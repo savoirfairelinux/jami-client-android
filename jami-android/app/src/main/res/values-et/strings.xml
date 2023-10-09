@@ -373,5 +373,9 @@
   <string name="bottomsheet_contact">Võta ühendust Jami\n%1$s</string>
   <string name="bottomsheet_remove">Võta ta roost välja.</string>
   <!--JamiId-->
+  <string name="jami_id_validate">Kasutaja nimi registreerimine</string>
+  <string name="jami_id_looking_for_availability">Otsime kasutajanimi kättesaadavust...</string>
+  <string name="jami_id_choose_username">Vali kasutajanimi</string>
   <!--WelcomeJami-->
+  <string name="welcome_jami_title">Tere tulemast Jami\'sse.</string>
 </resources>

@@ -158,5 +158,9 @@
   <string name="dialog_hint_title">عنوان</string>
   <string name="dialog_hint_description">ڤرسمباڬان</string>
   <!--JamiId-->
+  <string name="jami_id_validate">نام ڤڠڬونا</string>
+  <string name="jami_id_looking_for_availability">دالم مڠمبيل نام ڤڠڬونا...</string>
+  <string name="jami_id_choose_username">مميليه نام ڤڠڬونا</string>
   <!--WelcomeJami-->
+  <string name="welcome_jami_title">خوش اومدن جامي</string>
 </resources>

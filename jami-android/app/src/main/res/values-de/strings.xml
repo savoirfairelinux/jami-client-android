@@ -376,7 +376,17 @@
   <string name="picker_btn">Kontakte auswählen</string>
   <string name="bottomsheet_contact">Kontakt Jami\n%1$s</string>
   <string name="bottomsheet_remove">Aus dem Schwarm entfernen</string>
+  <string name="error_open_no_app_found">Keine Anwendung zur Verarbeitung dieser Datei gefunden:%1$s</string>
   <!--JamiId-->
+  <string name="jami_id_copy">Jami-ID kopieren</string>
+  <string name="jami_id_share">Jami-ID teilen</string>
+  <string name="jami_id_validate">Benutzername registrieren</string>
+  <string name="jami_id_available">Der Benutzername ist verfügbar</string>
+  <string name="jami_id_not_available">Der Benutzername ist nicht verfügbar\n• Maximal 32 Zeichen\n• Zulässige Sonderzeichen: Bindestrich (-), Unterstrich (_)</string>
+  <string name="jami_id_info">• Maximal 32 Zeichen\n• Zulässige Sonderzeichen: Bindestrich (-), Unterstrich (_)</string>
+  <string name="jami_id_looking_for_availability">Prüfe, ob der Benutzername verfügbar ist...</string>
+  <string name="jami_id_choose_username">Einen Benutzernamen wählen</string>
   <!--WelcomeJami-->
+  <string name="welcome_jami_title">Willkommen bei Jami</string>
   <string name="welcome_jami_description">Teilen Sie Ihren Jami-Identifikator mit, um einfacher kontaktiert zu werden!</string>
 </resources>

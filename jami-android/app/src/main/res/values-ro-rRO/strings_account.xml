@@ -247,7 +247,23 @@
   <string name="account_device_this_indicator">Acest aparat</string>
   <string name="account_disabled_indicator">dezactivat</string>
   <!--Link a new device-->
+  <string name="account_link_prompt_pin_manually">Introdu manual PIN-ul</string>
+  <string name="qr_invalid">Nu este un cod QR de autentificare Jami</string>
+  <string name="content_description_checkbox">Codul tău QR este valabil</string>
   <string name="error_format_not_supported">Acest format nu este acceptat.</string>
+  <string name="account_link_info">În noua aplicație Jami, scanează codul QR sau introdu manual codul PIN.</string>
   <string name="account_link_device_title">Asociază alt aparat</string>
+  <string name="account_link_password">Acest cont este cifrat cu parolă. Introdu parola pentru a genera codul PIN.</string>
+  <string name="account_link_generate_button">Generează</string>
+  <string name="account_link_time_valid">Codul PIN va fi valabil: %1$s.</string>
+  <string name="account_link_device_info">Alege „Asociază alt aparat” din cealaltă aplicație Jami pentru a afișa codul QR sau PIN-ul.</string>
+  <string name="account_generate_export_device">În celălalt aparat</string>
+  <string name="account_generate_export_info">Instalează și pornește Jami, alege „Importă din alt aparat” și scanează codul QR.</string>
+  <string name="content_description_qr_generated">Codul tău QR</string>
+  <string name="account_generate_export_invalid">PIN-ul nu mai este valabil.\n Introdu parola și generează alt PIN pentru asocierea noului aparat.</string>
+  <string name="account_generate_export_invalid_two">PIN-ul nu mai este valabil.\n Generează alt PIN pentru asocierea noului aparat.</string>
+  <string name="help_pin_info">Se completează dacă acest cont are parolă.</string>
+  <string name="connect_device_scanqr">Scanează QR-ul</string>
+  <string name="connect_device_enterPIN">Sau introdu codul PIN</string>
   <string name="account_link_device_button">Conectează</string>
 </resources>

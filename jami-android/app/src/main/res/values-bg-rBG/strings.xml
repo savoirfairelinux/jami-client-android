@@ -373,5 +373,9 @@
   <string name="bottomsheet_contact">Свържете се с Jami\n%1$s</string>
   <string name="bottomsheet_remove">Отдръпнете се от роя.</string>
   <!--JamiId-->
+  <string name="jami_id_validate">Регистрирайте потребителско име</string>
+  <string name="jami_id_looking_for_availability">Проверяване дали потребителското име е свободно…</string>
+  <string name="jami_id_choose_username">Изберете потребителско име</string>
   <!--WelcomeJami-->
+  <string name="welcome_jami_title">Добре дошли в Jami</string>
 </resources>

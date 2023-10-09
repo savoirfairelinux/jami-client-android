@@ -247,7 +247,23 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="account_device_this_indicator">Dieses Gerät</string>
   <string name="account_disabled_indicator">deaktiviert</string>
   <!--Link a new device-->
+  <string name="account_link_prompt_pin_manually">PIN manuell eingeben</string>
+  <string name="qr_invalid">Kein Jami-Authentifizierungs-QR-Code</string>
+  <string name="content_description_checkbox">Ihr QR-Code ist gültig</string>
   <string name="error_format_not_supported">Dieses Format wird nicht unterstützt.</string>
+  <string name="account_link_info">Scannen Sie in der neuen Jami-App den QR-Code oder geben Sie die PIN manuell ein.</string>
   <string name="account_link_device_title">Verbinde ein neues Gerät</string>
+  <string name="account_link_password">Dieses Konto ist passwortverschlüsselt. Geben Sie das Passwort ein, um den PIN-Code zu generieren.</string>
+  <string name="account_link_generate_button">Generieren</string>
+  <string name="account_link_time_valid">Der PIN-Code ist ungültig:%1$s</string>
+  <string name="account_link_device_info">Wählen Sie in der anderen Jami-App „Neues Gerät verknüpfen“, um den QR-Code oder die PIN anzuzeigen</string>
+  <string name="account_generate_export_device">Auf dem anderen Gerät</string>
+  <string name="account_generate_export_info">Installieren und starten Sie Jami, wählen Sie „Von einem anderen Gerät importieren“ und scannen Sie den QR-Code.</string>
+  <string name="content_description_qr_generated">Ihr QR-Code</string>
+  <string name="account_generate_export_invalid">Die PIN ist nicht mehr gültig.\n Geben Sie das Passwort ein und generieren Sie ein neues, um das neue Gerät zu verknüpfen.</string>
+  <string name="account_generate_export_invalid_two">Die PIN ist nicht mehr gültig.\n Generieren Sie eine andere, um das neue Gerät zu verknüpfen.</string>
+  <string name="help_pin_info">Dieses Feld ausfüllen, wenn das Konto passwortverschlüsselt ist</string>
+  <string name="connect_device_scanqr">QR scannen</string>
+  <string name="connect_device_enterPIN">Oder PIN eingeben</string>
   <string name="account_link_device_button">Verbinden</string>
 </resources>

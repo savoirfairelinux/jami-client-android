@@ -369,5 +369,9 @@
   <string name="bottomsheet_contact">الاتصال مع Jami\n%1$s</string>
   <string name="bottomsheet_remove">إبتعد عن السحابة</string>
   <!--JamiId-->
+  <string name="jami_id_validate">تسجيل اسم المستخدم</string>
+  <string name="jami_id_looking_for_availability">جاري البحث عن توفر اسم المستخدم…</string>
+  <string name="jami_id_choose_username">اختر اسم مستخدم</string>
   <!--WelcomeJami-->
+  <string name="welcome_jami_title">مرحبا بك في جامي</string>
 </resources>

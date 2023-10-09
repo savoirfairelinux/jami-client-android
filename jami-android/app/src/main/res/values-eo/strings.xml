@@ -373,5 +373,9 @@
   <string name="bottomsheet_contact">Kontaktu Jami\n%1$s</string>
   <string name="bottomsheet_remove">Forigu ĝin el la sorbo</string>
   <!--JamiId-->
+  <string name="jami_id_validate">Registru uzantnomon</string>
+  <string name="jami_id_looking_for_availability">Serĉante uzantnomon disponeblan...</string>
+  <string name="jami_id_choose_username">Elektu uzantnomon</string>
   <!--WelcomeJami-->
+  <string name="welcome_jami_title">Bonvenon al Jami.</string>
 </resources>

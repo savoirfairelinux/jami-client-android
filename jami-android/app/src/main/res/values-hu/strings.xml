@@ -238,7 +238,7 @@
   <string name="no_registered_name">Nincs bejegyzett név</string>
   <string name="identity">Személyazonosság</string>
   <string name="account">Fiók</string>
-  <string name="link_new_device">Eszköz összekapcsolása fiókhoz</string>
+  <string name="link_new_device">Új eszköz összekapcsolása</string>
   <string name="devices">Összekapcsolt eszközök</string>
   <string name="total_devices">Összes eszköz: </string>
   <!--Share fragment-->
@@ -376,8 +376,15 @@
   <string name="picker_btn">Kapcsolatok kijelölése</string>
   <string name="bottomsheet_contact">Forduljon a Jamihez\n%1$s</string>
   <string name="bottomsheet_remove">Eltávolítás a rajcsoportból</string>
+  <string name="error_open_no_app_found">Nem található alkalmazás a fájl kezelésére: %1$s</string>
   <!--JamiId-->
+  <string name="jami_id_copy">Jami-azonosító másolása</string>
+  <string name="jami_id_share">Jami-azonosító megosztása</string>
   <string name="jami_id_validate">Felhasználónév bejegyeztetése</string>
+  <string name="jami_id_available">A felhasználónév nem elérhető</string>
+  <string name="jami_id_not_available">A felhasználónév nem elérhető\n• Legfeljebb 32 karakter\n• Megengedett speciális karakterek: kötőjel (-), aláhúzás (_)</string>
+  <string name="jami_id_info">• Legfeljebb 32 karakter\n• Megengedett speciális karakterek: kötőjel (-), aláhúzás (_)</string>
+  <string name="jami_id_looking_for_availability">A felhasználónév rendelkezésre állásának keresése…</string>
   <string name="jami_id_choose_username">Felhasználónév kiválasztása</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Üdvözli a Jami</string>

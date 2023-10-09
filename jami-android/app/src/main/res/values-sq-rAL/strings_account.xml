@@ -247,7 +247,23 @@
   <string name="account_device_this_indicator">Këtë pajisje</string>
   <string name="account_disabled_indicator">e çaktivizuar</string>
   <!--Link a new device-->
+  <string name="account_link_prompt_pin_manually">Jepeni PIN-in dorazi</string>
+  <string name="qr_invalid">S’është kod QR Mirëfilltësimi Jami</string>
+  <string name="content_description_checkbox">Kodi juaj QR është i vlefshëm</string>
   <string name="error_format_not_supported">Ky format nuk mbulohet.</string>
+  <string name="account_link_info">Në aplikacionin e ri Jami, skanoni kodin QR, ose jepni dorazin PIN-in. </string>
   <string name="account_link_device_title">Lidhni një pajisje të re</string>
+  <string name="account_link_password">Kjo llogari është e mbrojtur me fjalëkalim, jepni fjalëkalimin që të prodhohet kodi PIN.</string>
+  <string name="account_link_generate_button">Prodhoje</string>
+  <string name="account_link_time_valid">Kodi PIN do të jetë i pavlefshëm: %1$s.</string>
+  <string name="account_link_device_info">Zgjidhni “Lidhni një pajisje të re”, që nga aplikacioni tjetër Jami, që të shfaqet kodi QR, ose PIN-i</string>
+  <string name="account_generate_export_device">Te pajisja tjetër</string>
+  <string name="account_generate_export_info">Instaloni dhe niseni Jami-n, përzgjidhni “Importo prej pajisje tjetër” dhe skanoni kodin QR.</string>
+  <string name="content_description_qr_generated">Kodi juaj QR</string>
+  <string name="account_generate_export_invalid">PIN-i s’është më i vlefshëm.\n Që të lidhni pajisjen e re, jepni fjalëkalimin dhe prodhoni një tjetër.</string>
+  <string name="account_generate_export_invalid_two">PIN-i s’është më i vlefshëm.\n Që të lidhni pajisjen e re, prodhoni një tjetër.</string>
+  <string name="help_pin_info">Plotësojeni nëse llogaria është e fshehtëzuar me fjalëkalim</string>
+  <string name="connect_device_scanqr">Skanoni QR-in</string>
+  <string name="connect_device_enterPIN">Ose jepni PIN-in</string>
   <string name="account_link_device_button">Lidhu</string>
 </resources>

@@ -161,5 +161,9 @@
   <string name="dialog_hint_title">Назва</string>
   <string name="dialog_hint_description">Апісанне</string>
   <!--JamiId-->
+  <string name="jami_id_validate">Запіс імя карыстальніка</string>
+  <string name="jami_id_looking_for_availability">Шукаю даступнасць імя карыстальніка...</string>
+  <string name="jami_id_choose_username">Выберыце імя карыстальніка</string>
   <!--WelcomeJami-->
+  <string name="welcome_jami_title">Сардэчна запрашаем у Джамі</string>
 </resources>

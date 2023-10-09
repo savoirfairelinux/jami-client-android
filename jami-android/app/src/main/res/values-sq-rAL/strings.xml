@@ -376,8 +376,14 @@
   <string name="picker_btn">Përzgjidhni kontake</string>
   <string name="bottomsheet_contact">Lidhuni me Jami-n\n%1$s</string>
   <string name="bottomsheet_remove">Hiqe prej zgjoi</string>
+  <string name="error_open_no_app_found">S’u gjet aplikacion për trajtim të kësaj kartele: %1$s</string>
   <!--JamiId-->
+  <string name="jami_id_copy">Kopjo JamiId</string>
+  <string name="jami_id_share">Ndajeni JamiId-në me të tjerë</string>
   <string name="jami_id_validate">Regjistroni emër përdoruesi</string>
+  <string name="jami_id_available">Emri i përdoruesit është i lirë</string>
+  <string name="jami_id_not_available">Emri i përdoruesit s’është i lirë\n• E shumta 32 shenja\n• Shenja speciale të lejuara: vijë ndarëse në mes (-), nënvijë (_)</string>
+  <string name="jami_id_info">• E shumta 32 shenja\n• Shenja speciale të lejuara: vijë ndarëse në mes (-), nënvijë (_)</string>
   <string name="jami_id_looking_for_availability">Po shihet nëse emri i përdoruesit është i pazënë…</string>
   <string name="jami_id_choose_username">Zgjidhni emër përdoruesi</string>
   <!--WelcomeJami-->

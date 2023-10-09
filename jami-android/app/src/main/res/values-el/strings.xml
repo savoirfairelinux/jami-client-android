@@ -373,5 +373,9 @@
   <string name="bottomsheet_contact">Επικοινωνήστε με Jami\n%1$s</string>
   <string name="bottomsheet_remove">Απομακρύνσου από το σμήνος</string>
   <!--JamiId-->
+  <string name="jami_id_validate">Καταχωρίστε το όνομα χρήστη</string>
+  <string name="jami_id_looking_for_availability">Ψάχνω για τη διαθεσιμότητα του ονόματος χρήστη...</string>
+  <string name="jami_id_choose_username">Επιλέξτε όνομα χρήστη</string>
   <!--WelcomeJami-->
+  <string name="welcome_jami_title">Καλώς ήλθατε στο  Jami</string>
 </resources>

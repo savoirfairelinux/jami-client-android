@@ -375,5 +375,9 @@
   <string name="bottomsheet_contact">Kontaktovat Jami\n %1$s</string>
   <string name="bottomsheet_remove">Odstranit ze swarmu</string>
   <!--JamiId-->
+  <string name="jami_id_validate">Zaregistrovat uživatelské jméno</string>
+  <string name="jami_id_looking_for_availability">Zjišťuje se dostupnost uživatelského jména…</string>
+  <string name="jami_id_choose_username">Výberte uživatelské jméno</string>
   <!--WelcomeJami-->
+  <string name="welcome_jami_title">Vítejte v Jami</string>
 </resources>

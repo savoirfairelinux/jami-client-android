@@ -378,6 +378,8 @@
   <string name="bottomsheet_contact">Contact Jami\n%1$s</string>
   <string name="bottomsheet_remove">Retirer du Swarm</string>
   <!--JamiId-->
+  <string name="jami_id_validate">Enregistrer le nom d\'utilisateur</string>
+  <string name="jami_id_looking_for_availability">Vérification de la disponibilité du nom d\'utilisateur...</string>
   <string name="jami_id_choose_username">Choisir un nom d\'utilisateur</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Bienvenue sur Jami</string>

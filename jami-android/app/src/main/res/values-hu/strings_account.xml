@@ -190,13 +190,13 @@
   <string name="account_link_archive_button">Kapcsolódás biztonsági másolatból</string>
   <string name="account_link_prompt_pin">PIN-kód megadása</string>
   <string name="account_new_button">Jami-fiók létrehozása</string>
-  <string name="account_link_export_button">Eszköz összekapcsolása fiókhoz</string>
+  <string name="account_link_export_button">Új eszköz összekapcsolása</string>
   <string name="account_link_show_button">További %d összekapcsolt eszköz megjelenítése</string>
   <string name="account_link_hide_button">Összekapcsolt eszköz elrejtése</string>
   <string name="account_link_export_info">Ha ezt a fiókot más eszközökön szeretné használni, először meg kell jeleníteni a Jamin. Ez létrehoz egy PIN-kódot, amelyet meg kell adnia az új eszközön a fiók beállításához. A PIN-kód 10 percig érvényes.</string>
   <string name="account_start_export_button">PIN-kód létrehozása</string>
   <string name="account_end_export_button">bezárás</string>
-  <string name="account_end_export_infos">A PIN-kódja:\n\n%%\n\nA folyamat befejezéséhez meg kell nyitnia a Jamit az új eszközön. Hozzon létre egy új fiókot az „Eszköz összekapcsolása fiókhoz” lehetőséggel. A PIN-kódja 10 percig érvényes.</string>
+  <string name="account_end_export_infos">A PIN-kódja:\n\n%%\n\nA folyamat befejezéséhez meg kell nyitnia a Jamit az új eszközön. Hozzon létre egy új fiókot az „Új eszköz összekapcsolása” lehetőséggel. A PIN-kódja 10 percig érvényes.</string>
   <string name="account_link_export_info_light">Ha ezt a fiókot más eszközökön szeretné használni, először meg kell jeleníteni a Jamin. Ez létrehoz egy PIN-kódot, amelyet meg kell adnia az új eszközön a fiók beállításához. A PIN-kód 10 percig érvényes.</string>
   <string name="account_export_title">Fiók összekapcsolása más eszközökkel</string>
   <string name="account_connect_server_button">Csatlakozás a felügyeleti kiszolgálóhoz</string>
@@ -247,7 +247,23 @@
   <string name="account_device_this_indicator">Ez az eszköz</string>
   <string name="account_disabled_indicator">letiltva</string>
   <!--Link a new device-->
+  <string name="account_link_prompt_pin_manually">Írja be kézzel a PIN-kódot</string>
+  <string name="qr_invalid">Nem Jami hitelesítési QR-kód</string>
+  <string name="content_description_checkbox">Érvényes QR-kód</string>
   <string name="error_format_not_supported">Ez a formátum nem támogatott</string>
-  <string name="account_link_device_title">Eszköz összekapcsolása fiókhoz</string>
+  <string name="account_link_info">Az új Jami alkalmazásban olvassa be a QR-kódot, vagy írja be kézzel a PIN-kódot.</string>
+  <string name="account_link_device_title">Új eszköz összekapcsolása</string>
+  <string name="account_link_password">Ez a fiók jelszóval titkosított, írja be a jelszót a PIN-kód létrehozásához.</string>
+  <string name="account_link_generate_button">Létrehozás</string>
+  <string name="account_link_time_valid">PIN-kód lejárata: %1$s.</string>
+  <string name="account_link_device_info">Válassza az „Új eszköz összekapcsolása” lehetőséget a másik Jami alkalmazásban a QR- vagy PIN-kód megjelenítéséhez</string>
+  <string name="account_generate_export_device">A másik eszközön</string>
+  <string name="account_generate_export_info">Telepítse és indítsa el a Jamit, válassza az \"Importálás másik eszközről\" lehetőséget, és olvassa be a QR-kódot.</string>
+  <string name="content_description_qr_generated">QR-kód</string>
+  <string name="account_generate_export_invalid">A PIN-kód már nem érvényes.\nAdja meg a jelszót, és hozzon létre egy másikat az új eszköz összekapcsolásához.</string>
+  <string name="account_generate_export_invalid_two">A PIN-kód már nem érvényes.\nAz új eszköz összekapcsolásához hozzon létre egy másikat.</string>
+  <string name="help_pin_info">Adja meg, ha a fiók jelszóval titkosított</string>
+  <string name="connect_device_scanqr">QR-kód beolvasása</string>
+  <string name="connect_device_enterPIN">Vagy PIN-kód megadása</string>
   <string name="account_link_device_button">Kapcsolódás</string>
 </resources>

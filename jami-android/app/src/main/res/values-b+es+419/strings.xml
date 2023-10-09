@@ -73,6 +73,10 @@
   <string name="bottomsheet_contact">Contacta con Jami\n%1$s</string>
   <string name="bottomsheet_remove">Retirada del enjambre</string>
   <!--JamiId-->
+  <string name="jami_id_validate">Registrar nombre de usuario</string>
+  <string name="jami_id_looking_for_availability">Revisando si el nombre de usuario está disponible</string>
+  <string name="jami_id_choose_username">Elegir nombre de usuario</string>
   <!--WelcomeJami-->
+  <string name="welcome_jami_title">Bienvenido a Jami</string>
   <string name="welcome_jami_description">¡Comparta su identificador Jami para contactar más fácilmente!</string>
 </resources>

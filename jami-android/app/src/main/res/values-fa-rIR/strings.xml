@@ -374,6 +374,8 @@
   <string name="bottomsheet_contact">با Jami\n%1$s تماس بگیرید</string>
   <string name="bottomsheet_remove">اخراج از گروه</string>
   <!--JamiId-->
+  <string name="jami_id_validate">ثبت نام کاربری</string>
+  <string name="jami_id_looking_for_availability">در حال جستجو برای در دسترس بودن نام کاربری …</string>
   <string name="jami_id_choose_username">یک نام کاربری را انتخاب کنید</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">به جمی خوش آمدید</string>

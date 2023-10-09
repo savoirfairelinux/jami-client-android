@@ -373,6 +373,9 @@
   <string name="bottomsheet_contact">Jarri harremanetan Jami\n%1$s</string>
   <string name="bottomsheet_remove">Kendu zabortegitik.</string>
   <!--JamiId-->
+  <string name="jami_id_validate">Erabiltzaile izena erregistratzea</string>
+  <string name="jami_id_looking_for_availability">Erabiltzaileen izenen eskuragarritasunaren bila...</string>
+  <string name="jami_id_choose_username">Erabiltzaile izena aukeratu</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Ongi etorri Jamira</string>
 </resources>

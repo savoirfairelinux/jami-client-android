@@ -377,8 +377,14 @@
   <string name="picker_btn">Alege contacte</string>
   <string name="bottomsheet_contact">Contactează Jami\n%1$s</string>
   <string name="bottomsheet_remove">Scoate din grup</string>
+  <string name="error_open_no_app_found">Nu s-a găsit nicio aplicație care să gestioneze acest fișier: %1$s</string>
   <!--JamiId-->
+  <string name="jami_id_copy">Copiază JamiID</string>
+  <string name="jami_id_share">Distribuie JamiID</string>
   <string name="jami_id_validate">Înscrie numele de utilizator</string>
+  <string name="jami_id_available">Numele este disponibil</string>
+  <string name="jami_id_not_available">Numele de utilizator nu este disponibil\n• maximum 32 de caractere\n• Caractere speciale permise: cratimă (-), liniuță joasă (_)</string>
+  <string name="jami_id_info">• maximum 32 de caractere\n• Caractere speciale permise: cratimă (-), liniuță joasă (_)</string>
   <string name="jami_id_looking_for_availability">Caut disponibilitatea numelui de utilizator...</string>
   <string name="jami_id_choose_username">Alege un nume de utilizator</string>
   <!--WelcomeJami-->
