@@ -47,6 +47,7 @@ class CallPresenter @Inject constructor(
     private val mCallService: CallService,
     private val mDeviceRuntimeService: DeviceRuntimeService,
     private val mConversationFacade: ConversationFacade,
+    private val mNotificationService: NotificationService,
     @param:Named("UiScheduler") private val mUiScheduler: Scheduler
 ) : RootPresenter<CallView>() {
     private var mConference: Conference? = null
@@ -633,9 +634,12 @@ class CallPresenter @Inject constructor(
         mCallService.raiseParticipantHand(call.accountId, call.id, mAccountService.getAccount(call.accountId)?.uri!!, state)
     }
 
-    fun startScreenShare(mediaProjection: Any?): Boolean {
+    fun startScreenShare(resultCode: Int, data: Any): Boolean {
         val conference = mConference ?: return false
-        mHardwareService.switchInput(conference.accountId, conference.id, false, mediaProjection)
+        mNotificationService.preparePendingScreenshare(conference) {
+            val mediaProjection = view?.getMediaProjection(resultCode, data) ?: return@preparePendingScreenshare
+            mHardwareService.switchInput(conference.accountId, conference.id, false, mediaProjection)
+        }
         return true
     }
 

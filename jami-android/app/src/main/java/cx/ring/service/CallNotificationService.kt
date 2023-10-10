@@ -37,14 +37,18 @@ class CallNotificationService : Service() {
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         super.onStartCommand(intent, flags, startId)
         if (ACTION_START == intent.action) {
+            val confId = intent.getStringExtra(NotificationService.KEY_CALL_ID)
             val notification = mNotificationService.showCallNotification(intent.getIntExtra(NotificationService.KEY_NOTIFICATION_ID, -1)) as Notification?
+            val startScreenshare = intent.getBooleanExtra(NotificationService.KEY_SCREENSHARE, false)
             if (notification != null) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE && !startScreenshare)
                     startForeground(NotificationServiceImpl.NOTIF_CALL_ID, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_PHONE_CALL)
                 else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
                     startForeground(NotificationServiceImpl.NOTIF_CALL_ID, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_PHONE_CALL or ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PROJECTION)
                 else
                     startForeground(NotificationServiceImpl.NOTIF_CALL_ID, notification)
+                if (startScreenshare && confId != null)
+                    mNotificationService.startPendingScreenshare(confId)
             }
         } else if (ACTION_STOP == intent.action) {
             stopForeground(STOP_FOREGROUND_REMOVE)

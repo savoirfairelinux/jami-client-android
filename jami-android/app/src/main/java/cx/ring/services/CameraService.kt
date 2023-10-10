@@ -588,21 +588,21 @@ class CameraService internal constructor(c: Context) {
         surface: TextureView,
         metrics: DisplayMetrics
     ): Boolean {
+        mediaProjection.registerCallback(object : MediaProjection.Callback() {
+            override fun onStop() {
+                params.mediaCodec?.let { codec ->
+                    codec.signalEndOfInputStream()
+                    codec.stop()
+                    codec.release()
+                    params.mediaCodec = null
+                }
+                params.display?.release()
+                params.display = null
+                params.codecStarted = false
+            }
+        }, videoHandler)
         val r = createVirtualDisplay(params, mediaProjection, surface, metrics)
         if (r != null) {
-            mediaProjection.registerCallback(object : MediaProjection.Callback() {
-                override fun onStop() {
-                    params.mediaCodec?.let { codec ->
-                        codec.signalEndOfInputStream()
-                        codec.stop()
-                        codec.release()
-                        params.mediaCodec = null
-                    }
-                    params.display?.release()
-                    params.display = null
-                    params.codecStarted = false
-                }
-            }, videoHandler)
             params.codecStarted = true
             params.mediaCodec = r.first
             params.projection = mediaProjection

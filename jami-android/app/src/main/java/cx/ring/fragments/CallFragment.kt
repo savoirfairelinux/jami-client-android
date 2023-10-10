@@ -729,7 +729,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                 Log.w(TAG, "[screenshare] onActivityResult ---> requestCode: $requestCode, resultCode: $resultCode")
                 if (resultCode == Activity.RESULT_OK && data != null) {
                     try {
-                        startScreenShare(mProjectionManager.getMediaProjection(resultCode, data))
+                        startScreenShare(resultCode, data)
                     } catch (e: Exception) {
                         Log.w(TAG, "Error starting screen sharing", e)
                     }
@@ -1261,8 +1261,8 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         presenter.speakerClick(binding!!.callSpeakerBtn.isChecked)
     }
 
-    private fun startScreenShare(mediaProjection: MediaProjection?) {
-        if (presenter.startScreenShare(mediaProjection)) {
+    private fun startScreenShare(resultCode: Int, data: Intent) {
+        if (presenter.startScreenShare(resultCode, data)) {
             if (isChoosePluginMode) {
                 binding!!.pluginPreviewSurface.visibility = View.GONE
                 displayLocalVideo(false)
@@ -1351,6 +1351,11 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
 
     override fun displayPluginsButton(): Boolean {
         return JamiService.getPluginsEnabled() && JamiService.getCallMediaHandlers().size > 0
+    }
+
+    override fun getMediaProjection(resultCode: Int, data: Any): MediaProjection {
+        val dataIntent = data as Intent
+        return mProjectionManager.getMediaProjection(resultCode, dataIntent)
     }
 
     public fun pluginsButtonClicked() {

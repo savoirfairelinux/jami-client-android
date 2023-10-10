@@ -23,7 +23,9 @@ interface NotificationService {
     fun showCallNotification(notifId: Int): Any?
     fun cancelCallNotification()
     fun removeCallNotification(notifId: Int)
-    fun handleCallNotification(conference: Conference, remove: Boolean)
+    fun handleCallNotification(conference: Conference, remove: Boolean, startScreenshare: Boolean = false)
+    fun preparePendingScreenshare(conference: Conference, callback: () -> Unit)
+    fun startPendingScreenshare(confId: String)
     fun showMissedCallNotification(call: Call)
     fun showGroupCallNotification(conversation: Conversation)
     fun showTextNotification(conversation: Conversation)
@@ -51,5 +53,6 @@ interface NotificationService {
         const val KEY_HOLD_ID = "holdId"
         const val KEY_END_ID = "endId"
         const val KEY_NOTIFICATION_ID = "notificationId"
+        const val KEY_SCREENSHARE = "screenshare"
     }
 }

@@ -93,6 +93,7 @@ class NotificationServiceImpl(
     private val callNotifications = ConcurrentHashMap<Int, Notification>()
     private val dataTransferNotifications = ConcurrentHashMap<Int, Notification>()
     private var pendingNotificationActions = ArrayList<() -> Unit>()
+    private var pendingScreenshareCallbacks = HashMap<String, () -> Unit>()
 
     init {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -276,7 +277,7 @@ class NotificationServiceImpl(
      * @param conference the conference object for the notification
      * @param remove     true if it should be removed from current calls
      */
-    override fun handleCallNotification(conference: Conference, remove: Boolean) {
+    override fun handleCallNotification(conference: Conference, remove: Boolean, startScreenshare: Boolean) {
         if (!remove && conference.isIncoming && conference.state == Call.CallStatus.RINGING) {
             // Filter case where state is ringing but we haven't receive the media list yet
             val call = conference.call ?: return
@@ -286,14 +287,14 @@ class NotificationServiceImpl(
                 Log.w(TAG, "Telecom API: requestIncomingCall result ${result.allowed}")
                 if (result.allowed) {
                     result.setCall(call)
-                    manageCallNotification(conference, remove)
+                    manageCallNotification(conference, remove, startScreenshare)
                 }
             }
         } else {
-            manageCallNotification(conference, remove)
+            manageCallNotification(conference, remove, startScreenshare)
         }
     }
-    private fun manageCallNotification(conference: Conference, remove: Boolean) {
+    private fun manageCallNotification(conference: Conference, remove: Boolean, startScreenshare: Boolean) {
         if (DeviceUtils.isTv(mContext)) {
             if (!remove) startCallActivity(conference.id)
             return
@@ -321,7 +322,10 @@ class NotificationServiceImpl(
             val start = {
                 ContextCompat.startForegroundService(mContext,
                     Intent(CallNotificationService.ACTION_START, null, mContext, CallNotificationService::class.java)
-                        .putExtra(NotificationService.KEY_NOTIFICATION_ID, nid))
+                        .putExtra(NotificationService.KEY_NOTIFICATION_ID, nid)
+                        .putExtra(NotificationService.KEY_SCREENSHARE, startScreenshare)
+                        .putExtra(NotificationService.KEY_CALL_ID, id)
+                )
             }
             try {
                 start()
@@ -340,6 +344,22 @@ class NotificationServiceImpl(
         } else {
             removeCallNotification(0)
         }
+    }
+
+    override fun preparePendingScreenshare(conference: Conference, callback: () -> Unit) {
+        pendingScreenshareCallbacks[conference.id] = callback
+        handleCallNotification(conference, false, true)
+    }
+
+    /**
+     * Starts a pending screenshare after the foreground service has received the required
+     * screen capture permission using a previously provided callback
+     * @param confId The call to start the screenshare on
+     */
+    override fun startPendingScreenshare(confId: String) {
+        val callback = pendingScreenshareCallbacks[confId] ?: return
+        callback()
+        pendingScreenshareCallbacks.remove(confId)
     }
 
     override fun processPush() {
