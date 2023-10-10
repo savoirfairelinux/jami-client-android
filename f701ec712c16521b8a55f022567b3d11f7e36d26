@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "56d8e26b_e0f2f8ce",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 930
+      },
+      "writtenOn": "2023-10-10T13:35:10Z",
+      "side": 1,
+      "message": "Intent reuse for screen capture will need to be adapted as this is no longer allowed in Android 14",
+      "revId": "f701ec712c16521b8a55f022567b3d11f7e36d26",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
