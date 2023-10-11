@@ -120,17 +120,27 @@ along with this program; if not, write to the Free Software
                 <!-- padding of the msg_txt is added in ConversationAdapter.kt-->
                 <TextView
                     android:id="@+id/msg_txt"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:focusable="true"
                     android:textColor="@color/colorOnSurface"
                     android:textColorLink="@color/link_peer_color"
                     android:textIsSelectable="true"
                     android:textSize="@dimen/text_size_medium"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/msg_time"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    tools:paddingStart="30dp"
                     tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod \n dhejhfjw" />
+
+                <TextView
+                    android:id="@+id/msg_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size_small"
+                    app:layout_constraintBottom_toBottomOf="@id/msg_txt"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:text="14:30am" />
 
                 <include
                     layout="@layout/msg_link_preview"

@@ -44,6 +44,7 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
         else -> null
     }
     var mMsgTxt: TextView? = null
+    var mMsgTime: TextView? = null
     var mMsgTxtContainer2: ConstraintLayout? = null
     var mMsgDetailTxt: TextView? = null
     var mMsgDetailTxtPerm: TextView? = null
@@ -142,6 +143,7 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
                 mHistDetailTxt = v.findViewById(R.id.link_preview_description)
                 mPreviewDomain = v.findViewById(R.id.link_preview_domain)
                 primaryClickableView = mMsgTxt
+                mMsgTime = v.findViewById(R.id.msg_time)
             }
             MessageType.INCOMING_FILE,
             MessageType.OUTGOING_FILE -> {

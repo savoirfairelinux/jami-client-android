@@ -134,9 +134,22 @@ along with this program; if not, write to the Free Software
                     android:textColorLink="@color/text_color_primary_dark"
                     android:textIsSelectable="true"
                     android:textSize="@dimen/text_size_medium"
+                    app:layout_constraintEnd_toStartOf="@id/msg_time"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    tools:paddingStart="30dp"
                     tools:text="yo this is the test of a long long text can not be_found_message" />
+
+                <TextView
+                    android:id="@+id/msg_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_color_primary_dark"
+                    android:textColorHighlight="@color/conversation_primary_selection"
+                    android:textSize="@dimen/text_size_small"
+                    app:layout_constraintBottom_toBottomOf="@id/msg_txt"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:text="14:30am" />
 
                 <include
                     layout="@layout/msg_link_preview"
