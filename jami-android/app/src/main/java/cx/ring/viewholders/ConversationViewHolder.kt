@@ -27,6 +27,7 @@ import android.animation.ValueAnimator
 import android.media.MediaPlayer
 import android.view.Surface
 import android.view.View
+import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.RelativeLayout
@@ -44,9 +45,12 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
         else -> null
     }
     var mMsgTxt: TextView? = null
-    var mMsgTxtContainer2: ConstraintLayout? = null
+    var mMsgTime: TextView? = null
+    var mMsgTxtContainer2: RelativeLayout? = null
     var mMsgDetailTxt: TextView? = null
     var mMsgDetailTxtPerm: TextView? = null
+    var mTwo: RelativeLayout? = v.findViewById(R.id.two)
+
     val mAvatar: ImageView? = when (type) {
         MessageType.INCOMING_TEXT_MESSAGE,
         MessageType.INCOMING_FILE,
@@ -142,6 +146,7 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
                 mHistDetailTxt = v.findViewById(R.id.link_preview_description)
                 mPreviewDomain = v.findViewById(R.id.link_preview_domain)
                 primaryClickableView = mMsgTxt
+                mMsgTime = v.findViewById(R.id.msg_time)
             }
             MessageType.INCOMING_FILE,
             MessageType.OUTGOING_FILE -> {

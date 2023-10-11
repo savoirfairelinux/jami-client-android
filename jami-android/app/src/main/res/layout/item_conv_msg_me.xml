@@ -45,7 +45,8 @@ along with this program; if not, write to the Free Software
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:id="@+id/conversationLayout">
 
         <RelativeLayout
             android:id="@+id/two"
@@ -113,40 +114,53 @@ along with this program; if not, write to the Free Software
 
             </RelativeLayout>
 
-
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <RelativeLayout
                 android:id="@+id/msg_txt_container2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/msg_txt_container1"
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="24dp"
-                android:background="@drawable/textmsg_bg_out"
-                android:focusable="true">
-                <!-- padding of the msg_txt is added in ConversationAdapter.kt-->
-                <TextView
-                    android:id="@+id/msg_txt"
+                android:background="@drawable/textmsg_bg_out">
+
+                <FrameLayout
+                    android:id="@+id/msg_txt_container3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:focusable="true"
-                    android:textColor="@color/text_color_primary_dark"
-                    android:textColorHighlight="@color/conversation_primary_selection"
-                    android:textColorLink="@color/text_color_primary_dark"
-                    android:textIsSelectable="true"
-                    android:textSize="@dimen/text_size_medium"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="yo this is the test of a long long text can not be_found_message" />
+                    android:focusable="true">
+                    <!-- padding of the msg_txt is added in ConversationAdapter.kt-->
+                    <TextView
+                        android:id="@+id/msg_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:focusable="true"
+                        android:textColor="@color/text_color_primary_dark"
+                        android:textColorHighlight="@color/conversation_primary_selection"
+                        android:textColorLink="@color/text_color_primary_dark"
+                        android:textIsSelectable="true"
+                        android:textSize="@dimen/text_size_medium"
+                        tools:text="yo this is the test of a long long text can not be_found_message" />
+
+                    <TextView
+                        android:id="@+id/msg_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|end"
+                        android:alpha="0.6"
+                        android:singleLine="true"
+                        android:textColor="@color/text_color_primary_dark"
+                        android:textColorHighlight="@color/conversation_primary_selection"
+                        android:textSize="@dimen/text_size_xsmall"
+                        tools:text="14:30am" />
+                </FrameLayout>
 
                 <include
                     layout="@layout/msg_link_preview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/msg_txt" />
+                    android:layout_below="@id/msg_txt_container3" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            </RelativeLayout>
 
             <cx.ring.views.MessageStatusView
                 android:id="@+id/status_icon"
