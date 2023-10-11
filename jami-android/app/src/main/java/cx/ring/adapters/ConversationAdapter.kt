@@ -45,6 +45,7 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.PopupWindow
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.cardview.widget.CardView
@@ -84,7 +85,6 @@ import net.jami.model.Interaction.InteractionStatus
 import net.jami.utils.StringUtils
 import org.commonmark.node.SoftLineBreak
 import java.io.File
-import java.text.DateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.math.max
@@ -1053,6 +1053,59 @@ class ConversationAdapter(
     }
 
     /**
+     * Used to create 2 text view text in single line like :
+     * Hello World 13:00am
+     * @param convViewHolder    ConversationViewHolder
+     * @param two               RelativeLayout
+     * @param msgTxt            TextView
+     * @param msgTime           TextView
+     * Directly "View" can be used as param type, but for this case only I
+     * have used dedicated Views and ViewGroup.
+     */
+    private fun manageTextViews(convViewHolder: ConversationViewHolder, two: RelativeLayout, msgTxt: TextView, msgTime: TextView
+    ) {
+        msgTxt.post {
+            val lineCount = msgTxt.lineCount
+            // If we don't have enough space to put the time on the right of the last line
+            // math : width of the TextView is <= line width + time width + paddings and margins
+            if (two.width <= (msgTxt.layout.getLineWidth(lineCount - 1)
+                        + msgTime.width
+                        + convertDpToPixel(16f, convViewHolder)
+                        + 2 * convertDpToPixel(10f, convViewHolder)
+                        )
+            ) {
+                // So we have a complete line for the message and the time is on the right end corner
+                // paddingTop = number of lines * height of a line + padding
+                val paddingTop =
+                    lineCount * msgTxt.lineHeight + convertDpToPixel(10f, convViewHolder).toInt()
+                val paddingRight = convertDpToPixel(5f, convViewHolder).toInt()
+                msgTime.setPadding(0, paddingTop, paddingRight, 0)
+            } else {
+                // If we have enough space to put the time on the right of the last line
+                // paddingLeft = last line width + padding
+                val paddingLeft =
+                    msgTxt.layout.getLineWidth(lineCount - 1).toInt() + convertDpToPixel(
+                        16f,
+                        convViewHolder
+                    ).toInt()
+                val paddingRight = convertDpToPixel(5f, convViewHolder).toInt()
+                msgTime.setPadding(paddingLeft, 0, paddingRight, 0)
+            }
+        }
+    }
+
+    /**
+     * Convert dp to pixel using the context
+     */
+    private fun convertDpToPixel(dp: Float, convViewHolder: ConversationViewHolder): Float {
+        return TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP,
+            dp,
+            convViewHolder.itemView.context.resources.displayMetrics
+        )
+    }
+
+    /**
      * Configures the viewholder to display a classic text message, ie. not a call info text message
      *
      * @param convViewHolder The conversation viewHolder
@@ -1064,6 +1117,7 @@ class ConversationAdapter(
         convViewHolder.compositeDisposable.add(interaction.lastElement
             .observeOn(DeviceUtils.uiScheduler)
             .subscribe { lastElement ->
+
                 val textMessage = lastElement as TextMessage
                 val contact = textMessage.contact ?: return@subscribe
                 val isDeleted = textMessage.body.isNullOrEmpty()
@@ -1071,21 +1125,12 @@ class ConversationAdapter(
                 val msgTxtContainer2 = convViewHolder.mMsgTxtContainer2 ?: return@subscribe
                 msgTxtContainer2.background?.setTintList(null)
                 val answerLayout = convViewHolder.mAnswerLayout
-                val isTimeShown = hasPermanentTimeString(textMessage, position)
-                val msgSequenceType = getMsgSequencing(position, isTimeShown)
-                // edited function in the chatview
-//                val history = interaction.historyObservable.blockingFirst()
-
-//                if(convViewHolder.mMsgEditedIcon== null){
-//                    Log.w("SALUT","BUG1")
-//                }
-//                val editedIcon = convViewHolder.mMsgEditedIcon ?: return@subscribe
-//                val isEdited = !isDeleted && history.size > 1
-//                editedIcon.isVisible = isEdited
+                val msgSequenceType = getMsgSequencing(position)
+                val msgTime = convViewHolder.mMsgTime ?: return@subscribe
+                val two = convViewHolder.mTwo ?: return@subscribe
 
                 // Manage deleted message.
                 if (isDeleted) {
-                    msgTxt.text = context.getString(R.string.conversation_message_deleted)
                     // delete the link also if there is one
                     answerLayout?.visibility = View.GONE
                     // Manage layout for deleted message. Index refers to msgBGLayouts array.
@@ -1097,6 +1142,13 @@ class ConversationAdapter(
                     context.resources.getDimensionPixelSize(R.dimen.padding_medium).let {
                         msgTxt.setPadding(it, it, it, it)
                     }
+                    // Show the time of the message in the bubble
+                    convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
+                        convViewHolder.mMsgTime?.text =
+                            DateUtils.formatDateTime(context, textMessage.timestamp, DateUtils.FORMAT_SHOW_TIME)
+                    })
+                    convViewHolder.mMsgTime?.visibility = View.VISIBLE
+                    // Manage background color
                     msgTxtContainer2.background.alpha = 255
                     if (convColor != 0 && !textMessage.isIncoming) {
                         msgTxtContainer2.background?.setTint(convColor)
@@ -1134,7 +1186,29 @@ class ConversationAdapter(
                     msgTxtContainer2.background?.alpha = 0
                     msgTxt.textSize = 32.0f
                     msgTxt.setPadding(0, 0, 0, 0)
+                    // When it is an emoji, we put the time below the emoji
+                    // paddingTop = height of a line + padding
+                    val paddingTop =
+                        msgTxt.lineHeight + convertDpToPixel(10f, convViewHolder).toInt()
+                    msgTime.setPadding(0, paddingTop, 0, 0)
+                    // change the color of the time to be visible because it is white by default
+                    msgTime.setTextColor(ContextCompat.getColor(context, R.color.colorOnSurface))
+                    // put the avatar in the middle of the message
+                    if (convViewHolder.mPhoto != null) {
+                        val photo = convViewHolder.mPhoto
+                        val layoutParams = photo?.layoutParams as RelativeLayout.LayoutParams
+                        layoutParams.removeRule(RelativeLayout.ALIGN_BOTTOM)
+                        layoutParams.addRule(RelativeLayout.CENTER_VERTICAL)
+                        photo.layoutParams = layoutParams
+                    }
                 } else {
+                    // put the avatar at the bottom of the message
+                    if (convViewHolder.mPhoto != null) {
+                        val photo = convViewHolder.mPhoto
+                        val layoutParams = photo?.layoutParams as RelativeLayout.LayoutParams
+                        layoutParams.removeRule(RelativeLayout.CENTER_VERTICAL)
+                        photo.layoutParams = layoutParams
+                    }
                     // Manage layout for standard message. Index refers to msgBGLayouts array.
                     val resIndex =
                         if (interaction.replyTo != null) {
@@ -1150,10 +1224,17 @@ class ConversationAdapter(
                     context.resources.getDimensionPixelSize(R.dimen.padding_medium).let {
                         msgTxt.setPadding(it, it, it, it)
                     }
+                    // Manage the time position in the bubble depending on the message length
+                    manageTextViews(convViewHolder, two, msgTxt, msgTime)
+                    // Manage background color of outgoing message.
                     if (convColor != 0 && !textMessage.isIncoming) {
                         msgTxtContainer2.background?.setTint(convColor)
                     }
                     msgTxtContainer2.background.alpha = 255
+                    // Set the color of the time
+                    if(!textMessage.isIncoming) {
+                        msgTime.setTextColor(ContextCompat.getColor(context, R.color.text_color_primary_dark))
+                    }
                     msgTxt.textSize = 16f
 
                     // Manage layout for message with a link inside.
@@ -1240,36 +1321,14 @@ class ConversationAdapter(
                 // Apply a bottom margin to the global layout if end of sequence needed.
                 convViewHolder.mItem?.let { setBottomMargin(it, if (endOfSeq) 8 else 0) }
 
-                // Manage the update of the timestamp and the fact than we can expend/hide it.
-                if (isTimeShown) {
-                    convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
-                        convViewHolder.mMsgDetailTxtPerm?.text =
-                            TextUtils.timestampToDetailString(context, textMessage.timestamp)
-                    })
-                    convViewHolder.mMsgDetailTxtPerm?.visibility = View.VISIBLE
-                } else {
-                    convViewHolder.mMsgDetailTxtPerm?.visibility = View.GONE
-                    val isExpanded = position == expandedItemPosition
-                    if (isExpanded) {
-                        convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
-                            convViewHolder.mMsgDetailTxt?.text =
-                                TextUtils.timestampToDetailString(context, textMessage.timestamp)
-                        })
-                    }
-                    setItemViewExpansionState(convViewHolder, isExpanded)
-                    convViewHolder.mItem?.setOnClickListener {
-                        if (convViewHolder.animator?.isRunning == true) {
-                            return@setOnClickListener
-                        }
-                        if (expandedItemPosition >= 0) {
-                            val prev = expandedItemPosition
-                            notifyItemChanged(prev)
-                        }
-                        expandedItemPosition = if (isExpanded) -1 else position
-                        notifyItemChanged(expandedItemPosition)
-                    }
-                }
-            })
+                // Show the timestamp of the message
+                convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
+                    convViewHolder.mMsgTime?.text =
+                        DateUtils.formatDateTime(context, textMessage.timestamp, DateUtils.FORMAT_SHOW_TIME)
+                })
+                convViewHolder.mMsgTime?.visibility = View.VISIBLE
+            }
+        )
     }
 
     private fun configureForContactEvent(viewHolder: ConversationViewHolder, interaction: Interaction) {
@@ -1462,7 +1521,7 @@ class ConversationAdapter(
      * @param isTimeShown   meta data of the interaction telling if the time is shown.
      * @return              the SequenceType of the analyzed interaction.
      */
-    private fun getMsgSequencing(i: Int, isTimeShown: Boolean): SequenceType {
+    private fun getMsgSequencing(i: Int): SequenceType {
         val msg = mInteractions[i]
 
         // Manage specific interaction which are always single (ex : emoji).
@@ -1493,7 +1552,7 @@ class ConversationAdapter(
             // Get the previous interaction and if exists check if sequence break needed.
             val prevMsg = getPreviousMessageFromPosition(i)
             if (prevMsg != null) {
-                return if (isSeqBreak(prevMsg, msg) || isTimeShown) {
+                return if (isSeqBreak(prevMsg, msg)) {
                     SequenceType.SINGLE
                 } else {
                     SequenceType.LAST
@@ -1507,13 +1566,13 @@ class ConversationAdapter(
         val nextMsg = getNextMessageFromPosition(i)
         if (prevMsg != null && nextMsg != null) {
             val nextMsgHasTime = hasPermanentTimeString(nextMsg, i + 1)
-            return if ((isSeqBreak(prevMsg, msg) || isTimeShown)
+            return if ((isSeqBreak(prevMsg, msg))
                 && !(isSeqBreak(msg, nextMsg) || nextMsgHasTime)
             ) {
                 SequenceType.FIRST
-            } else if (!isSeqBreak(prevMsg, msg) && !isTimeShown && isSeqBreak(msg, nextMsg)) {
+            } else if (!isSeqBreak(prevMsg, msg) && isSeqBreak(msg, nextMsg)) {
                 SequenceType.LAST
-            } else if (!isSeqBreak(prevMsg, msg) && !isTimeShown && !isSeqBreak(msg, nextMsg)) {
+            } else if (!isSeqBreak(prevMsg, msg) && !isSeqBreak(msg, nextMsg)) {
                 if (nextMsgHasTime) SequenceType.LAST else SequenceType.MIDDLE
             } else {
                 SequenceType.SINGLE
