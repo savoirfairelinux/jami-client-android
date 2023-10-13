@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef0d74cd_21e05732",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-13T21:06:56Z",
+      "side": 1,
+      "message": "what\u0027s the purpose of this commit ?\nYou should do it for all the msg backgrounds in one patch",
+      "revId": "ff0cbc190d743b437d9354b724229e9ceaadc5cc",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98adfdbc_4b7a313d",
+        "filename": "jami-android/app/src/main/res/values/dimens.xml",
+        "patchSetId": 15
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-13T21:06:56Z",
+      "side": 1,
+      "message": "used everywhere (cannot be changed)",
+      "range": {
+        "startLine": 22,
+        "startChar": 17,
+        "endLine": 22,
+        "endChar": 31
+      },
+      "revId": "ff0cbc190d743b437d9354b724229e9ceaadc5cc",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3e8b54a9_d55c345d",
+        "filename": "jami-android/app/src/main/res/values/dimens.xml",
+        "patchSetId": 15
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-13T21:06:56Z",
+      "side": 1,
+      "message": "used at some other place (can be done but needs some checks)",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 14
+      },
+      "revId": "ff0cbc190d743b437d9354b724229e9ceaadc5cc",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
