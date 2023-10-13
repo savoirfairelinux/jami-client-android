@@ -142,7 +142,7 @@ class HomeActivity : FragmentActivity() {
 //            mIsContactFragmentVisible = false;
             supportFragmentManager.popBackStack()
         } else {
-            super.getOnBackPressedDispatcher().onBackPressed()
+            super.onBackPressed()
         }
     }
 
