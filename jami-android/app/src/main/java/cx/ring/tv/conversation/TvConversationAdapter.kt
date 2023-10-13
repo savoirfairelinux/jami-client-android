@@ -199,7 +199,8 @@ class TvConversationAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ConversationViewHolder {
         val type = MessageType.values()[viewType]
-        val v = LayoutInflater.from(parent.context).inflate(type.tvLayout, parent, false) as ViewGroup
+        val v = if (type == MessageType.INVALID) FrameLayout(parent.context)
+        else LayoutInflater.from(parent.context).inflate(type.tvLayout, parent, false) as ViewGroup
         return ConversationViewHolder(v, type)
     }
 
