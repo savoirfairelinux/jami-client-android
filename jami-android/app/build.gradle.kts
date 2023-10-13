@@ -114,7 +114,7 @@ dependencies {
     implementation ("androidx.emoji2:emoji2-emojipicker:1.4.0")
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
     implementation ("androidx.slidingpanelayout:slidingpanelayout:1.2.0")
-    implementation ("com.google.android.material:material:1.9.0")
+    implementation ("com.google.android.material:material:1.10.0")
     implementation ("com.google.android.flexbox:flexbox:3.0.0")
     implementation ("org.osmdroid:osmdroid-android:6.1.16")
     implementation ("io.noties.markwon:core:$markwon_version")

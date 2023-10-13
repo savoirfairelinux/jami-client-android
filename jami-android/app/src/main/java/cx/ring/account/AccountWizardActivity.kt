@@ -156,7 +156,7 @@ class AccountWizardActivity : BaseActivity<AccountWizardPresenter>(), AccountWiz
     override fun onBackPressed() {
         val fragment = supportFragmentManager.findFragmentById(R.id.wizard_container)
         if (fragment is ProfileCreationFragment) finish()
-        else super.getOnBackPressedDispatcher().onBackPressed()
+        else super.onBackPressed()
     }
 
     override fun displayProgress(display: Boolean) {

@@ -98,7 +98,7 @@ class TVAccountWizard : BaseActivity<AccountWizardPresenter>(), AccountWizardVie
             is TVProfileCreationFragment -> finish()
             is TVHomeAccountCreationFragment -> finishAffinity()
             is TVJamiAccountCreationFragment -> supportFragmentManager.popBackStack()
-            else -> super.getOnBackPressedDispatcher().onBackPressed()
+            else -> super.onBackPressed()
         }
     }
 
