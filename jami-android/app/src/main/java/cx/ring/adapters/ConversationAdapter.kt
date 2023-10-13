@@ -45,6 +45,7 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.PopupWindow
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.cardview.widget.CardView
@@ -87,7 +88,6 @@ import java.io.File
 import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.math.max
-import java.util.Locale
 
 
 class ConversationAdapter(
@@ -1053,6 +1053,59 @@ class ConversationAdapter(
     }
 
     /**
+     * Used to create 2 text view text in single line like :
+     * Hello World 13:00am
+     * @param convViewHolder    ConversationViewHolder
+     * @param two               RelativeLayout
+     * @param msgTxt            TextView
+     * @param msgTime           TextView
+     * Directly "View" can be used as param type, but for this case only I
+     * have used dedicated Views and ViewGroup.
+     */
+    private fun manageTextViews(convViewHolder: ConversationViewHolder, two: RelativeLayout, msgTxt: TextView, msgTime: TextView
+    ) {
+        msgTxt.post {
+            val lineCount = msgTxt.lineCount
+            // If we don't have enough space to put the time on the right of the last line
+            // math : width of the TextView is <= line width + time width + paddings and margins
+            if (two.width <= (msgTxt.layout.getLineWidth(lineCount - 1)
+                        + msgTime.width
+                        + convertDpToPixel(16f, convViewHolder)
+                        + 2 * convertDpToPixel(10f, convViewHolder)
+                        )
+            ) {
+                // So we have a complete line for the message and the time is on the right end corner
+                // paddingTop = number of lines * height of a line + padding
+                val paddingTop =
+                    lineCount * msgTxt.lineHeight + convertDpToPixel(10f, convViewHolder).toInt()
+                val paddingRight = convertDpToPixel(5f, convViewHolder).toInt()
+                msgTime.setPadding(0, paddingTop, paddingRight, 0)
+            } else {
+                // If we have enough space to put the time on the right of the last line
+                // paddingLeft = last line width + padding
+                val paddingLeft =
+                    msgTxt.layout.getLineWidth(lineCount - 1).toInt() + convertDpToPixel(
+                        16f,
+                        convViewHolder
+                    ).toInt()
+                val paddingRight = convertDpToPixel(5f, convViewHolder).toInt()
+                msgTime.setPadding(paddingLeft, 0, paddingRight, 0)
+            }
+        }
+    }
+
+    /**
+     * Convert dp to pixel using the context
+     */
+    private fun convertDpToPixel(dp: Float, convViewHolder: ConversationViewHolder): Float {
+        return TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP,
+            dp,
+            convViewHolder.itemView.context.resources.displayMetrics
+        )
+    }
+
+    /**
      * Configures the viewholder to display a classic text message, ie. not a call info text message
      *
      * @param convViewHolder The conversation viewHolder
@@ -1064,6 +1117,7 @@ class ConversationAdapter(
         convViewHolder.compositeDisposable.add(interaction.lastElement
             .observeOn(DeviceUtils.uiScheduler)
             .subscribe { lastElement ->
+
                 val textMessage = lastElement as TextMessage
                 val contact = textMessage.contact ?: return@subscribe
                 val isDeleted = textMessage.body.isNullOrEmpty()
@@ -1073,7 +1127,8 @@ class ConversationAdapter(
                 val answerLayout = convViewHolder.mAnswerLayout
                 val msgSequenceType = getMsgSequencing(position)
                 val msgTime = convViewHolder.mMsgTime ?: return@subscribe
-                val author = textMessage.account ?: return@subscribe
+                val two = convViewHolder.mTwo ?: return@subscribe
+
                 // Manage deleted message.
                 if (isDeleted) {
                     // delete the link also if there is one
@@ -1086,7 +1141,6 @@ class ConversationAdapter(
                         ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
                     context.resources.getDimensionPixelSize(R.dimen.padding_medium).let {
                         msgTxt.setPadding(it, it, it, it)
-                        msgTime.setPadding(it, it, it, it)
                     }
                     // Show the time of the message in the bubble
                     convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
@@ -1094,7 +1148,7 @@ class ConversationAdapter(
                             DateUtils.formatDateTime(context, textMessage.timestamp, DateUtils.FORMAT_SHOW_TIME)
                     })
                     convViewHolder.mMsgTime?.visibility = View.VISIBLE
-
+                    // Manage background color
                     msgTxtContainer2.background.alpha = 255
                     if (convColor != 0 && !textMessage.isIncoming) {
                         msgTxtContainer2.background?.setTint(convColor)
@@ -1132,8 +1186,14 @@ class ConversationAdapter(
                     msgTxtContainer2.background?.alpha = 0
                     msgTxt.textSize = 32.0f
                     msgTxt.setPadding(0, 0, 0, 0)
-                    // TODO put msgTime at the bottom of the msgTxt and show
-                    msgTime.setPadding(0, 0, 0, 0)
+                    // When it is an emoji, we put the time below the emoji
+                    // paddingTop = height of a line + padding
+                    val paddingTop =
+                        msgTxt.lineHeight + convertDpToPixel(10f, convViewHolder).toInt()
+                    msgTime.setPadding(0, paddingTop, 0, 0)
+                    Log.w("emoji", "emoji $message")
+                    // change the color of the time to be visible because it is white by default
+                    msgTime.setTextColor(ContextCompat.getColor(context, R.color.colorOnSurface))
                 } else {
                     // Manage layout for standard message. Index refers to msgBGLayouts array.
                     val resIndex =
@@ -1149,16 +1209,10 @@ class ConversationAdapter(
                     msgTxtContainer2.background = ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
                     context.resources.getDimensionPixelSize(R.dimen.padding_medium).let {
                         msgTxt.setPadding(it, it, it, it)
-                        msgTime.setPadding(it, it, it, it)
                     }
-
-                    // Show the time of the message in the bubble
-                    convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
-                        convViewHolder.mMsgTime?.text =
-                            DateUtils.formatDateTime(context, textMessage.timestamp, DateUtils.FORMAT_SHOW_TIME)
-                    })
-                    convViewHolder.mMsgTime?.visibility = View.VISIBLE
-
+                    // Manage the time position in the bubble depending on the message length
+                    manageTextViews(convViewHolder, two, msgTxt, msgTime)
+                    // Manage background color of outgoing message.
                     if (convColor != 0 && !textMessage.isIncoming) {
                         msgTxtContainer2.background?.setTint(convColor)
                     }
@@ -1223,6 +1277,14 @@ class ConversationAdapter(
                 // Manage animation for avatar doing ???.
                 if (textMessage.isIncoming) {
                     val avatar = convViewHolder.mAvatar ?: return@subscribe
+                    // change the alignment of the time to be below the emoji
+                    // TODO a refaire car ne fonctionne pas
+                    val layoutParams = msgTxtContainer2.layoutParams as RelativeLayout.LayoutParams
+                    layoutParams.removeRule(RelativeLayout.ALIGN_BOTTOM)
+                    layoutParams.removeRule(RelativeLayout.ALIGN_BASELINE)
+                    layoutParams.addRule(RelativeLayout.CENTER_VERTICAL)
+                    msgTxtContainer2.layoutParams = layoutParams
+
                     if (endOfSeq) {
                         avatar.setImageDrawable(conversationFragment.getConversationAvatar(contact.primaryNumber))
                         avatar.visibility = View.VISIBLE
