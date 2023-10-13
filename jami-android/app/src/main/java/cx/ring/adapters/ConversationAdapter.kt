@@ -1191,10 +1191,25 @@ class ConversationAdapter(
                     val paddingTop =
                         msgTxt.lineHeight + convertDpToPixel(10f, convViewHolder).toInt()
                     msgTime.setPadding(0, paddingTop, 0, 0)
-                    Log.w("emoji", "emoji $message")
                     // change the color of the time to be visible because it is white by default
                     msgTime.setTextColor(ContextCompat.getColor(context, R.color.colorOnSurface))
+                    // put the avatar in the middle of the message
+                    if (convViewHolder.mPhoto != null) {
+                        val photo = convViewHolder.mPhoto
+                        val layoutParams = photo?.layoutParams as RelativeLayout.LayoutParams
+                        layoutParams.removeRule(RelativeLayout.ALIGN_BOTTOM)
+                        layoutParams.addRule(RelativeLayout.CENTER_VERTICAL)
+                        photo.layoutParams = layoutParams
+                    }
+
                 } else {
+                    // put the avatar at the bottom of the message
+                    if (convViewHolder.mPhoto != null) {
+                        val photo = convViewHolder.mPhoto
+                        val layoutParams = photo?.layoutParams as RelativeLayout.LayoutParams
+                        layoutParams.removeRule(RelativeLayout.CENTER_VERTICAL)
+                        photo.layoutParams = layoutParams
+                    }
                     // Manage layout for standard message. Index refers to msgBGLayouts array.
                     val resIndex =
                         if (interaction.replyTo != null) {
@@ -1277,14 +1292,6 @@ class ConversationAdapter(
                 // Manage animation for avatar doing ???.
                 if (textMessage.isIncoming) {
                     val avatar = convViewHolder.mAvatar ?: return@subscribe
-                    // change the alignment of the time to be below the emoji
-                    // TODO a refaire car ne fonctionne pas
-                    val layoutParams = msgTxtContainer2.layoutParams as RelativeLayout.LayoutParams
-                    layoutParams.removeRule(RelativeLayout.ALIGN_BOTTOM)
-                    layoutParams.removeRule(RelativeLayout.ALIGN_BASELINE)
-                    layoutParams.addRule(RelativeLayout.CENTER_VERTICAL)
-                    msgTxtContainer2.layoutParams = layoutParams
-
                     if (endOfSeq) {
                         avatar.setImageDrawable(conversationFragment.getConversationAvatar(contact.primaryNumber))
                         avatar.visibility = View.VISIBLE
