@@ -1232,6 +1232,10 @@ class ConversationAdapter(
                         msgTxtContainer2.background?.setTint(convColor)
                     }
                     msgTxtContainer2.background.alpha = 255
+                    // Set the color of the time
+                    if(!textMessage.isIncoming) {
+                        msgTime.setTextColor(ContextCompat.getColor(context, R.color.text_color_primary_dark))
+                    }
                     msgTxt.textSize = 16f
 
                     // Manage layout for message with a link inside.
