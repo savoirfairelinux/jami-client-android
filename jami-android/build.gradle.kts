@@ -1,3 +1,7 @@
+plugins {
+    id("com.google.devtools.ksp") version "1.9.10-1.0.13" apply false
+}
+
 buildscript {
     repositories {
         google()
@@ -6,7 +10,7 @@ buildscript {
     }
 
     val kotlin_version by extra { "1.9.10" }
-    val hilt_version by extra { "2.47" }
+    val hilt_version by extra { "2.48.1" }
 
     dependencies {
         classpath ("com.android.tools.build:gradle:8.1.2")

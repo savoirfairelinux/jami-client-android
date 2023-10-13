@@ -6,9 +6,9 @@ val buildFirebase = project.hasProperty("buildFirebase") || gradle.startParamete
 plugins {
     id("com.android.application")
     kotlin("android")
-    kotlin("kapt")
     id("dagger.hilt.android.plugin")
     id("com.google.protobuf") version "0.9.3"
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -130,7 +130,7 @@ dependencies {
 
     // Dagger dependency injection
     implementation("com.google.dagger:hilt-android:$hilt_version")
-    kapt("com.google.dagger:hilt-android-compiler:$hilt_version")
+    ksp("com.google.dagger:hilt-android-compiler:$hilt_version")
 
     // Espresso Unit Tests
     androidTestImplementation("androidx.test.ext:junit-ktx:1.1.5")
@@ -140,7 +140,7 @@ dependencies {
 
     // Glide
     implementation ("com.github.bumptech.glide:glide:4.15.1")
-    kapt ("com.github.bumptech.glide:compiler:4.15.1")
+    ksp("com.github.bumptech.glide:ksp:4.15.1")
 
     // RxAndroid
     implementation ("io.reactivex.rxjava3:rxandroid:3.0.2")
@@ -173,10 +173,6 @@ protobuf {
             }
         }
     }
-}
-
-kapt {
-    correctErrorTypes = true
 }
 
 if (buildFirebase) {
