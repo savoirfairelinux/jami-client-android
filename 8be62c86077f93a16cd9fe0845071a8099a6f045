@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "04e1a62b_a2ae32a8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-13T19:30:40Z",
+      "side": 1,
+      "message": "i don\u0027t understand the general purpose of this ?",
+      "revId": "8be62c86077f93a16cd9fe0845071a8099a6f045",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "71e182b1_146d6c1b",
         "filename": "jami-android/app/src/main/java/cx/ring/viewholders/ConversationViewHolder.kt",
         "patchSetId": 14
