@@ -1191,7 +1191,6 @@ class ConversationAdapter(
                     val paddingTop =
                         msgTxt.lineHeight + convertDpToPixel(10f, convViewHolder).toInt()
                     msgTime.setPadding(0, paddingTop, 0, 0)
-                    Log.w("emoji", "emoji $message")
                     // change the color of the time to be visible because it is white by default
                     msgTime.setTextColor(ContextCompat.getColor(context, R.color.colorOnSurface))
                 } else {
@@ -1279,11 +1278,12 @@ class ConversationAdapter(
                     val avatar = convViewHolder.mAvatar ?: return@subscribe
                     // change the alignment of the time to be below the emoji
                     // TODO a refaire car ne fonctionne pas
-                    val layoutParams = msgTxtContainer2.layoutParams as RelativeLayout.LayoutParams
+                    val photo = convViewHolder.mPhoto ?: return@subscribe
+
+                    val layoutParams = photo.layoutParams as RelativeLayout.LayoutParams
+                    layoutParams.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE)
                     layoutParams.removeRule(RelativeLayout.ALIGN_BOTTOM)
-                    layoutParams.removeRule(RelativeLayout.ALIGN_BASELINE)
-                    layoutParams.addRule(RelativeLayout.CENTER_VERTICAL)
-                    msgTxtContainer2.layoutParams = layoutParams
+                    photo.layoutParams = layoutParams
 
                     if (endOfSeq) {
                         avatar.setImageDrawable(conversationFragment.getConversationAvatar(contact.primaryNumber))
