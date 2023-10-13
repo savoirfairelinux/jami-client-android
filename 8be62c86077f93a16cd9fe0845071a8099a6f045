@@ -53,6 +53,23 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e4de6c0_79849eb6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-13T19:59:10Z",
+      "side": 1,
+      "message": "positive point: ctrl+l is well executed ;P",
+      "revId": "8be62c86077f93a16cd9fe0845071a8099a6f045",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "71e182b1_146d6c1b",
@@ -165,6 +182,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "431c1c2f_4aab3685",
+        "filename": "jami-android/app/src/main/res/layout/item_conv_msg_me.xml",
+        "patchSetId": 14
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-13T19:59:10Z",
+      "side": 1,
+      "message": "I don\u0027t understand what this means",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 1
+      },
+      "revId": "8be62c86077f93a16cd9fe0845071a8099a6f045",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "51be329c_7a6c8da0",
         "filename": "jami-android/app/src/main/res/layout/item_conv_msg_me.xml",
         "patchSetId": 14
@@ -234,6 +274,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a78c0eb5_2e6df773",
+        "filename": "jami-android/app/src/main/res/layout/item_conv_msg_me.xml",
+        "patchSetId": 14
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-13T19:59:10Z",
+      "side": 1,
+      "message": "not viable composent name",
+      "range": {
+        "startLine": 88,
+        "startChar": 0,
+        "endLine": 88,
+        "endChar": 11
+      },
+      "revId": "8be62c86077f93a16cd9fe0845071a8099a6f045",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "676cba34_655d3add",
         "filename": "jami-android/app/src/main/res/layout/item_conv_msg_me.xml",
         "patchSetId": 14
@@ -250,6 +313,29 @@
         "startChar": 44,
         "endLine": 110,
         "endChar": 45
+      },
+      "revId": "8be62c86077f93a16cd9fe0845071a8099a6f045",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aa6b51d6_7c4f212f",
+        "filename": "jami-android/app/src/main/res/layout/item_conv_msg_me.xml",
+        "patchSetId": 14
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-13T19:59:10Z",
+      "side": 1,
+      "message": "not viable composent name",
+      "range": {
+        "startLine": 118,
+        "startChar": 0,
+        "endLine": 118,
+        "endChar": 10
       },
       "revId": "8be62c86077f93a16cd9fe0845071a8099a6f045",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
@@ -308,6 +394,29 @@
       "writtenOn": "2023-10-13T19:36:36Z",
       "side": 1,
       "message": "doesnt exist",
+      "revId": "8be62c86077f93a16cd9fe0845071a8099a6f045",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "698efbbe_fe1673bd",
+        "filename": "jami-android/app/src/main/res/layout/item_conv_msg_me.xml",
+        "patchSetId": 14
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-13T19:59:10Z",
+      "side": 1,
+      "message": "not viable composent name",
+      "range": {
+        "startLine": 181,
+        "startChar": 0,
+        "endLine": 181,
+        "endChar": 1
+      },
       "revId": "8be62c86077f93a16cd9fe0845071a8099a6f045",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
