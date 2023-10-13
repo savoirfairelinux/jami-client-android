@@ -33,6 +33,155 @@
       "message": "Doesnt build",
       "revId": "8d90dd96359f703c45d4ff6df4df8d6983bdd645",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "75e0b226_12a2568f",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 16
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-13T20:55:40Z",
+      "side": 1,
+      "message": "single line: can be simplified",
+      "range": {
+        "startLine": 818,
+        "startChar": 18,
+        "endLine": 820,
+        "endChar": 17
+      },
+      "revId": "8d90dd96359f703c45d4ff6df4df8d6983bdd645",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "506d2146_c222dd93",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 16
+      },
+      "lineNbr": 995,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-13T20:55:40Z",
+      "side": 1,
+      "message": "\"?\" should not be needed (to check)",
+      "range": {
+        "startLine": 995,
+        "startChar": 40,
+        "endLine": 995,
+        "endChar": 41
+      },
+      "revId": "8d90dd96359f703c45d4ff6df4df8d6983bdd645",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "129ab49a_ebe5e222",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 16
+      },
+      "lineNbr": 1059,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-13T20:55:40Z",
+      "side": 1,
+      "message": "empty",
+      "revId": "8d90dd96359f703c45d4ff6df4df8d6983bdd645",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e0c51ac6_b0c40a94",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 16
+      },
+      "lineNbr": 1066,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-13T20:55:40Z",
+      "side": 1,
+      "message": "i guess \"?\" may be removed (to check)",
+      "range": {
+        "startLine": 1066,
+        "startChar": 43,
+        "endLine": 1066,
+        "endChar": 44
+      },
+      "revId": "8d90dd96359f703c45d4ff6df4df8d6983bdd645",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ef1dadc_25ddde2e",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 16
+      },
+      "lineNbr": 1069,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-13T20:55:40Z",
+      "side": 1,
+      "message": "to remove",
+      "revId": "8d90dd96359f703c45d4ff6df4df8d6983bdd645",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "500fe91a_0d306cf5",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 16
+      },
+      "lineNbr": 1084,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-13T20:55:40Z",
+      "side": 1,
+      "message": "idem",
+      "range": {
+        "startLine": 1084,
+        "startChar": 51,
+        "endLine": 1084,
+        "endChar": 52
+      },
+      "revId": "8d90dd96359f703c45d4ff6df4df8d6983bdd645",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a39beeb2_7080c293",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 16
+      },
+      "lineNbr": 1329,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-13T20:55:40Z",
+      "side": 1,
+      "message": "idem \"?\"",
+      "range": {
+        "startLine": 1329,
+        "startChar": 30,
+        "endLine": 1329,
+        "endChar": 31
+      },
+      "revId": "8d90dd96359f703c45d4ff6df4df8d6983bdd645",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
