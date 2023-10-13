@@ -122,6 +122,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2a7ba0cd_2c41a1ed",
+        "filename": "jami-android/app/src/main/java/cx/ring/viewholders/ConversationViewHolder.kt",
+        "patchSetId": 14
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-13T19:40:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "80c20eaa_954f7cc9",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 77,
+        "endChar": 15
+      },
+      "revId": "8be62c86077f93a16cd9fe0845071a8099a6f045",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "265cdf80_85961659",
