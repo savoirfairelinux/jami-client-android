@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ea045b78_dd35df64",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-13T19:30:16Z",
+      "side": 1,
+      "message": "don\u0027t even build",
+      "revId": "8be62c86077f93a16cd9fe0845071a8099a6f045",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "71e182b1_146d6c1b",
+        "filename": "jami-android/app/src/main/java/cx/ring/viewholders/ConversationViewHolder.kt",
+        "patchSetId": 14
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-13T19:30:16Z",
+      "side": 1,
+      "message": "not used ?",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 8
+      },
+      "revId": "8be62c86077f93a16cd9fe0845071a8099a6f045",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "45b3f59b_de68de7b",
+        "filename": "jami-android/app/src/main/java/cx/ring/viewholders/ConversationViewHolder.kt",
+        "patchSetId": 14
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-13T19:30:16Z",
+      "side": 1,
+      "message": "not used ?",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 77,
+        "endChar": 17
+      },
+      "revId": "8be62c86077f93a16cd9fe0845071a8099a6f045",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "80c20eaa_954f7cc9",
+        "filename": "jami-android/app/src/main/java/cx/ring/viewholders/ConversationViewHolder.kt",
+        "patchSetId": 14
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-13T19:30:16Z",
+      "side": 1,
+      "message": "pretty sure it will crash on tv",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 77,
+        "endChar": 15
+      },
+      "revId": "8be62c86077f93a16cd9fe0845071a8099a6f045",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "265cdf80_85961659",
+        "filename": "jami-android/app/src/main/java/cx/ring/viewholders/ConversationViewHolder.kt",
+        "patchSetId": 14
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-13T19:30:16Z",
+      "side": 1,
+      "message": "empty line",
+      "revId": "8be62c86077f93a16cd9fe0845071a8099a6f045",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
