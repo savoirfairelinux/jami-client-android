@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "eeb5b0db_0daec354",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 15
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-16T15:09:31Z",
+      "side": 1,
+      "message": "textView or chatview? \n\ntextView is the text object to display text",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 8
+      },
+      "revId": "9fc1684c39e520a3ff10e7367f8edf77b41ce728",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3fdd4a3a_914e179e",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 15
