@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ce828c5_3c20125f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-16T17:25:51Z",
+      "side": 1,
+      "message": "I don\u0027t understand what\u0027s this commit for",
+      "revId": "ec9480fff8f5a82ea37653356324687eec216b56",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "04e25175_ac83012d",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 1103,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-16T17:25:51Z",
+      "side": 1,
+      "message": "This looks like special logic for deleted message. However it uses the same graphical logic than standard message",
+      "range": {
+        "startLine": 1095,
+        "startChar": 20,
+        "endLine": 1103,
+        "endChar": 21
+      },
+      "revId": "ec9480fff8f5a82ea37653356324687eec216b56",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
