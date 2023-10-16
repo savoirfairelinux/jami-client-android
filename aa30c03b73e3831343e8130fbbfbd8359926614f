@@ -26,6 +26,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5b3b4ba9_7310e57b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-16T15:27:08Z",
+      "side": 1,
+      "message": "you can add a description of what it does for us to understand",
+      "revId": "aa30c03b73e3831343e8130fbbfbd8359926614f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9294c890_14dd4218",
         "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
         "patchSetId": 10
