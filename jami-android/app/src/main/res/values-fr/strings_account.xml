@@ -249,7 +249,23 @@ Vous pouvez modifier votre compte plus tard.</string>
   <string name="account_device_this_indicator">Cet appareil</string>
   <string name="account_disabled_indicator">désactivé</string>
   <!--Link a new device-->
+  <string name="account_link_prompt_pin_manually">Entrer votre NIP manuellement</string>
+  <string name="qr_invalid">n\'est pas un QR code Jami valide</string>
+  <string name="content_description_checkbox">Votre code QR est valide</string>
   <string name="error_format_not_supported">Ce format de fichier n\'est pas supporté.</string>
+  <string name="account_link_info">Sur votre nouvel application Jami, scannez le code QR ou bien saisissez manuellement votre NIP</string>
   <string name="account_link_device_title">Associer un nouvel appareil</string>
+  <string name="account_link_password">Ce compte est chiffré, veuillez saisir le mot de passe pour générer un NIP.</string>
+  <string name="account_link_generate_button">Générer</string>
+  <string name="account_link_time_valid">Le NIP sera invalide : %1$s.</string>
+  <string name="account_link_device_info">Allez sur \"Associer un nouvel appareil\" sur l\'autre appareil pour voir le code QR ou le NIP</string>
+  <string name="account_generate_export_device">Sur l\'autre appareil</string>
+  <string name="account_generate_export_info">Installer et lancer Jami, choisissez \"Importer d\'un nouvel appareil\" et scanner le code QR.</string>
+  <string name="content_description_qr_generated">Votre code QR</string>
+  <string name="account_generate_export_invalid">Votre NIP n\'est plus valide. Saisissez le mot de passe et générer un nouveau NIP pour associer cet appareil.</string>
+  <string name="account_generate_export_invalid_two">Votre NIP n\'est plus valide. Générer un nouveau NIP pour associer cet appareil.</string>
+  <string name="help_pin_info">Renseigner ce champ si le compte est chiffré</string>
+  <string name="connect_device_scanqr">Scanner le code QR</string>
+  <string name="connect_device_enterPIN">ou entrer le NIP</string>
   <string name="account_link_device_button">Se connecter</string>
 </resources>

@@ -377,8 +377,14 @@
   <string name="picker_btn">Choisissez vos contacts</string>
   <string name="bottomsheet_contact">Contact Jami\n%1$s</string>
   <string name="bottomsheet_remove">Retirer du Swarm</string>
+  <string name="error_open_no_app_found">Aucune application trouvée pour gérer le fichier %1$s</string>
   <!--JamiId-->
+  <string name="jami_id_copy">Copier le JamiId</string>
+  <string name="jami_id_share">Partager votre JamiId</string>
   <string name="jami_id_validate">Enregistrer le nom d\'utilisateur</string>
+  <string name="jami_id_available">Ce nom est disponible</string>
+  <string name="jami_id_not_available">Ce nom n\'est pas disponible\n• 32 caractères maximum\n• Caractères spéciaux autorisés: tiré (-), souligné (_)</string>
+  <string name="jami_id_info">• 32 caractères maximum\n• Caractères spéciaux autorisés: tiré (-), souligné (_)</string>
   <string name="jami_id_looking_for_availability">Vérification de la disponibilité du nom d\'utilisateur...</string>
   <string name="jami_id_choose_username">Choisir un nom d\'utilisateur</string>
   <!--WelcomeJami-->
