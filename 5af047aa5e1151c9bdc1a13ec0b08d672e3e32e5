@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f0c6547_6ec5da77",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 1057,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-16T20:24:42Z",
+      "side": 1,
+      "message": "Good practice to write header comment on top of your function, however it is not correct. I would prefer smthg like: \n\n\"Determining the optimal placement for displaying the time within the message bubble:\n\n- Single line: If there is sufficient space within the message bubble to accommodate both the text message and the time on a single line, they will be displayed together.\n- Time under text message: In cases where the text message occupies the entire width of the bubble, the time will be positioned beneath it.\"",
+      "range": {
+        "startLine": 1056,
+        "startChar": 0,
+        "endLine": 1057,
+        "endChar": 26
+      },
+      "revId": "5af047aa5e1151c9bdc1a13ec0b08d672e3e32e5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d3d3a1bb_75e9ae39",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 1060,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-16T20:24:42Z",
+      "side": 1,
+      "message": "Should not hint the type of the parameter but its purpose\n\n    * @param msgTxt The text to write within the bubble.",
+      "range": {
+        "startLine": 1060,
+        "startChar": 32,
+        "endLine": 1060,
+        "endChar": 40
+      },
+      "revId": "5af047aa5e1151c9bdc1a13ec0b08d672e3e32e5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8319e74c_eea55c84",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 1063,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-16T20:24:42Z",
+      "side": 1,
+      "message": "I don\u0027t understand this",
+      "range": {
+        "startLine": 1062,
+        "startChar": 7,
+        "endLine": 1063,
+        "endChar": 47
+      },
+      "revId": "5af047aa5e1151c9bdc1a13ec0b08d672e3e32e5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a5698114_b8cfb586",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 1065,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-16T20:24:42Z",
+      "side": 1,
+      "message": "shouldn\u0027t determineOptimalTimePlacement a better function name ?",
+      "range": {
+        "startLine": 1065,
+        "startChar": 16,
+        "endLine": 1065,
+        "endChar": 31
+      },
+      "revId": "5af047aa5e1151c9bdc1a13ec0b08d672e3e32e5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "82e942de_d24e895b",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 1106,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-16T20:24:42Z",
+      "side": 1,
+      "message": "Use getDimensionPixelSize instead of this function\n\ncontext.resources.getDimensionPixelSize(...)",
+      "range": {
+        "startLine": 1097,
+        "startChar": 6,
+        "endLine": 1106,
+        "endChar": 5
+      },
+      "revId": "5af047aa5e1151c9bdc1a13ec0b08d672e3e32e5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4b434f1b_e6891255",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 1506,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-16T20:24:42Z",
+      "side": 1,
+      "message": "dont forget this",
+      "range": {
+        "startLine": 1506,
+        "startChar": 0,
+        "endLine": 1506,
+        "endChar": 27
+      },
+      "revId": "5af047aa5e1151c9bdc1a13ec0b08d672e3e32e5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
