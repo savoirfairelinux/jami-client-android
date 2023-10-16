@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db2d0605_f1672ec8",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 1388,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-16T18:58:58Z",
+      "side": 1,
+      "message": "So shouldn\u0027t we have txtmsg_call_background.xml and txtmsg_call_missed_background.xml ?",
+      "range": {
+        "startLine": 1388,
+        "startChar": 0,
+        "endLine": 1388,
+        "endChar": 3
+      },
+      "revId": "75662502843e1e4d8dcf6ed28e061d975e514587",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "00462cc6_08858d09",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 1402,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-16T18:58:58Z",
+      "side": 1,
+      "message": "format",
+      "range": {
+        "startLine": 1402,
+        "startChar": 0,
+        "endLine": 1402,
+        "endChar": 27
+      },
+      "revId": "75662502843e1e4d8dcf6ed28e061d975e514587",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "092dbf1d_b0df349a",
+        "filename": "jami-android/app/src/main/res/drawable/baseline_call_missed_24.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-16T18:58:58Z",
+      "side": 1,
+      "message": "I think should not be changed as it will impact every layout using this drawable",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 21
+      },
+      "revId": "75662502843e1e4d8dcf6ed28e061d975e514587",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "48ae386c_3f887770",
+        "filename": "jami-android/app/src/main/res/drawable/baseline_call_missed_outgoing_24.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-16T18:58:58Z",
+      "side": 1,
+      "message": "I think should not be changed as it will impact every layout using this drawable",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "75662502843e1e4d8dcf6ed28e061d975e514587",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "609de504_f25633af",
+        "filename": "jami-android/app/src/main/res/drawable/textmsg_call_stroke.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-16T18:58:58Z",
+      "side": 1,
+      "message": "I don\u0027t well understand why we don\u0027t keep text_call_background.xml as name.\nIf other files use text_call_background.xml as background, they should be updated to use another specific file.",
+      "revId": "75662502843e1e4d8dcf6ed28e061d975e514587",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
