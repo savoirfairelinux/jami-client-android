@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3fdd4a3a_914e179e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-16T15:08:48Z",
+      "side": 1,
+      "message": "I dont\u0027t understand purpose of this commit but code looks correct. ",
+      "revId": "9fc1684c39e520a3ff10e7367f8edf77b41ce728",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d4bcfc3b_95365967",
+        "filename": "jami-android/app/src/main/res/values/dimens.xml",
+        "patchSetId": 15
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-16T15:08:48Z",
+      "side": 1,
+      "message": "line return would be appreciated",
+      "range": {
+        "startLine": 128,
+        "startChar": 0,
+        "endLine": 128,
+        "endChar": 6
+      },
+      "revId": "9fc1684c39e520a3ff10e7367f8edf77b41ce728",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
