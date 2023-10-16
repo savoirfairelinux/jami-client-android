@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "50cec4e6_5b244f52",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-16T14:49:29Z",
+      "side": 1,
+      "message": "I don\u0027t understand what\u0027s the purpose of this but code looks correct to me",
+      "revId": "7b6d252b1fe8b094c61ab5220d0d59858c2e434c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
