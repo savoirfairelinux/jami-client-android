@@ -1201,7 +1201,22 @@ class ConversationAdapter(
                     msgTime.setPadding(0, paddingTop, 0, 0)
                     // change the color of the time to be visible because it is white by default
                     msgTime.setTextColor(ContextCompat.getColor(context, R.color.colorOnSurface))
+                    // put the avatar in the middle of the message
+                    if (convViewHolder.mPhoto != null) {
+                        val photo = convViewHolder.mPhoto
+                        val layoutParams = photo?.layoutParams as RelativeLayout.LayoutParams
+                        layoutParams.removeRule(RelativeLayout.ALIGN_BOTTOM)
+                        layoutParams.addRule(RelativeLayout.CENTER_VERTICAL)
+                        photo.layoutParams = layoutParams
+                    }
                 } else {
+                    // put the avatar at the bottom of the message
+                    if (convViewHolder.mPhoto != null) {
+                        val photo = convViewHolder.mPhoto
+                        val layoutParams = photo?.layoutParams as RelativeLayout.LayoutParams
+                        layoutParams.removeRule(RelativeLayout.CENTER_VERTICAL)
+                        photo.layoutParams = layoutParams
+                    }
                     // Manage layout for standard message. Index refers to msgBGLayouts array.
                     val resIndex =
                         if (interaction.replyTo != null) {
