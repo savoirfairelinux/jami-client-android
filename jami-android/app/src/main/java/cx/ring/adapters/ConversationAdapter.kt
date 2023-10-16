@@ -44,6 +44,7 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.PopupWindow
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.cardview.widget.CardView
@@ -1079,6 +1080,7 @@ class ConversationAdapter(
                 val answerLayout = convViewHolder.mAnswerLayout
                 val isTimeShown = hasPermanentTimeString(textMessage, position)
                 val msgSequenceType = getMsgSequencing(position, isTimeShown)
+                val avatar = convViewHolder.mAvatar
                 // Manage deleted message.
                 if (isDeleted) {
                     msgTxt.text = context.getString(R.string.conversation_message_deleted)
@@ -1130,7 +1132,20 @@ class ConversationAdapter(
                     msgTxtContainer.background?.alpha = 0
                     msgTxt.textSize = 32.0f
                     msgTxt.setPadding(0, 0, 0, 0)
+                    // Put the avatar in the middle of the message
+                    if (avatar != null) {
+                        val layoutParams = avatar.layoutParams as RelativeLayout.LayoutParams
+                        layoutParams.removeRule(RelativeLayout.ALIGN_BOTTOM)
+                        layoutParams.addRule(RelativeLayout.CENTER_VERTICAL)
+                        avatar.layoutParams = layoutParams
+                    }
                 } else {
+                    // put the avatar at the bottom of the message
+                    if (avatar != null) {
+                        val layoutParams = avatar.layoutParams as RelativeLayout.LayoutParams
+                        layoutParams.removeRule(RelativeLayout.CENTER_VERTICAL)
+                        avatar.layoutParams = layoutParams
+                    }
                     // Manage layout for standard message. Index refers to msgBGLayouts array.
                     val resIndex =
                         if (interaction.replyTo != null) {
@@ -1146,6 +1161,7 @@ class ConversationAdapter(
                     context.resources.getDimensionPixelSize(R.dimen.padding_medium).let {
                         msgTxt.setPadding(it, it, it, it)
                     }
+                    // Manage background color of outgoing message.
                     if (convColor != 0 && !textMessage.isIncoming) {
                         msgTxtContainer.background.setTint(convColor)
                     }
