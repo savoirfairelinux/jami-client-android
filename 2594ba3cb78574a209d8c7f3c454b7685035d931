@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "920ab28b_4f80ea65",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 1198,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-16T17:53:32Z",
+      "side": 1,
+      "message": "what?",
+      "range": {
+        "startLine": 1198,
+        "startChar": 0,
+        "endLine": 1198,
+        "endChar": 32
+      },
+      "revId": "2594ba3cb78574a209d8c7f3c454b7685035d931",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f56c6ca4_dede62dd",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 1199,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-16T17:53:32Z",
+      "side": 1,
+      "message": "double if; consider to use \u0026",
+      "range": {
+        "startLine": 1197,
+        "startChar": 37,
+        "endLine": 1199,
+        "endChar": 45
+      },
+      "revId": "2594ba3cb78574a209d8c7f3c454b7685035d931",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3c6523e_4b01de65",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 1204,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-16T17:53:32Z",
+      "side": 1,
+      "message": "wtf",
+      "range": {
+        "startLine": 1204,
+        "startChar": 99,
+        "endLine": 1204,
+        "endChar": 113
+      },
+      "revId": "2594ba3cb78574a209d8c7f3c454b7685035d931",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "18d39d51_d9c68eb8",
+        "filename": "jami-android/app/src/main/res/drawable/textmsg_bg_ripple.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-16T17:53:32Z",
+      "side": 1,
+      "message": "you just removed the ripple effect",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 8
+      },
+      "revId": "2594ba3cb78574a209d8c7f3c454b7685035d931",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
