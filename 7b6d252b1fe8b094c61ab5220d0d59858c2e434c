@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1d2fe8d7_9ea304e6",
+        "filename": "jami-android/app/src/main/res/drawable/textmsg_bg_in_first.xml",
+        "patchSetId": 17
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-16T15:00:06Z",
+      "side": 0,
+      "message": "not used in the code anymore ? delete it",
+      "revId": "7b6d252b1fe8b094c61ab5220d0d59858c2e434c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "64c4e6f1_d3136081",
+        "filename": "jami-android/app/src/main/res/drawable/textmsg_bg_in_first.xml",
+        "patchSetId": 17
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-16T15:00:06Z",
+      "side": 0,
+      "message": "not used in the code anymore ? delete it",
+      "range": {
+        "startLine": 14,
+        "startChar": 31,
+        "endLine": 14,
+        "endChar": 66
+      },
+      "revId": "7b6d252b1fe8b094c61ab5220d0d59858c2e434c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9b4d37d0_afbfbcb2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-16T15:00:06Z",
+      "side": 1,
+      "message": "Isn\u0027t related to commit change id \"I3fa71a464ca002f815797e470b254ebc2f0d3dbd\" ?",
+      "revId": "db54b5a54fbd95a82d667a2a12e5d53209265df0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
