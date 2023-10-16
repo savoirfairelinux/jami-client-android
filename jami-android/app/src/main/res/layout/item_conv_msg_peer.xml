@@ -138,7 +138,7 @@ along with this program; if not, write to the Free Software
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom|end"
                         android:textColor="@color/colorOnSurface"
-                        android:textSize="@dimen/text_size_small"
+                        android:textSize="@dimen/text_size_xsmall"
                         tools:text="14:30am" />
                 </FrameLayout>
 

@@ -148,7 +148,7 @@ along with this program; if not, write to the Free Software
                         android:singleLine="true"
                         android:textColor="@color/text_color_primary_dark"
                         android:textColorHighlight="@color/conversation_primary_selection"
-                        android:textSize="@dimen/text_size_small"
+                        android:textSize="@dimen/text_size_xsmall"
                         tools:text="14:30am" />
                 </FrameLayout>
 

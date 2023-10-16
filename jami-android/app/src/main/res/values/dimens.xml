@@ -126,6 +126,7 @@ along with this program; if not, write to the Free Software
     <!--  WelcomeJami  -->
     <dimen name="welcome_jami_logo_default_size">85dp</dimen>
     <!--Text size-->
+    <dimen name="text_size_xsmall">9sp</dimen>
     <dimen name="text_size_small">13sp</dimen>
     <dimen name="text_size_medium">15sp</dimen>
     <dimen name="text_size_large">16sp</dimen>
