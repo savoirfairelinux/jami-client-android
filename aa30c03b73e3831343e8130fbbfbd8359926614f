@@ -1,0 +1,152 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1e4ad177_07fa122a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-16T15:26:06Z",
+      "side": 1,
+      "message": "remove empty space",
+      "range": {
+        "startLine": 7,
+        "startChar": 8,
+        "endLine": 7,
+        "endChar": 9
+      },
+      "revId": "aa30c03b73e3831343e8130fbbfbd8359926614f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9294c890_14dd4218",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 10
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-16T15:26:06Z",
+      "side": 1,
+      "message": "not related to this patch feature",
+      "revId": "aa30c03b73e3831343e8130fbbfbd8359926614f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c1bf8b59_e2ff7efa",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 10
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-16T15:26:06Z",
+      "side": 1,
+      "message": "not related to this patch feature",
+      "revId": "aa30c03b73e3831343e8130fbbfbd8359926614f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "605ab71e_93fb9026",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 10
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-16T15:26:06Z",
+      "side": 1,
+      "message": "not related to this patch feature",
+      "revId": "aa30c03b73e3831343e8130fbbfbd8359926614f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "52ba9703_d34a3e32",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 10
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-16T15:26:06Z",
+      "side": 1,
+      "message": "not related to this patch feature",
+      "revId": "aa30c03b73e3831343e8130fbbfbd8359926614f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a61f0e76_142b75a6",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 10
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-16T15:26:06Z",
+      "side": 1,
+      "message": "not related to this patch feature",
+      "revId": "aa30c03b73e3831343e8130fbbfbd8359926614f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e2b8a450_235d9ee8",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 10
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-16T15:26:06Z",
+      "side": 1,
+      "message": "could it be a bit more clean? \n\nlike start with a space\nhave starting majuscule",
+      "range": {
+        "startLine": 436,
+        "startChar": 0,
+        "endLine": 436,
+        "endChar": 1
+      },
+      "revId": "aa30c03b73e3831343e8130fbbfbd8359926614f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3f7aa64_6ee426c7",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 10
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-16T15:26:06Z",
+      "side": 1,
+      "message": "not related to this patch feature",
+      "revId": "aa30c03b73e3831343e8130fbbfbd8359926614f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
