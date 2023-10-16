@@ -164,6 +164,29 @@
       "message": "not related to this patch feature",
       "revId": "aa30c03b73e3831343e8130fbbfbd8359926614f",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b0470549_286f918d",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 10
+      },
+      "lineNbr": 1571,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-16T15:30:20Z",
+      "side": 1,
+      "message": "what is this for ? doesnt seems related to this patch feature",
+      "range": {
+        "startLine": 1570,
+        "startChar": 13,
+        "endLine": 1571,
+        "endChar": 29
+      },
+      "revId": "aa30c03b73e3831343e8130fbbfbd8359926614f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
