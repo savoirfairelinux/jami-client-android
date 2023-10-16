@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0949be01_caa82802",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 20
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-16T15:03:40Z",
+      "side": 1,
+      "message": "what this commit for ?",
+      "revId": "6fa3c4dd84014bde9be28534d9ef72be027b6efc",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9d4213d2_d40f666b",
+        "filename": "jami-android/app/src/main/res/layout/item_conv_file_me.xml",
+        "patchSetId": 20
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-16T15:03:40Z",
+      "side": 1,
+      "message": "what this for ?",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 2
+      },
+      "revId": "6fa3c4dd84014bde9be28534d9ef72be027b6efc",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
