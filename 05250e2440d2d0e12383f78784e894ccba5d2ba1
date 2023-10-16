@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f1ad5423_1b66a773",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 930
+      },
+      "writtenOn": "2023-10-16T20:55:50Z",
+      "side": 1,
+      "message": "build was initially working but a clean build does not",
+      "revId": "05250e2440d2d0e12383f78784e894ccba5d2ba1",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
