@@ -22,6 +22,30 @@
       },
       "revId": "1a838b3b98a3444665a34cc8f07f52d0ac472699",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bbfee1a9_0702f99e",
+        "filename": "jami-android/app/src/main/java/cx/ring/client/HomeActivity.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-17T13:04:19Z",
+      "side": 0,
+      "message": "This is a line removal. What\u0027s the point?",
+      "parentUuid": "1508cdc8_9df70a3c",
+      "range": {
+        "startLine": 90,
+        "startChar": 4,
+        "endLine": 90,
+        "endChar": 32
+      },
+      "revId": "1a838b3b98a3444665a34cc8f07f52d0ac472699",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
