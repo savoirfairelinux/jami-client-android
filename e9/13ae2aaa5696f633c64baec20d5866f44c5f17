@@ -1,0 +1,7 @@
+Code-Review+2: Alexander Lussier-Cullen <alexander.lussier-cullen@savoirfairelinux.com>
+Verified+1: Jenkins CI <jenkins@ring-packaging.cx>
+Submitted-by: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
+Submitted-at: Tue, 17 Oct 2023 14:14:15 -0400
+Reviewed-on: https://review.jami.net/c/jami-client-android/+/26147
+Project: jami-client-android
+Branch: refs/heads/master
