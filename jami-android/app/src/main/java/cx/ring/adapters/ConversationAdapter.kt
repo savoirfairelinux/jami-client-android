@@ -1139,6 +1139,7 @@ class ConversationAdapter(
 
                 // Manage deleted message.
                 if (isDeleted) {
+                    msgTxt.text = context.getString(R.string.conversation_message_deleted)
                     // delete the link also if there is one
                     answerLayout?.visibility = View.GONE
                     // Manage layout for deleted message. Index refers to msgBGLayouts array.
@@ -1156,6 +1157,8 @@ class ConversationAdapter(
                             DateUtils.formatDateTime(context, textMessage.timestamp, DateUtils.FORMAT_SHOW_TIME)
                     })
                     convViewHolder.mMsgTime?.visibility = View.VISIBLE
+                    // Time position in the bubble
+                    manageTextViews(convViewHolder, two, msgTxt, msgTime)
                     // Manage background color
                     msgTxtContainer2.background.alpha = 255
                     if (convColor != 0 && !textMessage.isIncoming) {
