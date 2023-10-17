@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b9d3fb64_ec27915c",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 1198,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-17T12:42:50Z",
+      "side": 1,
+      "message": "This looks more kotlinic\n\n    photo?.layoutParams.apply {\n                        this as RelativeLayout.LayoutParams\n                        this.removeRule(RelativeLayout.ALIGN_BOTTOM)\n                        this.addRule(RelativeLayout.CENTER_VERTICAL)\n                    }",
+      "revId": "b68e4344f22be366f66a421a657c5efea85ee0ee",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "856a9286_ce7e5182",
+        "filename": "jami-android/app/src/main/java/cx/ring/viewholders/ConversationViewHolder.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-17T12:42:50Z",
+      "side": 1,
+      "message": "what is the difference btw mPhoto and mAvatar ?",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 1
+      },
+      "revId": "b68e4344f22be366f66a421a657c5efea85ee0ee",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}

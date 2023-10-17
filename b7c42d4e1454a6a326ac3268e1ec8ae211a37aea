@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7471c7e7_bbebcbe3",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 1131,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-17T12:42:50Z",
+      "side": 0,
+      "message": "get a reference to val photo \u003d convViewHolder.mPhoto here",
+      "revId": "b7c42d4e1454a6a326ac3268e1ec8ae211a37aea",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
