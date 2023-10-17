@@ -16,6 +16,24 @@
       "message": "remove duplicate action",
       "revId": "8f6cd21e277fe3601ec6ade8a0a9a3e8a5e9f6e0",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ceb8f0ba_2e4746f4",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/ConversationFacade.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-17T13:55:21Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "1f2d4c4c_d3840e0d",
+      "revId": "8f6cd21e277fe3601ec6ade8a0a9a3e8a5e9f6e0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
