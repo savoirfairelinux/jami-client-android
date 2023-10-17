@@ -87,6 +87,7 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
     private var fConversation: ConversationFragment? = null
     private var fWelcomeJami: WelcomeJamiFragment? = null
     private var mHomeFragment: HomeFragment? = null
+    private var savedInstanceFlag = false
 
     @Inject
     lateinit
@@ -126,6 +127,8 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        savedInstanceFlag = savedInstanceState!=null
         JamiApplication.instance?.startDaemon(this)
 
         // Switch to TV if appropriate (could happen with buggy launcher)
@@ -324,7 +327,6 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
         mDisposable.add(
             mAccountService.currentAccountSubject
                 .observeOn(DeviceUtils.uiScheduler)
-                .firstOrError()
                 .subscribe { account ->
                     // Can be null if the account doesn't have a config
                     val uiCustomization = try {
@@ -344,16 +346,17 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
                         onCheckUsernameAvailability = { usernameAvailabilitySubject.onNext(it) },
                         uiCustomization = uiCustomization,
                     )
+
+                    // Display the welcome fragment if there is no conversation fragment displayed
+                    if (!savedInstanceFlag || fConversation == null) {
+                        mBinding!!.panel.doOnNextLayout {
+                            it as SlidingPaneLayout
+                            if (!it.isSlideable) showWelcomeFragment()
+                        }
+                    }
                 }
         )
-
-        // Display the welcome fragment if there is no conversation fragment displayed
-        if (fConversation == null) {
-            mBinding!!.panel.doOnNextLayout {
-                it as SlidingPaneLayout
-                if (!it.isSlideable) showWelcomeFragment()
-            }
-        }
+        savedInstanceFlag = false
     }
 
     override fun onStop() {

@@ -39,6 +39,7 @@ class WelcomeJamiFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View =
         WelcomeJamiLayoutBinding.inflate(inflater, container, false).apply {
+            binding = this
 
             if (!welcomeJamiViewModel.uiState.value.isJamiAccount) {
                 Log.d(TAG, "Not a Jami account")
@@ -51,8 +52,6 @@ class WelcomeJamiFragment : Fragment() {
             childFragmentManager.beginTransaction()
                 .replace(R.id.jamiIdFragmentContainerView, JamiIdFragment())
                 .commit()
-
-            binding = this
         }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
