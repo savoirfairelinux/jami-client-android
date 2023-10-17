@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5af388fa_d09efd56",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-17T12:31:53Z",
+      "side": 0,
+      "message": "format your code",
+      "revId": "0848aff600a3642fc96b8018583f61549d12a3a8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
