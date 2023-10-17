@@ -22,6 +22,30 @@
       },
       "revId": "0848aff600a3642fc96b8018583f61549d12a3a8",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9a60ba8c_dac782ac",
+        "filename": "jami-android/app/src/main/res/values/styles.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-17T15:37:16Z",
+      "side": 1,
+      "message": "So as discussed, it is coherent to homogeneously modify the cornersize to every action button. However please also delete the ovveride made by floatingbutton",
+      "parentUuid": "d647b403_ecfe3ffc",
+      "range": {
+        "startLine": 164,
+        "startChar": 0,
+        "endLine": 164,
+        "endChar": 13
+      },
+      "revId": "0848aff600a3642fc96b8018583f61549d12a3a8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
