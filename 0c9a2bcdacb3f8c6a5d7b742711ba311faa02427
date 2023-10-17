@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e210e353_ee47b6e9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-17T13:54:19Z",
+      "side": 1,
+      "message": "As @efalkiewitz is working on the chatview, I think this should be part of her stack",
+      "revId": "0c9a2bcdacb3f8c6a5d7b742711ba311faa02427",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
