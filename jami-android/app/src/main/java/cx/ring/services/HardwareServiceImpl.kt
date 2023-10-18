@@ -324,29 +324,37 @@ class HardwareServiceImpl(
     @Synchronized
     override fun toggleSpeakerphone(conf: Conference, checked: Boolean) {
         Log.w(TAG, "toggleSpeakerphone $conf $checked")
-        val hasVideo = conf.hasActiveVideo()
-        disposables.add(conf.call!!.systemConnection
-            .map {
-                // Map before subscribe to fallback to the error path if no Telecom API
-                (it as CallServiceImpl.AndroidCall).connection!!
-            }
-            .subscribe({
-                // Using the Telecom API
-                it.setWantedAudioState(if (checked) CallConnection.ROUTE_LIST_SPEAKER_EXPLICIT
-                else if (hasVideo) CallConnection.ROUTE_LIST_SPEAKER_IMPLICIT
-                else CallConnection.ROUTE_LIST_DEFAULT)
-            }) {
-                // Fallback to the AudioManager API
-                JamiService.setAudioPlugin(JamiService.getCurrentAudioOutputPlugin())
-                mShouldSpeakerphone = checked
-                if (mHasSpeakerPhone && checked) {
-                    routeToSpeaker()
-                } else if (mBluetoothWrapper != null && mBluetoothWrapper!!.canBluetooth()) {
-                    routeToBTHeadset()
-                } else {
-                    resetAudio()
-                }
-            })
+
+        conf.call?.let { call ->
+            val hasVideo = conf.hasActiveVideo()
+            disposables.add(
+                call.systemConnection
+                    .map {
+                        // Map before subscribe to fallback to the error path if no Telecom API
+                        (it as CallServiceImpl.AndroidCall).connection!!
+                    }
+                    .subscribe({
+                        // Using the Telecom API
+                        it.setWantedAudioState(
+                            if (checked) CallConnection.ROUTE_LIST_SPEAKER_EXPLICIT
+                            else if (hasVideo) CallConnection.ROUTE_LIST_SPEAKER_IMPLICIT
+                            else CallConnection.ROUTE_LIST_DEFAULT
+                        )
+                    }) {
+                        // Fallback to the AudioManager API
+                        JamiService.setAudioPlugin(JamiService.getCurrentAudioOutputPlugin())
+                        mShouldSpeakerphone = checked
+                        if (mHasSpeakerPhone && checked) {
+                            routeToSpeaker()
+                        } else
+                            if (mBluetoothWrapper != null && mBluetoothWrapper!!.canBluetooth()) {
+                                routeToBTHeadset()
+                            } else {
+                                resetAudio()
+                            }
+                    }
+            )
+        } ?: Log.e(TAG, "This is a bug. Cannot toggle speaker phone as conference call is null.")
     }
 
     @Synchronized
