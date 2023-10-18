@@ -885,37 +885,43 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
 
         if(callMediaHandlers == null) callMediaHandlers = PluginUtils.getInstalledPlugins(binding.pluginslistContainer.context)
         pluginsAdapter = PluginsAdapter(
-            callMediaHandlers!!,
-            object : PluginsAdapter.PluginListItemListener {
-                override fun onPluginItemClicked(pluginDetails: PluginDetails) {
-                }
+            mList = callMediaHandlers!!,
+            listener = object : PluginsAdapter.PluginListItemListener {
+                override fun onPluginItemClicked(pluginDetails: PluginDetails) {}
+
                 override fun onPluginEnabled(pluginDetails: PluginDetails) {
                     pluginDetails.isRunning = !pluginDetails.isRunning
-                    if(!isChoosePluginMode) {
+                    if (!isChoosePluginMode) {
                         presenter.startPlugin(pluginDetails.handlerId!!)
                         isChoosePluginMode = true
                     } else {
                         if (pluginDetails.isRunning) {
                             presenter.toggleCallMediaHandler(pluginDetails.handlerId!!, true)
-                        }
-                        else {
+                        } else {
                             presenter.toggleCallMediaHandler(pluginDetails.handlerId!!, false)
-                            for(handler in callMediaHandlers!!) if (handler.isRunning) break else {
-                                presenter.stopPlugin()
-                                isChoosePluginMode = false
-                            }
+                            for (handler in callMediaHandlers!!)
+                                if (handler.isRunning) break
+                                else {
+                                    presenter.stopPlugin()
+                                    isChoosePluginMode = false
+                                }
                         }
                     }
                 }
-            }, participantInfo[0].call?.account)
+            },
+            accountId = if (participantInfo.isNotEmpty()) participantInfo[0].call?.account else null
+        )
         binding.pluginslistContainer.adapter = pluginsAdapter
     }
 
     private fun generateParticipantOverlay(participantsInfo: List<ParticipantInfo>) {
         val overlayViewBinding = binding?.participantOverlayContainer ?: return
-        overlayViewBinding.participants = if (participantsInfo.size == 1) participantsInfo else participantsInfo.filterNot {
-            it.contact.contact.isUser && it.device == presenter.getDeviceId()
-        }
+        overlayViewBinding.participants =
+            if (participantsInfo.size == 1) participantsInfo
+            else participantsInfo.filterNot {
+                Log.w("DEVDEBUG", "CallFragment:generateParticipantOverlay isUser=${it.contact.contact.isUser} device=${it.device} deviceId=${presenter.getDeviceId()}")
+                it.contact.contact.isUser && it.device == presenter.getDeviceId()
+            }
         overlayViewBinding.initialize()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             overlayViewBinding.post { updatePipParams() }
