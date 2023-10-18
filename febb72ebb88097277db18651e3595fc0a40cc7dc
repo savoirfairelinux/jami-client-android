@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "86e969a0_b5e808d8",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/HardwareServiceImpl.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-10-18T14:53:44Z",
+      "side": 1,
+      "message": "it",
+      "range": {
+        "startLine": 331,
+        "startChar": 16,
+        "endLine": 331,
+        "endChar": 27
+      },
+      "revId": "febb72ebb88097277db18651e3595fc0a40cc7dc",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
