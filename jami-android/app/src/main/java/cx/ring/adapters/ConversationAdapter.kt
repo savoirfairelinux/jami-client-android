@@ -51,6 +51,7 @@ import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
+import androidx.core.graphics.drawable.toDrawable
 import androidx.core.view.children
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
@@ -493,6 +494,10 @@ class ConversationAdapter(
     }
 
     override fun onBindViewHolder(conversationViewHolder: ConversationViewHolder, position: Int) {
+        conversationViewHolder.itemView.resources.getDimensionPixelSize(R.dimen.padding_small).let {
+            conversationViewHolder.mMsgTime?.setPadding(it,0,it,0)
+        }
+
         if (isComposing && position == mInteractions.size) {
             configureForTypingIndicator(conversationViewHolder)
             return
@@ -1076,28 +1081,34 @@ class ConversationAdapter(
             val lineCount = msgTxt.lineCount
             // If we don't have enough space to put the time on the right of the last line
             // math : width of the TextView is <= line width + time width + paddings and margins
-            if (two.width <= (msgTxt.layout.getLineWidth(lineCount - 1)
+            Log.e(TAG, "msg cotnent = ${msgTxt.text}")
+            Log.w(TAG, "msgTxt width = ${msgTxt.width}")
+            Log.w(TAG, "two width=${two.width}\n" +
+                    "linewidth= ${msgTxt.layout.getLineWidth(lineCount - 1)}\n" +
+                    "msgTxt padding start=${msgTxt.paddingStart}\n" +
+                    "msgTxt padding end=${msgTxt.paddingEnd}\n" +
+                    "msgTime width=${msgTime.width}")
+
+            if (two.width < (msgTxt.layout.getLineWidth(lineCount - 1)
                         + msgTime.width
-                        + convertDpToPixel(16f, convViewHolder)
-                        + 2 * convertDpToPixel(10f, convViewHolder)
+                        + msgTxt.paddingEnd + msgTxt.paddingStart
                         )
             ) {
                 // So we have a complete line for the message and the time is on the right end corner
                 // paddingTop = number of lines * height of a line + padding
                 val paddingTop =
-                    lineCount * msgTxt.lineHeight + convertDpToPixel(10f, convViewHolder).toInt()
-                val paddingRight = convertDpToPixel(5f, convViewHolder).toInt()
-                msgTime.setPadding(0, paddingTop, paddingRight, 0)
+                    lineCount * msgTxt.lineHeight + msgTxt.paddingTop + msgTxt.paddingBottom
+                msgTime.setPadding(msgTime.paddingStart, paddingTop, msgTime.paddingEnd, msgTxt.paddingBottom)
+                msgTime.background = Color.argb(70, 255, 0,0 ).toDrawable()
+
             } else {
                 // If we have enough space to put the time on the right of the last line
                 // paddingLeft = last line width + padding
                 val paddingLeft =
-                    msgTxt.layout.getLineWidth(lineCount - 1).toInt() + convertDpToPixel(
-                        16f,
-                        convViewHolder
-                    ).toInt()
-                val paddingRight = convertDpToPixel(5f, convViewHolder).toInt()
-                msgTime.setPadding(paddingLeft, 0, paddingRight, 0)
+                    msgTxt.layout.getLineWidth(lineCount - 1).toInt() + msgTxt.paddingStart + msgTxt.paddingEnd
+                msgTime.setPadding(paddingLeft, 0, msgTxt.paddingEnd, msgTxt.paddingBottom)
+                msgTime.background = Color.argb(70, 0, 255, 0).toDrawable()
+
             }
         }
     }
@@ -1136,6 +1147,7 @@ class ConversationAdapter(
                 val msgSequenceType = getMsgSequencing(position)
                 val msgTime = convViewHolder.mMsgTime ?: return@subscribe
                 val two = convViewHolder.mTwo ?: return@subscribe
+                val three = convViewHolder.mThree
 
                 // Manage deleted message.
                 if (isDeleted) {
@@ -1158,7 +1170,9 @@ class ConversationAdapter(
                     })
                     convViewHolder.mMsgTime?.visibility = View.VISIBLE
                     // Time position in the bubble
-                    manageTextViews(convViewHolder, two, msgTxt, msgTime)
+                    three?.let {
+                        manageTextViews(convViewHolder, three, msgTxt, msgTime)
+                    }
                     // Manage background color
                     msgTxtContainer2.background.alpha = 255
                     if (convColor != 0 && !textMessage.isIncoming) {
@@ -1236,7 +1250,8 @@ class ConversationAdapter(
                         msgTxt.setPadding(it, it, it, it)
                     }
                     // Manage the time position in the bubble depending on the message length
-                    manageTextViews(convViewHolder, two, msgTxt, msgTime)
+
+                    three?.let { manageTextViews(convViewHolder, three, msgTxt, msgTime)}
                     // Manage background color of outgoing message.
                     if (convColor != 0 && !textMessage.isIncoming) {
                         msgTxtContainer2.background?.setTint(convColor)

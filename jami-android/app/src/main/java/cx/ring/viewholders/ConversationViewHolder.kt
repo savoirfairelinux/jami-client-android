@@ -31,6 +31,7 @@ import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.RelativeLayout
+import android.widget.Space
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.material.chip.Chip
 import cx.ring.R
@@ -50,7 +51,9 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
     var mMsgDetailTxt: TextView? = null
     var mMsgDetailTxtPerm: TextView? = null
     var mTwo: RelativeLayout? = v.findViewById(R.id.two)
+    var mThree: RelativeLayout? = v.findViewById(R.id.three)
     var mPhoto: ImageView? = v.findViewById(R.id.photo)
+//    var mSpaceMsg : Space? = v.findViewById(R.id.space_msg)
     val mAvatar: ImageView? = when (type) {
         MessageType.INCOMING_TEXT_MESSAGE,
         MessageType.INCOMING_FILE,

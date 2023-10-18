@@ -52,6 +52,17 @@ along with this program; if not, write to the Free Software
             app:layout_constraintRight_toLeftOf="@id/one"
             app:layout_constraintTop_toTopOf="parent">
 
+            <ImageView
+                android:id="@+id/photo"
+                android:layout_width="34dp"
+                android:layout_height="@dimen/conversation_avatar_size"
+                android:layout_alignBottom="@id/three"
+                android:layout_marginEnd="10dp"
+                android:contentDescription="@string/content_avatar"
+                tools:srcCompat="@tools:sample/avatars"
+                tools:visibility="visible" />
+
+
             <TextView
                 android:id="@+id/msg_reply_name"
                 android:layout_width="wrap_content"
@@ -108,79 +119,89 @@ along with this program; if not, write to the Free Software
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/msg_txt_container2"
-                android:layout_width="wrap_content"
+                android:id="@+id/three"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/msg_txt_container1"
-                android:layout_toEndOf="@id/photo"
-                android:background="@drawable/textmsg_bg_in">
+                android:layout_toEndOf="@id/photo">
 
-                <FrameLayout
-                    android:id="@+id/msg_txt_container3"
+                <RelativeLayout
+                    android:id="@+id/msg_txt_container2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:focusable="true">
-                    <!-- padding of the msg_txt is added in ConversationAdapter.kt-->
-                    <TextView
-                        android:id="@+id/msg_txt"
+
+                    android:background="@drawable/textmsg_bg_in">
+
+
+                    <FrameLayout
+                        android:id="@+id/msg_txt_container3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:focusable="true"
-                        android:textColor="@color/colorOnSurface"
-                        android:textColorLink="@color/link_peer_color"
-                        android:textIsSelectable="true"
-                        android:textSize="@dimen/text_size_medium"
-                        tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod \n dhejhfjw" />
+                        android:focusable="true">
+                        <!-- padding of the msg_txt is added in ConversationAdapter.kt-->
+                        <TextView
+                            android:id="@+id/msg_txt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:focusable="true"
+                            android:textColor="@color/colorOnSurface"
+                            android:textColorLink="@color/link_peer_color"
+                            android:textIsSelectable="true"
+                            android:textSize="@dimen/text_size_medium"
+                            tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod \n dhejhfjw" />
 
-                    <TextView
-                        android:id="@+id/msg_time"
+                        <!--                    <Space-->
+                        <!--                        android:layout_width="0dp"-->
+                        <!--                        android:layout_height="20dp"-->
+                        <!--                        android:id="@+id/space_msg"-->
+                        <!--                        app:layout_constraintTop_toTopOf="@+id/txt_entry"-->
+                        <!--                        app:layout_constraintBottom_toBottomOf="@+id/msg_txt"-->
+                        <!--                        app:layout_constraintEnd_toEndOf="@+id/msg_txt"-->
+                        <!--                        app:layout_constraintStart_toStartOf="@+id/msg_txt"/>-->
+                        <TextView
+                            android:id="@+id/msg_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom|end"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            android:singleLine="true"
+                            android:textColor="@color/colorOnSurface"
+                            android:textSize="@dimen/text_size_xsmall"
+                            tools:text="14:30am" />
+                    </FrameLayout>
+
+                    <include
+                        layout="@layout/msg_link_preview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="bottom|end"
-                        android:textColor="@color/colorOnSurface"
-                        android:textSize="@dimen/text_size_xsmall"
-                        tools:text="14:30am" />
-                </FrameLayout>
+                        android:layout_below="@id/msg_txt_container3" />
 
-                <include
-                    layout="@layout/msg_link_preview"
+                </RelativeLayout>
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/reaction_chip"
+                    style="@style/Widget.Material3.Chip.Suggestion"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/msg_txt_container3" />
+                    android:layout_below="@id/msg_txt_container2"
+                    android:layout_alignEnd="@id/msg_txt_container2"
+                    android:layout_marginTop="-16dp"
+                    android:layout_marginEnd="8dp"
+                    android:elevation="4dp"
+                    android:text="👍😍 3"
+                    app:chipBackgroundColor="@color/icon_background_color"
+                    app:chipCornerRadius="5dp"
+                    app:chipEndPadding="0dp"
+                    app:chipStartPadding="0dp"
+                    app:chipStrokeColor="@color/border_color"
+                    app:textEndPadding="5dp"
+                    app:textStartPadding="5dp" />
 
             </RelativeLayout>
 
-            <ImageView
-                android:id="@+id/photo"
-                android:layout_width="34dp"
-                android:layout_height="@dimen/conversation_avatar_size"
-                android:layout_alignBaseline="@id/msg_txt_container2"
-                android:layout_alignBottom="@id/msg_txt_container2"
-                android:layout_marginEnd="10dp"
-                android:contentDescription="@string/content_avatar"
-                tools:srcCompat="@tools:sample/avatars"
-                tools:visibility="visible" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/reaction_chip"
-                style="@style/Widget.Material3.Chip.Suggestion"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/msg_txt_container2"
-                android:layout_alignEnd="@id/msg_txt_container2"
-                android:layout_marginTop="-16dp"
-                android:layout_marginEnd="8dp"
-                android:elevation="4dp"
-                android:text="👍😍 3"
-                app:chipBackgroundColor="@color/icon_background_color"
-                app:chipCornerRadius="5dp"
-                app:chipEndPadding="0dp"
-                app:chipStartPadding="0dp"
-                app:chipStrokeColor="@color/border_color"
-                app:textEndPadding="5dp"
-                app:textStartPadding="5dp" />
-
         </RelativeLayout>
+
 
         <Space
             android:id="@+id/one"
@@ -190,7 +211,6 @@ along with this program; if not, write to the Free Software
             app:layout_constraintLeft_toRightOf="@id/two"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>
