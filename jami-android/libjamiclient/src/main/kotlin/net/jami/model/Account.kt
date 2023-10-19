@@ -537,7 +537,7 @@ class Account(
     fun needsMigration(): Boolean = AccountConfig.RegistrationState.ERROR_NEED_MIGRATION == registrationState
 
     val deviceId: String
-        get() = getDetail(ConfigKey.ACCOUNT_DEVICE_ID)
+        get() = mVolatileDetails[ConfigKey.ACCOUNT_DEVICE_ID]
     val deviceName: String
         get() = getDetail(ConfigKey.ACCOUNT_DEVICE_NAME)
     val contacts: Map<String, Contact>
