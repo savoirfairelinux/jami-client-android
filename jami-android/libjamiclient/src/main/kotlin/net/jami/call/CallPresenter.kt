@@ -241,7 +241,21 @@ class CallPresenter @Inject constructor(
      * */
     fun muteMicrophoneToggled(checked: Boolean) {
         val conference = mConference ?: return
-        mCallService.setLocalMediaMuted(conference.accountId, conference.id, CallService.MEDIA_TYPE_AUDIO, checked)
+        val callId = conference.call?.daemonIdString
+        if(callId != null) {
+            mCallService.setLocalMediaMuted(
+                conference.accountId,
+                callId,
+                CallService.MEDIA_TYPE_AUDIO,
+                checked
+            )
+        }
+        mCallService.setLocalMediaMuted(
+            conference.accountId,
+            conference.id,
+            CallService.MEDIA_TYPE_AUDIO,
+            checked
+        )
     }
 
     fun switchVideoInputClick() {
