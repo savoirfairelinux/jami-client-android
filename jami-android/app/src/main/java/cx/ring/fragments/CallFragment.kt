@@ -131,7 +131,6 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     lateinit var mDeviceRuntimeService: DeviceRuntimeService
     private val mCompositeDisposable = CompositeDisposable()
     private var bottomSheetParams: BottomSheetBehavior<View>? = null
-    private var isMyMicMuted: Boolean = false
     private var pluginsAdapter: PluginsAdapter? = null
 
     private val cameraPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
@@ -808,7 +807,6 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         mConferenceMode = participantInfo.size > 1
 
         if (participantInfo.isNotEmpty()) {
-            isMyMicMuted = participantInfo[0].audioLocalMuted
             val username = if (participantInfo.size > 1)
                 "Conference with ${participantInfo.size} people"
             else participantInfo[0].contact.displayName
