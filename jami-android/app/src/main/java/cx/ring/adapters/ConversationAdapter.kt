@@ -415,7 +415,7 @@ class ConversationAdapter(
         val conversation = interaction.conversation
         if (conversation == null || conversation !is Conversation) {
             conversationViewHolder.mReplyName?.isVisible = false
-            conversationViewHolder.mMsgTxtContainer1?.isVisible = false
+            conversationViewHolder.mReplyTxt?.isVisible = false
             conversationViewHolder.mInReplyTo?.isVisible = false
             return
         }
@@ -444,7 +444,7 @@ class ConversationAdapter(
                         conversationViewHolder.mReplyName.text = i.second.displayName
 
                         // Apply correct color depending if message is incoming or not.
-                        conversationViewHolder.mMsgTxtContainer1?.background?.setTint(
+                        conversationViewHolder.mReplyTxt?.background?.setTint(
                             if (i.first.isIncoming)
                                 conversationViewHolder.itemView.context.getColor(
                                     R.color.conversation_secondary_background
@@ -470,12 +470,12 @@ class ConversationAdapter(
                         conversationViewHolder.mReplyName!!.setCompoundDrawablesWithIntrinsicBounds(smallAvatarDrawable, null, null, null)
 
                         replyView.isVisible = true
-                        conversationViewHolder.mMsgTxtContainer1!!.isVisible = true
+                        conversationViewHolder.mReplyTxt!!.isVisible = true
                         conversationViewHolder.mInReplyTo!!.isVisible = true
 
                         // User can click on mReplyTxt (replied message),
                         // mInReplyTo or mReplyName (text above the message) to go to it.
-                        listOf(conversationViewHolder.mMsgTxtContainer1,
+                        listOf(conversationViewHolder.mReplyTxt,
                             conversationViewHolder.mInReplyTo,
                             replyView).forEach{
                             it.setOnClickListener{
@@ -484,12 +484,12 @@ class ConversationAdapter(
                         }
                     }) {
                         replyView.isVisible = false
-                        conversationViewHolder.mMsgTxtContainer1!!.isVisible = false
+                        conversationViewHolder.mReplyTxt!!.isVisible = false
                         conversationViewHolder.mInReplyTo!!.isVisible = false
                     })
             } else { // Not replying to another message, we can hide reply Textview.
                 replyView.isVisible = false
-                conversationViewHolder.mMsgTxtContainer1?.isVisible = false
+                conversationViewHolder.mReplyTxt?.isVisible = false
                 conversationViewHolder.mInReplyTo?.isVisible = false
             }
         }
@@ -557,7 +557,7 @@ class ConversationAdapter(
             holder.player = null
         }
         holder.mMsgTxt?.setOnLongClickListener(null)
-        holder.mMsgTxtContainer2?.setOnLongClickListener(null)
+        holder.mMsgBubble?.setOnLongClickListener(null)
         holder.mItem?.setOnClickListener(null)
         if (expandedItemPosition == holder.layoutPosition) {
             holder.mMsgDetailTxt?.visibility = View.GONE
@@ -1079,8 +1079,7 @@ class ConversationAdapter(
      */
     private fun manageTextViews(
         convViewHolder: ConversationViewHolder,
-        two: RelativeLayout,
-        msgTxtContainer2: ConstraintLayout,
+        messageBubble: ViewGroup,
         msgTxt: TextView,
         msgTime: TextView
     ) {
@@ -1088,25 +1087,23 @@ class ConversationAdapter(
             val lineCount = msgTxt.lineCount
             // If we don't have enough space to put the time on the right of the last line
             // math : width of the TextView is <= line width + time width + paddings and margins
-            Log.e(TAG, "msg cotnent = ${msgTxt.text}")
+            Log.e(TAG, "msg content = ${msgTxt.text}")
             Log.w(TAG, "msgTxt width = ${msgTxt.width}")
-            Log.w(TAG, "two width=${two.width}\n" +
+            Log.w(TAG, "messageBubble width=${messageBubble.width}\n" +
                     "linewidth= ${msgTxt.layout.getLineWidth(lineCount - 1)}\n" +
                     "msgTxt padding start=${msgTxt.paddingStart}\n" +
                     "msgTxt padding end=${msgTxt.paddingEnd}\n" +
                     "msgTime width=${msgTime.width}")
 
-            if (two.width - msgTxt.x < (msgTxt.layout.getLineWidth(lineCount - 1)
-                        + msgTime.width
-                        )
+            if (messageBubble.width < (msgTxt.layout.getLineWidth(lineCount - 1)
+                        + msgTime.width)
             ) {
                 // on met l'heure en bas a droite
                 Log.w("ici", "on met l'heure en bas a droite: ${msgTxt.text}")
                 msgTime.updateLayoutParams {
                     (this as ConstraintLayout.LayoutParams).apply {
                         topToBottom = msgTxt.id
-                        startToEnd = ConstraintLayout.LayoutParams.UNSET
-                        baselineToBaseline = ConstraintLayout.LayoutParams.UNSET
+                        bottomToBottom = ConstraintLayout.LayoutParams.UNSET
                     }
                     msgTime.setBackgroundColor(Color.RED)
                 }
@@ -1116,24 +1113,12 @@ class ConversationAdapter(
                 msgTime.updateLayoutParams {
                     (this as ConstraintLayout.LayoutParams).apply {
                         topToBottom = ConstraintLayout.LayoutParams.UNSET
-                        startToEnd = msgTxt.id
-                        baselineToBaseline = msgTxt.id
+                        bottomToBottom = msgTxt.id
                     }
                 }
                 msgTime.setBackgroundColor(Color.GREEN)
             }
         }
-    }
-
-    /**
-     * Convert dp to pixel using the context
-     */
-    private fun convertDpToPixel(dp: Float, convViewHolder: ConversationViewHolder): Float {
-        return TypedValue.applyDimension(
-            TypedValue.COMPLEX_UNIT_DIP,
-            dp,
-            convViewHolder.itemView.context.resources.displayMetrics
-        )
     }
 
     /**
@@ -1153,14 +1138,11 @@ class ConversationAdapter(
                 val contact = textMessage.contact ?: return@subscribe
                 val isDeleted = textMessage.body.isNullOrEmpty()
                 val msgTxt = convViewHolder.mMsgTxt ?: return@subscribe
-                val msgTxtContainer2 = convViewHolder.mMsgTxtContainer2 ?: return@subscribe
-                msgTxtContainer2.background?.setTintList(null)
+                val messageBubble = convViewHolder.mMsgBubble ?: return@subscribe
+                messageBubble.background?.setTintList(null)
                 val answerLayout = convViewHolder.mAnswerLayout
                 val msgSequenceType = getMsgSequencing(position)
                 val msgTime = convViewHolder.mMsgTime ?: return@subscribe
-                val two = convViewHolder.mTwo ?: return@subscribe
-//                val msgTxtContainer = convViewHolder.mMsgContainer ?: return@subscribe
-//                val three = convViewHolder.mThree
 
                 // Manage deleted message.
                 if (isDeleted) {
@@ -1171,7 +1153,7 @@ class ConversationAdapter(
                     // Standard deleted message, incoming or outgoing and first, single or last.
                     val resIndex = msgSequenceType.ordinal + (if (textMessage.isIncoming) 1 else 0) * 4
                     // Manage padding and background.
-                    msgTxtContainer2.background =
+                    messageBubble.background =
                         ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
                     context.resources.getDimensionPixelSize(R.dimen.padding_medium).let {
                         msgTxt.setPadding(it, it, it, it)
@@ -1184,14 +1166,14 @@ class ConversationAdapter(
                     convViewHolder.mMsgTime?.visibility = View.VISIBLE
                     // Time position in the bubble
 
-                    manageTextViews(convViewHolder, two, msgTxtContainer2, msgTxt, msgTime)
+                    manageTextViews(convViewHolder, messageBubble, msgTxt, msgTime)
                     // Manage background color
-                    msgTxtContainer2.background.alpha = 255
+                    messageBubble.background.alpha = 255
                     if (convColor != 0 && !textMessage.isIncoming) {
-                        msgTxtContainer2.background?.setTint(convColor)
+                        messageBubble.background?.setTint(convColor)
                     }
                     msgTxt.textSize = 14f
-                    msgTxtContainer2.setOnLongClickListener(null)
+                    messageBubble.setOnLongClickListener(null)
                     msgTxt.setOnLongClickListener(null)
 
                     return@subscribe
@@ -1199,21 +1181,21 @@ class ConversationAdapter(
 
                 // Manage long press.
                 { v: View ->
-                    openItemMenu(convViewHolder, msgTxtContainer2, interaction)
+                    openItemMenu(convViewHolder, messageBubble, interaction)
                     if (expandedItemPosition == position) {
                         expandedItemPosition = -1
                     }
                     conversationFragment.updatePosition(convViewHolder.bindingAdapterPosition)
                     if (textMessage.isIncoming) {
-                        msgTxtContainer2.background?.setTint(res.getColor(R.color.grey_500))
+                        messageBubble.background?.setTint(res.getColor(R.color.grey_500))
                     } else {
-                        msgTxtContainer2.background?.setTint(convColorTint)
+                        messageBubble.background?.setTint(convColorTint)
                     }
                     mCurrentLongItem = RecyclerViewContextMenuInfo(convViewHolder.bindingAdapterPosition, v.id.toLong())
                     true
                 }.let {
                     msgTxt.setOnLongClickListener(it)
-                    msgTxtContainer2.setOnLongClickListener(it) }
+                    messageBubble.setOnLongClickListener(it) }
 
                 val message = textMessage.body?.trim() ?: ""
                 msgTxt.text = markwon.toMarkdown(message)
@@ -1222,32 +1204,32 @@ class ConversationAdapter(
 
                 if (StringUtils.isOnlyEmoji(message)) {
                     // Manage layout if message is emoji.
-                    msgTxtContainer2.background?.alpha = 0
+                    messageBubble.background?.alpha = 0
                     msgTxt.textSize = 32.0f
                     msgTxt.setPadding(0, 0, 0, 0)
                     // When it is an emoji, we put the time below the emoji
                     // paddingTop = height of a line + padding
                     val paddingTop =
-                        msgTxt.lineHeight + convertDpToPixel(10f, convViewHolder).toInt()
+                        msgTxt.lineHeight + res.getDimension(R.dimen.padding_medium).toInt()
                     msgTime.setPadding(0, paddingTop, 0, 0)
                     // change the color of the time to be visible because it is white by default
                     msgTime.setTextColor(ContextCompat.getColor(context, R.color.colorOnSurface))
                     // put the avatar in the middle of the message
-                    if (convViewHolder.mPhoto != null) {
-                        val photo = convViewHolder.mPhoto
-                        val layoutParams = photo?.layoutParams as RelativeLayout.LayoutParams
-                        layoutParams.removeRule(RelativeLayout.ALIGN_BOTTOM)
-                        layoutParams.addRule(RelativeLayout.CENTER_VERTICAL)
-                        photo.layoutParams = layoutParams
-                    }
+//                    if (convViewHolder.mPhoto != null) {
+//                        val photo = convViewHolder.mPhoto
+//                        val layoutParams = photo?.layoutParams as RelativeLayout.LayoutParams
+//                        layoutParams.removeRule(RelativeLayout.ALIGN_BOTTOM)
+//                        layoutParams.addRule(RelativeLayout.CENTER_VERTICAL)
+//                        photo.layoutParams = layoutParams
+//                    }
                 } else {
-                    // put the avatar at the bottom of the message
-                    if (convViewHolder.mPhoto != null) {
-                        val photo = convViewHolder.mPhoto
-                        val layoutParams = photo?.layoutParams as RelativeLayout.LayoutParams
-                        layoutParams.removeRule(RelativeLayout.CENTER_VERTICAL)
-                        photo.layoutParams = layoutParams
-                    }
+//                    // put the avatar at the bottom of the message
+//                    if (convViewHolder.mPhoto != null) {
+//                        val photo = convViewHolder.mPhoto
+//                        val layoutParams = photo?.layoutParams as RelativeLayout.LayoutParams
+//                        layoutParams.removeRule(RelativeLayout.CENTER_VERTICAL)
+//                        photo.layoutParams = layoutParams
+//                    }
                     // Manage layout for standard message. Index refers to msgBGLayouts array.
                     val resIndex =
                         if (interaction.replyTo != null) {
@@ -1259,18 +1241,18 @@ class ConversationAdapter(
                         // Standard message, incoming or outgoing and first, single or last.
                         else msgSequenceType.ordinal + (if (textMessage.isIncoming) 1 else 0) * 4
 
-                    msgTxtContainer2.background = ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
+                    messageBubble.background = ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
                     context.resources.getDimensionPixelSize(R.dimen.padding_medium).let {
                         msgTxt.setPadding(it, it, it, it)
                     }
                     // Manage the time position in the bubble depending on the message length
 
-                    manageTextViews(convViewHolder, two, msgTxtContainer2, msgTxt, msgTime)
+                    manageTextViews(convViewHolder, messageBubble, msgTxt, msgTime)
                     // Manage background color of outgoing message.
                     if (convColor != 0 && !textMessage.isIncoming) {
-                        msgTxtContainer2.background?.setTint(convColor)
+                        messageBubble.background?.setTint(convColor)
                     }
-                    msgTxtContainer2.background.alpha = 255
+                    messageBubble.background.alpha = 255
                     // Set the color of the time
                     if(!textMessage.isIncoming) {
                         msgTime.setTextColor(ContextCompat.getColor(context, R.color.text_color_primary_dark))

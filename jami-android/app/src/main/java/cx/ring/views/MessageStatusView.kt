@@ -82,17 +82,17 @@ class MessageStatusView : LinearLayout {
                 }
             }
         }
-        if (resId != View.NO_ID) {
-            val params = layoutParams as RelativeLayout.LayoutParams? ?: return
-            val fitRight = showStatus || contacts.size < 2
-            if (fitRight) {
-                params.removeRule(RelativeLayout.BELOW)
-                params.addRule(RelativeLayout.ALIGN_BOTTOM, resId)
-            } else {
-                params.removeRule(RelativeLayout.ALIGN_BOTTOM)
-                params.addRule(RelativeLayout.BELOW, resId)
-            }
-            layoutParams = params
-        }
+//        if (resId != View.NO_ID) {
+//            val params = layoutParams as RelativeLayout.LayoutParams? ?: return
+//            val fitRight = showStatus || contacts.size < 2
+//            if (fitRight) {
+//                params.removeRule(RelativeLayout.BELOW)
+//                params.addRule(RelativeLayout.ALIGN_BOTTOM, resId)
+//            } else {
+//                params.removeRule(RelativeLayout.ALIGN_BOTTOM)
+//                params.addRule(RelativeLayout.BELOW, resId)
+//            }
+//            layoutParams = params
+//        }
     }
 }
