@@ -48,12 +48,14 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.cardview.widget.CardView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
-import androidx.core.graphics.drawable.toDrawable
 import androidx.core.view.children
+import androidx.core.view.doOnLayout
 import androidx.core.view.isVisible
+import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.RecyclerView
 import androidx.vectordrawable.graphics.drawable.Animatable2Compat
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat
@@ -1069,15 +1071,20 @@ class ConversationAdapter(
      * Used to create 2 text view text in single line like :
      * Hello World 13:00am
      * @param convViewHolder    ConversationViewHolder
-     * @param two               RelativeLayout
+     * @param three               RelativeLayout
      * @param msgTxt            TextView
      * @param msgTime           TextView
      * Directly "View" can be used as param type, but for this case only I
      * have used dedicated Views and ViewGroup.
      */
-    private fun manageTextViews(convViewHolder: ConversationViewHolder, two: RelativeLayout, msgTxt: TextView, msgTime: TextView
+    private fun manageTextViews(
+        convViewHolder: ConversationViewHolder,
+        two: RelativeLayout,
+        msgTxtContainer2: ConstraintLayout,
+        msgTxt: TextView,
+        msgTime: TextView
     ) {
-        msgTxt.post {
+        convViewHolder.itemView.doOnLayout {
             val lineCount = msgTxt.lineCount
             // If we don't have enough space to put the time on the right of the last line
             // math : width of the TextView is <= line width + time width + paddings and margins
@@ -1089,26 +1096,31 @@ class ConversationAdapter(
                     "msgTxt padding end=${msgTxt.paddingEnd}\n" +
                     "msgTime width=${msgTime.width}")
 
-            if (two.width < (msgTxt.layout.getLineWidth(lineCount - 1)
+            if (two.width - msgTxt.x < (msgTxt.layout.getLineWidth(lineCount - 1)
                         + msgTime.width
-                        + msgTxt.paddingEnd + msgTxt.paddingStart
                         )
             ) {
-                // So we have a complete line for the message and the time is on the right end corner
-                // paddingTop = number of lines * height of a line + padding
-                val paddingTop =
-                    lineCount * msgTxt.lineHeight + msgTxt.paddingTop + msgTxt.paddingBottom
-                msgTime.setPadding(msgTime.paddingStart, paddingTop, msgTime.paddingEnd, msgTxt.paddingBottom)
-                msgTime.background = Color.argb(70, 255, 0,0 ).toDrawable()
-
+                // on met l'heure en bas a droite
+                Log.w("ici", "on met l'heure en bas a droite: ${msgTxt.text}")
+                msgTime.updateLayoutParams {
+                    (this as ConstraintLayout.LayoutParams).apply {
+                        topToBottom = msgTxt.id
+                        startToEnd = ConstraintLayout.LayoutParams.UNSET
+                        baselineToBaseline = ConstraintLayout.LayoutParams.UNSET
+                    }
+                    msgTime.setBackgroundColor(Color.RED)
+                }
             } else {
-                // If we have enough space to put the time on the right of the last line
-                // paddingLeft = last line width + padding
-                val paddingLeft =
-                    msgTxt.layout.getLineWidth(lineCount - 1).toInt() + msgTxt.paddingStart + msgTxt.paddingEnd
-                msgTime.setPadding(paddingLeft, 0, msgTxt.paddingEnd, msgTxt.paddingBottom)
-                msgTime.background = Color.argb(70, 0, 255, 0).toDrawable()
-
+                // on met l'heure a la suite du texte
+                Log.w("ici", "on met l'heure a la suite du texte: ${msgTxt.text}")
+                msgTime.updateLayoutParams {
+                    (this as ConstraintLayout.LayoutParams).apply {
+                        topToBottom = ConstraintLayout.LayoutParams.UNSET
+                        startToEnd = msgTxt.id
+                        baselineToBaseline = msgTxt.id
+                    }
+                }
+                msgTime.setBackgroundColor(Color.GREEN)
             }
         }
     }
@@ -1147,7 +1159,8 @@ class ConversationAdapter(
                 val msgSequenceType = getMsgSequencing(position)
                 val msgTime = convViewHolder.mMsgTime ?: return@subscribe
                 val two = convViewHolder.mTwo ?: return@subscribe
-                val three = convViewHolder.mThree
+//                val msgTxtContainer = convViewHolder.mMsgContainer ?: return@subscribe
+//                val three = convViewHolder.mThree
 
                 // Manage deleted message.
                 if (isDeleted) {
@@ -1170,9 +1183,8 @@ class ConversationAdapter(
                     })
                     convViewHolder.mMsgTime?.visibility = View.VISIBLE
                     // Time position in the bubble
-                    three?.let {
-                        manageTextViews(convViewHolder, three, msgTxt, msgTime)
-                    }
+
+                    manageTextViews(convViewHolder, two, msgTxtContainer2, msgTxt, msgTime)
                     // Manage background color
                     msgTxtContainer2.background.alpha = 255
                     if (convColor != 0 && !textMessage.isIncoming) {
@@ -1204,6 +1216,8 @@ class ConversationAdapter(
                     msgTxtContainer2.setOnLongClickListener(it) }
 
                 val message = textMessage.body?.trim() ?: ""
+                msgTxt.text = markwon.toMarkdown(message)
+
                 convViewHolder.mAnswerLayout?.visibility = View.GONE
 
                 if (StringUtils.isOnlyEmoji(message)) {
@@ -1251,7 +1265,7 @@ class ConversationAdapter(
                     }
                     // Manage the time position in the bubble depending on the message length
 
-                    three?.let { manageTextViews(convViewHolder, three, msgTxt, msgTime)}
+                    manageTextViews(convViewHolder, two, msgTxtContainer2, msgTxt, msgTime)
                     // Manage background color of outgoing message.
                     if (convColor != 0 && !textMessage.isIncoming) {
                         msgTxtContainer2.background?.setTint(convColor)
