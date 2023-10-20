@@ -20,6 +20,19 @@ class QrCodePinInputFragment : Fragment() {
     private val viewModel: QrCodePinInputViewModel by viewModels({ requireParentFragment() })
     private lateinit var binding: QrCodePinInputBinding
 
+    private var cameraPermissionIsRefusedFlag = false // to not ask for permission again if refused
+    // check the permission to use the camera
+    private val requestCameraPermission =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+            if (granted) {
+                showErrorPanel(isError = false)
+                initializeBarcode()
+            } else {
+                cameraPermissionIsRefusedFlag = true
+                showErrorPanel(isError = true)
+            }
+        }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -32,14 +45,11 @@ class QrCodePinInputFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.barcodeScanner.setStatusText("")
-        checkPermission()
     }
 
     override fun onResume() {
         super.onResume()
-        if (checkPermission()) {
-            binding.barcodeScanner.resume()
-        }
+        manageCameraPermission()
     }
 
     override fun onPause() {
@@ -92,27 +102,21 @@ class QrCodePinInputFragment : Fragment() {
         }
     }
 
-    // check the permission to use the camera
-    private val requestCameraPermission =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
-            if (granted) {
-                showErrorPanel(isError = false)
-                initializeBarcode()
-            } else {
-                showErrorPanel(isError = true)
-            }
-        }
-
     private fun hasCameraPermission(): Boolean =
         ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) ==
                 PackageManager.PERMISSION_GRANTED
 
-    private fun checkPermission(): Boolean {
+    private fun manageCameraPermission() {
         if (!hasCameraPermission()) {
-            requestCameraPermission.launch(Manifest.permission.CAMERA)
-            return false
+            if (!cameraPermissionIsRefusedFlag) // if the permission is refused, don't ask again
+                requestCameraPermission.launch(Manifest.permission.CAMERA)
+            else showErrorPanel(isError = true)
         }
-        initializeBarcode()
-        return true
+        else{
+            showErrorPanel(isError = false)
+            Log.w("QrCodePinInputFragment", "p1")
+            initializeBarcode()
+            binding.barcodeScanner.resume()
+        }
     }
 }
