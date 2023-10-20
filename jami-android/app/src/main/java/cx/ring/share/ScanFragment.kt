@@ -42,12 +42,14 @@ class ScanFragment : Fragment() {
     private var barcodeView: DecoratedBarcodeView? = null
     private var mErrorMessageTextView: TextView? = null
 
+    private var cameraPermissionIsRefusedFlag = false // to not ask for permission again if refused
     private val requestCameraPermission =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
             if (granted) {
                 hideErrorPanel()
                 initializeBarcode()
             } else {
+                cameraPermissionIsRefusedFlag = true
                 displayNoPermissionsError()
             }
         }
@@ -126,7 +128,8 @@ class ScanFragment : Fragment() {
 
     private fun checkPermission(): Boolean {
         if (!hasCameraPermission()) {
-            requestCameraPermission.launch(Manifest.permission.CAMERA)
+            if (!cameraPermissionIsRefusedFlag) // if the permission is refused, don't ask again
+                requestCameraPermission.launch(Manifest.permission.CAMERA)
             return false
         }
         return true

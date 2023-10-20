@@ -79,6 +79,7 @@ class HomeActivity : FragmentActivity() {
     private var input: Allocation? = null
     private var out: Allocation? = null
     private var mBlurOut: Allocation? = null
+    private var cameraPermissionIsRefusedFlag = false // to not ask for permission again if refused
 
     private val mErrorCallback = ErrorCallback { error, camera ->
         mBlurImage.visibility = View.INVISIBLE
@@ -285,7 +286,7 @@ class HomeActivity : FragmentActivity() {
         if (mDeviceRuntimeService.hasVideoPermission()) {
             setUpCamera()
         } else {
-            askCameraPermission()
+            if (!cameraPermissionIsRefusedFlag) askCameraPermission()
         }
     }
 
@@ -297,10 +298,12 @@ class HomeActivity : FragmentActivity() {
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
-            ProfileCreationFragment.REQUEST_PERMISSION_CAMERA -> if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                cameraPermissionChanged(true)
-                setUpCamera()
-            }
+            ProfileCreationFragment.REQUEST_PERMISSION_CAMERA ->
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    cameraPermissionChanged(true)
+                    setUpCamera()
+                }
+                else cameraPermissionIsRefusedFlag = true
         }
     }
 
