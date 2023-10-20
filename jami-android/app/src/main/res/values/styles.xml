@@ -35,6 +35,8 @@
         <item name="extendedFloatingActionButtonStyle">@style/Widget.AppTheme.MainActionButton</item>
 
         <item name="preferenceTheme">@style/JamiPreferenceThemeOverlay</item>
+
+        <item name="popupMenuBackground">@drawable/custom_popup_background</item>
     </style>
 
     <style name="JamiPreferenceThemeOverlay" parent="@style/PreferenceThemeOverlay">
