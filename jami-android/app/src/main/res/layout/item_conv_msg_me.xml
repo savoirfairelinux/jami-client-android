@@ -162,14 +162,12 @@ along with this program; if not, write to the Free Software
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/message_bubble"
-                    android:layout_width="0dp"
-                    app:layout_constraintHorizontal_weight="1"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/textmsg_bg_out"
                     android:visibility="visible"
                     app:layout_constraintRight_toLeftOf="@id/carrerouge2"
-                    app:layout_constraintTop_toBottomOf="@id/content"
-                    app:layout_constraintLeft_toLeftOf="parent">
+                    app:layout_constraintTop_toBottomOf="@id/content">
 
                     <TextView
                         android:id="@+id/msg_txt"
@@ -186,7 +184,7 @@ along with this program; if not, write to the Free Software
                         app:layout_constraintHorizontal_weight="1"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        tools:text="yo this is the test of a long long text can not be_found_message" />
+                        tools:text="yo salut dvfhyyjuuki9pio" />
 
                     <TextView
                         android:id="@+id/msg_time"
@@ -241,7 +239,6 @@ along with this program; if not, write to the Free Software
                     android:elevation="5dp"
                     android:gravity="end"
                     app:layout_constraintBottom_toBottomOf="@id/message_bubble"
-                    app:layout_constraintLeft_toRightOf="@id/message_bubble"
                     app:layout_constraintRight_toRightOf="parent">
 
                     <cx.ring.views.MessageStatusView
