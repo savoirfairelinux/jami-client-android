@@ -22,6 +22,30 @@
       },
       "revId": "379454988f352ed6e8009e781ee21703d6a2db89",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "70c285ae_1ae5ba7d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-20T16:21:00Z",
+      "side": 1,
+      "message": "Nop, not related, I should have made another ticket for this one.\n(but actually, I speak about the error i\u0027m fixing in the comments section of #1405)",
+      "parentUuid": "87de0b66_6f63608f",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 13
+      },
+      "revId": "379454988f352ed6e8009e781ee21703d6a2db89",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
