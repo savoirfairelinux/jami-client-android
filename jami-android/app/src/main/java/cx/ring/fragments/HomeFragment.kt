@@ -157,14 +157,14 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
                             mDisposable, mAccountService, mConversationFacade
                         )
                     ) { _, index ->
-                        // Disable account settings menu option when account is loading
-                        binding.searchBar.menu.findItem(R.id.menu_account_settings)
-                            .isEnabled = false
-
-                        if (index >= accounts.size)
+                        if (index >= accounts.size) // Add account
                             startActivity(Intent(activity, AccountWizardActivity::class.java))
-                        else
+                        else if (mAccountService.currentAccount != accounts[index]) {
+                            // Disable account settings menu option when account is loading
+                            binding.searchBar.menu.findItem(R.id.menu_account_settings)
+                                .isEnabled = false
                             mAccountService.currentAccount = accounts[index]
+                        }
                     }
                     .show()
             }
