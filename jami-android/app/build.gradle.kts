@@ -102,7 +102,7 @@ dependencies {
     implementation ("androidx.cardview:cardview:1.0.0")
     implementation ("com.caverock:androidsvg-aar:1.4")
     implementation ("androidx.preference:preference-ktx:1.2.1")
-    implementation ("androidx.recyclerview:recyclerview:1.3.1")
+    implementation ("androidx.recyclerview:recyclerview:1.3.2")
     implementation ("androidx.leanback:leanback:1.2.0-alpha03")
     implementation ("androidx.leanback:leanback-preference:1.2.0-alpha03")
     implementation ("androidx.car.app:app:1.4.0-beta02")
@@ -116,9 +116,6 @@ dependencies {
     implementation ("androidx.slidingpanelayout:slidingpanelayout:1.2.0")
     implementation ("com.google.android.material:material:1.10.0")
     implementation ("com.google.android.flexbox:flexbox:3.0.0")
-    implementation ("org.osmdroid:osmdroid-android:6.1.16")
-    implementation ("io.noties.markwon:core:$markwon_version")
-    implementation ("io.noties.markwon:linkify:$markwon_version")
     implementation ("com.google.protobuf:protobuf-javalite:3.23.2")
 
     // ORM
@@ -145,6 +142,13 @@ dependencies {
     // RxAndroid
     implementation ("io.reactivex.rxjava3:rxandroid:3.0.2")
     implementation ("io.reactivex.rxjava3:rxjava:3.1.7")
+
+    // Open Street Map
+    implementation ("org.osmdroid:osmdroid-android:6.1.16")
+
+    // Markwon (Markdown support)
+    implementation ("io.noties.markwon:core:$markwon_version")
+    implementation ("io.noties.markwon:linkify:$markwon_version")
 
     implementation ("com.jsibbold:zoomage:1.3.1")
     implementation ("com.googlecode.ez-vcard:ez-vcard:0.11.3") {
