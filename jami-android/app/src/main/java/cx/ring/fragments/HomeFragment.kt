@@ -29,6 +29,8 @@ import android.view.animation.DecelerateInterpolator
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.SearchView
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
@@ -265,11 +267,6 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
                                 item.accountId,
                                 item.uri
                             )
-                            // Weird bug fixed by line below.
-                            // Without it, the appBarLayoutBottom is not displayed correctly
-                            // when collapsing the pendingList (no space between statusBar and
-                            // appBarLayout).
-                            //mBinding?.appBar?.fitsSystemWindows = true
                         }
 
                         override fun onItemLongClick(item: Conversation) {
@@ -333,17 +330,19 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
             ChangeBounds().setInterpolator(DecelerateInterpolator())
         )
 
-        binding.appBarContainer.fitsSystemWindows = true
         // Make the invitation card take all the height.
         binding.appBar.updateLayoutParams {
             height = ViewGroup.LayoutParams.MATCH_PARENT
         }
-        binding.appBarContainer.updatePadding(bottom = 0)
+
+        val insetsCompat = ViewCompat.getRootWindowInsets(binding.invitationCard.invitationGroup) ?: return
+        val insets = insetsCompat.getInsets(WindowInsetsCompat.Type.systemBars())
+        binding.appBar.updatePadding(bottom = insets.bottom)
 
         // Adapt the margins of the invitation card.
         requireContext().resources.getDimensionPixelSize(R.dimen.bottom_sheet_radius).let {
             (binding.invitationCard.invitationGroup.layoutParams as ViewGroup.MarginLayoutParams)
-                .setMargins(it, it, it, it)
+                .setMargins(it, it, it, 2*it)
         }
         // Enable to possibility to scroll the invitation pending list.
         (binding.appBar.layoutParams as CoordinatorLayout.LayoutParams).behavior = null
@@ -381,17 +380,7 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
             Fade()
         )
 
-        binding.appBarContainer.fitsSystemWindows = false
-
-        // Update AppBarLayoutBottom padding.
-        mDisposable.add(mAccountService.currentAccountSubject
-            .switchMap { account ->
-                account.getPendingSubject()
-            }
-            .firstOrError().subscribe { list ->
-                updateAppBarLayoutBottomPadding(hasInvites = list.isNotEmpty())
-            }
-        )
+        binding.appBar.updatePadding(bottom = 0)
 
         // Make the invitation card wrap content (not take all space available anymore).
         binding.appBar.updateLayoutParams {
