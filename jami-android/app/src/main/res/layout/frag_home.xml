@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 Copyright (C) 2004-2016 Savoir-faire Linux Inc.
 
 This program is free software; you can redistribute it and/or modify
@@ -21,7 +20,8 @@ along with this program; if not, write to the Free Software
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/content"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
 
     <!-- Smartlist to display swarms -->
     <androidx.fragment.app.FragmentContainerView
@@ -41,8 +41,8 @@ along with this program; if not, write to the Free Software
             android:id="@+id/app_bar_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
             android:background="@drawable/background_appbar_gradient"
+            android:orientation="vertical"
             app:layout_scrollFlags="scroll|enterAlways|snap|exitUntilCollapsed">
 
             <!-- Search bar to search for a swarm or for new contacts -->
@@ -70,6 +70,7 @@ along with this program; if not, write to the Free Software
         android:id="@+id/search_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
         android:hint="@string/searchbar_hint"
         app:layout_anchor="@id/search_bar"
         tools:visibility="gone">
@@ -160,22 +161,22 @@ along with this program; if not, write to the Free Software
     <!-- Floating button to start a new conversation -->
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/new_swarm_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="8dp"
-        android:backgroundTint="@color/fab_background_color"
-        android:text="@string/start_conversation"
-        android:outlineProvider="none"
-        android:textColor="@color/fab_text_color"
-        app:icon="@drawable/baseline_chat_24"
-        app:iconTint="@color/fab_text_color"
-        app:layout_anchorGravity="bottom|center_horizontal"
-        app:pressedTranslationZ="12dp"
-        app:shapeAppearanceOverlay="@style/HomeFabButton" />
+        android:layout_height="match_parent">
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/new_swarm_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="8dp"
+            android:backgroundTint="@color/fab_background_color"
+            android:outlineProvider="none"
+            android:text="@string/start_conversation"
+            android:textColor="@color/fab_text_color"
+            app:icon="@drawable/baseline_chat_24"
+            app:iconTint="@color/fab_text_color"
+            app:layout_anchorGravity="bottom|center_horizontal"
+            app:pressedTranslationZ="12dp"
+            app:shapeAppearanceOverlay="@style/HomeFabButton" />
     </FrameLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
