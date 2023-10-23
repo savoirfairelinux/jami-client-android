@@ -43,7 +43,7 @@ class ParticipantsContainerView// adding name, mic etc..
             removeAllViews()
             return
         }
-        // Used to know which participant to display in PiP mode.
+
         val inflater = LayoutInflater.from(context)
 
         val mainWidth = width.toFloat()
@@ -53,6 +53,17 @@ class ParticipantsContainerView// adding name, mic etc..
 
         val pipFocusParticipant = getPipFocusParticipant()
 
+        for (childView in ll.children){
+            val tag = childView.tag  as String?
+
+            if (tag.isNullOrEmpty() || (participants.firstOrNull { (it.tag) == tag } == null )) {
+                toRemove.add(childView)
+            }
+        }
+        for (v in toRemove) {
+            ll.removeView(v)
+        }
+        toRemove.clear()
         for (childView in children) {
             val tag = childView.tag  as String?
             if (tag.isNullOrEmpty() || (participants.firstOrNull { (it.tag) == tag } == null && tag != "scroll"))
