@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9d4ab7e0_a70a854f",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/HomeFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-23T16:58:15Z",
+      "side": 1,
+      "message": "Logs \"RecyclerView does not support scrolling to an absolute position. Use scrollToPosition instead\"\n\nTell me if I\u0027m wrong, but from what I understand, using scrollToPosition is not a correct solution as the list will scroll to top for each pending invitation update.",
+      "range": {
+        "startLine": 320,
+        "startChar": 7,
+        "endLine": 321,
+        "endChar": 82
+      },
+      "revId": "3849962407853e4338c6fbb8e4a06c523edcd440",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "72329af4_9bba9348",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/HomeFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-23T16:58:15Z",
+      "side": 1,
+      "message": "duplicate of",
+      "range": {
+        "startLine": 545,
+        "startChar": 8,
+        "endLine": 548,
+        "endChar": 48
+      },
+      "revId": "3849962407853e4338c6fbb8e4a06c523edcd440",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c1d7d74e_9e53316a",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/HomeFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-23T16:58:15Z",
+      "side": 1,
+      "message": "this",
+      "range": {
+        "startLine": 556,
+        "startChar": 16,
+        "endLine": 558,
+        "endChar": 56
+      },
+      "revId": "3849962407853e4338c6fbb8e4a06c523edcd440",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "05db224e_f19abdf4",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/HomeFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-23T16:58:15Z",
+      "side": 1,
+      "message": "Ok but \"updateAppBarLayoutBottomPadding\" call should be deleted from setBadge because it\u0027s called two times.",
+      "range": {
+        "startLine": 620,
+        "startChar": 0,
+        "endLine": 620,
+        "endChar": 7
+      },
+      "revId": "3849962407853e4338c6fbb8e4a06c523edcd440",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
