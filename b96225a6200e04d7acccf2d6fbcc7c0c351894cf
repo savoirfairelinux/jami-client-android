@@ -41,6 +41,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "03192b4e_66ae9b97",
+        "filename": "jami-android/app/src/main/res/layout/item_conv_contact.xml",
+        "patchSetId": 17
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-10-23T21:58:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46123df3_0cb75257",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 7
+      },
+      "revId": "b96225a6200e04d7acccf2d6fbcc7c0c351894cf",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "04b21cb6_8003a98e",
@@ -54,6 +78,30 @@
       "writtenOn": "2023-10-16T13:37:43Z",
       "side": 1,
       "message": "as discussed, modify these strings is not a correct solution (not meaning anything and cannot be easily concatenate)\n\nit will also cause translators for all languages to re-translate the string",
+      "range": {
+        "startLine": 264,
+        "startChar": 0,
+        "endLine": 267,
+        "endChar": 73
+      },
+      "revId": "b96225a6200e04d7acccf2d6fbcc7c0c351894cf",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e8b65b7e_65cdbeef",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 17
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-10-23T21:58:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04b21cb6_8003a98e",
       "range": {
         "startLine": 264,
         "startChar": 0,
