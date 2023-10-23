@@ -102,7 +102,8 @@ abstract class HistoryService {
      * @param interaction  the interaction to insert
      * @return a conversation single
      */
-    fun insertInteraction(accountId: String, conversation: Conversation, interaction: Interaction): Completable = Completable.fromAction {
+    fun insertInteraction(accountId: String, conversation: Conversation, interaction: Interaction): Completable =
+        Completable.fromAction {
         Log.d(TAG, "Inserting interaction for account -> $accountId")
         val conversationDataDao = getConversationDataDao(accountId)
         val history = conversationDataDao.queryBuilder().where().eq(ConversationHistory.COLUMN_PARTICIPANT, conversation.participant).queryForFirst() ?:
@@ -197,7 +198,9 @@ abstract class HistoryService {
         msg
     }.subscribeOn(scheduler)
 
+    abstract fun insertCallHistory(accountId: String, conversation: Conversation, call: Call)
+
     companion object {
-        private val TAG = HistoryService::class.java.simpleName
+        val TAG = HistoryService::class.java.simpleName
     }
 }

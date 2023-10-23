@@ -639,14 +639,19 @@ class ConversationFacade(
             if (call.timestampEnd == 0L) {
                 call.timestampEnd = now
             }
-            if (conference != null && conference.removeParticipant(call) && conversation != null && !conversation.isSwarm) {
+            if (conference != null && conference.removeParticipant(call) && conversation != null) {
                 Log.w(TAG, "Adding call history for conversation " + conversation.uri)
-                mHistoryService.insertInteraction(account.accountId, conversation, call).subscribe()
-                conversation.addCall(call)
+                if (!conversation.isSwarm) {
+                    mHistoryService.insertInteraction(account.accountId, conversation, call)
+                        .subscribe()
+                    conversation.addCall(call)
+                    account.updated(conversation)
+                }// else {
+                mHistoryService.insertCallHistory(account.accountId, conversation, call)
+                //}
                 if (call.isIncoming && call.isMissed) {
                     mNotificationService.showMissedCallNotification(call)
                 }
-                account.updated(conversation)
             }
             if (conversation != null && conference != null && conference.participants.isEmpty()) {
                 conversation.removeConference(conference)
