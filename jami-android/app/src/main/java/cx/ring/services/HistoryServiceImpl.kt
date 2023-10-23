@@ -17,17 +17,23 @@
  */
 package cx.ring.services
 
+import android.content.ContentValues
 import android.content.Context
+import android.provider.CallLog
+import android.util.Log
 import com.j256.ormlite.dao.Dao
 import com.j256.ormlite.support.ConnectionSource
 import cx.ring.fragments.ConversationFragment
 import cx.ring.history.DatabaseHelper
+import net.jami.model.Call
+import net.jami.model.Conversation
 import net.jami.model.ConversationHistory
 import net.jami.model.Interaction
 import net.jami.model.Uri
 import net.jami.services.HistoryService
 import java.io.File
 import java.util.concurrent.ConcurrentHashMap
+
 
 /**
  * Implements the necessary Android related methods for the [HistoryService]
@@ -93,6 +99,23 @@ class HistoryServiceImpl(private val mContext: Context) : HistoryService() {
         val preferences = mContext.getSharedPreferences(accountId + "_" + conversationUri.uri, Context.MODE_PRIVATE)
         return preferences.getString(ConversationFragment.KEY_PREFERENCE_CONVERSATION_LAST_READ, null)
     }
+
+    override fun insertCallHistory(accountId: String, conversation: Conversation, call: Call) {
+        val cr = mContext.contentResolver
+        val values = ContentValues().apply {
+            put(CallLog.Calls.NUMBER, call.contactNumber)
+            put(CallLog.Calls.DATE, System.currentTimeMillis())
+            put(CallLog.Calls.DURATION, 0)
+            put(CallLog.Calls.TYPE, if (call.isIncoming) CallLog.Calls.INCOMING_TYPE else CallLog.Calls.OUTGOING_TYPE)
+            put(CallLog.Calls.NEW, 1)
+            put(CallLog.Calls.CACHED_NAME, "")
+            put(CallLog.Calls.CACHED_NUMBER_TYPE, 0)
+            put(CallLog.Calls.CACHED_NUMBER_LABEL, "")
+        }
+        Log.d(TAG, "Inserting call log placeholder for ${call.contactNumber}")
+        cr.insert(CallLog.Calls.CONTENT_URI, values)
+    }
+
 
     /**
      * Deletes a file and all its children recursively
