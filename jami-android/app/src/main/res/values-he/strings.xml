@@ -178,6 +178,7 @@
   <string name="dialog_hint_description">תיאור</string>
   <!--JamiId-->
   <string name="jami_id_validate">רשום שם משתמש</string>
+  <string name="jami_id_looking_for_availability">מחפש זמינות שם המשתמש...</string>
   <string name="jami_id_choose_username">בחר שם משתמש</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">ברוך בואך אל Jami</string>

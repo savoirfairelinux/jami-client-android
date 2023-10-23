@@ -374,6 +374,7 @@
   <string name="bottomsheet_remove">झुंड से दूर</string>
   <!--JamiId-->
   <string name="jami_id_validate">उपयोगकर्ता नाम पंजीकृत करें</string>
+  <string name="jami_id_looking_for_availability">उपयोगकर्ता नाम उपलब्धता की तलाश में...</string>
   <string name="jami_id_choose_username">एक उपयोगकर्ता नाम चुनें</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">जामी में आपका स्वागत है</string>

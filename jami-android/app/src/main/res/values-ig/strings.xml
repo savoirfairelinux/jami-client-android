@@ -163,6 +163,7 @@
   <string name="dialog_hint_description">Nkọwa</string>
   <!--JamiId-->
   <string name="jami_id_validate">Debanye aha njirimara</string>
+  <string name="jami_id_looking_for_availability">Na-achọ maka aha njirimara dịnụ...</string>
   <string name="jami_id_choose_username">Họrọ aha njirimara</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Mmadụ Bịa na Jami</string>

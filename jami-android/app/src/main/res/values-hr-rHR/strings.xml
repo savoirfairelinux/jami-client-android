@@ -201,6 +201,7 @@
   <string name="bottomsheet_remove">Odvedite iz skupa</string>
   <!--JamiId-->
   <string name="jami_id_validate">Upis korisničkog imena</string>
+  <string name="jami_id_looking_for_availability">Tražim dostupnost korisničkog imena...</string>
   <string name="jami_id_choose_username">Izaberite korisničko ime</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Dobrodošli u Jami</string>

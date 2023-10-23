@@ -162,6 +162,7 @@
   <string name="dialog_hint_description">Tuairisc</string>
   <!--JamiId-->
   <string name="jami_id_validate">Ainm úsáideora a chlárú</string>
+  <string name="jami_id_looking_for_availability">Ag lorg ar fáil ainm úsáideora...</string>
   <string name="jami_id_choose_username">Roghnaigh ainm úsáideora</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Fáilte go Jami</string>

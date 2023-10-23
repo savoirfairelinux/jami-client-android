@@ -374,6 +374,7 @@
   <string name="bottomsheet_remove">ದಣಿದಿಂದ ಹೊರಹಾಕಿ</string>
   <!--JamiId-->
   <string name="jami_id_validate">ಬಳಕೆದಾರ ಹೆಸರನ್ನು ನೋಂದಾಯಿಸಿ</string>
+  <string name="jami_id_looking_for_availability">ಬಳಕೆದಾರ ಹೆಸರು ಲಭ್ಯತೆಗಾಗಿ ಹುಡುಕುತ್ತಿದ್ದೇನೆ.</string>
   <string name="jami_id_choose_username">ಬಳಕೆದಾರ ಹೆಸರನ್ನು ಆರಿಸಿ</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">ಜಾಮಿಗೆ ಸ್ವಾಗತ</string>

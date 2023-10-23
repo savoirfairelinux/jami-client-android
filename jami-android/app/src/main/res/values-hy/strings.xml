@@ -374,6 +374,7 @@
   <string name="bottomsheet_remove">Բեռնել զավակից</string>
   <!--JamiId-->
   <string name="jami_id_validate">Գրանցել օգտվողի անունը</string>
+  <string name="jami_id_looking_for_availability">Փնտրում եմ օգտատերերի անունների հասանելիությունը...</string>
   <string name="jami_id_choose_username">Ընտրեք օգտատերու անուն</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Բարի գալուստ Ջամի:</string>

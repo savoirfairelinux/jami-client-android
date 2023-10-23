@@ -374,6 +374,7 @@
   <string name="bottomsheet_remove">Қалыңдықтан алыңыз</string>
   <!--JamiId-->
   <string name="jami_id_validate">Пайдаланушы атауын тіркеу</string>
+  <string name="jami_id_looking_for_availability">Пайдаланушының аты-жөнінің қолжетімділігін іздеймін...</string>
   <string name="jami_id_choose_username">Пайдаланушы атауын таңдау</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Жамиге қош келдіңіздер</string>

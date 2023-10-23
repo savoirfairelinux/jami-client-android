@@ -374,6 +374,7 @@
   <string name="bottomsheet_remove">સમૂહમાંથી દૂર કરો</string>
   <!--JamiId-->
   <string name="jami_id_validate">વપરાશકર્તા નામ નોંધણી</string>
+  <string name="jami_id_looking_for_availability">વપરાશકર્તા નામ ઉપલબ્ધતા શોધી રહ્યા છીએ...</string>
   <string name="jami_id_choose_username">વપરાશકર્તા નામ પસંદ કરો</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">જમીમાં આપનું સ્વાગત છે</string>

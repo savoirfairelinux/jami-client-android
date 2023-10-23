@@ -379,6 +379,7 @@
   <string name="bottomsheet_remove">Swarmから外す</string>
   <!--JamiId-->
   <string name="jami_id_validate">ユーザー名を登録</string>
+  <string name="jami_id_looking_for_availability">利用可能なユーザー名を検索中…</string>
   <string name="jami_id_choose_username">ユーザー名を選択する</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Jamiへようこそ</string>

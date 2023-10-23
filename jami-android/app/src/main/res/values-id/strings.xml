@@ -373,6 +373,7 @@
   <string name="bottomsheet_remove">Jauhkan dari gerombolan</string>
   <!--JamiId-->
   <string name="jami_id_validate">Daftarkan nama pengguna</string>
+  <string name="jami_id_looking_for_availability">Memeriksa ketersediaan nama pengguna...</string>
   <string name="jami_id_choose_username">Tentukan nama pengguna</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Selamat datang di Jami</string>
