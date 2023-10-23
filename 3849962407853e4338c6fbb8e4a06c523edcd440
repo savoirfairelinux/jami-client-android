@@ -49,6 +49,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "88a6d82c_88d1b2ff",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/HomeFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-23T17:03:32Z",
+      "side": 1,
+      "message": "(see the last comment first to understand this one)",
+      "parentUuid": "72329af4_9bba9348",
+      "range": {
+        "startLine": 545,
+        "startChar": 8,
+        "endLine": 548,
+        "endChar": 48
+      },
+      "revId": "3849962407853e4338c6fbb8e4a06c523edcd440",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c1d7d74e_9e53316a",
         "filename": "jami-android/app/src/main/java/cx/ring/fragments/HomeFragment.kt",
         "patchSetId": 1
