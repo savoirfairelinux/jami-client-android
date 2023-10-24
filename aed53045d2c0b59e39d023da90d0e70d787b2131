@@ -16,6 +16,24 @@
       "message": "here is what I suggest:\n\n```\nprivate fun setBadge(\n        conversations: List\u003cConversation\u003e,\n        snip: List\u003cConversationItemViewModel\u003e,\n    ) {\n        Log.w(TAG, \"setBadge ${conversations.size}\")\n        val binding \u003d mBinding ?: return\n\n        pendingAdapter?.update(conversations)\n\n        if (conversations.isEmpty()) { // No pending invitations \u003d no badge\n            showInvitationCard(false)\n        }\n        else {\n            showInvitationCard(true)\n            binding.invitationCard.invitationBadge.text \u003d conversations.size.toString()\n            binding.invitationCard.invitationReceivedTxt.text \u003d\n                snip.joinToString(\", \") { it.title }\n        }\n    }\n```",
       "revId": "aed53045d2c0b59e39d023da90d0e70d787b2131",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e8398fad_7ce16911",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/HomeFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-10-24T19:57:09Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "34bd5ada_7897cb73",
+      "revId": "aed53045d2c0b59e39d023da90d0e70d787b2131",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
