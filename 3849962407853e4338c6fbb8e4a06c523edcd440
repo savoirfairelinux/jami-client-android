@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "30366bef_1a079eb5",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/HomeFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-10-24T19:57:29Z",
+      "side": 1,
+      "message": "it works regardless",
+      "parentUuid": "9d4ab7e0_a70a854f",
+      "range": {
+        "startLine": 320,
+        "startChar": 7,
+        "endLine": 321,
+        "endChar": 82
+      },
+      "revId": "3849962407853e4338c6fbb8e4a06c523edcd440",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "72329af4_9bba9348",
         "filename": "jami-android/app/src/main/java/cx/ring/fragments/HomeFragment.kt",
         "patchSetId": 1
