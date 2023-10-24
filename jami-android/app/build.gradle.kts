@@ -57,6 +57,7 @@ android {
     buildFeatures {
         viewBinding = true
         dataBinding = true
+        buildConfig = true
     }
     flavorDimensions += "push"
     productFlavors {
