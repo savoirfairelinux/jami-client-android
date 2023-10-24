@@ -24,6 +24,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "795beaf0_17735a11",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-10-24T15:25:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e4ad177_07fa122a",
+      "range": {
+        "startLine": 7,
+        "startChar": 8,
+        "endLine": 7,
+        "endChar": 9
+      },
+      "revId": "aa30c03b73e3831343e8130fbbfbd8359926614f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5b3b4ba9_7310e57b",
@@ -37,6 +61,24 @@
       "writtenOn": "2023-10-16T15:27:08Z",
       "side": 1,
       "message": "you can add a description of what it does for us to understand",
+      "revId": "aa30c03b73e3831343e8130fbbfbd8359926614f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6a7bf57f_377470e7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-10-24T15:25:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b3b4ba9_7310e57b",
       "revId": "aa30c03b73e3831343e8130fbbfbd8359926614f",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
@@ -58,6 +100,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f32fa36c_f4c4e248",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 10
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-10-24T15:25:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9294c890_14dd4218",
+      "revId": "aa30c03b73e3831343e8130fbbfbd8359926614f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c1bf8b59_e2ff7efa",
@@ -71,6 +131,24 @@
       "writtenOn": "2023-10-16T15:26:06Z",
       "side": 1,
       "message": "not related to this patch feature",
+      "revId": "aa30c03b73e3831343e8130fbbfbd8359926614f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6c959871_663ab19d",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 10
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-10-24T15:25:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1bf8b59_e2ff7efa",
       "revId": "aa30c03b73e3831343e8130fbbfbd8359926614f",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
@@ -92,6 +170,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5f4f234e_7eea6fd2",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 10
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-10-24T15:25:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "605ab71e_93fb9026",
+      "revId": "aa30c03b73e3831343e8130fbbfbd8359926614f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "52ba9703_d34a3e32",
@@ -109,6 +205,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d9849b6_2292e4f3",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 10
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-10-24T15:25:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52ba9703_d34a3e32",
+      "revId": "aa30c03b73e3831343e8130fbbfbd8359926614f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a61f0e76_142b75a6",
@@ -122,6 +236,24 @@
       "writtenOn": "2023-10-16T15:26:06Z",
       "side": 1,
       "message": "not related to this patch feature",
+      "revId": "aa30c03b73e3831343e8130fbbfbd8359926614f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3eb77ffa_9acf9023",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 10
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-10-24T15:25:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a61f0e76_142b75a6",
       "revId": "aa30c03b73e3831343e8130fbbfbd8359926614f",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
@@ -149,6 +281,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "697aca2a_95e4fa8b",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 10
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-10-24T15:25:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2b8a450_235d9ee8",
+      "range": {
+        "startLine": 436,
+        "startChar": 0,
+        "endLine": 436,
+        "endChar": 1
+      },
+      "revId": "aa30c03b73e3831343e8130fbbfbd8359926614f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f3f7aa64_6ee426c7",
@@ -166,6 +322,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b29ec627_abe489b2",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 10
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-10-24T15:25:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f3f7aa64_6ee426c7",
+      "revId": "aa30c03b73e3831343e8130fbbfbd8359926614f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b0470549_286f918d",
@@ -179,6 +353,30 @@
       "writtenOn": "2023-10-16T15:30:20Z",
       "side": 1,
       "message": "what is this for ? doesnt seems related to this patch feature",
+      "range": {
+        "startLine": 1570,
+        "startChar": 13,
+        "endLine": 1571,
+        "endChar": 29
+      },
+      "revId": "aa30c03b73e3831343e8130fbbfbd8359926614f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9fbe3c80_c5a924f0",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 10
+      },
+      "lineNbr": 1571,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-10-24T15:25:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0470549_286f918d",
       "range": {
         "startLine": 1570,
         "startChar": 13,
