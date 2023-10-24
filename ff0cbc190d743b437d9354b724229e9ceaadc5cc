@@ -41,6 +41,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "97fceeef_b1fd4943",
+        "filename": "jami-android/app/src/main/res/values/dimens.xml",
+        "patchSetId": 15
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-10-24T14:39:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98adfdbc_4b7a313d",
+      "range": {
+        "startLine": 22,
+        "startChar": 17,
+        "endLine": 22,
+        "endChar": 31
+      },
+      "revId": "ff0cbc190d743b437d9354b724229e9ceaadc5cc",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3e8b54a9_d55c345d",
@@ -54,6 +78,30 @@
       "writtenOn": "2023-10-13T21:06:56Z",
       "side": 1,
       "message": "used at some other place (can be done but needs some checks)",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 14
+      },
+      "revId": "ff0cbc190d743b437d9354b724229e9ceaadc5cc",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f231772c_ff3eb7d4",
+        "filename": "jami-android/app/src/main/res/values/dimens.xml",
+        "patchSetId": 15
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-10-24T14:39:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3e8b54a9_d55c345d",
       "range": {
         "startLine": 35,
         "startChar": 0,
