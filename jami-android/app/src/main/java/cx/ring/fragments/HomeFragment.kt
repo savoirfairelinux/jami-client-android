@@ -43,10 +43,6 @@ import androidx.transition.Fade
 import androidx.transition.Slide
 import androidx.transition.TransitionManager
 import com.google.android.material.appbar.AppBarLayout
-import com.google.android.material.appbar.AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS
-import com.google.android.material.appbar.AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED
-import com.google.android.material.appbar.AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL
-import com.google.android.material.appbar.AppBarLayout.LayoutParams.SCROLL_FLAG_SNAP
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.R
 import cx.ring.account.AccountWizardActivity
@@ -77,13 +73,11 @@ import cx.ring.utils.TextUtils
 import io.reactivex.rxjava3.disposables.Disposable
 
 @AndroidEntryPoint
-class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
+class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
     SearchView.OnQueryTextListener, HomeView {
 
     private var mBinding: FragHomeBinding? = null
     private var pagerContent: Fragment? = null
-    private var mHasConversationBadge = false
-    private var mHasPendingBadge = false
     private val mDisposable = CompositeDisposable()
     private var mSearchView: SearchView? = null
     private var searchDisposable: Disposable? = null
@@ -322,7 +316,9 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
      */
     private fun updateAppBarLayoutBottomPadding(hasInvites: Boolean) {
         mBinding?.appBarContainer?.updatePadding(top = 0, bottom = if (hasInvites)
-            context?.resources!!.getDimensionPixelSize(R.dimen.bottom_sheet_radius) else 0)
+            resources.getDimensionPixelSize(R.dimen.bottom_sheet_radius) else 0)
+        if (hasInvites)
+            (pagerContent as SmartListFragment).scrollToTop()
     }
 
     private fun expandPendingView() {
@@ -496,9 +492,10 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
             .observeOn(DeviceUtils.uiScheduler)
             .subscribe { count ->
                 // Collapse pending view if there is no more pending invitations
-                if(count.first.isEmpty()) collapsePendingView()
-
-                setBadge(TAB_INVITATIONS, count.second, count.first) }
+                if(count.first.isEmpty())
+                    collapsePendingView()
+                setInvitationBadge(count.second, count.first)
+            }
         )
 
         // Subscribe on current account to display avatar on navigation (searchbar)
@@ -538,30 +535,16 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
     /**
      * Set a badge to display how many invitations are pending.
      */
-    private fun setBadge(
-        menuId: Int,
-        conversations: List<Conversation>,
-        snip: List<ConversationItemViewModel>,
-    ) {
-        Log.w(TAG, "setBadge ${conversations.size}")
+    private fun setInvitationBadge(conversations: List<Conversation>, snip: List<ConversationItemViewModel>) {
         val binding = mBinding ?: return
-
-        binding.invitationCard.invitationBadge.text = conversations.size.toString()
-        showInvitationCard()
-        binding.invitationCard.invitationReceivedTxt.text =
-            snip.joinToString(", ") { it.title }
-
-        if (menuId == TAB_INVITATIONS) {
-            pendingAdapter?.update(conversations)
-            updateAppBarLayoutBottomPadding(conversations.isNotEmpty())
-            if (conversations.isEmpty()) { // No pending invitations = no badge
-                showInvitationCard(false)
-            } else {
-                binding.invitationCard.invitationBadge.text = conversations.size.toString()
-                binding.invitationCard.invitationReceivedTxt.text =
-                    snip.joinToString(", ") { it.title }
-            }
+        pendingAdapter?.update(conversations)
+        val hasInvites = conversations.isNotEmpty()
+        binding.invitationCard.invitationGroup.isVisible = hasInvites
+        if (hasInvites) {
+            binding.invitationCard.invitationBadge.text = conversations.size.toString()
+            binding.invitationCard.invitationReceivedTxt.text = snip.joinToString(", ") { it.title }
         }
+        updateAppBarLayoutBottomPadding(hasInvites)
     }
 
     fun handleIntent(intent: Intent) {
@@ -607,29 +590,14 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
     }
 
     private fun expandSearchActionView(): Boolean {
-        mBinding ?: return false
-        mBinding!!.searchView.show()
+        val b = mBinding ?: return false
+        b.searchView.show()
         return true
     }
 
     fun collapseSearchActionView() {
-        mBinding ?: return
-        mBinding!!.searchView.hide()
-    }
-
-    private fun showInvitationCard(isVisible: Boolean = true) {
-        mBinding ?: return
-        mBinding!!.invitationCard.invitationGroup.isVisible = isVisible
-
-        // Update padding AppBarLayoutBottom and conversation list.
-        mDisposable.add(mAccountService.currentAccountSubject
-            .switchMap { account ->
-                account.getPendingSubject()
-            }
-            .firstOrError().subscribe { list ->
-                updateAppBarLayoutBottomPadding(hasInvites = list.isNotEmpty())
-            }
-        )
+        val b = mBinding ?: return
+        b.searchView.hide()
     }
 
     companion object {
