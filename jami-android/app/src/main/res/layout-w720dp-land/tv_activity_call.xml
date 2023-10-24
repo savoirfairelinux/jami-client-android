@@ -16,7 +16,7 @@ along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 -->
 
-<cx.ring.tv.views.FitsWindowsLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<cx.ring.views.FitsWindowsLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                  xmlns:tools="http://schemas.android.com/tools"
                                  android:id="@+id/main_call_layout"
                                  android:layout_width="match_parent"
@@ -24,4 +24,4 @@ along with this program; if not, write to the Free Software
                                  android:background="@color/cardview_dark_background"
                                  tools:context=".tv.call.TVCallActivity">
 
-</cx.ring.tv.views.FitsWindowsLayout>
+</cx.ring.views.FitsWindowsLayout>

@@ -103,7 +103,7 @@ class ShareWithFragment : Fragment() {
                     var data = pendingIntent.data
                     if (data == null && clip != null && clip.itemCount > 0) data = clip.getItemAt(0).uri
                     try {
-                        binding.previewVideo.setVideoURI(data)
+                        binding.previewVideo.setVideoURI(data!!)
                         binding.previewVideo.visibility = View.VISIBLE
                     } catch (e: NullPointerException) {
                         Log.e(TAG, e.message!!)

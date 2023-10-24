@@ -17,35 +17,33 @@
  *  along with this program; if not, write to the Free Software
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-package cx.ring.views;
+package cx.ring.views
 
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.util.AttributeSet;
-import android.widget.ImageView;
+import android.annotation.SuppressLint
+import android.content.Context
+import android.util.AttributeSet
+import android.widget.ImageView
 
 @SuppressLint("AppCompatCustomView")
-public class ConversationImageView extends ImageView {
-    private final int mMaxHeight;
+class ConversationImageView : ImageView {
+    private val mMaxHeight: Int
 
-    public ConversationImageView(Context context) {
-        super(context);
-        mMaxHeight = 0;
+    constructor(context: Context) : super(context) {
+        mMaxHeight = 0
     }
 
-    public ConversationImageView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        mMaxHeight = getMaxHeight();
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
+        mMaxHeight = maxHeight
     }
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        int measuredHeight = MeasureSpec.getSize(heightMeasureSpec);
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        var heightMeasureSpec = heightMeasureSpec
+        val measuredHeight = MeasureSpec.getSize(heightMeasureSpec)
         // Avoid image to take zero space when not loaded yet
         if (measuredHeight == 0) {
-            int measureMode = MeasureSpec.getMode(heightMeasureSpec);
-            heightMeasureSpec = MeasureSpec.makeMeasureSpec(mMaxHeight, measureMode);
+            val measureMode = MeasureSpec.getMode(heightMeasureSpec)
+            heightMeasureSpec = MeasureSpec.makeMeasureSpec(mMaxHeight, measureMode)
         }
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
     }
 }

@@ -62,7 +62,7 @@ class DeviceAdapter(
         val isCurrentDevice = mDevices[i].key.contentEquals(mCurrentDeviceId)
         val devId: TwoButtonEditText = view.findViewById(R.id.txt_device_id)
         val thisDevice = view.findViewById<TextView>(R.id.txt_device_thisflag)
-        devId.setText(mDevices[i].value)
+        devId.text = mDevices[i].value
         var hint = mDevices[i].key
         hint = hint.substring(0, (hint.length * 0.66).toInt())
         devId.setHint(hint)

@@ -229,7 +229,7 @@ class JamiAccountSummaryFragment :
             binding.userPhoto.setImageDrawable(AvatarDrawable.build(binding.root.context, account, profile, true))
             binding.username.setText(profile.displayName)
             binding.userPhoto.setOnClickListener { profileContainerClicked(account) }
-            binding.linkedDevices.setText(account.deviceName)
+            binding.linkedDevices.text = account.deviceName
             setLinkedDevicesAdapter(account)
             mAccountHasPassword = account.hasPassword()
             mBinding!!.accountSwitch.setCheckedSilent(account.isEnabled)

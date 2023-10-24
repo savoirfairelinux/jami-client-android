@@ -16,28 +16,18 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package cx.ring.views;
+package cx.ring.views
 
-import android.content.Context;
-import androidx.preference.EditTextPreference;
-import android.util.AttributeSet;
+import android.content.Context
+import android.util.AttributeSet
+import androidx.preference.EditTextPreference
 
-public class EditTextIntegerPreference extends EditTextPreference {
+class EditTextIntegerPreference : EditTextPreference {
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes)
 
-    public EditTextIntegerPreference(Context context, AttributeSet attrs, int defStyleAttr,
-                                     int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-    }
+    constructor(context: Context, attrs: AttributeSet?, defStyle: Int) : super(context, attrs, defStyle)
 
-    public EditTextIntegerPreference(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-    }
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
 
-    public EditTextIntegerPreference(Context context, AttributeSet attrs) {
-        super(context, attrs);
-    }
-
-    public EditTextIntegerPreference(Context context) {
-        super(context);
-    }
+    constructor(context: Context) : super(context)
 }

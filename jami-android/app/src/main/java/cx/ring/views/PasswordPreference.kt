@@ -17,29 +17,17 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package cx.ring.views;
+package cx.ring.views
 
-import android.content.Context;
-import androidx.preference.EditTextPreference;
-import android.util.AttributeSet;
+import android.content.Context
+import android.util.AttributeSet
+import androidx.preference.EditTextPreference
 
-public class PasswordPreference extends EditTextPreference {
+class PasswordPreference : EditTextPreference {
+    @JvmOverloads
+    constructor(context: Context, attrs: AttributeSet? = null) : super(context, attrs)
 
-    public PasswordPreference(Context context) {
-        this(context, null);
-    }
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes)
 
-    public PasswordPreference(Context context, AttributeSet attrs) {
-        super(context, attrs);
-    }
-
-    public PasswordPreference(Context context, AttributeSet attrs, int defStyleAttr,
-                              int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-    }
-
-    public PasswordPreference(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-    }
-
+    constructor(context: Context, attrs: AttributeSet?, defStyle: Int) : super(context, attrs, defStyle)
 }
