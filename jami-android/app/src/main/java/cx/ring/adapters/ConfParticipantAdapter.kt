@@ -93,34 +93,23 @@ class ConfParticipantAdapter(private var calls: List<ParticipantInfo>, private v
         }
     }
 
-    override fun getItemId(position: Int): Long {
-        val info = calls[position]
-        return Objects.hash(info.contact.contact.uri, info.call?.daemonIdString).toLong()
-    }
+    override fun getItemId(position: Int): Long = calls[position].hashCode().toLong()
 
-    override fun getItemCount(): Int {
-        return calls.size
-    }
+    override fun getItemCount(): Int = calls.size
 
     fun updateFromCalls(contacts: List<ParticipantInfo>) {
         val oldCalls = calls
         calls = contacts
         DiffUtil.calculateDiff(object : DiffUtil.Callback() {
-            override fun getOldListSize(): Int {
-                return oldCalls.size
-            }
+            override fun getOldListSize(): Int = oldCalls.size
 
-            override fun getNewListSize(): Int {
-                return contacts.size
-            }
+            override fun getNewListSize(): Int = contacts.size
 
-            override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-                return oldCalls[oldItemPosition].contact === contacts[newItemPosition].contact
-            }
+            override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
+                oldCalls[oldItemPosition].hashCode() == contacts[newItemPosition].hashCode()
 
-            override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-                return false
-            }
+            override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
+                false
         }).dispatchUpdatesTo(this)
     }
 

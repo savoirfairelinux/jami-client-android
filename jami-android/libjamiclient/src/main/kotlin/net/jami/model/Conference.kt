@@ -47,13 +47,19 @@ class Conference(val accountId: String, val id: String) {
 
         val tag: String
             get() = sinkId ?: contact.contact.uri.uri
+
+        override fun hashCode(): Int = Objects.hash(contact.contact.uri, device, call?.daemonIdString, pending)
     }
 
     private val mParticipantInfo: Subject<List<ParticipantInfo>> = BehaviorSubject.createDefault(emptyList())
+    private val mPendingCalls: MutableList<ParticipantInfo> = java.util.ArrayList()
+    private val mPendingSubject: Subject<List<ParticipantInfo>> = BehaviorSubject.createDefault(mPendingCalls)
+
     private val mParticipantRecordingSet: MutableSet<Contact> = HashSet()
     private val mParticipantRecording: Subject<Set<Contact>> = BehaviorSubject.createDefault(emptySet())
     private var mConfState: CallStatus? = null
     private val mParticipants: ArrayList<Call> = ArrayList()
+
     private var mRecording: Boolean = false
     var maximizedParticipant: Contact? = null
     var isModerator = false
@@ -113,6 +119,20 @@ class Conference(val accountId: String, val id: String) {
 
     fun removeParticipant(toRemove: Call): Boolean {
         return mParticipants.remove(toRemove)
+    }
+
+    fun removeParticipants() {
+        mParticipants.clear()
+    }
+
+    fun addPending(participantInfo: ParticipantInfo) {
+        mPendingCalls.add(participantInfo)
+        mPendingSubject.onNext(mPendingCalls)
+    }
+
+    fun removePending(participantInfo: ParticipantInfo) {
+        mPendingCalls.remove(participantInfo)
+        mPendingSubject.onNext(mPendingCalls)
     }
 
     operator fun contains(callID: String): Boolean {
@@ -178,16 +198,16 @@ class Conference(val accountId: String, val id: String) {
             return t
         }
 
-    fun removeParticipants() {
-        mParticipants.clear()
-    }
-
     fun setInfo(info: List<ParticipantInfo>) {
         mParticipantInfo.onNext(info)
     }
 
     val participantInfo: Observable<List<ParticipantInfo>>
         get() = mParticipantInfo
+
+    val pendingCalls: Observable<List<ParticipantInfo>>
+        get() = mPendingSubject
+
     val participantRecording: Observable<Set<Contact>>
         get() = mParticipantRecording
 
