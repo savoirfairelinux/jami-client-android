@@ -24,6 +24,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a7320587_1f4a5e9d",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 1388,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-10-25T20:11:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db2d0605_f1672ec8",
+      "range": {
+        "startLine": 1388,
+        "startChar": 0,
+        "endLine": 1388,
+        "endChar": 3
+      },
+      "revId": "75662502843e1e4d8dcf6ed28e061d975e514587",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "00462cc6_08858d09",
@@ -37,6 +61,30 @@
       "writtenOn": "2023-10-16T18:58:58Z",
       "side": 1,
       "message": "format",
+      "range": {
+        "startLine": 1402,
+        "startChar": 0,
+        "endLine": 1402,
+        "endChar": 27
+      },
+      "revId": "75662502843e1e4d8dcf6ed28e061d975e514587",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2ad9ace1_323badef",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 1402,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-10-25T20:11:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00462cc6_08858d09",
       "range": {
         "startLine": 1402,
         "startChar": 0,
@@ -70,6 +118,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9946d130_677ad3b1",
+        "filename": "jami-android/app/src/main/res/drawable/baseline_call_missed_24.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-10-25T20:11:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "092dbf1d_b0df349a",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 21
+      },
+      "revId": "75662502843e1e4d8dcf6ed28e061d975e514587",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "48ae386c_3f887770",
@@ -83,6 +155,30 @@
       "writtenOn": "2023-10-16T18:58:58Z",
       "side": 1,
       "message": "I think should not be changed as it will impact every layout using this drawable",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "75662502843e1e4d8dcf6ed28e061d975e514587",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "719d0f6e_1af2f4dc",
+        "filename": "jami-android/app/src/main/res/drawable/baseline_call_missed_outgoing_24.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-10-25T20:11:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48ae386c_3f887770",
       "range": {
         "startLine": 1,
         "startChar": 0,
@@ -110,6 +206,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "41612ef8_9e8d47f3",
+        "filename": "jami-android/app/src/main/res/drawable/textmsg_call_stroke.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-10-25T20:11:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "609de504_f25633af",
+      "revId": "75662502843e1e4d8dcf6ed28e061d975e514587",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "aceb7ff9_cd07ddc6",
@@ -123,6 +237,30 @@
       "writtenOn": "2023-10-16T19:01:18Z",
       "side": 1,
       "message": "Did you check it worked in blackmode ?",
+      "range": {
+        "startLine": 95,
+        "startChar": 17,
+        "endLine": 95,
+        "endChar": 28
+      },
+      "revId": "75662502843e1e4d8dcf6ed28e061d975e514587",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f62b082f_c8875d42",
+        "filename": "jami-android/app/src/main/res/values/colors.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-10-25T20:11:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aceb7ff9_cd07ddc6",
       "range": {
         "startLine": 95,
         "startChar": 17,
