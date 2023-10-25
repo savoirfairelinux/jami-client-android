@@ -77,14 +77,15 @@ class ConversationSelectionActivity : AppCompatActivity() {
             .getConversationSmartlist()
             .map { vm: List<Conversation> ->
                 if (conference == null) return@map vm
+
+                val participantOrPendingUri =
+                    conference.participants.map { it.contact?.uri } +
+                            conference.pendingCalls.blockingFirst().map { it.contact.contact.uri }
+
                 return@map vm.filter { v ->
                     try {
                         val contact = v.contact ?: return@filter false
-                        for (call in conference.participants) {
-                            if (call.contact === contact) {
-                                return@filter false
-                            }
-                        }
+                        if (participantOrPendingUri.contains(contact.uri)) return@filter false
                     } catch (e: Exception) {
                         return@filter false
                     }

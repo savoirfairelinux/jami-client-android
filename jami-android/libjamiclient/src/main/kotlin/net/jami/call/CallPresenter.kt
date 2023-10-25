@@ -21,8 +21,6 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.disposables.Disposable
-import io.reactivex.rxjava3.subjects.BehaviorSubject
-import io.reactivex.rxjava3.subjects.Subject
 import net.jami.daemon.JamiService
 import net.jami.services.ConversationFacade
 import net.jami.model.*
@@ -51,8 +49,6 @@ class CallPresenter @Inject constructor(
     @param:Named("UiScheduler") private val mUiScheduler: Scheduler
 ) : RootPresenter<CallView>() {
     private var mConference: Conference? = null
-    private val mPendingCalls: MutableList<ParticipantInfo> = ArrayList()
-    private val mPendingSubject: Subject<List<ParticipantInfo>> = BehaviorSubject.createDefault(mPendingCalls)
     var mOnGoingCall = false
         private set
     private var permissionChanged = false
@@ -177,7 +173,7 @@ class CallPresenter @Inject constructor(
         val conference = conference.distinctUntilChanged()
         mCompositeDisposable.add(conference
             .switchMap { obj: Conference ->
-                Observable.combineLatest(obj.participantInfo, mPendingSubject,
+                Observable.combineLatest(obj.participantInfo, obj.pendingCalls,
                 if (obj.isConference)
                     ContactViewModel.EMPTY_VM
                 else
@@ -288,12 +284,12 @@ class CallPresenter @Inject constructor(
                 mCallService.hangUpConference(conference.accountId, conference.id)
             else
                 mCallService.hangUp(conference.accountId, conference.id)
-        }
 
-        // Hang up pending calls.
-        for (participant in mPendingCalls) {
-            val call = participant.call ?: continue
-            mCallService.hangUp(call.account!!, call.daemonIdString!!)
+            // Hang up pending calls.
+            for (participant in conference.pendingCalls.blockingFirst()) {
+                val call = participant.call ?: continue
+                mCallService.hangUp(call.account!!, call.daemonIdString!!)
+            }
         }
 
         finish()
@@ -562,15 +558,13 @@ class CallPresenter @Inject constructor(
                             if (call == null) {
                                 val contact = sipCall.contact ?: conversation.contact!!
                                 call = ParticipantInfo(sipCall, ContactViewModel(contact, contact.profile.blockingFirst()), mapOf("sinkId" to (sipCall.daemonIdString ?: "")), pending = true)
-                                    .apply { mPendingCalls.add(this) }
+                                    .apply { conference.addPending(this) }
                             }
-                            mPendingSubject.onNext(mPendingCalls)
                         }
 
                         private fun onFinally()  {
-                            if (call != null) {
-                                mPendingCalls.remove(call)
-                                mPendingSubject.onNext(mPendingCalls)
+                            call?.let {
+                                conference.removePending(it)
                                 call = null
                             }
                         }
