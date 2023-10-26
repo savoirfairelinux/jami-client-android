@@ -24,6 +24,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3410c597_0aa4c3cf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 15
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-10-26T15:50:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eeb5b0db_0daec354",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 8
+      },
+      "revId": "9fc1684c39e520a3ff10e7367f8edf77b41ce728",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3fdd4a3a_914e179e",
@@ -37,6 +61,24 @@
       "writtenOn": "2023-10-16T15:08:48Z",
       "side": 1,
       "message": "I dont\u0027t understand purpose of this commit but code looks correct. ",
+      "revId": "9fc1684c39e520a3ff10e7367f8edf77b41ce728",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c38c138e_5698250c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-10-26T15:50:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3fdd4a3a_914e179e",
       "revId": "9fc1684c39e520a3ff10e7367f8edf77b41ce728",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
