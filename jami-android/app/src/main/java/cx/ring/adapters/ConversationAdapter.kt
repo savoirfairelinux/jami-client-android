@@ -105,7 +105,6 @@ class ConversationAdapter(
     private var mCurrentLongItem: RecyclerViewContextMenuInfo? = null
     @ColorInt private var convColor = 0
     @ColorInt private var convColorTint = 0
-    private var expandedItemPosition = -1
     private var lastDeliveredPosition = -1
     private val timestampUpdateTimer: Observable<Long> = Observable.interval(10, TimeUnit.SECONDS, DeviceUtils.uiScheduler)
         .startWithItem(0L)
@@ -547,10 +546,6 @@ class ConversationAdapter(
         }
         holder.mMsgTxt?.setOnLongClickListener(null)
         holder.mItem?.setOnClickListener(null)
-        if (expandedItemPosition == holder.layoutPosition) {
-            holder.mMsgDetailTxt?.visibility = View.GONE
-            expandedItemPosition = -1
-        }
         holder.compositeDisposable.clear()
     }
 
@@ -1090,9 +1085,6 @@ class ConversationAdapter(
                 // Manage long press.
                 longPressView.setOnLongClickListener { v: View ->
                     openItemMenu(convViewHolder, v, interaction)
-                    if (expandedItemPosition == position) {
-                        expandedItemPosition = -1
-                    }
                     conversationFragment.updatePosition(convViewHolder.bindingAdapterPosition)
                     if (textMessage.isIncoming) {
                         longPressView.background.setTint(res.getColor(R.color.grey_500))
@@ -1212,25 +1204,6 @@ class ConversationAdapter(
                     convViewHolder.mMsgDetailTxtPerm?.visibility = View.VISIBLE
                 } else {
                     convViewHolder.mMsgDetailTxtPerm?.visibility = View.GONE
-                    val isExpanded = position == expandedItemPosition
-                    if (isExpanded) {
-                        convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
-                            convViewHolder.mMsgDetailTxt?.text =
-                                TextUtils.timestampToDetailString(context, textMessage.timestamp)
-                        })
-                    }
-                    setItemViewExpansionState(convViewHolder, isExpanded)
-                    convViewHolder.mItem?.setOnClickListener {
-                        if (convViewHolder.animator?.isRunning == true) {
-                            return@setOnClickListener
-                        }
-                        if (expandedItemPosition >= 0) {
-                            val prev = expandedItemPosition
-                            notifyItemChanged(prev)
-                        }
-                        expandedItemPosition = if (isExpanded) -1 else position
-                        notifyItemChanged(expandedItemPosition)
-                    }
                 }
             })
     }

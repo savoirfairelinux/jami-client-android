@@ -37,17 +37,6 @@ along with this program; if not, write to the Free Software
         android:visibility="gone"
         tools:text="@string/time_just_now" />
 
-    <TextView
-        android:id="@+id/msg_details_txt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="4dp"
-        android:paddingBottom="2dp"
-        android:textColor="@color/textColorSecondary"
-        android:textSize="@dimen/conversation_timestamp_textsize"
-        android:visibility="gone"
-        tools:text="@string/time_just_now" />
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
