@@ -235,7 +235,7 @@ abstract class JamiApplication : Application() {
                             .addSupportedUriScheme(PhoneAccount.SCHEME_SIP)
                             .build())
                     androidPhoneAccountHandle = handle
-                } catch (e: SecurityException) {
+                } catch (e: Exception) {
                     Log.e(TAG, "Can't register the Telecom API", e)
                 }
             }
