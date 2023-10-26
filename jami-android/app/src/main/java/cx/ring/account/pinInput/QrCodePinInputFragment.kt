@@ -27,6 +27,7 @@ class QrCodePinInputFragment : Fragment() {
             if (granted) {
                 showErrorPanel(isError = false)
                 initializeBarcode()
+                viewModel.cameraPermissionChanged(true)
             } else {
                 cameraPermissionIsRefusedFlag = true
                 showErrorPanel(isError = true)
