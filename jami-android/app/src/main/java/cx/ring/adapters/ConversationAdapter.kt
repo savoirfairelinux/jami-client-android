@@ -1093,7 +1093,7 @@ class ConversationAdapter(
                     // Manage padding and background.
                     msgTxtContainer.background =
                         ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
-                    context.resources.getDimensionPixelSize(R.dimen.padding_medium).let {
+                    context.resources.getDimensionPixelSize(R.dimen.conversation_message_padding).let {
                         msgTxt.setPadding(it, it, it, it)
                     }
                     msgTxtContainer.background.alpha = 255
@@ -1159,7 +1159,7 @@ class ConversationAdapter(
                         else msgSequenceType.ordinal + (if (textMessage.isIncoming) 1 else 0) * 4
 
                     msgTxtContainer.background = ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
-                    context.resources.getDimensionPixelSize(R.dimen.padding_medium).let {
+                    context.resources.getDimensionPixelSize(R.dimen.conversation_message_padding).let {
                         msgTxt.setPadding(it, it, it, it)
                     }
                     // Manage background color of outgoing message.
