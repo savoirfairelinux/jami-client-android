@@ -177,6 +177,6 @@ along with this program; if not, write to the Free Software
             app:iconTint="@color/fab_text_color"
             app:layout_anchorGravity="bottom|center_horizontal"
             app:pressedTranslationZ="12dp"
-            app:shapeAppearanceOverlay="@style/HomeFabButton" />
+            app:shapeAppearanceOverlay="@style/Widget.AppTheme.MainActionButton" />
     </FrameLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
