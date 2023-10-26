@@ -387,17 +387,10 @@ class CameraService internal constructor(c: Context) {
             setInteger(MediaFormat.KEY_REPEAT_PREVIOUS_FRAME_AFTER, 1000000 / frameRate)
             setInteger(MediaFormat.KEY_CHANNEL_COUNT, 1)
             setInteger(MediaFormat.KEY_I_FRAME_INTERVAL, 5)
-            setInteger(MediaFormat.KEY_FRAME_RATE, 24)
+            //setInteger(MediaFormat.KEY_I_FRAME_INTERVAL, -1)
+            //setInteger(MediaFormat.KEY_INTRA_REFRESH_PERIOD, 5)
         }
-        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            format.setInteger(MediaFormat.KEY_I_FRAME_INTERVAL, -1);
-            format.setInteger(MediaFormat.KEY_INTRA_REFRESH_PERIOD, 5);
-        } else {
-            format.setInteger(MediaFormat.KEY_I_FRAME_INTERVAL, 5);
-        }*/
-        //format.setInteger(MediaFormat.KEY_BITRATE_MODE, MediaCodecInfo.CodecCapabilities.BITRATE_MODE_VBR);
         val codecs = MediaCodecList(MediaCodecList.REGULAR_CODECS)
-        //listSupportedCodecs(codecs);
         val codecName = codecs.findEncoderForFormat(format) ?: return Pair(null, null)
         var encoderInput: Surface? = null
         var codec: MediaCodec? = null
