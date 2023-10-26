@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b2358b29_54e5a11d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-10-26T14:35:11Z",
+      "side": 1,
+      "message": "I deleted the padding in the xml so now I add it in the code",
+      "parentUuid": "9ce828c5_3c20125f",
+      "revId": "ec9480fff8f5a82ea37653356324687eec216b56",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "04e25175_ac83012d",
         "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
         "patchSetId": 9
@@ -31,6 +49,30 @@
       "writtenOn": "2023-10-16T17:25:51Z",
       "side": 1,
       "message": "This looks like special logic for deleted message. However it uses the same graphical logic than standard message",
+      "range": {
+        "startLine": 1095,
+        "startChar": 20,
+        "endLine": 1103,
+        "endChar": 21
+      },
+      "revId": "ec9480fff8f5a82ea37653356324687eec216b56",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5918752a_6aba766e",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 1103,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-10-26T14:35:11Z",
+      "side": 1,
+      "message": "Does a deleted message has padding if I don\u0027t put that here ?",
+      "parentUuid": "04e25175_ac83012d",
       "range": {
         "startLine": 1095,
         "startChar": 20,
