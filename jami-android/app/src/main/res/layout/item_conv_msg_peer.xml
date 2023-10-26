@@ -17,6 +17,7 @@ along with this program; if not, write to the Free Software
 -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/txt_entry"
     android:layout_width="match_parent"
@@ -115,11 +116,17 @@ along with this program; if not, write to the Free Software
             android:layout_height="wrap_content"
             android:layout_below="@id/msg_txt"
             android:layout_alignStart="@id/msg_txt"
-            android:layout_marginStart="16dp"
             android:layout_marginTop="-16dp"
+            android:layout_marginStart="8dp"
+            android:backgroundTint="@color/icon_background_color"
             android:elevation="4dp"
-            android:focusable="false"
-            android:text="👍😍 3" />
+            android:text="👍😍 3"
+            app:chipCornerRadius="5dp"
+            app:chipEndPadding="0dp"
+            app:chipStartPadding="0dp"
+            app:chipStrokeColor="@color/border_color"
+            app:textEndPadding="5dp"
+            app:textStartPadding="5dp" />
 
         <TextView
             android:id="@+id/msg_in_reply_to"

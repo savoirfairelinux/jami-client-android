@@ -56,4 +56,8 @@
     <!--  QrCode  -->
     <color name="qr_code_color">#FFF</color>
 
+    <!--  ChatView  -->
+    <color name="icon_background_color">#202020</color>
+    <color name="border_color">#515151</color>
+
 </resources>
