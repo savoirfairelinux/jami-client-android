@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <stroke
-        android:width="0dp"
-        android:color="@android:color/transparent" />
-
     <solid android:color="@color/conversation_primary_background" />
 
     <corners android:radius="@dimen/conversation_message_radius" />
