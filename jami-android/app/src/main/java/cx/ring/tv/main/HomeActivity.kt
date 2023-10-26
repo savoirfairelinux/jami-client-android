@@ -20,13 +20,19 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.drawable.ColorDrawable
 import android.hardware.Camera
 import android.hardware.Camera.ErrorCallback
 import android.hardware.camera2.CameraManager
 import android.hardware.camera2.CameraManager.AvailabilityCallback
 import android.os.Build
 import android.os.Bundle
-import android.renderscript.*
+import android.renderscript.Allocation
+import android.renderscript.Element
+import android.renderscript.RenderScript
+import android.renderscript.ScriptIntrinsicBlur
+import android.renderscript.ScriptIntrinsicYuvToRGB
+import android.renderscript.Type
 import android.util.Log
 import android.util.Size
 import android.view.View
@@ -52,7 +58,7 @@ import net.jami.model.Account
 import net.jami.services.AccountService
 import net.jami.services.DeviceRuntimeService
 import net.jami.services.HardwareService
-import java.util.*
+import java.util.Collections
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -82,8 +88,14 @@ class HomeActivity : FragmentActivity() {
     private var cameraPermissionIsRefusedFlag = false // to not ask for permission again if refused
 
     private val mErrorCallback = ErrorCallback { error, camera ->
-        mBlurImage.visibility = View.INVISIBLE
-        mBackgroundManager.drawable = ContextCompat.getDrawable(this@HomeActivity, R.drawable.tv_background)
+        try {
+            mBlurImage.visibility = View.INVISIBLE
+            mBackgroundManager.drawable =
+                ContextCompat.getDrawable(this@HomeActivity, R.drawable.tv_background)
+                    ?: ColorDrawable(getColor(R.color.colorPrimary))
+        } catch (e: Exception) {
+            Log.e(TAG, "ErrorCallback", e)
+        }
     }
     private val mCameraAvailabilityCallback: AvailabilityCallback = object : AvailabilityCallback() {
         override fun onCameraAvailable(cameraId: String) {
