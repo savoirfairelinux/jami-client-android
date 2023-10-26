@@ -60,6 +60,7 @@ class AccountService(
     private val mDeviceRuntimeService: DeviceRuntimeService,
     private val mVCardService: VCardService
 ) {
+    private val scheduler = Schedulers.from(mExecutor)
     /**
      * @return the current Account from the local cache
      */
@@ -352,7 +353,7 @@ class AccountService(
             Observable.merge(observableAccountList.mapOptional { Optional.ofNullable(it.firstOrNull { a -> a.accountId == accountId }) },
                 observableAccounts.filter { account: Account -> account.accountId == accountId })
         }
-        .subscribeOn(Schedulers.from(mExecutor))
+        .subscribeOn(scheduler)
 
     /**
      * @return the Account from the local cache that matches the accountId
@@ -398,7 +399,7 @@ class AccountService(
     fun sendProfile(callId: String, accountId: String) {
         mVCardService.loadSmallVCard(accountId, VCardService.MAX_SIZE_SIP)
             .subscribeOn(Schedulers.computation())
-            .observeOn(Schedulers.from(mExecutor))
+            .observeOn(scheduler)
             .subscribe({ vcard: VCard ->
                 var stringVCard = VCardUtils.vcardToString(vcard)!!
                 val nbTotal = stringVCard.length / VCARD_CHUNK_SIZE + if (stringVCard.length % VCARD_CHUNK_SIZE != 0) 1 else 0
@@ -437,14 +438,15 @@ class AccountService(
             account.conversationStarted(conversation)
             Log.w(TAG, "loadConversationMessages")
             conversation
-        }.subscribeOn(Schedulers.from(mExecutor))
+        }.subscribeOn(scheduler)
 
     fun removeConversation(accountId: String, conversationUri: Uri): Completable =
         Completable.fromAction { JamiService.removeConversation(accountId, conversationUri.rawRingId) }
-            .subscribeOn(Schedulers.from(mExecutor))
+            .subscribeOn(scheduler)
 
     private fun loadConversationHistory(accountId: String, conversationUri: Uri, root: String, n: Long) =
-        JamiService.loadConversationMessages(accountId, conversationUri.rawRingId, root, n)
+        Schedulers.io().scheduleDirect { JamiService.loadConversationMessages(accountId, conversationUri.rawRingId, root, n) }
+
 
     fun loadMore(conversation: Conversation, n: Int = 32): Single<Conversation> {
         synchronized(conversation) {
@@ -558,7 +560,7 @@ class AccountService(
                 details[ConfigKey.ARCHIVE_PASSWORD.key] = password
                 mExecutor.execute { JamiService.setAccountDetails(accountId, StringMap.toSwig(details)) }
             }
-            .subscribeOn(Schedulers.from(mExecutor))
+            .subscribeOn(scheduler)
     }
 
     fun setAccountEnabled(accountId: String, active: Boolean) {
@@ -605,7 +607,7 @@ class AccountService(
     fun getAccountTemplate(accountType: String): Single<HashMap<String, String>> {
         Log.i(TAG, "getAccountTemplate() $accountType")
         return Single.fromCallable { JamiService.getAccountTemplate(accountType).toNative() }
-            .subscribeOn(Schedulers.from(mExecutor))
+            .subscribeOn(scheduler)
     }
 
     /**
@@ -687,7 +689,7 @@ class AccountService(
     fun exportToFile(accountId: String, absolutePath: String, password: String): Completable =
         Completable.fromAction {
             require(JamiService.exportToFile(accountId, absolutePath, password)) { "Can't export archive" }
-        }.subscribeOn(Schedulers.from(mExecutor))
+        }.subscribeOn(scheduler)
 
     /**
      * @param accountId   id of the account
@@ -696,7 +698,7 @@ class AccountService(
     fun setAccountPassword(accountId: String, oldPassword: String, newPassword: String): Completable =
         Completable.fromAction {
             require(JamiService.changeAccountPassword(accountId, oldPassword, newPassword)) { "Can't change password" }
-        }.subscribeOn(Schedulers.from(mExecutor))
+        }.subscribeOn(scheduler)
 
     /**
      * Sets the active codecs list of the account in the Daemon
@@ -915,7 +917,7 @@ class AccountService(
             .doOnSubscribe {
                 mExecutor.execute { JamiService.lookupName(account, nameserver, name) }
             }
-            .subscribeOn(Schedulers.from(mExecutor))
+            .subscribeOn(scheduler)
 
     fun findRegistrationByAddress(account: String, nameserver: String, address: String): Single<RegisteredName> =
         if (address.isEmpty())
@@ -926,7 +928,7 @@ class AccountService(
             .doOnSubscribe {
                 mExecutor.execute { JamiService.lookupAddress(account, nameserver, address) }
             }
-            .subscribeOn(Schedulers.from(mExecutor))
+            .subscribeOn(scheduler)
 
     fun searchUser(account: String, query: String): Single<UserSearchResult> {
         if (query.isEmpty()) {
@@ -943,7 +945,7 @@ class AccountService(
             .doOnSubscribe {
                 mExecutor.execute { JamiService.searchUser(account, encodedUrl) }
             }
-            .subscribeOn(Schedulers.from(mExecutor))
+            .subscribeOn(scheduler)
     }
 
     /**
