@@ -1484,7 +1484,7 @@ class AccountService(
         mExecutor.execute { JamiService.cancelDataTransfer(accountId, conversationId, fileId) }
     }
 
-    private inner class DataTransferRefreshTask constructor(
+    private inner class DataTransferRefreshTask(
         private val account: Account,
         private val conversation: Conversation,
         private val toUpdate: DataTransfer
@@ -1524,11 +1524,11 @@ class AccountService(
         val progress = progressA[0]
         val total = totalA[0]
         synchronized(transfer) {
+            val oldState = transfer.status
             transfer.conversation = conversation
             transfer.daemonPath = File(paths[0]!!)
             transfer.status = transferStatus
             transfer.bytesProgress = progress
-            val oldState = transfer.status
             if (oldState != transferStatus) {
                 if (transferStatus == InteractionStatus.TRANSFER_ONGOING) {
                     DataTransferRefreshTask(account, conversation, transfer)
