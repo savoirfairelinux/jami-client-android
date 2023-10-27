@@ -53,6 +53,7 @@ import cx.ring.databinding.FragLocationSharingBinding
 import cx.ring.service.LocationSharingService
 import cx.ring.service.LocationSharingService.LocalBinder
 import cx.ring.utils.ConversationPath
+import cx.ring.utils.DeviceUtils
 import cx.ring.utils.TouchClickListener
 import cx.ring.views.AvatarFactory
 import dagger.hilt.android.AndroidEntryPoint
@@ -151,10 +152,8 @@ class LocationSharingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding?.let { binding ->
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                binding.locationShareTime1h.text = formatDuration(DateUtils.HOUR_IN_MILLIS, FormatWidth.WIDE)
-                binding.locationShareTime10m.text = formatDuration(10 * DateUtils.MINUTE_IN_MILLIS, FormatWidth.WIDE)
-            }
+            binding.locationShareTime1h.text = formatDuration(DateUtils.HOUR_IN_MILLIS, FormatWidth.WIDE)
+            binding.locationShareTime10m.text = formatDuration(10 * DateUtils.MINUTE_IN_MILLIS, FormatWidth.WIDE)
             binding.infoBtn.setOnClickListener { v: View ->
                 val padding = v.resources.getDimensionPixelSize(R.dimen.padding_large)
                 val textView = TextView(v.context)
@@ -225,11 +224,7 @@ class LocationSharingFragment : Fragment() {
         overlay?.disableMyLocation()
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
-    ) {
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         if (requestCode == REQUEST_CODE_LOCATION) {
             var granted = false
             for (result in grantResults) granted =
@@ -245,11 +240,10 @@ class LocationSharingFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        mDisposableBag.add(mServiceDisposableBag)
         mDisposableBag.add(mShowControlsSubject.subscribe { show: Boolean -> setShowControls(show) })
         mDisposableBag.add(mIsSharingSubject.subscribe { sharing: Boolean -> setIsSharing(sharing) })
         mDisposableBag.add(mShowMapSubject
-            .subscribeOn(AndroidSchedulers.mainThread())
+            .observeOn(DeviceUtils.uiScheduler)
             .subscribe { state: MapState ->
                 val p = parentFragment
                 if (p is ConversationFragment) {
@@ -261,7 +255,7 @@ class LocationSharingFragment : Fragment() {
             })
         mDisposableBag.add(mIsContactSharingSubject
             .distinctUntilChanged()
-            .observeOn(AndroidSchedulers.mainThread())
+            .observeOn(DeviceUtils.uiScheduler)
             .subscribe { sharing ->
                 binding?.let { binding  ->
                     if (sharing) {
@@ -306,7 +300,7 @@ class LocationSharingFragment : Fragment() {
                     list
                 }
             }
-            .observeOn(AndroidSchedulers.mainThread())
+            .observeOn(DeviceUtils.uiScheduler)
             .subscribe({ locations: List<LocationViewModel> ->
                 val context = context
                 if (context != null) {
@@ -565,7 +559,6 @@ class LocationSharingFragment : Fragment() {
             return fragment
         }
 
-        @RequiresApi(api = Build.VERSION_CODES.N)
         private fun formatDuration(millis: Long, width: FormatWidth): CharSequence {
             val formatter = MeasureFormat.getInstance(Locale.getDefault(), width)
             return when {

@@ -29,7 +29,12 @@ import android.location.Criteria
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
-import android.os.*
+import android.os.Binder
+import android.os.Build
+import android.os.Bundle
+import android.os.Handler
+import android.os.IBinder
+import android.os.SystemClock
 import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
@@ -56,7 +61,8 @@ import net.jami.services.ContactService
 import net.jami.services.ConversationFacade
 import org.json.JSONException
 import org.json.JSONObject
-import java.util.*
+import java.util.Date
+import java.util.Random
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import kotlin.math.ceil
@@ -178,25 +184,29 @@ class LocationSharingService : Service(), LocationListener {
                     .subscribe { notification -> mNotificationManager.notify(NOTIF_SYNC_SERVICE_ID, notification) })
             }
         } else if (ACTION_STOP == action) {
-            if (path == null) contactLocationShare.clear() else {
-                contactLocationShare.remove(path)
-                val jsonObject = JSONObject()
-                try {
-                    jsonObject.put("type", AccountService.Location.Type.Stop.toString())
-                    jsonObject.put("time", Long.MAX_VALUE)
-                } catch (e: JSONException) {
-                    e.printStackTrace()
+            if (path == null)
+                contactLocationShare.clear()
+            else {
+                val removed = contactLocationShare.remove(path)
+                if (removed != null) {
+                    val jsonObject = JSONObject()
+                    try {
+                        jsonObject.put("type", AccountService.Location.Type.Stop.toString())
+                        jsonObject.put("time", Long.MAX_VALUE)
+                    } catch (e: JSONException) {
+                        e.printStackTrace()
+                    }
+                    Log.w(TAG, "location send $jsonObject to ${contactLocationShare.size}")
+                    JamiService.sendAccountTextMessage(path.accountId, path.conversationId, StringMap().apply {
+                        setUnicode(CallService.MIME_GEOLOCATION, jsonObject.toString())
+                    }, 1)
                 }
-                Log.w(TAG, "location send $jsonObject to ${contactLocationShare.size}")
-                JamiService.sendAccountTextMessage(path.accountId, path.conversationId, StringMap().apply {
-                    setUnicode(CallService.MIME_GEOLOCATION, jsonObject.toString())
-                }, 1)
             }
             mContactSharingSubject.onNext(contactLocationShare.keys)
             if (contactLocationShare.isEmpty()) {
                 Log.w(TAG, "stopping sharing $intent")
                 mDisposableBag.clear()
-                stopForeground(true)
+                stopForeground(STOP_FOREGROUND_REMOVE)
                 stopSelf()
                 started = false
             } else {
