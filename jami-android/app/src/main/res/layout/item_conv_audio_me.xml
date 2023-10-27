@@ -112,7 +112,7 @@
             android:layout_height="wrap_content"
             android:layout_alignEnd="@id/audioInfoLayout"
             android:layout_below="@id/audioInfoLayout"
-            android:layout_marginEnd="@dimen/conversation_message_radius"
+            android:layout_marginEnd="@dimen/message_details_margin"
             android:maxWidth="200dp"
             android:textColor="@color/textColorSecondary"
             android:textSize="12sp"

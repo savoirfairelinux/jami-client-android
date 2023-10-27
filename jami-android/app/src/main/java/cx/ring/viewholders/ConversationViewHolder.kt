@@ -86,6 +86,7 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
     var mAnswerLayout: ViewGroup? = null
 
     // Ongoing call
+    var mCallLayout: LinearLayout? = null
     var mCallInfoLayout: LinearLayout? = null
     var mAcceptCallVideoButton: ImageButton? = null
     var mAcceptCallAudioButton: ImageButton? = null
@@ -120,6 +121,8 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
                 mHistTxt = v.findViewById(R.id.call_hist_txt)
                 mHistDetailTxt = v.findViewById(R.id.call_details_txt)
                 mCallInfoLayout = v.findViewById(R.id.callInfoLayout)
+                mCallLayout = v.findViewById(R.id.callLayout)
+                mMsgDetailTxtPerm = v.findViewById(R.id.msg_details_txt_perm)
                 primaryClickableView = mCallInfoLayout
             }
             MessageType.ONGOING_GROUP_CALL -> {
