@@ -27,35 +27,20 @@ along with this program; if not, write to the Free Software
     android:focusable="false"
     app:layout_anchorGravity="center_horizontal">
 
-    <RelativeLayout
-        android:id="@+id/contactDetailsGroup"
+    <TextView
+        android:id="@+id/contact_event_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal">
-
-        <TextView
-            android:id="@+id/contact_event_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ellipsize="middle"
-            android:marqueeRepeatLimit="marquee_forever"
-            android:maxLines="1"
-            android:scrollHorizontally="true"
-            android:singleLine="false"
-            android:textColor="@color/textColorSecondary"
-            android:textSize="12sp"
-            tools:text="Bob was invited, " />
-
-        <TextView
-            android:id="@+id/contact_event_details_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/contact_event_txt"
-            android:paddingHorizontal="4dp"
-            android:textColor="@color/textColorSecondary"
-            android:textSize="12sp"
-            tools:text="MAY 15, 15:28" />
-
-    </RelativeLayout>
+        android:layout_gravity="center_horizontal"
+        android:ellipsize="end"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:maxLines="2"
+        android:paddingHorizontal="@dimen/padding_large"
+        android:scrollHorizontally="true"
+        android:singleLine="false"
+        android:textAlignment="center"
+        android:textColor="@color/textColorSecondary"
+        android:textSize="12sp"
+        tools:text="Bob was invited, MAY 15, 15:28" />
 
 </FrameLayout>

@@ -1252,7 +1252,8 @@ class ConversationAdapter(
     private fun configureForContactEvent(viewHolder: ConversationViewHolder, interaction: Interaction) {
         val event = interaction as ContactEvent
         Log.w(TAG, "configureForContactEvent ${event.account} ${event.event} ${event.contact} ${event.author} ")
-        viewHolder.mMsgDetailTxt?.text = TextUtils.timestampToDetailString(viewHolder.itemView.context, event.timestamp)
+        val timestamp =
+            TextUtils.timestampToDetailString(viewHolder.itemView.context, event.timestamp)
 
         if (interaction.isSwarm) {
             viewHolder.compositeDisposable.add(
@@ -1266,7 +1267,7 @@ class ConversationAdapter(
                         ContactEvent.Event.BANNED -> R.string.conversation_contact_banned
                         else -> R.string.hist_contact_added
                     }, vm.displayName)
-                    viewHolder.mMsgTxt?.text = "$eventString, "
+                    viewHolder.mMsgTxt?.text = "$eventString, $timestamp"
                 })
         } else {
             val eventString = when (event.event) {
@@ -1277,7 +1278,7 @@ class ConversationAdapter(
                 ContactEvent.Event.INCOMING_REQUEST -> R.string.hist_invitation_received
                 else -> R.string.hist_contact_added
             }
-            viewHolder.mMsgTxt?.text = "$eventString, "
+            viewHolder.mMsgTxt?.text = "$eventString, $timestamp"
         }
     }
 
