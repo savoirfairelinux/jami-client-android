@@ -109,7 +109,7 @@
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/audioInfoLayout"
             android:layout_below="@+id/audioInfoLayout"
-            android:layout_marginStart="@dimen/conversation_message_radius"
+            android:layout_marginStart="18dp"
             android:textColor="@color/textColorSecondary"
             android:textSize="12sp"
             tools:text="1 mo - 12 mars" />

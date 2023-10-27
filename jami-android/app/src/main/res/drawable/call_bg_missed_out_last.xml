@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <stroke
+        android:width="1dp"
+        android:color="@color/call_missed_text_message" />
+
+    <corners
+        android:topLeftRadius="@dimen/conversation_message_radius"
+        android:topRightRadius="@dimen/conversation_message_minor_radius"
+        android:bottomRightRadius="@dimen/conversation_message_radius"
+        android:bottomLeftRadius="@dimen/conversation_message_radius"
+        />
+
+</shape>

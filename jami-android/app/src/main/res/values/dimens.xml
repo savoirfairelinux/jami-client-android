@@ -32,7 +32,7 @@ along with this program; if not, write to the Free Software
     <dimen name="conversation_message_input_margin">16dp</dimen>
     <dimen name="conversation_avatar_size">36dp</dimen>
     <dimen name="conversation_avatar_size_small">16dp</dimen>
-    <dimen name="conversation_message_radius">18dp</dimen>
+    <dimen name="conversation_message_radius">10dp</dimen>
     <dimen name="conversation_message_minor_radius">3dp</dimen>
     <dimen name="conversation_timestamp_textsize">12sp</dimen>
     <dimen name="conversation_status_icon_size">14dp</dimen>
@@ -125,5 +125,10 @@ along with this program; if not, write to the Free Software
 
     <!--  WelcomeJami  -->
     <dimen name="welcome_jami_logo_default_size">60dp</dimen>
+
+    <!--  ChatView  -->
+    <dimen name="padding_call_vertical">4dp</dimen>
+    <dimen name="text_message_padding">10dp</dimen>
+    <dimen name="message_details_margin">18dp</dimen>
 
 </resources>
