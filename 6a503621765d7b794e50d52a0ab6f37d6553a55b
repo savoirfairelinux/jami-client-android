@@ -16,6 +16,24 @@
       "message": "Should I abandon this change?",
       "revId": "6a503621765d7b794e50d52a0ab6f37d6553a55b",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "168cdbb7_005157cc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-10-27T19:48:16Z",
+      "side": 1,
+      "message": "Hi,\nYes we\u0027re currently implementing this very feature in the new chat UI, so it\u0027s fine to abandon this patch.\nHowever, thanks a lot for your contribution. It helped us prioritizing this feature.",
+      "parentUuid": "9e0dd92b_5ab65eff",
+      "revId": "6a503621765d7b794e50d52a0ab6f37d6553a55b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
