@@ -37,6 +37,14 @@ object ActionHelper {
     const val ACTION_DELETE = 2
     const val ACTION_BLOCK = 3
 
+    data class Padding(
+        val pixelsLeft: Int, val pixelsTop: Int,
+        val pixelsRight: Int, val pixelsBottom: Int
+    )
+
+    fun View.setPadding(padding: Padding) =
+        setPadding(padding.pixelsLeft, padding.pixelsTop, padding.pixelsRight, padding.pixelsBottom)
+
     /**
      * Share the given username with the system share intent.
      * @param context the context
