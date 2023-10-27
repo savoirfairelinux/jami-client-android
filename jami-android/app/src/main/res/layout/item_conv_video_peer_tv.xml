@@ -84,7 +84,7 @@
             android:layout_height="wrap_content"
             android:layout_alignStart="@id/video_frame"
             android:layout_below="@id/video_frame"
-            android:layout_marginStart="@dimen/conversation_message_radius"
+            android:layout_marginStart="@dimen/message_details_margin"
             android:textColor="@color/conversation_secondary_background"
             android:textSize="12sp"
             android:singleLine="true"

@@ -79,7 +79,7 @@
             android:layout_height="wrap_content"
             android:layout_alignEnd="@id/video_frame"
             android:layout_below="@id/video_frame"
-            android:layout_marginEnd="@dimen/conversation_message_radius"
+            android:layout_marginEnd="@dimen/message_details_margin"
             android:textColor="@color/textColorSecondary"
             android:textSize="@dimen/conversation_timestamp_textsize"
             android:singleLine="true"
