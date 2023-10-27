@@ -749,7 +749,7 @@ class NotificationServiceImpl(
 
     @SuppressLint("RestrictedApi")
     override fun showFileTransferNotification(conversation: Conversation, info: DataTransfer) {
-        val event = info.status ?: return
+        val event = info.status
         if (event == InteractionStatus.FILE_AVAILABLE)
             return
         val path = ConversationPath.toUri(conversation)
@@ -757,7 +757,8 @@ class NotificationServiceImpl(
         val dataTransferId = info.fileId ?: info.id.toString()
         val notificationId = getFileTransferNotificationId(path, dataTransferId)
         val intentViewConversation = Intent(Intent.ACTION_VIEW, path, mContext, HomeActivity::class.java)
-        val profile = getProfile(conversation) ?: return
+        //val profile = getProfile(conversation)
+        val author = mContactService.getLoadedContact(info.account!!, info.author!!).blockingGet()
 
         if (event.isOver) {
             removeTransferNotification(path, dataTransferId)
@@ -777,14 +778,14 @@ class NotificationServiceImpl(
                         .submit()
                         .get() as BitmapDrawable
                     img = d.bitmap
-                    notif.setContentTitle(mContext.getString(R.string.notif_incoming_picture, profile.second))
+                    notif.setContentTitle(mContext.getString(R.string.notif_incoming_picture, author.displayName))
                     notif.setStyle(NotificationCompat.BigPictureStyle().bigPicture(img))
                 } catch (e: Exception) {
                     Log.w(TAG, "Can't load image for notification", e)
                     return
                 }
             } else {
-                notif.setContentTitle(mContext.getString(R.string.notif_incoming_file_transfer_title, profile.second))
+                notif.setContentTitle(mContext.getString(R.string.notif_incoming_file_transfer_title, author.displayName))
                 notif.setStyle(null)
             }
             val picture = getContactPicture(conversation)
@@ -796,11 +797,7 @@ class NotificationServiceImpl(
             mNotificationBuilders.put(notificationId, this)
         }
         val ongoing = event == InteractionStatus.TRANSFER_ONGOING || event == InteractionStatus.TRANSFER_ACCEPTED
-        val titleMessage = mContext.getString(
-            if (info.isOutgoing) R.string.notif_outgoing_file_transfer_title else R.string.notif_incoming_file_transfer_title,
-            profile.second
-        )
-        messageNotificationBuilder.setContentTitle(titleMessage)
+        messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_incoming_file_transfer_title, author.displayName))
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             .setAutoCancel(false)
