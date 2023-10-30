@@ -281,7 +281,7 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
                 expandPendingView()
             }
             binding.invitationCard.pendingToolbar // Return to search
-                .setNavigationOnClickListener { activity?.onBackPressedDispatcher?.onBackPressed() }
+                .setNavigationOnClickListener { collapsePendingView() }
 
             mBinding = binding
             binding.root
