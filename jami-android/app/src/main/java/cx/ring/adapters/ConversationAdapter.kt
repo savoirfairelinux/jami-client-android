@@ -98,8 +98,6 @@ class ConversationAdapter(
     private val mInteractions = ArrayList<Interaction>()
     private val res = conversationFragment.resources
     private val mPictureMaxSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 200f, res.displayMetrics).toInt()
-    private val mPreviewMaxSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100f, res.displayMetrics).toInt()
-    private var currentSelectionId: String? = null
     private var mCurrentLongItem: RecyclerViewContextMenuInfo? = null
     @ColorInt private var convColor = 0
     @ColorInt private var convColorTint = 0
@@ -1014,7 +1012,7 @@ class ConversationAdapter(
         longPressView.setOnLongClickListener { v: View ->
             if (type == MessageType.TransferType.AUDIO || type == MessageType.TransferType.FILE) {
                 conversationFragment.updatePosition(viewHolder.bindingAdapterPosition)
-                longPressView.background.setTint(res.getColor(R.color.grey_500))
+                longPressView.background.setTint(viewHolder.itemView.context.getColor(R.color.grey_500))
             }
             openItemMenu(viewHolder,v, file)
             mCurrentLongItem = RecyclerViewContextMenuInfo(viewHolder.bindingAdapterPosition, v.id.toLong())
@@ -1108,7 +1106,7 @@ class ConversationAdapter(
                     }
                     conversationFragment.updatePosition(convViewHolder.bindingAdapterPosition)
                     if (textMessage.isIncoming) {
-                        longPressView.background.setTint(res.getColor(R.color.grey_500))
+                        longPressView.background.setTint(convViewHolder.itemView.context.getColor(R.color.grey_500))
                     } else {
                         longPressView.background.setTint(convColorTint)
                     }
@@ -1314,7 +1312,7 @@ class ConversationAdapter(
                 }
                 // When long clicked...
                 setOnLongClickListener { v: View ->
-                    background.setTint(res.getColor(R.color.grey_500))
+                    background.setTint(convViewHolder.itemView.context.getColor(R.color.grey_500))
                     // Open Context Menu
                     conversationFragment.updatePosition(convViewHolder.adapterPosition)
                     mCurrentLongItem =
@@ -1351,8 +1349,10 @@ class ConversationAdapter(
                     callInfoLayout.background?.setTintList(null)
                     val callIcon = convViewHolder.mIcon ?: return@subscribe
                     callIcon.drawable?.setTintList(null)
-                    val histTxt = convViewHolder.mHistTxt ?: return@subscribe
+                    val typeCall = convViewHolder.mHistTxt ?: return@subscribe
+                    val detailCall = convViewHolder.mHistDetailTxt ?: return@subscribe
                     val resIndex: Int
+                    val typeCallTxt : String
 
                     // Manage the update of the timestamp
                     if (isTimeShown) {
@@ -1369,50 +1369,49 @@ class ConversationAdapter(
                         if (call.isMissed) { // Call incoming missed.
                             resIndex = msgSequenceType.ordinal + 12
                             // Set the call message color.
-                            histTxt.setTextColor(
-                                convViewHolder.itemView.context
-                                    .getColor(R.color.call_missed_text_message)
+                            typeCall.setTextColor(
+                                convViewHolder.itemView.context.getColor(R.color.call_missed_text_message)
                             )
                             callIcon.setImageResource(R.drawable.baseline_missed_call_16)
                             // Set the drawable color to red because it is missed.
                             callIcon.drawable.setTint(context.getColor(R.color.call_missed))
-                            histTxt.text = context.getString(R.string.notif_missed_incoming_call)
+                            typeCallTxt = context.getString(R.string.notif_missed_incoming_call)
                         } else { // Call incoming not missed.
                             resIndex = msgSequenceType.ordinal + 4
                             // Set the call message color.
-                            histTxt.setTextColor(
+                            typeCall.setTextColor(
                                 convViewHolder.itemView.context.getColor(R.color.colorOnSurface)
                             )
                             callIcon.setImageResource(R.drawable.baseline_incoming_call_16)
                             callIcon.drawable.setTint(context.getColor(R.color.colorOnSurface))
-                            histTxt.text = context.getString(R.string.notif_incoming_call)
+                            typeCallTxt = context.getString(R.string.notif_incoming_call)
                         }
                         // Put the message to the left because it is incoming.
                         convViewHolder.mCallLayout?.gravity = Gravity.START
+                        callIcon.scaleX = 1f
                     } else {
                         if (call.isMissed) { // Outgoing call missed.
                             resIndex = msgSequenceType.ordinal + 16
                             // Set the call message color .
-                            histTxt.setTextColor(
-                                convViewHolder.itemView.context
-                                    .getColor(R.color.call_missed_text_message)
+                            typeCall.setTextColor(
+                                convViewHolder.itemView.context.getColor(R.color.call_missed_text_message)
                             )
                             callIcon.setImageResource(R.drawable.baseline_missed_call_16)
                             // Set the drawable color to red because it is missed.
                             callIcon.drawable.setTint(context.getColor(R.color.call_missed))
-                            histTxt.text = context.getString(R.string.notif_missed_outgoing_call)
+                            typeCallTxt = context.getString(R.string.notif_missed_outgoing_call)
                             // Flip the photo upside down to show a "missed outgoing call".
                             callIcon.scaleX = -1f
                         } else { // Outgoing call not missed.
                             resIndex = msgSequenceType.ordinal
                             // Set the call message color.
-                            histTxt.setTextColor(
-                                convViewHolder.itemView.context
-                                    .getColor(R.color.call_text_outgoing_message)
+                            typeCall.setTextColor(
+                                convViewHolder.itemView.context.getColor(R.color.call_text_outgoing_message)
                             )
                             callIcon.setImageResource(R.drawable.baseline_outgoing_call_16)
                             callIcon.drawable.setTint(context.getColor(R.color.call_drawable_color))
-                            histTxt.text = context.getString(R.string.notif_outgoing_call)
+                            typeCallTxt = context.getString(R.string.notif_outgoing_call)
+                            callIcon.scaleX = 1f
                         }
                         // Put the message to the right because it is outgoing.
                         convViewHolder.mCallLayout?.gravity = Gravity.END
@@ -1423,6 +1422,25 @@ class ConversationAdapter(
                     // Manage background to convColor if it is outgoing and not missed.
                     if (convColor != 0 && !call.isIncoming && !call.isMissed) {
                         callInfoLayout.background.setTint(convColor)
+                    }
+                    typeCall.text = typeCallTxt
+                    // Add the call duration if not null.
+                    detailCall.text =
+                        if (call.duration != 0L) {
+                            String.format(
+                                context.getString(R.string.call_duration), call.shortDurationString
+                            ).let { " - $it" }
+                        } else null
+                    // Set the color of the time duration.
+                    if (!call.isIncoming && !call.isMissed) {
+                        detailCall.setTextColor(
+                            convViewHolder.itemView.context.getColor(R.color.call_text_outgoing_message)
+                        )
+                    }
+                    if (call.isIncoming && !call.isMissed) {
+                        detailCall.setTextColor(
+                            convViewHolder.itemView.context.getColor(R.color.colorOnSurface)
+                        )
                     }
                 })
     }
@@ -1571,17 +1589,6 @@ class ConversationAdapter(
         val prevMsg = getPreviousMessageFromPosition(position)
         return prevMsg != null && msg.timestamp - prevMsg.timestamp > 10 * DateUtils.MINUTE_IN_MILLIS
     }
-
-    private fun lastOutgoingIndex(): Int {
-        var i: Int = mInteractions.size - 1
-        while (i >= 0) {
-            if (!mInteractions[i].isIncoming)
-                break
-            i--
-        }
-        return i
-    }
-
     private enum class SequenceType { FIRST, MIDDLE, LAST, SINGLE }
 
     companion object {

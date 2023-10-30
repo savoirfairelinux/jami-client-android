@@ -25,7 +25,9 @@ import net.jami.utils.Log
 import net.jami.utils.ProfileChunk
 import net.jami.utils.VCardUtils
 import java.lang.UnsupportedOperationException
+import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 class Call : Interaction {
     override val daemonIdString: String?
@@ -180,6 +182,20 @@ class Call : Interaction {
                 String.format(Locale.getDefault(), "%02d mins %02d secs", mDuration % 3600 / 60, mDuration % 60)
             else
                 String.format(Locale.getDefault(), "%d h %02d mins %02d secs", mDuration / 3600, mDuration % 3600 / 60, mDuration % 60)
+        }
+
+    val shortDurationString: String
+        get() {
+            val mDuration = duration ?: return ""
+
+            val formatter =
+                if (mDuration < 3600000L) SimpleDateFormat("mm:ss")
+                else if (mDuration < 24* 3600000L) SimpleDateFormat("HH:mm:ss")
+                else {
+                    Log.w(TAG, "Call duration is too long to be displayed.")
+                    return ""
+                }
+            return formatter.format(Date(TimeUnit.MILLISECONDS.toMillis(mDuration)))
         }
 
     fun setCallState(callStatus: CallStatus) {
