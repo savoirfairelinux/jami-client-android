@@ -25,7 +25,6 @@ import net.jami.utils.Log
 import net.jami.utils.ProfileChunk
 import net.jami.utils.VCardUtils
 import java.lang.UnsupportedOperationException
-import java.util.*
 
 class Call : Interaction {
     override val daemonIdString: String?
@@ -170,18 +169,6 @@ class Call : Interaction {
     val isGroupCall: Boolean
         get() = isConferenceParticipant && duration == 0L
 
-    val durationString: String
-        get() {
-            val mDuration = duration!! / 1000
-            if (mDuration < 60) {
-                return String.format(Locale.getDefault(), "%02d secs", mDuration)
-            }
-            return if (mDuration < 3600)
-                String.format(Locale.getDefault(), "%02d mins %02d secs", mDuration % 3600 / 60, mDuration % 60)
-            else
-                String.format(Locale.getDefault(), "%d h %02d mins %02d secs", mDuration / 3600, mDuration % 3600 / 60, mDuration % 60)
-        }
-
     fun setCallState(callStatus: CallStatus) {
         this.callStatus = callStatus
         if (callStatus == CallStatus.CURRENT) {
@@ -193,22 +180,10 @@ class Call : Interaction {
             mStatus = InteractionStatus.FAILURE.toString()
         }
     }
-
-    /*override var timestamp: Long
-        get() = super.timestamp
-        set(timestamp) {
-            var timestamp = timestamp
-            timestamp = timestamp
-        }*/
     val isRinging: Boolean
         get() = callStatus.isRinging
     val isOnGoing: Boolean
         get() = callStatus.isOnGoing
-    /*override var isIncoming: Direction
-        get() = super.isIncoming
-        set(direction) {
-            field = direction == Direction.INCOMING
-        }*/
 
     fun appendToVCard(messages: Map<String, String>): VCard? {
         for ((key, value) in messages) {

@@ -28,12 +28,15 @@ import cx.ring.R
 import cx.ring.databinding.ItemSmartlistBinding
 import cx.ring.databinding.ItemSmartlistHeaderBinding
 import cx.ring.utils.DeviceUtils
+import cx.ring.utils.DurationFormat
 import cx.ring.utils.TextUtils
 import cx.ring.views.AvatarDrawable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.model.*
 import net.jami.services.ConversationFacade
 import net.jami.smartlist.ConversationItemViewModel
+import kotlin.time.DurationUnit
+import kotlin.time.toDuration
 
 class SmartListViewHolder : RecyclerView.ViewHolder {
     private val binding: ItemSmartlistBinding?
@@ -148,12 +151,13 @@ class SmartListViewHolder : RecyclerView.ViewHolder {
             }
         } else if (e.type == Interaction.InteractionType.CALL) {
             val call = e as Call
+            val callDuration = call.duration!!.toDuration(DurationUnit.MILLISECONDS)
             return if (call.isMissed) if (call.isIncoming) context.getString(R.string.notif_missed_incoming_call) else context.getString(
                 R.string.notif_missed_outgoing_call
             ) else if (call.isIncoming) String.format(
                 context.getString(R.string.hist_in_call),
-                call.durationString
-            ) else String.format(context.getString(R.string.hist_out_call), call.durationString)
+                DurationFormat().format(callDuration)
+            ) else String.format(context.getString(R.string.hist_out_call), DurationFormat().format(callDuration))
         } else if (e.type == Interaction.InteractionType.CONTACT) {
             val contactEvent = e as ContactEvent
             if (contactEvent.event == ContactEvent.Event.ADDED) {
