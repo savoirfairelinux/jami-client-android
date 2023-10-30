@@ -1295,7 +1295,7 @@ class ConversationAdapter(
         val context = convViewHolder.itemView.context
 
         // Reset the scale of the icon
-        convViewHolder.mIcon?.scaleY = 1f
+        convViewHolder.mIcon?.scaleX = 1f
 
         // In the case were it is not a swarm (legacy call or SIP?)
         if (!interaction.isSwarm) {
