@@ -304,9 +304,9 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                 scrollToEnd()
             }
             setHasOptionsMenu(true)
-            if (!DeviceUtils.isTablet(requireContext())) {
-                binding.toolbar.setNavigationIcon(androidx.appcompat.R.drawable.abc_ic_ab_back_material)
-                binding.toolbar.setNavigationOnClickListener { activity?.onBackPressedDispatcher?.onBackPressed() }
+            binding.toolbar.setNavigationIcon(androidx.appcompat.R.drawable.abc_ic_ab_back_material)
+            binding.toolbar.setNavigationOnClickListener {
+                activity?.onBackPressedDispatcher?.onBackPressed()
             }
             binding.root
         }
