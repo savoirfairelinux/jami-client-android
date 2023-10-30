@@ -211,7 +211,7 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
             it as SlidingPaneLayout
 
             if (it.isSlideable) {
-                if (fConversation == null) it.closePane()
+                if (fConversation == null) it.closePane(); return@doOnNextLayout
                 it.openPane() // Force the pane to be open to show the conversation
             } else {
                 if (fConversation == null) {
