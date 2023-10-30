@@ -377,8 +377,14 @@
   <string name="picker_btn">Elegir contactos</string>
   <string name="bottomsheet_contact">Contacta con Jami\n%1$s</string>
   <string name="bottomsheet_remove">Retirada del enjambre</string>
+  <string name="error_open_no_app_found">No se ha encontrado una aplicación para manejar este archivo: %1$s</string>
   <!--JamiId-->
+  <string name="jami_id_copy">Copiar JamiId</string>
+  <string name="jami_id_share">Compartir JamiId</string>
   <string name="jami_id_validate">Registrar nombre de usuario</string>
+  <string name="jami_id_available">El nombre de usuario no está disponible</string>
+  <string name="jami_id_not_available">El nombre de usuario no está disponible\n• Máximo 32 caracteres\n• Caracteres especiales permitidos: guion (-), subrayado (_)</string>
+  <string name="jami_id_info">• Máximo 32 caracteres\n• Caracteres especiales permitidos: guion (-), subrayado (_)</string>
   <string name="jami_id_looking_for_availability">Revisando si el nombre de usuario está disponible</string>
   <string name="jami_id_choose_username">Elegir nombre de usuario</string>
   <!--WelcomeJami-->

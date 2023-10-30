@@ -23,7 +23,7 @@ along with this program; if not, write to the Free Software
     <!-- SipCalls -->
     <string name="call_human_state_searching">Ricerca</string>
     <string name="call_human_state_incoming">In arrivo</string>
-    <string name="call_human_state_connecting">Collegamento</string>
+    <string name="call_human_state_connecting">Connessione in corso</string>
     <string name="call_human_state_ringing">Squilla</string>
     <string name="call_human_state_current">In chiamata</string>
     <string name="call_human_state_hungup">Terminata</string>

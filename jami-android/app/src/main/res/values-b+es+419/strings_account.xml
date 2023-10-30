@@ -24,7 +24,23 @@
   <!--Edit profile-->
   <!--Devices-->
   <!--Link a new device-->
+  <string name="account_link_prompt_pin_manually">Introducir PIN manualmente</string>
+  <string name="qr_invalid">No es un código QR de autenticación de Jami</string>
+  <string name="content_description_checkbox">Su código Qr es válido</string>
   <string name="error_format_not_supported">Formato no soportado.</string>
+  <string name="account_link_info">En la nueva aplicación de Jami, escanear el código QR o introducir manualmente el PIN.</string>
   <string name="account_link_device_title">Vincular un nuevo dispositivo</string>
+  <string name="account_link_password">Esta cuenta está cifrada con contraseña, introducir la contraseña para generar el código PIN.</string>
+  <string name="account_link_generate_button">Generar</string>
+  <string name="account_link_time_valid">El código PIN será inválido: %1$s.</string>
+  <string name="account_link_device_info">Elegir \"Enlazar un nuevo dispositivo\" desde la otra aplicación de Jami para mostrar el código QR o el PIN</string>
+  <string name="account_generate_export_device">En el otro dispositivo</string>
+  <string name="account_generate_export_info">Instalar y abrir Jami, seleccionar \"Importar desde otro dispositivo\" y escanear el código QR.</string>
+  <string name="content_description_qr_generated">Su código Qr</string>
+  <string name="account_generate_export_invalid">El PIN ya no es válido.\n Introduzca la contraseña y genere otro para enlazar el nuevo dispositivo.</string>
+  <string name="account_generate_export_invalid_two">El PIN ya no es válido.\n Generar otro para enlazar el nuevo dispositivo.</string>
+  <string name="help_pin_info">Rellene si la cuenta está cifrada con contraseña</string>
+  <string name="connect_device_scanqr">Escanear QR</string>
+  <string name="connect_device_enterPIN">O introducir PIN</string>
   <string name="account_link_device_button">Conectarse</string>
 </resources>

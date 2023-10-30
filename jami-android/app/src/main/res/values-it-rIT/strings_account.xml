@@ -218,7 +218,7 @@ Potrai modificare il tuo account successivamente</string>
   <string name="invalid_username">Nome utente non valido</string>
   <string name="unknown_error">Errore sconosciuto. Controlla la tua connessione di rete!</string>
   <string name="looking_for_username_availability">La disponibilità del nome utente viene controllata...</string>
-  <string name="account_status_connecting">Collegamento</string>
+  <string name="account_status_connecting">Connessione in corso</string>
   <string name="account_status_connection_error">Errore di connessione</string>
   <string name="account_status_online">Connesso</string>
   <string name="account_status_unknown">Sconosciuto</string>
