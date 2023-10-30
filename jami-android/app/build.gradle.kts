@@ -101,7 +101,6 @@ dependencies {
     implementation ("androidx.appcompat:appcompat:1.6.1")
     implementation ("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation ("androidx.cardview:cardview:1.0.0")
-    implementation ("com.caverock:androidsvg-aar:1.4")
     implementation ("androidx.preference:preference-ktx:1.2.1")
     implementation ("androidx.recyclerview:recyclerview:1.3.2")
     implementation ("androidx.leanback:leanback:1.2.0-alpha03")
@@ -139,6 +138,8 @@ dependencies {
     // Glide
     implementation ("com.github.bumptech.glide:glide:4.15.1")
     ksp("com.github.bumptech.glide:ksp:4.15.1")
+    // Android SVG
+    implementation ("com.caverock:androidsvg-aar:1.4")
 
     // RxAndroid
     implementation ("io.reactivex.rxjava3:rxandroid:3.0.2")
