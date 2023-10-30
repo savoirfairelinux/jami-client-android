@@ -37,6 +37,7 @@ import cx.ring.R
 import cx.ring.account.AccountEditionFragment
 import cx.ring.databinding.FragLinkDeviceBinding
 import cx.ring.mvp.BaseBottomSheetFragment
+import cx.ring.utils.BiometricHelper
 import cx.ring.utils.KeyboardVisibilityManager.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 import net.jami.account.LinkDevicePresenter
@@ -69,10 +70,18 @@ class LinkDeviceFragment : BaseBottomSheetFragment<LinkDevicePresenter>(), LinkD
         arguments?.let { arguments ->
             arguments.getString(AccountEditionFragment.ACCOUNT_ID_KEY)?.let { accountId ->
                 presenter.setAccountId(accountId)
+            // go directly to the qr and pin page if there is no account password
+            if (!mAccountHasPassword)
+                onClickStart()
+            else
+                BiometricHelper.startBiometricLogin(this, accountId) { encryptedInfo: ByteArray? ->
+                    if (encryptedInfo != null) {
+                        val password = String(encryptedInfo)
+                        presenter.startAccountExport(password)
+                    }
+                }
             }
         }
-        // go directly to the qr and pin page if there is no account password
-        if (!mAccountHasPassword) onClickStart()
     }
 
     /**

@@ -1,24 +1,24 @@
 /*
- * Copyright (C) 2004-2023 Savoir-faire Linux Inc.
+ *  Copyright (C) 2004-2023 Savoir-faire Linux Inc.
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 3 of the License, or
- * (at your option) any later version.
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *  GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 package cx.ring.account
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -28,17 +28,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import android.widget.CompoundButton
 import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import cx.ring.R
 import cx.ring.databinding.FragAccJamiPasswordBinding
 import cx.ring.mvp.BaseSupportFragment
+import cx.ring.utils.BiometricHelper
 import dagger.hilt.android.AndroidEntryPoint
 import net.jami.account.JamiAccountCreationPresenter
 import net.jami.account.JamiAccountCreationView
 import net.jami.account.JamiAccountCreationView.UsernameAvailabilityStatus
-import net.jami.model.AccountCreationModel
 
 @AndroidEntryPoint
 class JamiAccountPasswordFragment : BaseSupportFragment<JamiAccountCreationPresenter, JamiAccountCreationView>(),
@@ -46,10 +45,34 @@ class JamiAccountPasswordFragment : BaseSupportFragment<JamiAccountCreationPrese
     private val model: AccountCreationViewModel by activityViewModels()
     private var binding: FragAccJamiPasswordBinding? = null
     private var mIsChecked = false
+    private lateinit var biometricEnroll: BiometricHelper.BiometricEnroll
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == BiometricHelper.REQUEST_CODE_ENROLL) {
+            if (resultCode == Activity.RESULT_OK) {
+                if (!biometricEnroll.start())
+                    presenter.createAccount()
+            } else {
+                presenter.createAccount()
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    private fun nextStep() {
+        biometricEnroll = BiometricHelper.BiometricEnroll(this@JamiAccountPasswordFragment, model.model.password) { info ->
+            presenter.biometricInfoChanged(info)
+            presenter.createAccount()
+        }
+        if (!biometricEnroll.start())
+            presenter.createAccount()
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         FragAccJamiPasswordBinding.inflate(inflater, container, false).apply {
-            createAccount.setOnClickListener { presenter.createAccount() }
+            createAccount.setOnClickListener {
+                nextStep()
+            }
             ringPasswordSwitch.setOnCheckedChangeListener { _, isChecked: Boolean ->
                 mIsChecked = isChecked
                 if (isChecked) {
@@ -81,17 +104,11 @@ class JamiAccountPasswordFragment : BaseSupportFragment<JamiAccountCreationPrese
 
                 override fun afterTextChanged(s: Editable) {}
             })
-            ringPasswordRepeat.setOnEditorActionListener { v: TextView?, actionId: Int, event: KeyEvent? ->
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    presenter.createAccount()
-                }
-                false
-            }
             ringPasswordRepeat.setOnEditorActionListener { v: TextView, actionId: Int, event: KeyEvent? ->
                 if (actionId == EditorInfo.IME_ACTION_DONE && binding!!.createAccount.isEnabled) {
                     val inputMethodManager = v.context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager?
                     inputMethodManager?.hideSoftInputFromWindow(v.windowToken, 0)
-                    presenter.createAccount()
+                    nextStep()
                     return@setOnEditorActionListener true
                 }
                 false

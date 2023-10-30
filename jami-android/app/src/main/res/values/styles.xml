@@ -392,6 +392,18 @@
         <item name="android:textSize">16sp</item>
         <item name="materialAlertDialogTitleTextStyle">@style/TitleTextStyle</item>
     </style>
+    <style name="BiometricMaterialAlertDialog" parent="RoundedMaterialAlertDialog">
+        <item name="colorPrimary">@color/black</item>
+        <item name="colorSecondary">@color/primary_text_default_material_dark</item>
+        <item name="colorSurface">@color/black</item>
+        <item name="colorOnSurface">@color/primary_text_default_material_dark</item>
+        <item name="colorOnSurfaceVariant">@color/secondary_text_default_material_dark</item>
+        <item name="android:textColor">@color/color_primary_light_translucent</item>
+        <item name="buttonBarPositiveButtonStyle">@style/BiometricMaterialAlertDialog</item>
+        <item name="buttonBarNegativeButtonStyle">@style/BiometricMaterialAlertDialog</item>
+    </style>
+
+    <style name="BiometricMaterialAlertDialog.Button" parent="MaterialAlertDialog.Material3.Title.Text" />
 
     <style name="ShapeAppearanceOverlay.Dialog.Rounded" parent="">
         <item name="cornerFamily">rounded</item>

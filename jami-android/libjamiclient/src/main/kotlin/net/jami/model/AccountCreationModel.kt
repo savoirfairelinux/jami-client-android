@@ -28,6 +28,7 @@ abstract class AccountCreationModel {
     var managementServer: String? = null
     var username = ""
     var password = ""
+    var biometricInfo: BiometricInfo? = null
     var archive: File? = null
     var isLink = false
     var isPush = true

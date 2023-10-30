@@ -20,6 +20,7 @@ package net.jami.account
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.subjects.PublishSubject
 import net.jami.model.AccountCreationModel
+import net.jami.model.BiometricInfo
 import net.jami.mvp.RootPresenter
 import net.jami.services.AccountService
 import net.jami.services.AccountService.RegisteredName
@@ -124,6 +125,10 @@ class JamiAccountCreationPresenter @Inject constructor(
         }
         this.passwordConfirm = passwordConfirm
         view?.enableNextButton(isPasswordCorrect && isConfirmCorrect)
+    }
+
+    fun biometricInfoChanged(info: BiometricInfo?) {
+        accountCreationModel?.biometricInfo = info
     }
 
     fun createAccount() {
