@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "36f9aacd_96fb17d6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 943
+      },
+      "writtenOn": "2023-10-30T13:57:42Z",
+      "side": 1,
+      "message": "What will happen if the user downgrades to an older version of Jami?\n\nOr uses a modified version without this patch?\n\nCan the biometric authentication be bypassed?\nOr other methods https://sec-consult.com/blog/detail/bypassing-android-biometric-authentication/ ?\nhttps://blog.compass-security.com/2021/09/ionic-identity-vault-biometric-authentication-bypass/",
+      "revId": "a73730c35bd8a4880cb5dd65849a3764269787f4",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
