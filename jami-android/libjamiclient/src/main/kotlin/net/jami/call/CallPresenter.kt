@@ -448,7 +448,7 @@ class CallPresenter @Inject constructor(
         val conference = mConference ?: return
         val contact = info?.contact
         val toMaximize = if (conference.maximizedParticipant == contact?.contact) null else info
-        conference.maximizedParticipant = contact?.contact
+        conference.maximizedParticipant = toMaximize?.contact?.contact
         if (toMaximize != null) {
             mCallService.setConfMaximizedParticipant(conference.accountId, conference.id, toMaximize.contact.contact.uri)
         } else {
