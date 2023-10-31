@@ -174,8 +174,8 @@ class LinkDeviceFragment : BaseBottomSheetFragment<LinkDevicePresenter>(), LinkD
         // encode the qr code with the pin generated
         val qrCodeData = QRCodeUtils.encodeStringAsQRCodeData(
             pin,
-            resources.getColor(R.color.qr_code_color, null),
-            resources.getColor(R.color.transparent, null)
+            resources.getColor(R.color.black, null),
+            resources.getColor(R.color.white, null)
         )
         var bitmap = qrCodeData?.let {
             Bitmap.createBitmap(it.width, qrCodeData.height, Bitmap.Config.ARGB_8888).apply {
