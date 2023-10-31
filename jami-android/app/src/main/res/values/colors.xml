@@ -86,9 +86,6 @@
     <!--  WelcomeJami  -->
     <color name="welcome_jami_surface_color">#000000</color>
 
-    <!--  QrCode  -->
-    <color name="qr_code_color">#000000</color>
-
     <!--  ChatView  -->
     <color name="call_missed">#CC0022</color>
     <color name="call_text_outgoing_message">#FFF</color>

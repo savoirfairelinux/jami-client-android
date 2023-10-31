@@ -48,7 +48,6 @@
                 android:layout_gravity="center"
                 android:contentDescription="@string/content_description_qr_generated"
                 android:scaleType="fitCenter"
-                app:tint="@color/qr_code_color"
                 tools:src="@drawable/baseline_qr_code_2_black_24dp" />
         </FrameLayout>
 

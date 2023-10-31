@@ -53,9 +53,6 @@
     <!--  WelcomeJami  -->
     <color name="welcome_jami_surface_color">#FFFFFF</color>
 
-    <!--  QrCode  -->
-    <color name="qr_code_color">#FFF</color>
-
     <!--  ChatView  -->
     <color name="call_missed">#FA2E30</color>
     <color name="icon_background_color">#202020</color>
