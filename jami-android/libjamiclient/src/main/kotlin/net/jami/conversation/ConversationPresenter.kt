@@ -56,7 +56,6 @@ class ConversationPresenter @Inject constructor(
     }
     private val mConversationSubject: Subject<Conversation> = BehaviorSubject.create()
     private var searchQuerySubject: Subject<String>? = null
-    private var myId: String? = null
 
     fun init(conversationUri: Uri, accountId: String) {
         if (conversationUri == mConversationUri) return
@@ -66,7 +65,6 @@ class ConversationPresenter @Inject constructor(
         mConversationUri = conversationUri
         mCompositeDisposable.add(conversationFacade.getAccountSubject(accountId)
             .flatMap { a: Account ->
-                myId = a.username
                 conversationFacade.loadConversationHistory(a, conversationUri)
                     .observeOn(uiScheduler)
                     .doOnSuccess { c: Conversation -> setConversation(a, c) }
@@ -496,27 +494,6 @@ class ConversationPresenter @Inject constructor(
         val conversation = mConversation ?: return
         accountService.editConversationMessage(
             conversation.accountId, conversation.uri, "", reactionToRemove.messageId!!
-        )
-    }
-
-    /**
-     * Remove all reactions (emoji)
-     * Remove a reaction with git system consists in creating an "edit" interaction with empty body.
-     * @param interaction to clean from reaction
-     */
-    fun removeAllReactions(interaction: Interaction) {
-        val conversation = mConversation ?: return
-        // User can only remove his reactions.
-        mCompositeDisposable.add(interaction.reactionObservable
-            .firstOrError()
-            .subscribe { interactionList ->
-                interactionList.filter { it.author == myId }.forEach { interaction ->
-                    accountService.editConversationMessage(
-                        conversation.accountId,
-                        conversation.uri, "", interaction.messageId!!
-                    )
-                }
-            }
         )
     }
 
