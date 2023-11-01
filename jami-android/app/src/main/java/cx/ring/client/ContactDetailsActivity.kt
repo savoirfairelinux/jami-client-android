@@ -400,7 +400,7 @@ class ContactDetailsActivity : AppCompatActivity(), TabLayout.OnTabSelectedListe
         startActivity(Intent(Intent.ACTION_VIEW,
             ConversationPath.toUri(accountId, conversationUri),
             applicationContext,
-            ConversationActivity::class.java
+            HomeActivity::class.java
         ))
     }
 

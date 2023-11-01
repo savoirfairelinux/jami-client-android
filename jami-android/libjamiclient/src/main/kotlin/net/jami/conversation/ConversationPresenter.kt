@@ -64,16 +64,30 @@ class ConversationPresenter @Inject constructor(
         view?.setSettings(settings.enableLinkPreviews)
         mConversationUri = conversationUri
         mCompositeDisposable.add(conversationFacade.getAccountSubject(accountId)
-            .flatMap { a: Account ->
-                conversationFacade.loadConversationHistory(a, conversationUri)
-                    .observeOn(uiScheduler)
-                    .doOnSuccess { c: Conversation -> setConversation(a, c) }
+            .flatMapObservable { account: Account ->
+                val conversation = account.getByUri(conversationUri)!!
+                conversation.mode.flatMap { conversationMode: Conversation.Mode ->
+                    if (conversationMode === Conversation.Mode.Legacy)
+                        conversation.contact!!.conversationUri.switchMapSingle { uri ->
+                            conversationFacade.startConversation(accountId, uri)
+                        }
+                    else
+                        Observable.just(conversation)
+                }.switchMapSingle { conversation ->
+                    conversationFacade.loadConversationHistory(conversation)
+                        .map { Pair(account, it) }
+                }
             }
             .observeOn(uiScheduler)
-            .subscribe({}) { e: Throwable ->
-                Log.e(TAG, "Error loading conversation", e)
+            .subscribe(
+                { (account, conversation) ->
+                    setConversation(account, conversation)
+                }
+            ) { error: Throwable ->
                 view?.goToHome()
-            })
+                Log.e(TAG, "Error loading conversation", error)
+            }
+        )
     }
 
     override fun unbindView() {
@@ -152,11 +166,6 @@ class ConversationPresenter @Inject constructor(
                     .doOnNext { convViewModel -> initContact(account, convViewModel, this.view!!) }
             }
             .subscribe())
-        disposable.add(c.mode
-            .switchMap { mode: Conversation.Mode ->
-                if (mode === Conversation.Mode.Legacy) c.contact!!.conversationUri else Observable.empty() }
-            .observeOn(uiScheduler)
-            .subscribe { uri: Uri -> init(uri, account.accountId) })
         disposable.add(Observable.combineLatest(hardwareService.connectivityState, accountService.getObservableAccount(account))
             { isConnected: Boolean, a: Account -> isConnected || a.isRegistered }
             .observeOn(uiScheduler)

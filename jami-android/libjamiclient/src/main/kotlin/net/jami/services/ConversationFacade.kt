@@ -231,9 +231,7 @@ class ConversationFacade(
      * @param conversationUri the conversation
      * @return a conversation single
      */
-    fun loadConversationHistory(account: Account, conversationUri: Uri): Single<Conversation> {
-        val conversation = account.getByUri(conversationUri)
-            ?: return Single.error(RuntimeException("Can't get conversation $conversationUri"))
+    fun loadConversationHistory(conversation: Conversation): Single<Conversation> {
         synchronized(conversation) {
             if ((!conversation.isSwarm && conversation.id == null) || (conversation.isSwarm && conversation.mode.blockingFirst() == Conversation.Mode.Request)) {
                 return Single.just(conversation)
