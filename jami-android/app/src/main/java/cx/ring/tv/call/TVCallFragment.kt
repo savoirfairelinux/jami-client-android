@@ -236,10 +236,6 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
         }
     }
 
-    override fun displayContactBubble(display: Boolean) {
-        binding!!.contactBubbleLayout.visibility = if (display) View.VISIBLE else View.GONE
-    }
-
     override fun displayLocalVideo(display: Boolean) {
         binding!!.previewContainer.visibility = if (display) View.VISIBLE else View.GONE
     }

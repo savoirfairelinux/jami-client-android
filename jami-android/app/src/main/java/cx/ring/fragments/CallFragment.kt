@@ -738,12 +738,6 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         }
     }
 
-    override fun displayContactBubble(display: Boolean) {
-        binding?.apply {
-            contactBubbleLayout.isVisible = display
-        }
-    }
-
     override fun displayLocalVideo(display: Boolean) {
         Log.w(TAG, "displayLocalVideo -> $display")
         binding?.apply {
@@ -851,8 +845,6 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             )
             generateParticipantOverlay(participantInfo)
             presenter.prepareBottomSheetButtonsStatus()
-        } else  {
-            displayContactBubble(true)
         }
 
         binding.confControlGroup.visibility = View.VISIBLE

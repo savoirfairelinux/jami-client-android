@@ -24,7 +24,6 @@ import net.jami.model.Uri
 import net.jami.services.HardwareService.AudioState
 
 interface CallView {
-    fun displayContactBubble(display: Boolean)
     fun displayLocalVideo(display: Boolean)
     fun displayHangupButton(display: Boolean)
     fun displayDialPadKeyboard()
