@@ -279,10 +279,10 @@ abstract class CallService(
         }
     }
 
-    fun raiseParticipantHand(accountId: String, confId: String, peerId: String, state: Boolean){
+    fun raiseHand(accountId: String, confId: String, peerId: String, state: Boolean, deviceId:String?){
         mExecutor.execute {
             Log.i(TAG, "participant $peerId raise hand... ")
-            JamiService.raiseParticipantHand(accountId, confId, peerId, state)
+            JamiService.raiseHand(accountId, confId, peerId, deviceId ?: "", state)
         }
     }
 
