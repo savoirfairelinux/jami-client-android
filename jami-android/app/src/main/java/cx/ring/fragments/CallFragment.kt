@@ -792,19 +792,47 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         }
     }
 
+    private fun showRingingInfo(
+        state: Boolean = true,
+        participantInfoList: List<ParticipantInfo> = emptyList()
+    ) {
+        Log.w("devdebug", "$TAG:showRingingInfo state:$state")
+        val binding = binding ?: return
+
+        if (!state) {
+            binding.contactBubbleLayout.visibility = View.GONE
+            return
+        }
+        binding.contactBubbleLayout.visibility = View.VISIBLE
+
+        // Can only be ringing for one to one call
+        binding.contactBubbleNumTxt.visibility = View.VISIBLE
+        binding.contactBubbleTxt.text = participantInfoList[0].contact.displayName
+
+        binding.contactBubble.setImageDrawable(
+            AvatarDrawable.Builder()
+                .withContact(participantInfoList[0].contact)
+                .withCircleCrop(true)
+                .withPresence(false)
+                .build(requireActivity())
+        )
+    }
+
     @SuppressLint("RestrictedApi")
-    override fun updateConfInfo(participantInfo: List<ParticipantInfo>) {
+    override fun updateConfInfo(conferenceStatus:CallStatus, participantInfo: List<ParticipantInfo>) {
         Log.w(TAG, "updateConfInfo -> $participantInfo")
 
         val binding = binding ?: return
         mConferenceMode = participantInfo.size > 1
 
+        if(conferenceStatus.isRinging){ // Only show bubble when call is ringing
+            showRingingInfo(participantInfoList = participantInfo)
+        }
+        else{
+            showRingingInfo(false)
+        }
+
         if (participantInfo.isNotEmpty()) {
-            val username = if (participantInfo.size > 1)
-                "Conference with ${participantInfo.size} people"
-            else participantInfo[0].contact.displayName
-            val displayName = if (participantInfo.size > 1) null else participantInfo[0].contact.displayName
-            val hasProfileName = displayName != null && !displayName.contentEquals(username)
             val activity = activity
             if (activity != null) {
                 val call = participantInfo[0].call
@@ -828,21 +856,6 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             } else {
                 Log.w(TAG, "DEBUG null activity")
             }
-            if (hasProfileName) {
-                binding.contactBubbleNumTxt.visibility = View.VISIBLE
-                binding.contactBubbleTxt.text = displayName
-                binding.contactBubbleNumTxt.text = username
-            } else {
-                binding.contactBubbleNumTxt.visibility = View.GONE
-                binding.contactBubbleTxt.text = username
-            }
-            binding.contactBubble.setImageDrawable(
-                AvatarDrawable.Builder()
-                    .withContact(participantInfo[0].contact)
-                    .withCircleCrop(true)
-                    .withPresence(false)
-                    .build(requireActivity())
-            )
             generateParticipantOverlay(participantInfo)
             presenter.prepareBottomSheetButtonsStatus()
         }
@@ -1077,7 +1090,6 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             callAcceptAudioBtnText.isVisible = false
             callRefuseBtn.isVisible = false
             callRefuseBtnText.isVisible = false
-            contactBubbleLayout.isVisible = false
             participantOverlayContainer.isVisible = true
         }
 
@@ -1095,7 +1107,6 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             callAcceptAudioBtnText.isVisible = true
             callRefuseBtn.isVisible = true
             callRefuseBtnText.isVisible = true
-            contactBubbleLayout.isVisible = true
             participantOverlayContainer.isVisible = false
         }
     }
@@ -1109,7 +1120,6 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             callAcceptAudioBtnText.isVisible = false
             callRefuseBtn.isVisible = true
             callRefuseBtnText.isVisible = true
-            contactBubbleLayout.isVisible = true
         }
     }
 

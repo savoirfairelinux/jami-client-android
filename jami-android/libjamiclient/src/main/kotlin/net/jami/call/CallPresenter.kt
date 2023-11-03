@@ -169,7 +169,6 @@ class CallPresenter @Inject constructor(
      * @param conference: conference whose value have been updated
      */
     private fun showConference(conference: Observable<Conference>){
-        val conference = conference.distinctUntilChanged()
         mCompositeDisposable.add(conference
             .switchMap { obj: Conference ->
                 Observable.combineLatest(obj.participantInfo, obj.pendingCalls,
@@ -185,10 +184,13 @@ class CallPresenter @Inject constructor(
                     )))
                 else
                     participants
-                if (p.isEmpty()) p else p + pending
+                Pair(obj, if (p.isEmpty()) p else p + pending)
             }}
             .observeOn(mUiScheduler)
-            .subscribe({ info: List<ParticipantInfo> -> view?.updateConfInfo(info) })
+            .subscribe({ (conf, info) ->
+                if (callInitialized || !conf.isIncoming)
+                    view?.updateConfInfo(conf.state ?: CallStatus.NONE, info)
+            })
             { e: Throwable -> Log.e(TAG, "Error with initIncoming, action view flow: ", e) })
 
         mCompositeDisposable.add(conference
