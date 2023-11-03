@@ -11,18 +11,40 @@
         android:id="@+id/avatar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/call_participant_margin"
         android:layout_gravity="center"
-        android:scaleType="fitCenter"/>
+        android:layout_margin="@dimen/call_participant_margin"
+        android:scaleType="fitCenter" />
 
     <cx.ring.views.VideoSinkView
         android:id="@+id/sink"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:ratioWidth="720dp"
-        tools:ratioHeight="1280dp"
         android:layout_gravity="center"
-        tools:fitToContent="true"/>
+        tools:fitToContent="true"
+        tools:ratioHeight="1280dp"
+        tools:ratioWidth="720dp" />
+
+    <LinearLayout
+        android:id="@+id/hand_raised"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_margin="20dp"
+        android:background="@drawable/background_conference_hand"
+        android:orientation="horizontal"
+        android:padding="4dp"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_margin="4dp"
+            android:contentDescription="@string/call_handRaised"
+            android:src="@drawable/baseline_raisehand_24"
+            android:visibility="visible" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -39,11 +61,11 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:layout_marginEnd="4dp"
+            android:layout_weight="1"
             android:ellipsize="marquee"
             android:singleLine="true"
             android:textColor="@color/white"
             android:textSize="12sp"
-            android:layout_weight="1"
             tools:text="Georges Longname of Chateaubrillant" />
 
         <ImageView
@@ -51,22 +73,22 @@
             android:layout_width="12dp"
             android:layout_height="12dp"
             android:layout_marginHorizontal="8dp"
+            android:layout_weight="0"
             android:contentDescription="@string/call_moderator"
             android:src="@drawable/baseline_moderateur"
             android:visibility="gone"
-            tools:visibility="visible"
-            android:layout_weight="0"
-            app:tint="@color/colorOnSecondary" />
+            app:tint="@color/colorOnSecondary"
+            tools:visibility="visible" />
 
         <ImageView
             android:id="@+id/mute"
             android:layout_width="12dp"
             android:layout_height="12dp"
             android:layout_marginHorizontal="8dp"
+            android:layout_weight="0"
             android:contentDescription="@string/call_muted"
             android:src="@drawable/baseline_mic_off_24"
             android:visibility="gone"
-            android:layout_weight="0"
             tools:visibility="visible" />
 
     </LinearLayout>
