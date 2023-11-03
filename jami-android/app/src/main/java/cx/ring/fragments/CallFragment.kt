@@ -1295,7 +1295,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     }
 
     fun raiseHandClicked() {
-        presenter.raiseParticipantHand(binding!!.callRaiseHandBtn.isChecked)
+        presenter.raiseHand(binding!!.callRaiseHandBtn.isChecked)
     }
 
     fun hangUpClicked() {

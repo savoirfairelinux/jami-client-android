@@ -636,9 +636,9 @@ class CallPresenter @Inject constructor(
         view?.goToContact(call.account!!, info.contact.contact)
     }
 
-    fun raiseParticipantHand(state: Boolean){
+    fun raiseHand(state: Boolean){
         val call = mConference ?: return
-        mCallService.raiseParticipantHand(call.accountId, call.id, mAccountService.getAccount(call.accountId)?.uri!!, state)
+        mCallService.raiseHand(call.accountId, call.id, mAccountService.getAccount(call.accountId)?.uri!!, state, getDeviceId())
     }
 
     fun startScreenShare(resultCode: Int, data: Any): Boolean {
