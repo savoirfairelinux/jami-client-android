@@ -433,7 +433,7 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
     }
 
     @SuppressLint("RestrictedApi")
-    override fun updateConfInfo(participantInfo: List<ParticipantInfo>) {
+    override fun updateConfInfo(conferenceStatus:CallStatus, participantInfo: List<ParticipantInfo>) {
         val binding = binding ?: return
         mConferenceMode = participantInfo.size > 1
         if (participantInfo.isNotEmpty()) {

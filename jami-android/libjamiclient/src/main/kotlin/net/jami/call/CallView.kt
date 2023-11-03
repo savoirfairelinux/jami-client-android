@@ -46,7 +46,7 @@ interface CallView {
     fun handleCallWakelock(isAudioOnly: Boolean)
     fun goToContact(accountId: String, contact: Contact)
     fun displayPluginsButton(): Boolean
-    fun updateConfInfo(info: List<ParticipantInfo>)
+    fun updateConfInfo(conferenceStatus: CallStatus, info: List<ParticipantInfo>)
     fun updateParticipantRecording(contacts: List<ContactViewModel>)
     fun toggleCallMediaHandler(id: String, callId: String, toggle: Boolean)
     fun getMediaProjection(resultCode: Int, data: Any): Any
