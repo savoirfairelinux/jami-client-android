@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3ba8136e_6848fba6",
+        "filename": "jami-android/app/src/main/res/drawable/background_conference_hand.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-11-06T18:50:34Z",
+      "side": 1,
+      "message": "format",
+      "range": {
+        "startLine": 4,
+        "startChar": 33,
+        "endLine": 4,
+        "endChar": 34
+      },
+      "revId": "832183fd398e71099ea58108d60fc34d60925f93",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
