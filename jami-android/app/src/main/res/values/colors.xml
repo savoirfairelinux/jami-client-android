@@ -12,8 +12,8 @@
     <color name="colorOnSecondary">@color/white</color>
     <color name="colorOnSecondaryContainer">@color/grey_700</color>
 
-    <color name="colorError">#f44336</color>
     <color name="colorOnError">#ffffff</color>
+    <color name="colorError">@color/red_500</color>
 
     <color name="colorOnSurface">@color/abc_primary_text_material_light</color>
     <color name="textColorSecondary">@color/abc_secondary_text_material_light</color>
@@ -46,7 +46,7 @@
     <color name="menu_icon">#0A84FF</color>
 
     <!--  TwoButton EditText  -->
-    <color name="edit_text_background">#f5f5f5</color>
+    <color name="edit_text_background">@color/grey_100</color>
     <color name="text_color">#414141</color>
     <color name="text_hint">@color/color_primary_dark</color>
     <color name="button_border">@color/color_primary_dark</color>
@@ -70,8 +70,8 @@
     <color name="invitation_card_text_color">#FFFFFF</color>
     <color name="invitation_card_on_surface_text_color">#FFFFFF</color>
     <color name="invitation_card_on_badge_text_color">#FFFFFF</color>
-    <color name="invitation_drawable_p1_color">#fff</color>
     <color name="invitation_drawable_p2_color">#03b9e9</color>
+    <color name="invitation_drawable_p1_color">@color/white</color>
 
     <!--  JamiId  -->
     <color name="jami_id_background_color">#4CFFFFFF</color>
@@ -88,11 +88,11 @@
 
     <!--  ChatView  -->
     <color name="call_missed">#CC0022</color>
-    <color name="call_text_outgoing_message">#FFF</color>
-    <color name="call_drawable_color">#FFF</color>
     <color name="call_missed_text_message">#A7A7A7</color>
     <color name="icon_background_color">#FFFFFF</color>
     <color name="border_color">#E5E5E5</color>
     <color name="link_peer_color">#005699</color>
+    <color name="call_text_outgoing_message">@color/white</color>
+    <color name="call_drawable_color">@color/white</color>
 
 </resources>
