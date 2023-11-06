@@ -14,6 +14,7 @@
   <!--TransferDFragment-->
   <!--Notifications-->
   <!--Call Fragment-->
+  <string name="action_call_minimize">缩小</string>
   <!--Text messages-->
   <string name="ongoing_group_call">去电</string>
   <!--MediaPreferenceFragment-->

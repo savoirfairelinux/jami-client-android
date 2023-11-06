@@ -51,14 +51,14 @@
   <!--TransferDFragment-->
   <!--Notifications-->
   <string name="notif_missed_incoming_call">Llamada entrante perdida</string>
-  <string name="notif_missed_outgoing_call">Lllamada saliente perdida</string>
+  <string name="notif_missed_outgoing_call">Llamada saliente perdida</string>
   <string name="notif_incoming_call_title">Llamada entrante de %1$s</string>
   <string name="notif_incoming_call">Llamada entrante</string>
   <string name="notif_outgoing_call_title">Llamando a %1$s</string>
   <string name="notif_outgoing_call">Lllamando a </string>
   <string name="notif_current_call_title">Llamada en curso con %1$s</string>
   <string name="notif_current_call">Llamada en curso</string>
-  <string name="notif_channel_call_in_progress">Lllamada en Progreso</string>
+  <string name="notif_channel_call_in_progress">Llamada en curso</string>
   <string name="notif_channel_calls">Lllamdas</string>
   <string name="notif_channel_missed_calls">Llamadas perdidas</string>
   <string name="notif_channel_incoming_calls">Llamadas entrantes</string>

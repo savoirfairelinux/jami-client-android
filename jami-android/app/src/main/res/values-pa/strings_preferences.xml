@@ -11,6 +11,7 @@
   <string name="pref_pushNotifications_title">ਪੁਸ਼ ਸੂਚਨਾਵਾਂ</string>
   <string name="pref_pushNotif_summary" translatable="false"></string>
   <string name="pref_pushNotifications_summary">ਬੈਕਗ੍ਰਾਊਂਡ ਵਿੱਚ ਕਾਲਾਂ/ਸੁਨੇਹੇ ਲੈਂਦੇ ਰਹਿਣ ਲਈ Google ਸਰਵਰ ਵਰਤੋ</string>
+  <string name="pref_video_advanced_title">ਉੱਨਤ ਵੀਡੀਓ ਸੈਟਿੰਗਾਂ</string>
   <string name="pref_hd_summary">HD ਵੀਡੀਓ ਭੇਜਣਾ ਚਾਲੂ ਕਰੋ</string>
   <string name="pref_hwEncode_title">ਐਕਸਲਰੇਟਿਡ ਇਨਕੋਡਿੰਗ ਚਾਲੂ ਕਰੋ</string>
   <string name="pref_hwEncode_summary">ਪ੍ਰਯੋਗਮਈ ਵਿਸ਼ੇਸ਼ਤਾ</string>
@@ -21,7 +22,10 @@
   <string name="pref_startOnBoot_title">ਸਿਸਟਮ ਸ਼ੁਰੂ ਹੋਣ \'ਤੇ Jami ਸ਼ੁਰੂ ਕਰੋ</string>
   <string name="pref_startOnBoot_summary">ਸਿਸਟਮ ਸ਼ੁਰੂ ਹੋਣ \'ਤੇ Jami ਨੂੰ ਬੈਕਗ੍ਰਾਊਂਡ ਵਿੱਚ ਚਲਾਓ।</string>
   <string name="pref_clearHistory_title">ਇਤਿਹਾਸ ਮਿਟਾਓ</string>
+  <string name="pref_blackList_title">ਬੰਦਸ਼ ਸੂਚੀ</string>
+  <string name="pref_blackList_summary">ਆਪਣੀ ਬੰਦਸ਼ ਸੂਚੀ ਵੇਖੋ।</string>
   <string name="pref_delete_account_title">ਖਾਤਾ ਮਿਟਾਓ</string>
+  <string name="pref_delete_account_summary">ਇਸ ਡੀਵਾਈਸ ਤੋਂ ਆਪਣਾ ਖਾਤਾ ਮਿਟਾਓ</string>
   <string name="pref_persistNotification_title">ਬੈਕਗ੍ਰਾਊਂਡ ਵਿੱਚ ਚਲਾਓ</string>
   <string name="pref_persistNotification_summary">ਕਾਲਾਂ ਅਤੇ ਸੁਨੇਹੇ ਲੈਣ ਲਈ ਬੈਕਗ੍ਰਾਊਂਡ ਵਿੱਚ ਚੱਲਣ ਦਿਓ।</string>
   <!--Notifications Visibility-->

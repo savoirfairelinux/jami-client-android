@@ -16,9 +16,12 @@
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
+  <string name="notif_missed_outgoing_call">Llamada saliente perdida</string>
+  <string name="notif_channel_call_in_progress">Llamada en Progreso</string>
   <string name="notif_channel_file_transfer">Transferencia de archivos</string>
   <string name="notif_inprogress_group_call">Llamada en curso</string>
   <!--Call Fragment-->
+  <string name="hist_out_call">Llamada saliente de %1$s</string>
   <string name="new_swarm">Iniciar swarm</string>
   <!--Text messages-->
   <string name="ongoing_group_call">Llamada en curso</string>

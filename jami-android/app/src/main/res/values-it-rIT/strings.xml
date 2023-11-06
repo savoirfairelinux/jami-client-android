@@ -59,7 +59,7 @@
   <string name="notif_missed_outgoing_call">Chiamata in uscita persa</string>
   <string name="notif_incoming_call_title">Chiamata in arrivo da %1$s</string>
   <string name="notif_incoming_call">Chiamata in arrivo</string>
-  <string name="notif_outgoing_call_title">Chiamata in uscita a %1$s</string>
+  <string name="notif_outgoing_call_title">Ho chiamato %1$s</string>
   <string name="notif_outgoing_call">Chiamata in uscita</string>
   <string name="notif_current_call_title">Chiamata in corso con %1$s</string>
   <string name="notif_current_call">Chiamata in corso</string>
@@ -100,7 +100,7 @@
   <string name="action_call_unmute">Attiva</string>
   <string name="ongoing_call">Chiamata in corso</string>
   <string name="hist_in_call">Chiamata in arrivo di %1$s</string>
-  <string name="hist_out_call">Chiamata in uscita di %1$s</string>
+  <string name="hist_out_call">Chiamata in uscita %1$s</string>
   <string name="start_error_title">Jami non si avvia!</string>
   <string name="start_error_mic_required">Jami deve usare il microfono per funzionare.</string>
   <string name="action_call_accept">Rispondi</string>

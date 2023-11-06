@@ -63,7 +63,7 @@
   <string name="notif_outgoing_call">Llamada saliente</string>
   <string name="notif_current_call_title">Llamada en curso con %1$s</string>
   <string name="notif_current_call">Llamada en curso</string>
-  <string name="notif_channel_call_in_progress">Llamada en curso</string>
+  <string name="notif_channel_call_in_progress">Llamada en Progreso</string>
   <string name="notif_channel_calls">Llamadas</string>
   <string name="notif_channel_missed_calls">Llamadas perdidas</string>
   <string name="notif_channel_incoming_calls">Llamadas entrantes</string>
@@ -74,7 +74,7 @@
   <string name="notif_channel_background_service">Servicio en segundo plano</string>
   <string name="notif_channel_background_service_descr">Permitir recibir llamadas y mensajes en cualquier momento.</string>
   <string name="notif_group_calls">Llamadas</string>
-  <string name="notif_inprogress_group_call">Llamada en progreso</string>
+  <string name="notif_inprogress_group_call">Llamada en curso</string>
   <string name="notif_background_service">Jami se está ejecutando en segundo plano</string>
   <string name="notif_mark_as_read">Marcar como leído</string>
   <string name="notif_dismiss">Descartar</string>
@@ -100,7 +100,7 @@
   <string name="action_call_unmute">Reactivar sonido</string>
   <string name="ongoing_call">Llamada en curso</string>
   <string name="hist_in_call">Llamada entrante de %1$s</string>
-  <string name="hist_out_call">Llamada saliente a %1$s</string>
+  <string name="hist_out_call">Llamada saliente de %1$s</string>
   <string name="start_error_title">No se puede iniciar Jami!</string>
   <string name="start_error_mic_required">Jami necesita permiso de acceso al micrófono para funcionar.</string>
   <string name="action_call_accept">Contestar a la llamada</string>

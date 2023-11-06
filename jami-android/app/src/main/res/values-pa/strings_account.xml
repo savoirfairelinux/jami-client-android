@@ -78,6 +78,8 @@
   <string name="account_video_enable">ਵੀਡੀਓ ਚਾਲੂ ਕਰੋ</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">ਉੱਨਤ</string>
+  <string name="account_chat_settings_title">ਚੈਟ ਸੈਟਿੰਗਾਂ</string>
+  <string name="account_read_receipts_label">ਪੜ੍ਹੇ ਜਾਣ ਦਾ ਇਸ਼ਾਰਾ ਚਾਲੂ ਕਰੋ</string>
   <string name="account_call_settings_title">ਕਾਲ ਸੈਟਿੰਗਾਂ</string>
   <string name="account_dht_public_in_calls_label">ਅਣਪਛਾਤੇ ਸੰਪਰਕਾਂ ਤੋਂ ਕਾਲਾਂ ਆਉਣ ਦਿਓ</string>
   <string name="account_registration_exp_label">ਦਰਜ ਹੋਣ ਦੀ ਮਿਆਦ</string>
