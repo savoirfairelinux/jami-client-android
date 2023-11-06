@@ -39,6 +39,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
+import androidx.activity.result.PickVisualMediaRequest
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.tabs.TabLayout
 import cx.ring.R
@@ -116,11 +117,9 @@ class ContactDetailsActivity : AppCompatActivity(), TabLayout.OnTabSelectedListe
         }
     }
 
-    private val galleryResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            val data: Intent? = result.data
-            updatePhoto(data!!.data!!)
-        }
+    private val galleryResultLauncher = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+        if (uri != null)
+            updatePhoto(uri)
     }
 
     internal class ContactView(val binding: ItemContactHorizontalBinding, parentDisposable: CompositeDisposable)
@@ -262,10 +261,7 @@ class ContactDetailsActivity : AppCompatActivity(), TabLayout.OnTabSelectedListe
                     askCameraPermission()
             }
             gallery.setOnClickListener {
-                if (mDeviceRuntimeService.hasGalleryPermission())
-                    goToGallery()
-                else
-                    askGalleryPermission()
+                goToGallery()
             }
         }
         mProfilePhoto = view.profilePhoto
@@ -331,17 +327,7 @@ class ContactDetailsActivity : AppCompatActivity(), TabLayout.OnTabSelectedListe
     }
 
     private fun goToGallery() {
-        try {
-            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-            galleryResultLauncher.launch(intent)
-        } catch (e: Exception) {
-            Toast.makeText(this, R.string.gallery_error_message, Toast.LENGTH_SHORT)
-                .show()
-        }
-    }
-
-    private fun askGalleryPermission() {
-        requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), REQUEST_PERMISSION_READ_STORAGE)
+        galleryResultLauncher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
     }
 
     private fun updatePhoto(uriImage: android.net.Uri) {
