@@ -64,14 +64,14 @@ class ColorChooserBottomSheet(val onColorSelected: ((Int) -> Unit)? = null) : Bo
 
     companion object {
         private val colors = intArrayOf(
-            R.color.pink_500,
-            R.color.purple_500, R.color.deep_purple_500,
-            R.color.indigo_500, R.color.blue_500,
-            R.color.cyan_500, R.color.teal_500,
-            R.color.green_500, R.color.light_green_500,
-            R.color.grey_500, R.color.lime_500,
-            R.color.amber_500, R.color.deep_orange_500,
-            R.color.brown_500, R.color.blue_grey_500
+            R.color.conversation_palette_pink,
+            R.color.conversation_palette_purple, R.color.conversation_palette_indigo,
+            R.color.conversation_palette_dark_blue, R.color.conversation_palette_blue,
+            R.color.conversation_palette_blue_jean, R.color.conversation_palette_cyan,
+            R.color.conversation_palette_teal, R.color.conversation_palette_green,
+            R.color.conversation_palette_lime, R.color.conversation_palette_yellow,
+            R.color.conversation_palette_orange, R.color.conversation_palette_red,
+            R.color.conversation_palette_brown, R.color.conversation_palette_grey
         )
     }
 }
