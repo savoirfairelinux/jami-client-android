@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="background">#202020</color>
+    <color name="background">@color/grey_925</color>
     <color name="surface">@color/grey_700</color>
 
     <color name="colorPrimary">@color/white</color>
@@ -29,21 +29,21 @@
     <!--  Home  -->
     <color name="appbar_gradient_color">#cc202020</color>
     <color name="searchbar_color">#000000</color>
-    <color name="fab_background_color">#03B9E9</color>
     <color name="fab_text_color">#000000</color>
+    <color name="fab_background_color">@color/cyan_A800</color>
 
     <!--  InvitationCard  -->
     <color name="invitation_card_background_color">#D6E4EF</color>
     <color name="invitation_card_badge_color">#A3C2DA</color>
     <color name="invitation_card_text_color">#000000</color>
     <color name="invitation_card_on_surface_text_color">#000000</color>
-    <color name="invitation_card_on_badge_text_color">#005699</color>
+    <color name="invitation_card_on_badge_text_color">@color/blue_600</color>
     <color name="invitation_drawable_p1_color">#00223c</color>
-    <color name="invitation_drawable_p2_color">#005699</color>
+    <color name="invitation_drawable_p2_color">@color/blue_600</color>
 
     <!--  JamiId  -->
     <color name="jami_id_background_color">#4C000000</color>
-    <color name="jami_id_surface_color">#03B9E9</color>
+    <color name="jami_id_surface_color">@color/cyan_A800</color>
     <color name="jami_id_edit_text_underline_color">#4DFFFFFF</color>
     <color name="jami_id_validate_background_disabled_color">#4C03B9E9</color>
     <color name="jami_id_validate_background_enabled_color">#CC03B9E9</color>
@@ -54,9 +54,9 @@
     <color name="welcome_jami_surface_color">#FFFFFF</color>
 
     <!--  ChatView  -->
-    <color name="call_missed">#FA2E30</color>
-    <color name="icon_background_color">#202020</color>
-    <color name="border_color">#515151</color>
-    <color name="link_peer_color">#03B9E9</color>
+    <color name="call_missed">@color/red_650</color>
+    <color name="icon_background_color">@color/grey_925</color>
+    <color name="border_color">@color/grey_700</color>
+    <color name="link_peer_color">@color/cyan_A800</color>
 
 </resources>

@@ -7,6 +7,7 @@
     <color name="red_400">#EF5350</color>
     <color name="red_500">#F44336</color>
     <color name="red_600">#E53935</color>
+    <color name="red_650">#FA2E30</color>
     <color name="red_700">#D32F2F</color>
     <color name="red_800">#C62828</color>
     <color name="red_900">#B71C1C</color>
@@ -145,6 +146,7 @@
     <color name="cyan_A200">#18FFFF</color>
     <color name="cyan_A400">#00E5FF</color>
     <color name="cyan_A700">#00B8D4</color>
+    <color name="cyan_A800">#03B9E9</color>
 
     <color name="light_green_50">#F1F8E9</color>
     <color name="light_green_100">#DCEDC8</color>
@@ -266,15 +268,17 @@
     <color name="grey_50">#FAFAFA</color>
     <color name="grey_100">#F5F5F5</color>
     <color name="grey_150">#EfEfEf</color>
-    <color name="grey_200">#EaEaEa</color>
+    <color name="grey_200">#E5E5E5</color>
     <color name="grey_300">#E0E0E0</color>
     <color name="grey_400">#BDBDBD</color>
+    <color name="grey_450">#A7A7A7</color>
     <color name="grey_500">#9E9E9E</color>
     <color name="grey_600">#757575</color>
-    <color name="grey_700">#616161</color>
+    <color name="grey_700">#515151</color>
     <color name="grey_800">#424242</color>
     <color name="grey_850">#323232</color>
     <color name="grey_900">#212121</color>
+    <color name="grey_925">#202020</color>
     <color name="grey_950">#121212</color>
 
 </resources>
