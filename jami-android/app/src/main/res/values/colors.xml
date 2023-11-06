@@ -95,4 +95,21 @@
     <color name="border_color">#E5E5E5</color>
     <color name="link_peer_color">#005699</color>
 
+    <!--  Chooser conversation color  -->
+    <color name="conversation_palette_pink">@color/pink_700</color>
+    <color name="conversation_palette_purple">#5934AE</color>
+    <color name="conversation_palette_indigo">@color/indigo_700</color>
+    <color name="conversation_palette_dark_blue">#005699</color>
+    <color name="conversation_palette_blue">@color/light_blue_700</color>
+    <color name="conversation_palette_blue_jean">#417FC2</color>
+    <color name="conversation_palette_cyan">@color/cyan_700</color>
+    <color name="conversation_palette_teal">@color/teal_700</color>
+    <color name="conversation_palette_green">@color/light_green_700</color>
+    <color name="conversation_palette_lime">@color/lime_800</color>
+    <color name="conversation_palette_yellow">@color/yellow_600</color>
+    <color name="conversation_palette_orange">#E59028</color>
+    <color name="conversation_palette_red">#CC0022</color>
+    <color name="conversation_palette_brown">#A6948B</color>
+    <color name="conversation_palette_grey">#6C6C6C</color>
+
 </resources>
