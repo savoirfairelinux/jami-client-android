@@ -14,6 +14,7 @@
     <color name="red_A200">#FF5252</color>
     <color name="red_A400">#FF1744</color>
     <color name="red_A700">#D50000</color>
+    <color name="red_A800">#CC0022</color>
 
     <color name="deep_purple_50">#EDE7F6</color>
     <color name="deep_purple_100">#D1C4E9</color>
@@ -80,7 +81,7 @@
     <color name="deep_orange_200">#FFAB91</color>
     <color name="deep_orange_300">#FF8A65</color>
     <color name="deep_orange_400">#FF7043</color>
-    <color name="deep_orange_500">#FF5722</color>
+    <color name="deep_orange_500">#E59028</color>
     <color name="deep_orange_600">#F4511E</color>
     <color name="deep_orange_700">#E64A19</color>
     <color name="deep_orange_800">#D84315</color>
@@ -179,6 +180,7 @@
     <color name="brown_50">#EFEBE9</color>
     <color name="brown_100">#D7CCC8</color>
     <color name="brown_200">#BCAAA4</color>
+    <color name="brown_250">#A6948B</color>
     <color name="brown_300">#A1887F</color>
     <color name="brown_400">#8D6E63</color>
     <color name="brown_500">#795548</color>
@@ -192,7 +194,7 @@
     <color name="purple_200">#CE93D8</color>
     <color name="purple_300">#BA68C8</color>
     <color name="purple_400">#AB47BC</color>
-    <color name="purple_500">#9C27B0</color>
+    <color name="purple_500">#5934AE</color>
     <color name="purple_600">#8E24AA</color>
     <color name="purple_700">#7B1FA2</color>
     <color name="purple_800">#6A1B9A</color>
@@ -207,8 +209,8 @@
     <color name="blue_200">#90CAF9</color>
     <color name="blue_300">#64B5F6</color>
     <color name="blue_400">#42A5F5</color>
-    <color name="blue_500">#2196F3</color>
-    <color name="blue_600">#1E88E5</color>
+    <color name="blue_500">#417FC2</color>
+    <color name="blue_600">#005699</color>
     <color name="blue_700">#1976D2</color>
     <color name="blue_800">#1565C0</color>
     <color name="blue_900">#0D47A1</color>
@@ -270,6 +272,7 @@
     <color name="grey_300">#E0E0E0</color>
     <color name="grey_400">#BDBDBD</color>
     <color name="grey_500">#9E9E9E</color>
+    <color name="grey_550">#6C6C6C</color>
     <color name="grey_600">#757575</color>
     <color name="grey_700">#616161</color>
     <color name="grey_800">#424242</color>
