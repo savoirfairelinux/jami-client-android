@@ -156,6 +156,7 @@ class ParticipantsContainerView// adding name, mic etc..
             participantInfoOverlay.participantName.text = i.contact.displayName
             participantInfoOverlay.mute.isVisible = i.audioModeratorMuted || i.audioLocalMuted
             participantInfoOverlay.handRaised.isVisible = i.isHandRaised
+            participantInfoOverlay.moderator.isVisible = i.isModerator
 
             val layoutWidth = if (portrait) LayoutParams.MATCH_PARENT else LayoutParams.WRAP_CONTENT
             val layoutHeight =  if (portrait) LayoutParams.WRAP_CONTENT else LayoutParams.MATCH_PARENT
