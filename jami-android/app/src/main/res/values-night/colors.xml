@@ -16,8 +16,7 @@
     <color name="text_color_primary_dark">@color/abc_primary_text_material_dark</color>
     <color name="text_color_secondary_dark">@color/abc_primary_text_material_light</color>
 
-    <color name="conversation_primary_background">@color/blue_600</color>
-    <color name="conversation_secondary_background">@color/grey_700</color>
+    <color name="conversation_secondary_background">#515151</color>
 
     <!--  TwoButton EditText  -->
     <color name="edit_text_background">#2e2e2e</color>
