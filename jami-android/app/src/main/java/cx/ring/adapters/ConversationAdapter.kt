@@ -43,6 +43,7 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.PopupWindow
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.cardview.widget.CardView
@@ -68,6 +69,7 @@ import cx.ring.fragments.ConversationFragment
 import cx.ring.linkpreview.LinkPreview
 import cx.ring.linkpreview.PreviewData
 import cx.ring.utils.*
+import cx.ring.utils.ActionHelper.TAG
 import cx.ring.utils.ContentUriHandler.getUriForFile
 import cx.ring.viewholders.ConversationViewHolder
 import cx.ring.views.AvatarDrawable
@@ -1352,10 +1354,84 @@ class ConversationAdapter(
             }
         }
 
+        // When a call is occurring (between members) but you are not in it, a message is
+        // displayed in conversation to inform the user about the call and invite him to join.
         val call = interaction as Call
         if (call.isGroupCall) {
-            // When a call is occurring (between members) but you are not in it, a message is
-            // displayed in conversation to inform the user about the call and invite him to join.
+            convViewHolder.compositeDisposable.add(
+                interaction.lastElement
+                    .observeOn(DeviceUtils.uiScheduler)
+                    .subscribe { lastElement ->
+                        val callStartedMsg = lastElement as Call
+                        val peerDisplayName = convViewHolder.mPeerDisplayName
+                        val account = interaction.account ?: return@subscribe
+                        val contact = callStartedMsg.contact ?: return@subscribe
+                        val isTimeShown = hasPermanentTimeString(callStartedMsg, position)
+                        val msgSequenceType = getMsgSequencing(position, isTimeShown)
+                        val acceptCallLayout = convViewHolder.mAcceptCallLayout
+                        val avatar = convViewHolder.mAvatar
+
+                        if (call.isIncoming) {
+                            // Show the avatar of the contact who is calling
+                            avatar?.let {
+                                it.setImageBitmap(null)
+                                it.visibility = View.VISIBLE
+                                it.setImageDrawable(
+                                    conversationFragment.getConversationAvatar(
+                                        contact.primaryNumber
+                                    )
+                                )
+                            }
+                            // We can call ourselves in a group call with different devices.
+                            // Set the message to the right when it is outgoing.
+                            val params =
+                                convViewHolder.mMsgLayout?.layoutParams as RelativeLayout.LayoutParams
+                            params.removeRule(RelativeLayout.ALIGN_PARENT_END)
+                            params.addRule(RelativeLayout.END_OF, R.id.photo)
+                            convViewHolder.mMsgLayout?.layoutParams = params
+                            // Show the name of the contact.
+                            peerDisplayName?.apply {
+                                if (presenter.isGroup() && (msgSequenceType == SequenceType.SINGLE ||
+                                            msgSequenceType == SequenceType.FIRST)
+                                ) {
+                                    visibility = View.VISIBLE
+                                    convViewHolder.compositeDisposable.add(
+                                        presenter.contactService
+                                            .observeContact(account, contact, false)
+                                            .observeOn(DeviceUtils.uiScheduler)
+                                            .subscribe {
+                                                text = it.displayName
+                                            }
+                                    )
+                                } else {
+                                    visibility = View.GONE
+                                    text = null
+                                }
+                            }
+//                            // Set the color to peer message color
+//                            acceptCallLayout?.background?.setTint(
+//                                convViewHolder.itemView.context.getColor(
+//                                    R.color.conversation_secondary_background
+//                                )
+//                            )
+                        } else {
+                            // Set the message to the left because it is incoming.
+                            val params =
+                                convViewHolder.mMsgLayout?.layoutParams as RelativeLayout.LayoutParams
+                            params.removeRule(RelativeLayout.END_OF)
+                            params.addRule(RelativeLayout.ALIGN_PARENT_END)
+                            convViewHolder.mMsgLayout?.layoutParams = params
+                            // Reset and hide the name of the contact.
+                            peerDisplayName?.text = null
+                            peerDisplayName?.visibility = View.GONE
+                            avatar?.visibility = View.GONE
+//                            // Manage background to convColor if it is outgoing.
+//                            if (convColor != 0) {
+//                                acceptCallLayout?.background?.setTint(convColor)
+//                            } need to change the police color and icon color also
+                        }
+                    })
+
             convViewHolder.mAcceptCallLayout?.apply {
                 // Accept with audio only
                 convViewHolder.mAcceptCallAudioButton?.setOnClickListener {
