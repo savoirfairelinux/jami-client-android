@@ -58,5 +58,6 @@
     <color name="border_color">#515151</color>
     <color name="link_peer_color">#03B9E9</color>
     <color name="menu_conversation_icons">@color/white</color>
+    <color name="accept_call_button">#CAC4D0</color>
 
 </resources>
