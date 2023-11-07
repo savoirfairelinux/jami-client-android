@@ -21,6 +21,9 @@ import android.os.Build
 import android.provider.ContactsContract
 import android.util.Log
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import android.widget.ImageView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import cx.ring.R
@@ -159,4 +162,25 @@ object ActionHelper {
         }
     }
 
+    /**
+     * Fade-out animation for the avatar. Used in the chat view to ensure that only the avatar
+     * of the last message will be displayed.
+     * @param avatar the contact avatar attach to the message.
+     */
+    fun startFadeOutAnimation(avatar: ImageView) {
+        val fadeOutAnimation = AnimationUtils.loadAnimation(
+            avatar.context,
+            R.anim.fade_out
+        ).apply {
+            setAnimationListener(object : Animation.AnimationListener {
+                override fun onAnimationStart(arg0: Animation) {}
+                override fun onAnimationRepeat(arg0: Animation) {}
+                override fun onAnimationEnd(arg0: Animation) {
+                    avatar.setImageBitmap(null)
+                    avatar.visibility = View.INVISIBLE
+                }
+            })
+        }
+        avatar.startAnimation(fadeOutAnimation)
+    }
 }
