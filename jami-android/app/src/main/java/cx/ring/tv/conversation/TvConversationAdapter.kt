@@ -47,6 +47,7 @@ import cx.ring.R
 import cx.ring.adapters.MessageType
 import cx.ring.client.MediaViewerActivity
 import cx.ring.utils.*
+import cx.ring.utils.ActionHelper.setPadding
 import cx.ring.utils.ContentUriHandler.getUriForFile
 import cx.ring.viewholders.ConversationViewHolder
 import io.noties.markwon.Markwon
@@ -84,6 +85,12 @@ class TvConversationAdapter(
         .startWithItem(0L)
     private var mCurrentLongItem: RecyclerViewContextMenuInfo? = null
     private var convColor = 0
+    private val callPadding = ActionHelper.Padding(
+        res.getDimensionPixelSize(R.dimen.text_message_padding),
+        res.getDimensionPixelSize(R.dimen.padding_call_vertical),
+        res.getDimensionPixelSize(R.dimen.text_message_padding),
+        res.getDimensionPixelSize(R.dimen.padding_call_vertical)
+    )
     private var expandedItemPosition = -1
     private var lastDeliveredPosition = -1
     private val markwon: Markwon = Markwon.builder(conversationFragment.requireContext())
@@ -214,10 +221,22 @@ class TvConversationAdapter(
         } else {
             holder.itemView.visibility = View.VISIBLE
             when (type) {
-                Interaction.InteractionType.TEXT -> configureForTextMessage(holder, interaction, position)
-                Interaction.InteractionType.CALL -> configureForCallInfoTextMessage(holder, interaction)
+                Interaction.InteractionType.TEXT -> configureForTextMessage(
+                    holder,
+                    interaction,
+                    position
+                )
+                Interaction.InteractionType.CALL -> configureForCallInfoTextMessage(
+                    holder,
+                    interaction,
+                    position
+                )
                 Interaction.InteractionType.CONTACT -> configureForContactEvent(holder, interaction)
-                Interaction.InteractionType.DATA_TRANSFER -> configureForFileInfo(holder, interaction, position)
+                Interaction.InteractionType.DATA_TRANSFER -> configureForFileInfo(
+                    holder,
+                    interaction,
+                    position
+                )
                 else -> {}
             }
         }
@@ -614,10 +633,10 @@ class TvConversationAdapter(
                 )
             }
         }
-        // Apply a bottom margin to the message if end of sequence needed.
+        // Apply a bottom margin to the global layout if end of sequence needed.
         val endOfSeq =
             msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE
-        setBottomMargin(msgTxt, if (endOfSeq) 8 else 0)
+        convViewHolder.mItem?.let { setBottomMargin(it, if (endOfSeq) 8 else 0) }
 
         if (isTimeShown) {
             convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe { t: Long? ->
@@ -673,30 +692,126 @@ class TvConversationAdapter(
      */
     private fun configureForCallInfoTextMessage(
         convViewHolder: ConversationViewHolder,
-        interaction: Interaction
+        interaction: Interaction,
+        position: Int
     ) {
         val context = convViewHolder.itemView.context
+        val call = interaction as Call
+        val isTimeShown = hasPermanentTimeString(call, position)
+        val msgSequenceType = getMsgSequencing(position, isTimeShown)
+
 
         // Reset the scale of the icon
         convViewHolder.mIcon?.scaleY = 1f
 
-        convViewHolder.mCallInfoLayout!!.background.setTintList(null) // Remove the tint
-
-        val call = interaction as Call
+        // When a call is occurring (between members) but you are not in it, a message is
+        // displayed in conversation to inform the user about the call and invite him to join.
         if (call.isGroupCall) {
-            // When a call is occurring (between members) but you are not in it, a message is
-            // displayed in conversation to inform the user about the call and invite him to join.
-            convViewHolder.mAcceptCallLayout?.apply {
-                // Accept with audio only
-                convViewHolder.mAcceptCallAudioButton?.setOnClickListener {
-                    call.confId?.let { presenter.goToGroupCall(false) }
-                }
-                // Accept call with video
-                convViewHolder.mAcceptCallVideoButton?.setOnClickListener {
-                    call.confId?.let { presenter.goToGroupCall(true) }
-                }
-            }
+            convViewHolder.compositeDisposable.add(
+                interaction.lastElement
+                    .observeOn(DeviceUtils.uiScheduler)
+                    .subscribe { lastElement ->
+                        val callStartedMsg = lastElement as Call
+                        val peerDisplayName = convViewHolder.mPeerDisplayName
+                        val account = interaction.account ?: return@subscribe
+                        val contact = callStartedMsg.contact ?: return@subscribe
+                        val callAcceptLayout = convViewHolder.mCallAcceptLayout ?: return@subscribe
+                        val avatar = convViewHolder.mAvatar
+                        val callInfoText = convViewHolder.mCallInfoText ?: return@subscribe
+                        val acceptCallAudioButton =
+                            convViewHolder.mAcceptCallAudioButton ?: return@subscribe
+                        val acceptCallVideoButton =
+                            convViewHolder.mAcceptCallVideoButton ?: return@subscribe
+
+                        if (callStartedMsg.isIncoming) {
+                            // Show the avatar of the contact who is calling
+                            avatar?.let {
+                                it.setImageBitmap(null)
+                                it.visibility = View.VISIBLE
+                                it.setImageDrawable(
+                                    conversationFragment.getConversationAvatar(
+                                        contact.primaryNumber
+                                    )
+                                )
+                            }
+                            // We can call ourselves in a group call with different devices.
+                            // Set the message to the left when it is incoming.
+                            convViewHolder.mGroupCallLayout?.gravity = Gravity.START
+                            // Show the name of the contact.
+                            peerDisplayName?.apply {
+                                if (presenter.isGroup() && (msgSequenceType == SequenceType.SINGLE
+                                            || msgSequenceType == SequenceType.FIRST)
+                                ) {
+                                    visibility = View.VISIBLE
+                                    convViewHolder.compositeDisposable.add(
+                                        presenter.contactService
+                                            .observeContact(account, contact, false)
+                                            .observeOn(DeviceUtils.uiScheduler)
+                                            .subscribe {
+                                                text = it.displayName
+                                            }
+                                    )
+                                } else {
+                                    visibility = View.GONE
+                                    text = null
+                                }
+                            }
+                        } else {
+                            // Set the message to the right because it is outgoing.
+                            convViewHolder.mGroupCallLayout?.gravity = Gravity.END
+                            // Reset and hide the name of the contact.
+                            peerDisplayName?.text = null
+                            peerDisplayName?.visibility = View.GONE
+                            avatar?.visibility = View.GONE
+                        }
+                        // Set the color to the call started message.
+                        // Call started message, incoming or outgoing and first, middle,
+                        // last or single.
+                        val resIndex = msgSequenceType.ordinal +
+                                (if (callStartedMsg.isIncoming) 1 else 0) * 4
+
+                        callAcceptLayout.background =
+                            ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
+                        callAcceptLayout.setPadding(callPadding)
+                        if (convColor != 0 && !callStartedMsg.isIncoming) {
+                            callAcceptLayout.background.setTint(convColor)
+                            callInfoText.setTextColor(
+                                context.getColor(
+                                    R.color.text_color_primary_dark
+                                )
+                            )
+                            acceptCallAudioButton.setColorFilter(context.getColor(R.color.white))
+                            acceptCallVideoButton.setColorFilter(context.getColor(R.color.white))
+                        }
+                        if (callStartedMsg.isIncoming) {
+                            // Use the original color of the icons.
+                            callInfoText.setTextColor(context.getColor(R.color.colorOnSurface))
+                            acceptCallAudioButton.setColorFilter(
+                                context.getColor(
+                                    R.color.accept_call_button
+                                )
+                            )
+                            acceptCallVideoButton.setColorFilter(
+                                context.getColor(
+                                    R.color.accept_call_button
+                                )
+                            )
+                        }
+                        callAcceptLayout.apply {
+                            // Accept with audio only
+                            acceptCallAudioButton.setOnClickListener {
+                                call.confId?.let { presenter.goToGroupCall(false) }
+                            }
+                            // Accept call with video
+                            acceptCallVideoButton.setOnClickListener {
+                                call.confId?.let { presenter.goToGroupCall(true) }
+                            }
+                        }
+                    })
         }
+        // When it is not a group call
+        // Remove the tint
+        convViewHolder.mCallInfoLayout?.background?.setTintList(null)
 
         val pictureResID: Int
         val historyTxt: String
@@ -725,6 +840,11 @@ class TvConversationAdapter(
         convViewHolder.mHistTxt?.text = historyTxt
         convViewHolder.mHistDetailTxt?.text =
             DateFormat.getDateTimeInstance().format(call.timestamp) // Start date of the call.
+
+        // Apply a bottom margin to the global layout if end of sequence needed.
+        val endOfSeq =
+            msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE
+        convViewHolder.mItem?.let { setBottomMargin(it, if (endOfSeq) 8 else 0) }
     }
 
     /**
