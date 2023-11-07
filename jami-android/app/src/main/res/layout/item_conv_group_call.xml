@@ -18,6 +18,7 @@ along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="end|bottom"
@@ -26,52 +27,61 @@ along with this program; if not, write to the Free Software
     android:paddingStart="@dimen/padding_medium"
     android:paddingEnd="36dp">
 
+    <ImageView
+        android:id="@+id/photo"
+        android:layout_width="@dimen/conversation_avatar_size"
+        android:layout_height="@dimen/conversation_avatar_size"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        tools:srcCompat="@tools:sample/avatars" />
+
     <LinearLayout
         android:id="@+id/callAcceptLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="@dimen/padding_medium"
+        android:layout_toEndOf="@id/photo"
         android:background="@drawable/textmsg_call_background"
-        android:orientation="horizontal"
-        android:paddingTop="4dp"
-        android:paddingBottom="4dp">
+        android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginEnd="8dp"
-            android:padding="12dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="@dimen/padding_medium">
 
             <TextView
+                android:id="@+id/call_info_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center_vertical"
                 android:marqueeRepeatLimit="marquee_forever"
                 android:scrollHorizontally="true"
                 android:singleLine="false"
+                android:text="@string/started_call"
                 android:textColor="@color/colorOnSurface"
-                android:gravity="center_vertical"
-                android:textSize="16sp"
-                android:text="@string/ongoing_group_call" />
+                android:textSize="16sp" />
 
             <ImageButton
                 android:id="@+id/acceptCallAudioButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
                 android:background="@drawable/baseline_call_24"
-                android:gravity="center_vertical"
                 android:clickable="true"
                 android:focusable="true"
-                android:layout_marginStart="16dp"/>
+                android:gravity="center_vertical" />
 
             <ImageButton
                 android:id="@+id/acceptCallVideoButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:gravity="center_vertical"
+                android:background="@drawable/baseline_videocam_on_24"
                 android:clickable="true"
                 android:focusable="true"
-                android:background="@drawable/baseline_videocam_on_24"/>
+                android:gravity="center_vertical" />
         </LinearLayout>
     </LinearLayout>
 
