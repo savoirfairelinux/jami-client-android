@@ -22,6 +22,30 @@
       },
       "revId": "46e79e490cc69b4ef6e68eba0ef291e94c857810",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1bfe3bbe_e4c9f51c",
+        "filename": "jami-android/app/src/main/res/values-night/colors.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-11-07T22:18:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1330c9d_63fbd60f",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 12
+      },
+      "revId": "46e79e490cc69b4ef6e68eba0ef291e94c857810",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
