@@ -95,6 +95,7 @@
     <color name="border_color">#E5E5E5</color>
     <color name="link_peer_color">#005699</color>
     <color name="msg_display_name">#A7A7A7</color>
+    <color name="accept_call_button">#48454E</color>
 
     <!--  Chooser conversation color  -->
     <color name="conversation_palette_pink">@color/pink_700</color>
