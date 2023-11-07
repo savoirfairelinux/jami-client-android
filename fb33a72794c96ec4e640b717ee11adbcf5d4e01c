@@ -22,6 +22,30 @@
       },
       "revId": "fb33a72794c96ec4e640b717ee11adbcf5d4e01c",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9773cdd5_6283b6c7",
+        "filename": "jami-android/app/src/main/res/values/colors.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-11-07T22:16:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2a4ccde_cdf00102",
+      "range": {
+        "startLine": 99,
+        "startChar": 0,
+        "endLine": 99,
+        "endChar": 15
+      },
+      "revId": "fb33a72794c96ec4e640b717ee11adbcf5d4e01c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
