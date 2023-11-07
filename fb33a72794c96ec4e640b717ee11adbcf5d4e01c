@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c2a4ccde_cdf00102",
+        "filename": "jami-android/app/src/main/res/values/colors.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-11-07T21:12:44Z",
+      "side": 1,
+      "message": "conversation_palette_xxx ???",
+      "range": {
+        "startLine": 99,
+        "startChar": 0,
+        "endLine": 99,
+        "endChar": 15
+      },
+      "revId": "fb33a72794c96ec4e640b717ee11adbcf5d4e01c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
