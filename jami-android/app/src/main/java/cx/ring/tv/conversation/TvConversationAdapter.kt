@@ -686,7 +686,7 @@ class TvConversationAdapter(
         if (call.isGroupCall) {
             // When a call is occurring (between members) but you are not in it, a message is
             // displayed in conversation to inform the user about the call and invite him to join.
-            convViewHolder.mAcceptCallLayout?.apply {
+            convViewHolder.mCallAcceptLayout?.apply {
                 // Accept with audio only
                 convViewHolder.mAcceptCallAudioButton?.setOnClickListener {
                     call.confId?.let { presenter.goToGroupCall(false) }
