@@ -259,6 +259,7 @@ along with this program; if not, write to the Free Software
     <string name="conversation_send_video">Record video clip</string>
     <string name="conversation_share_location">Share location</string>
     <string name="ongoing_group_call">Ongoing Call</string>
+    <string name="started_call">Started a call</string>
     <string name="in_reply_to">In reply to</string>
 
     <!-- MediaPreferenceFragment -->

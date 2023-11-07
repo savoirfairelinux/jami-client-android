@@ -57,6 +57,7 @@
     <color name="tv_contact_background">#00335C</color>
     <color name="tv_contact_row_background">#002B4E</color>
     <color name="tv_search_background">#0095EB</color>
+    <color name="tv_group_call_background">#C9C9C9</color>
 
     <!--  Home  -->
     <color name="appbar_gradient_color">#ccfdfdfd</color>
@@ -96,6 +97,7 @@
     <color name="link_peer_color">#005699</color>
     <color name="msg_display_name">#A7A7A7</color>
     <color name="menu_conversation_icons">#005699</color>
+    <color name="accept_call_button">#48454E</color>
 
     <!--  Chooser conversation color  -->
     <color name="conversation_palette_pink">@color/pink_700</color>
