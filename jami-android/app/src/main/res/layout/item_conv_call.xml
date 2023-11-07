@@ -41,7 +41,7 @@ along with this program; if not, write to the Free Software
         android:id="@+id/callInfoLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="64dp"
+        android:layout_marginStart="53dp"
         android:layout_marginEnd="24dp"
         android:paddingHorizontal="@dimen/text_message_padding"
         android:paddingVertical="@dimen/padding_call_vertical"
