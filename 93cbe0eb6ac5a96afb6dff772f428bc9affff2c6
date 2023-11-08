@@ -24,6 +24,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "87ce466a_54c5125e",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 1091,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-11-08T20:19:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b8d80ac_07ce405c",
+      "range": {
+        "startLine": 1091,
+        "startChar": 20,
+        "endLine": 1091,
+        "endChar": 34
+      },
+      "revId": "93cbe0eb6ac5a96afb6dff772f428bc9affff2c6",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ffcb9940_dd625b3a",
@@ -47,6 +71,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "69aecec4_24d57468",
+        "filename": "jami-android/app/src/main/java/cx/ring/viewholders/ConversationViewHolder.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-11-08T20:19:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ffcb9940_dd625b3a",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 17
+      },
+      "revId": "93cbe0eb6ac5a96afb6dff772f428bc9affff2c6",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bb395b6f_1194a734",
@@ -60,6 +108,30 @@
       "writtenOn": "2023-11-08T19:51:09Z",
       "side": 1,
       "message": "elipsize?",
+      "range": {
+        "startLine": 119,
+        "startChar": 0,
+        "endLine": 119,
+        "endChar": 7
+      },
+      "revId": "93cbe0eb6ac5a96afb6dff772f428bc9affff2c6",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1fabe004_ef97fcac",
+        "filename": "jami-android/app/src/main/res/layout/item_conv_msg_peer.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-11-08T20:19:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb395b6f_1194a734",
       "range": {
         "startLine": 119,
         "startChar": 0,
