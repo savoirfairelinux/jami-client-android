@@ -106,9 +106,24 @@ along with this program; if not, write to the Free Software
             layout="@layout/msg_link_preview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/msg_reply_txt"
+            android:layout_below="@id/msg_display_name"
             android:layout_alignStart="@id/msg_txt"
             android:layout_marginEnd="20dp" />
+
+        <TextView
+            android:id="@+id/msg_display_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/msg_reply_txt"
+            android:layout_alignStart="@id/msg_txt"
+            android:ellipsize="end"
+            android:maxLength="16"
+            android:padding="4dp"
+            android:textColor="@color/msg_display_name"
+            android:textSize="@dimen/message_display_name_textsize"
+            android:visibility="gone"
+            tools:text="Bob"
+            tools:visibility="visible" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/reaction_chip"

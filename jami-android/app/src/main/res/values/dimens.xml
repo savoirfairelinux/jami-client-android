@@ -130,5 +130,6 @@ along with this program; if not, write to the Free Software
     <dimen name="padding_call_vertical">4dp</dimen>
     <dimen name="text_message_padding">10dp</dimen>
     <dimen name="message_details_margin">18dp</dimen>
+    <dimen name="message_display_name_textsize">12sp</dimen>
 
 </resources>
