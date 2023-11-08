@@ -66,7 +66,6 @@ import cx.ring.services.SharedPreferencesServiceImpl.Companion.getConversationCo
 import cx.ring.services.SharedPreferencesServiceImpl.Companion.getConversationPreferences
 import cx.ring.services.SharedPreferencesServiceImpl.Companion.getConversationSymbol
 import cx.ring.utils.*
-import cx.ring.utils.MediaButtonsHelper.MediaButtonsHelperCallback
 import cx.ring.views.AvatarDrawable
 import cx.ring.views.AvatarFactory
 import dagger.hilt.android.AndroidEntryPoint
@@ -86,8 +85,7 @@ import java.util.*
 
 @AndroidEntryPoint
 class ConversationFragment : BaseSupportFragment<ConversationPresenter, ConversationView>(),
-    MediaButtonsHelperCallback, ConversationView,
-    SearchView.OnQueryTextListener {
+    ConversationView, SearchView.OnQueryTextListener {
     private var locationServiceConnection: ServiceConnection? = null
     private var binding: FragConversationBinding? = null
     private var mAudioCallBtn: MenuItem? = null
@@ -1158,18 +1156,6 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         currentBottomView = null
         requireActivity().invalidateOptionsMenu()
         updateListPadding()
-    }
-
-    override fun positiveMediaButtonClicked() {
-        presenter.clickOnGoingPane()
-    }
-
-    override fun negativeMediaButtonClicked() {
-        presenter.clickOnGoingPane()
-    }
-
-    override fun toggleMediaButtonClicked() {
-        presenter.clickOnGoingPane()
     }
 
     private fun setLoading(isLoading: Boolean) {
