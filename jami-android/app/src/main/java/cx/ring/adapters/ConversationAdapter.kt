@@ -1087,6 +1087,7 @@ class ConversationAdapter(
                 val answerLayout = convViewHolder.mAnswerLayout
                 val isTimeShown = hasPermanentTimeString(textMessage, position)
                 val msgSequenceType = getMsgSequencing(position, isTimeShown)
+                val msgName = convViewHolder.mMsgName
 
                 // Manage deleted message.
                 if (isDeleted) {
@@ -1248,6 +1249,25 @@ class ConversationAdapter(
                         notifyItemChanged(expandedItemPosition)
                     }
                 }
+
+
+                // Show the name of the contact if it is a group conversation
+                if(textMessage.isIncoming)
+                {
+                    msgName?.apply {
+                        if (presenter.isGroup() && (msgSequenceType == SequenceType.SINGLE || msgSequenceType == SequenceType.FIRST)) {
+                            visibility = View.VISIBLE
+                            text = "bob" // utiliser flux de contact
+
+                            Log.w("ici", "la")
+                        } else {
+                            visibility = View.GONE
+                            text = null
+                        }
+                    }
+
+                }
+
             })
     }
 
