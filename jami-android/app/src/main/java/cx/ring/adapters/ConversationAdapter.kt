@@ -1079,6 +1079,7 @@ class ConversationAdapter(
             .observeOn(DeviceUtils.uiScheduler)
             .subscribe { lastElement ->
                 val textMessage = lastElement as TextMessage
+                val account = interaction.account ?: return@subscribe
                 val contact = textMessage.contact ?: return@subscribe
                 val isDeleted = textMessage.body.isNullOrEmpty()
                 val msgTxt = convViewHolder.mMsgTxt ?: return@subscribe
@@ -1087,6 +1088,7 @@ class ConversationAdapter(
                 val answerLayout = convViewHolder.mAnswerLayout
                 val isTimeShown = hasPermanentTimeString(textMessage, position)
                 val msgSequenceType = getMsgSequencing(position, isTimeShown)
+                val msgDisplayName = convViewHolder.mMsgDisplayName
 
                 // Manage deleted message.
                 if (isDeleted) {
@@ -1246,6 +1248,28 @@ class ConversationAdapter(
                         }
                         expandedItemPosition = if (isExpanded) -1 else position
                         notifyItemChanged(expandedItemPosition)
+                    }
+                }
+
+                // Show the name of the contact if it is a group conversation
+                if (textMessage.isIncoming) {
+                    msgDisplayName?.apply {
+                        if (presenter.isGroup() && (msgSequenceType == SequenceType.SINGLE ||
+                                    msgSequenceType == SequenceType.FIRST)
+                        ) {
+                            visibility = View.VISIBLE
+                            convViewHolder.compositeDisposable.add(
+                                presenter.contactService
+                                    .observeContact(account, contact, false)
+                                    .observeOn(DeviceUtils.uiScheduler)
+                                    .subscribe {
+                                        text = it.displayName
+                                    }
+                            )
+                        } else {
+                            visibility = View.GONE
+                            text = null
+                        }
                     }
                 }
             })

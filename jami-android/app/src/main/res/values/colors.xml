@@ -94,5 +94,6 @@
     <color name="icon_background_color">#FFFFFF</color>
     <color name="border_color">#E5E5E5</color>
     <color name="link_peer_color">#005699</color>
+    <color name="msg_display_name">#A7A7A7</color>
 
 </resources>
