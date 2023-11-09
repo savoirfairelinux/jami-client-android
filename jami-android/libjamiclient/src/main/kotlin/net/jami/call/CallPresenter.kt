@@ -697,6 +697,8 @@ class CallPresenter @Inject constructor(
         }
     }
 
+    enum class IncomingCallAction { ACCEPT_AUDIO, ACCEPT_VIDEO, VIEW_ONLY }
+
     companion object {
         val TAG = CallPresenter::class.simpleName!!
         /** Describes what to do if there is another active call when accepting this call  */
