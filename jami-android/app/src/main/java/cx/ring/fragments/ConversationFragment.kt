@@ -73,7 +73,9 @@ import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
+import net.jami.call.CallPresenter
 import net.jami.conversation.ConversationPresenter
+import net.jami.conversation.ConversationPresenter.IncomingCallAction
 import net.jami.conversation.ConversationView
 import net.jami.daemon.JamiService
 import net.jami.model.*
@@ -241,7 +243,6 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                 WindowInsetsCompat.CONSUMED
             }
 
-            binding.ongoingcallPane.visibility = View.GONE
 
             // Content may be both text and non-text (HTML, images, videos, audio files, etc).
             ViewCompat.setOnReceiveContentListener(
@@ -306,6 +307,17 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             binding.toolbar.setNavigationOnClickListener {
                 activity?.onBackPressedDispatcher?.onBackPressed()
             }
+            binding.ongoingCallPane.setOnClickListener { presenter.clickOnGoingPane() }
+            binding.ringingCallPane.setOnClickListener {
+                presenter.clickRingingPane(IncomingCallAction.VIEW_ONLY)
+            }
+            binding.acceptAudioCallButton.setOnClickListener {
+                presenter.clickRingingPane(IncomingCallAction.ACCEPT_AUDIO)
+            }
+            binding.acceptVideoCallButton.setOnClickListener {
+                presenter.clickRingingPane(IncomingCallAction.ACCEPT_VIDEO)
+            }
+
             binding.root
         }
     }
@@ -956,7 +968,14 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     }
 
     override fun displayOnGoingCallPane(display: Boolean) {
-        binding!!.ongoingcallPane.visibility = if (display) View.VISIBLE else View.GONE
+        binding!!.ongoingCallPane.visibility = if (display) View.VISIBLE else View.GONE
+    }
+
+    override fun displayRingingCallPane(display: Boolean, withCamera: Boolean) {
+        binding!!.ringingCallPane.visibility =
+            if (display) View.VISIBLE else View.GONE
+        binding!!.acceptVideoCallButton.visibility =
+            if (withCamera) View.VISIBLE else View.GONE
     }
 
     override fun displayNumberSpinner(conversation: Conversation, number: net.jami.model.Uri) {
@@ -994,6 +1013,17 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             .setClass(requireContext().applicationContext, ContactDetailsActivity::class.java)
         startActivity(intent,
             ActivityOptions.makeSceneTransitionAnimation(activity, logo, "conversationIcon").toBundle())
+    }
+
+    override fun acceptAndGoToCallActivity(call: Call, withCamera: Boolean) {
+        startActivity(
+            Intent(DRingService.ACTION_CALL_ACCEPT)
+                .setClass(requireContext().applicationContext, CallActivity::class.java)
+                .putExtra(ConversationPath.KEY_ACCOUNT_ID, call.account)
+                .putExtra(NotificationService.KEY_CALL_ID, call.daemonIdString)
+                .putExtra(CallPresenter.KEY_ACCEPT_OPTION, CallPresenter.ACCEPT_HOLD)
+                .putExtra(CallFragment.KEY_HAS_VIDEO, withCamera)
+        )
     }
 
     override fun goToCallActivity(conferenceId: String, withCamera: Boolean) {
