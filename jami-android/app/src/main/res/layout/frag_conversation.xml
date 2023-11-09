@@ -116,7 +116,7 @@
                 tools:visibility="visible" />
 
             <TextView
-                android:id="@+id/ongoingcall_pane"
+                android:id="@+id/ongoing_call_pane"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_below="@id/error_msg_pane"
@@ -132,10 +132,51 @@
                 tools:visibility="visible" />
 
             <LinearLayout
+                android:id="@+id/ringing_call_pane"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ongoing_call_pane"
+                android:background="?attr/colorSecondary"
+                android:gravity="center"
+                android:padding="8dp"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/conversation_action_incoming_call"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="?attr/colorOnPrimary"
+                    android:textStyle="bold" />
+
+                <ImageButton
+                    android:id="@+id/acceptAudioCallButton"
+                    style="@style/ButtonOutLined"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="8dp"
+                    android:contentDescription="@string/action_call_accept_audio"
+                    android:src="@drawable/baseline_call_24"
+                    app:tint="?attr/colorOnPrimary" />
+
+                <ImageButton
+                    android:id="@+id/acceptVideoCallButton"
+                    style="@style/ButtonOutLined"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:contentDescription="@string/action_call_accept_video"
+                    android:src="@drawable/baseline_videocam_24"
+                    app:tint="?attr/colorOnPrimary" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
                 android:id="@+id/trustRequestMessageLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/ongoingcall_pane"
+                android:layout_below="@id/ongoing_call_pane"
                 android:orientation="vertical"
                 android:visibility="gone">
 
@@ -168,7 +209,7 @@
                 android:id="@+id/mapCard"
                 android:layout_width="@dimen/location_sharing_minmap_width"
                 android:layout_height="@dimen/location_sharing_minmap_height"
-                android:layout_below="@id/ongoingcall_pane"
+                android:layout_below="@id/ongoing_call_pane"
                 android:layout_centerHorizontal="true"
                 android:layout_marginHorizontal="0dp"
                 android:layout_marginVertical="16dp"
@@ -178,8 +219,7 @@
                 android:focusable="true"
                 android:visibility="gone"
                 app:cardCornerRadius="16dp"
-                app:cardElevation="4dp"
-                tools:visibility="visible">
+                app:cardElevation="4dp">
 
                 <FrameLayout
                     android:id="@+id/mapLayout"
