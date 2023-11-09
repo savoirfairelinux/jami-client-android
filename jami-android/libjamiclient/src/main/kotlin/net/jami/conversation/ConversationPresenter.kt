@@ -23,6 +23,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.PublishSubject
 import io.reactivex.rxjava3.subjects.Subject
+import net.jami.call.CallPresenter.IncomingCallAction
 import net.jami.daemon.Blob
 import net.jami.services.ConversationFacade
 import net.jami.model.*
@@ -120,6 +121,7 @@ class ConversationPresenter @Inject constructor(
             .subscribe({ conversation: Conversation ->
                 conversation.isVisible = true
                 updateOngoingCallView(conversation)
+                updateRingingCallView(conversation)
                 accountService.getAccount(conversation.accountId)?.let { account ->
                     conversationFacade.readMessages(account, conversation, !isBubble)}
             }) { e -> Log.e(TAG, "Error loading conversation", e) })
@@ -205,9 +207,15 @@ class ConversationPresenter @Inject constructor(
                 .observeOn(uiScheduler)
                 .subscribe { composingStatus: ComposingStatus -> this.view?.setComposingStatus(composingStatus) })
         }
+        disposable.add(c.activeCallsObservable
+            .observeOn(uiScheduler)
+            .subscribe { updateRingingCallView(c) })
         disposable.add(callService.callsUpdates
             .observeOn(uiScheduler)
-            .subscribe({ updateOngoingCallView(c) }) { e: Throwable ->
+            .subscribe({
+                updateOngoingCallView(c)
+                updateRingingCallView(c)
+            }) { e: Throwable ->
                 Log.e(TAG, "Can't update call view", e)
             })
         disposable.add(c.getColor()
@@ -333,6 +341,50 @@ class ConversationPresenter @Inject constructor(
         }
     }
 
+    fun clickRingingPane(action: IncomingCallAction) {
+        val conference = mConversation?.currentCall
+
+        if (conference != null) {
+            when (action) { // One to one call.
+                IncomingCallAction.ACCEPT_AUDIO -> {
+                    view?.acceptAndGoToCallActivity(conference.firstCall ?: return, false)
+                }
+
+                IncomingCallAction.ACCEPT_VIDEO -> {
+                    view?.acceptAndGoToCallActivity(conference.firstCall ?: return, true)
+                }
+
+                IncomingCallAction.VIEW_ONLY -> {
+                    view?.goToCallActivity(conference.id, conference.hasActiveVideo())
+                }
+            }
+        } else { // Case for group calls.
+            val conversation = mConversation ?: return
+            mCompositeDisposable.add(
+                conversation.activeCallsObservable
+                    .firstOrError()
+                    .subscribe { activeCalls ->
+                        val activeCall = activeCalls.firstOrNull()
+                        if (activeCall != null) {
+                            when (action) {
+                                IncomingCallAction.ACCEPT_AUDIO -> {
+                                    view?.goToGroupCall(mConversation!!, mConversation!!.uri, false)
+                                }
+
+                                IncomingCallAction.ACCEPT_VIDEO -> {
+                                    view?.goToGroupCall(mConversation!!, mConversation!!.uri, true)
+                                }
+
+                                IncomingCallAction.VIEW_ONLY -> {}
+                            }
+                        } else { // Seems there is no call ringing.
+                            view?.displayRingingCallPane(false)
+                        }
+                    }
+            )
+        }
+    }
+
     /**
      * Navigates to the call activity with the specified camera option.
      *
@@ -376,7 +428,26 @@ class ConversationPresenter @Inject constructor(
 
     private fun updateOngoingCallView(conversation: Conversation?) {
         val conf = conversation?.currentCall
-        view?.displayOnGoingCallPane(conf != null && (conf.state === Call.CallStatus.CURRENT || conf.state === Call.CallStatus.HOLD || conf.state === Call.CallStatus.RINGING))
+        if (conf != null)
+            view?.displayOnGoingCallPane(
+                conf.state === Call.CallStatus.CURRENT || conf.state === Call.CallStatus.HOLD
+            )
+    }
+
+    private fun updateRingingCallView(conversation: Conversation) {
+        val call = conversation.currentCall
+        val conversation = mConversation ?: return
+        mCompositeDisposable.add(conversation.activeCallsObservable
+            .firstOrError()
+            .subscribe { activeCalls ->
+                val activeCall = activeCalls.isNotEmpty() // Group call
+                view?.displayRingingCallPane(
+                    display = (call != null && call.state === Call.CallStatus.RINGING) ||
+                            (call == null && activeCall),
+                    withCamera = (call != null && call.hasActiveVideo()) || activeCall
+                )
+            }
+        )
     }
 
     fun onBlockIncomingContactRequest() {
