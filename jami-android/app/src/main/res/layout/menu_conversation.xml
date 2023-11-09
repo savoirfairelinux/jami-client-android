@@ -35,7 +35,8 @@
             android:contentDescription="@string/tv_action_more"
             android:focusable="true"
             android:padding="8dp"
-            android:src="@drawable/baseline_add_24" />
+            android:src="@drawable/baseline_add_24"
+            app:tint="@color/menu_conversation_icones" />
 
         <ImageView
             android:id="@+id/conv_action_reply"
@@ -46,8 +47,15 @@
             android:contentDescription="@string/menu_message_reply"
             android:focusable="true"
             android:padding="8dp"
-            android:src="@drawable/baseline_reply_24" />
+            android:src="@drawable/baseline_reply_24"
+            app:tint="@color/menu_conversation_icones" />
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/conversation_secondary_background"
+        android:layout_marginHorizontal="16dp"/>
 
     <androidx.emoji2.emojipicker.EmojiPickerView
         android:id="@+id/emoji_picker"
@@ -80,7 +88,7 @@
             android:text="@string/menu_file_open"
             android:textColor="@color/text_color"
             app:drawableStartCompat="@drawable/baseline_open_in_new_16"
-            app:drawableTint="@color/colorPrimary" />
+            app:drawableTint="@color/menu_conversation_icones" />
 
         <TextView
             android:id="@+id/conv_action_download_text"
@@ -96,7 +104,7 @@
             android:text="@string/menu_file_save"
             android:textColor="@color/text_color"
             app:drawableStartCompat="@drawable/baseline_file_download_16"
-            app:drawableTint="@color/colorPrimary" />
+            app:drawableTint="@color/menu_conversation_icones" />
 
         <TextView
             android:id="@+id/conv_action_copy_text"
@@ -112,7 +120,7 @@
             android:text="@android:string/copy"
             android:textColor="@color/text_color"
             app:drawableStartCompat="@drawable/outline_file_copy_16"
-            app:drawableTint="@color/colorPrimary" />
+            app:drawableTint="@color/menu_conversation_icones" />
 
         <TextView
             android:id="@+id/conv_action_share"
@@ -128,7 +136,7 @@
             android:text="@string/share_label"
             android:textColor="@color/text_color"
             app:drawableStartCompat="@drawable/baseline_share_twoton_16dp"
-            app:drawableTint="@color/colorPrimary" />
+            app:drawableTint="@color/menu_conversation_icones" />
 
         <TextView
             android:id="@+id/conv_action_edit"
@@ -144,23 +152,7 @@
             android:text="@string/menu_message_edit"
             android:textColor="@color/text_color"
             app:drawableStartCompat="@drawable/baseline_edit_16"
-            app:drawableTint="@color/colorPrimary" />
-
-        <TextView
-            android:id="@+id/conv_action_delete"
-            style="@style/TextAppearance.Material3.LabelMedium"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/conversation_menu_item_height"
-            android:background="?selectableItemBackground"
-            android:clickable="true"
-            android:drawablePadding="16dp"
-            android:focusable="true"
-            android:gravity="center_vertical"
-            android:paddingHorizontal="16dp"
-            android:text="@string/menu_message_delete"
-            android:textColor="@color/text_color"
-            app:drawableStartCompat="@drawable/baseline_delete_16"
-            app:drawableTint="@color/colorPrimary" />
+            app:drawableTint="@color/menu_conversation_icones" />
 
         <TextView
             android:id="@+id/conv_action_history"
@@ -176,7 +168,24 @@
             android:text="Message history"
             android:textColor="@color/text_color"
             app:drawableStartCompat="@drawable/outline_history_16"
-            app:drawableTint="@color/colorPrimary" />
+            app:drawableTint="@color/menu_conversation_icones" />
+
+        <TextView
+            android:id="@+id/conv_action_delete"
+            style="@style/TextAppearance.Material3.LabelMedium"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/conversation_menu_item_height"
+            android:background="?selectableItemBackground"
+            android:clickable="true"
+            android:drawablePadding="16dp"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="16dp"
+            android:text="@string/menu_message_delete"
+            android:textColor="@color/text_color"
+            app:drawableStartCompat="@drawable/baseline_delete_16"
+            app:drawableTint="@color/menu_conversation_icones" />
+
     </LinearLayout>
 
 </LinearLayout>
