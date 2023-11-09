@@ -120,23 +120,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_below="@id/error_msg_pane"
-                android:background="?attr/colorSecondary"
+                android:alpha="0.6"
+                android:background="@color/black"
                 android:gravity="center"
                 android:onClick="@{() -> presenter.onClick()}"
                 android:padding="8dp"
                 android:text="@string/conversation_action_go_to_call"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="?attr/colorOnPrimary"
-                android:textStyle="bold"
                 android:visibility="gone"
                 tools:visibility="visible" />
 
             <LinearLayout
-                android:id="@+id/ringing_call_pane"
+                android:id="@+id/ringing_call_buttons"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/ongoing_call_pane"
-                android:background="?attr/colorSecondary"
+                android:alpha="0.6"
+                android:background="@color/black"
                 android:gravity="center"
                 android:padding="8dp"
                 android:visibility="gone"
@@ -147,8 +148,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/conversation_action_incoming_call"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="?attr/colorOnPrimary"
-                    android:textStyle="bold" />
+                    android:textColor="?attr/colorOnPrimary" />
 
                 <ImageButton
                     android:id="@+id/acceptAudioCallButton"
@@ -170,7 +170,6 @@
                     app:tint="?attr/colorOnPrimary" />
 
             </LinearLayout>
-
 
             <LinearLayout
                 android:id="@+id/trustRequestMessageLayout"
