@@ -239,6 +239,7 @@ along with this program; if not, write to the Free Software
     <string name="conversation_action_block_this">Block contact</string>
     <string name="conversation_action_unblock_this">Unblock contact</string>
     <string name="conversation_action_go_to_call">Return to ongoing call</string>
+    <string name="conversation_action_incoming_call">Incoming call</string>
     <string name="conversation_action_latest">Jump to latest</string>
     <string name="conversation_default_emoji" translatable="false">👍</string>
     <string name="conversation_open_file_error">There is no installed application capable of opening this file type.</string>
