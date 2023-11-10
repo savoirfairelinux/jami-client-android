@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7cef678f_6c6f72cf",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/call/CallPresenter.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-11-10T20:59:09Z",
+      "side": 1,
+      "message": "Is here the place ?",
+      "range": {
+        "startLine": 700,
+        "startChar": 0,
+        "endLine": 700,
+        "endChar": 13
+      },
+      "revId": "f23189572b1cc8c748625f782d2bbe2ccee39563",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
