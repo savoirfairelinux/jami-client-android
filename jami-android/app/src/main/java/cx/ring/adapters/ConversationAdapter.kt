@@ -426,6 +426,7 @@ class ConversationAdapter(
     private fun configureReplyIndicator(conversationViewHolder: ConversationViewHolder,
                                         interaction: Interaction) {
 
+        val context = conversationViewHolder.itemView.context
         val conversation = interaction.conversation
         if (conversation == null || conversation !is Conversation) {
             conversationViewHolder.mReplyName?.isVisible = false
@@ -451,17 +452,17 @@ class ConversationAdapter(
                         // Apply correct color depending if message is incoming or not.
                         conversationViewHolder.mReplyTxt?.background?.setTint(
                             if (i.first.isIncoming)
-                                conversationViewHolder.itemView.context.getColor(
+                                context.getColor(
                                     R.color.conversation_secondary_background
                                 )
                             else convColor
                         )
                         conversationViewHolder.mReplyTxt.setTextColor(
                             if (i.first.isIncoming)
-                                conversationViewHolder.itemView.context.getColor(
+                                context.getColor(
                                     R.color.colorOnSurface
                                 )
-                            else conversationViewHolder.itemView.context.getColor(
+                            else context.getColor(
                                 R.color.text_color_primary_dark
                             )
                         )
@@ -470,8 +471,8 @@ class ConversationAdapter(
                         val smallAvatarDrawable = AvatarDrawable.Builder()
                             .withContact(i.second)
                             .withCircleCrop(true)
-                            .build(conversationViewHolder.itemView.context)
-                            .setInSize(conversationViewHolder.itemView.context.resources.getDimensionPixelSize(R.dimen.conversation_avatar_size_small))
+                            .build(context)
+                            .setInSize(context.resources.getDimensionPixelSize(R.dimen.conversation_avatar_size_small))
                         // Update the view.
                         conversationViewHolder.mReplyName!!.setCompoundDrawablesWithIntrinsicBounds(smallAvatarDrawable, null, null, null)
 
@@ -968,25 +969,26 @@ class ConversationAdapter(
 
     @SuppressLint("RestrictedApi", "ClickableViewAccessibility")
     private fun configureForFileInfo(viewHolder: ConversationViewHolder, interaction: Interaction, position: Int) {
+        val context = viewHolder.itemView.context
         val file = interaction as DataTransfer
         val path = presenter.deviceRuntimeService.getConversationPath(file)
-        val timeString = TextUtils.timestampToDetailString(viewHolder.itemView.context, file.timestamp)
+        val timeString = TextUtils.timestampToDetailString(context, file.timestamp)
         viewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
             viewHolder.mMsgDetailTxt?.text = when (val status = file.status) {
                 InteractionStatus.TRANSFER_FINISHED -> String.format("%s - %s", timeString,
-                    Formatter.formatFileSize(viewHolder.itemView.context, file.totalSize))
+                    Formatter.formatFileSize(context, file.totalSize))
                 InteractionStatus.TRANSFER_ONGOING -> String.format("%s / %s - %s",
-                    Formatter.formatFileSize(viewHolder.itemView.context, file.bytesProgress),
-                    Formatter.formatFileSize(viewHolder.itemView.context, file.totalSize),
-                    TextUtils.getReadableFileTransferStatus(viewHolder.itemView.context, status))
+                    Formatter.formatFileSize(context, file.bytesProgress),
+                    Formatter.formatFileSize(context, file.totalSize),
+                    TextUtils.getReadableFileTransferStatus(context, status))
                 else -> String.format("%s - %s - %s", timeString,
-                    Formatter.formatFileSize(viewHolder.itemView.context, file.totalSize),
-                    TextUtils.getReadableFileTransferStatus(viewHolder.itemView.context, status))
+                    Formatter.formatFileSize(context, file.totalSize),
+                    TextUtils.getReadableFileTransferStatus(context, status))
             }
         })
         if (hasPermanentTimeString(file, position)) {
             viewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
-                viewHolder.mMsgDetailTxtPerm?.text = TextUtils.timestampToDetailString(viewHolder.itemView.context, file.timestamp)
+                viewHolder.mMsgDetailTxtPerm?.text = TextUtils.timestampToDetailString(context, file.timestamp)
             })
             viewHolder.mMsgDetailTxtPerm?.visibility = View.VISIBLE
         } else {
@@ -1276,17 +1278,18 @@ class ConversationAdapter(
     }
 
     private fun configureForContactEvent(viewHolder: ConversationViewHolder, interaction: Interaction) {
+        val context = viewHolder.itemView.context
         val event = interaction as ContactEvent
         Log.w(TAG, "configureForContactEvent ${event.account} ${event.event} ${event.contact} ${event.author} ")
         val timestamp =
-            TextUtils.timestampToDetailString(viewHolder.itemView.context, event.timestamp)
+            TextUtils.timestampToDetailString(context, event.timestamp)
 
         if (interaction.isSwarm) {
             viewHolder.compositeDisposable.add(
                 presenter.contactService.observeContact(event.account!!, event.contact!!, false)
                     .observeOn(DeviceUtils.uiScheduler)
                 .subscribe { vm ->
-                    val eventString = viewHolder.itemView.context.getString(when (event.event) {
+                    val eventString = context.getString(when (event.event) {
                         ContactEvent.Event.ADDED -> R.string.conversation_contact_added
                         ContactEvent.Event.INVITED -> R.string.conversation_contact_invited
                         ContactEvent.Event.REMOVED -> R.string.conversation_contact_left
@@ -1320,7 +1323,6 @@ class ConversationAdapter(
         position: Int
     ) {
         val recycle: StringBuilder = StringBuilder()
-        val context = convViewHolder.itemView.context
 
         // Reset the scale of the icon
         convViewHolder.mIcon?.scaleX = 1f
@@ -1383,7 +1385,7 @@ class ConversationAdapter(
                     val detailCall = convViewHolder.mHistDetailTxt ?: return@subscribe
                     val resIndex: Int
                     val typeCallTxt : String
-
+                    val context = convViewHolder.itemView.context
                     // Manage the update of the timestamp
                     if (isTimeShown) {
                         convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
@@ -1400,7 +1402,7 @@ class ConversationAdapter(
                             resIndex = msgSequenceType.ordinal + 12
                             // Set the call message color.
                             typeCall.setTextColor(
-                                convViewHolder.itemView.context.getColor(R.color.call_missed_text_message)
+                                context.getColor(R.color.call_missed_text_message)
                             )
                             callIcon.setImageResource(R.drawable.baseline_missed_call_16)
                             // Set the drawable color to red because it is missed.
@@ -1410,7 +1412,7 @@ class ConversationAdapter(
                             resIndex = msgSequenceType.ordinal + 4
                             // Set the call message color.
                             typeCall.setTextColor(
-                                convViewHolder.itemView.context.getColor(R.color.colorOnSurface)
+                                context.getColor(R.color.colorOnSurface)
                             )
                             callIcon.setImageResource(R.drawable.baseline_incoming_call_16)
                             callIcon.drawable.setTint(context.getColor(R.color.colorOnSurface))
@@ -1423,7 +1425,7 @@ class ConversationAdapter(
                             resIndex = msgSequenceType.ordinal + 16
                             // Set the call message color .
                             typeCall.setTextColor(
-                                convViewHolder.itemView.context.getColor(R.color.call_missed_text_message)
+                                context.getColor(R.color.call_missed_text_message)
                             )
                             callIcon.setImageResource(R.drawable.baseline_missed_call_16)
                             // Set the drawable color to red because it is missed.
@@ -1435,7 +1437,7 @@ class ConversationAdapter(
                             resIndex = msgSequenceType.ordinal
                             // Set the call message color.
                             typeCall.setTextColor(
-                                convViewHolder.itemView.context.getColor(R.color.call_text_outgoing_message)
+                                context.getColor(R.color.call_text_outgoing_message)
                             )
                             callIcon.setImageResource(R.drawable.baseline_outgoing_call_16)
                             callIcon.drawable.setTint(context.getColor(R.color.call_drawable_color))
@@ -1462,12 +1464,12 @@ class ConversationAdapter(
                     // Set the color of the time duration.
                     if (!call.isIncoming && !call.isMissed) {
                         detailCall.setTextColor(
-                            convViewHolder.itemView.context.getColor(R.color.call_text_outgoing_message)
+                            context.getColor(R.color.call_text_outgoing_message)
                         )
                     }
                     if (call.isIncoming && !call.isMissed) {
                         detailCall.setTextColor(
-                            convViewHolder.itemView.context.getColor(R.color.colorOnSurface)
+                            context.getColor(R.color.colorOnSurface)
                         )
                     }
                 })
