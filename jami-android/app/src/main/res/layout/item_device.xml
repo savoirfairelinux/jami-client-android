@@ -23,7 +23,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
         android:id="@+id/txt_device_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:tint="@color/button_border"
+        app:tint="@color/button_border"
         android:singleLine="true"
         android:enabled="false"
         />

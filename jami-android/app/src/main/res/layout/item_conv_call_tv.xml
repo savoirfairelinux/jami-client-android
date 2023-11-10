@@ -44,7 +44,7 @@ along with this program; if not, write to the Free Software
             android:layout_marginLeft="12dp"
             android:layout_marginRight="12dp"
             android:alpha="0.75"
-            android:tint="@color/black"
+            app:tint="@color/black"
             android:src="@drawable/baseline_call_missed_24" />
 
         <LinearLayout
