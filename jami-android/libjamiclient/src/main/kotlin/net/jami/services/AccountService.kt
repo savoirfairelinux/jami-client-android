@@ -1024,6 +1024,15 @@ class AccountService(
         observableAccounts.onNext(account)
     }
 
+    fun activeCallsChanged(
+        accountId: String,
+        conversationId: String,
+        activeCalls: List<Map<String, String>>,
+    ) {
+        val account = getAccount(accountId) ?: return
+        account.setActiveCalls(conversationId, activeCalls)
+    }
+
     fun accountProfileReceived(accountId: String, name: String?, photo: String?) {
         val account = getAccount(accountId) ?: return
         mVCardService.saveVCardProfile(accountId, account.uri, name, photo)
