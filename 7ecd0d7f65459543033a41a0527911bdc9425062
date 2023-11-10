@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "270bf56e_6c297ead",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/model/Conversation.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 773,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-11-10T20:52:30Z",
+      "side": 1,
+      "message": "Please check this is the place and this is the way we want to implement this.",
+      "range": {
+        "startLine": 764,
+        "startChar": 4,
+        "endLine": 773,
+        "endChar": 5
+      },
+      "revId": "7ecd0d7f65459543033a41a0527911bdc9425062",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
