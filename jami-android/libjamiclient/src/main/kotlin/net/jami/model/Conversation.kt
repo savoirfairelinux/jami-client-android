@@ -32,12 +32,14 @@ class Conversation : ConversationHistory {
     val contacts: MutableList<Contact>
     private val rawHistory: NavigableMap<Long, Interaction> = TreeMap()
     private val currentCalls = ArrayList<Conference>()
+    private val activeCalls = ArrayList<ActiveCall>()
     val aggregateHistory = ArrayList<Interaction>(32)
 
     private val lastDisplayedMessages: MutableMap<String, String> = HashMap()
     private val updatedElementSubject: Subject<Pair<Interaction, ElementStatus>> = PublishSubject.create()
     private val clearedSubject: Subject<List<Interaction>> = PublishSubject.create()
     private val callsSubject: Subject<List<Conference>> = BehaviorSubject.createDefault(emptyList())
+    private val activeCallsSubject: Subject<List<ActiveCall>> = BehaviorSubject.createDefault(emptyList())
     private val composingStatusSubject: Subject<Account.ComposingStatus> = BehaviorSubject.createDefault(Account.ComposingStatus.Idle)
     private val color: Subject<Int> = BehaviorSubject.create()
     private val symbol: Subject<CharSequence> = BehaviorSubject.create()
@@ -96,8 +98,13 @@ class Conversation : ConversationHistory {
 
     val cleared: Observable<List<Interaction>>
         get() = clearedSubject
+
     val calls: Observable<List<Conference>>
         get() = callsSubject
+
+    val activeCallsObservable: Observable<List<ActiveCall>>
+        get() = activeCallsSubject
+
     val composingStatus: Observable<Account.ComposingStatus>
         get() = composingStatusSubject
 
@@ -752,6 +759,27 @@ class Conversation : ConversationHistory {
         } else
             mPendingReactions.computeIfAbsent(reactTo) { ArrayList() }.add(reactionInteraction)
     }
+
+    data class ActiveCall(val confId: String, val uri: String, val device: String) {
+        constructor(map: Map<String, String>) :
+                this(map[KEY_CONF_ID]!!, map[KEY_URI]!!, map[KEY_DEVICE]!!)
+
+        companion object {
+            const val KEY_CONF_ID = "id"
+            const val KEY_URI = "uri"
+            const val KEY_DEVICE = "device"
+        }
+    }
+
+    fun setActiveCalls(activeCalls: List<Map<String, String>>) {
+        this.activeCalls.clear()
+        for (call in activeCalls) {
+            this.activeCalls.add(ActiveCall(call))
+        }
+        activeCallsSubject.onNext(this.activeCalls)
+    }
+
+    fun getActiveCalls(): List<ActiveCall> = activeCalls
 
     private val conferenceStarted: MutableMap<String, Call> = HashMap()
     private val conferenceEnded: MutableMap<String, Call> = HashMap()
