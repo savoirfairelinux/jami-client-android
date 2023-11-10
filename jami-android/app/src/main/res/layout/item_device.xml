@@ -14,6 +14,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
@@ -23,7 +24,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
         android:id="@+id/txt_device_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:tint="@color/button_border"
+        app:tint="@color/button_border"
         android:singleLine="true"
         android:enabled="false"
         />

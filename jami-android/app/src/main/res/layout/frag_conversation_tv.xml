@@ -90,14 +90,15 @@
                         android:gravity="center"
                         android:orientation="horizontal">
 
-                        <ImageButton
+                        <androidx.appcompat.widget.AppCompatImageButton
                             android:id="@+id/button_text"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
                             android:background="@drawable/tv_button_shape"
                             android:contentDescription="@string/tv_send_text"
+                            android:padding="@dimen/padding_small"
                             android:src="@drawable/baseline_androidtv_chat"
-                            android:tint="@color/white" />
+                            app:tint="@color/white" />
 
                         <TextView
                             android:id="@+id/text_text"
@@ -118,14 +119,15 @@
                         android:gravity="center"
                         android:orientation="horizontal">
 
-                        <ImageButton
+                        <androidx.appcompat.widget.AppCompatImageButton
                             android:id="@+id/button_audio"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
                             android:background="@drawable/tv_button_shape"
                             android:contentDescription="@string/tv_send_audio"
+                            android:padding="@dimen/padding_small"
                             android:src="@drawable/baseline_androidtv_message_audio"
-                            android:tint="@color/white" />
+                            app:tint="@color/white" />
 
                         <TextView
                             android:id="@+id/text_audio"
@@ -147,14 +149,15 @@
                         android:gravity="center"
                         android:orientation="horizontal">
 
-                        <ImageButton
+                        <androidx.appcompat.widget.AppCompatImageButton
                             android:id="@+id/button_video"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
                             android:background="@drawable/tv_button_shape"
                             android:contentDescription="@string/tv_send_video"
+                            android:padding="@dimen/padding_small"
                             android:src="@drawable/baseline_androidtv_message_video"
-                            android:tint="@color/white" />
+                            app:tint="@color/white" />
 
                         <TextView
                             android:id="@+id/text_video"
