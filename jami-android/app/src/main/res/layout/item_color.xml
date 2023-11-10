@@ -6,4 +6,4 @@
     android:layout_gravity="center"
     android:scaleType="center"
     android:src="@drawable/item_color_background"
-    android:tint="@color/red_500" />
+    app:tint="@color/red_500" />
