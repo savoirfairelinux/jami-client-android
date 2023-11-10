@@ -86,7 +86,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="4dp"
                 android:contentDescription="@string/lb_playback_controls_play"
-                android:tint="@color/black"
+                app:tint="@color/black"
                 android:alpha="0.75"
                 android:src="@drawable/baseline_play_arrow_24" />
 

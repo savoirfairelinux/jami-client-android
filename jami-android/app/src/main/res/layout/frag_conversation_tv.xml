@@ -97,7 +97,7 @@
                             android:background="@drawable/tv_button_shape"
                             android:contentDescription="@string/tv_send_text"
                             android:src="@drawable/baseline_androidtv_chat"
-                            android:tint="@color/white" />
+                            app:tint="@color/white" />
 
                         <TextView
                             android:id="@+id/text_text"
@@ -125,7 +125,7 @@
                             android:background="@drawable/tv_button_shape"
                             android:contentDescription="@string/tv_send_audio"
                             android:src="@drawable/baseline_androidtv_message_audio"
-                            android:tint="@color/white" />
+                            app:tint="@color/white" />
 
                         <TextView
                             android:id="@+id/text_audio"
@@ -154,7 +154,7 @@
                             android:background="@drawable/tv_button_shape"
                             android:contentDescription="@string/tv_send_video"
                             android:src="@drawable/baseline_androidtv_message_video"
-                            android:tint="@color/white" />
+                            app:tint="@color/white" />
 
                         <TextView
                             android:id="@+id/text_video"
