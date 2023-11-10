@@ -106,6 +106,12 @@ class DaemonService(
             mExecutor.submit { mAccountService.accountDetailsChanged(account_id, jdetails) }
         }
 
+        override fun activeCallsChanged(
+            accountId: String,
+            conversationId: String,
+            activeCalls: VectMap,
+        ) = mAccountService.activeCallsChanged(accountId, conversationId, activeCalls)
+
         override fun profileReceived(accountId: String, peerId: String, path: String) {
             mExecutor.submit { mAccountService.profileReceived(accountId, peerId, path) }
         }

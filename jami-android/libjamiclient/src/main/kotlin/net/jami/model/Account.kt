@@ -892,6 +892,9 @@ class Account(
         mDataTransfers[fileId] = transfer
     }
 
+    fun setActiveCalls(conversationId: String, activeCalls: List<Map<String, String>>) =
+        getSwarm(conversationId)?.setActiveCalls(activeCalls)
+
     private class ConversationComparator : Comparator<Conversation> {
         override fun compare(a: Conversation, b: Conversation): Int {
             return Interaction.compare(b.lastEvent, a.lastEvent)
