@@ -63,7 +63,7 @@
             android:layout_alignBottom="@id/video_frame"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="5dp"
-            android:tint="@color/grey_500" />
+            app:tint="@color/grey_500" />
 
         <TextView
             android:id="@+id/msg_details_txt"
