@@ -155,5 +155,5 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="8dp"
         android:src="@drawable/baseline_info_24"
-        android:tint="@color/surface" />
+        app:tint="@color/surface" />
 </FrameLayout>

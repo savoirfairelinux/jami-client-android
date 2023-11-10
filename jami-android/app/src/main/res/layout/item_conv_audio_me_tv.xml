@@ -17,14 +17,15 @@
   -->
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/file_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="8dp"
     android:background="@android:color/transparent"
-    android:orientation="vertical"
     android:gravity="center"
+    android:orientation="vertical"
+    android:paddingBottom="8dp"
     android:focusable="true"
     android:clipChildren="false"
     android:clipToPadding="false">
@@ -55,7 +56,7 @@
             android:layout_alignBottom="@id/audioInfoLayout"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="5dp"
-            android:tint="@color/grey_500"/>
+            app:tint="@color/grey_500"/>
 
         <TextView
             android:id="@+id/file_details_txt"
@@ -90,7 +91,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="4dp"
                 android:contentDescription="@string/lb_playback_controls_play"
-                android:tint="@color/black"
+                app:tint="@color/black"
                 android:alpha="0.75"
                 android:src="@drawable/baseline_play_arrow_24" />
 

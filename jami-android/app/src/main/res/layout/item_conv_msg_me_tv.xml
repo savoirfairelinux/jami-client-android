@@ -18,6 +18,7 @@ along with this program; if not, write to the Free Software
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/txt_entry"
     android:layout_width="match_parent"
@@ -70,7 +71,7 @@ along with this program; if not, write to the Free Software
             android:layout_alignBottom="@id/msg_txt"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="5dp"
-            android:tint="@color/grey_500" />
+            app:tint="@color/grey_500" />
 
         <TextView
             android:id="@+id/msg_txt"
