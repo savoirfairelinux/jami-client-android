@@ -41,7 +41,7 @@
             android:alpha="0.1"
             android:contentDescription="@string/account_connect_server_button"
             android:src="@drawable/baseline_router_black_36"
-            android:tint="@color/white" />
+            app:tint="@color/white" />
 
         <TextView
             android:layout_width="wrap_content"
