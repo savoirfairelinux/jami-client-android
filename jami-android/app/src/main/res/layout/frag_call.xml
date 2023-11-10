@@ -203,7 +203,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             android:layout_margin="16dp"
                             android:contentDescription="@string/action_call_decline"
                             android:onClick="@{() -> presenter.refuseClicked()}"
-                            android:tint="@color/white"
+                            app:tint="@color/white"
                             android:visibility="gone"
                             app:backgroundTint="@color/colorError"
                             app:elevation="6dp"
@@ -241,7 +241,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             android:layout_margin="16dp"
                             android:contentDescription="@string/action_call_accept_audio"
                             android:onClick="@{() -> presenter.acceptAudioClicked()}"
-                            android:tint="@color/white"
+                            app:tint="@color/white"
                             android:visibility="gone"
                             app:backgroundTint="@color/green_500"
                             app:elevation="6dp"
@@ -418,7 +418,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                 android:contentDescription="@string/ab_action_speakerphone"
                                 android:onClick="@{() -> presenter.speakerClicked()}"
                                 android:padding="16dp"
-                                android:tint="@color/white"
+                                app:tint="@color/white"
                                 app:srcCompat="@drawable/baseline_sound_24" />
 
                             <TextView
@@ -455,7 +455,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                 android:contentDescription="@string/action_call_mic_mute"
                                 android:onClick="@{() -> presenter.micClicked()}"
                                 android:padding="16dp"
-                                android:tint="@color/call_button"
+                                app:tint="@color/call_button"
                                 app:srcCompat="@drawable/baseline_mic_24" />
 
                             <TextView
@@ -527,7 +527,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                 android:background="@drawable/call_button_background_checkable"
                                 android:onClick="@{() -> presenter.switchCamera()}"
                                 android:padding="16dp"
-                                android:tint="@color/call_button"
+                                app:tint="@color/call_button"
                                 app:srcCompat="@drawable/baseline_videocam_24" />
 
                             <TextView
