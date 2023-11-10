@@ -29,7 +29,7 @@
         <ImageView
             android:layout_width="128dp"
             android:layout_height="128dp"
-            android:tint="@color/darker_gray"
+            app:tint="@color/darker_gray"
             android:src="@drawable/baseline_block_24"
             android:contentDescription="@string/no_blocked_contact" />
 

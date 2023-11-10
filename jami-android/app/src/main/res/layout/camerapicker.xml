@@ -50,7 +50,7 @@
             android:layout_width="96dp"
             android:layout_height="96dp"
             android:src="@drawable/baseline_photo_camera_24"
-            android:tint="@color/grey_100"
+            app:tint="@color/grey_100"
             android:layout_margin="16dp"
             android:layout_gravity="center" />
     </FrameLayout>

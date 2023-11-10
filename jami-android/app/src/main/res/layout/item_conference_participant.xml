@@ -61,7 +61,7 @@ along with this program; if not, write to the Free Software
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_weight="0"
-        android:tint="@color/call_button"
+        app:tint="@color/call_button"
         android:background="?actionBarItemBackground"
         android:padding="12dp"
         app:srcCompat="@drawable/baseline_mic_on_24"/>
@@ -82,7 +82,7 @@ along with this program; if not, write to the Free Software
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_weight="0"
-        android:tint="@color/white"
+        app:tint="@color/white"
         android:background="?actionBarItemBackground"
         android:padding="12dp"
         app:srcCompat="@drawable/baseline_block_24"/>
