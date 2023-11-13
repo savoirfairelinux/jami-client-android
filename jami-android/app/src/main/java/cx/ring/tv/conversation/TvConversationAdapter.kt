@@ -633,10 +633,10 @@ class TvConversationAdapter(
                 )
             }
         }
-        // Apply a bottom margin to the message if end of sequence needed.
+        // Apply a bottom margin to the global layout if end of sequence needed.
         val endOfSeq =
             msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE
-        setBottomMargin(msgTxt, if (endOfSeq) 8 else 0)
+        convViewHolder.mItem?.let { setBottomMargin(it, if (endOfSeq) 8 else 0) }
 
         if (isTimeShown) {
             convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe { t: Long? ->
@@ -840,6 +840,10 @@ class TvConversationAdapter(
         convViewHolder.mHistTxt?.text = historyTxt
         convViewHolder.mHistDetailTxt?.text =
             DateFormat.getDateTimeInstance().format(call.timestamp) // Start date of the call.
+        // Apply a bottom margin to the global layout if end of sequence needed.
+        val endOfSeq =
+            msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE
+        convViewHolder.mItem?.let { setBottomMargin(it, if (endOfSeq) 8 else 0) }
     }
 
     /**
