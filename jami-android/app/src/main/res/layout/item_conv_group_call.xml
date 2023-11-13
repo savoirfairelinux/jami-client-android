@@ -18,13 +18,13 @@ along with this program; if not, write to the Free Software
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/groupCallLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="end|bottom"
-    android:layout_marginTop="8dp"
-    android:layout_marginBottom="8dp"
     android:paddingStart="@dimen/padding_large"
-    android:paddingEnd="24dp">
+    android:paddingEnd="24dp"
+    android:paddingBottom="@dimen/padding_xsmall">
 
     <ImageView
         android:id="@+id/photo"
