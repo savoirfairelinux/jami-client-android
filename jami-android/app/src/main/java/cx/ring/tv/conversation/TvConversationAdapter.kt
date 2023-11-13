@@ -120,8 +120,14 @@ class TvConversationAdapter(
     fun add(e: Interaction) {
         val update = mInteractions.isNotEmpty()
         mInteractions.add(e)
-        notifyItemInserted(mInteractions.size - 1)
-        if (update) notifyItemChanged(mInteractions.size - 2)
+        val previousLast = mInteractions.size - 1
+        notifyItemInserted(previousLast)
+        if (update) {
+            // Find previous last not invalid.
+            getPreviousInteractionFromPosition(previousLast)?.let { interactionNotInvalid ->
+                notifyItemChanged(mInteractions.lastIndexOf(interactionNotInvalid))
+            }
+        }
     }
 
     fun update(e: Interaction) {
@@ -635,10 +641,10 @@ class TvConversationAdapter(
                 )
             }
         }
-        // Apply a bottom margin to the message if end of sequence needed.
-        val endOfSeq =
-            msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE
-        setBottomMargin(msgTxt, if (endOfSeq) 8 else 0)
+        // Apply a bottom margin to the global layout if end of sequence needed.
+        val startOfSeq =
+            msgSequenceType == SequenceType.FIRST || msgSequenceType == SequenceType.SINGLE
+        convViewHolder.mItem?.let { setBottomMargin(it, if (startOfSeq) 8 else 0) }
 
         if (isTimeShown) {
             convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe { t: Long? ->
@@ -938,25 +944,32 @@ class TvConversationAdapter(
     }
 
     /**
-     * Helper method to return the previous TextMessage relative to an initial position.
+     * Helper method to return the previous Interaction relative to an initial position.
      *
      * @param position The initial position
-     * @return the previous TextMessage if any, null otherwise
+     * @return the previous Interaction if any, null otherwise
      */
-    private fun getPreviousMessageFromPosition(position: Int): Interaction? =
-        if (mInteractions.isNotEmpty() && position > 0) mInteractions[position - 1]
-        else null
+    private fun getPreviousInteractionFromPosition(position: Int): Interaction? =
+        if (mInteractions.isNotEmpty() && position > 0) {
+            if (mInteractions[position - 1].type == Interaction.InteractionType.INVALID) {
+                // Recursive function to ignore invalid interactions.
+                getPreviousInteractionFromPosition(position - 1)
+            } else mInteractions[position - 1]
+        } else null
 
     /**
-     * Helper method to return the next TextMessage relative to an initial position.
+     * Helper method to return the next Interaction relative to an initial position.
      *
      * @param position The initial position
-     * @return the next TextMessage if any, null otherwise
+     * @return the next Interaction if any, null otherwise
      */
-    private fun getNextMessageFromPosition(position: Int): Interaction? =
-        if (mInteractions.isNotEmpty() && position < mInteractions.size - 1)
-            mInteractions[position + 1]
-        else null
+    private fun getNextInteractionFromPosition(position: Int): Interaction? =
+        if (mInteractions.isNotEmpty() && position < mInteractions.size - 1) {
+            if (mInteractions[position + 1].type == Interaction.InteractionType.INVALID) {
+                // Recursive function to ignore invalid interactions.
+                getNextInteractionFromPosition(position + 1)
+            } else mInteractions[position + 1]
+        } else null
 
     private fun getMsgSequencing(i: Int, isTimeShown: Boolean): SequenceType {
         val msg = mInteractions[i]
@@ -967,7 +980,7 @@ class TvConversationAdapter(
             if (mInteractions.size == i + 1) {
                 return SequenceType.SINGLE
             }
-            val nextMsg = getNextMessageFromPosition(i)
+            val nextMsg = getNextInteractionFromPosition(i)
             if (nextMsg != null) {
                 return if (isSeqBreak(msg, nextMsg) || hasPermanentTimeString(nextMsg, i + 1)) {
                     SequenceType.SINGLE
@@ -975,18 +988,16 @@ class TvConversationAdapter(
                     SequenceType.FIRST
                 }
             }
-        } else if (mInteractions.size == i + 1) {
-            val prevMsg = getPreviousMessageFromPosition(i)
+        } else if (getNextInteractionFromPosition(i) == null) { // If this is the last interaction.
+            val prevMsg = getPreviousInteractionFromPosition(i)
             if (prevMsg != null) {
                 return if (isSeqBreak(msg, prevMsg) || isTimeShown) {
                     SequenceType.SINGLE
-                } else {
-                    SequenceType.LAST
-                }
+                } else SequenceType.LAST
             }
         }
-        val prevMsg = getPreviousMessageFromPosition(i)
-        val nextMsg = getNextMessageFromPosition(i)
+        val prevMsg = getPreviousInteractionFromPosition(i)
+        val nextMsg = getNextInteractionFromPosition(i)
         if (prevMsg != null && nextMsg != null) {
             val nextMsgHasTime = hasPermanentTimeString(nextMsg, i + 1)
             if ((isSeqBreak(msg, prevMsg) || isTimeShown) && !(isSeqBreak(msg, nextMsg) || nextMsgHasTime)) {
@@ -1036,7 +1047,7 @@ class TvConversationAdapter(
     }
 
     private fun hasPermanentTimeString(msg: Interaction, position: Int): Boolean {
-        val prevMsg = getPreviousMessageFromPosition(position)
+        val prevMsg = getPreviousInteractionFromPosition(position)
         return prevMsg != null && msg.timestamp - prevMsg.timestamp > 10 * DateUtils.MINUTE_IN_MILLIS
     }
 
@@ -1087,11 +1098,17 @@ class TvConversationAdapter(
         }
 
         private fun isSeqBreak(first: Interaction, second: Interaction): Boolean =
-            isOnlyEmoji(first.body) != isOnlyEmoji(second.body) || first.isIncoming != second.isIncoming || first.type !== Interaction.InteractionType.TEXT || second.type !== Interaction.InteractionType.TEXT
+            isOnlyEmoji(first.body) != isOnlyEmoji(second.body)
+                    || first.isIncoming != second.isIncoming
+                    || (first.type !== Interaction.InteractionType.TEXT
+                        && (first.type !== Interaction.InteractionType.CALL))
+                    || (second.type !== Interaction.InteractionType.TEXT
+                        && (second.type !== Interaction.InteractionType.CALL))
+                    || first.contact != second.contact
 
         private fun isAlwaysSingleMsg(msg: Interaction): Boolean =
             (msg.type !== Interaction.InteractionType.TEXT
-                    || isOnlyEmoji(msg.body))
+                    && msg.type !== Interaction.InteractionType.CALL || isOnlyEmoji(msg.body))
     }
 
 }
