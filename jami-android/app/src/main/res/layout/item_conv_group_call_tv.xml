@@ -20,11 +20,11 @@ along with this program; if not, write to the Free Software
     android:id="@+id/groupCallLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="start"
     android:layout_gravity="bottom"
-    android:layout_marginBottom="8dp"
+    android:gravity="start"
     android:paddingStart="@dimen/padding_medium"
-    android:paddingEnd="36dp">
+    android:paddingEnd="36dp"
+    android:paddingBottom="@dimen/padding_xsmall">
 
     <ImageView
         android:id="@+id/photo"
