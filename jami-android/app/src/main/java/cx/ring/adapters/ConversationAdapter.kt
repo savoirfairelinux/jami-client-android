@@ -1471,6 +1471,11 @@ class ConversationAdapter(
                     val resIndex: Int
                     val typeCallTxt : String
 
+                    val endOfSeq =
+                        msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE
+                    // Apply a bottom margin to the global layout if end of sequence needed.
+                    convViewHolder.mItem?.let { setBottomMargin(it, if (endOfSeq) 8 else 0) }
+
                     // Manage the update of the timestamp
                     if (isTimeShown) {
                         convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {

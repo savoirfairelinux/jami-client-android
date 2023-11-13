@@ -215,7 +215,7 @@ class TvConversationAdapter(
             holder.itemView.visibility = View.VISIBLE
             when (type) {
                 Interaction.InteractionType.TEXT -> configureForTextMessage(holder, interaction, position)
-                Interaction.InteractionType.CALL -> configureForCallInfoTextMessage(holder, interaction)
+                Interaction.InteractionType.CALL -> configureForCallInfoTextMessage(holder, interaction, position)
                 Interaction.InteractionType.CONTACT -> configureForContactEvent(holder, interaction)
                 Interaction.InteractionType.DATA_TRANSFER -> configureForFileInfo(holder, interaction, position)
                 else -> {}
@@ -614,10 +614,10 @@ class TvConversationAdapter(
                 )
             }
         }
-        // Apply a bottom margin to the message if end of sequence needed.
+        // Apply a bottom margin to the global layout if end of sequence needed.
         val endOfSeq =
             msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE
-        setBottomMargin(msgTxt, if (endOfSeq) 8 else 0)
+        convViewHolder.mItem?.let { setBottomMargin(it, if (endOfSeq) 8 else 0) }
 
         if (isTimeShown) {
             convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe { t: Long? ->
@@ -673,16 +673,19 @@ class TvConversationAdapter(
      */
     private fun configureForCallInfoTextMessage(
         convViewHolder: ConversationViewHolder,
-        interaction: Interaction
+        interaction: Interaction,
+        position: Int
     ) {
         val context = convViewHolder.itemView.context
+        val call = interaction as Call
+        val isTimeShown = hasPermanentTimeString(call, position)
+        val msgSequenceType = getMsgSequencing(position, isTimeShown)
 
         // Reset the scale of the icon
         convViewHolder.mIcon?.scaleY = 1f
 
         convViewHolder.mCallInfoLayout!!.background.setTintList(null) // Remove the tint
 
-        val call = interaction as Call
         if (call.isGroupCall) {
             // When a call is occurring (between members) but you are not in it, a message is
             // displayed in conversation to inform the user about the call and invite him to join.
@@ -725,6 +728,11 @@ class TvConversationAdapter(
         convViewHolder.mHistTxt?.text = historyTxt
         convViewHolder.mHistDetailTxt?.text =
             DateFormat.getDateTimeInstance().format(call.timestamp) // Start date of the call.
+
+        // Apply a bottom margin to the global layout if end of sequence needed.
+        val endOfSeq =
+            msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE
+        convViewHolder.mItem?.let { setBottomMargin(it, if (endOfSeq) 8 else 0) }
     }
 
     /**
