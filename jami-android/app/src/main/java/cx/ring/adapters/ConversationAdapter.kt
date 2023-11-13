@@ -1087,8 +1087,9 @@ class ConversationAdapter(
                 val longPressView = convViewHolder.mMsgTxt!!
                 longPressView.background?.setTintList(null)
                 val answerLayout = convViewHolder.mAnswerLayout
-                Log.w("Devedbug", "$TAG:configurefortextmessage, interaction.text = ${textMessage.body} istimeshown: ${hasPermanentTimeString(textMessage, position)}")
+                Log.w("Devedbug", "$TAG:configurefortextmessage, interaction.text = ${textMessage.body}")
                 val isTimeShown = hasPermanentTimeString(textMessage, position)
+                Log.w("Devedbug", "$TAG:configurefortextmessage, position = $position")
                 val msgSequenceType = getMsgSequencing(position, isTimeShown)
                 val peerDisplayName = convViewHolder.mPeerDisplayName
 
@@ -1366,7 +1367,6 @@ class ConversationAdapter(
                         val peerDisplayName = convViewHolder.mPeerDisplayName
                         val account = interaction.account ?: return@subscribe
                         val contact = callStartedMsg.contact ?: return@subscribe
-                        // todo faire aussi avec les messages pas que les appels
                         val isTimeShown = hasPermanentTimeString(callStartedMsg, position)
                         val msgSequenceType = getMsgSequencing(position, isTimeShown)
                         val callAcceptLayout = convViewHolder.mCallAcceptLayout ?: return@subscribe
@@ -1374,6 +1374,11 @@ class ConversationAdapter(
                         val callInfoText = convViewHolder.mCallInfoText ?: return@subscribe
                         val acceptCallAudioButton = convViewHolder.mAcceptCallAudioButton ?: return@subscribe
                         val acceptCallVideoButton = convViewHolder.mAcceptCallVideoButton ?: return@subscribe
+
+                        val endOfSeq =
+                            msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE
+                        // Apply a bottom margin to the global layout if end of sequence needed.
+                        convViewHolder.mItem?.let { setBottomMargin(it, if (endOfSeq) 8 else 0) }
 
                         if (callStartedMsg.isIncoming) {
                             // Show the avatar of the contact who is calling
@@ -1455,14 +1460,15 @@ class ConversationAdapter(
                 }
             }
         }
+
         convViewHolder.compositeDisposable.add(
             interaction.lastElement
                 .observeOn(DeviceUtils.uiScheduler)
                 .subscribe { lastElement ->
                     val textMessage = lastElement as Call
+                    Log.w("Devedbug", "$TAG:configureforcallinfo, interaction.text = ${textMessage.body}")
                     val isTimeShown = hasPermanentTimeString(textMessage, position)
                     val msgSequenceType = getMsgSequencing(position, isTimeShown)
-
                     val callInfoLayout = convViewHolder.mCallInfoLayout ?: return@subscribe
                     callInfoLayout.background?.setTintList(null)
                     val callIcon = convViewHolder.mIcon ?: return@subscribe
@@ -1471,6 +1477,11 @@ class ConversationAdapter(
                     val detailCall = convViewHolder.mHistDetailTxt ?: return@subscribe
                     val resIndex: Int
                     val typeCallTxt : String
+
+                    val endOfSeq =
+                        msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE
+                    // Apply a bottom margin to the global layout if end of sequence needed.
+                    convViewHolder.mItem?.let { setBottomMargin(it, if (endOfSeq) 8 else 0) }
 
                     // Manage the update of the timestamp
                     if (isTimeShown) {
@@ -1585,8 +1596,12 @@ class ConversationAdapter(
      * @return the previous TextMessage if any, null otherwise
      */
     private fun getPreviousMessageFromPosition(position: Int): Interaction? =
-        if (mInteractions.isNotEmpty() && position > 0) mInteractions[position - 1]
-        else null
+        if (mInteractions.isNotEmpty() && position > 0) {
+            if (mInteractions[position - 1].type == Interaction.InteractionType.INVALID) {
+                // Recursive function to ignore invalid interactions.
+                getPreviousMessageFromPosition(position - 1)
+            } else mInteractions[position - 1]
+        } else null
 
     /**
      * Helper method to return the next TextMessage relative to an initial position.
@@ -1595,9 +1610,12 @@ class ConversationAdapter(
      * @return the next TextMessage if any, null otherwise
      */
     private fun getNextMessageFromPosition(position: Int): Interaction? =
-        if (mInteractions.isNotEmpty() && position < mInteractions.size - 1)
-            mInteractions[position + 1]
-        else null
+        if (mInteractions.isNotEmpty() && position < mInteractions.size - 1){
+            if (mInteractions[position + 1].type == Interaction.InteractionType.INVALID){
+                // Recursive function to ignore invalid interactions.
+                getNextMessageFromPosition(position + 1)
+            } else mInteractions[position + 1]
+        } else null
 
     /**
      * Returns a SequenceType object which tell what type is the Interaction.
@@ -1608,7 +1626,6 @@ class ConversationAdapter(
      */
     private fun getMsgSequencing(i: Int, isTimeShown: Boolean): SequenceType {
         val msg = mInteractions[i]
-
         // Manage specific interaction which are always single (ex : emoji).
         if (isAlwaysSingleMsg(msg)) {
             return SequenceType.SINGLE
@@ -1625,6 +1642,7 @@ class ConversationAdapter(
             // Get the next interaction and if exists check if sequence break needed.
             val nextMsg = getNextMessageFromPosition(i)
             if (nextMsg != null) {
+                Log.w(TAG, "ici0, isSeqBreak(msg, nextMsg) = ${isSeqBreak(msg, nextMsg)}")
                 return if (isSeqBreak(msg, nextMsg)
                     || hasPermanentTimeString(nextMsg, i + 1)
                 ) {
@@ -1633,8 +1651,10 @@ class ConversationAdapter(
                     SequenceType.FIRST
                 }
             }
-        } else if (mInteractions.size == i + 1) { // If this is the last interaction.
+        } else if (mInteractions.size == i + 1) {
+            // If this is the last interaction.
             // Get the previous interaction and if exists check if sequence break needed.
+            Log.w(TAG, "ici mInteractions.size = ${mInteractions.size}, i = $i, isSeqBreak(prevMsg, msg) = ${isSeqBreak(getPreviousMessageFromPosition(i)!!, msg)}")
             val prevMsg = getPreviousMessageFromPosition(i)
             if (prevMsg != null) {
                 return if (isSeqBreak(prevMsg, msg) || isTimeShown) {
@@ -1643,7 +1663,7 @@ class ConversationAdapter(
                     SequenceType.LAST
                 }
             }
-        }
+        } else if (mInteractions.size == i + 2) return SequenceType.LAST // If it is a call message and the last.
 
         // If not the first, nor the last and if there is not only one interaction.
         // Get the next and previous interactions and if exists check if sequence break needed.
@@ -1651,6 +1671,7 @@ class ConversationAdapter(
         val nextMsg = getNextMessageFromPosition(i)
         if (prevMsg != null && nextMsg != null) {
             val nextMsgHasTime = hasPermanentTimeString(nextMsg, i + 1)
+            Log.w(TAG, "getMsgSequencing2: prevMsg = $prevMsg, isSeqBreak(prevMsg, msg) = ${isSeqBreak(prevMsg, msg)}, nextMsgHasTime = $nextMsgHasTime,  isSeqBreak(msg, nextMsg) = ${isSeqBreak(msg, nextMsg)}")
             return if ((isSeqBreak(prevMsg, msg) || isTimeShown)
                 && !(isSeqBreak(msg, nextMsg) || nextMsgHasTime)
             ) {
@@ -1663,6 +1684,7 @@ class ConversationAdapter(
                 SequenceType.SINGLE
             }
         }
+        Log.w(TAG, "getMsgSequencing3: prevMsg = $prevMsg")
         return SequenceType.SINGLE
     }
 
