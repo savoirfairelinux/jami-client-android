@@ -36,6 +36,9 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 
 class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView.ViewHolder(v) {
     val mItem: View? = when (type) {
+        MessageType.OUTGOING_CALL_INFORMATION,
+        MessageType.INCOMING_CALL_INFORMATION -> v.findViewById(R.id.callLayout)
+        MessageType.ONGOING_GROUP_CALL -> v.findViewById(R.id.groupCallLayout)
         MessageType.INCOMING_TEXT_MESSAGE,
         MessageType.OUTGOING_TEXT_MESSAGE -> v.findViewById(R.id.txt_entry)
         else -> null
