@@ -167,8 +167,14 @@ class ConversationAdapter(
             if (mInteractions.isEmpty() || mInteractions[mInteractions.size - 1].messageId == e.parentId) {
                 val update = mInteractions.isNotEmpty()
                 mInteractions.add(e)
-                notifyItemInserted(mInteractions.size - 1)
-                if (update) notifyItemChanged(mInteractions.size - 2)
+                val previousLast = mInteractions.size - 1
+                notifyItemInserted(previousLast)
+                if (update) {
+                    // Find previous last not invalid.
+                    getPreviousInteractionFromPosition(previousLast)?.let { interactionNotInvalid ->
+                        notifyItemChanged(mInteractions.lastIndexOf(interactionNotInvalid))
+                    }
+                }
                 return true
             }
             var i = 0
@@ -1464,6 +1470,11 @@ class ConversationAdapter(
                     val resIndex: Int
                     val typeCallTxt : String
 
+                    val endOfSeq =
+                        msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE
+                    // Apply a bottom margin to the global layout if end of sequence needed.
+                    convViewHolder.mItem?.let { setBottomMargin(it, if (endOfSeq) 8 else 0) }
+
                     // Manage the update of the timestamp
                     if (isTimeShown) {
                         convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
@@ -1576,10 +1587,13 @@ class ConversationAdapter(
      * @param position The initial position
      * @return the previous TextMessage if any, null otherwise
      */
-    private fun getPreviousMessageFromPosition(position: Int): Interaction? =
-        if (mInteractions.isNotEmpty() && position > 0)
-            mInteractions[position - 1]
-        else null
+    private fun getPreviousInteractionFromPosition(position: Int): Interaction? =
+        if (mInteractions.isNotEmpty() && position > 0) {
+            if (mInteractions[position - 1].type == Interaction.InteractionType.INVALID) {
+                // Recursive function to ignore invalid interactions.
+                getPreviousInteractionFromPosition(position - 1)
+            } else mInteractions[position - 1]
+        } else null
 
     /**
      * Helper method to return the next TextMessage relative to an initial position.
@@ -1587,10 +1601,13 @@ class ConversationAdapter(
      * @param position The initial position
      * @return the next TextMessage if any, null otherwise
      */
-    private fun getNextMessageFromPosition(position: Int): Interaction? =
-        if (mInteractions.isNotEmpty() && position < mInteractions.size - 1)
-            mInteractions[position + 1]
-        else null
+    private fun getNextInteractionFromPosition(position: Int): Interaction? =
+        if (mInteractions.isNotEmpty() && position < mInteractions.size - 1) {
+            if (mInteractions[position + 1].type == Interaction.InteractionType.INVALID) {
+                // Recursive function to ignore invalid interactions.
+                getNextInteractionFromPosition(position + 1)
+            } else mInteractions[position + 1]
+        } else null
 
     /**
      * Returns a SequenceType object which tell what type is the Interaction.
@@ -1616,7 +1633,7 @@ class ConversationAdapter(
             }
 
             // Get the next interaction and if exists check if sequence break needed.
-            val nextMsg = getNextMessageFromPosition(i)
+            val nextMsg = getNextInteractionFromPosition(i)
             if (nextMsg != null) {
                 return if (isSeqBreak(msg, nextMsg)
                     || hasPermanentTimeString(nextMsg, i + 1)
@@ -1626,22 +1643,20 @@ class ConversationAdapter(
                     SequenceType.FIRST
                 }
             }
-        } else if (mInteractions.size == i + 1) { // If this is the last interaction.
+        } else if (getNextInteractionFromPosition(i) == null) { // If this is the last interaction.
             // Get the previous interaction and if exists check if sequence break needed.
-            val prevMsg = getPreviousMessageFromPosition(i)
+            val prevMsg = getPreviousInteractionFromPosition(i)
             if (prevMsg != null) {
                 return if (isSeqBreak(prevMsg, msg) || isTimeShown) {
                     SequenceType.SINGLE
-                } else {
-                    SequenceType.LAST
-                }
+                } else SequenceType.LAST
             }
         }
 
         // If not the first, nor the last and if there is not only one interaction.
         // Get the next and previous interactions and if exists check if sequence break needed.
-        val prevMsg = getPreviousMessageFromPosition(i)
-        val nextMsg = getNextMessageFromPosition(i)
+        val prevMsg = getPreviousInteractionFromPosition(i)
+        val nextMsg = getNextInteractionFromPosition(i)
         if (prevMsg != null && nextMsg != null) {
             val nextMsgHasTime = hasPermanentTimeString(nextMsg, i + 1)
             return if ((isSeqBreak(prevMsg, msg) || isTimeShown)
@@ -1695,7 +1710,7 @@ class ConversationAdapter(
     }
 
     private fun hasPermanentTimeString(msg: Interaction, position: Int): Boolean {
-        val prevMsg = getPreviousMessageFromPosition(position)
+        val prevMsg = getPreviousInteractionFromPosition(position)
         return prevMsg != null && msg.timestamp - prevMsg.timestamp > 10 * DateUtils.MINUTE_IN_MILLIS
     }
 
