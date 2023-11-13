@@ -789,14 +789,6 @@ class TvConversationAdapter(
         // When it is not a group call
         convViewHolder.mCallInfoLayout?.background?.setTintList(null) // Remove the tint
         if (call.isGroupCall) {
-            convViewHolder.mAcceptCallAudioButton?.let{
-                it.setColorFilter(Color.BLACK)
-                it.alpha = 0.75f
-            }
-            convViewHolder.mAcceptCallVideoButton?.let{
-                it.setColorFilter(Color.BLACK)
-                it.alpha = 0.75f
-            }
             // When a call is occurring (between members) but you are not in it, a message is
             // displayed in conversation to inform the user about the call and invite him to join.
             convViewHolder.mCallAcceptLayout?.apply {
