@@ -26,7 +26,6 @@ along with this program; if not, write to the Free Software
     android:background="@android:color/transparent"
     android:orientation="vertical"
     android:gravity="center"
-    android:padding="5dp"
     android:focusable="true"
     android:clipToPadding="false"
     android:clipChildren="false">
@@ -65,16 +64,18 @@ along with this program; if not, write to the Free Software
             android:id="@+id/photo"
             android:layout_width="@dimen/conversation_avatar_size"
             android:layout_height="@dimen/conversation_avatar_size"
-            android:background="@null"
             android:layout_alignBottom="@id/msg_txt"
-            android:scaleType="centerCrop" />
+            android:layout_alignParentStart="true"
+            android:layout_marginEnd="@dimen/padding_medium"
+            android:background="@null"
+            android:scaleType="centerCrop"
+            android:visibility="visible" />
 
         <TextView
             android:id="@+id/msg_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@+id/photo"
-            android:layout_marginStart="@dimen/padding_medium"
             android:layout_marginEnd="20dp"
             android:minWidth="@dimen/conversation_avatar_size"
             android:minHeight="@dimen/conversation_avatar_size"

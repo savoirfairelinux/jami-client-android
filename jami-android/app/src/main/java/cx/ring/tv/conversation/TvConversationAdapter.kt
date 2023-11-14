@@ -31,6 +31,8 @@ import android.view.*
 import android.view.ContextMenu.ContextMenuInfo
 import android.view.TextureView.SurfaceTextureListener
 import android.view.ViewGroup.MarginLayoutParams
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.cardview.widget.CardView
@@ -91,6 +93,7 @@ class TvConversationAdapter(
         res.getDimensionPixelSize(R.dimen.text_message_padding),
         res.getDimensionPixelSize(R.dimen.padding_call_vertical)
     )
+    private var lastMsgPos = -1
     private var expandedItemPosition = -1
     private var lastDeliveredPosition = -1
     private val markwon: Markwon = Markwon.builder(conversationFragment.requireContext())
@@ -479,12 +482,14 @@ class TvConversationAdapter(
             viewHolder.mMsgDetailTxtPerm?.visibility = View.GONE
         }
         val contact = interaction.contact
-        if (interaction.isIncoming) {
+        if (interaction.isIncoming && presenter.isGroup()) {
             viewHolder.mAvatar?.let { avatar ->
                 avatar.setImageBitmap(null)
                 avatar.visibility = View.VISIBLE
                 if (contact != null)
-                    avatar.setImageDrawable(conversationFragment.getConversationAvatar(contact.primaryNumber))
+                    avatar.setImageDrawable(
+                        conversationFragment.getConversationAvatar(contact.primaryNumber)
+                    )
             }
         }
         val type = viewHolder.type.transferType
@@ -610,22 +615,47 @@ class TvConversationAdapter(
             msgTxt.setPadding(hPadding, vPadding, hPadding, vPadding)
         }
         msgTxt.text = markwon.toMarkdown(message)
-        if (textMessage.isIncoming) {
-            convViewHolder.mAvatar!!.setImageBitmap(null)
-            convViewHolder.mAvatar.visibility = View.VISIBLE
-        }
-        if (msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE) {
-            if (textMessage.isIncoming) {
-                convViewHolder.mAvatar!!.setImageDrawable(
+        // Do not show the avatar if it is a one to one conversation.
+        val avatar = convViewHolder.mAvatar
+        avatar?.visibility = View.GONE
+        // Only show the peer avatar if it is a group conversation
+        if (presenter.isGroup()) {
+            val endOfSeq =
+                msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE
+
+            // Manage animation for avatar doing ???.
+            val avatar = convViewHolder.mAvatar
+            if (endOfSeq) {
+                avatar?.setImageDrawable(
                     conversationFragment.getConversationAvatar(contact.primaryNumber)
                 )
+                avatar?.visibility = View.VISIBLE
+            } else {
+                if (position == lastMsgPos - 1) {
+                    avatar?.startAnimation(
+                        AnimationUtils.loadAnimation(avatar.context, R.anim.fade_out)
+                            .apply {
+                                setAnimationListener(object :
+                                    Animation.AnimationListener {
+                                    override fun onAnimationStart(arg0: Animation) {}
+                                    override fun onAnimationRepeat(arg0: Animation) {}
+                                    override fun onAnimationEnd(arg0: Animation) {
+                                        avatar.setImageBitmap(null)
+                                        avatar.visibility = View.INVISIBLE
+                                    }
+                                })
+                            })
+                } else {
+                    avatar?.setImageBitmap(null)
+                    avatar?.visibility = View.INVISIBLE
+                }
+            }
+
+            // Apply a bottom margin to the global layout if end of sequence needed.
+            convViewHolder.mItem?.let {
+                setBottomMargin(it, if (endOfSeq) 8 else 0)
             }
         }
-        // Apply a bottom margin to the global layout if end of sequence needed.
-        val endOfSeq =
-            msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE
-        convViewHolder.mItem?.let { setBottomMargin(it, if (endOfSeq) 8 else 0) }
-
         if (isTimeShown) {
             convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe { t: Long? ->
                 val timeSeparationString = TextUtils.timestampToDetailString(context, textMessage.timestamp)
