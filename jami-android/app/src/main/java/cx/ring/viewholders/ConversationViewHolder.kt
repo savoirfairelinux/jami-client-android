@@ -60,6 +60,7 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
         else -> null
     }
     val mStatusIcon: MessageStatusView? = when (type) {
+        MessageType.OUTGOING_CALL_INFORMATION,
         MessageType.OUTGOING_TEXT_MESSAGE,
         MessageType.OUTGOING_FILE,
         MessageType.OUTGOING_IMAGE,
