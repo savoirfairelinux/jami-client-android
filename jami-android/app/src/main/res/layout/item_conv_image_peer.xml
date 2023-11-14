@@ -39,28 +39,28 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingStart="@dimen/padding_large"
         android:paddingTop="8dp"
-        android:paddingStart="@dimen/padding_medium"
         android:paddingEnd="@dimen/padding_large">
 
         <ImageView
             android:id="@+id/photo"
             android:layout_width="@dimen/conversation_avatar_size"
             android:layout_height="@dimen/conversation_avatar_size"
+            android:layout_alignBottom="@id/imgLayout"
+            android:layout_marginEnd="@dimen/padding_medium"
             android:background="@null"
             android:gravity="start"
-            android:layout_alignBottom="@id/imgLayout"
-            android:scaleType="centerCrop"/>
+            android:scaleType="centerCrop" />
 
         <LinearLayout
             android:id="@+id/imgLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/padding_medium"
             android:layout_marginEnd="20dp"
-            android:minHeight="@dimen/conversation_avatar_size"
             android:layout_toEndOf="@+id/photo"
-            android:gravity="bottom">
+            android:gravity="bottom"
+            android:minHeight="@dimen/conversation_avatar_size">
 
             <ImageView
                 android:id="@+id/image"
