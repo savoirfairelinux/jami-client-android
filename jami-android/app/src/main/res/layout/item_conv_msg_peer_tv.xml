@@ -56,7 +56,7 @@ along with this program; if not, write to the Free Software
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingStart="@dimen/padding_medium"
+        android:paddingStart="@dimen/padding_large"
         android:paddingEnd="36dp"
         android:clipToPadding="false"
         android:clipChildren="false">
@@ -74,7 +74,6 @@ along with this program; if not, write to the Free Software
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@+id/photo"
-            android:layout_marginStart="@dimen/padding_medium"
             android:layout_marginEnd="20dp"
             android:minWidth="@dimen/conversation_avatar_size"
             android:minHeight="@dimen/conversation_avatar_size"

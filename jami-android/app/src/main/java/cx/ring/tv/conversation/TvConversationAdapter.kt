@@ -479,12 +479,14 @@ class TvConversationAdapter(
             viewHolder.mMsgDetailTxtPerm?.visibility = View.GONE
         }
         val contact = interaction.contact
-        if (interaction.isIncoming) {
+        if (interaction.isIncoming && presenter.isGroup()) {
             viewHolder.mAvatar?.let { avatar ->
                 avatar.setImageBitmap(null)
                 avatar.visibility = View.VISIBLE
                 if (contact != null)
-                    avatar.setImageDrawable(conversationFragment.getConversationAvatar(contact.primaryNumber))
+                    avatar.setImageDrawable(
+                        conversationFragment.getConversationAvatar(contact.primaryNumber)
+                    )
             }
         } /*else {
             when (interaction.status) {
@@ -619,14 +621,18 @@ class TvConversationAdapter(
             msgTxt.setPadding(hPadding, vPadding, hPadding, vPadding)
         }
         msgTxt.text = markwon.toMarkdown(message)
-        if (textMessage.isIncoming) {
-            convViewHolder.mAvatar!!.setImageBitmap(null)
-            convViewHolder.mAvatar.visibility = View.VISIBLE
+        // Do not show the avatar if it is a one to one conversation.
+        val avatar = convViewHolder.mAvatar
+        avatar?.visibility = View.GONE
         if (msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE) {
-            if (textMessage.isIncoming) {
-                convViewHolder.mAvatar!!.setImageDrawable(
-                    conversationFragment.getConversationAvatar(contact.primaryNumber)
-                )
+            if (textMessage.isIncoming && presenter.isGroup()) {
+                avatar?.let {
+                    it.setImageBitmap(null)
+                    it.setImageDrawable(
+                        conversationFragment.getConversationAvatar(contact.primaryNumber)
+                    )
+                    it.visibility = View.VISIBLE
+                }
             }
         }
         // Apply a bottom margin to the global layout if end of sequence needed.
@@ -836,6 +842,24 @@ class TvConversationAdapter(
                             text = null
                         }
                     }
+                    // Do not show the avatar if it is a one to one conversation.
+                    val avatar = convViewHolder.mAvatar
+                    avatar?.visibility = View.GONE
+                    if (msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE) {
+                        if (textMessage.isIncoming && presenter.isGroup()) {
+                            avatar?.let {
+                                it.setImageBitmap(null)
+                                it.setImageDrawable(
+                                    conversationFragment.getConversationAvatar(contact.primaryNumber)
+                                )
+                                it.visibility = View.VISIBLE
+                            }
+                        }
+                    }
+                    // Apply a bottom margin to the global layout if end of sequence needed.
+                    val endOfSeq =
+                        msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE
+                    convViewHolder.mItem?.let { setBottomMargin(it, if (endOfSeq) 8 else 0) }
                 })
     }
 
