@@ -999,12 +999,14 @@ class ConversationAdapter(
             viewHolder.mMsgDetailTxtPerm?.visibility = View.GONE
         }
         val contact = interaction.contact
-        if (interaction.isIncoming) {
+        if (interaction.isIncoming && presenter.isGroup()) {
             viewHolder.mAvatar?.let { avatar ->
                 avatar.setImageBitmap(null)
                 avatar.visibility = View.VISIBLE
                 if (contact != null)
-                    avatar.setImageDrawable(conversationFragment.getConversationAvatar(contact.primaryNumber))
+                    avatar.setImageDrawable(
+                        conversationFragment.getConversationAvatar(contact.primaryNumber)
+                    )
             }
         }
         val type = viewHolder.type.transferType
@@ -1096,6 +1098,8 @@ class ConversationAdapter(
                 val msgSequenceType = getMsgSequencing(position, isTimeShown)
                 val peerDisplayName = convViewHolder.mPeerDisplayName
 
+                // Do not show the avatar if it is a one to one conversation.
+                convViewHolder.mAvatar?.visibility = View.GONE
                 // Manage deleted message.
                 if (isDeleted) {
                     msgTxt.text = context.getString(R.string.conversation_message_deleted)
@@ -1195,37 +1199,6 @@ class ConversationAdapter(
                 }
                 msgTxt.movementMethod = LinkMovementMethod.getInstance()
                 msgTxt.text = markwon.toMarkdown(message)
-                val endOfSeq =
-                    msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE
-
-                // Manage animation for avatar doing ???.
-                if (textMessage.isIncoming) {
-                    val avatar = convViewHolder.mAvatar ?: return@subscribe
-                    if (endOfSeq) {
-                        avatar.setImageDrawable(conversationFragment.getConversationAvatar(contact.primaryNumber))
-                        avatar.visibility = View.VISIBLE
-                    } else {
-                        if (position == lastMsgPos - 1) {
-                            avatar.startAnimation(
-                                AnimationUtils.loadAnimation(avatar.context, R.anim.fade_out).apply {
-                                    setAnimationListener(object : Animation.AnimationListener {
-                                        override fun onAnimationStart(arg0: Animation) {}
-                                        override fun onAnimationRepeat(arg0: Animation) {}
-                                        override fun onAnimationEnd(arg0: Animation) {
-                                            avatar.setImageBitmap(null)
-                                            avatar.visibility = View.INVISIBLE
-                                        }
-                                    })
-                                })
-                        } else {
-                            avatar.setImageBitmap(null)
-                            avatar.visibility = View.INVISIBLE
-                        }
-                    }
-                }
-
-                // Apply a bottom margin to the global layout if end of sequence needed.
-                convViewHolder.mItem?.let { setBottomMargin(it, if (endOfSeq) 8 else 0) }
 
                 // Manage the update of the timestamp and the fact than we can expend/hide it.
                 if (isTimeShown) {
@@ -1278,6 +1251,29 @@ class ConversationAdapter(
                         }
                     }
                 }
+                // Only show the peer avatar if it is a group conversation
+                val endOfSeq =
+                    msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE
+                if (presenter.isGroup()) {
+                    // Manage animation for avatar.
+                    // To only display the avatar of the last message.
+                    val avatar = convViewHolder.mAvatar
+                    if (endOfSeq) {
+                        avatar?.setImageDrawable(
+                            conversationFragment.getConversationAvatar(contact.primaryNumber)
+                        )
+                        avatar?.visibility = View.VISIBLE
+                    } else {
+                        if (position == lastMsgPos - 1) {
+                            avatar?.let { ActionHelper.startFadeOutAnimation(avatar) }
+                        } else {
+                            avatar?.setImageBitmap(null)
+                            avatar?.visibility = View.INVISIBLE
+                        }
+                    }
+                }
+                // Apply a bottom margin to the global layout if end of sequence needed.
+                convViewHolder.mItem?.let { setBottomMargin(it, if (endOfSeq) 8 else 0) }
             })
     }
 
@@ -1477,7 +1473,6 @@ class ConversationAdapter(
                     val textMessage = lastElement as Call
                     val isTimeShown = hasPermanentTimeString(textMessage, position)
                     val msgSequenceType = getMsgSequencing(position, isTimeShown)
-
                     val callInfoLayout = convViewHolder.mCallInfoLayout ?: return@subscribe
                     callInfoLayout.background?.setTintList(null)
                     val callIcon = convViewHolder.mIcon ?: return@subscribe
@@ -1486,6 +1481,11 @@ class ConversationAdapter(
                     val detailCall = convViewHolder.mHistDetailTxt ?: return@subscribe
                     val resIndex: Int
                     val typeCallTxt : String
+                    val peerDisplayName = convViewHolder.mPeerDisplayName
+                    val account = interaction.account ?: return@subscribe
+                    val callLayout = convViewHolder.mCallLayout
+                    val contact = textMessage.contact ?: return@subscribe
+                    val avatar = convViewHolder.mAvatar
 
                     val endOfSeq = msgSequenceType == SequenceType.LAST
                             || msgSequenceType == SequenceType.SINGLE
@@ -1525,7 +1525,7 @@ class ConversationAdapter(
                             typeCallTxt = context.getString(R.string.notif_incoming_call)
                         }
                         // Put the message to the left because it is incoming.
-                        convViewHolder.mCallLayout?.gravity = Gravity.START
+                        callLayout?.gravity = Gravity.START
                     } else {
                         if (call.isMissed) { // Outgoing call missed.
                             resIndex = msgSequenceType.ordinal + 16
@@ -1550,7 +1550,7 @@ class ConversationAdapter(
                             typeCallTxt = context.getString(R.string.notif_outgoing_call)
                         }
                         // Put the message to the right because it is outgoing.
-                        convViewHolder.mCallLayout?.gravity = Gravity.END
+                        callLayout?.gravity = Gravity.END
                     }
                     callInfoLayout.background =
                         ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
@@ -1578,6 +1578,42 @@ class ConversationAdapter(
                             convViewHolder.itemView.context.getColor(R.color.colorOnSurface)
                         )
                     }
+                    // Show the name of the contact if it is a group conversation
+                    peerDisplayName?.apply {
+                        if (presenter.isGroup() && (msgSequenceType == SequenceType.SINGLE ||
+                                    msgSequenceType == SequenceType.FIRST)
+                        ) {
+                            visibility = View.VISIBLE
+                            convViewHolder.compositeDisposable.add(
+                                presenter.contactService
+                                    .observeContact(account, contact, false)
+                                    .observeOn(DeviceUtils.uiScheduler)
+                                    .subscribe {
+                                        text = it.displayName
+                                    }
+                            )
+                        } else visibility = View.GONE
+                    }
+                    // Only show the avatar if it is a group conversation
+                    if (presenter.isGroup()) {
+                        // Manage animation for avatar.
+                        // To only display the avatar of the last message.
+                        if (endOfSeq) {
+                            avatar?.setImageDrawable(
+                                conversationFragment.getConversationAvatar(
+                                    contact.primaryNumber
+                                )
+                            )
+                            avatar?.visibility = View.VISIBLE
+                        } else {
+                            if (position == lastMsgPos - 1) {
+                                avatar?.let { ActionHelper.startFadeOutAnimation(avatar) }
+                            } else {
+                                avatar?.setImageBitmap(null)
+                                avatar?.visibility = View.INVISIBLE
+                            }
+                        }
+                    } else avatar?.visibility = View.GONE
                 })
     }
     private fun configureSearchResult(convViewHolder: ConversationViewHolder, interaction: Interaction) {
