@@ -500,12 +500,14 @@ class TvConversationAdapter(
             viewHolder.mMsgDetailTxtPerm?.visibility = View.GONE
         }
         val contact = interaction.contact
-        if (interaction.isIncoming) {
+        if (interaction.isIncoming && presenter.isGroup()) {
             viewHolder.mAvatar?.let { avatar ->
                 avatar.setImageBitmap(null)
                 avatar.visibility = View.VISIBLE
                 if (contact != null)
-                    avatar.setImageDrawable(conversationFragment.getConversationAvatar(contact.primaryNumber))
+                    avatar.setImageDrawable(
+                        conversationFragment.getConversationAvatar(contact.primaryNumber)
+                    )
             }
         }
         val type = viewHolder.type.transferType
@@ -631,15 +633,28 @@ class TvConversationAdapter(
             msgTxt.setPadding(hPadding, vPadding, hPadding, vPadding)
         }
         msgTxt.text = markwon.toMarkdown(message)
-        if (textMessage.isIncoming) {
-            convViewHolder.mAvatar!!.setImageBitmap(null)
-            convViewHolder.mAvatar.visibility = View.VISIBLE
-        }
-        if (msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE) {
-            if (textMessage.isIncoming) {
-                convViewHolder.mAvatar!!.setImageDrawable(
+        // Do not show the avatar if it is a one to one conversation.
+        val avatar = convViewHolder.mAvatar
+        avatar?.visibility = View.GONE
+        // Only show the peer avatar if it is a group conversation
+        if (presenter.isGroup()) {
+            val endOfSeq =
+                msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE
+            // Manage animation for avatar.
+            // To only display the avatar of the last message.
+            val avatar = convViewHolder.mAvatar
+            if (endOfSeq) {
+                avatar?.setImageDrawable(
                     conversationFragment.getConversationAvatar(contact.primaryNumber)
                 )
+                avatar?.visibility = View.VISIBLE
+            } else {
+                if (position == lastMsgPos - 1) {
+                    avatar?.let { ActionHelper.startFadeOutAnimation(avatar) }
+                } else {
+                    avatar?.setImageBitmap(null)
+                    avatar?.visibility = View.INVISIBLE
+                }
             }
         }
         // Apply a bottom margin to the global layout if end of sequence needed.
@@ -838,6 +853,7 @@ class TvConversationAdapter(
                     val detailCall = convViewHolder.mHistDetailTxt ?: return@subscribe
                     val resIndex: Int
                     val typeCallTxt: String
+                    val contact = call.contact ?: return@subscribe
 
                     // Manage the update of the timestamp
                     if (isTimeShown) {
@@ -934,6 +950,30 @@ class TvConversationAdapter(
                         detailCall.setTextColor(
                             convViewHolder.itemView.context.getColor(R.color.colorOnSurface)
                         )
+                    }
+                    // Do not show the avatar if it is a one to one conversation.
+                    val avatar = convViewHolder.mAvatar
+                    avatar?.visibility = View.GONE
+                    // Only show the peer avatar if it is a group conversation
+                    if (presenter.isGroup()) {
+                        val endOfSeq =
+                            msgSequenceType == SequenceType.LAST
+                                    || msgSequenceType == SequenceType.SINGLE
+                        // Manage animation for avatar.
+                        // To only display the avatar of the last message.
+                        if (endOfSeq) {
+                            avatar?.setImageDrawable(
+                                conversationFragment.getConversationAvatar(contact.primaryNumber)
+                            )
+                            avatar?.visibility = View.VISIBLE
+                        } else {
+                            if (position == lastMsgPos - 1) {
+                                avatar?.let { ActionHelper.startFadeOutAnimation(avatar) }
+                            } else {
+                                avatar?.setImageBitmap(null)
+                                avatar?.visibility = View.INVISIBLE
+                            }
+                        }
                     }
                 })
         // Apply a bottom margin to the global layout if end of sequence needed.
