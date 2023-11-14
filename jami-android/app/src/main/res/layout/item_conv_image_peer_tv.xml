@@ -41,7 +41,8 @@
             android:layout_width="@dimen/conversation_avatar_size"
             android:layout_height="@dimen/conversation_avatar_size"
             android:layout_alignBottom="@id/imageLayout"
-            android:layout_marginEnd="12dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginEnd="@dimen/margin_end_avatar_conversation"
             android:background="@null"
             android:gravity="start"
             android:scaleType="centerCrop" />
