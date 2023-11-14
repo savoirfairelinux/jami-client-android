@@ -117,6 +117,12 @@ class ConversationAdapter(
         res.getDimensionPixelSize(R.dimen.text_message_padding),
         res.getDimensionPixelSize(R.dimen.text_message_padding)
     )
+    private val audioFilePadding = Padding(
+        res.getDimensionPixelSize(R.dimen.padding_audio_file),
+        res.getDimensionPixelSize(R.dimen.padding_audio_file),
+        res.getDimensionPixelSize(R.dimen.padding_audio_file),
+        res.getDimensionPixelSize(R.dimen.padding_audio_file)
+    )
 
     private var expandedItemPosition = -1
     private var lastDeliveredPosition = -1
@@ -1020,39 +1026,91 @@ class ConversationAdapter(
             mCurrentLongItem = RecyclerViewContextMenuInfo(viewHolder.bindingAdapterPosition, v.id.toLong())
             true
         }
-        if (type == MessageType.TransferType.IMAGE) {
-            configureImage(viewHolder, path, file.body)
-        } else if (type == MessageType.TransferType.VIDEO) {
-            configureVideo(viewHolder, path)
-        } else if (type == MessageType.TransferType.AUDIO) {
-            configureAudio(viewHolder, path)
-        } else {
-            val status = file.status
-            viewHolder.mIcon?.setImageResource(if (status.isError) R.drawable.baseline_warning_24 else R.drawable.baseline_attach_file_24)
-            viewHolder.mMsgTxt?.text = file.displayName
-            viewHolder.mFileInfoLayout?.setOnClickListener(null)
-            if (status == InteractionStatus.TRANSFER_AWAITING_HOST) {
-                viewHolder.btnRefuse?.visibility = View.VISIBLE
-                viewHolder.mAnswerLayout?.visibility = View.VISIBLE
-                viewHolder.btnAccept?.setOnClickListener { presenter.acceptFile(file) }
-                viewHolder.btnRefuse?.setOnClickListener { presenter.refuseFile(file) }
-            } else if (status == InteractionStatus.FILE_AVAILABLE) {
-                viewHolder.btnRefuse?.visibility = View.GONE
-                viewHolder.mAnswerLayout?.visibility = View.VISIBLE
-                viewHolder.btnAccept?.setOnClickListener { presenter.acceptFile(file) }
-            } else {
-                viewHolder.mAnswerLayout?.visibility = View.GONE
-                if (status == InteractionStatus.TRANSFER_ONGOING) {
-                    viewHolder.progress?.max = (file.totalSize / 1024).toInt()
-                    viewHolder.progress?.setProgress((file.bytesProgress / 1024).toInt(), true)
-                    viewHolder.progress?.show()
-                } else {
-                    viewHolder.progress?.hide()
-                }
-                viewHolder.mFileInfoLayout?.setOnClickListener { presenter.openFile(file) }
-            }
-        }
+        // todo mettre les resIndex et changer background aimantation
+        // val file = interaction as DataTransfer
+//        msgSequenceType.ordinal + (if (textMessage.isIncoming) 1 else 0) * 4
+//        callInfoLayout.background =
+//                        ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
+//        callInfoLayout.setPadding(callPadding)
+        val context = viewHolder.itemView.context
+        viewHolder.compositeDisposable.add(
+            interaction.lastElement
+                .observeOn(DeviceUtils.uiScheduler)
+                .subscribe { lastElement ->
+                    val fileMessage = lastElement as DataTransfer
+                    val isTimeShown = hasPermanentTimeString(fileMessage, position)
+                    val msgSequenceType = getMsgSequencing(position, isTimeShown)
+                    val audioInfoLayout = viewHolder.mAudioInfoLayout ?: return@subscribe
+                    val resIndex = msgSequenceType.ordinal + (if (fileMessage.isIncoming) 1 else 0) * 4
+
+                    when (type) {
+                        MessageType.TransferType.IMAGE -> {
+                            configureImage(viewHolder, path, file.body)
+
+                        }
+                        MessageType.TransferType.VIDEO -> {
+                            configureVideo(viewHolder, path)
+                        }
+                        MessageType.TransferType.AUDIO -> {
+                            configureAudio(viewHolder, path)
+                            // Update background
+                            viewHolder.mAudioInfoLayout?.background =
+                                ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
+                            if (convColor != 0 && !fileMessage.isIncoming) {
+                                audioInfoLayout.background.setTint(convColor)
+                            }
+                            // padding ?
+                            audioInfoLayout.setPadding(audioFilePadding)
+
+                        }
+                        else -> {
+                            // Update background
+                            viewHolder.mFileInfoLayout?.background =
+                                ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
+                            if (convColor != 0 && !fileMessage.isIncoming) {
+                                viewHolder.mFileInfoLayout?.background?.setTint(convColor)
+                            }
+                            // padding ?
+                            viewHolder.mFileInfoLayout?.setPadding(audioFilePadding)
+
+                            val status = file.status
+                            viewHolder.mIcon?.setImageResource(if (status.isError) R.drawable.baseline_warning_24 else R.drawable.baseline_attach_file_24)
+                            viewHolder.mMsgTxt?.text = file.displayName
+                            viewHolder.mFileInfoLayout?.setOnClickListener(null)
+                            when (status) {
+                                InteractionStatus.TRANSFER_AWAITING_HOST -> {
+                                    viewHolder.btnRefuse?.visibility = View.VISIBLE
+                                    viewHolder.mAnswerLayout?.visibility = View.VISIBLE
+                                    viewHolder.btnAccept?.setOnClickListener { presenter.acceptFile(file) }
+                                    viewHolder.btnRefuse?.setOnClickListener { presenter.refuseFile(file) }
+                                }
+
+                                InteractionStatus.FILE_AVAILABLE -> {
+                                    viewHolder.btnRefuse?.visibility = View.GONE
+                                    viewHolder.mAnswerLayout?.visibility = View.VISIBLE
+                                    viewHolder.btnAccept?.setOnClickListener { presenter.acceptFile(file) }
+                                }
+
+                                else -> {
+                                    viewHolder.mAnswerLayout?.visibility = View.GONE
+                                    if (status == InteractionStatus.TRANSFER_ONGOING) {
+                                        viewHolder.progress?.max = (file.totalSize / 1024).toInt()
+                                        viewHolder.progress?.setProgress(
+                                            (file.bytesProgress / 1024).toInt(),
+                                            true
+                                        )
+                                        viewHolder.progress?.show()
+                                    } else {
+                                        viewHolder.progress?.hide()
+                                    }
+                                    viewHolder.mFileInfoLayout?.setOnClickListener { presenter.openFile(file) }
+                                }
+                            }
+                        }
+                    }
+                })
     }
+
 
     private fun configureForTypingIndicator(viewHolder: ConversationViewHolder) {
         AnimatedVectorDrawableCompat.create(viewHolder.itemView.context, R.drawable.typing_indicator_animation)?.let { anim ->

@@ -44,7 +44,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
-        android:paddingEnd="2dp">
+        android:paddingEnd="2dp"
+        android:paddingStart="0dp">
 
         <LinearLayout
             android:id="@+id/audioInfoLayout"
@@ -54,7 +55,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginStart="72dp"
             android:layout_marginEnd="24dp"
-            android:background="@drawable/textmsg_call_background"
+            android:background="@drawable/textmsg_bg_in"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:padding="4dp">
