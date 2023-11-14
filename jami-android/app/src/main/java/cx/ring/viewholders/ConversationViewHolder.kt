@@ -28,6 +28,7 @@ import android.view.Surface
 import android.view.View
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import com.google.android.material.chip.Chip
 import cx.ring.R
 import cx.ring.adapters.MessageType
@@ -60,6 +61,7 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
         else -> null
     }
     val mStatusIcon: MessageStatusView? = when (type) {
+        MessageType.CALL_INFORMATION,
         MessageType.OUTGOING_TEXT_MESSAGE,
         MessageType.OUTGOING_FILE,
         MessageType.OUTGOING_IMAGE,
@@ -86,7 +88,7 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
     var mAnswerLayout: ViewGroup? = null
 
     // Ongoing call
-    var mCallLayout: LinearLayout? = null
+    var mCallLayout: RelativeLayout? = null
     var mCallInfoLayout: LinearLayout? = null
     var mAcceptCallVideoButton: ImageButton? = null
     var mAcceptCallAudioButton: ImageButton? = null

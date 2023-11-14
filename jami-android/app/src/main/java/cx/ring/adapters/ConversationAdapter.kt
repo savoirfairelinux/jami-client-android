@@ -43,6 +43,7 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.PopupWindow
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.cardview.widget.CardView
@@ -59,8 +60,6 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withC
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.R
-import cx.ring.utils.ActionHelper.Padding
-import cx.ring.utils.ActionHelper.setPadding
 import cx.ring.client.MediaViewerActivity
 import cx.ring.client.MessageEditActivity
 import cx.ring.databinding.MenuConversationBinding
@@ -68,6 +67,8 @@ import cx.ring.fragments.ConversationFragment
 import cx.ring.linkpreview.LinkPreview
 import cx.ring.linkpreview.PreviewData
 import cx.ring.utils.*
+import cx.ring.utils.ActionHelper.Padding
+import cx.ring.utils.ActionHelper.setPadding
 import cx.ring.utils.ContentUriHandler.getUriForFile
 import cx.ring.viewholders.ConversationViewHolder
 import cx.ring.views.AvatarDrawable
@@ -1374,7 +1375,6 @@ class ConversationAdapter(
                     val textMessage = lastElement as Call
                     val isTimeShown = hasPermanentTimeString(textMessage, position)
                     val msgSequenceType = getMsgSequencing(position, isTimeShown)
-
                     val callInfoLayout = convViewHolder.mCallInfoLayout ?: return@subscribe
                     callInfoLayout.background?.setTintList(null)
                     val callIcon = convViewHolder.mIcon ?: return@subscribe
@@ -1417,7 +1417,17 @@ class ConversationAdapter(
                             typeCallTxt = context.getString(R.string.notif_incoming_call)
                         }
                         // Put the message to the left because it is incoming.
-                        convViewHolder.mCallLayout?.gravity = Gravity.START
+                        val params = RelativeLayout.LayoutParams(
+                            RelativeLayout.LayoutParams.WRAP_CONTENT,
+                            RelativeLayout.LayoutParams.WRAP_CONTENT
+                        )
+                        params.let {
+                            it.removeRule(RelativeLayout.ALIGN_PARENT_END)
+                            it.addRule(RelativeLayout.ALIGN_PARENT_START)
+                            it.marginEnd = 0
+                        }
+                        callInfoLayout.layoutParams = params
+
                     } else {
                         if (call.isMissed) { // Outgoing call missed.
                             resIndex = msgSequenceType.ordinal + 16
@@ -1442,7 +1452,16 @@ class ConversationAdapter(
                             typeCallTxt = context.getString(R.string.notif_outgoing_call)
                         }
                         // Put the message to the right because it is outgoing.
-                        convViewHolder.mCallLayout?.gravity = Gravity.END
+                        val params = RelativeLayout.LayoutParams(
+                            RelativeLayout.LayoutParams.WRAP_CONTENT,
+                            RelativeLayout.LayoutParams.WRAP_CONTENT
+                        )
+                        params.let {
+                            it.removeRule(RelativeLayout.ALIGN_PARENT_START)
+                            it.addRule(RelativeLayout.ALIGN_PARENT_END)
+                            it.marginEnd = res.getDimensionPixelSize(R.dimen.conversation_me_margin_end)
+                        }
+                        callInfoLayout.layoutParams = params
                     }
                     callInfoLayout.background =
                         ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
