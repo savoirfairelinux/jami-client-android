@@ -993,7 +993,7 @@ class ConversationAdapter(
             viewHolder.mMsgDetailTxtPerm?.visibility = View.GONE
         }
         val contact = interaction.contact
-        if (interaction.isIncoming) {
+        if (interaction.isIncoming && presenter.isGroup()) {
             viewHolder.mAvatar?.let { avatar ->
                 avatar.setImageBitmap(null)
                 avatar.visibility = View.VISIBLE
