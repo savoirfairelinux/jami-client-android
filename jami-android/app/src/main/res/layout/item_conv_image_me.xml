@@ -15,11 +15,11 @@
   ~ along with this program; if not, write to the Free Software
   ~  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
   -->
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingBottom="8dp"
     android:clickable="true"
     android:descendantFocusability="blocksDescendants"
@@ -92,16 +92,25 @@
                 <com.google.android.material.chip.Chip
                     android:id="@+id/reaction_chip"
                     style="@style/Widget.Material3.Chip.Suggestion"
-                    android:focusable="false"
-                    android:checkable="false"
-                    android:clickable="false"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/image"
-                    android:layout_alignStart="@id/image"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="-16dp"
-                    android:text="👍😍 3" />
+                    android:layout_below="@id/msg_details_txt"
+                    android:layout_alignEnd="@id/image"
+                    android:layout_marginTop="-8dp"
+                    android:layout_marginEnd="8dp"
+                    android:backgroundTint="@color/icon_background_color"
+                    android:checkable="false"
+                    android:clickable="false"
+                    android:elevation="4dp"
+                    android:focusable="false"
+                    android:outlineProvider="none"
+                    android:text="👍😍 3"
+                    app:chipCornerRadius="5dp"
+                    app:chipEndPadding="0dp"
+                    app:chipStartPadding="0dp"
+                    app:chipStrokeColor="@color/border_color"
+                    app:textEndPadding="5dp"
+                    app:textStartPadding="5dp" />
 
             </RelativeLayout>
 
