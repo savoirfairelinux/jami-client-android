@@ -46,6 +46,7 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
     var mMsgDetailTxt: TextView? = null
     var mMsgDetailTxtPerm: TextView? = null
     val mAvatar: ImageView? = when (type) {
+        MessageType.CALL_INFORMATION,
         MessageType.INCOMING_TEXT_MESSAGE,
         MessageType.INCOMING_FILE,
         MessageType.INCOMING_IMAGE,
