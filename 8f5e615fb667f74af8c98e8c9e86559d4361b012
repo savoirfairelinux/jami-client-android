@@ -16,6 +16,24 @@
       "message": "waiting for the designs",
       "revId": "8f5e615fb667f74af8c98e8c9e86559d4361b012",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "03db2cbb_7d2366ea",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-11-15T14:25:06Z",
+      "side": 1,
+      "message": "fail",
+      "parentUuid": "1d41937e_bcbdc443",
+      "revId": "8f5e615fb667f74af8c98e8c9e86559d4361b012",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
