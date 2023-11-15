@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b928c5a5_fbba66c1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-11-15T20:40:31Z",
+      "side": 1,
+      "message": "\"manage avatar display\"\n\nor\n\n\"show avatar only within swarm group\"",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 29
+      },
+      "revId": "c704a9012e07b8cd65068d9f2d179b51342002e9",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
