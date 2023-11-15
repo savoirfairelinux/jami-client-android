@@ -17,12 +17,10 @@ along with this program; if not, write to the Free Software
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/callLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/padding_xsmall"
-    tools:gravity="end">
+    android:paddingBottom="@dimen/padding_xsmall">
 
     <TextView
         android:id="@+id/msg_details_txt_perm"
@@ -38,47 +36,63 @@ along with this program; if not, write to the Free Software
         tools:visibility="visible" />
 
     <LinearLayout
-        android:id="@+id/callInfoLayout"
-        android:layout_width="wrap_content"
+        android:id="@+id/callLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="53dp"
-        android:layout_marginEnd="24dp"
-        android:paddingHorizontal="@dimen/text_message_padding"
-        android:paddingVertical="@dimen/padding_call_vertical"
-        tools:background="@drawable/textmsg_bg_out">
+        android:gravity="start"
+        android:layout_marginStart="@dimen/padding_large">
 
         <ImageView
-            android:id="@+id/call_icon"
-            android:layout_width="15dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="0dp"
-            android:layout_marginEnd="5dp"
+            android:id="@+id/photo"
             android:contentDescription="@null"
-            tools:srcCompat="@drawable/baseline_outgoing_call_16"
-            tools:tint="@color/white" />
+            android:layout_width="@dimen/conversation_avatar_size"
+            android:layout_height="@dimen/conversation_avatar_size"
+            android:layout_marginEnd="@dimen/padding_medium"
+            tools:srcCompat="@color/blue_200"
+            android:layout_gravity="bottom"
+            tools:visibility="visible" />
 
-        <TextView
-            android:id="@+id/call_hist_txt"
+        <LinearLayout
+            android:id="@+id/callInfoLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:marqueeRepeatLimit="marquee_forever"
-            android:scrollHorizontally="true"
-            android:singleLine="true"
-            android:textColor="@color/colorOnSurface"
-            android:textSize="13sp"
-            tools:text="Outgoing call"
-            tools:textColor="@color/white" />
+            android:layout_marginEnd="@dimen/conversation_avatar_size"
+            android:paddingHorizontal="@dimen/text_message_padding"
+            android:paddingVertical="@dimen/padding_call_vertical"
+            tools:background="@drawable/textmsg_bg_in">
 
-        <TextView
-            android:id="@+id/call_details_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/colorOnSurface"
-            tools:textColor="@color/white"
-            android:textSize="13sp"
-            tools:text="- Lasted 17:26" />
+            <ImageView
+                android:id="@+id/call_icon"
+                android:layout_width="15dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="0dp"
+                android:layout_marginEnd="5dp"
+                android:contentDescription="@null"
+                tools:srcCompat="@drawable/baseline_incoming_call_16"
+                tools:tint="@color/colorOnSurface" />
 
+            <TextView
+                android:id="@+id/call_hist_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:textColor="@color/colorOnSurface"
+                android:textSize="13sp"
+                tools:text="Incoming call" />
+
+            <TextView
+                android:id="@+id/call_details_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorOnSurface"
+                android:textSize="13sp"
+                tools:text="- Lasted 17:26" />
+
+        </LinearLayout>
     </LinearLayout>
+
 </LinearLayout>
