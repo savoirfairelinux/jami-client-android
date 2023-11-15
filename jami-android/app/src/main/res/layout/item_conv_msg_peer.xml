@@ -138,6 +138,7 @@ along with this program; if not, write to the Free Software
             android:layout_marginTop="-16dp"
             android:backgroundTint="@color/icon_background_color"
             android:elevation="4dp"
+            android:outlineProvider="none"
             android:text="👍😍 3"
             app:chipCornerRadius="5dp"
             app:chipEndPadding="0dp"
