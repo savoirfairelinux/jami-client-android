@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1331c026_c6ad5e3b",
+        "filename": "jami-android/app/src/main/java/cx/ring/share/ShareFragment.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-11-15T16:04:08Z",
+      "side": 0,
+      "message": "format",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 31
+      },
+      "revId": "5de51fd3b5ca492a4d6a78993f8e84c4ef539cf2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
