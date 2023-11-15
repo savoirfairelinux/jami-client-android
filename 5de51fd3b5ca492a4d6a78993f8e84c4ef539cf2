@@ -22,6 +22,30 @@
       },
       "revId": "5de51fd3b5ca492a4d6a78993f8e84c4ef539cf2",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2694db7f_d88c0efb",
+        "filename": "jami-android/app/src/main/java/cx/ring/share/ShareFragment.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-11-15T16:06:41Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "1331c026_c6ad5e3b",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 31
+      },
+      "revId": "5de51fd3b5ca492a4d6a78993f8e84c4ef539cf2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
