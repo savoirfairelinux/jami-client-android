@@ -73,7 +73,8 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
     val mPeerDisplayName: TextView? = v.findViewById(R.id.msg_display_name)
     val reactionChip: Chip? = v.findViewById(R.id.reaction_chip)
     val mIcon: ImageView? = when (type) {
-        MessageType.CALL_INFORMATION -> v.findViewById(R.id.call_icon)
+        MessageType.INCOMING_CALL_INFORMATION,
+        MessageType.OUTGOING_CALL_INFORMATION -> v.findViewById(R.id.call_icon)
         MessageType.INCOMING_FILE,
         MessageType.OUTGOING_FILE -> v.findViewById(R.id.file_icon)
         MessageType.COMPOSING_INDICATION -> v.findViewById(R.id.status_icon)
@@ -117,7 +118,8 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
                 mMsgDetailTxt = v.findViewById(R.id.contact_event_details_txt)
                 primaryClickableView = v.findViewById(R.id.contactDetailsGroup)
             }
-            MessageType.CALL_INFORMATION -> {
+            MessageType.OUTGOING_CALL_INFORMATION,
+            MessageType.INCOMING_CALL_INFORMATION -> {
                 mHistTxt = v.findViewById(R.id.call_hist_txt)
                 mHistDetailTxt = v.findViewById(R.id.call_details_txt)
                 mCallInfoLayout = v.findViewById(R.id.callInfoLayout)
