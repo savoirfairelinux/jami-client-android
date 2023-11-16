@@ -28,6 +28,7 @@ import android.view.Surface
 import android.view.View
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import com.google.android.material.chip.Chip
 import cx.ring.R
 import cx.ring.adapters.MessageType
@@ -44,6 +45,7 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
     var mMsgDetailTxt: TextView? = null
     var mMsgDetailTxtPerm: TextView? = null
     val mAvatar: ImageView? = when (type) {
+        MessageType.INCOMING_CALL_INFORMATION,
         MessageType.INCOMING_TEXT_MESSAGE,
         MessageType.INCOMING_FILE,
         MessageType.INCOMING_IMAGE,
@@ -60,6 +62,7 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
         else -> null
     }
     val mStatusIcon: MessageStatusView? = when (type) {
+        MessageType.OUTGOING_CALL_INFORMATION,
         MessageType.OUTGOING_TEXT_MESSAGE,
         MessageType.OUTGOING_FILE,
         MessageType.OUTGOING_IMAGE,
@@ -73,7 +76,8 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
     val mPeerDisplayName: TextView? = v.findViewById(R.id.msg_display_name)
     val reactionChip: Chip? = v.findViewById(R.id.reaction_chip)
     val mIcon: ImageView? = when (type) {
-        MessageType.CALL_INFORMATION -> v.findViewById(R.id.call_icon)
+        MessageType.INCOMING_CALL_INFORMATION,
+        MessageType.OUTGOING_CALL_INFORMATION -> v.findViewById(R.id.call_icon)
         MessageType.INCOMING_FILE,
         MessageType.OUTGOING_FILE -> v.findViewById(R.id.file_icon)
         MessageType.COMPOSING_INDICATION -> v.findViewById(R.id.status_icon)
@@ -86,7 +90,7 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
     var mAnswerLayout: ViewGroup? = null
 
     // Ongoing call
-    var mCallLayout: LinearLayout? = null
+    var mCallLayout: RelativeLayout? = null
     var mCallInfoLayout: LinearLayout? = null
     var mAcceptCallVideoButton: ImageButton? = null
     var mAcceptCallAudioButton: ImageButton? = null
@@ -117,7 +121,8 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
                 mMsgDetailTxt = v.findViewById(R.id.contact_event_details_txt)
                 primaryClickableView = v.findViewById(R.id.contactDetailsGroup)
             }
-            MessageType.CALL_INFORMATION -> {
+            MessageType.OUTGOING_CALL_INFORMATION,
+            MessageType.INCOMING_CALL_INFORMATION -> {
                 mHistTxt = v.findViewById(R.id.call_hist_txt)
                 mHistDetailTxt = v.findViewById(R.id.call_details_txt)
                 mCallInfoLayout = v.findViewById(R.id.callInfoLayout)
