@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2eaa6c9e_9571a159",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-11-16T15:19:37Z",
+      "side": 1,
+      "message": "update of the status icon only working on msgTxt (l.327 of conversationAdapter)\nneed to see how to make status icon gone for peer call",
+      "revId": "24dde1e256d52fcec5cd238eae96106723ce7c28",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
