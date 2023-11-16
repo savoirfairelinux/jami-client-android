@@ -281,9 +281,9 @@ class ConversationAdapter(
             Interaction.InteractionType.CALL ->
                 if ((interaction as Call).isGroupCall) {
                     MessageType.ONGOING_GROUP_CALL.ordinal
-                } else {
-                    MessageType.CALL_INFORMATION.ordinal
-                }
+                } else if (interaction.isIncoming) {
+                    MessageType.INCOMING_CALL_INFORMATION.ordinal
+                } else MessageType.OUTGOING_CALL_INFORMATION.ordinal
             Interaction.InteractionType.TEXT ->
                 if (interaction.isIncoming) {
                     MessageType.INCOMING_TEXT_MESSAGE.ordinal
