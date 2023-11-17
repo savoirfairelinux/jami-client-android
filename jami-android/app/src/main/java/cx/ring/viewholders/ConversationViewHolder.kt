@@ -77,6 +77,7 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
     val mInReplyTo: TextView? = v.findViewById(R.id.msg_in_reply_to)
     val mPeerDisplayName: TextView? = when (type){
         MessageType.INCOMING_TEXT_MESSAGE,
+        MessageType.INCOMING_CALL_INFORMATION,
         MessageType.ONGOING_GROUP_CALL -> v.findViewById(R.id.msg_display_name)
         else -> null
     }
