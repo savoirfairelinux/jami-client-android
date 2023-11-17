@@ -185,7 +185,11 @@ class Account(
 
     fun getConversationsSubject(withBanned: Boolean = false): Observable<List<Conversation>> =
         if (withBanned) conversationsSubject
-        else conversationsSubject.map { list -> list.filter { it.isGroup() || it.contact?.isBanned != true } }
+        else conversationsSubject.map { list ->
+            // In case where banned contact is in a swarm:group, we want to keep the conversation,
+            // except if it is a swarm:group with only him and the user.
+            list.filter { it.isGroup() || it.contact?.isBanned == false }
+        }
 
     /**
      * Get conversation subject

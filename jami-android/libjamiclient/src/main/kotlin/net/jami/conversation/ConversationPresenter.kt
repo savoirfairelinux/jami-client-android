@@ -346,7 +346,7 @@ class ConversationPresenter @Inject constructor(
         }
 
         // Check if it's a group call
-        if (isGroup()) {
+        if (isSwarmGroup()) {
             goToGroupCall(withCamera)
             return
         }
@@ -455,9 +455,9 @@ class ConversationPresenter @Inject constructor(
         }
     }
 
-    fun isGroup() : Boolean {
-        return mConversation?.isGroup() ?: false
-    }
+    fun isGroup() = mConversation?.isGroup() ?: false
+
+    private fun isSwarmGroup() = mConversation?.isSwarmGroup() ?: false
 
     private fun showTypingIndicator(): Boolean {
         return preferencesService.settings.enableTypingIndicator
