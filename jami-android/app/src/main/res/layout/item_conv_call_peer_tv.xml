@@ -15,63 +15,70 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/callLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="end|bottom"
-    android:layout_marginTop="8dp"
-    android:layout_marginBottom="8dp"
-    android:descendantFocusability="blocksDescendants"
-    android:focusable="false"
-    android:paddingStart="72dp"
-    android:paddingEnd="72dp">
+    android:background="@color/tv_contact_background"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/padding_xsmall">
 
     <LinearLayout
         android:id="@+id/callInfoLayout"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/textmsg_call_background"
-        android:orientation="horizontal"
-        android:paddingTop="4dp"
-        android:paddingBottom="4dp">
+        android:layout_marginStart="53dp"
+        android:layout_marginEnd="24dp"
+        android:paddingHorizontal="@dimen/text_message_padding"
+        android:paddingVertical="@dimen/padding_call_vertical"
+        tools:background="@drawable/textmsg_bg_out">
 
         <ImageView
             android:id="@+id/call_icon"
+            android:layout_width="15dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="5dp"
+            android:contentDescription="@null"
+            tools:srcCompat="@drawable/baseline_outgoing_call_16"
+            tools:tint="@color/white" />
+
+        <TextView
+            android:id="@+id/call_hist_txt"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"
-            android:alpha="0.75"
-            android:tint="@color/black"
-            android:src="@drawable/baseline_call_missed_24" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:textColor="@color/colorOnSurface"
+            android:textSize="13sp"
+            tools:text="Outgoing call"
+            tools:textColor="@color/white" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginEnd="8dp"
-            android:orientation="vertical">
+        <TextView
+            android:id="@+id/call_details_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorOnSurface"
+            android:textSize="13sp"
+            tools:text="- Lasted 17:26"
+            tools:textColor="@color/white" />
 
-            <TextView
-                android:id="@+id/call_hist_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:marqueeRepeatLimit="marquee_forever"
-                android:scrollHorizontally="true"
-                android:singleLine="false"
-                android:textColor="@color/colorOnSurface"
-                android:textSize="14sp"
-                tools:text="Appel manqué" />
-
-            <TextView
-                android:id="@+id/call_details_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/textColorSecondary"
-                android:textSize="12sp"
-                tools:text="Adrien - 12 mars" />
-        </LinearLayout>
     </LinearLayout>
 
-</RelativeLayout>
+    <TextView
+        android:id="@+id/msg_details_txt_perm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp"
+        android:paddingTop="8dp"
+        android:textColor="@color/white"
+        android:textSize="@dimen/conversation_timestamp_textsize"
+        android:visibility="gone"
+        tools:text="@string/time_just_now"
+        tools:visibility="visible" />
+</LinearLayout>
