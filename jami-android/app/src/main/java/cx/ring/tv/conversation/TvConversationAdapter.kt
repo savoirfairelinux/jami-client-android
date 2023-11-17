@@ -845,6 +845,8 @@ class TvConversationAdapter(
                         val detailCall = convViewHolder.mHistDetailTxt ?: return@subscribe
                         val resIndex: Int
                         val typeCallTxt: String
+                        val peerDisplayName = convViewHolder.mPeerDisplayName
+                        val account = interaction.account ?: return@subscribe
                         val contact = callMessage.contact ?: return@subscribe
 
                         // Manage the update of the timestamp
@@ -881,6 +883,22 @@ class TvConversationAdapter(
                             }
                             // Put the message to the left because it is incoming.
                             convViewHolder.mCallLayout?.gravity = Gravity.START
+                            // Show the name of the contact if it is a group conversation
+                            val startOfSeq = msgSequenceType == SequenceType.SINGLE
+                                    || msgSequenceType == SequenceType.FIRST
+                            peerDisplayName?.apply {
+                                if (presenter.isGroup() && startOfSeq) {
+                                    visibility = View.VISIBLE
+                                    convViewHolder.compositeDisposable.add(
+                                        presenter.contactService
+                                            .observeContact(account, contact, false)
+                                            .observeOn(DeviceUtils.uiScheduler)
+                                            .subscribe {
+                                                text = it.displayName
+                                            }
+                                    )
+                                } else visibility = View.GONE
+                            }
                         } else {
                             // Same background for outgoing calls.
                             resIndex = msgSequenceType.ordinal
