@@ -21,6 +21,9 @@ import android.os.Build
 import android.provider.ContactsContract
 import android.util.Log
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import android.widget.ImageView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import cx.ring.R
@@ -159,4 +162,24 @@ object ActionHelper {
         }
     }
 
+    /**
+     * ImageView fade-out animation for the avatar. 
+     * @param imageView the image view used for the animation.
+     */
+    fun startFadeOutAnimation(imageView: ImageView) {
+        val fadeOutAnimation = AnimationUtils.loadAnimation(
+            imageView.context,
+            R.anim.fade_out
+        ).apply {
+            setAnimationListener(object : Animation.AnimationListener {
+                override fun onAnimationStart(arg0: Animation) {}
+                override fun onAnimationRepeat(arg0: Animation) {}
+                override fun onAnimationEnd(arg0: Animation) {
+                    imageView.setImageBitmap(null)
+                    imageView.visibility = View.INVISIBLE
+                }
+            })
+        }
+        imageView.startAnimation(fadeOutAnimation)
+    }
 }

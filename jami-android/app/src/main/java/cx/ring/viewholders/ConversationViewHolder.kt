@@ -26,6 +26,7 @@ import android.animation.ValueAnimator
 import android.media.MediaPlayer
 import android.view.Surface
 import android.view.View
+import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.ImageView
 import com.google.android.material.chip.Chip
@@ -36,6 +37,9 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 
 class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView.ViewHolder(v) {
     val mItem: View? = when (type) {
+        MessageType.OUTGOING_CALL_INFORMATION,
+        MessageType.INCOMING_CALL_INFORMATION -> v.findViewById(R.id.callLayout)
+        MessageType.ONGOING_GROUP_CALL -> v.findViewById(R.id.groupCallLayout)
         MessageType.INCOMING_TEXT_MESSAGE,
         MessageType.OUTGOING_TEXT_MESSAGE -> v.findViewById(R.id.txt_entry)
         else -> null
@@ -44,7 +48,9 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
     var mMsgDetailTxt: TextView? = null
     var mMsgDetailTxtPerm: TextView? = null
     val mAvatar: ImageView? = when (type) {
+        MessageType.INCOMING_CALL_INFORMATION,
         MessageType.INCOMING_TEXT_MESSAGE,
+        MessageType.ONGOING_GROUP_CALL,
         MessageType.INCOMING_FILE,
         MessageType.INCOMING_IMAGE,
         MessageType.INCOMING_AUDIO,
@@ -60,6 +66,7 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
         else -> null
     }
     val mStatusIcon: MessageStatusView? = when (type) {
+        MessageType.OUTGOING_CALL_INFORMATION,
         MessageType.OUTGOING_TEXT_MESSAGE,
         MessageType.OUTGOING_FILE,
         MessageType.OUTGOING_IMAGE,
@@ -67,10 +74,16 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
         MessageType.OUTGOING_VIDEO -> v.findViewById(R.id.status_icon)
         else -> null
     }
+    val mTypingIndicatorLayout: FrameLayout? = v.findViewById(R.id.typing_indicator_layout)
     val mReplyName: TextView? = v.findViewById(R.id.msg_reply_name)
     val mReplyTxt: TextView? = v.findViewById(R.id.msg_reply_txt)
     val mInReplyTo: TextView? = v.findViewById(R.id.msg_in_reply_to)
-    val mPeerDisplayName: TextView? = v.findViewById(R.id.msg_display_name)
+    val mPeerDisplayName: TextView? = when (type){
+        MessageType.INCOMING_TEXT_MESSAGE,
+        MessageType.INCOMING_CALL_INFORMATION,
+        MessageType.ONGOING_GROUP_CALL -> v.findViewById(R.id.msg_display_name)
+        else -> null
+    }
     val reactionChip: TextView? = v.findViewById(R.id.reaction_chip)
     val mIcon: ImageView? = when (type) {
         MessageType.INCOMING_CALL_INFORMATION,
@@ -88,6 +101,7 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
 
     // Ongoing call
     var mCallLayout: LinearLayout? = null
+    var mGroupCallLayout: LinearLayout? = null
     var mCallInfoLayout: LinearLayout? = null
     var mAcceptCallVideoButton: ImageButton? = null
     var mAcceptCallAudioButton: ImageButton? = null
@@ -100,7 +114,9 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
         MessageType.OUTGOING_VIDEO -> v.findViewById(R.id.video)
         else -> null
     }
-    var mAcceptCallLayout: LinearLayout? = null
+    var mMsgLayout: ViewGroup? = null
+    var mCallInfoText: TextView? = null
+    var mCallAcceptLayout: LinearLayout? = null
     var mFileInfoLayout: LinearLayout? = null
     var mAudioInfoLayout: LinearLayout? = null
 
@@ -128,7 +144,10 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
                 primaryClickableView = mCallInfoLayout
             }
             MessageType.ONGOING_GROUP_CALL -> {
-                mAcceptCallLayout = v.findViewById(R.id.callAcceptLayout)
+                mMsgLayout = v.findViewById(R.id.msg_layout)
+                mGroupCallLayout = v.findViewById(R.id.groupCallLayout)
+                mCallInfoText = v.findViewById(R.id.call_info_text)
+                mCallAcceptLayout = v.findViewById(R.id.callAcceptLayout)
                 mAcceptCallAudioButton = v.findViewById(R.id.acceptCallAudioButton)
                 mAcceptCallVideoButton = v.findViewById(R.id.acceptCallVideoButton)
             }
