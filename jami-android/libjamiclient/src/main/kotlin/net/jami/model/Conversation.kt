@@ -707,7 +707,11 @@ class Conversation : ConversationHistory {
         } else symbol.onNext("")
     }
 
-    fun isGroup(): Boolean = isSwarm && contacts.size > 2
+    /** Tells if the conversation is a swarm:group with more than 2 participants (including user) */
+    fun isGroup() = isSwarm && contacts.size > 2
+
+    /** Tells if the conversation is a swarm:group. No matter how many participants. */
+    fun isSwarmGroup() = isSwarm && mode.blockingFirst() != Mode.OneToOne
 
     @Synchronized
     fun loadMessage(id: String, load: () -> Unit): Single<Interaction> {
