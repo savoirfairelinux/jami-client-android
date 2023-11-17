@@ -479,73 +479,58 @@ class TvConversationAdapter(
                 if (contact != null)
                     avatar.setImageDrawable(conversationFragment.getConversationAvatar(contact.primaryNumber))
             }
-        } /*else {
-            when (interaction.status) {
-                InteractionStatus.SENDING -> {
-                    viewHolder.mStatusIcon?.visibility = View.VISIBLE
-                    viewHolder.mStatusIcon?.setImageResource(R.drawable.baseline_circle_24)
-                }
-                InteractionStatus.FAILURE -> {
-                    viewHolder.mStatusIcon?.visibility = View.VISIBLE
-                    viewHolder.mStatusIcon?.setImageResource(R.drawable.round_highlight_off_24)
-                }
-                else -> {
-                    viewHolder.mStatusIcon?.visibility = View.VISIBLE
-                    viewHolder.mStatusIcon?.setImageResource(R.drawable.baseline_check_circle_24)
-                    lastDeliveredPosition = position
-                }
-            }
-        }*/
-        val type = viewHolder.type.transferType
+        }
+            val type = viewHolder.type.transferType
 
-        val longPressView = viewHolder.itemView
-        longPressView.setOnCreateContextMenuListener { menu: ContextMenu, v: View, menuInfo: ContextMenuInfo? ->
-            menu.setHeaderTitle(file.displayName)
-            conversationFragment.onCreateContextMenu(menu, v, menuInfo)
-            val inflater = conversationFragment.requireActivity().menuInflater
-            inflater.inflate(R.menu.conversation_item_actions_file_tv, menu)
-            if (!file.isComplete) {
-                menu.removeItem(R.id.conv_action_download)
-                menu.removeItem(R.id.conv_action_share)
+            val longPressView = viewHolder.itemView
+            longPressView.setOnCreateContextMenuListener { menu: ContextMenu, v: View, menuInfo: ContextMenuInfo? ->
+                menu.setHeaderTitle(file.displayName)
+                conversationFragment.onCreateContextMenu(menu, v, menuInfo)
+                val inflater = conversationFragment.requireActivity().menuInflater
+                inflater.inflate(R.menu.conversation_item_actions_file_tv, menu)
+                if (!file.isComplete) {
+                    menu.removeItem(R.id.conv_action_download)
+                    menu.removeItem(R.id.conv_action_share)
+                }
             }
-        }
-        longPressView.setOnLongClickListener { v: View ->
-            if (type == MessageType.TransferType.AUDIO || type == MessageType.TransferType.FILE) {
-                conversationFragment.updatePosition(viewHolder.adapterPosition)
+            longPressView.setOnLongClickListener { v: View ->
+                if (type == MessageType.TransferType.AUDIO || type == MessageType.TransferType.FILE) {
+                    conversationFragment.updatePosition(viewHolder.adapterPosition)
+                }
+                mCurrentLongItem =
+                    RecyclerViewContextMenuInfo(viewHolder.adapterPosition, v.id.toLong())
+                false
             }
-            mCurrentLongItem = RecyclerViewContextMenuInfo(viewHolder.adapterPosition, v.id.toLong())
-            false
-        }
-        if (type == MessageType.TransferType.IMAGE) {
-            configureImage(viewHolder, path)
-        } else if (type == MessageType.TransferType.VIDEO) {
-            configureVideo(viewHolder, path)
-        } else if (type == MessageType.TransferType.AUDIO) {
-            configureAudio(viewHolder, path)
-        } else {
-            viewHolder.itemView.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
-                viewHolder.itemView.setBackgroundResource(if (hasFocus) R.drawable.tv_item_selected_background else R.drawable.tv_item_unselected_background)
-                viewHolder.mFileInfoLayout?.animate()
-                    ?.scaleY(if (hasFocus) 1.1f else 1f)
-                    ?.scaleX(if (hasFocus) 1.1f else 1f)
-            }
-            val status = file.status
-            viewHolder.mIcon?.setImageResource(if (status.isError) R.drawable.baseline_warning_24 else R.drawable.baseline_attach_file_24)
-            viewHolder.mMsgTxt?.text = file.displayName
-            if (status === InteractionStatus.TRANSFER_AWAITING_HOST) {
-                viewHolder.mAnswerLayout?.visibility = View.VISIBLE
-                viewHolder.btnAccept?.setOnClickListener { presenter.acceptFile(file) }
-                viewHolder.btnRefuse?.setOnClickListener { presenter.refuseFile(file) }
-            } else if (status == InteractionStatus.FILE_AVAILABLE) {
-                viewHolder.btnRefuse?.visibility = View.GONE
-                viewHolder.mAnswerLayout?.visibility = View.VISIBLE
-                viewHolder.btnAccept?.setOnClickListener { presenter.acceptFile(file) }
+            if (type == MessageType.TransferType.IMAGE) {
+                configureImage(viewHolder, path)
+            } else if (type == MessageType.TransferType.VIDEO) {
+                configureVideo(viewHolder, path)
+            } else if (type == MessageType.TransferType.AUDIO) {
+                configureAudio(viewHolder, path)
             } else {
-                viewHolder.mAnswerLayout?.visibility = View.GONE
+                viewHolder.itemView.onFocusChangeListener =
+                    View.OnFocusChangeListener { v, hasFocus ->
+                        viewHolder.itemView.setBackgroundResource(if (hasFocus) R.drawable.tv_item_selected_background else R.drawable.tv_item_unselected_background)
+                        viewHolder.mFileInfoLayout?.animate()
+                            ?.scaleY(if (hasFocus) 1.1f else 1f)
+                            ?.scaleX(if (hasFocus) 1.1f else 1f)
+                    }
+                val status = file.status
+                viewHolder.mIcon?.setImageResource(if (status.isError) R.drawable.baseline_warning_24 else R.drawable.baseline_attach_file_24)
+                viewHolder.mMsgTxt?.text = file.displayName
+                if (status === InteractionStatus.TRANSFER_AWAITING_HOST) {
+                    viewHolder.mAnswerLayout?.visibility = View.VISIBLE
+                    viewHolder.btnAccept?.setOnClickListener { presenter.acceptFile(file) }
+                    viewHolder.btnRefuse?.setOnClickListener { presenter.refuseFile(file) }
+                } else if (status == InteractionStatus.FILE_AVAILABLE) {
+                    viewHolder.btnRefuse?.visibility = View.GONE
+                    viewHolder.mAnswerLayout?.visibility = View.VISIBLE
+                    viewHolder.btnAccept?.setOnClickListener { presenter.acceptFile(file) }
+                } else {
+                    viewHolder.mAnswerLayout?.visibility = View.GONE
+                }
             }
         }
-
-    }
 
     /**
      * Configures the viewholder to display a classic text message, ie. not a call info text message
@@ -615,35 +600,19 @@ class TvConversationAdapter(
         if (textMessage.isIncoming) {
             convViewHolder.mAvatar!!.setImageBitmap(null)
             convViewHolder.mAvatar.visibility = View.VISIBLE
-        } /*else {
-            when (textMessage.status) {
-                InteractionStatus.SENDING -> {
-                    convViewHolder.mStatusIcon!!.visibility = View.VISIBLE
-                    convViewHolder.mStatusIcon.setImageResource(R.drawable.baseline_circle_24)
-                }
-                InteractionStatus.FAILURE -> {
-                    convViewHolder.mStatusIcon!!.visibility = View.VISIBLE
-                    convViewHolder.mStatusIcon.setImageResource(R.drawable.round_highlight_off_24)
-                }
-                else -> if (position == lastOutgoingIndex()) {
-                    convViewHolder.mStatusIcon!!.visibility = View.VISIBLE
-                    convViewHolder.mStatusIcon.setImageResource(R.drawable.baseline_check_circle_24)
-                    lastDeliveredPosition = position
-                } else {
-                    convViewHolder.mStatusIcon!!.visibility = View.GONE
-                }
-            }
-        }*/
+        }
         if (msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE) {
-            setBottomMargin(msgTxt, 8)
             if (textMessage.isIncoming) {
                 convViewHolder.mAvatar!!.setImageDrawable(
                     conversationFragment.getConversationAvatar(contact.primaryNumber)
                 )
             }
-        } else {
-            setBottomMargin(msgTxt, 0)
         }
+        // Apply a bottom margin to the global layout if end of sequence needed.
+        val endOfSeq =
+            msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE
+        convViewHolder.mItem?.let { setBottomMargin(it, if (endOfSeq) 8 else 0) }
+
         if (isTimeShown) {
             convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe { t: Long? ->
                 val timeSeparationString = TextUtils.timestampToDetailString(context, textMessage.timestamp)
@@ -705,7 +674,7 @@ class TvConversationAdapter(
         // Reset the scale of the icon
         convViewHolder.mIcon?.scaleY = 1f
 
-        convViewHolder.mCallInfoLayout!!.background.setTintList(null) // Remove the tint
+        convViewHolder.mCallInfoLayout?.background?.setTintList(null) // Remove the tint
 
         val call = interaction as Call
         if (call.isGroupCall) {
