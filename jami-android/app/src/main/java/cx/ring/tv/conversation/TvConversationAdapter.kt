@@ -479,23 +479,6 @@ class TvConversationAdapter(
                 if (contact != null)
                     avatar.setImageDrawable(conversationFragment.getConversationAvatar(contact.primaryNumber))
             }
-        } /*else {
-            when (interaction.status) {
-                InteractionStatus.SENDING -> {
-                    viewHolder.mStatusIcon?.visibility = View.VISIBLE
-                    viewHolder.mStatusIcon?.setImageResource(R.drawable.baseline_circle_24)
-                }
-                InteractionStatus.FAILURE -> {
-                    viewHolder.mStatusIcon?.visibility = View.VISIBLE
-                    viewHolder.mStatusIcon?.setImageResource(R.drawable.round_highlight_off_24)
-                }
-                else -> {
-                    viewHolder.mStatusIcon?.visibility = View.VISIBLE
-                    viewHolder.mStatusIcon?.setImageResource(R.drawable.baseline_check_circle_24)
-                    lastDeliveredPosition = position
-                }
-            }
-        }*/
         val type = viewHolder.type.transferType
 
         val longPressView = viewHolder.itemView
@@ -615,35 +598,18 @@ class TvConversationAdapter(
         if (textMessage.isIncoming) {
             convViewHolder.mAvatar!!.setImageBitmap(null)
             convViewHolder.mAvatar.visibility = View.VISIBLE
-        } /*else {
-            when (textMessage.status) {
-                InteractionStatus.SENDING -> {
-                    convViewHolder.mStatusIcon!!.visibility = View.VISIBLE
-                    convViewHolder.mStatusIcon.setImageResource(R.drawable.baseline_circle_24)
-                }
-                InteractionStatus.FAILURE -> {
-                    convViewHolder.mStatusIcon!!.visibility = View.VISIBLE
-                    convViewHolder.mStatusIcon.setImageResource(R.drawable.round_highlight_off_24)
-                }
-                else -> if (position == lastOutgoingIndex()) {
-                    convViewHolder.mStatusIcon!!.visibility = View.VISIBLE
-                    convViewHolder.mStatusIcon.setImageResource(R.drawable.baseline_check_circle_24)
-                    lastDeliveredPosition = position
-                } else {
-                    convViewHolder.mStatusIcon!!.visibility = View.GONE
-                }
-            }
-        }*/
         if (msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE) {
-            setBottomMargin(msgTxt, 8)
             if (textMessage.isIncoming) {
                 convViewHolder.mAvatar!!.setImageDrawable(
                     conversationFragment.getConversationAvatar(contact.primaryNumber)
                 )
             }
-        } else {
-            setBottomMargin(msgTxt, 0)
         }
+        // Apply a bottom margin to the global layout if end of sequence needed.
+        val endOfSeq =
+            msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE
+        convViewHolder.mItem?.let { setBottomMargin(it, if (endOfSeq) 8 else 0) }
+
         if (isTimeShown) {
             convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe { t: Long? ->
                 val timeSeparationString = TextUtils.timestampToDetailString(context, textMessage.timestamp)
@@ -671,6 +637,7 @@ class TvConversationAdapter(
                 expandedItemPosition = if (isExpanded) -1 else position
                 notifyItemChanged(expandedItemPosition)
             }
+        }
         }
     }
 
@@ -705,7 +672,7 @@ class TvConversationAdapter(
         // Reset the scale of the icon
         convViewHolder.mIcon?.scaleY = 1f
 
-        convViewHolder.mCallInfoLayout!!.background.setTintList(null) // Remove the tint
+        convViewHolder.mCallInfoLayout?.background?.setTintList(null) // Remove the tint
 
         val call = interaction as Call
         if (call.isGroupCall) {
