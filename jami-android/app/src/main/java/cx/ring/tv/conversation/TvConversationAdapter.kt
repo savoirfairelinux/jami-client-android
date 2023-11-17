@@ -829,7 +829,8 @@ class TvConversationAdapter(
         convViewHolder.compositeDisposable.add(
             interaction.lastElement
                 .observeOn(DeviceUtils.uiScheduler)
-                .subscribe {
+                .subscribe { lastElement ->
+                    val textMessage = lastElement as Call
                     val callInfoLayout = convViewHolder.mCallInfoLayout ?: return@subscribe
                     callInfoLayout.background?.setTintList(null)
                     val callIcon = convViewHolder.mIcon ?: return@subscribe
@@ -838,6 +839,9 @@ class TvConversationAdapter(
                     val detailCall = convViewHolder.mHistDetailTxt ?: return@subscribe
                     val resIndex: Int
                     val typeCallTxt: String
+                    val peerDisplayName = convViewHolder.mPeerDisplayName
+                    val account = interaction.account ?: return@subscribe
+                    val contact = textMessage.contact ?: return@subscribe
 
                     // Manage the update of the timestamp
                     if (isTimeShown) {
@@ -934,6 +938,22 @@ class TvConversationAdapter(
                         detailCall.setTextColor(
                             convViewHolder.itemView.context.getColor(R.color.colorOnSurface)
                         )
+                    }
+                    // Show the name of the contact if it is a group conversation
+                    peerDisplayName?.apply {
+                        if (presenter.isGroup() && (msgSequenceType == SequenceType.SINGLE ||
+                                    msgSequenceType == SequenceType.FIRST)
+                        ) {
+                            visibility = View.VISIBLE
+                            convViewHolder.compositeDisposable.add(
+                                presenter.contactService
+                                    .observeContact(account, contact, false)
+                                    .observeOn(DeviceUtils.uiScheduler)
+                                    .subscribe {
+                                        text = it.displayName
+                                    }
+                            )
+                        } else visibility = View.GONE
                     }
                 })
         // Apply a bottom margin to the global layout if end of sequence needed.
