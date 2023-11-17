@@ -27,12 +27,19 @@ import android.text.format.DateUtils
 import android.text.format.Formatter
 import android.util.Log
 import android.util.TypedValue
-import android.view.*
+import android.view.ContextMenu
 import android.view.ContextMenu.ContextMenuInfo
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.Surface
 import android.view.TextureView.SurfaceTextureListener
+import android.view.View
+import android.view.ViewGroup
 import android.view.ViewGroup.MarginLayoutParams
 import android.widget.FrameLayout
 import android.widget.ImageView
+import androidx.annotation.ColorInt
 import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
@@ -43,11 +50,16 @@ import com.bumptech.glide.load.resource.bitmap.CenterInside
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.DrawableImageViewTarget
+import com.google.android.material.color.MaterialColors
 import cx.ring.R
 import cx.ring.adapters.MessageType
 import cx.ring.client.MediaViewerActivity
-import cx.ring.utils.*
+import cx.ring.utils.ActionHelper
+import cx.ring.utils.ActionHelper.setPadding
+import cx.ring.utils.ContentUriHandler
 import cx.ring.utils.ContentUriHandler.getUriForFile
+import cx.ring.utils.DeviceUtils
+import cx.ring.utils.TextUtils
 import cx.ring.viewholders.ConversationViewHolder
 import io.noties.markwon.Markwon
 import io.noties.markwon.linkify.LinkifyPlugin
@@ -55,8 +67,12 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.conversation.ConversationPresenter
-import net.jami.model.*
+import net.jami.model.Call
+import net.jami.model.ContactEvent
+import net.jami.model.DataTransfer
+import net.jami.model.Interaction
 import net.jami.model.Interaction.InteractionStatus
+import net.jami.model.TextMessage
 import net.jami.utils.StringUtils.isOnlyEmoji
 import java.io.File
 import java.text.DateFormat
@@ -72,7 +88,8 @@ class TvConversationAdapter(
     private val mInteractions = ArrayList<Interaction>()
     private val hPadding = res.getDimensionPixelSize(R.dimen.padding_medium)
     private val vPadding = res.getDimensionPixelSize(R.dimen.padding_small)
-    private val mPictureMaxSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 200f, res.displayMetrics).toInt()
+    private val mPictureMaxSize =
+        TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 200f, res.displayMetrics).toInt()
     private val pictureOptions = RequestOptions()
         .transform(CenterInside())
         .fitCenter()
@@ -83,7 +100,15 @@ class TvConversationAdapter(
         .observeOn(AndroidSchedulers.mainThread())
         .startWithItem(0L)
     private var mCurrentLongItem: RecyclerViewContextMenuInfo? = null
-    private var convColor = 0
+    @ColorInt private var convColor = 0
+    @ColorInt private var convColorTint = 0
+    private val callPadding = ActionHelper.Padding(
+        res.getDimensionPixelSize(R.dimen.text_message_padding),
+        res.getDimensionPixelSize(R.dimen.padding_call_vertical),
+        res.getDimensionPixelSize(R.dimen.text_message_padding),
+        res.getDimensionPixelSize(R.dimen.padding_call_vertical)
+    )
+    private var lastMsgPos = -1
     private var expandedItemPosition = -1
     private var lastDeliveredPosition = -1
     private val markwon: Markwon = Markwon.builder(conversationFragment.requireContext())
@@ -112,8 +137,14 @@ class TvConversationAdapter(
     fun add(e: Interaction) {
         val update = mInteractions.isNotEmpty()
         mInteractions.add(e)
-        notifyItemInserted(mInteractions.size - 1)
-        if (update) notifyItemChanged(mInteractions.size - 2)
+        val previousLast = mInteractions.size - 1
+        notifyItemInserted(previousLast)
+        if (update) {
+            // Find previous last not invalid.
+            getPreviousInteractionFromPosition(previousLast)?.let { interactionNotInvalid ->
+                notifyItemChanged(mInteractions.lastIndexOf(interactionNotInvalid))
+            }
+        }
     }
 
     fun update(e: Interaction) {
@@ -215,10 +246,22 @@ class TvConversationAdapter(
         } else {
             holder.itemView.visibility = View.VISIBLE
             when (type) {
-                Interaction.InteractionType.TEXT -> configureForTextMessage(holder, interaction, position)
-                Interaction.InteractionType.CALL -> configureForCallInfoTextMessage(holder, interaction)
+                Interaction.InteractionType.TEXT -> configureForTextMessage(
+                    holder,
+                    interaction,
+                    position
+                )
+                Interaction.InteractionType.CALL -> configureForCallInfoTextMessage(
+                    holder,
+                    interaction,
+                    position
+                )
                 Interaction.InteractionType.CONTACT -> configureForContactEvent(holder, interaction)
-                Interaction.InteractionType.DATA_TRANSFER -> configureForFileInfo(holder, interaction, position)
+                Interaction.InteractionType.DATA_TRANSFER -> configureForFileInfo(
+                    holder,
+                    interaction,
+                    position
+                )
                 else -> {}
             }
         }
@@ -257,10 +300,14 @@ class TvConversationAdapter(
 
     fun setPrimaryColor(color: Int) {
         convColor = color
+        convColorTint = MaterialColors.compositeARGBWithAlpha(
+            color, (MaterialColors.ALPHA_LOW * 255).toInt()
+        )
         notifyDataSetChanged()
     }
 
-    private class RecyclerViewContextMenuInfo constructor(val position: Int, val id: Long) : ContextMenuInfo
+    private class RecyclerViewContextMenuInfo constructor(val position: Int, val id: Long) :
+        ContextMenuInfo
 
     fun onContextItemSelected(item: MenuItem): Boolean {
         val info = mCurrentLongItem ?: return false
@@ -299,7 +346,11 @@ class TvConversationAdapter(
                     .setAction(Intent.ACTION_VIEW)
                     .setDataAndType(contentUri, "image/*")
                     .setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                val options = ActivityOptionsCompat.makeSceneTransitionAnimation(conversationFragment.requireActivity(), viewHolder.mImage!!, "picture")
+                val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                    conversationFragment.requireActivity(),
+                    viewHolder.mImage!!,
+                    "picture"
+                )
                 conversationFragment.startActivityForResult(i, 3006, options.toBundle())
             } catch (e: Exception) {
                 Log.w(TAG, "Can't open picture", e)
@@ -310,15 +361,22 @@ class TvConversationAdapter(
     private fun configureAudio(viewHolder: ConversationViewHolder, path: File) {
         val context = viewHolder.itemView.context
         viewHolder.itemView.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
-            viewHolder.itemView.setBackgroundResource(if (hasFocus) R.drawable.tv_item_selected_background else R.drawable.tv_item_unselected_background)
-            viewHolder.mAudioInfoLayout?.animate()?.scaleY(if (hasFocus) 1.1f else 1f)?.scaleX(if (hasFocus) 1.1f else 1f)
+            viewHolder.itemView.setBackgroundResource(
+                if (hasFocus) R.drawable.tv_item_selected_background
+                else R.drawable.tv_item_unselected_background
+            )
+            viewHolder.mAudioInfoLayout?.animate()?.scaleY(if (hasFocus) 1.1f else 1f)
+                ?.scaleX(if (hasFocus) 1.1f else 1f)
         }
 
         try {
             val acceptBtn = viewHolder.btnAccept as ImageView
             val refuseBtn = viewHolder.btnRefuse
             acceptBtn.setImageResource(R.drawable.baseline_play_arrow_24)
-            val player = MediaPlayer.create(context, getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, path))
+            val player = MediaPlayer.create(
+                context,
+                getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, path)
+            )
             viewHolder.player = player
             if (player != null) {
                 player.setOnCompletionListener { mp: MediaPlayer ->
@@ -345,7 +403,14 @@ class TvConversationAdapter(
                         .subscribe {
                             val pS = player.currentPosition / 1000
                             val dS = player.duration / 1000
-                            viewHolder.mMsgTxt?.text = String.format(Locale.getDefault(), "%02d:%02d / %02d:%02d", pS / 60, pS % 60, dS / 60, dS % 60)
+                            viewHolder.mMsgTxt?.text = String.format(
+                                Locale.getDefault(),
+                                "%02d:%02d / %02d:%02d",
+                                pS / 60,
+                                pS % 60,
+                                dS / 60,
+                                dS % 60
+                            )
                         })
             } else {
                 acceptBtn.setOnClickListener(null)
@@ -359,8 +424,12 @@ class TvConversationAdapter(
     private fun configureVideo(viewHolder: ConversationViewHolder, path: File) {
         val context = viewHolder.itemView.context
         viewHolder.itemView.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
-            viewHolder.itemView.setBackgroundResource(if (hasFocus) R.drawable.tv_item_selected_background else R.drawable.tv_item_unselected_background)
-            viewHolder.mLayout?.animate()?.scaleY(if (hasFocus) 1.1f else 1f)?.scaleX(if (hasFocus) 1.1f else 1f)
+            viewHolder.itemView.setBackgroundResource(
+                if (hasFocus) R.drawable.tv_item_selected_background
+                else R.drawable.tv_item_unselected_background
+            )
+            viewHolder.mLayout?.animate()?.scaleY(if (hasFocus) 1.1f else 1f)
+                ?.scaleX(if (hasFocus) 1.1f else 1f)
         }
 
         viewHolder.player?.let {
@@ -369,9 +438,14 @@ class TvConversationAdapter(
         }
         val video = viewHolder.video ?: return
         val cardLayout = viewHolder.mLayout as CardView
-        val player = MediaPlayer.create(context, getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, path)) ?: return
+        val player = MediaPlayer.create(
+            context,
+            getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, path)
+        ) ?: return
         viewHolder.player = player
-        val playBtn = ContextCompat.getDrawable(cardLayout.context, R.drawable.baseline_play_arrow_24)!!.mutate()
+        val playBtn =
+            ContextCompat.getDrawable(cardLayout.context, R.drawable.baseline_play_arrow_24)!!
+                .mutate()
         DrawableCompat.setTint(playBtn, Color.WHITE)
         cardLayout.foreground = playBtn
         player.setOnCompletionListener { mp: MediaPlayer ->
@@ -384,7 +458,7 @@ class TvConversationAdapter(
             Log.w(TAG, "OnVideoSizeChanged " + width + "x" + height)
             val p = video.layoutParams as FrameLayout.LayoutParams
             val maxDim = max(width, height)
-            if (maxDim != 0)  {
+            if (maxDim != 0) {
                 p.width = width * mPictureMaxSize / maxDim
                 p.height = height * mPictureMaxSize / maxDim
             } else {
@@ -400,7 +474,11 @@ class TvConversationAdapter(
             player.setSurface(viewHolder.surface)
         }
         video.surfaceTextureListener = object : SurfaceTextureListener {
-            override fun onSurfaceTextureAvailable(surfaceTexture: SurfaceTexture, width: Int, height: Int) {
+            override fun onSurfaceTextureAvailable(
+                surfaceTexture: SurfaceTexture,
+                width: Int,
+                height: Int
+            ) {
                 if (viewHolder.surface == null) {
                     viewHolder.surface = Surface(surfaceTexture).also { surface ->
                         try {
@@ -412,7 +490,11 @@ class TvConversationAdapter(
                 }
             }
 
-            override fun onSurfaceTextureSizeChanged(surface: SurfaceTexture, width: Int, height: Int) {
+            override fun onSurfaceTextureSizeChanged(
+                surface: SurfaceTexture,
+                width: Int,
+                height: Int
+            ) {
             }
 
             override fun onSurfaceTextureDestroyed(surface: SurfaceTexture): Boolean {
@@ -446,10 +528,18 @@ class TvConversationAdapter(
         player.seekTo(1)
     }
 
-    private fun configureForFileInfo(viewHolder: ConversationViewHolder, interaction: Interaction, position: Int) {
+    private fun configureForFileInfo(
+        viewHolder: ConversationViewHolder,
+        interaction: Interaction,
+        position: Int
+    ) {
         val file = interaction as DataTransfer
         val path = presenter.deviceRuntimeService.getConversationPath(file)
-        val timeString = TextUtils.timestampToDetailString(viewHolder.itemView.context, formatter, file.timestamp)
+        val timeString = TextUtils.timestampToDetailString(
+            viewHolder.itemView.context,
+            formatter,
+            file.timestamp
+        )
         viewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
             viewHolder.mMsgDetailTxt?.text = when (val status = file.status) {
                 InteractionStatus.TRANSFER_FINISHED -> String.format("%s - %s", timeString,
@@ -466,20 +556,28 @@ class TvConversationAdapter(
         viewHolder.compositeDisposable.clear()
         if (hasPermanentTimeString(file, position)) {
             viewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
-                viewHolder.mMsgDetailTxtPerm?.text = TextUtils.timestampToDetailString(viewHolder.itemView.context, formatter, file.timestamp)
+                viewHolder.mMsgDetailTxtPerm?.text = TextUtils.timestampToDetailString(
+                    viewHolder.itemView.context,
+                    formatter,
+                    file.timestamp
+                )
             })
             viewHolder.mMsgDetailTxtPerm?.visibility = View.VISIBLE
         } else {
             viewHolder.mMsgDetailTxtPerm?.visibility = View.GONE
         }
         val contact = interaction.contact
-        if (interaction.isIncoming) {
+        if (interaction.isIncoming && presenter.isGroup()) {
             viewHolder.mAvatar?.let { avatar ->
                 avatar.setImageBitmap(null)
                 avatar.visibility = View.VISIBLE
                 if (contact != null)
-                    avatar.setImageDrawable(conversationFragment.getConversationAvatar(contact.primaryNumber))
+                    avatar.setImageDrawable(
+                        conversationFragment.getConversationAvatar(contact.primaryNumber)
+                    )
             }
+        } else {
+            viewHolder.mAvatar?.visibility = View.GONE
         }
         val type = viewHolder.type.transferType
 
@@ -513,7 +611,8 @@ class TvConversationAdapter(
                 View.OnFocusChangeListener { v, hasFocus ->
                     viewHolder.itemView.setBackgroundResource(
                         if (hasFocus) R.drawable.tv_item_selected_background
-                        else R.drawable.tv_item_unselected_background)
+                        else R.drawable.tv_item_unselected_background
+                    )
                     viewHolder.mFileInfoLayout?.animate()
                         ?.scaleY(if (hasFocus) 1.1f else 1f)
                         ?.scaleX(if (hasFocus) 1.1f else 1f)
@@ -521,7 +620,8 @@ class TvConversationAdapter(
             val status = file.status
             viewHolder.mIcon?.setImageResource(
                 if (status.isError) R.drawable.baseline_warning_24
-                else R.drawable.baseline_attach_file_24)
+                else R.drawable.baseline_attach_file_24
+            )
             viewHolder.mMsgTxt?.text = file.displayName
             if (status === InteractionStatus.TRANSFER_AWAITING_HOST) {
                 viewHolder.mAnswerLayout?.visibility = View.VISIBLE
@@ -544,124 +644,201 @@ class TvConversationAdapter(
      * @param interaction    The conversation element to display
      * @param position       The position of the viewHolder
      */
-    private fun configureForTextMessage(convViewHolder: ConversationViewHolder, interaction: Interaction, position: Int) {
-        val context = convViewHolder.itemView.context
-        val textMessage = interaction as TextMessage
-        val contact = textMessage.contact
-        if (contact == null) {
-            Log.e(TAG, "Invalid contact, not able to display message correctly")
-            return
-        }
-        convViewHolder.itemView.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
-            convViewHolder.itemView.setBackgroundResource(
-                if (hasFocus) R.drawable.tv_item_selected_background
-                else R.drawable.tv_item_unselected_background)
-            convViewHolder.mMsgTxt!!.animate().scaleY(if (hasFocus) 1.1f else 1f).scaleX(if (hasFocus) 1.1f else 1f)
-        }
-        val message = textMessage.body!!.trim { it <= ' ' }
-        val longPressView = convViewHolder.itemView
-        longPressView.background.setTintList(null)
-        longPressView.setOnCreateContextMenuListener { menu: ContextMenu, v: View?, menuInfo: ContextMenuInfo? ->
-            val date = Date(interaction.timestamp)
-            val dateFormat = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT)
-            menu.setHeaderTitle(dateFormat.format(date))
-            conversationFragment.onCreateContextMenu(menu, v!!, menuInfo)
-            val inflater = conversationFragment.requireActivity().menuInflater
-            inflater.inflate(R.menu.conversation_item_actions_messages_tv, menu)
-            if (interaction.status === InteractionStatus.SENDING) {
-                menu.removeItem(R.id.conv_action_delete)
-            } else {
-                menu.findItem(R.id.conv_action_delete).setTitle(R.string.menu_message_delete)
-                menu.removeItem(R.id.conv_action_cancel_message)
-            }
-        }
-        longPressView.setOnLongClickListener { v: View ->
-            if (expandedItemPosition == position) {
-                expandedItemPosition = -1
-            }
-            conversationFragment.updatePosition(convViewHolder.adapterPosition)
-            mCurrentLongItem = RecyclerViewContextMenuInfo(
-                convViewHolder.adapterPosition, v.id
-                    .toLong()
-            )
-            false
-        }
-        val isTimeShown = hasPermanentTimeString(textMessage, position)
-        val msgSequenceType = getMsgSequencing(position, isTimeShown)
-        val msgTxt = convViewHolder.mMsgTxt ?: return
-        if (isOnlyEmoji(message)) {
-            msgTxt.background.alpha = 0
-            msgTxt.textSize = 32.0f
-            msgTxt.setPadding(0, 0, 0, 0)
-        } else {
-            val resIndex = msgSequenceType.ordinal + (if (textMessage.isIncoming) 1 else 0) * 4
-            msgTxt.background = ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
-            if (convColor != 0 && !textMessage.isIncoming) {
-                msgTxt.background.setTint(convColor)
-            }
-            msgTxt.background.alpha = 255
-            msgTxt.textSize = 16f
-            msgTxt.setPadding(hPadding, vPadding, hPadding, vPadding)
-        }
-        msgTxt.text = markwon.toMarkdown(message)
-        if (textMessage.isIncoming) {
-            convViewHolder.mAvatar!!.setImageBitmap(null)
-            convViewHolder.mAvatar.visibility = View.VISIBLE
-        }
-        if (msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE) {
-            if (textMessage.isIncoming) {
-                convViewHolder.mAvatar!!.setImageDrawable(
-                    conversationFragment.getConversationAvatar(contact.primaryNumber)
-                )
-            }
-        }
-        // Apply a bottom margin to the message if end of sequence needed.
-        val endOfSeq =
-            msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE
-        setBottomMargin(msgTxt, if (endOfSeq) 8 else 0)
+    private fun configureForTextMessage(
+        convViewHolder: ConversationViewHolder,
+        interaction: Interaction,
+        position: Int
+    ) {
+        convViewHolder.compositeDisposable.add(interaction.lastElement
+            .observeOn(DeviceUtils.uiScheduler)
+            .subscribe { lastElement ->
+                val textMessage = lastElement as TextMessage
+                val context = convViewHolder.itemView.context
+                val contact = textMessage.contact ?: return@subscribe
+                val account = interaction.account ?: return@subscribe
+                val isDeleted = textMessage.body.isNullOrEmpty()
+                val message = textMessage.body?.trim() ?: ""
+                val longPressView = convViewHolder.itemView
+                val isTimeShown = hasPermanentTimeString(textMessage, position)
+                val msgSequenceType = getMsgSequencing(position, isTimeShown)
+                val msgTxt = convViewHolder.mMsgTxt ?: return@subscribe
+                val answerLayout = convViewHolder.mAnswerLayout
+                val avatar = convViewHolder.mAvatar
+                val peerDisplayName = convViewHolder.mPeerDisplayName
 
-        if (isTimeShown) {
-            convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe { t: Long? ->
-                val timeSeparationString = TextUtils.timestampToDetailString(context, formatter, textMessage.timestamp)
-                convViewHolder.mMsgDetailTxtPerm!!.text = timeSeparationString
+                convViewHolder.itemView.onFocusChangeListener =
+                    View.OnFocusChangeListener { _, hasFocus ->
+                        convViewHolder.itemView.setBackgroundResource(
+                            if (hasFocus) R.drawable.tv_item_selected_background
+                            else R.drawable.tv_item_unselected_background
+                        )
+                        msgTxt.animate().scaleY(if (hasFocus) 1.1f else 1f)
+                            .scaleX(if (hasFocus) 1.1f else 1f)
+                    }
+                // Manage long press.
+                longPressView.background.setTintList(null)
+                longPressView.setOnCreateContextMenuListener {
+                    menu: ContextMenu, v: View?, menuInfo: ContextMenuInfo? ->
+                    val date = Date(interaction.timestamp)
+                    val dateFormat =
+                        DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT)
+                    menu.setHeaderTitle(dateFormat.format(date))
+                    conversationFragment.onCreateContextMenu(menu, v!!, menuInfo)
+                    val inflater = conversationFragment.requireActivity().menuInflater
+                    inflater.inflate(R.menu.conversation_item_actions_messages_tv, menu)
+                    if (interaction.status === InteractionStatus.SENDING) {
+                        menu.removeItem(R.id.conv_action_delete)
+                    } else {
+                        menu.findItem(R.id.conv_action_delete)
+                            .setTitle(R.string.menu_message_delete)
+                        menu.removeItem(R.id.conv_action_cancel_message)
+                    }
+                }
+                longPressView.setOnLongClickListener { v: View ->
+                    if (expandedItemPosition == position) {
+                        expandedItemPosition = -1
+                    }
+                    conversationFragment.updatePosition(convViewHolder.bindingAdapterPosition)
+                    mCurrentLongItem = RecyclerViewContextMenuInfo(
+                        convViewHolder.bindingAdapterPosition, v.id.toLong()
+                    )
+                    false
+                }
+                // Manage background.
+                // Standard message, incoming or outgoing and first, single or last.
+                val resIndex =
+                    msgSequenceType.ordinal + (if (textMessage.isIncoming) 1 else 0) * 4
+                msgTxt.background = ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
+                if (convColor != 0 && !textMessage.isIncoming) {
+                    msgTxt.background.setTint(convColor)
+                }
+                // Manage classic message
+                msgTxt.background.alpha = 255
+                msgTxt.textSize = 16f
+                msgTxt.setPadding(hPadding, vPadding, hPadding, vPadding)
+                msgTxt.text = markwon.toMarkdown(message)
+                val endOfSeq =
+                    msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE
+                // Only show the peer avatar if it is a group conversation
+                if (presenter.isGroup()) {
+                       // Manage animation for avatar.
+                    // To only display the avatar of the last message.
+                    val avatar = convViewHolder.mAvatar
+                    if (endOfSeq) {
+                        avatar?.setImageDrawable(
+                            conversationFragment.getConversationAvatar(contact.primaryNumber)
+                        )
+                        avatar?.visibility = View.VISIBLE
+                    } else {
+                        if (position == lastMsgPos - 1) {
+                            avatar?.let { ActionHelper.startFadeOutAnimation(avatar) }
+                        } else {
+                            avatar?.setImageBitmap(null)
+                            avatar?.visibility = View.INVISIBLE
+                        }
+                    }
+                } // Do not show the avatar if it is a one to one conversation.
+                else avatar?.visibility = View.GONE
+                // Apply a bottom margin to the global layout if end of sequence needed.
+                val startOfSeq =
+                    msgSequenceType == SequenceType.FIRST || msgSequenceType == SequenceType.SINGLE
+                convViewHolder.mItem?.let { setBottomMargin(it, if (startOfSeq) 8 else 0) }
+                // Show the name of the contact if it is a group conversation
+                peerDisplayName?.apply {
+                    if (presenter.isGroup() && endOfSeq) {
+                        visibility = View.VISIBLE
+                        convViewHolder.compositeDisposable.add(
+                            presenter.contactService
+                                .observeContact(account, contact, false)
+                                .observeOn(DeviceUtils.uiScheduler)
+                                .subscribe {
+                                    text = it.displayName
+                                }
+                        )
+                    } else visibility = View.GONE
+                }
+                // Manage deleted message.
+                if (isDeleted) {
+                    msgTxt.text = context.getString(R.string.conversation_message_deleted)
+                    // Hide the link preview
+                    answerLayout?.visibility = View.GONE
+                    if (convColor != 0 && !textMessage.isIncoming) {
+                        msgTxt.background.setTint(convColor)
+                    }
+                    msgTxt.textSize = 14f
+                    longPressView.setOnLongClickListener(null)
+                    return@subscribe
+                }
+                // Manage emoji message
+                if (isOnlyEmoji(message)) {
+                    msgTxt.background.alpha = 0
+                    msgTxt.textSize = 32.0f
+                    msgTxt.setPadding(0, 0, 0, 0)
+                }
+                if (isTimeShown) {
+                    convViewHolder.compositeDisposable.add(
+                        timestampUpdateTimer.subscribe { t: Long? ->
+                        val timeSeparationString =
+                            TextUtils.timestampToDetailString(
+                                context,
+                                formatter,
+                                textMessage.timestamp
+                            )
+                        convViewHolder.mMsgDetailTxtPerm?.text = timeSeparationString
+                    })
+                    convViewHolder.mMsgDetailTxtPerm?.visibility = View.VISIBLE
+                } else {
+                    convViewHolder.mMsgDetailTxtPerm?.visibility = View.GONE
+                    val isExpanded = position == expandedItemPosition
+                    if (isExpanded) {
+                        convViewHolder.compositeDisposable.add(
+                            timestampUpdateTimer.subscribe { t: Long? ->
+                            val timeSeparationString = TextUtils.timestampToDetailString(
+                                context,
+                                formatter,
+                                textMessage.timestamp
+                            )
+                            convViewHolder.mMsgDetailTxt?.text = timeSeparationString
+                        })
+                    }
+                    setItemViewExpansionState(convViewHolder, isExpanded)
+                    convViewHolder.itemView.setOnClickListener { v: View? ->
+                        if (convViewHolder.animator != null && convViewHolder.animator!!.isRunning)
+                        {
+                            return@setOnClickListener
+                        }
+                        if (expandedItemPosition >= 0) {
+                            val prev = expandedItemPosition
+                            notifyItemChanged(prev)
+                        }
+                        expandedItemPosition = if (isExpanded) -1 else position
+                        notifyItemChanged(expandedItemPosition)
+                    }
+                }
             })
-            convViewHolder.mMsgDetailTxtPerm!!.visibility = View.VISIBLE
-        } else {
-            convViewHolder.mMsgDetailTxtPerm!!.visibility = View.GONE
-            val isExpanded = position == expandedItemPosition
-            if (isExpanded) {
-                convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe { t: Long? ->
-                    val timeSeparationString = TextUtils.timestampToDetailString(context, formatter, textMessage.timestamp)
-                    convViewHolder.mMsgDetailTxt!!.text = timeSeparationString
-                })
-            }
-            setItemViewExpansionState(convViewHolder, isExpanded)
-            convViewHolder.itemView.setOnClickListener { v: View? ->
-                if (convViewHolder.animator != null && convViewHolder.animator!!.isRunning) {
-                    return@setOnClickListener
-                }
-                if (expandedItemPosition >= 0) {
-                    val prev = expandedItemPosition
-                    notifyItemChanged(prev)
-                }
-                expandedItemPosition = if (isExpanded) -1 else position
-                notifyItemChanged(expandedItemPosition)
-            }
-        }
     }
 
-    private fun configureForContactEvent(viewHolder: ConversationViewHolder, interaction: Interaction) {
+    private fun configureForContactEvent(
+        viewHolder: ConversationViewHolder,
+        interaction: Interaction
+    ) {
         val event = interaction as ContactEvent
-        viewHolder.mMsgTxt?.setText(when (event.event) {
-            ContactEvent.Event.ADDED -> R.string.hist_contact_added
-            ContactEvent.Event.INVITED -> R.string.hist_contact_invited
-            ContactEvent.Event.REMOVED -> R.string.hist_contact_left
-            ContactEvent.Event.BANNED -> R.string.hist_contact_banned
-            ContactEvent.Event.INCOMING_REQUEST -> R.string.hist_invitation_received
-            else -> R.string.hist_contact_added
-        })
+        viewHolder.mMsgTxt?.setText(
+            when (event.event) {
+                ContactEvent.Event.ADDED -> R.string.hist_contact_added
+                ContactEvent.Event.INVITED -> R.string.hist_contact_invited
+                ContactEvent.Event.REMOVED -> R.string.hist_contact_left
+                ContactEvent.Event.BANNED -> R.string.hist_contact_banned
+                ContactEvent.Event.INCOMING_REQUEST -> R.string.hist_invitation_received
+                else -> R.string.hist_contact_added
+            }
+        )
         viewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe { t: Long? ->
-            val timeSeparationString = TextUtils.timestampToDetailString(viewHolder.itemView.context, formatter, event.timestamp)
+            val timeSeparationString = TextUtils.timestampToDetailString(
+                viewHolder.itemView.context,
+                formatter,
+                event.timestamp
+            )
             viewHolder.mMsgDetailTxt?.text = timeSeparationString
         })
     }
@@ -674,80 +851,328 @@ class TvConversationAdapter(
      */
     private fun configureForCallInfoTextMessage(
         convViewHolder: ConversationViewHolder,
-        interaction: Interaction
+        interaction: Interaction,
+        position: Int
     ) {
+        val recycle: StringBuilder = StringBuilder()
         val context = convViewHolder.itemView.context
+        val call = interaction as Call
 
         // Reset the scale of the icon
-        convViewHolder.mIcon?.scaleY = 1f
-
-        convViewHolder.mCallInfoLayout!!.background.setTintList(null) // Remove the tint
-
-        val call = interaction as Call
+        convViewHolder.mIcon?.scaleX = 1f
+        // Set the call message focusable.
+        convViewHolder.itemView.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
+            convViewHolder.itemView.setBackgroundResource(
+                if (hasFocus) R.drawable.tv_item_selected_background
+                else R.drawable.tv_item_unselected_background
+            )
+            convViewHolder.mCallInfoLayout!!.animate()
+                .scaleY(if (hasFocus) 1.1f else 1f)
+                .scaleX(if (hasFocus) 1.1f else 1f)
+        }
+        // When a call is occurring (between members) but you are not in it, a message is
+        // displayed in conversation to inform the user about the call and invite him to join.
         if (call.isGroupCall) {
-            // When a call is occurring (between members) but you are not in it, a message is
-            // displayed in conversation to inform the user about the call and invite him to join.
-            convViewHolder.mAcceptCallLayout?.apply {
-                // Accept with audio only
-                convViewHolder.mAcceptCallAudioButton?.setOnClickListener {
-                    call.confId?.let { presenter.goToGroupCall(false) }
-                }
-                // Accept call with video
-                convViewHolder.mAcceptCallVideoButton?.setOnClickListener {
-                    call.confId?.let { presenter.goToGroupCall(true) }
-                }
-            }
-        }
+            convViewHolder.compositeDisposable.add(
+                interaction.lastElement
+                    .observeOn(DeviceUtils.uiScheduler)
+                    .subscribe { lastElement ->
+                        val callStartedMsg = lastElement as Call
+                        val isTimeShown = hasPermanentTimeString(callStartedMsg, position)
+                        val msgSequenceType = getMsgSequencing(position, isTimeShown)
+                        val peerDisplayName = convViewHolder.mPeerDisplayName
+                        val account = interaction.account ?: return@subscribe
+                        val contact = callStartedMsg.contact ?: return@subscribe
+                        val callAcceptLayout = convViewHolder.mCallAcceptLayout ?: return@subscribe
+                        val avatar = convViewHolder.mAvatar
+                        val callInfoText = convViewHolder.mCallInfoText ?: return@subscribe
+                        val acceptCallAudioButton =
+                            convViewHolder.mAcceptCallAudioButton ?: return@subscribe
+                        val acceptCallVideoButton =
+                            convViewHolder.mAcceptCallVideoButton ?: return@subscribe
 
-        val pictureResID: Int
-        val historyTxt: String
-        // After call, a message is displayed in conversation to inform the user about the call.
-        if (call.isMissed) { // When call is missed
-            // Personalize the text and the icon depending if call is incoming or outgoing
-            if (call.isIncoming) {
-                pictureResID = R.drawable.baseline_call_missed_24
-                historyTxt = context.getString(R.string.notif_missed_incoming_call)
-            } else {
-                pictureResID = R.drawable.baseline_call_missed_outgoing_24
-                historyTxt = context.getString(R.string.notif_missed_outgoing_call)
-                // Flip the photo upside down to show a "missed outgoing call"
-                convViewHolder.mIcon?.scaleY = -1f
-            }
+                        if (callStartedMsg.isIncoming) {
+                            // Show the avatar of the caller
+                            // depending on the position of the message.
+                            val endOfSeq = msgSequenceType == SequenceType.LAST
+                                        || msgSequenceType == SequenceType.SINGLE
+                            // Manage animation for avatar.
+                            // To only display the avatar of the last message.
+                            if (endOfSeq) {
+                                avatar?.setImageDrawable(
+                                    conversationFragment.getConversationAvatar(
+                                        contact.primaryNumber
+                                    )
+                                )
+                                avatar?.visibility = View.VISIBLE
+                            } else {
+                                if (position == lastMsgPos - 1) {
+                                    avatar?.let { ActionHelper.startFadeOutAnimation(avatar) }
+                                } else {
+                                    avatar?.setImageBitmap(null)
+                                    avatar?.visibility = View.INVISIBLE
+                                }
+                            }
+                            // We can call ourselves in a group call with different devices.
+                            // Set the message to the left when it is incoming.
+                            convViewHolder.mGroupCallLayout?.gravity = Gravity.START
+                            // Show the name of the contact.
+                            peerDisplayName?.apply {
+                                if (presenter.isGroup() && (msgSequenceType == SequenceType.SINGLE
+                                            || msgSequenceType == SequenceType.LAST)
+                                ) {
+                                    visibility = View.VISIBLE
+                                    convViewHolder.compositeDisposable.add(
+                                        presenter.contactService
+                                            .observeContact(account, contact, false)
+                                            .observeOn(DeviceUtils.uiScheduler)
+                                            .subscribe {
+                                                text = it.displayName
+                                            }
+                                    )
+                                } else visibility = View.GONE
+                            }
+                            // Use the original color of the icons.
+                            callInfoText.setTextColor(context.getColor(R.color.colorOnSurface))
+                            acceptCallAudioButton.setColorFilter(
+                                context.getColor(R.color.accept_call_button)
+                            )
+                            acceptCallVideoButton.setColorFilter(
+                                context.getColor(R.color.accept_call_button)
+                            )
+                            // Set the background to the call started message.
+                            val resIndex = msgSequenceType.ordinal + 4
+                            callAcceptLayout.background =
+                                ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
+                            callAcceptLayout.background.setTint(
+                                context.getColor(R.color.conversation_secondary_background)
+                            )
+                        } else {
+                            // Set the message to the right because it is outgoing.
+                            convViewHolder.mGroupCallLayout?.gravity = Gravity.END
+                            // Hide the name of the contact.
+                            peerDisplayName?.visibility = View.GONE
+                            avatar?.visibility = View.GONE
+                            callInfoText.setTextColor(
+                                context.getColor(
+                                    R.color.text_color_primary_dark
+                                )
+                            )
+                            acceptCallAudioButton.setColorFilter(
+                                context.getColor(R.color.white)
+                            )
+                            acceptCallVideoButton.setColorFilter(
+                                context.getColor(R.color.white)
+                            )
+                            // Set the background to the call started message.
+                            val resIndex = msgSequenceType.ordinal
+                            callAcceptLayout.background =
+                                ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
+                            callAcceptLayout.background.setTint(convColor)
+                        }
+                        callAcceptLayout.setPadding(callPadding)
+                        callAcceptLayout.apply {
+                            // Accept with audio only
+                            acceptCallAudioButton.setOnClickListener {
+                                call.confId?.let { presenter.goToGroupCall(false) }
+                            }
+                            // Accept call with video
+                            acceptCallVideoButton.setOnClickListener {
+                                call.confId?.let { presenter.goToGroupCall(true) }
+                            }
+                        }
+                        // Apply a bottom margin to the global layout if end of sequence needed.
+                        val startOfSeq =
+                            msgSequenceType == SequenceType.FIRST ||
+                                    msgSequenceType == SequenceType.SINGLE
+                        convViewHolder.mItem?.let { setBottomMargin(it, if (startOfSeq) 8 else 0) }
+                    })
         } else {
-            pictureResID =
-                if (call.isIncoming) R.drawable.baseline_call_received_24
-                else R.drawable.baseline_call_made_24
-            historyTxt =
-                if (call.isIncoming) context.getString(R.string.notif_incoming_call)
-                else context.getString(R.string.notif_outgoing_call)
+            // When it is not a group call
+            // Remove the tint
+            convViewHolder.mCallInfoLayout?.background?.setTintList(null)
+
+            convViewHolder.compositeDisposable.add(
+                interaction.lastElement
+                    .observeOn(DeviceUtils.uiScheduler)
+                    .subscribe { lastElement ->
+                        val callMessage = lastElement as Call
+                        val isTimeShown = hasPermanentTimeString(callMessage, position)
+                        val msgSequenceType = getMsgSequencing(position, isTimeShown)
+                        val callInfoLayout = convViewHolder.mCallInfoLayout ?: return@subscribe
+                        callInfoLayout.background?.setTintList(null)
+                        val callIcon = convViewHolder.mIcon ?: return@subscribe
+                        callIcon.drawable?.setTintList(null)
+                        val typeCall = convViewHolder.mHistTxt ?: return@subscribe
+                        val detailCall = convViewHolder.mHistDetailTxt ?: return@subscribe
+                        val resIndex: Int
+                        val typeCallTxt: String
+                        val peerDisplayName = convViewHolder.mPeerDisplayName
+                        val account = interaction.account ?: return@subscribe
+                        val contact = callMessage.contact ?: return@subscribe
+
+                    // Manage the update of the timestamp
+                    if (isTimeShown) {
+                        convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
+                            convViewHolder.mMsgDetailTxtPerm?.text =
+                                TextUtils.timestampToDetailString(
+                                    context, formatter, call.timestamp
+                                )
+                        })
+                        convViewHolder.mMsgDetailTxtPerm?.visibility = View.VISIBLE
+                    } else convViewHolder.mMsgDetailTxtPerm?.visibility = View.GONE
+
+                        // After a call, a message is displayed with call information.
+                        // Manage the call message layout.
+                        if (callMessage.isIncoming) {
+                            // Same background for incoming calls.
+                            resIndex = msgSequenceType.ordinal + 4
+                            // Set the color of the time duration.
+                            detailCall.setTextColor(
+                                convViewHolder.itemView.context.getColor(R.color.colorOnSurface)
+                            )
+                            // Set the call message color.
+                            typeCall.setTextColor(
+                                convViewHolder.itemView.context.getColor(R.color.colorOnSurface)
+                            )
+                            if (callMessage.isMissed) { // Call incoming missed.
+                                callIcon.setImageResource(R.drawable.baseline_missed_call_16)
+                                // Set the drawable color to red because it is missed.
+                                callIcon.drawable.setTint(context.getColor(R.color.call_missed))
+                                typeCallTxt = context.getString(R.string.notif_missed_incoming_call)
+                            } else { // Call incoming not missed.
+                                callIcon.setImageResource(R.drawable.baseline_incoming_call_16)
+                                callIcon.drawable.setTint(context.getColor(R.color.colorOnSurface))
+                                typeCallTxt = context.getString(R.string.notif_incoming_call)
+                            }
+                            // Put the message to the left because it is incoming.
+                            convViewHolder.mCallLayout?.gravity = Gravity.START
+                            // Show the name of the contact if it is a group conversation
+                            val endOfSeq = msgSequenceType == SequenceType.SINGLE
+                                    || msgSequenceType == SequenceType.LAST
+                            peerDisplayName?.apply {
+                                if (presenter.isGroup() && endOfSeq) {
+                                    visibility = View.VISIBLE
+                                    convViewHolder.compositeDisposable.add(
+                                        presenter.contactService
+                                            .observeContact(account, contact, false)
+                                            .observeOn(DeviceUtils.uiScheduler)
+                                            .subscribe {
+                                                text = it.displayName
+                                            }
+                                    )
+                                } else visibility = View.GONE
+                            }
+                        } else {
+                            // Same background for outgoing calls.
+                            resIndex = msgSequenceType.ordinal
+                            typeCall.setTextColor(
+                                convViewHolder.itemView.context.getColor(
+                                    R.color.call_text_outgoing_message
+                                )
+                            )
+                            // Set the color of the time duration.
+                            detailCall.setTextColor(
+                                convViewHolder.itemView.context.getColor(
+                                    R.color.call_text_outgoing_message
+                                )
+                            )
+                            if (callMessage.isMissed) { // Outgoing call missed.
+                                callIcon.setImageResource(R.drawable.baseline_missed_call_16)
+                                // Set the drawable color to red because it is missed.
+                                callIcon.drawable.setTint(context.getColor(R.color.call_missed))
+                                typeCallTxt = context.getString(R.string.notif_missed_outgoing_call)
+                                // Flip the photo upside down to show a "missed outgoing call".
+                                callIcon.scaleX = -1f
+                            } else { // Outgoing call not missed.
+                                callIcon.setImageResource(R.drawable.baseline_outgoing_call_16)
+                                callIcon.drawable.setTint(
+                                    context.getColor(R.color.call_drawable_color)
+                                )
+                                typeCallTxt = context.getString(R.string.notif_outgoing_call)
+                            }
+                            // Put the message to the right because it is outgoing.
+                            convViewHolder.mCallLayout?.gravity = Gravity.END
+                        }
+                        callInfoLayout.background =
+                            ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
+                        callInfoLayout.setPadding(callPadding)
+                        // Manage background to convColor if it is outgoing.
+                        if (convColor != 0 && !callMessage.isIncoming) {
+                            callInfoLayout.background.setTint(convColor)
+                        }
+                        typeCall.text = typeCallTxt
+                        // Add the call duration if not null.
+                        detailCall.text =
+                            if (callMessage.duration != 0L) {
+                                String.format(
+                                    context.getString(R.string.call_duration),
+                                    DateUtils.formatElapsedTime(
+                                        recycle, callMessage.duration!! / 1000
+                                    )
+                                ).let { " - $it" }
+                            } else null
+                        // Apply a bottom margin to the global layout if end of sequence needed.
+                        val startOfSeq =
+                            msgSequenceType == SequenceType.FIRST ||
+                                    msgSequenceType == SequenceType.SINGLE
+                        convViewHolder.mItem?.let { setBottomMargin(it, if (startOfSeq) 8 else 0) }
+
+                        // Do not show the avatar if it is a one to one conversation.
+                        val avatar = convViewHolder.mAvatar
+                        avatar?.visibility = View.GONE
+                        // Only show the peer avatar if it is a group conversation
+                        if (presenter.isGroup()) {
+                            val endOfSeq =
+                                msgSequenceType == SequenceType.LAST
+                                        || msgSequenceType == SequenceType.SINGLE
+                            // Manage animation for avatar.
+                            // To only display the avatar of the last message.
+                            if (endOfSeq) {
+                                avatar?.setImageDrawable(
+                                    conversationFragment.getConversationAvatar(contact.primaryNumber)
+                                )
+                                avatar?.visibility = View.VISIBLE
+                            } else {
+                                if (position == lastMsgPos - 1) {
+                                    avatar?.let { ActionHelper.startFadeOutAnimation(avatar) }
+                                } else {
+                                    avatar?.setImageBitmap(null)
+                                    avatar?.visibility = View.INVISIBLE
+                                }
+                            }
+                        }
+                    })
         }
-        // Update icon, text and date
-        convViewHolder.mIcon?.setImageResource(pictureResID)
-        convViewHolder.mHistTxt?.text = historyTxt
-        convViewHolder.mHistDetailTxt?.text =
-            DateFormat.getDateTimeInstance().format(call.timestamp) // Start date of the call.
     }
 
     /**
-     * Helper method to return the previous TextMessage relative to an initial position.
+     * Helper method to return the previous Interaction relative to an initial position.
      *
      * @param position The initial position
-     * @return the previous TextMessage if any, null otherwise
+     * @return the previous Interaction if any, null otherwise
      */
-    private fun getPreviousMessageFromPosition(position: Int): Interaction? =
-        if (mInteractions.isNotEmpty() && position > 0) mInteractions[position - 1]
-        else null
+    private fun getPreviousInteractionFromPosition(position: Int): Interaction? =
+        if (mInteractions.isNotEmpty() && position > 0) {
+            if (mInteractions[position - 1].type == Interaction.InteractionType.INVALID) {
+                // Recursive function to ignore invalid interactions.
+                getPreviousInteractionFromPosition(position - 1)
+            } else mInteractions[position - 1]
+        } else null
 
     /**
-     * Helper method to return the next TextMessage relative to an initial position.
+     * Helper method to return the next Interaction relative to an initial position.
      *
      * @param position The initial position
-     * @return the next TextMessage if any, null otherwise
+     * @return the next Interaction if any, null otherwise
      */
-    private fun getNextMessageFromPosition(position: Int): Interaction? =
-        if (mInteractions.isNotEmpty() && position < mInteractions.size - 1)
-            mInteractions[position + 1]
-        else null
+    private fun getNextInteractionFromPosition(position: Int): Interaction? =
+        if (mInteractions.isNotEmpty() && position < mInteractions.size - 1) {
+            if (mInteractions[position + 1].type == Interaction.InteractionType.INVALID) {
+                // Recursive function to ignore invalid interactions.
+                getNextInteractionFromPosition(position + 1)
+            } else mInteractions[position + 1]
+        } else null
 
     private fun getMsgSequencing(i: Int, isTimeShown: Boolean): SequenceType {
         val msg = mInteractions[i]
@@ -758,7 +1183,7 @@ class TvConversationAdapter(
             if (mInteractions.size == i + 1) {
                 return SequenceType.SINGLE
             }
-            val nextMsg = getNextMessageFromPosition(i)
+            val nextMsg = getNextInteractionFromPosition(i)
             if (nextMsg != null) {
                 return if (isSeqBreak(msg, nextMsg) || hasPermanentTimeString(nextMsg, i + 1)) {
                     SequenceType.SINGLE
@@ -766,21 +1191,23 @@ class TvConversationAdapter(
                     SequenceType.FIRST
                 }
             }
-        } else if (mInteractions.size == i + 1) {
-            val prevMsg = getPreviousMessageFromPosition(i)
+        } else if (getNextInteractionFromPosition(i) == null) { // If this is the last interaction.
+            val prevMsg = getPreviousInteractionFromPosition(i)
             if (prevMsg != null) {
                 return if (isSeqBreak(msg, prevMsg) || isTimeShown) {
                     SequenceType.SINGLE
-                } else {
-                    SequenceType.LAST
-                }
+                } else SequenceType.LAST
             }
         }
-        val prevMsg = getPreviousMessageFromPosition(i)
-        val nextMsg = getNextMessageFromPosition(i)
+        val prevMsg = getPreviousInteractionFromPosition(i)
+        val nextMsg = getNextInteractionFromPosition(i)
         if (prevMsg != null && nextMsg != null) {
             val nextMsgHasTime = hasPermanentTimeString(nextMsg, i + 1)
-            if ((isSeqBreak(msg, prevMsg) || isTimeShown) && !(isSeqBreak(msg, nextMsg) || nextMsgHasTime)) {
+            if ((isSeqBreak(msg, prevMsg) || isTimeShown) && !(isSeqBreak(
+                    msg,
+                    nextMsg
+                ) || nextMsgHasTime)
+            ) {
                 return SequenceType.FIRST
             } else if (!isSeqBreak(msg, prevMsg) && !isTimeShown && isSeqBreak(msg, nextMsg)) {
                 return SequenceType.LAST
@@ -827,7 +1254,7 @@ class TvConversationAdapter(
     }
 
     private fun hasPermanentTimeString(msg: Interaction, position: Int): Boolean {
-        val prevMsg = getPreviousMessageFromPosition(position)
+        val prevMsg = getPreviousInteractionFromPosition(position)
         return prevMsg != null && msg.timestamp - prevMsg.timestamp > 10 * DateUtils.MINUTE_IN_MILLIS
     }
 
@@ -856,7 +1283,19 @@ class TvConversationAdapter(
             R.drawable.textmsg_bg_in_last,
             R.drawable.textmsg_bg_in_middle,
             R.drawable.textmsg_bg_in_first,
-            R.drawable.textmsg_bg_in
+            R.drawable.textmsg_bg_in,
+            R.drawable.textmsg_bg_out_reply,
+            R.drawable.textmsg_bg_out_reply_first,
+            R.drawable.textmsg_bg_in_reply,
+            R.drawable.textmsg_bg_in_reply_first,
+            R.drawable.call_bg_missed_in_first,
+            R.drawable.call_bg_missed_in_middle,
+            R.drawable.call_bg_missed_in_last,
+            R.drawable.call_bg_missed,
+            R.drawable.call_bg_missed_out_first,
+            R.drawable.call_bg_missed_out_middle,
+            R.drawable.call_bg_missed_out_last,
+            R.drawable.call_bg_missed
         )
 
         private fun setBottomMargin(view: View, value: Int) {
@@ -866,11 +1305,17 @@ class TvConversationAdapter(
         }
 
         private fun isSeqBreak(first: Interaction, second: Interaction): Boolean =
-            isOnlyEmoji(first.body) != isOnlyEmoji(second.body) || first.isIncoming != second.isIncoming || first.type !== Interaction.InteractionType.TEXT || second.type !== Interaction.InteractionType.TEXT
+            isOnlyEmoji(first.body) != isOnlyEmoji(second.body)
+                    || first.isIncoming != second.isIncoming
+                    || (first.type !== Interaction.InteractionType.TEXT
+                        && (first.type !== Interaction.InteractionType.CALL))
+                    || (second.type !== Interaction.InteractionType.TEXT
+                        && (second.type !== Interaction.InteractionType.CALL))
+                    || first.contact != second.contact
 
         private fun isAlwaysSingleMsg(msg: Interaction): Boolean =
             (msg.type !== Interaction.InteractionType.TEXT
-                    || isOnlyEmoji(msg.body))
+                    && msg.type !== Interaction.InteractionType.CALL || isOnlyEmoji(msg.body))
     }
 
 }
