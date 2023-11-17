@@ -1273,10 +1273,7 @@ class ConversationAdapter(
                                         text = it.displayName
                                     }
                             )
-                        } else {
-                            visibility = View.GONE
-                            text = null
-                        }
+                        } else visibility = View.GONE
                     }
                 }
             })
@@ -1478,7 +1475,6 @@ class ConversationAdapter(
                     val textMessage = lastElement as Call
                     val isTimeShown = hasPermanentTimeString(textMessage, position)
                     val msgSequenceType = getMsgSequencing(position, isTimeShown)
-
                     val callInfoLayout = convViewHolder.mCallInfoLayout ?: return@subscribe
                     callInfoLayout.background?.setTintList(null)
                     val callIcon = convViewHolder.mIcon ?: return@subscribe
@@ -1487,6 +1483,9 @@ class ConversationAdapter(
                     val detailCall = convViewHolder.mHistDetailTxt ?: return@subscribe
                     val resIndex: Int
                     val typeCallTxt : String
+                    val peerDisplayName = convViewHolder.mPeerDisplayName
+                    val account = interaction.account ?: return@subscribe
+                    val contact = textMessage.contact ?: return@subscribe
 
                     val endOfSeq = msgSequenceType == SequenceType.LAST
                             || msgSequenceType == SequenceType.SINGLE
@@ -1578,6 +1577,22 @@ class ConversationAdapter(
                         detailCall.setTextColor(
                             convViewHolder.itemView.context.getColor(R.color.colorOnSurface)
                         )
+                    }
+                    // Show the name of the contact if it is a group conversation
+                    peerDisplayName?.apply {
+                        if (presenter.isGroup() && (msgSequenceType == SequenceType.SINGLE ||
+                                    msgSequenceType == SequenceType.FIRST)
+                        ) {
+                            visibility = View.VISIBLE
+                            convViewHolder.compositeDisposable.add(
+                                presenter.contactService
+                                    .observeContact(account, contact, false)
+                                    .observeOn(DeviceUtils.uiScheduler)
+                                    .subscribe {
+                                        text = it.displayName
+                                    }
+                            )
+                        } else visibility = View.GONE
                     }
                 })
     }
