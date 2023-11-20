@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d40690ba_9465525f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2023-11-20T17:36:55Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 7,
+        "startChar": 23,
+        "endLine": 7,
+        "endChar": 36
+      },
+      "revId": "9f08807ddc35decfe8db7d85e00f560b309d8310",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b9528423_06b8c485",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2023-11-20T17:36:55Z",
+      "side": 1,
+      "message": "works but isGroup seems weird",
+      "revId": "9f08807ddc35decfe8db7d85e00f560b309d8310",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "632d40ed_c09f13e5",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/conversation/ConversationPresenter.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2023-11-20T17:36:55Z",
+      "side": 1,
+      "message": "when is this used?",
+      "range": {
+        "startLine": 458,
+        "startChar": 8,
+        "endLine": 458,
+        "endChar": 15
+      },
+      "revId": "9f08807ddc35decfe8db7d85e00f560b309d8310",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b58b722a_17ca9fc4",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/model/Account.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2023-11-20T17:36:55Z",
+      "side": 1,
+      "message": "why not just checking if non swarm or 1:1?",
+      "range": {
+        "startLine": 191,
+        "startChar": 29,
+        "endLine": 191,
+        "endChar": 36
+      },
+      "revId": "9f08807ddc35decfe8db7d85e00f560b309d8310",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "557c307e_19761caf",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/model/Conversation.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 711,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2023-11-20T17:36:55Z",
+      "side": 1,
+      "message": "seems a weird logic as the mode should give pretty everything",
+      "range": {
+        "startLine": 711,
+        "startChar": 8,
+        "endLine": 711,
+        "endChar": 15
+      },
+      "revId": "9f08807ddc35decfe8db7d85e00f560b309d8310",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
