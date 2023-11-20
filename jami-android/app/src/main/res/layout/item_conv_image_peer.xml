@@ -15,26 +15,26 @@
   ~ along with this program; if not, write to the Free Software
   ~  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
   -->
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="8dp"
     android:clickable="true"
     android:descendantFocusability="blocksDescendants"
     android:focusable="true"
+    android:gravity="center"
     android:orientation="vertical"
-    android:gravity="center">
+    android:paddingBottom="8dp">
 
     <TextView
         android:id="@+id/msg_details_txt_perm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
         android:textColor="@color/textColorSecondary"
         android:textSize="@dimen/conversation_timestamp_textsize"
-        tools:text="@string/time_just_now" />
+        android:visibility="gone"
+        tools:text="@string/time_just_now"
+        tools:visibility="visible" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -42,6 +42,22 @@
         android:paddingStart="@dimen/padding_large"
         android:paddingTop="8dp"
         android:paddingEnd="@dimen/padding_large">
+
+        <TextView
+            android:id="@+id/msg_display_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@id/imgLayout"
+            android:ellipsize="end"
+            android:maxEms="8"
+            android:maxLines="1"
+            android:padding="4dp"
+            android:textColor="@color/msg_display_name"
+            android:textSize="@dimen/message_display_name_textsize"
+            android:visibility="gone"
+            tools:text="Bob"
+            tools:visibility="visible" />
+        <!--    maxEms="8" to have around 16 characters displayed   -->
 
         <ImageView
             android:id="@+id/photo"
@@ -57,6 +73,7 @@
             android:id="@+id/imgLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/msg_display_name"
             android:layout_marginEnd="20dp"
             android:layout_toEndOf="@+id/photo"
             android:gravity="bottom"
@@ -66,8 +83,8 @@
                 android:id="@+id/image"
                 android:layout_width="wrap_content"
                 android:layout_height="180dp"
-                android:background="@drawable/background_item_conv_image"
                 android:adjustViewBounds="true"
+                android:background="@drawable/background_item_conv_image"
                 android:transitionName="picture"
                 tools:src="@drawable/ic_jami" />
 
@@ -77,8 +94,8 @@
             android:id="@+id/msg_details_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/imgLayout"
             android:layout_below="@+id/imgLayout"
+            android:layout_alignStart="@+id/imgLayout"
             android:layout_marginStart="@dimen/message_details_margin"
             android:textColor="@color/textColorSecondary"
             android:textSize="@dimen/conversation_timestamp_textsize"
@@ -87,15 +104,15 @@
         <com.google.android.material.chip.Chip
             android:id="@+id/reaction_chip"
             style="@style/Widget.Material3.Chip.Suggestion"
-            android:focusable="false"
-            android:checkable="false"
-            android:clickable="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/imgLayout"
             android:layout_alignEnd="@id/imgLayout"
-            android:layout_marginEnd="16dp"
             android:layout_marginTop="-16dp"
+            android:layout_marginEnd="16dp"
+            android:checkable="false"
+            android:clickable="false"
+            android:focusable="false"
             android:text="👍😍 3" />
 
     </RelativeLayout>
