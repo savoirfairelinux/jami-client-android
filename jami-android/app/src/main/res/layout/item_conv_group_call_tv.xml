@@ -18,60 +18,60 @@ along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="end|bottom"
     android:layout_marginTop="8dp"
     android:layout_marginBottom="8dp"
-    android:descendantFocusability="blocksDescendants"
-    android:focusable="true"
-    android:paddingStart="72dp"
-    android:paddingEnd="72dp">
+    android:paddingStart="@dimen/padding_medium"
+    android:paddingEnd="36dp">
 
     <LinearLayout
         android:id="@+id/callAcceptLayout"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/textmsg_call_background"
         android:orientation="horizontal"
         android:paddingTop="4dp"
         android:paddingBottom="4dp">
 
-        <ImageView
-            android:id="@+id/call_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"
-            android:alpha="0.75"
-            app:srcCompat="@drawable/baseline_call_missed_24" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginEnd="8dp"
-            android:orientation="vertical">
+            android:padding="12dp"
+            android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/call_hist_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:marqueeRepeatLimit="marquee_forever"
                 android:scrollHorizontally="true"
                 android:singleLine="false"
                 android:textColor="@color/colorOnSurface"
-                android:textSize="14sp"
-                tools:text="Appel manqué" />
+                android:gravity="center_vertical"
+                android:textSize="16sp"
+                android:text="@string/ongoing_group_call" />
 
-            <TextView
-                android:id="@+id/call_details_txt"
+            <ImageButton
+                android:id="@+id/acceptCallAudioButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/textColorSecondary"
-                android:textSize="12sp"
-                tools:text="Adrien - 12 mars" />
+                android:background="@drawable/baseline_call_24"
+                android:gravity="center_vertical"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_marginStart="16dp"/>
+
+            <ImageButton
+                android:id="@+id/acceptCallVideoButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:gravity="center_vertical"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="@drawable/baseline_videocam_on_24"/>
         </LinearLayout>
     </LinearLayout>
 
