@@ -471,14 +471,47 @@ class TvConversationAdapter(
         } else {
             viewHolder.mMsgDetailTxtPerm?.visibility = View.GONE
         }
-        val contact = interaction.contact
         if (interaction.isIncoming) {
-            viewHolder.mAvatar?.let { avatar ->
-                avatar.setImageBitmap(null)
-                avatar.visibility = View.VISIBLE
-                if (contact != null)
-                    avatar.setImageDrawable(conversationFragment.getConversationAvatar(contact.primaryNumber))
-            }
+            viewHolder.compositeDisposable.add(interaction.lastElement
+                .observeOn(DeviceUtils.uiScheduler)
+                .subscribe { lastElement ->
+                    val fileMessage = lastElement as DataTransfer
+                    val account = interaction.account ?: return@subscribe
+                    val contact = fileMessage.contact ?: return@subscribe
+                    val isTimeShown = hasPermanentTimeString(fileMessage, position)
+                    val msgSequenceType = getMsgSequencing(position, isTimeShown)
+                    val peerDisplayName = viewHolder.mPeerDisplayName
+
+                    // Display the avatar of the contact.
+                    viewHolder.mAvatar?.let { avatar ->
+                        avatar.setImageBitmap(null)
+                        avatar.visibility = View.VISIBLE
+                        avatar.setImageDrawable(
+                            conversationFragment.getConversationAvatar(
+                                contact.primaryNumber
+                            )
+                        )
+                    }
+                    // Show the name of the contact if it is a group conversation
+                    peerDisplayName?.apply {
+                        if (presenter.isGroup() && (msgSequenceType == SequenceType.SINGLE ||
+                                    msgSequenceType == SequenceType.FIRST)
+                        ) {
+                            visibility = View.VISIBLE
+                            viewHolder.compositeDisposable.add(
+                                presenter.contactService
+                                    .observeContact(account, contact, false)
+                                    .observeOn(DeviceUtils.uiScheduler)
+                                    .subscribe {
+                                        text = it.displayName
+                                    }
+                            )
+                        } else {
+                            visibility = View.GONE
+                            text = null
+                        }
+                    }
+                })
         }
         val type = viewHolder.type.transferType
 

@@ -35,13 +35,30 @@
         android:textColor="@color/textColorSecondary"
         android:textSize="@dimen/conversation_timestamp_textsize"
         android:visibility="gone"
-        tools:text="@string/time_just_now" />
+        tools:text="@string/time_just_now"
+        tools:visibility="visible" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/padding_large"
         android:paddingTop="8dp">
+
+        <TextView
+            android:id="@+id/msg_display_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@id/fileInfoLayout"
+            android:ellipsize="end"
+            android:maxEms="8"
+            android:maxLines="1"
+            android:padding="4dp"
+            android:textColor="@color/msg_display_name"
+            android:textSize="@dimen/message_display_name_textsize"
+            android:visibility="gone"
+            tools:text="Bob"
+            tools:visibility="visible" />
+        <!--    maxEms="8" to have around 16 characters displayed   -->
 
         <ImageView
             android:id="@+id/photo"
@@ -56,6 +73,7 @@
             android:id="@+id/fileInfoLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/msg_display_name"
             android:layout_marginEnd="20dp"
             android:layout_toEndOf="@+id/photo"
             android:background="@drawable/textmsg_call_background"
