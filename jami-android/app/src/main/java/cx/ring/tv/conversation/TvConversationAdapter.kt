@@ -689,6 +689,12 @@ class TvConversationAdapter(
         // Reset the scale of the icon
         convViewHolder.mIcon?.scaleY = 1f
 
+        // Set the call message focusable.
+        convViewHolder.itemView.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
+            convViewHolder.itemView.setBackgroundResource(if (hasFocus) R.drawable.tv_item_selected_background else R.drawable.tv_item_unselected_background)
+            convViewHolder.mCallInfoLayout!!.animate().scaleY(if (hasFocus) 1.1f else 1f).scaleX(if (hasFocus) 1.1f else 1f)
+        }
+
         val call = interaction as Call
         if (call.isGroupCall) {
             // When a call is occurring (between members) but you are not in it, a message is
