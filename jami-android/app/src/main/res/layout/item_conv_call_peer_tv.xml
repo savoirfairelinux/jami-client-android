@@ -20,6 +20,9 @@ along with this program; if not, write to the Free Software
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/tv_contact_background"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:focusable="true"
     android:orientation="vertical"
     android:paddingBottom="@dimen/padding_xsmall">
 
