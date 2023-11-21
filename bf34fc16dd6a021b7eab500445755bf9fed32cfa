@@ -47,6 +47,54 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "584afea9_013b4e17",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/conversation/ConversationPresenter.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-11-21T21:24:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "788d394d_b7a1ebce",
+      "range": {
+        "startLine": 371,
+        "startChar": 73,
+        "endLine": 371,
+        "endChar": 88
+      },
+      "revId": "bf34fc16dd6a021b7eab500445755bf9fed32cfa",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "25b3a8cc_8564d196",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/conversation/ConversationPresenter.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-11-21T21:24:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ee4b961_46257f3d",
+      "range": {
+        "startLine": 371,
+        "startChar": 56,
+        "endLine": 371,
+        "endChar": 71
+      },
+      "revId": "bf34fc16dd6a021b7eab500445755bf9fed32cfa",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "db64dfd8_499fe83b",
@@ -93,6 +141,54 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9b7d41a1_54bbbe5b",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/conversation/ConversationPresenter.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-11-21T21:24:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db64dfd8_499fe83b",
+      "range": {
+        "startLine": 375,
+        "startChar": 56,
+        "endLine": 375,
+        "endChar": 71
+      },
+      "revId": "bf34fc16dd6a021b7eab500445755bf9fed32cfa",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "95bbec83_854110c5",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/conversation/ConversationPresenter.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-11-21T21:24:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "117ed811_b01ef790",
+      "range": {
+        "startLine": 375,
+        "startChar": 73,
+        "endLine": 375,
+        "endChar": 88
+      },
+      "revId": "bf34fc16dd6a021b7eab500445755bf9fed32cfa",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "630825e3_50e07925",
@@ -106,6 +202,30 @@
       "writtenOn": "2023-11-18T03:02:32Z",
       "side": 1,
       "message": "use a switchmap on the conversation observable for a nice and clean RX flow :)\n\n conversationObservable.switchMap { it.activeCallsObservable }",
+      "range": {
+        "startLine": 440,
+        "startChar": 8,
+        "endLine": 441,
+        "endChar": 27
+      },
+      "revId": "bf34fc16dd6a021b7eab500445755bf9fed32cfa",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4b6c0481_a7ea41b5",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/conversation/ConversationPresenter.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-11-21T21:24:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "630825e3_50e07925",
       "range": {
         "startLine": 440,
         "startChar": 8,
