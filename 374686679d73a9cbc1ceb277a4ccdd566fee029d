@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51574f14_0ab9b325",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2023-11-21T22:15:59Z",
+      "side": 1,
+      "message": "```\nAppears Monday, November 27, 2023 12:00:00 AM\nDisappears Wednesday, January 31, 2024 11:59:59.999 PM\n```\n\nCf. https://www.epochconverter.com/\n\n1701043200000\n1706745599999",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 45
+      },
+      "revId": "374686679d73a9cbc1ceb277a4ccdd566fee029d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
