@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8b867c26_2ec2aeb7",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/conversation/ConversationPresenter.kt",
+        "patchSetId": 8
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-11-21T23:20:22Z",
+      "side": 1,
+      "message": "firstOrError should not be needed: the whole function should be plugged in the rx flow, instead of generating a new subscription for every event.\nNote that updateRingingCallView is already called as part of the conversationSubject flow",
+      "range": {
+        "startLine": 440,
+        "startChar": 12,
+        "endLine": 450,
+        "endChar": 17
+      },
+      "revId": "9bf52f24cbb01879a197234b1692dfad20cccdaa",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
