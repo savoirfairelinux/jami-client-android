@@ -44,6 +44,12 @@ object ActionHelper {
     fun View.setPadding(padding: Padding) =
         setPadding(padding.pixelsLeft, padding.pixelsTop, padding.pixelsRight, padding.pixelsBottom)
 
+    fun openJamiDonateWebPage(context: Context) {
+        context.startActivity(
+            Intent(Intent.ACTION_VIEW, android.net.Uri.parse(context.getString(R.string.donation_url)))
+        )
+    }
+
     /**
      * Share the given username with the system share intent.
      * @param context the context
