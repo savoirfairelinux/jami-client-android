@@ -49,7 +49,7 @@ along with this program; if not, write to the Free Software
             android:id="@+id/msg_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/padding_medium"
+            android:layout_marginStart="12dp"
             android:layout_marginEnd="20dp"
             android:layout_toEndOf="@+id/photo"
             android:background="@drawable/textmsg_bg_in"

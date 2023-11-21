@@ -34,7 +34,6 @@
         android:clipChildren="false"
         android:clipToPadding="false"
         android:paddingStart="72dp"
-        android:paddingTop="8dp"
         android:paddingEnd="2dp">
 
         <androidx.cardview.widget.CardView

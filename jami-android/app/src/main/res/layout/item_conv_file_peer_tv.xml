@@ -16,6 +16,7 @@
   ~  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
   -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/file_layout"
     android:layout_width="match_parent"
@@ -30,7 +31,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingStart="@dimen/padding_medium"
-        android:paddingTop="8dp"
         android:paddingEnd="@dimen/padding_large">
 
         <ImageView
@@ -38,6 +38,7 @@
             android:layout_width="@dimen/conversation_avatar_size"
             android:layout_height="@dimen/conversation_avatar_size"
             android:layout_alignBottom="@id/fileInfoLayout"
+            android:layout_marginEnd="12dp"
             android:background="@null"
             android:scaleType="centerCrop" />
 
@@ -45,7 +46,6 @@
             android:id="@+id/fileInfoLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/padding_medium"
             android:layout_marginEnd="20dp"
             android:layout_toEndOf="@+id/photo"
             android:background="@drawable/textmsg_call_background"
@@ -60,7 +60,7 @@
                 android:layout_marginEnd="4dp"
                 android:alpha="0.75"
                 android:src="@drawable/baseline_attach_file_24"
-                android:tint="@color/black" />
+                app:tint="@color/black" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
