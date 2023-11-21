@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "49126928_8ee6ad39",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/utils/DonationUtils.kt",
+        "patchSetId": 8
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-11-21T19:38:25Z",
+      "side": 1,
+      "message": "This needs to be checked!",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 8
+      },
+      "revId": "716d0fde11ba1dac1641b5f02536ac8822f02169",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
