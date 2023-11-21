@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "842cb187_eea2592b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-11-21T20:45:34Z",
+      "side": 1,
+      "message": "The icons appear white on tv",
+      "revId": "c9ea89ac752c471644bedbc46e33bf238d7282c4",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
