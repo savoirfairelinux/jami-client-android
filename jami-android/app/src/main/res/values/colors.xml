@@ -114,4 +114,8 @@
     <color name="conversation_palette_brown">#A6948B</color>
     <color name="conversation_palette_grey">#6C6C6C</color>
 
+    <!--  Donation Card  -->
+    <color name="donation_card_background_color">#D5E4EF</color>
+    <color name="donation_card_button_color">#005699</color>
+
 </resources>
