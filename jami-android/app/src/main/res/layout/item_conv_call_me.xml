@@ -29,8 +29,7 @@ along with this program; if not, write to the Free Software
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="8dp"
-        android:paddingBottom="8dp"
+        android:paddingBottom="@dimen/padding_small"
         android:textColor="@color/textColorSecondary"
         android:textSize="@dimen/conversation_timestamp_textsize"
         android:visibility="gone"
@@ -76,9 +75,9 @@ along with this program; if not, write to the Free Software
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/colorOnSurface"
-            tools:textColor="@color/white"
             android:textSize="13sp"
-            tools:text="- Lasted 17:26" />
+            tools:text="- Lasted 17:26"
+            tools:textColor="@color/white" />
 
     </LinearLayout>
 </LinearLayout>
