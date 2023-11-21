@@ -50,10 +50,11 @@
             android:id="@+id/photo"
             android:layout_width="@dimen/conversation_avatar_size"
             android:layout_height="@dimen/conversation_avatar_size"
+            android:layout_alignBottom="@id/imageLayout"
+            android:layout_marginEnd="@dimen/padding_medium"
             android:background="@null"
             android:gravity="start"
-            android:layout_alignBottom="@id/imageLayout"
-            android:scaleType="centerCrop"/>
+            android:scaleType="centerCrop" />
 
         <TextView
             android:id="@+id/msg_details_txt"
@@ -71,7 +72,6 @@
             android:id="@+id/imageLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/padding_medium"
             android:layout_marginEnd="20dp"
             android:minHeight="@dimen/conversation_avatar_size"
             android:layout_toEndOf="@+id/photo"
