@@ -34,7 +34,7 @@
         android:clipChildren="false"
         android:clipToPadding="false"
         android:paddingStart="@dimen/padding_medium"
-        android:paddingTop="8dp"
+        android:paddingTop="@dimen/padding_small"
         android:paddingEnd="@dimen/padding_large">
 
         <ImageView
@@ -42,6 +42,7 @@
             android:layout_width="@dimen/conversation_avatar_size"
             android:layout_height="@dimen/conversation_avatar_size"
             android:layout_alignBottom="@id/imageLayout"
+            android:layout_marginEnd="@dimen/padding_medium"
             android:background="@null"
             android:gravity="start"
             android:scaleType="centerCrop" />
@@ -62,7 +63,6 @@
             android:id="@+id/imageLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/padding_medium"
             android:layout_marginEnd="20dp"
             android:layout_toEndOf="@+id/photo"
             android:gravity="center_vertical"
