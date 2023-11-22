@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ce8c525_248f39af",
+        "filename": "jami-android/app/src/main/java/cx/ring/utils/ActionHelper.kt",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-11-22T20:06:00Z",
+      "side": 1,
+      "message": "move to strings (non-translatable) or to a const value",
+      "range": {
+        "startLine": 48,
+        "startChar": 18,
+        "endLine": 48,
+        "endChar": 92
+      },
+      "revId": "5f02b0dd2b4bb787bdc9ea6855f53fceabf0eb6f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
