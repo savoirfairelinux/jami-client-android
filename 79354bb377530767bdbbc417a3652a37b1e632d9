@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c2c861b_aa51422a",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 996,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-11-22T21:50:34Z",
+      "side": 1,
+      "message": "@aberraud can you check rx ?",
+      "range": {
+        "startLine": 996,
+        "startChar": 12,
+        "endLine": 996,
+        "endChar": 70
+      },
+      "revId": "79354bb377530767bdbbc417a3652a37b1e632d9",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "65dec8e3_15df5924",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 1022,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-11-22T21:50:34Z",
+      "side": 1,
+      "message": "@aberraud can you check rx ?",
+      "range": {
+        "startLine": 1022,
+        "startChar": 0,
+        "endLine": 1022,
+        "endChar": 1
+      },
+      "revId": "79354bb377530767bdbbc417a3652a37b1e632d9",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "53e4cbbb_e458df1e",
+        "filename": "jami-android/app/src/main/java/cx/ring/tv/conversation/TvConversationAdapter.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-11-22T21:50:34Z",
+      "side": 1,
+      "message": "@aberraud can you check rx ?",
+      "range": {
+        "startLine": 475,
+        "startChar": 0,
+        "endLine": 475,
+        "endChar": 1
+      },
+      "revId": "79354bb377530767bdbbc417a3652a37b1e632d9",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ffb2d990_f5495ce6",
+        "filename": "jami-android/app/src/main/java/cx/ring/tv/conversation/TvConversationAdapter.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-11-22T21:50:34Z",
+      "side": 1,
+      "message": "@aberraud can you check rx ?",
+      "range": {
+        "startLine": 501,
+        "startChar": 0,
+        "endLine": 501,
+        "endChar": 1
+      },
+      "revId": "79354bb377530767bdbbc417a3652a37b1e632d9",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
