@@ -277,7 +277,7 @@ open class Interaction {
 
         fun compare(a: Interaction?, b: Interaction?): Int {
             if (a == null) return if (b == null) 0 else -1
-            return if (b == null) 1 else java.lang.Long.compare(a.timestamp, b.timestamp)
+            return if (b == null) 1 else a.timestamp.compareTo(b.timestamp)
         }
     }
 }
