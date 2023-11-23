@@ -410,13 +410,10 @@ class Conversation : ConversationHistory {
     @Synchronized
     fun sortHistory() {
         if (mDirty) {
-            //Log.w(TAG, "sortHistory()")
             aggregateHistory.sortWith { c1, c2 -> c1.timestamp.compareTo(c2.timestamp) }
-            for (i in aggregateHistory.asReversed())
-                if (i.type != Interaction.InteractionType.INVALID) {
-                    lastEventSubject.onNext(aggregateHistory.last())
-                    break
-                }
+            aggregateHistory.lastOrNull { it.type != Interaction.InteractionType.INVALID }?.let {
+                lastEventSubject.onNext(it)
+            }
             mDirty = false
         }
     }
