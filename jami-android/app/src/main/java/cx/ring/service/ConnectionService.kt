@@ -55,10 +55,15 @@ class ConnectionService : ConnectionService() {
             val account = request.extras.getString(ConversationPath.KEY_ACCOUNT_ID)
             val contactId = request.extras.getString(ConversationPath.KEY_CONVERSATION_URI)
             if (account != null && contactId != null) {
-                val profile = conversationFacade.observeConversation(account, Uri.fromString(contactId), false).blockingFirst()
-                Log.w(TAG, "Set connection metadata ${profile.title} ${android.net.Uri.parse(profile.uriTitle)}")
-                setCallerDisplayName(profile.title, TelecomManager.PRESENTATION_ALLOWED)
-                setAddress(android.net.Uri.parse(profile.uriTitle), TelecomManager.PRESENTATION_UNKNOWN)
+                try {
+                    val profile = conversationFacade.observeConversation(account, Uri.fromString(contactId), false).blockingFirst()
+                    Log.w(TAG, "Set connection metadata ${profile.title} ${android.net.Uri.parse(profile.uriTitle)}")
+                    setCallerDisplayName(profile.title, TelecomManager.PRESENTATION_ALLOWED)
+                    setAddress(android.net.Uri.parse(profile.uriTitle), TelecomManager.PRESENTATION_UNKNOWN)
+                } catch (e: Exception) {
+                    Log.e(TAG, "Error setting connection metadata", e)
+                    setAddress(request.address, TelecomManager.PRESENTATION_UNKNOWN)
+                }
             } else
                 setAddress(request.address, TelecomManager.PRESENTATION_UNKNOWN)
 
