@@ -9,7 +9,7 @@ buildscript {
         mavenCentral()
     }
 
-    val kotlin_version by extra { "1.9.10" }
+    val kotlin_version by extra { "1.9.21" }
     val hilt_version by extra { "2.48.1" }
 
     dependencies {
