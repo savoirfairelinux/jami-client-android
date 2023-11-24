@@ -25,7 +25,8 @@ import io.reactivex.rxjava3.subjects.Subject
 import net.jami.model.Interaction.InteractionStatus
 import net.jami.services.AccountService
 import net.jami.utils.Log
-import java.util.*
+import java.util.Collections
+import java.util.Date
 import kotlin.collections.ArrayList
 
 class Account(
@@ -60,10 +61,6 @@ class Account(
     private val conversationSubject: Subject<Conversation> = PublishSubject.create()
     private val pendingSubject: Subject<List<Conversation>> = BehaviorSubject.create()
     private val conversationsSubject: Subject<List<Conversation>> = BehaviorSubject.create()
-    val unreadConversations: Observable<List<Conversation>> =
-        conversationsSubject.map { conversations ->
-            conversations.filter { it.lastEvent?.isRead == false }
-        }
     private val contactListSubject = BehaviorSubject.create<Collection<Contact>>()
     private val contactLocations: MutableMap<Contact, Observable<ContactLocation>> = HashMap()
     private val mLocationSubject: Subject<Map<Contact, Observable<ContactLocation>>> = BehaviorSubject.createDefault(contactLocations)
@@ -226,7 +223,7 @@ class Account(
             getSortedPending()
         } else {
             conversation?.sortHistory()
-            sortedPending.sortWith { a, b -> Interaction.compare(b.lastEvent, a.lastEvent) }
+            sortedPending.sortWith(ConversationComparator())
         }
         pendingSubject.onNext(getSortedPending())
     }
@@ -253,8 +250,7 @@ class Account(
                 getSortedConversations()
             } else {
                 conversation.sortHistory()
-                sortedConversations.sortWith { a: Conversation, b: Conversation ->
-                    Interaction.compare(b.lastEvent, a.lastEvent) }
+                sortedConversations.sortWith(ConversationComparator())
             }
             // TODO: remove next line when profile is updated through dedicated signal
             conversationSubject.onNext(conversation)
@@ -406,10 +402,9 @@ class Account(
     val displayUsername: String?
         get() {
             if (isJami) {
-                val registeredName: String? = registeredName
-                if (registeredName != null && registeredName.isNotEmpty()) {
+                val registeredName = registeredName
+                if (registeredName.isNotEmpty())
                     return registeredName
-                }
             }
             return username
         }
@@ -900,9 +895,8 @@ class Account(
         getSwarm(conversationId)?.setActiveCalls(activeCalls.map { Conversation.ActiveCall(it) })
 
     private class ConversationComparator : Comparator<Conversation> {
-        override fun compare(a: Conversation, b: Conversation): Int {
-            return Interaction.compare(b.lastEvent, a.lastEvent)
-        }
+        override fun compare(a: Conversation, b: Conversation): Int =
+            Interaction.compare(b.lastEvent, a.lastEvent)
     }
 
     companion object {

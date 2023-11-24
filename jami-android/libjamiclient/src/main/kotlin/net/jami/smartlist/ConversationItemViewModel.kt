@@ -35,7 +35,6 @@ class ConversationItemViewModel(
     var isChecked = false
     var selected: Observable<Boolean>? = conversation.getVisible()
         private set
-    val lastEvent: Interaction? = conversation.lastEvent
     val request: TrustRequest? = conversation.request
 
     enum class Title {
@@ -81,7 +80,6 @@ class ConversationItemViewModel(
         return contacts === other.contacts
                 && title == other.title
                 && isOnline == other.isOnline
-                && lastEvent === other.lastEvent
     }
 
     companion object {
