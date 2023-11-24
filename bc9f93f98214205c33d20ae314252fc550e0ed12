@@ -16,6 +16,29 @@
       "message": "This should be translatable",
       "revId": "bc9f93f98214205c33d20ae314252fc550e0ed12",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "36691b21_17d97d63",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2023-11-24T22:04:30Z",
+      "side": 1,
+      "message": "Replace `that` with `who`? Thank you",
+      "range": {
+        "startLine": 127,
+        "startChar": 31,
+        "endLine": 127,
+        "endChar": 35
+      },
+      "revId": "bc9f93f98214205c33d20ae314252fc550e0ed12",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
