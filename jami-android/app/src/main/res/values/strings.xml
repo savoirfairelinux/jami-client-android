@@ -52,7 +52,79 @@ along with this program; if not, write to the Free Software
     <string name="developed_by">Developed by</string>
     <string name="designed_by">Designed by</string>
     <string name="ringtones_by">Ringtones by</string>
-    <string name="credits_developer" translatable="false">Adrien Béraud\nAlbert Babí\nAlexander Lussier-Cullen\nAlexandr Sergheev\nAlexandre Lision\nAlexandre Viau\nAline Bonnet\nAline Gondim Santos\nAmirHossein Naghshzan\nAndreas Traczyk\nAnthony Léonard\nBrando Tovar\nCyrille Béraud\nEdric Milaret\nÉloi Bail\nEmma Falkiewitz\nEmmanuel Lepage-Vallée\nFrédéric Guimont\nGuillaume Heller\nGuillaume Roguez\nHadrien De Sousa\nJulien Grossholtz\nKateryna Kostiuk\nLoïc Siret\nMarianne Forget\nMichel Schmit\nMingrui Zhang\nMohamed Chibani\nMohamed Amine Younes Bouacida\nNicolas Jäger\nNicolas Reynaud\nOlivier Gregoire\nOlivier Soldano\nPatrick Keroulas\nPeymane Marandi\nPhilippe Gorley\nPierre Duchemin\nPierre Nicolas\nRomain Bertozzi\nSaher Azer\nSébastien Blin\nSeva Ivanov\nSilbino Gonçalves Matado\nSimon Désaulniers\nStepan Salenikovich\nSimon Zeni\nThibault Wittemberg</string>
+    <string name="credits_developer" translatable="false">
+        Adrien Béraud\n
+        Albert Babí\n
+        Alexander Lussier-Cullen\n
+        Alexandr Sergheev\n
+        Alexandre Lision\n
+        Alexandre Viau\n
+        Aline Bonnet\n
+        Aline Gondim Santos\n
+        Alireza Toghiani\n
+        Amin Bandali\n
+        AmirHossein Naghshzan\n
+        Amna Snene\n
+        Andreas Traczyk\n
+        Anthony Léonard\n
+        Brando Tovar\n
+        Capucine Berthet\n
+        Charles-Francis Damedey\n
+        Christophe Villemer\n
+        Charlotte Hoffmann\n
+        Cyrille Béraud\n
+        Dorina Mosku\n
+        Eden Abitbol\n
+        Edric Milaret\n
+        Éloi Bail\n
+        Emma Falkiewitz\n
+        Emmanuel Lepage-Vallée\n
+        Fadi Shehadeh\n
+        Franck Laurent\n
+        Frédéric Guimont\n
+        Guillaume Heller\n
+        Guillaume Roguez\n
+        Hadrien De Sousa\n
+        Hugo Lefeuvre\n
+        Julien Grossholtz\n
+        Kateryna Kostiuk\n
+        Léo Banno-Cloutier\n
+        Liam Courdoson\n
+        Loïc Siret\n
+        Marianne Forget\n
+        Mathéo Joseph\n
+        Michel Schmit\n
+        Mingrui Zhang\n
+        Mohamed Chibani\n
+        Mohamed Amine Younes Bouacida\n
+        Nicolas Jäger\n
+        Nicolas Reynaud\n
+        Nicolas Vengeon\n
+        Olivier Gregoire\n
+        Olivier Soldano\n
+        Patrick Keroulas\n
+        Peymane Marandi\n
+        Philippe Gorley\n
+        Pierre Duchemin\n
+        Pierre Lespagnol\n
+        Pierre Nicolas\n
+        Raphaël Brulé\n
+        Rayan Osseiran\n
+        Romain Bertozzi\n
+        Saher Azer\n
+        Sébastien Blin\n
+        Seva Ivanov\n
+        Silbino Gonçalves Matado\n
+        Simon Désaulniers\n
+        Simon Zeni\n
+        Stepan Salenikovich\n
+        Thibault Wittemberg\n
+        Thomas Ballasi\n
+        Trevor Tabah\n
+        Vsevolod Ivanov\n
+        Xavier Jouslin de Noray\n
+        Yang Wang\n
+        And all the volunteers that contribute to this project!</string>
     <string name="credits_ringtones" translatable="false">Loïc Bogino</string>
 
     <!-- RingActivity -->
