@@ -39,6 +39,29 @@
       },
       "revId": "bc9f93f98214205c33d20ae314252fc550e0ed12",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0d0bcfda_7b35aae5",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2023-11-24T22:08:23Z",
+      "side": 1,
+      "message": "Remove `all ` as superfluous? Thank you",
+      "range": {
+        "startLine": 127,
+        "startChar": 12,
+        "endLine": 127,
+        "endChar": 16
+      },
+      "revId": "bc9f93f98214205c33d20ae314252fc550e0ed12",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
