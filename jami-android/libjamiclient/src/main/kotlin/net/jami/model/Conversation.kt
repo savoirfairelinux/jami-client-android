@@ -112,7 +112,13 @@ class Conversation : ConversationHistory {
         sortHistory()
         aggregateHistory
     }
-    val lastEventSubject: Subject<Interaction> = BehaviorSubject.create()
+    var lastEvent: Interaction? = null
+        private set(e) {
+            field = e
+            if (e != null)
+                lastEventSubject.onNext(e)
+        }
+    private val lastEventSubject: Subject<Interaction> = BehaviorSubject.create()
     val currentStateObservable: Observable<Pair<Interaction, Boolean>> =
         Observable.combineLatest(
             lastEventSubject,
@@ -195,7 +201,7 @@ class Conversation : ConversationHistory {
         }
         // Update the last event if it was just read
         interactions.firstOrNull { it.type != Interaction.InteractionType.INVALID }?.let {
-            lastEventSubject.onNext(it)
+            lastEvent = it
         }
         return interactions
     }
@@ -411,19 +417,11 @@ class Conversation : ConversationHistory {
     fun sortHistory() {
         if (mDirty) {
             aggregateHistory.sortWith { c1, c2 -> c1.timestamp.compareTo(c2.timestamp) }
-            aggregateHistory.lastOrNull { it.type != Interaction.InteractionType.INVALID }?.let {
-                lastEventSubject.onNext(it)
-            }
+            lastEvent = aggregateHistory.lastOrNull { it.type != Interaction.InteractionType.INVALID }
             mDirty = false
         }
     }
 
-    val lastEvent: Interaction?
-        @Synchronized
-        get() {
-            sortHistory()
-            return aggregateHistory.lastOrNull { it.type != Interaction.InteractionType.INVALID }
-        }
 
     val currentCall: Conference?
         get() = if (currentCalls.isEmpty()) null else currentCalls[0]
@@ -509,6 +507,7 @@ class Conversation : ConversationHistory {
 
     @Synchronized
     fun setHistory(loadedConversation: List<Interaction>) {
+        mDirty = true
         aggregateHistory.ensureCapacity(loadedConversation.size)
         for (i in loadedConversation) {
             val interaction = getTypedInteraction(i)
@@ -516,8 +515,7 @@ class Conversation : ConversationHistory {
             aggregateHistory.add(interaction)
             rawHistory[interaction.timestamp] = interaction
         }
-        lastEvent?.let { lastEventSubject.onNext(it) }
-        mDirty = false
+        sortHistory()
     }
 
     @Synchronized
@@ -649,7 +647,7 @@ class Conversation : ConversationHistory {
                 setLastMessageRead(id)
             }
             if (interaction.type != Interaction.InteractionType.INVALID)
-                lastEventSubject.onNext(interaction)
+                lastEvent = interaction
         }
         if (!added) {
             Log.e(TAG, "Can't attach interaction $id with parent ${interaction.parentId}")
