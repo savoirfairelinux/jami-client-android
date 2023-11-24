@@ -22,6 +22,30 @@
       },
       "revId": "f23189572b1cc8c748625f782d2bbe2ccee39563",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5188db4a_80b181e2",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/call/CallPresenter.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-11-24T23:21:01Z",
+      "side": 1,
+      "message": "It should go to ConversationPresenter, because it\u0027s used as an argument to a ConversationPresenter function",
+      "parentUuid": "7cef678f_6c6f72cf",
+      "range": {
+        "startLine": 700,
+        "startChar": 0,
+        "endLine": 700,
+        "endChar": 13
+      },
+      "revId": "f23189572b1cc8c748625f782d2bbe2ccee39563",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
