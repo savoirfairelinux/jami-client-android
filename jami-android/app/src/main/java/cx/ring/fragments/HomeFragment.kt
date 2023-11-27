@@ -366,6 +366,7 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
         (binding.appBar.layoutParams as CoordinatorLayout.LayoutParams).behavior = null
 
         // Hide everything unneeded.
+        binding.donationCard.donationCard.isVisible = false
         binding.searchBar.isVisible = false
         binding.invitationCard.invitationSummary.isVisible = false
         binding.fragmentContainer.isVisible = false
@@ -415,6 +416,7 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
             AppBarLayout.Behavior()
 
         // Show everything needed.
+        binding.donationCard.donationCard.isVisible = presenter.donationCardIsVisible
         binding.searchBar.isVisible = true
         binding.invitationCard.invitationSummary.isVisible = true
         binding.newSwarmFab.isVisible = true

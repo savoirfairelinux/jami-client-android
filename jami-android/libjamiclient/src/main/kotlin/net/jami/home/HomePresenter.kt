@@ -25,6 +25,9 @@ import javax.inject.Inject
 class HomePresenter @Inject constructor(
     private val mPreferencesService: PreferencesService,
 ) : RootPresenter<HomeView>() {
+
+    var donationCardIsVisible = false
+
     override fun bindView(view: HomeView) {
         super.bindView(view)
 
@@ -34,7 +37,7 @@ class HomePresenter @Inject constructor(
         mCompositeDisposable.add(mPreferencesService.donationSettings().subscribe { settings ->
             // No need to show the reminder if user specified not to display it anymore
             if (!settings.donationReminderVisibility) {
-                view.showDonationReminder(false)
+                showDonationReminder(false)
                 return@subscribe
             }
 
@@ -42,8 +45,13 @@ class HomePresenter @Inject constructor(
             val lastDismissed = settings.lastDismissed
             val elapsedDay = (System.currentTimeMillis() - lastDismissed) / 1000 / 60 / 60 / 24
 
-            view.showDonationReminder(elapsedDay >= 7)
+            showDonationReminder(elapsedDay >= 7)
         })
+    }
+
+    private fun showDonationReminder(show: Boolean) {
+        donationCardIsVisible = show
+        view?.showDonationReminder(show)
     }
 
     fun setDonationReminderDismissed() {
