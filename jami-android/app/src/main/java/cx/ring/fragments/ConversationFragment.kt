@@ -49,6 +49,7 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.*
 import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import cx.ring.R
@@ -112,6 +113,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     private var mapHeight = 0
     private var loading = true
     private var animating = 0
+    private var swipeHelper: ItemTouchHelper? = null
 
     private val pickMultipleMedia =
         registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia(8)) { uris ->
@@ -385,6 +387,19 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             val animator = binding.histList.itemAnimator as DefaultItemAnimator?
             animator?.supportsChangeAnimations = false
             binding.histList.adapter = mAdapter
+
+            val messageSwipeController =
+                ActionHelper.MessageSwipeController(
+                    context = requireContext(),
+                    onSwipe = { position: Int ->
+                        mAdapter?.getMessageFromPosition(position)?.let {
+                            presenter.startReplyTo(it)
+                        }
+                    }
+                )
+            swipeHelper = ItemTouchHelper(messageSwipeController).apply {
+                attachToRecyclerView(binding.histList)
+            }
         }
     }
 
