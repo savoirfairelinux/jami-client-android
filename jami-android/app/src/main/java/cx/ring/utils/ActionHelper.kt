@@ -16,18 +16,29 @@
  */
 package cx.ring.utils
 
+import android.annotation.SuppressLint
 import android.content.*
+import android.graphics.Canvas
+import android.graphics.drawable.Drawable
 import android.os.Build
 import android.provider.ContactsContract
 import android.util.Log
+import android.util.TypedValue
+import android.view.HapticFeedbackConstants
+import android.view.MotionEvent
 import android.view.View
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import cx.ring.R
+import cx.ring.adapters.MessageType
 import net.jami.model.Contact
 import net.jami.model.Conversation.ConversationActionCallback
 import net.jami.model.Uri
 import java.util.*
+import kotlin.math.abs
+import kotlin.math.roundToInt
 
 object ActionHelper {
     val TAG = ActionHelper::class.simpleName!!
@@ -159,4 +170,174 @@ object ActionHelper {
         }
     }
 
+    class MessageSwipeController(
+        private val context: Context,
+        private val onSwipe: (Int) -> Unit,
+    ) : ItemTouchHelper.Callback() {
+
+        private lateinit var imageDrawable: Drawable
+        private var currentItemViewHolder: RecyclerView.ViewHolder? = null
+        private lateinit var mView: View
+        private var dX = 0f
+        private var replyButtonProgress = 0f
+        private var lastReplyButtonAnimationTime: Long = 0
+        private var swipeBack = false
+        private var isVibrate = false
+        private var startTracking = false
+        private val swipeLengthLimit = 130.dp
+        private val swipeTrigger = 80.dp
+
+        override fun getMovementFlags(
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+        ): Int {
+            mView = viewHolder.itemView
+            imageDrawable = context.getDrawable(R.drawable.baseline_reply_24) ?: return 0
+
+            val messageType = MessageType.values()[viewHolder.itemViewType]
+
+            val incomingMessageType = listOf(
+                MessageType.INCOMING_TEXT_MESSAGE,
+                MessageType.INCOMING_AUDIO,
+                MessageType.INCOMING_FILE,
+                MessageType.INCOMING_IMAGE,
+                MessageType.INCOMING_VIDEO
+            )
+            val outgoingMessageType = listOf(
+                MessageType.OUTGOING_TEXT_MESSAGE,
+                MessageType.OUTGOING_AUDIO,
+                MessageType.OUTGOING_FILE,
+                MessageType.OUTGOING_IMAGE,
+                MessageType.OUTGOING_VIDEO
+            )
+
+            // Only allows swipe to incoming and outgoing messages.
+            if (messageType in incomingMessageType)
+                return makeMovementFlags(ItemTouchHelper.ACTION_STATE_IDLE, ItemTouchHelper.RIGHT)
+            else if (messageType in outgoingMessageType)
+                return makeMovementFlags(ItemTouchHelper.ACTION_STATE_IDLE, ItemTouchHelper.LEFT)
+            return 0
+        }
+
+        override fun onMove(
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+            target: RecyclerView.ViewHolder,
+        ) = false
+
+        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {}
+
+        override fun convertToAbsoluteDirection(flags: Int, layoutDirection: Int): Int {
+            if (swipeBack) {
+                swipeBack = false
+                return 0
+            }
+            return super.convertToAbsoluteDirection(flags, layoutDirection)
+        }
+
+        override fun onChildDraw(
+            canvas: Canvas,
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+            dX: Float,
+            dY: Float,
+            actionState: Int,
+            isCurrentlyActive: Boolean,
+        ) {
+            if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE)
+                setTouchListener(recyclerView, viewHolder)
+
+            // Allows to limit the swipe length.
+            if (abs(mView.translationX) < swipeLengthLimit || abs(dX) < this.dX) {
+                super.onChildDraw(
+                    canvas, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive
+                )
+                this.dX = abs(dX)
+                startTracking = true
+            }
+            currentItemViewHolder = viewHolder
+            drawReplyButton(canvas)
+        }
+
+        @SuppressLint("ClickableViewAccessibility")
+        private fun setTouchListener(
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+        ) {
+            recyclerView.setOnTouchListener { _, event ->
+                swipeBack = event.action == MotionEvent.ACTION_CANCEL
+                        || event.action == MotionEvent.ACTION_UP
+                if (swipeBack) {
+                    // Define the swipe distance to trigger reply.
+                    if (abs(mView.translationX) >= swipeTrigger) {
+                        onSwipe(viewHolder.bindingAdapterPosition)
+                    }
+                }
+                false
+            }
+        }
+
+        private fun drawReplyButton(canvas: Canvas) {
+            this.currentItemViewHolder ?: return
+
+            val absoluteTranslationX = abs(mView.translationX)
+            val newTime = System.currentTimeMillis()
+            val dt = 17L.coerceAtMost(newTime - lastReplyButtonAnimationTime)
+            lastReplyButtonAnimationTime = newTime
+
+            // Animate reply drawable coming on/off.
+            val showing = absoluteTranslationX >= 30.dp
+            if (showing) {
+                if (replyButtonProgress < 1.0f) {
+                    replyButtonProgress += dt / 180.0f
+                    if (replyButtonProgress > 1.0f) replyButtonProgress = 1.0f
+                    else mView.invalidate()
+                }
+            } else if (absoluteTranslationX == 0.0f) { // Reset.
+                replyButtonProgress = 0f
+                startTracking = false
+                isVibrate = false
+            } else {
+                if (replyButtonProgress > 0.0f) {
+                    replyButtonProgress -= dt / 180.0f
+                    if (replyButtonProgress < 0.1f) replyButtonProgress = 0f
+                    else mView.invalidate()
+                }
+            }
+            val scale: Float = if (showing) {
+                if (replyButtonProgress <= 0.8f) 1.2f * (replyButtonProgress / 0.8f)
+                else 1.2f - 0.2f * ((replyButtonProgress - 0.8f) / 0.2f)
+            } else replyButtonProgress
+
+            if (startTracking) { // Makes device vibrate when reply is triggered.
+                if (!isVibrate && absoluteTranslationX >= swipeTrigger) {
+                    mView.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP)
+                    isVibrate = true
+                }
+            }
+
+            val ratio = 3 // Reply drawable would be drawn at 1/3 of the swipe length.
+            val x: Int = if (absoluteTranslationX > swipeLengthLimit) {
+                if (mView.translationX > 0) swipeLengthLimit / ratio
+                else mView.width - (swipeLengthLimit / ratio)
+            } else {
+                if (mView.translationX > 0) (mView.translationX / ratio).toInt()
+                else mView.width - (absoluteTranslationX / ratio).toInt()
+            }
+            val y = (mView.top + mView.measuredHeight / 2).toFloat()
+            imageDrawable.setBounds(
+                (x - 12.dp * scale).toInt(),
+                (y - 11.dp * scale).toInt(),
+                (x + 12.dp * scale).toInt(),
+                (y + 10.dp * scale).toInt()
+            )
+            imageDrawable.draw(canvas)
+        }
+
+        private val Int.dp
+            get() = TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                toFloat(), context.resources.displayMetrics
+            ).roundToInt()
+    }
 }
