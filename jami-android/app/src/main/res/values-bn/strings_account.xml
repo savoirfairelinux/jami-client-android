@@ -233,7 +233,7 @@
   <string name="account_revoke_device_hint">নিশ্চিত করার জন্য পাসওয়ার্ড লিখুন</string>
   <string name="enter_password">পাসওয়ার্ড লিখুন</string>
   <string name="revoke_device_title">বাতিলকরণ ডিভাইস</string>
-  <string name="revoke_device_message">আপনি কি নিশ্চিত যে আপনি % 1$s বাতিল করতে চান?</string>
+  <string name="revoke_device_message">আপনি কি নিশ্চিত যে আপনি %1$s বাতিল করতে চান?</string>
   <string name="revoke_device_wait_title">দয়া করে অপেক্ষা করুন...</string>
   <string name="revoke_device_wait_message">প্রত্যাহারকারী ডিভাইস</string>
   <string name="rename_device_title">এই ডিভাইসের নাম পরিবর্তন করুন</string>

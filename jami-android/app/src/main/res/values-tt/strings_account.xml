@@ -233,7 +233,7 @@
   <string name="account_revoke_device_hint">Ышаныч бирү өчен пароль кертегез</string>
   <string name="enter_password">Пароль кертегез</string>
   <string name="revoke_device_title">Ачу чарасы</string>
-  <string name="revoke_device_message">% 1$sны кире кагуыгыз киләме?</string>
+  <string name="revoke_device_message">%1$s ны кире кагуыгыз киләме?</string>
   <string name="revoke_device_wait_title">Сөйләмнәр.</string>
   <string name="revoke_device_wait_message">Искәртү аппараты</string>
   <string name="rename_device_title">Бу җайланманы үзгәртеп атагыз</string>

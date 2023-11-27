@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--Strings for xml content description of images-->
-  <string name="contact_quick_call_description">Hızlı Ara</string>
-  <string name="contact_picture_description">Kişi Resmi</string>
+  <string name="contact_quick_call_description">Hızlı Çağrı</string>
+  <string name="contact_picture_description">Kişi Görseli</string>
   <string name="dial_numeric_pad">Sayısal tuşlar</string>
   <string name="contact_unblock">Engeli kaldır</string>
-  <string name="video_plugins">Görüntü Eklentileri</string>
+  <string name="video_plugins">Görüntü Uzantıları</string>
 </resources>

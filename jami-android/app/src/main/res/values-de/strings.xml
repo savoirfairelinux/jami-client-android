@@ -390,4 +390,8 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Willkommen bei Jami</string>
   <string name="welcome_jami_description">Teilen Sie Ihren Jami-Identifikator mit, um einfacher kontaktiert zu werden!</string>
+  <!--Donation-->
+  <string name="donation_card_description">Wenn Sie gerne Jami nutzen und an unsere Mission glauben, würden Sie dann spenden?</string>
+  <string name="donation_card_not_now">Nicht jetzt</string>
+  <string name="donation_donate">Spenden</string>
 </resources>

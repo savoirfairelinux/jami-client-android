@@ -378,4 +378,5 @@
   <string name="jami_id_choose_username">Επιλέξτε όνομα χρήστη</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Καλώς ήλθατε στο  Jami</string>
+  <!--Donation-->
 </resources>

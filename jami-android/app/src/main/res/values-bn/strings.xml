@@ -200,7 +200,7 @@
   <string name="conversation_type_group">গ্রুপ স্টাফ</string>
   <string name="conversation_contact_invited">%1$s আমন্ত্রিত হয়েছে</string>
   <string name="conversation_contact_added">%1$s যোগ করা হয়েছে</string>
-  <string name="conversation_contact_left">%1$ বাম</string>
+  <string name="conversation_contact_left">%1$s বাম</string>
   <string name="conversation_contact_banned">%1$s নিষিদ্ধ করা হয়েছে</string>
   <string name="conversation_search_hint">অনুসন্ধান কথোপকথন</string>
   <!--Contacts-->
@@ -370,7 +370,7 @@
   <string name="dialog_hint_description">বর্ণনা</string>
   <string name="picker_title">পরিচিতি নির্বাচন করুন</string>
   <string name="picker_btn">পরিচিতি নির্বাচন করুন</string>
-  <string name="bottomsheet_contact">জ্যামি % 1$s এর সাথে যোগাযোগ করুন</string>
+  <string name="bottomsheet_contact">জ্যামি %1$s এর সাথে যোগাযোগ করুন</string>
   <string name="bottomsheet_remove">ঘোড়ার থেকে সরিয়ে ফেলুন</string>
   <string name="error_open_no_app_found">এই ফাইলটি সামলানোর জন্য কোন আপ্লিকেশন পাওয়া যাইনি: 1%1$s</string>
   <!--JamiId-->
@@ -379,4 +379,5 @@
   <string name="jami_id_choose_username">একটি ব্যবহারকারীর নাম নির্বাচন করুন</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">জামিতে স্বাগতম</string>
+  <!--Donation-->
 </resources>

@@ -384,4 +384,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Добро пожаловать в Jami</string>
   <string name="welcome_jami_description">Поделитесь своим идентификатором Jami, чтобы с вами было проще связаться!</string>
+  <!--Donation-->
 </resources>

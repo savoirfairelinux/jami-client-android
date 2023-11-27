@@ -380,4 +380,5 @@
   <string name="jami_id_choose_username">Виберіть ім\'я користувача</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Вітаємо в Jami</string>
+  <!--Donation-->
 </resources>

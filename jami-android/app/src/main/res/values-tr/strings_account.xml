@@ -22,9 +22,9 @@
   <string name="dialog_wait_update">Hesap güncelleniyor</string>
   <string name="dialog_wait_update_details">Yeni hesabınız güncellenirken lütfen bekleyin...</string>
   <string name="dialog_warn_ip2ip_account_title">Boş SIP hesabı oluşturulsun mu?</string>
-  <string name="dialog_warn_ip2ip_account_message">Geçerli ana makine adı olmadan SIP hesabı oluşturuyorsunuz.
-  Yalnızca doğrudan ip çağrıları yapabilir ve alabilirsiniz.
-  Hesabınızı daha sonra düzenleyebilirsiniz</string>
+  <string name="dialog_warn_ip2ip_account_message">Geçerli ana makine adı olmadan SIP hesabı oluşturuyorsun.
+        Yalnızca doğrudan ip çağrıları yapabilir ve alabilirsin.
+        Hesabını daha sonra düzenleyebilirsin.</string>
   <string name="account_type_ip2ip">IP hesabı</string>
   <string name="help_ring">Jami hesabı, tümüyle dağıtık ağdan insanlara uçtan uca güvenle ulaşmanızı sağlar.</string>
   <string name="help_sip_title">SIP hesabınızı ekleyin</string>
@@ -59,12 +59,12 @@
   <string name="account_optionnal_category">İsteğe Bağlı Ayarlar</string>
   <string name="account_useragent_label">Kullanıcı Aracısı</string>
   <string name="account_autoanswer_label">Kendiliğinden Yanıtla</string>
-  <string name="account_rendezvous_label">Buluşma Kipi</string>
-  <string name="account_rendezvous_summary">Buluşma kipinde, gelen aramalar bir konferans odasına eklenecek.</string>
+  <string name="account_rendezvous_label">Randevu Kipi</string>
+  <string name="account_rendezvous_summary">Randevu kipinde, gelen çağrılar bir konferans odasına eklenecektir.</string>
   <string name="account_upnp_label">UPnP\'yi etkinleştir</string>
   <string name="account_proxy_field">Vekil</string>
   <!--Plugin Details-->
-  <string name="account_preference_plugin_tab">Eklentiler</string>
+  <string name="account_preference_plugin_tab">Uzantılar</string>
   <!--Audio Details-->
   <string name="account_audio_label">Ses</string>
   <string name="account_preferences_media_tab">Ortam</string>
@@ -73,26 +73,27 @@
   <string name="account_ringtone_path_label">Zil sesi yolu</string>
   <string name="account_ringtone_custom_label">Özel zil sesi kullan</string>
   <string name="account_ringtone_title">Zil sesi seç</string>
-  <string name="account_ringtone_summary">Zil sesi yeğle veya kendininkini seç</string>
+  <string name="account_ringtone_summary">Bir zil belirle veya kendin seç</string>
   <!--Video Details-->
   <string name="account_video_label">Görüntü</string>
   <string name="account_video_enable">Görüntüyü Etkinleştir</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Gelişmiş</string>
-  <string name="account_read_receipts_label">Okundu onaylarını etkinleştir</string>
+  <string name="account_chat_settings_title">Konuşma ayarları</string>
+  <string name="account_read_receipts_label">Okunma bilgisini etkinleştir</string>
   <string name="account_read_receipts_summary">İletinin görüldüğünü belirten onay bilgilerini gönder ve al.</string>
-  <string name="account_call_settings_title">Arama ayarları</string>
+  <string name="account_call_settings_title">Çağrı ayarları</string>
   <string name="account_dht_public_in_calls_label">Bilinmeyen kişilerden gelen çağrılara izin ver</string>
   <string name="account_registration_exp_label">Kaydolma Bitimi</string>
   <string name="account_local_interface_label">Yerel Arayüz</string>
   <string name="account_local_port_label">Yerel Bağlantı Noktası</string>
   <string name="account_stun_enable_label">Stun Kullan</string>
   <string name="account_stun_server_label">Stun Sunucusu</string>
-  <string name="account_accept_files">Gelen dosyaları kendiliğinden kabul et</string>
-  <string name="account_conversation_settings_title">Konuşma ayarları</string>
-  <string name="account_accept_files_max_size">Kendiliğinden kabul edilebilir azami dosya boyutu </string>
-  <string name="account_accept_files_never">Asla kendiliğinden kabul etme</string>
-  <string name="account_accept_files_always">Her zaman kendiliğinden kabul et</string>
+  <string name="account_accept_files">Gelen dosyaları otomatik olarak kabul et</string>
+  <string name="account_conversation_settings_title">Görüşme ayarları</string>
+  <string name="account_accept_files_max_size">Otomatik kabul edilebilir azami dosya boyutu </string>
+  <string name="account_accept_files_never">Asla otomatik olarak kabul etme</string>
+  <string name="account_accept_files_always">Her zaman otomatik kabul et</string>
   <string name="size_mb">%1$dMB</string>
   <string name="account_turn_enable_label">TURN kullan</string>
   <string name="account_turn_server_label">TURN sunucusu</string>
@@ -100,7 +101,7 @@
   <string name="account_turn_password_label">TURN parolası</string>
   <string name="account_published_same_as_local_label">Yayımlanan yerel ile aynı</string>
   <string name="account_published_port_label">Yayımlanan Bağlantı Noktası</string>
-  <string name="account_published_address_label">Yayımlanan Yer</string>
+  <string name="account_published_address_label">Yayınlanan Adres</string>
   <string name="disabled">Engelliler</string>
   <string name="enabled">Etkin</string>
   <string name="account_proxy_label">DHT vekil</string>
@@ -151,19 +152,19 @@
   <string name="account_export_end_error_message">Hesap dışa aktarılamadı. Bilinmeyen hata oluştu.</string>
   <string name="account_enter_password">Parolayı gir</string>
   <string name="account_share_body">Jami dağıtık iletişim platformunda \'%1$s\' kullanarak benimle iletişime geç: %2$s</string>
-  <string name="account_share_body_with_username">Ring dağıtık iletişim platformunda \'%1$s\' veya herkese açık kullanıcı adımı \'%2$s\' kullanarak benimle iletişime geç: %3$s</string>
-  <string name="account_contact_me">Jami\'de bana ulaşın !</string>
+  <string name="account_share_body_with_username">Jami dağıtık iletişim platformunda \'%1$s\' veya herkese açık kullanıcı adımı \'%2$s\' kullanarak benimle iletişime geç: %3$s</string>
+  <string name="account_contact_me">Jami üzerinden bana ulaşın !</string>
   <string name="update_account">Hesabı güncelle</string>
   <string name="account_migration">Jami hesabınız güncellenebilir.\nParolanızı girin.</string>
   <string name="ring_account">Jami hesabı </string>
   <string name="sip_account">SIP hesabı</string>
   <string name="ring_account_identity">Kimlik</string>
   <string name="account_migration_title_dialog">Hesap taşıma</string>
-  <string name="account_migration_message_dialog">Hesaplarınızın güncellenmesi gerekli. Hesap yönetim ekranından bu süreci yürütmek ister misiniz?</string>
+  <string name="account_migration_message_dialog">Hesaplarının güncellenmesi gerekli. Bu işlemi gerçekleştirmek için Hesap yönetimi ekranına gitmek ister misin?</string>
   <string name="account_update_needed">Güncelleme gerekli</string>
   <string name="account_cannot_be_found_title">Hesap bulunamadı</string>
   <string name="account_cannot_be_found_message">Hesap, Jami ağında bulunamadı.\nVar olan aygıttan Jami üzerinde dışa aktarıldığından ve sağladığı bilgilerin doğru olduğundan emin olun.</string>
-  <string name="account_sip_cannot_be_registered_message">Hesap oluşturma süreciyle devam edebilir ya da bilginizi burada düzenleyebilirsiniz. Düzenleme daha sonra hesap ayarlarında yapılabilir.</string>
+  <string name="account_sip_cannot_be_registered_message">Hesap oluşturma süreciyle devam edebilir ya da bilgilerini burada düzenleyebilirsin. Düzenleme daha sonra hesap ayarlarında yapılabilir.</string>
   <string name="account_no_network_title">Ağa bağlanılamıyor</string>
   <string name="account_no_network_message">Hesap eklenemiyor çünkü Jami dağıtık ağa bağlanamıyor. Bağlanabilirliğinizi denetleyin.</string>
   <string name="account_device_added_title">Hesap aygıtı eklendi</string>
@@ -192,12 +193,12 @@
   <string name="account_link_export_button">Yeni aygıt bağla</string>
   <string name="account_link_show_button">Diğer %d bağlı aygıtı göster</string>
   <string name="account_link_hide_button">Bağlı aygıtı gizle</string>
-  <string name="account_link_export_info">Bu hesabı başka aygıtlarda kullanmak için önce Jami\'de açığa çıkarmalısınız. Bu, hesabı kurmak için yeni aygıtta girmeniz gereken PIN kodu oluşturacak. PIN, 10 dakikalığına geçerlidir.</string>
+  <string name="account_link_export_info">Bu hesabı diğer aygıtlarda kullanmak için öncelikle onu Jami de göstermelisin. Bu, hesabı ayarlamak için yeni aygıta girmen gereken bir PIN kodu oluşturacaktır. PIN 10 dakika süreyle geçerlidir.</string>
   <string name="account_start_export_button">PIN oluştur</string>
   <string name="account_end_export_button">kapat</string>
-  <string name="account_end_export_infos">PIN\'iniz:\n\n%%\n\nSüreci tamamlamak için yeni aygıtta Ring\'i açmanız gerekiyor. \"Bu aygıtı hesaba bağla\" ile yeni hesap oluşturun. PIN\'iniz 10 dakikalığına geçerlidir.</string>
-  <string name="account_link_export_info_light">Bu hesabı başka aygıtlarda kullanmak için önce Jami\'de açığa çıkarmalısınız. Bu, hesabı kurmak için yeni aygıtta girmeniz gereken PIN kodu oluşturacak. PIN, 10 dakikalığına geçerlidir.</string>
-  <string name="account_export_title">Hesabı diğer cihazlara bağla</string>
+  <string name="account_end_export_infos">PIN: \n\n%%\n\nSüreci tamamlamak için yeni aygıtta Ring açman gerekiyor. \"Bu aygıtı hesaba bağla\" ile yeni hesap oluştur. PIN 10 dakikalığına geçerlidir.</string>
+  <string name="account_link_export_info_light">Bu hesabı diğer aygıtlarda kullanmak için öncelikle onu Jami de göstermelisin. Bu, hesabı ayarlamak için yeni aygıta girmen gereken bir PIN kodu oluşturacaktır. PIN 10 dakika süreyle geçerlidir.</string>
+  <string name="account_export_title">Hesabı diğer aygıtlara bağla</string>
   <string name="account_connect_server_button">Yönetim sunucusuna bağlan</string>
   <string name="account_connect_button">Bağlan</string>
   <string name="prompt_server">Jami Yönetim Sunucusu URL\'si</string>
@@ -235,7 +236,7 @@
   <string name="account_revoke_device_hint">Onaylamak için parolayı girin</string>
   <string name="enter_password">Parolayı gir</string>
   <string name="revoke_device_title">Aygıtı kaldır</string>
-  <string name="revoke_device_message">%1$s kaldırılacak, emin misiniz?</string>
+  <string name="revoke_device_message">%1$s kaldırılacak, emin misin?</string>
   <string name="revoke_device_wait_title">Lütfen bekleyin...</string>
   <string name="revoke_device_wait_message">Aygıt iptal ediliyor</string>
   <string name="rename_device_title">Bu aygıtı yeniden adlandır</string>
@@ -246,7 +247,22 @@
   <string name="account_device_this_indicator">Bu aygıt</string>
   <string name="account_disabled_indicator">devre dışı</string>
   <!--Link a new device-->
+  <string name="account_link_prompt_pin_manually">PIN\'i manuel olarak girin</string>
+  <string name="content_description_checkbox">QR Kodunuz geçerli</string>
   <string name="error_format_not_supported">Bu biçim desteklenmiyor.</string>
+  <string name="account_link_info">Yeni Jami uygulamasında QR kodunu tarayın veya PIN\'i manuel olarak girin.</string>
   <string name="account_link_device_title">Yeni aygıt bağla</string>
+  <string name="account_link_password">Bu hesap parola ile şifrelenmiştir; PIN kodunu oluşturmak için parolayı girin.</string>
+  <string name="account_link_generate_button">Oluştur</string>
+  <string name="account_link_time_valid">%1$s sonra bu PIN geçerliliğini yitirecek.</string>
+  <string name="account_link_device_info">QR kodunu veya PIN\'i görmek için diğer Jami uygulamasından \"Yeni bir aygıt bağla\"yı seç</string>
+  <string name="account_generate_export_device">Diğer aygıtta</string>
+  <string name="account_generate_export_info">Jami\'yi kur ve başlat, \"Başka bir aygıttan içe aktar\"ı seç ve QR kodunu tara.</string>
+  <string name="content_description_qr_generated">QR kodunuz</string>
+  <string name="account_generate_export_invalid">PIN artık geçerli değil.\n Parolayı gir ve yeni aygıtı bağlamak için başka bir tane oluştur.</string>
+  <string name="account_generate_export_invalid_two">PIN artık geçerli değil.\n Yeni aygıtı bağlamak için başka bir PIN oluştur.</string>
+  <string name="help_pin_info">Hesap parola ile şifrelenmişse doldurun</string>
+  <string name="connect_device_scanqr">QR kodu tara</string>
+  <string name="connect_device_enterPIN">veya PIN\'i gir</string>
   <string name="account_link_device_button">Bağlan</string>
 </resources>

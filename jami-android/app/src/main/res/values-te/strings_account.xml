@@ -233,7 +233,7 @@
   <string name="account_revoke_device_hint">నిర్ధారించడానికి పాస్వర్డ్ను నమోదు చేయండి</string>
   <string name="enter_password">పాస్వర్డ్ను నమోదు చేయండి</string>
   <string name="revoke_device_title">ఉపకరణాన్ని రద్దు చేయడం</string>
-  <string name="revoke_device_message">% 1$s ను రద్దు చేయాలనుకుంటున్నారా అని మీకు ఖచ్చితంగా తెలుసా?</string>
+  <string name="revoke_device_message">%1$s ను రద్దు చేయాలనుకుంటున్నారా అని మీకు ఖచ్చితంగా తెలుసా?</string>
   <string name="revoke_device_wait_title">దయచేసి వేచి ఉండండి.</string>
   <string name="revoke_device_wait_message">ఉపసంహరించుకునే పరికరం</string>
   <string name="rename_device_title">ఈ పరికరాన్ని పేరు మార్చు</string>

@@ -88,4 +88,8 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Bienvenido a Jami</string>
   <string name="welcome_jami_description">¡Comparta su identificador Jami para contactar más fácilmente!</string>
+  <!--Donation-->
+  <string name="donation_card_description">Si disfruta usando Jami y cree en nuestra misión, ¿le gustaría hacer una donación?</string>
+  <string name="donation_card_not_now">Ahora no</string>
+  <string name="donation_donate">Donar</string>
 </resources>

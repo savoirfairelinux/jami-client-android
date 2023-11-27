@@ -390,4 +390,8 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Üdvözli a Jami</string>
   <string name="welcome_jami_description">Oszd meg ennek a fióknak a Jami-azonosítóját, hogy mások könnyebben kapcsolatba léphessenek Önnel!</string>
+  <!--Donation-->
+  <string name="donation_card_description">Ha hisz a küldetésünkben, adományozna?</string>
+  <string name="donation_card_not_now">Máskor</string>
+  <string name="donation_donate">Adományozás</string>
 </resources>

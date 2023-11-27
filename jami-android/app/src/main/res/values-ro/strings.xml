@@ -101,7 +101,7 @@
   <string name="ongoing_call">Apel în curs</string>
   <string name="hist_in_call">Apel primit %1$s</string>
   <string name="hist_out_call">Apel efectuat %1$s</string>
-  <string name="call_duration">A durat %s</string>
+  <string name="call_duration">Durata %s</string>
   <string name="start_error_title">Jami nu se deschide!</string>
   <string name="start_error_mic_required">Jami trebuie să folosească microfonul ca să funcționeze.</string>
   <string name="action_call_accept">Răspunde</string>
@@ -391,4 +391,8 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Bine ai venit pe Jami</string>
   <string name="welcome_jami_description">Împărtășește identificatorul tău Jami pentru a fi contactat mai ușor!</string>
+  <!--Donation-->
+  <string name="donation_card_description">Dacă îți place să folosești Jami și crezi că misiunea noastră este importantă, poți face o donație?</string>
+  <string name="donation_card_not_now">Nu acum</string>
+  <string name="donation_donate">Donează</string>
 </resources>

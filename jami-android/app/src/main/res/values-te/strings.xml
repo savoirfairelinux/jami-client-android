@@ -200,7 +200,7 @@
   <string name="conversation_type_group">సమూహ సమూహం</string>
   <string name="conversation_contact_invited">%1$s ఆహ్వానించబడింది</string>
   <string name="conversation_contact_added">%1$s చేరింది</string>
-  <string name="conversation_contact_left">%1$ ఎడమవైపు</string>
+  <string name="conversation_contact_left">%1$s ఎడమవైపు</string>
   <string name="conversation_contact_banned">%1$s నిషేధించబడింది</string>
   <string name="conversation_search_hint">శోధన సంభాషణ</string>
   <!--Contacts-->
@@ -378,4 +378,5 @@
   <string name="jami_id_choose_username">ఒక వినియోగదారు పేరును ఎంచుకోండి</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">జామికి స్వాగతం</string>
+  <!--Donation-->
 </resources>

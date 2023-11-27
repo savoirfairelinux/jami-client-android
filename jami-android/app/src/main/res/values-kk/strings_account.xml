@@ -233,7 +233,7 @@
   <string name="account_revoke_device_hint">Құжатты растау үшін парольді келтіріңіз</string>
   <string name="enter_password">Парольді келтіріңіз</string>
   <string name="revoke_device_title">Қайта шығару құрылғысы</string>
-  <string name="revoke_device_message">% 1$-ды қайтарып алуыңыздың рас па?</string>
+  <string name="revoke_device_message">%1$s-ды қайтарып алуыңыздың рас па?</string>
   <string name="revoke_device_wait_title">Күте көріңіз...</string>
   <string name="revoke_device_wait_message">Қайтарып алу құрылғысы</string>
   <string name="rename_device_title">Құрылғының атын өзгерту</string>

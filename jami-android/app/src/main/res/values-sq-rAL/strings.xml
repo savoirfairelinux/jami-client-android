@@ -389,4 +389,8 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Mirë se vini te Jami</string>
   <string name="welcome_jami_description">Jepuani të tjerëve identifikuesin tuaj Jami, që të lidhen më lehtësisht me ju!</string>
+  <!--Donation-->
+  <string name="donation_card_description">Nëse ju shijon të përdorni Jami-n dhe besoni në misionin tonë, a do të bënit një dhurim?</string>
+  <string name="donation_card_not_now">Jo tani</string>
+  <string name="donation_donate">Dhuroni</string>
 </resources>

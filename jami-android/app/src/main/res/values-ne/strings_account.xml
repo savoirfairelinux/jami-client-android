@@ -233,7 +233,7 @@
   <string name="account_revoke_device_hint">पुष्टि गर्न पासवर्ड प्रविष्ट गर्नुहोस्</string>
   <string name="enter_password">पासवर्ड प्रविष्ट गर्नुहोस्</string>
   <string name="revoke_device_title">रिभ्यु उपकरण</string>
-  <string name="revoke_device_message">के तपाईँ % 1$s रद्द गर्न चाहनुहुन्छ?</string>
+  <string name="revoke_device_message">के तपाईँ %1$s रद्द गर्न चाहनुहुन्छ?</string>
   <string name="revoke_device_wait_title">कृपया प्रतीक्षा गर्नुहोस्...</string>
   <string name="revoke_device_wait_message">रिभोकेसन उपकरण</string>
   <string name="rename_device_title">यो यन्त्रको नाम परिवर्तन गर्नुहोस्</string>
