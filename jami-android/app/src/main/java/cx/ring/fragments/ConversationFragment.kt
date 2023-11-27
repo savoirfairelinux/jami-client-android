@@ -46,6 +46,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.*
 import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import cx.ring.R
@@ -145,6 +146,8 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             mainContainer.updatePadding(bottom = insets.bottom)
         }
     }
+
+    private var swipeHelper: ItemTouchHelper? = null
 
     private val pickMultipleMedia =
         registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia(8)) { uris ->
@@ -393,6 +396,19 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             (histList.itemAnimator as? DefaultItemAnimator)?.supportsChangeAnimations = false
             histList.adapter = mAdapter
             searchList.adapter = mSearchAdapter
+
+            val messageSwipeController =
+                ActionHelper.MessageSwipeController(
+                    context = requireContext(),
+                    onSwipe = { position: Int ->
+                        mAdapter?.getMessageFromPosition(position)?.let {
+                            presenter.startReplyTo(it)
+                        }
+                    }
+                )
+            swipeHelper = ItemTouchHelper(messageSwipeController).apply {
+                attachToRecyclerView(histList)
+            }
         }
     }
 
