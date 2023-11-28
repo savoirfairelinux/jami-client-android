@@ -84,6 +84,18 @@ class AccountService(
     private var mHasRingAccount = false
     private val accountsSubject = BehaviorSubject.create<List<Account>>()
     private val observableAccounts: Subject<Account> = PublishSubject.create()
+
+    private val activeCallsSubject: Subject<ConversationActiveCalls> =
+        PublishSubject.create()
+    val activeCallsObservable: Observable<ConversationActiveCalls> =
+        activeCallsSubject
+
+    data class ConversationActiveCalls(
+        val accountId: String,
+        val conversationId: String,
+        val activeCalls: List<Conversation.ActiveCall>
+    )
+
     val currentAccountSubject: Observable<Account> = accountsSubject
         .filter { l -> l.isNotEmpty() }
         .map { l -> l[0] }
@@ -1042,7 +1054,17 @@ class AccountService(
         accountId: String,
         conversationId: String,
         activeCalls: List<Map<String, String>>,
-    ) = getAccount(accountId)?.setActiveCalls(conversationId, activeCalls)
+    ) {
+        val activeCallList = activeCalls.map { Conversation.ActiveCall(it) }
+        activeCallsSubject.onNext(
+            ConversationActiveCalls(
+                accountId,
+                conversationId,
+                activeCallList
+            )
+        )
+        getAccount(accountId)?.setActiveCalls(conversationId, activeCallList)
+    }
 
     fun accountProfileReceived(accountId: String, name: String?, photo: String?) {
         val account = getAccount(accountId) ?: return

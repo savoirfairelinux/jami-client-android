@@ -912,8 +912,8 @@ class Account(
         mDataTransfers[fileId] = transfer
     }
 
-    fun setActiveCalls(conversationId: String, activeCalls: List<Map<String, String>>) =
-        getSwarm(conversationId)?.setActiveCalls(activeCalls.map { Conversation.ActiveCall(it) })
+    fun setActiveCalls(conversationId: String, activeCalls: List<Conversation.ActiveCall>) =
+        getSwarm(conversationId)?.setActiveCalls(activeCalls)
 
     private fun updateUnreadConversations() {
         var unread = 0
