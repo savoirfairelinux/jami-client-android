@@ -88,6 +88,12 @@ class AccountService(
     private var mStartingTransfer: DataTransfer? = null
     private val accountsSubject = BehaviorSubject.create<List<Account>>()
     private val observableAccounts: Subject<Account> = PublishSubject.create()
+
+    private val activeCallsSubject: Subject<Triple<String, String, List<Conversation.ActiveCall>>> =
+        PublishSubject.create()
+    val activeCallsObservable: Observable<Triple<String, String, List<Conversation.ActiveCall>>> =
+        activeCallsSubject
+
     val currentAccountSubject: Observable<Account> = accountsSubject
         .filter { l -> l.isNotEmpty() }
         .map { l -> l[0] }
@@ -1028,7 +1034,12 @@ class AccountService(
         accountId: String,
         conversationId: String,
         activeCalls: List<Map<String, String>>,
-    ) = getAccount(accountId)?.setActiveCalls(conversationId, activeCalls)
+    ) {
+        activeCallsSubject.onNext(
+            Triple(accountId, conversationId, activeCalls.map { Conversation.ActiveCall(it) })
+        )
+        getAccount(accountId)?.setActiveCalls(conversationId, activeCalls)
+    }
 
     fun accountProfileReceived(accountId: String, name: String?, photo: String?) {
         val account = getAccount(accountId) ?: return
