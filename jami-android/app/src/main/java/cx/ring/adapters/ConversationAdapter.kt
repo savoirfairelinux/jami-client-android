@@ -1390,15 +1390,37 @@ class ConversationAdapter(
                             convViewHolder.mAcceptCallVideoButton ?: return@subscribe
 
                         if (callStartedMsg.isIncoming) {
-                            // Show the avatar of the contact who is calling
-                            avatar?.let {
-                                it.setImageBitmap(null)
-                                it.visibility = View.VISIBLE
-                                it.setImageDrawable(
-                                    conversationFragment.getConversationAvatar(
-                                        contact.primaryNumber
-                                    )
+                            // Show the avatar of the caller depending on the position of the message.
+                            val endOfSeq =
+                                msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE
+                            // Manage animation for avatar.
+                            if (endOfSeq) {
+                                avatar?.setImageDrawable(
+                                    conversationFragment.getConversationAvatar(contact.primaryNumber)
                                 )
+                                avatar?.visibility = View.VISIBLE
+                            } else {
+                                if (position == lastMsgPos - 1) {
+                                    avatar?.startAnimation(
+                                        AnimationUtils.loadAnimation(
+                                            avatar.context,
+                                            R.anim.fade_out
+                                        )
+                                            .apply {
+                                                setAnimationListener(object :
+                                                    Animation.AnimationListener {
+                                                    override fun onAnimationStart(arg0: Animation) {}
+                                                    override fun onAnimationRepeat(arg0: Animation) {}
+                                                    override fun onAnimationEnd(arg0: Animation) {
+                                                        avatar.setImageBitmap(null)
+                                                        avatar.visibility = View.INVISIBLE
+                                                    }
+                                                })
+                                            })
+                                } else {
+                                    avatar?.setImageBitmap(null)
+                                    avatar?.visibility = View.INVISIBLE
+                                }
                             }
                             // We can call ourselves in a group call with different devices.
                             // Set the message to the left when it is incoming.
