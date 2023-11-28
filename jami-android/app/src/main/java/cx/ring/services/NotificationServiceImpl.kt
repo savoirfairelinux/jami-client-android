@@ -503,21 +503,29 @@ class NotificationServiceImpl(
     /**
      * Function to show a group call notification.
      */
-    override fun showGroupCallNotification(conversation: Conversation) {
+    override fun showGroupCallNotification(conversation: Conversation, remove: Boolean) {
         // Call the showGroupCallNotification function with the loaded conversation.
         mContactService.getLoadedConversation(conversation)
-            .subscribe({ cvm -> showGroupCallNotification(cvm) })
+            .subscribe({ cvm -> showGroupCallNotification(cvm, remove) })
             { e: Throwable -> Log.w(TAG, "Can't load contact", e) }
     }
 
     /**
      * Function to show a group call notification.
      */
-    private fun showGroupCallNotification(cvm: ConversationItemViewModel) {
+    private fun showGroupCallNotification(cvm: ConversationItemViewModel, remove: Boolean) {
         // Obtain the conversation path and key
         val cpath = ConversationPath(cvm.accountId, cvm.uri)
         val path = cpath.toUri()
         val key = cpath.toKey()
+
+        // Generate a unique notification ID
+        val notificationId = getTextNotificationId(cpath.accountId, cvm.uri)
+
+        if (remove) { // Remove the notification if the call is no longer in progress.
+            CarNotificationManager.from(mContext).cancel(notificationId)
+            return
+        }
 
         // Get the conversation profile
         val conversationProfile = getProfile(cvm)
@@ -551,8 +559,6 @@ class NotificationServiceImpl(
             .setColor(ResourcesCompat.getColor(mContext.resources, R.color.color_primary_dark, null))
         messageNotificationBuilder.setLargeIcon(conversationProfile.first)
 
-        // Generate a unique notification ID
-        val notificationId = getTextNotificationId(cpath.accountId, cvm.uri)
         // Notify the notification
         CarNotificationManager.from(mContext).notify(notificationId, messageNotificationBuilder)
         // Save the notification builder for future reference
