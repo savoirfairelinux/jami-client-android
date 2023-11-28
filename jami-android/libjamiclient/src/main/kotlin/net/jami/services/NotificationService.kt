@@ -26,7 +26,7 @@ interface NotificationService {
     fun preparePendingScreenshare(conference: Conference, callback: () -> Unit)
     fun startPendingScreenshare(confId: String)
     fun showMissedCallNotification(call: Call)
-    fun showGroupCallNotification(conversation: Conversation)
+    fun showGroupCallNotification(conversation: Conversation, remove: Boolean = false)
     fun showTextNotification(conversation: Conversation)
     fun cancelTextNotification(accountId: String, contact: Uri)
     fun cancelAll()
