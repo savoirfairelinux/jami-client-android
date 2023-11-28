@@ -897,7 +897,7 @@ class Account(
     }
 
     fun setActiveCalls(conversationId: String, activeCalls: List<Map<String, String>>) =
-        getSwarm(conversationId)?.setActiveCalls(activeCalls)
+        getSwarm(conversationId)?.setActiveCalls(activeCalls.map { Conversation.ActiveCall(it) })
 
     private class ConversationComparator : Comparator<Conversation> {
         override fun compare(a: Conversation, b: Conversation): Int {

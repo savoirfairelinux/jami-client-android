@@ -772,8 +772,8 @@ class Conversation : ConversationHistory {
         }
     }
 
-    fun setActiveCalls(activeCalls: List<Map<String, String>>) =
-        activeCallsSubject.onNext(activeCalls.map { ActiveCall(it) })
+    fun setActiveCalls(activeCalls: List<ActiveCall>) =
+        activeCallsSubject.onNext(activeCalls)
 
     private val conferenceStarted: MutableMap<String, Call> = HashMap()
     private val conferenceEnded: MutableMap<String, Call> = HashMap()
