@@ -268,6 +268,9 @@ class AccountService(
                 val mode = if ("true" == info["syncing"]) Conversation.Mode.Syncing else Conversation.Mode.values()[info["mode"]?.toInt() ?: Conversation.Mode.Syncing.ordinal]
                 val conversation = account.newSwarm(conversationId, mode)
                 conversation.setProfile(mVCardService.loadConversationProfile(info))
+                JamiService.getActiveCalls(account.accountId, conversationId)
+                    .map { Conversation.ActiveCall(it) }
+                    .let { conversation.setActiveCalls(it) }
 
                 val preferences = // Load conversation preferences (color, symbol, etc.)
                     JamiService.getConversationPreferences(account.accountId, conversationId)
