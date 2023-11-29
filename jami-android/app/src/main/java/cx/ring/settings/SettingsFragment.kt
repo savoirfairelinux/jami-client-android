@@ -68,6 +68,8 @@ class SettingsFragment :
 
     private val backPressedCallback = object : OnBackPressedCallback(false) {
         override fun handleOnBackPressed() {
+            val binding = binding ?: return
+            binding.donateButton.isVisible = true
             popBackStack()
         }
     }
@@ -150,6 +152,7 @@ class SettingsFragment :
         }.root
 
     private fun goToVideoSettings() {
+        val binding = binding ?: return
         val content = VideoSettingsFragment()
         fragment = content
         childFragmentManager
@@ -157,11 +160,13 @@ class SettingsFragment :
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
             .replace(fragmentContainerId, content, VIDEO_SETTINGS_TAG)
             .addToBackStack(VIDEO_SETTINGS_TAG).commit()
-        binding!!.fragmentContainer.isVisible = true
+        binding.fragmentContainer.isVisible = true
+        binding.donateButton.isVisible = false
         backPressedCallback.isEnabled = true
     }
 
     private fun goToPluginsListSettings(accountId: String? = "") {
+        val binding = binding ?: return
         val content = PluginsListSettingsFragment.newInstance(accountId)
         fragment = content
         childFragmentManager
@@ -169,7 +174,8 @@ class SettingsFragment :
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
             .replace(fragmentContainerId, content, PLUGINS_LIST_SETTINGS_TAG)
             .addToBackStack(PLUGINS_LIST_SETTINGS_TAG).commit()
-        binding!!.fragmentContainer.isVisible = true
+        binding.fragmentContainer.isVisible = true
+        binding.donateButton.isVisible = false
         backPressedCallback.isEnabled = true
     }
 
