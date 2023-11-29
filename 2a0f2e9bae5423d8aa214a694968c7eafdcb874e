@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "088c0108_8a9e7218",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 12
+      },
+      "lineNbr": 1474,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-11-29T16:07:00Z",
+      "side": 1,
+      "message": "syntax",
+      "range": {
+        "startLine": 1474,
+        "startChar": 0,
+        "endLine": 1474,
+        "endChar": 14
+      },
+      "revId": "2a0f2e9bae5423d8aa214a694968c7eafdcb874e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e779da3b_c2f0649f",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 12
+      },
+      "lineNbr": 1599,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-11-29T16:07:00Z",
+      "side": 1,
+      "message": "interaction",
+      "range": {
+        "startLine": 1599,
+        "startChar": 40,
+        "endLine": 1599,
+        "endChar": 51
+      },
+      "revId": "2a0f2e9bae5423d8aa214a694968c7eafdcb874e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "79f35658_c781a650",
+        "filename": "jami-android/app/src/main/java/cx/ring/tv/conversation/TvConversationAdapter.kt",
+        "patchSetId": 12
+      },
+      "lineNbr": 1085,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-11-29T16:07:00Z",
+      "side": 1,
+      "message": "typo!",
+      "range": {
+        "startLine": 1085,
+        "startChar": 0,
+        "endLine": 1085,
+        "endChar": 14
+      },
+      "revId": "2a0f2e9bae5423d8aa214a694968c7eafdcb874e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
