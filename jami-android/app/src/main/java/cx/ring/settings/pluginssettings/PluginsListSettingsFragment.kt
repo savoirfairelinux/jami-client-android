@@ -118,27 +118,12 @@ class PluginsListSettingsFragment : Fragment(), PluginListItemListener {
         }
         return when (i) {
             0 -> pluginFile.name
-            100 -> throw IOException(
-                resources
-                    .getString(
-                        R.string.plugin_same_version_exception,
-                        pluginFile.name
-                    )
-            )
-            200 -> throw IOException(
-                resources
-                    .getString(
-                        R.string.plugin_recent_version_exception,
-                        pluginFile.name
-                    )
-            )
-            else -> throw IOException(
-                resources
-                    .getString(
-                        R.string.plugin_install_failure,
-                        pluginFile.name
-                    )
-            )
+            100 -> throw IOException(getString(R.string.plugin_same_version_exception, pluginFile.name))
+            200 -> throw IOException(getString(R.string.plugin_recent_version_exception, pluginFile.name))
+            300 -> throw IOException(getString(R.string.plugin_invalid_signature, pluginFile.name))
+            400 -> throw IOException(getString(R.string.plugin_invalid_authority, pluginFile.name))
+            500 -> throw IOException(getString(R.string.plugin_invalid_format, pluginFile.name))
+            else -> throw IOException(getString(R.string.plugin_install_failure, pluginFile.name))
         }
     }
 
