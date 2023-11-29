@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5845376b_16839838",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-11-29T16:24:00Z",
+      "side": 1,
+      "message": "to check with @choffmann if feature is wanted.\ncode is ok",
+      "revId": "5f62f81a508bc941e0a4eca1ab4ddb2d28d0fe11",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "196fd6db_ffc4ede0",
+        "filename": "jami-android/app/src/main/java/cx/ring/tv/conversation/TvConversationAdapter.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 694,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-11-29T16:24:00Z",
+      "side": 1,
+      "message": "syntax",
+      "range": {
+        "startLine": 694,
+        "startChar": 0,
+        "endLine": 694,
+        "endChar": 27
+      },
+      "revId": "5f62f81a508bc941e0a4eca1ab4ddb2d28d0fe11",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
