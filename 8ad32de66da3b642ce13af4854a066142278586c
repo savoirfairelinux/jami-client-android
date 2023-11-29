@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "21238fb5_b69366a2",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 14
+      },
+      "lineNbr": 1257,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-11-29T16:38:13Z",
+      "side": 1,
+      "message": "syntax",
+      "range": {
+        "startLine": 1257,
+        "startChar": 0,
+        "endLine": 1257,
+        "endChar": 14
+      },
+      "revId": "8ad32de66da3b642ce13af4854a066142278586c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "85353eda_7459b075",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 14
+      },
+      "lineNbr": 1259,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-11-29T16:38:13Z",
+      "side": 1,
+      "message": "explains what the animation is",
+      "range": {
+        "startLine": 1259,
+        "startChar": 0,
+        "endLine": 1259,
+        "endChar": 12
+      },
+      "revId": "8ad32de66da3b642ce13af4854a066142278586c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a3cf3790_f3f1ee0d",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 14
+      },
+      "lineNbr": 1593,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-11-29T16:38:13Z",
+      "side": 1,
+      "message": "uneeded",
+      "range": {
+        "startLine": 1593,
+        "startChar": 0,
+        "endLine": 1593,
+        "endChar": 4
+      },
+      "revId": "8ad32de66da3b642ce13af4854a066142278586c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aefcd093_6984662d",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 14
+      },
+      "lineNbr": 1622,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-11-29T16:38:13Z",
+      "side": 1,
+      "message": "maybe thgis object can be isolated instead of being copy paste several times",
+      "range": {
+        "startLine": 1609,
+        "startChar": 36,
+        "endLine": 1622,
+        "endChar": 38
+      },
+      "revId": "8ad32de66da3b642ce13af4854a066142278586c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2240388e_169f91c6",
+        "filename": "jami-android/app/src/main/java/cx/ring/tv/conversation/TvConversationAdapter.kt",
+        "patchSetId": 14
+      },
+      "lineNbr": 958,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-11-29T16:38:13Z",
+      "side": 1,
+      "message": "syntax",
+      "range": {
+        "startLine": 958,
+        "startChar": 0,
+        "endLine": 958,
+        "endChar": 13
+      },
+      "revId": "8ad32de66da3b642ce13af4854a066142278586c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "72814861_35273cf4",
+        "filename": "jami-android/app/src/main/java/cx/ring/tv/conversation/TvConversationAdapter.kt",
+        "patchSetId": 14
+      },
+      "lineNbr": 959,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-11-29T16:38:13Z",
+      "side": 1,
+      "message": "here",
+      "range": {
+        "startLine": 959,
+        "startChar": 0,
+        "endLine": 959,
+        "endChar": 12
+      },
+      "revId": "8ad32de66da3b642ce13af4854a066142278586c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a61875b4_83515d9d",
+        "filename": "jami-android/app/src/main/res/layout/item_conv_msg_peer_tv.xml",
+        "patchSetId": 14
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-11-29T16:38:13Z",
+      "side": 1,
+      "message": ";(",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 2
+      },
+      "revId": "8ad32de66da3b642ce13af4854a066142278586c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
