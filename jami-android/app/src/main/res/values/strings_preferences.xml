@@ -91,6 +91,9 @@
     <string name="plugin_install_failure">Failed to install plugin: <b>%1$s</b></string>
     <string name="plugin_recent_version_exception">You have a more recent version of: <b>%1$s</b></string>
     <string name="plugin_same_version_exception">You have the same version of <b>%1$s</b> installed</string>
+    <string name="plugin_invalid_signature"><b>%1$s</b> has an invalid signature</string>
+    <string name="plugin_invalid_authority">Can\'t verify authority for: <b>%1$s</b></string>
+    <string name="plugin_invalid_format">Invalid plugin format: <b>%1$s</b></string>
     <string name="plugin_force_install">force \n install</string>
     <string name="plugin_path_image_add">Add a new image</string>
 
