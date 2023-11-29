@@ -16,6 +16,24 @@
       "message": "The list is updated through a signal after startup. So there is no reason to expose this method.  JamiService.getActiveCalls should only be used in loadAccount",
       "revId": "2367a8af6a3b0f15566a02a0b3e2888b35ffb29d",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "25c8dbce_34a8289d",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1568,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-11-29T14:52:51Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "c548d22b_d62cc24c",
+      "revId": "2367a8af6a3b0f15566a02a0b3e2888b35ffb29d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
