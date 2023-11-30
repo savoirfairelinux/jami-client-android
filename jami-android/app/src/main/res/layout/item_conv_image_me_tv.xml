@@ -15,53 +15,44 @@
   ~ along with this program; if not, write to the Free Software
   ~  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
   -->
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="8dp"
-    android:orientation="vertical"
+    android:background="@android:color/transparent"
+    android:clipChildren="false"
+    android:clipToPadding="false"
     android:focusable="true"
     android:gravity="center"
-    android:clipChildren="false"
-    android:clipToPadding="false">
-
-    <TextView
-        android:id="@+id/msg_details_txt_perm"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:textColor="@color/conversation_secondary_background"
-        android:textSize="14sp"
-        android:paddingTop="4dp"
-        tools:text="@string/time_just_now" />
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/padding_xsmall"
+    tools:background="@color/tv_contact_background">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="8dp"
-        android:paddingEnd="2dp"
-        android:paddingStart="72dp"
         android:clipChildren="false"
-        android:clipToPadding="false">
+        android:clipToPadding="false"
+        android:paddingStart="72dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="2dp">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="end"
             android:layout_alignParentEnd="true"
-            android:orientation="vertical"
             android:clipChildren="false"
-            android:clipToPadding="false">
+            android:clipToPadding="false"
+            android:gravity="end"
+            android:orientation="vertical">
 
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:minWidth="200dp"
+                android:clipChildren="false"
                 android:clipToPadding="false"
-                android:clipChildren="false">
+                android:minWidth="200dp">
 
                 <cx.ring.views.MessageStatusView
                     android:id="@+id/status_icon"
@@ -76,24 +67,24 @@
                     android:id="@+id/msg_details_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignEnd="@id/imageLayout"
                     android:layout_below="@id/imageLayout"
+                    android:layout_alignEnd="@id/imageLayout"
+                    android:layout_marginTop="10dp"
                     android:layout_marginEnd="@dimen/conversation_message_radius"
+                    android:singleLine="true"
                     android:textColor="@color/conversation_secondary_background"
                     android:textSize="12sp"
-                    android:singleLine="true"
-                    android:layout_marginTop="10dp"
                     tools:text="Tue" />
 
                 <LinearLayout
                     android:id="@+id/imageLayout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
                     android:layout_marginStart="@dimen/padding_medium"
                     android:layout_marginEnd="20dp"
-                    android:minHeight="@dimen/conversation_avatar_size"
-                    android:layout_alignParentEnd="true"
-                    android:gravity="center_vertical">
+                    android:gravity="center_vertical"
+                    android:minHeight="@dimen/conversation_avatar_size">
 
                     <ImageView
                         android:id="@+id/image"
@@ -105,14 +96,23 @@
                         android:minWidth="@dimen/conversation_avatar_size"
                         android:minHeight="@dimen/conversation_avatar_size"
                         android:transitionName="picture"
-                        tools:src="@drawable/ic_jami"/>
+                        tools:src="@drawable/ic_jami" />
 
                 </LinearLayout>
-
             </RelativeLayout>
-
         </LinearLayout>
-
     </RelativeLayout>
+
+    <TextView
+        android:id="@+id/msg_details_txt_perm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="4dp"
+        android:paddingBottom="@dimen/padding_small"
+        android:textColor="@color/conversation_secondary_background"
+        android:textSize="14sp"
+        android:visibility="gone"
+        tools:text="@string/time_just_now"
+        tools:visibility="visible" />
 
 </LinearLayout>

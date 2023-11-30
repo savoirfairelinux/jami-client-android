@@ -15,38 +15,27 @@
   ~ along with this program; if not, write to the Free Software
   ~  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
   -->
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/file_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="8dp"
     android:background="@android:color/transparent"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:focusable="true"
     android:clipChildren="false"
-    android:clipToPadding="false">
-
-    <TextView
-        android:id="@+id/msg_details_txt_perm"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:textColor="@color/conversation_secondary_background"
-        android:textSize="14sp"
-        android:paddingTop="4dp"
-        android:paddingBottom="8dp"
-        tools:text="@string/time_just_now" />
+    android:clipToPadding="false"
+    android:focusable="true"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/padding_xsmall"
+    tools:background="@color/tv_contact_background">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="8dp"
-        android:paddingEnd="2dp"
         android:clipChildren="false"
-        android:clipToPadding="false">
+        android:clipToPadding="false"
+        android:paddingTop="8dp"
+        android:paddingEnd="2dp">
 
         <cx.ring.views.MessageStatusView
             android:id="@+id/status_icon"
@@ -55,20 +44,20 @@
             android:layout_alignBottom="@id/audioInfoLayout"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="5dp"
-            android:tint="@color/grey_500"/>
+            android:tint="@color/grey_500" />
 
         <TextView
             android:id="@+id/file_details_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@id/audioInfoLayout"
             android:layout_below="@id/audioInfoLayout"
+            android:layout_alignEnd="@id/audioInfoLayout"
+            android:layout_marginTop="5dp"
             android:layout_marginEnd="@dimen/message_details_margin"
             android:maxWidth="200dp"
             android:textColor="@color/conversation_secondary_background"
             android:textSize="12sp"
-            tools:text="1 mo - 12 mars"
-            android:layout_marginTop="5dp"/>
+            tools:text="1 mo - 12 mars" />
 
         <LinearLayout
             android:id="@+id/audioInfoLayout"
@@ -89,10 +78,10 @@
                 android:layout_height="32dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="4dp"
-                android:contentDescription="@string/lb_playback_controls_play"
-                android:tint="@color/black"
                 android:alpha="0.75"
-                android:src="@drawable/baseline_play_arrow_24" />
+                android:contentDescription="@string/lb_playback_controls_play"
+                android:src="@drawable/baseline_play_arrow_24"
+                android:tint="@color/black" />
 
             <TextView
                 android:id="@+id/msg_txt"
@@ -108,7 +97,18 @@
                 tools:text="2:03 / 2:45" />
 
         </LinearLayout>
-
     </RelativeLayout>
+
+    <TextView
+        android:id="@+id/msg_details_txt_perm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="4dp"
+        android:paddingBottom="@dimen/padding_small"
+        android:textColor="@color/conversation_secondary_background"
+        android:textSize="14sp"
+        android:visibility="gone"
+        tools:text="@string/time_just_now"
+        tools:visibility="visible" />
 
 </LinearLayout>

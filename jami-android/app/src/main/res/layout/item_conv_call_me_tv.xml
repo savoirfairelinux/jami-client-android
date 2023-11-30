@@ -74,11 +74,12 @@ along with this program; if not, write to the Free Software
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="8dp"
-        android:paddingTop="8dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="@dimen/padding_small"
         android:textColor="@color/white"
-        android:textSize="@dimen/conversation_timestamp_textsize"
+        android:textSize="14sp"
         android:visibility="gone"
         tools:text="@string/time_just_now"
         tools:visibility="visible" />
+
 </LinearLayout>
