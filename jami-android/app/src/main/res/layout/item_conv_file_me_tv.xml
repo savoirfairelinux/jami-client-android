@@ -16,26 +16,16 @@
   ~  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
   -->
 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/file_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="8dp"
     android:background="@android:color/transparent"
+    android:gravity="center"
     android:orientation="vertical"
-    android:gravity="center">
-
-    <TextView
-        android:id="@+id/msg_details_txt_perm"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:textColor="@color/conversation_secondary_background"
-        android:textSize="14sp"
-        android:paddingTop="4dp"
-        tools:text="@string/time_just_now" />
+    android:paddingBottom="@dimen/padding_xsmall"
+    tools:background="@color/tv_contact_background">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -61,9 +51,9 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="12dp"
                 android:layout_marginEnd="4dp"
-                android:tint="@color/black"
                 android:alpha="0.75"
-                android:src="@drawable/baseline_attach_file_24" />
+                android:src="@drawable/baseline_attach_file_24"
+                android:tint="@color/black" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -121,28 +111,26 @@
 
                     <Button
                         android:id="@+id/btnRefuse"
+                        style="@style/LightThemeSelector"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
-                        style="@style/LightThemeSelector"
                         android:gravity="center"
                         android:text="@string/refuse"
                         android:textColor="@color/color_primary_dark" />
 
                     <Button
                         android:id="@+id/btnAccept"
+                        style="@style/LightThemeSelector"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
-                        style="@style/LightThemeSelector"
                         android:gravity="center"
                         android:text="@string/accept"
                         android:textColor="@color/color_primary_dark" />
 
                 </LinearLayout>
-
             </LinearLayout>
-
         </LinearLayout>
 
         <cx.ring.views.MessageStatusView
@@ -155,5 +143,17 @@
             android:tint="@color/grey_500" />
 
     </RelativeLayout>
+
+    <TextView
+        android:id="@+id/msg_details_txt_perm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="4dp"
+        android:paddingBottom="@dimen/padding_small"
+        android:textColor="@color/conversation_secondary_background"
+        android:textSize="14sp"
+        android:visibility="gone"
+        tools:text="@string/time_just_now"
+        tools:visibility="visible" />
 
 </LinearLayout>
