@@ -24,6 +24,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea98bd77_79f5a31b",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 19
+      },
+      "lineNbr": 1407,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-11-30T19:52:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04f8351e_17aa09fe",
+      "range": {
+        "startLine": 1407,
+        "startChar": 0,
+        "endLine": 1407,
+        "endChar": 1
+      },
+      "revId": "ca50df5a8396b538a76610e643c6b06320c4ae3f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e97016ee_21e3a968",
@@ -37,6 +61,30 @@
       "writtenOn": "2023-11-29T15:56:05Z",
       "side": 1,
       "message": "looks useless",
+      "range": {
+        "startLine": 1414,
+        "startChar": 0,
+        "endLine": 1414,
+        "endChar": 1
+      },
+      "revId": "ca50df5a8396b538a76610e643c6b06320c4ae3f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b219ce2f_168dcaa2",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 19
+      },
+      "lineNbr": 1414,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-11-30T19:52:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e97016ee_21e3a968",
       "range": {
         "startLine": 1414,
         "startChar": 0,
@@ -70,6 +118,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c52bd69_c23c446f",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 19
+      },
+      "lineNbr": 1434,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-11-30T19:52:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "863cf527_2b113b1c",
+      "range": {
+        "startLine": 1434,
+        "startChar": 0,
+        "endLine": 1434,
+        "endChar": 3
+      },
+      "revId": "ca50df5a8396b538a76610e643c6b06320c4ae3f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "93daad77_068792d3",
@@ -83,6 +155,30 @@
       "writtenOn": "2023-11-29T15:56:05Z",
       "side": 1,
       "message": "could be put in previous if loop           \n if (callStartedMsg.isIncoming)",
+      "range": {
+        "startLine": 1425,
+        "startChar": 30,
+        "endLine": 1436,
+        "endChar": 25
+      },
+      "revId": "ca50df5a8396b538a76610e643c6b06320c4ae3f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6913adcd_bd822c26",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 19
+      },
+      "lineNbr": 1436,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-11-30T19:52:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93daad77_068792d3",
       "range": {
         "startLine": 1425,
         "startChar": 30,
@@ -116,6 +212,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc2dd43c_908eee7c",
+        "filename": "jami-android/app/src/main/java/cx/ring/tv/conversation/TvConversationAdapter.kt",
+        "patchSetId": 19
+      },
+      "lineNbr": 707,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-11-30T19:52:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4f7ea8d_c7cb1e07",
+      "range": {
+        "startLine": 707,
+        "startChar": 0,
+        "endLine": 707,
+        "endChar": 1
+      },
+      "revId": "ca50df5a8396b538a76610e643c6b06320c4ae3f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "20ddd417_223d7929",
@@ -129,6 +249,30 @@
       "writtenOn": "2023-11-29T15:56:05Z",
       "side": 1,
       "message": "linear param",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 6
+      },
+      "revId": "ca50df5a8396b538a76610e643c6b06320c4ae3f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "664eb4f0_6791466b",
+        "filename": "jami-android/app/src/main/res/layout/item_conv_group_call.xml",
+        "patchSetId": 19
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-11-30T19:52:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20ddd417_223d7929",
       "range": {
         "startLine": 44,
         "startChar": 0,
@@ -162,6 +306,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "35022893_0209ff93",
+        "filename": "jami-android/app/src/main/res/layout/item_conv_group_call.xml",
+        "patchSetId": 19
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-11-30T19:52:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6cbc39e4_0f508fe7",
+      "range": {
+        "startLine": 83,
+        "startChar": 38,
+        "endLine": 83,
+        "endChar": 50
+      },
+      "revId": "ca50df5a8396b538a76610e643c6b06320c4ae3f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "155b28cf_fc176d75",
@@ -185,6 +353,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b5fda64a_114e1af6",
+        "filename": "jami-android/app/src/main/res/layout/item_conv_group_call_tv.xml",
+        "patchSetId": 19
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-11-30T19:52:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "155b28cf_fc176d75",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 1
+      },
+      "revId": "ca50df5a8396b538a76610e643c6b06320c4ae3f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "be1a0ad3_dd26b61c",
@@ -198,6 +390,30 @@
       "writtenOn": "2023-11-29T15:56:05Z",
       "side": 1,
       "message": "touch target \u003d 48dp",
+      "range": {
+        "startLine": 81,
+        "startChar": 38,
+        "endLine": 81,
+        "endChar": 50
+      },
+      "revId": "ca50df5a8396b538a76610e643c6b06320c4ae3f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d9a0438d_373aa120",
+        "filename": "jami-android/app/src/main/res/layout/item_conv_group_call_tv.xml",
+        "patchSetId": 19
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-11-30T19:52:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be1a0ad3_dd26b61c",
       "range": {
         "startLine": 81,
         "startChar": 38,
