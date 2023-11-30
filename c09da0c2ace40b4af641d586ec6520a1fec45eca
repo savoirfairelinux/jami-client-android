@@ -24,6 +24,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a1b53584_da7474ea",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1393,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-11-30T19:00:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ab90b20_1055dec0",
+      "range": {
+        "startLine": 1393,
+        "startChar": 0,
+        "endLine": 1393,
+        "endChar": 16
+      },
+      "revId": "c09da0c2ace40b4af641d586ec6520a1fec45eca",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6749deb7_78e60bed",
@@ -47,6 +71,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8375ec43_4491385f",
+        "filename": "jami-android/app/src/main/java/cx/ring/tv/conversation/TvConversationAdapter.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 765,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-11-30T19:00:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6749deb7_78e60bed",
+      "range": {
+        "startLine": 765,
+        "startChar": 0,
+        "endLine": 765,
+        "endChar": 4
+      },
+      "revId": "c09da0c2ace40b4af641d586ec6520a1fec45eca",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "679b1096_3db5d05c",
@@ -60,6 +108,30 @@
       "writtenOn": "2023-11-29T16:40:34Z",
       "side": 1,
       "message": "isolate this object in utils",
+      "range": {
+        "startLine": 775,
+        "startChar": 0,
+        "endLine": 775,
+        "endChar": 5
+      },
+      "revId": "c09da0c2ace40b4af641d586ec6520a1fec45eca",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "57c36f9e_88e98d12",
+        "filename": "jami-android/app/src/main/java/cx/ring/tv/conversation/TvConversationAdapter.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 775,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-11-30T19:00:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "679b1096_3db5d05c",
       "range": {
         "startLine": 775,
         "startChar": 0,
