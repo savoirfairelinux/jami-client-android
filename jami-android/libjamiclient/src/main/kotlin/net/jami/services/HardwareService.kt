@@ -151,7 +151,7 @@ abstract class HardwareService(
 
     abstract fun setDeviceOrientation(rotation: Int)
     protected abstract fun videoDevices(): List<String>
-    private var logs: Observable<String>? = null
+    private var logs: Observable<List<String>>? = null
     private var logEmitter: Emitter<String>? = null
 
     @get:Synchronized
@@ -159,7 +159,7 @@ abstract class HardwareService(
         get() = logs != null
 
     @Synchronized
-    fun startLogs(): Observable<String> {
+    fun startLogs(): Observable<List<String>> {
         return logs ?: Observable.create { emitter: ObservableEmitter<String> ->
             logEmitter = emitter
             // Queue the service call on daemon executor to be sure it has been initialized.
@@ -172,11 +172,8 @@ abstract class HardwareService(
                 }
             }
         }
-            .observeOn(Schedulers.io())
-            .scan(StringBuffer(1024)) { sb: StringBuffer, message: String -> sb.append(message).append('\n') }
-            .throttleLatest(500, TimeUnit.MILLISECONDS)
-            .map { obj: StringBuffer -> obj.toString() }
-            .replay(1)
+            .buffer(500, TimeUnit.MILLISECONDS)
+            .replay()
             .autoConnect()
             .apply { logs = this }
     }
