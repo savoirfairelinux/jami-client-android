@@ -103,11 +103,11 @@ dependencies {
     implementation ("androidx.cardview:cardview:1.0.0")
     implementation ("androidx.preference:preference-ktx:1.2.1")
     implementation ("androidx.recyclerview:recyclerview:1.3.2")
-    implementation ("androidx.leanback:leanback:1.2.0-alpha03")
-    implementation ("androidx.leanback:leanback-preference:1.2.0-alpha03")
-    implementation ("androidx.car.app:app:1.4.0-beta02")
+    implementation ("androidx.leanback:leanback:1.2.0-alpha04")
+    implementation ("androidx.leanback:leanback-preference:1.2.0-alpha04")
+    implementation ("androidx.car.app:app:1.4.0-rc01")
     implementation ("androidx.tvprovider:tvprovider:1.1.0-alpha01")
-    implementation ("androidx.media:media:1.6.0")
+    implementation ("androidx.media:media:1.7.0")
     implementation ("androidx.sharetarget:sharetarget:1.2.0")
     implementation ("androidx.percentlayout:percentlayout:1.0.0")
     implementation ("androidx.emoji2:emoji2:1.4.0")
@@ -143,7 +143,7 @@ dependencies {
 
     // RxAndroid
     implementation ("io.reactivex.rxjava3:rxandroid:3.0.2")
-    implementation ("io.reactivex.rxjava3:rxjava:3.1.7")
+    implementation ("io.reactivex.rxjava3:rxjava:3.1.8")
 
     // Open Street Map
     implementation ("org.osmdroid:osmdroid-android:6.1.17")
