@@ -28,11 +28,14 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
 import cx.ring.R
@@ -89,6 +92,9 @@ class LogsActivity : AppCompatActivity() {
         }
         binding.fab.setOnClickListener { if (disposable == null) startLogging() else stopLogging() }
 
+        binding.logRecyclerView.adapter = LogAdapter()
+        binding.logRecyclerView.layoutManager = LinearLayoutManager(this)
+
         // Check for previous crash reasons, if any.
         if (savedInstanceState == null)
             showNativeCrashes()
@@ -124,13 +130,10 @@ class LogsActivity : AppCompatActivity() {
     }
 
     private val log: Maybe<String>
-        get() {
-            if (mHardwareService.isLogging)
-                return mHardwareService.startLogs().firstElement()
-            val log = binding.logView.text
-            return if (log.isNullOrEmpty()) Maybe.empty()
-            else Maybe.just(log.toString())
+        get() = (binding.logRecyclerView.adapter as LogAdapter).getLogs().let {
+            if (it.isEmpty()) Maybe.empty() else Maybe.just(it)
         }
+
     private val logFile: Maybe<File>
         get() = log
             .observeOn(Schedulers.io())
@@ -252,12 +255,12 @@ class LogsActivity : AppCompatActivity() {
         // Allows to start logging at application startup.
         mHardwareService.mPreferenceService.isLogActive = true
 
-        binding.logView.text = ""
         compositeDisposable.add(mHardwareService.startLogs()
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ message: String ->
-                binding.logView.text = message
-                binding.scroll.post { binding.scroll.fullScroll(View.FOCUS_DOWN) }
+            .subscribe({ messages: List<String> ->
+                val adapter = binding.logRecyclerView.adapter as LogAdapter
+                adapter.addLogs(messages.map { LogMessage(it) })
+                binding.logRecyclerView.smoothScrollToPosition(adapter.itemCount - 1)
             }) { e -> Log.w(TAG, "Error in logger", e) }
             .apply { disposable = this })
         setButtonState(true)
@@ -290,5 +293,35 @@ class LogsActivity : AppCompatActivity() {
 
     companion object {
         private val TAG = LogsActivity::class.simpleName!!
+    }
+}
+
+data class LogMessage(val message: String)
+
+class LogAdapter :
+    RecyclerView.Adapter<LogAdapter.LogViewHolder>() {
+
+    private val logList = mutableListOf<LogMessage>()
+
+    fun getLogs(): String = logList.joinToString { it.message }
+
+    class LogViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val messageTextView: TextView = itemView.findViewById(R.id.log_item_text)
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LogViewHolder =
+        LogViewHolder(
+            LayoutInflater.from(parent.context).inflate(R.layout.item_log, parent, false)
+        )
+
+    override fun onBindViewHolder(holder: LogViewHolder, position: Int) {
+        holder.messageTextView.text = logList[position].message
+    }
+
+    override fun getItemCount(): Int = logList.size
+
+    fun addLogs(logs: List<LogMessage>) {
+        logList.addAll(logs)
+        notifyItemRangeInserted(logList.size - logs.size, logs.size)
     }
 }
