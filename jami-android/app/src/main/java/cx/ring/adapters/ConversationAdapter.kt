@@ -1102,6 +1102,10 @@ class ConversationAdapter(
                     // Hide the link preview
                     answerLayout?.visibility = View.GONE
                     msgTxt.background.alpha = 255
+                    // Manage layout for deleted message. Index refers to msgBGLayouts array.
+                    val resIndex =
+                        msgSequenceType.ordinal + (if (textMessage.isIncoming) 1 else 0) * 4
+                    msgTxt.background = ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
                     if (convColor != 0 && !textMessage.isIncoming) {
                         msgTxt.background.setTint(convColor)
                     }
@@ -1679,6 +1683,8 @@ class ConversationAdapter(
             return if ((isSeqBreak(prevMsg, msg) || isTimeShown)
                 && !(isSeqBreak(msg, nextMsg) || nextMsgHasTime)
             ) {
+                Log.w(TAG, "getMsgSequencing: ici1, msg.body: ${msg.body} " +
+                        "breakPrev?: ${isSeqBreak(prevMsg, msg)}, isTimeShown: $isTimeShown")
                 SequenceType.FIRST
             } else if (!isSeqBreak(prevMsg, msg) && !isTimeShown && isSeqBreak(msg, nextMsg)) {
                 SequenceType.LAST
