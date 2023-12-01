@@ -25,6 +25,7 @@ import cx.ring.services.SharedPreferencesServiceImpl
 
 class VideoSettingsFragment : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+        (parentFragment as SettingsFragment).setToolbarTitle(R.string.video_setting_title)
         val pm = preferenceManager
         pm.sharedPreferencesMode = Context.MODE_PRIVATE
         pm.sharedPreferencesName = SharedPreferencesServiceImpl.PREFS_VIDEO
