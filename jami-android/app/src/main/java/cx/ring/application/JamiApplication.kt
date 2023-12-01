@@ -40,6 +40,7 @@ import cx.ring.service.DRingService
 import cx.ring.service.JamiJobService
 import cx.ring.services.CallServiceImpl.Companion.CONNECTION_SERVICE_TELECOM_API_SDK_COMPATIBILITY
 import cx.ring.utils.AndroidFileUtils
+import cx.ring.utils.DebugUtils
 import cx.ring.views.AvatarFactory
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.plugins.RxJavaPlugins
@@ -132,13 +133,17 @@ abstract class JamiApplication : Application() {
 
     fun bootstrapDaemon() {
         if (daemon.isStarted) {
+            DebugUtils.appendDebugPut(applicationContext, "$TAG:bootstrapDaemon() Daemon already started p1 RETURN")
             return
         }
+        DebugUtils.appendDebugPut(applicationContext, "$TAG:bootstrapDaemon()")
         Log.d(TAG, "bootstrapDaemon")
         mExecutor.execute {
             try {
+                DebugUtils.appendDebugPut(applicationContext, "$TAG:bootstrapDaemon() START")
                 Log.d(TAG, "bootstrapDaemon: START")
                 if (daemon.isStarted) {
+                    DebugUtils.appendDebugPut(applicationContext, "$TAG:bootstrapDaemon() Daemon already started p2 RETURN")
                     return@execute
                 }
                 daemon.startDaemon()
@@ -146,17 +151,20 @@ abstract class JamiApplication : Application() {
                 // Check if the camera hardware feature is available.
                 if (mDeviceRuntimeService.hasVideoPermission()) {
                     //initVideo is called here to give time to the application to initialize hardware cameras
+                    DebugUtils.appendDebugPut(applicationContext, "$TAG:bootstrapDaemon() At least one camera available. Initializing video...")
                     Log.d(TAG, "bootstrapDaemon: At least one camera available. Initializing video...")
                     hardwareService.initVideo()
                             .onErrorComplete()
                             .subscribe()
                 } else {
+                    DebugUtils.appendDebugPut(applicationContext, "$TAG:bootstrapDaemon() No camera available")
                     Log.d(TAG, "bootstrapDaemon: No camera available")
                 }
                 ringerModeChanged((getSystemService(AUDIO_SERVICE) as AudioManager).ringerMode)
                 registerReceiver(ringerModeListener, RINGER_FILTER)
 
                 // load accounts from Daemon
+                DebugUtils.appendDebugPut(applicationContext, "$TAG:bootstrapDaemon() Loading accounts from daemon")
                 mAccountService.loadAccountsFromDaemon(mPreferencesService.hasNetworkConnected())
                 if (mPreferencesService.settings.enablePushNotifications) {
                     pushToken.let { token -> JamiService.setPushNotificationToken(token) }
@@ -168,6 +176,7 @@ abstract class JamiApplication : Application() {
                 sendBroadcast(intent)
                 scheduleRefreshJob()
             } catch (e: Exception) {
+                DebugUtils.appendDebugPut(applicationContext, "$TAG:bootstrapDaemon() Error starting daemon service $e")
                 Log.e(TAG, "DRingService start failed", e)
             }
         }
@@ -268,11 +277,14 @@ abstract class JamiApplication : Application() {
             try {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
                         && mPreferencesService.settings.enablePermanentService) {
+                    DebugUtils.appendDebugPut(activityContext, "$TAG:startDaemon() Starting daemon service p1")
                     startForegroundService(Intent(this, DRingService::class.java))
                 } else {
+                    DebugUtils.appendDebugPut(activityContext, "$TAG:startDaemon() Starting daemon service p2")
                     startService(Intent(this, DRingService::class.java))
                 }
             } catch (e: Exception) {
+                DebugUtils.appendDebugPut(activityContext, "$TAG:startDaemon() Error starting daemon service")
                 Log.w(TAG, "Error starting daemon service")
             }
         }
@@ -285,6 +297,7 @@ abstract class JamiApplication : Application() {
             try {
                 bindService(Intent(this, DRingService::class.java), mConnection, BIND_AUTO_CREATE or BIND_IMPORTANT or BIND_ABOVE_CLIENT)
             } catch (e: Exception) {
+                DebugUtils.appendDebugPut(applicationContext, "Error binding daemon service")
                 Log.w(TAG, "Error binding daemon service")
             }
         }

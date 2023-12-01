@@ -35,6 +35,7 @@ import cx.ring.application.JamiApplication
 import cx.ring.client.CallActivity
 import cx.ring.client.ConversationActivity
 import cx.ring.utils.ConversationPath
+import cx.ring.utils.DebugUtils
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.model.Conversation
@@ -144,6 +145,7 @@ class DRingService : Service() {
 
     override fun onCreate() {
         super.onCreate()
+        DebugUtils.appendDebugPut(applicationContext, "$TAG:onCreate()")
         Log.i(TAG, "onCreate")
         isRunning = true
         if (mDeviceRuntimeService.hasContactPermission()) {

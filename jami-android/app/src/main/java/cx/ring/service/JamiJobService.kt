@@ -24,41 +24,49 @@ import android.text.format.DateUtils
 import android.util.Log
 import androidx.core.content.ContextCompat
 import cx.ring.application.JamiApplication
+import cx.ring.utils.DebugUtils
 
 class JamiJobService : JobService() {
     override fun onStartJob(params: JobParameters): Boolean {
         if (params.jobId != JOB_ID) return false
         Log.w(TAG, "onStartJob() $params")
+        DebugUtils.appendDebugPut(this, "$TAG:onStartJob() $params")
         try {
             try {
                 ContextCompat.startForegroundService(this, Intent(SyncService.ACTION_START)
                     .setClass(this, SyncService::class.java))
             } catch (e: IllegalStateException) {
                 Log.e(TAG, "Error starting service", e)
+                DebugUtils.appendDebugPut(this, "$TAG:onStartJob() Error starting service $e")
             }
             Handler().postDelayed({
                 Log.w(TAG, "jobFinished() $params")
+                DebugUtils.appendDebugPut(this, "$TAG:onStartJob() jobFinished $params")
                 try {
                     startService(Intent(SyncService.ACTION_STOP).setClass(this, SyncService::class.java))
                 } catch (ignored: IllegalStateException) {
                 }
                 jobFinished(params, false)
             }, JOB_DURATION)
+            DebugUtils.appendDebugPut(this, "$TAG:onStartJob() Starting daemon")
             JamiApplication.instance?.startDaemon(this)
         } catch (e: Exception) {
             Log.e(TAG, "onStartJob failed", e)
+            DebugUtils.appendDebugPut(this, "$TAG:onStartJob() failed $e")
         }
         return true
     }
 
     override fun onStopJob(params: JobParameters): Boolean {
         Log.w(TAG, "onStopJob() $params")
+        DebugUtils.appendDebugPut(this, "$TAG:onStopJob() $params")
         try {
             startService(Intent(SyncService.ACTION_STOP)
                 .setClass(this, SyncService::class.java))
         } catch (ignored: IllegalStateException) {
         } catch (e: Exception) {
             Log.e(TAG, "onStopJob failed", e)
+            DebugUtils.appendDebugPut(this, "$TAG:onStopJob() failed $e")
         }
         return false
     }
