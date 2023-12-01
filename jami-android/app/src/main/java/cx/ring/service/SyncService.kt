@@ -50,9 +50,11 @@ class SyncService : Service() {
             if (notification == null) {
                 val deleteIntent = Intent(ACTION_STOP)
                     .setClass(applicationContext, SyncService::class.java)
+
                 val contentIntent = Intent(Intent.ACTION_VIEW)
                     .setClass(applicationContext, HomeActivity::class.java)
                     .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+
                 notification = NotificationCompat.Builder(this, NotificationServiceImpl.NOTIF_CHANNEL_SYNC)
                     .setContentTitle(getString(R.string.notif_sync_title))
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
@@ -77,21 +79,25 @@ class SyncService : Service() {
             val timeout = intent.getLongExtra(EXTRA_TIMEOUT, -1)
             if (timeout > 0) {
                 Handler().postDelayed({
-                    try {
-                        startService(Intent(ACTION_STOP).setClass(applicationContext, SyncService::class.java))
-                    } catch (ignored: IllegalStateException) {
-                    }
+                    stop()
                 }, timeout)
             }
         } else if (ACTION_STOP == action) {
-            serviceUsers--
-            if (serviceUsers == 0) {
-                stopForeground(true)
-                stopSelf()
-                notification = null
-            }
+            stop()
         }
         return START_NOT_STICKY
+    }
+
+    private fun stop() {
+        serviceUsers--
+        if (serviceUsers == 0) {
+            try {
+                stopForeground(true)
+                stopSelf()
+            } catch (ignored: IllegalStateException) {
+            }
+            notification = null
+        }
     }
 
     override fun onBind(intent: Intent): IBinder? = null

@@ -32,19 +32,16 @@ class JamiJobService : JobService() {
         try {
             try {
                 ContextCompat.startForegroundService(this, Intent(SyncService.ACTION_START)
+                    .putExtra(SyncService.EXTRA_TIMEOUT, JOB_DURATION)
                     .setClass(this, SyncService::class.java))
             } catch (e: IllegalStateException) {
                 Log.e(TAG, "Error starting service", e)
             }
+            JamiApplication.instance?.startDaemon(this)
             Handler().postDelayed({
                 Log.w(TAG, "jobFinished() $params")
-                try {
-                    startService(Intent(SyncService.ACTION_STOP).setClass(this, SyncService::class.java))
-                } catch (ignored: IllegalStateException) {
-                }
                 jobFinished(params, false)
-            }, JOB_DURATION)
-            JamiApplication.instance?.startDaemon(this)
+            }, JOB_DURATION + 500)
         } catch (e: Exception) {
             Log.e(TAG, "onStartJob failed", e)
         }
@@ -67,7 +64,7 @@ class JamiJobService : JobService() {
         private val TAG = JamiJobService::class.java.name
         const val JOB_INTERVAL = 12 * DateUtils.HOUR_IN_MILLIS
         const val JOB_FLEX = 60 * DateUtils.MINUTE_IN_MILLIS
-        const val JOB_DURATION = 10 * DateUtils.SECOND_IN_MILLIS
+        const val JOB_DURATION = 7 * DateUtils.SECOND_IN_MILLIS
         const val JOB_ID = 3905
     }
 }
