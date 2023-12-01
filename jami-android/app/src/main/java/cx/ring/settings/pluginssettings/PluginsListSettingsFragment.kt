@@ -87,14 +87,22 @@ class PluginsListSettingsFragment : Fragment(), PluginListItemListener {
      * @param pluginDetails instance of a plugin details that is sent to PluginSettingsFragment
      */
     override fun onPluginEnabled(pluginDetails: PluginDetails) {
+        var status: String?
+
         if (pluginDetails.isEnabled) {
             pluginDetails.isEnabled = loadPlugin(pluginDetails.rootPath)
+            status =
+                if (pluginDetails.isEnabled) getString(R.string.load_sucess, pluginDetails.name)
+                else {
+                    mAdapter?.notifyItemChanged(pluginDetails)
+                    getString(R.string.unable_to_load, pluginDetails.name)
+                }
         } else {
             unloadPlugin(pluginDetails.rootPath)
+            status = getString(R.string.unload_sucess, pluginDetails.name)
         }
-        val status = if (pluginDetails.isEnabled) "ON" else "OFF"
         Toast.makeText(
-            requireContext(), pluginDetails.name + " " + status,
+            requireContext(), status,
             Toast.LENGTH_SHORT
         ).show()
     }

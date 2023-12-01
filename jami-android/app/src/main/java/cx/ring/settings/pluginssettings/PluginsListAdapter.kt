@@ -29,6 +29,9 @@ class PluginsListAdapter(private var mList: List<PluginDetails>, private val lis
         return PluginSettingViewHolder(view, listener)
     }
 
+    fun notifyItemChanged(pluginDetails: PluginDetails) =
+        mList.indexOf(pluginDetails).let { if (it != -1) notifyItemChanged(it) }
+
     override fun onBindViewHolder(holderSetting: PluginSettingViewHolder, position: Int) {
         for (item in mList) {
             item.accountId = accountId
