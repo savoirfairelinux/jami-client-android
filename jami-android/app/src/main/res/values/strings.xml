@@ -74,6 +74,8 @@ along with this program; if not, write to the Free Software
     <string name="menu_item_share">Share my account</string>
     <string name="menu_item_about">About Jami</string>
 
+    <string name="video_setting_title">Video Settings</string>
+
     <!-- Dialing Fragment -->
     <string name="dial_number">Dial a number</string>
 

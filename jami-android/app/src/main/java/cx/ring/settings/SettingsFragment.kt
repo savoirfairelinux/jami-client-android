@@ -70,6 +70,7 @@ class SettingsFragment :
         override fun handleOnBackPressed() {
             val binding = binding ?: return
             binding.donateButton.isVisible = true
+            setToolbarTitle(R.string.menu_item_advanced_settings)
             popBackStack()
         }
     }
