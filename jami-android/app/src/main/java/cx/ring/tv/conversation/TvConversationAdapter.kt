@@ -554,68 +554,105 @@ class TvConversationAdapter(
      * @param interaction    The conversation element to display
      * @param position       The position of the viewHolder
      */
-    private fun configureForTextMessage(convViewHolder: ConversationViewHolder, interaction: Interaction, position: Int) {
-        val context = convViewHolder.itemView.context
-        val textMessage = interaction as TextMessage
-        val contact = textMessage.contact
-        if (contact == null) {
-            Log.e(TAG, "Invalid contact, not able to display message correctly")
-            return
-        }
-        convViewHolder.itemView.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
-            convViewHolder.itemView.setBackgroundResource(if (hasFocus) R.drawable.tv_item_selected_background else R.drawable.tv_item_unselected_background)
-            convViewHolder.mMsgTxt!!.animate().scaleY(if (hasFocus) 1.1f else 1f).scaleX(if (hasFocus) 1.1f else 1f)
-        }
-        val message = textMessage.body!!.trim { it <= ' ' }
-        val longPressView = convViewHolder.itemView
-        longPressView.background.setTintList(null)
-        longPressView.setOnCreateContextMenuListener { menu: ContextMenu, v: View?, menuInfo: ContextMenuInfo? ->
-            val date = Date(interaction.timestamp)
-            val dateFormat = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT)
-            menu.setHeaderTitle(dateFormat.format(date))
-            conversationFragment.onCreateContextMenu(menu, v!!, menuInfo)
-            val inflater = conversationFragment.requireActivity().menuInflater
-            inflater.inflate(R.menu.conversation_item_actions_messages_tv, menu)
-            if (interaction.status === InteractionStatus.SENDING) {
-                menu.removeItem(R.id.conv_action_delete)
-            } else {
-                menu.findItem(R.id.conv_action_delete).setTitle(R.string.menu_message_delete)
-                menu.removeItem(R.id.conv_action_cancel_message)
-            }
-        }
-        longPressView.setOnLongClickListener { v: View ->
-            if (expandedItemPosition == position) {
-                expandedItemPosition = -1
-            }
-            conversationFragment.updatePosition(convViewHolder.adapterPosition)
-            mCurrentLongItem = RecyclerViewContextMenuInfo(
-                convViewHolder.adapterPosition, v.id
-                    .toLong()
-            )
-            false
-        }
-        val isTimeShown = hasPermanentTimeString(textMessage, position)
-        val msgSequenceType = getMsgSequencing(position, isTimeShown)
-        val msgTxt = convViewHolder.mMsgTxt ?: return
-        if (isOnlyEmoji(message)) {
-            msgTxt.background.alpha = 0
-            msgTxt.textSize = 32.0f
-            msgTxt.setPadding(0, 0, 0, 0)
-        } else {
-            val resIndex = msgSequenceType.ordinal + (if (textMessage.isIncoming) 1 else 0) * 4
-            msgTxt.background = ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
-            if (convColor != 0 && !textMessage.isIncoming) {
-                msgTxt.background.setTint(convColor)
-            }
-            msgTxt.background.alpha = 255
-            msgTxt.textSize = 16f
-            msgTxt.setPadding(hPadding, vPadding, hPadding, vPadding)
-        }
-        msgTxt.text = markwon.toMarkdown(message)
-        if (textMessage.isIncoming) {
-            convViewHolder.mAvatar!!.setImageBitmap(null)
-            convViewHolder.mAvatar.visibility = View.VISIBLE
-        } /*else {
+    private fun configureForTextMessage(
+        convViewHolder: ConversationViewHolder,
+        interaction: Interaction,
+        position: Int
+    ) {
+        convViewHolder.compositeDisposable.add(interaction.lastElement
+            .observeOn(DeviceUtils.uiScheduler)
+            .subscribe { lastElement ->
+                val textMessage = lastElement as TextMessage
+                val context = convViewHolder.itemView.context
+                val contact = textMessage.contact
+                val isDeleted = textMessage.body.isNullOrEmpty()
+                val message = textMessage.body?.trim() ?: ""
+                val longPressView = convViewHolder.itemView
+                val isTimeShown = hasPermanentTimeString(textMessage, position)
+                val msgSequenceType = getMsgSequencing(position, isTimeShown)
+                val msgTxt = convViewHolder.mMsgTxt ?: return@subscribe
+                val answerLayout = convViewHolder.mAnswerLayout
+                val avatar = convViewHolder.mAvatar ?: return@subscribe
+
+                if (contact == null) {
+                    Log.e(TAG, "Invalid contact, not able to display message correctly")
+                    return@subscribe
+                }
+                convViewHolder.itemView.onFocusChangeListener =
+                    View.OnFocusChangeListener { _, hasFocus ->
+                        convViewHolder.itemView.setBackgroundResource(
+                            if (hasFocus) R.drawable.tv_item_selected_background
+                            else R.drawable.tv_item_unselected_background
+                        )
+                        msgTxt.animate().scaleY(if (hasFocus) 1.1f else 1f)
+                            .scaleX(if (hasFocus) 1.1f else 1f)
+                    }
+                // Manage long press.
+                longPressView.background.setTintList(null)
+                longPressView.setOnCreateContextMenuListener {
+                    menu: ContextMenu, v: View?, menuInfo: ContextMenuInfo? ->
+                    val date = Date(interaction.timestamp)
+                    val dateFormat =
+                        DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT)
+                    menu.setHeaderTitle(dateFormat.format(date))
+                    conversationFragment.onCreateContextMenu(menu, v!!, menuInfo)
+                    val inflater = conversationFragment.requireActivity().menuInflater
+                    inflater.inflate(R.menu.conversation_item_actions_messages_tv, menu)
+                    if (interaction.status === InteractionStatus.SENDING) {
+                        menu.removeItem(R.id.conv_action_delete)
+                    } else {
+                        menu.findItem(R.id.conv_action_delete)
+                            .setTitle(R.string.menu_message_delete)
+                        menu.removeItem(R.id.conv_action_cancel_message)
+                    }
+                }
+                longPressView.setOnLongClickListener { v: View ->
+                    if (expandedItemPosition == position) {
+                        expandedItemPosition = -1
+                    }
+                    conversationFragment.updatePosition(convViewHolder.bindingAdapterPosition)
+                    mCurrentLongItem = RecyclerViewContextMenuInfo(
+                        convViewHolder.bindingAdapterPosition, v.id.toLong()
+                    )
+                    false
+                }
+
+                // Manage deleted message.
+                if (isDeleted) {
+                    msgTxt.text = context.getString(R.string.conversation_message_deleted)
+                    // Hide the link preview
+                    answerLayout?.visibility = View.GONE
+                    msgTxt.background.alpha = 255
+                    if (convColor != 0 && !textMessage.isIncoming) {
+                        msgTxt.background.setTint(convColor)
+                    }
+                    msgTxt.textSize = 14f
+                    msgTxt.setPadding(hPadding, vPadding, hPadding, vPadding)
+                    longPressView.setOnLongClickListener(null)
+                    return@subscribe
+                }
+                // Manage emoji message
+                if (isOnlyEmoji(message)) {
+                    msgTxt.background.alpha = 0
+                    msgTxt.textSize = 32.0f
+                    msgTxt.setPadding(0, 0, 0, 0)
+                } else { // Manage classic message
+                    // Standard message, incoming or outgoing and first, single or last.
+                    val resIndex =
+                        msgSequenceType.ordinal + (if (textMessage.isIncoming) 1 else 0) * 4
+                    msgTxt.background = ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
+                    if (convColor != 0 && !textMessage.isIncoming) {
+                        msgTxt.background.setTint(convColor)
+                    }
+                    msgTxt.background.alpha = 255
+                    msgTxt.textSize = 16f
+                    msgTxt.setPadding(hPadding, vPadding, hPadding, vPadding)
+                }
+                msgTxt.text = markwon.toMarkdown(message)
+                if (textMessage.isIncoming) {
+                    avatar.setImageBitmap(null)
+                    avatar.visibility = View.VISIBLE
+                } /*else {
             when (textMessage.status) {
                 InteractionStatus.SENDING -> {
                     convViewHolder.mStatusIcon!!.visibility = View.VISIBLE
@@ -634,44 +671,55 @@ class TvConversationAdapter(
                 }
             }
         }*/
-        if (msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE) {
-            setBottomMargin(msgTxt, 8)
-            if (textMessage.isIncoming) {
-                convViewHolder.mAvatar!!.setImageDrawable(
-                    conversationFragment.getConversationAvatar(contact.primaryNumber)
-                )
-            }
-        } else {
-            setBottomMargin(msgTxt, 0)
-        }
-        if (isTimeShown) {
-            convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe { t: Long? ->
-                val timeSeparationString = TextUtils.timestampToDetailString(context, textMessage.timestamp)
-                convViewHolder.mMsgDetailTxtPerm!!.text = timeSeparationString
+                val endOfSeq =
+                    msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE
+                if (endOfSeq) {
+                    setBottomMargin(msgTxt, 8)
+                    // Show the avatar at the end of the message sequence
+                    if (textMessage.isIncoming) {
+                        avatar.setImageDrawable(
+                            conversationFragment.getConversationAvatar(contact.primaryNumber)
+                        )
+                    }
+                } else {
+                    setBottomMargin(msgTxt, 0)
+                }
+                if (isTimeShown) {
+                    convViewHolder.compositeDisposable.add(
+                        timestampUpdateTimer.subscribe { t: Long? ->
+                        val timeSeparationString =
+                            TextUtils.timestampToDetailString(context, textMessage.timestamp)
+                        convViewHolder.mMsgDetailTxtPerm?.text = timeSeparationString
+                    })
+                    convViewHolder.mMsgDetailTxtPerm?.visibility = View.VISIBLE
+                } else {
+                    convViewHolder.mMsgDetailTxtPerm?.visibility = View.GONE
+                    val isExpanded = position == expandedItemPosition
+                    if (isExpanded) {
+                        convViewHolder.compositeDisposable.add(
+                            timestampUpdateTimer.subscribe { t: Long? ->
+                            val timeSeparationString = TextUtils.timestampToDetailString(
+                                context,
+                                textMessage.timestamp
+                            )
+                            convViewHolder.mMsgDetailTxt?.text = timeSeparationString
+                        })
+                    }
+                    setItemViewExpansionState(convViewHolder, isExpanded)
+                    convViewHolder.itemView.setOnClickListener { v: View? ->
+                        if (convViewHolder.animator != null && convViewHolder.animator!!.isRunning)
+                        {
+                            return@setOnClickListener
+                        }
+                        if (expandedItemPosition >= 0) {
+                            val prev = expandedItemPosition
+                            notifyItemChanged(prev)
+                        }
+                        expandedItemPosition = if (isExpanded) -1 else position
+                        notifyItemChanged(expandedItemPosition)
+                    }
+                }
             })
-            convViewHolder.mMsgDetailTxtPerm!!.visibility = View.VISIBLE
-        } else {
-            convViewHolder.mMsgDetailTxtPerm!!.visibility = View.GONE
-            val isExpanded = position == expandedItemPosition
-            if (isExpanded) {
-                convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe { t: Long? ->
-                    val timeSeparationString = TextUtils.timestampToDetailString(context, textMessage.timestamp)
-                    convViewHolder.mMsgDetailTxt!!.text = timeSeparationString
-                })
-            }
-            setItemViewExpansionState(convViewHolder, isExpanded)
-            convViewHolder.itemView.setOnClickListener { v: View? ->
-                if (convViewHolder.animator != null && convViewHolder.animator!!.isRunning) {
-                    return@setOnClickListener
-                }
-                if (expandedItemPosition >= 0) {
-                    val prev = expandedItemPosition
-                    notifyItemChanged(prev)
-                }
-                expandedItemPosition = if (isExpanded) -1 else position
-                notifyItemChanged(expandedItemPosition)
-            }
-        }
     }
 
     private fun configureForContactEvent(viewHolder: ConversationViewHolder, interaction: Interaction) {
