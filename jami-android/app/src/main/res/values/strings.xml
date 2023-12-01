@@ -476,4 +476,9 @@ along with this program; if not, write to the Free Software
     <string name="donation_setting_description">Enable the donation reminder</string>
     <string name="donation_url" translatable="false">https://crowdfunding.lfx.linuxfoundation.org/projects/jami-a-gnu-package</string>
 
+    <!--  Plugin  -->
+    <string name="unable_to_load">Unable to load %1$s</string>
+    <string name="load_sucess">%1$s: enabled</string>
+    <string name="unload_sucess">%1$s: disabled</string>
+
 </resources>
