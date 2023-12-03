@@ -28,6 +28,7 @@ import androidx.fragment.app.DialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.R
 import cx.ring.databinding.DialogConfirmRevocationBinding
+import net.jami.services.AccountService
 
 class BackupAccountDialog : DialogFragment() {
     private var mAccountId: String? = null
@@ -73,14 +74,14 @@ class BackupAccountDialog : DialogFragment() {
 
     private fun validate(): Boolean {
         if (mListener != null) {
-            mListener!!.onUnlockAccount(mAccountId!!, binding!!.passwordTxt.text.toString())
+            mListener!!.onUnlockAccount(mAccountId!!, AccountService.ACCOUNT_SCHEME_PASSWORD, binding!!.passwordTxt.text.toString())
             return true
         }
         return false
     }
 
     interface UnlockAccountListener {
-        fun onUnlockAccount(accountId: String, password: String)
+        fun onUnlockAccount(accountId: String, scheme: String, password: String)
     }
 
     companion object {

@@ -62,11 +62,13 @@ import cx.ring.mvp.BaseSupportFragment
 import cx.ring.settings.AccountFragment
 import cx.ring.settings.pluginssettings.PluginsListSettingsFragment
 import cx.ring.utils.AndroidFileUtils
+import cx.ring.utils.BiometricHelper
 import cx.ring.utils.BitmapUtils
 import cx.ring.utils.ContentUriHandler
 import cx.ring.utils.DeviceUtils
 import cx.ring.views.AvatarDrawable
 import dagger.hilt.android.AndroidEntryPoint
+import ezvcard.util.org.apache.commons.codec.binary.Base64
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -236,7 +238,7 @@ class JamiAccountSummaryFragment :
 
     override fun accountChanged(account: Account, profile: Profile) {
         mAccountId = account.accountId
-        mBestName = account.registeredName ?: account.displayUsername ?: account.username!!
+        mBestName = account.registeredName.ifEmpty { account.displayUsername ?: account.username!! }
         mBestName = "$mBestName.gz"
         mBinding?.let { binding ->
             binding.userPhoto.setImageDrawable(AvatarDrawable.build(binding.root.context, account, profile, true))
@@ -331,7 +333,7 @@ class JamiAccountSummaryFragment :
         if (mAccountHasPassword) {
             onBackupAccount()
         } else {
-            onUnlockAccount(mAccountId!!, "")
+            onUnlockAccount(mAccountId!!, AccountService.ACCOUNT_SCHEME_NONE, "")
         }
     }
 
@@ -399,12 +401,19 @@ class JamiAccountSummaryFragment :
     }
 
     private fun onBackupAccount() {
-        BackupAccountDialog().apply {
-            arguments = Bundle().apply {
-                putString(AccountEditionFragment.ACCOUNT_ID_KEY, mAccountId)
+        val accountId = mAccountId ?: return
+        BiometricHelper.startBiometricLogin(this, accountId) {
+            if (it != null) {
+                onUnlockAccount(accountId, AccountService.ACCOUNT_SCHEME_KEY, Base64.encodeBase64String(it))
+            } else {
+                BackupAccountDialog().apply {
+                    arguments = Bundle().apply {
+                        putString(AccountEditionFragment.ACCOUNT_ID_KEY, mAccountId)
+                    }
+                    setListener(this@JamiAccountSummaryFragment)
+                }.show(parentFragmentManager, FRAGMENT_DIALOG_BACKUP)
             }
-            setListener(this@JamiAccountSummaryFragment)
-        }.show(parentFragmentManager, FRAGMENT_DIALOG_BACKUP)
+        }
     }
 
     fun onPasswordChangeAsked() {
@@ -421,14 +430,14 @@ class JamiAccountSummaryFragment :
         presenter.changePassword(oldPassword, newPassword)
     }
 
-    override fun onUnlockAccount(accountId: String, password: String) {
+    override fun onUnlockAccount(accountId: String, scheme: String, password: String) {
         val context = requireContext()
         val cacheDir = File(AndroidFileUtils.getTempShareDir(context), "archives")
         cacheDir.mkdirs()
         if (!cacheDir.canWrite()) Log.w(TAG, "Can't write to: $cacheDir")
         val dest = File(cacheDir, mBestName)
         if (dest.exists()) dest.delete()
-        presenter.downloadAccountsArchive(dest, password)
+        presenter.downloadAccountsArchive(dest, scheme, password)
     }
 
     override fun gotToImageCapture() {
