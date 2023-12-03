@@ -668,7 +668,7 @@ class AccountService(
             .firstOrError()
             .map { r: DeviceRevocationResult -> r.code }
             .doOnSubscribe { mExecutor.execute {
-                JamiService.revokeDevice(accountId, password, deviceId)
+                JamiService.revokeDevice(accountId, deviceId, "password", password)
             }}
             .subscribeOn(Schedulers.io())
 
@@ -690,7 +690,7 @@ class AccountService(
 
     fun exportToFile(accountId: String, absolutePath: String, password: String): Completable =
         Completable.fromAction {
-            require(JamiService.exportToFile(accountId, absolutePath, password)) { "Can't export archive" }
+            require(JamiService.exportToFile(accountId, absolutePath, "password", password)) { "Can't export archive" }
         }.subscribeOn(scheduler)
 
     /**
@@ -838,7 +838,7 @@ class AccountService(
      */
     fun registerName(account: String, password: String, name: String) {
         Log.i(TAG, "registerName()")
-        mExecutor.execute { JamiService.registerName(account, password, name) }
+        mExecutor.execute { JamiService.registerName(account, name, "password", password) }
     }
     /* contact requests */
     /**
