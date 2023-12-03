@@ -159,7 +159,7 @@ class AccountWizardPresenter @Inject constructor(
         }
     }
 
-    fun  successDialogClosed() {
+    fun successDialogClosed() {
         view?.finish(true)
     }
 
@@ -180,6 +180,7 @@ class AccountWizardPresenter @Inject constructor(
             }
     }
 
+    @Synchronized
     private fun createNewAccount(model: AccountCreationModel, accountDetails: Map<String, String>): Observable<Account> {
         if (mCreatingAccount) {
             return newAccount!!
