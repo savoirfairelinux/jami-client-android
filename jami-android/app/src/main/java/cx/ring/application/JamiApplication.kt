@@ -163,9 +163,9 @@ abstract class JamiApplication : Application() {
                 } else {
                     JamiService.setPushNotificationToken("")
                 }
-                val intent = Intent(DRING_CONNECTION_CHANGED)
-                intent.putExtra("connected", daemon.isStarted)
-                sendBroadcast(intent)
+                sendBroadcast(Intent(DRING_CONNECTION_CHANGED).apply {
+                    putExtra("connected", daemon.isStarted)
+                })
                 scheduleRefreshJob()
             } catch (e: Exception) {
                 Log.e(TAG, "DRingService start failed", e)
