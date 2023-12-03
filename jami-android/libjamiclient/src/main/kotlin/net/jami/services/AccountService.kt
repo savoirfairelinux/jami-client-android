@@ -702,6 +702,10 @@ class AccountService(
             require(JamiService.changeAccountPassword(accountId, oldPassword, newPassword)) { "Can't change password" }
         }.subscribeOn(scheduler)
 
+    fun getAccountPasswordKey(accountId: String, password: String): Single<ByteArray> =
+        Single.fromCallable { JamiService.getPasswordKey(accountId, password).bytes }
+            .subscribeOn(Schedulers.computation())
+
     /**
      * Sets the active codecs list of the account in the Daemon
      */
