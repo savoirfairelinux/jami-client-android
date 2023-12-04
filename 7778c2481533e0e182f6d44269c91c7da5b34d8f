@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c88f8c2_19dba2a8",
+        "filename": "jami-android/app/src/main/java/cx/ring/utils/ActionHelper.kt",
+        "patchSetId": 21
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-12-04T20:13:34Z",
+      "side": 1,
+      "message": "ImageView fade-out animation.",
+      "range": {
+        "startLine": 166,
+        "startChar": 7,
+        "endLine": 166,
+        "endChar": 25
+      },
+      "revId": "7778c2481533e0e182f6d44269c91c7da5b34d8f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
