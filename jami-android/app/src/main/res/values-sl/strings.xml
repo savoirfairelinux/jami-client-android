@@ -43,6 +43,7 @@
   <!--History Fragment-->
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
+  <string name="invitation_card_title">Prejetih povabil</string>
   <plurals name="home_conferences_title">
     <item quantity="one">%d pogovor</item>
     <item quantity="two">%d pogovora</item>
@@ -74,6 +75,7 @@
   <string name="notif_channel_background_service">Storitve v ozadju</string>
   <string name="notif_channel_background_service_descr">Dovoli sprejemanje klicev in sporočil kadarkoli.</string>
   <string name="notif_group_calls">Klici</string>
+  <string name="notif_inprogress_group_call">Klic poteka</string>
   <string name="notif_background_service">Jami se trenutno izvaja v ozadju</string>
   <string name="notif_mark_as_read">Označi kot prebrano</string>
   <string name="notif_dismiss">Opusti</string>
@@ -100,6 +102,7 @@
   <string name="ongoing_call">Aktivni klic</string>
   <string name="hist_in_call">Dohodni klic od %1$s</string>
   <string name="hist_out_call">Odhodni klic do %1$s</string>
+  <string name="call_duration">Trajanje: %s</string>
   <string name="start_error_title">Jami ni možno zagnati!</string>
   <string name="start_error_mic_required">Jami za delovanje potrebuje dovoljenje za uporabo mikrofona.</string>
   <string name="action_call_accept">Prevzemi klic</string>
@@ -121,6 +124,7 @@
   <string name="write_a_message">Napiši sporočilo</string>
   <string name="scan_qr">Preberi QR-kodo</string>
   <string name="qr_code">QR-koda</string>
+  <string name="new_swarm">Zaženi roj</string>
   <string name="ab_action_flipcamera">Zrcali kamero</string>
   <string name="ab_action_hidepreview">Skrij predogled</string>
   <string name="remote_recording">%s snema …</string>
@@ -136,6 +140,7 @@
   <string name="conversation_send_audio">Snemaj zvočni posnetek</string>
   <string name="conversation_send_video">Snemaj video posnetek</string>
   <string name="conversation_share_location">Deli lokacijo</string>
+  <string name="ongoing_group_call">Aktivni klic</string>
   <string name="in_reply_to">Kot odgovor</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Dovoljenja za kamero</string>
@@ -179,6 +184,7 @@
   <string name="conversation_action_block_this">Blokiraj stik</string>
   <string name="conversation_action_unblock_this">Odblokiraj stik</string>
   <string name="conversation_action_go_to_call">Vrnitev na aktivni klic</string>
+  <string name="conversation_action_incoming_call">Dohodni klic</string>
   <string name="conversation_action_latest">Premaknite se na konec pogovora</string>
   <string name="conversation_open_file_error">Ni nameščene aplikacije za odpiranje te vrste datotek.</string>
   <string name="clip_contact_uri">Naslov stika</string>
@@ -374,11 +380,24 @@
   <string name="picker_btn">Izberite stike</string>
   <string name="bottomsheet_contact">Stop v stik z Jamijem\n%1$s</string>
   <string name="bottomsheet_remove">Odstrani iz roja</string>
+  <string name="error_open_no_app_found">Ni programa, ki bi znal ravnati z datoteko: %1$s</string>
   <!--JamiId-->
+  <string name="jami_id_copy">Kopiraj JamiId</string>
+  <string name="jami_id_share">Deli JamiId</string>
   <string name="jami_id_validate">Registriraj uporabniško ime</string>
+  <string name="jami_id_available">Uporabniško ime je na voljo</string>
+  <string name="jami_id_not_available">Uporabniško ime ni na voljo\n• Največ 32 znakov\n• Dovoljena posebna znaka: vezaj (-), podčrtaj (_)</string>
+  <string name="jami_id_info">• Največ 32 znakov\n• Dovoljena posebna znaka: vezaj (-), podčrtaj (_)</string>
   <string name="jami_id_looking_for_availability">Poteka preverjanje, ali je uporabniško ime na voljo ...</string>
   <string name="jami_id_choose_username">Izberite uporabniško ime</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Dobrodošli v Jami</string>
+  <string name="welcome_jami_description">Delite svoj identifikator Jami, da vas lažje najdejo!</string>
   <!--Donation-->
+  <string name="donation_card_description">Če vam je všeč Jami in verjamete v naše poslanstvo - bi prispevali projektu?</string>
+  <string name="donation_card_not_now">Ne zdaj</string>
+  <string name="donation_donate">Donirajte</string>
+  <string name="donation_setting_title">Opomnik za donacije</string>
+  <string name="donation_setting_description">Omogoči opomnik za donacije</string>
+  <!--Plugin-->
 </resources>

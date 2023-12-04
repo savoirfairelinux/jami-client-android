@@ -394,4 +394,7 @@
   <string name="donation_card_description">Wenn Sie gerne Jami nutzen und an unsere Mission glauben, würden Sie dann spenden?</string>
   <string name="donation_card_not_now">Nicht jetzt</string>
   <string name="donation_donate">Spenden</string>
+  <string name="donation_setting_title">Spendenaktion</string>
+  <string name="donation_setting_description">Spendenerinnerung aktivieren</string>
+  <!--Plugin-->
 </resources>

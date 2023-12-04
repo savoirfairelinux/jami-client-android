@@ -182,6 +182,7 @@
   <string name="conversation_action_block_this">Bloquear contacto</string>
   <string name="conversation_action_unblock_this">Desbloquear contacto</string>
   <string name="conversation_action_go_to_call">Volver a la llamada en curso</string>
+  <string name="conversation_action_incoming_call">Llamada entrante</string>
   <string name="conversation_action_latest">Desplazar hasta el final de la conversación</string>
   <string name="conversation_open_file_error">No hay ninguna aplicación instalada capaz de abrir este tipo de fichero</string>
   <string name="clip_contact_uri">Dirección del contacto</string>
@@ -394,4 +395,5 @@
   <string name="donation_card_description">Si disfruta usando Jami y cree en nuestra misión, ¿le gustaría hacer una donación?</string>
   <string name="donation_card_not_now">Ahora no</string>
   <string name="donation_donate">Donar</string>
+  <!--Plugin-->
 </resources>

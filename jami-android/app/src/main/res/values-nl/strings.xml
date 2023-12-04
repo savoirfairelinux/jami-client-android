@@ -177,6 +177,7 @@
   <string name="conversation_action_block_this">Contact blokkeren</string>
   <string name="conversation_action_unblock_this">Contact deblokkeren</string>
   <string name="conversation_action_go_to_call">Terug naar lopende oproep</string>
+  <string name="conversation_action_incoming_call">Inkomende oproep</string>
   <string name="conversation_action_latest">Naar het einde van het gesprek schuiven</string>
   <string name="conversation_open_file_error">Er is geen toepassing geïnstalleerd om dit bestandstype te openen.</string>
   <string name="clip_contact_uri">Contactadres</string>
@@ -379,4 +380,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Welkom bij Jami</string>
   <!--Donation-->
+  <!--Plugin-->
 </resources>

@@ -87,6 +87,7 @@
   <string name="conversation_action_delete_this_message">Hành động này không thể không được thực hiện.</string>
   <string name="conversation_action_history_clear">Lịch sử rõ ràng</string>
   <string name="conversation_action_block_this">Khác tiếp xúc</string>
+  <string name="conversation_action_incoming_call">Tiếp tục gọi</string>
   <string name="conversation_action_latest">Cuộn đến cuối cuộc hội thoại</string>
   <string name="conversation_members">Các thành viên</string>
   <!--Contacts-->
@@ -171,4 +172,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Chào mừng đến với Jami.</string>
   <!--Donation-->
+  <!--Plugin-->
 </resources>

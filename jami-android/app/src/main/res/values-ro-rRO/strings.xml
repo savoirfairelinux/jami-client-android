@@ -183,6 +183,7 @@
   <string name="conversation_action_block_this">Blochează contactul</string>
   <string name="conversation_action_unblock_this">Deblochează contactul</string>
   <string name="conversation_action_go_to_call">Revino la apelul în curs</string>
+  <string name="conversation_action_incoming_call">Apel primit</string>
   <string name="conversation_action_latest">Saltă la ultimul</string>
   <string name="conversation_open_file_error">Nu există o aplicație instalată capabilă să deschidă acest tip de fișier.</string>
   <string name="clip_contact_uri">Adresă de contact</string>
@@ -395,4 +396,7 @@
   <string name="donation_card_description">Dacă îți place să folosești Jami și crezi că misiunea noastră este importantă, poți face o donație?</string>
   <string name="donation_card_not_now">Nu acum</string>
   <string name="donation_donate">Donează</string>
+  <string name="donation_setting_title">Reamintire donații</string>
+  <string name="donation_setting_description">Activează reamintirea pentru a dona</string>
+  <!--Plugin-->
 </resources>

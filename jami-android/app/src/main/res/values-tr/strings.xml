@@ -181,6 +181,7 @@
   <string name="conversation_action_block_this">Kişiyi engelle</string>
   <string name="conversation_action_unblock_this">Kişinin engelini kaldır</string>
   <string name="conversation_action_go_to_call">Devam eden çağrıya dön</string>
+  <string name="conversation_action_incoming_call">Gelen çağrı</string>
   <string name="conversation_action_latest">Görüşmenin sonuna kaydır</string>
   <string name="conversation_open_file_error">Bu dosya türünü açabilecek yüklü bir uygulama yok.</string>
   <string name="clip_contact_uri">İletişim adresi</string>
@@ -393,4 +394,5 @@
   <string name="donation_card_description">Jami\'yi kullanmaktan hoşlanıyor ve misyonumuza inanıyorsan bağış yapmak ister misin?</string>
   <string name="donation_card_not_now">Şimdi değil</string>
   <string name="donation_donate">Bağış</string>
+  <!--Plugin-->
 </resources>

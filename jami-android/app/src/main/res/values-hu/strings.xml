@@ -182,6 +182,7 @@
   <string name="conversation_action_block_this">Kapcsolat letiltása</string>
   <string name="conversation_action_unblock_this">Kapcsolat letiltás feloldása</string>
   <string name="conversation_action_go_to_call">Visszatérés a folyamatban lévő híváshoz</string>
+  <string name="conversation_action_incoming_call">Bejövő hívás</string>
   <string name="conversation_action_latest">Görgetés a beszélgetés végére</string>
   <string name="conversation_open_file_error">Nem található alkalmazás ehhez a fájltípushoz.</string>
   <string name="clip_contact_uri">Kapcsolattartási címe</string>
@@ -394,4 +395,7 @@
   <string name="donation_card_description">Ha hisz a küldetésünkben, adományozna?</string>
   <string name="donation_card_not_now">Máskor</string>
   <string name="donation_donate">Adományozás</string>
+  <string name="donation_setting_title">Adományozási emlékeztető</string>
+  <string name="donation_setting_description">Adományozási emlékeztető engedélyezése</string>
+  <!--Plugin-->
 </resources>

@@ -87,6 +87,7 @@
   <string name="conversation_action_delete_this_message">A pụghị ime ka ihe a ghara ime.</string>
   <string name="conversation_action_history_clear">Akụkọ ihe mere eme doro anya</string>
   <string name="conversation_action_block_this">Njikọ na-ekpuchi</string>
+  <string name="conversation_action_incoming_call">N\'ọhịa</string>
   <string name="conversation_members">Ndị otu</string>
   <!--Contacts-->
   <string name="account_create_title">Mepụta akaụntụ Jami</string>
@@ -168,4 +169,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Mmadụ Bịa na Jami</string>
   <!--Donation-->
+  <!--Plugin-->
 </resources>

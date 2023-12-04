@@ -177,6 +177,7 @@
   <string name="conversation_action_block_this">Blocar contacte</string>
   <string name="conversation_action_unblock_this">Desblocar contacte</string>
   <string name="conversation_action_go_to_call">Tornar a l\'invòca en cors</string>
+  <string name="conversation_action_incoming_call">Apèl entrant</string>
   <string name="conversation_action_latest">Salta a l\' darrièr</string>
   <string name="conversation_open_file_error">I a pas d\'aplicacion installada capable d\'obrir aqueste tipe de fichièr.</string>
   <string name="clip_contact_uri">Adressa de contacte</string>
@@ -379,4 +380,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Benvenguts a Jami</string>
   <!--Donation-->
+  <!--Plugin-->
 </resources>

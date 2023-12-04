@@ -66,6 +66,7 @@
   <string name="clear_history">Jasno</string>
   <!--Conversation-->
   <string name="conversation_action_unblock_this">Otključaj kontakt</string>
+  <string name="conversation_action_incoming_call">Dolazni poziv</string>
   <string name="conversation_action_latest">Pomicanje na kraj razgovora</string>
   <string name="conversation_open_file_error">Ne postoji instalirana aplikacija koja može otvoriti ovaj tip datoteke.</string>
   <string name="block_contact_dialog_message">%1$s neće moći kontaktirati vas dok ga ne otključite.</string>
@@ -206,4 +207,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Dobrodošli u Jami</string>
   <!--Donation-->
+  <!--Plugin-->
 </resources>

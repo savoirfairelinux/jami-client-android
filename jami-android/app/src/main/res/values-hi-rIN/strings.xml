@@ -177,6 +177,7 @@
   <string name="conversation_action_block_this">ब्लॉक संपर्क</string>
   <string name="conversation_action_unblock_this">संपर्क अवरोधित करें</string>
   <string name="conversation_action_go_to_call">चल रहे कॉल पर लौटें</string>
+  <string name="conversation_action_incoming_call">फोन आ रहा है </string>
   <string name="conversation_action_latest">वार्तालाप के अंत तक स्क्रॉल करें</string>
   <string name="conversation_open_file_error">इस प्रकार की फ़ाइल खोलने में सक्षम कोई स्थापित एप्लिकेशन नहीं है।</string>
   <string name="clip_contact_uri">संपर्क पता</string>
@@ -379,4 +380,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">जामी में आपका स्वागत है</string>
   <!--Donation-->
+  <!--Plugin-->
 </resources>

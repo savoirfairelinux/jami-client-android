@@ -179,6 +179,7 @@
   <string name="conversation_action_block_this">Заблокувати контакт</string>
   <string name="conversation_action_unblock_this">Відблокувати контакт</string>
   <string name="conversation_action_go_to_call">Повернутися до поточного дзвінка</string>
+  <string name="conversation_action_incoming_call">Вхідний виклик</string>
   <string name="conversation_action_latest">Прокрутити до кінця розмови</string>
   <string name="conversation_open_file_error">Немає встановленої програми, здатної відкрити цей тип файлу.</string>
   <string name="clip_contact_uri">Адреса контакту</string>
@@ -381,4 +382,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Вітаємо в Jami</string>
   <!--Donation-->
+  <!--Plugin-->
 </resources>

@@ -176,6 +176,7 @@
   <string name="conversation_action_block_this">Blokir kontak</string>
   <string name="conversation_action_unblock_this">Buka blokir kontak</string>
   <string name="conversation_action_go_to_call">Kembali ke panggilan</string>
+  <string name="conversation_action_incoming_call">Panggilan masuk</string>
   <string name="conversation_action_latest">Gulir ke akhir percakapan</string>
   <string name="conversation_open_file_error">Tidak aplikasi yang terinstal untuk membuka tipe file ini.</string>
   <string name="clip_contact_uri">Alamat kontak</string>
@@ -378,4 +379,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Selamat datang di Jami</string>
   <!--Donation-->
+  <!--Plugin-->
 </resources>

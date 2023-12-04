@@ -171,6 +171,7 @@
   <string name="conversation_action_select_peer_number">Izaberi broj</string>
   <string name="conversation_action_block_this">Blokiraj kontakt</string>
   <string name="conversation_action_go_to_call">Vratite se na tekući poziv</string>
+  <string name="conversation_action_incoming_call">Dolazeći poziv</string>
   <string name="conversation_action_latest">Pomerite se na kraj razgovora</string>
   <string name="conversation_open_file_error">Ne postoji instalirana aplikacija koja može otvoriti ovaj tip datoteke.</string>
   <string name="clip_contact_uri">Kontakt adresa</string>
@@ -351,4 +352,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Dobrodošli na Jami</string>
   <!--Donation-->
+  <!--Plugin-->
 </resources>

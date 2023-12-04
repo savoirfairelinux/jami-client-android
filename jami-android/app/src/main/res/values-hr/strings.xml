@@ -178,6 +178,7 @@
   <string name="conversation_action_block_this">Blokiraj kontakt</string>
   <string name="conversation_action_unblock_this">Otključaj kontakt</string>
   <string name="conversation_action_go_to_call">Vrati se na poziv u tijeku</string>
+  <string name="conversation_action_incoming_call">Dolazni poziv</string>
   <string name="conversation_action_latest">Pomicanje na kraj razgovora</string>
   <string name="conversation_open_file_error">Ne postoji instalirana aplikacija koja može otvoriti ovaj tip datoteke.</string>
   <string name="clip_contact_uri">Adresa kontakta</string>
@@ -380,4 +381,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Dobrodošli u Jami</string>
   <!--Donation-->
+  <!--Plugin-->
 </resources>

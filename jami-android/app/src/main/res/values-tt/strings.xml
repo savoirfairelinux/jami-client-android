@@ -86,6 +86,7 @@
   <string name="conversation_action_delete_this_message">Бу эштән баш тартырга ярамый.</string>
   <string name="conversation_action_history_clear">Тарих ачык</string>
   <string name="conversation_action_block_this">Блок белән элемтә</string>
+  <string name="conversation_action_incoming_call">Килүче чакыру</string>
   <string name="conversation_members">Депутатлар</string>
   <!--Contacts-->
   <string name="account_create_title">Jami хисабы булдыру</string>
@@ -166,4 +167,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Җәмигә рәхим итегез.</string>
   <!--Donation-->
+  <!--Plugin-->
 </resources>

@@ -183,6 +183,7 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="conversation_action_block_this">Bloquear contato</string>
   <string name="conversation_action_unblock_this">Desbloquear o contato</string>
   <string name="conversation_action_go_to_call">Voltar à chamada em andamento</string>
+  <string name="conversation_action_incoming_call">Chamada recebida</string>
   <string name="conversation_action_latest">Rolar para o fim da conversa</string>
   <string name="conversation_open_file_error">Não há aplicativo instalado capaz de abrir este tipo de arquivo.</string>
   <string name="clip_contact_uri">Endereço do contato</string>
@@ -385,4 +386,5 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Bem-vindo ao Jami</string>
   <!--Donation-->
+  <!--Plugin-->
 </resources>

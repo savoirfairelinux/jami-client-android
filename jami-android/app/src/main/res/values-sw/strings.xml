@@ -177,6 +177,7 @@
   <string name="conversation_action_block_this">Kuzuia mawasiliano</string>
   <string name="conversation_action_unblock_this">Kufungua mawasiliano</string>
   <string name="conversation_action_go_to_call">Kurudi kwenye simu inayoendelea</string>
+  <string name="conversation_action_incoming_call">Kuwasiliana</string>
   <string name="conversation_action_latest">Kuruka kwa karibuni</string>
   <string name="conversation_open_file_error">Hakuna programu imewekwa uwezo wa kufungua aina hii ya faili.</string>
   <string name="clip_contact_uri">Anwani ya mawasiliano</string>
@@ -379,4 +380,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Karibu Jami</string>
   <!--Donation-->
+  <!--Plugin-->
 </resources>

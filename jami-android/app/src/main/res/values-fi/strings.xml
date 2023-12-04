@@ -177,6 +177,7 @@
   <string name="conversation_action_block_this">Estä henkilö</string>
   <string name="conversation_action_unblock_this">Poista kontaktin esto</string>
   <string name="conversation_action_go_to_call">Palaa jatkuvaan puheluun</string>
+  <string name="conversation_action_incoming_call">Saapuva puhelu</string>
   <string name="conversation_action_latest">Vieritä keskustelun loppuun</string>
   <string name="conversation_open_file_error">Laitteessa ei ole sovellusta, joka pystyisi avaamaan tämän tiedoston.</string>
   <string name="clip_contact_uri">Yhteystieto</string>
@@ -379,4 +380,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Tervetuloa Jamiin</string>
   <!--Donation-->
+  <!--Plugin-->
 </resources>

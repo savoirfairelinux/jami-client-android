@@ -177,6 +177,7 @@
   <string name="conversation_action_block_this">Բլոկային շփումը</string>
   <string name="conversation_action_unblock_this">Բաց թողնել շփումը</string>
   <string name="conversation_action_go_to_call">Վերադարձ դեպի Շարունակվող զանգը</string>
+  <string name="conversation_action_incoming_call">Հեռախոսազանգ</string>
   <string name="conversation_action_latest">Հագնացիր վերջին</string>
   <string name="conversation_open_file_error">Այս ֆայլերի տեսակը բացելու համար տեղադրված ծրագիր չկա:</string>
   <string name="clip_contact_uri">Հաղորդակցական հասցե</string>
@@ -379,4 +380,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Բարի գալուստ Ջամի:</string>
   <!--Donation-->
+  <!--Plugin-->
 </resources>

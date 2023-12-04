@@ -247,7 +247,23 @@
   <string name="account_device_this_indicator">Ta naprava</string>
   <string name="account_disabled_indicator">onemogočeno</string>
   <!--Link a new device-->
+  <string name="account_link_prompt_pin_manually">Ročno vnesite PIN</string>
+  <string name="qr_invalid">Ni overitvena koda QR Jami</string>
+  <string name="content_description_checkbox">Vaša koda QR je veljavna</string>
   <string name="error_format_not_supported">Format ni podprt.</string>
+  <string name="account_link_info">V novem programu Jami optično preberite QR-kodo ali ročno vnesite PIN.</string>
   <string name="account_link_device_title">Poveži novo napravo</string>
+  <string name="account_link_password">Ta račun je šifriran z geslom, vnesite geslo, da tvorite kodo PIN.</string>
+  <string name="account_link_generate_button">Tvori</string>
+  <string name="account_link_time_valid">Koda PIN bo neveljavna: %1$s.</string>
+  <string name="account_link_device_info">Izberite \"Poveži novo napravo\" v drugem programu Jami, da prikažete QR-kodo ali PIN</string>
+  <string name="account_generate_export_device">Na drugi napravi</string>
+  <string name="account_generate_export_info">Namestite in zaženite Jami, izberite \"Uvozi iz druge naprave\" in optično preberite kodo QR.</string>
+  <string name="content_description_qr_generated">Vaša koda QR</string>
+  <string name="account_generate_export_invalid">PIN ni več veljaven.\n Vnesite geslo in tvorite novi PIN, da se povežete z novo napravo.</string>
+  <string name="account_generate_export_invalid_two">PIN ni več veljaven.\n Tvorite novega, da se povežete z novo napravo.</string>
+  <string name="help_pin_info">Izpolnite, če je račun zaščiten z geslom</string>
+  <string name="connect_device_scanqr">Optično preberi QR</string>
+  <string name="connect_device_enterPIN">Ali vnesite PIN</string>
   <string name="account_link_device_button">Poveži</string>
 </resources>

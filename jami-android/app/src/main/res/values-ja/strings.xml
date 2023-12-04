@@ -180,6 +180,7 @@
   <string name="conversation_action_block_this">連絡先をブロック</string>
   <string name="conversation_action_unblock_this">連絡先の解禁</string>
   <string name="conversation_action_go_to_call">通話に戻る</string>
+  <string name="conversation_action_incoming_call">着信</string>
   <string name="conversation_action_latest">会話の最後までスクロール</string>
   <string name="conversation_open_file_error">この種類のファイルを開けるアプリがインストールされていません。</string>
   <string name="clip_contact_uri">連絡先</string>
@@ -384,4 +385,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Jamiへようこそ</string>
   <!--Donation-->
+  <!--Plugin-->
 </resources>

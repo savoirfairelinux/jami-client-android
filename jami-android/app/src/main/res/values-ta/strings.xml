@@ -177,6 +177,7 @@
   <string name="conversation_action_block_this">பிளாக் தொடர்பு</string>
   <string name="conversation_action_unblock_this">தொடர்புகளைத் திறக்கவும்</string>
   <string name="conversation_action_go_to_call">தொடர்ச்சியான அழைப்புக்கு திரும்புதல்</string>
+  <string name="conversation_action_incoming_call">வருகின்ற அழைப்பு</string>
   <string name="conversation_action_latest">உரையாடலின் முடிவுக்கு ஸ்க்ரோல் செய்யவும்</string>
   <string name="conversation_open_file_error">இந்த கோப்பு வகை திறக்கக்கூடிய எந்த பயன்பாடும் நிறுவப்படவில்லை.</string>
   <string name="clip_contact_uri">தொடர்பு முகவரி</string>
@@ -379,4 +380,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">ஜாமிக்கு வரவேற்கிறோம்</string>
   <!--Donation-->
+  <!--Plugin-->
 </resources>

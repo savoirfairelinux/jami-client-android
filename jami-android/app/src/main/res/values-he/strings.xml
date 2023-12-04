@@ -99,6 +99,7 @@
   <string name="conversation_action_history_clear">היסטוריה ברורה</string>
   <string name="conversation_action_copy_peer_number">העתקת מספר</string>
   <string name="conversation_action_block_this">פגע בלוק</string>
+  <string name="conversation_action_incoming_call">שיחה נכנסת</string>
   <string name="conversation_action_latest">גלול לקצה השיחה</string>
   <string name="conversation_members">חברי</string>
   <!--Contacts-->
@@ -183,4 +184,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">ברוך בואך אל Jami</string>
   <!--Donation-->
+  <!--Plugin-->
 </resources>

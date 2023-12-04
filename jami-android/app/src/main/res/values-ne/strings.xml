@@ -177,6 +177,7 @@
   <string name="conversation_action_block_this">सम्पर्कको अवरोध</string>
   <string name="conversation_action_unblock_this">सम्पर्क रोक्न</string>
   <string name="conversation_action_go_to_call">चलिरहेको कलमा फर्कनुहोस्</string>
+  <string name="conversation_action_incoming_call">आगमन कल</string>
   <string name="conversation_action_latest">पछिल्लोमा उफ्रनुहोस्</string>
   <string name="conversation_open_file_error">यो फाइल प्रकार खोल्न सक्षम कुनै पनि अनुप्रयोग स्थापना गरिएको छैन।</string>
   <string name="clip_contact_uri">सम्पर्क ठेगाना</string>
@@ -379,4 +380,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">जामीमा स्वागत छ</string>
   <!--Donation-->
+  <!--Plugin-->
 </resources>

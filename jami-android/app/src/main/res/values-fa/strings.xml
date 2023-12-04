@@ -179,6 +179,7 @@
   <string name="conversation_action_block_this">مسدودسازی مخاطب</string>
   <string name="conversation_action_unblock_this">رفع مسدودی مخاطب</string>
   <string name="conversation_action_go_to_call">بازگشت به تماس جاری</string>
+  <string name="conversation_action_incoming_call">تماس ورودی</string>
   <string name="conversation_action_latest">پرش به آخرین</string>
   <string name="conversation_open_file_error">هیچ برنامه‌ نصب‌شده‌ای قادر به باز کردن این نوع فایل نیست.</string>
   <string name="clip_contact_uri">نشانی مخاطب</string>
@@ -382,4 +383,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">به جمی خوش آمدید</string>
   <!--Donation-->
+  <!--Plugin-->
 </resources>

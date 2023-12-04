@@ -176,6 +176,7 @@
   <string name="conversation_action_block_this">차단 접촉</string>
   <string name="conversation_action_unblock_this">연결 차단</string>
   <string name="conversation_action_go_to_call">계속되는 호출으로 돌아갑니다</string>
+  <string name="conversation_action_incoming_call">수신 전화</string>
   <string name="conversation_action_latest">대화의 끝으로 스크롤</string>
   <string name="conversation_open_file_error">이 파일 타입을 열 수 있는 설치된 응용 프로그램은 없습니다.</string>
   <string name="clip_contact_uri">연락처 주소</string>
@@ -378,4 +379,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">자미에 오신 것을 환영합니다</string>
   <!--Donation-->
+  <!--Plugin-->
 </resources>

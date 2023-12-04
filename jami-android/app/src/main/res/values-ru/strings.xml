@@ -182,6 +182,7 @@
   <string name="conversation_action_block_this">Заблокировать контакт</string>
   <string name="conversation_action_unblock_this">Разблокировать контакт</string>
   <string name="conversation_action_go_to_call">Вернуться к текущему вызову</string>
+  <string name="conversation_action_incoming_call">Входящий вызов</string>
   <string name="conversation_action_latest">Прокрутить до конца беседы</string>
   <string name="conversation_open_file_error">Отсутствует приложение для открытия данного типа файлов.</string>
   <string name="clip_contact_uri">Контактный адрес</string>
@@ -385,4 +386,5 @@
   <string name="welcome_jami_title">Добро пожаловать в Jami</string>
   <string name="welcome_jami_description">Поделитесь своим идентификатором Jami, чтобы с вами было проще связаться!</string>
   <!--Donation-->
+  <!--Plugin-->
 </resources>

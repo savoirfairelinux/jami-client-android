@@ -177,6 +177,7 @@
   <string name="conversation_action_block_this">Blokeatu kontaktua</string>
   <string name="conversation_action_unblock_this">Kontaktuak desblokeatu</string>
   <string name="conversation_action_go_to_call">Itzuli abioan den deira</string>
+  <string name="conversation_action_incoming_call">Sarrera-deia</string>
   <string name="conversation_action_latest">Azkenera salto egin.</string>
   <string name="conversation_open_file_error">Ez dago fitxategi hau ireki dezakeen aplikaziorik instalatuta</string>
   <string name="clip_contact_uri">Kontaktuaren helbidea</string>
@@ -379,4 +380,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Ongi etorri Jamira</string>
   <!--Donation-->
+  <!--Plugin-->
 </resources>

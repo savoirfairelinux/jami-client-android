@@ -177,6 +177,7 @@
   <string name="conversation_action_block_this">阻擋連絡人</string>
   <string name="conversation_action_unblock_this">取消屏蔽联系人</string>
   <string name="conversation_action_go_to_call">返回正在进行的通话</string>
+  <string name="conversation_action_incoming_call">來電</string>
   <string name="conversation_action_latest">跳到最新</string>
   <string name="conversation_open_file_error">没有适合打开这种文件类型的应用程序。</string>
   <string name="clip_contact_uri">联系人地址</string>
@@ -379,4 +380,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">欢迎来到 Jami</string>
   <!--Donation-->
+  <!--Plugin-->
 </resources>

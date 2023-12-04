@@ -177,6 +177,7 @@
   <string name="conversation_action_block_this">Блок-тай холбоо тогтоох</string>
   <string name="conversation_action_unblock_this">Байлгын сүлжээг буулгах</string>
   <string name="conversation_action_go_to_call">Урьдчилсан дуудлагад буцах</string>
+  <string name="conversation_action_incoming_call">Цаашид ирсэн дуудлага</string>
   <string name="conversation_action_latest">Хамгийн сүүлийн үеийн</string>
   <string name="conversation_open_file_error">Энэ файлын хэлбэрийг нээж чадах орчин суурилсан хэрэгсэл байхгүй.</string>
   <string name="clip_contact_uri">Байлгын хаяг</string>
@@ -379,4 +380,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Жэми-д тавтай морилно уу</string>
   <!--Donation-->
+  <!--Plugin-->
 </resources>

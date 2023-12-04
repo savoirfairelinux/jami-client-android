@@ -179,6 +179,7 @@
   <string name="conversation_action_block_this">Užblokuoti adresatą</string>
   <string name="conversation_action_unblock_this">Atblokuoti adresatą</string>
   <string name="conversation_action_go_to_call">Grįžti prie nuolatinio skambučio</string>
+  <string name="conversation_action_incoming_call">Gaunamasis skambutis</string>
   <string name="conversation_action_latest">Slinkite į pokalbio pabaigą</string>
   <string name="conversation_open_file_error">Nėra įdiegtos programos, kuri galėtų atverti šį failo tipą.</string>
   <string name="clip_contact_uri">Adresato adresas</string>
@@ -381,4 +382,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Sveiki atvykę į Jami</string>
   <!--Donation-->
+  <!--Plugin-->
 </resources>

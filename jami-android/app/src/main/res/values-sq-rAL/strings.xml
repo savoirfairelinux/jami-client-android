@@ -182,6 +182,7 @@
   <string name="conversation_action_block_this">Bllokojeni kontaktin</string>
   <string name="conversation_action_unblock_this">Zhbllokoje kontaktin</string>
   <string name="conversation_action_go_to_call">Rikthehu te thirrja që po bëhej</string>
+  <string name="conversation_action_incoming_call">Thirrje ardhëse</string>
   <string name="conversation_action_latest">Hidhu te më i riu</string>
   <string name="conversation_open_file_error">S’ka të instaluar aplikacion të aftë të hapë këtë lloj kartelash.</string>
   <string name="clip_contact_uri">Adresë kontakti</string>
@@ -393,4 +394,7 @@
   <string name="donation_card_description">Nëse ju shijon të përdorni Jami-n dhe besoni në misionin tonë, a do të bënit një dhurim?</string>
   <string name="donation_card_not_now">Jo tani</string>
   <string name="donation_donate">Dhuroni</string>
+  <string name="donation_setting_title">Kujtues dhurimi</string>
+  <string name="donation_setting_description">Aktivizo kujtues dhurimesh</string>
+  <!--Plugin-->
 </resources>

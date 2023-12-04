@@ -177,6 +177,7 @@
   <string name="conversation_action_block_this">ಬ್ಲಾಕ್ ಸಂಪರ್ಕ</string>
   <string name="conversation_action_unblock_this">ಸಂಪರ್ಕವನ್ನು ನಿರ್ಬಂಧಿಸಲು</string>
   <string name="conversation_action_go_to_call">ನಡೆಯುತ್ತಿರುವ ಕರೆಗೆ ಹಿಂತಿರುಗಿ</string>
+  <string name="conversation_action_incoming_call">ಒಳಬರುವ ಕರೆ</string>
   <string name="conversation_action_latest">ಸಂಭಾಷಣೆಯ ಕೊನೆಯ ಭಾಗಕ್ಕೆ ಸ್ಕ್ರಾಲ್ ಮಾಡಿ</string>
   <string name="conversation_open_file_error">ಈ ಫೈಲ್ ಪ್ರಕಾರವನ್ನು ತೆರೆಯಲು ಯಾವುದೇ ಸ್ಥಾಪಿತ ಅಪ್ಲಿಕೇಶನ್ ಇಲ್ಲ.</string>
   <string name="clip_contact_uri">ಸಂಪರ್ಕ ವಿಳಾಸ</string>
@@ -379,4 +380,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">ಜಾಮಿಗೆ ಸ್ವಾಗತ</string>
   <!--Donation-->
+  <!--Plugin-->
 </resources>

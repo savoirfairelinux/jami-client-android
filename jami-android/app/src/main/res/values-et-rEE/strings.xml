@@ -177,6 +177,7 @@
   <string name="conversation_action_block_this">Blokeeri kontakt</string>
   <string name="conversation_action_unblock_this">Eemalda kontakti blokeering</string>
   <string name="conversation_action_go_to_call">Tagasi käimasolekul</string>
+  <string name="conversation_action_incoming_call">Sisseõnnestamine</string>
   <string name="conversation_action_latest">Liigu kerides vestluse lõppu</string>
   <string name="conversation_open_file_error">Seda faili tüüpi avamiseks ei ole paigaldatud rakendust.</string>
   <string name="clip_contact_uri">Kontakt aadress</string>
@@ -379,4 +380,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Tere tulemast Jami\'sse.</string>
   <!--Donation-->
+  <!--Plugin-->
 </resources>

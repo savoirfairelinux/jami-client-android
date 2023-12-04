@@ -179,6 +179,7 @@
   <string name="conversation_action_block_this">Blokuj kontakt</string>
   <string name="conversation_action_unblock_this">Odblokuj kontakt</string>
   <string name="conversation_action_go_to_call">Powróć do trwającej rozmowy</string>
+  <string name="conversation_action_incoming_call">Połączenie przychodzące</string>
   <string name="conversation_action_latest">Przewiń do końca konwersacji</string>
   <string name="conversation_open_file_error">Brak aplikacji umożliwiającej otwarcie tego pliku.</string>
   <string name="clip_contact_uri">Kontakty</string>
@@ -381,4 +382,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Witaj w Jami</string>
   <!--Donation-->
+  <!--Plugin-->
 </resources>

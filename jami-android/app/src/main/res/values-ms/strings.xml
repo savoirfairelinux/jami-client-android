@@ -176,6 +176,7 @@
   <string name="conversation_action_block_this">തടയൽ കോൺടാക്റ്റ്</string>
   <string name="conversation_action_unblock_this">കോൺടാക്റ്റ് തടയുക</string>
   <string name="conversation_action_go_to_call">തുടര് ന്ന കോളിന് മടങ്ങുക</string>
+  <string name="conversation_action_incoming_call">Panggilan masuk</string>
   <string name="conversation_action_latest">ഏറ്റവും പുതിയത് വരെ ചാടി</string>
   <string name="conversation_open_file_error">ഈ ഫയൽ തരം തുറക്കാൻ സാധിക്കുന്ന ഒരു അപ്ലിക്കേഷനും ഇൻസ്റ്റാൾ ചെയ്തിട്ടില്ല.</string>
   <string name="clip_contact_uri">ബന്ധപ്പെടാനുള്ള വിലാസം</string>
@@ -378,4 +379,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">ജാമിയിൽ സ്വാഗതം</string>
   <!--Donation-->
+  <!--Plugin-->
 </resources>

@@ -24,6 +24,7 @@
   <!--QRCode Scan-->
   <!--Settings-->
   <!--Conversation-->
+  <string name="conversation_action_incoming_call">来电</string>
   <!--Contacts-->
   <!--Account Summary-->
   <!--Share fragment-->
@@ -44,4 +45,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">欢迎使用 Jami</string>
   <!--Donation-->
+  <!--Plugin-->
 </resources>

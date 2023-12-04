@@ -86,6 +86,7 @@
   <string name="conversation_action_delete_this_message">Ní féidir an gníomh seo a dhéanamh ar ais.</string>
   <string name="conversation_action_history_clear">Tuairiscí soiléir</string>
   <string name="conversation_action_block_this">Contae Bloc</string>
+  <string name="conversation_action_incoming_call">Glacadh isteach</string>
   <string name="conversation_members">Comhaltaí</string>
   <!--Contacts-->
   <string name="account_create_title">Déan cuntas Jami</string>
@@ -167,4 +168,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Fáilte go Jami</string>
   <!--Donation-->
+  <!--Plugin-->
 </resources>
