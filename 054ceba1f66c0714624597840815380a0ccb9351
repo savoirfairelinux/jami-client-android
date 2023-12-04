@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7450f0d1_71f1286c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-12-04T20:19:09Z",
+      "side": 1,
+      "message": "to check with @choffmann if feature is wanted.\n\ncode is still ok",
+      "revId": "054ceba1f66c0714624597840815380a0ccb9351",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
