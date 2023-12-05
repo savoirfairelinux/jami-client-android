@@ -66,6 +66,8 @@ class Account(
     private val mLocationSubject: Subject<Map<Contact, Observable<ContactLocation>>> = BehaviorSubject.createDefault(contactLocations)
     private val mLocationStartedSubject: Subject<ContactLocationEntry> = PublishSubject.create()
     private val registrationStateSubject = BehaviorSubject.createDefault(AccountConfig.RegistrationState.valueOf(mVolatileDetails[ConfigKey.ACCOUNT_REGISTRATION_STATUS]))
+    private val unreadConversationsSubject: Subject<Int> = BehaviorSubject.create()
+    val unreadConversations: Observable<Int> = unreadConversationsSubject.distinctUntilChanged()
 
     var historyLoader: Single<Account>? = null
     var loadedProfile: Single<Profile>? = null
@@ -231,6 +233,7 @@ class Account(
     private fun conversationRefreshed(conversation: Conversation) {
         if (historyLoaded) {
             conversationSubject.onNext(conversation)
+            updateUnreadConversations()
         }
     }
 
@@ -239,6 +242,7 @@ class Account(
             conversationsChanged = true
             if (historyLoaded) {
                 conversationsSubject.onNext(ArrayList(getSortedConversations()))
+                updateUnreadConversations()
             }
         }
     }
@@ -255,6 +259,7 @@ class Account(
             // TODO: remove next line when profile is updated through dedicated signal
             conversationSubject.onNext(conversation)
             conversationsSubject.onNext(ArrayList(sortedConversations))
+            updateUnreadConversations()
         }
     }
 
@@ -893,6 +898,15 @@ class Account(
 
     fun setActiveCalls(conversationId: String, activeCalls: List<Map<String, String>>) =
         getSwarm(conversationId)?.setActiveCalls(activeCalls.map { Conversation.ActiveCall(it) })
+
+    private fun updateUnreadConversations() {
+        var unread = 0
+        for (model in sortedConversations) {
+            val last = model.lastEvent
+            if (last != null && !last.isRead) unread++
+        }
+        unreadConversationsSubject.onNext(unread)
+    }
 
     private class ConversationComparator : Comparator<Conversation> {
         override fun compare(a: Conversation, b: Conversation): Int =
