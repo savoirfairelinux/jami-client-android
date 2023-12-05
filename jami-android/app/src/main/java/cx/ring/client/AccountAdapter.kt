@@ -90,6 +90,15 @@ class AccountAdapter(
                             profile.first.isRegistered
                         )
                     )
+                    profile.first.getConversations()
+                        .sumOf { if (it.unreadTextMessages.keys.size > 0) 1L else 0L }
+                        .let { unread ->
+                            val total = unread + profile.first.getPending().size
+                            if (total > 0) {
+                                holder.binding.invitationBadge.visibility = View.VISIBLE
+                                holder.binding.invitationBadge.text = total.toString()
+                            } else holder.binding.invitationBadge.visibility = View.GONE
+                        }
                     holder.binding.title.text = getTitle(profile.first, profile.second)
                     if (holder.binding.title.text == subtitle) {
                         holder.binding.subtitle.visibility = View.GONE
