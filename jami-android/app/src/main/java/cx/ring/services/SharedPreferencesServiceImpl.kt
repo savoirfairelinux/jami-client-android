@@ -225,7 +225,7 @@ class SharedPreferencesServiceImpl(private val context: Context, accountService:
 
         /** Compute conversation color from preference value, fallback on default */
         fun getConversationColor(context: Context, @ColorInt color: Int) =
-            if (color != 0) color else context.getColor(R.color.color_primary_light)
+            if (color != 0) color else context.getColor(R.color.conversation_primary_background)
 
         /** Compute conversation symbol from preference value, fallback on default */
         fun getConversationSymbol(context: Context, symbol: CharSequence?): CharSequence =
