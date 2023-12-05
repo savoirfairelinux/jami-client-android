@@ -22,11 +22,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.RelativeLayout
 import cx.ring.R
 import cx.ring.databinding.ItemToolbarSpinnerBinding
 import cx.ring.utils.DeviceUtils
 import cx.ring.views.AvatarDrawable
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.model.Account
 import net.jami.model.Profile
@@ -75,10 +75,24 @@ class AccountAdapter(
         if (type == TYPE_ACCOUNT) {
             val account = getItem(position)!!
 
-            // For type=TYPE_CREATE_ACCOUNT, item title is center vertical. So remove this rule.
-            val params = holder.binding.title.layoutParams as RelativeLayout.LayoutParams
-            params.removeRule(RelativeLayout.CENTER_VERTICAL)
-            holder.binding.title.layoutParams = params
+            // Update the unread counter (sum of unread conversations and pending conversations)
+            holder.loader.add(
+                mAccountService.getObservableAccountProfile(account.accountId).switchMap {
+                    Observable.combineLatest(
+                        account.unreadConversations,
+                        account.getPendingSubject()
+                    ) { unreadConversationCounter, pendingConversationList ->
+                        unreadConversationCounter + pendingConversationList.size
+                    }
+                }
+                    .observeOn(DeviceUtils.uiScheduler)
+                    .subscribe {
+                        if (it > 0) {
+                            holder.binding.invitationBadge.visibility = View.VISIBLE
+                            holder.binding.invitationBadge.text = it.toString()
+                        } else holder.binding.invitationBadge.visibility = View.GONE
+                    }
+            )
 
             // Subscribe to account profile changes to update:
             // - avatar
@@ -105,18 +119,13 @@ class AccountAdapter(
                     }
                 }) { e: Throwable -> Log.e(TAG, "Error loading avatar", e) })
         } else {
+            holder.binding.invitationBadge.visibility = View.GONE
             holder.binding.title.setText(
                 if (type == TYPE_CREATE_ACCOUNT) R.string.add_ring_account_title
                 else R.string.add_sip_account_title
             )
             holder.binding.logo.setImageResource(R.drawable.baseline_add_24)
             holder.binding.subtitle.visibility = View.GONE
-
-            // Center vertical the title.
-            val params = holder.binding.title.layoutParams as RelativeLayout.LayoutParams
-            params.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE)
-            holder.binding.title.layoutParams = params
-
         }
         return view
     }

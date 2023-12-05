@@ -138,4 +138,5 @@ along with this program; if not, write to the Free Software
     <dimen name="text_size_large">16sp</dimen>
     <dimen name="text_size_xlarge">18sp</dimen>
 
+    <dimen name="account_unread_radius">10dp</dimen>
 </resources>
