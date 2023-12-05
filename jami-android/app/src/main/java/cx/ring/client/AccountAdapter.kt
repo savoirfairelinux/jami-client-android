@@ -22,7 +22,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.RelativeLayout
 import cx.ring.R
 import cx.ring.databinding.ItemToolbarSpinnerBinding
 import cx.ring.utils.DeviceUtils
@@ -75,11 +74,6 @@ class AccountAdapter(
         if (type == TYPE_ACCOUNT) {
             val account = getItem(position)!!
 
-            // For type=TYPE_CREATE_ACCOUNT, item title is center vertical. So remove this rule.
-            val params = holder.binding.title.layoutParams as RelativeLayout.LayoutParams
-            params.removeRule(RelativeLayout.CENTER_VERTICAL)
-            holder.binding.title.layoutParams = params
-
             // Subscribe to account profile changes to update:
             // - avatar
             // - name (will display the jami if name is not setup)
@@ -105,18 +99,13 @@ class AccountAdapter(
                     }
                 }) { e: Throwable -> Log.e(TAG, "Error loading avatar", e) })
         } else {
+            holder.binding.invitationBadge.visibility = View.GONE
             holder.binding.title.setText(
                 if (type == TYPE_CREATE_ACCOUNT) R.string.add_ring_account_title
                 else R.string.add_sip_account_title
             )
             holder.binding.logo.setImageResource(R.drawable.baseline_add_24)
             holder.binding.subtitle.visibility = View.GONE
-
-            // Center vertical the title.
-            val params = holder.binding.title.layoutParams as RelativeLayout.LayoutParams
-            params.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE)
-            holder.binding.title.layoutParams = params
-
         }
         return view
     }
