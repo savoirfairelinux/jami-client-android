@@ -157,5 +157,6 @@ along with this program; if not, write to the Free Software
     <dimen name="custom_message_bubble_default_text_size">14sp</dimen>
     <dimen name="custom_message_bubble_emoji_only_text_size">32sp</dimen>
 
-
+    <!--  Account List  -->
+    <dimen name="account_unread_radius">10dp</dimen>
 </resources>
