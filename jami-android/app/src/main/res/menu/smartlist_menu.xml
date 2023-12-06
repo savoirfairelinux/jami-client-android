@@ -7,7 +7,7 @@
         android:icon="@drawable/ic_baseline_more_vert"
         android:orderInCategory="101"
         android:title=""
-        app:iconTint="?attr/colorControlNormal"
+        app:iconTint="@color/icon_color"
         app:showAsAction="always">
 
         <menu>
@@ -17,19 +17,21 @@
                 android:enabled="false"
                 android:icon="@drawable/baseline_account_settings_24dp"
                 android:title="@string/menu_item_account_settings"
+                app:iconTint="@color/icon_color"
                 app:showAsAction="ifRoom" />
 
             <item
                 android:id="@+id/menu_advanced_settings"
                 android:icon="@drawable/baseline_advanced_settings_24dp"
                 android:title="@string/menu_item_advanced_settings"
+                app:iconTint="@color/icon_color"
                 app:showAsAction="ifRoom" />
 
             <item
                 android:id="@+id/menu_donate"
                 android:icon="@drawable/baseline_favorite_24"
-                app:iconTint="@color/donation_card_favorite_color"
                 android:title="@string/donation_donate"
+                app:iconTint="@color/donation_card_favorite_color"
                 app:showAsAction="ifRoom" />
 
             <item
