@@ -45,6 +45,8 @@
     <color name="online_indicator">#0B8271</color>
     <color name="menu_icon">#0A84FF</color>
 
+    <color name="icon_color">#656565</color>
+
     <!--  TwoButton EditText  -->
     <color name="edit_text_background">@color/grey_100</color>
     <color name="text_color">#414141</color>

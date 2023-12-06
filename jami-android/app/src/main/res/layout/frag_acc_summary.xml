@@ -89,7 +89,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:textColorHint="@color/text_hint"
                     app:endIconDrawable="@drawable/baseline_edit_twoton_24dp"
                     app:endIconMode="custom"
-                    app:endIconTint="@color/colorPrimary"
                     app:hintEnabled="true"
                     app:hintTextColor="@color/text_hint">
 
