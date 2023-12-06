@@ -422,8 +422,7 @@
                             android:background="?selectableItemBackgroundBorderless"
                             android:contentDescription="@string/share_label"
                             android:padding="8dp"
-                            app:srcCompat="@drawable/baseline_more_vert_24"
-                            app:tint="@color/colorPrimary" />
+                            app:srcCompat="@drawable/baseline_more_vert_24"/>
 
                         <ImageButton
                             android:id="@+id/btn_take_picture"
@@ -432,8 +431,7 @@
                             android:background="?selectableItemBackgroundBorderless"
                             android:contentDescription="@string/take_a_photo"
                             android:padding="8dp"
-                            app:srcCompat="@drawable/baseline_photo_camera_24"
-                            app:tint="@color/colorPrimary" />
+                            app:srcCompat="@drawable/baseline_photo_camera_24"/>
 
                         <ProgressBar
                             android:id="@+id/pb_data_transfer"
@@ -480,8 +478,7 @@
                             android:contentDescription="@string/send_message"
                             android:padding="8dp"
                             android:visibility="gone"
-                            app:srcCompat="@drawable/baseline_send_24"
-                            app:tint="@color/colorPrimary" />
+                            app:srcCompat="@drawable/baseline_send_24"/>
 
                     </LinearLayout>
                 </LinearLayout>
