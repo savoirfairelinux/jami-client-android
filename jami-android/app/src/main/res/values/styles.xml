@@ -1,10 +1,27 @@
-<resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- Main Day/Night base theme -->
     <style name="AppThemeBase" parent="@style/Theme.Material3.DayNight.NoActionBar">
         <item name="colorSurface">@color/background</item>
         <item name="colorOnSurface">@color/colorOnSurface</item>
 
+        <!-- most of the icons color to modify-->
+        <item name="colorControlNormal">@color/purple_800</item>
+
+        <!-- the rest of the icons color but also strings :
+        Qr code, start swarm and search bar smartlist text-->
+        <item name="colorOnSurfaceVariant">@color/orange_700</item>
+
+        <item name="actionMenuTextColor">@color/teal_700</item>
+
+
+
+        <!-- write a message hint text color-->
+        <item name="android:textColorHint">@color/yellow_200</item>
+        <!-- titles in settings, profile string in settings and menu conversation send files-->
+        <item name="android:textColor">@color/pink_100</item>
+        <!-- write a message text color-->
+        <item name="android:editTextColor">@color/yellow_A100</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryVariant">@color/colorSecondary</item>
         <item name="colorOnPrimary">@color/background</item>
@@ -21,7 +38,8 @@
         <item name="android:colorBackground">@color/background</item>
         <item name="colorOnBackground">@color/colorPrimary</item>
 
-        <!--<item name="android:textColorSecondary">@color/colorPrimary</item>-->
+        <!--swarm id in detail contact of a conversation and subtitle in settings-->
+        <item name="android:textColorSecondary">@color/yellow_A100</item>
 
         <item name="colorError">@color/colorError</item>
         <item name="colorOnError">@color/colorOnError</item>
@@ -32,25 +50,61 @@
 
         <item name="alertDialogTheme">@style/RoundedMaterialAlertDialog</item>
         <item name="materialAlertDialogTheme">@style/RoundedMaterialAlertDialog</item>
-        <item name="extendedFloatingActionButtonStyle">@style/Widget.AppTheme.MainActionButton</item>
+        <item name="extendedFloatingActionButtonStyle">@style/Widget.AppTheme.MainActionButton
+        </item>
 
+        <!--        ici pour enlever des choses -->
         <item name="preferenceTheme">@style/JamiPreferenceThemeOverlay</item>
 
         <item name="popupMenuBackground">@drawable/custom_popup_background</item>
+        <item name="popupTheme">@style/JamiPopupTheme</item>
+        <item name="android:popupTheme">@style/JamiPopupTheme</item>
+<!--        <item name="materialSearchBarStyle">@style/JamiSearchTheme</item>-->
+
+
+    </style>
+
+<!--    <style name="JamiSearchTheme">-->
+<!--        <item name="colorOnSurfaceVariant">@color/grey_800</item>-->
+<!--        <item name="android:textAppearance">@color/blue_800</item>-->
+<!--        <item name="colorControlNormal">@color/orange_700</item>-->
+<!--        <item name="colorSurfaceContainerHigh">@color/pink_300</item>-->
+<!--        <item name="colorOnSurface">@color/green_400</item>-->
+<!--        <item name="android:textColorHint">@color/blue_600</item>-->
+<!--        <item name="android:textColor">@color/light_blue_A200</item>-->
+
+<!--    </style>-->
+
+    <style name="JamiPopupTheme" parent="@style/ThemeOverlay.Material3">
+        <!-- after clicking on overflow button a popup is displayed
+        and this color is the text color inside the popup
+        -> menu settings search bar in smartlist and menu search conversation in conversation-->
+        <item name="android:textColor">@color/yellow_A100</item>
+
+        <!-- button background highlighted when button pressed
+        -> menu settings search bar in smartlist -->
+        <item name="colorControlHighlight">@color/blue_600</item>
+
     </style>
 
     <style name="JamiPreferenceThemeOverlay" parent="@style/PreferenceThemeOverlay">
-        <item name="switchPreferenceCompatStyle">@style/AppThemeBase.Preference.SwitchPreferenceCompat</item>
-        <item name="checkBoxPreferenceStyle">@style/AppThemeBase.Preference.CheckboxPreferenceCompat</item>
+        <item name="switchPreferenceCompatStyle">
+            @style/AppThemeBase.Preference.SwitchPreferenceCompat
+        </item>
+        <item name="checkBoxPreferenceStyle">
+            @style/AppThemeBase.Preference.CheckboxPreferenceCompat
+        </item>
         <item name="seekBarPreferenceStyle">@style/AppThemeBase.Preference.SliderCompat</item>
     </style>
 
     <style name="AppThemeBase.Preference.SwitchPreferenceCompat" parent="Preference.SwitchPreferenceCompat.Material">
         <item name="android:widgetLayout">@layout/preference_widget_material_switch</item>
     </style>
+
     <style name="AppThemeBase.Preference.CheckboxPreferenceCompat" parent="Preference.CheckBoxPreference.Material">
         <item name="android:widgetLayout">@layout/preference_widget_material_checkbox</item>
     </style>
+
     <style name="AppThemeBase.Preference.SliderCompat" parent="Preference.SeekBarPreference.Material">
         <item name="android:widgetLayout">@layout/preference_widget_material_slider</item>
     </style>
@@ -147,7 +201,8 @@
     <!-- Fullscreen style -->
     <style name="AppTheme.Fullscreen" parent="AppThemeBase.Fullscreen">
         <item name="android:windowLightStatusBar">true</item>
-    </style>/
+    </style>
+    /
 
     <!-- Transparent toolbar theme -->
     <style name="ActionBar.Transparent" parent="@android:style/Widget.DeviceDefault.Light.ActionBar.Solid.Inverse">
@@ -160,8 +215,8 @@
     <style name="Widget.AppTheme.MainActionButton" parent="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Primary">
         <item name="android:textAppearance">@style/TextAppearance.AppTheme.MainActionButton</item>
         <item name="android:fontFamily">@font/ubuntu_regular</item>
-<!--        <item name="android:textStyle">normal</item>-->
-<!--        <item name="iconPadding">8dp</item>-->
+        <!--        <item name="android:textStyle">normal</item>-->
+        <!--        <item name="iconPadding">8dp</item>-->
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">16dp</item>
     </style>
@@ -197,6 +252,7 @@
         <item name="android:typeface">normal</item>
         <item name="android:textColor">@color/textColorSecondary</item>
     </style>
+
     <style name="EmojiReactionDetail">
         <item name="android:textSize">30sp</item>
     </style>
@@ -355,7 +411,7 @@
         <item name="imageCardViewStyle">@style/ContactTitleViewOnlineStyle</item>
         <item name="imageCardViewBadgeStyle">@style/OnlineBadgeStyle</item>
     </style>
-    
+
     <style name="LeanbackPreferences" parent="Theme.Leanback">
         <item name="preferenceTheme">@style/PreferenceThemeOverlayLeanback</item>
         <item name="android:windowIsTranslucent">true</item>
@@ -368,7 +424,6 @@
     <style name="OutgoingTextView">
         <item name="colorControlActivated">@color/conversation_primary_selection_handles</item>
     </style>
-
 
 
     <style name="Widget.Jami.TextInputLayout" parent="Widget.Material3.TextInputLayout.FilledBox">

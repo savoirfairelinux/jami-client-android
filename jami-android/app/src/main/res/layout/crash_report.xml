@@ -21,16 +21,26 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/crash"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/padding_small"
-            android:textIsSelectable="true"
-            android:breakStrategy="simple"
-            android:hyphenationFrequency="none"
-            tools:text="@tools:sample/lorem/random"
-            />
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/edit_test_24px"/>
+            <TextView
+                android:id="@+id/crash"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_small"
+                android:textIsSelectable="true"
+                android:breakStrategy="simple"
+                android:hyphenationFrequency="none"
+                tools:text="@tools:sample/lorem/random"
+                />
+
+        </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
 </LinearLayout>

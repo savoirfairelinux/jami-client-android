@@ -45,6 +45,8 @@
     <color name="online_indicator">#0B8271</color>
     <color name="menu_icon">#0A84FF</color>
 
+    <color name="icon_color">#656565</color>
+
     <!--  TwoButton EditText  -->
     <color name="edit_text_background">@color/grey_100</color>
     <color name="text_color">#414141</color>
@@ -95,7 +97,6 @@
     <color name="border_color">#E5E5E5</color>
     <color name="link_peer_color">#005699</color>
     <color name="msg_display_name">#A7A7A7</color>
-    <color name="menu_conversation_icons">#005699</color>
 
     <!--  Chooser conversation color  -->
     <color name="conversation_palette_pink">@color/pink_700</color>
