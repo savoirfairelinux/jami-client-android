@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/conversationLayout"
@@ -390,13 +389,12 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:drawableStart="@drawable/baseline_reply_24"
                             android:drawablePadding="8dp"
-                            android:drawableTint="@color/colorPrimaryTranslucent"
                             android:ellipsize="end"
                             android:gravity="center_vertical"
                             android:maxLines="2"
-                            android:text="Reply" />
+                            tools:text="Reply"
+                            app:drawableStartCompat="@drawable/baseline_reply_24" />
 
                         <ImageView
                             android:id="@+id/reply_close_btn"
@@ -422,8 +420,7 @@
                             android:background="?selectableItemBackgroundBorderless"
                             android:contentDescription="@string/share_label"
                             android:padding="8dp"
-                            app:srcCompat="@drawable/baseline_more_vert_24"
-                            app:tint="@color/colorPrimary" />
+                            app:srcCompat="@drawable/baseline_more_vert_24"/>
 
                         <ImageButton
                             android:id="@+id/btn_take_picture"
@@ -432,8 +429,7 @@
                             android:background="?selectableItemBackgroundBorderless"
                             android:contentDescription="@string/take_a_photo"
                             android:padding="8dp"
-                            app:srcCompat="@drawable/baseline_photo_camera_24"
-                            app:tint="@color/colorPrimary" />
+                            app:srcCompat="@drawable/baseline_photo_camera_24"/>
 
                         <ProgressBar
                             android:id="@+id/pb_data_transfer"
@@ -469,8 +465,8 @@
                             android:layout_height="match_parent"
                             android:background="?selectableItemBackgroundBorderless"
                             android:padding="0dp"
-                            tools:text="@string/conversation_default_emoji"
-                            android:textSize="18sp" />
+                            android:textSize="18sp"
+                            tools:text="@string/conversation_default_emoji" />
 
                         <ImageButton
                             android:id="@+id/msg_send"
@@ -480,8 +476,7 @@
                             android:contentDescription="@string/send_message"
                             android:padding="8dp"
                             android:visibility="gone"
-                            app:srcCompat="@drawable/baseline_send_24"
-                            app:tint="@color/colorPrimary" />
+                            app:srcCompat="@drawable/baseline_send_24"/>
 
                     </LinearLayout>
                 </LinearLayout>

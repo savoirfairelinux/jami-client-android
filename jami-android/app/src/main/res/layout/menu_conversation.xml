@@ -35,8 +35,7 @@
             android:contentDescription="@string/tv_action_more"
             android:focusable="true"
             android:padding="8dp"
-            android:src="@drawable/baseline_add_24"
-            app:tint="@color/menu_conversation_icons" />
+            android:src="@drawable/baseline_add_24" />
 
         <ImageView
             android:id="@+id/conv_action_reply"
@@ -47,8 +46,7 @@
             android:contentDescription="@string/menu_message_reply"
             android:focusable="true"
             android:padding="8dp"
-            android:src="@drawable/baseline_reply_24"
-            app:tint="@color/menu_conversation_icons" />
+            android:src="@drawable/baseline_reply_24"/>
     </LinearLayout>
 
     <View
@@ -87,8 +85,7 @@
             android:paddingHorizontal="16dp"
             android:text="@string/menu_file_open"
             android:textColor="@color/text_color"
-            app:drawableStartCompat="@drawable/baseline_open_in_new_16"
-            app:drawableTint="@color/menu_conversation_icons" />
+            app:drawableStartCompat="@drawable/baseline_open_in_new_16" />
 
         <TextView
             android:id="@+id/conv_action_download_text"
@@ -103,8 +100,7 @@
             android:paddingHorizontal="16dp"
             android:text="@string/menu_file_save"
             android:textColor="@color/text_color"
-            app:drawableStartCompat="@drawable/baseline_file_download_16"
-            app:drawableTint="@color/menu_conversation_icons" />
+            app:drawableStartCompat="@drawable/baseline_file_download_16" />
 
         <TextView
             android:id="@+id/conv_action_copy_text"
@@ -119,8 +115,7 @@
             android:paddingHorizontal="16dp"
             android:text="@android:string/copy"
             android:textColor="@color/text_color"
-            app:drawableStartCompat="@drawable/outline_file_copy_16"
-            app:drawableTint="@color/menu_conversation_icons" />
+            app:drawableStartCompat="@drawable/outline_file_copy_16" />
 
         <TextView
             android:id="@+id/conv_action_share"
@@ -135,8 +130,7 @@
             android:paddingHorizontal="16dp"
             android:text="@string/share_label"
             android:textColor="@color/text_color"
-            app:drawableStartCompat="@drawable/baseline_share_twoton_16dp"
-            app:drawableTint="@color/menu_conversation_icons" />
+            app:drawableStartCompat="@drawable/baseline_share_twoton_16dp"/>
 
         <TextView
             android:id="@+id/conv_action_edit"
@@ -151,8 +145,7 @@
             android:paddingHorizontal="16dp"
             android:text="@string/menu_message_edit"
             android:textColor="@color/text_color"
-            app:drawableStartCompat="@drawable/baseline_edit_16"
-            app:drawableTint="@color/menu_conversation_icons" />
+            app:drawableStartCompat="@drawable/baseline_edit_16" />
 
         <TextView
             android:id="@+id/conv_action_history"
@@ -167,8 +160,7 @@
             android:paddingHorizontal="16dp"
             android:text="Message history"
             android:textColor="@color/text_color"
-            app:drawableStartCompat="@drawable/outline_history_16"
-            app:drawableTint="@color/menu_conversation_icons" />
+            app:drawableStartCompat="@drawable/outline_history_16" />
 
         <TextView
             android:id="@+id/conv_action_delete"
@@ -183,8 +175,7 @@
             android:paddingHorizontal="16dp"
             android:text="@string/menu_message_delete"
             android:textColor="@color/text_color"
-            app:drawableStartCompat="@drawable/baseline_delete_16"
-            app:drawableTint="@color/menu_conversation_icons" />
+            app:drawableStartCompat="@drawable/baseline_delete_16" />
 
     </LinearLayout>
 

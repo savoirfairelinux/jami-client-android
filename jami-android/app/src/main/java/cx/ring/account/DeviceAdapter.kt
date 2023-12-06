@@ -73,6 +73,7 @@ class DeviceAdapter(
         } else {
             thisDevice.visibility = View.GONE
             devId.setLeftDrawable(R.drawable.baseline_cancel_24)
+            devId.setDrawableTint(R.color.icon_color)
             devId.setLeftDrawableOnClickListener { mListener.onDeviceRevocationAsked(mDevices[i].key) }
         }
         return view
