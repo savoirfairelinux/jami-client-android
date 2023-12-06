@@ -7,18 +7,21 @@
         android:id="@+id/menu_log_crashes"
         android:icon="@drawable/outline_bug_report_24"
         android:title="Crashes"
+        app:iconTint="@color/icon_color"
         app:showAsAction="always" />
 
     <item
         android:id="@+id/menu_log_share"
         android:icon="@drawable/baseline_share_24"
         android:title="@string/share_label"
+        app:iconTint="@color/icon_color"
         app:showAsAction="collapseActionView|always" />
 
     <item
         android:id="@+id/menu_log_save"
         android:icon="@drawable/baseline_file_download_24"
         android:title="@string/menu_file_save"
+        app:iconTint="@color/icon_color"
         app:showAsAction="always" />
 
 </menu>
