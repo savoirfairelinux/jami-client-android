@@ -2,24 +2,36 @@
 
     <!-- Main Day/Night base theme -->
     <style name="AppThemeBase" parent="@style/Theme.Material3.DayNight.NoActionBar">
-        <item name="colorSurface">@color/background</item>
-        <item name="colorOnSurface">@color/colorOnSurface</item>
+        <item name="colorSurface">@color/amber_300</item>
+        <item name="colorOnSurface">@color/cyan_800</item>
+        <item name="colorOnSurfaceVariant">@color/green_A400</item>
 
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryVariant">@color/colorSecondary</item>
-        <item name="colorOnPrimary">@color/background</item>
+        <item name="colorOnPrimary">@color/yellow_900</item>
 
         <item name="colorPrimaryContainer">@color/colorPrimary</item>
         <item name="colorOnPrimaryContainer">@color/background</item>
 
-        <item name="colorSecondary">@color/colorSecondary</item>
-        <item name="colorOnSecondary">@color/colorOnSecondary</item>
+        <item name="colorSecondary">@color/green_500</item>
+        <item name="colorOnSecondary">@color/red_600</item>
 
-        <item name="colorSecondaryContainer">@color/colorSecondaryContainer</item>
-        <item name="colorOnSecondaryContainer">@color/colorOnSecondaryContainer</item>
+        <item name="colorSecondaryContainer">@color/yellow_700</item>
+        <item name="colorOnSecondaryContainer">@color/purple_700</item>
 
         <item name="android:colorBackground">@color/background</item>
         <item name="colorOnBackground">@color/colorPrimary</item>
+
+        <item name="colorTertiary">@color/orange_400</item>
+        <item name="colorOnTertiary">@color/purple_300</item>
+        <item name="colorTertiaryContainer">@color/brown_600</item>
+        <item name="colorOnTertiaryContainer">@color/green_900</item>
+
+        <item name="android:textColorPrimary">@color/deep_purple_700</item>
+        /ici textColorSecondary
+        <item name="android:textColorSecondary">@color/light_blue_700</item>
+        <item name="android:textColorHighlight">@color/orange_200</item>
+        <item name="android:colorAccent">@color/red_A400</item>
 
         <!--<item name="android:textColorSecondary">@color/colorPrimary</item>-->
 
@@ -70,16 +82,16 @@
 
     <!-- Main light base theme -->
     <style name="AppThemeBase.Light" parent="@style/Theme.Material3.Light.NoActionBar">
-        <item name="colorPrimary">@color/color_primary_dark</item>
+        <item name="colorPrimary">@color/pink_200</item>
         <item name="colorSecondary">@color/color_primary_light</item>
         <item name="colorError">@color/colorError</item>
-        <item name="colorPrimaryDark">@color/color_primary_dark</item>
+        <item name="colorPrimaryDark">@color/orange_700</item>
         <item name="android:textColor">@color/abc_primary_text_material_light</item>
     </style>
 
     <!-- Light themes for older APIs -->
     <style name="AppTheme" parent="AppThemeBase">
-        <item name="colorPrimaryDark">@color/color_primary_dark</item>
+        <item name="colorPrimaryDark">@color/cyan_600</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:statusBarColor">@color/transparent</item>
     </style>

@@ -397,7 +397,6 @@
                                 android:layout_weight="1"
                                 android:drawableStart="@drawable/baseline_reply_24"
                                 android:drawablePadding="8dp"
-                                android:drawableTint="@color/colorPrimaryTranslucent"
                                 android:ellipsize="end"
                                 android:gravity="center_vertical"
                                 android:maxLines="2"
