@@ -95,7 +95,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_marginEnd="32dp"
                     android:contentDescription="@string/version_section"
                     app:srcCompat="@drawable/ic_ring_logo_white"
-                    app:tint="@color/colorPrimary" />
+                    app:tint="?attr/colorControlNormal" />
 
                 <TextView
                     android:id="@+id/version_title"
