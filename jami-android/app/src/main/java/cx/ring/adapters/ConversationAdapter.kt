@@ -1693,35 +1693,42 @@ class ConversationAdapter(
                     // After a call, a message is displayed with call information.
                     // Manage the call message layout.
                     if (call.isIncoming) {
+                        // Same background for incoming calls.
+                        resIndex = msgSequenceType.ordinal + 4
+                        // Set the color of the time duration.
+                        detailCall.setTextColor(
+                            convViewHolder.itemView.context.getColor(R.color.colorOnSurface)
+                        )
+                        // Set the call message color.
+                        typeCall.setTextColor(
+                            convViewHolder.itemView.context.getColor(R.color.colorOnSurface)
+                        )
+                        // Put the message to the left because it is incoming.
+                        convViewHolder.mCallLayout?.gravity = Gravity.START
                         if (call.isMissed) { // Call incoming missed.
-                            resIndex = msgSequenceType.ordinal + 12
-                            // Set the call message color.
-                            typeCall.setTextColor(
-                                convViewHolder.itemView.context.getColor(R.color.call_missed_text_message)
-                            )
                             callIcon.setImageResource(R.drawable.baseline_missed_call_16)
                             // Set the drawable color to red because it is missed.
                             callIcon.drawable.setTint(context.getColor(R.color.call_missed))
                             typeCallTxt = context.getString(R.string.notif_missed_incoming_call)
                         } else { // Call incoming not missed.
-                            resIndex = msgSequenceType.ordinal + 4
-                            // Set the call message color.
-                            typeCall.setTextColor(
-                                convViewHolder.itemView.context.getColor(R.color.colorOnSurface)
-                            )
                             callIcon.setImageResource(R.drawable.baseline_incoming_call_16)
                             callIcon.drawable.setTint(context.getColor(R.color.colorOnSurface))
                             typeCallTxt = context.getString(R.string.notif_incoming_call)
                         }
-                        // Put the message to the left because it is incoming.
-                        callLayout?.gravity = Gravity.START
                     } else {
+                        // Same background for outgoing calls.
+                        resIndex = msgSequenceType.ordinal
+                        // Set the call message color.
+                        typeCall.setTextColor(
+                            convViewHolder.itemView.context.getColor(
+                                R.color.call_text_outgoing_message)
+                        )
+                        // Set the color of the time duration.
+                        detailCall.setTextColor(
+                            convViewHolder.itemView.context.getColor(
+                                R.color.call_text_outgoing_message)
+                        )
                         if (call.isMissed) { // Outgoing call missed.
-                            resIndex = msgSequenceType.ordinal + 16
-                            // Set the call message color .
-                            typeCall.setTextColor(
-                                convViewHolder.itemView.context.getColor(R.color.call_missed_text_message)
-                            )
                             callIcon.setImageResource(R.drawable.baseline_missed_call_16)
                             // Set the drawable color to red because it is missed.
                             callIcon.drawable.setTint(context.getColor(R.color.call_missed))
@@ -1729,11 +1736,6 @@ class ConversationAdapter(
                             // Flip the photo upside down to show a "missed outgoing call".
                             callIcon.scaleX = -1f
                         } else { // Outgoing call not missed.
-                            resIndex = msgSequenceType.ordinal
-                            // Set the call message color.
-                            typeCall.setTextColor(
-                                convViewHolder.itemView.context.getColor(R.color.call_text_outgoing_message)
-                            )
                             callIcon.setImageResource(R.drawable.baseline_outgoing_call_16)
                             callIcon.drawable.setTint(context.getColor(R.color.call_drawable_color))
                             typeCallTxt = context.getString(R.string.notif_outgoing_call)
@@ -1745,7 +1747,7 @@ class ConversationAdapter(
                         ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
                     callInfoLayout.setPadding(callPadding)
                     // Manage background to convColor if it is outgoing and not missed.
-                    if (convColor != 0 && !call.isIncoming && !call.isMissed) {
+                    if (convColor != 0 && !call.isIncoming) {
                         callInfoLayout.background.setTint(convColor)
                     }
                     typeCall.text = typeCallTxt
@@ -1754,20 +1756,11 @@ class ConversationAdapter(
                         if (call.duration != 0L) {
                             String.format(
                                 context.getString(R.string.call_duration),
-                                DateUtils.formatElapsedTime(recycle, call.duration!! / 1000)
+                                DateUtils.formatElapsedTime(
+                                    recycle, call.duration!! / 1000
+                                )
                             ).let { " - $it" }
                         } else null
-                    // Set the color of the time duration.
-                    if (!call.isIncoming && !call.isMissed) {
-                        detailCall.setTextColor(
-                            convViewHolder.itemView.context.getColor(R.color.call_text_outgoing_message)
-                        )
-                    }
-                    if (call.isIncoming && !call.isMissed) {
-                        detailCall.setTextColor(
-                            convViewHolder.itemView.context.getColor(R.color.colorOnSurface)
-                        )
-                    }
                     // Show the name of the contact if it is a group conversation
                     peerDisplayName?.apply {
                         if (presenter.isGroup() && (msgSequenceType == SequenceType.SINGLE ||
@@ -1976,15 +1969,7 @@ class ConversationAdapter(
             R.drawable.textmsg_bg_out_reply,
             R.drawable.textmsg_bg_out_reply_first,
             R.drawable.textmsg_bg_in_reply,
-            R.drawable.textmsg_bg_in_reply_first,
-            R.drawable.call_bg_missed_in_first,
-            R.drawable.call_bg_missed_in_middle,
-            R.drawable.call_bg_missed_in_last,
-            R.drawable.call_bg_missed,
-            R.drawable.call_bg_missed_out_first,
-            R.drawable.call_bg_missed_out_middle,
-            R.drawable.call_bg_missed_out_last,
-            R.drawable.call_bg_missed
+            R.drawable.textmsg_bg_in_reply_first
         )
 
         /**

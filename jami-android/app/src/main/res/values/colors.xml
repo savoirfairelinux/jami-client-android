@@ -88,7 +88,7 @@
     <color name="welcome_jami_surface_color">#000000</color>
 
     <!--  ChatView  -->
-    <color name="call_missed">#CC0022</color>
+    <color name="call_missed">#FA2E30</color>
     <color name="call_text_outgoing_message">@color/white</color>
     <color name="call_drawable_color">@color/white</color>
     <color name="call_missed_text_message">#A7A7A7</color>
