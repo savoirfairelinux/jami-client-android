@@ -31,8 +31,7 @@
         android:layout_height="48dp"
         android:layout_margin="4dp"
         android:layout_centerInParent="true"
-        android:src="@drawable/baseline_attach_file_24"
-        app:tint="@color/colorPrimary" />
+        android:src="@drawable/baseline_attach_file_24" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/name"

@@ -89,8 +89,7 @@
                     android:background="?selectableItemBackgroundBorderless"
                     android:contentDescription="@string/send_message"
                     android:padding="8dp"
-                    app:srcCompat="@drawable/baseline_send_24"
-                    app:tint="@color/colorPrimary" />
+                    app:srcCompat="@drawable/baseline_send_24"/>
 
             </LinearLayout>
         </LinearLayout>
