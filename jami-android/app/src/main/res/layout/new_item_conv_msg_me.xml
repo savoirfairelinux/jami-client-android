@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraint_parent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/msg_reply_content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@id/message_status"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/msg_reply_bubble"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="70dp"
+            android:gravity="end"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/textmsg_bg_out"
+                android:backgroundTint="#E5E5E5"
+                android:padding="5dp">
+
+                <LinearLayout
+                    android:id="@+id/test"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/reply_contact_msg_bg"
+                    android:backgroundTint="#33000000"
+                    android:baselineAlignedChildIndex="1"
+                    android:gravity="center"
+                    android:paddingHorizontal="5dp"
+                    android:paddingVertical="5dp">
+
+                    <ImageView
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:src="@drawable/reply_contact_avatar" />
+
+                    <TextView
+                        android:id="@+id/name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:paddingStart="5dp"
+                        android:paddingEnd="0dp"
+                        android:text="Jean-Pascal"
+                        android:textColor="#000000"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/msg_reply_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:focusable="true"
+                    android:maxLines="1"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:textColor="#000000"
+                    android:textColorHighlight="@color/conversation_primary_selection"
+                    android:textColorLink="@color/text_color_primary_dark"
+                    android:textSize="12sp"
+                    android:theme="@style/OutgoingTextView"
+                    android:translationY="5dp"
+                    tools:text="Lorem ipsum" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:id="@+id/main_bubble_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-8dp"
+        android:gravity="end"
+        app:layout_constraintEnd_toStartOf="@id/message_status"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/msg_reply_content">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/textmsg_bg_out"
+            android:backgroundTint="@color/vert_pale"
+            android:paddingStart="1.5dp"
+            android:paddingTop="1.5dp"
+            android:paddingEnd="0dp"
+            android:paddingBottom="0dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/main_bubble"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:background="@drawable/textmsg_bg_out"
+                android:padding="0dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/message_text_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:background="@drawable/textmsg_bg_out"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/message_edited"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="2dp"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="0dp"
+                        android:text="Edited"
+                        android:textColor="#99FFFFFF"
+                        android:textSize="12sp"
+                        android:visibility="gone"
+                        app:layout_constraintBaseline_toBaselineOf="@id/message_text"
+                        app:layout_constraintEnd_toStartOf="@id/message_time"
+                        app:layout_constraintStart_toEndOf="@id/message_text"
+                        app:layout_constraintTop_toBottomOf="@id/message_text"
+                        tools:visibility="visible"
+                        app:drawableStartCompat="@drawable/pen_black_24dp"
+                        app:drawableTint="#99FFFFFF" />
+
+                    <TextView
+                        android:id="@+id/message_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="0dp"
+                        android:textColor="#99FFFFFF"
+                        android:textSize="12sp"
+                        app:layout_constraintBaseline_toBaselineOf="@id/message_text"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/message_text"
+                        tools:text="11h05" />
+
+                    <com.example.testapp.BaselineLastLineTextView
+                        android:id="@+id/message_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#FFFFFF"
+                        android:textSize="15sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="hello\nhello" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <include
+                    android:id="@+id/link_preview"
+                    layout="@layout/msg_link_preview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/message_text_time" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <com.google.android.material.chip.Chip
+        android:id="@+id/reaction_chip"
+        style="@style/Widget.Material3.Chip.Suggestion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-16dp"
+        android:layout_marginEnd="8dp"
+        android:backgroundTint="@color/icon_background_color"
+        android:elevation="4dp"
+        android:outlineProvider="none"
+        android:text="🤕🤒3"
+        app:chipCornerRadius="5dp"
+        app:chipEndPadding="0dp"
+        app:chipStartPadding="0dp"
+        app:chipStrokeColor="@color/border_color"
+        app:chipStrokeWidth="1.5dp"
+        app:layout_constraintEnd_toEndOf="@id/main_bubble_container"
+        app:layout_constraintTop_toBottomOf="@id/main_bubble_container"
+        app:textEndPadding="5dp"
+        app:textStartPadding="5dp" />
+
+    <include
+        android:id="@+id/message_status"
+        layout="@layout/message_status"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintBottom_toBottomOf="@id/main_bubble_container"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
