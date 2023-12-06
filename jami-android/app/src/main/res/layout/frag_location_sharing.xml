@@ -76,7 +76,7 @@
             app:elevation="2dp"
             app:fabSize="mini"
             app:rippleColor="@color/grey_400"
-            app:tint="@color/colorPrimary" />
+            app:tint="?attr/colorControlNormal" />
 
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/location_share_time_group"
