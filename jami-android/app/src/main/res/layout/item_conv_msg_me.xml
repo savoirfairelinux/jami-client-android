@@ -35,6 +35,7 @@ along with this program; if not, write to the Free Software
         android:textColor="@color/textColorSecondary"
         android:textSize="@dimen/conversation_timestamp_textsize"
         android:visibility="gone"
+        tools:visibility="visible"
         tools:text="@string/time_just_now" />
 
     <TextView
@@ -46,19 +47,20 @@ along with this program; if not, write to the Free Software
         android:textColor="@color/textColorSecondary"
         android:textSize="@dimen/conversation_timestamp_textsize"
         android:visibility="gone"
+        tools:visibility="visible"
         tools:text="@string/time_just_now" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingStart="@dimen/padding_large"
-        android:paddingEnd="2dp">
+        android:paddingEnd="0dp">
 
         <TextView
-            android:id="@+id/msg_reply_name"
+            android:id="@+id/reply_contact_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@id/msg_reply_txt"
+            android:layout_alignEnd="@id/reply_message_txt"
             android:drawablePadding="4dp"
             android:ellipsize="middle"
             android:maxWidth="200dp"
@@ -74,8 +76,8 @@ along with this program; if not, write to the Free Software
             android:id="@+id/msg_in_reply_to"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@id/msg_reply_name"
-            android:layout_toStartOf="@id/msg_reply_name"
+            android:layout_alignBaseline="@id/reply_contact_name"
+            android:layout_toStartOf="@id/reply_contact_name"
             android:maxLines="1"
             android:text="@string/in_reply_to"
             android:textColor="@color/textColorSecondary"
@@ -83,10 +85,10 @@ along with this program; if not, write to the Free Software
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/msg_reply_txt"
+            android:id="@+id/reply_message_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/msg_reply_name"
+            android:layout_below="@id/reply_contact_name"
             android:layout_alignEnd="@id/msg_txt"
             android:layout_marginStart="72dp"
             android:layout_marginEnd="30dp"
@@ -107,7 +109,7 @@ along with this program; if not, write to the Free Software
             layout="@layout/msg_link_preview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/msg_reply_txt"
+            android:layout_below="@id/reply_message_txt"
             android:layout_marginStart="72dp"
             android:layout_marginEnd="24dp" />
 
@@ -137,6 +139,9 @@ along with this program; if not, write to the Free Software
             android:layout_height="wrap_content"
             android:layout_below="@id/msg_txt"
             android:layout_alignParentEnd="true"
+            tools:layout_width="@dimen/conversation_status_icon_size"
+            tools:layout_height="@dimen/conversation_status_icon_size"
+            android:background="@color/purple_300"
             android:layout_marginEnd="5dp" />
 
         <com.google.android.material.chip.Chip

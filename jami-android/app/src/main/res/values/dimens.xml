@@ -147,4 +147,6 @@ along with this program; if not, write to the Free Software
     <dimen name="conversation_message_radius_2">5dp</dimen>
     <dimen name="conversation_status_icon_size">14dp</dimen>
 
+    <dimen name="conversation_avatar_reply_size">12dp</dimen>
+
 </resources>

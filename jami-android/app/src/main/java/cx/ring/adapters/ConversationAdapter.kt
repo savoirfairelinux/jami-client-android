@@ -51,6 +51,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.view.children
 import androidx.core.view.isVisible
+import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.RecyclerView
 import androidx.vectordrawable.graphics.drawable.Animatable2Compat
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat
@@ -88,7 +89,6 @@ import java.io.File
 import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.math.max
-
 
 class ConversationAdapter(
     private val conversationFragment: ConversationFragment,
@@ -338,13 +338,14 @@ class ConversationAdapter(
         conversationViewHolder: ConversationViewHolder,
         interaction: Interaction
     ) {
+        val context = conversationViewHolder.itemView.context
         // If reaction chip is clicked we wants to display the reaction visualiser.
         conversationViewHolder.reactionChip?.setOnClickListener {
             val adapter = ReactionVisualizerAdapter(
-                conversationViewHolder.itemView.context,
+                context,
                 presenter::removeReaction
             )
-            val dialog = MaterialAlertDialogBuilder(conversationViewHolder.itemView.context)
+            val dialog = MaterialAlertDialogBuilder(context)
                 .setAdapter(adapter) { _, _ -> }
                 .show()
 
@@ -394,23 +395,47 @@ class ConversationAdapter(
             interaction.reactionObservable
                 .observeOn(DeviceUtils.uiScheduler)
                 .subscribe { reactions ->
+                    val msgTxt = conversationViewHolder.mMsgTxt ?: return@subscribe
+                    val mainBubbleContainer = conversationViewHolder.mMainBubbleContainer ?: return@subscribe
+                    val editedMessage = conversationViewHolder.mEditedMessage ?: return@subscribe
+                    val msgTextAndTime = conversationViewHolder.mMsgTextAndTime ?: return@subscribe
+                    val bubbleMessageLayout = conversationViewHolder.mBubbleMessageLayout ?: return@subscribe
+                    val msgTime = conversationViewHolder.mMsgDetailTxt ?: return@subscribe
+
                     conversationViewHolder.reactionChip?.let { chip ->
                         // No reaction, hide the chip.
-                        if (reactions.isEmpty())
+                        if (reactions.isEmpty()) {
                             chip.isVisible = false
+                            MessageBubble.showTime(
+                                mainBubbleContainer,
+                                msgTxt,
+                                msgTime,
+                                editedMessage,
+                                msgTextAndTime,
+                                bubbleMessageLayout,
+                            )
+                        }
                         else {
                             chip.text = reactions.filterIsInstance<TextMessage>()
                                 .groupingBy { it.body!! }
                                 .eachCount()
                                 .map { it }
                                 .sortedByDescending { it.value }
-                                .joinToString("") {
+                                .joinToString(" ") {
                                     if (it.value > 1) it.key + it.value else it.key
                                 }
                             chip.isVisible = true
                             chip.isClickable = true
                             chip.isFocusable = true
                             chip.isChecked = false
+                            MessageBubble.showTime(
+                                mainBubbleContainer,
+                                msgTxt,
+                                msgTime,
+                                editedMessage,
+                                msgTextAndTime,
+                                bubbleMessageLayout,
+                            )
                         }
                     }
                 }
@@ -426,77 +451,123 @@ class ConversationAdapter(
     private fun configureReplyIndicator(conversationViewHolder: ConversationViewHolder,
                                         interaction: Interaction) {
 
+        val context= conversationViewHolder.itemView.context
         val conversation = interaction.conversation
+        val replyName = conversationViewHolder.mReplyName ?: return
+        val replyTxt = conversationViewHolder.mReplyTxt ?: return
+        val inReplyTo = conversationViewHolder.mInReplyTo ?: return
+        val msgReplyBubbleContent = conversationViewHolder.mMsgReplyBubbleContent ?: return
+        val msgReplyContent = conversationViewHolder.mMsgReplyContent ?: return
+        val mainBubbleContainer = conversationViewHolder.mMainBubbleContainer ?: return
+        val replyContactLayout = conversationViewHolder.mReplyContactLayout ?: return
+
         if (conversation == null || conversation !is Conversation) {
-            conversationViewHolder.mReplyName?.isVisible = false
-            conversationViewHolder.mReplyTxt?.isVisible = false
-            conversationViewHolder.mInReplyTo?.isVisible = false
+            // besoin de tout ça si msgReplyContent.isVisible = false ?
+            replyName.isVisible = false
+            replyTxt.isVisible = false
+            inReplyTo.isVisible = false
+            // pas sure ici et a chaque fois
+            msgReplyContent.isVisible = false
+            mainBubbleContainer.updateLayoutParams<MarginLayoutParams> {
+                topMargin = 0
+            }
             return
         }
 
-        conversationViewHolder.mReplyName?.let { replyView ->
-            val replyTo = interaction.replyTo
+        replyName.let { replyView ->
+            val replyBubble = interaction.replyTo
 
             // If currently replying to another message :
-            if (replyTo != null)  {
-                conversationViewHolder.compositeDisposable.add(replyTo
+            if (replyBubble != null)  {
+                conversationViewHolder.compositeDisposable.add(replyBubble
                     .flatMapObservable { reply -> presenter.contactService
                         .observeContact(interaction.account!!, reply.contact!!, false)
                         .map { contact -> Pair(reply, contact) }}
                     .observeOn(DeviceUtils.uiScheduler)
-                    .subscribe({ i ->
-                        conversationViewHolder.mReplyTxt!!.text = i.first.body
-                        conversationViewHolder.mReplyName!!.text = i.second.displayName
+                    .subscribe({ (textReply, nameReply) ->
+                        replyTxt.text = textReply.body
+                        if(!textReply.isIncoming)
+                            replyTxt.text = context.getString(R.string.reply_contact_you)
+                        replyName.text = nameReply.displayName
 
                         // Apply correct color depending if message is incoming or not.
-                        conversationViewHolder.mReplyTxt?.background?.setTint(
-                            if (i.first.isIncoming)
-                                conversationViewHolder.itemView.context.getColor(
+                        msgReplyBubbleContent.background?.setTint(
+                            if (textReply.isIncoming)
+                                context.getColor(
+                                    R.color.conversation_secondary_background
+                                )
+                            else convColor
+                            // condition convcolor ?
+                        )
+                        replyTxt.setTextColor(
+                            if (textReply.isIncoming)
+                                context.getColor(
+                                    R.color.colorOnSurface
+                                )
+                            else context.getColor(
+                                R.color.text_color_primary_dark
+                            )
+                        )
+                        // todo mettre aussi background reply_contact_layout background contact reply
+                        // qui change si outgoing ou incoming
+                        // avoir les vraies couleurs
+                        replyContactLayout.background.setTint(
+                            if (textReply.isIncoming)
+                                context.getColor(
                                     R.color.conversation_secondary_background
                                 )
                             else convColor
                         )
-                        conversationViewHolder.mReplyTxt.setTextColor(
-                            if (i.first.isIncoming)
-                                conversationViewHolder.itemView.context.getColor(
-                                    R.color.colorOnSurface
-                                )
-                            else conversationViewHolder.itemView.context.getColor(
-                                R.color.text_color_primary_dark
-                            )
-                        )
 
                         // Load avatar drawable from contact.
                         val smallAvatarDrawable = AvatarDrawable.Builder()
-                            .withContact(i.second)
+                            .withContact(nameReply)
                             .withCircleCrop(true)
-                            .build(conversationViewHolder.itemView.context)
-                            .setInSize(conversationViewHolder.itemView.context.resources.getDimensionPixelSize(R.dimen.conversation_avatar_size_small))
+                            .build(context)
+                            .setInSize(
+                                context.resources.getDimensionPixelSize(
+                                    R.dimen.conversation_avatar_reply_size
+                                )
+                            )
                         // Update the view.
-                        conversationViewHolder.mReplyName!!.setCompoundDrawablesWithIntrinsicBounds(smallAvatarDrawable, null, null, null)
+                        replyName.setCompoundDrawablesWithIntrinsicBounds(
+                            smallAvatarDrawable, null, null, null
+                        )
 
                         replyView.isVisible = true
-                        conversationViewHolder.mReplyTxt!!.isVisible = true
-                        conversationViewHolder.mInReplyTo!!.isVisible = true
+                        replyTxt.isVisible = true
+                        inReplyTo.isVisible = true
+                        msgReplyContent.isVisible = true
+                        mainBubbleContainer.updateLayoutParams<MarginLayoutParams> {
+                            topMargin = res.getDimensionPixelSize(R.dimen.replied_shift)
+                        }
 
                         // User can click on mReplyTxt (replied message),
                         // mInReplyTo or mReplyName (text above the message) to go to it.
-                        listOf(conversationViewHolder.mReplyTxt,
-                            conversationViewHolder.mInReplyTo,
-                            replyView).forEach{
-                            it.setOnClickListener{
-                                i.first.messageId?.let { presenter.scrollToMessage(it) }
+                        listOf(replyTxt,
+                            inReplyTo,
+                            replyView).forEach{ clickField ->
+                            clickField.setOnClickListener{
+                                textReply.messageId?.let { presenter.scrollToMessage(it) }
                             }
                         }
                     }) {
                         replyView.isVisible = false
-                        conversationViewHolder.mReplyTxt!!.isVisible = false
-                        conversationViewHolder.mInReplyTo!!.isVisible = false
+                        replyTxt.isVisible = false
+                        inReplyTo.isVisible = false
+                        msgReplyContent.isVisible = false
+                        mainBubbleContainer.updateLayoutParams<MarginLayoutParams> {
+                            topMargin = 0
+                        }
                     })
             } else { // Not replying to another message, we can hide reply Textview.
                 replyView.isVisible = false
-                conversationViewHolder.mReplyTxt?.isVisible = false
-                conversationViewHolder.mInReplyTo?.isVisible = false
+                replyTxt.isVisible = false
+                inReplyTo.isVisible = false
+                msgReplyContent.isVisible = false
+                mainBubbleContainer.updateLayoutParams<MarginLayoutParams> {
+                    topMargin = 0
+                }
             }
         }
     }
@@ -1083,12 +1154,30 @@ class ConversationAdapter(
                 val contact = textMessage.contact ?: return@subscribe
                 val isDeleted = textMessage.body.isNullOrEmpty()
                 val msgTxt = convViewHolder.mMsgTxt ?: return@subscribe
+                val mMsgDetailTxt = convViewHolder.mMsgDetailTxt ?: return@subscribe
                 val longPressView = convViewHolder.mMsgTxt!!
                 longPressView.background?.setTintList(null)
                 val answerLayout = convViewHolder.mAnswerLayout
                 val isTimeShown = hasPermanentTimeString(textMessage, position)
                 val msgSequenceType = getMsgSequencing(position, isTimeShown)
                 val peerDisplayName = convViewHolder.mPeerDisplayName
+                val mainBubbleContainer = convViewHolder.mMainBubbleContainer ?: return@subscribe
+                val editedMessage = convViewHolder.mEditedMessage ?: return@subscribe
+                val msgTextAndTime = convViewHolder.mMsgTextAndTime ?: return@subscribe
+                val bubbleMessageLayout = convViewHolder.mBubbleMessageLayout ?: return@subscribe
+
+                // Set message text
+                // pas sure de message avec le trim
+                val messageText = textMessage.body?.trim() ?: ""
+                val time = TextUtils.timestampToDetailString(context, textMessage.timestamp)
+                MessageBubble.setMessageText(
+                    markwon, msgTxt, mMsgDetailTxt,
+                    messageText, time, mainBubbleContainer,
+                    editedMessage, msgTextAndTime, bubbleMessageLayout
+                )
+
+
+
 
                 // Manage deleted message.
                 if (isDeleted) {
@@ -1121,10 +1210,10 @@ class ConversationAdapter(
                     true
                 }
 
-                val message = textMessage.body?.trim() ?: ""
+//                val message = textMessage.body?.trim() ?: ""
                 convViewHolder.mAnswerLayout?.visibility = View.GONE
 
-                if (StringUtils.isOnlyEmoji(message)) {
+                if (StringUtils.isOnlyEmoji(messageText)) {
                     // Manage layout if message is emoji.
                     msgTxt.background.alpha = 0
                     msgTxt.textSize = 32.0f
@@ -1152,7 +1241,7 @@ class ConversationAdapter(
                     // Manage layout for message with a link inside.
                     if (showLinkPreviews) {
                         val cachedPreview =
-                            textMessage.preview as? Maybe<PreviewData>? ?: LinkPreview.getFirstUrl(message)
+                            textMessage.preview as? Maybe<PreviewData>? ?: LinkPreview.getFirstUrl(messageText)
                                 .flatMap { url -> LinkPreview.load(url) }
                                 .cache()
                                 .apply { interaction.preview = this }
@@ -1188,7 +1277,7 @@ class ConversationAdapter(
                     }
                 }
                 msgTxt.movementMethod = LinkMovementMethod.getInstance()
-                msgTxt.text = markwon.toMarkdown(message)
+                msgTxt.text = markwon.toMarkdown(messageText)
                 val endOfSeq =
                     msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE
 
@@ -1220,6 +1309,7 @@ class ConversationAdapter(
 
                 // Apply a bottom margin to the global layout if end of sequence needed.
                 convViewHolder.mItem?.let { setBottomMargin(it, if (endOfSeq) 8 else 0) }
+
 
                 // Manage the update of the timestamp and the fact than we can expend/hide it.
                 if (isTimeShown) {

@@ -30,17 +30,18 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import com.google.android.material.chip.Chip
 import cx.ring.R
+import cx.ring.adapters.BaselineLastLineTextView
 import cx.ring.adapters.MessageType
 import cx.ring.views.MessageStatusView
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 
 class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView.ViewHolder(v) {
     val mItem: View? = when (type) {
-        MessageType.INCOMING_TEXT_MESSAGE,
-        MessageType.OUTGOING_TEXT_MESSAGE -> v.findViewById(R.id.txt_entry)
+        MessageType.INCOMING_TEXT_MESSAGE -> v.findViewById(R.id.txt_entry)
+        MessageType.OUTGOING_TEXT_MESSAGE -> v.findViewById(R.id.msg_layout)
         else -> null
     }
-    var mMsgTxt: TextView? = null
+    var mMsgTxt: BaselineLastLineTextView? = null
     var mMsgDetailTxt: TextView? = null
     var mMsgDetailTxtPerm: TextView? = null
     val mAvatar: ImageView? = when (type) {
@@ -67,10 +68,12 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
         MessageType.OUTGOING_VIDEO -> v.findViewById(R.id.status_icon)
         else -> null
     }
-    val mReplyName: TextView? = v.findViewById(R.id.msg_reply_name)
-    val mReplyTxt: TextView? = v.findViewById(R.id.msg_reply_txt)
-    val mInReplyTo: TextView? = v.findViewById(R.id.msg_in_reply_to)
-    val mPeerDisplayName: TextView? = v.findViewById(R.id.msg_display_name)
+    val mReplyName: TextView? = v.findViewById(R.id.reply_contact_name)
+    // ici mReplyTxt change le background mais aussi la couleur de la police
+    // pour le incoming on veut police = mReplyTxt
+    // mais pour le background on veut msg_reply_bubble_content
+    val mReplyTxt: TextView? = v.findViewById(R.id.reply_message_txt)
+
     val reactionChip: Chip? = v.findViewById(R.id.reaction_chip)
     val mIcon: ImageView? = when (type) {
         MessageType.CALL_INFORMATION -> v.findViewById(R.id.call_icon)
@@ -80,10 +83,36 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
         else -> null
     }
     var mHistTxt: TextView? = null
-    var mHistDetailTxt: TextView? = null
     var mPreviewDomain: TextView? = null
     var mLayout: View? = null
     var mAnswerLayout: ViewGroup? = null
+    //
+    // TODO
+    // Only incoming messages
+    val mInReplyTo: TextView? = v.findViewById(R.id.msg_in_reply_to)
+    val mPeerDisplayName: TextView? = v.findViewById(R.id.msg_display_name)
+    var mHistDetailTxt: TextView? = null
+    //
+
+    // TODO
+    // only outgoing messages
+    // à utiliser pour changer le fond de la bulle de contact reply to si incoming ou outgoing
+    val mReplyContactLayout: ViewGroup? = v.findViewById(R.id.reply_contact_layout)
+    // pour l'avatar du reply contact
+    val mReplyContactAvatar: ImageView? = v.findViewById(R.id.reply_contact_avatar)
+    // utiliser pour changer couleurs background aimantation message
+    // ne pas utiliser msgTxt du coup
+    val mBubbleMessageLayout: ViewGroup? = v.findViewById(R.id.bubble_message_layout)
+    // pour le message edité
+    var mEditedMessage: TextView? = v.findViewById(R.id.edited_message)
+    // pour modifier uniquement le background de la bulle de reply (a la place de mReplyTxt)
+    val mMsgReplyBubbleContent : ViewGroup? = v.findViewById(R.id.msg_reply_bubble_content)
+
+    // pour le calcul de la position de l'heure dans la bulle message
+    val mMainBubbleContainer: ViewGroup? = v.findViewById(R.id.main_bubble_container)
+    val mMsgTextAndTime: ViewGroup? = v.findViewById(R.id.msg_text_and_time)
+    val mMsgReplyContent: ViewGroup? = v.findViewById(R.id.msg_reply_content)
+    //
 
     // Ongoing call
     var mCallLayout: LinearLayout? = null
@@ -130,11 +159,21 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
                 mAcceptCallAudioButton = v.findViewById(R.id.acceptCallAudioButton)
                 mAcceptCallVideoButton = v.findViewById(R.id.acceptCallVideoButton)
             }
-            MessageType.INCOMING_TEXT_MESSAGE,
-            MessageType.OUTGOING_TEXT_MESSAGE -> {
+            MessageType.INCOMING_TEXT_MESSAGE-> {
                 mMsgTxt = v.findViewById(R.id.msg_txt)
                 mMsgDetailTxt = v.findViewById(R.id.msg_details_txt)
                 mMsgDetailTxtPerm = v.findViewById(R.id.msg_details_txt_perm)
+                mAnswerLayout = v.findViewById(R.id.link_preview)
+                mHistTxt = v.findViewById(R.id.link_preview_title)
+                mHistDetailTxt = v.findViewById(R.id.link_preview_description)
+                mPreviewDomain = v.findViewById(R.id.link_preview_domain)
+                primaryClickableView = mMsgTxt
+            }
+            MessageType.OUTGOING_TEXT_MESSAGE -> {
+                // ajouter tout
+                mMsgTxt = v.findViewById(R.id.message_text)
+                mMsgDetailTxt = v.findViewById(R.id.message_time)
+                mMsgDetailTxtPerm = v.findViewById(R.id.msg_time_perm)
                 mAnswerLayout = v.findViewById(R.id.link_preview)
                 mHistTxt = v.findViewById(R.id.link_preview_title)
                 mHistDetailTxt = v.findViewById(R.id.link_preview_description)
