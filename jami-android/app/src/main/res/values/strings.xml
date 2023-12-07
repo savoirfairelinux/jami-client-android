@@ -481,4 +481,22 @@ along with this program; if not, write to the Free Software
     <string name="load_sucess">%1$s: enabled</string>
     <string name="unload_sucess">%1$s: disabled</string>
 
+    <!--  ChatView messages  -->
+    <string name="app_name">TestApp</string>
+    <string name="time_just_now">Just now</string>
+    <string name="in_reply_to">In reply to</string>
+    <string name="message_long">Un autre problème est que les contrôleurs d\'interface utilisateur doivent fréquemment effectuer des appels asynchrones dont le retour peut prendre un certain temps. Le contrôleur d\'interface utilisateur doit gérer ces appels et s\'assurer que le système les nettoie après sa destruction pour éviter toute fuite</string>
+    <string name="message_long_2">Un autre problème est que les contrôleurs d\'interface utilisateur doivent fréquemment effectuer des appels asynchrones dont le retour peut prendre un certain temps. Le contrôleur d\'interface utilisateur doit gérer ces appels et s\'assurer que le système les nettoie après sa destruction pour éviter toute fuite potentielle</string>
+    <string name="message_court">Hello !</string>
+    <string name="message_court_2">Hello !\nHello !\nHello !\nHello !\nHello !</string>
+    <string name="link_preview_image_url">https://www.ctvnews.ca/polopoly_fs/1.3996751.1530504939!/httpImage/image.jpg_gen/derivatives/landscape_1020/image.jpg</string>
+
+    <string-array name="array_name">
+        <item>short1</item>
+        <item>short2</item>
+        <item>long1</item>
+        <item>long2</item>
+    </string-array>
+
+    <string name="reply_contact_you">You</string>
 </resources>
