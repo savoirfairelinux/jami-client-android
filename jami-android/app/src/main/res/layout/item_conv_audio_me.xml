@@ -82,7 +82,7 @@
                 app:srcCompat="@drawable/baseline_replay_24" />
 
             <TextView
-                android:id="@+id/msg_txt"
+                android:id="@+id/time_duration"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"

@@ -59,7 +59,7 @@ along with this program; if not, write to the Free Software
             tools:tint="@color/white" />
 
         <TextView
-            android:id="@+id/call_hist_txt"
+            android:id="@+id/type_call"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"

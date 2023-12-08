@@ -698,6 +698,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                 val path = InteractionPath.fromUri(uri) ?: return
                 val message = resultData.getStringExtra(Intent.EXTRA_TEXT) ?: return
                 presenter.editMessage(path.conversation.accountId, path.conversation.conversationUri, path.messageId, message)
+                //TODO ici showTime ?
             }
         }
     }

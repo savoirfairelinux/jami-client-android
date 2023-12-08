@@ -59,4 +59,7 @@
     <color name="link_peer_color">#03B9E9</color>
     <color name="menu_conversation_icons">@color/white</color>
 
+    <!--  Chatview message bubble  -->
+    <color name="reply_contact_background">#33000000</color>
+
 </resources>
