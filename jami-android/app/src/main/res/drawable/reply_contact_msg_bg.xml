@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <solid android:color="@color/conversation_primary_background" />
+    <solid android:color="@color/reply_contact_background" />
 
 
     <corners android:radius="@dimen/conversation_message_radius_2" />

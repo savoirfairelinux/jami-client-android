@@ -389,33 +389,16 @@ class ConversationAdapter(
                 conversationViewHolder.compositeDisposable.remove(observable)
             }
         }
-
         // Manage the display of the chip (ui element showing the emojis)
         conversationViewHolder.compositeDisposable.add(
             interaction.reactionObservable
                 .observeOn(DeviceUtils.uiScheduler)
                 .subscribe { reactions ->
-                    val msgTxt = conversationViewHolder.mMsgTxt ?: return@subscribe
-                    val mainBubbleContainer = conversationViewHolder.mMainBubbleContainer ?: return@subscribe
-                    val editedMessage = conversationViewHolder.mEditedMessage ?: return@subscribe
-                    val msgTextAndTime = conversationViewHolder.mMsgTextAndTime ?: return@subscribe
-                    val bubbleMessageLayout = conversationViewHolder.mBubbleMessageLayout ?: return@subscribe
-                    val msgTime = conversationViewHolder.mMsgDetailTxt ?: return@subscribe
-
                     conversationViewHolder.reactionChip?.let { chip ->
                         // No reaction, hide the chip.
                         if (reactions.isEmpty()) {
                             chip.isVisible = false
-                            MessageBubble.showTime(
-                                mainBubbleContainer,
-                                msgTxt,
-                                msgTime,
-                                editedMessage,
-                                msgTextAndTime,
-                                bubbleMessageLayout,
-                            )
-                        }
-                        else {
+                        } else {
                             chip.text = reactions.filterIsInstance<TextMessage>()
                                 .groupingBy { it.body!! }
                                 .eachCount()
@@ -428,14 +411,6 @@ class ConversationAdapter(
                             chip.isClickable = true
                             chip.isFocusable = true
                             chip.isChecked = false
-                            MessageBubble.showTime(
-                                mainBubbleContainer,
-                                msgTxt,
-                                msgTime,
-                                editedMessage,
-                                msgTextAndTime,
-                                bubbleMessageLayout,
-                            )
                         }
                     }
                 }
@@ -450,7 +425,6 @@ class ConversationAdapter(
      */
     private fun configureReplyIndicator(conversationViewHolder: ConversationViewHolder,
                                         interaction: Interaction) {
-
         val context= conversationViewHolder.itemView.context
         val conversation = interaction.conversation
         val replyName = conversationViewHolder.mReplyName ?: return
@@ -459,7 +433,6 @@ class ConversationAdapter(
         val msgReplyBubbleContent = conversationViewHolder.mMsgReplyBubbleContent ?: return
         val msgReplyContent = conversationViewHolder.mMsgReplyContent ?: return
         val mainBubbleContainer = conversationViewHolder.mMainBubbleContainer ?: return
-        val replyContactLayout = conversationViewHolder.mReplyContactLayout ?: return
 
         if (conversation == null || conversation !is Conversation) {
             // besoin de tout ça si msgReplyContent.isVisible = false ?
@@ -473,10 +446,8 @@ class ConversationAdapter(
             }
             return
         }
-
         replyName.let { replyView ->
             val replyBubble = interaction.replyTo
-
             // If currently replying to another message :
             if (replyBubble != null)  {
                 conversationViewHolder.compositeDisposable.add(replyBubble
@@ -486,39 +457,18 @@ class ConversationAdapter(
                     .observeOn(DeviceUtils.uiScheduler)
                     .subscribe({ (textReply, nameReply) ->
                         replyTxt.text = textReply.body
-                        if(!textReply.isIncoming)
+                        if (!textReply.isIncoming)
                             replyTxt.text = context.getString(R.string.reply_contact_you)
                         replyName.text = nameReply.displayName
 
-                        // Apply correct color depending if message is incoming or not.
-                        msgReplyBubbleContent.background?.setTint(
-                            if (textReply.isIncoming)
-                                context.getColor(
-                                    R.color.conversation_secondary_background
-                                )
-                            else convColor
-                            // condition convcolor ?
-                        )
+                        // Apply the correct color depending if message is incoming or not.
+                        if (convColor != 0 && !textReply.isIncoming)
+                            msgReplyBubbleContent.background?.setTint(convColor)
                         replyTxt.setTextColor(
                             if (textReply.isIncoming)
-                                context.getColor(
-                                    R.color.colorOnSurface
-                                )
-                            else context.getColor(
-                                R.color.text_color_primary_dark
-                            )
+                                context.getColor(R.color.colorOnSurface)
+                            else context.getColor(R.color.text_color_primary_dark)
                         )
-                        // todo mettre aussi background reply_contact_layout background contact reply
-                        // qui change si outgoing ou incoming
-                        // avoir les vraies couleurs
-                        replyContactLayout.background.setTint(
-                            if (textReply.isIncoming)
-                                context.getColor(
-                                    R.color.conversation_secondary_background
-                                )
-                            else convColor
-                        )
-
                         // Load avatar drawable from contact.
                         val smallAvatarDrawable = AvatarDrawable.Builder()
                             .withContact(nameReply)
@@ -533,7 +483,6 @@ class ConversationAdapter(
                         replyName.setCompoundDrawablesWithIntrinsicBounds(
                             smallAvatarDrawable, null, null, null
                         )
-
                         replyView.isVisible = true
                         replyTxt.isVisible = true
                         inReplyTo.isVisible = true
@@ -714,7 +663,7 @@ class ConversationAdapter(
         val context = viewHolder.itemView.context
         try {
             val acceptBtn = viewHolder.btnAccept as ImageView
-            val refuseBtn = viewHolder.btnRefuse!!
+            val btnReplay = viewHolder.btnReplay!!
             acceptBtn.setImageResource(R.drawable.baseline_play_arrow_24)
             val player = MediaPlayer.create(context, getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, path))
             viewHolder.player = player
@@ -732,7 +681,7 @@ class ConversationAdapter(
                         acceptBtn.setImageResource(R.drawable.baseline_pause_24)
                     }
                 }
-                refuseBtn.setOnClickListener {
+                btnReplay.setOnClickListener {
                     if (player.isPlaying) player.pause()
                     player.seekTo(0)
                     acceptBtn.setImageResource(R.drawable.baseline_play_arrow_24)
@@ -743,11 +692,11 @@ class ConversationAdapter(
                         .subscribe {
                             val pS = player.currentPosition / 1000
                             val dS = player.duration / 1000
-                            viewHolder.mMsgTxt?.text = String.format(Locale.getDefault(), "%02d:%02d / %02d:%02d", pS / 60, pS % 60, dS / 60, dS % 60)
+                            viewHolder.mTimeDuration?.text = String.format(Locale.getDefault(), "%02d:%02d / %02d:%02d", pS / 60, pS % 60, dS / 60, dS % 60)
                         })
             } else {
                 acceptBtn.setOnClickListener(null)
-                refuseBtn.setOnClickListener(null)
+                btnReplay.setOnClickListener(null)
             }
         } catch (e: Exception) {
             Log.e(TAG, "Error initializing player", e)
@@ -1100,19 +1049,19 @@ class ConversationAdapter(
         } else {
             val status = file.status
             viewHolder.mIcon?.setImageResource(if (status.isError) R.drawable.baseline_warning_24 else R.drawable.baseline_attach_file_24)
-            viewHolder.mMsgTxt?.text = file.displayName
+            viewHolder.mFileName?.text = file.displayName
             viewHolder.mFileInfoLayout?.setOnClickListener(null)
             if (status == InteractionStatus.TRANSFER_AWAITING_HOST) {
                 viewHolder.btnRefuse?.visibility = View.VISIBLE
-                viewHolder.mAnswerLayout?.visibility = View.VISIBLE
+                viewHolder.mDownloadButton?.visibility = View.VISIBLE
                 viewHolder.btnAccept?.setOnClickListener { presenter.acceptFile(file) }
                 viewHolder.btnRefuse?.setOnClickListener { presenter.refuseFile(file) }
             } else if (status == InteractionStatus.FILE_AVAILABLE) {
                 viewHolder.btnRefuse?.visibility = View.GONE
-                viewHolder.mAnswerLayout?.visibility = View.VISIBLE
+                viewHolder.mDownloadButton?.visibility = View.VISIBLE
                 viewHolder.btnAccept?.setOnClickListener { presenter.acceptFile(file) }
             } else {
-                viewHolder.mAnswerLayout?.visibility = View.GONE
+                viewHolder.mDownloadButton?.visibility = View.GONE
                 if (status == InteractionStatus.TRANSFER_ONGOING) {
                     viewHolder.progress?.max = (file.totalSize / 1024).toInt()
                     viewHolder.progress?.setProgress((file.bytesProgress / 1024).toInt(), true)
@@ -1144,225 +1093,242 @@ class ConversationAdapter(
      * @param interaction    The conversation element to display
      * @param position       The position of the viewHolder
      */
-    private fun configureForTextMessage(convViewHolder: ConversationViewHolder, interaction: Interaction, position: Int) {
+    private fun configureForTextMessage(
+        convViewHolder: ConversationViewHolder,
+        interaction: Interaction,
+        position: Int
+    ) {
         val context = convViewHolder.itemView.context
-        convViewHolder.compositeDisposable.add(interaction.lastElement
-            .observeOn(DeviceUtils.uiScheduler)
-            .subscribe { lastElement ->
-                val textMessage = lastElement as TextMessage
-                val account = interaction.account ?: return@subscribe
-                val contact = textMessage.contact ?: return@subscribe
-                val isDeleted = textMessage.body.isNullOrEmpty()
-                val msgTxt = convViewHolder.mMsgTxt ?: return@subscribe
-                val mMsgDetailTxt = convViewHolder.mMsgDetailTxt ?: return@subscribe
-                val longPressView = convViewHolder.mMsgTxt!!
-                longPressView.background?.setTintList(null)
-                val answerLayout = convViewHolder.mAnswerLayout
-                val isTimeShown = hasPermanentTimeString(textMessage, position)
-                val msgSequenceType = getMsgSequencing(position, isTimeShown)
-                val peerDisplayName = convViewHolder.mPeerDisplayName
-                val mainBubbleContainer = convViewHolder.mMainBubbleContainer ?: return@subscribe
-                val editedMessage = convViewHolder.mEditedMessage ?: return@subscribe
-                val msgTextAndTime = convViewHolder.mMsgTextAndTime ?: return@subscribe
-                val bubbleMessageLayout = convViewHolder.mBubbleMessageLayout ?: return@subscribe
+        convViewHolder.compositeDisposable.add(
+            interaction.lastElement
+                .observeOn(DeviceUtils.uiScheduler)
+                .subscribe { lastElement ->
+                    val textMessage = lastElement as TextMessage
+                    val account = interaction.account ?: return@subscribe
+                    val contact = textMessage.contact ?: return@subscribe
+                    val isDeleted = textMessage.body.isNullOrEmpty()
+                    val msgTxt = convViewHolder.mMsgTxt ?: return@subscribe
+                    val msgTime = convViewHolder.mMsgDetailTxt ?: return@subscribe
+                    val longPressView = convViewHolder.mMsgTxt!!
+                    longPressView.background?.setTintList(null)
+                    val linkPreviewLayout = convViewHolder.mLinkPreviewLayout
+                    val isTimeShown = hasPermanentTimeString(textMessage, position)
+                    val msgSequenceType = getMsgSequencing(position, isTimeShown)
+                    val peerDisplayName = convViewHolder.mPeerDisplayName
+                    val mainBubbleContainer =
+                        convViewHolder.mMainBubbleContainer ?: return@subscribe
+                    val editedMessage = convViewHolder.mEditedMessage
+                    val msgTextAndTime = convViewHolder.mMsgTextAndTime ?: return@subscribe
+                    val bubbleMessageLayout =
+                        convViewHolder.mBubbleMessageLayout ?: return@subscribe
+                    val msgReplyBubbleContent = convViewHolder.mMsgReplyBubbleContent
 
-                // Set message text
-                // pas sure de message avec le trim
-                val messageText = textMessage.body?.trim() ?: ""
-                val time = TextUtils.timestampToDetailString(context, textMessage.timestamp)
-                MessageBubble.setMessageText(
-                    markwon, msgTxt, mMsgDetailTxt,
-                    messageText, time, mainBubbleContainer,
-                    editedMessage, msgTextAndTime, bubbleMessageLayout
-                )
-
-
-
-
-                // Manage deleted message.
-                if (isDeleted) {
-                    msgTxt.text = context.getString(R.string.conversation_message_deleted)
-                    // Hide the link preview
-                    answerLayout?.visibility = View.GONE
-                    msgTxt.background.alpha = 255
-                    if (convColor != 0 && !textMessage.isIncoming) {
-                        msgTxt.background.setTint(convColor)
+                    // Set message text
+                    // pas sure de message avec le trim
+                    var messageText = textMessage.body?.trim() ?: ""
+                    val time = TextUtils.timestampToDetailString(context, textMessage.timestamp)
+                    if (editedMessage != null) { // pour eviter d'avoir un return subscribe
+                        MessageBubble.setMessageText(
+                            markwon, msgTxt, msgTime,
+                            messageText, time, mainBubbleContainer,
+                            editedMessage, msgTextAndTime, bubbleMessageLayout
+                        )
                     }
-                    msgTxt.textSize = 14f
-                    msgTxt.setPadding(textMessagePadding)
-                    longPressView.setOnLongClickListener(null)
-                    return@subscribe
-                }
-
-                // Manage long press.
-                longPressView.setOnLongClickListener { v: View ->
-                    openItemMenu(convViewHolder, v, interaction)
-                    if (expandedItemPosition == position) {
-                        expandedItemPosition = -1
-                    }
-                    conversationFragment.updatePosition(convViewHolder.bindingAdapterPosition)
-                    if (textMessage.isIncoming) {
-                        longPressView.background.setTint(res.getColor(R.color.grey_500))
-                    } else {
-                        longPressView.background.setTint(convColorTint)
-                    }
-                    mCurrentLongItem = RecyclerViewContextMenuInfo(convViewHolder.bindingAdapterPosition, v.id.toLong())
-                    true
-                }
-
-//                val message = textMessage.body?.trim() ?: ""
-                convViewHolder.mAnswerLayout?.visibility = View.GONE
-
-                if (StringUtils.isOnlyEmoji(messageText)) {
-                    // Manage layout if message is emoji.
-                    msgTxt.background.alpha = 0
-                    msgTxt.textSize = 32.0f
-                    msgTxt.setPadding(emojiMessagePadding)
-                } else {
-                    // Manage layout for standard message. Index refers to msgBGLayouts array.
-                    val resIndex =
-                        if (interaction.replyTo != null) {
-                            // Reply message incoming, first or single.
-                            if (textMessage.isIncoming) if (msgSequenceType == SequenceType.FIRST) 11 else 10
-                            // Reply message outgoing, first or single
-                            else if (msgSequenceType == SequenceType.FIRST) 9 else 8
+                    // Manage deleted message.
+                    if (isDeleted) {
+                        // Set text to deleted message.
+                        messageText = context.getString(R.string.conversation_message_deleted)
+                        if (editedMessage != null) {
+                            MessageBubble.setMessageText(
+                                markwon, msgTxt, msgTime,
+                                messageText, time, mainBubbleContainer,
+                                editedMessage, msgTextAndTime, bubbleMessageLayout
+                            )
                         }
-                        // Standard message, incoming or outgoing and first, single or last.
-                        else msgSequenceType.ordinal + (if (textMessage.isIncoming) 1 else 0) * 4
-
-                    msgTxt.background = ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
-                    if (convColor != 0 && !textMessage.isIncoming) {
-                        msgTxt.background.setTint(convColor)
+                        // Hide the link preview
+                        linkPreviewLayout?.visibility = View.GONE
+                        msgTxt.background.alpha = 255
+                        if (convColor != 0 && !textMessage.isIncoming) {
+                            bubbleMessageLayout.background.setTint(convColor)
+                        }
+                        msgTxt.textSize = 14f
+                        bubbleMessageLayout.setPadding(textMessagePadding)
+                        longPressView.setOnLongClickListener(null)
+                        return@subscribe
                     }
-                    msgTxt.background.alpha = 255
-                    msgTxt.textSize = 16f
-                    msgTxt.setPadding(textMessagePadding)
-
-                    // Manage layout for message with a link inside.
-                    if (showLinkPreviews) {
-                        val cachedPreview =
-                            textMessage.preview as? Maybe<PreviewData>? ?: LinkPreview.getFirstUrl(messageText)
-                                .flatMap { url -> LinkPreview.load(url) }
-                                .cache()
-                                .apply { interaction.preview = this }
-
-                        convViewHolder.compositeDisposable.add(cachedPreview
-                            .observeOn(DeviceUtils.uiScheduler)
-                            .subscribe({ data ->
-                                Log.w(TAG, "got preview $data")
-                                val image = convViewHolder.mImage ?: return@subscribe
-                                if (data.imageUrl.isNotEmpty()) {
-                                    Glide.with(context)
-                                        .load(data.imageUrl)
-                                        .centerCrop()
-                                        .into(image)
-                                    image.visibility = View.VISIBLE
-                                } else {
-                                    image.visibility = View.GONE
-                                }
-                                convViewHolder.mHistTxt?.text = data.title
-                                if (data.description.isNotEmpty()) {
-                                    convViewHolder.mHistDetailTxt?.visibility = View.VISIBLE
-                                    convViewHolder.mHistDetailTxt?.text = data.description
-                                } else {
-                                    convViewHolder.mHistDetailTxt?.visibility = View.GONE
-                                }
-                                convViewHolder.mAnswerLayout?.visibility = View.VISIBLE
-                                val url = Uri.parse(data.baseUrl)
-                                convViewHolder.mPreviewDomain?.text = url.host
-                                convViewHolder.mAnswerLayout?.setOnClickListener {
-                                    context.startActivity(Intent(Intent.ACTION_VIEW, url))
-                                }
-                            }) { e -> Log.e(TAG, "Can't load preview", e) })
-                    }
-                }
-                msgTxt.movementMethod = LinkMovementMethod.getInstance()
-                msgTxt.text = markwon.toMarkdown(messageText)
-                val endOfSeq =
-                    msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE
-
-                // Manage animation for avatar doing ???.
-                if (textMessage.isIncoming) {
-                    val avatar = convViewHolder.mAvatar ?: return@subscribe
-                    if (endOfSeq) {
-                        avatar.setImageDrawable(conversationFragment.getConversationAvatar(contact.primaryNumber))
-                        avatar.visibility = View.VISIBLE
-                    } else {
-                        if (position == lastMsgPos - 1) {
-                            avatar.startAnimation(
-                                AnimationUtils.loadAnimation(avatar.context, R.anim.fade_out).apply {
-                                    setAnimationListener(object : Animation.AnimationListener {
-                                        override fun onAnimationStart(arg0: Animation) {}
-                                        override fun onAnimationRepeat(arg0: Animation) {}
-                                        override fun onAnimationEnd(arg0: Animation) {
-                                            avatar.setImageBitmap(null)
-                                            avatar.visibility = View.INVISIBLE
-                                        }
-                                    })
-                                })
+                    // Manage long press.
+                    longPressView.setOnLongClickListener { v: View ->
+                        openItemMenu(convViewHolder, v, interaction)
+                        if (expandedItemPosition == position) {
+                            expandedItemPosition = -1
+                        }
+                        conversationFragment.updatePosition(convViewHolder.bindingAdapterPosition)
+                        if (textMessage.isIncoming) {
+                            longPressView.background.setTint(context.getColor(R.color.grey_500))
                         } else {
-                            avatar.setImageBitmap(null)
-                            avatar.visibility = View.INVISIBLE
+                            longPressView.background.setTint(convColorTint)
+                        }
+                        mCurrentLongItem = RecyclerViewContextMenuInfo(
+                            convViewHolder.bindingAdapterPosition, v.id.toLong()
+                        )
+                        true
+                    }
+                    // Manage text message layout
+                    if (StringUtils.isOnlyEmoji(messageText)) {
+                        // Manage layout if message is emoji.
+                        bubbleMessageLayout.background.alpha = 0
+                        msgTxt.textSize = 32.0f
+                        bubbleMessageLayout.setPadding(emojiMessagePadding)
+                    } else {
+                        // Manage layout for standard message. Index refers to msgBGLayouts array.
+                        val resIndex =
+                            if (interaction.replyTo != null) { // todo voir aimantation si reply
+                                // Reply message incoming, first or single.
+                                if (textMessage.isIncoming)
+                                    if (msgSequenceType == SequenceType.FIRST) 11 else 10
+                                // Reply message outgoing, first or single
+                                else if (msgSequenceType == SequenceType.FIRST) 9 else 8
+                            }
+                            // Standard message, incoming or outgoing and first, single or last.
+                            else
+                                msgSequenceType.ordinal + (if (textMessage.isIncoming) 1 else 0) * 4
+
+                        bubbleMessageLayout.background =
+                            ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
+                        if (convColor != 0 && !textMessage.isIncoming) {
+                            bubbleMessageLayout.background.setTint(convColor)
+                        }
+                        bubbleMessageLayout.background.alpha = 255
+                        msgTxt.textSize = 16f
+                        bubbleMessageLayout.setPadding(textMessagePadding)
+
+                        // TODO Manage layout for the message we are replying to.
+                        // mettre resIndex = 4 si incoming teinte à modifier selon origine
+                        // mettre resIndex = 0 si outgoing teinte à modifier selon origine
+//                    msgReplyBubbleContent?.background = ...
+
+                        // je suis ici
+                        // Manage layout for message with a link inside.
+                        if (showLinkPreviews) {
+                            val cachedPreview =
+                                textMessage.preview as? Maybe<PreviewData>?
+                                    ?: LinkPreview.getFirstUrl(messageText)
+                                        .flatMap { url -> LinkPreview.load(url) }
+                                        .cache()
+                                        .apply { interaction.preview = this }
+
+                            convViewHolder.compositeDisposable.add(cachedPreview
+                                .observeOn(DeviceUtils.uiScheduler)
+                                .subscribe({ data ->
+                                    Log.w(TAG, "got preview $data")
+                                    val image = convViewHolder.mImage ?: return@subscribe
+                                    if (data.imageUrl.isNotEmpty()) {
+                                        Glide.with(context)
+                                            .load(data.imageUrl)
+                                            .centerCrop()
+                                            .into(image)
+                                        image.visibility = View.VISIBLE
+                                    } else {
+                                        image.visibility = View.GONE
+                                    }
+                                    convViewHolder.mLinkPreviewTitle?.text = data.title
+                                    if (data.description.isNotEmpty()) {
+                                        convViewHolder.mLinkPreviewDescription?.visibility =
+                                            View.VISIBLE
+                                        convViewHolder.mLinkPreviewDescription?.text =
+                                            data.description
+                                    } else {
+                                        convViewHolder.mLinkPreviewDescription?.visibility =
+                                            View.GONE
+                                    }
+                                    convViewHolder.mLinkPreviewLayout?.visibility = View.VISIBLE
+                                    val url = Uri.parse(data.baseUrl)
+                                    convViewHolder.mLinkPreviewDomain?.text = url.host
+                                    convViewHolder.mLinkPreviewLayout?.setOnClickListener {
+                                        context.startActivity(Intent(Intent.ACTION_VIEW, url))
+                                    }
+                                    if (editedMessage != null) {
+                                        MessageBubble.showTime(
+                                            mainBubbleContainer,
+                                            msgTxt,
+                                            msgTime,
+                                            editedMessage,
+                                            msgTextAndTime,
+                                            bubbleMessageLayout,
+                                        )
+                                    }
+                                }) { e -> Log.e(TAG, "Can't load preview", e) })
+                        } else convViewHolder.mLinkPreviewLayout?.visibility = View.GONE
+                    }
+                    // pas sure de ça
+                    msgTxt.movementMethod = LinkMovementMethod.getInstance()
+                    val endOfSeq = msgSequenceType == SequenceType.LAST
+                            || msgSequenceType == SequenceType.SINGLE
+
+                    // Manage animation for avatar doing ???.
+                    if (textMessage.isIncoming) {
+                        val avatar = convViewHolder.mAvatar ?: return@subscribe
+                        if (endOfSeq) {
+                            avatar.setImageDrawable(
+                                conversationFragment.getConversationAvatar(contact.primaryNumber)
+                            )
+                            avatar.visibility = View.VISIBLE
+                        } else {
+                            if (position == lastMsgPos - 1) {
+                                avatar.startAnimation(
+                                    AnimationUtils.loadAnimation(
+                                        avatar.context, R.anim.fade_out
+                                    ).apply {
+                                        setAnimationListener(object : Animation.AnimationListener {
+                                            override fun onAnimationStart(arg0: Animation) {}
+                                            override fun onAnimationRepeat(arg0: Animation) {}
+                                            override fun onAnimationEnd(arg0: Animation) {
+                                                avatar.setImageBitmap(null)
+                                                avatar.visibility = View.INVISIBLE
+                                            }
+                                        })
+                                    })
+                            } else {
+                                avatar.setImageBitmap(null)
+                                avatar.visibility = View.INVISIBLE
+                            }
                         }
                     }
-                }
+                    // Apply a bottom margin to the global layout if end of sequence needed.
+                    convViewHolder.mItem?.let { setBottomMargin(it, if (endOfSeq) 8 else 0) }
 
-                // Apply a bottom margin to the global layout if end of sequence needed.
-                convViewHolder.mItem?.let { setBottomMargin(it, if (endOfSeq) 8 else 0) }
-
-
-                // Manage the update of the timestamp and the fact than we can expend/hide it.
-                if (isTimeShown) {
-                    convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
-                        convViewHolder.mMsgDetailTxtPerm?.text =
-                            TextUtils.timestampToDetailString(context, textMessage.timestamp)
-                    })
-                    convViewHolder.mMsgDetailTxtPerm?.visibility = View.VISIBLE
-                } else {
-                    convViewHolder.mMsgDetailTxtPerm?.visibility = View.GONE
-                    val isExpanded = position == expandedItemPosition
-                    if (isExpanded) {
+                    // Manage the update of the timestamp and the fact than we can expend/hide it.
+                    if (isTimeShown) {
+                        // todo probleme message edited pour l'heure
+                        //  -> heure qui change toutes les 8 secondes
                         convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
-                            convViewHolder.mMsgDetailTxt?.text =
+                            convViewHolder.mMsgDetailTxtPerm?.text =
                                 TextUtils.timestampToDetailString(context, textMessage.timestamp)
                         })
+                        convViewHolder.mMsgDetailTxtPerm?.visibility = View.VISIBLE
+                    } else {
+                        convViewHolder.mMsgDetailTxtPerm?.visibility = View.GONE
                     }
-                    setItemViewExpansionState(convViewHolder, isExpanded)
-                    convViewHolder.mItem?.setOnClickListener {
-                        if (convViewHolder.animator?.isRunning == true) {
-                            return@setOnClickListener
-                        }
-                        if (expandedItemPosition >= 0) {
-                            val prev = expandedItemPosition
-                            notifyItemChanged(prev)
-                        }
-                        expandedItemPosition = if (isExpanded) -1 else position
-                        notifyItemChanged(expandedItemPosition)
-                    }
-                }
 
-                // Show the name of the contact if it is a group conversation
-                if (textMessage.isIncoming) {
-                    peerDisplayName?.apply {
-                        if (presenter.isGroup() && (msgSequenceType == SequenceType.SINGLE ||
-                                    msgSequenceType == SequenceType.FIRST)
-                        ) {
-                            visibility = View.VISIBLE
-                            convViewHolder.compositeDisposable.add(
-                                presenter.contactService
-                                    .observeContact(account, contact, false)
-                                    .observeOn(DeviceUtils.uiScheduler)
-                                    .subscribe {
-                                        text = it.displayName
-                                    }
-                            )
-                        } else {
-                            visibility = View.GONE
-                            text = null
+                    // Show the name of the contact if it is a group conversation
+                    if (textMessage.isIncoming) {
+                        peerDisplayName?.apply {
+                            if (presenter.isGroup() && (msgSequenceType == SequenceType.SINGLE ||
+                                        msgSequenceType == SequenceType.FIRST)
+                            ) {
+                                visibility = View.VISIBLE
+                                convViewHolder.compositeDisposable.add(
+                                    presenter.contactService
+                                        .observeContact(account, contact, false)
+                                        .observeOn(DeviceUtils.uiScheduler)
+                                        .subscribe {
+                                            text = it.displayName
+                                        }
+                                )
+                            } else visibility = View.GONE
                         }
                     }
-                }
-            })
+                })
     }
 
     private fun configureForContactEvent(viewHolder: ConversationViewHolder, interaction: Interaction) {
@@ -1383,7 +1349,7 @@ class ConversationAdapter(
                         ContactEvent.Event.BANNED -> R.string.conversation_contact_banned
                         else -> R.string.hist_contact_added
                     }, vm.displayName)
-                    viewHolder.mMsgTxt?.text = "$eventString, $timestamp"
+                    viewHolder.mContactEventTxt?.text = "$eventString, $timestamp"
                 })
         } else {
             val eventString = when (event.event) {
@@ -1394,7 +1360,7 @@ class ConversationAdapter(
                 ContactEvent.Event.INCOMING_REQUEST -> R.string.hist_invitation_received
                 else -> R.string.hist_contact_added
             }
-            viewHolder.mMsgTxt?.text = "$eventString, $timestamp"
+            viewHolder.mContactEventTxt?.text = "$eventString, $timestamp"
         }
     }
 
@@ -1469,8 +1435,8 @@ class ConversationAdapter(
                     callInfoLayout.background?.setTintList(null)
                     val callIcon = convViewHolder.mIcon ?: return@subscribe
                     callIcon.drawable?.setTintList(null)
-                    val typeCall = convViewHolder.mHistTxt ?: return@subscribe
-                    val detailCall = convViewHolder.mHistDetailTxt ?: return@subscribe
+                    val typeCall = convViewHolder.mTypeCall ?: return@subscribe
+                    val detailCall = convViewHolder.mCallLastedInfo ?: return@subscribe
                     val resIndex: Int
                     val typeCallTxt : String
 

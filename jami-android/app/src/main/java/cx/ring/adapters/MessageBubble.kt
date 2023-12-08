@@ -18,7 +18,7 @@ import io.noties.markwon.Markwon
 object MessageBubble : Fragment() {
     private val TAG = "MessageFragment"
 
-    //TODO a modifier dans le viewholder
+
 //    private var binding: NewItemConvMsgMeBinding? = null
     private var isMessageEdited = false
 
@@ -158,33 +158,36 @@ object MessageBubble : Fragment() {
 //        showTime()
 //    }
 
-    // ici je suis
-    fun showLinkPreview(
-        domain: String? = null,
-        title: String? = null,
-        description: String? = null,
-    ) {
-        val binding = binding ?: return
+//    fun showLinkPreview(
+//        domain: String? = null,
+//        title: String? = null,
+//        description: String? = null,
+//    ) {
+////        val binding = binding ?: return
 
-        val isLinkMessage = domain != null
-        if (isLinkMessage) {
-            binding.linkPreview.linkPreview.visibility = View.VISIBLE
-            Glide.with(requireContext())
-                .load(resources.getString(R.string.link_preview_image_url))
-                .into(binding.linkPreview.linkPreviewImg)
-            binding.linkPreview.linkPreviewTitle.text = "Title"
-            binding.linkPreview.linkPreviewDescription.text =
-                getString(R.string.message_long)
-            binding.linkPreview.linkPreviewDomain.text = "www.example.com"
-        } else {
-            binding.linkPreview.linkPreview.visibility = View.GONE
-        }
-        showTime()
-    }
+//        val isLinkMessage = domain != null
+
+//        if (isLinkMessage) {
+//
+//            binding.linkPreview.linkPreview.visibility = View.VISIBLE
+//            Glide.with(requireContext())
+//                .load(resources.getString(R.string.link_preview_image_url))
+//                .into(binding.linkPreview.linkPreviewImg)
+////            binding.linkPreview.linkPreviewTitle.text = "Title"
+////            binding.linkPreview.linkPreviewDescription.text =
+//                getString(R.string.message_long)
+////            binding.linkPreview.linkPreviewDomain.text = "www.example.com"
+//        } else {
+//            binding.linkPreview.linkPreview.visibility = View.GONE
+//        }
+//        showTime()
+////    }
 
 
+    // ici je suis fonction qui est appelée dans le fragment
+    // comment accéder au view holder depuis le fragment ?
     fun showMessageEdited(checked: Boolean) {
-        val binding = binding ?: return
+//        val binding = binding ?: return
         isMessageEdited = checked
         binding.messageEdited.isVisible = checked
         showTime()

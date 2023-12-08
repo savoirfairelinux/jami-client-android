@@ -36,14 +36,19 @@ import cx.ring.views.MessageStatusView
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 
 class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView.ViewHolder(v) {
+    // Layout messages used to add bottom margins
     val mItem: View? = when (type) {
         MessageType.INCOMING_TEXT_MESSAGE -> v.findViewById(R.id.txt_entry)
         MessageType.OUTGOING_TEXT_MESSAGE -> v.findViewById(R.id.msg_layout)
         else -> null
     }
-    var mMsgTxt: BaselineLastLineTextView? = null
+
+
+    // Time and date
     var mMsgDetailTxt: TextView? = null
     var mMsgDetailTxtPerm: TextView? = null
+
+    // Avatar on the left of the conversation
     val mAvatar: ImageView? = when (type) {
         MessageType.INCOMING_TEXT_MESSAGE,
         MessageType.INCOMING_FILE,
@@ -52,14 +57,33 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
         MessageType.INCOMING_VIDEO -> v.findViewById(R.id.photo)
         else -> null
     }
+
+    // Images
     val mImage: ImageView? = when (type) {
         MessageType.INCOMING_IMAGE,
         MessageType.OUTGOING_IMAGE -> v.findViewById(R.id.image)
-        MessageType.INCOMING_TEXT_MESSAGE,
-        MessageType.OUTGOING_TEXT_MESSAGE -> v.findViewById(R.id.link_preview_img)
-        MessageType.CONTACT_EVENT -> v.findViewById(R.id.imageView)
+        MessageType.LINK_PREVIEW -> v.findViewById(R.id.link_preview_img)
+        MessageType.CONTACT_EVENT -> v.findViewById(R.id.photo)
         else -> null
     }
+
+    // Video
+    val video: TextureView? = when (type) {
+        MessageType.INCOMING_VIDEO,
+        MessageType.OUTGOING_VIDEO -> v.findViewById(R.id.video)
+        else -> null
+    }
+
+
+    // Reply messages
+    val mReplyName: TextView? = v.findViewById(R.id.reply_contact_name)
+    // ici mReplyTxt change le background mais aussi la couleur de la police
+    // pour le incoming on veut police = mReplyTxt
+    // mais pour le background on veut msg_reply_bubble_content
+    val mReplyTxt: TextView? = v.findViewById(R.id.reply_message_txt)
+
+    // Reactions and status icon
+    val reactionChip: Chip? = v.findViewById(R.id.reaction_chip)
     val mStatusIcon: MessageStatusView? = when (type) {
         MessageType.OUTGOING_TEXT_MESSAGE,
         MessageType.OUTGOING_FILE,
@@ -68,13 +92,7 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
         MessageType.OUTGOING_VIDEO -> v.findViewById(R.id.status_icon)
         else -> null
     }
-    val mReplyName: TextView? = v.findViewById(R.id.reply_contact_name)
-    // ici mReplyTxt change le background mais aussi la couleur de la police
-    // pour le incoming on veut police = mReplyTxt
-    // mais pour le background on veut msg_reply_bubble_content
-    val mReplyTxt: TextView? = v.findViewById(R.id.reply_message_txt)
-
-    val reactionChip: Chip? = v.findViewById(R.id.reaction_chip)
+    // Icons for call, file, composing
     val mIcon: ImageView? = when (type) {
         MessageType.CALL_INFORMATION -> v.findViewById(R.id.call_icon)
         MessageType.INCOMING_FILE,
@@ -82,16 +100,23 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
         MessageType.COMPOSING_INDICATION -> v.findViewById(R.id.status_icon)
         else -> null
     }
-    var mHistTxt: TextView? = null
-    var mPreviewDomain: TextView? = null
+
+    // Link preview
+    var mLinkPreviewTitle: TextView? = null
+    var mLinkPreviewDomain: TextView? = null
     var mLayout: View? = null
-    var mAnswerLayout: ViewGroup? = null
+    var mLinkPreviewLayout: ViewGroup? = null
+    var mLinkPreviewDescription: TextView? = null
+
+    // Text messages
+    // Message text
+    var mMsgTxt: BaselineLastLineTextView? = null
     //
     // TODO
     // Only incoming messages
     val mInReplyTo: TextView? = v.findViewById(R.id.msg_in_reply_to)
     val mPeerDisplayName: TextView? = v.findViewById(R.id.msg_display_name)
-    var mHistDetailTxt: TextView? = null
+
     //
 
     // TODO
@@ -114,24 +139,35 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
     val mMsgReplyContent: ViewGroup? = v.findViewById(R.id.msg_reply_content)
     //
 
-    // Ongoing call
+
+    // Call finished
     var mCallLayout: LinearLayout? = null
     var mCallInfoLayout: LinearLayout? = null
+    val mCallLastedInfo: TextView? = v.findViewById(R.id.call_details_txt)
+    var mTypeCall: TextView? = null
+
+    // Ongoing group call
     var mAcceptCallVideoButton: ImageButton? = null
     var mAcceptCallAudioButton: ImageButton? = null
-
     var btnAccept: View? = null
     var btnRefuse: View? = null
-    var progress: ContentLoadingProgressBar? = null
-    val video: TextureView? = when (type) {
-        MessageType.INCOMING_VIDEO,
-        MessageType.OUTGOING_VIDEO -> v.findViewById(R.id.video)
-        else -> null
-    }
     var mAcceptCallLayout: LinearLayout? = null
-    var mFileInfoLayout: LinearLayout? = null
-    var mAudioInfoLayout: LinearLayout? = null
 
+    // File
+    var progress: ContentLoadingProgressBar? = null
+    var mFileInfoLayout: LinearLayout? = null
+    var mDownloadButton : ViewGroup? = null
+    var mFileName: TextView? = null
+
+    // Audio
+    var mAudioInfoLayout: LinearLayout? = null
+    var btnReplay: ImageView? = null
+    var mTimeDuration: TextView? = null
+
+    // Contact event
+    var mContactEventTxt: TextView? = null
+
+    // Other
     var player: MediaPlayer? = null
     var surface: Surface? = null
     var animator: ValueAnimator? = null
@@ -142,13 +178,12 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
     init {
         when (type) {
             MessageType.CONTACT_EVENT -> {
-                mMsgTxt = v.findViewById(R.id.contact_event_txt)
+                mContactEventTxt = v.findViewById(R.id.contact_event_txt)
                 mMsgDetailTxt = v.findViewById(R.id.contact_event_details_txt)
                 primaryClickableView = v.findViewById(R.id.contactDetailsGroup)
             }
             MessageType.CALL_INFORMATION -> {
-                mHistTxt = v.findViewById(R.id.call_hist_txt)
-                mHistDetailTxt = v.findViewById(R.id.call_details_txt)
+                mTypeCall = v.findViewById(R.id.type_call)
                 mCallInfoLayout = v.findViewById(R.id.callInfoLayout)
                 mCallLayout = v.findViewById(R.id.callLayout)
                 mMsgDetailTxtPerm = v.findViewById(R.id.msg_details_txt_perm)
@@ -163,10 +198,6 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
                 mMsgTxt = v.findViewById(R.id.msg_txt)
                 mMsgDetailTxt = v.findViewById(R.id.msg_details_txt)
                 mMsgDetailTxtPerm = v.findViewById(R.id.msg_details_txt_perm)
-                mAnswerLayout = v.findViewById(R.id.link_preview)
-                mHistTxt = v.findViewById(R.id.link_preview_title)
-                mHistDetailTxt = v.findViewById(R.id.link_preview_description)
-                mPreviewDomain = v.findViewById(R.id.link_preview_domain)
                 primaryClickableView = mMsgTxt
             }
             MessageType.OUTGOING_TEXT_MESSAGE -> {
@@ -174,20 +205,16 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
                 mMsgTxt = v.findViewById(R.id.message_text)
                 mMsgDetailTxt = v.findViewById(R.id.message_time)
                 mMsgDetailTxtPerm = v.findViewById(R.id.msg_time_perm)
-                mAnswerLayout = v.findViewById(R.id.link_preview)
-                mHistTxt = v.findViewById(R.id.link_preview_title)
-                mHistDetailTxt = v.findViewById(R.id.link_preview_description)
-                mPreviewDomain = v.findViewById(R.id.link_preview_domain)
                 primaryClickableView = mMsgTxt
             }
             MessageType.INCOMING_FILE,
             MessageType.OUTGOING_FILE -> {
-                mMsgTxt = v.findViewById(R.id.call_hist_filename)
+                mFileName = v.findViewById(R.id.call_hist_filename)
                 mMsgDetailTxt = v.findViewById(R.id.file_details_txt)
                 mLayout = v.findViewById(R.id.file_layout)
                 mFileInfoLayout = v.findViewById(R.id.fileInfoLayout)
                 progress = v.findViewById(R.id.progress)
-                mAnswerLayout = v.findViewById(R.id.llAnswer)
+                mDownloadButton = v.findViewById(R.id.llAnswer)
                 btnAccept = v.findViewById(R.id.btnAccept)
                 btnRefuse = v.findViewById(R.id.btnRefuse)
                 mMsgDetailTxtPerm = v.findViewById(R.id.msg_details_txt_perm)
@@ -195,7 +222,7 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
             }
             MessageType.INCOMING_IMAGE,
             MessageType.OUTGOING_IMAGE -> {
-                mAnswerLayout = v.findViewById(R.id.imageLayout)
+                // prob ici imageLayout non utilisé
                 mMsgDetailTxtPerm = v.findViewById(R.id.msg_details_txt_perm)
                 mMsgDetailTxt = v.findViewById(R.id.msg_details_txt)
                 primaryClickableView = mImage
@@ -203,8 +230,8 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
             MessageType.INCOMING_AUDIO,
             MessageType.OUTGOING_AUDIO -> {
                 btnAccept = v.findViewById(R.id.play)
-                btnRefuse = v.findViewById(R.id.replay)
-                mMsgTxt = v.findViewById(R.id.msg_txt)
+                btnReplay = v.findViewById(R.id.replay)
+                mTimeDuration = v.findViewById(R.id.time_duration)
                 mAudioInfoLayout = v.findViewById(R.id.audioInfoLayout)
                 mMsgDetailTxt = v.findViewById(R.id.file_details_txt)
                 mMsgDetailTxtPerm = v.findViewById(R.id.msg_details_txt_perm)
@@ -213,10 +240,16 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
             MessageType.INCOMING_VIDEO,
             MessageType.OUTGOING_VIDEO -> {
                 mLayout = v.findViewById(R.id.video_frame)
-                mAnswerLayout = v.findViewById(R.id.imageLayout)
                 mMsgDetailTxt = v.findViewById(R.id.msg_details_txt)
                 mMsgDetailTxtPerm = v.findViewById(R.id.msg_details_txt_perm)
                 primaryClickableView = video
+            }
+            MessageType.LINK_PREVIEW -> {
+                mLinkPreviewLayout = v.findViewById(R.id.link_preview)
+                mLinkPreviewTitle = v.findViewById(R.id.link_preview_title)
+                mLinkPreviewDescription = v.findViewById(R.id.link_preview_description)
+                mLinkPreviewDomain = v.findViewById(R.id.link_preview_domain)
+                primaryClickableView = mLinkPreviewLayout
             }
             else ->  {}
         }
