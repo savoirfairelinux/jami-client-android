@@ -33,6 +33,7 @@ enum class MessageType(@LayoutRes val layout: Int, @LayoutRes val tvLayout: Int 
     ONGOING_GROUP_CALL(R.layout.item_conv_group_call, R.layout.item_conv_group_call_tv),
     INCOMING_TEXT_MESSAGE(R.layout.item_conv_msg_peer, R.layout.item_conv_msg_peer_tv),
     OUTGOING_TEXT_MESSAGE(R.layout.item_conv_msg_me, R.layout.item_conv_msg_me_tv),
+    LINK_PREVIEW(R.layout.msg_link_preview),
     COMPOSING_INDICATION(R.layout.item_conv_composing),
     HEADER(R.layout.tv_header_blank),
     INVALID(-1);

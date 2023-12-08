@@ -287,7 +287,7 @@ class TvConversationAdapter(
             .into(DrawableImageViewTarget(viewHolder.mImage).waitForLayout())
         viewHolder.itemView.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
             viewHolder.itemView.setBackgroundResource(if (hasFocus) R.drawable.tv_item_selected_background else R.drawable.tv_item_unselected_background)
-            viewHolder.mAnswerLayout!!.animate().scaleY(if (hasFocus) 1.1f else 1f)
+            viewHolder.mLinkPreviewLayout!!.animate().scaleY(if (hasFocus) 1.1f else 1f)
                 .scaleX(if (hasFocus) 1.1f else 1f)
         }
 
@@ -533,15 +533,15 @@ class TvConversationAdapter(
             viewHolder.mIcon?.setImageResource(if (status.isError) R.drawable.baseline_warning_24 else R.drawable.baseline_attach_file_24)
             viewHolder.mMsgTxt?.text = file.displayName
             if (status === InteractionStatus.TRANSFER_AWAITING_HOST) {
-                viewHolder.mAnswerLayout?.visibility = View.VISIBLE
+                viewHolder.mLinkPreviewLayout?.visibility = View.VISIBLE
                 viewHolder.btnAccept?.setOnClickListener { presenter.acceptFile(file) }
                 viewHolder.btnRefuse?.setOnClickListener { presenter.refuseFile(file) }
             } else if (status == InteractionStatus.FILE_AVAILABLE) {
                 viewHolder.btnRefuse?.visibility = View.GONE
-                viewHolder.mAnswerLayout?.visibility = View.VISIBLE
+                viewHolder.mLinkPreviewLayout?.visibility = View.VISIBLE
                 viewHolder.btnAccept?.setOnClickListener { presenter.acceptFile(file) }
             } else {
-                viewHolder.mAnswerLayout?.visibility = View.GONE
+                viewHolder.mLinkPreviewLayout?.visibility = View.GONE
             }
         }
 
@@ -747,8 +747,8 @@ class TvConversationAdapter(
         }
         // Update icon, text and date
         convViewHolder.mIcon?.setImageResource(pictureResID)
-        convViewHolder.mHistTxt?.text = historyTxt
-        convViewHolder.mHistDetailTxt?.text =
+        convViewHolder.mLinkPreviewTitle?.text = historyTxt
+        convViewHolder.mLinkPreviewDescription?.text =
             DateFormat.getDateTimeInstance().format(call.timestamp) // Start date of the call.
     }
 
