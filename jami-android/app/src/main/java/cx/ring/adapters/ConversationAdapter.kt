@@ -429,16 +429,15 @@ class ConversationAdapter(
         val conversation = interaction.conversation
         val replyName = conversationViewHolder.mReplyName ?: return
         val replyTxt = conversationViewHolder.mReplyTxt ?: return
-        val inReplyTo = conversationViewHolder.mInReplyTo ?: return
         val msgReplyBubbleContent = conversationViewHolder.mMsgReplyBubbleContent ?: return
         val msgReplyContent = conversationViewHolder.mMsgReplyContent ?: return
         val mainBubbleContainer = conversationViewHolder.mMainBubbleContainer ?: return
+        val replyAvatar = conversationViewHolder.mReplyContactAvatar ?: return
 
         if (conversation == null || conversation !is Conversation) {
             // besoin de tout ça si msgReplyContent.isVisible = false ?
             replyName.isVisible = false
             replyTxt.isVisible = false
-            inReplyTo.isVisible = false
             // pas sure ici et a chaque fois
             msgReplyContent.isVisible = false
             mainBubbleContainer.updateLayoutParams<MarginLayoutParams> {
@@ -480,12 +479,9 @@ class ConversationAdapter(
                                 )
                             )
                         // Update the view.
-                        replyName.setCompoundDrawablesWithIntrinsicBounds(
-                            smallAvatarDrawable, null, null, null
-                        )
+                        replyAvatar.setImageDrawable(smallAvatarDrawable)
                         replyView.isVisible = true
                         replyTxt.isVisible = true
-                        inReplyTo.isVisible = true
                         msgReplyContent.isVisible = true
                         mainBubbleContainer.updateLayoutParams<MarginLayoutParams> {
                             topMargin = res.getDimensionPixelSize(R.dimen.replied_shift)
@@ -494,7 +490,6 @@ class ConversationAdapter(
                         // User can click on mReplyTxt (replied message),
                         // mInReplyTo or mReplyName (text above the message) to go to it.
                         listOf(replyTxt,
-                            inReplyTo,
                             replyView).forEach{ clickField ->
                             clickField.setOnClickListener{
                                 textReply.messageId?.let { presenter.scrollToMessage(it) }
@@ -503,7 +498,6 @@ class ConversationAdapter(
                     }) {
                         replyView.isVisible = false
                         replyTxt.isVisible = false
-                        inReplyTo.isVisible = false
                         msgReplyContent.isVisible = false
                         mainBubbleContainer.updateLayoutParams<MarginLayoutParams> {
                             topMargin = 0
@@ -512,7 +506,6 @@ class ConversationAdapter(
             } else { // Not replying to another message, we can hide reply Textview.
                 replyView.isVisible = false
                 replyTxt.isVisible = false
-                inReplyTo.isVisible = false
                 msgReplyContent.isVisible = false
                 mainBubbleContainer.updateLayoutParams<MarginLayoutParams> {
                     topMargin = 0
@@ -1109,65 +1102,83 @@ class ConversationAdapter(
                     val isDeleted = textMessage.body.isNullOrEmpty()
                     val msgTxt = convViewHolder.mMsgTxt ?: return@subscribe
                     val msgTime = convViewHolder.mMsgDetailTxt ?: return@subscribe
-                    val longPressView = convViewHolder.mMsgTxt!!
-                    longPressView.background?.setTintList(null)
                     val linkPreviewLayout = convViewHolder.mLinkPreviewLayout
                     val isTimeShown = hasPermanentTimeString(textMessage, position)
                     val msgSequenceType = getMsgSequencing(position, isTimeShown)
-                    val peerDisplayName = convViewHolder.mPeerDisplayName
+//                    val peerDisplayName = convViewHolder.mPeerDisplayName
                     val mainBubbleContainer =
                         convViewHolder.mMainBubbleContainer ?: return@subscribe
                     val editedMessage = convViewHolder.mEditedMessage
                     val msgTextAndTime = convViewHolder.mMsgTextAndTime ?: return@subscribe
                     val bubbleMessageLayout =
                         convViewHolder.mBubbleMessageLayout ?: return@subscribe
-                    val msgReplyBubbleContent = convViewHolder.mMsgReplyBubbleContent
+                    bubbleMessageLayout.background?.setTintList(null)
 
                     // Set message text
                     // pas sure de message avec le trim
                     var messageText = textMessage.body?.trim() ?: ""
-                    val time = TextUtils.timestampToDetailString(context, textMessage.timestamp)
-                    if (editedMessage != null) { // pour eviter d'avoir un return subscribe
-                        MessageBubble.setMessageText(
-                            markwon, msgTxt, msgTime,
-                            messageText, time, mainBubbleContainer,
-                            editedMessage, msgTextAndTime, bubbleMessageLayout
-                        )
-                    }
-                    // Manage deleted message.
-                    if (isDeleted) {
-                        // Set text to deleted message.
-                        messageText = context.getString(R.string.conversation_message_deleted)
-                        if (editedMessage != null) {
+                    convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
+                        val time = DateUtils.formatDateTime(
+                            context, textMessage.timestamp, DateUtils.FORMAT_SHOW_TIME
+                        ).uppercase(Locale.getDefault())
+                        if (editedMessage != null) { // pour eviter d'avoir un return subscribe
                             MessageBubble.setMessageText(
                                 markwon, msgTxt, msgTime,
                                 messageText, time, mainBubbleContainer,
                                 editedMessage, msgTextAndTime, bubbleMessageLayout
                             )
                         }
+                    })
+                    // Manage deleted message.
+                    if (isDeleted) {
+                        // Set text to deleted message.
+                        messageText = context.getString(R.string.conversation_message_deleted)
+                        convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
+                            val time = DateUtils.formatDateTime(
+                                context, textMessage.timestamp, DateUtils.FORMAT_SHOW_TIME
+                            ).uppercase(Locale.getDefault())
+                            if (editedMessage != null) {
+                                MessageBubble.setMessageText(
+                                    markwon, msgTxt, msgTime,
+                                    messageText, time, mainBubbleContainer,
+                                    editedMessage, msgTextAndTime, bubbleMessageLayout
+                                )
+                            }
+                        })
                         // Hide the link preview
                         linkPreviewLayout?.visibility = View.GONE
-                        msgTxt.background.alpha = 255
+                        bubbleMessageLayout.background.alpha = 255
                         if (convColor != 0 && !textMessage.isIncoming) {
                             bubbleMessageLayout.background.setTint(convColor)
                         }
                         msgTxt.textSize = 14f
                         bubbleMessageLayout.setPadding(textMessagePadding)
-                        longPressView.setOnLongClickListener(null)
+                        bubbleMessageLayout.setOnLongClickListener(null)
+//                        MessageBubble.showTime(
+//                            mainBubbleContainer,
+//                            msgTxt,
+//                            msgTime,
+//                            editedMessage!!,
+//                            msgTextAndTime,
+//                            bubbleMessageLayout,
+//                        )
                         return@subscribe
                     }
                     // Manage long press.
-                    longPressView.setOnLongClickListener { v: View ->
+                    bubbleMessageLayout.setOnLongClickListener { v: View ->
                         openItemMenu(convViewHolder, v, interaction)
                         if (expandedItemPosition == position) {
                             expandedItemPosition = -1
                         }
                         conversationFragment.updatePosition(convViewHolder.bindingAdapterPosition)
                         if (textMessage.isIncoming) {
-                            longPressView.background.setTint(context.getColor(R.color.grey_500))
+                            bubbleMessageLayout.background.setTint(
+                                context.getColor(R.color.grey_500)
+                            )
                         } else {
-                            longPressView.background.setTint(convColorTint)
+                            bubbleMessageLayout.background.setTint(convColorTint)
                         }
+
                         mCurrentLongItem = RecyclerViewContextMenuInfo(
                             convViewHolder.bindingAdapterPosition, v.id.toLong()
                         )
@@ -1176,9 +1187,11 @@ class ConversationAdapter(
                     // Manage text message layout
                     if (StringUtils.isOnlyEmoji(messageText)) {
                         // Manage layout if message is emoji.
-                        bubbleMessageLayout.background.alpha = 0
                         msgTxt.textSize = 32.0f
                         bubbleMessageLayout.setPadding(emojiMessagePadding)
+                        bubbleMessageLayout.background.alpha = 0
+                        // TODO recyclage couleur
+                        msgTime.setTextColor(context.getColor(R.color.color))
                     } else {
                         // Manage layout for standard message. Index refers to msgBGLayouts array.
                         val resIndex =
@@ -1198,8 +1211,8 @@ class ConversationAdapter(
                         if (convColor != 0 && !textMessage.isIncoming) {
                             bubbleMessageLayout.background.setTint(convColor)
                         }
-                        bubbleMessageLayout.background.alpha = 255
                         msgTxt.textSize = 16f
+                        bubbleMessageLayout.background.alpha = 255
                         bubbleMessageLayout.setPadding(textMessagePadding)
 
                         // TODO Manage layout for the message we are replying to.
@@ -1247,18 +1260,20 @@ class ConversationAdapter(
                                     convViewHolder.mLinkPreviewLayout?.setOnClickListener {
                                         context.startActivity(Intent(Intent.ACTION_VIEW, url))
                                     }
-                                    if (editedMessage != null) {
-                                        MessageBubble.showTime(
-                                            mainBubbleContainer,
-                                            msgTxt,
-                                            msgTime,
-                                            editedMessage,
-                                            msgTextAndTime,
-                                            bubbleMessageLayout,
-                                        )
-                                    }
+//                                    if (editedMessage != null) {
+//                                        MessageBubble.showTime(
+//                                            mainBubbleContainer,
+//                                            msgTxt,
+//                                            msgTime,
+//                                            editedMessage!!,
+//                                            msgTextAndTime,
+//                                            bubbleMessageLayout,
+//                                        )
+//                                    }
                                 }) { e -> Log.e(TAG, "Can't load preview", e) })
-                        } else convViewHolder.mLinkPreviewLayout?.visibility = View.GONE
+                        } else {
+                            convViewHolder.mLinkPreviewLayout?.visibility = View.GONE
+                        }
                     }
                     // pas sure de ça
                     msgTxt.movementMethod = LinkMovementMethod.getInstance()
@@ -1311,23 +1326,32 @@ class ConversationAdapter(
                     }
 
                     // Show the name of the contact if it is a group conversation
-                    if (textMessage.isIncoming) {
-                        peerDisplayName?.apply {
-                            if (presenter.isGroup() && (msgSequenceType == SequenceType.SINGLE ||
-                                        msgSequenceType == SequenceType.FIRST)
-                            ) {
-                                visibility = View.VISIBLE
-                                convViewHolder.compositeDisposable.add(
-                                    presenter.contactService
-                                        .observeContact(account, contact, false)
-                                        .observeOn(DeviceUtils.uiScheduler)
-                                        .subscribe {
-                                            text = it.displayName
-                                        }
-                                )
-                            } else visibility = View.GONE
-                        }
-                    }
+//                    if (textMessage.isIncoming) {
+//                        peerDisplayName?.apply {
+//                            if (presenter.isGroup() && (msgSequenceType == SequenceType.SINGLE ||
+//                                        msgSequenceType == SequenceType.FIRST)
+//                            ) {
+//                                visibility = View.VISIBLE
+//                                convViewHolder.compositeDisposable.add(
+//                                    presenter.contactService
+//                                        .observeContact(account, contact, false)
+//                                        .observeOn(DeviceUtils.uiScheduler)
+//                                        .subscribe {
+//                                            text = it.displayName
+//                                        }
+//                                )
+//                            } else visibility = View.GONE
+//                        }
+//                    }
+                    Log.w("devdebug", "Message ${textMessage.body}")
+                    MessageBubble.showTime(
+                        mainBubbleContainer,
+                        msgTxt,
+                        msgTime,
+                        editedMessage!!,
+                        msgTextAndTime,
+                        bubbleMessageLayout,
+                    )
                 })
     }
 

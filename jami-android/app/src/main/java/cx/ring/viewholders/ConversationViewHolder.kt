@@ -114,8 +114,8 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
     //
     // TODO
     // Only incoming messages
-    val mInReplyTo: TextView? = v.findViewById(R.id.msg_in_reply_to)
-    val mPeerDisplayName: TextView? = v.findViewById(R.id.msg_display_name)
+//    val mInReplyTo: TextView? = v.findViewById(R.id.msg_in_reply_to)
+//    val mPeerDisplayName: TextView? = v.findViewById(R.id.msg_display_name)
 
     //
 
@@ -135,6 +135,7 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
 
     // pour le calcul de la position de l'heure dans la bulle message
     val mMainBubbleContainer: ViewGroup? = v.findViewById(R.id.main_bubble_container)
+
     val mMsgTextAndTime: ViewGroup? = v.findViewById(R.id.msg_text_and_time)
     val mMsgReplyContent: ViewGroup? = v.findViewById(R.id.msg_reply_content)
     //
