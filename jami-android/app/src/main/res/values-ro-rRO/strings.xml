@@ -399,4 +399,7 @@
   <string name="donation_setting_title">Reamintire donații</string>
   <string name="donation_setting_description">Activează reamintirea pentru a dona</string>
   <!--Plugin-->
+  <string name="unable_to_load">Nu se poate încărca %1$s</string>
+  <string name="load_sucess">%1$s: activat</string>
+  <string name="unload_sucess">%1$s: dezactivat</string>
 </resources>

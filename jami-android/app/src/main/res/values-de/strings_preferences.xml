@@ -66,6 +66,9 @@
   <string name="plugin_install_failure">Installation des Plugins ist fehlgeschlagen: <b>%1$s</b></string>
   <string name="plugin_recent_version_exception">Sie haben eine neuere Version von: <b>%1$s</b></string>
   <string name="plugin_same_version_exception">Sie haben die gleiche Version von <b>%1$s</b> installiert</string>
+  <string name="plugin_invalid_signature"><b>%1$s</b> hat eine ungültige Signatur</string>
+  <string name="plugin_invalid_authority">Die Autorität kann nicht überprüft werden für:<b>%1$s</b></string>
+  <string name="plugin_invalid_format">Ungültiges Plugin-Format: <b>%1$s</b></string>
   <string name="plugin_force_install">Erzwinge \n Installation</string>
   <string name="plugin_path_image_add">Ein neues Bild hinzufügen</string>
 </resources>

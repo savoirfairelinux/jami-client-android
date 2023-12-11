@@ -177,6 +177,7 @@
   <string name="conversation_action_block_this">Bloquear el contacto</string>
   <string name="conversation_action_unblock_this">Desbloquear el contacto</string>
   <string name="conversation_action_go_to_call">Volver a la llamada en cursu</string>
+  <string name="conversation_action_incoming_call">L\'español</string>
   <string name="conversation_action_latest">Salta a lo último</string>
   <string name="conversation_open_file_error">Nun hai aplicaciones instaladas capaces d\'abrir este tipu de ficheru.</string>
   <string name="clip_contact_uri">Direición de contacto</string>

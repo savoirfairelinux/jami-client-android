@@ -66,6 +66,9 @@
   <string name="plugin_install_failure">Échec de l\'installation du module d\'extension : <b>%1$s</b></string>
   <string name="plugin_recent_version_exception">Vous avez une version plus récente de :<b>%1$s</b></string>
   <string name="plugin_same_version_exception">La même version de <b>%1$s</b> est déjà installée</string>
+  <string name="plugin_invalid_signature"><b>%1$s</b> a une signature invalide</string>
+  <string name="plugin_invalid_authority">Impossible de vérifier l\'autorité pour : <b>%1$s</b></string>
+  <string name="plugin_invalid_format">Format du plugin invalide : <b>%1$s</b></string>
   <string name="plugin_force_install">Forcer l\'installation</string>
   <string name="plugin_path_image_add">Ajouter une nouvelle image</string>
 </resources>

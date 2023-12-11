@@ -100,6 +100,7 @@
   <string name="ongoing_call">Giden çağrı</string>
   <string name="hist_in_call">Gelen çağrı %1$s</string>
   <string name="hist_out_call">Giden çağrı %1$s</string>
+  <string name="call_duration">%s sürdü</string>
   <string name="start_error_title">Jami başlatılamıyor !</string>
   <string name="start_error_mic_required">Jami\'nin çalışması için mikrofon izni gerekli.</string>
   <string name="action_call_accept">Çağrıyı yanıtla</string>
@@ -394,5 +395,10 @@
   <string name="donation_card_description">Jami\'yi kullanmaktan hoşlanıyor ve misyonumuza inanıyorsan bağış yapmak ister misin?</string>
   <string name="donation_card_not_now">Şimdi değil</string>
   <string name="donation_donate">Bağış</string>
+  <string name="donation_setting_title">Bağış anımsatıcı</string>
+  <string name="donation_setting_description">Bağış anımsatıcısını etkinleştir.</string>
   <!--Plugin-->
+  <string name="unable_to_load">%1$s yüklenemedi.</string>
+  <string name="load_sucess">%1$s: etkinleştirildi</string>
+  <string name="unload_sucess">%1$s: devre dışı</string>
 </resources>

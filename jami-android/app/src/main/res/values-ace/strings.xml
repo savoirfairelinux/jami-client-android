@@ -86,6 +86,7 @@
   <string name="conversation_action_delete_this_message">ڤرودوک اين تيدق دڤرچايا?? ي.</string>
   <string name="conversation_action_history_clear">تاريخ يڠ برڤنتيڠ</string>
   <string name="conversation_action_block_this">ڤڠاجرن ڤڠاجرن</string>
+  <string name="conversation_action_incoming_call">ڤڠاجين يڠ دڤرچايا?? ي</string>
   <string name="conversation_members">ڤڠڬونا</string>
   <!--Contacts-->
   <string name="account_create_title">منوليسكن اکاونت Jami</string>

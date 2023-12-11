@@ -66,6 +66,9 @@
   <string name="plugin_install_failure">Uzantı kurulamadı: <b>%1$s</b></string>
   <string name="plugin_recent_version_exception">Daha yeni bir sürümü var: <b>%1$s</b></string>
   <string name="plugin_same_version_exception">Aynı <b>%1$s</b> sürüme sahipsin</string>
+  <string name="plugin_invalid_signature"><b>%1$s</b> geçersiz bir imza içeriyor.</string>
+  <string name="plugin_invalid_authority">%1$s için yetkilendirme doğrulanamıyor.</string>
+  <string name="plugin_invalid_format">Geçersiz eklenti biçimi: <b>%1$s</b></string>
   <string name="plugin_force_install">zorla \n yükle</string>
   <string name="plugin_path_image_add">Yeni görsel ekle</string>
 </resources>

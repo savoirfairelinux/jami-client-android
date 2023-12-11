@@ -66,6 +66,9 @@
   <string name="plugin_install_failure">Impossibile installare il plugin: <b>%1$s</b></string>
   <string name="plugin_recent_version_exception">Hai una versione più recente di: <b>%1$s</b></string>
   <string name="plugin_same_version_exception">Hai la stessa versione di <b>%1$s</b> installata</string>
+  <string name="plugin_invalid_signature"><b>%1$s</b> ha una firma non valida</string>
+  <string name="plugin_invalid_authority">Impossibile verificare l\'autorità per: <b>%1$s</b></string>
+  <string name="plugin_invalid_format">Formato del plugin non valido: <b>%1$s</b></string>
   <string name="plugin_force_install">forza \n installazione</string>
   <string name="plugin_path_image_add">Aggiungi una nuova immagine</string>
 </resources>

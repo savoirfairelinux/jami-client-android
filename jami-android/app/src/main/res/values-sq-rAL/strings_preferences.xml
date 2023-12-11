@@ -66,6 +66,9 @@
   <string name="plugin_install_failure">S’u arrit të instalohej shtojcë: <b>%1$s</b></string>
   <string name="plugin_recent_version_exception">Keni një version më të freskët të: <b>%1$s</b></string>
   <string name="plugin_same_version_exception">Keni të instaluar të njëjtin version të <b>%1$s</b></string>
+  <string name="plugin_invalid_signature"><b>%1$s</b> ka nënshkrim të pavlefshëm</string>
+  <string name="plugin_invalid_authority">S’verifikohet dot autoritteti për: <b>%1$s</b></string>
+  <string name="plugin_invalid_format">Format i pavlefshëm shtojcash: <b>%1$s</b></string>
   <string name="plugin_force_install">detyro \n instalim</string>
   <string name="plugin_path_image_add">Shtoni një figurë të re</string>
 </resources>

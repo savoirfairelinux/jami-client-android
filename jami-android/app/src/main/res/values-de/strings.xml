@@ -182,6 +182,7 @@
   <string name="conversation_action_block_this">Kontakt blockieren</string>
   <string name="conversation_action_unblock_this">Blockierung des Kontakts aufheben</string>
   <string name="conversation_action_go_to_call">Zurück zum laufenden Anruf</string>
+  <string name="conversation_action_incoming_call">Eingehender Anruf</string>
   <string name="conversation_action_latest">Zum Ende der Unterhaltung scrollen</string>
   <string name="conversation_open_file_error">Es gibt keine installierte App, die diesen Dateityp öffnen kann.</string>
   <string name="clip_contact_uri">Kontakt-Addresse</string>
@@ -397,4 +398,7 @@
   <string name="donation_setting_title">Spendenaktion</string>
   <string name="donation_setting_description">Spendenerinnerung aktivieren</string>
   <!--Plugin-->
+  <string name="unable_to_load">Nicht möglich zu laden %1$s</string>
+  <string name="load_sucess">%1$s: aktiviert</string>
+  <string name="unload_sucess">%1$s: deaktiviert</string>
 </resources>

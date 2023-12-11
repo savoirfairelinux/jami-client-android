@@ -66,6 +66,9 @@
   <string name="plugin_install_failure">Nu s-a reușit instalarea extensiei: <b>%1$s</b></string>
   <string name="plugin_recent_version_exception">Ai o versiune mai recentă de: <b>%1$s</b></string>
   <string name="plugin_same_version_exception">Ai aceeași versiune de <b>%1$s</b> instalată</string>
+  <string name="plugin_invalid_signature"><b>%1$s</b> are o semnătură incorectă</string>
+  <string name="plugin_invalid_authority">Nu se poate verifica autoritatea pentru: <b>%1$s</b></string>
+  <string name="plugin_invalid_format">Format de extensie neacceptat: <b>%1$s</b></string>
   <string name="plugin_force_install">forțează \n instalarea</string>
   <string name="plugin_path_image_add">Adaugă o imagine nouă</string>
 </resources>

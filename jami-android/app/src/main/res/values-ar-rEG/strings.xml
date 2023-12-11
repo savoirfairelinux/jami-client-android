@@ -173,6 +173,7 @@
   <string name="conversation_action_block_this">حظر جهة إتصال</string>
   <string name="conversation_action_unblock_this">فك الحظر على الاتصال</string>
   <string name="conversation_action_go_to_call">العودة إلى المكالمة الجارية</string>
+  <string name="conversation_action_incoming_call">مكالمة واردة</string>
   <string name="conversation_action_latest">التمرير إلى نهاية المحادثة</string>
   <string name="conversation_open_file_error">ﻻ يوجد برنامج مثبت يمكنه فتح هذا النوع من الملفات.</string>
   <string name="clip_contact_uri">عنوان جهة إتصال</string>

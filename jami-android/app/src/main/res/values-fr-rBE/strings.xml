@@ -396,5 +396,10 @@
   <string name="donation_card_description">Si vous appréciez Jami et que vous croyez à notre mission, feriez-vous une donation ?</string>
   <string name="donation_card_not_now">Pas maintenant</string>
   <string name="donation_donate">Donnez </string>
+  <string name="donation_setting_title">Rappel de donation</string>
+  <string name="donation_setting_description">Activer le rappel de donation</string>
   <!--Plugin-->
+  <string name="unable_to_load">Impossible de charger %1$s</string>
+  <string name="load_sucess">%1$s: activé</string>
+  <string name="unload_sucess">%1$s: désactivé</string>
 </resources>

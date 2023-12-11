@@ -248,6 +248,7 @@
   <string name="account_disabled_indicator">devre dışı</string>
   <!--Link a new device-->
   <string name="account_link_prompt_pin_manually">PIN\'i manuel olarak girin</string>
+  <string name="qr_invalid">Bir Jami Kimlik Doğrulama QR kodu değil</string>
   <string name="content_description_checkbox">QR Kodunuz geçerli</string>
   <string name="error_format_not_supported">Bu biçim desteklenmiyor.</string>
   <string name="account_link_info">Yeni Jami uygulamasında QR kodunu tarayın veya PIN\'i manuel olarak girin.</string>

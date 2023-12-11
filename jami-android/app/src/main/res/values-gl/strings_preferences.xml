@@ -66,6 +66,9 @@
   <string name="plugin_install_failure">Fallo ó instalar o plugin: <b>%1$s</b></string>
   <string name="plugin_recent_version_exception">Tes unha versión máis recente de: <b>%1$s</b></string>
   <string name="plugin_same_version_exception">Tes a mesma versión de <b>%1$s</b> instalada</string>
+  <string name="plugin_invalid_signature"><b>%1$s</b> ten unha sinatura non válida</string>
+  <string name="plugin_invalid_authority">Non se puido verificar a autoridade para: <b>%1$s</b></string>
+  <string name="plugin_invalid_format">Formato inválido do complemento: <b>%1$s</b></string>
   <string name="plugin_force_install">forzar \n instalación</string>
   <string name="plugin_path_image_add">Engadir nova imaxe</string>
 </resources>

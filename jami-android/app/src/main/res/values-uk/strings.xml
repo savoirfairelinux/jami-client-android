@@ -43,6 +43,7 @@
   <!--History Fragment-->
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
+  <string name="invitation_card_title">Запрошення отримані</string>
   <plurals name="home_conferences_title">
     <item quantity="one">%d груповий чат</item>
     <item quantity="few">%d групових чатів</item>
@@ -74,6 +75,7 @@
   <string name="notif_channel_background_service">Фоновий сервіс</string>
   <string name="notif_channel_background_service_descr">Дозволяє будь-коли отримувати дзвінки і повідомлення.</string>
   <string name="notif_group_calls">Дзвінки</string>
+  <string name="notif_inprogress_group_call">Виклик у процесі</string>
   <string name="notif_background_service">Jami зараз працює фоново</string>
   <string name="notif_mark_as_read">Позначити прочитаним</string>
   <string name="notif_dismiss">Відхилити</string>
@@ -100,6 +102,7 @@
   <string name="ongoing_call">Вихідний виклик</string>
   <string name="hist_in_call">Вхідний виклик тривалістю %1$s</string>
   <string name="hist_out_call">Вихідний виклик тривалістю %1$s</string>
+  <string name="call_duration">Тривалість %s</string>
   <string name="start_error_title">Неможливо запустити Jami!</string>
   <string name="start_error_mic_required">Для роботи Jami потрібен доступ до мікрофону.</string>
   <string name="action_call_accept">Прийняти виклик</string>
@@ -121,6 +124,7 @@
   <string name="write_a_message">Написати повідомлення</string>
   <string name="scan_qr">Сканування QR коду</string>
   <string name="qr_code">QR код</string>
+  <string name="new_swarm">Стартувати рій</string>
   <string name="ab_action_flipcamera">Змінити камеру</string>
   <string name="ab_action_hidepreview">Сховати передогляд</string>
   <string name="remote_recording">Запис %s...</string>
@@ -136,6 +140,7 @@
   <string name="conversation_send_audio">Записати аудіо</string>
   <string name="conversation_send_video">Записати відео</string>
   <string name="conversation_share_location">Поділитися геоданними</string>
+  <string name="ongoing_group_call">Поточний виклик</string>
   <string name="in_reply_to">Відповідно до</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Дозволи для камери</string>
@@ -375,12 +380,27 @@
   <string name="picker_btn">Виберіть контакти</string>
   <string name="bottomsheet_contact">Зверніться до Jami\n%1$s</string>
   <string name="bottomsheet_remove">Знесіть з рога</string>
+  <string name="error_open_no_app_found">Не знайдено жодного додатку для обробки цього файлу: %1$s</string>
   <!--JamiId-->
+  <string name="jami_id_copy">Копіювати JamiId</string>
+  <string name="jami_id_share">Поділитися JamiId</string>
   <string name="jami_id_validate">Зареєструйте ім\'я користувача</string>
+  <string name="jami_id_available">Імʼя користувача доступне</string>
+  <string name="jami_id_not_available">Імʼя користувача недоступне\n• Максимальна кількість символів – 32\n• Дозволені спеціальні символи: дефіс (-), підкреслення (_)</string>
+  <string name="jami_id_info">• 32 символи максимум\n• Дозволені спеціальні символи: дефіс (-), підкреслення (_)</string>
   <string name="jami_id_looking_for_availability">Перевіряю доступність імені користувача…</string>
   <string name="jami_id_choose_username">Виберіть ім\'я користувача</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Вітаємо в Jami</string>
+  <string name="welcome_jami_description">Поділіться своїм ідентифікатором Jami, щоб можна було легше з вами звʼязатися!</string>
   <!--Donation-->
+  <string name="donation_card_description">Якщо вам подобається Jami і ви вірите в нашу місію, чи не зробили б ви пожертву?</string>
+  <string name="donation_card_not_now">Не зараз</string>
+  <string name="donation_donate">Донат</string>
+  <string name="donation_setting_title">Нагадування про пожертвування</string>
+  <string name="donation_setting_description">Увімкнути нагадування про пожертвування</string>
   <!--Plugin-->
+  <string name="unable_to_load">Неможливо завантажити %1$s</string>
+  <string name="load_sucess">%1$s: увімкнено</string>
+  <string name="unload_sucess">%1$s: вимкнено</string>
 </resources>

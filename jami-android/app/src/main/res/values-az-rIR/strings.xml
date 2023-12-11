@@ -177,6 +177,7 @@
   <string name="conversation_action_block_this">بلاک کنتاکت</string>
   <string name="conversation_action_unblock_this">تماس رو باز کن</string>
   <string name="conversation_action_go_to_call">داواملي چاغيرماغا قاييت</string>
+  <string name="conversation_action_incoming_call">گئچن چاغ</string>
   <string name="conversation_action_latest">آخیرینا قایغیش</string>
   <string name="conversation_open_file_error">بو فایل تئلئپینی آچماغا قادیر اولان ایستیفاده نصب اولمامیش.</string>
   <string name="clip_contact_uri">تماس آدرس</string>

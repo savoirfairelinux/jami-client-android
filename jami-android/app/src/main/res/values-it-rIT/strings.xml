@@ -399,4 +399,7 @@
   <string name="donation_setting_title">Promemoria donazioni</string>
   <string name="donation_setting_description">Attiva il promemoria per le donazioni</string>
   <!--Plugin-->
+  <string name="unable_to_load">Impossibile caricare %1$s</string>
+  <string name="load_sucess">%1$s: attivato</string>
+  <string name="unload_sucess">%1$s: disattivato</string>
 </resources>

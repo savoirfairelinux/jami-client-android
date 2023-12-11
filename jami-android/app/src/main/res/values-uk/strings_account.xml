@@ -9,8 +9,8 @@
   <string name="add_sip_account_title">Додати обліковий запис SIP</string>
   <string name="ring_account_default_name">Обліковий запис Jami %1$s</string>
   <string name="prompt_alias">Додаткове ім’я</string>
-  <string name="prompt_hostname">Ім\'я хоста</string>
-  <string name="prompt_username">Ім’я</string>
+  <string name="prompt_hostname">Імʼя хоста</string>
+  <string name="prompt_username">Ім’я користувача</string>
   <string name="prompt_password">Пароль</string>
   <string name="action_create">Створити обліковий запис</string>
   <string name="action_create_short">Створити</string>
@@ -26,7 +26,7 @@
 Вам будуть доступні лише прямі IP дзвінки. 
 Ви зможете відредагувати цей обліковий запис пізніше</string>
   <string name="account_type_ip2ip">Обліковий запис IP</string>
-  <string name="help_ring">Обліковий запис Джамі дозволяє вам зв\'язуватися з людьми безпечно та напряму через повністю розподілену мережу.</string>
+  <string name="help_ring">Обліковий запис Jami дозволяє вам безпечно зв\'язуватися з людьми напряму через повністю розподілену мережу.</string>
   <string name="help_sip_title">Додати Ваш обліковий запис SIP</string>
   <string name="help_sip">Налаштувати існуючий обліковий запис SIP</string>
   <string name="create_sip_account">Додати обліковий запис SIP</string>
@@ -46,25 +46,25 @@
   <string name="account_device_revocation_error_unknown">Невідома помилка.</string>
   <string name="account_password_change">Зміна паролю</string>
   <string name="account_password_set">Задати пароль</string>
-  <string name="account_password_summary">Управляйте паролем рахунку.</string>
+  <string name="account_password_summary">Управління паролем облікового запису.</string>
   <string name="account_password_change_wait_message">Зміна пароля облікового запису</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Головні</string>
   <string name="account_basic_category">Базові налаштування</string>
   <string name="account_alias_label">Назва облікового запису</string>
-  <string name="account_hostname_label">Ім\'я хоста</string>
+  <string name="account_hostname_label">Імʼя хоста</string>
   <string name="account_bootstrap_label">Початкове завантаження</string>
-  <string name="account_username_label">Ім’я</string>
+  <string name="account_username_label">Ім’я користувача</string>
   <string name="account_password_label">Пароль</string>
   <string name="account_optionnal_category">Додаткові параметри</string>
   <string name="account_useragent_label">Ідентифікація клієнта</string>
   <string name="account_autoanswer_label">Приймати дзвінок автоматично</string>
-  <string name="account_rendezvous_label">Мод зустрічі</string>
-  <string name="account_rendezvous_summary">У режимі \"Рендевус\" прийшові дзвінки будуть додані до конференц-залу.</string>
+  <string name="account_rendezvous_label">Режим Рандеву</string>
+  <string name="account_rendezvous_summary">У режимі «Рандеву» вхідні дзвінки будуть додані до конференц-зали.</string>
   <string name="account_upnp_label">Включити UPnP</string>
   <string name="account_proxy_field">Проксі</string>
   <!--Plugin Details-->
-  <string name="account_preference_plugin_tab">Втулки</string>
+  <string name="account_preference_plugin_tab">Плагіни</string>
   <!--Audio Details-->
   <string name="account_audio_label">Звук</string>
   <string name="account_preferences_media_tab">Медіа</string>
@@ -79,6 +79,7 @@
   <string name="account_video_enable">Увімкнути відео</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Розширені</string>
+  <string name="account_chat_settings_title">Налаштування чату</string>
   <string name="account_read_receipts_label">Отримати квитанції з прочитання</string>
   <string name="account_read_receipts_summary">Відправляйте і отримуйте квитанції, що вказують, що повідомлення відображено.</string>
   <string name="account_call_settings_title">Налаштування дзвінків</string>
@@ -246,7 +247,23 @@
   <string name="account_device_this_indicator">Цей пристрій</string>
   <string name="account_disabled_indicator">вимкнено</string>
   <!--Link a new device-->
+  <string name="account_link_prompt_pin_manually">Введіть PIN вручну</string>
+  <string name="qr_invalid">Не QR код автентифікації Jami</string>
+  <string name="content_description_checkbox">Ваш QR-код є дійсним</string>
   <string name="error_format_not_supported">Цей формат не підтримується</string>
+  <string name="account_link_info">У іншому застосунку Jami, скануйте QR-код або введіть PIN вручну.</string>
   <string name="account_link_device_title">Прив\'язати новий пристрій</string>
+  <string name="account_link_password">Цей обліковий запис зашифрований паролем, введіть пароль, щоб згенерувати PIN-код.</string>
+  <string name="account_link_generate_button">Згенерувати</string>
+  <string name="account_link_time_valid">PIN-код буде недійсним: %1$s.</string>
+  <string name="account_link_device_info">Виберіть «Підключити новий пристрій» у іншій програмі Jami, щоб показати QR-код або PIN</string>
+  <string name="account_generate_export_device">На іншому пристрої</string>
+  <string name="account_generate_export_info">Встановіть та запустіть Jami, виберіть «Імпортувати з іншого пристрою» та скануйте QR-код.</string>
+  <string name="content_description_qr_generated">Ваш QR-код</string>
+  <string name="account_generate_export_invalid">ПІН більше не дійсний.\n Введіть пароль і згенеруйте новий, щоб звʼязати новий пристрій.</string>
+  <string name="account_generate_export_invalid_two">ПІН більше не дійсний.\n Згенеруйте новий, щоб зв\'язати новий пристрій.</string>
+  <string name="help_pin_info">Заповніть, якщо обліковий запис зашифрований паролем</string>
+  <string name="connect_device_scanqr">Сканувати QR</string>
+  <string name="connect_device_enterPIN">Або введіть PIN</string>
   <string name="account_link_device_button">З\'єднати</string>
 </resources>

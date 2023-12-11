@@ -66,6 +66,9 @@
   <string name="plugin_install_failure">A beépülő modul telepítése nem sikerült: <b>%1$s</b></string>
   <string name="plugin_recent_version_exception">A(z) <b>%1$s</b> újabb verziója már telepítve van</string>
   <string name="plugin_same_version_exception">A(z) <b>%1$s</b> ugyanazon verziója már telepítve van</string>
+  <string name="plugin_invalid_signature"><b>%1$s</b> aláírása érvénytelen</string>
+  <string name="plugin_invalid_authority">Nem sikerült ellenőrizni a jogosultságot a következőhöz: <b>%1$s</b></string>
+  <string name="plugin_invalid_format">Érvénytelen bővítményformátum: <b>%1$s</b></string>
   <string name="plugin_force_install">Telepítés\nkényszerítése</string>
   <string name="plugin_path_image_add">Új kép hozzáadása</string>
 </resources>
