@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.view.ViewGroup.MarginLayoutParams
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.doOnLayout
 import androidx.core.view.doOnNextLayout
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
@@ -48,13 +49,13 @@ object MessageBubble : Fragment() {
 //        val convViewHolder = convViewHolder ?: return
         messageText.text = markwon.toMarkdown(text)
         messageTime.text = time
-        showTime(
-            mainBubbleContainer,
-            messageText,
-            messageTime,
-            messageEdited,
-            msgTextAndTime,
-            bubbleMessageLayout)
+//        showTime(
+//            mainBubbleContainer,
+//            messageText,
+//            messageTime,
+//            messageEdited,
+//            msgTextAndTime,
+//            bubbleMessageLayout)
     }
 
     fun showTime(
@@ -65,13 +66,28 @@ object MessageBubble : Fragment() {
         msgTextAndTime: ViewGroup,
         bubbleMessageLayout: ViewGroup
     ) {
+        Log.w("ConversationAdapter", "$TAG:showTime")
 //        val binding = binding ?: return
-        bubbleMessageLayout.doOnNextLayout {
+        if(messageTime==null) Log.w("devdebug","messageTime est null")
+        mainBubbleContainer.doOnLayout {
             val bubbleMaximumWidth = mainBubbleContainer.width
             val messageTextWidth = messageText.width
             val messageTimeWidth = messageTime.width
             val messageEditedWidth = messageEdited.width
+            Log.w("devdebug", "$TAG:showTime:widths: $bubbleMaximumWidth $messageTextWidth $messageTimeWidth $messageEditedWidth")
 
+            Log.w("devdebug","avant:\n"+
+            "\tendToEnd=${(messageTime.layoutParams as ConstraintLayout.LayoutParams).endToEnd}\n" +
+                    "\tstartToEnd=${(messageTime.layoutParams as ConstraintLayout.LayoutParams).startToEnd}\n" +
+                    "\tbaselineToBaseline=${(messageTime.layoutParams as ConstraintLayout.LayoutParams).baselineToBaseline}\n" +
+                    "\tbaselineToBottom=${(messageTime.layoutParams as ConstraintLayout.LayoutParams).baselineToBottom}\n" +
+                    "\tbaselineToTop=${(messageTime.layoutParams as ConstraintLayout.LayoutParams).baselineToTop}\n" +
+                    "\ttopToBottom=${(messageTime.layoutParams as ConstraintLayout.LayoutParams).topToBottom}\n" +
+                    "\ttopToTop=${(messageTime.layoutParams as ConstraintLayout.LayoutParams).topToTop}\n" +
+                    "\tbottomToBottom=${(messageTime.layoutParams as ConstraintLayout.LayoutParams).bottomToBottom}\n" +
+                    "\tbottomToTop=${(messageTime.layoutParams as ConstraintLayout.LayoutParams).bottomToTop}\n" +
+                    "\tstartToStart=${(messageTime.layoutParams as ConstraintLayout.LayoutParams).startToStart}\n" +
+                    "\tendToStart=${(messageTime.layoutParams as ConstraintLayout.LayoutParams).endToStart}\n")
             val messageLineCount = messageText.lineCount
             val paddingWidth = msgTextAndTime.paddingStart +
                     msgTextAndTime.paddingEnd
@@ -81,16 +97,30 @@ object MessageBubble : Fragment() {
                 // Case 1: message is too long and time should be displayed on a new line.
                 if (bubbleMaximumWidth < (messageText.layout.getLineWidth(messageLineCount - 1)) + messageInfoWidth) {
                     Log.w("devdebug", "$TAG:showTime:case1")
+
                     messageTime.updateLayoutParams<ConstraintLayout.LayoutParams> {
                         topToBottom = messageText.id
                         baselineToBaseline = ConstraintLayout.LayoutParams.UNSET
                         startToEnd = ConstraintLayout.LayoutParams.UNSET
+                        endToEnd = ConstraintLayout.LayoutParams.PARENT_ID
                     }
-                    messageEdited.updateLayoutParams<ConstraintLayout.LayoutParams> {
+                    Log.w("devdebug","après:\n"+
+                            "\tendToEnd=${(messageTime.layoutParams as ConstraintLayout.LayoutParams).endToEnd}\n" +
+                            "\tstartToEnd=${(messageTime.layoutParams as ConstraintLayout.LayoutParams).startToEnd}\n" +
+                            "\tbaselineToBaseline=${(messageTime.layoutParams as ConstraintLayout.LayoutParams).baselineToBaseline}\n" +
+                            "\tbaselineToBottom=${(messageTime.layoutParams as ConstraintLayout.LayoutParams).baselineToBottom}\n" +
+                            "\tbaselineToTop=${(messageTime.layoutParams as ConstraintLayout.LayoutParams).baselineToTop}\n" +
+                            "\ttopToBottom=${(messageTime.layoutParams as ConstraintLayout.LayoutParams).topToBottom}\n" +
+                            "\ttopToTop=${(messageTime.layoutParams as ConstraintLayout.LayoutParams).topToTop}\n" +
+                            "\tbottomToBottom=${(messageTime.layoutParams as ConstraintLayout.LayoutParams).bottomToBottom}\n" +
+                            "\tbottomToTop=${(messageTime.layoutParams as ConstraintLayout.LayoutParams).bottomToTop}\n" +
+                            "\tstartToStart=${(messageTime.layoutParams as ConstraintLayout.LayoutParams).startToStart}\n" +
+                            "\tendToStart=${(messageTime.layoutParams as ConstraintLayout.LayoutParams).endToStart}\n")
+                    /*messageEdited.updateLayoutParams<ConstraintLayout.LayoutParams> {
                         topToBottom = messageText.id
                         startToEnd = ConstraintLayout.LayoutParams.UNSET
                         baselineToBaseline = ConstraintLayout.LayoutParams.UNSET
-                    }
+                    }*/
                 } else {
                     // Case 2: message is too long but time can be displayed next to the last line.
                     Log.w("devdebug", "$TAG:showTime:case2")
@@ -98,29 +128,59 @@ object MessageBubble : Fragment() {
                         topToBottom = ConstraintLayout.LayoutParams.UNSET
                         baselineToBaseline = messageText.id
                         startToEnd = ConstraintLayout.LayoutParams.UNSET
+                        endToEnd = ConstraintLayout.LayoutParams.PARENT_ID
                     }
-                    messageEdited.updateLayoutParams<ConstraintLayout.LayoutParams> {
+                    Log.w("devdebug","après:\n"+
+                            "\tendToEnd=${(messageTime.layoutParams as ConstraintLayout.LayoutParams).endToEnd}\n" +
+                            "\tstartToEnd=${(messageTime.layoutParams as ConstraintLayout.LayoutParams).startToEnd}\n" +
+                            "\tbaselineToBaseline=${(messageTime.layoutParams as ConstraintLayout.LayoutParams).baselineToBaseline}\n" +
+                            "\tbaselineToBottom=${(messageTime.layoutParams as ConstraintLayout.LayoutParams).baselineToBottom}\n" +
+                            "\tbaselineToTop=${(messageTime.layoutParams as ConstraintLayout.LayoutParams).baselineToTop}\n" +
+                            "\ttopToBottom=${(messageTime.layoutParams as ConstraintLayout.LayoutParams).topToBottom}\n" +
+                            "\ttopToTop=${(messageTime.layoutParams as ConstraintLayout.LayoutParams).topToTop}\n" +
+                            "\tbottomToBottom=${(messageTime.layoutParams as ConstraintLayout.LayoutParams).bottomToBottom}\n" +
+                            "\tbottomToTop=${(messageTime.layoutParams as ConstraintLayout.LayoutParams).bottomToTop}\n" +
+                            "\tstartToStart=${(messageTime.layoutParams as ConstraintLayout.LayoutParams).startToStart}\n" +
+                            "\tendToStart=${(messageTime.layoutParams as ConstraintLayout.LayoutParams).endToStart}\n")
+                    /*messageEdited.updateLayoutParams<ConstraintLayout.LayoutParams> {
                         topToBottom = ConstraintLayout.LayoutParams.UNSET
                         startToEnd = ConstraintLayout.LayoutParams.UNSET
                         baselineToBaseline = messageText.id
-                    }
+                    }*/
 
                 }
             } else {
                 // Case 3: message is not too long and time can be displayed on the same line.
-                Log.w("devdebug", "$TAG:showTime:case3")
+                Log.w("devdebug", "$TAG:showTime:case3 ")
+
+
                 messageTime.updateLayoutParams<ConstraintLayout.LayoutParams> {
                     topToBottom = ConstraintLayout.LayoutParams.UNSET
                     baselineToBaseline = messageText.id
+                    endToEnd = ConstraintLayout.LayoutParams.PARENT_ID
                     startToEnd =
-                        if (isMessageEdited) ConstraintLayout.LayoutParams.UNSET
-                        else messageText.id
+                        /*if (isMessageEdited) ConstraintLayout.LayoutParams.UNSET
+                        else */ messageText.id
                 }
-                messageEdited.updateLayoutParams<ConstraintLayout.LayoutParams> {
+                Log.w("devdebug","après:\n"+
+                        "\tendToEnd=${(messageTime.layoutParams as ConstraintLayout.LayoutParams).endToEnd}\n" +
+                        "\tstartToEnd=${(messageTime.layoutParams as ConstraintLayout.LayoutParams).startToEnd}\n" +
+                        "\tbaselineToBaseline=${(messageTime.layoutParams as ConstraintLayout.LayoutParams).baselineToBaseline}\n" +
+                        "\tbaselineToBottom=${(messageTime.layoutParams as ConstraintLayout.LayoutParams).baselineToBottom}\n" +
+                        "\tbaselineToTop=${(messageTime.layoutParams as ConstraintLayout.LayoutParams).baselineToTop}\n" +
+                        "\ttopToBottom=${(messageTime.layoutParams as ConstraintLayout.LayoutParams).topToBottom}\n" +
+                        "\ttopToTop=${(messageTime.layoutParams as ConstraintLayout.LayoutParams).topToTop}\n" +
+                        "\tbottomToBottom=${(messageTime.layoutParams as ConstraintLayout.LayoutParams).bottomToBottom}\n" +
+                        "\tbottomToTop=${(messageTime.layoutParams as ConstraintLayout.LayoutParams).bottomToTop}\n" +
+                        "\tstartToStart=${(messageTime.layoutParams as ConstraintLayout.LayoutParams).startToStart}\n" +
+                        "\tendToStart=${(messageTime.layoutParams as ConstraintLayout.LayoutParams).endToStart}\n")
+
+
+                /*messageEdited.updateLayoutParams<ConstraintLayout.LayoutParams> {
                     topToBottom = ConstraintLayout.LayoutParams.UNSET
                     startToEnd = messageText.id
                     baselineToBaseline = messageText.id
-                }
+                }*/
             }
         }
     }
@@ -188,8 +248,8 @@ object MessageBubble : Fragment() {
     // comment accéder au view holder depuis le fragment ?
     fun showMessageEdited(checked: Boolean) {
 //        val binding = binding ?: return
-        isMessageEdited = checked
-        binding.messageEdited.isVisible = checked
-        showTime()
+//        isMessageEdited = checked
+//        binding.messageEdited.isVisible = checked
+//        showTime()
     }
 }

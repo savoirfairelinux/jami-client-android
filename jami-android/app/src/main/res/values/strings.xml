@@ -482,9 +482,9 @@ along with this program; if not, write to the Free Software
     <string name="unload_sucess">%1$s: disabled</string>
 
     <!--  ChatView messages  -->
-    <string name="app_name">TestApp</string>
-    <string name="time_just_now">Just now</string>
-    <string name="in_reply_to">In reply to</string>
+    <string name="app_name2">TestApp</string>
+    <string name="time_just_now2">Just now</string>
+    <string name="in_reply_to2">In reply to</string>
     <string name="message_long">Un autre problème est que les contrôleurs d\'interface utilisateur doivent fréquemment effectuer des appels asynchrones dont le retour peut prendre un certain temps. Le contrôleur d\'interface utilisateur doit gérer ces appels et s\'assurer que le système les nettoie après sa destruction pour éviter toute fuite</string>
     <string name="message_long_2">Un autre problème est que les contrôleurs d\'interface utilisateur doivent fréquemment effectuer des appels asynchrones dont le retour peut prendre un certain temps. Le contrôleur d\'interface utilisateur doit gérer ces appels et s\'assurer que le système les nettoie après sa destruction pour éviter toute fuite potentielle</string>
     <string name="message_court">Hello !</string>

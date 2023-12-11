@@ -68,7 +68,7 @@
                             android:layout_width="12dp"
                             android:layout_height="12dp"
                             android:contentDescription="@null"
-                            android:src="@drawable/reply_contact_avatar" />
+                            tools:src="@drawable/reply_contact_avatar" />
 
                         <TextView
                             android:id="@+id/reply_contact_name"
@@ -138,17 +138,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
-                    android:background="@drawable/textmsg_bg_out"
-                    android:padding="0dp">
+                    android:background="@drawable/textmsg_bg_out">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/msg_text_and_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
-                        android:padding="10dp"
-                        android:paddingStart="10dp"
-                        android:paddingEnd="8dp"
+                        tools:padding="10dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 
@@ -160,7 +157,7 @@
                             android:paddingStart="8dp"
                             android:paddingEnd="0dp"
                             android:text="Edited"
-                            android:textColor="#99FFFFFF"
+                            android:textColor="#CCFFFFFF"
                             android:textSize="12sp"
                             android:visibility="gone"
                             app:drawableStartCompat="@drawable/pen_black_24dp"
@@ -169,19 +166,20 @@
                             app:layout_constraintEnd_toStartOf="@id/message_time"
                             app:layout_constraintStart_toEndOf="@id/message_text"
                             app:layout_constraintTop_toBottomOf="@id/message_text"
-                            tools:visibility="visible" />
-                        <!--TODO creer couleur android:textColor="#99FFFFFF" et voir en mode dark-->
+                            tools:visibility="gone" />
+                        <!--TODO creer couleur pas la bonne
+                        android:textColor="#99FFFFFF" et voir en mode dark-->
                         <TextView
                             android:id="@+id/message_time"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingStart="8dp"
                             android:paddingEnd="0dp"
-                            android:textColor="#99FFFFFF"
+                            android:textColor="#CCFFFFFF"
                             android:textSize="@dimen/conversation_timestamp_textsize"
-                            app:layout_constraintBaseline_toBaselineOf="@id/message_text"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/message_text"
+                            app:layout_constraintStart_toEndOf="@id/message_text"
+                            app:layout_constraintBaseline_toBaselineOf="@id/message_text"
                             tools:text="11h05" />
 
                         <cx.ring.adapters.BaselineLastLineTextView
@@ -192,13 +190,14 @@
                             android:textSize="14sp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            tools:text="hello\nhello" />
+                            tools:text="hellooooooooooooooooo" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <!--TODO probleme de largeur ici-->
                     <include
                         android:id="@+id/link_preview"
+                        android:visibility="gone"
                         layout="@layout/msg_link_preview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -237,6 +236,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="5dp"
             android:background="@color/purple_300"
+            tools:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@id/main_bubble_container"
             app:layout_constraintEnd_toEndOf="parent"
             tools:layout_height="@dimen/conversation_status_icon_size"
