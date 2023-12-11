@@ -3,13 +3,6 @@
 
     <solid android:color="@color/conversation_primary_background" />
 
-    <padding
-        android:left="@dimen/padding_medium"
-        android:right="@dimen/padding_medium"
-        android:top="@dimen/conversation_message_padding_top"
-        android:bottom="@dimen/conversation_message_padding_bottom"
-        />
-
     <corners
         android:bottomRightRadius="@dimen/conversation_message_minor_radius"
         android:bottomLeftRadius="@dimen/conversation_message_radius"

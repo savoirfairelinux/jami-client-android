@@ -133,19 +133,19 @@ along with this program; if not, write to the Free Software
     <dimen name="message_display_name_textsize">12sp</dimen>
 
     <!--  ChatView message bubble-->
-    <dimen name="conversation_timestamp_textsize">12sp</dimen>
-    <dimen name="padding_large">16dp</dimen>
-    <dimen name="conversation_avatar_size">36dp</dimen>
-    <dimen name="menu_icon_size">16dp</dimen>
-    <dimen name="padding_medium">12dp</dimen>
-    <dimen name="conversation_message_padding_bottom">7dp</dimen>
-    <dimen name="conversation_message_padding_top">7dp</dimen>
+    <dimen name="conversation_timestamp_textsize2">12sp</dimen>
+    <dimen name="padding_large2">16dp</dimen>
+    <dimen name="conversation_avatar_size2">36dp</dimen>
+    <dimen name="menu_icon_size2">16dp</dimen>
+    <dimen name="padding_medium2">12dp</dimen>
+    <dimen name="conversation_message_padding_bottom2">7dp</dimen>
+    <dimen name="conversation_message_padding_top2">7dp</dimen>
     <dimen name="text_size_small">13sp</dimen>
-    <dimen name="conversation_message_minor_radius">3dp</dimen>
+    <dimen name="conversation_message_minor_radius2">3dp</dimen>
     <dimen name="replied_shift">-8dp</dimen>
-    <dimen name="conversation_message_radius">10dp</dimen>
+    <dimen name="conversation_message_radius2">10dp</dimen>
     <dimen name="conversation_message_radius_2">5dp</dimen>
-    <dimen name="conversation_status_icon_size">14dp</dimen>
+    <dimen name="conversation_status_icon_size2">14dp</dimen>
 
     <dimen name="conversation_avatar_reply_size">12dp</dimen>
 
