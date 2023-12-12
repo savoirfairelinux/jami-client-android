@@ -1327,10 +1327,11 @@ class AccountService(
             // Log.w(TAG, "ConversationCallback: conversationLoaded $accountId/$conversationId ${messages.size}")
             getAccount(accountId)?.let { account -> account.getSwarm(conversationId)?.let { conversation ->
                 val interactions: List<Interaction>
-                synchronized(conversation) {
+                val subject = synchronized(conversation) {
                     interactions = messages.map { addMessage(account, conversation, it, false) }
                     conversation.stopLoading()
                 }
+                subject?.onSuccess(conversation)
                 task?.onSuccess(interactions)
                 account.conversationChanged()
             }}
@@ -1355,7 +1356,7 @@ class AccountService(
         Log.w(TAG, "ConversationCallback: conversationMemberEvent $accountId/$conversationId")
         getAccount(accountId)?.let { account -> account.getSwarm(conversationId)?.let { conversation ->
             val uri = Uri.fromId(peerUri)
-            when (ConversationMemberEvent.values()[event]) {
+            when (ConversationMemberEvent.entries[event]) {
                 ConversationMemberEvent.Add, ConversationMemberEvent.Join -> {
                     val contact = conversation.findContact(uri)
                     if (contact == null) {

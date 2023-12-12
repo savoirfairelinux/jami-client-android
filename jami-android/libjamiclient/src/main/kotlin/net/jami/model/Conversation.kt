@@ -217,14 +217,10 @@ class Conversation : ConversationHistory {
         lastNotified = lastMessage
     }
 
-    fun stopLoading(): Boolean {
+    fun stopLoading(): SingleSubject<Conversation>? {
         val ret = mLoadingSubject
         mLoadingSubject = null
-        if (ret != null) {
-            ret.onSuccess(this)
-            return true
-        }
-        return false
+        return ret
     }
 
     fun setProfile(profile: Single<Profile>) {
