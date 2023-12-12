@@ -22,10 +22,10 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.RelativeLayout
 import androidx.annotation.IdRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.core.view.updateLayoutParams
 import androidx.core.widget.ImageViewCompat
 import cx.ring.R
 import net.jami.model.ContactViewModel
@@ -99,35 +99,17 @@ class MessageStatusView : LinearLayout {
                 }
             }
         }
-//        if (resId != View.NO_ID) {
-//            val params = layoutParams as RelativeLayout.LayoutParams? ?: return
-//            val fitRight = showStatus || contacts.size < 2
-//            if (fitRight) {
-//                params.removeRule(RelativeLayout.BELOW)
-//                params.addRule(RelativeLayout.ALIGN_BOTTOM, resId)
-//            } else {
-//                params.removeRule(RelativeLayout.ALIGN_BOTTOM)
-//                params.addRule(RelativeLayout.BELOW, resId)
-//            }
-//            layoutParams = params
-//        }
 
         if (resId != View.NO_ID) {
-            val params = layoutParams as ConstraintLayout.LayoutParams? ?: return
-            val fitRight = showStatus || contacts.size < 2
-
-            if (fitRight) {
-                params.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID
-                params.topToBottom = ConstraintLayout.LayoutParams.UNSET
-                params.bottomToTop = resId
-            } else {
-                params.bottomToBottom = ConstraintLayout.LayoutParams.UNSET
-                params.topToBottom = resId
-                params.bottomToTop = ConstraintLayout.LayoutParams.UNSET
+            this.updateLayoutParams<ConstraintLayout.LayoutParams> {
+                if (showStatus && contacts.size < 2) {
+                    bottomToBottom = R.id.main_bubble_container
+                    topToBottom = ConstraintLayout.LayoutParams.UNSET
+                } else {
+                    bottomToBottom = ConstraintLayout.LayoutParams.UNSET
+                    topToBottom = R.id.reaction_chip
+                }
             }
-
-            layoutParams = params
         }
-
     }
 }
