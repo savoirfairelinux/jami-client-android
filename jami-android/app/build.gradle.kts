@@ -148,6 +148,9 @@ dependencies {
     // Open Street Map
     implementation ("org.osmdroid:osmdroid-android:6.1.17")
 
+    // Giphy
+    implementation("com.giphy.sdk:ui:2.3.13")
+
     // Markwon (Markdown support)
     implementation ("io.noties.markwon:core:$markwon_version")
     implementation ("io.noties.markwon:linkify:$markwon_version")

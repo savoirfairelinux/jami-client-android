@@ -51,6 +51,8 @@ import androidx.core.view.*
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.giphy.sdk.ui.GPHContentType
+import com.giphy.sdk.ui.views.GiphyDialogFragment
 import cx.ring.R
 import cx.ring.adapters.ConversationAdapter
 import cx.ring.client.CallActivity
@@ -83,6 +85,7 @@ import net.jami.model.Account.ComposingStatus
 import net.jami.services.NotificationService
 import net.jami.smartlist.ConversationItemViewModel
 import java.io.File
+import java.net.URL
 import java.util.*
 
 @AndroidEntryPoint
@@ -445,6 +448,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                 R.id.conv_send_audio -> sendAudioMessage()
                 R.id.conv_send_video -> sendVideoMessage()
                 R.id.conv_send_file -> openFilePicker()
+                R.id.conv_giphy -> openGiphySearchDialog()
                 R.id.conv_select_media -> openGallery()
                 R.id.conv_share_location -> shareLocation()
                 R.id.chat_plugins -> presenter.showPluginListHandlers()
@@ -635,6 +639,44 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 
     private fun sendFile(file: File): Completable = Completable.fromAction {
         presenter.sendFile(file)
+    }
+
+    private fun openGiphySearchDialog() {
+        val context = this.context
+        val dialog = GiphyDialogFragment.newInstance()
+        dialog.show(parentFragmentManager, "giphy_dialog")
+        dialog.gifSelectionListener = object : GiphyDialogFragment.GifSelectionListener {
+            override fun onGifSelected(media: com.giphy.sdk.core.models.Media, searchTerm: String?, selectedContentType: GPHContentType) {
+                if (context != null) {
+                    val gifUrl = media.images.downsizedMedium?.gifUrl
+                    val imgFile = File.createTempFile("giphy", ".gif", AndroidFileUtils.getTempShareDir(context))
+                    sendFileFromURL(context, gifUrl, imgFile)
+                } else {
+                    displayErrorToast(Error.INVALID_FILE)
+                }
+            }
+
+            override fun didSearchTerm(term: String) {}
+            override fun onDismissed(selectedContentType: GPHContentType) {}
+        }
+    }
+
+    private fun sendFileFromURL(context: Context, url: String?, tempFile: File) {
+        val thread = Thread {
+            try {
+                val imageURI = Uri.fromFile(tempFile)
+                URL(url).openStream().use { inputStream ->
+                    context.contentResolver.openOutputStream(imageURI).use { outputStream ->
+                        inputStream.copyTo(outputStream!!)
+                    }
+                }
+                presenter.sendFile(tempFile)
+                tempFile.deleteOnExit()
+            } catch (e: java.lang.Exception) {
+                Log.e(TAG, "Can't download file from URL")
+            }
+        }
+        thread.start()
     }
 
     private fun startFileSend(op: Completable): Disposable {

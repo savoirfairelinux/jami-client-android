@@ -38,6 +38,7 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import androidx.slidingpanelayout.widget.SlidingPaneLayout
 import androidx.slidingpanelayout.widget.SlidingPaneLayout.PanelSlideListener
+import com.giphy.sdk.ui.Giphy
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.BuildConfig
 import cx.ring.R
@@ -126,6 +127,7 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Giphy.configure(this, "YOUR_GIPHY_SDK_API_KEY")
 
         JamiApplication.instance?.startDaemon(this)
 

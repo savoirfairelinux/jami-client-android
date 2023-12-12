@@ -38,6 +38,13 @@
         tools:ignore="AlwaysShowAction" />
 
     <item
+        android:id="@+id/conv_giphy"
+        android:icon="@drawable/baseline_giphy_24"
+        android:title="@string/send_giphy"
+        app:showAsAction="always"
+        tools:ignore="AlwaysShowAction" />
+
+    <item
         android:id="@+id/chat_plugins"
         android:icon="@drawable/ic_plugin"
         android:title="@string/chat_plugins"
