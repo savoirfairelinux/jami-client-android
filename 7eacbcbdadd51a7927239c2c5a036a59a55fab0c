@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d15844c8_cf98b933",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1031
+      },
+      "writtenOn": "2023-12-12T01:34:30Z",
+      "side": 1,
+      "message": "This a basic Giphy integration if you ever are interested to integrate it.\nIt supposes the creation of an API key for Jami (https://support.giphy.com/hc/en-us/articles/360020283431-Request-A-GIPHY-API-Key) to be put in HomeActivity (or a better place...?)",
+      "revId": "7eacbcbdadd51a7927239c2c5a036a59a55fab0c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
