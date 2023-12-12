@@ -25,6 +25,8 @@ import androidx.annotation.StringRes
 import androidx.fragment.app.*
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import cx.ring.R
 import cx.ring.contactrequests.BlockListFragment
@@ -72,16 +74,20 @@ class AccountEditionFragment : BaseSupportFragment<AccountEditionPresenter, Acco
         super.onViewCreated(view, savedInstanceState)
 
         mAccountId = requireArguments().getString(ACCOUNT_ID_KEY)
-        mBinding!!.fragmentContainer.viewTreeObserver.addOnScrollChangedListener(this)
         presenter.init(mAccountId!!)
 
         mBinding?.apply {
-            TabLayoutMediator(slidingTabs, pager){ tab, position ->
-                tab.text = context?.getString(
-                        if (mAccountIsJami) getJamiPanelTitle(position)
-                        else getSIPPanelTitle(position))
-            }.attach()
+            fragmentContainer.viewTreeObserver.addOnScrollChangedListener(this@AccountEditionFragment)
         }
+    }
+
+    private fun updateAdapter(tabLayout: TabLayout, viewPager: ViewPager2, accountId: String, isJami: Boolean) {
+        viewPager.adapter = PreferencesPagerAdapter(this@AccountEditionFragment, accountId, isJami)
+        TabLayoutMediator(tabLayout, viewPager){ tab, position ->
+            tab.text = context?.getString(
+                if (mAccountIsJami) getJamiPanelTitle(position)
+                else getSIPPanelTitle(position))
+        }.attach()
     }
 
     override fun displaySummary(accountId: String) {
@@ -111,7 +117,7 @@ class AccountEditionFragment : BaseSupportFragment<AccountEditionPresenter, Acco
     override fun initViewPager(accountId: String, isJami: Boolean) {
         mBinding?.apply {
             pager.offscreenPageLimit = 4
-            pager.adapter = PreferencesPagerAdapter(this@AccountEditionFragment, accountId, isJami)
+            updateAdapter(slidingTabs, pager, accountId, isJami)
         }
         val existingFragment = childFragmentManager.findFragmentByTag(BlockListFragment.TAG) as BlockListFragment?
         if (existingFragment != null) {

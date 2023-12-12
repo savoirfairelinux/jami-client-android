@@ -24,6 +24,7 @@ import android.content.pm.PackageManager
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.os.Bundle
+import android.util.Log
 import cx.ring.R
 import androidx.annotation.StringRes
 import com.journeyapps.barcodescanner.DefaultDecoderFactory
@@ -129,7 +130,11 @@ class ScanFragment : Fragment() {
     }
 
     private fun goToConversation(conversationUri: String) {
-        (requireActivity() as HomeActivity).startConversation(conversationUri)
+        try {
+            (requireActivity() as HomeActivity).startConversation(conversationUri)
+        } catch (e: Exception) {
+            Log.w(TAG, "Error while starting conversation", e)
+        }
     }
 
     private fun checkPermission(): Boolean {
