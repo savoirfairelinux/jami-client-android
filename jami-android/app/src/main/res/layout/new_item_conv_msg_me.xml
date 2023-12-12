@@ -232,15 +232,14 @@
 
         <cx.ring.views.MessageStatusView
             android:id="@+id/status_icon"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="5dp"
-            android:background="@color/purple_300"
-            tools:visibility="gone"
+            tools:background="@color/purple_300"
+            tools:visibility="visible"
             app:layout_constraintBottom_toBottomOf="@id/main_bubble_container"
             app:layout_constraintEnd_toEndOf="parent"
             tools:layout_height="@dimen/conversation_status_icon_size"
-            tools:layout_width="@dimen/conversation_status_icon_size" />
+            android:layout_width="@dimen/conversation_status_icon_size" />
         <!--    //TODO: marge start de 5 dp car 24dp de marge msg bubble-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -316,6 +316,7 @@ class ConversationAdapter(
     private fun configureDisplayIndicator(conversationViewHolder: ConversationViewHolder, interaction: Interaction) {
         val conversation = interaction.conversation
         if (conversation == null || conversation !is Conversation) {
+            Log.w("devdebug", "STATUS ICON HIDDEN")
             conversationViewHolder.mStatusIcon?.isVisible = false
             return
         }
@@ -323,7 +324,8 @@ class ConversationAdapter(
             .getLoadedContact(interaction.account!!, conversation, interaction.displayedContacts)
             .observeOn(DeviceUtils.uiScheduler)
             .subscribe { contacts ->
-                conversationViewHolder.mStatusIcon?.isVisible = contacts.isNotEmpty()
+//                conversationViewHolder.mStatusIcon?.isVisible = contacts.isNotEmpty()
+                Log.w("devdebug", "STATUS ICON HIDDEN? ${contacts.isNotEmpty()}")
                 conversationViewHolder.mStatusIcon?.update(contacts, interaction.status, conversationViewHolder.mMsgTxt?.id ?: View.NO_ID)
             })
     }
@@ -417,6 +419,17 @@ class ConversationAdapter(
         )
     }
 
+    fun showWhiteBorder(boolean: Boolean, whiteBorderView: ViewGroup) {
+        if (boolean) {
+            (whiteBorderView.context.resources.displayMetrics.density * 1.5).toInt().let {
+                whiteBorderView.setPadding(it, it, 0, 0)
+            }
+        } else {
+            whiteBorderView.setPadding(0, 0, 0, 0)
+            whiteBorderView.background = null
+        }
+    }
+
     /**
      * Configure a reply Interaction.
      *
@@ -433,11 +446,13 @@ class ConversationAdapter(
         val msgReplyContent = conversationViewHolder.mMsgReplyContent ?: return
         val mainBubbleContainer = conversationViewHolder.mMainBubbleContainer ?: return
         val replyAvatar = conversationViewHolder.mReplyContactAvatar ?: return
+        val whiteBorder = conversationViewHolder.mWhiteBorder ?: return
 
         if (conversation == null || conversation !is Conversation) {
             // besoin de tout ça si msgReplyContent.isVisible = false ?
             replyName.isVisible = false
             replyTxt.isVisible = false
+            showWhiteBorder(false, whiteBorder)
             // pas sure ici et a chaque fois
             msgReplyContent.isVisible = false
             mainBubbleContainer.updateLayoutParams<MarginLayoutParams> {
@@ -483,6 +498,7 @@ class ConversationAdapter(
                         replyView.isVisible = true
                         replyTxt.isVisible = true
                         msgReplyContent.isVisible = true
+                        showWhiteBorder(true, whiteBorder)
                         mainBubbleContainer.updateLayoutParams<MarginLayoutParams> {
                             topMargin = res.getDimensionPixelSize(R.dimen.replied_shift)
                         }
@@ -499,6 +515,7 @@ class ConversationAdapter(
                         replyView.isVisible = false
                         replyTxt.isVisible = false
                         msgReplyContent.isVisible = false
+                        showWhiteBorder(false, whiteBorder)
                         mainBubbleContainer.updateLayoutParams<MarginLayoutParams> {
                             topMargin = 0
                         }
@@ -507,6 +524,7 @@ class ConversationAdapter(
                 replyView.isVisible = false
                 replyTxt.isVisible = false
                 msgReplyContent.isVisible = false
+                showWhiteBorder(false, whiteBorder)
                 mainBubbleContainer.updateLayoutParams<MarginLayoutParams> {
                     topMargin = 0
                 }
@@ -546,8 +564,8 @@ class ConversationAdapter(
                 else -> {}
             }
         }
-        if(isSearch)
-            configureSearchResult(conversationViewHolder, interaction)
+//        if(isSearch)
+//            configureSearchResult(conversationViewHolder, interaction)
     }
 
     override fun onViewRecycled(holder: ConversationViewHolder) {
@@ -1110,6 +1128,7 @@ class ConversationAdapter(
                         convViewHolder.mMainBubbleContainer ?: return@subscribe
                     val editedMessage = convViewHolder.mEditedMessage
                     val msgTextAndTime = convViewHolder.mMsgTextAndTime ?: return@subscribe
+                    val whiteBorder = convViewHolder.mWhiteBorder ?: return@subscribe
                     val bubbleMessageLayout =
                         convViewHolder.mBubbleMessageLayout ?: return@subscribe
                     bubbleMessageLayout.background?.setTintList(null)
@@ -1206,6 +1225,8 @@ class ConversationAdapter(
                             else
                                 msgSequenceType.ordinal + (if (textMessage.isIncoming) 1 else 0) * 4
 
+                        whiteBorder.background =
+                            ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
                         bubbleMessageLayout.background =
                             ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
                         if (convColor != 0 && !textMessage.isIncoming) {
