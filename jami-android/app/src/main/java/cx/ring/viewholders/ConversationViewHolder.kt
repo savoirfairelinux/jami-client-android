@@ -127,6 +127,7 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
     val mReplyContactAvatar: ImageView? = v.findViewById(R.id.reply_contact_avatar)
     // utiliser pour changer couleurs background aimantation message
     // ne pas utiliser msgTxt du coup
+    val mWhiteBorder : ViewGroup? = v.findViewById(R.id.white_border)
     val mBubbleMessageLayout: ViewGroup? = v.findViewById(R.id.bubble_message_layout)
     // pour le message edité
     var mEditedMessage: TextView? = v.findViewById(R.id.edited_message)
