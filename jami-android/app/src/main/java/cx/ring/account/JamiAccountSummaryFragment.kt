@@ -146,11 +146,24 @@ class JamiAccountSummaryFragment :
         super.onViewCreated(view, savedInstanceState)
         presenter.setAccountId(requireArguments().getString(AccountEditionFragment.ACCOUNT_ID_KEY)!!)
         val binding = mBinding ?: return
-        val adapter = SettingsAdapter(view.context, R.layout.item_setting, listOf(
-            SettingItem(R.string.account, R.drawable.baseline_account_card_details) { presenter.goToAccount() },
-            SettingItem(R.string.account_preferences_media_tab, R.drawable.outline_file_copy_24) { presenter.goToMedia() },
-            SettingItem(R.string.notif_channel_messages, R.drawable.baseline_chat_24) { presenter.goToSystem() },
-            SettingItem(R.string.account_preferences_advanced_tab, R.drawable.round_check_circle_24) { presenter.goToAdvanced() }
+        val adapter = SettingsAdapter(
+            view.context, R.layout.item_setting, listOf(
+                SettingItem(
+                    R.string.account,
+                    R.drawable.account_circle_24
+                ) { presenter.goToAccount() },
+                SettingItem(
+                    R.string.account_preferences_media_tab,
+                    R.drawable.perm_media_24
+                ) { presenter.goToMedia() },
+                SettingItem(
+                    R.string.notif_channel_messages,
+                    R.drawable.chat_bubble_24
+                ) { presenter.goToSystem() },
+                SettingItem(
+                    R.string.account_preferences_advanced_tab,
+                    R.drawable.settings_account_24
+                ) { presenter.goToAdvanced() }
         ))
         binding.settingsList.onItemClickListener =
             AdapterView.OnItemClickListener { _, _, i: Int, _ ->
