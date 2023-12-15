@@ -1097,20 +1097,68 @@ class ConversationAdapter(
                 val isTimeShown = hasPermanentTimeString(textMessage, position)
                 val msgSequenceType = getMsgSequencing(position, isTimeShown)
                 val peerDisplayName = convViewHolder.mPeerDisplayName
+                val avatar = convViewHolder.mAvatar
 
                 // Do not show the avatar if it is a one to one conversation.
-                convViewHolder.mAvatar?.visibility = View.GONE
+                avatar?.visibility = View.GONE
                 // Manage deleted message.
                 if (isDeleted) {
-                    msgTxt.text = context.getString(R.string.conversation_message_deleted)
+                    if (presenter.isGroup()) {
+                        Log.w(TAG, "Deleted11 message in group")
+                        avatar?.visibility = View.VISIBLE
+                        Log.w(TAG, "Deleted12 message in group")
+                        peerDisplayName?.visibility = View.VISIBLE
+                        Log.w(TAG, "Deleted13 message in group")
+
+                    } else {
+                        avatar?.visibility = View.GONE
+                        peerDisplayName?.visibility = View.GONE
+                    }
+                    Log.w(TAG, "Deleted2 message in group")
+
+                    // Show the contact information of the deleted message.
+                    convViewHolder.compositeDisposable.add(
+                        presenter.contactService
+                            .observeContact(account, contact, false)
+                            .subscribe {
+                               val contactName = it.displayName
+                                // you si incoming
+                                msgTxt.text =
+                                    context.getString(
+                                        R.string.conversation_username_deleted_message,
+                                        contactName
+                                    )
+                                peerDisplayName?.text = contactName
+                                avatar?.setImageDrawable(
+                                    conversationFragment.getConversationAvatar(contact.primaryNumber)
+                                )
+                            }
+                    )
+                    // Hide the reply bubble if there is one.
+                    convViewHolder.mReplyName?.visibility = View.GONE
+                    convViewHolder.mReplyTxt?.visibility = View.GONE
+                    convViewHolder.mInReplyTo?.visibility = View.GONE
                     // Hide the link preview
                     answerLayout?.visibility = View.GONE
+                    // Manage background for deleted message.
+                    val resIndex =
+                        // Standard message, incoming or outgoing and first, single or last.
+                        msgSequenceType.ordinal + (if (textMessage.isIncoming) 1 else 0) * 4
+
+                    // marche pas
+                    msgTxt.background = ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
                     msgTxt.background.alpha = 255
                     if (convColor != 0 && !textMessage.isIncoming) {
                         msgTxt.background.setTint(convColor)
                     }
-                    msgTxt.textSize = 14f
                     msgTxt.setPadding(textMessagePadding)
+                    // Change the text color
+                    msgTxt.setTextColor(
+                        if (textMessage.isIncoming)
+                            context.getColor(R.color.colorOnSurface)
+                        else context.getColor(R.color.text_color_primary_dark)
+                    )
+                    msgTxt.textSize = 14f
                     longPressView.setOnLongClickListener(null)
                     return@subscribe
                 }
@@ -1257,7 +1305,6 @@ class ConversationAdapter(
                 if (presenter.isGroup()) {
                     // Manage animation for avatar.
                     // To only display the avatar of the last message.
-                    val avatar = convViewHolder.mAvatar
                     if (endOfSeq) {
                         avatar?.setImageDrawable(
                             conversationFragment.getConversationAvatar(contact.primaryNumber)

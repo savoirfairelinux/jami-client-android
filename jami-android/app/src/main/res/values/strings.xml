@@ -258,6 +258,7 @@ along with this program; if not, write to the Free Software
     <string name="conversation_blocked">This contact is blocked.</string>
     <string name="conversation_ended">Conversation ended.</string>
     <string name="conversation_message_deleted">(Message deleted)</string>
+    <string name="conversation_username_deleted_message">%1$s deleted a message</string>
 
     <string name="conversation_preference_color">Conversation color</string>
     <string name="conversation_preference_emoji">Conversation emoji</string>
