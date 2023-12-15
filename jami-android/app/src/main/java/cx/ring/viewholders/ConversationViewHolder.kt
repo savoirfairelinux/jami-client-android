@@ -31,6 +31,8 @@ import android.widget.ImageView
 import com.google.android.material.chip.Chip
 import cx.ring.R
 import cx.ring.adapters.BaselineLastLineTextView
+import cx.ring.adapters.CustomMessageBubble
+import cx.ring.adapters.Message
 import cx.ring.adapters.MessageType
 import cx.ring.views.MessageStatusView
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -130,15 +132,16 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
     val mWhiteBorder : ViewGroup? = v.findViewById(R.id.white_border)
     val mBubbleMessageLayout: ViewGroup? = v.findViewById(R.id.bubble_message_layout)
     // pour le message edité
-    var mEditedMessage: TextView? = v.findViewById(R.id.edited_message)
+//    var mEditedMessage: TextView? = v.findViewById(R.id.edited_message)
     // pour modifier uniquement le background de la bulle de reply (a la place de mReplyTxt)
     val mMsgReplyBubbleContent : ViewGroup? = v.findViewById(R.id.msg_reply_bubble_content)
 
     // pour le calcul de la position de l'heure dans la bulle message
     val mMainBubbleContainer: ViewGroup? = v.findViewById(R.id.main_bubble_container)
 
-    val mMsgTextAndTime: ViewGroup? = v.findViewById(R.id.msg_text_and_time)
     val mMsgReplyContent: ViewGroup? = v.findViewById(R.id.msg_reply_content)
+    var message: Message = Message("","",false)
+    var mCustomBubble: CustomMessageBubble? = v.findViewById(R.id.custom_message_bubble)
     //
 
 
@@ -197,15 +200,17 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
                 mAcceptCallVideoButton = v.findViewById(R.id.acceptCallVideoButton)
             }
             MessageType.INCOMING_TEXT_MESSAGE-> {
-                mMsgTxt = v.findViewById(R.id.msg_txt)
-                mMsgDetailTxt = v.findViewById(R.id.msg_details_txt)
+//                mMsgTxt = v.findViewById(R.id.msg_txt)
+//                mMsgDetailTxt = v.findViewById(R.id.msg_details_txt)
+                mCustomBubble = v.findViewById(R.id.custom_message_bubble)
                 mMsgDetailTxtPerm = v.findViewById(R.id.msg_details_txt_perm)
                 primaryClickableView = mMsgTxt
             }
             MessageType.OUTGOING_TEXT_MESSAGE -> {
                 // ajouter tout
-                mMsgTxt = v.findViewById(R.id.message_text)
-                mMsgDetailTxt = v.findViewById(R.id.message_time)
+//                mMsgTxt = v.findViewById(R.id.message_text)
+//                mMsgDetailTxt = v.findViewById(R.id.message_time)
+                mCustomBubble = v.findViewById(R.id.custom_message_bubble)
                 mMsgDetailTxtPerm = v.findViewById(R.id.msg_time_perm)
                 primaryClickableView = mMsgTxt
             }
