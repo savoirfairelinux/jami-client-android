@@ -1118,16 +1118,16 @@ class ConversationAdapter(
                     val account = interaction.account ?: return@subscribe
                     val contact = textMessage.contact ?: return@subscribe
                     val isDeleted = textMessage.body.isNullOrEmpty()
-                    val msgTxt = convViewHolder.mMsgTxt ?: return@subscribe
-                    val msgTime = convViewHolder.mMsgDetailTxt ?: return@subscribe
+//                    val msgTxt = convViewHolder.mMsgTxt ?: return@subscribe
+                    val customMessageBubble = convViewHolder.mCustomBubble ?: return@subscribe
+//                    val msgTime = convViewHolder.mMsgDetailTxt ?: return@subscribe
                     val linkPreviewLayout = convViewHolder.mLinkPreviewLayout
                     val isTimeShown = hasPermanentTimeString(textMessage, position)
                     val msgSequenceType = getMsgSequencing(position, isTimeShown)
 //                    val peerDisplayName = convViewHolder.mPeerDisplayName
                     val mainBubbleContainer =
                         convViewHolder.mMainBubbleContainer ?: return@subscribe
-                    val editedMessage = convViewHolder.mEditedMessage
-                    val msgTextAndTime = convViewHolder.mMsgTextAndTime ?: return@subscribe
+//                    val editedMessage = convViewHolder.mEditedMessage
                     val whiteBorder = convViewHolder.mWhiteBorder ?: return@subscribe
                     val bubbleMessageLayout =
                         convViewHolder.mBubbleMessageLayout ?: return@subscribe
@@ -1140,13 +1140,15 @@ class ConversationAdapter(
                         val time = DateUtils.formatDateTime(
                             context, textMessage.timestamp, DateUtils.FORMAT_SHOW_TIME
                         ).uppercase(Locale.getDefault())
-                        if (editedMessage != null) { // pour eviter d'avoir un return subscribe
-                            MessageBubble.setMessageText(
-                                markwon, msgTxt, msgTime,
-                                messageText, time, mainBubbleContainer,
-                                editedMessage, msgTextAndTime, bubbleMessageLayout
-                            )
-                        }
+                        convViewHolder.message = convViewHolder.message.copy( messageText = messageText, messageTime = time)
+                        customMessageBubble.update(convViewHolder.message)
+//                        if (editedMessage != null) { // pour eviter d'avoir un return subscribe
+////                            MessageBubble.setMessageText(
+////                                markwon, msgTxt, msgTime,
+////                                messageText, time, mainBubbleContainer,
+////                                editedMessage, msgTextAndTime, bubbleMessageLayout
+////                            )
+//                        }
                     })
                     // Manage deleted message.
                     if (isDeleted) {
@@ -1156,13 +1158,19 @@ class ConversationAdapter(
                             val time = DateUtils.formatDateTime(
                                 context, textMessage.timestamp, DateUtils.FORMAT_SHOW_TIME
                             ).uppercase(Locale.getDefault())
-                            if (editedMessage != null) {
-                                MessageBubble.setMessageText(
-                                    markwon, msgTxt, msgTime,
-                                    messageText, time, mainBubbleContainer,
-                                    editedMessage, msgTextAndTime, bubbleMessageLayout
-                                )
-                            }
+                            convViewHolder.message = convViewHolder.message.copy(
+                                messageTime = time,
+                                messageText = messageText,
+                                messageEdited = false
+                            )
+                            customMessageBubble.update(convViewHolder.message)
+//                            if (editedMessage != null) {
+//                                MessageBubble.setMessageText(
+//                                    markwon, msgTxt, msgTime,
+//                                    messageText, time, mainBubbleContainer,
+//                                    editedMessage, msgTextAndTime, bubbleMessageLayout
+//                                )
+//                            }
                         })
                         // Hide the link preview
                         linkPreviewLayout?.visibility = View.GONE
@@ -1170,7 +1178,7 @@ class ConversationAdapter(
                         if (convColor != 0 && !textMessage.isIncoming) {
                             bubbleMessageLayout.background.setTint(convColor)
                         }
-                        msgTxt.textSize = 14f
+//                        msgTxt.textSize = 14f
                         bubbleMessageLayout.setPadding(textMessagePadding)
                         bubbleMessageLayout.setOnLongClickListener(null)
 //                        MessageBubble.showTime(
@@ -1206,11 +1214,15 @@ class ConversationAdapter(
                     // Manage text message layout
                     if (StringUtils.isOnlyEmoji(messageText)) {
                         // Manage layout if message is emoji.
-                        msgTxt.textSize = 32.0f
+//                        msgTxt.textSize = 32.0f
                         bubbleMessageLayout.setPadding(emojiMessagePadding)
                         bubbleMessageLayout.background.alpha = 0
+                        convViewHolder.message = convViewHolder.message.copy(
+                            messageText = messageText,
+                        )
+                        customMessageBubble.updateEmoji(convViewHolder.message)
                         // TODO recyclage couleur
-                        msgTime.setTextColor(context.getColor(R.color.color))
+//                        msgTime.setTextColor(context.getColor(R.color.color))
                     } else {
                         // Manage layout for standard message. Index refers to msgBGLayouts array.
                         val resIndex =
@@ -1232,7 +1244,7 @@ class ConversationAdapter(
                         if (convColor != 0 && !textMessage.isIncoming) {
                             bubbleMessageLayout.background.setTint(convColor)
                         }
-                        msgTxt.textSize = 16f
+//                        msgTxt.textSize = 16f
                         bubbleMessageLayout.background.alpha = 255
                         bubbleMessageLayout.setPadding(textMessagePadding)
 
@@ -1297,7 +1309,7 @@ class ConversationAdapter(
                         }
                     }
                     // pas sure de ça
-                    msgTxt.movementMethod = LinkMovementMethod.getInstance()
+//                    msgTxt.movementMethod = LinkMovementMethod.getInstance()
                     val endOfSeq = msgSequenceType == SequenceType.LAST
                             || msgSequenceType == SequenceType.SINGLE
 
@@ -1365,14 +1377,14 @@ class ConversationAdapter(
 //                        }
 //                    }
                     Log.w("devdebug", "Message ${textMessage.body}")
-                    MessageBubble.showTime(
-                        mainBubbleContainer,
-                        msgTxt,
-                        msgTime,
-                        editedMessage!!,
-                        msgTextAndTime,
-                        bubbleMessageLayout,
-                    )
+//                    MessageBubble.showTime(
+//                        mainBubbleContainer,
+//                        msgTxt,
+//                        msgTime,
+//                        editedMessage!!,
+//                        msgTextAndTime,
+//                        bubbleMessageLayout,
+//                    )
                 })
     }
 
