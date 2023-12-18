@@ -141,7 +141,7 @@
     <color name="conversation_secondary_background2">@color/grey_200</color>
     <color name="colorOnSurface2">@color/abc_primary_text_material_light</color>
     <color name="fab_background_color2">#005699</color>
-    <color name="reply_contact_background">#26000000</color>
+    <color name="reply_contact_background">#33000000</color>
     <color name="color">#CC000000</color>
 
 </resources>
