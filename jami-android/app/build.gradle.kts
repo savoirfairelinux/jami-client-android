@@ -105,7 +105,7 @@ dependencies {
     implementation ("androidx.recyclerview:recyclerview:1.3.2")
     implementation ("androidx.leanback:leanback:1.2.0-alpha04")
     implementation ("androidx.leanback:leanback-preference:1.2.0-alpha04")
-    implementation ("androidx.car.app:app:1.4.0-rc01")
+    implementation ("androidx.car.app:app:1.4.0-rc02")
     implementation ("androidx.tvprovider:tvprovider:1.1.0-alpha01")
     implementation ("androidx.media:media:1.7.0")
     implementation ("androidx.sharetarget:sharetarget:1.2.0")
