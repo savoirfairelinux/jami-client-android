@@ -1,207 +1,152 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
-    <!--voir les tailles de police-->
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/msg_layout"
-        android:layout_width="match_parent"
+<?xml version="1.0" encoding="UTF-8" ?><!--voir les tailles de police-->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/msg_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent"
+    android:paddingBottom="@dimen/padding_xsmall">
+
+    <LinearLayout
+        android:id="@+id/msg_reply_bubble"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:paddingBottom="@dimen/padding_xsmall">
+        android:layout_marginEnd="70dp"
+        android:background="@drawable/textmsg_bg_out"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:backgroundTint="#E5E5E5"
+        android:gravity="start"
+        android:padding="5dp"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toEndOf="@id/avatar_conv"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/msg_time_perm"
+            android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingBottom="8dp"
-            android:textColor="@color/textColorSecondary"
-            android:textSize="@dimen/conversation_timestamp_textsize"
-            android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@id/msg_reply_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="@string/time_just_now"
-            tools:visibility="visible" />
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/reply_contact_msg_bg"
+            android:backgroundTint="#33000000"
+            android:drawablePadding="5dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingHorizontal="5dp"
+            android:paddingVertical="5dp"
+            android:text="Jean-Pascal"
+            android:textColor="#000000"
+            android:textSize="12sp"
+            app:drawableStartCompat="@drawable/reply_contact_avatar_12px" />
+
+        <TextView
+            android:id="@+id/reply_message_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:focusable="true"
+            android:maxLines="1"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:textColor="@color/black"
+            android:textColorHighlight="@color/conversation_primary_selection"
+            android:textColorLink="@color/text_color_primary_dark"
+            android:textSize="12sp"
+            android:theme="@style/OutgoingTextView"
+            android:translationY="5dp"
+            tools:text="Lorem ipsum" />
+
+    </LinearLayout>
+
+
+    <FrameLayout
+        android:id="@+id/main_bubble_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-8dp"
+        android:background="@drawable/textmsg_bg_in"
+        android:backgroundTint="@color/white"
+        android:gravity="start"
+        android:paddingStart="0dp"
+        android:paddingTop="1.5dp"
+        android:paddingEnd="1.5dp"
+        android:paddingBottom="0dp"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toEndOf="@id/avatar_conv"
+        app:layout_constraintTop_toBottomOf="@id/msg_reply_bubble">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/msg_reply_content"
-            android:layout_width="0dp"
+            android:id="@+id/bubble_message_layout"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_weight="1"
-            app:layout_constraintStart_toEndOf="@id/avatar_conv"
-            app:layout_constraintTop_toBottomOf="@id/msg_time_perm">
+            android:layout_gravity="start"
+            android:background="@drawable/textmsg_bg_in">
 
-            <LinearLayout
-                android:id="@+id/msg_reply_bubble"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="70dp"
-                android:gravity="start"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
 
-                <!--background change selon le message -->
-                <!--textColor, textColorHighlight et textcolorlink-->
-                <LinearLayout
-                    android:id="@+id/msg_reply_bubble_content"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/textmsg_bg_in"
-                    android:padding="5dp">
-
-                    <LinearLayout
-                        android:id="@+id/reply_contact_layout"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/reply_contact_msg_bg"
-                        android:baselineAlignedChildIndex="1"
-                        android:gravity="center"
-                        android:paddingHorizontal="5dp"
-                        android:paddingVertical="5dp">
-
-                        <ImageView
-                            android:id="@+id/reply_contact_avatar"
-                            android:layout_width="12dp"
-                            android:layout_height="12dp"
-                            android:contentDescription="@null"
-                            tools:src="@drawable/reply_contact_avatar" />
-
-                        <TextView
-                            android:id="@+id/reply_contact_name"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:ellipsize="end"
-                            android:maxEms="8"
-                            android:maxLines="1"
-                            android:paddingStart="5dp"
-                            android:paddingEnd="0dp"
-                            android:textColor="@color/black"
-                            android:textSize="12sp"
-                            android:textStyle="bold"
-                            tools:text="Jean-Pascal" />
-                        <!--    maxEms="8" to have around 16 characters displayed   -->
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/reply_message_txt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:focusable="true"
-                        android:maxLines="1"
-                        android:paddingLeft="5dp"
-                        android:paddingRight="5dp"
-                        android:textColor="@color/black"
-                        android:textColorHighlight="@color/conversation_primary_selection"
-                        android:textColorLink="@color/text_color_primary_dark"
-                        android:textSize="12sp"
-                        android:theme="@style/OutgoingTextView"
-                        android:translationY="5dp"
-                        tools:text="Lorem ipsum" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <LinearLayout
-            android:id="@+id/main_bubble_container"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="-8dp"
-            android:gravity="start"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/avatar_conv"
-            app:layout_constraintTop_toBottomOf="@id/msg_reply_content">
-            <!--android:gravity="start" utile ?-->
-
-            <!--bordure blanche entre bulle msg et reply-->
-            <LinearLayout
-                android:id="@+id/white_border"
+            <cx.ring.adapters.CustomMessageBubble
+                android:id="@+id/custom_message_bubble"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/textmsg_bg_in"
-                android:backgroundTint="@color/white"
-                android:paddingStart="0dp"
-                android:paddingTop="1.5dp"
-                android:paddingEnd="1.5dp"
-                android:paddingBottom="0dp">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/bubble_message_layout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:background="@drawable/textmsg_bg_in">
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="5dp"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:edited="true"
+                tools:message="This is a test !"
+                tools:time="11h05" />
 
 
-
-                        <cx.ring.adapters.CustomMessageBubble
-                            android:id="@+id/custom_message_bubble"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingHorizontal="10dp"
-                            android:paddingVertical="5dp"
-                            android:textColor="@color/black"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            tools:edited="true"
-                            tools:message="This is a test !"
-                            tools:time="11h05" />
+            <!--TODO probleme de largeur ici-->
+            <include
+                android:id="@+id/link_preview"
+                layout="@layout/msg_link_preview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/custom_message_bubble" />
 
 
-                    <!--TODO probleme de largeur ici-->
-                    <include
-                        android:id="@+id/link_preview"
-                        layout="@layout/msg_link_preview"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/custom_message_bubble" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
 
+    <com.google.android.material.chip.Chip
+        android:id="@+id/reaction_chip"
+        style="@style/Widget.Material3.Chip.Suggestion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="-16dp"
+        android:backgroundTint="@color/icon_background_color"
+        android:elevation="4dp"
+        android:outlineProvider="none"
+        app:chipCornerRadius="5dp"
+        app:chipEndPadding="0dp"
+        app:chipStartPadding="0dp"
+        app:chipStrokeColor="@color/border_color"
+        app:chipStrokeWidth="1.5dp"
+        app:layout_constraintStart_toStartOf="@id/main_bubble_container"
+        app:layout_constraintTop_toBottomOf="@id/main_bubble_container"
+        app:textEndPadding="5dp"
+        app:textStartPadding="5dp"
+        tools:text="🤕🤒3" />
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </LinearLayout>
-        </LinearLayout>
+    <cx.ring.views.MessageStatusView
+        android:id="@+id/avatar_conv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="5dp"
+        android:background="@color/purple_300"
+        app:layout_constraintBottom_toBottomOf="@id/main_bubble_container"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_height="@dimen/conversation_avatar_size"
+        tools:layout_width="@dimen/conversation_avatar_size" />
+    <!--    //TODO: marge start de 5 dp car 24dp de marge msg bubble-->
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/reaction_chip"
-            style="@style/Widget.Material3.Chip.Suggestion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="-16dp"
-            android:backgroundTint="@color/icon_background_color"
-            android:elevation="4dp"
-            android:outlineProvider="none"
-            app:chipCornerRadius="5dp"
-            app:chipEndPadding="0dp"
-            app:chipStartPadding="0dp"
-            app:chipStrokeColor="@color/border_color"
-            app:chipStrokeWidth="1.5dp"
-            app:layout_constraintStart_toStartOf="@id/main_bubble_container"
-            app:layout_constraintTop_toBottomOf="@id/main_bubble_container"
-            app:textEndPadding="5dp"
-            app:textStartPadding="5dp"
-            tools:text="🤕🤒3" />
-
-        <cx.ring.views.MessageStatusView
-            android:id="@+id/avatar_conv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="5dp"
-            android:background="@color/purple_300"
-            app:layout_constraintBottom_toBottomOf="@id/main_bubble_container"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:layout_height="@dimen/conversation_avatar_size"
-            tools:layout_width="@dimen/conversation_avatar_size" />
-        <!--    //TODO: marge start de 5 dp car 24dp de marge msg bubble-->
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>
+</androidx.constraintlayout.widget.ConstraintLayout>
