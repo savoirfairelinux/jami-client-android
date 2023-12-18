@@ -43,6 +43,7 @@
   <!--History Fragment-->
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
+  <string name="invitation_card_title">دعوت‌نامه‌های دریافت شده</string>
   <plurals name="home_conferences_title">
     <item quantity="one">%d گفتگو</item>
     <item quantity="other">%d گفتگوها</item>
@@ -72,6 +73,7 @@
   <string name="notif_channel_background_service">سرویس پس‌زمینه</string>
   <string name="notif_channel_background_service_descr">اجازه دریافت تماس‌ها و پیام‌ها در هر زمان.</string>
   <string name="notif_group_calls">تماس‌ها</string>
+  <string name="notif_inprogress_group_call">تماس در جریان</string>
   <string name="notif_background_service">جمی هم ‌اکنون در پس‌زمینه در حال اجراست.</string>
   <string name="notif_mark_as_read">علامت‌گذاری به عنوان خوانده‌شده</string>
   <string name="notif_dismiss"> رد‌کردن</string>
@@ -134,6 +136,7 @@
   <string name="conversation_send_audio">ضبط بُریده صوتی</string>
   <string name="conversation_send_video">ضبط بُریده ویدیویی</string>
   <string name="conversation_share_location">اشتراک مکان</string>
+  <string name="ongoing_group_call">تماس جاری</string>
   <string name="in_reply_to">در پاسخ به</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">مجوز دوربین</string>
@@ -376,10 +379,15 @@
   <string name="bottomsheet_remove">اخراج از گروه</string>
   <!--JamiId-->
   <string name="jami_id_validate">ثبت نام کاربری</string>
+  <string name="jami_id_available">نام کاربری دردسترس است</string>
   <string name="jami_id_looking_for_availability">در حال جستجو برای در دسترس بودن نام کاربری …</string>
   <string name="jami_id_choose_username">یک نام کاربری را انتخاب کنید</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">به جمی خوش آمدید</string>
   <!--Donation-->
+  <string name="donation_card_not_now">الان نه</string>
+  <string name="donation_donate">اهدا کنید</string>
+  <string name="donation_setting_title">یادآوری اهدا کردن</string>
+  <string name="donation_setting_description">فعال کردن یادآوری اهدا کردن</string>
   <!--Plugin-->
 </resources>
