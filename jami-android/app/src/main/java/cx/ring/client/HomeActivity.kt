@@ -36,8 +36,6 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
-import androidx.slidingpanelayout.widget.SlidingPaneLayout
-import androidx.slidingpanelayout.widget.SlidingPaneLayout.PanelSlideListener
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.BuildConfig
 import cx.ring.R
@@ -60,6 +58,7 @@ import cx.ring.utils.getUiCustomizationFromConfigJson
 import cx.ring.viewmodel.WelcomeJamiViewModel
 import cx.ring.views.AvatarDrawable
 import cx.ring.views.AvatarFactory
+import cx.ring.views.slidingpane.SlidingPaneLayout
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -143,7 +142,7 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
             setContentView(binding.root)
             //supportActionBar?.title = ""
             binding.panel.lockMode = SlidingPaneLayout.LOCK_MODE_LOCKED
-            binding.panel.addPanelSlideListener(object : PanelSlideListener {
+            binding.panel.addPanelSlideListener(object : SlidingPaneLayout.PanelSlideListener {
                 override fun onPanelSlide(panel: View, slideOffset: Float) {}
 
                 override fun onPanelOpened(panel: View) {
