@@ -35,8 +35,7 @@
         android:clipChildren="false"
         android:clipToPadding="false"
         android:paddingStart="72dp"
-        android:paddingTop="8dp"
-        android:paddingEnd="2dp">
+        android:paddingEnd="0dp">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -81,8 +80,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginStart="@dimen/padding_medium"
-                    android:layout_marginEnd="20dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="24dp"
                     android:gravity="center_vertical"
                     android:minHeight="@dimen/conversation_avatar_size">
 
@@ -90,7 +89,6 @@
                         android:id="@+id/image"
                         android:layout_width="wrap_content"
                         android:layout_height="180dp"
-                        android:layout_marginEnd="24dp"
                         android:adjustViewBounds="true"
                         android:maxHeight="200dp"
                         android:minWidth="@dimen/conversation_avatar_size"
