@@ -41,6 +41,8 @@
             android:layout_width="@dimen/conversation_avatar_size"
             android:layout_height="@dimen/conversation_avatar_size"
             android:layout_alignBottom="@id/video_frame"
+            android:layout_alignParentStart="true"
+            android:layout_marginEnd="@dimen/margin_end_avatar_conversation"
             android:background="@null"
             android:gravity="start"
             android:scaleType="centerCrop" />
@@ -49,7 +51,6 @@
             android:id="@+id/video_frame"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
             android:layout_marginEnd="20dp"
             android:layout_toEndOf="@+id/photo"
             android:foreground="@drawable/baseline_play_arrow_24"

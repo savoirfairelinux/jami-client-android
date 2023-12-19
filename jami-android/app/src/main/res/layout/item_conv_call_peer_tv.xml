@@ -53,8 +53,8 @@ along with this program; if not, write to the Free Software
             android:id="@+id/photo"
             android:layout_width="@dimen/conversation_avatar_size"
             android:layout_height="@dimen/conversation_avatar_size"
-            android:layout_gravity="bottom"
-            android:layout_marginEnd="12dp"
+            android:layout_gravity="start|bottom"
+            android:layout_marginEnd="@dimen/margin_end_avatar_conversation"
             android:contentDescription="@null"
             tools:srcCompat="@color/blue_200" />
 
