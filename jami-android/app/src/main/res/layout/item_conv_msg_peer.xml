@@ -84,6 +84,7 @@ along with this program; if not, write to the Free Software
             android:layout_height="@dimen/conversation_avatar_size"
             android:layout_alignBottom="@id/msg_txt"
             android:layout_alignParentStart="true"
+            android:layout_marginEnd="@dimen/margin_end_avatar_conversation"
             tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
@@ -91,7 +92,6 @@ along with this program; if not, write to the Free Software
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/link_preview"
-            android:layout_marginStart="12dp"
             android:layout_marginEnd="20dp"
             android:layout_toEndOf="@+id/photo"
             android:background="@drawable/textmsg_bg_in"
@@ -178,5 +178,4 @@ along with this program; if not, write to the Free Software
             tools:text="Bob" />
 
     </RelativeLayout>
-
 </LinearLayout>
