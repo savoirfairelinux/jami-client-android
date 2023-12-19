@@ -16,6 +16,24 @@
       "message": "The commit I6fa4fc2909c379cb6ac6f5565f84b24978a5456e needs to be merged before this one",
       "revId": "2a65f8092d45a101685d4f20c14585b9f2a4cff3",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dae7f599_871ba66d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-12-19T14:46:20Z",
+      "side": 1,
+      "message": "please merge them together",
+      "parentUuid": "8e93d7f2_65f6e63b",
+      "revId": "2a65f8092d45a101685d4f20c14585b9f2a4cff3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
