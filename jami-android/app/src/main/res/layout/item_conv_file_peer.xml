@@ -26,29 +26,31 @@
     android:focusable="true"
     android:gravity="center"
     android:orientation="vertical"
-    android:paddingBottom="8dp">
+    android:paddingBottom="@dimen/padding_xsmall">
 
     <TextView
         android:id="@+id/msg_details_txt_perm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/padding_small"
         android:textColor="@color/textColorSecondary"
         android:textSize="@dimen/conversation_timestamp_textsize"
         android:visibility="gone"
-        tools:text="@string/time_just_now" />
+        tools:text="@string/time_just_now"
+        tools:visibility="visible" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/padding_large"
-        android:paddingTop="8dp">
+        android:paddingStart="@dimen/padding_large"
+        android:paddingEnd="0dp">
 
         <ImageView
             android:id="@+id/photo"
             android:layout_width="@dimen/conversation_avatar_size"
             android:layout_height="@dimen/conversation_avatar_size"
             android:layout_alignBottom="@id/fileInfoLayout"
-            android:layout_marginEnd="@dimen/padding_medium"
+            android:layout_marginEnd="12dp"
             android:background="@null"
             android:scaleType="centerCrop" />
 
@@ -149,11 +151,7 @@
                         android:textColor="@color/color_primary_dark" />
 
                 </LinearLayout>
-
             </LinearLayout>
-
         </LinearLayout>
-
     </RelativeLayout>
-
 </LinearLayout>
