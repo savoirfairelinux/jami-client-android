@@ -103,6 +103,8 @@ class ConversationAdapter(
     private var mCurrentLongItem: RecyclerViewContextMenuInfo? = null
     @ColorInt private var convColor = 0
     @ColorInt private var convColorTint = 0
+    private val stringCache = StringBuilder(64)
+    private val formatter = Formatter(stringCache, Locale.getDefault())
 
     private val emojiMessagePadding = Padding(0, 0, 0, 0)
     private val callPadding = Padding(
@@ -970,7 +972,7 @@ class ConversationAdapter(
     private fun configureForFileInfo(viewHolder: ConversationViewHolder, interaction: Interaction, position: Int) {
         val file = interaction as DataTransfer
         val path = presenter.deviceRuntimeService.getConversationPath(file)
-        val timeString = TextUtils.timestampToDetailString(viewHolder.itemView.context, file.timestamp)
+        val timeString = TextUtils.timestampToDetailString(viewHolder.itemView.context, formatter, file.timestamp)
         viewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
             viewHolder.mMsgDetailTxt?.text = when (val status = file.status) {
                 InteractionStatus.TRANSFER_FINISHED -> String.format("%s - %s", timeString,
@@ -986,7 +988,7 @@ class ConversationAdapter(
         })
         if (hasPermanentTimeString(file, position)) {
             viewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
-                viewHolder.mMsgDetailTxtPerm?.text = TextUtils.timestampToDetailString(viewHolder.itemView.context, file.timestamp)
+                viewHolder.mMsgDetailTxtPerm?.text = TextUtils.timestampToDetailString(viewHolder.itemView.context, formatter, file.timestamp)
             })
             viewHolder.mMsgDetailTxtPerm?.visibility = View.VISIBLE
         } else {
@@ -1225,7 +1227,7 @@ class ConversationAdapter(
                 if (isTimeShown) {
                     convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
                         convViewHolder.mMsgDetailTxtPerm?.text =
-                            TextUtils.timestampToDetailString(context, textMessage.timestamp)
+                            TextUtils.timestampToDetailString(context, formatter, textMessage.timestamp)
                     })
                     convViewHolder.mMsgDetailTxtPerm?.visibility = View.VISIBLE
                 } else {
@@ -1234,7 +1236,7 @@ class ConversationAdapter(
                     if (isExpanded) {
                         convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
                             convViewHolder.mMsgDetailTxt?.text =
-                                TextUtils.timestampToDetailString(context, textMessage.timestamp)
+                                TextUtils.timestampToDetailString(context, formatter, textMessage.timestamp)
                         })
                     }
                     setItemViewExpansionState(convViewHolder, isExpanded)
@@ -1279,7 +1281,7 @@ class ConversationAdapter(
         val event = interaction as ContactEvent
         Log.w(TAG, "configureForContactEvent ${event.account} ${event.event} ${event.contact} ${event.author} ")
         val timestamp =
-            TextUtils.timestampToDetailString(viewHolder.itemView.context, event.timestamp)
+            TextUtils.timestampToDetailString(viewHolder.itemView.context, formatter, event.timestamp)
 
         if (interaction.isSwarm) {
             viewHolder.compositeDisposable.add(
@@ -1388,7 +1390,7 @@ class ConversationAdapter(
                     if (isTimeShown) {
                         convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
                             convViewHolder.mMsgDetailTxtPerm?.text =
-                                TextUtils.timestampToDetailString(context, call.timestamp)
+                                TextUtils.timestampToDetailString(context, formatter, call.timestamp)
                         })
                         convViewHolder.mMsgDetailTxtPerm?.visibility = View.VISIBLE
                     } else convViewHolder.mMsgDetailTxtPerm?.visibility = View.GONE
