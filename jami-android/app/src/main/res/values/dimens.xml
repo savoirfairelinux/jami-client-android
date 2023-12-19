@@ -133,5 +133,6 @@ along with this program; if not, write to the Free Software
     <dimen name="message_display_name_textsize">12sp</dimen>
     <dimen name="conversation_me_margin_end">24dp</dimen>
     <dimen name="button_size">48dp</dimen>
+    <dimen name="margin_end_avatar_conversation">12dp</dimen>
 
 </resources>
