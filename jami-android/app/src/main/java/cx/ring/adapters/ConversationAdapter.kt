@@ -1064,7 +1064,10 @@ class ConversationAdapter(
     }
 
     private fun configureForTypingIndicator(viewHolder: ConversationViewHolder) {
-        AnimatedVectorDrawableCompat.create(viewHolder.itemView.context, R.drawable.typing_indicator_animation)?.let { anim ->
+        // Start the animation.
+        AnimatedVectorDrawableCompat.create(
+            viewHolder.itemView.context, R.drawable.typing_indicator_animation
+        )?.let { anim ->
             viewHolder.mIcon?.setImageDrawable(anim)
             anim.registerAnimationCallback(object : Animatable2Compat.AnimationCallback() {
                 override fun onAnimationEnd(drawable: Drawable) {
