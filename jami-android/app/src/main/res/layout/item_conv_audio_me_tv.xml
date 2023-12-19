@@ -16,6 +16,7 @@
   ~  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
   -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/file_layout"
     android:layout_width="match_parent"
@@ -33,9 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clipChildren="false"
-        android:clipToPadding="false"
-        android:paddingTop="8dp"
-        android:paddingEnd="2dp">
+        android:clipToPadding="false">
 
         <cx.ring.views.MessageStatusView
             android:id="@+id/status_icon"
@@ -81,7 +80,7 @@
                 android:alpha="0.75"
                 android:contentDescription="@string/lb_playback_controls_play"
                 android:src="@drawable/baseline_play_arrow_24"
-                android:tint="@color/black" />
+                app:tint="@color/black" />
 
             <TextView
                 android:id="@+id/msg_txt"

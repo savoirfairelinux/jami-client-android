@@ -15,32 +15,32 @@
   ~ along with this program; if not, write to the Free Software
   ~  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
   -->
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="8dp"
     android:clickable="true"
     android:descendantFocusability="blocksDescendants"
     android:focusable="true"
+    android:gravity="center"
     android:orientation="vertical"
-    android:gravity="center">
+    android:paddingBottom="@dimen/padding_xsmall">
 
     <TextView
         android:id="@+id/msg_details_txt_perm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
+        android:paddingBottom="@dimen/padding_small"
         android:textColor="@color/textColorSecondary"
         android:textSize="@dimen/conversation_timestamp_textsize"
-        tools:text="@string/time_just_now" />
+        android:visibility="gone"
+        tools:text="@string/time_just_now"
+        tools:visibility="visible" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingStart="@dimen/padding_large"
-        android:paddingTop="8dp"
         android:paddingEnd="@dimen/padding_large">
 
         <ImageView
@@ -48,7 +48,7 @@
             android:layout_width="@dimen/conversation_avatar_size"
             android:layout_height="@dimen/conversation_avatar_size"
             android:layout_alignBottom="@id/imgLayout"
-            android:layout_marginEnd="@dimen/padding_medium"
+            android:layout_marginEnd="12dp"
             android:background="@null"
             android:gravity="start"
             android:scaleType="centerCrop" />
@@ -66,8 +66,8 @@
                 android:id="@+id/image"
                 android:layout_width="wrap_content"
                 android:layout_height="180dp"
-                android:background="@drawable/background_item_conv_image"
                 android:adjustViewBounds="true"
+                android:background="@drawable/background_item_conv_image"
                 android:transitionName="picture"
                 tools:src="@drawable/ic_jami" />
 
@@ -77,8 +77,8 @@
             android:id="@+id/msg_details_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/imgLayout"
             android:layout_below="@+id/imgLayout"
+            android:layout_alignStart="@+id/imgLayout"
             android:layout_marginStart="@dimen/message_details_margin"
             android:textColor="@color/textColorSecondary"
             android:textSize="@dimen/conversation_timestamp_textsize"
@@ -87,17 +87,16 @@
         <com.google.android.material.chip.Chip
             android:id="@+id/reaction_chip"
             style="@style/Widget.Material3.Chip.Suggestion"
-            android:focusable="false"
-            android:checkable="false"
-            android:clickable="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/imgLayout"
             android:layout_alignEnd="@id/imgLayout"
-            android:layout_marginEnd="16dp"
             android:layout_marginTop="-16dp"
+            android:layout_marginEnd="16dp"
+            android:checkable="false"
+            android:clickable="false"
+            android:focusable="false"
             android:text="👍😍 3" />
 
     </RelativeLayout>
-
 </LinearLayout>
