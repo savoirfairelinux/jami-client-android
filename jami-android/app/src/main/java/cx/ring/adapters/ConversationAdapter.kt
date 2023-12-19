@@ -1102,8 +1102,29 @@ class ConversationAdapter(
                 val msgSequenceType = getMsgSequencing(position, isTimeShown)
                 val peerDisplayName = convViewHolder.mPeerDisplayName
 
-                // Do not show the avatar if it is a one to one conversation.
-                convViewHolder.mAvatar?.visibility = View.GONE
+                // Only show the peer avatar if it is a group conversation
+                val endOfSeq =
+                    msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE
+                if (presenter.isGroup()) {
+                    // Manage animation for avatar.
+                    // To only display the avatar of the last message.
+                    val avatar = convViewHolder.mAvatar
+                    if (endOfSeq) {
+                        avatar?.setImageDrawable(
+                            conversationFragment.getConversationAvatar(contact.primaryNumber)
+                        )
+                        avatar?.visibility = View.VISIBLE
+                    } else {
+                        if (position == lastMsgPos - 1) {
+                            avatar?.let { ActionHelper.startFadeOutAnimation(avatar) }
+                        } else {
+                            avatar?.setImageBitmap(null)
+                            avatar?.visibility = View.INVISIBLE
+                        }
+                    }
+                } else {
+                    convViewHolder.mAvatar?.visibility = View.GONE
+                }
                 // Manage deleted message.
                 if (isDeleted) {
                     msgTxt.text = context.getString(R.string.conversation_message_deleted)
@@ -1250,27 +1271,6 @@ class ConversationAdapter(
                                     }
                             )
                         } else visibility = View.GONE
-                    }
-                }
-                // Only show the peer avatar if it is a group conversation
-                val endOfSeq =
-                    msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE
-                if (presenter.isGroup()) {
-                    // Manage animation for avatar.
-                    // To only display the avatar of the last message.
-                    val avatar = convViewHolder.mAvatar
-                    if (endOfSeq) {
-                        avatar?.setImageDrawable(
-                            conversationFragment.getConversationAvatar(contact.primaryNumber)
-                        )
-                        avatar?.visibility = View.VISIBLE
-                    } else {
-                        if (position == lastMsgPos - 1) {
-                            avatar?.let { ActionHelper.startFadeOutAnimation(avatar) }
-                        } else {
-                            avatar?.setImageBitmap(null)
-                            avatar?.visibility = View.INVISIBLE
-                        }
                     }
                 }
                 // Apply a bottom margin to the global layout if end of sequence needed.
