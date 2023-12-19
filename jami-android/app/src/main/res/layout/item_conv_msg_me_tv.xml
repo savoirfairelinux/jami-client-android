@@ -36,7 +36,7 @@ along with this program; if not, write to the Free Software
         android:clipChildren="false"
         android:clipToPadding="false"
         android:paddingStart="@dimen/padding_large"
-        android:paddingEnd="2dp">
+        android:paddingEnd="0dp">
 
         <cx.ring.views.MessageStatusView
             android:id="@+id/status_icon"

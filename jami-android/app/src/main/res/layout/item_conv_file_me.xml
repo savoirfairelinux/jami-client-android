@@ -16,36 +16,34 @@
   ~  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
   -->
 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/file_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="8dp"
     android:background="@android:color/transparent"
     android:clickable="true"
     android:descendantFocusability="blocksDescendants"
     android:focusable="true"
+    android:gravity="center"
     android:orientation="vertical"
-    android:gravity="center">
+    android:paddingBottom="@dimen/padding_xsmall">
 
     <TextView
         android:id="@+id/msg_details_txt_perm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
+        android:paddingBottom="@dimen/padding_small"
         android:textColor="@color/textColorSecondary"
         android:textSize="@dimen/conversation_timestamp_textsize"
-        tools:text="@string/time_just_now" />
+        android:visibility="gone"
+        tools:text="@string/time_just_now"
+        tools:visibility="visible" />
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="8dp"
-        android:paddingEnd="2dp"
-        android:paddingStart="0dp">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:id="@+id/fileInfoLayout"
@@ -144,9 +142,7 @@
                         android:textColor="@color/color_primary_dark" />
 
                 </LinearLayout>
-
             </LinearLayout>
-
         </LinearLayout>
 
         <cx.ring.views.MessageStatusView
@@ -159,5 +155,4 @@
             android:tint="@color/grey_500" />
 
     </RelativeLayout>
-
 </LinearLayout>

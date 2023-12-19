@@ -34,7 +34,6 @@
         android:clipChildren="false"
         android:clipToPadding="false"
         android:paddingStart="72dp"
-        android:paddingTop="8dp"
         android:paddingEnd="2dp">
 
         <androidx.cardview.widget.CardView
@@ -42,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="44dp"
+            android:layout_marginEnd="24dp"
             android:foreground="@drawable/baseline_play_arrow_24"
             android:foregroundGravity="center"
             app:cardCornerRadius="16dp">

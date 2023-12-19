@@ -15,35 +15,35 @@
   ~ along with this program; if not, write to the Free Software
   ~  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
   -->
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="8dp"
     android:background="@android:color/transparent"
     android:clickable="true"
     android:descendantFocusability="blocksDescendants"
     android:focusable="true"
+    android:gravity="center"
     android:orientation="vertical"
-    android:gravity="center">
+    android:paddingBottom="@dimen/padding_xsmall">
 
     <TextView
         android:id="@+id/msg_details_txt_perm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
+        android:paddingBottom="@dimen/padding_small"
         android:textColor="@color/textColorSecondary"
         android:textSize="@dimen/conversation_timestamp_textsize"
-        tools:text="@string/time_just_now" />
+        android:visibility="gone"
+        tools:text="@string/time_just_now"
+        tools:visibility="visible" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="8dp"
-        android:paddingEnd="2dp"
-        android:paddingStart="72dp">
+        android:paddingStart="72dp"
+        android:paddingEnd="0dp">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/video_frame"
@@ -77,14 +77,13 @@
             android:id="@+id/msg_details_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@id/video_frame"
             android:layout_below="@id/video_frame"
+            android:layout_alignEnd="@id/video_frame"
             android:layout_marginEnd="@dimen/message_details_margin"
+            android:singleLine="true"
             android:textColor="@color/textColorSecondary"
             android:textSize="@dimen/conversation_timestamp_textsize"
-            android:singleLine="true"
             tools:text="@string/time_just_now" />
 
     </RelativeLayout>
-
 </LinearLayout>
