@@ -152,7 +152,7 @@
 
                 <ImageButton
                     android:id="@+id/acceptAudioCallButton"
-                    style="@style/ButtonOutLined"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:layout_marginStart="8dp"
@@ -162,7 +162,7 @@
 
                 <ImageButton
                     android:id="@+id/acceptVideoCallButton"
-                    style="@style/ButtonOutLined"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:contentDescription="@string/action_call_accept_video"
