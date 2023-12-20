@@ -254,16 +254,16 @@ class CallPresenter @Inject constructor(
 
     fun switchVideoInputClick() {
         val conference = mConference ?: return
-        if(conference.hasActiveNonScreenShareVideo())
-            mHardwareService.switchInput(conference.accountId, conference.id)
+        if(conference.hasActiveNonScreenShareVideo()) {
+            val camId = mHardwareService.changeCamera() ?: return
+            mCallService.replaceVideoMedia(conference, "camera://$camId", false)
+        }
     }
 
     fun switchOnOffCamera() {
         val conference = mConference ?: return
-        if(conference.hasActiveScreenSharing())
-            mHardwareService.switchInput(conference.accountId, conference.id, true)
-        else
-            mCallService.requestVideoMedia(conference, !conference.hasActiveNonScreenShareVideo())
+        val camId = mHardwareService.changeCamera(true)
+        mCallService.replaceVideoMedia(conference, "camera://$camId", conference.hasActiveNonScreenShareVideo())
     }
 
     fun configurationChanged(rotation: Int) {
@@ -414,7 +414,8 @@ class CallPresenter @Inject constructor(
                 pluginSurfaceUpdateId(call.pluginId)
                 view.displayLocalVideo(hasActiveCameraVideo && mDeviceRuntimeService.hasVideoPermission())
                 if (permissionChanged) {
-                    mHardwareService.switchInput(call.accountId, call.id, permissionChanged)
+                    val camId = mHardwareService.changeCamera(true)
+                    mCallService.replaceVideoMedia(call, "camera://$camId", true)
                     permissionChanged = false
                 }
             }
@@ -643,8 +644,9 @@ class CallPresenter @Inject constructor(
 
     fun switchOnOffScreenShare() {
         val conference = mConference ?: return
+        val camId = mHardwareService.changeCamera(true)
         if(conference.hasActiveScreenSharing())
-            mHardwareService.switchInput(conference.accountId, conference.id, true)
+            mCallService.replaceVideoMedia(conference, "camera://$camId", true)
         else
             view?.startScreenCapture()
     }
@@ -653,7 +655,8 @@ class CallPresenter @Inject constructor(
         val conference = mConference ?: return false
         mNotificationService.preparePendingScreenshare(conference) {
             val mediaProjection = view?.getMediaProjection(resultCode, data) ?: return@preparePendingScreenshare
-            mHardwareService.switchInput(conference.accountId, conference.id, false, mediaProjection)
+            mHardwareService.setPendingScreenShareProjection(mediaProjection)
+            mCallService.replaceVideoMedia(conference, "camera://desktop", false)
         }
         return true
     }
@@ -664,12 +667,32 @@ class CallPresenter @Inject constructor(
 
     fun startPlugin(mediaHandlerId: String) {
         mHardwareService.startMediaHandler(mediaHandlerId)
-        mConference?.let { conference -> mHardwareService.switchInput(conference.accountId, conference.id, mHardwareService.isPreviewFromFrontCamera) }
+        val conference = mConference ?: return
+        val media = conference.getMediaList() ?: return
+        val source = media.first {
+            it.mediaType == Media.MediaType.MEDIA_TYPE_VIDEO &&
+            it.source != "camera://desktop"
+        }.source ?: return
+        mHardwareService.switchInput(
+            conference.accountId,
+            conference.id,
+            source
+        )
     }
 
     fun stopPlugin() {
         mHardwareService.stopMediaHandler()
-        mConference?.let { conference -> mHardwareService.switchInput(conference.accountId, conference.id, mHardwareService.isPreviewFromFrontCamera) }
+        val conference = mConference ?: return
+        val media = conference.getMediaList() ?: return
+        val source = media.first {
+            it.mediaType == Media.MediaType.MEDIA_TYPE_VIDEO &&
+                    it.source != "camera://desktop"
+        }.source ?: return
+        mHardwareService.switchInput(
+            conference.accountId,
+            conference.id,
+            source
+        )
     }
 
     fun getDeviceId(): String? {
