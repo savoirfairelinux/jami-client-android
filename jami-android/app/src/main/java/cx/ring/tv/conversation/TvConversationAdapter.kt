@@ -903,7 +903,7 @@ class TvConversationAdapter(
                         if (isTimeShown) {
                             convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
                                 convViewHolder.mMsgDetailTxtPerm?.text =
-                                    TextUtils.timestampToDetailString(context, callMessage.timestamp)
+                                    TextUtils.timestampToDetailString(context, formatter, callMessage.timestamp)
                             })
                             convViewHolder.mMsgDetailTxtPerm?.visibility = View.VISIBLE
                         } else convViewHolder.mMsgDetailTxtPerm?.visibility = View.GONE
