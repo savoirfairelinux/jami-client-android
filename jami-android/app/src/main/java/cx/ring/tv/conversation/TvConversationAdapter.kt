@@ -89,6 +89,7 @@ class TvConversationAdapter(
     private val markwon: Markwon = Markwon.builder(conversationFragment.requireContext())
         .usePlugin(LinkifyPlugin.create())
         .build()
+    private val formatter = Formatter(StringBuilder(64), Locale.getDefault())
 
     /**
      * Refreshes the data and notifies the changes
@@ -448,7 +449,7 @@ class TvConversationAdapter(
     private fun configureForFileInfo(viewHolder: ConversationViewHolder, interaction: Interaction, position: Int) {
         val file = interaction as DataTransfer
         val path = presenter.deviceRuntimeService.getConversationPath(file)
-        val timeString = TextUtils.timestampToDetailString(viewHolder.itemView.context, file.timestamp)
+        val timeString = TextUtils.timestampToDetailString(viewHolder.itemView.context, formatter, file.timestamp)
         viewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
             viewHolder.mMsgDetailTxt?.text = when (val status = file.status) {
                 InteractionStatus.TRANSFER_FINISHED -> String.format("%s - %s", timeString,
@@ -465,7 +466,7 @@ class TvConversationAdapter(
         viewHolder.compositeDisposable.clear()
         if (hasPermanentTimeString(file, position)) {
             viewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
-                viewHolder.mMsgDetailTxtPerm?.text = TextUtils.timestampToDetailString(viewHolder.itemView.context, file.timestamp)
+                viewHolder.mMsgDetailTxtPerm?.text = TextUtils.timestampToDetailString(viewHolder.itemView.context, formatter, file.timestamp)
             })
             viewHolder.mMsgDetailTxtPerm?.visibility = View.VISIBLE
         } else {
@@ -646,7 +647,7 @@ class TvConversationAdapter(
         }
         if (isTimeShown) {
             convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe { t: Long? ->
-                val timeSeparationString = TextUtils.timestampToDetailString(context, textMessage.timestamp)
+                val timeSeparationString = TextUtils.timestampToDetailString(context, formatter, textMessage.timestamp)
                 convViewHolder.mMsgDetailTxtPerm!!.text = timeSeparationString
             })
             convViewHolder.mMsgDetailTxtPerm!!.visibility = View.VISIBLE
@@ -655,7 +656,7 @@ class TvConversationAdapter(
             val isExpanded = position == expandedItemPosition
             if (isExpanded) {
                 convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe { t: Long? ->
-                    val timeSeparationString = TextUtils.timestampToDetailString(context, textMessage.timestamp)
+                    val timeSeparationString = TextUtils.timestampToDetailString(context, formatter, textMessage.timestamp)
                     convViewHolder.mMsgDetailTxt!!.text = timeSeparationString
                 })
             }
@@ -685,7 +686,7 @@ class TvConversationAdapter(
             else -> R.string.hist_contact_added
         })
         viewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe { t: Long? ->
-            val timeSeparationString = TextUtils.timestampToDetailString(viewHolder.itemView.context, event.timestamp)
+            val timeSeparationString = TextUtils.timestampToDetailString(viewHolder.itemView.context, formatter, event.timestamp)
             viewHolder.mMsgDetailTxt?.text = timeSeparationString
         })
     }
