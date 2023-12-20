@@ -285,7 +285,8 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
         canDial: Boolean,
         showPluginBtn: Boolean,
         onGoingCall: Boolean,
-        hasActiveVideo: Boolean) {
+        hasActiveVideo: Boolean,
+        hasActiveScreenShare: Boolean) {
     }
 
     override fun resetBottomSheetState() {}
@@ -515,6 +516,10 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
     override fun goToConversation(accountId: String, conversationId: Uri) {}
     override fun goToAddContact(contact: Contact) {
         startActivityForResult(ActionHelper.getAddNumberIntentForContact(contact), ConversationFragment.REQ_ADD_CONTACT)
+    }
+
+    override fun startScreenCapture() {
+        TODO("Not yet implemented")
     }
 
     override fun startAddParticipant(conferenceId: String) {
