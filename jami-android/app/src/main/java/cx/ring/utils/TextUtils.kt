@@ -16,10 +16,10 @@
  */
 package cx.ring.utils
 
-import android.text.TextUtils
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.text.TextUtils
 import android.text.format.DateUtils
 import cx.ring.R
 import net.jami.model.Interaction.InteractionStatus
@@ -50,25 +50,26 @@ object TextUtils {
      * Can be the last received message timestamp for example.
      * @return The string to display in the text details between messages.
      */
-    fun timestampToDetailString(context: Context, timestamp: Long): String {
+    fun timestampToDetailString(context: Context, formatter: Formatter, timestamp: Long): String {
+        (formatter.out() as? StringBuilder)?.setLength(0)
         val diff = Date().time - timestamp
-        val timeStr: String = if (diff < DateUtils.WEEK_IN_MILLIS) {
+        val timeStr: Formatter = if (diff < DateUtils.WEEK_IN_MILLIS) {
             if (diff < DateUtils.DAY_IN_MILLIS && DateUtils.isToday(timestamp)) { // 11:32 A.M.
-                DateUtils.formatDateTime(context, timestamp, DateUtils.FORMAT_SHOW_TIME)
+                DateUtils.formatDateRange(context, formatter, timestamp, timestamp, DateUtils.FORMAT_SHOW_TIME)
             } else {
-                DateUtils.formatDateTime(context, timestamp,
+                DateUtils.formatDateRange(context, formatter, timestamp, timestamp,
                     DateUtils.FORMAT_SHOW_WEEKDAY or DateUtils.FORMAT_NO_YEAR or
                             DateUtils.FORMAT_ABBREV_ALL or DateUtils.FORMAT_SHOW_TIME)
             }
         } else if (diff < DateUtils.YEAR_IN_MILLIS) {
-            DateUtils.formatDateTime(context, timestamp, DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_NO_YEAR or
+            DateUtils.formatDateRange(context, formatter, timestamp, timestamp, DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_NO_YEAR or
                     DateUtils.FORMAT_ABBREV_ALL or DateUtils.FORMAT_SHOW_TIME)
         } else {
-            DateUtils.formatDateTime(context, timestamp, DateUtils.FORMAT_SHOW_TIME or DateUtils.FORMAT_SHOW_DATE or
+            DateUtils.formatDateRange(context, formatter, timestamp, timestamp, DateUtils.FORMAT_SHOW_TIME or DateUtils.FORMAT_SHOW_DATE or
                     DateUtils.FORMAT_SHOW_YEAR or DateUtils.FORMAT_SHOW_WEEKDAY or
                     DateUtils.FORMAT_ABBREV_ALL)
         }
-        return timeStr.uppercase(Locale.getDefault())
+        return timeStr.out().toString().uppercase(Locale.getDefault())
     }
 
     fun getReadableFileTransferStatus(context: Context, transferStatus: InteractionStatus): String {
