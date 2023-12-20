@@ -190,6 +190,18 @@ class Conference(val accountId: String, val id: String) {
         return false
     }
 
+    fun hasActiveNonScreenShareVideo(): Boolean {
+        return mParticipants.any { call ->
+            val mediaList = call.mediaList ?: return@any false
+            mediaList.any { media ->
+                media.isEnabled &&
+                !media.isMuted &&
+                media.mediaType == Media.MediaType.MEDIA_TYPE_VIDEO &&
+                media.source != "camera://desktop"
+            }
+        }
+    }
+
     val timestampStart: Long
         get() {
             var t = Long.MAX_VALUE
