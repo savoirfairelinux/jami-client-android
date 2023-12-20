@@ -497,9 +497,7 @@ class HardwareServiceImpl(
         if (videoParams.id == CameraService.VideoDevices.SCREEN_SHARING) {
             val projection = pendingScreenSharingSession ?: return
             pendingScreenSharingSession = null
-            if (!cameraService.startScreenSharing(videoParams, projection, surface, context.resources.displayMetrics)) {
-                projection.stop()
-            }
+            cameraService.startScreenSharing(videoParams, projection, surface, context.resources.displayMetrics)
             return
         }
 
