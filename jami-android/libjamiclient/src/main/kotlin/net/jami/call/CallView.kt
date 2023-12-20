@@ -30,7 +30,7 @@ interface CallView {
     fun updateAudioState(state: AudioState)
     fun updateTime(duration: Long)
     fun updateCallStatus(callState: CallStatus)
-    fun updateBottomSheetButtonStatus(isConference: Boolean, isSpeakerOn: Boolean, isMicrophoneMuted: Boolean, hasMultipleCamera: Boolean, canDial: Boolean, showPluginBtn: Boolean, onGoingCall: Boolean, hasActiveVideo: Boolean)
+    fun updateBottomSheetButtonStatus(isConference: Boolean, isSpeakerOn: Boolean, isMicrophoneMuted: Boolean, hasMultipleCamera: Boolean, canDial: Boolean, showPluginBtn: Boolean, onGoingCall: Boolean, hasActiveCameraVideo: Boolean, hasActiveScreenShare: Boolean)
     fun resetBottomSheetState()
     fun initNormalStateDisplay()
     fun initIncomingCallDisplay(hasVideo: Boolean)

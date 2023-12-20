@@ -948,7 +948,8 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         canDial: Boolean,
         showPluginBtn: Boolean,
         onGoingCall: Boolean,
-        hasActiveVideo: Boolean
+        hasActiveCameraVideo: Boolean,
+        hasActiveScreenShare: Boolean
     ) {
         binding?.apply {
             pluginsBtnContainer.isVisible = showPluginBtn
@@ -957,13 +958,14 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             dialpadBtnContainer.isVisible = canDial
 
             callVideocamBtn.apply {
-                isChecked = !hasActiveVideo
+                isChecked = !hasActiveCameraVideo
                 setImageResource(if (isChecked) R.drawable.baseline_videocam_off_24 else R.drawable.baseline_videocam_on_24)
             }
             callCameraFlipBtn.apply {
                 isEnabled = !callVideocamBtn.isChecked
-                setImageResource(if (hasMultipleCamera && hasActiveVideo) R.drawable.baseline_flip_camera_24 else R.drawable.baseline_flip_camera_24_off)
+                setImageResource(if (hasMultipleCamera && hasActiveCameraVideo) R.drawable.baseline_flip_camera_24 else R.drawable.baseline_flip_camera_24_off)
             }
+            callSharescreenBtn.isChecked = hasActiveScreenShare
             callMicBtn.isChecked = isMicrophoneMuted
         }
     }

@@ -285,7 +285,8 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
         canDial: Boolean,
         showPluginBtn: Boolean,
         onGoingCall: Boolean,
-        hasActiveVideo: Boolean) {
+        hasActiveVideo: Boolean,
+        hasActiveScreenShare: Boolean) {
     }
 
     override fun resetBottomSheetState() {}
