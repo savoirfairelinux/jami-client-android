@@ -55,7 +55,6 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.core.view.*
-import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import cx.ring.R
 import cx.ring.adapters.ConfParticipantAdapter
@@ -161,11 +160,9 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         previewMargin = inflater.context.resources.getDimension(R.dimen.call_preview_margin)
-        return (DataBindingUtil.inflate(inflater, R.layout.frag_call, container, false) as FragCallBinding)
+        return FragCallBinding.inflate(inflater, container, false)
             .also { b ->
-                b.presenter = this
                 binding = b
-
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                     //b.participantOverlayContainer.list
                     b.participantOverlayContainer.addOnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
@@ -173,7 +170,19 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                         updatePipParams()
                     }
                 }
-
+                b.callAcceptBtn.setOnClickListener { acceptClicked() }
+                b.callAcceptAudioBtn.setOnClickListener { acceptAudioClicked() }
+                b.callRefuseBtn.setOnClickListener { refuseClicked() }
+                b.callHngUpBtn.setOnClickListener { hangupClicked() }
+                b.callSpeakerBtn.setOnClickListener { speakerClicked() }
+                b.callMicBtn.setOnClickListener { micClicked() }
+                b.callVideocamBtn.setOnClickListener { switchCamera() }
+                b.callSharescreenBtn.setOnClickListener { shareScreenClicked() }
+                b.addParticipantBtn.setOnClickListener { addParticipantClicked() }
+                b.callDialpadBtn.setOnClickListener { displayDialPadKeyboard() }
+                b.callRaiseHandBtn.setOnClickListener { raiseHandClicked() }
+                b.callPluginsBtn.setOnClickListener { pluginsButtonClicked() }
+                b.callCameraFlipBtn.setOnClickListener { cameraFlip() }
                 bottomSheetParams = binding?.callOptionsBottomSheet?.let { BottomSheetBehavior.from(it) }
             }.root
     }
@@ -1289,7 +1298,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         presenter.raiseHand(binding!!.callRaiseHandBtn.isChecked)
     }
 
-    fun hangUpClicked() {
+    fun hangupClicked() {
         presenter.hangupCall()
     }
 
