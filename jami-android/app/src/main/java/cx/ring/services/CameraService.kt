@@ -45,6 +45,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.Subject
 import net.jami.daemon.IntVect
@@ -54,6 +55,7 @@ import net.jami.daemon.UintVect
 import java.nio.ByteBuffer
 import java.util.*
 import java.util.concurrent.Executor
+import java.util.concurrent.TimeUnit
 import kotlin.math.abs
 
 class CameraService internal constructor(c: Context) {
@@ -359,8 +361,16 @@ class CameraService internal constructor(c: Context) {
                 params.camera = null
             }
             params.projection?.let { mediaProjection ->
-                mediaProjection.stop()
-                params.projection = null
+                // delay the media projection stop call to avoid destroying the screen capture
+                // for cases where media sources in the daemon are re-initialized
+                Observable.timer(5, TimeUnit.SECONDS)
+                        .observeOn(Schedulers.io())
+                        .subscribe {
+                            if (!params.isCapturing) {
+                                params.projection = null
+                                mediaProjection.stop()
+                            }
+                        }
             }
             params.isCapturing = false
         }
