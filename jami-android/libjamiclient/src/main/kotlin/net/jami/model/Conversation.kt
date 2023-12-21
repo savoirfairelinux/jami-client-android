@@ -41,8 +41,8 @@ class Conversation : ConversationHistory {
     private val activeCallsSubject: Subject<List<ActiveCall>> =
         BehaviorSubject.createDefault(emptyList())
     private val composingStatusSubject: Subject<Account.ComposingStatus> = BehaviorSubject.createDefault(Account.ComposingStatus.Idle)
-    private val color: Subject<Int> = BehaviorSubject.create()
-    private val symbol: Subject<CharSequence> = BehaviorSubject.create()
+    private val color: Subject<Int> = BehaviorSubject.createDefault(0)
+    private val symbol: Subject<CharSequence> = BehaviorSubject.createDefault("")
     private val mContactSubject: Subject<List<Contact>> = BehaviorSubject.create()
     var loaded: Single<Conversation>? = null
     val lastElementLoadedSubject = SingleSubject.create<Completable>()

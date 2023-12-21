@@ -477,7 +477,7 @@
                                 android:background="?selectableItemBackgroundBorderless"
                                 android:onClick="@{() -> presenter.sendEmoji()}"
                                 android:padding="0dp"
-                                android:text="@string/conversation_default_emoji"
+                                tools:text="@string/conversation_default_emoji"
                                 android:textSize="18sp" />
 
                             <ImageButton
