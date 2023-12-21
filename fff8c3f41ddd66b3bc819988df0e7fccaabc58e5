@@ -141,6 +141,30 @@
       },
       "revId": "fff8c3f41ddd66b3bc819988df0e7fccaabc58e5",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6a60e943_72bfaca2",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/CameraService.kt",
+        "patchSetId": 24
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 930
+      },
+      "writtenOn": "2023-12-21T14:52:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7106a4a1_bfa6b33b",
+      "range": {
+        "startLine": 370,
+        "startChar": 32,
+        "endLine": 371,
+        "endChar": 54
+      },
+      "revId": "fff8c3f41ddd66b3bc819988df0e7fccaabc58e5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
