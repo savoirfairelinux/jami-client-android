@@ -50,6 +50,7 @@ import cx.ring.fragments.HomeFragment
 import cx.ring.fragments.WelcomeJamiFragment
 import cx.ring.service.DRingService
 import cx.ring.settings.SettingsFragment
+import cx.ring.utils.AsyncConversationCache
 import cx.ring.utils.BitmapUtils
 import cx.ring.utils.ContentUriHandler
 import cx.ring.utils.ConversationPath
@@ -86,6 +87,9 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
     private var fConversation: ConversationFragment? = null
     private var fWelcomeJami: WelcomeJamiFragment? = null
     private var mHomeFragment: HomeFragment? = null
+    private var mBinding: ActivityHomeBinding? = null
+    private var mMigrationDialog: AlertDialog? = null
+    private val mDisposable = CompositeDisposable()
 
     @Inject
     lateinit
@@ -103,9 +107,7 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
     lateinit
     var mNotificationService: NotificationService
 
-    private var mBinding: ActivityHomeBinding? = null
-    private var mMigrationDialog: AlertDialog? = null
-    private val mDisposable = CompositeDisposable()
+    var conversationCache: AsyncConversationCache? = null
 
     private val conversationBackPressedCallback: OnBackPressedCallback =
         object : OnBackPressedCallback(false) {
@@ -182,6 +184,8 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
         }
         onBackPressedDispatcher.addCallback(this, conversationBackPressedCallback)
         handleIntent(intent)
+
+        conversationCache = AsyncConversationCache(this)
     }
 
     override fun onDestroy() {

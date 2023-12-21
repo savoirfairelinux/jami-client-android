@@ -308,9 +308,9 @@ class ConversationAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ConversationViewHolder {
-        val type = MessageType.values()[viewType]
+        val type = MessageType.entries[viewType]
         val v = if (type == MessageType.INVALID) FrameLayout(parent.context)
-        else (LayoutInflater.from(parent.context).inflate(type.layout, parent, false) as ViewGroup)
+        else (conversationFragment.itemCache!![viewType].getView() as ViewGroup)
         return ConversationViewHolder(v, type)
     }
 

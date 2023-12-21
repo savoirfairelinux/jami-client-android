@@ -113,6 +113,8 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     private var loading = true
     private var animating = 0
 
+    var itemCache: List<AsyncLayoutCache>? = null
+
     private val pickMultipleMedia =
         registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia(8)) { uris ->
             for (uri in uris) {
@@ -134,7 +136,17 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             adapter.updateDataset(conversation)
             loading = false
         }
-        requireActivity().invalidateOptionsMenu()
+        binding?.histList?.let {
+            if (it.isInvisible) {
+                // Fade-in animation after load
+                it.alpha = 0f
+                it.isInvisible = false
+                it.doOnNextLayout {
+                    it.animate().alpha(1f).setDuration(300).start()
+                }
+            }
+        }
+        requireActivity().invalidateMenu()
     }
 
     override fun scrollToEnd() {
@@ -207,7 +219,10 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         mapWidth = res.getDimensionPixelSize(R.dimen.location_sharing_minmap_width)
         mapHeight = res.getDimensionPixelSize(R.dimen.location_sharing_minmap_height)
         marginPxTotal = marginPx
-        return FragConversationBinding.inflate(inflater, container, false).let { binding ->
+        val activity = requireActivity() as HomeActivity
+        val cache = activity.conversationCache!!.getData()
+        itemCache = cache.itemCaches
+        return cache.binding.let { binding ->
             this@ConversationFragment.binding = binding
             binding.presenter = this@ConversationFragment
             animation.duration = 150
@@ -268,6 +283,8 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                 remaining
             }
 
+            binding.histList.isInvisible = true
+
             binding.msgInputTxt.setOnEditorActionListener { _, actionId: Int, _ -> actionSendMsgText(actionId) }
             binding.msgInputTxt.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus: Boolean ->
                 if (hasFocus) {
@@ -324,60 +341,59 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding?.let { binding ->
-            mPreferences?.let { preferences ->
-                val pendingMessage = preferences.getString(KEY_PREFERENCE_PENDING_MESSAGE, null)
-                if (!pendingMessage.isNullOrEmpty()) {
-                    binding.msgInputTxt.setText(pendingMessage)
-                    binding.msgSend.visibility = View.VISIBLE
-                    binding.emojiSend.visibility = View.GONE
-                }
+        val binding = binding ?: return
+        mPreferences?.let { preferences ->
+            val pendingMessage = preferences.getString(KEY_PREFERENCE_PENDING_MESSAGE, null)
+            if (!pendingMessage.isNullOrEmpty()) {
+                binding.msgInputTxt.setText(pendingMessage)
+                binding.msgSend.visibility = View.VISIBLE
+                binding.emojiSend.visibility = View.GONE
             }
-            binding.msgInputTxt.addOnLayoutChangeListener { _, _, _, _, _, oldLeft, oldTop, oldRight, oldBottom ->
-                if (oldBottom == 0 && oldTop == 0) {
-                    updateListPadding()
-                } else {
-                    if (animation.isStarted) animation.cancel()
-                    animation.setIntValues(
-                        binding.histList.paddingBottom,
-                        (currentBottomView?.height ?: 0) + marginPxTotal
-                    )
-                    animation.start()
-                }
-            }
-            binding.histList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                // The minimum amount of items to have below current scroll position
-                // before loading more.
-                val visibleLoadThreshold = 3
-                // The amount of items to have below the current scroll position to display
-                // the scroll to latest button.
-                val visibleLatestThreshold = 8
-                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {}
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    val layoutManager = recyclerView.layoutManager as LinearLayoutManager? ?: return
-                    if (!loading
-                        && layoutManager.findFirstVisibleItemPosition() < visibleLoadThreshold
-                    ) {
-                        loading = true
-                        presenter.loadMore()
-                    }
-
-                    // Recyclerview is composed of items which are sometimes invisible (to preserve
-                    // the model and interaction relationship).
-                    // Because of bug #1251, we use findLastCompletelyVisibleItemPosition because
-                    // findLastVisibleItemPosition ignores invisible items (don't understand why).
-                    val lastVisibleItemPosition =
-                        layoutManager.findLastCompletelyVisibleItemPosition()
-                    if (layoutManager.itemCount - lastVisibleItemPosition > visibleLatestThreshold)
-                        binding.fabLatest.show()
-                    else binding.fabLatest.hide()
-                }
-            })
-
-            val animator = binding.histList.itemAnimator as DefaultItemAnimator?
-            animator?.supportsChangeAnimations = false
-            binding.histList.adapter = mAdapter
         }
+        binding.msgInputTxt.addOnLayoutChangeListener { _, _, _, _, _, oldLeft, oldTop, oldRight, oldBottom ->
+            if (oldBottom == 0 && oldTop == 0) {
+                updateListPadding()
+            } else {
+                if (animation.isStarted) animation.cancel()
+                animation.setIntValues(
+                    binding.histList.paddingBottom,
+                    (currentBottomView?.height ?: 0) + marginPxTotal
+                )
+                animation.start()
+            }
+        }
+        binding.histList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            // The minimum amount of items to have below current scroll position
+            // before loading more.
+            val visibleLoadThreshold = 3
+            // The amount of items to have below the current scroll position to display
+            // the scroll to latest button.
+            val visibleLatestThreshold = 8
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {}
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                val layoutManager = recyclerView.layoutManager as LinearLayoutManager? ?: return
+                if (!loading
+                    && layoutManager.findFirstVisibleItemPosition() < visibleLoadThreshold
+                ) {
+                    loading = true
+                    presenter.loadMore()
+                }
+
+                // Recyclerview is composed of items which are sometimes invisible (to preserve
+                // the model and interaction relationship).
+                // Because of bug #1251, we use findLastCompletelyVisibleItemPosition because
+                // findLastVisibleItemPosition ignores invisible items (don't understand why).
+                val lastVisibleItemPosition =
+                    layoutManager.findLastCompletelyVisibleItemPosition()
+                if (layoutManager.itemCount - lastVisibleItemPosition > visibleLatestThreshold)
+                    binding.fabLatest.show()
+                else binding.fabLatest.hide()
+            }
+        })
+
+        val animator = binding.histList.itemAnimator as DefaultItemAnimator?
+        animator?.supportsChangeAnimations = false
+        binding.histList.adapter = mAdapter
     }
 
     override fun setConversationColor(@ColorInt color: Int) {
@@ -401,7 +417,11 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         }
         mAdapter = null
         super.onDestroyView()
-        binding = null
+        binding?.let { b ->
+            (requireActivity() as? HomeActivity?)?.conversationCache?.recycleView(b, itemCache!!)
+            binding = null
+            itemCache = null
+        }
     }
 
     override fun onContextItemSelected(item: MenuItem): Boolean =
