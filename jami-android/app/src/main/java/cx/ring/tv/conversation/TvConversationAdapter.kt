@@ -27,9 +27,15 @@ import android.text.format.DateUtils
 import android.text.format.Formatter
 import android.util.Log
 import android.util.TypedValue
-import android.view.*
+import android.view.ContextMenu
 import android.view.ContextMenu.ContextMenuInfo
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.Surface
 import android.view.TextureView.SurfaceTextureListener
+import android.view.View
+import android.view.ViewGroup
 import android.view.ViewGroup.MarginLayoutParams
 import android.widget.FrameLayout
 import android.widget.ImageView
@@ -46,12 +52,14 @@ import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.DrawableImageViewTarget
 import com.google.android.material.color.MaterialColors
 import cx.ring.R
-import cx.ring.adapters.ConversationAdapter
 import cx.ring.adapters.MessageType
 import cx.ring.client.MediaViewerActivity
-import cx.ring.utils.*
+import cx.ring.utils.ActionHelper
 import cx.ring.utils.ActionHelper.setPadding
+import cx.ring.utils.ContentUriHandler
 import cx.ring.utils.ContentUriHandler.getUriForFile
+import cx.ring.utils.DeviceUtils
+import cx.ring.utils.TextUtils
 import cx.ring.viewholders.ConversationViewHolder
 import io.noties.markwon.Markwon
 import io.noties.markwon.linkify.LinkifyPlugin
@@ -59,8 +67,12 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.conversation.ConversationPresenter
-import net.jami.model.*
+import net.jami.model.Call
+import net.jami.model.ContactEvent
+import net.jami.model.DataTransfer
+import net.jami.model.Interaction
 import net.jami.model.Interaction.InteractionStatus
+import net.jami.model.TextMessage
 import net.jami.utils.StringUtils.isOnlyEmoji
 import java.io.File
 import java.text.DateFormat
@@ -76,7 +88,8 @@ class TvConversationAdapter(
     private val mInteractions = ArrayList<Interaction>()
     private val hPadding = res.getDimensionPixelSize(R.dimen.padding_medium)
     private val vPadding = res.getDimensionPixelSize(R.dimen.padding_small)
-    private val mPictureMaxSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 200f, res.displayMetrics).toInt()
+    private val mPictureMaxSize =
+        TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 200f, res.displayMetrics).toInt()
     private val pictureOptions = RequestOptions()
         .transform(CenterInside())
         .fitCenter()
@@ -293,7 +306,8 @@ class TvConversationAdapter(
         notifyDataSetChanged()
     }
 
-    private class RecyclerViewContextMenuInfo constructor(val position: Int, val id: Long) : ContextMenuInfo
+    private class RecyclerViewContextMenuInfo constructor(val position: Int, val id: Long) :
+        ContextMenuInfo
 
     fun onContextItemSelected(item: MenuItem): Boolean {
         val info = mCurrentLongItem ?: return false
@@ -332,7 +346,11 @@ class TvConversationAdapter(
                     .setAction(Intent.ACTION_VIEW)
                     .setDataAndType(contentUri, "image/*")
                     .setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                val options = ActivityOptionsCompat.makeSceneTransitionAnimation(conversationFragment.requireActivity(), viewHolder.mImage!!, "picture")
+                val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                    conversationFragment.requireActivity(),
+                    viewHolder.mImage!!,
+                    "picture"
+                )
                 conversationFragment.startActivityForResult(i, 3006, options.toBundle())
             } catch (e: Exception) {
                 Log.w(TAG, "Can't open picture", e)
@@ -343,15 +361,22 @@ class TvConversationAdapter(
     private fun configureAudio(viewHolder: ConversationViewHolder, path: File) {
         val context = viewHolder.itemView.context
         viewHolder.itemView.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
-            viewHolder.itemView.setBackgroundResource(if (hasFocus) R.drawable.tv_item_selected_background else R.drawable.tv_item_unselected_background)
-            viewHolder.mAudioInfoLayout?.animate()?.scaleY(if (hasFocus) 1.1f else 1f)?.scaleX(if (hasFocus) 1.1f else 1f)
+            viewHolder.itemView.setBackgroundResource(
+                if (hasFocus) R.drawable.tv_item_selected_background
+                else R.drawable.tv_item_unselected_background
+            )
+            viewHolder.mAudioInfoLayout?.animate()?.scaleY(if (hasFocus) 1.1f else 1f)
+                ?.scaleX(if (hasFocus) 1.1f else 1f)
         }
 
         try {
             val acceptBtn = viewHolder.btnAccept as ImageView
             val refuseBtn = viewHolder.btnRefuse
             acceptBtn.setImageResource(R.drawable.baseline_play_arrow_24)
-            val player = MediaPlayer.create(context, getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, path))
+            val player = MediaPlayer.create(
+                context,
+                getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, path)
+            )
             viewHolder.player = player
             if (player != null) {
                 player.setOnCompletionListener { mp: MediaPlayer ->
@@ -378,7 +403,14 @@ class TvConversationAdapter(
                         .subscribe {
                             val pS = player.currentPosition / 1000
                             val dS = player.duration / 1000
-                            viewHolder.mMsgTxt?.text = String.format(Locale.getDefault(), "%02d:%02d / %02d:%02d", pS / 60, pS % 60, dS / 60, dS % 60)
+                            viewHolder.mMsgTxt?.text = String.format(
+                                Locale.getDefault(),
+                                "%02d:%02d / %02d:%02d",
+                                pS / 60,
+                                pS % 60,
+                                dS / 60,
+                                dS % 60
+                            )
                         })
             } else {
                 acceptBtn.setOnClickListener(null)
@@ -392,8 +424,12 @@ class TvConversationAdapter(
     private fun configureVideo(viewHolder: ConversationViewHolder, path: File) {
         val context = viewHolder.itemView.context
         viewHolder.itemView.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
-            viewHolder.itemView.setBackgroundResource(if (hasFocus) R.drawable.tv_item_selected_background else R.drawable.tv_item_unselected_background)
-            viewHolder.mLayout?.animate()?.scaleY(if (hasFocus) 1.1f else 1f)?.scaleX(if (hasFocus) 1.1f else 1f)
+            viewHolder.itemView.setBackgroundResource(
+                if (hasFocus) R.drawable.tv_item_selected_background
+                else R.drawable.tv_item_unselected_background
+            )
+            viewHolder.mLayout?.animate()?.scaleY(if (hasFocus) 1.1f else 1f)
+                ?.scaleX(if (hasFocus) 1.1f else 1f)
         }
 
         viewHolder.player?.let {
@@ -402,9 +438,14 @@ class TvConversationAdapter(
         }
         val video = viewHolder.video ?: return
         val cardLayout = viewHolder.mLayout as CardView
-        val player = MediaPlayer.create(context, getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, path)) ?: return
+        val player = MediaPlayer.create(
+            context,
+            getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, path)
+        ) ?: return
         viewHolder.player = player
-        val playBtn = ContextCompat.getDrawable(cardLayout.context, R.drawable.baseline_play_arrow_24)!!.mutate()
+        val playBtn =
+            ContextCompat.getDrawable(cardLayout.context, R.drawable.baseline_play_arrow_24)!!
+                .mutate()
         DrawableCompat.setTint(playBtn, Color.WHITE)
         cardLayout.foreground = playBtn
         player.setOnCompletionListener { mp: MediaPlayer ->
@@ -417,7 +458,7 @@ class TvConversationAdapter(
             Log.w(TAG, "OnVideoSizeChanged " + width + "x" + height)
             val p = video.layoutParams as FrameLayout.LayoutParams
             val maxDim = max(width, height)
-            if (maxDim != 0)  {
+            if (maxDim != 0) {
                 p.width = width * mPictureMaxSize / maxDim
                 p.height = height * mPictureMaxSize / maxDim
             } else {
@@ -433,7 +474,11 @@ class TvConversationAdapter(
             player.setSurface(viewHolder.surface)
         }
         video.surfaceTextureListener = object : SurfaceTextureListener {
-            override fun onSurfaceTextureAvailable(surfaceTexture: SurfaceTexture, width: Int, height: Int) {
+            override fun onSurfaceTextureAvailable(
+                surfaceTexture: SurfaceTexture,
+                width: Int,
+                height: Int
+            ) {
                 if (viewHolder.surface == null) {
                     viewHolder.surface = Surface(surfaceTexture).also { surface ->
                         try {
@@ -445,7 +490,11 @@ class TvConversationAdapter(
                 }
             }
 
-            override fun onSurfaceTextureSizeChanged(surface: SurfaceTexture, width: Int, height: Int) {
+            override fun onSurfaceTextureSizeChanged(
+                surface: SurfaceTexture,
+                width: Int,
+                height: Int
+            ) {
             }
 
             override fun onSurfaceTextureDestroyed(surface: SurfaceTexture): Boolean {
@@ -479,10 +528,18 @@ class TvConversationAdapter(
         player.seekTo(1)
     }
 
-    private fun configureForFileInfo(viewHolder: ConversationViewHolder, interaction: Interaction, position: Int) {
+    private fun configureForFileInfo(
+        viewHolder: ConversationViewHolder,
+        interaction: Interaction,
+        position: Int
+    ) {
         val file = interaction as DataTransfer
         val path = presenter.deviceRuntimeService.getConversationPath(file)
-        val timeString = TextUtils.timestampToDetailString(viewHolder.itemView.context, formatter, file.timestamp)
+        val timeString = TextUtils.timestampToDetailString(
+            viewHolder.itemView.context,
+            formatter,
+            file.timestamp
+        )
         viewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
             viewHolder.mMsgDetailTxt?.text = when (val status = file.status) {
                 InteractionStatus.TRANSFER_FINISHED -> String.format("%s - %s", timeString,
@@ -499,7 +556,11 @@ class TvConversationAdapter(
         viewHolder.compositeDisposable.clear()
         if (hasPermanentTimeString(file, position)) {
             viewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
-                viewHolder.mMsgDetailTxtPerm?.text = TextUtils.timestampToDetailString(viewHolder.itemView.context, formatter, file.timestamp)
+                viewHolder.mMsgDetailTxtPerm?.text = TextUtils.timestampToDetailString(
+                    viewHolder.itemView.context,
+                    formatter,
+                    file.timestamp
+                )
             })
             viewHolder.mMsgDetailTxtPerm?.visibility = View.VISIBLE
         } else {
@@ -550,7 +611,8 @@ class TvConversationAdapter(
                 View.OnFocusChangeListener { v, hasFocus ->
                     viewHolder.itemView.setBackgroundResource(
                         if (hasFocus) R.drawable.tv_item_selected_background
-                        else R.drawable.tv_item_unselected_background)
+                        else R.drawable.tv_item_unselected_background
+                    )
                     viewHolder.mFileInfoLayout?.animate()
                         ?.scaleY(if (hasFocus) 1.1f else 1f)
                         ?.scaleX(if (hasFocus) 1.1f else 1f)
@@ -558,7 +620,8 @@ class TvConversationAdapter(
             val status = file.status
             viewHolder.mIcon?.setImageResource(
                 if (status.isError) R.drawable.baseline_warning_24
-                else R.drawable.baseline_attach_file_24)
+                else R.drawable.baseline_attach_file_24
+            )
             viewHolder.mMsgTxt?.text = file.displayName
             if (status === InteractionStatus.TRANSFER_AWAITING_HOST) {
                 viewHolder.mAnswerLayout?.visibility = View.VISIBLE
@@ -581,7 +644,11 @@ class TvConversationAdapter(
      * @param interaction    The conversation element to display
      * @param position       The position of the viewHolder
      */
-    private fun configureForTextMessage(convViewHolder: ConversationViewHolder, interaction: Interaction, position: Int) {
+    private fun configureForTextMessage(
+        convViewHolder: ConversationViewHolder,
+        interaction: Interaction,
+        position: Int
+    ) {
         val context = convViewHolder.itemView.context
         val textMessage = interaction as TextMessage
         val contact = textMessage.contact
@@ -592,8 +659,10 @@ class TvConversationAdapter(
         convViewHolder.itemView.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
             convViewHolder.itemView.setBackgroundResource(
                 if (hasFocus) R.drawable.tv_item_selected_background
-                else R.drawable.tv_item_unselected_background)
-            convViewHolder.mMsgTxt!!.animate().scaleY(if (hasFocus) 1.1f else 1f).scaleX(if (hasFocus) 1.1f else 1f)
+                else R.drawable.tv_item_unselected_background
+            )
+            convViewHolder.mMsgTxt!!.animate().scaleY(if (hasFocus) 1.1f else 1f)
+                .scaleX(if (hasFocus) 1.1f else 1f)
         }
         val message = textMessage.body!!.trim { it <= ' ' }
         val longPressView = convViewHolder.itemView
@@ -672,7 +741,8 @@ class TvConversationAdapter(
 
         if (isTimeShown) {
             convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe { t: Long? ->
-                val timeSeparationString = TextUtils.timestampToDetailString(context, formatter, textMessage.timestamp)
+                val timeSeparationString =
+                    TextUtils.timestampToDetailString(context, formatter, textMessage.timestamp)
                 convViewHolder.mMsgDetailTxtPerm!!.text = timeSeparationString
             })
             convViewHolder.mMsgDetailTxtPerm!!.visibility = View.VISIBLE
@@ -681,7 +751,8 @@ class TvConversationAdapter(
             val isExpanded = position == expandedItemPosition
             if (isExpanded) {
                 convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe { t: Long? ->
-                    val timeSeparationString = TextUtils.timestampToDetailString(context, formatter, textMessage.timestamp)
+                    val timeSeparationString =
+                        TextUtils.timestampToDetailString(context, formatter, textMessage.timestamp)
                     convViewHolder.mMsgDetailTxt!!.text = timeSeparationString
                 })
             }
@@ -725,18 +796,27 @@ class TvConversationAdapter(
             })
     }
 
-    private fun configureForContactEvent(viewHolder: ConversationViewHolder, interaction: Interaction) {
+    private fun configureForContactEvent(
+        viewHolder: ConversationViewHolder,
+        interaction: Interaction
+    ) {
         val event = interaction as ContactEvent
-        viewHolder.mMsgTxt?.setText(when (event.event) {
-            ContactEvent.Event.ADDED -> R.string.hist_contact_added
-            ContactEvent.Event.INVITED -> R.string.hist_contact_invited
-            ContactEvent.Event.REMOVED -> R.string.hist_contact_left
-            ContactEvent.Event.BANNED -> R.string.hist_contact_banned
-            ContactEvent.Event.INCOMING_REQUEST -> R.string.hist_invitation_received
-            else -> R.string.hist_contact_added
-        })
+        viewHolder.mMsgTxt?.setText(
+            when (event.event) {
+                ContactEvent.Event.ADDED -> R.string.hist_contact_added
+                ContactEvent.Event.INVITED -> R.string.hist_contact_invited
+                ContactEvent.Event.REMOVED -> R.string.hist_contact_left
+                ContactEvent.Event.BANNED -> R.string.hist_contact_banned
+                ContactEvent.Event.INCOMING_REQUEST -> R.string.hist_invitation_received
+                else -> R.string.hist_contact_added
+            }
+        )
         viewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe { t: Long? ->
-            val timeSeparationString = TextUtils.timestampToDetailString(viewHolder.itemView.context, formatter, event.timestamp)
+            val timeSeparationString = TextUtils.timestampToDetailString(
+                viewHolder.itemView.context,
+                formatter,
+                event.timestamp
+            )
             viewHolder.mMsgDetailTxt?.text = timeSeparationString
         })
     }
@@ -1101,7 +1181,11 @@ class TvConversationAdapter(
         val nextMsg = getNextInteractionFromPosition(i)
         if (prevMsg != null && nextMsg != null) {
             val nextMsgHasTime = hasPermanentTimeString(nextMsg, i + 1)
-            if ((isSeqBreak(msg, prevMsg) || isTimeShown) && !(isSeqBreak(msg, nextMsg) || nextMsgHasTime)) {
+            if ((isSeqBreak(msg, prevMsg) || isTimeShown) && !(isSeqBreak(
+                    msg,
+                    nextMsg
+                ) || nextMsgHasTime)
+            ) {
                 return SequenceType.FIRST
             } else if (!isSeqBreak(msg, prevMsg) && !isTimeShown && isSeqBreak(msg, nextMsg)) {
                 return SequenceType.LAST
