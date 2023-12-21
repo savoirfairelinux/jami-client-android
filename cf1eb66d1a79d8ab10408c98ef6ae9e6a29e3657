@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d7cfc6fc_78a759ad",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/model/Conference.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-12-21T03:09:25Z",
+      "side": 1,
+      "message": "potential race conditions if this is called form the UI thread while the media list or the participant list is updated from the daemon. If this was already the case before, it could be fixed in another commit.",
+      "range": {
+        "startLine": 193,
+        "startChar": 4,
+        "endLine": 203,
+        "endChar": 5
+      },
+      "revId": "cf1eb66d1a79d8ab10408c98ef6ae9e6a29e3657",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
