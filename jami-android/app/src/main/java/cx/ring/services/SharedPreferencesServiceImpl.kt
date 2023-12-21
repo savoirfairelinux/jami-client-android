@@ -225,10 +225,11 @@ class SharedPreferencesServiceImpl(private val context: Context, accountService:
 
         /** Compute conversation color from preference value, fallback on default */
         fun getConversationColor(context: Context, @ColorInt color: Int) =
-            if (color != 0) color else context.resources.getColor(R.color.color_primary_light)
+            if (color != 0) color else context.getColor(R.color.color_primary_light)
 
         /** Compute conversation symbol from preference value, fallback on default */
-        fun getConversationSymbol(context: Context, symbol: CharSequence) =
-            symbol.ifEmpty { context.resources.getText(R.string.conversation_default_emoji) }
+        fun getConversationSymbol(context: Context, symbol: CharSequence?): CharSequence =
+            if (!symbol.isNullOrEmpty()) symbol
+            else context.resources.getText(R.string.conversation_default_emoji)
     }
 }
