@@ -71,7 +71,7 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
     val mReplyTxt: TextView? = v.findViewById(R.id.msg_reply_txt)
     val mInReplyTo: TextView? = v.findViewById(R.id.msg_in_reply_to)
     val mPeerDisplayName: TextView? = v.findViewById(R.id.msg_display_name)
-    val reactionChip: Chip? = v.findViewById(R.id.reaction_chip)
+    val reactionChip: TextView? = v.findViewById(R.id.reaction_chip)
     val mIcon: ImageView? = when (type) {
         MessageType.INCOMING_CALL_INFORMATION,
         MessageType.OUTGOING_CALL_INFORMATION -> v.findViewById(R.id.call_icon)

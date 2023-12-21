@@ -363,7 +363,7 @@ class ConversationAdapter(
                     }
                     // Subscribe on result.
                     Observable.combineLatest(entry) { resultDictionary ->
-                        resultDictionary.map { it ->
+                        resultDictionary.map {
                             it as Pair<ContactViewModel, List<Interaction>>
                         }
                     }
@@ -411,7 +411,7 @@ class ConversationAdapter(
                             chip.isVisible = true
                             chip.isClickable = true
                             chip.isFocusable = true
-                            chip.isChecked = false
+                            //chip.isChecked = false
                         }
                     }
                 }
@@ -1663,8 +1663,8 @@ class ConversationAdapter(
          */
         private fun setBottomMargin(view: View, margin_in_dp: Int) {
             val targetSize = (margin_in_dp * view.context.resources.displayMetrics.density).toInt()
-            val params = view.layoutParams as MarginLayoutParams
-            params.bottomMargin = targetSize
+            val params = view.layoutParams as? MarginLayoutParams?
+            params?.bottomMargin = targetSize
         }
 
         /**

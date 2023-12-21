@@ -139,25 +139,23 @@ along with this program; if not, write to the Free Software
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="5dp" />
 
-        <com.google.android.material.chip.Chip
+        <TextView
             android:id="@+id/reaction_chip"
-            style="@style/Widget.Material3.Chip.Suggestion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/msg_txt"
             android:layout_alignEnd="@id/msg_txt"
             android:layout_marginTop="-16dp"
             android:layout_marginEnd="8dp"
+            android:background="@drawable/background_item_conv_image"
             android:backgroundTint="@color/icon_background_color"
             android:elevation="4dp"
             android:outlineProvider="none"
             android:text="👍 😍 3"
-            app:chipCornerRadius="5dp"
-            app:chipEndPadding="0dp"
-            app:chipStartPadding="0dp"
-            app:chipStrokeColor="@color/border_color"
-            app:textEndPadding="5dp"
-            app:textStartPadding="5dp" />
+            android:lines="1"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:padding="5dp" />
 
     </RelativeLayout>
 
