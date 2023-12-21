@@ -1446,6 +1446,13 @@ class ConversationAdapter(
                             acceptCallVideoButton.setColorFilter(
                                 context.getColor(R.color.accept_call_button)
                             )
+                            // Set the background to the call started message.
+                            val resIndex = msgSequenceType.ordinal + 4
+                            callAcceptLayout.background =
+                                ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
+                            callAcceptLayout.background.setTint(
+                                context.getColor(R.color.conversation_secondary_background)
+                            )
                         } else {
                             // Set the message to the right because it is outgoing.
                             convViewHolder.mGroupCallLayout?.gravity = Gravity.END
@@ -1464,15 +1471,13 @@ class ConversationAdapter(
                                 acceptCallVideoButton.setColorFilter(
                                     context.getColor(R.color.white)
                                 )
+                                // Set the background to the call started message.
+                                val resIndex = msgSequenceType.ordinal
+                                callAcceptLayout.background =
+                                    ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
+                                callAcceptLayout.background.setTint(convColor)
                             }
                         }
-                        // Set the background to the call started message.
-                        // Call started message, incoming or outgoing and first,
-                        // middle, last or single.
-                        val resIndex = msgSequenceType.ordinal +
-                                (if (callStartedMsg.isIncoming) 1 else 0) * 4
-                        callAcceptLayout.background =
-                            ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
                         callAcceptLayout.setPadding(callPadding)
                     })
 
