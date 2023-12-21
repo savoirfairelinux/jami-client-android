@@ -26,6 +26,7 @@ import android.animation.ValueAnimator
 import android.media.MediaPlayer
 import android.view.Surface
 import android.view.View
+import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.ImageView
 import com.google.android.material.chip.Chip
@@ -73,6 +74,7 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
         MessageType.OUTGOING_VIDEO -> v.findViewById(R.id.status_icon)
         else -> null
     }
+    val mTypingIndicatorLayout: FrameLayout? = v.findViewById(R.id.typing_indicator_layout)
     val mReplyName: TextView? = v.findViewById(R.id.msg_reply_name)
     val mReplyTxt: TextView? = v.findViewById(R.id.msg_reply_txt)
     val mInReplyTo: TextView? = v.findViewById(R.id.msg_in_reply_to)

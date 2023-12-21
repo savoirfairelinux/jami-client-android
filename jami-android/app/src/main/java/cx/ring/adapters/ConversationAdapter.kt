@@ -1066,7 +1066,24 @@ class ConversationAdapter(
     }
 
     private fun configureForTypingIndicator(viewHolder: ConversationViewHolder) {
-        // Start the animation.
+        // Set the alignment of the typing indicator.
+        val layoutParams = FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.WRAP_CONTENT,
+            FrameLayout.LayoutParams.WRAP_CONTENT
+        )
+        if (presenter.isGroup()) {
+            layoutParams.setMargins(
+                res.getDimensionPixelSize(R.dimen.margin_with_avatar), 0,
+                0, 0
+            )
+        } else {
+            layoutParams.setMargins(
+                res.getDimensionPixelSize(R.dimen.margin_without_avatar), 0,
+                0, 0
+            )
+        }
+        viewHolder.mTypingIndicatorLayout?.layoutParams = layoutParams
+        //Start the animation.
         AnimatedVectorDrawableCompat.create(
             viewHolder.itemView.context, R.drawable.typing_indicator_animation
         )?.let { anim ->
