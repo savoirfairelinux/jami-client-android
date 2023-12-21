@@ -33,6 +33,7 @@ import android.view.TextureView.SurfaceTextureListener
 import android.view.ViewGroup.MarginLayoutParams
 import android.widget.FrameLayout
 import android.widget.ImageView
+import androidx.annotation.ColorInt
 import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
@@ -43,7 +44,9 @@ import com.bumptech.glide.load.resource.bitmap.CenterInside
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.DrawableImageViewTarget
+import com.google.android.material.color.MaterialColors
 import cx.ring.R
+import cx.ring.adapters.ConversationAdapter
 import cx.ring.adapters.MessageType
 import cx.ring.client.MediaViewerActivity
 import cx.ring.utils.*
@@ -84,7 +87,8 @@ class TvConversationAdapter(
         .observeOn(AndroidSchedulers.mainThread())
         .startWithItem(0L)
     private var mCurrentLongItem: RecyclerViewContextMenuInfo? = null
-    private var convColor = 0
+    @ColorInt private var convColor = 0
+    @ColorInt private var convColorTint = 0
     private val callPadding = ActionHelper.Padding(
         res.getDimensionPixelSize(R.dimen.text_message_padding),
         res.getDimensionPixelSize(R.dimen.padding_call_vertical),
@@ -283,6 +287,9 @@ class TvConversationAdapter(
 
     fun setPrimaryColor(color: Int) {
         convColor = color
+        convColorTint = MaterialColors.compositeARGBWithAlpha(
+            color, (MaterialColors.ALPHA_LOW * 255).toInt()
+        )
         notifyDataSetChanged()
     }
 
@@ -831,6 +838,13 @@ class TvConversationAdapter(
                             acceptCallVideoButton.setColorFilter(
                                 context.getColor(R.color.accept_call_button)
                             )
+                            // Set the background to the call started message.
+                            val resIndex = msgSequenceType.ordinal + 4
+                            callAcceptLayout.background =
+                                ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
+                            callAcceptLayout.background.setTint(
+                                context.getColor(R.color.conversation_secondary_background)
+                            )
                         } else {
                             // Set the message to the right because it is outgoing.
                             convViewHolder.mGroupCallLayout?.gravity = Gravity.END
@@ -848,19 +862,12 @@ class TvConversationAdapter(
                             acceptCallVideoButton.setColorFilter(
                                 context.getColor(R.color.white)
                             )
-
-                            // Manage background to convColor if it is outgoing.
-                            if (convColor != 0) {
-                                callAcceptLayout.background.setTint(convColor)
-                            }
+                            // Set the background to the call started message.
+                            val resIndex = msgSequenceType.ordinal
+                            callAcceptLayout.background =
+                                ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
+                            callAcceptLayout.background.setTint(convColor)
                         }
-                        // Set the background to the call started message.
-                        // Call started message, incoming or outgoing and first, middle,
-                        // last or single.
-                        val resIndex = msgSequenceType.ordinal +
-                                (if (callStartedMsg.isIncoming) 1 else 0) * 4
-                        callAcceptLayout.background =
-                            ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
                         callAcceptLayout.setPadding(callPadding)
                         callAcceptLayout.apply {
                             // Accept with audio only
