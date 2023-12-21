@@ -158,7 +158,7 @@ dependencies {
         exclude(group= "com.fasterxml.jackson.core", module= "jackson-core")
     }
 
-    "withFirebaseImplementation"("com.google.firebase:firebase-messaging:23.1.2") {
+    "withFirebaseImplementation"("com.google.firebase:firebase-messaging:23.4.0") {
         exclude(group= "com.google.firebase", module= "firebase-core")
         exclude(group= "com.google.firebase", module= "firebase-analytics")
         exclude(group= "com.google.firebase", module= "firebase-measurement-connector")
