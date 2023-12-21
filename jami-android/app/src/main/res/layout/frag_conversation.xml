@@ -1,511 +1,494 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/conversationLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:background="@color/background"
+    tools:context=".client.ConversationActivity">
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id="@+id/conversationLayout"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/toolbar_layout"
+        style="@style/Widget.Material3.AppBarLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:animateLayoutChanges="true"
-        android:background="@color/background"
-        tools:context=".client.ConversationActivity">
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:elevation="4dp"
+        android:fitsSystemWindows="true"
+        app:elevation="4dp"
+        app:liftOnScroll="true"
+        app:liftOnScrollTargetViewId="@id/hist_list">
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/toolbar_layout"
-            style="@style/Widget.Material3.AppBarLayout"
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top"
-            android:elevation="4dp"
-            android:fitsSystemWindows="true"
-            app:elevation="4dp"
-            app:liftOnScroll="true"
-            app:liftOnScrollTargetViewId="@id/hist_list">
+            android:layout_height="?attr/actionBarSize">
 
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize">
-
-                <RelativeLayout
-                    android:id="@+id/tablet_toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical">
-
-                    <ImageView
-                        android:id="@+id/contact_image"
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:transitionName="conversationIcon"
-                        tools:src="@drawable/baseline_person_24" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="16dp"
-                        android:layout_toEndOf="@+id/contact_image"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/contact_title"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:ellipsize="middle"
-                            android:singleLine="true"
-                            android:textColor="@color/colorOnSurface"
-                            android:textSize="16sp"
-                            tools:text="@tools:sample/first_names" />
-
-                        <TextView
-                            android:id="@+id/contact_subtitle"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:ellipsize="middle"
-                            android:singleLine="true"
-                            android:textSize="14sp"
-                            tools:text="@tools:sample/full_names" />
-                    </LinearLayout>
-
-                </RelativeLayout>
-
-            </com.google.android.material.appbar.MaterialToolbar>
-
-        </com.google.android.material.appbar.AppBarLayout>
-
-        <RelativeLayout
-            android:id="@+id/relativeLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="?attr/actionBarSize"
-            android:fitsSystemWindows="true">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/hist_list"
+            <RelativeLayout
+                android:id="@+id/tablet_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:animateLayoutChanges="false"
-                android:clipToPadding="false"
-                android:divider="@null"
-                android:listSelector="@color/transparent"
-                android:paddingTop="8dp"
-                android:paddingBottom="60dp"
-                android:transcriptMode="normal"
-                app:layoutManager="LinearLayoutManager"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                app:stackFromEnd="true"
-                tools:listitem="@layout/item_conv_msg_peer" />
+                android:gravity="center_vertical">
 
-            <TextView
-                android:id="@+id/error_msg_pane"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_alignParentTop="true"
-                android:background="?attr/colorError"
-                android:gravity="center_vertical|center_horizontal"
-                android:padding="8dp"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="?attr/colorOnError"
-                android:textStyle="bold"
-                android:visibility="gone"
-                tools:text="No connectivity"
-                tools:visibility="visible" />
+                <ImageView
+                    android:id="@+id/contact_image"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:transitionName="conversationIcon"
+                    tools:src="@drawable/baseline_person_24" />
 
-            <TextView
-                android:id="@+id/ongoing_call_pane"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_below="@id/error_msg_pane"
-                android:background="?attr/colorSecondary"
-                android:gravity="center"
-                android:onClick="@{() -> presenter.onClick()}"
-                android:padding="8dp"
-                android:text="@string/conversation_action_go_to_call"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="?attr/colorOnPrimary"
-                android:textStyle="bold"
-                android:visibility="gone"
-                tools:visibility="visible" />
-
-            <LinearLayout
-                android:id="@+id/ringing_call_pane"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/ongoing_call_pane"
-                android:background="?attr/colorSecondary"
-                android:gravity="center"
-                android:padding="8dp"
-                android:visibility="gone"
-                tools:visibility="visible">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/conversation_action_incoming_call"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="?attr/colorOnPrimary"
-                    android:textStyle="bold" />
-
-                <ImageButton
-                    android:id="@+id/acceptAudioCallButton"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_marginStart="8dp"
-                    android:contentDescription="@string/action_call_accept_audio"
-                    android:src="@drawable/baseline_call_24"
-                    app:tint="?attr/colorOnPrimary" />
-
-                <ImageButton
-                    android:id="@+id/acceptVideoCallButton"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:contentDescription="@string/action_call_accept_video"
-                    android:src="@drawable/baseline_videocam_24"
-                    app:tint="?attr/colorOnPrimary" />
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:id="@+id/trustRequestMessageLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/ongoing_call_pane"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-                <TextView
-                    android:id="@+id/tvTrustRequestMessage"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/surface"
-                    android:gravity="center"
-                    android:padding="24dp"
-                    android:textColor="@color/colorOnSurface"
-                    tools:text="Jean is not in your contacts yet" />
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="16dp"
+                    android:layout_toEndOf="@+id/contact_image"
+                    android:orientation="vertical">
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/lighter_gray" />
+                    <TextView
+                        android:id="@+id/contact_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="middle"
+                        android:singleLine="true"
+                        android:textColor="@color/colorOnSurface"
+                        android:textSize="16sp"
+                        tools:text="@tools:sample/first_names" />
 
-            </LinearLayout>
+                    <TextView
+                        android:id="@+id/contact_subtitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="middle"
+                        android:singleLine="true"
+                        android:textSize="14sp"
+                        tools:text="@tools:sample/full_names" />
+                </LinearLayout>
 
-            <ProgressBar
-                android:id="@+id/pb_loading"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:layout_centerInParent="true"
-                android:indeterminate="true"
-                android:visibility="gone" />
+            </RelativeLayout>
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/mapCard"
-                android:layout_width="@dimen/location_sharing_minmap_width"
-                android:layout_height="@dimen/location_sharing_minmap_height"
-                android:layout_below="@id/ongoing_call_pane"
-                android:layout_centerHorizontal="true"
-                android:layout_marginHorizontal="0dp"
-                android:layout_marginVertical="16dp"
-                android:animateLayoutChanges="true"
-                android:clickable="true"
-                android:descendantFocusability="blocksDescendants"
-                android:focusable="true"
-                android:visibility="gone"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="4dp">
+        </com.google.android.material.appbar.MaterialToolbar>
 
-                <FrameLayout
-                    android:id="@+id/mapLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:clickable="false"
-                    tools:background="@color/light_green_400" />
+    </com.google.android.material.appbar.AppBarLayout>
 
-                <RelativeLayout
-                    android:id="@+id/pluginListHandlers"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:clickable="false"
-                    tools:background="@color/light_green_400" />
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:fitsSystemWindows="true">
 
-            </androidx.cardview.widget.CardView>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/hist_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:animateLayoutChanges="false"
+            android:clipToPadding="false"
+            android:divider="@null"
+            android:listSelector="@color/transparent"
+            android:paddingTop="8dp"
+            android:paddingBottom="60dp"
+            android:transcriptMode="normal"
+            app:layoutManager="LinearLayoutManager"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:stackFromEnd="true"
+            tools:listitem="@layout/item_conv_msg_peer" />
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fabLatest"
+        <TextView
+            android:id="@+id/error_msg_pane"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_alignParentTop="true"
+            android:background="?attr/colorError"
+            android:gravity="center_vertical|center_horizontal"
+            android:padding="8dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="?attr/colorOnError"
+            android:textStyle="bold"
+            android:visibility="gone"
+            tools:text="No connectivity"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/ongoing_call_pane"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_below="@id/error_msg_pane"
+            android:background="?attr/colorSecondary"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="@string/conversation_action_go_to_call"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="?attr/colorOnPrimary"
+            android:textStyle="bold"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+        <LinearLayout
+            android:id="@+id/ringing_call_pane"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ongoing_call_pane"
+            android:background="?attr/colorSecondary"
+            android:gravity="center"
+            android:padding="8dp"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_above="@id/cvMessageInputGroup"
-                android:layout_centerHorizontal="true"
-                android:layout_margin="8dp"
-                android:backgroundTint="@color/conversation_secondary_background"
-                android:contentDescription="@string/conversation_action_latest"
-                android:scaleType="center"
-                android:textColor="@color/fab_text_color"
-                android:visibility="gone"
-                app:fabCustomSize="40dp"
-                app:shapeAppearanceOverlay="@style/Widget.AppTheme.MainActionButton"
-                app:srcCompat="@drawable/baseline_arrow_down_24dp"
-                app:tint="@color/colorOnSurface"
-                tools:visibility="visible" />
+                android:text="@string/conversation_action_incoming_call"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="?attr/colorOnPrimary"
+                android:textStyle="bold" />
 
-            <LinearLayout
-                android:id="@+id/unknownContactPrompt"
+            <ImageButton
+                android:id="@+id/acceptAudioCallButton"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="8dp"
+                android:contentDescription="@string/action_call_accept_audio"
+                android:src="@drawable/baseline_call_24"
+                app:tint="?attr/colorOnPrimary" />
+
+            <ImageButton
+                android:id="@+id/acceptVideoCallButton"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:contentDescription="@string/action_call_accept_video"
+                android:src="@drawable/baseline_videocam_24"
+                app:tint="?attr/colorOnPrimary" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/trustRequestMessageLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ongoing_call_pane"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tvTrustRequestMessage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:visibility="gone">
+                android:background="@color/surface"
+                android:gravity="center"
+                android:padding="24dp"
+                android:textColor="@color/colorOnSurface"
+                tools:text="Jean is not in your contacts yet" />
 
-                <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-                    style="@style/Widget.AppTheme.MainActionButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:layout_marginHorizontal="16dp"
-                    android:layout_marginVertical="8dp"
-                    android:onClick="@{() -> presenter.addContact()}"
-                    android:text="@string/ab_action_contact_add"
-                    android:textAlignment="center"
-                    app:backgroundTint="#4CAF50" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/trustRequestPrompt"
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:visibility="gone">
+                android:layout_height="1dp"
+                android:background="@color/lighter_gray" />
 
-                <androidx.cardview.widget.CardView
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/pb_loading"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_centerInParent="true"
+            android:indeterminate="true"
+            android:visibility="gone" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/mapCard"
+            android:layout_width="@dimen/location_sharing_minmap_width"
+            android:layout_height="@dimen/location_sharing_minmap_height"
+            android:layout_below="@id/ongoing_call_pane"
+            android:layout_centerHorizontal="true"
+            android:layout_marginHorizontal="0dp"
+            android:layout_marginVertical="16dp"
+            android:animateLayoutChanges="true"
+            android:clickable="true"
+            android:descendantFocusability="blocksDescendants"
+            android:focusable="true"
+            android:visibility="gone"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp">
+
+            <FrameLayout
+                android:id="@+id/mapLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clickable="false"
+                tools:background="@color/light_green_400" />
+
+            <RelativeLayout
+                android:id="@+id/pluginListHandlers"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clickable="false"
+                tools:background="@color/light_green_400" />
+
+        </androidx.cardview.widget.CardView>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabLatest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/cvMessageInputGroup"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="8dp"
+            android:backgroundTint="@color/conversation_secondary_background"
+            android:contentDescription="@string/conversation_action_latest"
+            android:scaleType="center"
+            android:textColor="@color/fab_text_color"
+            android:visibility="gone"
+            app:fabCustomSize="40dp"
+            app:shapeAppearanceOverlay="@style/Widget.AppTheme.MainActionButton"
+            app:srcCompat="@drawable/baseline_arrow_down_24dp"
+            app:tint="@color/colorOnSurface"
+            tools:visibility="visible" />
+
+        <LinearLayout
+            android:id="@+id/unknownContactPrompt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:visibility="gone">
+
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/unknownContactButton"
+                style="@style/Widget.AppTheme.MainActionButton"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginVertical="8dp"
+                android:text="@string/ab_action_contact_add"
+                android:textAlignment="center"
+                app:backgroundTint="#4CAF50" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/trustRequestPrompt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:visibility="gone">
+
+            <androidx.cardview.widget.CardView
+                style="?android:attr/buttonBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginBottom="8dp"
+                android:padding="0dp"
+                app:cardCornerRadius="@dimen/conversation_message_input_radius">
+
+                <LinearLayout
                     style="?android:attr/buttonBarStyle"
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:layout_marginHorizontal="16dp"
-                    android:layout_marginBottom="8dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="0dp"
+                    android:orientation="horizontal"
                     android:padding="0dp"
-                    app:cardCornerRadius="@dimen/conversation_message_input_radius">
+                    android:weightSum="3">
 
-                    <LinearLayout
-                        style="?android:attr/buttonBarStyle"
-                        android:layout_width="match_parent"
+                    <Button
+                        android:id="@+id/btnBlock"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_margin="0dp"
-                        android:orientation="horizontal"
-                        android:padding="0dp"
-                        android:weightSum="3">
+                        android:layout_weight="1"
+                        android:background="?attr/selectableItemBackground"
+                        android:gravity="center"
+                        android:text="@string/block"
+                        android:textColor="@color/colorPrimary" />
 
-                        <Button
-                            android:id="@+id/btnBlock"
-                            style="@style/Widget.MaterialComponents.Button.TextButton"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:background="?attr/selectableItemBackground"
-                            android:gravity="center"
-                            android:onClick="@{() -> presenter.blockContactRequest()}"
-                            android:text="@string/block"
-                            android:textColor="@color/colorPrimary" />
+                    <Button
+                        android:id="@+id/btnRefuse"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="?attr/selectableItemBackground"
+                        android:gravity="center"
+                        android:text="@string/refuse"
+                        android:textColor="@color/colorPrimary" />
 
-                        <Button
-                            android:id="@+id/btnRefuse"
-                            style="@style/Widget.MaterialComponents.Button.TextButton"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:background="?attr/selectableItemBackground"
-                            android:gravity="center"
-                            android:onClick="@{() -> presenter.refuseContactRequest()}"
-                            android:text="@string/refuse"
-                            android:textColor="@color/colorPrimary" />
+                    <Button
+                        android:id="@+id/btnAccept"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="?attr/selectableItemBackground"
+                        android:gravity="center"
+                        android:text="@string/accept"
+                        android:textColor="#4CAF50" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
 
-                        <Button
-                            android:id="@+id/btnAccept"
-                            style="@style/Widget.MaterialComponents.Button.TextButton"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:background="?attr/selectableItemBackground"
-                            android:gravity="center"
-                            android:onClick="@{() -> presenter.acceptContactRequest()}"
-                            android:text="@string/accept"
-                            android:textColor="#4CAF50" />
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
-            </LinearLayout>
+        <LinearLayout
+            android:id="@+id/cvMessageInputGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:animateLayoutChanges="true"
+            android:background="@drawable/textmsg_bg_input"
+            android:orientation="vertical"
+            android:visibility="visible"
+            tools:visibility="visible">
 
-            <LinearLayout
-                android:id="@+id/cvMessageInputGroup"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvMessageInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:animateLayoutChanges="true"
-                android:background="@drawable/textmsg_bg_input"
-                android:orientation="vertical"
-                android:visibility="visible"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="8dp"
+                android:minHeight="48dp"
+                android:visibility="gone"
+                app:cardCornerRadius="@dimen/conversation_message_input_radius"
+                app:cardElevation="4dp"
                 tools:visibility="visible">
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cvMessageInput"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginBottom="8dp"
-                    android:minHeight="48dp"
-                    android:visibility="gone"
-                    app:cardCornerRadius="@dimen/conversation_message_input_radius"
-                    app:cardElevation="4dp"
-                    tools:visibility="visible">
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="vertical">
 
                     <LinearLayout
+                        android:id="@+id/reply_group"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center_vertical"
-                        android:orientation="vertical">
+                        android:layout_height="wrap_content"
+                        android:background="@color/surface"
+                        android:gravity="center_vertical"
+                        android:paddingHorizontal="16dp"
+                        android:paddingVertical="4dp"
+                        android:visibility="gone"
+                        tools:visibility="visible">
 
-                        <LinearLayout
-                            android:id="@+id/reply_group"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@color/surface"
-                            android:gravity="center_vertical"
-                            android:paddingHorizontal="16dp"
-                            android:paddingVertical="4dp"
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:adjustViewBounds="true"
                             android:visibility="gone"
-                            tools:visibility="visible">
+                            tools:src="@tools:sample/backgrounds/scenic" />
 
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="40dp"
-                                android:adjustViewBounds="true"
-                                android:visibility="gone"
-                                tools:src="@tools:sample/backgrounds/scenic" />
+                        <TextView
+                            android:id="@+id/reply_message"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:drawableStart="@drawable/baseline_reply_24"
+                            android:drawablePadding="8dp"
+                            android:drawableTint="@color/colorPrimaryTranslucent"
+                            android:ellipsize="end"
+                            android:gravity="center_vertical"
+                            android:maxLines="2"
+                            android:text="Reply" />
 
-                            <TextView
-                                android:id="@+id/reply_message"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:drawableStart="@drawable/baseline_reply_24"
-                                android:drawablePadding="8dp"
-                                android:drawableTint="@color/colorPrimaryTranslucent"
-                                android:ellipsize="end"
-                                android:gravity="center_vertical"
-                                android:maxLines="2"
-                                android:text="Reply" />
-
-                            <ImageView
-                                android:id="@+id/reply_close_btn"
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:background="?selectableItemBackgroundBorderless"
-                                android:src="@drawable/baseline_close_24" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/btn_container"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:orientation="horizontal"
-                            android:paddingStart="8dp">
-
-                            <ImageButton
-                                android:id="@+id/btn_menu"
-                                android:layout_width="28dp"
-                                android:layout_height="match_parent"
-                                android:background="?selectableItemBackgroundBorderless"
-                                android:contentDescription="@string/share_label"
-                                android:onClick="@{v -> presenter.expandMenu(v)}"
-                                android:padding="8dp"
-                                app:srcCompat="@drawable/baseline_more_vert_24"
-                                app:tint="@color/colorPrimary" />
-
-                            <ImageButton
-                                android:id="@+id/btn_take_picture"
-                                android:layout_width="34dp"
-                                android:layout_height="match_parent"
-                                android:background="?selectableItemBackgroundBorderless"
-                                android:contentDescription="@string/take_a_photo"
-                                android:onClick="@{() -> presenter.takePicture()}"
-                                android:padding="8dp"
-                                app:srcCompat="@drawable/baseline_photo_camera_24"
-                                app:tint="@color/colorPrimary" />
-
-                            <ProgressBar
-                                android:id="@+id/pb_data_transfer"
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:indeterminate="true"
-                                android:visibility="gone" />
-
-                            <Spinner
-                                android:id="@+id/number_selector"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:visibility="gone"
-                                tools:listitem="@layout/item_number_selected" />
-
-                            <EditText
-                                android:id="@+id/msg_input_txt"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:background="@null"
-                                android:hint="@string/write_a_message"
-                                android:imeOptions="actionSend|flagNoExtractUi"
-                                android:importantForAutofill="no"
-                                android:inputType="textShortMessage|textImeMultiLine|text|textMultiLine|textCapSentences"
-                                android:maxLines="5"
-                                android:padding="8dp" />
-
-                            <TextView
-                                android:id="@+id/emoji_send"
-                                style="?attr/borderlessButtonStyle"
-                                android:layout_width="50dp"
-                                android:layout_height="match_parent"
-                                android:background="?selectableItemBackgroundBorderless"
-                                android:onClick="@{() -> presenter.sendEmoji()}"
-                                android:padding="0dp"
-                                android:text="@string/conversation_default_emoji"
-                                android:textSize="18sp" />
-
-                            <ImageButton
-                                android:id="@+id/msg_send"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:background="?selectableItemBackgroundBorderless"
-                                android:contentDescription="@string/send_message"
-                                android:onClick="@{() -> presenter.sendMessageText()}"
-                                android:padding="8dp"
-                                android:visibility="gone"
-                                app:srcCompat="@drawable/baseline_send_24"
-                                app:tint="@color/colorPrimary" />
-
-                        </LinearLayout>
+                        <ImageView
+                            android:id="@+id/reply_close_btn"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:background="?selectableItemBackgroundBorderless"
+                            android:src="@drawable/baseline_close_24" />
                     </LinearLayout>
 
-                </androidx.cardview.widget.CardView>
-            </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/btn_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:paddingStart="8dp">
 
-        </RelativeLayout>
+                        <ImageButton
+                            android:id="@+id/btn_menu"
+                            android:layout_width="28dp"
+                            android:layout_height="match_parent"
+                            android:background="?selectableItemBackgroundBorderless"
+                            android:contentDescription="@string/share_label"
+                            android:padding="8dp"
+                            app:srcCompat="@drawable/baseline_more_vert_24"
+                            app:tint="@color/colorPrimary" />
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+                        <ImageButton
+                            android:id="@+id/btn_take_picture"
+                            android:layout_width="34dp"
+                            android:layout_height="match_parent"
+                            android:background="?selectableItemBackgroundBorderless"
+                            android:contentDescription="@string/take_a_photo"
+                            android:padding="8dp"
+                            app:srcCompat="@drawable/baseline_photo_camera_24"
+                            app:tint="@color/colorPrimary" />
 
-    <data>
+                        <ProgressBar
+                            android:id="@+id/pb_data_transfer"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:indeterminate="true"
+                            android:visibility="gone" />
 
-        <variable
-            name="presenter"
-            type="cx.ring.fragments.ConversationFragment" />
-    </data>
-</layout>
+                        <Spinner
+                            android:id="@+id/number_selector"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:visibility="gone"
+                            tools:listitem="@layout/item_number_selected" />
+
+                        <EditText
+                            android:id="@+id/msg_input_txt"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:hint="@string/write_a_message"
+                            android:imeOptions="actionSend|flagNoExtractUi"
+                            android:importantForAutofill="no"
+                            android:inputType="textShortMessage|textImeMultiLine|text|textMultiLine|textCapSentences"
+                            android:maxLines="5"
+                            android:padding="8dp" />
+
+                        <TextView
+                            android:id="@+id/emoji_send"
+                            style="?attr/borderlessButtonStyle"
+                            android:layout_width="50dp"
+                            android:layout_height="match_parent"
+                            android:background="?selectableItemBackgroundBorderless"
+                            android:padding="0dp"
+                            android:text="@string/conversation_default_emoji"
+                            android:textSize="18sp" />
+
+                        <ImageButton
+                            android:id="@+id/msg_send"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:background="?selectableItemBackgroundBorderless"
+                            android:contentDescription="@string/send_message"
+                            android:padding="8dp"
+                            android:visibility="gone"
+                            app:srcCompat="@drawable/baseline_send_24"
+                            app:tint="@color/colorPrimary" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

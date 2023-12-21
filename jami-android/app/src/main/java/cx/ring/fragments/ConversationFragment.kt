@@ -227,7 +227,6 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         itemCache = cache.itemCaches
         return cache.binding.let { binding ->
             this@ConversationFragment.binding = binding
-            binding.presenter = this@ConversationFragment
             animation.duration = 150
             animation.addUpdateListener { valueAnimator: ValueAnimator -> binding.histList.updatePadding(bottom = valueAnimator.animatedValue as Int) }
 
@@ -336,7 +335,14 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             binding.acceptVideoCallButton.setOnClickListener {
                 presenter.clickRingingPane(IncomingCallAction.ACCEPT_VIDEO)
             }
-
+            binding.msgSend.setOnClickListener { sendMessageText() }
+            binding.emojiSend.setOnClickListener { sendEmoji() }
+            binding.btnMenu.setOnClickListener { expandMenu(it) }
+            binding.btnTakePicture.setOnClickListener { takePicture() }
+            binding.unknownContactButton.setOnClickListener { presenter.onAddContact() }
+            binding.btnBlock.setOnClickListener { presenter.onBlockIncomingContactRequest() }
+            binding.btnRefuse.setOnClickListener { presenter.onRefuseIncomingContactRequest() }
+            binding.btnAccept.setOnClickListener { presenter.onAcceptIncomingContactRequest() }
             binding.root
         }
     }
