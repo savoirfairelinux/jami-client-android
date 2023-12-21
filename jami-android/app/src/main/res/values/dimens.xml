@@ -135,5 +135,6 @@ along with this program; if not, write to the Free Software
     <dimen name="button_size">48dp</dimen>
     <dimen name="margin_end_avatar_conversation">12dp</dimen>
     <dimen name="margin_with_avatar">52dp</dimen>
+    <dimen name="margin_without_avatar">16dp</dimen>
 
 </resources>
