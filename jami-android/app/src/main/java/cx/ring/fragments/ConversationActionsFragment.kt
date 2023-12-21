@@ -127,11 +127,13 @@ class ConversationActionsFragment : Fragment(), Colorable {
 
             // Update color on RX color signal.
             mDisposableBag.add(conversation.getColor()
+                .startWith(Single.just(getConversationColor(requireContext(), 0)))
                 .observeOn(DeviceUtils.uiScheduler)
                 .subscribe { setColor(getConversationColor(requireContext(), it)) })
 
             // Update symbol on RX color signal.
             mDisposableBag.add(conversation.getSymbol()
+                .startWith(Single.just(getConversationSymbol(requireContext(), null)))
                 .observeOn(DeviceUtils.uiScheduler)
                 .subscribe { setSymbol(getConversationSymbol(requireContext(), it)) })
 
