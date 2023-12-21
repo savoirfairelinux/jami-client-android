@@ -1009,6 +1009,8 @@ class ConversationAdapter(
                         conversationFragment.getConversationAvatar(contact.primaryNumber)
                     )
             }
+        } else {
+            viewHolder.mAvatar?.visibility = View.GONE
         }
         val type = viewHolder.type.transferType
         val longPressView = when (type) {

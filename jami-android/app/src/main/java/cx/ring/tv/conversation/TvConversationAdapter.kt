@@ -508,6 +508,8 @@ class TvConversationAdapter(
                         conversationFragment.getConversationAvatar(contact.primaryNumber)
                     )
             }
+        } else {
+            viewHolder.mAvatar?.visibility = View.GONE
         }
         val type = viewHolder.type.transferType
 
