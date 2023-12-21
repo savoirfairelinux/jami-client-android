@@ -1125,15 +1125,35 @@ class ConversationAdapter(
                 } else {
                     convViewHolder.mAvatar?.visibility = View.GONE
                 }
+                // Manage background layout for standard message.
+                // Index refers to msgBGLayouts array.
+                val resIndex =
+                    if (interaction.replyTo != null) {
+                        // Reply message incoming, first or single.
+                        if (textMessage.isIncoming)
+                            if (msgSequenceType == SequenceType.FIRST) 11 else 10
+                        // Reply message outgoing, first or single
+                        else if (msgSequenceType == SequenceType.FIRST) 9 else 8
+                    }
+                    // Standard message, incoming or outgoing and first, single or last.
+                    else msgSequenceType.ordinal + (if (textMessage.isIncoming) 1 else 0) * 4
+
+                msgTxt.background = ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
+                if (convColor != 0 && !textMessage.isIncoming) {
+                    msgTxt.background.setTint(convColor)
+                } else
+                    msgTxt.background.setTint(
+                        context.getColor(R.color.conversation_secondary_background)
+                    )
+                msgTxt.background.alpha = 255
+                // Apply a bottom margin to the global layout if end of sequence needed.
+                convViewHolder.mItem?.let { setBottomMargin(it, if (endOfSeq) 8 else 0) }
+
                 // Manage deleted message.
                 if (isDeleted) {
                     msgTxt.text = context.getString(R.string.conversation_message_deleted)
                     // Hide the link preview
                     answerLayout?.visibility = View.GONE
-                    msgTxt.background.alpha = 255
-                    if (convColor != 0 && !textMessage.isIncoming) {
-                        msgTxt.background.setTint(convColor)
-                    }
                     msgTxt.textSize = 14f
                     msgTxt.setPadding(textMessagePadding)
                     longPressView.setOnLongClickListener(null)
@@ -1165,22 +1185,6 @@ class ConversationAdapter(
                     msgTxt.textSize = 32.0f
                     msgTxt.setPadding(emojiMessagePadding)
                 } else {
-                    // Manage layout for standard message. Index refers to msgBGLayouts array.
-                    val resIndex =
-                        if (interaction.replyTo != null) {
-                            // Reply message incoming, first or single.
-                            if (textMessage.isIncoming) if (msgSequenceType == SequenceType.FIRST) 11 else 10
-                            // Reply message outgoing, first or single
-                            else if (msgSequenceType == SequenceType.FIRST) 9 else 8
-                        }
-                        // Standard message, incoming or outgoing and first, single or last.
-                        else msgSequenceType.ordinal + (if (textMessage.isIncoming) 1 else 0) * 4
-
-                    msgTxt.background = ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
-                    if (convColor != 0 && !textMessage.isIncoming) {
-                        msgTxt.background.setTint(convColor)
-                    }
-                    msgTxt.background.alpha = 255
                     msgTxt.textSize = 16f
                     msgTxt.setPadding(textMessagePadding)
 
@@ -1273,8 +1277,6 @@ class ConversationAdapter(
                         } else visibility = View.GONE
                     }
                 }
-                // Apply a bottom margin to the global layout if end of sequence needed.
-                convViewHolder.mItem?.let { setBottomMargin(it, if (endOfSeq) 8 else 0) }
             })
     }
 
