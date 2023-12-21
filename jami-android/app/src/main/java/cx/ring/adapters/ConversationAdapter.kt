@@ -1679,33 +1679,22 @@ class ConversationAdapter(
             return SequenceType.SINGLE
         }
 
-        // If there is only one interaction in the conversation
-        // OR if this is the first interaction.
-        if (mInteractions.size == 1 || i == 0) {
-            // If this interaction is the last.
-            if (mInteractions.size == i + 1) {
-                return SequenceType.SINGLE
-            }
-
-            // Get the next interaction and if exists check if sequence break needed.
-            val nextMsg = getNextInteractionFromPosition(i)
-            if (nextMsg != null) {
-                return if (isSeqBreak(msg, nextMsg)
-                    || hasPermanentTimeString(nextMsg, i + 1)
-                ) {
-                    SequenceType.SINGLE
-                } else {
-                    SequenceType.FIRST
-                }
-            }
-        } else if (getNextInteractionFromPosition(i) == null) { // If this is the last interaction.
+        // Check for extremes (first or last or only one interaction).
+        if (getPreviousInteractionFromPosition(i) == null) {
+            // Get the next interaction (if null it means there is only one interaction).
+            val nextMsg = getNextInteractionFromPosition(i) ?: return SequenceType.SINGLE
+            // Check if sequence break needed.
+            return if (isSeqBreak(msg, nextMsg) || hasPermanentTimeString(nextMsg, i + 1))
+                SequenceType.SINGLE
+            else
+                SequenceType.FIRST
+        } else if (getNextInteractionFromPosition(i) == null) {
             // Get the previous interaction and if exists check if sequence break needed.
             val prevMsg = getPreviousInteractionFromPosition(i)
-            if (prevMsg != null) {
-                return if (isSeqBreak(prevMsg, msg) || isTimeShown) {
+            if (prevMsg != null)
+                return if (isSeqBreak(prevMsg, msg) || isTimeShown)
                     SequenceType.SINGLE
-                } else SequenceType.LAST
-            }
+                else SequenceType.LAST
         }
 
         // If not the first, nor the last and if there is not only one interaction.
