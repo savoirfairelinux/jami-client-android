@@ -219,6 +219,9 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         mapWidth = res.getDimensionPixelSize(R.dimen.location_sharing_minmap_width)
         mapHeight = res.getDimensionPixelSize(R.dimen.location_sharing_minmap_height)
         marginPxTotal = marginPx
+
+        requireActivity().addMenuProvider(menuProvider, viewLifecycleOwner)
+
         val activity = requireActivity() as HomeActivity
         val cache = activity.conversationCache!!.getData()
         itemCache = cache.itemCaches
@@ -319,7 +322,6 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             binding.fabLatest.setOnClickListener {
                 scrollToEnd()
             }
-            setHasOptionsMenu(true)
             binding.toolbar.setNavigationIcon(androidx.appcompat.R.drawable.abc_ic_ab_back_material)
             binding.toolbar.setNavigationOnClickListener {
                 activity?.onBackPressedDispatcher?.onBackPressed()
@@ -837,57 +839,59 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         super.onDestroy()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        if (!isVisible)
-            return
-        menu.clear()
-        inflater.inflate(R.menu.conversation_actions, menu)
-        mAudioCallBtn = menu.findItem(R.id.conv_action_audiocall)
-        mVideoCallBtn = menu.findItem(R.id.conv_action_videocall)
-        val searchMenuItem = menu.findItem(R.id.conv_search)
-        searchMenuItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
-            override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
-                val binding = binding ?: return false
-                presenter.stopSearch()
-                binding.histList.adapter = mAdapter
-                updateListPadding()
-                currentBottomView?.isVisible = true
-                if (animation.isStarted) animation.cancel()
-                animation.setIntValues(binding.histList.paddingBottom, (currentBottomView?.height ?: 0) + marginPxTotal)
-                animation.start()
-                return true
-            }
-            override fun onMenuItemActionExpand(item: MenuItem): Boolean {
-                val binding = binding ?: return false
-                mSearchAdapter = ConversationAdapter(this@ConversationFragment, presenter, true)
-                presenter.startSearch()
-                currentBottomView?.isVisible = false
-                binding.histList.adapter = mSearchAdapter
-                if (animation.isStarted) animation.cancel()
-                animation.setIntValues(binding.histList.paddingBottom, marginPxTotal)
-                animation.start()
-                return true
-            }
-        })
-        (searchMenuItem.actionView as SearchView).let {
-            it.setOnQueryTextListener(this)
-            it.queryHint = getString(R.string.conversation_search_hint)
-        }
-    }
+    private val menuProvider = object : MenuProvider {
+        override fun onCreateMenu(menu: Menu, inflater: MenuInflater) {
+            if (!isVisible)
+                return
+            menu.clear()
+            inflater.inflate(R.menu.conversation_actions, menu)
+            mAudioCallBtn = menu.findItem(R.id.conv_action_audiocall)
+            mVideoCallBtn = menu.findItem(R.id.conv_action_videocall)
+            val searchMenuItem = menu.findItem(R.id.conv_search)
+            searchMenuItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
+                override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
+                    val binding = binding ?: return false
+                    presenter.stopSearch()
+                    binding.histList.adapter = mAdapter
+                    updateListPadding()
+                    currentBottomView?.isVisible = true
+                    if (animation.isStarted) animation.cancel()
+                    animation.setIntValues(
+                        binding.histList.paddingBottom,
+                        (currentBottomView?.height ?: 0) + marginPxTotal
+                    )
+                    animation.start()
+                    return true
+                }
 
-    fun openContact() {
-        presenter.openContact()
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            android.R.id.home -> startActivity(Intent(activity, HomeActivity::class.java))
-            R.id.conv_action_audiocall -> presenter.goToCall(false)
-            R.id.conv_action_videocall -> presenter.goToCall(true)
-            R.id.conv_contact_details -> presenter.openContact()
-            else -> return super.onOptionsItemSelected(item)
+                override fun onMenuItemActionExpand(item: MenuItem): Boolean {
+                    val binding = binding ?: return false
+                    mSearchAdapter = ConversationAdapter(this@ConversationFragment, presenter, true)
+                    presenter.startSearch()
+                    currentBottomView?.isVisible = false
+                    binding.histList.adapter = mSearchAdapter
+                    if (animation.isStarted) animation.cancel()
+                    animation.setIntValues(binding.histList.paddingBottom, marginPxTotal)
+                    animation.start()
+                    return true
+                }
+            })
+            (searchMenuItem.actionView as SearchView).let {
+                it.setOnQueryTextListener(this@ConversationFragment)
+                it.queryHint = getString(R.string.conversation_search_hint)
+            }
         }
-        return true
+
+        override fun onMenuItemSelected(item: MenuItem): Boolean {
+            when (item.itemId) {
+                android.R.id.home -> startActivity(Intent(activity, HomeActivity::class.java))
+                R.id.conv_action_audiocall -> presenter.goToCall(false)
+                R.id.conv_action_videocall -> presenter.goToCall(true)
+                R.id.conv_contact_details -> presenter.openContact()
+                else -> return false
+            }
+            return true
+        }
     }
 
     override fun onQueryTextSubmit(query: String): Boolean {
@@ -899,6 +903,10 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             presenter.setSearchQuery(query.trim())
         mSearchAdapter?.clearSearchResults()
         return true
+    }
+
+    fun openContact() {
+        presenter.openContact()
     }
 
     override fun addSearchResults(results: List<Interaction>) {
@@ -1143,7 +1151,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             trustRequestMessageLayout.visibility = View.VISIBLE
             currentBottomView = unknownContactPrompt
         }
-        requireActivity().invalidateOptionsMenu()
+        requireActivity().invalidateMenu()
         updateListPadding()
     }
 
@@ -1156,7 +1164,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             trustRequestMessageLayout.visibility = View.VISIBLE
             currentBottomView = trustRequestPrompt
         }
-        requireActivity().invalidateOptionsMenu()
+        requireActivity().invalidateMenu()
         updateListPadding()
     }
 
@@ -1168,7 +1176,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             trustRequestMessageLayout.visibility = View.GONE
             currentBottomView = cvMessageInput
         }
-        requireActivity().invalidateOptionsMenu()
+        requireActivity().invalidateMenu()
         updateListPadding()
     }
 
@@ -1181,7 +1189,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             tvTrustRequestMessage.text = getText(R.string.conversation_syncing)
         }
         currentBottomView = null
-        requireActivity().invalidateOptionsMenu()
+        requireActivity().invalidateMenu()
         updateListPadding()
     }
 
@@ -1204,7 +1212,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             tvTrustRequestMessage.text = getText(R.string.conversation_ended)
         }
         currentBottomView = null
-        requireActivity().invalidateOptionsMenu()
+        requireActivity().invalidateMenu()
         updateListPadding()
     }
 
