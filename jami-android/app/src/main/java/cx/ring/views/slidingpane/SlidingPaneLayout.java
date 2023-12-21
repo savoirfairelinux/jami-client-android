@@ -22,32 +22,22 @@ import android.content.ContextWrapper;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.PixelFormat;
 import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.accessibility.AccessibilityEvent;
-import android.widget.FrameLayout;
-
-import androidx.annotation.ColorInt;
-import androidx.annotation.DrawableRes;
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.Px;
 import androidx.core.content.ContextCompat;
-import androidx.core.graphics.Insets;
 import androidx.core.view.AccessibilityDelegateCompat;
 import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat;
 import androidx.core.view.animation.PathInterpolatorCompat;
 import androidx.customview.view.AbsSavedState;
@@ -57,11 +47,8 @@ import androidx.transition.Transition;
 import androidx.transition.TransitionManager;
 import androidx.window.layout.FoldingFeature;
 import androidx.window.layout.WindowInfoTracker;
-
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -110,28 +97,6 @@ public class SlidingPaneLayout extends ViewGroup implements Openable {
             "androidx.slidingpanelayout.widget.SlidingPaneLayout";
 
     /**
-     * This field is only used to support the setter and getter. It is not used by
-     * SlidingPaneLayout.
-     */
-    private int mSliderFadeColor = 0;
-
-    /**
-     * This field is only used to support the setter and getter. It is not used by
-     * SlidingPaneLayout.
-     */
-    private int mCoveredFadeColor;
-
-    /**
-     * Drawable used to draw the shadow between panes by default.
-     */
-    private Drawable mShadowDrawableLeft;
-
-    /**
-     * Drawable used to draw the shadow between panes to support RTL (right to left language).
-     */
-    private Drawable mShadowDrawableRight;
-
-    /**
      * True if a panel can slide with the current measurements
      */
     private boolean mCanSlide;
@@ -176,8 +141,6 @@ public class SlidingPaneLayout extends ViewGroup implements Openable {
 
     private final Rect mTmpRect = new Rect();
 
-    final ArrayList<DisableLayerRunnable> mPostedRunnables = new ArrayList<>();
-
     @LockMode
     private int mLockMode;
 
@@ -211,8 +174,6 @@ public class SlidingPaneLayout extends ViewGroup implements Openable {
     }
 
     FoldingFeature mFoldingFeature;
-
-    private static boolean sEdgeSizeUsingSystemGestureInsets = Build.VERSION.SDK_INT >= 29;
 
     /**
      * Set the lock mode that controls how the user can swipe between the panes.
@@ -305,11 +266,6 @@ public class SlidingPaneLayout extends ViewGroup implements Openable {
     public SlidingPaneLayout(@NonNull Context context, @Nullable AttributeSet attrs,
             int defStyle) {
         super(context, attrs, defStyle);
-
-        final float density = context.getResources().getDisplayMetrics().density;
-
-        setWillNotDraw(false);
-
         ViewCompat.setAccessibilityDelegate(this, new AccessibilityDelegate());
         ViewCompat.setImportantForAccessibility(this, ViewCompat.IMPORTANT_FOR_ACCESSIBILITY_YES);
 
@@ -320,75 +276,9 @@ public class SlidingPaneLayout extends ViewGroup implements Openable {
         setFoldingFeatureObserver(foldingFeatureObserver);
     }
 
-    private void setFoldingFeatureObserver(
-            FoldingFeatureObserver foldingFeatureObserver) {
+    private void setFoldingFeatureObserver(FoldingFeatureObserver foldingFeatureObserver) {
         mFoldingFeatureObserver = foldingFeatureObserver;
-        mFoldingFeatureObserver.setOnFoldingFeatureChangeListener(
-                mOnFoldingFeatureChangeListener);
-    }
-
-    /**
-     * Set a distance to parallax the lower pane by when the upper pane is in its
-     * fully closed state. The lower pane will scroll between this position and
-     * its fully open state.
-     *
-     * @param parallaxBy Distance to parallax by in pixels
-     */
-    public void setParallaxDistance(@Px int parallaxBy) {
-        mParallaxBy = parallaxBy;
-        requestLayout();
-    }
-
-    /**
-     * @return The distance the lower pane will parallax by when the upper pane is fully closed.
-     * @see #setParallaxDistance(int)
-     */
-    @Px
-    public int getParallaxDistance() {
-        return mParallaxBy;
-    }
-
-    /**
-     * Set the color used to fade the sliding pane out when it is slid most of the way offscreen.
-     *
-     * @param color An ARGB-packed color value
-     * @deprecated SlidingPaneLayout no longer uses this field.
-     */
-    @Deprecated
-    public void setSliderFadeColor(@ColorInt int color) {
-        mSliderFadeColor = color;
-    }
-
-    /**
-     * @return The ARGB-packed color value used to fade the sliding pane
-     * @deprecated This field is no longer populated by SlidingPaneLayout.
-     */
-    @Deprecated
-    @ColorInt
-    public int getSliderFadeColor() {
-        return mSliderFadeColor;
-    }
-
-    /**
-     * Set the color used to fade the pane covered by the sliding pane out when the pane
-     * will become fully covered in the closed state.
-     *
-     * @param color An ARGB-packed color value
-     * @deprecated SlidingPaneLayout no longer uses this field.
-     */
-    @Deprecated
-    public void setCoveredFadeColor(@ColorInt int color) {
-        mCoveredFadeColor = color;
-    }
-
-    /**
-     * @return The ARGB-packed color value used to fade the fixed pane
-     * @deprecated This field is no longer populated by SlidingPaneLayout
-     */
-    @Deprecated
-    @ColorInt
-    public int getCoveredFadeColor() {
-        return mCoveredFadeColor;
+        mFoldingFeatureObserver.setOnFoldingFeatureChangeListener(mOnFoldingFeatureChangeListener);
     }
 
     /**
@@ -439,12 +329,6 @@ public class SlidingPaneLayout extends ViewGroup implements Openable {
         mPanelSlideListeners.remove(listener);
     }
 
-    void dispatchOnPanelSlide(@NonNull View panel) {
-        for (PanelSlideListener listener : mPanelSlideListeners) {
-            listener.onPanelSlide(panel, mSlideOffset);
-        }
-    }
-
     void dispatchOnPanelOpened(@NonNull View panel) {
         for (PanelSlideListener listener : mPanelSlideListeners) {
             listener.onPanelOpened(panel);
@@ -469,7 +353,7 @@ public class SlidingPaneLayout extends ViewGroup implements Openable {
         final int right;
         final int top;
         final int bottom;
-        if (panel != null && viewIsOpaque(panel)) {
+        if (panel != null && panel.isOpaque()) {
             left = panel.getLeft();
             right = panel.getRight();
             top = panel.getTop();
@@ -505,47 +389,6 @@ public class SlidingPaneLayout extends ViewGroup implements Openable {
         }
     }
 
-    @SuppressWarnings("deprecation")
-    // Remove suppression once b/120984816 is addressed.
-    private static boolean viewIsOpaque(View v) {
-        if (v.isOpaque()) {
-            return true;
-        }
-
-        // View#isOpaque didn't take all valid opaque scrollbar modes into account
-        // before API 18 (JB-MR2). On newer devices rely solely on isOpaque above and return false
-        // here. On older devices, check the view's background drawable directly as a fallback.
-        if (Build.VERSION.SDK_INT >= 18) {
-            return false;
-        }
-
-        final Drawable bg = v.getBackground();
-        if (bg != null) {
-            return bg.getOpacity() == PixelFormat.OPAQUE;
-        }
-        return false;
-    }
-
-    @Override
-    public void addView(@NonNull View child, int index, @Nullable ViewGroup.LayoutParams params) {
-        if (getChildCount() == 1) {
-            // Wrap detail view inside a touch blocker container
-            View detailView = new TouchBlocker(child);
-            super.addView(detailView, index, params);
-            return;
-        }
-        super.addView(child, index, params);
-    }
-
-    @Override
-    public void removeView(@NonNull View view) {
-        if (view.getParent() instanceof TouchBlocker) {
-            super.removeView((View) view.getParent());
-            return;
-        }
-        super.removeView(view);
-    }
-
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
@@ -565,11 +408,6 @@ public class SlidingPaneLayout extends ViewGroup implements Openable {
         if (mFoldingFeatureObserver != null) {
             mFoldingFeatureObserver.unregisterLayoutStateChangeCallback();
         }
-        for (int i = 0, count = mPostedRunnables.size(); i < count; i++) {
-            final DisableLayerRunnable dlr = mPostedRunnables.get(i);
-            dlr.run();
-        }
-        mPostedRunnables.clear();
     }
 
     @Override
@@ -759,9 +597,6 @@ public class SlidingPaneLayout extends ViewGroup implements Openable {
     }
 
     private static int getMinimumWidth(View child) {
-        if (child instanceof TouchBlocker) {
-            return ViewCompat.getMinimumWidth(((TouchBlocker) child).getChildAt(0));
-        }
         return ViewCompat.getMinimumWidth(child);
     }
 
@@ -981,31 +816,6 @@ public class SlidingPaneLayout extends ViewGroup implements Openable {
         return mCanSlide;
     }
 
-    void onPanelDragged(int newLeft) {
-        if (mSlideableView == null) {
-            // This can happen if we're aborting motion during layout because everything now fits.
-            mSlideOffset = 0;
-            return;
-        }
-        final boolean isLayoutRtl = isLayoutRtlSupport();
-        final LayoutParams lp = (LayoutParams) mSlideableView.getLayoutParams();
-
-        int childWidth = mSlideableView.getWidth();
-        final int newStart = isLayoutRtl ? getWidth() - newLeft - childWidth : newLeft;
-
-        final int paddingStart = isLayoutRtl ? getPaddingRight() : getPaddingLeft();
-        final int lpMargin = isLayoutRtl ? lp.rightMargin : lp.leftMargin;
-        final int startBound = paddingStart + lpMargin;
-
-        mSlideOffset = (float) (newStart - startBound) / mSlideRange;
-
-        if (mParallaxBy != 0) {
-            parallaxOtherViews(mSlideOffset);
-        }
-
-        dispatchOnPanelSlide(mSlideableView);
-    }
-
     @Override
     protected boolean drawChild(Canvas canvas, View child, long drawingTime) {
         final LayoutParams lp = (LayoutParams) child.getLayoutParams();
@@ -1028,70 +838,6 @@ public class SlidingPaneLayout extends ViewGroup implements Openable {
         canvas.restoreToCount(save);
 
         return result;
-    }
-
-    // Get system gesture insets when SDK version is larger than 29. Otherwise, return null.
-    private Insets getSystemGestureInsets() {
-        Insets gestureInsets = null;
-        if (sEdgeSizeUsingSystemGestureInsets) {
-            WindowInsetsCompat rootInsetsCompat = ViewCompat.getRootWindowInsets(this);
-            if (rootInsetsCompat != null) {
-                gestureInsets = rootInsetsCompat.getSystemGestureInsets();
-            }
-        }
-        return gestureInsets;
-    }
-
-    private Method mGetDisplayList;
-    private Field mRecreateDisplayList;
-    private boolean mDisplayListReflectionLoaded;
-
-    void invalidateChildRegion(View v) {
-        if (Build.VERSION.SDK_INT >= 17) {
-            ViewCompat.setLayerPaint(v, ((LayoutParams) v.getLayoutParams()).dimPaint);
-            return;
-        }
-
-        if (Build.VERSION.SDK_INT >= 16) {
-            // Private API hacks! Nasty! Bad!
-            //
-            // In Jellybean, some optimizations in the hardware UI renderer
-            // prevent a changed Paint on a View using a hardware layer from having
-            // the intended effect. This twiddles some internal bits on the view to force
-            // it to recreate the display list.
-            if (!mDisplayListReflectionLoaded) {
-                try {
-                    mGetDisplayList = View.class.getDeclaredMethod("getDisplayList",
-                            (Class<?>[]) null);
-                } catch (NoSuchMethodException e) {
-                    Log.e(TAG, "Couldn't fetch getDisplayList method; dimming won't work right.",
-                            e);
-                }
-                try {
-                    mRecreateDisplayList = View.class.getDeclaredField("mRecreateDisplayList");
-                    mRecreateDisplayList.setAccessible(true);
-                } catch (NoSuchFieldException e) {
-                    Log.e(TAG, "Couldn't fetch mRecreateDisplayList field; dimming will be slow.",
-                            e);
-                }
-                mDisplayListReflectionLoaded = true;
-            }
-            if (mGetDisplayList == null || mRecreateDisplayList == null) {
-                // Slow path. REALLY slow path. Let's hope we don't get here.
-                v.invalidate();
-                return;
-            }
-
-            try {
-                mRecreateDisplayList.setBoolean(v, true);
-                mGetDisplayList.invoke(v, (Object[]) null);
-            } catch (Exception e) {
-                Log.e(TAG, "Error refreshing display list state", e);
-            }
-        }
-
-        ViewCompat.postInvalidateOnAnimation(this, v.getLeft(), v.getTop(), v.getRight(),
-                v.getBottom());
     }
 
     /**
@@ -1119,106 +865,6 @@ public class SlidingPaneLayout extends ViewGroup implements Openable {
         return true;
     }
 
-    /**
-     * @param d drawable to use as a shadow
-     * @deprecated Renamed to {@link #setShadowDrawableLeft(Drawable d)} to support LTR (left to
-     * right language) and {@link #setShadowDrawableRight(Drawable d)} to support RTL (right to left
-     * language) during opening/closing.
-     */
-    @Deprecated
-    public void setShadowDrawable(Drawable d) {
-        setShadowDrawableLeft(d);
-    }
-
-    /**
-     * Set a drawable to use as a shadow cast by the right pane onto the left pane
-     * during opening/closing.
-     *
-     * @param d drawable to use as a shadow
-     */
-    public void setShadowDrawableLeft(@Nullable Drawable d) {
-        mShadowDrawableLeft = d;
-    }
-
-    /**
-     * Set a drawable to use as a shadow cast by the left pane onto the right pane
-     * during opening/closing to support right to left language.
-     *
-     * @param d drawable to use as a shadow
-     */
-    public void setShadowDrawableRight(@Nullable Drawable d) {
-        mShadowDrawableRight = d;
-    }
-
-    /**
-     * Set a drawable to use as a shadow cast by the right pane onto the left pane
-     * during opening/closing.
-     *
-     * @param resId Resource ID of a drawable to use
-     * @deprecated Renamed to {@link #setShadowResourceLeft(int)} to support LTR (left to
-     * right language) and {@link #setShadowResourceRight(int)} to support RTL (right to left
-     * language) during opening/closing.
-     */
-    @Deprecated
-    public void setShadowResource(@DrawableRes int resId) {
-        setShadowDrawableLeft(getResources().getDrawable(resId));
-    }
-
-    /**
-     * Set a drawable to use as a shadow cast by the right pane onto the left pane
-     * during opening/closing.
-     *
-     * @param resId Resource ID of a drawable to use
-     */
-    public void setShadowResourceLeft(int resId) {
-        setShadowDrawableLeft(ContextCompat.getDrawable(getContext(), resId));
-    }
-
-    /**
-     * Set a drawable to use as a shadow cast by the left pane onto the right pane
-     * during opening/closing to support right to left language.
-     *
-     * @param resId Resource ID of a drawable to use
-     */
-    public void setShadowResourceRight(int resId) {
-        setShadowDrawableRight(ContextCompat.getDrawable(getContext(), resId));
-    }
-
-    @Override
-    public void draw(Canvas c) {
-        super.draw(c);
-        final boolean isLayoutRtl = isLayoutRtlSupport();
-        Drawable shadowDrawable;
-        if (isLayoutRtl) {
-            shadowDrawable = mShadowDrawableRight;
-        } else {
-            shadowDrawable = mShadowDrawableLeft;
-        }
-
-        final View shadowView = getChildCount() > 1 ? getChildAt(1) : null;
-        if (shadowView == null || shadowDrawable == null) {
-            // No need to draw a shadow if we don't have one.
-            return;
-        }
-
-        final int top = shadowView.getTop();
-        final int bottom = shadowView.getBottom();
-
-        final int shadowWidth = shadowDrawable.getIntrinsicWidth();
-        final int left;
-        final int right;
-        if (isLayoutRtlSupport()) {
-            left = shadowView.getRight();
-            right = left + shadowWidth;
-        } else {
-            right = shadowView.getLeft();
-            left = right - shadowWidth;
-        }
-
-        shadowDrawable.setBounds(left, top, right, bottom);
-        shadowDrawable.draw(c);
-    }
-
     private void parallaxOtherViews(float slideOffset) {
         final boolean isLayoutRtl = isLayoutRtlSupport();
         final int childCount = getChildCount();
@@ -1233,40 +879,6 @@ public class SlidingPaneLayout extends ViewGroup implements Openable {
 
             v.offsetLeftAndRight(isLayoutRtl ? -dx : dx);
         }
-    }
-
-    /**
-     * Tests scrollability within child views of v given a delta of dx.
-     *
-     * @param v      View to test for horizontal scrollability
-     * @param checkV Whether the view v passed should itself be checked for scrollability (true),
-     *               or just its children (false).
-     * @param dx     Delta scrolled in pixels
-     * @param x      X coordinate of the active touch point
-     * @param y      Y coordinate of the active touch point
-     * @return true if child views of v can be scrolled by delta of dx.
-     */
-    protected boolean canScroll(View v, boolean checkV, int dx, int x, int y) {
-        if (v instanceof ViewGroup) {
-            final ViewGroup group = (ViewGroup) v;
-            final int scrollX = v.getScrollX();
-            final int scrollY = v.getScrollY();
-            final int count = group.getChildCount();
-            // Count backwards - let topmost views consume scroll distance first.
-            for (int i = count - 1; i >= 0; i--) {
-                // TODO: Add versioned support here for transformed views.
-                // This will not work for transformed views in Honeycomb+
-                final View child = group.getChildAt(i);
-                if (x + scrollX >= child.getLeft() && x + scrollX < child.getRight()
-                        && y + scrollY >= child.getTop() && y + scrollY < child.getBottom()
-                        && canScroll(child, true, dx, x + scrollX - child.getLeft(),
-                        y + scrollY - child.getTop())) {
-                    return true;
-                }
-            }
-        }
-
-        return checkV && v.canScrollHorizontally((isLayoutRtlSupport() ? dx : -dx));
     }
 
     boolean isDimmed(View child) {
@@ -1505,40 +1117,6 @@ public class SlidingPaneLayout extends ViewGroup implements Openable {
             dest.addAction(src.getActions());
 
             dest.setMovementGranularities(src.getMovementGranularities());
-        }
-    }
-
-    private static class TouchBlocker extends FrameLayout {
-        TouchBlocker(View view) {
-            super(view.getContext());
-            addView(view);
-        }
-
-        @Override
-        public boolean onTouchEvent(MotionEvent event) {
-            return true;
-        }
-
-        @Override
-        public boolean onGenericMotionEvent(MotionEvent event) {
-            return true;
-        }
-    }
-
-    private class DisableLayerRunnable implements Runnable {
-        final View mChildView;
-
-        DisableLayerRunnable(View childView) {
-            mChildView = childView;
-        }
-
-        @Override
-        public void run() {
-            if (mChildView.getParent() == SlidingPaneLayout.this) {
-                mChildView.setLayerType(View.LAYER_TYPE_NONE, null);
-                invalidateChildRegion(mChildView);
-            }
-            mPostedRunnables.remove(this);
         }
     }
 
