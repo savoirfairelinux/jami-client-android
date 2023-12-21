@@ -38,6 +38,7 @@ import android.view.ViewGroup
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.widget.Toast
+import androidx.annotation.ColorInt
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -53,6 +54,8 @@ import cx.ring.databinding.FragConversationTvBinding
 import cx.ring.fragments.CallFragment
 import cx.ring.mvp.BaseSupportFragment
 import cx.ring.service.DRingService
+import cx.ring.services.SharedPreferencesServiceImpl
+import cx.ring.services.SharedPreferencesServiceImpl.Companion.getConversationColor
 import cx.ring.tv.call.TVCallActivity
 import cx.ring.tv.camera.CustomCameraActivity
 import cx.ring.utils.AndroidFileUtils
@@ -592,7 +595,9 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
     }
 
     override fun setComposingStatus(composingStatus: ComposingStatus) {}
-    override fun setConversationColor(integer: Int) {}
+    override fun setConversationColor(@ColorInt color: Int) {
+        mAdapter?.setPrimaryColor(getConversationColor(requireContext(), color))
+    }
     override fun setConversationSymbol(symbol: CharSequence) {}
     override fun startShareLocation(accountId: String, conversationId: String) {}
     override fun showMap(accountId: String, contactId: String, open: Boolean) {}
