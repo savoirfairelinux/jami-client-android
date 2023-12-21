@@ -1681,9 +1681,12 @@ class ConversationAdapter(
 
         // If there is only one interaction in the conversation
         // OR if this is the first interaction.
-        if (mInteractions.size == 1 || i == 0) {
+        if (getNextInteractionFromPosition(position = i) == null
+            && getPreviousInteractionFromPosition(i) == null
+            || getPreviousInteractionFromPosition(i) == null
+        ) {
             // If this interaction is the last.
-            if (mInteractions.size == i + 1) {
+            if (getNextInteractionFromPosition(i) == null) {
                 return SequenceType.SINGLE
             }
 
