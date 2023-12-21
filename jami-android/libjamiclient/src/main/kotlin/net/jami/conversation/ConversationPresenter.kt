@@ -481,17 +481,6 @@ class ConversationPresenter @Inject constructor(
         view?.displayErrorToast(Error.NO_SPACE_LEFT)
     }
 
-    fun setConversationColor(color: Int) {
-        mCompositeDisposable.add(mConversationSubject
-            .firstElement()
-            .subscribe { conversation: Conversation -> conversation.setColor(color) })
-    }
-
-    fun setConversationSymbol(symbol: CharSequence) {
-        mCompositeDisposable.add(mConversationSubject.firstElement()
-            .subscribe { conversation -> conversation.setSymbol(symbol) })
-    }
-
     fun cameraPermissionChanged(isGranted: Boolean) {
         if (isGranted && hardwareService.isVideoAvailable) {
             hardwareService.initVideo()
