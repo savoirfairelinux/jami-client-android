@@ -1550,6 +1550,10 @@ class AccountService(
                     }
                 }
             }
+            // Hack to prevent notifications from being sent for data transfer uploads done on
+            // images which aren't owned by the local account
+            if (oldState == InteractionStatus.TRANSFER_FINISHED && oldState == transferStatus)
+                return
         }
         Log.d(TAG, "Data Transfer dataTransferSubject.onNext")
         dataTransfers.onNext(transfer)
