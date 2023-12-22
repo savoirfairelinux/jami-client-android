@@ -1583,9 +1583,9 @@ class ConversationAdapter(
                             convViewHolder.mGroupCallLayout?.gravity = Gravity.START
                             // Show the name of the contact.
                             peerDisplayName?.apply {
-                                if (presenter.isGroup() && (msgSequenceType == SequenceType.SINGLE
+                                if (msgSequenceType == SequenceType.SINGLE
                                             || msgSequenceType == SequenceType.FIRST)
-                                ) {
+                                {
                                     visibility = View.VISIBLE
                                     convViewHolder.compositeDisposable.add(
                                         presenter.contactService
