@@ -97,9 +97,6 @@ class ConversationAdapter(
     private val res = conversationFragment.resources
     private val mPictureMaxSize =
         TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 200f, res.displayMetrics).toInt()
-    private val mPreviewMaxSize =
-        TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100f, res.displayMetrics).toInt()
-    private var currentSelectionId: String? = null
     private var mCurrentLongItem: RecyclerViewContextMenuInfo? = null
     @ColorInt
     private var convColor = 0
@@ -383,7 +380,7 @@ class ConversationAdapter(
                     }
                     // Subscribe on result.
                     Observable.combineLatest(entry) { resultDictionary ->
-                        resultDictionary.map { it ->
+                        resultDictionary.map {
                             it as Pair<ContactViewModel, List<Interaction>>
                         }
                     }
@@ -399,7 +396,7 @@ class ConversationAdapter(
                     val mutableList = reactions.toMutableList()
                     val indexOfUserItem = mutableList.indexOfFirst { it.first.contact.isUser }
                     if (indexOfUserItem != -1) {
-                        mutableList.add(0, mutableList.removeAt(indexOfUserItem));
+                        mutableList.add(0, mutableList.removeAt(indexOfUserItem))
                     }
                     adapter.setValues(mutableList)
                 }
@@ -449,6 +446,7 @@ class ConversationAdapter(
         interaction: Interaction
     ) {
 
+        val context = conversationViewHolder.itemView.context
         val conversation = interaction.conversation
         if (conversation == null || conversation !is Conversation) {
             conversationViewHolder.mReplyName?.isVisible = false
@@ -471,46 +469,41 @@ class ConversationAdapter(
                     .observeOn(DeviceUtils.uiScheduler)
                     .subscribe({ i ->
                         conversationViewHolder.mReplyTxt!!.text = i.first.body
-                        conversationViewHolder.mReplyName!!.text = i.second.displayName
+                        conversationViewHolder.mReplyName.text = i.second.displayName
 
                         // Apply correct color depending if message is incoming or not.
-                        conversationViewHolder.mReplyTxt?.background?.setTint(
+                        conversationViewHolder.mReplyTxt.background?.setTint(
                             if (i.first.isIncoming)
-                                conversationViewHolder.itemView.context.getColor(
+                                context.getColor(
                                     R.color.conversation_secondary_background
                                 )
                             else convColor
                         )
                         conversationViewHolder.mReplyTxt.setTextColor(
                             if (i.first.isIncoming)
-                                conversationViewHolder.itemView.context.getColor(
+                                context.getColor(
                                     R.color.colorOnSurface
                                 )
-                            else conversationViewHolder.itemView.context.getColor(
+                            else context.getColor(
                                 R.color.text_color_primary_dark
                             )
                         )
 
                         // Load avatar drawable from contact.
+                        val avatarSize = context.resources
+                            .getDimensionPixelSize(R.dimen.conversation_avatar_size_small)
                         val smallAvatarDrawable = AvatarDrawable.Builder()
                             .withContact(i.second)
                             .withCircleCrop(true)
-                            .build(conversationViewHolder.itemView.context)
-                            .setInSize(
-                                conversationViewHolder.itemView.context.resources.getDimensionPixelSize(
-                                    R.dimen.conversation_avatar_size_small
-                                )
-                            )
+                            .build(context)
+                            .setInSize(avatarSize)
                         // Update the view.
-                        conversationViewHolder.mReplyName!!.setCompoundDrawablesWithIntrinsicBounds(
-                            smallAvatarDrawable,
-                            null,
-                            null,
-                            null
+                        conversationViewHolder.mReplyName.setCompoundDrawablesWithIntrinsicBounds(
+                            smallAvatarDrawable, null, null, null
                         )
 
                         replyView.isVisible = true
-                        conversationViewHolder.mReplyTxt!!.isVisible = true
+                        conversationViewHolder.mReplyTxt.isVisible = true
                         conversationViewHolder.mInReplyTo!!.isVisible = true
 
                         // User can click on mReplyTxt (replied message),
@@ -521,7 +514,9 @@ class ConversationAdapter(
                             replyView
                         ).forEach {
                             it.setOnClickListener {
-                                i.first.messageId?.let { presenter.scrollToMessage(it) }
+                                i.first.messageId?.let { messageId ->
+                                    presenter.scrollToMessage(messageId)
+                                }
                             }
                         }
                     }) {
@@ -799,7 +794,7 @@ class ConversationAdapter(
             cardLayout.foreground = playBtn
         }
 
-        player.setOnVideoSizeChangedListener { mp: MediaPlayer, width: Int, height: Int ->
+        player.setOnVideoSizeChangedListener { _: MediaPlayer, width: Int, height: Int ->
             Log.w(TAG, "OnVideoSizeChanged " + width + "x" + height)
             val p = video.layoutParams as FrameLayout.LayoutParams
             val maxDim = max(width, height)
@@ -1072,7 +1067,7 @@ class ConversationAdapter(
                                 .setTitle("Message history")
                                 .setItems(c.filterIsInstance<TextMessage>().map { it.body!! }
                                     .toTypedArray())
-                                { dialog, which -> dialog.dismiss() }
+                                { dialog, _ -> dialog.dismiss() }
                                 .create()
                                 .show()
                         }
@@ -1088,41 +1083,27 @@ class ConversationAdapter(
         interaction: Interaction,
         position: Int
     ) {
+        val context = viewHolder.itemView.context
         val file = interaction as DataTransfer
         val path = presenter.deviceRuntimeService.getConversationPath(file)
-        val timeString = TextUtils.timestampToDetailString(
-            viewHolder.itemView.context,
-            formatter,
-            file.timestamp
-        )
+        val timeString = TextUtils.timestampToDetailString(context, formatter, file.timestamp)
         viewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
             viewHolder.mMsgDetailTxt?.text = when (val status = file.status) {
-                InteractionStatus.TRANSFER_FINISHED -> String.format(
-                    "%s - %s", timeString,
-                    Formatter.formatFileSize(viewHolder.itemView.context, file.totalSize)
-                )
-
-                InteractionStatus.TRANSFER_ONGOING -> String.format(
-                    "%s / %s - %s",
-                    Formatter.formatFileSize(viewHolder.itemView.context, file.bytesProgress),
-                    Formatter.formatFileSize(viewHolder.itemView.context, file.totalSize),
-                    TextUtils.getReadableFileTransferStatus(viewHolder.itemView.context, status)
-                )
-
-                else -> String.format(
-                    "%s - %s - %s", timeString,
-                    Formatter.formatFileSize(viewHolder.itemView.context, file.totalSize),
-                    TextUtils.getReadableFileTransferStatus(viewHolder.itemView.context, status)
-                )
+                InteractionStatus.TRANSFER_FINISHED -> String.format("%s - %s", timeString,
+                    Formatter.formatFileSize(context, file.totalSize))
+                InteractionStatus.TRANSFER_ONGOING -> String.format("%s / %s - %s",
+                    Formatter.formatFileSize(context, file.bytesProgress),
+                    Formatter.formatFileSize(context, file.totalSize),
+                    TextUtils.getReadableFileTransferStatus(context, status))
+                else -> String.format("%s - %s - %s", timeString,
+                    Formatter.formatFileSize(context, file.totalSize),
+                    TextUtils.getReadableFileTransferStatus(context, status))
             }
         })
         if (hasPermanentTimeString(file, position)) {
             viewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
-                viewHolder.mMsgDetailTxtPerm?.text = TextUtils.timestampToDetailString(
-                    viewHolder.itemView.context,
-                    formatter,
-                    file.timestamp
-                )
+                viewHolder.mMsgDetailTxtPerm?.text =
+                    TextUtils.timestampToDetailString(context, formatter, file.timestamp)
             })
             viewHolder.mMsgDetailTxtPerm?.visibility = View.VISIBLE
         } else {
@@ -1154,43 +1135,57 @@ class ConversationAdapter(
         longPressView.setOnLongClickListener { v: View ->
             if (type == MessageType.TransferType.AUDIO || type == MessageType.TransferType.FILE) {
                 conversationFragment.updatePosition(viewHolder.bindingAdapterPosition)
-                longPressView.background.setTint(res.getColor(R.color.grey_500))
+                longPressView.background.setTint(context.getColor(R.color.grey_500))
             }
             openItemMenu(viewHolder, v, file)
             mCurrentLongItem =
                 RecyclerViewContextMenuInfo(viewHolder.bindingAdapterPosition, v.id.toLong())
             true
         }
-        if (type == MessageType.TransferType.IMAGE) {
-            configureImage(viewHolder, path, file.body)
-        } else if (type == MessageType.TransferType.VIDEO) {
-            configureVideo(viewHolder, path)
-        } else if (type == MessageType.TransferType.AUDIO) {
-            configureAudio(viewHolder, path)
-        } else {
-            val status = file.status
-            viewHolder.mIcon?.setImageResource(if (status.isError) R.drawable.baseline_warning_24 else R.drawable.baseline_attach_file_24)
-            viewHolder.mMsgTxt?.text = file.displayName
-            viewHolder.mFileInfoLayout?.setOnClickListener(null)
-            if (status == InteractionStatus.TRANSFER_AWAITING_HOST) {
-                viewHolder.btnRefuse?.visibility = View.VISIBLE
-                viewHolder.mAnswerLayout?.visibility = View.VISIBLE
-                viewHolder.btnAccept?.setOnClickListener { presenter.acceptFile(file) }
-                viewHolder.btnRefuse?.setOnClickListener { presenter.refuseFile(file) }
-            } else if (status == InteractionStatus.FILE_AVAILABLE) {
-                viewHolder.btnRefuse?.visibility = View.GONE
-                viewHolder.mAnswerLayout?.visibility = View.VISIBLE
-                viewHolder.btnAccept?.setOnClickListener { presenter.acceptFile(file) }
-            } else {
-                viewHolder.mAnswerLayout?.visibility = View.GONE
-                if (status == InteractionStatus.TRANSFER_ONGOING) {
-                    viewHolder.progress?.max = (file.totalSize / 1024).toInt()
-                    viewHolder.progress?.setProgress((file.bytesProgress / 1024).toInt(), true)
-                    viewHolder.progress?.show()
-                } else {
-                    viewHolder.progress?.hide()
+        when (type) {
+            MessageType.TransferType.IMAGE -> {
+                configureImage(viewHolder, path, file.body)
+            }
+            MessageType.TransferType.VIDEO -> {
+                configureVideo(viewHolder, path)
+            }
+            MessageType.TransferType.AUDIO -> {
+                configureAudio(viewHolder, path)
+            }
+            else -> {
+                val status = file.status
+                viewHolder.mIcon?.setImageResource(
+                    if (status.isError) R.drawable.baseline_warning_24
+                    else R.drawable.baseline_attach_file_24
+                )
+                viewHolder.mMsgTxt?.text = file.displayName
+                viewHolder.mFileInfoLayout?.setOnClickListener(null)
+                when (status) {
+                    InteractionStatus.TRANSFER_AWAITING_HOST -> {
+                        viewHolder.btnRefuse?.visibility = View.VISIBLE
+                        viewHolder.mAnswerLayout?.visibility = View.VISIBLE
+                        viewHolder.btnAccept?.setOnClickListener { presenter.acceptFile(file) }
+                        viewHolder.btnRefuse?.setOnClickListener { presenter.refuseFile(file) }
+                    }
+                    InteractionStatus.FILE_AVAILABLE -> {
+                        viewHolder.btnRefuse?.visibility = View.GONE
+                        viewHolder.mAnswerLayout?.visibility = View.VISIBLE
+                        viewHolder.btnAccept?.setOnClickListener { presenter.acceptFile(file) }
+                    }
+                    else -> {
+                        viewHolder.mAnswerLayout?.visibility = View.GONE
+                        if (status == InteractionStatus.TRANSFER_ONGOING) {
+                            viewHolder.progress?.apply {
+                                max = (file.totalSize / 1024).toInt()
+                                setProgress((file.bytesProgress / 1024).toInt(), true)
+                                show()
+                            }
+                        } else {
+                            viewHolder.progress?.hide()
+                        }
+                        viewHolder.mFileInfoLayout?.setOnClickListener { presenter.openFile(file) }
+                    }
                 }
-                viewHolder.mFileInfoLayout?.setOnClickListener { presenter.openFile(file) }
             }
         }
     }
@@ -1228,7 +1223,7 @@ class ConversationAdapter(
     }
 
     /**
-     * Configures the viewholder to display a classic text message, ie. not a call info text message
+     * Configures the viewHolder to display a classic text message, ie. not a call info text message
      *
      * @param convViewHolder The conversation viewHolder
      * @param interaction    The conversation element to display
@@ -1338,7 +1333,7 @@ class ConversationAdapter(
                     }
                     conversationFragment.updatePosition(convViewHolder.bindingAdapterPosition)
                     if (textMessage.isIncoming) {
-                        longPressView.background.setTint(res.getColor(R.color.grey_500))
+                        longPressView.background.setTint(context.getColor(R.color.grey_500))
                     } else {
                         longPressView.background.setTint(convColorTint)
                     }
@@ -1449,34 +1444,29 @@ class ConversationAdapter(
         viewHolder: ConversationViewHolder,
         interaction: Interaction
     ) {
+        val context = viewHolder.itemView.context
         val event = interaction as ContactEvent
         Log.w(
             TAG,
             "configureForContactEvent ${event.account} ${event.event} ${event.contact} ${event.author} "
         )
         val timestamp =
-            TextUtils.timestampToDetailString(
-                viewHolder.itemView.context,
-                formatter,
-                event.timestamp
-            )
+            TextUtils.timestampToDetailString(context, formatter, event.timestamp)
 
         if (interaction.isSwarm) {
             viewHolder.compositeDisposable.add(
                 presenter.contactService.observeContact(event.account!!, event.contact!!, false)
                     .observeOn(DeviceUtils.uiScheduler)
-                    .subscribe { vm ->
-                        val eventString = viewHolder.itemView.context.getString(
-                            when (event.event) {
-                                ContactEvent.Event.ADDED -> R.string.conversation_contact_added
-                                ContactEvent.Event.INVITED -> R.string.conversation_contact_invited
-                                ContactEvent.Event.REMOVED -> R.string.conversation_contact_left
-                                ContactEvent.Event.BANNED -> R.string.conversation_contact_banned
-                                else -> R.string.hist_contact_added
-                            }, vm.displayName
-                        )
-                        viewHolder.mMsgTxt?.text = "$eventString, $timestamp"
-                    })
+                .subscribe { vm ->
+                    val eventString = context.getString(when (event.event) {
+                        ContactEvent.Event.ADDED -> R.string.conversation_contact_added
+                        ContactEvent.Event.INVITED -> R.string.conversation_contact_invited
+                        ContactEvent.Event.REMOVED -> R.string.conversation_contact_left
+                        ContactEvent.Event.BANNED -> R.string.conversation_contact_banned
+                        else -> R.string.hist_contact_added
+                    }, vm.displayName)
+                    viewHolder.mMsgTxt?.text = "$eventString, $timestamp"
+                })
         } else {
             val eventString = when (event.event) {
                 ContactEvent.Event.ADDED -> R.string.hist_contact_added
@@ -1491,7 +1481,7 @@ class ConversationAdapter(
     }
 
     /**
-     * Configures the viewholder to display a call info text message, ie. not a classic text message
+     * Configures the viewHolder to display a call info text message, ie. not a classic text message
      *
      * @param convViewHolder The conversation viewHolder
      * @param interaction    The conversation element to display
@@ -1503,7 +1493,6 @@ class ConversationAdapter(
     ) {
         val recycle: StringBuilder = StringBuilder()
         val context = convViewHolder.itemView.context
-
         // Reset the scale of the icon
         convViewHolder.mIcon?.scaleX = 1f
 
@@ -1524,7 +1513,7 @@ class ConversationAdapter(
                 }
                 // When long clicked...
                 setOnLongClickListener { v: View ->
-                    background.setTint(res.getColor(R.color.grey_500))
+                    background.setTint(context.getColor(R.color.grey_500))
                     // Open Context Menu
                     conversationFragment.updatePosition(convViewHolder.adapterPosition)
                     mCurrentLongItem =
@@ -1665,7 +1654,7 @@ class ConversationAdapter(
                     val typeCall = convViewHolder.mHistTxt ?: return@subscribe
                     val detailCall = convViewHolder.mHistDetailTxt ?: return@subscribe
                     val resIndex: Int
-                    val typeCallTxt: String
+                    val typeCallTxt : String
                     val peerDisplayName = convViewHolder.mPeerDisplayName
                     val account = interaction.account ?: return@subscribe
                     val callLayout = convViewHolder.mCallLayout
@@ -1697,11 +1686,11 @@ class ConversationAdapter(
                         resIndex = msgSequenceType.ordinal + 4
                         // Set the color of the time duration.
                         detailCall.setTextColor(
-                            convViewHolder.itemView.context.getColor(R.color.colorOnSurface)
+                            context.getColor(R.color.colorOnSurface)
                         )
                         // Set the call message color.
                         typeCall.setTextColor(
-                            convViewHolder.itemView.context.getColor(R.color.colorOnSurface)
+                            context.getColor(R.color.colorOnSurface)
                         )
                         // Put the message to the left because it is incoming.
                         convViewHolder.mCallLayout?.gravity = Gravity.START
@@ -1720,12 +1709,12 @@ class ConversationAdapter(
                         resIndex = msgSequenceType.ordinal
                         // Set the call message color.
                         typeCall.setTextColor(
-                            convViewHolder.itemView.context.getColor(
+                            context.getColor(
                                 R.color.call_text_outgoing_message)
                         )
                         // Set the color of the time duration.
                         detailCall.setTextColor(
-                            convViewHolder.itemView.context.getColor(
+                            context.getColor(
                                 R.color.call_text_outgoing_message)
                         )
                         if (call.isMissed) { // Outgoing call missed.
@@ -1943,16 +1932,6 @@ class ConversationAdapter(
         return prevMsg != null && msg.timestamp - prevMsg.timestamp > 10 * DateUtils.MINUTE_IN_MILLIS
     }
 
-    private fun lastOutgoingIndex(): Int {
-        var i: Int = mInteractions.size - 1
-        while (i >= 0) {
-            if (!mInteractions[i].isIncoming)
-                break
-            i--
-        }
-        return i
-    }
-
     private enum class SequenceType { FIRST, MIDDLE, LAST, SINGLE }
 
     companion object {
@@ -1975,10 +1954,10 @@ class ConversationAdapter(
         /**
          * Add bottom margin to a view.
          * @param view              the view to modify
-         * @param margin_in_dp      the margin to set
+         * @param marginInDp      the margin to set
          */
-        private fun setBottomMargin(view: View, margin_in_dp: Int) {
-            val targetSize = (margin_in_dp * view.context.resources.displayMetrics.density).toInt()
+        private fun setBottomMargin(view: View, marginInDp: Int) {
+            val targetSize = (marginInDp * view.context.resources.displayMetrics.density).toInt()
             val params = view.layoutParams as MarginLayoutParams
             params.bottomMargin = targetSize
         }
