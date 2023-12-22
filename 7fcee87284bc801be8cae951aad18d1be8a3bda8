@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "02900e02_c59feb1a",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1556,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-12-22T23:26:59Z",
+      "side": 1,
+      "message": "could be simply\n\n else if (oldState \u003d\u003d InteractionStatus.TRANSFER_FINISHED)\n     return",
+      "range": {
+        "startLine": 1553,
+        "startChar": 12,
+        "endLine": 1556,
+        "endChar": 22
+      },
+      "revId": "7fcee87284bc801be8cae951aad18d1be8a3bda8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
