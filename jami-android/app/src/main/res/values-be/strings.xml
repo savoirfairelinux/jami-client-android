@@ -86,6 +86,7 @@
   <string name="conversation_action_delete_this_message">Гэтая дзейнасць не можа быць адменена.</string>
   <string name="conversation_action_history_clear">Ясная гісторыя</string>
   <string name="conversation_action_block_this">Блокальны кантакт</string>
+  <string name="conversation_action_incoming_call">Паступны званок</string>
   <string name="conversation_members">Члены</string>
   <!--Contacts-->
   <string name="account_create_title">Стварэнне ўліковага запісу Jami</string>

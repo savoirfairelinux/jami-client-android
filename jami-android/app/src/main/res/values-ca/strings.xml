@@ -177,6 +177,7 @@
   <string name="conversation_action_block_this">Bloqueja el contacte</string>
   <string name="conversation_action_unblock_this">Desbloca contacte</string>
   <string name="conversation_action_go_to_call">Torna a la trucada en curs</string>
+  <string name="conversation_action_incoming_call">Trucada entrant</string>
   <string name="conversation_action_latest">Salta a l\'última</string>
   <string name="conversation_open_file_error">No hi ha cap aplicació instaŀlada que pugui obrir aquest tipus de fitxer.</string>
   <string name="clip_contact_uri">Adreça de contacte</string>

@@ -177,6 +177,7 @@
   <string name="conversation_action_block_this">ব্লক যোগাযোগ</string>
   <string name="conversation_action_unblock_this">যোগাযোগ বন্ধ করুন</string>
   <string name="conversation_action_go_to_call">চলমান কল-এ ফেরত যান</string>
+  <string name="conversation_action_incoming_call">ইনকামিং কল</string>
   <string name="conversation_action_latest">সর্বশেষতম</string>
   <string name="conversation_open_file_error">এই ফাইল টাইপটি খুলতে সক্ষম কোন অ্যাপ্লিকেশন ইনস্টল করা নেই।</string>
   <string name="clip_contact_uri">যোগাযোগের ঠিকানা</string>

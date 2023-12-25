@@ -177,6 +177,7 @@
   <string name="conversation_action_block_this">Блокиране на контакт</string>
   <string name="conversation_action_unblock_this">Деблокиране на контакта</string>
   <string name="conversation_action_go_to_call">Обратно към текущо обаждане</string>
+  <string name="conversation_action_incoming_call">Входящо обаждане</string>
   <string name="conversation_action_latest">Прескочи до най-новото.</string>
   <string name="conversation_open_file_error">Няма инсталирано приложение, което да може да отвори този тип файл.</string>
   <string name="clip_contact_uri">Адрес за контакт</string>

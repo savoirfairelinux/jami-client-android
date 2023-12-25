@@ -23,18 +23,18 @@ along with this program; if not, write to the Free Software
     <!-- SipCalls -->
     <string name="call_human_state_searching">Шукаю</string>
     <string name="call_human_state_incoming">Викликає</string>
-    <string name="call_human_state_connecting">З\'єднання</string>
+    <string name="call_human_state_connecting">Зʼєднання</string>
     <string name="call_human_state_ringing">Дзвінок</string>
     <string name="call_human_state_current">Розмовляє</string>
     <string name="call_human_state_hungup">Завершено</string>
     <string name="call_human_state_busy">Зайнятий</string>
-    <string name="call_human_state_failure">Невдало</string>
-    <string name="call_human_state_hold">Режим очікування</string>
-    <string name="call_human_state_unhold">Зняти з утримування</string>
+    <string name="call_human_state_failure">Не вдалося</string>
+    <string name="call_human_state_hold">Утримання виклику</string>
+    <string name="call_human_state_unhold">Зняти з утримання</string>
     <string name="call_human_state_over">Понад</string>
     <!-- Conferences -->
     <string name="call_moderator">Модератор</string>
-    <string name="call_muted">Змомолочено</string>
-    <string name="call_handRaised">Рука піднята</string>
+    <string name="call_muted">Приглушено</string>
+    <string name="call_handRaised">Піднята рука</string>
 
 </resources>

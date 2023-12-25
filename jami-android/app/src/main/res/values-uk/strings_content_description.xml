@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--Strings for xml content description of images-->
-  <string name="contact_quick_call_description">Швидкий дзвінок</string>
+  <string name="contact_quick_call_description">Швидкий виклик</string>
   <string name="contact_picture_description">Аватар контакту</string>
-  <string name="dial_numeric_pad">Цифровий набір</string>
+  <string name="dial_numeric_pad">Цифрова панель набору</string>
   <string name="contact_unblock">Розблокувати</string>
-  <string name="video_plugins">Втулки для відео</string>
+  <string name="video_plugins">Відео плагіни</string>
 </resources>

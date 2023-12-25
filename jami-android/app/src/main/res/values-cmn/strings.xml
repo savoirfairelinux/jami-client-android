@@ -24,6 +24,7 @@
   <!--QRCode Scan-->
   <!--Settings-->
   <!--Conversation-->
+  <string name="conversation_action_incoming_call">来电</string>
   <!--Contacts-->
   <!--Account Summary-->
   <!--Share fragment-->

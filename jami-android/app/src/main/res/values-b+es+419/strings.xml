@@ -34,6 +34,7 @@
   <!--Settings-->
   <!--Conversation-->
   <string name="conversation_action_unblock_this">Desbloquear contacto</string>
+  <string name="conversation_action_incoming_call">Llamada entrante</string>
   <string name="conversation_action_latest">Desplazar hasta el final de la conversación</string>
   <string name="unblock_contact_dialog_title">¿Desbloquear a %1$s?</string>
   <string name="unblock_contact_dialog_message">%1$s te va a poder contactar de nuevo.</string>

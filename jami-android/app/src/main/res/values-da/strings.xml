@@ -177,6 +177,7 @@
   <string name="conversation_action_block_this">Bloker kontakt</string>
   <string name="conversation_action_unblock_this">Ublokere kontakt</string>
   <string name="conversation_action_go_to_call">Tilbage til igangeværende opkald</string>
+  <string name="conversation_action_incoming_call">Indgående opkald</string>
   <string name="conversation_action_latest">Rul til slutning af samtale</string>
   <string name="conversation_open_file_error">Der er ikke installeret en app, som kan åbne denne fil.</string>
   <string name="clip_contact_uri">Kontaktens adresse</string>

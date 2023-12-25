@@ -179,6 +179,7 @@
   <string name="conversation_action_block_this">Blokovat spojení</string>
   <string name="conversation_action_unblock_this">Odblokovat kontakt</string>
   <string name="conversation_action_go_to_call">Vrátit se k probíhajícímu hovoru</string>
+  <string name="conversation_action_incoming_call">Příchozí hovor</string>
   <string name="conversation_action_latest">Posunout se na konec konverzace</string>
   <string name="conversation_open_file_error">Nebyla nalezena žádná aplikace schopná otevřít tento typ souboru</string>
   <string name="clip_contact_uri">Adresa spojení</string>

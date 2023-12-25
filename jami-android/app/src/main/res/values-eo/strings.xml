@@ -177,6 +177,7 @@
   <string name="conversation_action_block_this">Kontakto blokita</string>
   <string name="conversation_action_unblock_this">Malblokigu kontakton</string>
   <string name="conversation_action_go_to_call">Reiri al daŭra alvoko</string>
+  <string name="conversation_action_incoming_call">Eniranta voko</string>
   <string name="conversation_action_latest">Saltu al la lasta</string>
   <string name="conversation_open_file_error">Ne ekzistas instalita programo kapabla malfermi ĉi tiun dosiertypon.</string>
   <string name="clip_contact_uri">Kontakta adreso</string>
