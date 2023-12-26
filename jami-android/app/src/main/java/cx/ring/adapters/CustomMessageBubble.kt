@@ -105,7 +105,10 @@ class CustomMessageBubble(context: Context, attrs: AttributeSet?) : ViewGroup(co
         this.messageTime.text = messageTime
         updateColor(Color.BLACK)
     }
-
+    /**
+     * Updates the color of the text.
+     * The time and edited text have opacity added.
+     */
     private fun updateColor(color: Int) {
         val colorAlpha60 = ColorUtils.setAlphaComponent(color, 0x99)
         messageText.setTextColor(color)
