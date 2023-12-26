@@ -46,7 +46,7 @@ class CustomMessageBubble(context: Context, attrs: AttributeSet?) : ViewGroup(co
         .getDimensionPixelSize(R.dimen.custom_message_bubble_edited_drawable_padding)
 
     // Colors
-    private var defaultTextColor = Color.WHITE
+    private var defaultTextColor = context.getColor(R.color.colorOnSurface)
 
     init {
         initialize() // Create UI elements.
@@ -103,9 +103,13 @@ class CustomMessageBubble(context: Context, attrs: AttributeSet?) : ViewGroup(co
         this.messageText.setTextSize(TypedValue.COMPLEX_UNIT_PX, emojiOnlyTextSize)
         this.messageText.text = messageText
         this.messageTime.text = messageTime
-        updateColor(Color.BLACK)
+        updateColor(defaultTextColor)
     }
 
+    /**
+     * Updates the color of the text.
+     * The time and edited text have opacity added.
+     */
     private fun updateColor(color: Int) {
         val colorAlpha60 = ColorUtils.setAlphaComponent(color, 0x99)
         messageText.setTextColor(color)
