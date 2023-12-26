@@ -356,13 +356,14 @@ class ConversationAdapter(
         conversationViewHolder: ConversationViewHolder,
         interaction: Interaction
     ) {
+        val context = conversationViewHolder.itemView.context
         // If reaction chip is clicked we wants to display the reaction visualiser.
         conversationViewHolder.reactionChip?.setOnClickListener {
             val adapter = ReactionVisualizerAdapter(
-                conversationViewHolder.itemView.context,
+                context,
                 presenter::removeReaction
             )
-            val dialog = MaterialAlertDialogBuilder(conversationViewHolder.itemView.context)
+            val dialog = MaterialAlertDialogBuilder(context)
                 .setAdapter(adapter) { _, _ -> }
                 .show()
 
@@ -406,7 +407,6 @@ class ConversationAdapter(
                 conversationViewHolder.compositeDisposable.remove(observable)
             }
         }
-
         // Manage the display of the chip (ui element showing the emojis)
         conversationViewHolder.compositeDisposable.add(
             interaction.reactionObservable
@@ -1143,15 +1143,9 @@ class ConversationAdapter(
             true
         }
         when (type) {
-            MessageType.TransferType.IMAGE -> {
-                configureImage(viewHolder, path, file.body)
-            }
-            MessageType.TransferType.VIDEO -> {
-                configureVideo(viewHolder, path)
-            }
-            MessageType.TransferType.AUDIO -> {
-                configureAudio(viewHolder, path)
-            }
+            MessageType.TransferType.IMAGE -> { configureImage(viewHolder, path, file.body) }
+            MessageType.TransferType.VIDEO -> { configureVideo(viewHolder, path) }
+            MessageType.TransferType.AUDIO -> { configureAudio(viewHolder, path) }
             else -> {
                 val status = file.status
                 viewHolder.mIcon?.setImageResource(
