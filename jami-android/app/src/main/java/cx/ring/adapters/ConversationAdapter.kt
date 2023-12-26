@@ -1143,15 +1143,9 @@ class ConversationAdapter(
             true
         }
         when (type) {
-            MessageType.TransferType.IMAGE -> {
-                configureImage(viewHolder, path, file.body)
-            }
-            MessageType.TransferType.VIDEO -> {
-                configureVideo(viewHolder, path)
-            }
-            MessageType.TransferType.AUDIO -> {
-                configureAudio(viewHolder, path)
-            }
+            MessageType.TransferType.IMAGE -> { configureImage(viewHolder, path, file.body) }
+            MessageType.TransferType.VIDEO -> { configureVideo(viewHolder, path) }
+            MessageType.TransferType.AUDIO -> { configureAudio(viewHolder, path) }
             else -> {
                 val status = file.status
                 viewHolder.mIcon?.setImageResource(
