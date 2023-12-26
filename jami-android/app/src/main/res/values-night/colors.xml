@@ -61,5 +61,6 @@
     <color name="menu_conversation_icons">@color/white</color>
     <color name="accept_call_button">#CAC4D0</color>
     <color name="file_icon_background_in">#4D000000</color>
+    <color name="conversation_reply_background">#33000000</color>
 
 </resources>
