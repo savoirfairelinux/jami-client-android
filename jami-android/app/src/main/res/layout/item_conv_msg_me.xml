@@ -16,138 +16,165 @@ along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/txt_entry"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@android:color/transparent"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:paddingBottom="2dp">
+    android:layout_height="wrap_content">
+
+    <FrameLayout
+        android:id="@+id/excluded_left_zone"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/message_layout"
+        app:layout_constraintTop_toTopOf="@id/message_time_permanent" />
 
     <TextView
-        android:id="@+id/msg_details_txt_perm"
+        android:id="@+id/message_time_permanent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingBottom="@dimen/padding_small"
         android:textColor="@color/textColorSecondary"
         android:textSize="@dimen/conversation_timestamp_textsize"
         android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/message_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="@string/time_just_now"
         tools:visibility="visible" />
 
-    <TextView
-        android:id="@+id/msg_details_txt"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/message_layout"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:paddingTop="4dp"
-        android:paddingBottom="2dp"
-        android:textColor="@color/textColorSecondary"
-        android:textSize="@dimen/conversation_timestamp_textsize"
-        android:visibility="gone"
-        tools:text="@string/time_just_now"
-        tools:visibility="visible" />
+        android:paddingBottom="@dimen/padding_xsmall"
+        app:layout_constraintHorizontal_weight="5"
+        app:layout_constraintLeft_toRightOf="@+id/excluded_left_zone"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/message_time_permanent">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingStart="@dimen/padding_large"
-        android:paddingEnd="0dp">
-
-        <TextView
-            android:id="@+id/msg_reply_name"
+        <LinearLayout
+            android:id="@+id/reply_bubble"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@id/msg_reply_txt"
-            android:drawablePadding="4dp"
-            android:ellipsize="middle"
-            android:maxWidth="200dp"
-            android:maxLines="1"
-            android:padding="4dp"
-            android:textColor="@color/textColorSecondary"
-            android:textSize="@dimen/conversation_timestamp_textsize"
-            android:textStyle="bold"
-            tools:drawableStart="@drawable/baseline_delete_16"
-            tools:text="Bob" />
-
-        <TextView
-            android:id="@+id/msg_in_reply_to"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@id/msg_reply_name"
-            android:layout_toStartOf="@id/msg_reply_name"
-            android:maxLines="1"
-            android:text="@string/in_reply_to"
-            android:textColor="@color/textColorSecondary"
-            android:textSize="@dimen/conversation_timestamp_textsize"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/msg_reply_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/msg_reply_name"
-            android:layout_alignEnd="@id/msg_txt"
-            android:layout_marginStart="72dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginBottom="-8dp"
+            android:layout_gravity="end"
+            android:layout_marginStart="70dp"
+            android:layout_marginEnd="@dimen/conversation_me_margin_end"
             android:background="@drawable/textmsg_bg_out"
-            android:focusable="true"
-            android:minWidth="@dimen/conversation_avatar_size"
-            android:minHeight="@dimen/conversation_avatar_size"
-            android:singleLine="true"
-            android:textColor="@color/text_color_primary_dark"
-            android:textColorHighlight="@color/conversation_primary_selection"
-            android:textColorLink="@color/text_color_primary_dark"
-            android:textSize="@dimen/text_size_large"
-            android:theme="@style/OutgoingTextView"
-            tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod" />
+            android:backgroundTint="@color/conversation_secondary_background"
+            android:padding="5dp"
+            android:visibility="gone"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible">
 
-        <include
-            layout="@layout/msg_link_preview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/msg_reply_txt"
-            android:layout_marginStart="72dp"
-            android:layout_marginEnd="24dp" />
+            <TextView
+                android:id="@+id/reply_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/reply_contact_msg_bg"
+                android:backgroundTint="@color/conversation_reply_background"
+                android:drawablePadding="5dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:padding="5dp"
+                android:textColor="#000000"
+                android:textSize="@dimen/message_display_name_textsize"
+                app:drawableStartCompat="@drawable/reply_contact_avatar_12px"
+                tools:text="Jean-Pascal" />
 
-        <TextView
-            android:id="@+id/msg_txt"
+            <TextView
+                android:id="@+id/reply_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:focusable="true"
+                android:maxLines="1"
+                android:padding="5dp"
+                android:textColor="@color/colorOnSurface"
+                android:textColorHighlight="@color/conversation_primary_selection"
+                android:textColorLink="@color/text_color_primary_dark"
+                android:textSize="@dimen/conversation_text_size_small"
+                android:theme="@style/OutgoingTextView"
+                tools:text="Lorem ipsum" />
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/message_bubble_border"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/link_preview"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="72dp"
-            android:layout_marginEnd="24dp"
+            android:layout_marginTop="-8dp"
+            android:layout_marginEnd="@dimen/conversation_me_margin_end"
             android:background="@drawable/textmsg_bg_out"
-            android:focusable="true"
-            android:minWidth="@dimen/conversation_avatar_size"
-            android:minHeight="@dimen/conversation_avatar_size"
-            android:textColor="@color/text_color_primary_dark"
-            android:textColorHighlight="@color/conversation_primary_selection"
-            android:textColorLink="@color/text_color_primary_dark"
-            android:textIsSelectable="true"
-            android:textSize="@dimen/text_size_large"
-            android:theme="@style/OutgoingTextView"
-            tools:text="yo this is the test of a long long text can not be_found_message" />
+            android:backgroundTint="@color/background"
+            android:paddingStart="1.5dp"
+            android:paddingTop="1.5dp"
+            android:paddingEnd="0dp"
+            android:paddingBottom="0dp"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/reply_bubble">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/message_bubble"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:background="@drawable/textmsg_bg_out">
+
+                <cx.ring.adapters.CustomMessageBubble
+                    android:id="@+id/message_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="5dp"
+                    android:textColor="@color/text_color_primary_dark"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:edited="true"
+                    tools:message="This is a test !"
+                    tools:time="11h05" />
+
+                <include
+                    android:id="@+id/link_preview"
+                    layout="@layout/msg_link_preview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/message_content" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </FrameLayout>
 
         <cx.ring.views.MessageStatusView
             android:id="@+id/status_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/msg_txt"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="5dp" />
+            android:layout_width="@dimen/conversation_status_icon_size"
+            android:layout_height="@dimen/conversation_status_icon_size"
+            android:layout_marginHorizontal="5dp"
+            app:layout_constraintBottom_toBottomOf="@id/message_bubble_border"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:background="@color/purple_300"
+            tools:layout_height="@dimen/conversation_status_icon_size"
+            tools:visibility="visible" />
 
         <TextView
             android:id="@+id/reaction_chip"
             style="@style/Widget.Material3.Chip.Suggestion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/msg_txt"
-            android:layout_alignEnd="@id/msg_txt"
             android:layout_marginTop="-6dp"
             android:layout_marginEnd="8dp"
             android:background="@drawable/background_reaction_chip"
@@ -157,7 +184,10 @@ along with this program; if not, write to the Free Software
             android:outlineProvider="none"
             android:padding="5dp"
             android:singleLine="true"
+            app:layout_constraintEnd_toEndOf="@id/message_bubble_border"
+            app:layout_constraintTop_toBottomOf="@id/message_bubble_border"
             tools:text="👍 😍 3" />
 
-    </RelativeLayout>
-</LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
