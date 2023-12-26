@@ -1011,16 +1011,16 @@ class TvConversationAdapter(
                         val account = interaction.account ?: return@subscribe
                         val contact = callMessage.contact ?: return@subscribe
 
-                    // Manage the update of the timestamp
-                    if (isTimeShown) {
-                        convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
-                            convViewHolder.mMsgDetailTxtPerm?.text =
-                                TextUtils.timestampToDetailString(
-                                    context, formatter, call.timestamp
-                                )
-                        })
-                        convViewHolder.mMsgDetailTxtPerm?.visibility = View.VISIBLE
-                    } else convViewHolder.mMsgDetailTxtPerm?.visibility = View.GONE
+                        // Manage the update of the timestamp
+                        if (isTimeShown) {
+                            convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
+                                convViewHolder.mMsgDetailTxtPerm?.text =
+                                    TextUtils.timestampToDetailString(
+                                        context, formatter, call.timestamp
+                                    )
+                            })
+                            convViewHolder.mMsgDetailTxtPerm?.visibility = View.VISIBLE
+                        } else convViewHolder.mMsgDetailTxtPerm?.visibility = View.GONE
 
                         // After a call, a message is displayed with call information.
                         // Manage the call message layout.
