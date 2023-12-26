@@ -12,6 +12,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/conversation_contact_is_typing"
-        android:paddingHorizontal="4dp"
+        android:padding="5dp"
         app:srcCompat="@drawable/typing_indicator_animation" />
 </FrameLayout>
