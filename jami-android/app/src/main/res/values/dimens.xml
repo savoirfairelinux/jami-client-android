@@ -135,12 +135,14 @@ along with this program; if not, write to the Free Software
     <dimen name="button_size">48dp</dimen>
     <dimen name="margin_end_avatar_conversation">12dp</dimen>
     <dimen name="margin_with_avatar">52dp</dimen>
+    <dimen name="margin_no_group">12dp</dimen>
     <dimen name="margin_without_avatar">16dp</dimen>
     <dimen name="file_background_radius">5dp</dimen>
     <dimen name="file_background_padding">10dp</dimen>
     <dimen name="file_size">12sp</dimen>
     <dimen name="file_name">16sp</dimen>
     <dimen name="reaction_chip_background_radius">5dp</dimen>
+    <dimen name="conversation_text_size_small">12sp</dimen>
 
     <!--Text size-->
     <dimen name="text_size_small">13sp</dimen>
