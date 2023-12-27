@@ -94,6 +94,7 @@ class ConversationAdapter(
     private val conversationFragment: ConversationFragment,
     private val presenter: ConversationPresenter,
     private val isSearch: Boolean = false
+        
 ) : RecyclerView.Adapter<ConversationViewHolder>() {
     private val mInteractions = ArrayList<Interaction>()
     private val res = conversationFragment.resources
