@@ -304,6 +304,7 @@ class ConversationPresenter @Inject constructor(
         view?.goToGroupCall(mConversation!!, mConversation!!.uri, media)
     }
 
+    // To delete ??
     fun refuseFile(transfer: DataTransfer) {
         view?.refuseFile(mConversation!!.accountId, mConversationUri!!, transfer)
     }

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <solid android:color="@color/conversation_secondary_background" />
+
+    <padding
+        android:bottom="@dimen/file_background_padding"
+        android:left="@dimen/file_background_padding"
+        android:right="@dimen/file_background_padding"
+        android:top="@dimen/file_background_padding" />
+
+    <corners android:radius="@dimen/conversation_message_radius" />
+
+</shape>

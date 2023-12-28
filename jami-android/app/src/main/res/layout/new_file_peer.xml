@@ -9,16 +9,34 @@
     android:clickable="true"
     android:descendantFocusability="blocksDescendants"
     android:focusable="true"
-    android:paddingBottom="5dp">
+    android:paddingStart="@dimen/padding_large"
+    android:paddingEnd="0dp"
+    android:paddingBottom="@dimen/padding_xsmall">
+
+    <ImageView
+        android:id="@+id/photo"
+        android:layout_width="@dimen/conversation_avatar_size"
+        android:layout_height="@dimen/conversation_avatar_size"
+        android:layout_marginEnd="12dp"
+        android:background="@null"
+        android:contentDescription="@null"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/fileInfoLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:background="@color/pink_400" />
+    <!--    rebase and use the new dimens for margin-->
+    <!--    prob margin qui ne marche pas-->
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/fileInfoLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:background="@drawable/filemsg_background_out"
+        android:animateLayoutChanges="true"
+        android:background="@drawable/filemsg_background_in"
+        android:minWidth="160dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/photo"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
@@ -26,7 +44,7 @@
             android:layout_width="56dp"
             android:layout_height="56dp"
             android:layout_marginEnd="10dp"
-            android:background="@drawable/file_icon_background_out"
+            android:background="@drawable/file_icon_background_in"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/file_title"
             app:layout_constraintStart_toStartOf="parent"
@@ -39,7 +57,7 @@
                 android:layout_gravity="center"
                 android:contentDescription="@null"
                 app:srcCompat="@drawable/baseline_attach_file_24"
-                app:tint="@color/file_icon_out" />
+                app:tint="@color/icon_color" />
         </LinearLayout>
 
         <TextView
@@ -51,13 +69,27 @@
             android:scrollHorizontally="true"
             android:singleLine="true"
             android:textAppearance="@android:style/TextAppearance.Medium"
-            android:textColor="@color/text_color_primary_dark"
-            android:textColorHighlight="@color/conversation_primary_selection"
-            android:textSize="16sp"
+            android:textColor="@color/colorOnSurface"
+            android:textSize="@dimen/file_name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/file_icon_layout"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Title_document_1234567.pdf" />
+
+        <androidx.core.widget.ContentLoadingProgressBar
+            android:id="@+id/file_download_progress"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:indeterminate="false"
+            android:visibility="gone"
+            android:minWidth="160dp"
+            app:layout_constraintBottom_toTopOf="@id/file_size"
+            app:layout_constraintStart_toStartOf="@id/file_title"
+            app:layout_constraintTop_toBottomOf="@id/file_title"
+            tools:max="100"
+            tools:progress="40"
+            tools:visibility="visible" />
 
         <TextView
             android:id="@+id/file_size"
@@ -65,11 +97,10 @@
             android:layout_height="wrap_content"
             android:ellipsize="middle"
             android:textAppearance="@android:style/TextAppearance.Small"
-            android:textColor="@color/text_color_primary_dark"
-            android:textColorHighlight="@color/conversation_primary_selection"
+            android:textColor="@color/colorOnSurface"
             android:textSize="@dimen/file_size"
             app:layout_constraintStart_toStartOf="@id/file_title"
-            app:layout_constraintTop_toBottomOf="@id/file_title"
+            app:layout_constraintTop_toBottomOf="@id/file_download_progress"
             tools:text="1.2 MB" />
 
         <TextView
@@ -84,36 +115,15 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.google.android.material.chip.Chip
-        android:id="@+id/reaction_chip"
-        style="@style/Widget.Material3.Chip.Suggestion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/fileInfoLayout"
-        app:layout_constraintEnd_toEndOf="@id/fileInfoLayout"
-        android:layout_marginTop="-16dp"
-        android:layout_marginEnd="8dp"
-        android:backgroundTint="@color/icon_background_color"
-        android:elevation="4dp"
-        android:outlineProvider="none"
-        tools:text="👍 😍 3"
-        app:chipCornerRadius="5dp"
-        app:chipEndPadding="0dp"
-        app:chipStartPadding="0dp"
-        app:chipStrokeColor="@color/border_color"
-        app:textEndPadding="5dp"
-        app:textStartPadding="5dp" />
-
-    <cx.ring.views.MessageStatusView
-        android:id="@+id/status_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:layout_width="@dimen/conversation_avatar_size_small"
-        tools:layout_height="@dimen/conversation_avatar_size_small"
+    <ImageButton
+        android:id="@+id/file_download_button"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="?selectableItemBackgroundBorderless"
+        android:contentDescription="@string/file_download_button"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/fileInfoLayout"
-        app:layout_constraintBottom_toBottomOf="@id/fileInfoLayout"
-        app:tint="@color/grey_500"
-        android:layout_marginStart="5dp"
-        tools:background="@color/amber_500" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/download_24px" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
