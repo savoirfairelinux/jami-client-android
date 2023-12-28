@@ -28,6 +28,7 @@ import android.view.Surface
 import android.view.View
 import android.widget.ImageButton
 import android.widget.ImageView
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.material.chip.Chip
 import cx.ring.R
 import cx.ring.adapters.MessageType
@@ -94,14 +95,18 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
 
     var btnAccept: View? = null
     var btnRefuse: View? = null
-    var progress: ContentLoadingProgressBar? = null
+    var mFileDownloadProgress: ContentLoadingProgressBar? = null
     val video: TextureView? = when (type) {
         MessageType.INCOMING_VIDEO,
         MessageType.OUTGOING_VIDEO -> v.findViewById(R.id.video)
         else -> null
     }
     var mAcceptCallLayout: LinearLayout? = null
-    var mFileInfoLayout: LinearLayout? = null
+    var mFileInfoLayout: ConstraintLayout? = null
+    var mFileSize: TextView? = null
+    var mFileTime: TextView? = null
+    var mFileTitle: TextView? = null
+    var mFileDownloadButton: ImageButton? = null
     var mAudioInfoLayout: LinearLayout? = null
 
     var player: MediaPlayer? = null
@@ -145,15 +150,13 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
             }
             MessageType.INCOMING_FILE,
             MessageType.OUTGOING_FILE -> {
-                mMsgTxt = v.findViewById(R.id.call_hist_filename)
-                mMsgDetailTxt = v.findViewById(R.id.file_details_txt)
+                mFileTitle = v.findViewById(R.id.file_title)
+                mFileSize = v.findViewById(R.id.file_size)
+                mFileTime = v.findViewById(R.id.file_time)
                 mLayout = v.findViewById(R.id.file_layout)
                 mFileInfoLayout = v.findViewById(R.id.fileInfoLayout)
-                progress = v.findViewById(R.id.progress)
-                mAnswerLayout = v.findViewById(R.id.llAnswer)
-                btnAccept = v.findViewById(R.id.btnAccept)
-                btnRefuse = v.findViewById(R.id.btnRefuse)
-                mMsgDetailTxtPerm = v.findViewById(R.id.msg_details_txt_perm)
+                mFileDownloadProgress = v.findViewById(R.id.file_download_progress)
+                mFileDownloadButton = v.findViewById(R.id.file_download_button)
                 primaryClickableView = mFileInfoLayout
             }
             MessageType.INCOMING_IMAGE,

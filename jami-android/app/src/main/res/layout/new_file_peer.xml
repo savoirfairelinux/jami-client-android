@@ -13,26 +13,20 @@
     android:paddingEnd="0dp"
     android:paddingBottom="@dimen/padding_xsmall">
 
-    <LinearLayout
-        android:id="@+id/photo_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageView
+        android:id="@+id/photo"
+        android:layout_width="@dimen/conversation_avatar_size"
+        android:layout_height="@dimen/conversation_avatar_size"
+        android:layout_marginEnd="12dp"
+        android:background="@null"
+        android:contentDescription="@null"
+        android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/fileInfoLayout"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <ImageView
-            android:id="@+id/photo"
-            android:layout_width="@dimen/conversation_avatar_size"
-            android:layout_height="@dimen/conversation_avatar_size"
-            android:layout_marginEnd="12dp"
-            android:background="@null"
-            android:contentDescription="@null"
-            android:scaleType="centerCrop"
-            tools:background="@color/pink_400"
-            tools:visibility="visible" />
-        <!--    rebase and use the new dimens for margin-->
-    </LinearLayout>
+        app:layout_constraintStart_toStartOf="parent"
+        tools:background="@color/pink_400" />
+    <!--    rebase and use the new dimens for margin-->
+    <!--    prob margin qui ne marche pas-->
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/fileInfoLayout"
@@ -42,7 +36,7 @@
         android:background="@drawable/filemsg_background_in"
         android:minWidth="160dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/photo_layout"
+        app:layout_constraintStart_toEndOf="@id/photo"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
@@ -68,7 +62,6 @@
 
         <TextView
             android:id="@+id/file_title"
-            android:minWidth="160dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="middle"
@@ -81,16 +74,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/file_icon_layout"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Title_doc.pdf" />
+            tools:text="Title_document_1234567.pdf" />
 
         <androidx.core.widget.ContentLoadingProgressBar
             android:id="@+id/file_download_progress"
             style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:indeterminate="false"
-            android:minWidth="160dp"
             android:visibility="gone"
+            android:minWidth="160dp"
             app:layout_constraintBottom_toTopOf="@id/file_size"
             app:layout_constraintStart_toStartOf="@id/file_title"
             app:layout_constraintTop_toBottomOf="@id/file_title"

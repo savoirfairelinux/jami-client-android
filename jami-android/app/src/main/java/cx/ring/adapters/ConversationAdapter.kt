@@ -971,23 +971,31 @@ class ConversationAdapter(
     private fun configureForFileInfo(viewHolder: ConversationViewHolder, interaction: Interaction, position: Int) {
         val file = interaction as DataTransfer
         val path = presenter.deviceRuntimeService.getConversationPath(file)
-        val timeString = TextUtils.timestampToDetailString(viewHolder.itemView.context, formatter, file.timestamp)
+
         viewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
-            viewHolder.mMsgDetailTxt?.text = when (val status = file.status) {
-                InteractionStatus.TRANSFER_FINISHED -> String.format("%s - %s", timeString,
+            val timeString = TextUtils.timestampToDetailString(
+                viewHolder.itemView.context,
+                formatter,
+                file.timestamp
+            )
+            viewHolder.mFileTime?.text = timeString
+            viewHolder.mFileSize?.text = when (val status = file.status) {
+                InteractionStatus.TRANSFER_FINISHED -> String.format(
                     Formatter.formatFileSize(viewHolder.itemView.context, file.totalSize))
                 InteractionStatus.TRANSFER_ONGOING -> String.format("%s / %s - %s",
                     Formatter.formatFileSize(viewHolder.itemView.context, file.bytesProgress),
                     Formatter.formatFileSize(viewHolder.itemView.context, file.totalSize),
                     TextUtils.getReadableFileTransferStatus(viewHolder.itemView.context, status))
-                else -> String.format("%s - %s - %s", timeString,
+                else -> String.format("%s - %s",
                     Formatter.formatFileSize(viewHolder.itemView.context, file.totalSize),
                     TextUtils.getReadableFileTransferStatus(viewHolder.itemView.context, status))
             }
         })
         if (hasPermanentTimeString(file, position)) {
             viewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
-                viewHolder.mMsgDetailTxtPerm?.text = TextUtils.timestampToDetailString(viewHolder.itemView.context, formatter, file.timestamp)
+                viewHolder.mMsgDetailTxtPerm?.text = TextUtils.timestampToDetailString(
+                    viewHolder.itemView.context, formatter, file.timestamp
+                )
             })
             viewHolder.mMsgDetailTxtPerm?.visibility = View.VISIBLE
         } else {
@@ -1029,26 +1037,36 @@ class ConversationAdapter(
             configureAudio(viewHolder, path)
         } else {
             val status = file.status
-            viewHolder.mIcon?.setImageResource(if (status.isError) R.drawable.baseline_warning_24 else R.drawable.baseline_attach_file_24)
-            viewHolder.mMsgTxt?.text = file.displayName
+            viewHolder.mIcon?.setImageResource(
+                if (status.isError) R.drawable.baseline_warning_24
+                else R.drawable.baseline_attach_file_24)
+            viewHolder.mFileTitle?.text = file.displayName
             viewHolder.mFileInfoLayout?.setOnClickListener(null)
-            if (status == InteractionStatus.TRANSFER_AWAITING_HOST) {
-                viewHolder.btnRefuse?.visibility = View.VISIBLE
-                viewHolder.mAnswerLayout?.visibility = View.VISIBLE
-                viewHolder.btnAccept?.setOnClickListener { presenter.acceptFile(file) }
-                viewHolder.btnRefuse?.setOnClickListener { presenter.refuseFile(file) }
-            } else if (status == InteractionStatus.FILE_AVAILABLE) {
-                viewHolder.btnRefuse?.visibility = View.GONE
-                viewHolder.mAnswerLayout?.visibility = View.VISIBLE
-                viewHolder.btnAccept?.setOnClickListener { presenter.acceptFile(file) }
+            if (file.isOutgoing) {
+                viewHolder.mFileInfoLayout?.background?.setTint(convColor)
             } else {
-                viewHolder.mAnswerLayout?.visibility = View.GONE
+                viewHolder.mFileInfoLayout?.background?.setTint(
+                    viewHolder.itemView.context.getColor(R.color.conversation_secondary_background)
+                )
+            }
+            if (status == InteractionStatus.TRANSFER_AWAITING_HOST) {
+                viewHolder.mFileDownloadButton?.let {
+                    it.visibility = View.VISIBLE
+                    it.setOnClickListener { presenter.acceptFile(file) }
+                }
+            } else if (status == InteractionStatus.FILE_AVAILABLE) {
+                viewHolder.mFileDownloadButton?.let {
+                    it.visibility = View.GONE
+                    it.setOnClickListener{presenter.acceptFile(file)}
+                }
+            } else {
+                viewHolder.mFileDownloadButton?.visibility = View.GONE
                 if (status == InteractionStatus.TRANSFER_ONGOING) {
-                    viewHolder.progress?.max = (file.totalSize / 1024).toInt()
-                    viewHolder.progress?.setProgress((file.bytesProgress / 1024).toInt(), true)
-                    viewHolder.progress?.show()
+                    viewHolder.mFileDownloadProgress?.max = (file.totalSize / 1024).toInt()
+                    viewHolder.mFileDownloadProgress?.setProgress((file.bytesProgress / 1024).toInt(), true)
+                    viewHolder.mFileDownloadProgress?.show()
                 } else {
-                    viewHolder.progress?.hide()
+                    viewHolder.mFileDownloadProgress?.hide()
                 }
                 viewHolder.mFileInfoLayout?.setOnClickListener { presenter.openFile(file) }
             }
