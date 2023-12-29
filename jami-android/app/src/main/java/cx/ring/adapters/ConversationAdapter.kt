@@ -451,11 +451,10 @@ class ConversationAdapter(
         if (conversation == null || conversation !is Conversation) {
             conversationViewHolder.mReplyName?.isVisible = false
             conversationViewHolder.mReplyTxt?.isVisible = false
-            conversationViewHolder.mInReplyTo?.isVisible = false
             return
         }
 
-        conversationViewHolder.mReplyName?.let { replyView ->
+        conversationViewHolder.mReplyBubble?.let { replyBubble ->
             val replyTo = interaction.replyTo
 
             // If currently replying to another message :
@@ -469,24 +468,20 @@ class ConversationAdapter(
                     .observeOn(DeviceUtils.uiScheduler)
                     .subscribe({ i ->
                         conversationViewHolder.mReplyTxt!!.text = i.first.body
-                        conversationViewHolder.mReplyName.text = i.second.displayName
+                        conversationViewHolder.mReplyName!!.text = i.second.displayName
 
                         // Apply correct color depending if message is incoming or not.
-                        conversationViewHolder.mReplyTxt.background?.setTint(
+                        conversationViewHolder.mReplyTxt?.background?.setTint(
                             if (i.first.isIncoming)
                                 context.getColor(
                                     R.color.conversation_secondary_background
                                 )
                             else convColor
                         )
-                        conversationViewHolder.mReplyTxt.setTextColor(
+                        conversationViewHolder.mReplyTxt?.setTextColor(
                             if (i.first.isIncoming)
-                                context.getColor(
-                                    R.color.colorOnSurface
-                                )
-                            else context.getColor(
-                                R.color.text_color_primary_dark
-                            )
+                                context.getColor(R.color.colorOnSurface)
+                            else context.getColor(R.color.text_color_primary_dark)
                         )
 
                         // Load avatar drawable from contact.
@@ -498,36 +493,28 @@ class ConversationAdapter(
                             .build(context)
                             .setInSize(avatarSize)
                         // Update the view.
-                        conversationViewHolder.mReplyName.setCompoundDrawablesWithIntrinsicBounds(
+                        conversationViewHolder.mReplyName!!.setCompoundDrawablesWithIntrinsicBounds(
                             smallAvatarDrawable, null, null, null
                         )
 
-                        replyView.isVisible = true
-                        conversationViewHolder.mReplyTxt.isVisible = true
-                        conversationViewHolder.mInReplyTo!!.isVisible = true
+                        replyBubble.isVisible = true
+                        conversationViewHolder.mReplyTxt!!.isVisible = true
 
-                        // User can click on mReplyTxt (replied message),
-                        // mInReplyTo or mReplyName (text above the message) to go to it.
-                        listOf(
-                            conversationViewHolder.mReplyTxt,
-                            conversationViewHolder.mInReplyTo,
-                            replyView
-                        ).forEach {
-                            it.setOnClickListener {
-                                i.first.messageId?.let { messageId ->
-                                    presenter.scrollToMessage(messageId)
-                                }
+                        // User can click on mReplyTxt (replied message)
+                        // or mReplyName (text above the message) to go to it.
+                        listOf(conversationViewHolder.mReplyTxt,
+                            replyBubble).forEach{
+                            it?.setOnClickListener{
+                                i.first.messageId?.let { presenter.scrollToMessage(it) }
                             }
                         }
                     }) {
-                        replyView.isVisible = false
+                        replyBubble.isVisible = false
                         conversationViewHolder.mReplyTxt!!.isVisible = false
-                        conversationViewHolder.mInReplyTo!!.isVisible = false
                     })
             } else { // Not replying to another message, we can hide reply Textview.
-                replyView.isVisible = false
+                replyBubble.isVisible = false
                 conversationViewHolder.mReplyTxt?.isVisible = false
-                conversationViewHolder.mInReplyTo?.isVisible = false
             }
         }
     }
