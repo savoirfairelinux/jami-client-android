@@ -303,7 +303,6 @@ class ConversationPresenter @Inject constructor(
     fun goToGroupCall(media: Boolean) {
         view?.goToGroupCall(mConversation!!, mConversation!!.uri, media)
     }
-
     fun refuseFile(transfer: DataTransfer) {
         view?.refuseFile(mConversation!!.accountId, mConversationUri!!, transfer)
     }

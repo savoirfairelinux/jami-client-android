@@ -24,6 +24,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import androidx.annotation.IdRes
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.widget.ImageViewCompat
 import cx.ring.R
@@ -99,6 +100,9 @@ class MessageStatusView : LinearLayout {
             }
         }
         if (resId != View.NO_ID) {
+            if (layoutParams == RelativeLayout.LayoutParams(
+                    RelativeLayout.LayoutParams.MATCH_PARENT,
+                    RelativeLayout.LayoutParams.WRAP_CONTENT)){
             val params = layoutParams as RelativeLayout.LayoutParams? ?: return
             val fitRight = showStatus || contacts.size < 2
             if (fitRight) {
@@ -107,6 +111,26 @@ class MessageStatusView : LinearLayout {
             } else {
                 params.removeRule(RelativeLayout.ALIGN_BOTTOM)
                 params.addRule(RelativeLayout.BELOW, resId)
+            }
+            layoutParams = params
+        }}
+        else if (layoutParams == ConstraintLayout.LayoutParams(
+                ConstraintLayout.LayoutParams.MATCH_PARENT,
+                ConstraintLayout.LayoutParams.WRAP_CONTENT
+            )
+        ) {
+            val params = layoutParams as ConstraintLayout.LayoutParams? ?: return
+            val fitRight = showStatus || contacts.size < 2
+            if (fitRight) {
+                // Put the avatar on the right of the message if there is only one contact
+                params.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID
+                params.topToBottom = ConstraintLayout.LayoutParams.UNSET
+                params.bottomToTop = resId
+            } else {
+                // Put the avatars below the message if there are multiple contacts
+                params.bottomToBottom = ConstraintLayout.LayoutParams.UNSET
+                params.topToBottom = resId
+                params.bottomToTop = ConstraintLayout.LayoutParams.UNSET
             }
             layoutParams = params
         }
