@@ -341,7 +341,7 @@ class ConversationAdapter(
                 conversationViewHolder.mStatusIcon?.update(
                     contacts,
                     interaction.status,
-                    conversationViewHolder.mMsgTxt?.id ?: View.NO_ID
+                    conversationViewHolder.mLayoutStatusIconId?.id ?: View.NO_ID
                 )
             })
     }
@@ -1086,18 +1086,28 @@ class ConversationAdapter(
         val context = viewHolder.itemView.context
         val file = interaction as DataTransfer
         val path = presenter.deviceRuntimeService.getConversationPath(file)
-        val timeString = TextUtils.timestampToDetailString(context, formatter, file.timestamp)
         viewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
-            viewHolder.mMsgDetailTxt?.text = when (val status = file.status) {
-                InteractionStatus.TRANSFER_FINISHED -> String.format("%s - %s", timeString,
-                    Formatter.formatFileSize(context, file.totalSize))
-                InteractionStatus.TRANSFER_ONGOING -> String.format("%s / %s - %s",
+            val timeString = TextUtils.timestampToDetailString(
+                viewHolder.itemView.context,
+                formatter,
+                file.timestamp
+            )
+            viewHolder.mFileTime?.text = timeString
+            viewHolder.mFileSize?.text = when (val status = file.status) {
+                InteractionStatus.TRANSFER_FINISHED -> String.format(
+                    "%s - %s",
+                    Formatter.formatFileSize(context, file.totalSize),
+                    TextUtils.getReadableFileTransferStatus(context, status)
+                )
+                InteractionStatus.TRANSFER_ONGOING -> String.format(
+                    "%s / %s - %s",
                     Formatter.formatFileSize(context, file.bytesProgress),
                     Formatter.formatFileSize(context, file.totalSize),
-                    TextUtils.getReadableFileTransferStatus(context, status))
-                else -> String.format("%s - %s - %s", timeString,
-                    Formatter.formatFileSize(context, file.totalSize),
-                    TextUtils.getReadableFileTransferStatus(context, status))
+                    TextUtils.getReadableFileTransferStatus(context, status)
+                )
+                else -> String.format(
+                    Formatter.formatFileSize(context, file.totalSize)
+                )
             }
         })
         if (hasPermanentTimeString(file, position)) {
@@ -1122,64 +1132,91 @@ class ConversationAdapter(
         } else {
             viewHolder.mAvatar?.visibility = View.GONE
         }
+
         val type = viewHolder.type.transferType
-        val longPressView = when (type) {
-            MessageType.TransferType.IMAGE -> viewHolder.mImage
-            MessageType.TransferType.VIDEO -> viewHolder.video
-            MessageType.TransferType.AUDIO -> viewHolder.mAudioInfoLayout
-            else -> viewHolder.mFileInfoLayout
-        } ?: return
-        if (type == MessageType.TransferType.AUDIO || type == MessageType.TransferType.FILE) {
-            longPressView.background?.setTintList(null)
-        }
-        longPressView.setOnLongClickListener { v: View ->
-            if (type == MessageType.TransferType.AUDIO || type == MessageType.TransferType.FILE) {
-                conversationFragment.updatePosition(viewHolder.bindingAdapterPosition)
-                longPressView.background.setTint(context.getColor(R.color.grey_500))
-            }
-            openItemMenu(viewHolder, v, file)
-            mCurrentLongItem =
-                RecyclerViewContextMenuInfo(viewHolder.bindingAdapterPosition, v.id.toLong())
-            true
-        }
+        viewHolder.compositeDisposable.add(interaction.lastElement
+            .observeOn(DeviceUtils.uiScheduler)
+            .subscribe {
+                val lastType = viewHolder.type.transferType
+                val longPressView = when (lastType) {
+                    MessageType.TransferType.IMAGE -> viewHolder.mImage
+                    MessageType.TransferType.VIDEO -> viewHolder.video
+                    MessageType.TransferType.AUDIO -> viewHolder.mAudioInfoLayout
+                    else -> viewHolder.mFileInfoLayout
+                } ?: return@subscribe
+                longPressView.setOnLongClickListener { v: View ->
+                    openItemMenu(viewHolder, v, file)
+                    if (lastType == MessageType.TransferType.AUDIO || lastType == MessageType.TransferType.FILE) {
+                        conversationFragment.updatePosition(viewHolder.bindingAdapterPosition)
+                        Log.w(TAG, "long appui")
+                        longPressView.background.setTint(context.getColor(R.color.grey_500))
+                    }
+                    mCurrentLongItem =
+                        RecyclerViewContextMenuInfo(
+                            viewHolder.bindingAdapterPosition,
+                            v.id.toLong()
+                        )
+                    true
+                }
+                Log.w(TAG, "reset?")
+                if (lastType == MessageType.TransferType.AUDIO || lastType == MessageType.TransferType.FILE) {
+                    Log.w(TAG, "reset ici")
+                    longPressView.background?.setTintList(null)
+                }
+            })
+        Log.w(TAG, "ici suite")
         when (type) {
             MessageType.TransferType.IMAGE -> {
                 configureImage(viewHolder, path, file.body)
             }
+
             MessageType.TransferType.VIDEO -> {
                 configureVideo(viewHolder, path)
             }
+
             MessageType.TransferType.AUDIO -> {
                 configureAudio(viewHolder, path)
             }
+
             else -> {
                 val status = file.status
                 viewHolder.mIcon?.setImageResource(
                     if (status.isError) R.drawable.baseline_warning_24
                     else R.drawable.baseline_attach_file_24
                 )
-                viewHolder.mMsgTxt?.text = file.displayName
+                viewHolder.mFileTitle?.text = file.displayName
                 viewHolder.mFileInfoLayout?.setOnClickListener(null)
+                if (file.isOutgoing) {
+                    viewHolder.mFileInfoLayout?.background?.setTint(convColor)
+                } else {
+                    viewHolder.mFileInfoLayout?.background?.setTint(
+                        viewHolder.itemView.context.getColor
+                            (R.color.conversation_secondary_background)
+                    )
+                }
                 when (status) {
                     InteractionStatus.TRANSFER_AWAITING_HOST -> {
-                        viewHolder.btnRefuse?.visibility = View.VISIBLE
-                        viewHolder.mAnswerLayout?.visibility = View.VISIBLE
-                        viewHolder.btnAccept?.setOnClickListener { presenter.acceptFile(file) }
-                        viewHolder.btnRefuse?.setOnClickListener { presenter.refuseFile(file) }
+                        viewHolder.mFileDownloadButton?.let {
+                            it.visibility = View.VISIBLE
+                            it.setOnClickListener { presenter.acceptFile(file) }
+                        }
                     }
+
                     InteractionStatus.FILE_AVAILABLE -> {
-                        viewHolder.btnRefuse?.visibility = View.GONE
-                        viewHolder.mAnswerLayout?.visibility = View.VISIBLE
-                        viewHolder.btnAccept?.setOnClickListener { presenter.acceptFile(file) }
+                        viewHolder.mFileDownloadButton?.let {
+                            it.visibility = View.VISIBLE
+                            it.setOnClickListener { presenter.acceptFile(file) }
+                        }
                     }
+
                     else -> {
-                        viewHolder.mAnswerLayout?.visibility = View.GONE
+                        viewHolder.mFileDownloadButton?.visibility = View.GONE
                         if (status == InteractionStatus.TRANSFER_ONGOING) {
-                            viewHolder.progress?.apply {
-                                max = (file.totalSize / 1024).toInt()
-                                setProgress((file.bytesProgress / 1024).toInt(), true)
-                                show()
-                            }
+                            viewHolder.progress?.max = (file.totalSize / 1024).toInt()
+                            viewHolder.progress?.setProgress(
+                                (file.bytesProgress / 1024).toInt(), true
+                            )
+                            viewHolder.progress?.show()
                         } else {
                             viewHolder.progress?.hide()
                         }
