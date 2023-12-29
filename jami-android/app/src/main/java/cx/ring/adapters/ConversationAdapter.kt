@@ -31,7 +31,6 @@ import android.media.MediaPlayer
 import android.net.Uri
 import android.text.format.DateUtils
 import android.text.format.Formatter
-import android.text.method.LinkMovementMethod
 import android.util.TypedValue
 import android.view.*
 import android.view.ContextMenu.ContextMenuInfo
@@ -478,11 +477,17 @@ class ConversationAdapter(
                                 )
                             else convColor
                         )
-                        conversationViewHolder.mReplyTxt?.setTextColor(
-                            if (i.first.isIncoming)
-                                context.getColor(R.color.colorOnSurface)
-                            else context.getColor(R.color.text_color_primary_dark)
-                        )
+
+                        val textColor:Int
+                        if (i.first.isIncoming){
+                            textColor = context.getColor(R.color.colorOnSurface)
+                        }
+                        else {
+                            textColor = context.getColor(R.color.text_color_primary_dark)
+                            replyBubble.background.setTint(convColor)
+                        }
+                        conversationViewHolder.mReplyTxt?.setTextColor(textColor)
+                        conversationViewHolder.mReplyName?.setTextColor(textColor)
 
                         // Load avatar drawable from contact.
                         val avatarSize = context.resources
@@ -1222,6 +1227,7 @@ class ConversationAdapter(
         position: Int
     ) {
         val context = convViewHolder.itemView.context
+
         convViewHolder.compositeDisposable.add(interaction.lastElement
             .observeOn(DeviceUtils.uiScheduler)
             .subscribe { lastElement ->
@@ -1229,100 +1235,53 @@ class ConversationAdapter(
                 val account = interaction.account ?: return@subscribe
                 val contact = textMessage.contact ?: return@subscribe
                 val isDeleted = textMessage.body.isNullOrEmpty()
-                val msgTxt = convViewHolder.mMsgTxt ?: return@subscribe
-                val longPressView = convViewHolder.mMsgTxt!!
-                longPressView.background?.setTintList(null)
+
+                val messageContent = convViewHolder.mMessageContent ?: return@subscribe
+                val messageBubble = convViewHolder.mMessageBubble ?: return@subscribe
+                val messageBubbleBorder = convViewHolder.mMessageBubbleBorder ?: return@subscribe
+                val replyBubble = convViewHolder.mReplyBubble
                 val answerLayout = convViewHolder.mAnswerLayout
+//                val peerDisplayName = convViewHolder.mPeerDisplayName
+
                 val isTimeShown = hasPermanentTimeString(textMessage, position)
                 val msgSequenceType = getMsgSequencing(position, isTimeShown)
-                val peerDisplayName = convViewHolder.mPeerDisplayName
 
-                // Only show the peer avatar if it is a group conversation
-                val endOfSeq =
-                    msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE
-                if (presenter.isGroup()) {
-                    // Manage animation for avatar.
-                    // To only display the avatar of the last message.
-                    val avatar = convViewHolder.mAvatar
-                    if (endOfSeq) {
-                        avatar?.setImageDrawable(
-                            conversationFragment.getConversationAvatar(contact.primaryNumber)
-                        )
-                        avatar?.visibility = View.VISIBLE
-                    } else {
-                        if (position == lastMsgPos - 1) {
-                            avatar?.let { ActionHelper.startFadeOutAnimation(avatar) }
-                        } else {
-                            avatar?.setImageBitmap(null)
-                            avatar?.visibility = View.INVISIBLE
-                        }
-                    }
-                } else {
-                    convViewHolder.mAvatar?.visibility = View.GONE
-                }
-                // Manage background layout for standard message.
-                // Index refers to msgBGLayouts array.
-                val resIndex =
-                    if (interaction.replyTo != null) {
-                        // Reply message incoming, first or single.
-                        if (textMessage.isIncoming)
-                            if (msgSequenceType == SequenceType.FIRST) 11 else 10
-                        // Reply message outgoing, first or single
-                        else if (msgSequenceType == SequenceType.FIRST) 9 else 8
-                    }
-                    // Standard message, incoming or outgoing and first, single or last.
-                    else msgSequenceType.ordinal + (if (textMessage.isIncoming) 1 else 0) * 4
+                messageBubble.background?.setTintList(null)
 
-                msgTxt.background = ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
-                if (convColor != 0 && !textMessage.isIncoming) {
-                    msgTxt.background.setTint(convColor)
-                } else {
-                    msgTxt.background.setTint(
-                        context.getColor(R.color.conversation_secondary_background)
-                    )
-                    // Show the name of the contact if it is a group conversation
-                    peerDisplayName?.apply {
-                        if (presenter.isGroup() && (msgSequenceType == SequenceType.SINGLE ||
-                                    msgSequenceType == SequenceType.FIRST)
-                        ) {
-                            visibility = View.VISIBLE
-                            convViewHolder.compositeDisposable.add(
-                                presenter.contactService
-                                    .observeContact(account, contact, false)
-                                    .observeOn(DeviceUtils.uiScheduler)
-                                    .subscribe {
-                                        text = it.displayName
-                                    }
-                            )
-                        } else visibility = View.GONE
-                    }
+                if(textMessage.replyToId != null) {
+                    val paddingInDp = (1.5 * context.resources.displayMetrics.density).toInt()
+                    messageBubbleBorder.setPadding(paddingInDp,paddingInDp,0,0)
+                    setTopMargin(messageBubbleBorder, -8)
                 }
-                msgTxt.background.alpha = 255
-                // Apply a bottom margin to the global layout if end of sequence needed.
-                convViewHolder.mItem?.let { setBottomMargin(it, if (endOfSeq) 8 else 0) }
+                else {
+                    messageBubbleBorder.setPadding(0,0,0,0)
+                    setTopMargin(messageBubbleBorder, 0)
+                }
 
                 // Manage deleted message.
                 if (isDeleted) {
-                    msgTxt.text = context.getString(R.string.conversation_message_deleted)
+                    messageContent.updateDeleted()
+
                     // Hide the link preview
                     answerLayout?.visibility = View.GONE
-                    msgTxt.textSize = 14f
-                    msgTxt.setPadding(textMessagePadding)
-                    longPressView.setOnLongClickListener(null)
+                    if (convColor != 0 && !textMessage.isIncoming) {
+                        messageBubble.background.setTint(convColor)
+                    }
+                    messageBubble.setOnLongClickListener(null)
                     return@subscribe
                 }
 
                 // Manage long press.
-                longPressView.setOnLongClickListener { v: View ->
+                messageBubble.setOnLongClickListener { v: View ->
                     openItemMenu(convViewHolder, v, interaction)
                     if (expandedItemPosition == position) {
                         expandedItemPosition = -1
                     }
                     conversationFragment.updatePosition(convViewHolder.bindingAdapterPosition)
                     if (textMessage.isIncoming) {
-                        longPressView.background.setTint(context.getColor(R.color.grey_500))
+                        messageBubble.background.setTint(context.getColor(R.color.grey_500))
                     } else {
-                        longPressView.background.setTint(convColorTint)
+                        messageBubble.background.setTint(convColorTint)
                     }
                     mCurrentLongItem = RecyclerViewContextMenuInfo(
                         convViewHolder.bindingAdapterPosition,
@@ -1334,14 +1293,32 @@ class ConversationAdapter(
                 val message = textMessage.body?.trim() ?: ""
                 convViewHolder.mAnswerLayout?.visibility = View.GONE
 
+                val messageTime = TextUtils.timestampToDetailString(context, formatter, textMessage.timestamp)
+
                 if (StringUtils.isOnlyEmoji(message)) {
+                    messageContent.updateEmoji(message, messageTime, false)
+                    messageBubble.background = null
                     // Manage layout if message is emoji.
-                    msgTxt.background.alpha = 0
-                    msgTxt.textSize = 32.0f
-                    msgTxt.setPadding(emojiMessagePadding)
                 } else {
-                    msgTxt.textSize = 16f
-                    msgTxt.setPadding(textMessagePadding)
+                    messageContent.updateStandard(markwon.toMarkdown(message), messageTime, false)
+                    // Manage layout for standard message. Index refers to msgBGLayouts array.
+                    val resIndex =
+                        if (interaction.replyTo != null) {
+                            // Reply message incoming, first or single.
+                            if (textMessage.isIncoming) if (msgSequenceType == SequenceType.FIRST) 11 else 10
+                            // Reply message outgoing, first or single
+                            else if (msgSequenceType == SequenceType.FIRST) 9 else 8
+                        }
+                        // Standard message, incoming or outgoing and first, single or last.
+                        else msgSequenceType.ordinal + (if (textMessage.isIncoming) 1 else 0) * 4
+
+                    messageBubble.background = ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
+                    if(textMessage.replyToId!=null) {
+                        messageBubbleBorder.background = ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
+                    }
+                    if (convColor != 0 && !textMessage.isIncoming) {
+                        messageBubble.background.setTint(convColor)
+                    }
 
                     // Manage layout for message with a link inside.
                     if (showLinkPreviews) {
@@ -1383,47 +1360,90 @@ class ConversationAdapter(
                             }) { e -> Log.e(TAG, "Can't load preview", e) })
                     }
                 }
-                msgTxt.movementMethod = LinkMovementMethod.getInstance()
-                msgTxt.text = markwon.toMarkdown(message)
+//                msgTxt.movementMethod = LinkMovementMethod.getInstance()
 
-                // Manage the update of the timestamp and the fact than we can expend/hide it.
-                if (isTimeShown) {
-                    convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
-                        convViewHolder.mMsgDetailTxtPerm?.text =
-                            TextUtils.timestampToDetailString(
-                                context,
-                                formatter,
-                                textMessage.timestamp
-                            )
-                    })
-                    convViewHolder.mMsgDetailTxtPerm?.visibility = View.VISIBLE
-                } else {
-                    convViewHolder.mMsgDetailTxtPerm?.visibility = View.GONE
-                    val isExpanded = position == expandedItemPosition
-                    if (isExpanded) {
-                        convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
-                            convViewHolder.mMsgDetailTxt?.text =
-                                TextUtils.timestampToDetailString(
-                                    context,
-                                    formatter,
-                                    textMessage.timestamp
-                                )
-                        })
-                    }
-                    setItemViewExpansionState(convViewHolder, isExpanded)
-                    convViewHolder.mItem?.setOnClickListener {
-                        if (convViewHolder.animator?.isRunning == true) {
-                            return@setOnClickListener
-                        }
-                        if (expandedItemPosition >= 0) {
-                            val prev = expandedItemPosition
-                            notifyItemChanged(prev)
-                        }
-                        expandedItemPosition = if (isExpanded) -1 else position
-                        notifyItemChanged(expandedItemPosition)
-                    }
-                }
+                val endOfSeq =
+                    msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE
 
+                // Manage animation for avatar doing ???.
+                val avatar = convViewHolder.mAvatar
+                if (presenter.isGroup() && textMessage.isIncoming) {
+                    // Todo: replace this with dimension resource
+                    setLeftMargin(messageBubbleBorder, 12)
+                    replyBubble?.let{ setLeftMargin(it, 12)}
+                    avatar ?: return@subscribe
+                    if (endOfSeq) {
+                        avatar.setImageDrawable(conversationFragment.getConversationAvatar(contact.primaryNumber))
+                        avatar.visibility = View.VISIBLE
+                    } else {
+                        if (position == lastMsgPos - 1) {
+                            ActionHelper.startFadeOutAnimation(avatar)
+                        } else {
+                            avatar.setImageBitmap(null)
+                            avatar.visibility = View.INVISIBLE
+                        }
+                    }
+                } else  {
+                    // Todo: replace this with dimension resource
+                    setLeftMargin(messageBubbleBorder, 16)
+                    replyBubble?.let{ setLeftMargin(it, 16)}
+                    avatar?.visibility = View.GONE }
+
+                // Apply a bottom margin to the global layout if end of sequence needed.
+                convViewHolder.mItem?.let { setBottomMargin(it, if (endOfSeq) 8 else 0) }
+
+
+//                // Manage the update of the timestamp and the fact than we can expend/hide it.
+//                if (isTimeShown) {
+//                    convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
+//                        convViewHolder.mMsgDetailTxtPerm?.text =
+//                            TextUtils.timestampToDetailString(context, formatter, textMessage.timestamp)
+//                    })
+//                    convViewHolder.mMsgDetailTxtPerm?.visibility = View.VISIBLE
+//                } else {
+//                    convViewHolder.mMsgDetailTxtPerm?.visibility = View.GONE
+//                    val isExpanded = position == expandedItemPosition
+//                    if (isExpanded) {
+//                        convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
+//                            convViewHolder.mMsgDetailTxt?.text =
+//                                TextUtils.timestampToDetailString(context, formatter, textMessage.timestamp)
+//                        })
+//                    }
+//                    setItemViewExpansionState(convViewHolder, isExpanded)
+//                    convViewHolder.mItem?.setOnClickListener {
+//                        if (convViewHolder.animator?.isRunning == true) {
+//                            return@setOnClickListener
+//                        }
+//                        if (expandedItemPosition >= 0) {
+//                            val prev = expandedItemPosition
+//                            notifyItemChanged(prev)
+//                        }
+//                        expandedItemPosition = if (isExpanded) -1 else position
+//                        notifyItemChanged(expandedItemPosition)
+//                    }
+//                }
+
+                // Show the name of the contact if it is a group conversation
+//                if (textMessage.isIncoming) {
+//                    peerDisplayName?.apply {
+//                        if (presenter.isGroup() && (msgSequenceType == SequenceType.SINGLE ||
+//                                    msgSequenceType == SequenceType.FIRST)
+//                        ) {
+//                            visibility = View.VISIBLE
+//                            convViewHolder.compositeDisposable.add(
+//                                presenter.contactService
+//                                    .observeContact(account, contact, false)
+//                                    .observeOn(DeviceUtils.uiScheduler)
+//                                    .subscribe {
+//                                        text = it.displayName
+//                                    }
+//                            )
+//                        } else {
+//                            visibility = View.GONE
+//                            text = null
+//                        }
+//                    }
+//                }
             })
     }
 
@@ -1921,6 +1941,12 @@ class ConversationAdapter(
             val targetSize = (marginInDp * view.context.resources.displayMetrics.density).toInt()
             val params = view.layoutParams as MarginLayoutParams
             params.bottomMargin = targetSize
+        }
+
+        private fun setLeftMargin(view: View, margin_in_dp: Int) {
+            val targetSize = (margin_in_dp * view.context.resources.displayMetrics.density).toInt()
+            val params = view.layoutParams as MarginLayoutParams
+            params.leftMargin = targetSize
         }
 
         private fun setTopMargin(view: View, margin_in_dp: Int) {
