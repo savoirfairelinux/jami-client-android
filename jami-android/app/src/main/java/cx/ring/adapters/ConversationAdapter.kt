@@ -1948,6 +1948,18 @@ class ConversationAdapter(
             params.bottomMargin = targetSize
         }
 
+        private fun setLeftMargin(view: View, margin_in_dp: Int) {
+            val targetSize = (margin_in_dp * view.context.resources.displayMetrics.density).toInt()
+            val params = view.layoutParams as MarginLayoutParams
+            params.leftMargin = targetSize
+        }
+
+        private fun setTopMargin(view: View, margin_in_dp: Int) {
+            val targetSize = (margin_in_dp * view.context.resources.displayMetrics.density).toInt()
+            val params = view.layoutParams as MarginLayoutParams
+            params.topMargin = targetSize
+        }
+
         /**
          * Tells if a break should be added in the sequence.
          * The first interaction must be before the second interaction.
