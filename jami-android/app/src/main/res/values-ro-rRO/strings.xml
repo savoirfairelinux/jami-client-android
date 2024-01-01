@@ -22,6 +22,7 @@
   <string name="developed_by">Creat de</string>
   <string name="designed_by">Proiectat de</string>
   <string name="ringtones_by">Sonerii de</string>
+  <string name="credits_volunteers">Și voluntarii care contribuie la acest proiect!</string>
   <!--RingActivity-->
   <string name="error_no_network">Nu există conectare la rețea</string>
   <string name="error_account_offline">Contul este deconectat</string>
@@ -140,6 +141,7 @@
   <string name="conversation_send_video">Trimite mesaj video</string>
   <string name="conversation_share_location">Trimite poziția</string>
   <string name="ongoing_group_call">Apel în curs</string>
+  <string name="started_call">A început un apel</string>
   <string name="in_reply_to">Răspuns pentru</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Acces la fotocameră</string>

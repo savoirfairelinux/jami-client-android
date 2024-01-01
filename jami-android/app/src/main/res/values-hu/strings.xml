@@ -22,6 +22,7 @@
   <string name="developed_by">Fejlesztők</string>
   <string name="designed_by">Tervezők</string>
   <string name="ringtones_by">Csengőhangok:</string>
+  <string name="credits_volunteers">És az önkéntesek, akik hozzájárulnak ehhez a projekthez!</string>
   <!--RingActivity-->
   <string name="error_no_network">Nincs hálózati kapcsolat</string>
   <string name="error_account_offline">A fiók kapcsolat nélküli állapotban van</string>
@@ -139,6 +140,7 @@
   <string name="conversation_send_video">Videóüzenet felvétele</string>
   <string name="conversation_share_location">Tartózkodási hely megosztása</string>
   <string name="ongoing_group_call">Folyamatban lévő hívás</string>
+  <string name="started_call">Hívás kezdeményezve</string>
   <string name="in_reply_to">Válaszul erre:</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kameraengedély</string>

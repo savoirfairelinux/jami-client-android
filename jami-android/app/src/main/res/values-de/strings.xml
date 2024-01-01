@@ -22,6 +22,7 @@
   <string name="developed_by">Entwickelt von</string>
   <string name="designed_by">Entworfen von</string>
   <string name="ringtones_by">Klingeltöne von</string>
+  <string name="credits_volunteers">Und die Freiwilligen, die zu diesem Projekt beitragen!</string>
   <!--RingActivity-->
   <string name="error_no_network">Keine Netzwerkverbindung</string>
   <string name="error_account_offline">Das Konto ist offline</string>
@@ -139,6 +140,7 @@
   <string name="conversation_send_video">Videoaufzeichnung starten</string>
   <string name="conversation_share_location">Standort teilen</string>
   <string name="ongoing_group_call">Laufender Anruf</string>
+  <string name="started_call">Anruf gestartet</string>
   <string name="in_reply_to">Als Antwort auf</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kamera-Berechtigung</string>
