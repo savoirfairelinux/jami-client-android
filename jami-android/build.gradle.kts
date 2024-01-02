@@ -1,5 +1,5 @@
 plugins {
-    id("com.google.devtools.ksp") version "1.9.21-1.0.15" apply false
+    id("com.google.devtools.ksp") version "1.9.22-1.0.16" apply false
 }
 
 buildscript {
@@ -9,7 +9,7 @@ buildscript {
         mavenCentral()
     }
 
-    val kotlin_version by extra { "1.9.21" }
+    val kotlin_version by extra { "1.9.22" }
     val hilt_version by extra { "2.48.1" }
 
     dependencies {
