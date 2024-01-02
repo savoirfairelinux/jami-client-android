@@ -447,7 +447,7 @@ class AccountService(
             .subscribeOn(scheduler)
 
     private fun loadConversationHistory(accountId: String, conversationUri: Uri, root: String, n: Long) =
-        Schedulers.io().scheduleDirect { JamiService.loadConversationMessages(accountId, conversationUri.rawRingId, root, n) }
+        Schedulers.io().scheduleDirect { JamiService.loadConversation(accountId, conversationUri.rawRingId, root, n) }
 
 
     fun loadMore(conversation: Conversation, n: Int = 32): Single<Conversation> {
@@ -1312,16 +1312,32 @@ class AccountService(
         return interaction
     }
 
-    private fun addMessage(account: Account, conversation: Conversation, message: Map<String, String>, newMessage: Boolean): Interaction {
-        val interaction = getInteraction(account, conversation, message)
-        if (conversation.addSwarmElement(interaction, newMessage)) {
-            /*if (conversation.isVisible)
-                mHistoryService.setMessageRead(account.accountID, conversation.uri, interaction.messageId!!)*/
-        }
+    private fun addMessage(account: Account, conversation: Conversation, message: SwarmMessage, newMessage: Boolean): Interaction {
+        val interaction = getInteraction(account, conversation, message.body)
+        conversation.addSwarmElement(interaction, newMessage)
         return interaction
     }
 
-    fun conversationLoaded(id: Long, accountId: String, conversationId: String, messages: List<Map<String, String>>) {
+//    fun conversationLoaded(id: Long, accountId: String, conversationId: String, messages: List<Map<String, String>>) {
+//        try {
+//            val task = loadingTasks.remove(id)
+//            // Log.w(TAG, "ConversationCallback: conversationLoaded $accountId/$conversationId ${messages.size}")
+//            getAccount(accountId)?.let { account -> account.getSwarm(conversationId)?.let { conversation ->
+//                val interactions: List<Interaction>
+//                val subject = synchronized(conversation) {
+//                    interactions = messages.map { addMessage(account, conversation, it, false) }
+//                    conversation.stopLoading()
+//                }
+//                subject?.onSuccess(conversation)
+//                task?.onSuccess(interactions)
+//                account.conversationChanged()
+//            }}
+//        } catch (e: Exception) {
+//            Log.e(TAG, "Exception loading message", e)
+//        }
+//    }
+
+    fun swarmLoaded(id: Long, accountId: String, conversationId: String, messages: SwarmMessageVect) {
         try {
             val task = loadingTasks.remove(id)
             // Log.w(TAG, "ConversationCallback: conversationLoaded $accountId/$conversationId ${messages.size}")
@@ -1448,22 +1464,22 @@ class AccountService(
             metadata["mode"]?.let { m -> Conversation.Mode.values()[m.toInt()] } ?: Conversation.Mode.OneToOne))
     }
 
-    fun messageReceived(accountId: String, conversationId: String, message: Map<String, String>) {
-        Log.w(TAG, "ConversationCallback: messageReceived " + accountId + "/" + conversationId + " " + message.size)
-        getAccount(accountId)?.let { account -> account.getSwarm(conversationId)?.let { conversation ->
-            synchronized(conversation) {
-                val interaction = addMessage(account, conversation, message, true)
-                account.conversationUpdated(conversation)
-                val isIncoming = !interaction.contact!!.isUser
-                if (isIncoming)
-                    incomingSwarmMessageSubject.onNext(interaction)
-                if (interaction is DataTransfer)
-                    dataTransfers.onNext(interaction)
-                if (interaction is Call && interaction.isGroupCall && isIncoming)
-                    incomingGroupCallSubject.onNext(conversation)
-            }
-        }}
-    }
+//    fun messageReceived(accountId: String, conversationId: String, message: Map<String, String>) {
+//        Log.w(TAG, "ConversationCallback: messageReceived " + accountId + "/" + conversationId + " " + message.size)
+//        getAccount(accountId)?.let { account -> account.getSwarm(conversationId)?.let { conversation ->
+//            synchronized(conversation) {
+//                val interaction = addMessage(account, conversation, message, true)
+//                account.conversationUpdated(conversation)
+//                val isIncoming = !interaction.contact!!.isUser
+//                if (isIncoming)
+//                    incomingSwarmMessageSubject.onNext(interaction)
+//                if (interaction is DataTransfer)
+//                    dataTransfers.onNext(interaction)
+//                if (interaction is Call && interaction.isGroupCall && isIncoming)
+//                    incomingGroupCallSubject.onNext(conversation)
+//            }
+//        }}
+//    }
 
     fun sendFile(conversation: Conversation, file: File) {
         mExecutor.execute { JamiService.sendFile(conversation.accountId, conversation.uri.rawRingId,file.absolutePath, file.name, "") }

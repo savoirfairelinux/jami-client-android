@@ -329,7 +329,16 @@ class DaemonService(
 
     internal inner class ConversationCallbackImpl : ConversationCallback() {
         override fun conversationLoaded(id: Long, accountId: String, conversationId: String, messages: VectMap) {
-            mAccountService.conversationLoaded(id, accountId, conversationId, messages.toNative())
+            Log.d(TAG, "conversationLoaded $id $accountId $conversationId $messages")
+//            mAccountService.conversationLoaded(id, accountId, conversationId, messages.toNative())
+        }
+
+        override fun swarmLoaded(id: Long, accountId: String, conversationId: String, messages: SwarmMessageVect) {
+            Log.d(TAG, "swarmLoaded $id $accountId $conversationId $messages")
+            messages.forEach {
+                Log.d(TAG, "${it.id} ${it.body} ${it.editions} ${it.type} ${it.reactions} ${it.linearizedParent}")
+            }
+            mAccountService.swarmLoaded(id, accountId, conversationId, messages)
         }
 
         override fun messagesFound(id: Long, accountId: String, conversationId: String, messages: VectMap) {
@@ -365,7 +374,28 @@ class DaemonService(
         }
 
         override fun messageReceived(accountId: String, conversationId: String, message: StringMap) {
-            mAccountService.messageReceived(accountId, conversationId, message.toNative())
+            Log.d(TAG, "messageReceived $accountId $conversationId $message")
+//            mAccountService.messageReceived(accountId, conversationId, message.toNative())
+        }
+
+        override fun swarmMessageReceived(accountId: String, conversationId: String, message: SwarmMessage) {
+            Log.d(TAG, "swarmMessageReceived $accountId $conversationId $message")
+            //mAccountService.swarmMessageReceived(accountId, conversationId, message)
+        }
+
+        override fun swarmMessageUpdated(accountId: String, conversationId: String, message: SwarmMessage) {
+            Log.d(TAG, "swarmMessageUpdated $accountId $conversationId $message")
+            //mAccountService.swarmMessageUpdated(accountId, conversationId, message)
+        }
+
+        override fun reactionAdded(accountId: String, conversationId: String, messageId: String, reaction: StringMap) {
+            Log.d(TAG, "reactionAdded $accountId $conversationId $messageId $reaction")
+            //mAccountService.reactionAdded(accountId, conversationId, messageId, reaction)
+        }
+
+        override fun reactionRemoved(accountId: String, conversationId: String, messageId: String, reactionId: String) {
+            Log.d(TAG, "reactionRemoved $accountId $conversationId $messageId $reactionId")
+            //mAccountService.reactionRemoved(accountId, conversationId, messageId, reactionId)
         }
     }
 
