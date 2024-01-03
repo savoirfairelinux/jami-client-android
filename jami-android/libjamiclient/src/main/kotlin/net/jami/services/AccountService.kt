@@ -447,7 +447,8 @@ class AccountService(
             .subscribeOn(scheduler)
 
     private fun loadConversationHistory(accountId: String, conversationUri: Uri, root: String, n: Long) =
-        Schedulers.io().scheduleDirect { JamiService.loadConversationMessages(accountId, conversationUri.rawRingId, root, n) }
+        Schedulers.io().scheduleDirect { JamiService.loadConversationMessages(accountId, conversationUri.rawRingId, root, n) } // todo why parent not set with loadConversation?
+        //Schedulers.io().scheduleDirect { JamiService.loadConversation(accountId, conversationUri.rawRingId, root, n) }
 
 
     fun loadMore(conversation: Conversation, n: Int = 32): Single<Conversation> {
@@ -1316,19 +1317,20 @@ class AccountService(
         return interaction
     }
 
-    private fun addMessage(account: Account, conversation: Conversation, message: Map<String, String>, newMessage: Boolean): Interaction {
-        val interaction = getInteraction(account, conversation, message)
-        if (conversation.addSwarmElement(interaction, newMessage)) {
-            /*if (conversation.isVisible)
-                mHistoryService.setMessageRead(account.accountID, conversation.uri, interaction.messageId!!)*/
-        }
+    private fun addMessage(account: Account, conversation: Conversation, message: SwarmMessage, newMessage: Boolean): Interaction {
+        // SwarmMessage id,type,linearizedParent,body,reactions,editions
+        val interaction = getInteraction(account, conversation, message.body) // use above in this
+        val edits = message.editions.map { getInteraction(account, conversation, it.toNative()) }
+        val reactions = message.reactions.map { getInteraction(account, conversation, it.toNative()) }
+        interaction.history.addAll(edits)
+        interaction.reactions.addAll(reactions)
+        conversation.addSwarmElement(interaction, newMessage) // todo?
         return interaction
     }
 
-    fun conversationLoaded(id: Long, accountId: String, conversationId: String, messages: List<Map<String, String>>) {
+    fun swarmLoaded(id: Long, accountId: String, conversationId: String, messages: SwarmMessageVect) {
         try {
             val task = loadingTasks.remove(id)
-            // Log.w(TAG, "ConversationCallback: conversationLoaded $accountId/$conversationId ${messages.size}")
             getAccount(accountId)?.let { account -> account.getSwarm(conversationId)?.let { conversation ->
                 val interactions: List<Interaction>
                 val subject = synchronized(conversation) {
@@ -1337,7 +1339,7 @@ class AccountService(
                 }
                 subject?.onSuccess(conversation)
                 task?.onSuccess(interactions)
-                account.conversationChanged()
+                account.conversationChanged() // todo simplify?
             }}
         } catch (e: Exception) {
             Log.e(TAG, "Exception loading message", e)
@@ -1452,19 +1454,52 @@ class AccountService(
             metadata["mode"]?.let { m -> Conversation.Mode.values()[m.toInt()] } ?: Conversation.Mode.OneToOne))
     }
 
+    // todo remove
     fun messageReceived(accountId: String, conversationId: String, message: Map<String, String>) {
         Log.w(TAG, "ConversationCallback: messageReceived " + accountId + "/" + conversationId + " " + message.size)
+//        getAccount(accountId)?.let { account -> account.getSwarm(conversationId)?.let { conversation ->
+//            synchronized(conversation) {
+//                val interaction = addMessage(account, conversation, message, true)
+//                account.conversationUpdated(conversation)
+//                val isIncoming = !interaction.contact!!.isUser
+//                if (isIncoming)
+//                    incomingSwarmMessageSubject.onNext(interaction)
+//                if (interaction is DataTransfer)
+//                    dataTransfers.onNext(interaction)
+//                if (interaction is Call && interaction.isGroupCall && isIncoming)
+//                    incomingGroupCallSubject.onNext(conversation)
+//            }
+//        }}
+    }
+
+    fun swarmMessageReceived(accountId: String, conversationId: String, message: SwarmMessage) {
         getAccount(accountId)?.let { account -> account.getSwarm(conversationId)?.let { conversation ->
             synchronized(conversation) {
-                val interaction = addMessage(account, conversation, message, true)
-                account.conversationUpdated(conversation)
-                val isIncoming = !interaction.contact!!.isUser
-                if (isIncoming)
-                    incomingSwarmMessageSubject.onNext(interaction)
-                if (interaction is DataTransfer)
-                    dataTransfers.onNext(interaction)
-                if (interaction is Call && interaction.isGroupCall && isIncoming)
-                    incomingGroupCallSubject.onNext(conversation)
+                // todo
+            }
+        }}
+    }
+
+    fun swarmMessageUpdated(accountId: String, conversationId: String, message: SwarmMessage) {
+        getAccount(accountId)?.let { account -> account.getSwarm(conversationId)?.let { conversation ->
+            synchronized(conversation) {
+                // todo
+            }
+        }}
+    }
+
+    fun reactionAdded(accountId: String, conversationId: String, messageId: String, reaction: StringMap) {
+        getAccount(accountId)?.let { account -> account.getSwarm(conversationId)?.let { conversation ->
+            synchronized(conversation) {
+                // todo
+            }
+        }}
+    }
+
+    fun reactionRemoved(accountId: String, conversationId: String, messageId: String, reactionId: String) {
+        getAccount(accountId)?.let { account -> account.getSwarm(conversationId)?.let { conversation ->
+            synchronized(conversation) {
+                // todo
             }
         }}
     }
