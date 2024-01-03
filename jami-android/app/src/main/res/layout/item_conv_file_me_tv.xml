@@ -1,159 +1,115 @@
-<?xml version="1.0" encoding="utf-8"?><!--
-  ~ Copyright (C) 2004-2023 Savoir-faire Linux Inc.
-  ~
-  ~ This program is free software; you can redistribute it and/or modify
-  ~ it under the terms of the GNU General Public License as published by
-  ~ the Free Software Foundation; either version 3 of the License, or
-  ~ (at your option) any later version.
-  ~
-  ~ This program is distributed in the hope that it will be useful,
-  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
-  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  ~ GNU General Public License for more details.
-  ~
-  ~ You should have received a copy of the GNU General Public License
-  ~ along with this program; if not, write to the Free Software
-  ~  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
-  -->
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?> <!--
+    ~ Copyright (C) 2004-2023 Savoir-faire Linux Inc.
+    ~
+    ~ This program is free software; you can redistribute it and/or modify
+    ~ it under the terms of the GNU General Public License as published by
+    ~ the Free Software Foundation; either version 3 of the License, or
+    ~ (at your option) any later version.
+    ~
+    ~ This program is distributed in the hope that it will be useful,
+    ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ~ GNU General Public License for more details.
+    ~
+    ~ You should have received a copy of the GNU General Public License
+    ~ along with this program; if not, write to the Free Software
+    ~  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+    -->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/file_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@android:color/transparent"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:paddingBottom="@dimen/padding_xsmall"
-    tools:background="@color/tv_contact_background">
+    android:background="@color/tv_contact_background"
+    android:clickable="true"
+    android:descendantFocusability="blocksDescendants"
+    android:focusable="true"
+    android:paddingBottom="@dimen/padding_xsmall">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/fileInfoLayout"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="8dp">
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/filemsg_background_out"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:id="@+id/fileInfoLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="72dp"
-            android:layout_marginEnd="24dp"
-            android:background="@drawable/textmsg_call_background"
-            android:orientation="horizontal">
+            android:id="@+id/file_icon_layout"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:background="@drawable/file_icon_background_out"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/file_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/file_icon"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="12dp"
-                android:layout_marginEnd="4dp"
-                android:alpha="0.75"
-                android:src="@drawable/baseline_attach_file_24"
-                app:tint="@color/black" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:animateLayoutChanges="true"
-                android:minWidth="160dp"
-                android:orientation="vertical"
-                android:paddingTop="8dp">
-
-                <TextView
-                    android:id="@+id/call_hist_filename"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginBottom="4dp"
-                    android:ellipsize="middle"
-                    android:maxWidth="200dp"
-                    android:scrollHorizontally="true"
-                    android:singleLine="true"
-                    android:textAppearance="@android:style/TextAppearance.Medium"
-                    android:textColor="@color/colorOnSurface"
-                    android:textSize="16sp"
-                    tools:text="long_file_name_gtest_long_file_name_gtest.jpg" />
-
-                <androidx.core.widget.ContentLoadingProgressBar
-                    android:id="@+id/progress"
-                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:indeterminate="false"
-                    android:visibility="gone"
-                    tools:visibility="gone" />
-
-                <TextView
-                    android:id="@+id/file_details_txt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="24dp"
-                    android:layout_marginBottom="8dp"
-                    android:maxWidth="200dp"
-                    android:textColor="@color/textColorSecondary"
-                    android:textSize="12sp"
-                    tools:text="1 mo - 12 mars" />
-
-                <LinearLayout
-                    android:id="@+id/llAnswer"
-                    android:layout_width="match_parent"
-                    android:layout_height="42dp"
-                    android:minWidth="350dp"
-                    android:orientation="horizontal"
-                    android:visibility="gone"
-                    tools:visibility="visible">
-
-                    <Button
-                        android:id="@+id/btnRefuse"
-                        style="@style/LightThemeSelector"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.5"
-                        android:gravity="center"
-                        android:text="@string/refuse"
-                        android:textColor="@color/color_primary_dark" />
-
-                    <Button
-                        android:id="@+id/btnAccept"
-                        style="@style/LightThemeSelector"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.5"
-                        android:gravity="center"
-                        android:text="@string/accept"
-                        android:textColor="@color/color_primary_dark" />
-
-                </LinearLayout>
-            </LinearLayout>
+                android:layout_gravity="center"
+                android:contentDescription="@null"
+                app:srcCompat="@drawable/baseline_attach_file_24"
+                app:tint="@color/file_icon_out" />
         </LinearLayout>
 
-        <cx.ring.views.MessageStatusView
-            android:id="@+id/status_icon"
-            android:layout_width="14dp"
-            android:layout_height="14dp"
-            android:layout_alignBottom="@id/fileInfoLayout"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="5dp"
-            app:tint="@color/grey_500" />
+        <TextView
+            android:id="@+id/file_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:ellipsize="middle"
+            android:maxWidth="200dp"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:textAppearance="@android:style/TextAppearance.Medium"
+            android:textColor="@color/text_color_primary_dark"
+            android:textColorHighlight="@color/conversation_primary_selection"
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@id/file_icon_layout"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Title_document_1234567.pdf" />
 
-    </RelativeLayout>
+        <TextView
+            android:id="@+id/file_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="middle"
+            android:textAppearance="@android:style/TextAppearance.Small"
+            android:textColor="@color/text_color_primary_dark"
+            android:textColorHighlight="@color/conversation_primary_selection"
+            android:textSize="@dimen/file_size"
+            app:layout_constraintStart_toStartOf="@id/file_title"
+            app:layout_constraintTop_toBottomOf="@id/file_title"
+            tools:text="1.2 MB" />
 
-    <TextView
-        android:id="@+id/msg_details_txt_perm"
+        <TextView
+            android:id="@+id/file_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/file_time_text"
+            android:textSize="@dimen/conversation_timestamp_textsize"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="11:36am" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <cx.ring.views.MessageStatusView
+        android:id="@+id/status_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="4dp"
-        android:paddingBottom="@dimen/padding_small"
-        android:textColor="@color/conversation_secondary_background"
-        android:textSize="14sp"
-        android:visibility="gone"
-        tools:text="@string/time_just_now"
-        tools:visibility="visible" />
+        android:layout_marginStart="5dp"
+        app:layout_constraintBottom_toBottomOf="@id/fileInfoLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/fileInfoLayout"
+        app:tint="@color/grey_500"
+        tools:background="@color/amber_500"
+        tools:layout_height="@dimen/conversation_avatar_size_small"
+        tools:layout_width="@dimen/conversation_avatar_size_small" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

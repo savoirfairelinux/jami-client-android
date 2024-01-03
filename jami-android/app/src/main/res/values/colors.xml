@@ -100,6 +100,10 @@
     <color name="msg_display_name">#A7A7A7</color>
     <color name="menu_conversation_icons">#005699</color>
     <color name="accept_call_button">#48454E</color>
+    <color name="file_time_text">#A7A7A7</color>
+    <color name="file_icon_background_in">#26000000</color>
+    <color name="file_icon_background_out">#4D000000</color>
+    <color name="file_icon_out">#A6A6A6</color>
 
     <!--  Chooser conversation color  -->
     <color name="conversation_palette_pink">@color/pink_700</color>
