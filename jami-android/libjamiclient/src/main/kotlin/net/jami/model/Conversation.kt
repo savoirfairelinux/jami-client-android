@@ -534,27 +534,27 @@ class Conversation : ConversationHistory {
      */
     @Synchronized
     fun addSwarmElement(interaction: Interaction, newMessage: Boolean): Boolean {
-        // Handle edit interaction
-        if (interaction.edit != null) {
-            addEdit(interaction, newMessage)
-            val i = Interaction(this, Interaction.InteractionType.INVALID)
-            i.setSwarmInfo(uri.rawRingId, interaction.messageId!!, interaction.parentId)
-            i.conversation = this
-            i.contact = interaction.contact
-            return addSwarmElement(i, newMessage)
-        }
-        // Handle reaction interaction
-        else if (interaction.reactToId != null) {
-            addReaction(interaction, interaction.reactToId!!)
-            val i = Interaction(this, Interaction.InteractionType.INVALID)
-            i.setSwarmInfo(uri.rawRingId, interaction.messageId!!, interaction.parentId)
-            i.conversation = this
-            i.contact = interaction.contact
-            i.reactTo = interaction
-            return addSwarmElement(i, newMessage)
-        }
+//        // Handle edit interaction
+//        if (interaction.edit != null) {
+//            addEdit(interaction, newMessage)
+//            val i = Interaction(this, Interaction.InteractionType.INVALID)
+//            i.setSwarmInfo(uri.rawRingId, interaction.messageId!!, interaction.parentId)
+//            i.conversation = this
+//            i.contact = interaction.contact
+//            return addSwarmElement(i, newMessage)
+//        }
+//        // Handle reaction interaction
+//        else if (interaction.reactToId != null) {
+//            addReaction(interaction, interaction.reactToId!!)
+//            val i = Interaction(this, Interaction.InteractionType.INVALID)
+//            i.setSwarmInfo(uri.rawRingId, interaction.messageId!!, interaction.parentId)
+//            i.conversation = this
+//            i.contact = interaction.contact
+//            i.reactTo = interaction
+//            return addSwarmElement(i, newMessage)
+//        }
         // Handle call interaction
-        else if (interaction is Call && interaction.confId != null) {
+        if (interaction is Call && interaction.confId != null) {
             // interaction.duration is changed when the call is ended.
             // It means duration=0 when the call is started and duration>0 when the call is ended.
             if (interaction.duration != 0L) {
