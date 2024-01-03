@@ -29,7 +29,6 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.ImageView
-import com.google.android.material.chip.Chip
 import androidx.constraintlayout.widget.ConstraintLayout
 import cx.ring.R
 import cx.ring.adapters.MessageType
