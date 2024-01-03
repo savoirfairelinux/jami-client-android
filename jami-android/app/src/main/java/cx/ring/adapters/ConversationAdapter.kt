@@ -27,6 +27,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.SurfaceTexture
 import android.graphics.drawable.Drawable
+import android.graphics.drawable.GradientDrawable
 import android.media.MediaPlayer
 import android.net.Uri
 import android.text.format.DateUtils
@@ -426,6 +427,17 @@ class ConversationAdapter(
                                 .joinToString("") {
                                     if (it.value > 1) it.key + it.value else it.key
                                 }
+
+                            (chip.background as GradientDrawable).apply {
+                                mutate()
+                                setStroke(
+                                    context.resources
+                                        .getDimensionPixelSize(R.dimen.message_reaction_stroke),
+                                    if (!interaction.isIncoming) convColor
+                                    else context.getColor(R.color.border_color)
+                                )
+                            }
+
                             chip.isVisible = true
                             chip.isClickable = true
                             chip.isFocusable = true
