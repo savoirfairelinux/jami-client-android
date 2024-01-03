@@ -533,34 +533,33 @@ class TvConversationAdapter(
         interaction: Interaction,
         position: Int
     ) {
+        val context = viewHolder.itemView.context
         val file = interaction as DataTransfer
         val path = presenter.deviceRuntimeService.getConversationPath(file)
-        val timeString = TextUtils.timestampToDetailString(
-            viewHolder.itemView.context,
-            formatter,
-            file.timestamp
-        )
+
         viewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
-            viewHolder.mMsgDetailTxt?.text = when (val status = file.status) {
-                InteractionStatus.TRANSFER_FINISHED -> String.format("%s - %s", timeString,
-                    Formatter.formatFileSize(viewHolder.itemView.context, file.totalSize))
+            val timeString = TextUtils.timestampToDetailString(context, formatter, file.timestamp)
+            viewHolder.mFileTime?.text = timeString
+            viewHolder.mFileSize?.text = when (val status = file.status) {
+                InteractionStatus.TRANSFER_FINISHED -> String.format("%s - %s",
+                    Formatter.formatFileSize(context, file.totalSize),
+                    TextUtils.getReadableFileTransferStatus(context, status)
+                )
                 InteractionStatus.TRANSFER_ONGOING -> String.format("%s / %s - %s",
-                    Formatter.formatFileSize(viewHolder.itemView.context, file.bytesProgress),
-                    Formatter.formatFileSize(viewHolder.itemView.context, file.totalSize),
-                    TextUtils.getReadableFileTransferStatus(viewHolder.itemView.context, status))
-                else -> String.format("%s - %s - %s", timeString,
-                    Formatter.formatFileSize(viewHolder.itemView.context, file.totalSize),
-                    TextUtils.getReadableFileTransferStatus(viewHolder.itemView.context, status))
+                    Formatter.formatFileSize(context, file.bytesProgress),
+                    Formatter.formatFileSize(context, file.totalSize),
+                    TextUtils.getReadableFileTransferStatus(context, status))
+                else -> String.format(
+                    Formatter.formatFileSize(context, file.totalSize)
+                )
             }
         })
-        viewHolder.compositeDisposable.clear()
+        // ici
+//        viewHolder.compositeDisposable.clear()
         if (hasPermanentTimeString(file, position)) {
             viewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
-                viewHolder.mMsgDetailTxtPerm?.text = TextUtils.timestampToDetailString(
-                    viewHolder.itemView.context,
-                    formatter,
-                    file.timestamp
-                )
+                viewHolder.mMsgDetailTxtPerm?.text =
+                    TextUtils.timestampToDetailString(context, formatter, file.timestamp)
             })
             viewHolder.mMsgDetailTxtPerm?.visibility = View.VISIBLE
         } else {
@@ -580,7 +579,6 @@ class TvConversationAdapter(
             viewHolder.mAvatar?.visibility = View.GONE
         }
         val type = viewHolder.type.transferType
-
         val longPressView = viewHolder.itemView
         longPressView.setOnCreateContextMenuListener { menu: ContextMenu, v: View, menuInfo: ContextMenuInfo? ->
             menu.setHeaderTitle(file.displayName)
@@ -594,45 +592,76 @@ class TvConversationAdapter(
         }
         longPressView.setOnLongClickListener { v: View ->
             if (type == MessageType.TransferType.AUDIO || type == MessageType.TransferType.FILE) {
-                conversationFragment.updatePosition(viewHolder.adapterPosition)
+                conversationFragment.updatePosition(viewHolder.bindingAdapterPosition)
+                if (file.isIncoming) {
+                    longPressView.background.setTint(context.getColor(R.color.grey_500))
+                } else {
+                    longPressView.background.setTint(convColorTint)
+                }
             }
             mCurrentLongItem =
-                RecyclerViewContextMenuInfo(viewHolder.adapterPosition, v.id.toLong())
+                RecyclerViewContextMenuInfo(viewHolder.bindingAdapterPosition, v.id.toLong())
             false
         }
-        if (type == MessageType.TransferType.IMAGE) {
-            configureImage(viewHolder, path)
-        } else if (type == MessageType.TransferType.VIDEO) {
-            configureVideo(viewHolder, path)
-        } else if (type == MessageType.TransferType.AUDIO) {
-            configureAudio(viewHolder, path)
-        } else {
-            viewHolder.itemView.onFocusChangeListener =
-                View.OnFocusChangeListener { v, hasFocus ->
-                    viewHolder.itemView.setBackgroundResource(
-                        if (hasFocus) R.drawable.tv_item_selected_background
-                        else R.drawable.tv_item_unselected_background
+        when (type) {
+            MessageType.TransferType.IMAGE -> { configureImage(viewHolder, path) }
+            MessageType.TransferType.VIDEO -> { configureVideo(viewHolder, path) }
+            MessageType.TransferType.AUDIO -> { configureAudio(viewHolder, path) }
+            else -> {
+                viewHolder.itemView.onFocusChangeListener =
+                    View.OnFocusChangeListener { v, hasFocus ->
+                        viewHolder.itemView.setBackgroundResource(
+                            if (hasFocus) R.drawable.tv_item_selected_background
+                            else R.drawable.tv_item_unselected_background
+                        )
+                        viewHolder.mFileInfoLayout?.animate()
+                            ?.scaleY(if (hasFocus) 1.1f else 1f)
+                            ?.scaleX(if (hasFocus) 1.1f else 1f)
+                    }
+                val status = file.status
+                viewHolder.mIcon?.setImageResource(
+                    if (status.isError) R.drawable.baseline_warning_24
+                    else R.drawable.baseline_attach_file_24
+                )
+                viewHolder.mFileTitle?.text = file.displayName
+                viewHolder.mFileInfoLayout?.setOnClickListener(null)
+                // Set the tint of the file background
+                if (file.isOutgoing) {
+                    viewHolder.mFileInfoLayout?.background?.setTint(convColor)
+                } else {
+                    viewHolder.mFileInfoLayout?.background?.setTint(
+                        viewHolder.itemView.context.getColor
+                            (R.color.conversation_secondary_background)
                     )
-                    viewHolder.mFileInfoLayout?.animate()
-                        ?.scaleY(if (hasFocus) 1.1f else 1f)
-                        ?.scaleX(if (hasFocus) 1.1f else 1f)
                 }
-            val status = file.status
-            viewHolder.mIcon?.setImageResource(
-                if (status.isError) R.drawable.baseline_warning_24
-                else R.drawable.baseline_attach_file_24
-            )
-            viewHolder.mMsgTxt?.text = file.displayName
-            if (status === InteractionStatus.TRANSFER_AWAITING_HOST) {
-                viewHolder.mAnswerLayout?.visibility = View.VISIBLE
-                viewHolder.btnAccept?.setOnClickListener { presenter.acceptFile(file) }
-                viewHolder.btnRefuse?.setOnClickListener { presenter.refuseFile(file) }
-            } else if (status == InteractionStatus.FILE_AVAILABLE) {
-                viewHolder.btnRefuse?.visibility = View.GONE
-                viewHolder.mAnswerLayout?.visibility = View.VISIBLE
-                viewHolder.btnAccept?.setOnClickListener { presenter.acceptFile(file) }
-            } else {
-                viewHolder.mAnswerLayout?.visibility = View.GONE
+                // Show the download button
+                when (status) {
+                    InteractionStatus.TRANSFER_AWAITING_HOST -> {
+                        viewHolder.mFileDownloadButton?.let {
+                            it.visibility = View.VISIBLE
+                            it.setOnClickListener { presenter.acceptFile(file) }
+                        }
+                    }
+                    InteractionStatus.FILE_AVAILABLE -> {
+                        viewHolder.mFileDownloadButton?.let {
+                            it.visibility = View.VISIBLE
+                            it.setOnClickListener { presenter.acceptFile(file) }
+                        }
+                    }
+                    else -> {
+                        viewHolder.mFileDownloadButton?.visibility = View.GONE
+                        if (status == InteractionStatus.TRANSFER_ONGOING) {
+                            viewHolder.progress?.max = (file.totalSize / 1024).toInt()
+                            viewHolder.progress?.setProgress(
+                                (file.bytesProgress / 1024).toInt(), true
+                            )
+                            viewHolder.progress?.show()
+                        } else {
+                            viewHolder.progress?.hide()
+                        }
+                        viewHolder.mFileInfoLayout?.setOnClickListener { presenter.openFile(file) }
+                    }
+                }
             }
         }
     }
