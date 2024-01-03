@@ -60,5 +60,7 @@
     <color name="link_peer_color">#03B9E9</color>
     <color name="menu_conversation_icons">@color/white</color>
     <color name="accept_call_button">#CAC4D0</color>
+    <color name="file_icon_background_in">#4D000000</color>
+    <color name="file_time_text_in">#99FFFFFF</color>
 
 </resources>

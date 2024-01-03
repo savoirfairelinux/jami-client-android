@@ -30,6 +30,7 @@ import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.ImageView
 import com.google.android.material.chip.Chip
+import androidx.constraintlayout.widget.ConstraintLayout
 import cx.ring.R
 import cx.ring.adapters.MessageType
 import cx.ring.views.MessageStatusView
@@ -82,6 +83,7 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
         MessageType.INCOMING_TEXT_MESSAGE,
         MessageType.INCOMING_CALL_INFORMATION,
         MessageType.ONGOING_GROUP_CALL -> v.findViewById(R.id.msg_display_name)
+        MessageType.INCOMING_FILE -> v.findViewById(R.id.peer_name)
         else -> null
     }
     val reactionChip: TextView? = v.findViewById(R.id.reaction_chip)
@@ -117,8 +119,30 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
     var mMsgLayout: ViewGroup? = null
     var mCallInfoText: TextView? = null
     var mCallAcceptLayout: LinearLayout? = null
-    var mFileInfoLayout: LinearLayout? = null
+    var mFileInfoLayout: ConstraintLayout? = null
+    var mFileSize: TextView? = null
+    var mFileTime: TextView? = null
+    var mFileTitle: TextView? = null
+    var mFileDownloadButton: ImageButton? = null
     var mAudioInfoLayout: LinearLayout? = null
+
+    val mLayoutStatusIconId: View? = when (type) {
+        MessageType.OUTGOING_CALL_INFORMATION,
+        MessageType.INCOMING_CALL_INFORMATION -> v.findViewById(R.id.callLayout)
+        MessageType.ONGOING_GROUP_CALL -> v.findViewById(R.id.msg_layout)
+        MessageType.INCOMING_TEXT_MESSAGE,
+        MessageType.OUTGOING_TEXT_MESSAGE -> v.findViewById(R.id.msg_txt)
+        MessageType.INCOMING_FILE,
+        MessageType.OUTGOING_FILE -> v.findViewById(R.id.file_layout)
+        MessageType.INCOMING_IMAGE,
+        MessageType.OUTGOING_IMAGE -> v.findViewById(R.id.image)
+        MessageType.INCOMING_AUDIO,
+        MessageType.OUTGOING_AUDIO -> v.findViewById(R.id.audioInfoLayout)
+        MessageType.INCOMING_VIDEO,
+        MessageType.OUTGOING_VIDEO -> v.findViewById(R.id.video_frame)
+        else -> null
+    }
+
 
     var player: MediaPlayer? = null
     var surface: Surface? = null
@@ -164,15 +188,14 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
             }
             MessageType.INCOMING_FILE,
             MessageType.OUTGOING_FILE -> {
-                mMsgTxt = v.findViewById(R.id.call_hist_filename)
-                mMsgDetailTxt = v.findViewById(R.id.file_details_txt)
+                mFileTitle = v.findViewById(R.id.file_title)
+                mFileSize = v.findViewById(R.id.file_size)
+                mFileTime = v.findViewById(R.id.file_time)
                 mLayout = v.findViewById(R.id.file_layout)
                 mFileInfoLayout = v.findViewById(R.id.fileInfoLayout)
-                progress = v.findViewById(R.id.progress)
-                mAnswerLayout = v.findViewById(R.id.llAnswer)
-                btnAccept = v.findViewById(R.id.btnAccept)
-                btnRefuse = v.findViewById(R.id.btnRefuse)
-                mMsgDetailTxtPerm = v.findViewById(R.id.msg_details_txt_perm)
+                progress = v.findViewById(R.id.file_download_progress)
+                mFileDownloadButton = v.findViewById(R.id.file_download_button)
+                mMsgDetailTxtPerm = v.findViewById(R.id.message_time_permanent)
                 primaryClickableView = mFileInfoLayout
             }
             MessageType.INCOMING_IMAGE,

@@ -341,7 +341,7 @@ class ConversationAdapter(
                 conversationViewHolder.mStatusIcon?.update(
                     contacts,
                     interaction.status,
-                    conversationViewHolder.mMsgTxt?.id ?: View.NO_ID
+                    conversationViewHolder.mLayoutStatusIconId?.id ?: View.NO_ID
                 )
             })
     }
@@ -929,9 +929,9 @@ class ConversationAdapter(
             conversationViewHolder.compositeDisposable.add(disposable)
 
             popupWindow.setOnDismissListener {
-                if (convColor != 0
-                    && interaction.type == Interaction.InteractionType.TEXT
-                    && !interaction.isIncoming
+                val type = conversationViewHolder.type.transferType
+                if (convColor != 0 && (interaction.type == Interaction.InteractionType.TEXT
+                            || type == MessageType.TransferType.FILE) && !interaction.isIncoming
                 ) view.background?.setTint(convColor)
                 else view.background?.setTintList(null)
                 // Remove disposable.
@@ -1086,18 +1086,22 @@ class ConversationAdapter(
         val context = viewHolder.itemView.context
         val file = interaction as DataTransfer
         val path = presenter.deviceRuntimeService.getConversationPath(file)
-        val timeString = TextUtils.timestampToDetailString(context, formatter, file.timestamp)
+        val timeString = TextUtils.timestampInMessage(context, formatter, file.timestamp)
+        viewHolder.mFileTime?.text = timeString
         viewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
-            viewHolder.mMsgDetailTxt?.text = when (val status = file.status) {
-                InteractionStatus.TRANSFER_FINISHED -> String.format("%s - %s", timeString,
-                    Formatter.formatFileSize(context, file.totalSize))
+            viewHolder.mFileSize?.text = when (val status = file.status) {
+                InteractionStatus.TRANSFER_FINISHED -> String.format("%s - %s",
+                    Formatter.formatFileSize(context, file.totalSize),
+                    TextUtils.getReadableFileTransferStatus(context, status)
+                )
                 InteractionStatus.TRANSFER_ONGOING -> String.format("%s / %s - %s",
                     Formatter.formatFileSize(context, file.bytesProgress),
                     Formatter.formatFileSize(context, file.totalSize),
-                    TextUtils.getReadableFileTransferStatus(context, status))
-                else -> String.format("%s - %s - %s", timeString,
-                    Formatter.formatFileSize(context, file.totalSize),
-                    TextUtils.getReadableFileTransferStatus(context, status))
+                    TextUtils.getReadableFileTransferStatus(context, status)
+                )
+                else -> String.format(
+                    Formatter.formatFileSize(context, file.totalSize)
+                )
             }
         })
         if (hasPermanentTimeString(file, position)) {
@@ -1109,18 +1113,29 @@ class ConversationAdapter(
         } else {
             viewHolder.mMsgDetailTxtPerm?.visibility = View.GONE
         }
-        val contact = interaction.contact
+        val contact = interaction.contact ?: return
         if (interaction.isIncoming && presenter.isGroup()) {
             viewHolder.mAvatar?.let { avatar ->
                 avatar.setImageBitmap(null)
                 avatar.visibility = View.VISIBLE
-                if (contact != null)
-                    avatar.setImageDrawable(
-                        conversationFragment.getConversationAvatar(contact.primaryNumber)
+                avatar.setImageDrawable(
+                    conversationFragment.getConversationAvatar(contact.primaryNumber)
+                )
+            }
+            val account = interaction.account?: return
+            // Show the name of the contact.
+            viewHolder.mPeerDisplayName?.apply {
+                    visibility = View.VISIBLE
+                    viewHolder.compositeDisposable.add(
+                        presenter.contactService
+                            .observeContact(account, contact, false)
+                            .observeOn(DeviceUtils.uiScheduler)
+                            .subscribe { text = it.displayName }
                     )
             }
         } else {
             viewHolder.mAvatar?.visibility = View.GONE
+            viewHolder.mPeerDisplayName?.visibility = View.GONE
         }
         val type = viewHolder.type.transferType
         val longPressView = when (type) {
@@ -1135,7 +1150,11 @@ class ConversationAdapter(
         longPressView.setOnLongClickListener { v: View ->
             if (type == MessageType.TransferType.AUDIO || type == MessageType.TransferType.FILE) {
                 conversationFragment.updatePosition(viewHolder.bindingAdapterPosition)
-                longPressView.background.setTint(context.getColor(R.color.grey_500))
+                if (file.isIncoming) {
+                    longPressView.background.setTint(context.getColor(R.color.grey_500))
+                } else {
+                    longPressView.background.setTint(convColorTint)
+                }
             }
             openItemMenu(viewHolder, v, file)
             mCurrentLongItem =
@@ -1152,28 +1171,26 @@ class ConversationAdapter(
                     if (status.isError) R.drawable.baseline_warning_24
                     else R.drawable.baseline_attach_file_24
                 )
-                viewHolder.mMsgTxt?.text = file.displayName
+                viewHolder.mFileTitle?.text = file.displayName
                 viewHolder.mFileInfoLayout?.setOnClickListener(null)
+                // Set the tint of the file background
+                if (file.isOutgoing) viewHolder.mFileInfoLayout?.background?.setTint(convColor)
+                // Show the download button
                 when (status) {
-                    InteractionStatus.TRANSFER_AWAITING_HOST -> {
-                        viewHolder.btnRefuse?.visibility = View.VISIBLE
-                        viewHolder.mAnswerLayout?.visibility = View.VISIBLE
-                        viewHolder.btnAccept?.setOnClickListener { presenter.acceptFile(file) }
-                        viewHolder.btnRefuse?.setOnClickListener { presenter.refuseFile(file) }
-                    }
-                    InteractionStatus.FILE_AVAILABLE -> {
-                        viewHolder.btnRefuse?.visibility = View.GONE
-                        viewHolder.mAnswerLayout?.visibility = View.VISIBLE
-                        viewHolder.btnAccept?.setOnClickListener { presenter.acceptFile(file) }
+                    InteractionStatus.TRANSFER_AWAITING_HOST, InteractionStatus.FILE_AVAILABLE -> {
+                        viewHolder.mFileDownloadButton?.let {
+                            it.visibility = View.VISIBLE
+                            it.setOnClickListener { presenter.acceptFile(file) }
+                        }
                     }
                     else -> {
-                        viewHolder.mAnswerLayout?.visibility = View.GONE
+                        viewHolder.mFileDownloadButton?.visibility = View.GONE
                         if (status == InteractionStatus.TRANSFER_ONGOING) {
-                            viewHolder.progress?.apply {
-                                max = (file.totalSize / 1024).toInt()
-                                setProgress((file.bytesProgress / 1024).toInt(), true)
-                                show()
-                            }
+                            viewHolder.progress?.max = (file.totalSize / 1024).toInt()
+                            viewHolder.progress?.setProgress(
+                                (file.bytesProgress / 1024).toInt(), true
+                            )
+                            viewHolder.progress?.show()
                         } else {
                             viewHolder.progress?.hide()
                         }
