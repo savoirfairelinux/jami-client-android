@@ -24,6 +24,7 @@ import io.reactivex.rxjava3.subjects.PublishSubject
 import io.reactivex.rxjava3.subjects.SingleSubject
 import io.reactivex.rxjava3.subjects.Subject
 import net.jami.utils.Log
+import net.jami.utils.StringUtils
 import java.util.*
 
 class Conversation : ConversationHistory {
@@ -699,10 +700,9 @@ class Conversation : ConversationHistory {
             // So we add FF in front of the color (full opacity).
             color.onNext(colorValue.substring(1).toInt(16) or 0xFF000000.toInt())
         } else color.onNext(0)
-        val symbolValue = preferences[KEY_PREFERENCE_CONVERSATION_SYMBOL]
-        if (symbolValue != null) {
-            symbol.onNext(symbolValue)
-        } else symbol.onNext("")
+        preferences[KEY_PREFERENCE_CONVERSATION_SYMBOL].let {
+            symbol.onNext(if (StringUtils.isOnlyEmoji(it)) it!! else "")
+        }
     }
 
     /** Tells if the conversation is a swarm:group with more than 2 participants (including user) */

@@ -96,10 +96,11 @@ class ConversationActionsFragment : Fragment(), Colorable {
                 getText(R.string.conversation_preference_color)
             ) {
                 ColorChooserBottomSheet { color -> // Color chosen by the user (onclick method).
-                    setConversationPreferences(
+                    val rgbColor = String.format("#%06X", 0xFFFFFF and color)
+                    mConversationFacade.setConversationPreferences(
                         path.accountId,
                         path.conversationUri,
-                        color = color
+                        mapOf(Conversation.KEY_PREFERENCE_CONVERSATION_COLOR to rgbColor)
                     )
                     // Need to manually update the color of the conversation as will not get the
                     // update signal from daemon.
@@ -113,10 +114,10 @@ class ConversationActionsFragment : Fragment(), Colorable {
             symbolAction = ContactAction(0, getText(R.string.conversation_preference_emoji)) {
                 EmojiChooserBottomSheet { emoji -> // Emoji chosen by the user (onclick method).
                     if (emoji == null) return@EmojiChooserBottomSheet
-                    setConversationPreferences(
+                    mConversationFacade.setConversationPreferences(
                         path.accountId,
                         path.conversationUri,
-                        emoji = emoji
+                        mapOf(Conversation.KEY_PREFERENCE_CONVERSATION_SYMBOL to emoji)
                     )
                     // Need to manually update the symbol of the conversation as will not get the
                     // update signal from daemon.
@@ -289,25 +290,6 @@ class ConversationActionsFragment : Fragment(), Colorable {
     private fun setSymbol(symbol: CharSequence) {
         symbolAction?.setSymbol(symbol) // Update emoji action icon
         adapter.notifyItemChanged(symbolActionPosition)
-    }
-
-    /**
-     * Set the conversation preferences.
-     * Always resend the color and emoji, even if they are not changed (to not reset).
-     */
-    private fun setConversationPreferences(
-        accountId: String,
-        conversationUri: Uri,
-        color: Int? = colorAction?.iconTint,
-        emoji: String = symbolAction?.iconSymbol.toString(),
-    ) {
-        mConversationFacade.setConversationPreferences(
-            accountId, conversationUri, mapOf(
-                Conversation.KEY_PREFERENCE_CONVERSATION_SYMBOL to emoji,
-                Conversation.KEY_PREFERENCE_CONVERSATION_COLOR to if (color != null)
-                    String.format("#%06X", 0xFFFFFF and color) else ""
-            )
-        )
     }
 
     private fun copyAndShow(toCopy: String) {
