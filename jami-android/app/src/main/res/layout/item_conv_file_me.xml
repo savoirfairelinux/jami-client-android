@@ -100,24 +100,22 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.google.android.material.chip.Chip
+    <TextView
         android:id="@+id/reaction_chip"
         style="@style/Widget.Material3.Chip.Suggestion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="-16dp"
+        android:layout_marginTop="-8dp"
         android:layout_marginEnd="8dp"
-        android:backgroundTint="@color/icon_background_color"
+        android:background="@drawable/background_reaction_chip"
         android:elevation="4dp"
+        android:lines="1"
+        android:maxLines="1"
         android:outlineProvider="none"
-        app:chipCornerRadius="5dp"
-        app:chipEndPadding="0dp"
-        app:chipStartPadding="0dp"
-        app:chipStrokeColor="@color/border_color"
+        android:padding="5dp"
+        android:singleLine="true"
         app:layout_constraintEnd_toEndOf="@id/fileInfoLayout"
         app:layout_constraintTop_toBottomOf="@id/fileInfoLayout"
-        app:textEndPadding="5dp"
-        app:textStartPadding="5dp"
         tools:text="👍 😍 3" />
 
     <cx.ring.views.MessageStatusView
