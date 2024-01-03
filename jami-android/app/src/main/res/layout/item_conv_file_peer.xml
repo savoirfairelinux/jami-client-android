@@ -33,7 +33,7 @@
         android:id="@+id/photo_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/fileInfoLayout"
         app:layout_constraintEnd_toStartOf="@id/fileInfoLayout"
         app:layout_constraintStart_toStartOf="parent">
 
@@ -148,5 +148,23 @@
         app:layout_constraintStart_toEndOf="@id/fileInfoLayout"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/download_24px" />
+
+    <TextView
+        android:id="@+id/reaction_chip"
+        style="@style/Widget.Material3.Chip.Suggestion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="-8dp"
+        android:background="@drawable/background_reaction_chip"
+        android:elevation="4dp"
+        android:lines="1"
+        android:maxLines="1"
+        android:outlineProvider="none"
+        android:padding="5dp"
+        android:singleLine="true"
+        app:layout_constraintStart_toStartOf="@id/fileInfoLayout"
+        app:layout_constraintTop_toBottomOf="@id/fileInfoLayout"
+        tools:text="👍😍 3" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
