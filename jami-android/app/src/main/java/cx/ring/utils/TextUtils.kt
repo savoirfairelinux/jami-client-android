@@ -72,6 +72,21 @@ object TextUtils {
         return timeStr.out().toString().uppercase(Locale.getDefault())
     }
 
+    /**
+     * Computes the string to set in the messages.
+     *
+     * @param timestamp The timestamp of the message.
+     * @return The string to display in the field "time" of the message.
+     */
+    fun timestampInMessage(context: Context, formatter: Formatter, timestamp: Long): String {
+        (formatter.out() as? StringBuilder)?.setLength(0)
+        // Example of the format in the message = 11:32 A.M.
+        val timeStr: Formatter = DateUtils.formatDateRange(
+            context, formatter, timestamp, timestamp, DateUtils.FORMAT_SHOW_TIME
+        )
+        return timeStr.out().toString().uppercase(Locale.getDefault())
+    }
+
     fun getReadableFileTransferStatus(context: Context, transferStatus: InteractionStatus): String {
         return when (transferStatus) {
             InteractionStatus.TRANSFER_CREATED -> context.getString(R.string.file_transfer_status_created)
