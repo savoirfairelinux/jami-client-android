@@ -141,6 +141,8 @@ along with this program; if not, write to the Free Software
     <dimen name="file_size">12sp</dimen>
     <dimen name="file_name">16sp</dimen>
     <dimen name="conversation_message_separation">15dp</dimen>
+    <dimen name="reaction_chip_background_radius">5dp</dimen>
+    <dimen name="message_reaction_stroke">2dp</dimen>
 
     <!--Text size-->
     <dimen name="text_size_small">13sp</dimen>

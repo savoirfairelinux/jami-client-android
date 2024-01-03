@@ -15,7 +15,8 @@
     ~ along with this program; if not, write to the Free Software
     ~  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
     -->
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -218,9 +219,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="-6dp"
-            android:background="@drawable/background_item_conv_image"
-            android:backgroundTint="@color/icon_background_color"
-            android:elevation="4dp"
+            android:background="@drawable/background_reaction_chip"
             android:lines="1"
             android:maxLines="1"
             android:outlineProvider="none"
