@@ -24,11 +24,13 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import androidx.annotation.IdRes
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.widget.ImageViewCompat
 import cx.ring.R
 import net.jami.model.ContactViewModel
 import net.jami.model.Interaction
+import net.jami.utils.Log
 
 class MessageStatusView : LinearLayout {
     private val iconSize = resources.getDimensionPixelSize(R.dimen.conversation_status_icon_size)
@@ -98,17 +100,40 @@ class MessageStatusView : LinearLayout {
                 }
             }
         }
-        if (resId != View.NO_ID) {
-            val params = layoutParams as RelativeLayout.LayoutParams? ?: return
-            val fitRight = showStatus || contacts.size < 2
-            if (fitRight) {
-                params.removeRule(RelativeLayout.BELOW)
-                params.addRule(RelativeLayout.ALIGN_BOTTOM, resId)
-            } else {
-                params.removeRule(RelativeLayout.ALIGN_BOTTOM)
-                params.addRule(RelativeLayout.BELOW, resId)
+        when (layoutParams) {
+            is RelativeLayout.LayoutParams -> {
+                val params = layoutParams as RelativeLayout.LayoutParams? ?: return
+                val fitRight = showStatus || contacts.size < 2
+                if (fitRight) {
+                    // Put the avatar on the right of the message if there is only one contact
+                    params.removeRule(RelativeLayout.BELOW)
+                    params.addRule(RelativeLayout.ALIGN_BOTTOM, resId)
+                } else {
+                    // Put the avatars below the message if there are multiple contacts
+                    params.removeRule(RelativeLayout.ALIGN_BOTTOM)
+                    params.addRule(RelativeLayout.BELOW, resId)
+                }
+                layoutParams = params
             }
-            layoutParams = params
+            is ConstraintLayout.LayoutParams -> {
+                val params = layoutParams as ConstraintLayout.LayoutParams? ?: return
+                val fitRight = showStatus || contacts.size < 2
+                if (fitRight) {
+                    // Put the avatar on the right of the message if there is only one contact
+                    params.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID
+                    params.topToBottom = ConstraintLayout.LayoutParams.UNSET
+                } else {
+                    // Put the avatars below the message if there are multiple contacts
+                    params.bottomToBottom = ConstraintLayout.LayoutParams.UNSET
+                    params.topToBottom = resId
+                }
+                layoutParams = params
+            }
+            else -> Log.w(TAG, "Error layout params.")
         }
+    }
+
+    companion object {
+        val TAG = MessageStatusView::class.simpleName!!
     }
 }
