@@ -50,8 +50,6 @@ class Conversation : ConversationHistory {
     private val mRoots: MutableSet<String> = HashSet(2)
     private val mMessages: MutableMap<String, Interaction> = HashMap(16)
     private val mPendingMessages: MutableMap<String, SingleSubject<Interaction>> = HashMap(8)
-    private val mPendingReactions: MutableMap<String, MutableList<Interaction>> = HashMap(8)
-    private val mPendingEdits: MutableMap<String, MutableList<Interaction>> = HashMap(8)
     var lastRead: String? = null
         private set
     var lastNotified: String? = null
@@ -533,54 +531,54 @@ class Conversation : ConversationHistory {
      * @param newMessage  Indicates whether it is a new message.
      */
     @Synchronized
-    fun addSwarmElement(interaction: Interaction, newMessage: Boolean): Boolean {
-        // Handle edit interaction
-        if (interaction.edit != null) {
-            addEdit(interaction, newMessage)
-            val i = Interaction(this, Interaction.InteractionType.INVALID)
-            i.setSwarmInfo(uri.rawRingId, interaction.messageId!!, interaction.parentId)
-            i.conversation = this
-            i.contact = interaction.contact
-            return addSwarmElement(i, newMessage)
-        }
-        // Handle reaction interaction
-        else if (interaction.reactToId != null) {
-            addReaction(interaction, interaction.reactToId!!)
-            val i = Interaction(this, Interaction.InteractionType.INVALID)
-            i.setSwarmInfo(uri.rawRingId, interaction.messageId!!, interaction.parentId)
-            i.conversation = this
-            i.contact = interaction.contact
-            i.reactTo = interaction
-            return addSwarmElement(i, newMessage)
-        }
+    fun addSwarmElement(interaction: Interaction, newMessage: Boolean) { // todo simplify? fix ordering?
+//        // Handle edit interaction
+//        if (interaction.edit != null) {
+//            addEdit(interaction, newMessage)
+//            val i = Interaction(this, Interaction.InteractionType.INVALID)
+//            i.setSwarmInfo(uri.rawRingId, interaction.messageId!!, interaction.parentId)
+//            i.conversation = this
+//            i.contact = interaction.contact
+//            return addSwarmElement(i, newMessage)
+//        }
+//        // Handle reaction interaction
+//        else if (interaction.reactToId != null) {
+//            addReaction(interaction, interaction.reactToId!!)
+//            val i = Interaction(this, Interaction.InteractionType.INVALID)
+//            i.setSwarmInfo(uri.rawRingId, interaction.messageId!!, interaction.parentId)
+//            i.conversation = this
+//            i.contact = interaction.contact
+//            i.reactTo = interaction
+//            return addSwarmElement(i, newMessage)
+//        }
         // Handle call interaction
-        else if (interaction is Call && interaction.confId != null) {
-            // interaction.duration is changed when the call is ended.
-            // It means duration=0 when the call is started and duration>0 when the call is ended.
-            if (interaction.duration != 0L) {
-                val startedCall = conferenceStarted.remove(interaction.confId)
-                if (startedCall != null) {
-                    startedCall.setEnded(interaction)
-                    updateInteraction(startedCall)
-                }
-                else conferenceEnded[interaction.confId!!] = interaction
-
-                val invalidInteraction = // Replacement element
-                    Interaction(this, Interaction.InteractionType.INVALID).apply {
-                        setSwarmInfo(uri.rawRingId, interaction.messageId!!, interaction.parentId)
-                        conversation = this@Conversation
-                        contact = interaction.contact
-                    }
-                return addSwarmElement(invalidInteraction, newMessage)
-            } else { // Call started but not ended
-                val endedCall = conferenceEnded.remove(interaction.confId)
-                if (endedCall != null) {
-                    interaction.setEnded(endedCall)
-                    updateInteraction(endedCall)
-                }
-                else conferenceStarted[interaction.confId!!] = interaction
-            }
-        }
+//        if (interaction is Call && interaction.confId != null) {
+//            // interaction.duration is changed when the call is ended.
+//            // It means duration=0 when the call is started and duration>0 when the call is ended.
+//            if (interaction.duration != 0L) {
+//                val startedCall = conferenceStarted.remove(interaction.confId)
+//                if (startedCall != null) {
+//                    startedCall.setEnded(interaction)
+//                    updateInteraction(startedCall)
+//                }
+//                else conferenceEnded[interaction.confId!!] = interaction
+//
+//                val invalidInteraction = // Replacement element
+//                    Interaction(this, Interaction.InteractionType.INVALID).apply {
+//                        setSwarmInfo(uri.rawRingId, interaction.messageId!!, interaction.parentId)
+//                        conversation = this@Conversation
+//                        contact = interaction.contact
+//                    }
+//                addSwarmElement(invalidInteraction, newMessage)
+//            } else { // Call started but not ended
+//                val endedCall = conferenceEnded.remove(interaction.confId)
+//                if (endedCall != null) {
+//                    interaction.setEnded(endedCall)
+//                    updateInteraction(endedCall)
+//                }
+//                else conferenceStarted[interaction.confId!!] = interaction
+//            }
+//        }
         val id = interaction.messageId!!
         val previous = mMessages.put(id, interaction)
         val action = if (previous == null) ElementStatus.ADD else ElementStatus.UPDATE
@@ -590,8 +588,6 @@ class Conversation : ConversationHistory {
             interaction.updateFrom(previous)
         }
         mRoots.remove(id)
-        mPendingReactions.remove(id)?.let { reactions -> interaction.addReactions(reactions) }
-        mPendingEdits.remove(id)?.let { edits -> interaction.addEdits(edits) }
         if (interaction.parentId != null && !mMessages.containsKey(interaction.parentId)) {
             mRoots.add(interaction.parentId!!)
             // Log.w(TAG, "@@@ Found new root for " + getUri() + " " + parent + " -> " + mRoots);
@@ -649,7 +645,6 @@ class Conversation : ConversationHistory {
             Log.e(TAG, "Can't attach interaction $id with parent ${interaction.parentId}")
         }
         mPendingMessages.remove(id)?.onSuccess(interaction)
-        return newLeaf
     }
 
     fun isLoaded(): Boolean {
@@ -721,22 +716,12 @@ class Conversation : ConversationHistory {
         }
     }
 
-    private fun addEdit(interaction: Interaction, newMessage: Boolean) {
+    fun addEdit(interaction: Interaction, newMessage: Boolean) {
         Log.w(TAG, "addEdit $interaction ${interaction.type} ${(interaction as? TextMessage)?.body}")
         val msg = getMessage(interaction.edit!!).let {
             it?.reactTo ?: it
         }
-
-        if (msg != null)
-            msg.addEdit(interaction, newMessage)
-        else
-            mPendingEdits.computeIfAbsent(interaction.edit!!) { ArrayList() }.let {
-                it.remove(interaction)
-                if (newMessage)
-                    it.add(interaction)
-                else
-                    it.add(0, interaction)
-            }
+        msg?.addEdit(interaction, newMessage)
     }
 
     /**
@@ -744,15 +729,14 @@ class Conversation : ConversationHistory {
      * @param reactionInteraction Reaction to add
      * @param reactTo Interaction we are reacting to
      */
-    private fun addReaction(reactionInteraction: Interaction, reactTo: String) {
-        // Connect interaction edit when pending
-        mPendingEdits.remove(reactionInteraction.messageId)
-            ?.let { edits -> reactionInteraction.addEdits(edits) }
+    fun addReaction(reactionInteraction: Interaction, reactTo: String) {
         val reactedInteraction = getMessage(reactTo)
-        if (reactedInteraction != null) {
-            reactedInteraction.addReaction(reactionInteraction)
-        } else
-            mPendingReactions.computeIfAbsent(reactTo) { ArrayList() }.add(reactionInteraction)
+        reactedInteraction?.addReaction(reactionInteraction)
+    }
+
+    fun removeReaction(reactTo: String, id: String) {
+        val interaction = getMessage(reactTo)
+        interaction?.removeReaction(id)
     }
 
     data class ActiveCall(val confId: String, val uri: String, val device: String) {
