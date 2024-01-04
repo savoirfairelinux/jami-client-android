@@ -105,18 +105,11 @@ class ConversationAdapter(
     private var convColorTint = 0
     private val formatter = Formatter(StringBuilder(64), Locale.getDefault())
 
-    private val emojiMessagePadding = Padding(0, 0, 0, 0)
     private val callPadding = Padding(
         res.getDimensionPixelSize(R.dimen.text_message_padding),
         res.getDimensionPixelSize(R.dimen.padding_call_vertical),
         res.getDimensionPixelSize(R.dimen.text_message_padding),
         res.getDimensionPixelSize(R.dimen.padding_call_vertical)
-    )
-    private val textMessagePadding = Padding(
-        res.getDimensionPixelSize(R.dimen.text_message_padding),
-        res.getDimensionPixelSize(R.dimen.text_message_padding),
-        res.getDimensionPixelSize(R.dimen.text_message_padding),
-        res.getDimensionPixelSize(R.dimen.text_message_padding)
     )
 
     private var lastDeliveredPosition = -1
@@ -1221,7 +1214,7 @@ class ConversationAdapter(
             )
         } else {
             layoutParams.setMargins(
-                res.getDimensionPixelSize(R.dimen.margin_without_avatar), 0,
+                res.getDimensionPixelSize(R.dimen.base_left_conversation_margin), 0,
                 0, 0
             )
         }
@@ -1281,7 +1274,7 @@ class ConversationAdapter(
         isGroup: Boolean, isIncoming: Boolean
     ) {
         if (isGroup && isIncoming) {
-            context.resources.getDimensionPixelSize(R.dimen.margin_no_group).let {
+            context.resources.getDimensionPixelSize(R.dimen.conditional_left_conversation_margin).let {
                 (messageBubbleBorder.layoutParams as MarginLayoutParams)
                     .apply { leftMargin = it }
                 replyBubble?.let { replyBubble ->
@@ -1290,7 +1283,7 @@ class ConversationAdapter(
                 }
             }
         } else {
-            context.resources.getDimensionPixelSize(R.dimen.margin_without_avatar).let {
+            context.resources.getDimensionPixelSize(R.dimen.base_left_conversation_margin).let {
                 (messageBubbleBorder.layoutParams as MarginLayoutParams)
                     .apply { leftMargin = it }
                 replyBubble?.let { replyBubble ->
