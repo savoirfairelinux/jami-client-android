@@ -54,7 +54,7 @@ along with this program; if not, write to the Free Software
             android:layout_width="@dimen/conversation_avatar_size"
             android:layout_height="@dimen/conversation_avatar_size"
             android:layout_gravity="start|bottom"
-            android:layout_marginEnd="@dimen/margin_end_avatar_conversation"
+            android:layout_marginEnd="@dimen/conditional_left_conversation_margin"
             android:contentDescription="@null"
             tools:srcCompat="@color/blue_200" />
 

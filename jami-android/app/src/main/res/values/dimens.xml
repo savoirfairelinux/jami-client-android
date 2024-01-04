@@ -25,9 +25,6 @@ along with this program; if not, write to the Free Software
     <dimen name="list_medium_icon_size">40dp</dimen>
     <dimen name="list_small_icon_size">32dp</dimen>
 
-    <dimen name="conversation_message_padding_top">7dp</dimen>
-    <dimen name="conversation_message_padding_bottom">7dp</dimen>
-
     <dimen name="conversation_message_input_radius">24dp</dimen>
     <dimen name="conversation_message_input_margin">16dp</dimen>
     <dimen name="conversation_avatar_size">24dp</dimen>
@@ -133,10 +130,9 @@ along with this program; if not, write to the Free Software
     <dimen name="message_display_name_textsize">12sp</dimen>
     <dimen name="conversation_me_margin_end">24dp</dimen>
     <dimen name="button_size">48dp</dimen>
-    <dimen name="margin_end_avatar_conversation">12dp</dimen>
     <dimen name="margin_with_avatar">52dp</dimen>
-    <dimen name="margin_no_group">12dp</dimen>
-    <dimen name="margin_without_avatar">16dp</dimen>
+    <dimen name="base_left_conversation_margin">16dp</dimen>
+    <dimen name="conditional_left_conversation_margin">12dp</dimen>
     <dimen name="file_background_radius">5dp</dimen>
     <dimen name="file_background_padding">10dp</dimen>
     <dimen name="file_size">12sp</dimen>
