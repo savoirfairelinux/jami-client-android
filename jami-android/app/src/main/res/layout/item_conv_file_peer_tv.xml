@@ -57,7 +57,7 @@
             android:id="@+id/photo"
             android:layout_width="@dimen/conversation_avatar_size"
             android:layout_height="@dimen/conversation_avatar_size"
-            android:layout_marginEnd="@dimen/margin_end_avatar_conversation"
+            android:layout_marginEnd="@dimen/conditional_left_conversation_margin"
             android:background="@null"
             android:contentDescription="@null"
             android:scaleType="centerCrop"
