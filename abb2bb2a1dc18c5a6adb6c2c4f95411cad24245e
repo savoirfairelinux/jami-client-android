@@ -24,6 +24,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5820364d_12329f87",
+        "filename": "jami-android/app/src/main/res/drawable/background_unread_counter.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-01-04T21:23:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "243de189_d3d90d97",
+      "range": {
+        "startLine": 5,
+        "startChar": 31,
+        "endLine": 5,
+        "endChar": 58
+      },
+      "revId": "abb2bb2a1dc18c5a6adb6c2c4f95411cad24245e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d1e470d7_67d003a4",
@@ -47,6 +71,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "87b97089_5d94e123",
+        "filename": "jami-android/app/src/main/res/layout/item_toolbar_spinner.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-01-04T21:23:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1e470d7_67d003a4",
+      "range": {
+        "startLine": 2,
+        "startChar": 51,
+        "endLine": 2,
+        "endChar": 109
+      },
+      "revId": "abb2bb2a1dc18c5a6adb6c2c4f95411cad24245e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c5133c2d_98798f07",
@@ -60,6 +108,30 @@
       "writtenOn": "2024-01-04T19:49:57Z",
       "side": 1,
       "message": "better to put @color/colorSecondary because the material theme can change and we will be directly impacted",
+      "range": {
+        "startLine": 57,
+        "startChar": 32,
+        "endLine": 57,
+        "endChar": 52
+      },
+      "revId": "abb2bb2a1dc18c5a6adb6c2c4f95411cad24245e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fbf87649_a9ea2a3a",
+        "filename": "jami-android/app/src/main/res/layout/item_toolbar_spinner.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-01-04T21:23:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5133c2d_98798f07",
       "range": {
         "startLine": 57,
         "startChar": 32,
