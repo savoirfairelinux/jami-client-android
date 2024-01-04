@@ -243,10 +243,6 @@ class ConversationPresenter @Inject constructor(
     fun scrollToMessage(messageId: String) {
         if(mConversation!!.getMessage(messageId) != null) {
             view?.scrollToMessage(messageId)
-        } else {
-            mConversationDisposable?.add(accountService.loadUntil(mConversation!!, until = messageId)
-                .observeOn(uiScheduler)
-                .subscribe { _ -> this.view?.scrollToMessage(messageId)})
         }
     }
 

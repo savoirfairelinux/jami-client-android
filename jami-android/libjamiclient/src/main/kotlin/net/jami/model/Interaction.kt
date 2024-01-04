@@ -198,6 +198,11 @@ open class Interaction {
         reactionSubject.onNext(ArrayList(reactions))
     }
 
+    fun removeReaction(id: String) {
+        reactions.removeAll { it.messageId == id }
+        reactionSubject.onNext(ArrayList(reactions))
+    }
+
     fun addEdit(interaction: Interaction, newMessage: Boolean) {
         history.remove(interaction)
         if (newMessage)
