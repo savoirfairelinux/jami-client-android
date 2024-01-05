@@ -669,11 +669,10 @@ class CallPresenter @Inject constructor(
         mHardwareService.startMediaHandler(mediaHandlerId)
         val conference = mConference ?: return
         val media = conference.getMediaList() ?: return
-        val source = media.first {
-            it.mediaType == Media.MediaType.MEDIA_TYPE_VIDEO &&
-            it.source != "camera://desktop"
-        }.source ?: return
-        mHardwareService.switchInput(
+        val source = media.firstOrNull {
+            it.mediaType == Media.MediaType.MEDIA_TYPE_VIDEO && it.source != "camera://desktop"
+        }?.source ?: return
+        mHardwareService.switchInput( // Plugins doesn't support hardware acceleration.
             conference.accountId,
             conference.id,
             source
@@ -684,10 +683,10 @@ class CallPresenter @Inject constructor(
         mHardwareService.stopMediaHandler()
         val conference = mConference ?: return
         val media = conference.getMediaList() ?: return
-        val source = media.first {
+        val source = media.firstOrNull {
             it.mediaType == Media.MediaType.MEDIA_TYPE_VIDEO &&
                     it.source != "camera://desktop"
-        }.source ?: return
+        }?.source ?: return
         mHardwareService.switchInput(
             conference.accountId,
             conference.id,
