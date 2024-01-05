@@ -54,6 +54,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/file_layout"
+        android:layout_marginStart="@dimen/margin_between_leftBorder_and_conversation"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_between_leftBorder_and_conversation"
