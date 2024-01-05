@@ -480,18 +480,13 @@ class ConversationAdapter(
                         conversationViewHolder.mReplyTxt!!.text = i.first.body
                         conversationViewHolder.mReplyName!!.text = i.second.displayName
 
-                        // Apply correct color depending if message is incoming or not.
-                        conversationViewHolder.mReplyTxt?.background?.setTint(
-                            if (i.first.isIncoming)
-                                context.getColor(
-                                    R.color.conversation_secondary_background
-                                )
-                            else convColor
-                        )
-
+                        // Apply the correct color depending if message is incoming or not.
                         val textColor:Int
                         if (i.first.isIncoming){
                             textColor = context.getColor(R.color.colorOnSurface)
+                            replyBubble.background.setTint(
+                                context.getColor(R.color.conversation_secondary_background)
+                            )
                         }
                         else {
                             textColor = context.getColor(R.color.text_color_primary_dark)
