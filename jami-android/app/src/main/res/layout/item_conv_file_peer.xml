@@ -25,8 +25,6 @@
     android:clickable="true"
     android:descendantFocusability="blocksDescendants"
     android:focusable="true"
-    android:paddingStart="@dimen/padding_large"
-    android:paddingEnd="0dp"
     android:paddingBottom="@dimen/padding_xsmall">
 
     <FrameLayout
@@ -56,6 +54,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/file_layout"
+        android:paddingStart="@dimen/padding_large"
+        android:paddingEnd="0dp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
