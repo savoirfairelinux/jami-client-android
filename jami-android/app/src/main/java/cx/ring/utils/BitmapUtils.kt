@@ -26,6 +26,7 @@ import android.util.Base64
 import android.util.Log
 import ezvcard.parameter.ImageType
 import ezvcard.property.Photo
+import net.jami.utils.QRCodeUtils
 import java.io.ByteArrayOutputStream
 import java.nio.ByteBuffer
 
@@ -122,6 +123,11 @@ object BitmapUtils {
         drawable.draw(canvas)
         return bitmap
     }
+
+    fun qrToBitmap(qrCodeData: QRCodeUtils.QRCodeData) =
+        Bitmap.createBitmap(qrCodeData.width, qrCodeData.height, Bitmap.Config.ARGB_8888).apply {
+            setPixels(qrCodeData.data, 0, qrCodeData.width, 0, 0, qrCodeData.width, qrCodeData.height)
+        }
 
     fun calculateInSampleSize(options: BitmapFactory.Options, reqWidth: Int, reqHeight: Int): Int {
         // Raw height and width of image
