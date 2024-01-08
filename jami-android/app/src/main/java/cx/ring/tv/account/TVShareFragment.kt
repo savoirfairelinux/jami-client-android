@@ -57,15 +57,12 @@ class TVShareFragment : BaseSupportFragment<SharePresenter, GenericView<ShareVie
 
     override fun showViewModel(viewModel: ShareViewModel) {
         binding?.let { binding ->
-            val qrCodeData = viewModel.getAccountQRCodeData(0x00000000, -0x1)
             getUserAvatar(viewModel.account)
-            if (qrCodeData == null) {
+            val qrCodeData = viewModel.accountShareUri
+            if (qrCodeData.isNullOrEmpty()) {
                 binding.qrImage.visibility = View.INVISIBLE
             } else {
-                val pad = 56
-                val bitmap = Bitmap.createBitmap(qrCodeData.width + 2 * pad, qrCodeData.height + 2 * pad, Bitmap.Config.ARGB_8888)
-                bitmap.setPixels(qrCodeData.data, 0, qrCodeData.width, pad, pad, qrCodeData.width, qrCodeData.height)
-                binding.qrImage.setImageBitmap(bitmap)
+                binding.qrImage.text = qrCodeData
                 binding.shareQrInstruction.setText(R.string.share_message)
                 binding.qrImage.visibility = View.VISIBLE
             }
