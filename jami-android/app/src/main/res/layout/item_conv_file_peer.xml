@@ -54,7 +54,6 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/file_layout"
-        android:layout_marginStart="@dimen/margin_between_leftBorder_and_conversation"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_between_leftBorder_and_conversation"
@@ -163,7 +162,8 @@
                 android:indeterminate="false"
                 android:visibility="gone"
                 app:layout_constraintBottom_toTopOf="@id/file_size"
-                app:layout_constraintEnd_toEndOf="@id/file_time"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
                 app:layout_constraintStart_toStartOf="@id/file_title"
                 app:layout_constraintTop_toBottomOf="@id/file_title"
                 tools:max="100"
