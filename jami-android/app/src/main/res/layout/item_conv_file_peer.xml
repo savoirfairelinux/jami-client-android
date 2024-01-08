@@ -90,7 +90,6 @@
             android:layout_height="wrap_content"
             android:animateLayoutChanges="true"
             android:background="@drawable/filemsg_background_in"
-            android:minWidth="160dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/photo_layout"
             app:layout_constraintTop_toTopOf="parent">
@@ -122,7 +121,6 @@
                 android:layout_marginStart="10dp"
                 android:ellipsize="middle"
                 android:maxWidth="200dp"
-                android:minWidth="160dp"
                 android:scrollHorizontally="true"
                 android:singleLine="true"
                 android:textAppearance="@android:style/TextAppearance.Medium"
@@ -130,19 +128,20 @@
                 android:textSize="@dimen/file_name"
                 app:layout_constraintStart_toEndOf="@id/file_icon_layout"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="Title_doc.pdf" />
+                tools:text="Title_document.pdf" />
 
             <androidx.core.widget.ContentLoadingProgressBar
                 android:id="@+id/file_download_progress"
                 style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:indeterminate="false"
-                android:minWidth="160dp"
                 android:visibility="gone"
                 app:layout_constraintBottom_toTopOf="@id/file_size"
                 app:layout_constraintStart_toStartOf="@id/file_title"
                 app:layout_constraintTop_toBottomOf="@id/file_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
                 tools:max="100"
                 tools:progress="40"
                 tools:visibility="visible" />
@@ -156,6 +155,8 @@
                 android:textColor="@color/colorOnSurface"
                 android:textSize="@dimen/file_size"
                 app:layout_constraintStart_toStartOf="@id/file_title"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintEnd_toEndOf="@id/file_time"
                 app:layout_constraintTop_toBottomOf="@id/file_download_progress"
                 tools:text="1.2 MB" />
 
@@ -166,7 +167,9 @@
                 android:textColor="@color/file_time_text_in"
                 android:textSize="@dimen/conversation_timestamp_textsize"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@id/file_title"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1"
                 app:layout_constraintTop_toBottomOf="@id/file_size"
                 tools:text="11:36am" />
 
