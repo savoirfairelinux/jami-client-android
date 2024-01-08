@@ -1309,7 +1309,7 @@ class ConversationAdapter(
                 val msgSequenceType = getMsgSequencing(position, isTimeShown)
                 val message = textMessage.body?.trim() ?: ""
                 val messageTime = TextUtils
-                    .timestampToDetailString(context, formatter, textMessage.timestamp)
+                    .timestampInMessage(context, formatter, textMessage.timestamp)
 
                 messageBubble.background?.setTintList(null)
 
