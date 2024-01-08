@@ -163,7 +163,7 @@
                 android:id="@+id/file_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/file_time_text"
+                android:textColor="@color/file_time_text_in"
                 android:textSize="@dimen/conversation_timestamp_textsize"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
