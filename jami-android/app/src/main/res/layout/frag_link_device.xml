@@ -41,7 +41,7 @@
             android:background="@drawable/background_qrcode"
             android:padding="6dp">
 
-            <ImageView
+            <cx.ring.views.QrView
                 android:id="@+id/qr_image"
                 android:layout_width="150dp"
                 android:layout_height="150dp"

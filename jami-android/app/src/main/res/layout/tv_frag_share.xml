@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
+    <cx.ring.views.QrView
         android:id="@+id/qr_image"
         android:layout_width="300dp"
         android:layout_height="300dp"
@@ -14,13 +14,11 @@
         android:layout_marginBottom="181dp"
         android:gravity="center"
         android:padding="@dimen/padding_small"
-        android:scaleType="fitCenter"
+        tools:text="Hey this is my code"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/share_qr_instruction"
-        tools:layout_conversion_wrapHeight="1050"
-        tools:layout_conversion_wrapWidth="1050" />
+        app:layout_constraintTop_toBottomOf="@+id/share_qr_instruction" />
 
     <TextView
         android:id="@+id/share_qr_instruction"
@@ -38,8 +36,6 @@
         app:layout_constraintBottom_toTopOf="@+id/qr_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_conversion_wrapHeight="215"
-        tools:layout_conversion_wrapWidth="1440" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
