@@ -1076,7 +1076,7 @@ class ConversationAdapter(
      */
     private fun configureForTextMessage(convViewHolder: ConversationViewHolder, interaction: Interaction, position: Int) {
         val context = convViewHolder.itemView.context
-        convViewHolder.compositeDisposable.add(interaction.lastElement
+        convViewHolder.compositeDisposable.add(interaction.firstElement
             .observeOn(DeviceUtils.uiScheduler)
             .subscribe { lastElement ->
                 val textMessage = lastElement as TextMessage
@@ -1369,7 +1369,7 @@ class ConversationAdapter(
             }
         }
         convViewHolder.compositeDisposable.add(
-            interaction.lastElement
+            interaction.lastElement // todo first?
                 .observeOn(DeviceUtils.uiScheduler)
                 .subscribe { lastElement ->
                     val textMessage = lastElement as Call
