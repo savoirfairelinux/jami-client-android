@@ -22,6 +22,7 @@
   <string name="developed_by">Programuar nga</string>
   <string name="designed_by">Skicuar nga</string>
   <string name="ringtones_by">Zile nga</string>
+  <string name="credits_volunteers">Dhe vullnetarët që kontribuojnë në këtë projekt!</string>
   <!--RingActivity-->
   <string name="error_no_network">Pa lidhje në rrjet</string>
   <string name="error_account_offline">Llogaria s’është në linjë</string>
@@ -139,6 +140,7 @@
   <string name="conversation_send_video">Regjistroni copës video</string>
   <string name="conversation_share_location">Ndani vendndodhje</string>
   <string name="ongoing_group_call">Thirrje Në Ecuri E Sipër</string>
+  <string name="started_call">Nisi një thirrje</string>
   <string name="in_reply_to">Në përgjigje të</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Leje për kamerën</string>
