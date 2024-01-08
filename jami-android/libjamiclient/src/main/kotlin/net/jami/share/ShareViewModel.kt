@@ -21,7 +21,7 @@ import net.jami.utils.QRCodeUtils.QRCodeData
 import net.jami.utils.QRCodeUtils
 
 class ShareViewModel(val account: Account) {
-    private val accountShareUri: String? = account.uri
+    val accountShareUri: String? = account.uri
     val accountDisplayUri: String? = account.displayUri
 
     fun getAccountQRCodeData(foregroundColor: Int, backgroundColor: Int): QRCodeData? {

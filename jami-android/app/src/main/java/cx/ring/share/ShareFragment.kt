@@ -64,17 +64,15 @@ class ShareFragment : BaseSupportFragment<SharePresenter, GenericView<ShareViewM
 
     override fun showViewModel(viewModel: ShareViewModel) {
         if (binding == null) return
-        val qrCodeData = viewModel.getAccountQRCodeData(
-            requireContext().getColor(R.color.color_primary_dark),
-            requireContext().getColor(R.color.transparent)
-        )
-        if (qrCodeData == null) {
+        val qrCodeData = viewModel.accountShareUri
+        if (qrCodeData.isNullOrEmpty()) {
             binding!!.qrImage.visibility = View.INVISIBLE
             binding!!.shareInstruction.setText(R.string.share_message_no_account)
         } else {
-            val bitmap = Bitmap.createBitmap(qrCodeData.width, qrCodeData.height, Bitmap.Config.ARGB_8888)
+            /*val bitmap = Bitmap.createBitmap(qrCodeData.width, qrCodeData.height, Bitmap.Config.ARGB_8888)
             bitmap.setPixels(qrCodeData.data, 0, qrCodeData.width, 0, 0, qrCodeData.width, qrCodeData.height)
-            binding!!.qrImage.setImageBitmap(bitmap)
+            binding!!.qrImage.setImageBitmap(bitmap)*/
+            binding!!.qrImage.text = qrCodeData
             binding!!.shareInstruction.setText(R.string.share_message)
             binding!!.qrImage.visibility = View.VISIBLE
         }

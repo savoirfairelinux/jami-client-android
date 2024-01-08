@@ -49,16 +49,15 @@ along with this program; if not, write to the Free Software
         app:layout_constraintStart_toEndOf="@+id/qr_image"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
+    <cx.ring.views.QrView
         android:id="@+id/qr_image"
         android:layout_width="@dimen/qr_code_size"
         android:layout_height="@dimen/qr_code_size"
         android:layout_marginStart="48dp"
-        android:background="@null"
         android:gravity="center"
         android:padding="@dimen/padding_small"
-        android:scaleType="fitCenter"
         android:transitionName="photo"
+        tools:text="Hey this is my code"
         android:contentDescription="@string/share_message"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

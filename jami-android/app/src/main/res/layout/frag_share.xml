@@ -6,15 +6,12 @@
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
-    <ImageView
+    <cx.ring.views.QrView
         android:id="@+id/qr_image"
-        android:layout_width="@dimen/qr_code_size"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/qr_code_size"
         android:layout_marginTop="16dp"
-        android:background="@color/design_default_color_background"
-        android:padding="@dimen/padding_small"
-        android:scaleType="fitCenter"
-        tools:src="@drawable/baseline_qr_code_2_black_24dp"
+        tools:text="A cool and long test URI to scan!"
         tools:tint="@color/color_primary_dark" />
 
     <TextView
