@@ -5,6 +5,12 @@
         <attr name="bounded_height" format="dimension" />
     </declare-styleable>
 
+    <declare-styleable name="QrView">
+        <attr name="foregroundColor" format="color" />
+        <attr name="backgroundColor" format="color" />
+        <attr name="text" format="string" />
+    </declare-styleable>
+
     <declare-styleable name="SwitchButton">
         <attr name="backColor" format="color|reference"/>
         <attr name="status" format="string"/>
