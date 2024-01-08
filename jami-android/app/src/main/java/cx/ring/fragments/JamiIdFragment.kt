@@ -21,6 +21,7 @@ import android.text.Editable
 import android.text.InputFilter
 import android.text.TextWatcher
 import android.text.method.KeyListener
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -143,16 +144,12 @@ class JamiIdFragment : Fragment() {
     private fun setEditTextUsername(username: String) {
         // Adapt the size to the length of the jamiId
         // If the jamiId is too long (more than 16 characters), use a smaller font size
-        binding.jamiIdEditText.textSize =
-            if (username.length > 16) {
-                requireContext().resources.getDimensionPixelSize(
-                    R.dimen.jami_id_small_font_size
-                ).toFloat()
-            } else {
-                requireContext().resources.getDimensionPixelSize(
-                    R.dimen.jami_id_regular_font_size
-                ).toFloat()
-            }
+        val jamiIdEditTextSize =
+            if (username.length > 16)
+                requireContext().resources.getDimension(R.dimen.jami_id_small_font_size)
+            else
+                requireContext().resources.getDimension(R.dimen.jami_id_regular_font_size)
+        binding.jamiIdEditText.setTextSize(TypedValue.COMPLEX_UNIT_PX, jamiIdEditTextSize)
 
         // Set the jamiId
         if (binding.jamiIdEditText.text.toString() != username) {
