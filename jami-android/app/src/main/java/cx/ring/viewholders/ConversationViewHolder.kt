@@ -76,9 +76,10 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
         else -> null
     }
     val mTypingIndicatorLayout: FrameLayout? = v.findViewById(R.id.typing_indicator_layout)
-    var mPeerDisplayName: TextView? = when (type){
+    var mPeerDisplayName: TextView? = when (type) {
         MessageType.INCOMING_CALL_INFORMATION,
         MessageType.ONGOING_GROUP_CALL -> v.findViewById(R.id.msg_display_name)
+        MessageType.INCOMING_FILE,
         MessageType.INCOMING_TEXT_MESSAGE -> v.findViewById(R.id.peer_name)
         else -> null
     }

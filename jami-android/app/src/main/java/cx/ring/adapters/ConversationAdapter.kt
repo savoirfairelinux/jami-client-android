@@ -1095,18 +1095,32 @@ class ConversationAdapter(
         } else {
             viewHolder.mMsgDetailTxtPerm?.visibility = View.GONE
         }
-        val contact = interaction.contact
+        val contact = interaction.contact ?: return
+        Log.w(TAG, "Configure for file info ici0")
         if (interaction.isIncoming && presenter.isGroup()) {
             viewHolder.mAvatar?.let { avatar ->
                 avatar.setImageBitmap(null)
                 avatar.visibility = View.VISIBLE
-                if (contact != null)
-                    avatar.setImageDrawable(
-                        conversationFragment.getConversationAvatar(contact.primaryNumber)
+                avatar.setImageDrawable(
+                    conversationFragment.getConversationAvatar(contact.primaryNumber)
+                )
+            }
+            val account = interaction.account?: return
+            // Show the name of the contact.
+            Log.w(TAG, "Configure for file info ici1")
+            viewHolder.mPeerDisplayName?.apply {
+                    visibility = View.VISIBLE
+                    viewHolder.compositeDisposable.add(
+                        presenter.contactService
+                            .observeContact(account, contact, false)
+                            .observeOn(DeviceUtils.uiScheduler)
+                            .subscribe { text = it.displayName }
                     )
+                Log.w(TAG, "Configure for file info ici 2:  $text")
             }
         } else {
             viewHolder.mAvatar?.visibility = View.GONE
+            viewHolder.mPeerDisplayName?.visibility = View.GONE
         }
         val type = viewHolder.type.transferType
         val longPressView = when (type) {
