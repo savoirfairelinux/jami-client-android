@@ -79,25 +79,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/imgLayout"
-            android:layout_alignStart="@+id/imgLayout"
-            android:layout_marginStart="@dimen/message_details_margin"
+            android:layout_alignEnd="@+id/imgLayout"
+            android:layout_marginEnd="@dimen/message_details_margin"
             android:textColor="@color/textColorSecondary"
             android:textSize="@dimen/conversation_timestamp_textsize"
             tools:text="@string/time_just_now" />
 
-        <com.google.android.material.chip.Chip
+        <TextView
             android:id="@+id/reaction_chip"
             style="@style/Widget.Material3.Chip.Suggestion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/imgLayout"
-            android:layout_alignEnd="@id/imgLayout"
-            android:layout_marginTop="-16dp"
-            android:layout_marginEnd="16dp"
-            android:checkable="false"
-            android:clickable="false"
-            android:focusable="false"
-            android:text="👍😍 3" />
+            android:layout_alignStart="@id/imgLayout"
+            android:layout_marginTop="-6dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/background_reaction_chip"
+            android:lines="1"
+            android:maxLines="1"
+            android:outlineProvider="none"
+            android:padding="5dp"
+            android:singleLine="true"
+            tools:text="👍 😍 3" />
 
     </RelativeLayout>
 </LinearLayout>
