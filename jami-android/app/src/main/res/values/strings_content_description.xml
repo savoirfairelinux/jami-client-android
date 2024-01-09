@@ -7,4 +7,7 @@
     <string name="contact_unblock">Unblock</string>
     <string name="video_plugins">Video Plugins</string>
     <string name="file_download_button">Download</string>
+    <string name="control_play">Play</string>
+    <string name="control_replay">Replay</string>
+    <string name="control_pause">Pause</string>
 </resources>
