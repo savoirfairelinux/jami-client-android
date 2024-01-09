@@ -34,8 +34,8 @@ class LinkDevicePresenter @Inject constructor(
     fun startAccountExport(password: String) {
         val v = view ?: return
         v.showExportingProgress()
-        mCompositeDisposable.add(accountService
-            .exportOnRing(mAccountID!!, password)
+        /*mCompositeDisposable.add(accountService
+            .exportToPeer(mAccountID!!, password)
             .observeOn(uiScheduler)
             .subscribe({ pin: String -> view?.showPIN(pin) })
             { error: Throwable ->
@@ -45,7 +45,7 @@ class LinkDevicePresenter @Inject constructor(
                     is SocketException -> view?.showNetworkError()
                     else -> view?.showGenericError()
                 }
-            })
+            })*/
     }
 
     fun setAccountId(accountID: String) {
@@ -57,6 +57,23 @@ class LinkDevicePresenter @Inject constructor(
         mCompositeDisposable.add(accountService.getObservableAccountUpdates(accountID)
             .observeOn(uiScheduler)
             .subscribe { a: Account -> view?.accountChanged(a) })
+    }
+
+    fun onQRCodeScanned(result: String) {
+        val v = view ?: return
+        v.showExportingProgress()
+        mCompositeDisposable.add(accountService.exportToPeer(mAccountID!!, result)
+            .observeOn(uiScheduler)
+            .subscribe({
+                v.dismissExportingProgress()
+            }) { error: Throwable ->
+                v.dismissExportingProgress()
+                when (error) {
+                    is IllegalArgumentException -> "" //v.showInvalidQRCodeError()
+                    is SocketException -> v.showNetworkError()
+                    else -> v.showGenericError()
+                }
+            })
     }
 
     companion object {
