@@ -79,8 +79,16 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
     var mPeerDisplayName: TextView? = when (type){
         MessageType.INCOMING_CALL_INFORMATION,
         MessageType.ONGOING_GROUP_CALL -> v.findViewById(R.id.msg_display_name)
+        MessageType.INCOMING_AUDIO,
         MessageType.INCOMING_FILE,
         MessageType.INCOMING_TEXT_MESSAGE -> v.findViewById(R.id.peer_name)
+        else -> null
+    }
+    var mFileTime: TextView? = when (type) {
+        MessageType.OUTGOING_AUDIO,
+        MessageType.INCOMING_AUDIO,
+        MessageType.INCOMING_FILE,
+        MessageType.OUTGOING_FILE -> v.findViewById(R.id.file_time)
         else -> null
     }
     var mMessageBubble: ConstraintLayout? = null
@@ -126,7 +134,6 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
     var mCallAcceptLayout: LinearLayout? = null
     var mFileInfoLayout: ConstraintLayout? = null
     var mFileSize: TextView? = null
-    var mFileTime: TextView? = null
     var mFileTitle: TextView? = null
     var mFileDownloadButton: ImageButton? = null
     var mAudioInfoLayout: LinearLayout? = null
@@ -202,7 +209,6 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
             MessageType.OUTGOING_FILE -> {
                 mFileTitle = v.findViewById(R.id.file_title)
                 mFileSize = v.findViewById(R.id.file_size)
-                mFileTime = v.findViewById(R.id.file_time)
                 mLayout = v.findViewById(R.id.file_layout)
                 mFileInfoLayout = v.findViewById(R.id.fileInfoLayout)
                 progress = v.findViewById(R.id.file_download_progress)
