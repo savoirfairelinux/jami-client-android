@@ -2,23 +2,40 @@
 # Build Jami daemon and client APK for Android
 # Flags:
 
+  # --test: build in test mode
   # --release: build in release mode
   # --daemon: Only build the daemon for the selected archs
 
+TEST=1
 RELEASE=0
 DAEMON_ONLY=0
-for i in ${@}; do
-    case "$i" in
-        release|--release)
-        RELEASE=1
-        ;;
-        daemon|--daemon)
-        DAEMON_ONLY=1
-        ;;
-        *)
-        ;;
-    esac
-done
+#for i in ${@}; do
+#    case "$i" in
+#        test|--test)
+#        TEST=1
+#        ;;
+#        release|--release)
+#        RELEASE=1
+#        ;;
+#        daemon|--daemon)
+#        DAEMON_ONLY=1
+#        ;;
+#        *)
+#        ;;
+#    esac
+#done
+
+#if [[ $TEST -eq 1 ]]; then
+#    ./start_emu_headless.sh
+#fi
+#su jenkins
+
+#sudo -i -u jenkins bash << EOF
+
+#whoami
+#pwd
+cd /jami-client-android
+
 export RELEASE
 
 if [ -z "$DAEMON_DIR" ]; then
@@ -54,7 +71,19 @@ if [[ $DAEMON_ONLY -eq 0 ]]; then
         echo "Building with Firebase support"
     fi
     if [[ $RELEASE -eq 1 ]]; then
-        cd $ANDROID_APP_DIR && ./gradlew $GRADLE_PROPERTIES assembleRelease bundleRelease
+    		echo "Executing tests false"
+        cd $ANDROID_APP_DIR  && ./gradlew $GRADLE_PROPERTIES assembleRelease bundleRelease
+    elif [[ $TEST -eq 1 ]]; then
+    		echo "Executing tests true"
+        cd $ANDROID_APP_DIR && ./gradlew $GRADLE_PROPERTIES assembleDebug assembleAndroidTest
+        # ls ..
+        #../start_emu_headless.sh
+        # java -jar /spoon-runner.jar --apk ./app/build/outputs/apk/noPush/debug/app-noPush-debug.apk --test-apk ./app/build/outputs/apk/androidTest/noPush/debug/app-noPush-debug-androidTest.apk --sdk /opt/android/
+        
+        # 1 - start emu
+        # 2 - get filepath apk et apk test
+        # 3 - spoon
+        # return spoon result
     else
         cd $ANDROID_APP_DIR && ./gradlew $GRADLE_PROPERTIES assembleDebug
     fi
@@ -62,3 +91,4 @@ else
     echo "Building daemon only"
     cd $ANDROID_APP_DIR && ./gradlew $GRADLE_PROPERTIES buildCMakeDebug
 fi
+#EOF
