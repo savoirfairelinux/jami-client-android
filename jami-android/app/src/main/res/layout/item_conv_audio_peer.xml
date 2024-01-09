@@ -15,7 +15,7 @@
   ~ along with this program; if not, write to the Free Software
   ~  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
   -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/file_layout"
@@ -25,25 +25,58 @@
     android:descendantFocusability="blocksDescendants"
     android:focusable="true"
     android:gravity="center"
-    android:orientation="vertical"
     android:paddingBottom="@dimen/padding_xsmall">
+
+    <FrameLayout
+        android:id="@+id/excluded_right_zone"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toEndOf="@+id/audio_message_layout"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/msg_details_txt_perm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/padding_small"
+        android:paddingVertical="@dimen/conversation_date_padding"
         android:textColor="@color/textColorSecondary"
         android:textSize="@dimen/conversation_timestamp_textsize"
         android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="@string/time_just_now"
         tools:visibility="visible" />
 
     <RelativeLayout
-        android:layout_width="match_parent"
+        android:id="@+id/audio_message_layout"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:paddingStart="@dimen/padding_large"
-        android:paddingEnd="@dimen/padding_large">
+        android:paddingEnd="0dp"
+        app:layout_constraintEnd_toStartOf="@+id/excluded_right_zone"
+        app:layout_constraintHorizontal_weight="5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/msg_details_txt_perm">
+
+        <TextView
+            android:id="@+id/peer_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@id/audioInfoLayout"
+            android:ellipsize="end"
+            android:maxEms="8"
+            android:maxLines="1"
+            android:padding="4dp"
+            android:textColor="@color/msg_display_name"
+            android:textSize="@dimen/message_display_name_textsize"
+            android:visibility="gone"
+            tools:text="Bob"
+            tools:visibility="visible" />
 
         <ImageView
             android:id="@+id/photo"
@@ -52,67 +85,77 @@
             android:layout_alignBottom="@id/audioInfoLayout"
             android:layout_marginEnd="@dimen/conditional_left_conversation_margin"
             android:background="@null"
-            android:scaleType="centerCrop" />
+            android:contentDescription="@null"
+            android:scaleType="centerCrop"
+            tools:background="@color/teal_700" />
 
         <LinearLayout
             android:id="@+id/audioInfoLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
+            android:layout_below="@id/peer_name"
             android:layout_toEndOf="@+id/photo"
-            android:background="@drawable/textmsg_call_background"
+            android:background="@drawable/textmsg_bg_in"
             android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="4dp">
+            android:orientation="horizontal">
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/play"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:layout_gravity="center_vertical"
-                android:layout_marginStart="4dp"
-                android:layout_marginEnd="4dp"
+                android:layout_marginStart="6dp"
                 android:background="?selectableItemBackgroundBorderless"
-                android:contentDescription="@string/lb_playback_controls_play"
+                android:contentDescription="@string/control_play"
                 app:srcCompat="@drawable/baseline_play_arrow_24" />
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/replay"
-                android:layout_width="28dp"
-                android:layout_height="31dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:layout_gravity="center_vertical"
-                android:layout_marginStart="4dp"
-                android:layout_marginEnd="4dp"
+                android:layout_marginEnd="15dp"
                 android:background="?selectableItemBackgroundBorderless"
-                android:contentDescription="@string/lb_playback_controls_rewind"
+                android:contentDescription="@string/control_replay"
                 app:srcCompat="@drawable/baseline_replay_24" />
 
             <TextView
                 android:id="@+id/msg_txt"
-                android:layout_width="120dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginEnd="6dp"
                 android:ellipsize="middle"
                 android:gravity="center_horizontal"
                 android:scrollHorizontally="true"
                 android:singleLine="true"
-                android:textAppearance="@android:style/TextAppearance.Medium"
-                android:textColor="@color/textColorSecondary"
+                android:textColor="@color/colorOnSurface"
+                android:textSize="@dimen/conversation_text_size_small"
                 tools:text="2:03 / 2:45" />
+
+            <TextView
+                android:id="@+id/file_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:textColor="@color/file_time_text_in"
+                android:textSize="@dimen/conversation_timestamp_textsize"
+                tools:text="11:36am" />
 
         </LinearLayout>
 
         <TextView
-            android:id="@+id/file_details_txt"
+            android:id="@+id/reaction_chip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/audioInfoLayout"
-            android:layout_alignStart="@+id/audioInfoLayout"
-            android:layout_marginStart="18dp"
-            android:textColor="@color/textColorSecondary"
-            android:textSize="12sp"
-            tools:text="1 mo - 12 mars" />
-
+            android:layout_below="@id/audioInfoLayout"
+            android:layout_alignStart="@id/audioInfoLayout"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="-6dp"
+            android:background="@drawable/background_reaction_chip"
+            android:lines="1"
+            android:maxLines="1"
+            android:padding="5dp"
+            android:singleLine="true"
+            tools:text="👍 😍 3" />
     </RelativeLayout>
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
