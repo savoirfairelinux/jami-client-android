@@ -923,7 +923,8 @@ class ConversationAdapter(
             popupWindow.setOnDismissListener {
                 val type = conversationViewHolder.type.transferType
                 if (convColor != 0 && (interaction.type == Interaction.InteractionType.TEXT
-                            || type == MessageType.TransferType.FILE) && !interaction.isIncoming
+                            || type == MessageType.TransferType.FILE
+                            || type == MessageType.TransferType.AUDIO ) && !interaction.isIncoming
                 ) view.background?.setTint(convColor)
                 else view.background?.setTintList(null)
                 // Remove disposable.
@@ -1159,7 +1160,24 @@ class ConversationAdapter(
         when (type) {
             MessageType.TransferType.IMAGE -> { configureImage(viewHolder, path, file.body) }
             MessageType.TransferType.VIDEO -> { configureVideo(viewHolder, path) }
-            MessageType.TransferType.AUDIO -> { configureAudio(viewHolder, path) }
+            MessageType.TransferType.AUDIO -> {
+                // Add margin if message need to be separated.
+                viewHolder.mAudioInfoLayout?.updateLayoutParams<MarginLayoutParams> {
+                    topMargin = if (!isMessageSeparationNeeded) 0 else context.resources
+                        .getDimensionPixelSize(R.dimen.conversation_message_separation)
+                }
+                viewHolder.mAudioInfoLayout?.setOnClickListener(null)
+                // Set the tint of the audio file background
+                if (file.isOutgoing) {
+                    viewHolder.mAudioInfoLayout?.background?.setTint(convColor)
+                } else {
+                    viewHolder.mAudioInfoLayout?.background?.setTint(
+                        viewHolder.itemView.context.getColor
+                            (R.color.conversation_secondary_background)
+                    )
+                }
+                configureAudio(viewHolder, path)
+            }
             else -> {
                 // Add margin if message need to be separated.
                 viewHolder.mLayout?.updateLayoutParams<MarginLayoutParams> {
