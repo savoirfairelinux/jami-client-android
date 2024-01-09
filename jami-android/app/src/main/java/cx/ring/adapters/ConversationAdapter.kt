@@ -1158,7 +1158,14 @@ class ConversationAdapter(
 
         val isMessageSeparationNeeded = isMessageSeparationNeeded(isDateShown, position)
         when (type) {
-            MessageType.TransferType.IMAGE -> { configureImage(viewHolder, path, file.body) }
+            MessageType.TransferType.IMAGE -> {
+                // Add margin if message need to be separated.
+                viewHolder.mAnswerLayout?.updateLayoutParams<MarginLayoutParams> {
+                    topMargin = if (!isMessageSeparationNeeded) 0 else context.resources
+                        .getDimensionPixelSize(R.dimen.conversation_message_separation)
+                }
+                configureImage(viewHolder, path, file.body)
+            }
             MessageType.TransferType.VIDEO -> { configureVideo(viewHolder, path) }
             MessageType.TransferType.AUDIO -> {
                 // Add margin if message need to be separated.
