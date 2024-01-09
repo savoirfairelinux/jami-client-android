@@ -1166,7 +1166,14 @@ class ConversationAdapter(
                 }
                 configureImage(viewHolder, path, file.body)
             }
-            MessageType.TransferType.VIDEO -> { configureVideo(viewHolder, path) }
+            MessageType.TransferType.VIDEO -> {
+                // Add margin if message need to be separated.
+                viewHolder.mAnswerLayout?.updateLayoutParams<MarginLayoutParams> {
+                    topMargin = if (!isMessageSeparationNeeded) 0 else context.resources
+                        .getDimensionPixelSize(R.dimen.conversation_message_separation)
+                }
+                configureVideo(viewHolder, path)
+            }
             MessageType.TransferType.AUDIO -> {
                 // Add margin if message need to be separated.
                 viewHolder.mAudioInfoLayout?.updateLayoutParams<MarginLayoutParams> {
