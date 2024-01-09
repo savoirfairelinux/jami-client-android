@@ -55,7 +55,7 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
         MessageType.INCOMING_FILE,
         MessageType.INCOMING_IMAGE,
         MessageType.INCOMING_AUDIO,
-        MessageType.INCOMING_VIDEO -> v.findViewById(R.id.photo)
+        MessageType.INCOMING_VIDEO-> v.findViewById(R.id.photo)
         else -> null
     }
     val mImage: ImageView? = when (type) {
@@ -81,6 +81,8 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
         MessageType.ONGOING_GROUP_CALL -> v.findViewById(R.id.msg_display_name)
         MessageType.INCOMING_AUDIO,
         MessageType.INCOMING_FILE,
+        MessageType.INCOMING_IMAGE,
+        MessageType.INCOMING_VIDEO,
         MessageType.INCOMING_TEXT_MESSAGE -> v.findViewById(R.id.peer_name)
         else -> null
     }
@@ -90,6 +92,8 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
         MessageType.INCOMING_FILE,
         MessageType.OUTGOING_IMAGE,
         MessageType.INCOMING_IMAGE,
+        MessageType.INCOMING_VIDEO,
+        MessageType.OUTGOING_VIDEO,
         MessageType.OUTGOING_FILE -> v.findViewById(R.id.file_time)
         else -> null
     }
