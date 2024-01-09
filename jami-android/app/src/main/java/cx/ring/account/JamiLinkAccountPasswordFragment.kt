@@ -36,32 +36,38 @@ import cx.ring.account.pinInput.EditTextPinInputViewModel
 import cx.ring.account.pinInput.QrCodePinInputFragment
 import cx.ring.account.pinInput.QrCodePinInputViewModel
 import cx.ring.databinding.FragAccJamiLinkPasswordBinding
+import cx.ring.databinding.FragLinkDeviceBinding
 import cx.ring.mvp.BaseSupportFragment
 import dagger.hilt.android.AndroidEntryPoint
 import net.jami.account.JamiLinkAccountPresenter
 import net.jami.account.JamiLinkAccountView
+import net.jami.utils.QRCodeUtils
 
 @AndroidEntryPoint
 class JamiLinkAccountPasswordFragment :
     BaseSupportFragment<JamiLinkAccountPresenter, JamiLinkAccountView>(),
     JamiLinkAccountView {
     private val model: AccountCreationViewModel by activityViewModels()
-    private var binding: FragAccJamiLinkPasswordBinding? = null
+    private var binding: FragLinkDeviceBinding? = null
 
     // the 2 view models connected to this fragment
     private val qrCodePinInputViewModel by lazy {
         ViewModelProvider(this)[QrCodePinInputViewModel::class.java]
     }
-    private val editTextPinInputViewModel by lazy {
+    /*private val editTextPinInputViewModel by lazy {
         ViewModelProvider(this)[EditTextPinInputViewModel::class.java]
-    }
+    }*/
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View =
-        FragAccJamiLinkPasswordBinding.inflate(inflater, container, false).apply {
+        FragLinkDeviceBinding.inflate(inflater, container, false).apply {
+            //linkButton.setOnClickListener { presenter.linkClicked() }
+            binding = this
+        }.root
+        /*FragAccJamiLinkPasswordBinding.inflate(inflater, container, false).apply {
 
             val adapter = SectionsPagerAdapter(this@JamiLinkAccountPasswordFragment)
             adapter.addFragment(
@@ -110,13 +116,13 @@ class JamiLinkAccountPasswordFragment :
                 }
             })
             binding = this
-        }.root
+        }.root*/
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // init the 2 view models
         qrCodePinInputViewModel.init({ presenter.pinChanged(it) }, { presenter.resetPin() })
-        editTextPinInputViewModel.init({ presenter.pinChanged(it) }, { presenter.resetPin() })
+        //editTextPinInputViewModel.init({ presenter.pinChanged(it) }, { presenter.resetPin() })
     }
 
     override fun onDestroyView() {
@@ -129,21 +135,22 @@ class JamiLinkAccountPasswordFragment :
     }
 
     override fun enableLinkButton(enable: Boolean) {
-        binding!!.linkButton.isEnabled = enable
+        //binding!!.linkButton.isEnabled = enable
     }
 
-    override fun showPin(show: Boolean) {
+    override fun showPin(uri: String) {
         val binding = binding ?: return
-        binding.pager.visibility = if (show) View.VISIBLE else View.GONE
+        binding.qrImage.text = uri//.setImageDrawable(QRCodeUtils.encodeStringAsQRCodeData(uri, 300, 300))
+        /*binding.pager.visibility = if (show) View.VISIBLE else View.GONE
         binding.tabLayout.visibility = if (show) View.VISIBLE else View.GONE
-        binding.linkButton.setText(if (show) R.string.account_link_device else R.string.account_link_archive_button)
+        binding.linkButton.setText(if (show) R.string.account_link_device else R.string.account_link_archive_button)*/
     }
 
     override fun createAccount() {
         (activity as AccountWizardActivity?)?.createAccount()
         val imm =
             requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
-        imm?.hideSoftInputFromWindow(binding!!.ringExistingPassword.windowToken, 0)
+        imm?.hideSoftInputFromWindow(binding!!.password.windowToken, 0)
     }
 
     override fun cancel() {

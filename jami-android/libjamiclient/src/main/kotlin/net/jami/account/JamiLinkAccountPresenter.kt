@@ -16,24 +16,50 @@
  */
 package net.jami.account
 
+import io.reactivex.rxjava3.core.Scheduler
+import net.jami.model.AccountConfig
 import net.jami.model.AccountCreationModel
+import net.jami.model.ConfigKey
 import net.jami.mvp.RootPresenter
+import net.jami.services.AccountService
+import net.jami.utils.Log
 import javax.inject.Inject
+import javax.inject.Named
 
-class JamiLinkAccountPresenter @Inject constructor() : RootPresenter<JamiLinkAccountView>() {
+class JamiLinkAccountPresenter @Inject constructor(
+    private val accountService: AccountService,
+    @param:Named("UiScheduler") private val uiScheduler: Scheduler
+) : RootPresenter<JamiLinkAccountView>() {
     private var mAccountCreationModel: AccountCreationModel? = null
 
     fun init(accountCreationModel: AccountCreationModel?) {
         mAccountCreationModel = accountCreationModel
-        if (mAccountCreationModel == null) {
+        if (accountCreationModel == null) {
             view?.cancel()
             return
         }
-        val hasArchive = mAccountCreationModel?.archive != null
+        val hasArchive = accountCreationModel.archive != null
         val view = view
         if (view != null) {
-            view.showPin(!hasArchive)
-            view.enableLinkButton(hasArchive)
+            //view.showPin(!hasArchive)
+            //view.enableLinkButton(hasArchive)
+        }
+        if (!hasArchive) {
+            val newAccount = accountService.getJamiAccountTemplate("")
+                .map { config ->
+                    config[ConfigKey.ARCHIVE_PATH.key] = accountCreationModel.username
+                    config
+                }
+                .flatMapObservable { config -> accountService.authenticateAccount(config) }
+                .share()
+            accountCreationModel.accountObservable = newAccount.map { it.second }
+            mCompositeDisposable.add(newAccount
+                .observeOn(uiScheduler)
+                .subscribe { (state, account)  ->
+                    Log.w("Link",  "state: $state, account: $account")
+                    accountCreationModel.newAccount = account
+                    view?.showPin(account.username!!)
+                })
         }
     }
 

@@ -49,6 +49,7 @@ abstract class PinInputViewModel : ViewModel() {
     // resetPinCallback is used to reset the pin when switching tabs -> disables the connect button
     private lateinit var resetPinCallback: () -> Unit
     private var pin: String = ""
+    private val pin_regex by lazy { Regex("^[A-Za-z0-9]{8}-[A-Za-z0-9]{8}$") }
 
     fun init(callback: (String) -> Unit, reset: () -> Unit) {
         validPinCallback = callback
@@ -64,9 +65,8 @@ abstract class PinInputViewModel : ViewModel() {
      */
     fun checkPin(pinToVerify: String): PinValidity {
         // only allow alphanumeric characters in pin format
-        val regex = Regex("^[A-Za-z0-9]{8}-[A-Za-z0-9]{8}$")
         // return the pin if it's valid, else reset it and return an error
-        return if (regex.matches(pinToVerify)) {
+        return if (pin_regex.matches(pinToVerify)) {
             pin = pinToVerify
             validPinCallback(pin)
             PinValidity.VALID

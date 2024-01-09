@@ -19,7 +19,6 @@ package net.jami.account
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.core.Single
-import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import net.jami.model.Account
 import net.jami.model.AccountConfig
@@ -68,7 +67,7 @@ class AccountWizardPresenter @Inject constructor(
     }
 
     fun initJamiAccountConnect(accountCreationModel: AccountCreationModel, defaultAccountName: String) {
-        val newAccount = initJamiAccountDetails(defaultAccountName)
+        val newAccount = mAccountService.getJamiAccountTemplate(defaultAccountName)
             .map<Map<String, String>> { accountDetails ->
                 if (!accountCreationModel.managementServer.isNullOrBlank()) {
                     accountDetails[ConfigKey.MANAGER_URI.key] = accountCreationModel.managementServer!!
@@ -88,7 +87,7 @@ class AccountWizardPresenter @Inject constructor(
     }
 
     fun initJamiAccountCreation(accountCreationModel: AccountCreationModel, defaultAccountName: String) {
-        val newAccount = initJamiAccountDetails(defaultAccountName)
+        val newAccount = mAccountService.getJamiAccountTemplate(defaultAccountName)
             .map<Map<String, String>> { accountDetails ->
                 if (accountCreationModel.username.isNotBlank()) {
                     accountDetails[ConfigKey.ACCOUNT_REGISTERED_NAME.key] = accountCreationModel.username
@@ -103,7 +102,7 @@ class AccountWizardPresenter @Inject constructor(
     }
 
     fun initJamiAccountLink(accountCreationModel: AccountCreationModel, defaultAccountName: String) {
-        val newAccount = initJamiAccountDetails(defaultAccountName)
+        val newAccount = mAccountService.getJamiAccountTemplate(defaultAccountName)
             .map<Map<String, String>> { accountDetails ->
                 val settings = mPreferences.settings
                 if (settings.enablePushNotifications) {
@@ -163,22 +162,9 @@ class AccountWizardPresenter @Inject constructor(
         view?.finish(true)
     }
 
-    private fun initJamiAccountDetails(defaultAccountName: String): Single<HashMap<String, String>> =
-        initAccountDetails().map { accountDetails: HashMap<String, String> ->
-            accountDetails[ConfigKey.ACCOUNT_ALIAS.key] = mAccountService.getNewAccountName(defaultAccountName)
-            accountDetails[ConfigKey.ACCOUNT_UPNP_ENABLE.key] = AccountConfig.TRUE_STR
-            accountDetails
-        }
-
-    private fun initAccountDetails(): Single<HashMap<String, String>> {
-        return if (mAccountType == null) Single.error(IllegalStateException())
+    private fun initAccountDetails(): Single<HashMap<String, String>> =
+        if (mAccountType == null) Single.error(IllegalStateException())
         else mAccountService.getAccountTemplate(mAccountType!!)
-            .map { accountDetails: HashMap<String, String> ->
-                accountDetails[ConfigKey.VIDEO_ENABLED.key] = true.toString()
-                accountDetails[ConfigKey.ACCOUNT_DTMF_TYPE.key] = "sipinfo"
-                accountDetails
-            }
-    }
 
     @Synchronized
     private fun createNewAccount(model: AccountCreationModel, accountDetails: Map<String, String>): Observable<Account> {
