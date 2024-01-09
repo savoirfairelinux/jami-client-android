@@ -58,8 +58,8 @@
 
                 <ImageView
                     android:id="@+id/image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="180dp"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="24dp"
                     android:adjustViewBounds="true"
@@ -79,16 +79,20 @@
                     app:tint="@color/grey_500" />
 
                 <TextView
-                    android:id="@+id/msg_details_txt"
+                    android:id="@+id/file_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/image"
+                    android:layout_alignStart="@id/image"
                     android:layout_alignEnd="@id/image"
-                    android:layout_marginEnd="@dimen/message_details_margin"
-                    android:singleLine="true"
-                    android:textColor="@color/textColorSecondary"
+                    android:layout_alignBottom="@id/image"
+                    android:background="@drawable/background_item_conv_image_time"
+                    android:gravity="end"
+                    android:paddingHorizontal="8dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="4dp"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/conversation_timestamp_textsize"
-                    tools:text="Tue" />
+                    tools:text="11:36am" />
 
                 <TextView
                     android:id="@+id/reaction_chip"
