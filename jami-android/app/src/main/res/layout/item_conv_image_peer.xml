@@ -30,7 +30,7 @@
         android:id="@+id/msg_details_txt_perm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/padding_small"
+        android:paddingVertical="@dimen/conversation_date_padding"
         android:textColor="@color/textColorSecondary"
         android:textSize="@dimen/conversation_timestamp_textsize"
         android:visibility="gone"
@@ -47,53 +47,70 @@
             android:id="@+id/photo"
             android:layout_width="@dimen/conversation_avatar_size"
             android:layout_height="@dimen/conversation_avatar_size"
-            android:layout_alignBottom="@id/imgLayout"
+            android:layout_alignBottom="@id/image"
             android:layout_alignParentStart="true"
             android:layout_marginEnd="@dimen/conditional_left_conversation_margin"
             android:background="@null"
+            android:contentDescription="@null"
             android:gravity="start"
-            android:scaleType="centerCrop" />
-
-        <LinearLayout
-            android:id="@+id/imgLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
-            android:layout_toEndOf="@+id/photo"
-            android:gravity="bottom"
-            android:minHeight="@dimen/conversation_avatar_size">
-
-            <ImageView
-                android:id="@+id/image"
-                android:layout_width="wrap_content"
-                android:layout_height="180dp"
-                android:adjustViewBounds="true"
-                android:background="@drawable/background_item_conv_image"
-                android:transitionName="picture"
-                tools:src="@drawable/ic_jami" />
-
-        </LinearLayout>
+            android:scaleType="centerCrop"
+            tools:background="@color/teal_700" />
 
         <TextView
-            android:id="@+id/msg_details_txt"
+            android:id="@+id/peer_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/imgLayout"
-            android:layout_alignEnd="@+id/imgLayout"
-            android:layout_marginEnd="@dimen/message_details_margin"
-            android:textColor="@color/textColorSecondary"
+            android:layout_alignStart="@id/image"
+            android:ellipsize="end"
+            android:maxEms="8"
+            android:maxLines="1"
+            android:padding="4dp"
+            android:textColor="@color/msg_display_name"
+            android:textSize="@dimen/message_display_name_textsize"
+            android:visibility="gone"
+            tools:text="Bob"
+            tools:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/peer_name"
+            android:layout_marginEnd="20dp"
+            android:layout_toEndOf="@+id/photo"
+            android:adjustViewBounds="true"
+            android:background="@drawable/background_item_conv_image"
+            android:contentDescription="@null"
+            android:gravity="bottom"
+            android:minHeight="@dimen/conversation_avatar_size"
+            android:transitionName="picture"
+            tools:src="@drawable/ic_jami" />
+
+        <TextView
+            android:id="@+id/file_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@id/image"
+            android:layout_alignEnd="@id/image"
+            android:layout_alignBottom="@id/image"
+            android:background="@drawable/background_item_conv_image_time"
+            android:gravity="end"
+            android:paddingHorizontal="8dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="4dp"
+            android:textColor="@color/white"
             android:textSize="@dimen/conversation_timestamp_textsize"
-            tools:text="@string/time_just_now" />
+            tools:text="11:36am" />
 
         <TextView
             android:id="@+id/reaction_chip"
             style="@style/Widget.Material3.Chip.Suggestion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/imgLayout"
-            android:layout_alignStart="@id/imgLayout"
-            android:layout_marginTop="-6dp"
+            android:layout_below="@id/image"
+            android:layout_alignStart="@id/image"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="-6dp"
             android:background="@drawable/background_reaction_chip"
             android:lines="1"
             android:maxLines="1"
