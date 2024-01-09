@@ -22,6 +22,15 @@ android {
         versionCode = 407
         versionName = "20240223-01"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        // The following argument makes the Android Test Orchestrator run its
+        // "pm clear" command after each test invocation. This command ensures
+        // that the app's state is completely cleared between tests.
+        testInstrumentationRunnerArguments["clearPackageData"] ="true"
+
+    }
+    testOptions {
+        execution= "ANDROID_TEST_ORCHESTRATOR"
     }
     buildTypes {
         debug {
@@ -110,6 +119,8 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     androidTestImplementation("androidx.test:rules:1.5.0")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test:runner:1.5.2")
+    androidTestUtil("androidx.test:orchestrator:1.4.2")
 
     // Glide
     implementation ("com.github.bumptech.glide:glide:4.15.1")
