@@ -49,7 +49,7 @@ class JamiAccountPasswordFragment : BaseSupportFragment<JamiAccountCreationPrese
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         FragAccJamiPasswordBinding.inflate(inflater, container, false).apply {
-            createAccount.setOnClickListener { presenter.createAccount() }
+            createAccountPassword.setOnClickListener { presenter.createAccount() }
             ringPasswordSwitch.setOnCheckedChangeListener { _, isChecked: Boolean ->
                 mIsChecked = isChecked
                 if (isChecked) {
@@ -88,7 +88,7 @@ class JamiAccountPasswordFragment : BaseSupportFragment<JamiAccountCreationPrese
                 false
             }
             ringPasswordRepeat.setOnEditorActionListener { v: TextView, actionId: Int, event: KeyEvent? ->
-                if (actionId == EditorInfo.IME_ACTION_DONE && binding!!.createAccount.isEnabled) {
+                if (actionId == EditorInfo.IME_ACTION_DONE && binding!!.createAccountPassword.isEnabled) {
                     val inputMethodManager = v.context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager?
                     inputMethodManager?.hideSoftInputFromWindow(v.windowToken, 0)
                     presenter.createAccount()
@@ -120,7 +120,7 @@ class JamiAccountPasswordFragment : BaseSupportFragment<JamiAccountCreationPrese
     }
 
     override fun enableNextButton(enabled: Boolean) {
-        binding!!.createAccount.isEnabled = if (mIsChecked) enabled else true
+        binding!!.createAccountPassword.isEnabled = if (mIsChecked) enabled else true
     }
 
     override fun goToAccountCreation() {
