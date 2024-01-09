@@ -29,13 +29,17 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.fragment.app.setFragmentResultListener
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.R
 import cx.ring.account.AccountEditionFragment
+import cx.ring.databinding.FragExportToDeviceBinding
 import cx.ring.databinding.FragLinkDeviceBinding
+import cx.ring.databinding.FragQrcodeBinding
 import cx.ring.mvp.BaseBottomSheetFragment
+import cx.ring.share.ScanFragment
 import cx.ring.utils.BiometricHelper
 import cx.ring.utils.KeyboardVisibilityManager.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
@@ -46,7 +50,7 @@ import net.jami.utils.QRCodeUtils
 
 @AndroidEntryPoint
 class LinkDeviceFragment : BaseBottomSheetFragment<LinkDevicePresenter>(), LinkDeviceView {
-    private var mBinding: FragLinkDeviceBinding? = null
+    private var mBinding: FragExportToDeviceBinding? = null
     private var mAccountHasPassword = true
     private var counter: CountDownTimer? = null
 
@@ -55,22 +59,28 @@ class LinkDeviceFragment : BaseBottomSheetFragment<LinkDevicePresenter>(), LinkD
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View =
-        FragLinkDeviceBinding.inflate(inflater, container, false).apply {
-            btnStartExport.setOnClickListener { onClickStart() }
+        FragExportToDeviceBinding.inflate(inflater, container, false).apply {
+            /*btnStartExport.setOnClickListener { onClickStart() }
             password.setOnEditorActionListener { pwd: TextView, actionId: Int, event: KeyEvent? ->
                 onPasswordEditorAction(pwd, actionId, event)
             }
+            pageContainer.visibility = View.GONE*/
             mBinding = this
-            pageContainer.visibility = View.GONE
+
         }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        mBinding!!.fragment.getFragment<ScanFragment>().setFragmentResultListener(ScanFragment.KEY_RESULT) { _, bundle ->
+            bundle.getString(ScanFragment.KEY_QR_SCAN)?.let { result ->
+                presenter.onQRCodeScanned(result)
+            }
+        }
         arguments?.let { arguments ->
             arguments.getString(AccountEditionFragment.ACCOUNT_ID_KEY)?.let { accountId ->
                 presenter.setAccountId(accountId)
-            // go directly to the qr and pin page if there is no account password
-            if (!mAccountHasPassword)
+                // go directly to the qr and pin page if there is no account password
+                /*if (!mAccountHasPassword)
                 onClickStart()
             else
                 BiometricHelper.startBiometricLogin(this, accountId) { encryptedInfo: ByteArray? ->
@@ -79,7 +89,10 @@ class LinkDeviceFragment : BaseBottomSheetFragment<LinkDevicePresenter>(), LinkD
                         presenter.startAccountExport(password)
                     }
                 }
+            }*/
             }
+
+
         }
     }
 
@@ -118,31 +131,31 @@ class LinkDeviceFragment : BaseBottomSheetFragment<LinkDevicePresenter>(), LinkD
 
     override fun showExportingProgress() {
         mBinding?.apply {
-            progressBar.visibility = View.VISIBLE
+            /*progressBar.visibility = View.VISIBLE
             accountLinkInfo.visibility = View.GONE
             btnStartExport.visibility = View.GONE
-            passwordLayout.visibility = View.GONE
+            passwordLayout.visibility = View.GONE*/
         }
     }
 
     override fun dismissExportingProgress() {
         mBinding?.apply {
-            progressBar.visibility = View.GONE
+            /*progressBar.visibility = View.GONE
             accountLinkInfo.visibility = if (mAccountHasPassword) View.VISIBLE else View.GONE
             btnStartExport.visibility = View.VISIBLE
-            passwordLayout.visibility = if (mAccountHasPassword) View.VISIBLE else View.GONE
+            passwordLayout.visibility = if (mAccountHasPassword) View.VISIBLE else View.GONE*/
         }
     }
 
     fun regeneratePin() {
         mBinding?.apply {
-            progressBar.visibility = View.GONE
+            /*progressBar.visibility = View.GONE
             btnStartExport.visibility = View.VISIBLE
             passwordLayout.visibility = if (mAccountHasPassword) View.VISIBLE else View.GONE
             if (!mAccountHasPassword) {
                 mBinding!!.accountLinkInfo.text = getString(R.string.account_generate_export_invalid_two)
             }
-            accountLinkInfo.visibility = View.VISIBLE
+            accountLinkInfo.visibility = View.VISIBLE*/
         }
     }
 
@@ -159,9 +172,9 @@ class LinkDeviceFragment : BaseBottomSheetFragment<LinkDevicePresenter>(), LinkD
     }
 
     override fun showPasswordError() {
-        mBinding!!.passwordLayout.error = getString(R.string.account_export_end_decryption_message)
+        /*mBinding!!.passwordLayout.error = getString(R.string.account_export_end_decryption_message)
         mBinding!!.password.setText("")
-        mBinding!!.pageContainer.visibility = View.GONE
+        mBinding!!.pageContainer.visibility = View.GONE*/
     }
 
     override fun showGenericError() {
@@ -178,7 +191,7 @@ class LinkDeviceFragment : BaseBottomSheetFragment<LinkDevicePresenter>(), LinkD
     }
 
     override fun showPIN(pin: String) {
-        val binding = mBinding ?: return
+        /*val binding = mBinding ?: return
         dismissExportingProgress()
         // encode the qr code with the pin generated
         val qrCodeData = QRCodeUtils.encodeStringAsQRCodeData(
@@ -233,14 +246,14 @@ class LinkDeviceFragment : BaseBottomSheetFragment<LinkDevicePresenter>(), LinkD
             accountLinkInfo.visibility = View.GONE
             password.text = null
         }
-        hideKeyboard(activity)
+        hideKeyboard(activity)*/
     }
 
     private fun onClickStart() {
-        mBinding?.let { binding ->
+        /*mBinding?.let { binding ->
             binding.passwordLayout.error = null
             presenter.startAccountExport(binding.password.text.toString())
-        }
+        }*/
     }
 
     private fun onPasswordEditorAction(pwd: TextView, actionId: Int, event: KeyEvent?): Boolean {

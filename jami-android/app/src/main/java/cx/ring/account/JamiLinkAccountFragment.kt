@@ -76,7 +76,7 @@ class JamiLinkAccountFragment : Fragment() {
     }
 
     fun scrollPagerFragment() {
-        mBinding?.let { it.pager.currentItem = it.pager.currentItem + 1 }
+        mBinding?.let { it.pager.currentItem += 1 }
         //mBinding!!.pager.currentItem = mBinding!!.pager.currentItem + 1
         /*if (accountCreationModel == null) {
             mBinding!!.pager.currentItem = mBinding!!.pager.currentItem - 1
@@ -91,8 +91,8 @@ class JamiLinkAccountFragment : Fragment() {
     }
 
     private class ScreenSlidePagerAdapter(fm: FragmentManager) :
-        FragmentStatePagerAdapter(fm) {
-        var mRegisteredFragments = SparseArray<Fragment>()
+        FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+        private val mRegisteredFragments = SparseArray<Fragment>()
         override fun getItem(position: Int): Fragment =
             when (position) {
                 0 -> JamiLinkAccountPasswordFragment()
@@ -111,13 +111,9 @@ class JamiLinkAccountFragment : Fragment() {
             super.destroyItem(container, position, `object`)
         }
 
-        override fun getCount(): Int {
-            return NUM_PAGES
-        }
+        override fun getCount(): Int = NUM_PAGES
 
-        fun getRegisteredFragment(position: Int): Fragment {
-            return mRegisteredFragments[position]
-        }
+        fun getRegisteredFragment(position: Int): Fragment = mRegisteredFragments[position]
 
     }
 

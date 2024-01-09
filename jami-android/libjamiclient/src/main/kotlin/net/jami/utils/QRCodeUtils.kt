@@ -34,21 +34,21 @@ object QRCodeUtils {
      * @return the resulting data
      */
     fun encodeStringAsQRCodeData(input: String?, foregroundColor: Int, backgroundColor: Int): QRCodeData? {
-        if (input == null || input.isEmpty()) {
+        if (input.isNullOrEmpty()) {
             return null
         }
         val qrWriter = QRCodeWriter()
         val qrImageMatrix: BitMatrix
         try {
-            val hints = HashMap<EncodeHintType, Int?>()
+            val hints = HashMap<EncodeHintType, Int>()
             hints[EncodeHintType.MARGIN] = QRCODE_IMAGE_PADDING
             qrImageMatrix = qrWriter.encode(input, BarcodeFormat.QR_CODE, QRCODE_IMAGE_SIZE, QRCODE_IMAGE_SIZE, hints)
         } catch (e: WriterException) {
             e(TAG, "Error while encoding QR", e)
             return null
         }
-        val qrImageWidth = qrImageMatrix.getWidth()
-        val qrImageHeight = qrImageMatrix.getHeight()
+        val qrImageWidth = qrImageMatrix.width
+        val qrImageHeight = qrImageMatrix.height
         val pixels = IntArray(qrImageWidth * qrImageHeight)
         for (row in 0 until qrImageHeight) {
             val offset = row * qrImageWidth
