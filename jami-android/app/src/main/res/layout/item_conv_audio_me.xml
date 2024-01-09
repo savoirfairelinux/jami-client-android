@@ -52,46 +52,56 @@
             android:layout_alignParentEnd="true"
             android:layout_marginStart="72dp"
             android:layout_marginEnd="24dp"
-            android:background="@drawable/textmsg_call_background"
+            android:background="@drawable/textmsg_bg_out"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:padding="4dp">
 
             <ImageView
                 android:id="@+id/play"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:layout_gravity="center_vertical"
-                android:layout_marginStart="4dp"
-                android:layout_marginEnd="4dp"
+                android:layout_marginHorizontal="13dp"
                 android:background="?selectableItemBackgroundBorderless"
                 android:contentDescription="@string/lb_playback_controls_play"
-                app:srcCompat="@drawable/baseline_play_arrow_24" />
+                android:padding="7dp"
+                app:srcCompat="@drawable/baseline_play_arrow_24"
+                app:tint="@color/white" />
 
             <ImageView
                 android:id="@+id/replay"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:layout_gravity="center_vertical"
-                android:layout_marginStart="4dp"
-                android:layout_marginEnd="4dp"
+                android:layout_marginEnd="13dp"
                 android:background="?selectableItemBackgroundBorderless"
                 android:contentDescription="@string/lb_playback_controls_rewind"
-                app:srcCompat="@drawable/baseline_replay_24" />
+                android:padding="7dp"
+                app:srcCompat="@drawable/baseline_replay_20"
+                app:tint="@color/white" />
 
             <TextView
                 android:id="@+id/msg_txt"
-                android:layout_width="120dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
                 android:layout_marginEnd="16dp"
                 android:ellipsize="middle"
                 android:gravity="center_horizontal"
                 android:scrollHorizontally="true"
                 android:singleLine="true"
-                android:textAppearance="@android:style/TextAppearance.Medium"
-                android:textColor="@color/textColorSecondary"
+                android:textColor="@color/white"
+                android:textSize="@dimen/conversation_text_size_small"
                 tools:text="2:03 / 2:45" />
+
+            <TextView
+                android:id="@+id/file_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:textColor="@color/file_time_text_out"
+                android:textSize="@dimen/conversation_timestamp_textsize"
+                tools:text="11:36am" />
 
         </LinearLayout>
 
@@ -102,19 +112,7 @@
             android:layout_alignBottom="@id/audioInfoLayout"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="5dp"
-            app:tint="@color/grey_500" />
-
-        <TextView
-            android:id="@+id/file_details_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/audioInfoLayout"
-            android:layout_alignEnd="@id/audioInfoLayout"
-            android:layout_marginEnd="@dimen/message_details_margin"
-            android:maxWidth="200dp"
-            android:textColor="@color/textColorSecondary"
-            android:textSize="12sp"
-            tools:text="1 mo - 12 mars" />
+            tools:background="@color/teal_700" />
 
     </RelativeLayout>
 </LinearLayout>
