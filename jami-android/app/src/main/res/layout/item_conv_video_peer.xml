@@ -56,16 +56,32 @@
             android:gravity="start"
             android:scaleType="centerCrop" />
 
+        <TextView
+            android:id="@+id/peer_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@id/video_frame"
+            android:ellipsize="end"
+            android:maxEms="8"
+            android:maxLines="1"
+            android:padding="4dp"
+            android:textColor="@color/msg_display_name"
+            android:textSize="@dimen/message_display_name_textsize"
+            android:visibility="gone"
+            tools:text="Bob"
+            tools:visibility="visible" />
+
         <androidx.cardview.widget.CardView
             android:id="@+id/video_frame"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/peer_name"
             android:layout_marginEnd="20dp"
             android:layout_toEndOf="@+id/photo"
             android:foreground="@drawable/baseline_play_arrow_24"
             android:foregroundGravity="center"
             android:minHeight="@dimen/conversation_avatar_size"
-            app:cardCornerRadius="16dp">
+            app:cardCornerRadius="@dimen/conversation_message_radius">
 
             <TextureView
                 android:id="@+id/video"
@@ -78,16 +94,39 @@
         </androidx.cardview.widget.CardView>
 
         <TextView
-            android:id="@+id/msg_details_txt"
+            android:id="@+id/file_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@id/video_frame"
+            android:layout_alignEnd="@id/video_frame"
+            android:layout_alignBottom="@id/video_frame"
+            android:background="@drawable/background_item_conv_image_time"
+            android:elevation="2dp"
+            android:gravity="end"
+            android:paddingHorizontal="8dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="4dp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/conversation_timestamp_textsize"
+            tools:text="11:36am" />
+
+        <TextView
+            android:id="@+id/reaction_chip"
+            style="@style/Widget.Material3.Chip.Suggestion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/video_frame"
             android:layout_alignStart="@id/video_frame"
-            android:layout_marginStart="@dimen/message_details_margin"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="-6dp"
+            android:background="@drawable/background_reaction_chip"
+            android:elevation="4dp"
+            android:lines="1"
+            android:maxLines="1"
+            android:outlineProvider="none"
+            android:padding="5dp"
             android:singleLine="true"
-            android:textColor="@color/textColorSecondary"
-            android:textSize="@dimen/conversation_timestamp_textsize"
-            tools:text="@string/time_just_now" />
+            tools:text="👍 😍 3" />
 
     </RelativeLayout>
 </LinearLayout>
