@@ -53,7 +53,7 @@
             android:layout_marginEnd="24dp"
             android:foreground="@drawable/baseline_play_arrow_24"
             android:foregroundGravity="center"
-            app:cardCornerRadius="16dp">
+            app:cardCornerRadius="@dimen/conversation_message_radius">
 
             <TextureView
                 android:id="@+id/video"
@@ -74,16 +74,39 @@
             android:layout_marginEnd="5dp" />
 
         <TextView
-            android:id="@+id/msg_details_txt"
+            android:id="@+id/file_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@id/video_frame"
+            android:layout_alignEnd="@id/video_frame"
+            android:layout_alignBottom="@id/video_frame"
+            android:background="@drawable/background_item_conv_image_time"
+            android:elevation="2dp"
+            android:gravity="end"
+            android:paddingHorizontal="8dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="4dp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/conversation_timestamp_textsize"
+            tools:text="11:36am" />
+
+        <TextView
+            android:id="@+id/reaction_chip"
+            style="@style/Widget.Material3.Chip.Suggestion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/video_frame"
             android:layout_alignEnd="@id/video_frame"
-            android:layout_marginEnd="@dimen/message_details_margin"
+            android:layout_marginTop="-6dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/background_reaction_chip"
+            android:elevation="4dp"
+            android:lines="1"
+            android:maxLines="1"
+            android:outlineProvider="none"
+            android:padding="5dp"
             android:singleLine="true"
-            android:textColor="@color/textColorSecondary"
-            android:textSize="@dimen/conversation_timestamp_textsize"
-            tools:text="@string/time_just_now" />
+            tools:text="👍 😍 3" />
 
     </RelativeLayout>
 </LinearLayout>
