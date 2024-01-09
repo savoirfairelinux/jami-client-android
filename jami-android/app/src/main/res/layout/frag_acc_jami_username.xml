@@ -94,7 +94,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/create_account"
+            android:id="@+id/create_account_username"
             style="@style/WizardButton"
             android:layout_width="@dimen/wizard_card_button_width"
             android:layout_height="wrap_content"
