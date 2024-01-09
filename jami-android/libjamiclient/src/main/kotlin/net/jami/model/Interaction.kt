@@ -46,7 +46,7 @@ open class Interaction {
             if (i.isEmpty())
                 Observable.just(emptyList())
             else {
-                Observable.combineLatest(i.map { it.lastElement }) { a -> a.mapNotNull {
+                Observable.combineLatest(i.map { it.lastElement }) { a -> a.mapNotNull { // todo first?
                     it as Interaction
                     return@mapNotNull if (it.body.isNullOrEmpty()) null else it
                 } }
@@ -57,6 +57,8 @@ open class Interaction {
         get() = historySubject
     var lastElement: Observable<Interaction> = historyObservable
         .map { it.lastOrNull() ?: this }
+    var firstElement: Observable<Interaction> = historyObservable
+        .map { it.firstOrNull() ?: this }
 
     @DatabaseField(generatedId = true, columnName = COLUMN_ID, index = true)
     var id = 0
@@ -198,6 +200,11 @@ open class Interaction {
         reactionSubject.onNext(ArrayList(reactions))
     }
 
+    fun removeReaction(id: String) {
+        reactions.removeAll { it.messageId == id }
+        reactionSubject.onNext(ArrayList(reactions))
+    }
+
     fun addEdit(interaction: Interaction, newMessage: Boolean) {
         history.remove(interaction)
         if (newMessage)
@@ -211,10 +218,21 @@ open class Interaction {
         historySubject.onNext(ArrayList(history))
     }
 
+    fun replaceEdits(interactions: List<Interaction>) {
+        history.clear()
+        history.addAll(interactions)
+        historySubject.onNext(ArrayList(history))
+    }
+
+    fun updateParent(parentId: String) {
+        this.parentId = parentId
+        // todo push change? sort aggregate history?
+    }
+
     fun updateFrom(previous: Interaction) {
         history = previous.history
         historySubject = previous.historySubject
-        lastElement = previous.lastElement
+        lastElement = previous.lastElement // todo?
         reactions = previous.reactions
         reactionSubject = previous.reactionSubject
         //reactionObservable = previous.reactionObservable

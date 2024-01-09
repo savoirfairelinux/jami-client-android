@@ -364,7 +364,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     val layoutManager = recyclerView.layoutManager as LinearLayoutManager? ?: return
                     if (!loading
-                        && layoutManager.findFirstVisibleItemPosition() < visibleLoadThreshold
+                        && layoutManager.findFirstVisibleItemPosition() < visibleLoadThreshold // todo prevent when searching
                     ) {
                         loading = true
                         presenter.loadMore()
