@@ -36,6 +36,7 @@ import com.google.zxing.ResultPoint
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.ViewModelProvider
 import cx.ring.client.HomeActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -120,8 +121,12 @@ class ScanFragment : Fragment() {
                 val contactUri = result.text
                 if (contactUri != null) {
                     val parent = parentFragment as QRCodeFragment?
-                    parent?.dismiss()
-                    goToConversation(contactUri)
+                    if (parent != null) {
+                        parent.dismiss()
+                        goToConversation(contactUri)
+                    } else {
+                        setFragmentResult(KEY_RESULT, Bundle().apply { putString(KEY_QR_SCAN, contactUri) })
+                    }
                 }
             }
         }
@@ -148,5 +153,7 @@ class ScanFragment : Fragment() {
 
     companion object {
         val TAG = ScanFragment::class.simpleName!!
+        val KEY_RESULT = "result"
+        val KEY_QR_SCAN = "qr_code"
     }
 }

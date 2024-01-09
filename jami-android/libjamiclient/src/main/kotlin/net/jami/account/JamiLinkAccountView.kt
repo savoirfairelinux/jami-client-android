@@ -20,7 +20,7 @@ import net.jami.model.AccountCreationModel
 
 interface JamiLinkAccountView {
     fun enableLinkButton(enable: Boolean)
-    fun showPin(show: Boolean)
+    fun showPin(uri: String)
     fun createAccount()
     fun cancel()
 }

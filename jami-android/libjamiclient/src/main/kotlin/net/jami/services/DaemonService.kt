@@ -118,8 +118,8 @@ class DaemonService(
             mExecutor.submit { mAccountService.profileReceived(accountId, peerId, path) }
         }
 
-        override fun accountProfileReceived(account_id: String, name: String, photo: String) {
-            mAccountService.accountProfileReceived(account_id, name, photo)
+        override fun accountProfileReceived(accountId: String, name: String, photo: String) {
+            mAccountService.accountProfileReceived(accountId, name, photo)
         }
 
         override fun incomingAccountMessage(accountId: String, from: String, messageId: String, messages: StringMap) {
@@ -161,6 +161,14 @@ class DaemonService(
 
         override fun exportOnRingEnded(accountId: String, code: Int, pin: String) {
             mAccountService.exportOnRingEnded(accountId, code, pin)
+        }
+
+        override fun addDeviceStateChanged(accountId: String, opId: Long, state: Int, detail: String) {
+            mAccountService.addDeviceStateChanged(accountId, opId, state, detail)
+        }
+
+        override fun deviceAuthStateChanged(accountId: String, state: Int, detail: String) {
+            mAccountService.deviceAuthStateChanged(accountId, state, detail)
         }
 
         override fun nameRegistrationEnded(accountId: String, state: Int, name: String) {

@@ -56,8 +56,8 @@ class JamiAccountSummaryPresenter @Inject constructor(
             return
         }
         view?.showExportingProgressDialog()
-        mCompositeDisposable.add(mAccountService
-            .exportOnRing(mAccountID!!, password!!)
+        /*mCompositeDisposable.add(mAccountService
+            .exportToPeer(mAccountID!!, password!!)
             .observeOn(mUiScheduler)
             .subscribe({ pin: String -> view?.showPIN(pin) }) { error: Throwable ->
                 when (error) {
@@ -65,7 +65,7 @@ class JamiAccountSummaryPresenter @Inject constructor(
                     is SocketException -> view?.showNetworkError()
                     else -> view?.showGenericError()
                 }
-            })
+            })*/
     }
 
     fun setAccountId(accountId: String) {

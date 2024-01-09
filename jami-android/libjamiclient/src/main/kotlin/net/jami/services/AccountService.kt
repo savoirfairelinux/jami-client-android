@@ -17,7 +17,6 @@
 package net.jami.services
 
 import com.google.gson.JsonParser
-import ezvcard.VCard
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Observable
@@ -32,10 +31,8 @@ import net.jami.model.*
 import net.jami.model.Interaction.InteractionStatus
 import net.jami.utils.Log
 import net.jami.utils.SwigNativeConverter
-import net.jami.utils.VCardUtils
 import java.io.File
 import java.io.UnsupportedEncodingException
-import java.net.SocketException
 import java.net.URLEncoder
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
@@ -44,8 +41,6 @@ import java.util.concurrent.ScheduledFuture
 import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
-import kotlin.math.absoluteValue
-import kotlin.math.min
 
 /**
  * This service handles the accounts
@@ -85,7 +80,6 @@ class AccountService(
     private var mAccountList: List<Account> = ArrayList()
     private var mHasSipAccount = false
     private var mHasRingAccount = false
-    private var mStartingTransfer: DataTransfer? = null
     private val accountsSubject = BehaviorSubject.create<List<Account>>()
     private val observableAccounts: Subject<Account> = PublishSubject.create()
     val currentAccountSubject: Observable<Account> = accountsSubject
@@ -149,7 +143,7 @@ class AccountService(
                 })
             } catch (e: Exception) {
                 Log.w(TAG, "Failed to receive geolocation", e)
-                Maybe.empty<Location>()
+                Maybe.empty()
             }
         }
         .share()
@@ -181,6 +175,13 @@ class AccountService(
         val pin: String?
     )
 
+    data class DeviceAuthState(
+        val accountId: String,
+        val opId: Long,
+        val state: Int,
+        val detail: String? = null
+    )
+
     private data class DeviceRevocationResult (
         val accountId: String,
         val deviceId: String,
@@ -193,6 +194,11 @@ class AccountService(
     )
 
     private val mExportSubject: Subject<ExportOnRingResult> = PublishSubject.create()
+    private val mDeviceAuthSubject: Subject<DeviceAuthState> = PublishSubject.create()
+    private val mAddDeviceSubject: Subject<DeviceAuthState> = PublishSubject.create()
+    private val addDeviceOps: MutableMap<Long, Subject<DeviceAuthState>> = ConcurrentHashMap()
+    private val deviceAuthOps: MutableMap<String, Subject<DeviceAuthState>> = ConcurrentHashMap()
+
     private val mDeviceRevocationSubject: Subject<DeviceRevocationResult> = PublishSubject.create()
     private val mMigrationSubject: Subject<MigrationResult> = PublishSubject.create()
     private val registeredNames: Observable<RegisteredName>
@@ -241,9 +247,11 @@ class AccountService(
         mAccountList = newAccounts
         val scheduler = Schedulers.computation()
         toLoad.forEach {
-            scheduler.createWorker().schedule {
+            val worker = scheduler.createWorker()
+            worker.schedule {
                 loadAccount(it)
                 it.loadedSubject.onComplete()
+                worker.dispose()
             }
         }
         // Cleanup removed accounts
@@ -317,7 +325,7 @@ class AccountService(
                     requestData["received"]!!.toLong() * 1000L,
                     Uri(Uri.SWARM_SCHEME, conversationId),
                     mVCardService.loadConversationProfile(requestData),
-                    requestData["mode"]?.let { m -> Conversation.Mode.values()[m.toInt()] } ?: Conversation.Mode.OneToOne))
+                    requestData["mode"]?.let { m -> Conversation.Mode.entries[m.toInt()] } ?: Conversation.Mode.OneToOne))
             } catch (e: Exception) {
                 Log.w(TAG, "Error loading request", e)
             }
@@ -356,6 +364,17 @@ class AccountService(
                 observableAccounts.filter { account: Account -> account.accountId == accountId })
         }
         .subscribeOn(scheduler)
+
+    fun authenticateAccount(map: Map<String, String>): Observable<Pair<DeviceAuthState, Account>> = Single.fromCallable {
+        JamiService.addAccount(StringMap.toSwig(map)).apply {
+                if (isEmpty()) throw RuntimeException("Can't create account.") }
+    }
+        .flatMapObservable { accountId ->
+            Observable.combineLatest(mDeviceAuthSubject.filter { it.accountId == accountId },
+                    observableAccounts.filter { a -> a.accountId == accountId }) { state, account -> Pair(state, account) }
+        }
+        .subscribeOn(scheduler)
+
 
     /**
      * @return the Account from the local cache that matches the accountId
@@ -569,11 +588,24 @@ class AccountService(
     /**
      * @return the default template (account details) for a type of account
      */
-    fun getAccountTemplate(accountType: String): Single<HashMap<String, String>> {
+    private fun getRawAccountTemplate(accountType: String): Single<HashMap<String, String>> = Single.fromCallable {
         Log.i(TAG, "getAccountTemplate() $accountType")
-        return Single.fromCallable { JamiService.getAccountTemplate(accountType).toNative() }
-            .subscribeOn(scheduler)
-    }
+        JamiService.getAccountTemplate(accountType).toNative()
+    }.subscribeOn(scheduler)
+
+    fun getAccountTemplate(accountType: String): Single<java.util.HashMap<String, String>> =
+        getRawAccountTemplate(accountType).map { accountDetails ->
+            accountDetails[ConfigKey.VIDEO_ENABLED.key] = true.toString()
+            accountDetails[ConfigKey.ACCOUNT_DTMF_TYPE.key] = "sipinfo"
+            accountDetails
+        }
+
+    fun getJamiAccountTemplate(defaultAccountName: String) : Single<HashMap<String, String>> =
+        getAccountTemplate(AccountConfig.ACCOUNT_TYPE_JAMI).map { accountDetails ->
+            accountDetails[ConfigKey.ACCOUNT_ALIAS.key] = getNewAccountName(defaultAccountName)
+            accountDetails[ConfigKey.ACCOUNT_UPNP_ENABLE.key] = AccountConfig.TRUE_STR
+            accountDetails
+        }
 
     /**
      * Removes the account in the Daemon as well as local history
@@ -587,38 +619,22 @@ class AccountService(
     /**
      * Exports the account on the DHT (used for multi-devices feature)
      */
-    fun exportOnRing(accountId: String, password: String): Single<String> =
-        mExportSubject
-            .filter { r: ExportOnRingResult -> r.accountId == accountId }
-            .firstOrError()
-            .map { result: ExportOnRingResult ->
-                when (result.code) {
-                    PIN_GENERATION_SUCCESS -> return@map result.pin!!
-                    PIN_GENERATION_WRONG_PASSWORD -> throw IllegalArgumentException()
-                    PIN_GENERATION_NETWORK_ERROR -> throw SocketException()
-                    else -> throw UnsupportedOperationException()
-                }
-            }
-            .doOnSubscribe {
-                Log.i(TAG, "exportOnRing() $accountId")
-                mExecutor.execute { JamiService.exportOnRing(accountId, password) }
-            }
-            .subscribeOn(Schedulers.io())
+    fun exportToPeer(accountId: String, uri: String): Observable<DeviceAuthState> = Single.fromCallable {
+        synchronized(addDeviceOps) {
+            val id = JamiService.exportToPeer(accountId, uri)
+            if (id != 0L) {
+                BehaviorSubject.create<DeviceAuthState>().apply { addDeviceOps[id] = this }
+            } else throw IllegalArgumentException()
+        }}
+        .flatMapObservable { it }
+        .subscribeOn(scheduler)
 
     /**
      * @return the list of the account's devices from the Daemon
      */
-    fun getKnownRingDevices(accountId: String): Map<String, String> {
-        Log.i(TAG, "getKnownRingDevices() $accountId")
-        return try {
-             mExecutor.submit<HashMap<String, String>> {
-                JamiService.getKnownRingDevices(accountId).toNative()
-            }.get()
-        } catch (e: Exception) {
-            Log.e(TAG, "Error running getKnownRingDevices()", e)
-            return HashMap()
-        }
-    }
+    fun getKnownJamiDevices(accountId: String): Single<HashMap<String, String>> =
+        Single.fromCallable { JamiService.getKnownRingDevices(accountId).toNative() }
+        .subscribeOn(scheduler)
 
     /**
      * @param accountId id of the account used with the device
@@ -932,11 +948,11 @@ class AccountService(
     }
 
     fun setPushNotificationToken(pushNotificationToken: String) {
-        Log.i(TAG, "setPushNotificationToken()");
+        Log.i(TAG, "setPushNotificationToken()")
         mExecutor.execute { JamiService.setPushNotificationToken(pushNotificationToken) }
     }
     fun setPushNotificationConfig(token: String = "", topic: String = "", platform: String = "") {
-        Log.i(TAG, "setPushNotificationConfig() $token $topic $platform");
+        Log.i(TAG, "setPushNotificationConfig() $token $topic $platform")
         mExecutor.execute { JamiService.setPushNotificationConfig(StringMap().apply {
             put("token", token)
             put("topic", topic)
@@ -1060,6 +1076,26 @@ class AccountService(
     fun exportOnRingEnded(accountId: String, code: Int, pin: String) {
         Log.d(TAG, "exportOnRingEnded: $accountId, $code, $pin")
         mExportSubject.onNext(ExportOnRingResult(accountId, code, pin))
+    }
+
+    fun addDeviceStateChanged(accountId: String, opId: Long, state: Int, detail: String) {
+        synchronized(addDeviceOps) {
+            val op = addDeviceOps[opId]
+            if (op == null) {
+                Log.w(TAG, "Can't find add device operation for $accountId, $opId")
+                return
+            }
+            Log.w(TAG, "addDeviceStateChanged: $accountId, $opId, $state, $detail")
+            op.onNext(DeviceAuthState(accountId, opId, state, detail))
+            if (state == 0) {
+                op.onComplete()
+                addDeviceOps.remove(opId)
+            }
+        }
+    }
+
+    fun deviceAuthStateChanged(accountId: String, state: Int, detail: String) {
+        mDeviceAuthSubject.onNext(DeviceAuthState(accountId, 0, state, detail))
     }
 
     fun nameRegistrationEnded(accountId: String, state: Int, name: String) {
@@ -1368,7 +1404,7 @@ class AccountService(
         /*for (Map.Entry<String, String> i : info.entrySet()) {
             Log.w(TAG, "conversation info: " + i.getKey() + " " + i.getValue());
         }*/
-        val mode = Conversation.Mode.values()[info["mode"]!!.toInt()]
+        val mode = Conversation.Mode.entries[info["mode"]!!.toInt()]
         val uri = Uri(Uri.SWARM_SCHEME, conversationId)
         var c = account.getByUri(uri)//getSwarm(conversationId) ?: account.getByUri(Uri(Uri.SWARM_SCHEME, conversationId))
         var setMode = false
@@ -1430,7 +1466,7 @@ class AccountService(
             metadata["received"]!!.toLong() * 1000L,
             Uri(Uri.SWARM_SCHEME, conversationId),
             mVCardService.loadConversationProfile(metadata),
-            metadata["mode"]?.let { m -> Conversation.Mode.values()[m.toInt()] } ?: Conversation.Mode.OneToOne))
+            metadata["mode"]?.let { m -> Conversation.Mode.entries[m.toInt()] } ?: Conversation.Mode.OneToOne))
     }
 
     fun swarmMessageReceived(accountId: String, conversationId: String, message: SwarmMessage) {
@@ -1596,7 +1632,7 @@ class AccountService(
         const val ACCOUNT_SCHEME_KEY = "key"
 
         private fun getDataTransferError(errorCode: Long): DataTransferError = try {
-            DataTransferError.values()[errorCode.toInt()]
+            DataTransferError.entries[errorCode.toInt()]
         } catch (ignored: ArrayIndexOutOfBoundsException) {
             Log.e(TAG, "getDataTransferError: invalid data transfer error from daemon")
             DataTransferError.UNKNOWN

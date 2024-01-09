@@ -76,7 +76,7 @@ class TVJamiLinkAccountFragment : JamiGuidedStepFragment<JamiLinkAccountPresente
         }
     }
 
-    override fun showPin(show: Boolean) {
+    override fun showPin(pin: String) {
         // TODO
     }
 
