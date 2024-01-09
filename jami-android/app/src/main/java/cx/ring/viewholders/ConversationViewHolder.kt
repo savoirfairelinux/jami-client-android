@@ -88,6 +88,8 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
         MessageType.OUTGOING_AUDIO,
         MessageType.INCOMING_AUDIO,
         MessageType.INCOMING_FILE,
+        MessageType.OUTGOING_IMAGE,
+        MessageType.INCOMING_IMAGE,
         MessageType.OUTGOING_FILE -> v.findViewById(R.id.file_time)
         else -> null
     }
