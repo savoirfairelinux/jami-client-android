@@ -65,8 +65,8 @@ along with this program; if not, write to the Free Software
             android:layout_gravity="start|bottom"
             android:layout_marginEnd="@dimen/margin_between_avatar_and_message"
             android:contentDescription="@null"
-            tools:visibility="visible"
-            tools:srcCompat="@color/blue_200" />
+            tools:srcCompat="@color/blue_200"
+            tools:visibility="visible" />
 
         <LinearLayout
             android:id="@+id/callInfoLayout"
@@ -107,6 +107,15 @@ along with this program; if not, write to the Free Software
                 android:textColor="@color/colorOnSurface"
                 android:textSize="13sp"
                 tools:text="- Lasted 17:26" />
+
+            <TextView
+                android:id="@+id/call_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:textColor="@color/file_time_text_in"
+                android:textSize="@dimen/conversation_timestamp_textsize"
+                tools:text="11:36am" />
 
         </LinearLayout>
     </LinearLayout>
