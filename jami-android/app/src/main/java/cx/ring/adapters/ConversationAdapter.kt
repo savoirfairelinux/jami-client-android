@@ -1104,7 +1104,7 @@ class ConversationAdapter(
                 )
             }
         })
-        if (hasPermanentTimeString(file, position)) {
+        if (hasPermanentDateString(file, position)) {
             viewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
                 viewHolder.mMsgDetailTxtPerm?.text =
                     TextUtils.timestampToDetailString(context, formatter, file.timestamp)
@@ -1334,13 +1334,23 @@ class ConversationAdapter(
                 val answerLayout = convViewHolder.mAnswerLayout
                 val peerDisplayName = convViewHolder.mPeerDisplayName
 
-                val isTimeShown = hasPermanentTimeString(textMessage, position)
-                val msgSequenceType = getMsgSequencing(position, isTimeShown)
+                val isDateShown = hasPermanentDateString(textMessage, position)
+                val hasMessageSeparation = hasMessageSeparation(textMessage, position)
+                val msgSequenceType = getMsgSequencing(position, hasMessageSeparation)
                 val message = textMessage.body?.trim() ?: ""
                 val messageTime = TextUtils
                     .timestampInMessage(context, formatter, textMessage.timestamp)
+                val timePermanent = convViewHolder.mMsgDetailTxtPerm
 
                 messageBubble.background?.setTintList(null)
+                // Manage the update of the timestamp
+                if (isDateShown) {
+                    convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
+                        timePermanent?.text = TextUtils
+                            .timestampToDetailString(context, formatter, textMessage.timestamp)
+                    })
+                    convViewHolder.mMsgDetailTxtPerm?.visibility = View.VISIBLE
+                } else convViewHolder.mMsgDetailTxtPerm?.visibility = View.GONE
 
                 // If in a replying bubble, we need to overlap the message bubble
                 // with the answered message bubble.
@@ -1583,8 +1593,9 @@ class ConversationAdapter(
 
                     val account = interaction.account ?: return@subscribe
                     val contact = call.contact ?: return@subscribe
-                    val isTimeShown = hasPermanentTimeString(call, position)
-                    val msgSequenceType = getMsgSequencing(position, isTimeShown)
+                    val isDateShown = hasPermanentDateString(call, position)
+                    val hasMessageSeparation = hasMessageSeparation(call, position)
+                    val msgSequenceType = getMsgSequencing(position, hasMessageSeparation)
                     val endOfSeq = msgSequenceType == SequenceType.LAST
                             || msgSequenceType == SequenceType.SINGLE
                     val startOfSeq = msgSequenceType == SequenceType.FIRST
@@ -1627,7 +1638,7 @@ class ConversationAdapter(
                     }
 
                     // Manage the update of the timestamp
-                    if (isTimeShown) {
+                    if (isDateShown) {
                         convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
                             timePermanent?.text = TextUtils
                                 .timestampToDetailString(context, formatter, call.timestamp)
@@ -1884,7 +1895,7 @@ class ConversationAdapter(
             // Get the next interaction (if null it means there is only one interaction).
             val nextMsg = getNextInteractionFromPosition(i) ?: return SequenceType.SINGLE
             // Check if sequence break needed.
-            return if (isSeqBreak(msg, nextMsg) || hasPermanentTimeString(nextMsg, i + 1))
+            return if (isSeqBreak(msg, nextMsg) || hasPermanentDateString(nextMsg, i + 1))
                 SequenceType.SINGLE
             else
                 SequenceType.FIRST
@@ -1902,7 +1913,7 @@ class ConversationAdapter(
         val prevMsg = getPreviousInteractionFromPosition(i)
         val nextMsg = getNextInteractionFromPosition(i)
         if (prevMsg != null && nextMsg != null) {
-            val nextMsgHasTime = hasPermanentTimeString(nextMsg, i + 1)
+            val nextMsgHasTime = hasPermanentDateString(nextMsg, i + 1)
             return if ((isSeqBreak(prevMsg, msg) || isTimeShown)
                 && !(isSeqBreak(msg, nextMsg) || nextMsgHasTime)
             ) {
@@ -1952,8 +1963,13 @@ class ConversationAdapter(
             }
         }
     }
-
-    private fun hasPermanentTimeString(msg: Interaction, position: Int): Boolean {
+    // Used to show the date between messages.
+    private fun hasPermanentDateString(msg: Interaction, position: Int): Boolean {
+        val prevMsg = getPreviousInteractionFromPosition(position)
+        return prevMsg != null && msg.timestamp - prevMsg.timestamp > 1 * DateUtils.DAY_IN_MILLIS
+    }
+    // Used to separate messages if the difference of time is more than 10 min.
+    private fun hasMessageSeparation(msg: Interaction, position: Int): Boolean {
         val prevMsg = getPreviousInteractionFromPosition(position)
         return prevMsg != null && msg.timestamp - prevMsg.timestamp > 10 * DateUtils.MINUTE_IN_MILLIS
     }
