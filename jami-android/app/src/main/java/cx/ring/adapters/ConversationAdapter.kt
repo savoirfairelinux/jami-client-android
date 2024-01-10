@@ -575,7 +575,8 @@ class ConversationAdapter(
                 )
                 Interaction.InteractionType.CONTACT -> configureForContactEvent(
                     conversationViewHolder,
-                    interaction
+                    interaction,
+                    position
                 )
                 Interaction.InteractionType.DATA_TRANSFER -> configureForFileInfo(
                     conversationViewHolder,
@@ -1488,7 +1489,8 @@ class ConversationAdapter(
 
     private fun configureForContactEvent(
         viewHolder: ConversationViewHolder,
-        interaction: Interaction
+        interaction: Interaction,
+        position: Int
     ) {
         val context = viewHolder.itemView.context
         val event = interaction as ContactEvent
@@ -1496,6 +1498,16 @@ class ConversationAdapter(
             TAG,
             "configureForContactEvent ${event.account} ${event.event} ${event.contact} ${event.author} "
         )
+        // Manage the date of the event.
+            val isDateShown = hasPermanentDateString(event, position)
+            viewHolder.mMsgDetailTxt?.apply {
+                if (isDateShown || getPreviousInteractionFromPosition(position) == null) {
+                    visibility = View.VISIBLE
+                    text = TextUtils.timestampToDetailString(context, formatter, event.timestamp)
+                } else {
+                    visibility = View.GONE
+                }
+            }
         val timestamp =
             TextUtils.timestampInMessage(context, formatter, event.timestamp)
 
