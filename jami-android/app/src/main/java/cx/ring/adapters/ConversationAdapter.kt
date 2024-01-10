@@ -1499,7 +1499,7 @@ class ConversationAdapter(
             "configureForContactEvent ${event.account} ${event.event} ${event.contact} ${event.author} "
         )
         val timestamp =
-            TextUtils.timestampToDetailString(context, formatter, event.timestamp)
+            TextUtils.timestampInMessage(context, formatter, event.timestamp)
 
         if (interaction.isSwarm) {
             viewHolder.compositeDisposable.add(
