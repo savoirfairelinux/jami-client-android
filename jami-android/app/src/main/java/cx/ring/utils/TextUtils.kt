@@ -74,6 +74,7 @@ object TextUtils {
 
     /**
      * Computes the string to set in the messages.
+     * Also used in contact events.
      *
      * @param timestamp The timestamp of the message.
      * @return The string to display in the field "time" of the message.
