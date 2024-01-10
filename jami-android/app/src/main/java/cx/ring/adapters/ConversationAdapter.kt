@@ -478,7 +478,12 @@ class ConversationAdapter(
                     .observeOn(DeviceUtils.uiScheduler)
                     .subscribe({ i ->
                         conversationViewHolder.mReplyTxt!!.text = i.first.body
-                        conversationViewHolder.mReplyName!!.text = i.second.displayName
+                        // Set the name of the contact to whom we are replying.
+                        if (i.first.isIncoming)
+                            conversationViewHolder.mReplyName!!.text = i.second.displayName
+                        else
+                            conversationViewHolder.mReplyName!!.text =
+                                res.getString(R.string.conversation_reply_you)
 
                         // Apply the correct color depending if message is incoming or not.
                         val textColor:Int
