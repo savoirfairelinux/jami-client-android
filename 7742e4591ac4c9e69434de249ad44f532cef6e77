@@ -24,6 +24,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "15f287e8_4a031d73",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/HomeFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-01-10T22:22:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfb0b177_8edfea0a",
+      "range": {
+        "startLine": 625,
+        "startChar": 8,
+        "endLine": 625,
+        "endChar": 18
+      },
+      "revId": "7742e4591ac4c9e69434de249ad44f532cef6e77",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "65a9600d_1e83dee1",
@@ -37,6 +61,30 @@
       "writtenOn": "2024-01-10T21:53:09Z",
       "side": 1,
       "message": "Make the function name semantically relevant instead of exposing implementation details or other things.\n\nFor instance, the function doesn\u0027t do anything related to conversation, so the function name should avoid mentioning conversations.\n\nIt doesn\u0027t matter what specific class instance it being touched, the function name should not mention \"AppBarLayout\"",
+      "range": {
+        "startLine": 626,
+        "startChar": 16,
+        "endLine": 626,
+        "endChar": 59
+      },
+      "revId": "7742e4591ac4c9e69434de249ad44f532cef6e77",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f9278bd_eb6b010f",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/HomeFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-01-10T22:22:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65a9600d_1e83dee1",
       "range": {
         "startLine": 626,
         "startChar": 16,
