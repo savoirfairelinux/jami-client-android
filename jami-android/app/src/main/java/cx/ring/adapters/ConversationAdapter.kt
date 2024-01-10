@@ -1622,7 +1622,11 @@ class ConversationAdapter(
                         })
                         convViewHolder.mMsgDetailTxtPerm?.visibility = View.VISIBLE
                     } else convViewHolder.mMsgDetailTxtPerm?.visibility = View.GONE
-
+                    convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
+                        val timeString =
+                            TextUtils.timestampInMessage(context, formatter, call.timestamp)
+                        convViewHolder.mCallTime?.text = timeString
+                    })
                     // When a group call is occurring but you are not in it, a message is displayed
                     // in conversation to inform the user about the call and invite him to join.
                     if (call.isGroupCall) {
