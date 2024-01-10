@@ -46,6 +46,7 @@ import androidx.transition.Fade
 import androidx.transition.Slide
 import androidx.transition.TransitionManager
 import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.appbar.AppBarLayout.Behavior.DragCallback
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.R
 import cx.ring.account.AccountWizardActivity
@@ -362,7 +363,8 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
             (binding.invitationCard.invitationGroup.layoutParams as ViewGroup.MarginLayoutParams)
                 .setMargins(it, it, it, 2*it)
         }
-        // Enable to possibility to scroll the invitation pending list.
+
+        // Enable possibility to scroll the invitation pending list.
         (binding.appBar.layoutParams as CoordinatorLayout.LayoutParams).behavior = null
 
         // Hide everything unneeded.
@@ -411,9 +413,8 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
             (binding.invitationCard.invitationGroup.layoutParams as ViewGroup.MarginLayoutParams)
                 .setMargins(it, 0, it, 0)
         }
-        // Disable possibility to scroll the invitation pending list.
-        (binding.appBar.layoutParams as CoordinatorLayout.LayoutParams).behavior =
-            AppBarLayout.Behavior()
+
+        disableAppBarLayoutScrollWhenNoConversation() // Workaround method.
 
         // Show everything needed.
         binding.donationCard.donationCard.isVisible = presenter.donationCardIsVisible
@@ -446,6 +447,8 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         pagerContent = mBinding!!.fragmentContainer.getFragment()
+
+        disableAppBarLayoutScrollWhenNoConversation() // Workaround method.
 
         // Subscribe on fragmentContainer to add scroll listener on the recycler view.
         mBinding!!.fragmentContainer.getFragment<SmartListFragment>().viewLifecycleOwnerLiveData
@@ -617,6 +620,16 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
     fun collapseSearchActionView() {
         val b = mBinding ?: return
         b.searchView.hide()
+    }
+
+    /** Workaround to prevent appbar to be collapsed when there is no conversations. */
+    private fun disableAppBarLayoutScrollWhenNoConversation() {
+        (mBinding!!.appBar.layoutParams as CoordinatorLayout.LayoutParams).behavior =
+            AppBarLayout.Behavior().apply {
+                setDragCallback(object : DragCallback() {
+                    override fun canDrag(appBarLayout: AppBarLayout): Boolean = false
+                })
+            }
     }
 
     companion object {
