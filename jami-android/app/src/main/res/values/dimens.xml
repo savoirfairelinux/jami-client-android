@@ -142,6 +142,7 @@ along with this program; if not, write to the Free Software
     <dimen name="message_reaction_stroke">2dp</dimen>
     <dimen name="conversation_text_size_small">12sp</dimen>
     <dimen name="conversation_reply_overlap">-8dp</dimen>
+    <dimen name="conversation_date_padding">15dp</dimen>
 
     <!--Text size-->
     <dimen name="text_size_small">13sp</dimen>
