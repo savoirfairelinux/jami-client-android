@@ -34,7 +34,6 @@ open class Interaction {
     var replyTo: Single<Interaction>? = null
     var edit: String? = null
     var reactToId: String? = null
-    var reactTo: Interaction? = null
     var reactions: MutableList<Interaction> = ArrayList()
     private var reactionSubject: Subject<List<Interaction>> = BehaviorSubject.createDefault(reactions)
 
@@ -57,6 +56,8 @@ open class Interaction {
         get() = historySubject
     var lastElement: Observable<Interaction> = historyObservable
         .map { it.lastOrNull() ?: this }
+    var firstElement: Observable<Interaction> = historyObservable
+        .map { it.firstOrNull() ?: this }
 
     @DatabaseField(generatedId = true, columnName = COLUMN_ID, index = true)
     var id = 0
@@ -198,6 +199,11 @@ open class Interaction {
         reactionSubject.onNext(ArrayList(reactions))
     }
 
+    fun removeReaction(id: String) {
+        reactions.removeAll { it.messageId == id }
+        reactionSubject.onNext(ArrayList(reactions))
+    }
+
     fun addEdit(interaction: Interaction, newMessage: Boolean) {
         history.remove(interaction)
         if (newMessage)
@@ -211,13 +217,14 @@ open class Interaction {
         historySubject.onNext(ArrayList(history))
     }
 
-    fun updateFrom(previous: Interaction) {
-        history = previous.history
-        historySubject = previous.historySubject
-        lastElement = previous.lastElement
-        reactions = previous.reactions
-        reactionSubject = previous.reactionSubject
-        //reactionObservable = previous.reactionObservable
+    fun replaceEdits(interactions: List<Interaction>) {
+        history.clear()
+        history.addAll(interactions)
+        historySubject.onNext(ArrayList(history))
+    }
+
+    fun updateParent(parentId: String) {
+        this.parentId = parentId
     }
 
     var preview: Any? = null
