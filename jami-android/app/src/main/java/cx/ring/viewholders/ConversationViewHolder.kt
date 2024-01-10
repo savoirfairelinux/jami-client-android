@@ -137,6 +137,7 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
     }
     var mMsgLayout: ViewGroup? = null
     var mCallInfoText: TextView? = null
+    var mCallTime : TextView? = null
     var mCallAcceptLayout: LinearLayout? = null
     var mFileInfoLayout: ConstraintLayout? = null
     var mFileSize: TextView? = null
@@ -178,6 +179,7 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
             }
             MessageType.OUTGOING_CALL_INFORMATION,
             MessageType.INCOMING_CALL_INFORMATION -> {
+                mCallTime = v.findViewById(R.id.call_time)
                 mHistTxt = v.findViewById(R.id.call_hist_txt)
                 mHistDetailTxt = v.findViewById(R.id.call_details_txt)
                 mCallInfoLayout = v.findViewById(R.id.callInfoLayout)

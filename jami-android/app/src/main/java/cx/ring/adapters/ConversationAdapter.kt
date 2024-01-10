@@ -1635,13 +1635,21 @@ class ConversationAdapter(
 
                     val account = interaction.account ?: return@subscribe
                     val contact = call.contact ?: return@subscribe
-                    val isTimeShown = hasPermanentTimeString(call, position)
-                    val msgSequenceType = getMsgSequencing(position, isTimeShown)
+                    val isDateShown = hasPermanentDateString(call, position)
+                    val msgSequenceType = getMsgSequencing(position, isDateShown)
+
                     val endOfSeq = msgSequenceType == SequenceType.LAST
                             || msgSequenceType == SequenceType.SINGLE
                     val startOfSeq = msgSequenceType == SequenceType.FIRST
                             || msgSequenceType == SequenceType.SINGLE
                     val resIndex = msgSequenceType.ordinal + (if (call.isIncoming) 1 else 0) * 4
+
+                    // Add margin if message need to be separated.
+                    val isMessageSeparationNeeded = isMessageSeparationNeeded(isDateShown, position)
+                    convViewHolder.mCallLayout?.updateLayoutParams<MarginLayoutParams> {
+                        topMargin = if (!isMessageSeparationNeeded) 0 else context.resources
+                            .getDimensionPixelSize(R.dimen.conversation_message_separation)
+                    }
 
                     // Only show the avatar if it is a group conversation
                     if (presenter.isGroup()) {
@@ -1676,14 +1684,18 @@ class ConversationAdapter(
                     }
 
                     // Manage the update of the timestamp
-                    if (isTimeShown) {
+                    if (isDateShown) {
                         convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
                             timePermanent?.text = TextUtils
-                                .timestampToDetailString(context, formatter, call.timestamp)
+                                .timestampToDate(context, formatter, call.timestamp)
                         })
                         convViewHolder.mMsgDetailTxtPerm?.visibility = View.VISIBLE
                     } else convViewHolder.mMsgDetailTxtPerm?.visibility = View.GONE
-
+                    convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
+                        val timeString =
+                            TextUtils.timestampToTime(context, formatter, call.timestamp)
+                        convViewHolder.mCallTime?.text = timeString
+                    })
                     // When a group call is occurring but you are not in it, a message is displayed
                     // in conversation to inform the user about the call and invite him to join.
                     if (call.isGroupCall) {
@@ -1996,11 +2008,6 @@ class ConversationAdapter(
                 reverse()
             }
         }
-    }
-
-    private fun hasPermanentTimeString(msg: Interaction, position: Int): Boolean {
-        val prevMsg = getPreviousInteractionFromPosition(position)
-        return prevMsg != null && msg.timestamp - prevMsg.timestamp > 10 * DateUtils.MINUTE_IN_MILLIS
     }
 
     // Used to show the date between messages.
