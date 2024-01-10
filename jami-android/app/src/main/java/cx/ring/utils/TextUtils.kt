@@ -44,7 +44,7 @@ object TextUtils {
     }
 
     /**
-     * Computes the string to set in text details between messages, indicating time separation.
+     * Computes the date to set in text details between messages, indicating time separation.
      *
      * @param timestamp The timestamp used to launch the computation with Date().getTime().
      * Can be the last received message timestamp for example.
@@ -69,6 +69,31 @@ object TextUtils {
                     DateUtils.FORMAT_SHOW_YEAR or DateUtils.FORMAT_SHOW_WEEKDAY or
                     DateUtils.FORMAT_ABBREV_ALL)
         }
+        return timeStr.out().toString().uppercase(Locale.getDefault())
+    }
+
+    /**
+     * Display the date between interactions, indicating date separation.
+     *
+     * @param timestamp The timestamp used to launch the computation with Date().getTime().
+     * Can be the last received message timestamp for example.
+     * @return The date to display between messages.
+     */
+    fun timestampToDate(context: Context, formatter: Formatter, timestamp: Long): String {
+        (formatter.out() as? StringBuilder)?.setLength(0)
+        val diff = Date().time - timestamp
+        if (diff < 2 * DateUtils.DAY_IN_MILLIS) {
+            return DateUtils.getRelativeDateTimeString(
+                context, timestamp, DateUtils.DAY_IN_MILLIS,
+                2 * DateUtils.DAY_IN_MILLIS, DateUtils.FORMAT_SHOW_WEEKDAY
+            ).toString().uppercase(Locale.getDefault())
+        }
+        val timeStr: Formatter =
+            DateUtils.formatDateRange(
+                context, formatter, timestamp, timestamp,
+                DateUtils.FORMAT_SHOW_DATE or
+                        DateUtils.FORMAT_NO_YEAR or DateUtils.FORMAT_ABBREV_MONTH
+            )
         return timeStr.out().toString().uppercase(Locale.getDefault())
     }
 
