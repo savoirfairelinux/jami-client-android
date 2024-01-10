@@ -1096,7 +1096,7 @@ class ConversationAdapter(
         if (hasPermanentDateString(file, position)) {
             viewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
                 viewHolder.mMsgDetailTxtPerm?.text =
-                    TextUtils.timestampToDetailString(context, formatter, file.timestamp)
+                    TextUtils.timestampToDate(context, formatter, file.timestamp)
             })
             viewHolder.mMsgDetailTxtPerm?.visibility = View.VISIBLE
         } else {
@@ -1349,7 +1349,7 @@ class ConversationAdapter(
                 if (isDateShown) {
                     convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
                         timePermanent?.text = TextUtils
-                            .timestampToDetailString(context, formatter, textMessage.timestamp)
+                            .timestampToDate(context, formatter, textMessage.timestamp)
                     })
                     convViewHolder.mMsgDetailTxtPerm?.visibility = View.VISIBLE
                 } else convViewHolder.mMsgDetailTxtPerm?.visibility = View.GONE
@@ -1516,7 +1516,7 @@ class ConversationAdapter(
             viewHolder.mMsgDetailTxt?.apply {
                 if (isDateShown || getPreviousInteractionFromPosition(position) == null) {
                     visibility = View.VISIBLE
-                    text = TextUtils.timestampToDetailString(context, formatter, event.timestamp)
+                    text = TextUtils.timestampToDate(context, formatter, event.timestamp)
                 } else {
                     visibility = View.GONE
                 }
@@ -1654,7 +1654,7 @@ class ConversationAdapter(
                     if (isDateShown) {
                         convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
                             timePermanent?.text = TextUtils
-                                .timestampToDetailString(context, formatter, call.timestamp)
+                                .timestampToDate(context, formatter, call.timestamp)
                         })
                         convViewHolder.mMsgDetailTxtPerm?.visibility = View.VISIBLE
                     } else convViewHolder.mMsgDetailTxtPerm?.visibility = View.GONE
