@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a7812e60_b85075f9",
+        "filename": "jami-android/app/src/main/res/values/strings_call.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-01-11T04:57:15Z",
+      "side": 1,
+      "message": "An error occurred while starting the call",
+      "range": {
+        "startLine": 20,
+        "startChar": 31,
+        "endLine": 20,
+        "endChar": 56
+      },
+      "revId": "d436979d4eb2da8c896eed648b986c13f871ac12",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
