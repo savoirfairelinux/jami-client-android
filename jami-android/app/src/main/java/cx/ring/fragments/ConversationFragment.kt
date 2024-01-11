@@ -363,7 +363,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {}
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     val layoutManager = recyclerView.layoutManager as LinearLayoutManager? ?: return
-                    if (!loading
+                    if (!loading && binding.histList.adapter != mSearchAdapter
                         && layoutManager.findFirstVisibleItemPosition() < visibleLoadThreshold
                     ) {
                         loading = true
