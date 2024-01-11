@@ -195,17 +195,14 @@ class ConversationAdapter(
         return true
     }
 
-    fun update(e: Interaction) {
-        Log.w(TAG, "update " + e.messageId)
-        if (!e.isIncoming && e.status == InteractionStatus.SUCCESS) {
+    fun update(editedInteraction: Interaction) {
+        if (!editedInteraction.isIncoming && editedInteraction.status == InteractionStatus.SUCCESS)
             notifyItemChanged(lastDeliveredPosition)
-        }
-        for (i in mInteractions.indices.reversed()) {
-            val element = mInteractions[i]
-            if (e === element) {
-                notifyItemChanged(i)
-                break
-            }
+
+        mInteractions.indexOfLast { it.messageId == editedInteraction.messageId }.let {
+            if (it == -1) return
+            mInteractions[it] = editedInteraction
+            notifyItemChanged(it)
         }
     }
 
@@ -1341,191 +1338,187 @@ class ConversationAdapter(
     ) {
         val context = convViewHolder.itemView.context
 
-        convViewHolder.compositeDisposable.add(interaction.lastElement
-            .observeOn(DeviceUtils.uiScheduler)
-            .subscribe { lastElement ->
-                val textMessage = lastElement as TextMessage
-                val account = interaction.account ?: return@subscribe
-                val contact = textMessage.contact ?: return@subscribe
-                val isDeleted = textMessage.body.isNullOrEmpty()
-                val isEdited = interaction.history.size > 1
+        val textMessage = interaction as TextMessage
+        val account = interaction.account ?: return
+        val contact = textMessage.contact ?: return
+        val isDeleted = textMessage.body.isNullOrEmpty()
+        val isEdited = interaction.history.size > 1
 
-                val messageContent = convViewHolder.mMessageContent ?: return@subscribe
-                val messageBubble = convViewHolder.mMessageBubble ?: return@subscribe
-                val messageBubbleBorder = convViewHolder.mMessageBubbleBorder ?: return@subscribe
-                val replyBubble = convViewHolder.mReplyBubble
-                val answerLayout = convViewHolder.mAnswerLayout
-                val peerDisplayName = convViewHolder.mPeerDisplayName
+        val messageContent = convViewHolder.mMessageContent ?: return
+        val messageBubble = convViewHolder.mMessageBubble ?: return
+        val messageBubbleBorder = convViewHolder.mMessageBubbleBorder ?: return
+        val replyBubble = convViewHolder.mReplyBubble
+        val answerLayout = convViewHolder.mAnswerLayout
+        val peerDisplayName = convViewHolder.mPeerDisplayName
 
-                val isDateShown = hasPermanentDateString(interaction, position)
-                val msgSequenceType = getMsgSequencing(position, isDateShown)
+        val isDateShown = hasPermanentDateString(interaction, position)
+        val msgSequenceType = getMsgSequencing(position, isDateShown)
 
-                val message = textMessage.body?.trim() ?: ""
-                val messageTime = TextUtils
-                    .timestampToTime(context, formatter, mInteractions[position].timestamp)
-                val timePermanent = convViewHolder.mMsgDetailTxtPerm
+        val message = textMessage.body?.trim() ?: ""
+        val messageTime = TextUtils
+            .timestampToTime(context, formatter, mInteractions[position].timestamp)
+        val timePermanent = convViewHolder.mMsgDetailTxtPerm
 
-                // Add margin if message need to be separated.
-                val isMessageSeparationNeeded = isMessageSeparationNeeded(isDateShown, position)
-                convViewHolder.mMessageLayout?.updateLayoutParams<MarginLayoutParams> {
-                    topMargin = if (!isMessageSeparationNeeded) 0 else context.resources
-                        .getDimensionPixelSize(R.dimen.conversation_message_separation)
-                }
+        // Add margin if message need to be separated.
+        val isMessageSeparationNeeded = isMessageSeparationNeeded(isDateShown, position)
+        convViewHolder.mMessageLayout?.updateLayoutParams<MarginLayoutParams> {
+            topMargin = if (!isMessageSeparationNeeded) 0 else context.resources
+                .getDimensionPixelSize(R.dimen.conversation_message_separation)
+        }
 
-                messageBubble.background?.setTintList(null)
-                // Manage the update of the timestamp
-                if (isDateShown) {
-                    convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
-                        timePermanent?.text = TextUtils
-                            .timestampToDate(context, formatter, interaction.timestamp)
-                    })
-                    convViewHolder.mMsgDetailTxtPerm?.visibility = View.VISIBLE
-                } else convViewHolder.mMsgDetailTxtPerm?.visibility = View.GONE
+        messageBubble.background?.setTintList(null)
+        // Manage the update of the timestamp
+        if (isDateShown) {
+            convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
+                timePermanent?.text = TextUtils
+                    .timestampToDate(context, formatter, interaction.timestamp)
+            })
+            convViewHolder.mMsgDetailTxtPerm?.visibility = View.VISIBLE
+        } else convViewHolder.mMsgDetailTxtPerm?.visibility = View.GONE
 
-                // If in a replying bubble, we need to overlap the message bubble
-                // with the answered message bubble.
-                if (textMessage.replyToId != null) {
-                    val paddingInDp = (1.5 * context.resources.displayMetrics.density).toInt()
-                    messageBubbleBorder.setPadding(paddingInDp, paddingInDp, 0, 0)
-                    messageBubbleBorder.updateLayoutParams<MarginLayoutParams> {
-                        topMargin = context.resources
-                            .getDimensionPixelSize(R.dimen.conversation_reply_overlap)
-                    }
-                } else {
-                    messageBubbleBorder.setPadding(0, 0, 0, 0)
-                    messageBubbleBorder.updateLayoutParams<MarginLayoutParams> { topMargin = 0 }
-                }
-                // Manage the background of the message bubble.
-                updateMessageBackground(
-                    context, messageBubble, messageBubbleBorder, msgSequenceType,
-                    isOnlyEmoji = StringUtils.isOnlyEmoji(message),
-                    isReplying = interaction.replyTo != null,
-                    isDeleted = isDeleted,
-                    isIncoming = textMessage.isIncoming
-                )
-                // Manage the left margin of the message bubble.
-                updateMessageLeftMargin(
-                    context, messageBubbleBorder, replyBubble,
-                    isGroup = presenter.isGroup(),
-                    isIncoming = textMessage.isIncoming
-                )
+        // If in a replying bubble, we need to overlap the message bubble
+        // with the answered message bubble.
+        if (textMessage.replyToId != null) {
+            val paddingInDp = (1.5 * context.resources.displayMetrics.density).toInt()
+            messageBubbleBorder.setPadding(paddingInDp, paddingInDp, 0, 0)
+            messageBubbleBorder.updateLayoutParams<MarginLayoutParams> {
+                topMargin = context.resources
+                    .getDimensionPixelSize(R.dimen.conversation_reply_overlap)
+            }
+        } else {
+            messageBubbleBorder.setPadding(0, 0, 0, 0)
+            messageBubbleBorder.updateLayoutParams<MarginLayoutParams> { topMargin = 0 }
+        }
+        // Manage the background of the message bubble.
+        updateMessageBackground(
+            context, messageBubble, messageBubbleBorder, msgSequenceType,
+            isOnlyEmoji = StringUtils.isOnlyEmoji(message),
+            isReplying = interaction.replyTo != null,
+            isDeleted = isDeleted,
+            isIncoming = textMessage.isIncoming
+        )
+        // Manage the left margin of the message bubble.
+        updateMessageLeftMargin(
+            context, messageBubbleBorder, replyBubble,
+            isGroup = presenter.isGroup(),
+            isIncoming = textMessage.isIncoming
+        )
 
-                // Manage long press.
-                messageBubble.setOnLongClickListener { v: View ->
-                    openItemMenu(convViewHolder, v, interaction)
-                    conversationFragment.updatePosition(convViewHolder.bindingAdapterPosition)
-                    if (textMessage.isIncoming) {
-                        messageBubble.background?.setTint(context.getColor(R.color.grey_500))
-                    } else {
-                        messageBubble.background?.setTint(convColorTint)
-                    }
-                    mCurrentLongItem = RecyclerViewContextMenuInfo(
-                        convViewHolder.bindingAdapterPosition,
-                        v.id.toLong()
+        // Manage long press.
+        messageBubble.setOnLongClickListener { v: View ->
+            openItemMenu(convViewHolder, v, interaction)
+            conversationFragment.updatePosition(convViewHolder.bindingAdapterPosition)
+            if (textMessage.isIncoming) {
+                messageBubble.background?.setTint(context.getColor(R.color.grey_500))
+            } else {
+                messageBubble.background?.setTint(convColorTint)
+            }
+            mCurrentLongItem = RecyclerViewContextMenuInfo(
+                convViewHolder.bindingAdapterPosition,
+                v.id.toLong()
+            )
+            true
+        }
+
+        // Manage the message content.
+        if (StringUtils.isOnlyEmoji(message)) {
+            messageContent.updateEmoji(message, messageTime, isEdited)
+        } else {
+            messageContent.updateStandard(
+                markwon.toMarkdown(message), messageTime, isEdited
+            )
+
+            // Manage layout for message with a link inside.
+            if (showLinkPreviews && !isDeleted) {
+                val cachedPreview =
+                    textMessage.preview as? Maybe<PreviewData>? ?: LinkPreview.getFirstUrl(
+                        message
                     )
-                    true
-                }
+                        .flatMap { url -> LinkPreview.load(url) }
+                        .cache()
+                        .apply { interaction.preview = this }
 
-                // Manage the message content.
-                if (StringUtils.isOnlyEmoji(message)) {
-                    messageContent.updateEmoji(message, messageTime, isEdited)
-                } else {
-                    messageContent.updateStandard(
-                        markwon.toMarkdown(message), messageTime, isEdited
-                    )
-
-                    // Manage layout for message with a link inside.
-                    if (showLinkPreviews && !isDeleted) {
-                        val cachedPreview =
-                            textMessage.preview as? Maybe<PreviewData>? ?: LinkPreview.getFirstUrl(
-                                message
-                            )
-                                .flatMap { url -> LinkPreview.load(url) }
-                                .cache()
-                                .apply { interaction.preview = this }
-
-                        convViewHolder.compositeDisposable.add(cachedPreview
-                            .observeOn(DeviceUtils.uiScheduler)
-                            .subscribe({ data ->
-                                Log.w(TAG, "got preview $data")
-                                val image = convViewHolder.mImage ?: return@subscribe
-                                if (data.imageUrl.isNotEmpty()) {
-                                    Glide.with(context)
-                                        .load(data.imageUrl)
-                                        .centerCrop()
-                                        .into(image)
-                                    image.visibility = View.VISIBLE
-                                } else {
-                                    image.visibility = View.GONE
-                                }
-                                convViewHolder.mHistTxt?.text = data.title
-                                if (data.description.isNotEmpty()) {
-                                    convViewHolder.mHistDetailTxt?.visibility = View.VISIBLE
-                                    convViewHolder.mHistDetailTxt?.text = data.description
-                                } else {
-                                    convViewHolder.mHistDetailTxt?.visibility = View.GONE
-                                }
-                                answerLayout?.visibility = View.VISIBLE
-                                val url = Uri.parse(data.baseUrl)
-                                convViewHolder.mPreviewDomain?.text = url.host
-                                answerLayout?.setOnClickListener {
-                                    context.startActivity(Intent(Intent.ACTION_VIEW, url))
-                                }
-                            }) { e -> Log.e(TAG, "Can't load preview", e) })
-                    } else answerLayout?.visibility = View.GONE
-                }
+                convViewHolder.compositeDisposable.add(cachedPreview
+                    .observeOn(DeviceUtils.uiScheduler)
+                    .subscribe({ data ->
+                        Log.w(TAG, "got preview $data")
+                        val image = convViewHolder.mImage ?: return@subscribe
+                        if (data.imageUrl.isNotEmpty()) {
+                            Glide.with(context)
+                                .load(data.imageUrl)
+                                .centerCrop()
+                                .into(image)
+                            image.visibility = View.VISIBLE
+                        } else {
+                            image.visibility = View.GONE
+                        }
+                        convViewHolder.mHistTxt?.text = data.title
+                        if (data.description.isNotEmpty()) {
+                            convViewHolder.mHistDetailTxt?.visibility = View.VISIBLE
+                            convViewHolder.mHistDetailTxt?.text = data.description
+                        } else {
+                            convViewHolder.mHistDetailTxt?.visibility = View.GONE
+                        }
+                        answerLayout?.visibility = View.VISIBLE
+                        val url = Uri.parse(data.baseUrl)
+                        convViewHolder.mPreviewDomain?.text = url.host
+                        answerLayout?.setOnClickListener {
+                            context.startActivity(Intent(Intent.ACTION_VIEW, url))
+                        }
+                    }) { e -> Log.e(TAG, "Can't load preview", e) })
+            } else answerLayout?.visibility = View.GONE
+        }
 //                msgTxt.movementMethod = LinkMovementMethod.getInstance()
 
-                val endOfSeq =
-                    msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE
-                // Manage animation for avatar and name.
-                val avatar = convViewHolder.mAvatar
-                if (presenter.isGroup() && textMessage.isIncoming) {
-                    avatar?.let {
-                        if (endOfSeq) { // To only display the avatar of the last message.
-                            avatar.setImageDrawable(
-                                conversationFragment.getConversationAvatar(contact.primaryNumber)
-                            )
-                            avatar.visibility = View.VISIBLE
-                        } else {
-                            if (position == lastMsgPos - 1) {
-                                ActionHelper.startFadeOutAnimation(avatar)
-                            } else {
-                                avatar.setImageBitmap(null)
-                                avatar.visibility = View.INVISIBLE
-                            }
-                        }
-                    }
-
-                    // Show the name of the contact.
-                    val startOfSeq = msgSequenceType == SequenceType.FIRST
-                            || msgSequenceType == SequenceType.SINGLE
-                    peerDisplayName?.apply {
-                        if (startOfSeq) {
-                            visibility = View.VISIBLE
-                            convViewHolder.compositeDisposable.add(
-                                presenter.contactService
-                                    .observeContact(account, contact, false)
-                                    .observeOn(DeviceUtils.uiScheduler)
-                                    .subscribe { text = it.displayName }
-                            )
-                        } else {
-                            visibility = View.GONE
-                            text = null
-                        }
-                    }
+        val endOfSeq =
+            msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE
+        // Manage animation for avatar and name.
+        val avatar = convViewHolder.mAvatar
+        if (presenter.isGroup() && textMessage.isIncoming) {
+            avatar?.let {
+                if (endOfSeq) { // To only display the avatar of the last message.
+                    avatar.setImageDrawable(
+                        conversationFragment.getConversationAvatar(contact.primaryNumber)
+                    )
+                    avatar.visibility = View.VISIBLE
                 } else {
-                    avatar?.visibility = View.GONE
-                    peerDisplayName?.visibility = View.GONE
+                    if (position == lastMsgPos - 1) {
+                        ActionHelper.startFadeOutAnimation(avatar)
+                    } else {
+                        avatar.setImageBitmap(null)
+                        avatar.visibility = View.INVISIBLE
+                    }
                 }
+            }
 
-                // Manage deleted message.
-                if (isDeleted) {
-                    replyBubble?.visibility = View.GONE
-                    messageContent.updateDeleted(messageTime)
-                    messageBubble.setOnLongClickListener(null)
+            // Show the name of the contact.
+            val startOfSeq = msgSequenceType == SequenceType.FIRST
+                    || msgSequenceType == SequenceType.SINGLE
+            peerDisplayName?.apply {
+                if (startOfSeq) {
+                    visibility = View.VISIBLE
+                    convViewHolder.compositeDisposable.add(
+                        presenter.contactService
+                            .observeContact(account, contact, false)
+                            .observeOn(DeviceUtils.uiScheduler)
+                            .subscribe { text = it.displayName }
+                    )
+                } else {
+                    visibility = View.GONE
+                    text = null
                 }
-            })
+            }
+        } else {
+            avatar?.visibility = View.GONE
+            peerDisplayName?.visibility = View.GONE
+        }
+
+        // Manage deleted message.
+        if (isDeleted) {
+            replyBubble?.visibility = View.GONE
+            messageContent.updateDeleted(messageTime)
+            messageBubble.setOnLongClickListener(null)
+        }
     }
 
     private fun configureForContactEvent(
@@ -1635,253 +1628,247 @@ class ConversationAdapter(
             }
         }
 
-        convViewHolder.compositeDisposable.add(
-            interaction.lastElement
-                .observeOn(DeviceUtils.uiScheduler)
-                .subscribe { lastElement ->
-                    val call = lastElement as Call
+        val call = interaction as Call
 
-                    val peerDisplayName = convViewHolder.mPeerDisplayName
-                    val avatar = convViewHolder.mAvatar
-                    val timePermanent = convViewHolder.mMsgDetailTxtPerm
+        val peerDisplayName = convViewHolder.mPeerDisplayName
+        val avatar = convViewHolder.mAvatar
+        val timePermanent = convViewHolder.mMsgDetailTxtPerm
 
-                    val account = interaction.account ?: return@subscribe
-                    val contact = call.contact ?: return@subscribe
-                    val isDateShown = hasPermanentDateString(call, position)
-                    val msgSequenceType = getMsgSequencing(position, isDateShown)
+        val account = interaction.account ?: return
+        val contact = call.contact ?: return
+        val isDateShown = hasPermanentDateString(call, position)
+        val msgSequenceType = getMsgSequencing(position, isDateShown)
 
-                    val endOfSeq = msgSequenceType == SequenceType.LAST
-                            || msgSequenceType == SequenceType.SINGLE
-                    val startOfSeq = msgSequenceType == SequenceType.FIRST
-                            || msgSequenceType == SequenceType.SINGLE
-                    val resIndex = msgSequenceType.ordinal + (if (call.isIncoming) 1 else 0) * 4
+        val endOfSeq = msgSequenceType == SequenceType.LAST
+                || msgSequenceType == SequenceType.SINGLE
+        val startOfSeq = msgSequenceType == SequenceType.FIRST
+                || msgSequenceType == SequenceType.SINGLE
+        val resIndex = msgSequenceType.ordinal + (if (call.isIncoming) 1 else 0) * 4
 
-                    // Add margin if message need to be separated.
-                    val isMessageSeparationNeeded = isMessageSeparationNeeded(isDateShown, position)
-                    convViewHolder.mCallLayout?.updateLayoutParams<MarginLayoutParams> {
-                        topMargin = if (!isMessageSeparationNeeded) 0 else context.resources
-                            .getDimensionPixelSize(R.dimen.conversation_message_separation)
-                    }
+        // Add margin if message need to be separated.
+        val isMessageSeparationNeeded = isMessageSeparationNeeded(isDateShown, position)
+        convViewHolder.mCallLayout?.updateLayoutParams<MarginLayoutParams> {
+            topMargin = if (!isMessageSeparationNeeded) 0 else context.resources
+                .getDimensionPixelSize(R.dimen.conversation_message_separation)
+        }
 
-                    // Only show the avatar if it is a group conversation
-                    if (presenter.isGroup()) {
-                        // Manage animation for avatar.
-                        // To only display the avatar of the last message.
-                        if (endOfSeq) {
-                            avatar?.setImageDrawable(
-                                conversationFragment.getConversationAvatar(contact.primaryNumber)
-                            )
-                            avatar?.visibility = View.VISIBLE
-                        } else {
-                            if (position == lastMsgPos - 1) {
-                                avatar?.let { ActionHelper.startFadeOutAnimation(avatar) }
-                            } else {
-                                avatar?.setImageBitmap(null)
-                                avatar?.visibility = View.INVISIBLE
-                            }
-                        }
-                    } else avatar?.visibility = View.GONE
+        // Only show the avatar if it is a group conversation
+        if (presenter.isGroup()) {
+            // Manage animation for avatar.
+            // To only display the avatar of the last message.
+            if (endOfSeq) {
+                avatar?.setImageDrawable(
+                    conversationFragment.getConversationAvatar(contact.primaryNumber)
+                )
+                avatar?.visibility = View.VISIBLE
+            } else {
+                if (position == lastMsgPos - 1) {
+                    avatar?.let { ActionHelper.startFadeOutAnimation(avatar) }
+                } else {
+                    avatar?.setImageBitmap(null)
+                    avatar?.visibility = View.INVISIBLE
+                }
+            }
+        } else avatar?.visibility = View.GONE
 
-                    // Show the name of the contact if it is a group conversation
-                    peerDisplayName?.apply {
-                        if (presenter.isGroup() && startOfSeq) {
-                            visibility = View.VISIBLE
-                            convViewHolder.compositeDisposable.add(
-                                presenter.contactService
-                                    .observeContact(account, contact, false)
-                                    .observeOn(DeviceUtils.uiScheduler)
-                                    .subscribe { text = it.displayName }
-                            )
-                        } else visibility = View.GONE
-                    }
+        // Show the name of the contact if it is a group conversation
+        peerDisplayName?.apply {
+            if (presenter.isGroup() && startOfSeq) {
+                visibility = View.VISIBLE
+                convViewHolder.compositeDisposable.add(
+                    presenter.contactService
+                        .observeContact(account, contact, false)
+                        .observeOn(DeviceUtils.uiScheduler)
+                        .subscribe { text = it.displayName }
+                )
+            } else visibility = View.GONE
+        }
 
-                    // Manage the update of the timestamp
-                    if (isDateShown) {
-                        convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
-                            timePermanent?.text = TextUtils
-                                .timestampToDate(context, formatter, call.timestamp)
-                        })
-                        convViewHolder.mMsgDetailTxtPerm?.visibility = View.VISIBLE
-                    } else convViewHolder.mMsgDetailTxtPerm?.visibility = View.GONE
-                    convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
-                        val timeString =
-                            TextUtils.timestampToTime(context, formatter, call.timestamp)
-                        convViewHolder.mCallTime?.text = timeString
-                    })
-                    // When a group call is occurring but you are not in it, a message is displayed
-                    // in conversation to inform the user about the call and invite him to join.
-                    if (call.isGroupCall) {
-                        val callAcceptLayout = convViewHolder.mCallAcceptLayout ?: return@subscribe
-                        val callInfoText = convViewHolder.mCallInfoText ?: return@subscribe
-                        val acceptCallAudioButton =
-                            convViewHolder.mAcceptCallAudioButton ?: return@subscribe
-                        val acceptCallVideoButton =
-                            convViewHolder.mAcceptCallVideoButton ?: return@subscribe
+        // Manage the update of the timestamp
+        if (isDateShown) {
+            convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
+                timePermanent?.text = TextUtils
+                    .timestampToDate(context, formatter, call.timestamp)
+            })
+            convViewHolder.mMsgDetailTxtPerm?.visibility = View.VISIBLE
+        } else convViewHolder.mMsgDetailTxtPerm?.visibility = View.GONE
+        convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
+            val timeString =
+                TextUtils.timestampToTime(context, formatter, call.timestamp)
+            convViewHolder.mCallTime?.text = timeString
+        })
+        // When a group call is occurring but you are not in it, a message is displayed
+        // in conversation to inform the user about the call and invite him to join.
+        if (call.isGroupCall) {
+            val callAcceptLayout = convViewHolder.mCallAcceptLayout ?: return
+            val callInfoText = convViewHolder.mCallInfoText ?: return
+            val acceptCallAudioButton =
+                convViewHolder.mAcceptCallAudioButton ?: return
+            val acceptCallVideoButton =
+                convViewHolder.mAcceptCallVideoButton ?: return
 
-                        callAcceptLayout.apply {
-                            // Accept with audio only
-                            convViewHolder.mAcceptCallAudioButton?.setOnClickListener {
-                                call.confId?.let { presenter.goToGroupCall(false) }
-                            }
-                            // Accept call with video
-                            convViewHolder.mAcceptCallVideoButton?.setOnClickListener {
-                                call.confId?.let { presenter.goToGroupCall(true) }
-                            }
-                        }
+            callAcceptLayout.apply {
+                // Accept with audio only
+                convViewHolder.mAcceptCallAudioButton?.setOnClickListener {
+                    call.confId?.let { presenter.goToGroupCall(false) }
+                }
+                // Accept call with video
+                convViewHolder.mAcceptCallVideoButton?.setOnClickListener {
+                    call.confId?.let { presenter.goToGroupCall(true) }
+                }
+            }
 
-                        // Set the background to the call started message.
-                        callAcceptLayout.background =
-                            ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
+            // Set the background to the call started message.
+            callAcceptLayout.background =
+                ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
 
-                        if (call.isIncoming) {
-                            // Show the avatar of the caller if last or single.
+            if (call.isIncoming) {
+                // Show the avatar of the caller if last or single.
 
-                            // Manage animation to only display the avatar of the last message.
-                            if (endOfSeq) {
-                                avatar?.setImageDrawable(
-                                    conversationFragment
-                                        .getConversationAvatar(contact.primaryNumber)
-                                )
-                                avatar?.visibility = View.VISIBLE
-                            } else {
-                                if (position == lastMsgPos - 1) {
-                                    avatar?.let { ActionHelper.startFadeOutAnimation(avatar) }
-                                } else {
-                                    avatar?.setImageBitmap(null)
-                                    avatar?.visibility = View.INVISIBLE
-                                }
-                            }
-                            // We can call ourselves in a group call with different devices.
-                            // Set the message to the left when it is incoming.
-                            convViewHolder.mGroupCallLayout?.gravity = Gravity.START
-                            // Show the name of the contact.
-                            peerDisplayName?.apply {
-                                if (startOfSeq) {
-                                    visibility = View.VISIBLE
-                                    convViewHolder.compositeDisposable.add(
-                                        presenter.contactService
-                                            .observeContact(account, contact, false)
-                                            .observeOn(DeviceUtils.uiScheduler)
-                                            .subscribe {
-                                                text = it.displayName
-                                            }
-                                    )
-                                } else visibility = View.GONE
-                            }
-                            // Use the original color of the icons.
-                            callInfoText.setTextColor(context.getColor(R.color.colorOnSurface))
-                            acceptCallAudioButton
-                                .setColorFilter(context.getColor(R.color.accept_call_button))
-                            acceptCallVideoButton
-                                .setColorFilter(context.getColor(R.color.accept_call_button))
-                            callAcceptLayout.background.setTint(
-                                context.getColor(R.color.conversation_secondary_background)
-                            )
-                        } else {
-                            // Set the message to the right because it is outgoing.
-                            convViewHolder.mGroupCallLayout?.gravity = Gravity.END
-                            // Hide the name of the contact.
-                            peerDisplayName?.visibility = View.GONE
-                            avatar?.visibility = View.GONE
-                            // Set the color to the call started message.
-                            if (convColor != 0) {
-                                callAcceptLayout.background.setTint(convColor)
-                                callInfoText.setTextColor(
-                                    context.getColor(R.color.text_color_primary_dark)
-                                )
-                                acceptCallAudioButton.setColorFilter(
-                                    context.getColor(R.color.white)
-                                )
-                                acceptCallVideoButton.setColorFilter(
-                                    context.getColor(R.color.white)
-                                )
-                                callAcceptLayout.background.setTint(convColor)
-                            }
-                        }
-                        callAcceptLayout.setPadding(callPadding)
+                // Manage animation to only display the avatar of the last message.
+                if (endOfSeq) {
+                    avatar?.setImageDrawable(
+                        conversationFragment
+                            .getConversationAvatar(contact.primaryNumber)
+                    )
+                    avatar?.visibility = View.VISIBLE
+                } else {
+                    if (position == lastMsgPos - 1) {
+                        avatar?.let { ActionHelper.startFadeOutAnimation(avatar) }
                     } else {
-                        val typeCall = convViewHolder.mHistTxt ?: return@subscribe
-                        val callInfoLayout = convViewHolder.mCallInfoLayout ?: return@subscribe
-                        val detailCall = convViewHolder.mHistDetailTxt ?: return@subscribe
-                        val callIcon = convViewHolder.mIcon ?: return@subscribe
-                        val callLayout = convViewHolder.mCallLayout
-
-                        val typeCallTxt: String
-
-                        callInfoLayout.background =
-                            ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
-                        callInfoLayout.setPadding(callPadding)
-                        // Manage background to convColor if it is outgoing and not missed.
-                        if (convColor != 0 && !call.isIncoming) {
-                            callInfoLayout.background.setTint(convColor)
-                        } else {
-                            callInfoLayout.background.setTintList(null)
-                        }
-                        // Add the call duration if not null.
-                        detailCall.text =
-                            if (call.duration != 0L) {
-                                String.format(
-                                    context.getString(R.string.call_duration),
-                                    DateUtils.formatElapsedTime(
-                                        recycle, call.duration!! / 1000
-                                    )
-                                ).let { " - $it" }
-                            } else null
-
-                        // After a call, a message is displayed with call information.
-                        // Manage the call message layout.
-                        if (call.isIncoming) {
-                            // Set the color of the time duration.
-                            detailCall.setTextColor(
-                                context.getColor(R.color.colorOnSurface)
-                            )
-                            // Set the call message color.
-                            typeCall.setTextColor(
-                                context.getColor(R.color.colorOnSurface)
-                            )
-                            // Put the message to the left because it is incoming.
-                            convViewHolder.mCallLayout?.gravity = Gravity.START
-
-                            if (call.isMissed) { // Call incoming missed.
-                                callIcon.setImageResource(R.drawable.baseline_missed_call_16)
-                                // Set the drawable color to red because it is missed.
-                                callIcon.drawable.setTint(context.getColor(R.color.call_missed))
-                                typeCallTxt = context.getString(R.string.notif_missed_incoming_call)
-                            } else { // Call incoming not missed.
-                                callIcon.setImageResource(R.drawable.baseline_incoming_call_16)
-                                callIcon.drawable.setTint(context.getColor(R.color.colorOnSurface))
-                                typeCallTxt = context.getString(R.string.notif_incoming_call)
-                            }
-                        } else {
-                            // Set the call message color.
-                            typeCall.setTextColor(
-                                context.getColor(R.color.call_text_outgoing_message)
-                            )
-                            // Set the color of the time duration.
-                            detailCall.setTextColor(
-                                context.getColor(R.color.call_text_outgoing_message)
-                            )
-                            if (call.isMissed) { // Outgoing call missed.
-                                callIcon.setImageResource(R.drawable.baseline_missed_call_16)
-                                // Set the drawable color to red because it is missed.
-                                callIcon.drawable.setTint(context.getColor(R.color.call_missed))
-                                typeCallTxt = context.getString(R.string.notif_missed_outgoing_call)
-                                // Flip the photo upside down to show a "missed outgoing call".
-                                callIcon.scaleX = -1f
-                            } else { // Outgoing call not missed.
-                                callIcon.setImageResource(R.drawable.baseline_outgoing_call_16)
-                                callIcon.drawable
-                                    .setTint(context.getColor(R.color.call_drawable_color))
-                                typeCallTxt = context.getString(R.string.notif_outgoing_call)
-                            }
-                            // Put the message to the right because it is outgoing.
-                            callLayout?.gravity = Gravity.END
-                        }
-
-                        typeCall.text = typeCallTxt
+                        avatar?.setImageBitmap(null)
+                        avatar?.visibility = View.INVISIBLE
                     }
                 }
-        )
+                // We can call ourselves in a group call with different devices.
+                // Set the message to the left when it is incoming.
+                convViewHolder.mGroupCallLayout?.gravity = Gravity.START
+                // Show the name of the contact.
+                peerDisplayName?.apply {
+                    if (startOfSeq) {
+                        visibility = View.VISIBLE
+                        convViewHolder.compositeDisposable.add(
+                            presenter.contactService
+                                .observeContact(account, contact, false)
+                                .observeOn(DeviceUtils.uiScheduler)
+                                .subscribe {
+                                    text = it.displayName
+                                }
+                        )
+                    } else visibility = View.GONE
+                }
+                // Use the original color of the icons.
+                callInfoText.setTextColor(context.getColor(R.color.colorOnSurface))
+                acceptCallAudioButton
+                    .setColorFilter(context.getColor(R.color.accept_call_button))
+                acceptCallVideoButton
+                    .setColorFilter(context.getColor(R.color.accept_call_button))
+                callAcceptLayout.background.setTint(
+                    context.getColor(R.color.conversation_secondary_background)
+                )
+            } else {
+                // Set the message to the right because it is outgoing.
+                convViewHolder.mGroupCallLayout?.gravity = Gravity.END
+                // Hide the name of the contact.
+                peerDisplayName?.visibility = View.GONE
+                avatar?.visibility = View.GONE
+                // Set the color to the call started message.
+                if (convColor != 0) {
+                    callAcceptLayout.background.setTint(convColor)
+                    callInfoText.setTextColor(
+                        context.getColor(R.color.text_color_primary_dark)
+                    )
+                    acceptCallAudioButton.setColorFilter(
+                        context.getColor(R.color.white)
+                    )
+                    acceptCallVideoButton.setColorFilter(
+                        context.getColor(R.color.white)
+                    )
+                    callAcceptLayout.background.setTint(convColor)
+                }
+            }
+            callAcceptLayout.setPadding(callPadding)
+        } else {
+            val typeCall = convViewHolder.mHistTxt ?: return
+            val callInfoLayout = convViewHolder.mCallInfoLayout ?: return
+            val detailCall = convViewHolder.mHistDetailTxt ?: return
+            val callIcon = convViewHolder.mIcon ?: return
+            val callLayout = convViewHolder.mCallLayout
+
+            val typeCallTxt: String
+
+            callInfoLayout.background =
+                ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
+            callInfoLayout.setPadding(callPadding)
+            // Manage background to convColor if it is outgoing and not missed.
+            if (convColor != 0 && !call.isIncoming) {
+                callInfoLayout.background.setTint(convColor)
+            } else {
+                callInfoLayout.background.setTintList(null)
+            }
+            // Add the call duration if not null.
+            detailCall.text =
+                if (call.duration != 0L) {
+                    String.format(
+                        context.getString(R.string.call_duration),
+                        DateUtils.formatElapsedTime(
+                            recycle, call.duration!! / 1000
+                        )
+                    ).let { " - $it" }
+                } else null
+
+            // After a call, a message is displayed with call information.
+            // Manage the call message layout.
+            if (call.isIncoming) {
+                // Set the color of the time duration.
+                detailCall.setTextColor(
+                    context.getColor(R.color.colorOnSurface)
+                )
+                // Set the call message color.
+                typeCall.setTextColor(
+                    context.getColor(R.color.colorOnSurface)
+                )
+                // Put the message to the left because it is incoming.
+                convViewHolder.mCallLayout?.gravity = Gravity.START
+
+                if (call.isMissed) { // Call incoming missed.
+                    callIcon.setImageResource(R.drawable.baseline_missed_call_16)
+                    // Set the drawable color to red because it is missed.
+                    callIcon.drawable.setTint(context.getColor(R.color.call_missed))
+                    typeCallTxt = context.getString(R.string.notif_missed_incoming_call)
+                } else { // Call incoming not missed.
+                    callIcon.setImageResource(R.drawable.baseline_incoming_call_16)
+                    callIcon.drawable.setTint(context.getColor(R.color.colorOnSurface))
+                    typeCallTxt = context.getString(R.string.notif_incoming_call)
+                }
+            } else {
+                // Set the call message color.
+                typeCall.setTextColor(
+                    context.getColor(R.color.call_text_outgoing_message)
+                )
+                // Set the color of the time duration.
+                detailCall.setTextColor(
+                    context.getColor(R.color.call_text_outgoing_message)
+                )
+                if (call.isMissed) { // Outgoing call missed.
+                    callIcon.setImageResource(R.drawable.baseline_missed_call_16)
+                    // Set the drawable color to red because it is missed.
+                    callIcon.drawable.setTint(context.getColor(R.color.call_missed))
+                    typeCallTxt = context.getString(R.string.notif_missed_outgoing_call)
+                    // Flip the photo upside down to show a "missed outgoing call".
+                    callIcon.scaleX = -1f
+                } else { // Outgoing call not missed.
+                    callIcon.setImageResource(R.drawable.baseline_outgoing_call_16)
+                    callIcon.drawable
+                        .setTint(context.getColor(R.color.call_drawable_color))
+                    typeCallTxt = context.getString(R.string.notif_outgoing_call)
+                }
+                // Put the message to the right because it is outgoing.
+                callLayout?.gravity = Gravity.END
+            }
+
+            typeCall.text = typeCallTxt
+        }
     }
 
     private fun configureSearchResult(
@@ -1944,7 +1931,7 @@ class ConversationAdapter(
         val msg = mInteractions[i]
 
         // Manage specific interaction which are always single (ex : emoji).
-        if (isAlwaysSingleMsg(msg.lastElement.blockingFirst())) {
+        if (isAlwaysSingleMsg(msg)) {
             return SequenceType.SINGLE
         }
 
@@ -2063,17 +2050,14 @@ class ConversationAdapter(
          * @param second    second interaction
          * @return          True if a sequence break is needed. Else false.
          */
-        private fun isSeqBreak(first: Interaction, second: Interaction): Boolean {
-            val lastElementFirst = first.lastElement.blockingFirst()
-            val lastElementSecond = second.lastElement.blockingFirst()
-            return StringUtils.isOnlyEmoji(lastElementFirst.body) != StringUtils.isOnlyEmoji(lastElementSecond.body)
+        private fun isSeqBreak(first: Interaction, second: Interaction): Boolean =
+            StringUtils.isOnlyEmoji(first.body) != StringUtils.isOnlyEmoji(second.body)
                     || first.isIncoming != second.isIncoming
                     || ((first.type !== Interaction.InteractionType.TEXT) && (first.type !== Interaction.InteractionType.CALL))
                     || ((second.type !== Interaction.InteractionType.TEXT) && (second.type !== Interaction.InteractionType.CALL))
                     || second.replyTo != null
                     || first.contact != second.contact
                     || (second.timestamp - first.timestamp) > (10 * DateUtils.MINUTE_IN_MILLIS)
-        }
 
         private fun isAlwaysSingleMsg(msg: Interaction): Boolean =
             ((msg.type !== Interaction.InteractionType.TEXT && msg.type !== Interaction.InteractionType.CALL)

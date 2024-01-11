@@ -34,29 +34,17 @@ open class Interaction {
     var replyTo: Single<Interaction>? = null
     var edit: String? = null
     var reactToId: String? = null
-    var reactTo: Interaction? = null
     var reactions: MutableList<Interaction> = ArrayList()
-    private var reactionSubject: Subject<List<Interaction>> = BehaviorSubject.createDefault(reactions)
-
     var history: MutableList<Interaction> = ArrayList<Interaction>(1).apply { add(this@Interaction) }
+
     private var historySubject: Subject<List<Interaction>> = BehaviorSubject.createDefault(history)
 
+    private var reactionSubject: Subject<List<Interaction>> = BehaviorSubject.createDefault(reactions)
     val reactionObservable: Observable<List<Interaction>>
-        get() = reactionSubject.switchMap { i ->
-            if (i.isEmpty())
-                Observable.just(emptyList())
-            else {
-                Observable.combineLatest(i.map { it.lastElement }) { a -> a.mapNotNull {
-                    it as Interaction
-                    return@mapNotNull if (it.body.isNullOrEmpty()) null else it
-                } }
-            }
-        }
+        get() = reactionSubject
 
     val historyObservable: Observable<List<Interaction>>
         get() = historySubject
-    var lastElement: Observable<Interaction> = historyObservable
-        .map { it.lastOrNull() ?: this }
 
     @DatabaseField(generatedId = true, columnName = COLUMN_ID, index = true)
     var id = 0
@@ -198,6 +186,11 @@ open class Interaction {
         reactionSubject.onNext(ArrayList(reactions))
     }
 
+    fun removeReaction(id: String) {
+        reactions.removeAll { it.messageId == id }
+        reactionSubject.onNext(ArrayList(reactions))
+    }
+
     fun addEdit(interaction: Interaction, newMessage: Boolean) {
         history.remove(interaction)
         if (newMessage)
@@ -211,13 +204,14 @@ open class Interaction {
         historySubject.onNext(ArrayList(history))
     }
 
-    fun updateFrom(previous: Interaction) {
-        history = previous.history
-        historySubject = previous.historySubject
-        lastElement = previous.lastElement
-        reactions = previous.reactions
-        reactionSubject = previous.reactionSubject
-        //reactionObservable = previous.reactionObservable
+    fun replaceEdits(interactions: List<Interaction>) {
+        history.clear()
+        history.addAll(interactions)
+        historySubject.onNext(ArrayList(history))
+    }
+
+    fun updateParent(parentId: String) {
+        this.parentId = parentId
     }
 
     var preview: Any? = null

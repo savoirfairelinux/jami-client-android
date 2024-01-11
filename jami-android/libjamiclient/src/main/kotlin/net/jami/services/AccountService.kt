@@ -447,15 +447,11 @@ class AccountService(
             .subscribeOn(scheduler)
 
     private fun loadConversationHistory(accountId: String, conversationUri: Uri, root: String, n: Long) =
-        Schedulers.io().scheduleDirect { JamiService.loadConversationMessages(accountId, conversationUri.rawRingId, root, n) }
+        Schedulers.io().scheduleDirect { JamiService.loadConversation(accountId, conversationUri.rawRingId, root, n) }
 
 
     fun loadMore(conversation: Conversation, n: Int = 32): Single<Conversation> {
         synchronized(conversation) {
-            if (conversation.isLoaded()) {
-                Log.w(TAG, "loadMore: conversation already fully loaded")
-                return Single.just(conversation)
-            }
             val mode = conversation.mode.blockingFirst()
             if (mode == Conversation.Mode.Syncing || mode == Conversation.Mode.Request) {
                 Log.w(TAG, "loadMore: conversation is syncing")
@@ -463,14 +459,9 @@ class AccountService(
             }
             conversation.loading?.let { return it }
             val ret = SingleSubject.create<Conversation>()
-            val roots = conversation.swarmRoot
-            // Log.w(TAG, "${conversation.accountId} loadMore ${conversation.uri} $mode $roots")
             conversation.loading = ret
-            if (roots.isEmpty())
-                loadConversationHistory(conversation.accountId, conversation.uri, "", n.toLong())
-            else
-                for (root in roots)
-                    loadConversationHistory(conversation.accountId, conversation.uri, root, n.toLong())
+            // load n messages before the oldest one in the history
+            loadConversationHistory(conversation.accountId, conversation.uri, "", n.toLong())
             return ret
         }
     }
@@ -482,7 +473,7 @@ class AccountService(
             return Single.just(emptyList())
         }
         return SingleSubject.create<List<Interaction>>().apply {
-            loadingTasks[JamiService.loadConversationUntil(conversation.accountId, conversation.uri.rawRingId, from, until)] = this
+            loadingTasks[JamiService.loadSwarmUntil(conversation.accountId, conversation.uri.rawRingId, from, until)] = this
         }
     }
 
@@ -1306,7 +1297,7 @@ class AccountService(
         interaction.edit = edit
         if (replyTo != null) {
             interaction.replyTo = conversation.loadMessage(replyTo) {
-                JamiService.loadConversationUntil(account.accountId, conversation.uri.rawRingId, id, replyTo)
+                JamiService.loadSwarmUntil(account.accountId, conversation.uri.rawRingId, "", replyTo)
             }
         }
         if (interaction.contact == null)
@@ -1316,19 +1307,37 @@ class AccountService(
         return interaction
     }
 
-    private fun addMessage(account: Account, conversation: Conversation, message: Map<String, String>, newMessage: Boolean): Interaction {
-        val interaction = getInteraction(account, conversation, message)
-        if (conversation.addSwarmElement(interaction, newMessage)) {
-            /*if (conversation.isVisible)
-                mHistoryService.setMessageRead(account.accountID, conversation.uri, interaction.messageId!!)*/
-        }
+    /**
+     * Converts a swarm message from the daemon into an interaction including it's edits and reactions.
+     * @param account The account the conversation is from.
+     * @param conversation The conversation the message is from.
+     * @param message The message to convert to an interaction.
+     * @return The swarm message as an interaction.
+     */
+    private fun getInteractionFromSwarmMessage(account: Account, conversation: Conversation, message: SwarmMessage): Interaction {
+        val body = message.body.toNative()
+        body["id"] = message.id
+        body["type"] = message.type
+        body["linearizedParent"] = message.linearizedParent
+
+        val interaction = getInteraction(account, conversation, body)
+        val edits = message.editions.map { getInteraction(account, conversation, it.toNative()) }
+        val reactions = message.reactions.map { getInteraction(account, conversation, it.toNative()) }
+        interaction.addEdits(edits)
+        interaction.addReactions(reactions)
+
         return interaction
     }
 
-    fun conversationLoaded(id: Long, accountId: String, conversationId: String, messages: List<Map<String, String>>) {
+    private fun addMessage(account: Account, conversation: Conversation, message: SwarmMessage, newMessage: Boolean): Interaction {
+        val interaction = getInteractionFromSwarmMessage(account, conversation, message)
+        conversation.addSwarmElement(interaction, newMessage)
+        return interaction
+    }
+
+    fun swarmLoaded(id: Long, accountId: String, conversationId: String, messages: SwarmMessageVect) {
         try {
             val task = loadingTasks.remove(id)
-            // Log.w(TAG, "ConversationCallback: conversationLoaded $accountId/$conversationId ${messages.size}")
             getAccount(accountId)?.let { account -> account.getSwarm(conversationId)?.let { conversation ->
                 val interactions: List<Interaction>
                 val subject = synchronized(conversation) {
@@ -1452,8 +1461,7 @@ class AccountService(
             metadata["mode"]?.let { m -> Conversation.Mode.values()[m.toInt()] } ?: Conversation.Mode.OneToOne))
     }
 
-    fun messageReceived(accountId: String, conversationId: String, message: Map<String, String>) {
-        Log.w(TAG, "ConversationCallback: messageReceived " + accountId + "/" + conversationId + " " + message.size)
+    fun swarmMessageReceived(accountId: String, conversationId: String, message: SwarmMessage) {
         getAccount(accountId)?.let { account -> account.getSwarm(conversationId)?.let { conversation ->
             synchronized(conversation) {
                 val interaction = addMessage(account, conversation, message, true)
@@ -1465,6 +1473,32 @@ class AccountService(
                     dataTransfers.onNext(interaction)
                 if (interaction is Call && interaction.isGroupCall && isIncoming)
                     incomingGroupCallSubject.onNext(conversation)
+            }
+        }}
+    }
+
+    fun swarmMessageUpdated(accountId: String, conversationId: String, message: SwarmMessage) {
+        getAccount(accountId)?.let { account -> account.getSwarm(conversationId)?.let { conversation ->
+            synchronized(conversation) {
+                val interaction = getInteractionFromSwarmMessage(account, conversation, message)
+                conversation.updateSwarmMessage(interaction)
+            }
+        }}
+    }
+
+    fun reactionAdded(accountId: String, conversationId: String, messageId: String, reaction: StringMap) {
+        getAccount(accountId)?.let { account -> account.getSwarm(conversationId)?.let { conversation ->
+            synchronized(conversation) {
+                val interaction = getInteraction(account, conversation, reaction)
+                conversation.addReaction(interaction, messageId)
+            }
+        }}
+    }
+
+    fun reactionRemoved(accountId: String, conversationId: String, messageId: String, reactionId: String) {
+        getAccount(accountId)?.let { account -> account.getSwarm(conversationId)?.let { conversation ->
+            synchronized(conversation) {
+                conversation.removeReaction(messageId, reactionId)
             }
         }}
     }
