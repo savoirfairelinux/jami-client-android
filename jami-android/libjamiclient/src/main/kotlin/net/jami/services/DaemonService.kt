@@ -328,8 +328,8 @@ class DaemonService(
     }
 
     internal inner class ConversationCallbackImpl : ConversationCallback() {
-        override fun conversationLoaded(id: Long, accountId: String, conversationId: String, messages: VectMap) {
-            mAccountService.conversationLoaded(id, accountId, conversationId, messages.toNative())
+        override fun swarmLoaded(id: Long, accountId: String, conversationId: String, messages: SwarmMessageVect) {
+            mAccountService.swarmLoaded(id, accountId, conversationId, messages)
         }
 
         override fun messagesFound(id: Long, accountId: String, conversationId: String, messages: VectMap) {
@@ -364,8 +364,20 @@ class DaemonService(
             mAccountService.conversationPreferencesUpdated(accountId, conversationId, preferences)
         }
 
-        override fun messageReceived(accountId: String, conversationId: String, message: StringMap) {
-            mAccountService.messageReceived(accountId, conversationId, message.toNative())
+        override fun swarmMessageReceived(accountId: String, conversationId: String, message: SwarmMessage) {
+            mAccountService.swarmMessageReceived(accountId, conversationId, message)
+        }
+
+        override fun swarmMessageUpdated(accountId: String, conversationId: String, message: SwarmMessage) {
+            mAccountService.swarmMessageUpdated(accountId, conversationId, message)
+        }
+
+        override fun reactionAdded(accountId: String, conversationId: String, messageId: String, reaction: StringMap) {
+            mAccountService.reactionAdded(accountId, conversationId, messageId, reaction)
+        }
+
+        override fun reactionRemoved(accountId: String, conversationId: String, messageId: String, reactionId: String) {
+            mAccountService.reactionRemoved(accountId, conversationId, messageId, reactionId)
         }
     }
 
