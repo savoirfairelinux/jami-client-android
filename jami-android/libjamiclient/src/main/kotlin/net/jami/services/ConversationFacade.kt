@@ -83,23 +83,23 @@ class ConversationFacade(
         mHistoryService.setMessageNotified(accountId, conversationUri, messageId)
     }
 
-    fun readMessages(accountId: String, contact: Uri): String? {
-        val account = mAccountService.getAccount(accountId) ?: return null
-        val conversation = account.getByUri(contact) ?: return null
-        return readMessages(account, conversation, true)
+    fun readMessages(accountId: String, contact: Uri) {
+        val account = mAccountService.getAccount(accountId) ?: return
+        val conversation = account.getByUri(contact) ?: return
+        readMessages(account, conversation, true)
     }
 
-    fun readMessages(account: Account, conversation: Conversation, cancelNotification: Boolean): String? {
-        val lastMessage = readMessages(conversation) ?: return null
+    fun readMessages(account: Account, conversation: Conversation, cancelNotification: Boolean) {
+        val lastMessage = readMessages(conversation) ?: conversation.lastRead ?: return
+        val lastRelevantMessage = conversation.getLastRelevantReadMessage(lastMessage) ?: return
         account.refreshed(conversation)
 
         // Mark the message as read (daemon will deal with "read receipt" parameter on his own).
-        mAccountService.setMessageDisplayed(account.accountId, conversation.uri, lastMessage)
+        mAccountService.setMessageDisplayed(account.accountId, conversation.uri, lastRelevantMessage)
 
         if (cancelNotification) {
             mNotificationService.cancelTextNotification(account.accountId, conversation.uri)
         }
-        return lastMessage
     }
 
     private fun readMessages(conversation: Conversation): String? {
