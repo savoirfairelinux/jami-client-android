@@ -201,6 +201,18 @@ class Conversation : ConversationHistory {
         return interactions
     }
 
+    fun getLastRelevantReadMessage(lastReadId: String): String? {
+        var lastReadFound = false
+        return aggregateHistory.reversed().firstOrNull {
+            if (it.messageId == lastReadId)
+                lastReadFound = true
+            if (lastReadFound)
+                it.isIncoming && it.type == Interaction.InteractionType.TEXT
+            else
+                false
+        }?.messageId
+    }
+
     @Synchronized
     fun getMessage(messageId: String): Interaction? = mMessages[messageId]
 
