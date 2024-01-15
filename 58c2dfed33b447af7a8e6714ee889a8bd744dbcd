@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "071a9d68_5da11945",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/model/Conversation.kt",
+        "patchSetId": 15
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-01-15T21:09:02Z",
+      "side": 1,
+      "message": "logic should now be in daemon",
+      "range": {
+        "startLine": 532,
+        "startChar": 0,
+        "endLine": 560,
+        "endChar": 1
+      },
+      "revId": "58c2dfed33b447af7a8e6714ee889a8bd744dbcd",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b65b6e72_5c39cbc0",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/model/Conversation.kt",
+        "patchSetId": 15
+      },
+      "lineNbr": 715,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-01-15T21:09:02Z",
+      "side": 1,
+      "message": "logic should now be in daemon",
+      "range": {
+        "startLine": 714,
+        "startChar": 0,
+        "endLine": 715,
+        "endChar": 15
+      },
+      "revId": "58c2dfed33b447af7a8e6714ee889a8bd744dbcd",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
