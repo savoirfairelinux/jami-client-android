@@ -22,6 +22,7 @@
   <string name="developed_by">Développé par</string>
   <string name="designed_by">Conçu par</string>
   <string name="ringtones_by">Sonneries par</string>
+  <string name="credits_volunteers">Et les volontaires qui contribuent à ce projet !</string>
   <!--RingActivity-->
   <string name="error_no_network">Aucune connectivité réseau</string>
   <string name="error_account_offline">Le compte est déconnecté</string>
@@ -140,6 +141,7 @@
   <string name="conversation_send_video">Enregistrer un message vidéo</string>
   <string name="conversation_share_location">Partager la localisation</string>
   <string name="ongoing_group_call">Appel en cours</string>
+  <string name="started_call">a commencé un appel</string>
   <string name="in_reply_to">En réponse à</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Droits d\'accès à la caméra</string>
