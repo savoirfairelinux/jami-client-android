@@ -349,6 +349,25 @@ class ConversationAdapter(
         conversationViewHolder: ConversationViewHolder,
         interaction: Interaction
     ) {
+        // Unnecessary to display reaction chip if interaction is deleted.
+        val lastElement = interaction.historyObservable.blockingFirst().last()
+        val isDeleted = lastElement is TextMessage && lastElement.body.isNullOrEmpty()
+        if (isDeleted) {
+            conversationViewHolder.reactionChip?.isVisible = false
+            return
+        }
+
+        // Subscribe on delete event to hide the reaction chip.
+        conversationViewHolder.compositeDisposable.add(
+            interaction.lastElement
+                .observeOn(DeviceUtils.uiScheduler)
+                .subscribe { interactionLastElement ->
+                    val isInteractionDeleted = interactionLastElement is TextMessage
+                            && interactionLastElement.body.isNullOrEmpty()
+                    if (isInteractionDeleted) conversationViewHolder.reactionChip?.isVisible = false
+                }
+        )
+
         val context = conversationViewHolder.itemView.context
         // If reaction chip is clicked we wants to display the reaction visualiser.
         conversationViewHolder.reactionChip?.setOnClickListener {
