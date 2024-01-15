@@ -22,6 +22,7 @@
   <string name="developed_by">Développé par</string>
   <string name="designed_by">Conçu par</string>
   <string name="ringtones_by">Sonneries par</string>
+  <string name="credits_volunteers">Et les volontaires qui contribuent à ce projet !</string>
   <!--RingActivity-->
   <string name="error_no_network">Aucune connexion au réseau n\'est possible</string>
   <string name="error_account_offline">Le compte est déconnecté</string>
