@@ -15,17 +15,25 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 -->
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"
-    android:layout_marginTop="15dp"
-    android:layout_marginBottom="15dp"
     android:descendantFocusability="blocksDescendants"
     android:focusable="false"
-    app:layout_anchorGravity="center_horizontal">
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/contact_event_details_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:paddingVertical="@dimen/conversation_date_padding"
+        android:textColor="@color/textColorSecondary"
+        android:textSize="@dimen/conversation_text_size_small"
+        tools:text="Aug 12" />
 
     <TextView
         android:id="@+id/contact_event_txt"
@@ -34,13 +42,13 @@ along with this program; if not, write to the Free Software
         android:layout_gravity="center_horizontal"
         android:ellipsize="end"
         android:marqueeRepeatLimit="marquee_forever"
-        android:maxLines="2"
+        android:maxLines="1"
         android:paddingHorizontal="@dimen/padding_large"
+        android:paddingVertical="@dimen/conversation_date_padding"
         android:scrollHorizontally="true"
-        android:singleLine="false"
-        android:textAlignment="center"
+        android:singleLine="true"
         android:textColor="@color/textColorSecondary"
-        android:textSize="12sp"
-        tools:text="Bob was invited, MAY 15, 15:28" />
+        android:textSize="@dimen/conversation_text_size_small"
+        tools:text="Bob was invited, 15:28 PM" />
 
-</FrameLayout>
+</LinearLayout>
