@@ -344,6 +344,9 @@ along with this program; if not, write to the Free Software
     <string name="conversation_contact_banned">%1$s was banned</string>
     <string name="conversation_search_hint">Search conversation</string>
 
+    <string name="today">Today</string>
+    <string name="yesterday">Yesterday</string>
+
     <!-- Contacts -->
     <string name="add_call_contact_number_to_contacts">Add %1$s?</string>
     <string name="prompt_new_password">New password</string>
