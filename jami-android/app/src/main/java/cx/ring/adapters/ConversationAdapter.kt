@@ -1475,6 +1475,20 @@ class ConversationAdapter(
     }
 
     /**
+     * Message Separation is used to highlight two group of messages.
+     * We don't need message separation if:
+     * - The message is the first of the conversation
+     * - The message is the first of the day (date already shown)
+     */
+    private fun isMessageSeparationNeeded(
+        isDateShown: Boolean,
+        messagePosition: Int,
+    ): Boolean = getPreviousInteractionFromPosition(messagePosition)?.let { firstInteraction ->
+        val secondInteraction = mInteractions[messagePosition]
+        isSeqBreak(firstInteraction, secondInteraction) && !isDateShown
+    } ?: false
+
+    /**
      * Configures the viewHolder to display a call info text message, ie. not a classic text message
      *
      * @param convViewHolder The conversation viewHolder
