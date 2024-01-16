@@ -1900,6 +1900,20 @@ class ConversationAdapter(
         return prevMsg != null && msg.timestamp - prevMsg.timestamp > 10 * DateUtils.MINUTE_IN_MILLIS
     }
 
+    // Used to show the date between messages.
+    private fun hasPermanentDateString(message: Interaction, position: Int): Boolean {
+        val previousMessageTimestamp =
+            getPreviousInteractionFromPosition(position)?.timestamp ?: return false
+
+        // Create Calendar instances for each timestamp
+        val calendar1 = Calendar.getInstance().apply { timeInMillis = message.timestamp }
+        val calendar2 = Calendar.getInstance().apply { timeInMillis = previousMessageTimestamp }
+
+        // Compare the year, month, and day of year to check if they are different days
+        return calendar1.get(Calendar.YEAR) != calendar2.get(Calendar.YEAR)
+                || calendar1.get(Calendar.DAY_OF_YEAR) != calendar2.get(Calendar.DAY_OF_YEAR)
+    }
+
     private enum class SequenceType { FIRST, MIDDLE, LAST, SINGLE }
 
     companion object {
