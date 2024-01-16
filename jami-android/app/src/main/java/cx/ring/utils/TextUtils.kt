@@ -72,6 +72,39 @@ object TextUtils {
         return timeStr.out().toString().uppercase(Locale.getDefault())
     }
 
+    /**
+     * Converts a timestamp into a date.
+     * May returns terms like 'Today' or 'Yesterday'. In all other cases, the complete date.
+     */
+    fun timestampToDate(context: Context, formatter: Formatter, timestamp: Long): String {
+        (formatter.out() as? StringBuilder)?.setLength(0)
+        fun isYesterday(timestamp: Long): Boolean {
+            return DateUtils.isToday(timestamp + DateUtils.DAY_IN_MILLIS)
+        }
+
+        if (DateUtils.isToday(timestamp)) return context.getString(R.string.today).uppercase()
+        else if (isYesterday(timestamp)) return context.getString(R.string.yesterday).uppercase()
+
+        val timeStr: Formatter =
+            DateUtils.formatDateRange(
+                context, formatter, timestamp, timestamp,
+                DateUtils.FORMAT_SHOW_DATE or
+                        DateUtils.FORMAT_NO_YEAR or DateUtils.FORMAT_ABBREV_MONTH
+            )
+        return timeStr.out().toString().uppercase(Locale.getDefault())
+    }
+
+    /**
+     * Converts a timestamp into a time. Don't display the date.
+     * Example of the output format = 11:32 A.M.
+     */
+    fun timestampToTime(context: Context, formatter: Formatter, timestamp: Long): String {
+        (formatter.out() as? StringBuilder)?.setLength(0)
+        return DateUtils // Example of the format in the message = 11:32 A.M.
+            .formatDateRange(context, formatter, timestamp, timestamp, DateUtils.FORMAT_SHOW_TIME)
+            .out().toString().uppercase(Locale.getDefault())
+    }
+
     fun getReadableFileTransferStatus(context: Context, transferStatus: InteractionStatus): String {
         return when (transferStatus) {
             InteractionStatus.TRANSFER_CREATED -> context.getString(R.string.file_transfer_status_created)
