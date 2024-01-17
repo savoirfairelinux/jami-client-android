@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "88fe46d3_d21bba16",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/CustomMessageBubble.kt",
+        "patchSetId": 18
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-01-17T16:41:14Z",
+      "side": 1,
+      "message": "move to views",
+      "range": {
+        "startLine": 1,
+        "startChar": 16,
+        "endLine": 1,
+        "endChar": 24
+      },
+      "revId": "05000da832ebada76003e0fdcaea9c56b5773f85",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "766f7e0a_ffc15e58",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/CustomMessageBubble.kt",
+        "patchSetId": 18
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-01-17T16:41:14Z",
+      "side": 1,
+      "message": "move inside class",
+      "range": {
+        "startLine": 19,
+        "startChar": 19,
+        "endLine": 19,
+        "endChar": 23
+      },
+      "revId": "05000da832ebada76003e0fdcaea9c56b5773f85",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "da551b3b_0b19cac9",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/CustomMessageBubble.kt",
+        "patchSetId": 18
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-01-17T16:41:14Z",
+      "side": 1,
+      "message": "CASE_NEXT_LINE",
+      "range": {
+        "startLine": 20,
+        "startChar": 4,
+        "endLine": 20,
+        "endChar": 10
+      },
+      "revId": "05000da832ebada76003e0fdcaea9c56b5773f85",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "01452b19_4a44e69a",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/CustomMessageBubble.kt",
+        "patchSetId": 18
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-01-17T16:41:14Z",
+      "side": 1,
+      "message": "CASE_LAST_LINE",
+      "range": {
+        "startLine": 21,
+        "startChar": 4,
+        "endLine": 21,
+        "endChar": 10
+      },
+      "revId": "05000da832ebada76003e0fdcaea9c56b5773f85",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b5b9920f_16738e90",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/CustomMessageBubble.kt",
+        "patchSetId": 18
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-01-17T16:41:14Z",
+      "side": 1,
+      "message": "CASE_SINGLE_LINE",
+      "range": {
+        "startLine": 22,
+        "startChar": 4,
+        "endLine": 22,
+        "endChar": 10
+      },
+      "revId": "05000da832ebada76003e0fdcaea9c56b5773f85",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e65bd7a8_c8987feb",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/CustomMessageBubble.kt",
+        "patchSetId": 18
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-01-17T16:41:14Z",
+      "side": 1,
+      "message": "not needed, create inline",
+      "range": {
+        "startLine": 30,
+        "startChar": 12,
+        "endLine": 30,
+        "endChar": 20
+      },
+      "revId": "05000da832ebada76003e0fdcaea9c56b5773f85",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eaf667f4_981e0838",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/CustomMessageBubble.kt",
+        "patchSetId": 18
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-01-17T16:41:14Z",
+      "side": 1,
+      "message": "use Kotlin extension instead",
+      "range": {
+        "startLine": 314,
+        "startChar": 17,
+        "endLine": 314,
+        "endChar": 28
+      },
+      "revId": "05000da832ebada76003e0fdcaea9c56b5773f85",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
