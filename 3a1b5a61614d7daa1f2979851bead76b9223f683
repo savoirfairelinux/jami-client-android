@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2fc760d3_002b4779",
+        "filename": "jami-android/app/src/main/res/layout/item_conv_msg_peer.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-01-17T16:18:08Z",
+      "side": 1,
+      "message": "should not be needed",
+      "range": {
+        "startLine": 134,
+        "startChar": 20,
+        "endLine": 134,
+        "endChar": 58
+      },
+      "revId": "3a1b5a61614d7daa1f2979851bead76b9223f683",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
