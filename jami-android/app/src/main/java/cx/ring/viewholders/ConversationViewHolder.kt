@@ -31,6 +31,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import cx.ring.R
+import cx.ring.views.CustomMessageBubble
 import cx.ring.adapters.MessageType
 import cx.ring.views.MessageStatusView
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -75,16 +76,21 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
         else -> null
     }
     val mTypingIndicatorLayout: FrameLayout? = v.findViewById(R.id.typing_indicator_layout)
-    val mReplyName: TextView? = v.findViewById(R.id.msg_reply_name)
-    val mReplyTxt: TextView? = v.findViewById(R.id.msg_reply_txt)
-    val mInReplyTo: TextView? = v.findViewById(R.id.msg_in_reply_to)
-    val mPeerDisplayName: TextView? = when (type){
-        MessageType.INCOMING_TEXT_MESSAGE,
+    var mPeerDisplayName: TextView? = when (type){
         MessageType.INCOMING_CALL_INFORMATION,
         MessageType.ONGOING_GROUP_CALL -> v.findViewById(R.id.msg_display_name)
-        MessageType.INCOMING_FILE -> v.findViewById(R.id.peer_name)
+        MessageType.INCOMING_FILE,
+        MessageType.INCOMING_TEXT_MESSAGE -> v.findViewById(R.id.peer_name)
         else -> null
     }
+    var mMessageBubble: ConstraintLayout? = null
+    var mMessageLayout: ConstraintLayout? = null
+    var mMessageBubbleBorder: FrameLayout? = null
+    var mMessageContent: CustomMessageBubble? = null
+    var mReplyBubble: LinearLayout? = null
+    var mReplyName: TextView? = null
+    var mReplyTxt: TextView? = null
+
     val reactionChip: TextView? = v.findViewById(R.id.reaction_chip)
     val mIcon: ImageView? = when (type) {
         MessageType.INCOMING_CALL_INFORMATION,
@@ -176,9 +182,16 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
             }
             MessageType.INCOMING_TEXT_MESSAGE,
             MessageType.OUTGOING_TEXT_MESSAGE -> {
+                mReplyName = v.findViewById(R.id.reply_name)
+                mReplyBubble = v.findViewById(R.id.reply_bubble)
+                mReplyTxt = v.findViewById(R.id.reply_text)
                 mMsgTxt = v.findViewById(R.id.msg_txt)
+                mMessageBubble = v.findViewById(R.id.message_bubble)
+                mMessageBubbleBorder = v.findViewById(R.id.message_bubble_border)
+                mMessageLayout = v.findViewById(R.id.message_layout)
+                mMessageContent = v.findViewById(R.id.message_content)
                 mMsgDetailTxt = v.findViewById(R.id.msg_details_txt)
-                mMsgDetailTxtPerm = v.findViewById(R.id.msg_details_txt_perm)
+                mMsgDetailTxtPerm = v.findViewById(R.id.message_time_permanent)
                 mAnswerLayout = v.findViewById(R.id.link_preview)
                 mHistTxt = v.findViewById(R.id.link_preview_title)
                 mHistDetailTxt = v.findViewById(R.id.link_preview_description)

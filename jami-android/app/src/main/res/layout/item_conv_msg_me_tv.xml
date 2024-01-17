@@ -41,8 +41,8 @@ along with this program; if not, write to the Free Software
 
         <cx.ring.views.MessageStatusView
             android:id="@+id/status_icon"
-            android:layout_width="14dp"
-            android:layout_height="14dp"
+            android:layout_width="@dimen/conversation_status_icon_size"
+            android:layout_height="@dimen/conversation_status_icon_size"
             android:layout_alignBottom="@id/msg_txt"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="5dp"
