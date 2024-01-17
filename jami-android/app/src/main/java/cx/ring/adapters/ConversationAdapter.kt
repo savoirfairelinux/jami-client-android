@@ -1831,7 +1831,7 @@ class ConversationAdapter(
         val msg = mInteractions[i]
 
         // Manage specific interaction which are always single (ex : emoji).
-        if (isAlwaysSingleMsg(msg)) {
+        if (isAlwaysSingleMsg(msg.lastElement.blockingFirst())) {
             return SequenceType.SINGLE
         }
 
@@ -1840,7 +1840,7 @@ class ConversationAdapter(
             // Get the next interaction (if null it means there is only one interaction).
             val nextMsg = getNextInteractionFromPosition(i) ?: return SequenceType.SINGLE
             // Check if sequence break needed.
-            return if (isSeqBreak(msg, nextMsg) || hasPermanentTimeString(nextMsg, i + 1))
+            return if (isSeqBreak(msg, nextMsg) || hasPermanentDateString(nextMsg, i + 1))
                 SequenceType.SINGLE
             else
                 SequenceType.FIRST
@@ -1858,15 +1858,15 @@ class ConversationAdapter(
         val prevMsg = getPreviousInteractionFromPosition(i)
         val nextMsg = getNextInteractionFromPosition(i)
         if (prevMsg != null && nextMsg != null) {
-            val nextMsgHasTime = hasPermanentTimeString(nextMsg, i + 1)
+            val nextMsgHasDate = hasPermanentDateString(nextMsg, i + 1)
             return if ((isSeqBreak(prevMsg, msg) || isTimeShown)
-                && !(isSeqBreak(msg, nextMsg) || nextMsgHasTime)
+                && !(isSeqBreak(msg, nextMsg) || nextMsgHasDate)
             ) {
                 SequenceType.FIRST
             } else if (!isSeqBreak(prevMsg, msg) && !isTimeShown && isSeqBreak(msg, nextMsg)) {
                 SequenceType.LAST
             } else if (!isSeqBreak(prevMsg, msg) && !isTimeShown && !isSeqBreak(msg, nextMsg)) {
-                if (nextMsgHasTime) SequenceType.LAST else SequenceType.MIDDLE
+                if (nextMsgHasDate) SequenceType.LAST else SequenceType.MIDDLE
             } else {
                 SequenceType.SINGLE
             }
@@ -1966,13 +1966,17 @@ class ConversationAdapter(
          * @param second    second interaction
          * @return          True if a sequence break is needed. Else false.
          */
-        private fun isSeqBreak(first: Interaction, second: Interaction): Boolean =
-            StringUtils.isOnlyEmoji(first.body) != StringUtils.isOnlyEmoji(second.body)
+        private fun isSeqBreak(first: Interaction, second: Interaction): Boolean {
+            val lastElementFirst = first.lastElement.blockingFirst()
+            val lastElementSecond = second.lastElement.blockingFirst()
+            return StringUtils.isOnlyEmoji(lastElementFirst.body) != StringUtils.isOnlyEmoji(lastElementSecond.body)
                     || first.isIncoming != second.isIncoming
                     || ((first.type !== Interaction.InteractionType.TEXT) && (first.type !== Interaction.InteractionType.CALL))
                     || ((second.type !== Interaction.InteractionType.TEXT) && (second.type !== Interaction.InteractionType.CALL))
                     || second.replyTo != null
                     || first.contact != second.contact
+                    || (second.timestamp - first.timestamp) > (10 * DateUtils.MINUTE_IN_MILLIS)
+        }
 
         private fun isAlwaysSingleMsg(msg: Interaction): Boolean =
             ((msg.type !== Interaction.InteractionType.TEXT && msg.type !== Interaction.InteractionType.CALL)
