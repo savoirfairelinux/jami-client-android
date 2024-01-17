@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6071abf8_9b567fef",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-01-17T16:02:51Z",
+      "side": 1,
+      "message": "competes with the reaction flow bellow.",
+      "range": {
+        "startLine": 352,
+        "startChar": 0,
+        "endLine": 369,
+        "endChar": 9
+      },
+      "revId": "3771fd39ebfc309aee25f33d37c2a99acb4fa809",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
