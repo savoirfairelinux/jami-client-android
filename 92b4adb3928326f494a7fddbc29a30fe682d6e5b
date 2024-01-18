@@ -24,6 +24,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a269b575_aec0fd7e",
+        "filename": "jami-android/app/src/main/java/cx/ring/views/CustomMessageBubble.kt",
+        "patchSetId": 19
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-01-18T15:50:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e2c832d_06739693",
+      "range": {
+        "startLine": 23,
+        "startChar": 12,
+        "endLine": 23,
+        "endChar": 24
+      },
+      "revId": "92b4adb3928326f494a7fddbc29a30fe682d6e5b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cfc3f90a_f32d787a",
@@ -37,6 +61,30 @@
       "writtenOn": "2024-01-18T15:36:40Z",
       "side": 1,
       "message": "should be `let`, lateinit not needed",
+      "range": {
+        "startLine": 24,
+        "startChar": 12,
+        "endLine": 24,
+        "endChar": 24
+      },
+      "revId": "92b4adb3928326f494a7fddbc29a30fe682d6e5b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a9055a9b_e9ce56ef",
+        "filename": "jami-android/app/src/main/java/cx/ring/views/CustomMessageBubble.kt",
+        "patchSetId": 19
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-01-18T15:50:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfc3f90a_f32d787a",
       "range": {
         "startLine": 24,
         "startChar": 12,
@@ -70,6 +118,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "30a21e7a_1a0e7de0",
+        "filename": "jami-android/app/src/main/java/cx/ring/views/CustomMessageBubble.kt",
+        "patchSetId": 19
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-01-18T15:50:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "386b086d_f49a5b3f",
+      "range": {
+        "startLine": 25,
+        "startChar": 12,
+        "endLine": 25,
+        "endChar": 24
+      },
+      "revId": "92b4adb3928326f494a7fddbc29a30fe682d6e5b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ec983152_72c3c32f",
@@ -93,6 +165,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "78744a71_8b1351f9",
+        "filename": "jami-android/app/src/main/java/cx/ring/views/CustomMessageBubble.kt",
+        "patchSetId": 19
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-01-18T15:50:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec983152_72c3c32f",
+      "range": {
+        "startLine": 27,
+        "startChar": 12,
+        "endLine": 27,
+        "endChar": 20
+      },
+      "revId": "92b4adb3928326f494a7fddbc29a30fe682d6e5b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3e666f40_70e48273",
@@ -106,6 +202,30 @@
       "writtenOn": "2024-01-18T15:36:40Z",
       "side": 1,
       "message": "not possible to get this without iterating over the lines ?",
+      "range": {
+        "startLine": 144,
+        "startChar": 0,
+        "endLine": 145,
+        "endChar": 14
+      },
+      "revId": "92b4adb3928326f494a7fddbc29a30fe682d6e5b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8df683a_4e945d92",
+        "filename": "jami-android/app/src/main/java/cx/ring/views/CustomMessageBubble.kt",
+        "patchSetId": 19
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-01-18T15:50:38Z",
+      "side": 1,
+      "message": "not equivalent of getting textView.width",
+      "parentUuid": "3e666f40_70e48273",
       "range": {
         "startLine": 144,
         "startChar": 0,

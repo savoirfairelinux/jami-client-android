@@ -24,6 +24,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f527f014_51292f0a",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/CustomMessageBubble.kt",
+        "patchSetId": 18
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-01-18T15:50:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88fe46d3_d21bba16",
+      "range": {
+        "startLine": 1,
+        "startChar": 16,
+        "endLine": 1,
+        "endChar": 24
+      },
+      "revId": "05000da832ebada76003e0fdcaea9c56b5773f85",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "766f7e0a_ffc15e58",
@@ -37,6 +61,30 @@
       "writtenOn": "2024-01-17T16:41:14Z",
       "side": 1,
       "message": "move inside class",
+      "range": {
+        "startLine": 19,
+        "startChar": 19,
+        "endLine": 19,
+        "endChar": 23
+      },
+      "revId": "05000da832ebada76003e0fdcaea9c56b5773f85",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e49d474a_e701934a",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/CustomMessageBubble.kt",
+        "patchSetId": 18
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-01-18T15:50:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "766f7e0a_ffc15e58",
       "range": {
         "startLine": 19,
         "startChar": 19,
@@ -70,6 +118,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3898b39c_a88fe0fb",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/CustomMessageBubble.kt",
+        "patchSetId": 18
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-01-18T15:50:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da551b3b_0b19cac9",
+      "range": {
+        "startLine": 20,
+        "startChar": 4,
+        "endLine": 20,
+        "endChar": 10
+      },
+      "revId": "05000da832ebada76003e0fdcaea9c56b5773f85",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "01452b19_4a44e69a",
@@ -93,6 +165,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9d9c7567_710ece79",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/CustomMessageBubble.kt",
+        "patchSetId": 18
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-01-18T15:50:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01452b19_4a44e69a",
+      "range": {
+        "startLine": 21,
+        "startChar": 4,
+        "endLine": 21,
+        "endChar": 10
+      },
+      "revId": "05000da832ebada76003e0fdcaea9c56b5773f85",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b5b9920f_16738e90",
@@ -106,6 +202,30 @@
       "writtenOn": "2024-01-17T16:41:14Z",
       "side": 1,
       "message": "CASE_SINGLE_LINE",
+      "range": {
+        "startLine": 22,
+        "startChar": 4,
+        "endLine": 22,
+        "endChar": 10
+      },
+      "revId": "05000da832ebada76003e0fdcaea9c56b5773f85",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f484a51e_5594a74a",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/CustomMessageBubble.kt",
+        "patchSetId": 18
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-01-18T15:50:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5b9920f_16738e90",
       "range": {
         "startLine": 22,
         "startChar": 4,
@@ -152,6 +272,30 @@
       "writtenOn": "2024-01-17T16:41:14Z",
       "side": 1,
       "message": "use Kotlin extension instead",
+      "range": {
+        "startLine": 314,
+        "startChar": 17,
+        "endLine": 314,
+        "endChar": 28
+      },
+      "revId": "05000da832ebada76003e0fdcaea9c56b5773f85",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "61a64009_0b0b26e8",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/CustomMessageBubble.kt",
+        "patchSetId": 18
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-01-18T15:50:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eaf667f4_981e0838",
       "range": {
         "startLine": 314,
         "startChar": 17,
