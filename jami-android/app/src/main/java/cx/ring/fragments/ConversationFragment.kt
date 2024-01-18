@@ -853,6 +853,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                 override fun onMenuItemActionExpand(item: MenuItem): Boolean {
                     val binding = binding ?: return false
                     mSearchAdapter = ConversationAdapter(this@ConversationFragment, presenter, true)
+                    mSearchAdapter?.setPrimaryColor(mAdapter!!.getPrimaryColor())
                     presenter.startSearch()
                     currentBottomView?.isVisible = false
                     binding.histList.adapter = mSearchAdapter

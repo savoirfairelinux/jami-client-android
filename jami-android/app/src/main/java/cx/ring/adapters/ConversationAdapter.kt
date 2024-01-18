@@ -626,6 +626,8 @@ class ConversationAdapter(
         notifyDataSetChanged()
     }
 
+    fun getPrimaryColor() = convColor
+
     fun setComposingStatus(composingStatus: ComposingStatus) {
         val composing = composingStatus == ComposingStatus.Active
         if (isComposing != composing) {
