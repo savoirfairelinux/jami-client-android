@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3e2c832d_06739693",
+        "filename": "jami-android/app/src/main/java/cx/ring/views/CustomMessageBubble.kt",
+        "patchSetId": 19
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-01-18T15:36:40Z",
+      "side": 1,
+      "message": "should be `let`, lateinit not needed",
+      "range": {
+        "startLine": 23,
+        "startChar": 12,
+        "endLine": 23,
+        "endChar": 24
+      },
+      "revId": "92b4adb3928326f494a7fddbc29a30fe682d6e5b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cfc3f90a_f32d787a",
+        "filename": "jami-android/app/src/main/java/cx/ring/views/CustomMessageBubble.kt",
+        "patchSetId": 19
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-01-18T15:36:40Z",
+      "side": 1,
+      "message": "should be `let`, lateinit not needed",
+      "range": {
+        "startLine": 24,
+        "startChar": 12,
+        "endLine": 24,
+        "endChar": 24
+      },
+      "revId": "92b4adb3928326f494a7fddbc29a30fe682d6e5b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "386b086d_f49a5b3f",
+        "filename": "jami-android/app/src/main/java/cx/ring/views/CustomMessageBubble.kt",
+        "patchSetId": 19
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-01-18T15:36:40Z",
+      "side": 1,
+      "message": "should be `let`, lateinit not needed",
+      "range": {
+        "startLine": 25,
+        "startChar": 12,
+        "endLine": 25,
+        "endChar": 24
+      },
+      "revId": "92b4adb3928326f494a7fddbc29a30fe682d6e5b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec983152_72c3c32f",
+        "filename": "jami-android/app/src/main/java/cx/ring/views/CustomMessageBubble.kt",
+        "patchSetId": 19
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-01-18T15:36:40Z",
+      "side": 1,
+      "message": "lateinit not required, could be default-initialized like maximumLineWidth",
+      "range": {
+        "startLine": 27,
+        "startChar": 12,
+        "endLine": 27,
+        "endChar": 20
+      },
+      "revId": "92b4adb3928326f494a7fddbc29a30fe682d6e5b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3e666f40_70e48273",
+        "filename": "jami-android/app/src/main/java/cx/ring/views/CustomMessageBubble.kt",
+        "patchSetId": 19
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-01-18T15:36:40Z",
+      "side": 1,
+      "message": "not possible to get this without iterating over the lines ?",
+      "range": {
+        "startLine": 144,
+        "startChar": 0,
+        "endLine": 145,
+        "endChar": 14
+      },
+      "revId": "92b4adb3928326f494a7fddbc29a30fe682d6e5b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
