@@ -1,0 +1,7 @@
+Code-Review+2: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
+Verified+1: Jenkins CI <jenkins@ring-packaging.cx>
+Submitted-by: Pierre Nicolas <pierre.nicolas@savoirfairelinux.com>
+Submitted-at: Thu, 18 Jan 2024 16:24:26 -0500
+Reviewed-on: https://review.jami.net/c/jami-client-android/+/27294
+Project: jami-client-android
+Branch: refs/heads/master
