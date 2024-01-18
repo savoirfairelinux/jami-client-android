@@ -22,6 +22,30 @@
       },
       "revId": "11f843a77be22c815c93748afe712754b57f72b6",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d7090f7_d8e50c84",
+        "filename": "jami-android/app/src/main/res/drawable/baseline_play_arrow_24.xml",
+        "patchSetId": 15
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-01-18T15:21:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15bc4b5e_b523f1e5",
+      "range": {
+        "startLine": 7,
+        "startChar": 28,
+        "endLine": 7,
+        "endChar": 34
+      },
+      "revId": "11f843a77be22c815c93748afe712754b57f72b6",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
