@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "99d18209_fa0a25b7",
+        "filename": "jami-android/app/src/main/res/drawable/baseline_pause_24.xml",
+        "patchSetId": 19
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-01-18T16:47:03Z",
+      "side": 0,
+      "message": "follow the same format as Android native icons",
+      "range": {
+        "startLine": 5,
+        "startChar": 6,
+        "endLine": 8,
+        "endChar": 48
+      },
+      "revId": "fbf4b90843ba24eb735c91645f3ecebb2caa0e54",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
