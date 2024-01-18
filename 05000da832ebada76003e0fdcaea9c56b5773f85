@@ -259,6 +259,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d77b7c7_5ef6ecdf",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/CustomMessageBubble.kt",
+        "patchSetId": 18
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2024-01-18T20:29:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e65bd7a8_c8987feb",
+      "range": {
+        "startLine": 30,
+        "startChar": 12,
+        "endLine": 30,
+        "endChar": 20
+      },
+      "revId": "05000da832ebada76003e0fdcaea9c56b5773f85",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "eaf667f4_981e0838",
