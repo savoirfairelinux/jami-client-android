@@ -116,6 +116,7 @@ along with this program; if not, write to the Free Software
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:drawablePadding="8dp"
                         android:text="@string/qr_code"
                         android:textSize="@dimen/text_size_large"
                         app:drawableStartCompat="@drawable/baseline_qr_code_2_black_24dp"
