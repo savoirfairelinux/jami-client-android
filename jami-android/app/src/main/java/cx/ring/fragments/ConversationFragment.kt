@@ -1087,9 +1087,10 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         val title = binding!!.contactTitle
         val subtitle = binding!!.contactSubtitle
         val logo = binding!!.contactImage
+        val toolbar = binding!!.tabletToolbar
         logo.setImageDrawable(mConversationAvatar)
         logo.visibility = View.VISIBLE
-        logo.setOnClickListener { openContact() }
+        toolbar.setOnClickListener { openContact() }
         title.text = conversation.title
         title.textSize = 15f
        title.setTypeface(null, Typeface.NORMAL)
