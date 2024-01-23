@@ -1402,6 +1402,7 @@ class ConversationAdapter(
         }
 
         // Manage the message content.
+        answerLayout?.visibility = View.GONE
         if (StringUtils.isOnlyEmoji(message)) {
             messageContent.updateEmoji(message, messageTime, isEdited)
         } else {
@@ -1412,9 +1413,8 @@ class ConversationAdapter(
             // Manage layout for message with a link inside.
             if (showLinkPreviews && !isDeleted) {
                 val cachedPreview =
-                    textMessage.preview as? Maybe<PreviewData>? ?: LinkPreview.getFirstUrl(
-                        message
-                    )
+                    textMessage.preview as? Maybe<PreviewData>? ?: LinkPreview
+                        .getFirstUrl(message)
                         .flatMap { url -> LinkPreview.load(url) }
                         .cache()
                         .apply { interaction.preview = this }
