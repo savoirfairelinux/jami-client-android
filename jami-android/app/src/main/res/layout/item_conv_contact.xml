@@ -30,7 +30,7 @@ along with this program; if not, write to the Free Software
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:paddingVertical="@dimen/conversation_date_padding"
+        android:paddingTop="@dimen/conversation_date_padding"
         android:textColor="@color/textColorSecondary"
         android:textSize="@dimen/conversation_text_size_small"
         tools:text="Aug 12" />
@@ -44,7 +44,7 @@ along with this program; if not, write to the Free Software
         android:marqueeRepeatLimit="marquee_forever"
         android:maxLines="1"
         android:paddingHorizontal="@dimen/padding_large"
-        android:paddingVertical="@dimen/conversation_date_padding"
+        android:paddingTop="@dimen/conversation_date_padding"
         android:scrollHorizontally="true"
         android:singleLine="true"
         android:textColor="@color/textColorSecondary"
