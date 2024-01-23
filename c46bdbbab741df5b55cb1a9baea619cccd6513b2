@@ -16,6 +16,24 @@
       "message": "Shouldn\u0027t we just add \n\n`messageText.setLinkTextColor(color)`\n\nin `CustomMessageBubble#updateColor`\n\n???",
       "revId": "c46bdbbab741df5b55cb1a9baea619cccd6513b2",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9fa562c2_2264615c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-01-23T17:17:44Z",
+      "side": 1,
+      "message": "unresolved",
+      "parentUuid": "c4d474d9_e04ccdb8",
+      "revId": "c46bdbbab741df5b55cb1a9baea619cccd6513b2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
