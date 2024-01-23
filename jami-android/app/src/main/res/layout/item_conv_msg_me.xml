@@ -140,6 +140,7 @@ along with this program; if not, write to the Free Software
                     android:paddingHorizontal="10dp"
                     android:paddingVertical="5dp"
                     android:textColor="@color/text_color_primary_dark"
+                    android:theme="@style/OutgoingTextView"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:edited="true"
