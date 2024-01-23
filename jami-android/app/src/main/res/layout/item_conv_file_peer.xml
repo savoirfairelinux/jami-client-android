@@ -107,12 +107,11 @@
             android:animateLayoutChanges="true"
             android:background="@drawable/filemsg_background_in"
             app:layout_constrainedWidth="true"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/file_download_button"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toEndOf="@id/photo_layout"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@id/peer_name">
 
             <LinearLayout
                 android:id="@+id/file_icon_layout"
@@ -209,7 +208,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toEndOf="@id/fileInfoLayout"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="@id/fileInfoLayout"
             app:srcCompat="@drawable/download_24px" />
 
         <TextView
