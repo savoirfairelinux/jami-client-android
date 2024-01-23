@@ -34,6 +34,24 @@
       "parentUuid": "c4d474d9_e04ccdb8",
       "revId": "c46bdbbab741df5b55cb1a9baea619cccd6513b2",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c1650208_c0adfaff",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-01-23T18:12:11Z",
+      "side": 1,
+      "message": "This would have the same effect as setting this in the theme.\nIt\u0027s better to define it in the theme.",
+      "parentUuid": "9fa562c2_2264615c",
+      "revId": "c46bdbbab741df5b55cb1a9baea619cccd6513b2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
