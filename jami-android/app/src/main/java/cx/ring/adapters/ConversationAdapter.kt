@@ -1254,7 +1254,11 @@ class ConversationAdapter(
         messageSequenceType: SequenceType,
         isOnlyEmoji: Boolean, isReplying: Boolean, isDeleted: Boolean, isIncoming: Boolean,
     ) {
-        if (isOnlyEmoji) messageBubble.background = null
+        if (isOnlyEmoji) {
+            messageBubble.background = null
+            messageBubbleBorder.backgroundTintList =
+                ContextCompat.getColorStateList(context, R.color.transparent)
+        }
         else {
             // Manage layout for standard message. Index refers to msgBGLayouts array.
             val resIndex =
