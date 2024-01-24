@@ -17,6 +17,7 @@
 package cx.ring.tv.conversation
 
 import android.Manifest
+import android.Manifest.permission.RECORD_AUDIO
 import android.app.Activity
 import android.content.DialogInterface
 import android.content.Intent
@@ -29,7 +30,9 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.speech.RecognitionListener
 import android.speech.RecognizerIntent
+import android.speech.SpeechRecognizer
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -38,6 +41,7 @@ import android.view.ViewGroup
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.ColorInt
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
@@ -77,6 +81,7 @@ import net.jami.smartlist.ConversationItemViewModel
 import java.io.File
 import java.io.IOException
 import java.util.*
+import com.google.android.material.R.style.Theme_MaterialComponents_Dialog
 
 @AndroidEntryPoint
 class TvConversationFragment : BaseSupportFragment<ConversationPresenter, ConversationView>(),
@@ -94,6 +99,34 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
     private val mCompositeDisposable = CompositeDisposable()
     private var binding: FragConversationTvBinding? = null
     private var mCurrentFileAbsolutePath: String? = null
+    private var audioAcceptedCallback: () -> Unit = {}
+    private val audioPermissionResultLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        if (isGranted) {
+            Log.w(TAG, "Audio permission granted by user.")
+            audioAcceptedCallback()
+        } else {
+            Log.w(TAG, "Audio permission denied by user.")
+            Toast.makeText(requireContext(), R.string.audio_permission_denied, Toast.LENGTH_LONG)
+                .show()
+        }
+    }
+    var spokenText: String? = null
+    val speechRecognitionDialog by lazy {
+        MaterialAlertDialogBuilder(requireContext(), Theme_MaterialComponents_Dialog)
+            .setTitle(R.string.conversation_input_speech_hint)
+            .setMessage("")
+            .setIcon(R.drawable.baseline_mic_24)
+            .setPositiveButton(R.string.tv_dialog_send) { _, _ ->
+                presenter.sendTextMessage(spokenText)
+            }
+            .setNegativeButton(android.R.string.cancel, null)
+            .create().apply {
+                window!!.setLayout(DIALOG_WIDTH, DIALOG_HEIGHT)
+                setOwnerActivity(requireActivity())
+            }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -109,7 +142,9 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         FragConversationTvBinding.inflate(inflater, container, false).apply {
-            buttonText.setOnClickListener { displaySpeechRecognizer() }
+            buttonText.setOnClickListener {
+                checkAudioPermissionRationale { checkAudioPermission { startRecognizer() } }
+            }
             buttonVideo.setOnClickListener {
                 if (checkAudioPermission(REQUEST_AUDIO_PERMISSION_FOR_VIDEO))
                     openVideoRecorder()
@@ -144,18 +179,6 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
         super.onDestroyView()
         binding = null
         mCompositeDisposable.dispose()
-    }
-
-    // Create an intent that can start the Speech Recognizer activity
-    private fun displaySpeechRecognizer() {
-        if (!checkAudioPermission(REQUEST_RECORD_AUDIO_PERMISSION)) return
-        try {
-            startActivityForResult(Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
-                .putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
-                .putExtra(RecognizerIntent.EXTRA_PROMPT, getText(R.string.conversation_input_speech_hint)), REQUEST_SPEECH_CODE)
-        } catch (e: Exception) {
-            Snackbar.make(requireView(), "Can't get voice input", Snackbar.LENGTH_SHORT).show()
-        }
     }
 
     override fun displayErrorToast(error: Error) {
@@ -197,12 +220,6 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
                 val type = data.type
                 createMediaDialog(media, type)
             }
-            REQUEST_SPEECH_CODE -> if (resultCode == Activity.RESULT_OK && data != null) {
-                val results: List<String>? =
-                    data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
-                val spokenText = results!![0]
-                createTextDialog(spokenText)
-            }
             REQUEST_CODE_SAVE_FILE -> {
                 if (resultCode == Activity.RESULT_OK) {
                     data?.data?.let { writeToFile(it) }
@@ -223,30 +240,6 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
             { Toast.makeText(context, R.string.generic_error, Toast.LENGTH_SHORT).show() })
     }
 
-    private fun createTextDialog(spokenText: String) {
-        if (spokenText.isEmpty()) {
-            return
-        }
-        val alertDialog =
-            MaterialAlertDialogBuilder(requireContext(), com.google.android.material.R.style.Theme_MaterialComponents_Dialog)
-                .setTitle(spokenText)
-                .setMessage("")
-                .setPositiveButton(R.string.tv_dialog_send) { dialog: DialogInterface?, whichButton: Int ->
-                    presenter.sendTextMessage(spokenText)
-                }
-                .setNegativeButton(android.R.string.cancel, null)
-                .create()
-        alertDialog.window!!.setLayout(DIALOG_WIDTH, DIALOG_HEIGHT)
-        alertDialog.setOwnerActivity(requireActivity())
-        alertDialog.setOnShowListener { dialog: DialogInterface? ->
-            val positive = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE)
-            positive.isFocusable = true
-            positive.isFocusableInTouchMode = true
-            positive.requestFocus()
-        }
-        alertDialog.show()
-    }
-
     private fun createMediaDialog(media: Uri?, type: String?) {
         if (media == null) {
             return
@@ -254,7 +247,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
         val activity = activity ?: return
         val file = AndroidFileUtils.getCacheFile(activity, media)
         val alertDialog =
-            MaterialAlertDialogBuilder(activity, com.google.android.material.R.style.Theme_MaterialComponents_Dialog)
+            MaterialAlertDialogBuilder(activity, Theme_MaterialComponents_Dialog)
                 .setTitle(if (type == CustomCameraActivity.TYPE_IMAGE) R.string.tv_send_image_dialog_message else R.string.tv_send_video_dialog_message)
                 .setMessage("")
                 .setPositiveButton(R.string.tv_dialog_send) { dialog: DialogInterface?, whichButton: Int ->
@@ -295,7 +288,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
 
     private fun createAudioDialog() {
         val alertDialog =
-            MaterialAlertDialogBuilder(requireContext(), com.google.android.material.R.style.Theme_MaterialComponents_Dialog)
+            MaterialAlertDialogBuilder(requireContext(), Theme_MaterialComponents_Dialog)
                 .setTitle(R.string.tv_send_audio_dialog_message)
                 .setMessage("")
                 .setPositiveButton(R.string.tv_dialog_send) { _, _ -> sendAudio() }
@@ -736,16 +729,111 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
         startActivityForResult(intent, REQUEST_CODE_PHOTO)
     }
 
+    private val recognizer by lazy {
+        SpeechRecognizer.createSpeechRecognizer(context).apply {
+            setRecognitionListener(object : RecognitionListener {
+
+                override fun onReadyForSpeech(params: Bundle?) {}
+
+                override fun onBeginningOfSpeech() {}
+
+                override fun onRmsChanged(rmsdB: Float) {}
+
+                override fun onBufferReceived(buffer: ByteArray?) {}
+
+                override fun onEndOfSpeech() {}
+
+                override fun onError(error: Int) = speechRecognitionDialog.dismiss()
+
+                override fun onEvent(eventType: Int, params: Bundle?) {}
+
+                override fun onResults(results: Bundle?) {
+                    // Speech recognition results are available
+                    val matches = results?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
+                    val recognizedText = matches?.getOrNull(0)
+
+                    if (recognizedText != null) {
+                        spokenText = recognizedText
+                        speechRecognitionDialog.setMessage(recognizedText)
+                        speechRecognitionDialog.getButton(AlertDialog.BUTTON_POSITIVE).apply {
+                            isEnabled = true
+                            isFocusable = true
+                            isFocusableInTouchMode = true
+                            requestFocus()
+                        }
+                    } else speechRecognitionDialog.dismiss()
+                }
+
+                override fun onPartialResults(partialResults: Bundle?) {
+                    // Partial speech recognition results are available
+                    val matches =
+                        partialResults?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
+                    val recognizedText = matches?.getOrNull(0)
+
+                    if (recognizedText != null) speechRecognitionDialog.setMessage(recognizedText)
+                }
+            })
+        }
+    }
+
+    private fun checkAudioPermissionRationale(dismissCallback: () -> Unit) {
+        if (shouldShowRequestPermissionRationale(RECORD_AUDIO)) {
+            MaterialAlertDialogBuilder(requireContext(), Theme_MaterialComponents_Dialog)
+                .setTitle(R.string.audio_permission_rationale_title)
+                .setMessage(R.string.audio_permission_rationale_message)
+                .setPositiveButton(android.R.string.ok) { _, _ -> dismissCallback() }
+                .create()
+                .show()
+        } else dismissCallback()
+    }
+
+    private fun checkAudioPermission(permissionAcceptedCallback: () -> Unit) {
+        if (ContextCompat.checkSelfPermission(requireContext(), RECORD_AUDIO)
+            == PackageManager.PERMISSION_DENIED
+        ) {
+            audioAcceptedCallback = permissionAcceptedCallback
+            audioPermissionResultLauncher.launch(RECORD_AUDIO)
+        } else permissionAcceptedCallback()
+    }
+
+    private fun startRecognizer() {
+
+        if (!SpeechRecognizer.isRecognitionAvailable(requireContext())) {
+            Log.w(TAG, "Speech recognition not available.")
+            Toast.makeText(
+                requireContext(),
+                R.string.speech_recogniton_unavailable,
+                Toast.LENGTH_SHORT
+            ).show()
+            return
+        }
+
+        // Init dialog
+        speechRecognitionDialog.apply {
+            setMessage("")
+            show()
+            getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = false
+        }
+
+        // Start listening
+        Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
+            putExtra(
+                RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
+            )
+            putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, true)
+        }.let { intent -> recognizer.startListening(intent) }
+    }
+
     companion object {
         private val TAG = TvConversationFragment::class.java.simpleName
         private const val ARG_MODEL = "model"
         private const val KEY_AUDIOFILE = "audiofile"
         private const val REQUEST_CODE_PHOTO = 101
-        private const val REQUEST_SPEECH_CODE = 102
         private const val REQUEST_CODE_SAVE_FILE = 103
         private const val DIALOG_WIDTH = 900
         private const val DIALOG_HEIGHT = 400
-        private val permissions = arrayOf(Manifest.permission.RECORD_AUDIO)
+        private val permissions = arrayOf(RECORD_AUDIO)
         private const val REQUEST_RECORD_AUDIO_PERMISSION = 200
         private const val REQUEST_AUDIO_PERMISSION_FOR_VIDEO = 201
 
