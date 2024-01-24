@@ -124,6 +124,7 @@ along with this program; if not, write to the Free Software
     <dimen name="welcome_jami_logo_default_size">60dp</dimen>
 
     <!--  ChatView  -->
+    <dimen name="image_maximum_size">200dp</dimen>
     <dimen name="padding_call_vertical">4dp</dimen>
     <dimen name="text_message_padding">10dp</dimen>
     <dimen name="message_details_margin">18dp</dimen>
