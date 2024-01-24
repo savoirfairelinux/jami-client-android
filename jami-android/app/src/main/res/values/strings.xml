@@ -480,6 +480,10 @@ along with this program; if not, write to the Free Software
     <string name="tv_send_video">Send Media</string>
     <string name="tv_action_more">More</string>
     <string name="conversation_input_speech_hint">Say something…</string>
+    <string name="audio_permission_denied">Please grant access to the microphone to use Jami audio features.</string>
+    <string name="speech_recogniton_unavailable">Speech recognition is not available.</string>
+    <string name="audio_permission_rationale_title">Audio permission required</string>
+    <string name="audio_permission_rationale_message">Jami requires the microphone permission to use speech-to-text and record audio features. It will be asked in the next step.</string>
 
     <!-- Wizard -->
     <string name="wizard_status_recommended">Recommended</string>
