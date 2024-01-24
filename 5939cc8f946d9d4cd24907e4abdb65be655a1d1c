@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "44cabd35_3bf6b096",
+        "filename": "jami-android/app/src/main/java/cx/ring/tv/conversation/TvConversationFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2024-01-24T21:53:09Z",
+      "side": 1,
+      "message": "format",
+      "range": {
+        "startLine": 121,
+        "startChar": 0,
+        "endLine": 121,
+        "endChar": 103
+      },
+      "revId": "5939cc8f946d9d4cd24907e4abdb65be655a1d1c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
