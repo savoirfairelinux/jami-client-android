@@ -16,7 +16,7 @@
  */
 package cx.ring.tv.conversation
 
-import android.Manifest
+import android.Manifest.permission.CAMERA
 import android.Manifest.permission.RECORD_AUDIO
 import android.app.Activity
 import android.content.DialogInterface
@@ -112,6 +112,19 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
                 .show()
         }
     }
+    private var cameraAcceptedCallback: () -> Unit = {}
+    private val cameraPermissionResultLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        if (isGranted) {
+            Log.w(TAG, "Camera permission granted by user.")
+            cameraAcceptedCallback()
+        } else {
+            Log.w(TAG, "Camera permission denied by user.")
+            Toast.makeText(requireContext(), R.string.camera_permission_denied, Toast.LENGTH_LONG)
+                .show()
+        }
+    }
     var spokenText: String? = null
     val speechRecognitionDialog by lazy {
         MaterialAlertDialogBuilder(requireContext(), Theme_MaterialComponents_Dialog)
@@ -146,8 +159,15 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
                 checkAudioPermissionRationale { checkAudioPermission { startRecognizer() } }
             }
             buttonVideo.setOnClickListener {
-                if (checkAudioPermission(REQUEST_AUDIO_PERMISSION_FOR_VIDEO))
-                    openVideoRecorder()
+                checkVideoPermissionRationale {
+                    checkCameraPermission {
+                        checkAudioPermissionRationale {
+                            checkAudioPermission {
+                                openVideoRecorder()
+                            }
+                        }
+                    }
+                }
             }
             buttonAudio.setOnClickListener {
                 if (isRecording) stopRecording()
@@ -395,15 +415,6 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
     override fun onStop() {
         releaseRecorder()
         super.onStop()
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        when (requestCode) {
-            REQUEST_AUDIO_PERMISSION_FOR_VIDEO -> if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                openVideoRecorder()
-            }
-        }
     }
 
     private fun onPlay(start: Boolean) {
@@ -771,6 +782,17 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
         }
     }
 
+    private fun checkVideoPermissionRationale(dismissCallback: () -> Unit) {
+        if (shouldShowRequestPermissionRationale(CAMERA)) {
+            MaterialAlertDialogBuilder(requireContext(), Theme_MaterialComponents_Dialog)
+                .setTitle(R.string.camera_permission_rationale_title)
+                .setMessage(R.string.camera_permission_rationale_message)
+                .setPositiveButton(android.R.string.ok) { _, _ -> dismissCallback() }
+                .create()
+                .show()
+        } else dismissCallback()
+    }
+
     private fun checkAudioPermissionRationale(dismissCallback: () -> Unit) {
         if (shouldShowRequestPermissionRationale(RECORD_AUDIO)) {
             MaterialAlertDialogBuilder(requireContext(), Theme_MaterialComponents_Dialog)
@@ -788,6 +810,15 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
         ) {
             audioAcceptedCallback = permissionAcceptedCallback
             audioPermissionResultLauncher.launch(RECORD_AUDIO)
+        } else permissionAcceptedCallback()
+    }
+
+    private fun checkCameraPermission(permissionAcceptedCallback: () -> Unit) {
+        if (ContextCompat.checkSelfPermission(requireContext(), CAMERA)
+            == PackageManager.PERMISSION_DENIED
+        ) {
+            cameraAcceptedCallback = permissionAcceptedCallback
+            cameraPermissionResultLauncher.launch(CAMERA)
         } else permissionAcceptedCallback()
     }
 
