@@ -1254,8 +1254,14 @@ class ConversationAdapter(
         messageSequenceType: SequenceType,
         isOnlyEmoji: Boolean, isReplying: Boolean, isDeleted: Boolean, isIncoming: Boolean,
     ) {
-        if (isOnlyEmoji) messageBubble.background = null
+        if (isOnlyEmoji && !isReplying) {
+            messageBubble.background = null
+            messageBubbleBorder.backgroundTintList =
+                ContextCompat.getColorStateList(context, R.color.transparent)
+        }
         else {
+            messageBubbleBorder.backgroundTintList =
+                ContextCompat.getColorStateList(context, R.color.background)
             // Manage layout for standard message. Index refers to msgBGLayouts array.
             val resIndex =
                 if (isReplying && !isDeleted) {
@@ -1268,9 +1274,11 @@ class ConversationAdapter(
                 else messageSequenceType.ordinal + (if (isIncoming) 1 else 0) * 4
 
             messageBubble.background = ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
-            if (isReplying && !isDeleted) messageBubbleBorder.background =
-                ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
-
+            if (isReplying && !isDeleted)
+                messageBubbleBorder.background =
+                    ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
+            else
+                messageBubbleBorder.background = null
             if (convColor != 0 && !isIncoming) messageBubble.background?.setTint(convColor)
         }
     }
@@ -1324,6 +1332,7 @@ class ConversationAdapter(
         val contact = textMessage.contact ?: return
         val isDeleted = textMessage.body.isNullOrEmpty()
         val isEdited = interaction.history.size > 1
+        val isReplying = interaction.replyToId != null
 
         val messageContent = convViewHolder.mMessageContent ?: return
         val messageBubble = convViewHolder.mMessageBubble ?: return
@@ -1374,7 +1383,7 @@ class ConversationAdapter(
         updateMessageBackground(
             context, messageBubble, messageBubbleBorder, msgSequenceType,
             isOnlyEmoji = StringUtils.isOnlyEmoji(message),
-            isReplying = interaction.replyTo != null,
+            isReplying = isReplying,
             isDeleted = isDeleted,
             isIncoming = textMessage.isIncoming
         )
@@ -1403,7 +1412,7 @@ class ConversationAdapter(
 
         // Manage the message content.
         answerLayout?.visibility = View.GONE
-        if (StringUtils.isOnlyEmoji(message)) {
+        if (StringUtils.isOnlyEmoji(message) && !isReplying) {
             messageContent.updateEmoji(message, messageTime, isEdited)
         } else {
             messageContent.updateStandard(
