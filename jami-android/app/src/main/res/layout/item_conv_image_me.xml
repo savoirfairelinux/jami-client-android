@@ -67,7 +67,7 @@
                     android:contentDescription="@null"
                     android:padding="0dp"
                     android:transitionName="picture"
-                    tools:scaleType="centerCrop"
+                    android:scaleType="centerCrop"
                     tools:src="@tools:sample/backgrounds/scenic" />
 
                 <cx.ring.views.MessageStatusView
