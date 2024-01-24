@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "71c776fc_f2613b10",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-01-24T21:43:15Z",
+      "side": 1,
+      "message": "as discussed, stroke needs to be shown only when replying to a message",
+      "revId": "611c4a7817f0bdad1699f565b0a11142810e812f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
