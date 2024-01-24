@@ -1,0 +1,228 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ce64a36_38ce8b4d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-01-24T06:45:22Z",
+      "side": 1,
+      "message": "Should all instances of `hangup` be changed to `end call`? Thank you",
+      "revId": "c67cc2fc461f333d6717e1932526ea2105bb59ab",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2439f500_063eed18",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/CallFragment.kt",
+        "patchSetId": 8
+      },
+      "lineNbr": 1239,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-01-24T06:45:22Z",
+      "side": 1,
+      "message": "`endCallReason`?",
+      "range": {
+        "startLine": 1239,
+        "startChar": 12,
+        "endLine": 1239,
+        "endChar": 24
+      },
+      "revId": "c67cc2fc461f333d6717e1932526ea2105bb59ab",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9c1a4fee_2c8d7be5",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/CallFragment.kt",
+        "patchSetId": 8
+      },
+      "lineNbr": 1239,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-01-24T06:45:22Z",
+      "side": 1,
+      "message": "`EndCallReason`?",
+      "range": {
+        "startLine": 1239,
+        "startChar": 42,
+        "endLine": 1239,
+        "endChar": 54
+      },
+      "revId": "c67cc2fc461f333d6717e1932526ea2105bb59ab",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f5c0e31_475cc8e4",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/call/CallPresenter.kt",
+        "patchSetId": 8
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-01-24T06:45:22Z",
+      "side": 1,
+      "message": "Change `hangupReason: HangupReason \u003d HangupReason.LOCAL` to `endCallReason: EndCallReason \u003d EndCalReason.LOCAL`?",
+      "range": {
+        "startLine": 281,
+        "startChar": 19,
+        "endLine": 281,
+        "endChar": 66
+      },
+      "revId": "c67cc2fc461f333d6717e1932526ea2105bb59ab",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ff01aea_cdff07bc",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/call/CallPresenter.kt",
+        "patchSetId": 8
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-01-24T06:45:22Z",
+      "side": 1,
+      "message": "Change `Hang up the` to `End`? Thank you",
+      "range": {
+        "startLine": 282,
+        "startChar": 11,
+        "endLine": 282,
+        "endChar": 22
+      },
+      "revId": "c67cc2fc461f333d6717e1932526ea2105bb59ab",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "93e5030a_41431555",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/call/CallPresenter.kt",
+        "patchSetId": 8
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-01-24T06:45:22Z",
+      "side": 1,
+      "message": "Change `Hang up` to `End`?",
+      "range": {
+        "startLine": 289,
+        "startChar": 15,
+        "endLine": 289,
+        "endChar": 22
+      },
+      "revId": "c67cc2fc461f333d6717e1932526ea2105bb59ab",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef304937_a6380c02",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/call/CallPresenter.kt",
+        "patchSetId": 8
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-01-24T06:45:22Z",
+      "side": 1,
+      "message": "Change `hangupReason` to `endCallReason`? Thank you",
+      "range": {
+        "startLine": 295,
+        "startChar": 15,
+        "endLine": 295,
+        "endChar": 27
+      },
+      "revId": "c67cc2fc461f333d6717e1932526ea2105bb59ab",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1e9ed4e8_e3dc0793",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/call/CallPresenter.kt",
+        "patchSetId": 8
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-01-24T06:45:22Z",
+      "side": 1,
+      "message": "Should `HangupReason` be changed to `EndCallReason`? Thank you",
+      "range": {
+        "startLine": 724,
+        "startChar": 15,
+        "endLine": 724,
+        "endChar": 27
+      },
+      "revId": "c67cc2fc461f333d6717e1932526ea2105bb59ab",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c6d2404_e4302cf4",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/call/CallPresenter.kt",
+        "patchSetId": 8
+      },
+      "lineNbr": 725,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-01-24T06:45:22Z",
+      "side": 1,
+      "message": "Should `hangup` be changed to `end`? Thank you",
+      "range": {
+        "startLine": 725,
+        "startChar": 21,
+        "endLine": 725,
+        "endChar": 27
+      },
+      "revId": "c67cc2fc461f333d6717e1932526ea2105bb59ab",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b638cd8f_090962ba",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/call/CallPresenter.kt",
+        "patchSetId": 8
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-01-24T06:45:22Z",
+      "side": 1,
+      "message": "Should `hangup` be changed to `end`? Thank you",
+      "range": {
+        "startLine": 726,
+        "startChar": 24,
+        "endLine": 726,
+        "endChar": 30
+      },
+      "revId": "c67cc2fc461f333d6717e1932526ea2105bb59ab",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
