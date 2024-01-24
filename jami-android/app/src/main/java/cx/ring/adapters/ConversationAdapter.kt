@@ -660,6 +660,7 @@ class ConversationAdapter(
         image.clipToOutline = true
         Glide.with(context)
             .load(path)
+            .override(200)
             .transition(withCrossFade())
             .into(image)
         image.setOnClickListener { v: View ->
