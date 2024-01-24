@@ -1361,11 +1361,14 @@ class ConversationAdapter(
         // with the answered message bubble.
         if (textMessage.replyToId != null) {
             val paddingInDp = (1.5 * context.resources.displayMetrics.density).toInt()
-            messageBubbleBorder.setPadding(paddingInDp, paddingInDp, 0, 0)
             messageBubbleBorder.updateLayoutParams<MarginLayoutParams> {
                 topMargin = context.resources
                     .getDimensionPixelSize(R.dimen.conversation_reply_overlap)
             }
+            if (textMessage.isIncoming)
+                messageBubbleBorder.setPadding(0, paddingInDp, paddingInDp, 0)
+            else
+                messageBubbleBorder.setPadding(paddingInDp, paddingInDp, 0, 0)
         } else {
             messageBubbleBorder.setPadding(0, 0, 0, 0)
             messageBubbleBorder.updateLayoutParams<MarginLayoutParams> { topMargin = 0 }
