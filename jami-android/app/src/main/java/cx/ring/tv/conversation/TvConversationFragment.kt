@@ -23,10 +23,12 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
+import android.media.MediaMuxer.OutputFormat
 import android.media.MediaPlayer
 import android.media.MediaRecorder
+import android.media.MediaRecorder.AudioSource
+import android.media.MediaRecorder.AudioEncoder
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
@@ -51,14 +53,12 @@ import androidx.transition.TransitionManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import cx.ring.R
-import cx.ring.client.CallActivity
 import cx.ring.client.ContactDetailsActivity
 import cx.ring.client.MediaViewerActivity
 import cx.ring.databinding.FragConversationTvBinding
 import cx.ring.fragments.CallFragment
 import cx.ring.mvp.BaseSupportFragment
 import cx.ring.service.DRingService
-import cx.ring.services.SharedPreferencesServiceImpl
 import cx.ring.services.SharedPreferencesServiceImpl.Companion.getConversationColor
 import cx.ring.tv.call.TVCallActivity
 import cx.ring.tv.camera.CustomCameraActivity
@@ -91,7 +91,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
     private var fileName: File? = null
     private var recorder: MediaRecorder? = null
     private var player: MediaPlayer? = null
-    var mStartRecording = true
+    private  var isRecording = false
     var mStartPlaying = true
     private var mAdapter: TvConversationAdapter? = null
     private var mConversationAvatar: AvatarDrawable? = null
@@ -150,8 +150,8 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
                     openVideoRecorder()
             }
             buttonAudio.setOnClickListener {
-                onRecord(mStartRecording)
-                mStartRecording = !mStartRecording
+                if (isRecording) stopRecording()
+                else checkAudioPermissionRationale { checkAudioPermission { startRecording() } }
             }
             buttonText.onFocusChangeListener =
                 View.OnFocusChangeListener { _, hasFocus: Boolean ->
@@ -197,15 +197,6 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
         mAdapter = TvConversationAdapter(this, presenter)
         presenter.init(mConversationPath!!.conversationUri, mConversationPath!!.accountId)
         binding!!.recyclerView.adapter = mAdapter
-    }
-
-    private fun checkAudioPermission(code: Int): Boolean {
-        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.RECORD_AUDIO)
-            != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(permissions, code)
-            return false
-        }
-        return true
     }
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
@@ -412,19 +403,6 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
             REQUEST_AUDIO_PERMISSION_FOR_VIDEO -> if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 openVideoRecorder()
             }
-            REQUEST_RECORD_AUDIO_PERMISSION -> if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                startRecording()
-            } else {
-                mStartRecording = !mStartRecording
-            }
-        }
-    }
-
-    private fun onRecord(start: Boolean) {
-        if (start) {
-            startRecording()
-        } else {
-            stopRecording()
         }
     }
 
@@ -455,43 +433,59 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
     }
 
     private fun startRecording() {
-        if (!checkAudioPermission(REQUEST_RECORD_AUDIO_PERMISSION)) return
-        if (recorder != null) {
-            return
+        if (recorder != null) return
+
+        if (!startRecorder(AudioEncoder.OPUS, OutputFormat.MUXER_OUTPUT_OGG))
+            if (!startRecorder(AudioEncoder.AAC, OutputFormat.MUXER_OUTPUT_MPEG_4)) {
+                Log.e(TAG, requireContext().resources.getString(R.string.unable_to_start_recorder))
+                Toast.makeText(
+                    requireContext(),
+                    R.string.unable_to_start_recorder,
+                    Toast.LENGTH_LONG
+                ).show()
+                return
+            }
+
+        // Update UI
+        binding?.apply {
+            buttonAudio.setImageResource(androidx.leanback.R.drawable.lb_ic_stop)
+            textAudio.setText(R.string.tv_audio_recording)
+            val anim: Animation = AlphaAnimation(0.0f, 1.0f).apply {
+                duration = 500
+                startOffset = 100
+                repeatMode = Animation.REVERSE
+                repeatCount = Animation.INFINITE
+            }
+            textAudio.startAnimation(anim)
+            isRecording = true
         }
+    }
+
+    // Try to start the recorder with a given encoder and output format.
+    private fun startRecorder(encoder: Int, outputFormat: Int): Boolean {
         try {
-            fileName = AndroidFileUtils.createAudioFile(requireContext())
-            recorder = MediaRecorder().apply {
-                setAudioSource(MediaRecorder.AudioSource.MIC)
-                setOutputFile(fileName!!.absolutePath)
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                    setOutputFormat(MediaRecorder.OutputFormat.OGG)
-                    setAudioEncoder(MediaRecorder.AudioEncoder.OPUS)
-                } else {
-                    setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
-                    setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
+            val mediaRecorder =
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S)
+                    MediaRecorder(requireContext())
+                else MediaRecorder()
+
+            AndroidFileUtils.createAudioFile(requireContext()).let {
+                fileName = it
+                recorder = mediaRecorder.apply {
+                    setAudioSource(AudioSource.VOICE_COMMUNICATION)
+                    setOutputFile(it.absolutePath)
+                    setOutputFormat(outputFormat)
+                    setAudioEncoder(encoder)
+                    prepare()
+                    start()
                 }
-                prepare()
-                start()
             }
         } catch (e: Exception) {
-            Toast.makeText(requireContext(), "Error starting recording: " + e.localizedMessage, Toast.LENGTH_LONG).show()
-            mStartRecording = !mStartRecording
-            recorder?.let { rec ->
-                rec.release()
-                recorder = null
-            }
-            return
+            recorder?.release()
+            recorder = null
+            return false
         }
-        binding!!.buttonAudio.setImageResource(androidx.leanback.R.drawable.lb_ic_stop)
-        binding!!.textAudio.setText(R.string.tv_audio_recording)
-        val anim: Animation = AlphaAnimation(0.0f, 1.0f).apply {
-            duration = 500
-            startOffset = 100
-            repeatMode = Animation.REVERSE
-            repeatCount = Animation.INFINITE
-        }
-        binding!!.textAudio.startAnimation(anim)
+        return true
     }
 
     private fun releaseRecorder() {
@@ -512,6 +506,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
         binding!!.textAudio.setText(R.string.tv_send_audio)
         binding!!.textAudio.clearAnimation()
         createAudioDialog()
+        isRecording = false
     }
 
     private fun sendAudio() {
@@ -833,8 +828,6 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
         private const val REQUEST_CODE_SAVE_FILE = 103
         private const val DIALOG_WIDTH = 900
         private const val DIALOG_HEIGHT = 400
-        private val permissions = arrayOf(RECORD_AUDIO)
-        private const val REQUEST_RECORD_AUDIO_PERMISSION = 200
         private const val REQUEST_AUDIO_PERMISSION_FOR_VIDEO = 201
 
         fun newInstance(args: Bundle?): TvConversationFragment {
