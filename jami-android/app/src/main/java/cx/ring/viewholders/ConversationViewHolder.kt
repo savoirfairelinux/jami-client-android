@@ -99,7 +99,6 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
     }
     var mMessageBubble: ConstraintLayout? = null
     var mMessageLayout: ConstraintLayout? = null
-    var mMessageBubbleBorder: FrameLayout? = null
     var mMessageContent: CustomMessageBubble? = null
     var mReplyBubble: LinearLayout? = null
     var mReplyName: TextView? = null
@@ -202,7 +201,6 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
                 mReplyTxt = v.findViewById(R.id.reply_text)
                 mMsgTxt = v.findViewById(R.id.msg_txt)
                 mMessageBubble = v.findViewById(R.id.message_bubble)
-                mMessageBubbleBorder = v.findViewById(R.id.message_bubble_border)
                 mMessageLayout = v.findViewById(R.id.message_layout)
                 mMessageContent = v.findViewById(R.id.message_content)
                 mMsgDetailTxt = v.findViewById(R.id.msg_details_txt)
