@@ -28,6 +28,7 @@ import android.graphics.Color
 import android.graphics.SurfaceTexture
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
+import android.graphics.drawable.LayerDrawable
 import android.media.MediaPlayer
 import android.net.Uri
 import android.text.format.DateUtils
@@ -1250,7 +1251,7 @@ class ConversationAdapter(
      * ResIndex indicates how is considered the message (first, single, last, etc.).
      */
     private fun updateMessageBackground(
-        context: Context, messageBubble: View, messageBubbleBorder: View,
+        context: Context, messageBubble: View,
         messageSequenceType: SequenceType,
         isOnlyEmoji: Boolean, isReplying: Boolean, isDeleted: Boolean, isIncoming: Boolean,
     ) {
@@ -1268,10 +1269,14 @@ class ConversationAdapter(
                 else messageSequenceType.ordinal + (if (isIncoming) 1 else 0) * 4
 
             messageBubble.background = ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
-            if (isReplying && !isDeleted) messageBubbleBorder.background =
-                ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
 
-            if (convColor != 0 && !isIncoming) messageBubble.background?.setTint(convColor)
+            if (isReplying && convColor != 0 && !isDeleted && !isIncoming) {
+                // Drawable is a layer list. Only need to change the color of the main bubble.
+                (messageBubble.background as LayerDrawable).apply {
+                    (findDrawableByLayerId(R.id.main_bubble) as GradientDrawable)
+                        .setColor(convColor)
+                }
+            } else if (convColor != 0 && !isIncoming) messageBubble.background?.setTint(convColor)
         }
     }
 
@@ -1281,12 +1286,12 @@ class ConversationAdapter(
      */
     private fun updateMessageLeftMargin(
         context: Context,
-        messageBubbleBorder: View, replyBubble: View?,
+        messageBubble: View, replyBubble: View?,
         isGroup: Boolean, isIncoming: Boolean
     ) {
         if (isGroup && isIncoming) {
             context.resources.getDimensionPixelSize(R.dimen.conditional_left_conversation_margin).let {
-                (messageBubbleBorder.layoutParams as MarginLayoutParams)
+                (messageBubble.layoutParams as MarginLayoutParams)
                     .apply { leftMargin = it }
                 replyBubble?.let { replyBubble ->
                     (replyBubble.layoutParams as MarginLayoutParams)
@@ -1295,7 +1300,7 @@ class ConversationAdapter(
             }
         } else {
             context.resources.getDimensionPixelSize(R.dimen.base_left_conversation_margin).let {
-                (messageBubbleBorder.layoutParams as MarginLayoutParams)
+                (messageBubble.layoutParams as MarginLayoutParams)
                     .apply { leftMargin = it }
                 replyBubble?.let { replyBubble ->
                     (replyBubble.layoutParams as MarginLayoutParams)
@@ -1327,7 +1332,6 @@ class ConversationAdapter(
 
         val messageContent = convViewHolder.mMessageContent ?: return
         val messageBubble = convViewHolder.mMessageBubble ?: return
-        val messageBubbleBorder = convViewHolder.mMessageBubbleBorder ?: return
         val replyBubble = convViewHolder.mReplyBubble
         val answerLayout = convViewHolder.mAnswerLayout
         val peerDisplayName = convViewHolder.mPeerDisplayName
@@ -1359,20 +1363,16 @@ class ConversationAdapter(
 
         // If in a replying bubble, we need to overlap the message bubble
         // with the answered message bubble.
-        if (textMessage.replyToId != null) {
-            val paddingInDp = (1.5 * context.resources.displayMetrics.density).toInt()
-            messageBubbleBorder.setPadding(paddingInDp, paddingInDp, 0, 0)
-            messageBubbleBorder.updateLayoutParams<MarginLayoutParams> {
+        if (textMessage.replyToId != null)
+            messageBubble.updateLayoutParams<MarginLayoutParams> {
                 topMargin = context.resources
                     .getDimensionPixelSize(R.dimen.conversation_reply_overlap)
             }
-        } else {
-            messageBubbleBorder.setPadding(0, 0, 0, 0)
-            messageBubbleBorder.updateLayoutParams<MarginLayoutParams> { topMargin = 0 }
-        }
+        else messageBubble.updateLayoutParams<MarginLayoutParams> { topMargin = 0 }
+
         // Manage the background of the message bubble.
         updateMessageBackground(
-            context, messageBubble, messageBubbleBorder, msgSequenceType,
+            context, messageBubble, msgSequenceType,
             isOnlyEmoji = StringUtils.isOnlyEmoji(message),
             isReplying = interaction.replyTo != null,
             isDeleted = isDeleted,
@@ -1380,7 +1380,7 @@ class ConversationAdapter(
         )
         // Manage the left margin of the message bubble.
         updateMessageLeftMargin(
-            context, messageBubbleBorder, replyBubble,
+            context, messageBubble, replyBubble,
             isGroup = presenter.isGroup(),
             isIncoming = textMessage.isIncoming
         )

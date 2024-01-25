@@ -127,72 +127,58 @@ along with this program; if not, write to the Free Software
 
         </LinearLayout>
 
-        <FrameLayout
-            android:id="@+id/message_bubble_border"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/message_bubble"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="start"
             android:layout_marginStart="@dimen/base_left_conversation_margin"
-            android:layout_marginTop="-8dp"
+            android:layout_marginTop="-6.5dp"
             android:background="@drawable/textmsg_bg_in"
-            android:backgroundTint="@color/background"
-            android:gravity="start"
-            android:paddingStart="0dp"
-            android:paddingTop="1.5dp"
-            android:paddingEnd="1.5dp"
-            android:paddingBottom="0dp"
             app:layout_constrainedWidth="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toEndOf="@id/photo"
             app:layout_constraintTop_toBottomOf="@id/reply_bubble">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/message_bubble"
+            <cx.ring.views.CustomMessageBubble
+                android:id="@+id/message_content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:background="@drawable/textmsg_bg_in">
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="5dp"
+                android:textColor="@color/colorOnSurface"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:edited="true"
+                tools:message="This is a test !"
+                tools:time="11h05" />
 
-                <cx.ring.views.CustomMessageBubble
-                    android:id="@+id/message_content"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingHorizontal="10dp"
-                    android:paddingVertical="5dp"
-                    android:textColor="@color/colorOnSurface"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:edited="true"
-                    tools:message="This is a test !"
-                    tools:time="11h05" />
+            <include
+                android:id="@+id/link_preview"
+                layout="@layout/msg_link_preview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/message_content" />
 
-                <include
-                    android:id="@+id/link_preview"
-                    layout="@layout/msg_link_preview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/message_content" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </FrameLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:id="@+id/reaction_chip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="-6dp"
+            android:layout_marginTop="-4dp"
             android:background="@drawable/background_reaction_chip"
             android:lines="1"
             android:maxLines="1"
             android:outlineProvider="none"
             android:padding="5dp"
             android:singleLine="true"
-            app:layout_constraintStart_toStartOf="@id/message_bubble_border"
-            app:layout_constraintTop_toBottomOf="@id/message_bubble_border"
+            app:layout_constraintStart_toStartOf="@id/message_bubble"
+            app:layout_constraintTop_toBottomOf="@id/message_bubble"
             tools:text="🤕🤒3" />
 
         <ImageView
@@ -201,7 +187,7 @@ along with this program; if not, write to the Free Software
             android:layout_height="@dimen/conversation_avatar_size"
             android:layout_marginStart="@dimen/base_left_conversation_margin"
             android:contentDescription="@null"
-            app:layout_constraintBottom_toBottomOf="@id/message_bubble_border"
+            app:layout_constraintBottom_toBottomOf="@id/message_bubble"
             app:layout_constraintStart_toStartOf="parent"
             tools:srcCompat="@color/blue_200"
             tools:visibility="gone" />
