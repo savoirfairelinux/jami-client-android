@@ -19,9 +19,6 @@
         <!--swarm id in detail contact of a conversation and subtitles in settings-->
         <item name="android:textColorSecondary">@color/colorOnSecondaryContainer</item>
 
-        <!--Incoming text color link-->
-        <item name="android:textColorLink">@color/colorOnSurface</item>
-
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryVariant">@color/colorSecondary</item>
         <item name="colorOnPrimary">@color/background</item>
@@ -388,10 +385,15 @@
 
     <style name="AppTheme.PopupOverlay" parent="AppTheme" />
 
-    <!--For incoming textView the text color used is defined in AppThemeBase-->
+    <!--For the messages-->
     <style name="OutgoingTextView">
         <item name="colorControlActivated">@color/conversation_primary_selection_handles</item>
         <item name="android:textColorLink">@color/text_color_primary_dark</item>
+        <item name="android:textColor">@color/text_color_primary_dark</item>
+    </style>
+    <style name="IncomingTextView">
+        <item name="android:textColorLink">@color/colorOnSurface</item>
+        <item name="android:textColor">@color/colorOnSurface</item>
     </style>
 
 

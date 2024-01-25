@@ -99,11 +99,8 @@ along with this program; if not, write to the Free Software
                 android:focusable="true"
                 android:maxLines="1"
                 android:padding="5dp"
-                android:textColor="@color/colorOnSurface"
-                android:textColorHighlight="@color/conversation_primary_selection"
-                android:textColorLink="@color/text_color_primary_dark"
                 android:textSize="@dimen/conversation_text_size_small"
-                android:theme="@style/OutgoingTextView"
+                android:theme="@style/IncomingTextView"
                 tools:text="Lorem ipsum" />
 
         </LinearLayout>
@@ -139,7 +136,6 @@ along with this program; if not, write to the Free Software
                     android:layout_height="wrap_content"
                     android:paddingHorizontal="10dp"
                     android:paddingVertical="5dp"
-                    android:textColor="@color/text_color_primary_dark"
                     android:theme="@style/OutgoingTextView"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
