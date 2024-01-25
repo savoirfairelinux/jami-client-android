@@ -69,8 +69,8 @@ class ConversationFacade(
         }
     }
 
-    fun startConversation(accountId: String, contactId: Uri): Single<Conversation> = getAccountSubject(accountId)
-        .map { account: Account -> account.getByUri(contactId)!! }
+    fun startConversation(accountId: String, contactId: Uri): Single<Conversation> =
+        getAccountSubject(accountId).map { account: Account -> account.getByUri(contactId)!! }
 
     fun getAccountSubject(accountId: String): Single<Account> = mAccountService.getAccountSingle(accountId)
         .flatMap { account: Account -> loadSmartlist(account) }
@@ -685,19 +685,17 @@ class ConversationFacade(
 
     fun banConversation(accountId: String, conversationUri: Uri) {
         if (conversationUri.isSwarm) {
-            startConversation(accountId, conversationUri)
-                .subscribe { conversation: Conversation ->
+            mDisposableBag.add(
+                startConversation(accountId, conversationUri).subscribe({ v: Conversation ->
                     try {
-                        val contact = conversation.contact
+                        val contact = v.contact
                         mAccountService.removeContact(accountId, contact!!.uri.rawRingId, true)
                     } catch (e: Exception) {
                         mAccountService.removeConversation(accountId, conversationUri)
                     }
-                }
-            //return mAccountService.removeConversation(accountId, conversationUri);
-        } else {
-            mAccountService.removeContact(accountId, conversationUri.rawRingId, true)
-        }
+                }, { e: Throwable -> Log.e(TAG, "Error banning conversation", e) })
+            )
+        } else mAccountService.removeContact(accountId, conversationUri.rawRingId, true)
     }
 
     fun createConversation(accountId: String, currentSelection: Collection<Contact>): Single<Conversation> {

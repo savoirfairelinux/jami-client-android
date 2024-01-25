@@ -256,8 +256,8 @@ class DRingService : Service() {
                 ACTION_TRUST_REQUEST_ACCEPT -> mConversationFacade.acceptRequest(path.accountId, path.conversationUri)
                 ACTION_TRUST_REQUEST_REFUSE -> mConversationFacade.discardRequest(path.accountId, path.conversationUri)
                 ACTION_TRUST_REQUEST_BLOCK -> {
-                    mConversationFacade.discardRequest(path.accountId, path.conversationUri)
                     mConversationFacade.banConversation(path.accountId, path.conversationUri)
+                    mConversationFacade.discardRequest(path.accountId, path.conversationUri)
                 }
             }
         }
