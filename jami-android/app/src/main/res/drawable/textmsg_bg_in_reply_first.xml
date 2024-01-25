@@ -1,11 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <solid android:color="@color/conversation_secondary_background" />
+    <item>
+        <shape>
+            <solid android:color="@color/background" />
+            <corners
+                android:bottomLeftRadius="@dimen/conversation_message_minor_radius"
+                android:radius="@dimen/conversation_message_radius"
+                android:topRightRadius="@dimen/conversation_message_minor_radius" />
+        </shape>
+    </item>
 
-    <corners android:radius="@dimen/conversation_message_radius"
-        android:topRightRadius="@dimen/conversation_message_minor_radius"
-        android:bottomLeftRadius="@dimen/conversation_message_minor_radius"
-        />
+    <item
+        android:id="@+id/main_bubble"
+        android:end="1.5dp"
+        android:top="1.5dp">
+        <shape>
+            <solid android:color="@color/conversation_secondary_background" />
+            <corners
+                android:bottomLeftRadius="@dimen/conversation_message_minor_radius"
+                android:radius="@dimen/conversation_message_radius"
+                android:topRightRadius="@dimen/conversation_message_minor_radius" />
+        </shape>
+    </item>
 
-</shape>
+</layer-list>
