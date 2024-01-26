@@ -29,6 +29,7 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import cx.ring.R
 import cx.ring.views.CustomMessageBubble
@@ -144,6 +145,7 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
     var mFileTitle: TextView? = null
     var mFileDownloadButton: ImageButton? = null
     var mAudioInfoLayout: LinearLayout? = null
+    var mAudioMessageLayout: RelativeLayout? = null
 
     val mLayoutStatusIconId: View? = when (type) {
         MessageType.OUTGOING_CALL_INFORMATION,
@@ -237,6 +239,7 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
                 btnRefuse = v.findViewById(R.id.replay)
                 mMsgTxt = v.findViewById(R.id.msg_txt)
                 mAudioInfoLayout = v.findViewById(R.id.audioInfoLayout)
+                mAudioMessageLayout = v.findViewById(R.id.audio_message_layout)
                 mMsgDetailTxt = v.findViewById(R.id.file_details_txt)
                 mMsgDetailTxtPerm = v.findViewById(R.id.msg_details_txt_perm)
                 primaryClickableView = mAudioInfoLayout

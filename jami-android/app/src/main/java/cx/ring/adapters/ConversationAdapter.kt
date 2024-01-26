@@ -1155,7 +1155,7 @@ class ConversationAdapter(
             }
             MessageType.TransferType.AUDIO -> {
                 // Add margin if message need to be separated.
-                viewHolder.mAudioInfoLayout?.updateLayoutParams<MarginLayoutParams> {
+                viewHolder.mAudioMessageLayout?.updateLayoutParams<MarginLayoutParams> {
                     topMargin = if (!isMessageSeparationNeeded) 0 else context.resources
                         .getDimensionPixelSize(R.dimen.conversation_message_separation)
                 }
