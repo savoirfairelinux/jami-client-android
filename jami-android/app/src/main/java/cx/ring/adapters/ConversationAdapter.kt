@@ -24,11 +24,13 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.SurfaceTexture
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.LayerDrawable
+import androidx.exifinterface.media.ExifInterface
 import android.media.MediaPlayer
 import android.net.Uri
 import android.text.format.DateUtils
@@ -85,6 +87,7 @@ import net.jami.utils.Log
 import net.jami.utils.StringUtils
 import org.commonmark.node.SoftLineBreak
 import java.io.File
+import java.io.IOException
 import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.math.max
@@ -659,6 +662,75 @@ class ConversationAdapter(
         val context = viewHolder.itemView.context
         val image = viewHolder.mImage ?: return
         image.clipToOutline = true
+
+        val options = BitmapFactory.Options()
+        options.inJustDecodeBounds = true
+        BitmapFactory.decodeFile(path.absolutePath, options)
+
+        fun getImageRotation(filePath: String): Int {
+            var rotation = 0
+            try {
+                val exif = ExifInterface(filePath)
+                val orientation = exif.getAttributeInt(
+                    ExifInterface.TAG_ORIENTATION,
+                    ExifInterface.ORIENTATION_NORMAL
+                )
+                rotation = when (orientation) {
+                    ExifInterface.ORIENTATION_ROTATE_90 -> 90
+                    ExifInterface.ORIENTATION_ROTATE_180 -> 180
+                    ExifInterface.ORIENTATION_ROTATE_270 -> 270
+                    else -> 0
+                }
+            } catch (_: IOException) {
+            }
+            return rotation
+        }
+
+        fun getRatio(options: BitmapFactory.Options): Int =
+            maxOf(options.outWidth, options.outHeight) / minOf(options.outWidth, options.outHeight)
+
+        fun isPortrait(options: BitmapFactory.Options, imageRotation: Int): Boolean =
+            when (imageRotation) {
+                90, 270 -> options.outWidth >= options.outHeight
+                else -> options.outWidth <= options.outHeight
+            }
+
+        image.setImageDrawable(null)
+        val isPortrait = isPortrait(options, getImageRotation(path.absolutePath))
+        // Tells if the ratio between image width and height is enough or not
+        val isWidthToHeightRatioAdequate = getRatio(options) < 5
+
+        when(Pair(isPortrait, isWidthToHeightRatioAdequate)){
+            Pair(true, true) -> { // Portrait and ratio acceptable
+                image.updateLayoutParams {
+                    image.scaleType = ImageView.ScaleType.FIT_CENTER
+                    width = ViewGroup.LayoutParams.WRAP_CONTENT
+                    height = context.resources.getDimensionPixelOffset(R.dimen.image_maximum_size)
+                }
+            }
+            Pair(true, false) -> { // Portrait and ratio too high
+                image.scaleType = ImageView.ScaleType.CENTER_CROP
+                image.updateLayoutParams {
+                    width = context.resources.getDimensionPixelOffset(R.dimen.image_minimum_size)
+                    height = context.resources.getDimensionPixelOffset(R.dimen.image_maximum_size)
+                }
+            }
+            Pair(false, true) -> { // Landscape and ratio acceptable
+                image.scaleType = ImageView.ScaleType.FIT_CENTER
+                image.updateLayoutParams {
+                    width = context.resources.getDimensionPixelOffset(R.dimen.image_maximum_size)
+                    height = ViewGroup.LayoutParams.WRAP_CONTENT
+                }
+            }
+            Pair(false, false) -> { // Landscape and ratio too high
+                image.scaleType = ImageView.ScaleType.CENTER_CROP
+                image.updateLayoutParams {
+                    width = context.resources.getDimensionPixelOffset(R.dimen.image_maximum_size)
+                    height = context.resources.getDimensionPixelOffset(R.dimen.image_minimum_size)
+                }
+            }
+        }
+
         Glide.with(context)
             .load(path)
             .transition(withCrossFade())
