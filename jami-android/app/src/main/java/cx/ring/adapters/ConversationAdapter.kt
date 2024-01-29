@@ -1499,7 +1499,21 @@ class ConversationAdapter(
         // Manage deleted message.
         if (isDeleted) {
             replyBubble?.visibility = View.GONE
-            messageContent.updateDeleted(messageTime)
+            if (textMessage.isIncoming) {
+                convViewHolder.compositeDisposable.add(
+                    presenter.contactService
+                        .observeContact(account, contact, false)
+                        .observeOn(DeviceUtils.uiScheduler)
+                        .subscribe { username ->
+                            messageContent.updateDeleted(messageTime, username.displayName)
+                        }
+                )
+            } else {
+                messageContent.updateDeleted(
+                    messageTime,
+                    context.getString(R.string.conversation_info_contact_you)
+                )
+            }
             messageBubble.setOnLongClickListener(null)
         }
     }
