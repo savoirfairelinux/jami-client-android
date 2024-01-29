@@ -14,16 +14,14 @@
  * limitations under the License.
  */
 
-package cx.ring.views.slidingpane;
+package cx.ring.views.twopane;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.graphics.Rect;
-import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.AttributeSet;
@@ -32,7 +30,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.accessibility.AccessibilityEvent;
-import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
@@ -47,8 +44,6 @@ import androidx.transition.Transition;
 import androidx.transition.TransitionManager;
 import androidx.window.layout.FoldingFeature;
 import androidx.window.layout.WindowInfoTracker;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -56,27 +51,26 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.Executor;
 
 /**
- * SlidingPaneLayout provides a horizontal, multi-pane layout for use at the top level
+ * TwoPaneLayout provides a horizontal, multi-pane layout for use at the top level
  * of a UI. A left (or start) pane is treated as a content list or browser, subordinate to a
  * primary detail view for displaying content.
  *
  * <p>Child views overlap if their combined width exceeds the available width
- * in the SlidingPaneLayout. Each of child views is expand out to fill the available width in
- * the SlidingPaneLayout. When this occurs, the user may slide the topmost view out of the way
- * by dragging it, and dragging back it from the very edge.</p>
+ * in the TwoPaneLayout. Each of child views is expand out to fill the available width in
+ * the TwoPaneLayout.</p>
  *
- * <p>Thanks to this sliding behavior, SlidingPaneLayout may be suitable for creating layouts
+ * <p>Thanks to this behavior, TwoPaneLayout may be suitable for creating layouts
  * that can smoothly adapt across many different screen sizes, expanding out fully on larger
  * screens and collapsing on smaller screens.</p>
  *
- * <p>SlidingPaneLayout is distinct from a navigation drawer as described in the design
- * guide and should not be used in the same scenarios. SlidingPaneLayout should be thought
+ * <p>TwoPaneLayout is distinct from a navigation drawer as described in the design
+ * guide and should not be used in the same scenarios. TwoPaneLayout should be thought
  * of only as a way to allow a two-pane layout normally used on larger screens to adapt to smaller
- * screens in a natural way. The interaction patterns expressed by SlidingPaneLayout imply
+ * screens in a natural way. The interaction patterns expressed by TwoPaneLayout imply
  * a physicality and direct information hierarchy between panes that does not necessarily exist
  * in a scenario where a navigation drawer should be used instead.</p>
  *
- * <p>Appropriate uses of SlidingPaneLayout include pairings of panes such as a contact list and
+ * <p>Appropriate uses of TwoPaneLayout include pairings of panes such as a contact list and
  * subordinate interactions with those contacts, or an email thread list with the content pane
  * displaying the contents of the selected thread. Inappropriate uses of SlidingPaneLayout include
  * switching between disparate functions of your app, such as jumping from a social stream view
@@ -84,17 +78,17 @@ import java.util.concurrent.Executor;
  * pattern instead. ({@link androidx.drawerlayout.widget.DrawerLayout DrawerLayout} implements
  * this pattern.)</p>
  *
- * <p>Like {@link android.widget.LinearLayout LinearLayout}, SlidingPaneLayout supports
+ * <p>Like {@link android.widget.LinearLayout LinearLayout}, TwoPaneLayout supports
  * the use of the layout parameter <code>layout_weight</code> on child views to determine
  * how to divide leftover space after measurement is complete. It is only relevant for width.
  * When views do not overlap weight behaves as it does in a LinearLayout.</p>
  */
-public class SlidingPaneLayout extends ViewGroup implements Openable {
-    private static final String TAG = "SlidingPaneLayout";
+public class TwoPaneLayout extends ViewGroup implements Openable {
+    private static final String TAG = "TwoPaneLayout";
 
     /** Class name may be obfuscated by Proguard. Hardcode the string for accessibility usage. */
     private static final String ACCESSIBILITY_CLASS_NAME =
-            "androidx.slidingpanelayout.widget.SlidingPaneLayout";
+            "cx.ring.views.twopane.TwoPaneLayout";
 
     /**
      * True if a panel can slide with the current measurements
@@ -104,108 +98,32 @@ public class SlidingPaneLayout extends ViewGroup implements Openable {
     /**
      * The child view that can slide, if any.
      */
-    View mSlideableView;
+    private View mSlideableView;
 
     /**
      * How far the panel is offset from its usual position.
      * range [0, 1] where 0 = open, 1 = closed.
      */
-    float mSlideOffset = 1.f;
+    private float mSlideOffset = 1.f;
 
-    /**
-     * How far the non-sliding panel is parallaxed from its usual position when open.
-     * range [0, 1]
-     */
-    private float mParallaxOffset;
-
-    /**
-     * How far in pixels the slideable panel may move.
-     */
-    int mSlideRange;
-
-    /**
-     * Distance in pixels to parallax the fixed pane by when fully closed
-     */
-    private int mParallaxBy;
-
-    private final List<PanelSlideListener> mPanelSlideListeners = new CopyOnWriteArrayList<>();
-    private @Nullable PanelSlideListener mPanelSlideListener;
+    private final List<PanelListener> mPanelListeners = new CopyOnWriteArrayList<>();
 
     /**
      * Stores whether or not the pane was open the last time it was slideable.
      * If open/close operations are invoked this state is modified. Used by
      * instance state save/restore.
      */
-    boolean mPreservedOpenState;
+    private boolean mPreservedOpenState;
     private boolean mFirstLayout = true;
 
     private final Rect mTmpRect = new Rect();
 
-    @LockMode
-    private int mLockMode;
-
-    /**
-     * User can freely swipe between list and detail panes.
-     */
-    public static final int LOCK_MODE_UNLOCKED = 0;
-
-    /**
-     * The detail pane is locked in an open position. The user cannot swipe to close the detail
-     * pane, but the app can close the detail pane programmatically.
-     */
-    public static final int LOCK_MODE_LOCKED_OPEN = 1;
-
-    /**
-     * The detail pane is locked in a closed position. The user cannot swipe to open the detail
-     * pane, but the app can open the detail pane programmatically.
-     */
-    public static final int LOCK_MODE_LOCKED_CLOSED = 2;
-
-    /**
-     * The user cannot swipe between list and detail panes, though the app can open or close the
-     * detail pane programmatically.
-     */
-    public static final int LOCK_MODE_LOCKED = 3;
-
-    @Retention(RetentionPolicy.SOURCE)
-    @IntDef({LOCK_MODE_UNLOCKED, LOCK_MODE_LOCKED_OPEN, LOCK_MODE_LOCKED_CLOSED,
-            LOCK_MODE_LOCKED})
-    @interface LockMode {
-    }
-
     FoldingFeature mFoldingFeature;
-
-    /**
-     * Set the lock mode that controls how the user can swipe between the panes.
-     *
-     * @param lockMode The new lock mode for the detail pane.
-     */
-    public final void setLockMode(@LockMode int lockMode) {
-        mLockMode = lockMode;
-    }
-
-    /**
-     * Get the lock mode used to control over the swipe behavior.
-     *
-     * @see #setLockMode(int)
-     */
-    @LockMode
-    public final int getLockMode() {
-        return mLockMode;
-    }
 
     /**
      * Listener for monitoring events about sliding panes.
      */
-    public interface PanelSlideListener {
-        /**
-         * Called when a detail view's position changes.
-         *
-         * @param panel       The child view that was moved
-         * @param slideOffset The new offset of this sliding pane within its range, from 0-1
-         */
-        void onPanelSlide(@NonNull View panel, float slideOffset);
-
+    public interface PanelListener {
         /**
          * Called when a detail view becomes slid completely open.
          *
@@ -221,25 +139,7 @@ public class SlidingPaneLayout extends ViewGroup implements Openable {
         void onPanelClosed(@NonNull View panel);
     }
 
-    /**
-     * No-op stubs for {@link PanelSlideListener}. If you only want to implement a subset
-     * of the listener methods you can extend this instead of implement the full interface.
-     */
-    public static class SimplePanelSlideListener implements PanelSlideListener {
-        @Override
-        public void onPanelSlide(@NonNull View panel, float slideOffset) {
-        }
-
-        @Override
-        public void onPanelOpened(@NonNull View panel) {
-        }
-
-        @Override
-        public void onPanelClosed(@NonNull View panel) {
-        }
-    }
-
-    private FoldingFeatureObserver.OnFoldingFeatureChangeListener mOnFoldingFeatureChangeListener =
+    private final FoldingFeatureObserver.OnFoldingFeatureChangeListener mOnFoldingFeatureChangeListener =
             new FoldingFeatureObserver.OnFoldingFeatureChangeListener() {
                 @Override
                 public void onFoldingFeatureChange(@NonNull FoldingFeature foldingFeature) {
@@ -248,63 +148,31 @@ public class SlidingPaneLayout extends ViewGroup implements Openable {
                     Transition changeBounds = new ChangeBounds();
                     changeBounds.setDuration(300L);
                     changeBounds.setInterpolator(PathInterpolatorCompat.create(0.2f, 0, 0, 1));
-                    TransitionManager.beginDelayedTransition(SlidingPaneLayout.this, changeBounds);
+                    TransitionManager.beginDelayedTransition(TwoPaneLayout.this, changeBounds);
                     requestLayout();
                 }
             };
 
     private FoldingFeatureObserver mFoldingFeatureObserver;
 
-    public SlidingPaneLayout(@NonNull Context context) {
+    public TwoPaneLayout(@NonNull Context context) {
         this(context, null);
     }
 
-    public SlidingPaneLayout(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public TwoPaneLayout(@NonNull Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public SlidingPaneLayout(@NonNull Context context, @Nullable AttributeSet attrs,
-            int defStyle) {
+    public TwoPaneLayout(@NonNull Context context, @Nullable AttributeSet attrs,
+                         int defStyle) {
         super(context, attrs, defStyle);
         ViewCompat.setAccessibilityDelegate(this, new AccessibilityDelegate());
         ViewCompat.setImportantForAccessibility(this, ViewCompat.IMPORTANT_FOR_ACCESSIBILITY_YES);
 
         WindowInfoTracker repo = WindowInfoTracker.getOrCreate(context);
         Executor mainExecutor = ContextCompat.getMainExecutor(context);
-        FoldingFeatureObserver foldingFeatureObserver =
-                new FoldingFeatureObserver(repo, mainExecutor);
-        setFoldingFeatureObserver(foldingFeatureObserver);
-    }
-
-    private void setFoldingFeatureObserver(FoldingFeatureObserver foldingFeatureObserver) {
-        mFoldingFeatureObserver = foldingFeatureObserver;
+        mFoldingFeatureObserver = new FoldingFeatureObserver(repo, mainExecutor);
         mFoldingFeatureObserver.setOnFoldingFeatureChangeListener(mOnFoldingFeatureChangeListener);
-    }
-
-    /**
-     * Set a listener to be notified of panel slide events. Note that this method is deprecated
-     * and you should use {@link #addPanelSlideListener(PanelSlideListener)} to add a listener and
-     * {@link #removePanelSlideListener(PanelSlideListener)} to remove a registered listener.
-     *
-     * @param listener Listener to notify when drawer events occur
-     * @see PanelSlideListener
-     * @see #addPanelSlideListener(PanelSlideListener)
-     * @see #removePanelSlideListener(PanelSlideListener)
-     * @deprecated Use {@link #addPanelSlideListener(PanelSlideListener)}
-     */
-    @Deprecated
-    public void setPanelSlideListener(@Nullable PanelSlideListener listener) {
-        // The logic in this method emulates what we had before support for multiple
-        // registered listeners.
-        if (mPanelSlideListener != null) {
-            removePanelSlideListener(mPanelSlideListener);
-        }
-        if (listener != null) {
-            addPanelSlideListener(listener);
-        }
-        // Update the deprecated field so that we can remove the passed listener the next
-        // time we're called
-        mPanelSlideListener = listener;
     }
 
     /**
@@ -312,10 +180,10 @@ public class SlidingPaneLayout extends ViewGroup implements Openable {
      * panel slide events.
      *
      * @param listener Listener to notify when panel slide events occur.
-     * @see #removePanelSlideListener(PanelSlideListener)
+     * @see #removePanelListener(PanelListener)
      */
-    public void addPanelSlideListener(@NonNull PanelSlideListener listener) {
-        mPanelSlideListeners.add(listener);
+    public void addPanelListener(@NonNull PanelListener listener) {
+        mPanelListeners.add(listener);
     }
 
     /**
@@ -323,21 +191,21 @@ public class SlidingPaneLayout extends ViewGroup implements Openable {
      * panel slide events.
      *
      * @param listener Listener to remove from being notified of panel slide events
-     * @see #addPanelSlideListener(PanelSlideListener)
+     * @see #addPanelListener(PanelListener)
      */
-    public void removePanelSlideListener(@NonNull PanelSlideListener listener) {
-        mPanelSlideListeners.remove(listener);
+    public void removePanelListener(@NonNull PanelListener listener) {
+        mPanelListeners.remove(listener);
     }
 
     void dispatchOnPanelOpened(@NonNull View panel) {
-        for (PanelSlideListener listener : mPanelSlideListeners) {
+        for (PanelListener listener : mPanelListeners) {
             listener.onPanelOpened(panel);
         }
         sendAccessibilityEvent(AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED);
     }
 
     void dispatchOnPanelClosed(@NonNull View panel) {
-        for (PanelSlideListener listener : mPanelSlideListeners) {
+        for (PanelListener listener : mPanelListeners) {
             listener.onPanelClosed(panel);
         }
         sendAccessibilityEvent(AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED);
@@ -448,7 +316,6 @@ public class SlidingPaneLayout extends ViewGroup implements Openable {
             final LayoutParams lp = (LayoutParams) child.getLayoutParams();
 
             if (child.getVisibility() == GONE) {
-                lp.dimWhenOffset = false;
                 continue;
             }
 
@@ -647,15 +514,10 @@ public class SlidingPaneLayout extends ViewGroup implements Openable {
             if (lp.slideable) {
                 final int margin = lp.leftMargin + lp.rightMargin;
                 final int range = Math.min(nextXStart, width - paddingEnd) - xStart - margin;
-                mSlideRange = range;
                 final int lpMargin = isLayoutRtl ? lp.rightMargin : lp.leftMargin;
-                lp.dimWhenOffset = xStart + lpMargin + range + childWidth / 2 > width - paddingEnd;
                 final int pos = (int) (range * mSlideOffset);
                 xStart += pos + lpMargin;
-                mSlideOffset = (float) pos / mSlideRange;
-            } else if (mCanSlide && mParallaxBy != 0) {
-                offset = (int) ((1 - mSlideOffset) * mParallaxBy);
-                xStart = nextXStart;
+                mSlideOffset = (float) pos / range;
             } else {
                 xStart = nextXStart;
             }
@@ -686,11 +548,6 @@ public class SlidingPaneLayout extends ViewGroup implements Openable {
         }
 
         if (mFirstLayout) {
-            if (mCanSlide) {
-                if (mParallaxBy != 0) {
-                    parallaxOtherViews(mSlideOffset);
-                }
-            }
             updateObscuredViewsVisibility(mSlideableView);
         }
 
@@ -750,28 +607,12 @@ public class SlidingPaneLayout extends ViewGroup implements Openable {
     }
 
     /**
-     * @deprecated Renamed to {@link #openPane()} - this method is going away soon!
-     */
-    @Deprecated
-    public void smoothSlideOpen() {
-        openPane();
-    }
-
-    /**
      * Open the detail view if it is currently slideable. If first layout
      * has already completed this will animate.
      */
     @Override
     public void open() {
         openPane();
-    }
-
-    /**
-     * @deprecated Renamed to {@link #closePane()} - this method is going away soon!
-     */
-    @Deprecated
-    public void smoothSlideClosed() {
-        closePane();
     }
 
     /**
@@ -792,15 +633,6 @@ public class SlidingPaneLayout extends ViewGroup implements Openable {
     @Override
     public boolean isOpen() {
         return !mCanSlide || mSlideOffset == 0;
-    }
-
-    /**
-     * @return true if content in this layout can be slid open and closed
-     * @deprecated Renamed to {@link #isSlideable()} - this method is going away soon!
-     */
-    @Deprecated
-    public boolean canSlide() {
-        return mCanSlide;
     }
 
     /**
@@ -853,7 +685,6 @@ public class SlidingPaneLayout extends ViewGroup implements Openable {
 
         View slideableView = mSlideableView;
         mSlideOffset = slideOffset;
-        parallaxOtherViews(slideOffset);
         requestLayout();
         invalidate();
         boolean opened = slideOffset == 0.f;
@@ -863,30 +694,6 @@ public class SlidingPaneLayout extends ViewGroup implements Openable {
             dispatchOnPanelClosed(slideableView);
         mPreservedOpenState = opened;
         return true;
-    }
-
-    private void parallaxOtherViews(float slideOffset) {
-        final boolean isLayoutRtl = isLayoutRtlSupport();
-        final int childCount = getChildCount();
-        for (int i = 0; i < childCount; i++) {
-            final View v = getChildAt(i);
-            if (v == mSlideableView) continue;
-
-            final int oldOffset = (int) ((1 - mParallaxOffset) * mParallaxBy);
-            mParallaxOffset = slideOffset;
-            final int newOffset = (int) ((1 - slideOffset) * mParallaxBy);
-            final int dx = oldOffset - newOffset;
-
-            v.offsetLeftAndRight(isLayoutRtl ? -dx : dx);
-        }
-    }
-
-    boolean isDimmed(View child) {
-        if (child == null) {
-            return false;
-        }
-        final LayoutParams lp = (LayoutParams) child.getLayoutParams();
-        return mCanSlide && lp.dimWhenOffset && mSlideOffset > 0;
     }
 
     @Override
@@ -914,11 +721,8 @@ public class SlidingPaneLayout extends ViewGroup implements Openable {
     @Override
     protected Parcelable onSaveInstanceState() {
         Parcelable superState = super.onSaveInstanceState();
-
         SavedState ss = new SavedState(superState);
         ss.isOpen = isSlideable() ? isOpen() : mPreservedOpenState;
-        ss.mLockMode = mLockMode;
-
         return ss;
     }
 
@@ -938,8 +742,6 @@ public class SlidingPaneLayout extends ViewGroup implements Openable {
             closePane();
         }
         mPreservedOpenState = ss.isOpen;
-
-        setLockMode(ss.mLockMode);
     }
 
     public static class LayoutParams extends ViewGroup.MarginLayoutParams {
@@ -957,14 +759,6 @@ public class SlidingPaneLayout extends ViewGroup implements Openable {
          * True if this pane is the slideable pane in the layout.
          */
         boolean slideable;
-
-        /**
-         * True if this view should be drawn dimmed
-         * when it's been offset from its default position.
-         */
-        boolean dimWhenOffset;
-
-        Paint dimPaint;
 
         public LayoutParams() {
             super(MATCH_PARENT, MATCH_PARENT);
@@ -999,8 +793,6 @@ public class SlidingPaneLayout extends ViewGroup implements Openable {
 
     static class SavedState extends AbsSavedState {
         boolean isOpen;
-        @LockMode
-        int mLockMode;
 
         SavedState(Parcelable superState) {
             super(superState);
@@ -1009,14 +801,12 @@ public class SlidingPaneLayout extends ViewGroup implements Openable {
         SavedState(Parcel in, ClassLoader loader) {
             super(in, loader);
             isOpen = in.readInt() != 0;
-            mLockMode = in.readInt();
         }
 
         @Override
         public void writeToParcel(Parcel out, int flags) {
             super.writeToParcel(out, flags);
             out.writeInt(isOpen ? 1 : 0);
-            out.writeInt(mLockMode);
         }
 
         public static final Creator<SavedState> CREATOR = new ClassLoaderCreator<SavedState>() {
@@ -1041,7 +831,7 @@ public class SlidingPaneLayout extends ViewGroup implements Openable {
         private final Rect mTmpRect = new Rect();
 
         @Override
-        public void onInitializeAccessibilityNodeInfo(View host, AccessibilityNodeInfoCompat info) {
+        public void onInitializeAccessibilityNodeInfo(@NonNull View host, @NonNull AccessibilityNodeInfoCompat info) {
             final AccessibilityNodeInfoCompat superNode = AccessibilityNodeInfoCompat.obtain(info);
             super.onInitializeAccessibilityNodeInfo(host, superNode);
             copyNodeInfoNoChildren(info, superNode);
@@ -1060,7 +850,7 @@ public class SlidingPaneLayout extends ViewGroup implements Openable {
             final int childCount = getChildCount();
             for (int i = 0; i < childCount; i++) {
                 final View child = getChildAt(i);
-                if (!filter(child) && (child.getVisibility() == View.VISIBLE)) {
+                if (child.getVisibility() == View.VISIBLE) {
                     // Force importance to "yes" since we can't read the value.
                     ViewCompat.setImportantForAccessibility(
                             child, ViewCompat.IMPORTANT_FOR_ACCESSIBILITY_YES);
@@ -1070,23 +860,9 @@ public class SlidingPaneLayout extends ViewGroup implements Openable {
         }
 
         @Override
-        public void onInitializeAccessibilityEvent(View host, AccessibilityEvent event) {
+        public void onInitializeAccessibilityEvent(@NonNull View host, @NonNull AccessibilityEvent event) {
             super.onInitializeAccessibilityEvent(host, event);
-
             event.setClassName(ACCESSIBILITY_CLASS_NAME);
-        }
-
-        @Override
-        public boolean onRequestSendAccessibilityEvent(ViewGroup host, View child,
-                AccessibilityEvent event) {
-            if (!filter(child)) {
-                return super.onRequestSendAccessibilityEvent(host, child, event);
-            }
-            return false;
-        }
-
-        public boolean filter(View child) {
-            return isDimmed(child);
         }
 
         /**
