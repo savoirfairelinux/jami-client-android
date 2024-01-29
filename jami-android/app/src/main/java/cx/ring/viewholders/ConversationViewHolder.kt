@@ -98,9 +98,9 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
         MessageType.OUTGOING_FILE -> v.findViewById(R.id.file_time)
         else -> null
     }
-    var mMessageBubble: ConstraintLayout? = null
+    var mMessageBubble: CustomMessageBubble? = null
     var mMessageLayout: ConstraintLayout? = null
-    var mMessageContent: CustomMessageBubble? = null
+//    var mMessageContent: CustomMessageBubble? = null
     var mReplyBubble: LinearLayout? = null
     var mReplyName: TextView? = null
     var mReplyTxt: TextView? = null
@@ -198,7 +198,7 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
                 mMsgTxt = v.findViewById(R.id.msg_txt)
                 mMessageBubble = v.findViewById(R.id.message_bubble)
                 mMessageLayout = v.findViewById(R.id.message_layout)
-                mMessageContent = v.findViewById(R.id.message_content)
+//                mMessageContent = v.findViewById(R.id.message_content)
                 mMsgDetailTxt = v.findViewById(R.id.msg_details_txt)
                 mMsgDetailTxtPerm = v.findViewById(R.id.message_time_permanent)
                 mAnswerLayout = v.findViewById(R.id.link_preview)

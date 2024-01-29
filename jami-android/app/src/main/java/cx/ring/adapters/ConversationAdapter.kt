@@ -990,7 +990,7 @@ class ConversationAdapter(
                             .setAction(Intent.ACTION_EDIT)
                             .putExtra(
                                 Intent.EXTRA_TEXT,
-                                conversationViewHolder.mMessageContent!!.getText().toString()
+                                conversationViewHolder.mMessageBubble!!.getText().toString()
                             )
                         val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
                             conversationFragment.requireActivity(),
@@ -1331,7 +1331,7 @@ class ConversationAdapter(
         val isEdited = interaction.history.size > 1
         val isReplying = interaction.replyToId != null
 
-        val messageContent = convViewHolder.mMessageContent ?: return
+//        val messageContent = convViewHolder.mMessageContent ?: return
         val messageBubble = convViewHolder.mMessageBubble ?: return
         val replyBubble = convViewHolder.mReplyBubble
         val answerLayout = convViewHolder.mAnswerLayout
@@ -1405,9 +1405,9 @@ class ConversationAdapter(
         // Manage the message content.
         answerLayout?.visibility = View.GONE
         if (StringUtils.isOnlyEmoji(message) && !isReplying) {
-            messageContent.updateEmoji(message, messageTime, isEdited)
+            messageBubble.updateEmoji(message, messageTime, isEdited)
         } else {
-            messageContent.updateStandard(
+            messageBubble.updateStandard(
                 markwon.toMarkdown(message), messageTime, isEdited
             )
 
@@ -1498,7 +1498,7 @@ class ConversationAdapter(
         // Manage deleted message.
         if (isDeleted) {
             replyBubble?.visibility = View.GONE
-            messageContent.updateDeleted(messageTime)
+            messageBubble.updateDeleted(messageTime)
             messageBubble.setOnLongClickListener(null)
         }
     }
