@@ -768,7 +768,24 @@ class TvConversationAdapter(
         }
         // Manage deleted message.
         if (isDeleted) {
-            msgTxt.text = context.getString(R.string.conversation_message_deleted)
+            if (textMessage.isIncoming) {
+                convViewHolder.compositeDisposable.add(
+                    presenter.contactService
+                        .observeContact(account, contact, false)
+                        .observeOn(DeviceUtils.uiScheduler)
+                        .subscribe { username ->
+                            msgTxt.text = String.format(
+                                context.getString(R.string.conversation_message_deleted),
+                                username
+                            )
+                        }
+                )
+            } else {
+                msgTxt.text = String.format(
+                    context.getString(R.string.conversation_message_deleted),
+                    context.getString(R.string.conversation_info_contact_you)
+                )
+            }
             // Hide the link preview
             answerLayout?.visibility = View.GONE
             if (convColor != 0 && !textMessage.isIncoming) {
