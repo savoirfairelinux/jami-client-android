@@ -7,8 +7,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/textmsg_bg_ripple"
     android:visibility="gone"
-    tools:visibility="visible"
-    tools:showIn="@layout/item_conv_msg_me">
+    tools:visibility="visible">
 
     <ImageView
         android:id="@+id/link_preview_img"

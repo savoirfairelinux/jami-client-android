@@ -990,7 +990,7 @@ class ConversationAdapter(
                             .setAction(Intent.ACTION_EDIT)
                             .putExtra(
                                 Intent.EXTRA_TEXT,
-                                conversationViewHolder.mMessageContent!!.getText().toString()
+                                conversationViewHolder.mMessageBubble!!.getText().toString()
                             )
                         val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
                             conversationFragment.requireActivity(),
@@ -1331,7 +1331,6 @@ class ConversationAdapter(
         val isEdited = interaction.history.size > 1
         val isReplying = interaction.replyToId != null
 
-        val messageContent = convViewHolder.mMessageContent ?: return
         val messageBubble = convViewHolder.mMessageBubble ?: return
         val replyBubble = convViewHolder.mReplyBubble
         val answerLayout = convViewHolder.mAnswerLayout
@@ -1405,9 +1404,9 @@ class ConversationAdapter(
         // Manage the message content.
         answerLayout?.visibility = View.GONE
         if (StringUtils.isOnlyEmoji(message) && !isReplying) {
-            messageContent.updateEmoji(message, messageTime, isEdited)
+            messageBubble.updateEmoji(message, messageTime, isEdited)
         } else {
-            messageContent.updateStandard(
+            messageBubble.updateStandard(
                 markwon.toMarkdown(message), messageTime, isEdited
             )
 
@@ -1424,31 +1423,34 @@ class ConversationAdapter(
                     .observeOn(DeviceUtils.uiScheduler)
                     .subscribe({ data ->
                         Log.w(TAG, "got preview $data")
-                        val image = convViewHolder.mImage ?: return@subscribe
-                        if (data.imageUrl.isNotEmpty()) {
-                            Glide.with(context)
-                                .load(data.imageUrl)
-                                .centerCrop()
-                                .into(image)
-                            image.visibility = View.VISIBLE
-                        } else {
-                            image.visibility = View.GONE
-                        }
-                        convViewHolder.mHistTxt?.text = data.title
-                        if (data.description.isNotEmpty()) {
-                            convViewHolder.mHistDetailTxt?.visibility = View.VISIBLE
-                            convViewHolder.mHistDetailTxt?.text = data.description
-                        } else {
-                            convViewHolder.mHistDetailTxt?.visibility = View.GONE
-                        }
-                        answerLayout?.visibility = View.VISIBLE
-                        val url = Uri.parse(data.baseUrl)
-                        convViewHolder.mPreviewDomain?.text = url.host
-                        answerLayout?.setOnClickListener {
-                            context.startActivity(Intent(Intent.ACTION_VIEW, url))
-                        }
+                        messageBubble.updateStandard(
+                            markwon.toMarkdown(message), messageTime, isEdited, data
+                        )
+//                        val image = convViewHolder.mImage ?: return@subscribe
+//                        if (data.imageUrl.isNotEmpty()) {
+//                            Glide.with(context)
+//                                .load(data.imageUrl)
+//                                .centerCrop()
+//                                .into(image)
+//                            image.visibility = View.VISIBLE
+//                        } else {
+//                            image.visibility = View.GONE
+//                        }
+//                        convViewHolder.mHistTxt?.text = data.title
+//                        if (data.description.isNotEmpty()) {
+//                            convViewHolder.mHistDetailTxt?.visibility = View.VISIBLE
+//                            convViewHolder.mHistDetailTxt?.text = data.description
+//                        } else {
+//                            convViewHolder.mHistDetailTxt?.visibility = View.GONE
+//                        }
+//                        answerLayout?.visibility = View.VISIBLE
+//                        val url = Uri.parse(data.baseUrl)
+//                        convViewHolder.mPreviewDomain?.text = url.host
+//                        answerLayout?.setOnClickListener {
+//                            context.startActivity(Intent(Intent.ACTION_VIEW, url))
+//                        }
                     }) { e -> Log.e(TAG, "Can't load preview", e) })
-            } else answerLayout?.visibility = View.GONE
+            }
         }
 //                msgTxt.movementMethod = LinkMovementMethod.getInstance()
 
@@ -1498,7 +1500,7 @@ class ConversationAdapter(
         // Manage deleted message.
         if (isDeleted) {
             replyBubble?.visibility = View.GONE
-            messageContent.updateDeleted(messageTime)
+            messageBubble.updateDeleted(messageTime)
             messageBubble.setOnLongClickListener(null)
         }
     }

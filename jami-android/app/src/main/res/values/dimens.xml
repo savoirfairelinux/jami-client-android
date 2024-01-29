@@ -124,6 +124,7 @@ along with this program; if not, write to the Free Software
     <dimen name="welcome_jami_logo_default_size">60dp</dimen>
 
     <!--  ChatView  -->
+    <dimen name="link_preview_image_size">100dp</dimen>
     <dimen name="image_maximum_size">200dp</dimen>
     <dimen name="padding_call_vertical">4dp</dimen>
     <dimen name="text_message_padding">10dp</dimen>
@@ -157,6 +158,8 @@ along with this program; if not, write to the Free Software
     <dimen name="custom_message_bubble_edited_drawable_padding">2dp</dimen>
     <dimen name="custom_message_bubble_default_text_size">14sp</dimen>
     <dimen name="custom_message_bubble_emoji_only_text_size">32sp</dimen>
+    <dimen name="custom_message_bubble_link_preview_horizontal_padding">8dp</dimen>
+    <dimen name="custom_message_bubble_link_preview_vertical_padding">4dp</dimen>
 
     <!--  Account List  -->
     <dimen name="account_unread_radius">10dp</dimen>

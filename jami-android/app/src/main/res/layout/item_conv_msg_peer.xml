@@ -62,7 +62,7 @@ along with this program; if not, write to the Free Software
             android:id="@+id/peer_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/conditional_left_conversation_margin"
+            android:layout_marginStart="@dimen/base_left_conversation_margin"
             android:ellipsize="end"
             android:maxEms="8"
             android:maxLines="1"
@@ -77,8 +77,8 @@ along with this program; if not, write to the Free Software
 
         <LinearLayout
             android:id="@+id/reply_bubble"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="180dp"
+            android:layout_height="33dp"
             android:layout_marginStart="@dimen/base_left_conversation_margin"
             android:layout_marginEnd="70dp"
             android:background="@drawable/textmsg_bg_in"
@@ -124,7 +124,7 @@ along with this program; if not, write to the Free Software
 
         </LinearLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <cx.ring.views.CustomMessageBubble
             android:id="@+id/message_bubble"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -132,35 +132,17 @@ along with this program; if not, write to the Free Software
             android:layout_marginStart="@dimen/base_left_conversation_margin"
             android:layout_marginTop="-6.5dp"
             android:background="@drawable/textmsg_bg_in_reply"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="5dp"
+            android:theme="@style/IncomingTextMessage"
             app:layout_constrainedWidth="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toEndOf="@id/photo"
-            app:layout_constraintTop_toBottomOf="@id/reply_bubble">
-
-            <cx.ring.views.CustomMessageBubble
-                android:id="@+id/message_content"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="10dp"
-                android:paddingVertical="5dp"
-                android:theme="@style/IncomingTextMessage"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:edited="true"
-                tools:message="This is a test !"
-                tools:time="11h05" />
-
-            <include
-                android:id="@+id/link_preview"
-                layout="@layout/msg_link_preview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/message_content" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintTop_toBottomOf="@id/reply_bubble"
+            tools:edited="true"
+            tools:message="This is a test !"
+            tools:time="11h05" />
 
         <TextView
             android:id="@+id/reaction_chip"

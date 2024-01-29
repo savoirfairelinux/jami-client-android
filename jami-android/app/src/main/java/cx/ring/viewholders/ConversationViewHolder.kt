@@ -63,7 +63,7 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
         MessageType.INCOMING_IMAGE,
         MessageType.OUTGOING_IMAGE -> v.findViewById(R.id.image)
         MessageType.INCOMING_TEXT_MESSAGE,
-        MessageType.OUTGOING_TEXT_MESSAGE -> v.findViewById(R.id.link_preview_img)
+//        MessageType.OUTGOING_TEXT_MESSAGE -> v.findViewById(R.id.link_preview_img)
         MessageType.CONTACT_EVENT -> v.findViewById(R.id.imageView)
         else -> null
     }
@@ -98,9 +98,8 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
         MessageType.OUTGOING_FILE -> v.findViewById(R.id.file_time)
         else -> null
     }
-    var mMessageBubble: ConstraintLayout? = null
+    var mMessageBubble: CustomMessageBubble? = null
     var mMessageLayout: ConstraintLayout? = null
-    var mMessageContent: CustomMessageBubble? = null
     var mReplyBubble: LinearLayout? = null
     var mReplyName: TextView? = null
     var mReplyTxt: TextView? = null
@@ -198,13 +197,13 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
                 mMsgTxt = v.findViewById(R.id.msg_txt)
                 mMessageBubble = v.findViewById(R.id.message_bubble)
                 mMessageLayout = v.findViewById(R.id.message_layout)
-                mMessageContent = v.findViewById(R.id.message_content)
+//                mMessageContent = v.findViewById(R.id.message_content)
                 mMsgDetailTxt = v.findViewById(R.id.msg_details_txt)
                 mMsgDetailTxtPerm = v.findViewById(R.id.message_time_permanent)
-                mAnswerLayout = v.findViewById(R.id.link_preview)
-                mHistTxt = v.findViewById(R.id.link_preview_title)
-                mHistDetailTxt = v.findViewById(R.id.link_preview_description)
-                mPreviewDomain = v.findViewById(R.id.link_preview_domain)
+//                mAnswerLayout = v.findViewById(R.id.link_preview)
+//                mHistTxt = v.findViewById(R.id.link_preview_title)
+//                mHistDetailTxt = v.findViewById(R.id.link_preview_description)
+//                mPreviewDomain = v.findViewById(R.id.link_preview_domain)
                 primaryClickableView = mMsgTxt
             }
             MessageType.INCOMING_FILE,

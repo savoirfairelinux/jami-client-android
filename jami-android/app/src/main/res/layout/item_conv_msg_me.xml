@@ -105,7 +105,22 @@ along with this program; if not, write to the Free Software
 
         </LinearLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+        <!--            android:id="@+id/message_bubble"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_gravity="end"-->
+        <!--            android:layout_marginTop="-6.5dp"-->
+        <!--            android:layout_marginEnd="@dimen/conversation_me_margin_end"-->
+        <!--            android:background="@drawable/textmsg_bg_out_reply"-->
+        <!--            android:paddingBottom="0dp"-->
+        <!--            app:layout_constrainedWidth="true"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintHorizontal_bias="1"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toBottomOf="@id/reply_bubble">-->
+
+        <cx.ring.views.CustomMessageBubble
             android:id="@+id/message_bubble"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -113,36 +128,30 @@ along with this program; if not, write to the Free Software
             android:layout_marginTop="-6.5dp"
             android:layout_marginEnd="@dimen/conversation_me_margin_end"
             android:background="@drawable/textmsg_bg_out_reply"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="5dp"
             android:paddingBottom="0dp"
+            android:theme="@style/OutgoingTextMesssage"
             app:layout_constrainedWidth="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/reply_bubble">
+            app:layout_constraintTop_toBottomOf="@id/reply_bubble"
+            tools:edited="true"
+            tools:message="This is a test blablablablablal !"
+            tools:time="11h05"
+            tools:withLinkPreview="false" />
 
-            <cx.ring.views.CustomMessageBubble
-                android:id="@+id/message_content"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="10dp"
-                android:paddingVertical="5dp"
-                android:theme="@style/OutgoingTextMesssage"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:edited="true"
-                tools:message="This is a test !"
-                tools:time="11h05" />
+        <!--            <include-->
+        <!--                android:id="@+id/link_preview"-->
+        <!--                layout="@layout/msg_link_preview"-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:visibility="visible"-->
+        <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--                app:layout_constraintTop_toBottomOf="@id/message_content" />-->
 
-            <include
-                android:id="@+id/link_preview"
-                layout="@layout/msg_link_preview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/message_content" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
 
         <cx.ring.views.MessageStatusView
             android:id="@+id/status_icon"

@@ -1,19 +1,27 @@
 package cx.ring.views
 
 import android.content.Context
+import android.content.Intent
 import android.content.res.ColorStateList
+import android.net.Uri
 import android.text.Spanned
 import android.util.AttributeSet
+import android.util.Log
 import android.util.TypedValue
+import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import androidx.core.view.isVisible
+import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import androidx.core.widget.TextViewCompat
+import com.bumptech.glide.Glide
 import cx.ring.R
+import cx.ring.linkpreview.PreviewData
 
 /**
  * Custom view that displays a message with time and edited indicator.
@@ -23,6 +31,52 @@ class CustomMessageBubble(context: Context, attrs: AttributeSet?) : ViewGroup(co
     private val messageText = AppCompatTextView(context)
     private val messageTime = TextView(context)
     private val messageEdited = TextView(context)
+
+    private val linkPreviewVerticalPadding = resources
+        .getDimensionPixelSize(R.dimen.custom_message_bubble_link_preview_vertical_padding)
+    private val linkPreviewHorizontalPadding = resources
+        .getDimensionPixelSize(R.dimen.custom_message_bubble_link_preview_horizontal_padding)
+    private val linkPreviewTitle = TextView(context).apply {
+        visibility = GONE
+        updatePadding(
+            top = linkPreviewVerticalPadding,
+            bottom = linkPreviewVerticalPadding,
+            right = linkPreviewHorizontalPadding,
+            left = linkPreviewHorizontalPadding
+        )
+    }
+    private val linkPreviewDescription = TextView(context).apply {
+        visibility = GONE
+        maxLines = 4
+        updatePadding(
+            top = linkPreviewVerticalPadding,
+            bottom = linkPreviewVerticalPadding,
+            right = linkPreviewHorizontalPadding,
+            left = linkPreviewHorizontalPadding
+        )
+    }
+    private val linkPreviewUrl = TextView(context).apply {
+        visibility = GONE
+        updatePadding(
+            top = linkPreviewVerticalPadding,
+            bottom = linkPreviewVerticalPadding,
+            right = linkPreviewHorizontalPadding,
+            left = linkPreviewHorizontalPadding
+        )
+    }
+    private val linkPreviewImage = ImageView(context).apply {
+        layoutParams = LayoutParams(
+            resources.getDimensionPixelSize(R.dimen.link_preview_image_size),
+            resources.getDimensionPixelSize(R.dimen.link_preview_image_size)
+        ).apply { scaleType = ImageView.ScaleType.CENTER_CROP }
+//        updateLayoutParams {
+////            width = resources.getDimensionPixelSize(R.dimen.link_preview_image_size)
+////            height = resources.getDimensionPixelSize(R.dimen.link_preview_image_size)
+//            scaleType = ImageView.ScaleType.CENTER_CROP
+//        }
+        visibility = GONE
+    }
+    private var isLinkPreview = false
 
     private var calculatedCase: Case = Case.CASE_NEW_LINE
     private var maximumLineWidth: Int = 0
@@ -62,6 +116,10 @@ class CustomMessageBubble(context: Context, attrs: AttributeSet?) : ViewGroup(co
         addView(this.messageText)
         addView(this.messageTime)
         addView(this.messageEdited)
+        addView(this.linkPreviewTitle)
+        addView(this.linkPreviewDescription)
+        addView(this.linkPreviewUrl)
+        addView(this.linkPreviewImage)
 
         context.theme.obtainStyledAttributes( // Get custom attributes and apply them.
             attrs, R.styleable.CustomMessageBubble, 0, 0
@@ -70,11 +128,24 @@ class CustomMessageBubble(context: Context, attrs: AttributeSet?) : ViewGroup(co
                 val message = getString(R.styleable.CustomMessageBubble_message)
                 val time = getString(R.styleable.CustomMessageBubble_time)
                 val edited = getBoolean(R.styleable.CustomMessageBubble_edited, false)
+                val withLinkPreview = getBoolean(R.styleable.CustomMessageBubble_withLinkPreview, false)
                 defaultTextColor =
                     getColor(R.styleable.CustomMessageBubble_android_textColor, defaultTextColor)
                 messageText.text = message
                 messageTime.text = time
                 messageEdited.isVisible = edited
+                isLinkPreview = withLinkPreview
+                if(isLinkPreview) {
+                    linkPreviewTitle.visibility = VISIBLE
+                    linkPreviewDescription.visibility = VISIBLE
+                    linkPreviewUrl.visibility = VISIBLE
+                    linkPreviewTitle.text = resources.getString(R.string.fake_link_preview_title)
+                    linkPreviewDescription.text =
+                        resources.getString(R.string.fake_link_preview_description)
+                    linkPreviewUrl.text = resources.getString(R.string.fake_link_preview_url)
+                    linkPreviewImage.setImageResource(R.drawable.jami_banner)
+                }
+
                 updateColor(defaultTextColor)
             } finally {
                 recycle()
@@ -89,7 +160,51 @@ class CustomMessageBubble(context: Context, attrs: AttributeSet?) : ViewGroup(co
     /**
      * Updates the view to display a standard message.
      */
-    fun updateStandard(messageText: Spanned, messageTime: String, messageIsEdited: Boolean) {
+    fun updateStandard(
+        messageText: Spanned,
+        messageTime: String,
+        messageIsEdited: Boolean,
+        previewData: PreviewData? = null,
+    ) {
+        isLinkPreview = previewData != null
+        if (previewData != null) {
+            Log.w("devdebug", "updateStandard: LINKPREVIEW ON previewData: $previewData")
+            // Update the image preview
+            if (previewData.imageUrl.isNotEmpty()) {
+                Glide.with(context)
+                    .load(previewData.imageUrl)
+                    .centerCrop()
+                    .into(linkPreviewImage)
+                linkPreviewImage.visibility = View.VISIBLE
+            } else linkPreviewImage.visibility = View.GONE
+
+            // Update title, description and url
+            linkPreviewTitle.text = previewData.title
+            linkPreviewTitle.visibility = View.VISIBLE
+            if (previewData.description.isNotEmpty()) {
+                linkPreviewDescription.visibility = View.VISIBLE
+                linkPreviewDescription.text = previewData.description
+            } else linkPreviewDescription.visibility = View.GONE
+            val url = Uri.parse(previewData.baseUrl)
+            linkPreviewUrl.text = url.host
+            linkPreviewUrl.visibility = View.VISIBLE
+
+            // Manage click to open the link
+            listOf(linkPreviewImage, linkPreviewTitle, linkPreviewDescription, linkPreviewUrl)
+                .forEach {
+                    it.setOnClickListener {
+                        context.startActivity(Intent(Intent.ACTION_VIEW, url))
+                    }
+                }
+        }
+        else {
+            Log.w("devdebug", "updateStandard: LINKPREVIEW OFF")
+            linkPreviewTitle.visibility = View.GONE
+            linkPreviewDescription.visibility = View.GONE
+            linkPreviewUrl.visibility = View.GONE
+            linkPreviewImage.visibility = View.GONE
+        }
+
         this.messageEdited.isVisible = messageIsEdited
         this.messageText.setTextSize(TypedValue.COMPLEX_UNIT_PX, defaultTextSize)
         this.messageText.text = messageText
@@ -141,11 +256,40 @@ class CustomMessageBubble(context: Context, attrs: AttributeSet?) : ViewGroup(co
         maximumLineWidth = (0..<messageText.lineCount)
             .maxOfOrNull { messageText.layout.getLineWidth(it) }?.toInt() ?: 0
 
-        // Get current layout case.
-        calculatedCase = getCase(MeasureSpec.getSize(widthMeasureSpec))
+        val desiredWidth: Int
+        val desiredHeight: Int
 
-        val desiredWidth = calculateDesiredWidth(calculatedCase)
-        val desiredHeight = calculateDesiredHeight(calculatedCase)
+        // Get current layout case.
+        if (isLinkPreview) {
+            calculatedCase = getCase(MeasureSpec.getSize(widthMeasureSpec)).let {
+                when (it) {
+                    Case.CASE_NEW_LINE -> Case.CASE_NEW_LINE
+                    Case.CASE_LAST_LINE -> Case.CASE_LAST_LINE
+                    Case.CASE_SINGLE_LINE -> Case.CASE_LAST_LINE
+                }
+            }
+            desiredWidth = MeasureSpec.getSize(widthMeasureSpec)
+            Log.w("devdebug", "desiredWidth: linkPreviewTitle.measuredHeight: ${linkPreviewTitle.measuredHeight} isVisible: ${linkPreviewTitle.isVisible}")
+            Log.w("devdebug", "desiredWidth: linkPreviewDescription.measuredHeight: ${linkPreviewDescription.measuredHeight} isVisible: ${linkPreviewDescription.isVisible}")
+            Log.w("devdebug", "desiredWidth: linkPreviewUrl.measuredHeight: ${linkPreviewUrl.measuredHeight} isVisible: ${linkPreviewUrl.isVisible}")
+            Log.w("devdebug", "desiredWidth: linkPreviewImage.measuredHeight: ${linkPreviewImage.measuredHeight} isVisible: ${linkPreviewImage.isVisible}")
+            desiredHeight = calculateDesiredHeight(calculatedCase) + maxOf(
+                linkPreviewTitle.measuredHeight +
+                linkPreviewDescription.measuredHeight +
+                linkPreviewUrl.measuredHeight,
+                linkPreviewImage.measuredHeight)
+        } else {
+            calculatedCase = getCase(MeasureSpec.getSize(widthMeasureSpec))
+            desiredWidth = calculateDesiredWidth(calculatedCase)
+            desiredHeight = calculateDesiredHeight(calculatedCase)
+        }
+
+//        val desiredWidth =
+//            if (isLinkPreview) MeasureSpec.getSize(widthMeasureSpec)
+//            else calculateDesiredWidth(calculatedCase)
+//        val desiredHeight =
+//            if (isLinkPreview) calculateDesiredHeight(Case.CASE_NEW_LINE)
+//            else calculateDesiredHeight(calculatedCase)
 
         val measuredWidth = resolveSizeAndState(desiredWidth, widthMeasureSpec, 0)
         val measuredHeight =
@@ -289,6 +433,37 @@ class CustomMessageBubble(context: Context, attrs: AttributeSet?) : ViewGroup(co
         messageText.layout(textStart, textTop, textEnd, textBottom)
         if (messageEdited.isVisible)
             messageEdited.layout(editedStart, editedTop, editedEnd, editedBottom)
+
+        if (isLinkPreview) {
+            val imageTop: Int = timeBottom
+            val imageStart: Int = paddingStart
+//            val imageBottom: Int = imageTop + linkPreviewImage.measuredHeight
+            val imageEnd: Int = imageStart + linkPreviewImage.measuredWidth
+
+            val titleTop: Int = timeBottom
+            val titleEnd: Int = timeEnd
+            val titleStart: Int = imageEnd
+            val titleBottom: Int = titleTop + linkPreviewTitle.measuredHeight
+
+            val descriptionTop: Int = titleBottom
+            val descriptionEnd: Int = titleEnd
+            val descriptionStart: Int = titleStart
+            val descriptionBottom: Int = descriptionTop + linkPreviewDescription.measuredHeight
+
+            val urlTop: Int = descriptionBottom
+            val urlEnd: Int = descriptionEnd
+            val urlStart: Int = descriptionStart
+            val urlBottom: Int = urlTop + linkPreviewUrl.measuredHeight
+
+            val imageBottom: Int = imageTop + linkPreviewImage.measuredHeight
+
+
+
+            linkPreviewTitle.layout(titleStart, titleTop, titleEnd, titleBottom)
+            linkPreviewDescription.layout(descriptionStart, descriptionTop, descriptionEnd, descriptionBottom)
+            linkPreviewUrl.layout(urlStart, urlTop, urlEnd, urlBottom)
+            linkPreviewImage.layout(imageStart, imageTop, imageEnd, imageBottom)
+        }
     }
 
     private enum class Case {

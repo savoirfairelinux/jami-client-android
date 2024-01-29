@@ -568,4 +568,9 @@ along with this program; if not, write to the Free Software
     <string name="load_sucess">%1$s: enabled</string>
     <string name="unload_sucess">%1$s: disabled</string>
 
+    <!--  Custom Message Bubble  -->
+    <string name="fake_link_preview_title">How to keep track of friends and family on Android / You can stay in control of who is able to see your location. </string>
+    <string name="fake_link_preview_description">The most obvious choice for location sharing on Android is Google Maps, as it comes preinstalled. There are other options you can try as well, which I’ll get to.</string>
+    <string name="fake_link_preview_url">https://www.theverge.com</string>
+
 </resources>

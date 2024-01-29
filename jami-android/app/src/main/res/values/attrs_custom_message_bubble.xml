@@ -3,6 +3,7 @@
         <attr name="time" format="string"/>
         <attr name="message" format="string"/>
         <attr name="edited" format="boolean"/>
+        <attr name="withLinkPreview" format="boolean"/>
         <attr name="android:textColor"/>
     </declare-styleable>
 </resources>
