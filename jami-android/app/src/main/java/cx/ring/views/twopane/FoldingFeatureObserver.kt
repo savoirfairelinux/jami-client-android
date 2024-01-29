@@ -1,4 +1,4 @@
-package cx.ring.views.slidingpane
+package cx.ring.views.twopane
 
 import android.app.Activity
 import androidx.window.layout.FoldingFeature
@@ -7,7 +7,6 @@ import androidx.window.layout.WindowLayoutInfo
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.asCoroutineDispatcher
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.launch
