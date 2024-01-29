@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5fcbcc85_5216702c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-01-29T16:07:43Z",
+      "side": 1,
+      "message": "Should be implemented with Glide features to avoid double-pass rendering",
+      "revId": "f3347a88674ae6082d20405288f41991f95c60b5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
