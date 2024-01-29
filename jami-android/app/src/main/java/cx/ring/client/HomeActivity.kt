@@ -58,7 +58,7 @@ import cx.ring.utils.getUiCustomizationFromConfigJson
 import cx.ring.viewmodel.WelcomeJamiViewModel
 import cx.ring.views.AvatarDrawable
 import cx.ring.views.AvatarFactory
-import cx.ring.views.slidingpane.SlidingPaneLayout
+import cx.ring.views.twopane.TwoPaneLayout
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -141,10 +141,7 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
         mBinding = ActivityHomeBinding.inflate(layoutInflater).also { binding ->
             setContentView(binding.root)
             //supportActionBar?.title = ""
-            binding.panel.lockMode = SlidingPaneLayout.LOCK_MODE_LOCKED
-            binding.panel.addPanelSlideListener(object : SlidingPaneLayout.PanelSlideListener {
-                override fun onPanelSlide(panel: View, slideOffset: Float) {}
-
+            binding.panel.addPanelListener(object : TwoPaneLayout.PanelListener {
                 override fun onPanelOpened(panel: View) {
                     conversationBackPressedCallback.isEnabled = true
                 }
@@ -205,7 +202,7 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
         super.onConfigurationChanged(newConfig)
 
         mBinding!!.panel.doOnNextLayout {
-            it as SlidingPaneLayout
+            it as TwoPaneLayout
 
             if (it.isSlideable) {
                 if (fConversation == null) {
@@ -351,7 +348,7 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
                         ConversationPath.fromBundle(fConversation?.arguments)?.accountId
                     if (account.accountId != currentConversationAccountId) {
                         mBinding!!.panel.doOnNextLayout {
-                            it as SlidingPaneLayout
+                            it as TwoPaneLayout
                             if (!it.isSlideable) showWelcomeFragment()
                         }
                     }
