@@ -112,9 +112,9 @@ dependencies {
     implementation ("androidx.percentlayout:percentlayout:1.0.0")
     implementation ("androidx.emoji2:emoji2:1.4.0")
     implementation ("androidx.emoji2:emoji2-emojipicker:1.4.0")
-    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
     implementation ("androidx.window:window:1.2.0")
-    implementation ("com.google.android.material:material:1.10.0")
+    implementation ("com.google.android.material:material:1.11.0")
     implementation ("com.google.android.flexbox:flexbox:3.0.0")
     implementation ("com.google.protobuf:protobuf-javalite:3.23.2")
 
@@ -146,7 +146,7 @@ dependencies {
     implementation ("io.reactivex.rxjava3:rxjava:3.1.8")
 
     // Open Street Map
-    implementation ("org.osmdroid:osmdroid-android:6.1.17")
+    implementation ("org.osmdroid:osmdroid-android:6.1.18")
 
     // Markwon (Markdown support)
     implementation ("io.noties.markwon:core:$markwon_version")
