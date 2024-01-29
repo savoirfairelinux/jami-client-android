@@ -43,6 +43,7 @@
   <!--History Fragment-->
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
+  <string name="invitation_card_title">Otrzymano zaproszenia</string>
   <plurals name="home_conferences_title">
     <item quantity="one">%d Rozmowa</item>
     <item quantity="few">%d Rozmowy</item>
@@ -74,6 +75,7 @@
   <string name="notif_channel_background_service">Usługa w tle</string>
   <string name="notif_channel_background_service_descr">Pozwala na odbieranie połączeń i wiadomości w dowolnym czasie.</string>
   <string name="notif_group_calls">Rozmowy</string>
+  <string name="notif_inprogress_group_call">Rozmowa w toku</string>
   <string name="notif_background_service">Jami działa teraz w tle</string>
   <string name="notif_mark_as_read">Zaznacz jako przeczytane</string>
   <string name="notif_dismiss">Odrzuć</string>
@@ -100,6 +102,7 @@
   <string name="ongoing_call">Trwa połączenie</string>
   <string name="hist_in_call">Czas przychodzączego połączenia: %1$s</string>
   <string name="hist_out_call">Czas wychodzączego połączenia: %1$s</string>
+  <string name="call_duration">Połączenie trwało %s</string>
   <string name="start_error_title">Nie udało się uruchomić Jami!</string>
   <string name="start_error_mic_required">Jami wymaga zezwolenia na korzystanie z mikrofonu, by działać.</string>
   <string name="action_call_accept">Odbierz</string>
@@ -121,6 +124,7 @@
   <string name="write_a_message">Napisz wiadomość</string>
   <string name="scan_qr">Zeskanuj kod QR</string>
   <string name="qr_code">Kod QR</string>
+  <string name="new_swarm">Rozpocznij rozmowę grupową</string>
   <string name="ab_action_flipcamera">Zamień kamerę</string>
   <string name="ab_action_hidepreview">Ukryj podgląd</string>
   <string name="remote_recording">%s nagrywanie...</string>
@@ -136,6 +140,8 @@
   <string name="conversation_send_audio">Nagraj klip dźwiękowy</string>
   <string name="conversation_send_video">Nagraj klip wideo</string>
   <string name="conversation_share_location">Udostępnij lokalizację</string>
+  <string name="ongoing_group_call">Rozmowa w toku</string>
+  <string name="started_call">Rozpoczęto połączenie głosowe </string>
   <string name="in_reply_to">W odpowiedzi na</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Uprawnienia do aparatu</string>
@@ -375,12 +381,26 @@
   <string name="picker_btn">Wybierz kontakty</string>
   <string name="bottomsheet_contact">Skontaktuj się z Jami\n%1$s</string>
   <string name="bottomsheet_remove">Wyprowadź z rodu</string>
+  <string name="error_open_no_app_found">Nie znaleziono aplikacji zdolnej do obsługi tego typu pliku %1$s</string>
   <!--JamiId-->
+  <string name="jami_id_copy">Skopiuj Jamild</string>
+  <string name="jami_id_share">Udostępnij Jamild</string>
   <string name="jami_id_validate">Zarejestruj nazwę użytkownika</string>
+  <string name="jami_id_available">Nazwa użytkownika jest dostępna</string>
+  <string name="jami_id_not_available">Nazwa użytkownika nie jest dostępna\n• maksymalnie 32 znaki\n• Następujące specjalne znaki są dozwolone: myślnik (-), podkreślnik (_)</string>
+  <string name="jami_id_info">• maksymalnie 32 znaki\n• Następujące specjalne znaki są dozwolone: myślnik (-), podkreślnik (_)</string>
   <string name="jami_id_looking_for_availability">Sprawdzanie dostępności nazwy użytkownika...</string>
   <string name="jami_id_choose_username">Wybierz nazwę użytkownika</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Witaj w Jami</string>
+  <string name="welcome_jami_description">Udostępnij swój identyfikator Jami aby ułatwić skontaktowanie się z Tobą!</string>
   <!--Donation-->
+  <string name="donation_card_not_now">Nie w tej chwili</string>
+  <string name="donation_donate">Przekaż darowiznę</string>
+  <string name="donation_setting_title">Przypomnienie o darowiźnie </string>
+  <string name="donation_setting_description">Włącz przypomnienie o darowiźnie </string>
   <!--Plugin-->
+  <string name="unable_to_load">Nie można załadować %1$s</string>
+  <string name="load_sucess">%1$s jest włączone</string>
+  <string name="unload_sucess">%1$s: wyłączone </string>
 </resources>
