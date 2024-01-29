@@ -100,11 +100,12 @@ class CustomMessageBubble(context: Context, attrs: AttributeSet?) : ViewGroup(co
     /**
      * Updates the view to display a deleted message.
      */
-    fun updateDeleted(messageTime: String) {
+    fun updateDeleted(messageTime: String, username: String) {
         messageEdited.visibility = GONE
         this.messageTime.text = messageTime
         messageText.setTextSize(TypedValue.COMPLEX_UNIT_PX, defaultTextSize)
-        messageText.text = resources.getString(R.string.conversation_message_deleted)
+        messageText.text =
+            String.format(context.getString(R.string.conversation_message_deleted), username)
         updateColor(defaultTextColor)
     }
 
