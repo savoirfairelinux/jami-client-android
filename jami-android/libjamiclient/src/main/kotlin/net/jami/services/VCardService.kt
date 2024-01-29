@@ -35,6 +35,7 @@ abstract class VCardService {
     abstract fun saveVCardProfile(accountId: String, uri: String?, displayName: String?, picture: String?): Single<VCard>
 
     abstract fun loadVCardProfile(vcard: VCard): Single<Profile>
+    abstract fun loadVCard(vcard: File): Single<Profile>
     abstract fun peerProfileReceived(accountId: String, peerId: String, vcard: File): Single<Profile>
     abstract fun loadConversationProfile(info: Map<String, String>): Single<Profile>
     abstract fun accountProfileReceived(accountId: String, vcardFile: File): Single<Profile>

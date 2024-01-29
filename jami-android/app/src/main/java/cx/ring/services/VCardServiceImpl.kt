@@ -60,6 +60,9 @@ class VCardServiceImpl(private val mContext: Context) : VCardService() {
             .flatMap { vcard: VCard -> VCardUtils.saveLocalProfileToDisk(vcard, accountId, mContext.filesDir) }
 
     override fun loadVCardProfile(vcard: VCard): Single<Profile> = Companion.loadVCardProfile(vcard)
+    override fun loadVCard(vcard: File): Single<Profile> = Single.fromCallable {
+        readData(VCardUtils.loadFromDisk(vcard))
+    }.subscribeOn(Schedulers.io())
 
     override fun peerProfileReceived(accountId: String, peerId: String, vcard: File): Single<Profile> =
         VCardUtils.peerProfileReceived(mContext.filesDir, accountId, peerId, vcard)
