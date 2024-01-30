@@ -1,0 +1,7 @@
+Code-Review+2: Pierre Nicolas <pierre.nicolas@savoirfairelinux.com>
+Verified+1: Jenkins CI <jenkins@ring-packaging.cx>
+Submitted-by: Emma Falkiewitz <emma.falkiewitz@savoirfairelinux.com>
+Submitted-at: Tue, 30 Jan 2024 16:17:08 -0500
+Reviewed-on: https://review.jami.net/c/jami-client-android/+/27379
+Project: jami-client-android
+Branch: refs/heads/master
