@@ -1364,7 +1364,7 @@ class ConversationAdapter(
 
         // If in a replying bubble, we need to overlap the message bubble
         // with the answered message bubble.
-        if (textMessage.replyToId != null)
+        if (textMessage.replyToId != null && !isDeleted)
             messageBubble.updateLayoutParams<MarginLayoutParams> {
                 topMargin = context.resources
                     .getDimensionPixelSize(R.dimen.conversation_reply_overlap)
