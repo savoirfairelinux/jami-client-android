@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.text.Spanned
 import android.util.AttributeSet
+import android.util.Log
 import android.util.TypedValue
 import android.view.ViewGroup
 import android.widget.TextView
@@ -14,11 +15,27 @@ import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.core.widget.TextViewCompat
 import cx.ring.R
+import kotlin.math.log
 
 /**
  * Custom view that displays a message with time and edited indicator.
  */
 class CustomMessageBubble(context: Context, attrs: AttributeSet?) : ViewGroup(context, attrs) {
+
+    val specificMessage = "Tyyiigihhhihihihihihihjhjououojouououohhohihhih ojojohouojojjojouohohohohohhopierre"
+    private fun logSpecificMessage(log: String) {
+        if(messageText.text.toString() == specificMessage)
+            Log.w("devdebug", "customMessageBubble: $log")
+    }
+
+
+    val Int.modeToString: String
+        get() = when (this) {
+            MeasureSpec.EXACTLY -> "EXACTLY"
+            MeasureSpec.AT_MOST -> "AT_MOST"
+            MeasureSpec.UNSPECIFIED -> "UNSPECIFIED"
+            else -> "UNKNOWN"
+        }
 
     private val messageText = AppCompatTextView(context)
     private val messageTime = TextView(context)
@@ -135,6 +152,14 @@ class CustomMessageBubble(context: Context, attrs: AttributeSet?) : ViewGroup(co
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        logSpecificMessage("onMeasure: entry")
+
+        logSpecificMessage(
+            "onMeasure: widthMeasureSpec heightMeasureSpec\n" +
+                    "\tpx: ${MeasureSpec.getSize(widthMeasureSpec)}" + "\tmode: ${MeasureSpec.getMode(widthMeasureSpec).modeToString}\n" +
+                    "\tpx: ${MeasureSpec.getSize(heightMeasureSpec)}" + "\tmode: ${MeasureSpec.getMode(heightMeasureSpec).modeToString}"
+        )
+
         measureChildren(widthMeasureSpec, heightMeasureSpec)
 
         // Measure the maximum line width of the message text.
@@ -147,11 +172,23 @@ class CustomMessageBubble(context: Context, attrs: AttributeSet?) : ViewGroup(co
         val desiredWidth = calculateDesiredWidth(calculatedCase)
         val desiredHeight = calculateDesiredHeight(calculatedCase)
 
+        logSpecificMessage(
+            "onMeasure: desiredWidth desiredHeight\n" +
+                    "\tpx: $desiredWidth" + "\tpx: $desiredHeight"
+        )
+
         val measuredWidth = resolveSizeAndState(desiredWidth, widthMeasureSpec, 0)
         val measuredHeight =
             resolveSizeAndState(desiredHeight, heightMeasureSpec, 0)
 
         setMeasuredDimension(measuredWidth, measuredHeight)
+
+        logSpecificMessage(
+            "onMeasure: measuredWidth measuredHeight\n" +
+                    "\tpx: $measuredWidth" + "\tpx: $measuredHeight"
+        )
+
+        logSpecificMessage("onMeasure: exit\n ")
     }
 
     private fun calculateDesiredWidth(case: Case): Int = when (case) {
