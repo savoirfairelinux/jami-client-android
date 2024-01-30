@@ -151,7 +151,7 @@ class CustomMessageBubble(context: Context, attrs: AttributeSet?) : ViewGroup(co
         val measuredHeight =
             resolveSizeAndState(desiredHeight, heightMeasureSpec, 0)
 
-        setMeasuredDimension(measuredWidth, measuredHeight)
+        setMeasuredDimension(desiredWidth, desiredHeight)
     }
 
     private fun calculateDesiredWidth(case: Case): Int = when (case) {
