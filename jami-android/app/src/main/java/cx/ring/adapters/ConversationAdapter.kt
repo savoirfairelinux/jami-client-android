@@ -1289,7 +1289,8 @@ class ConversationAdapter(
         messageBubble: View, replyBubble: View?,
         isGroup: Boolean, isIncoming: Boolean
     ) {
-        if (isGroup && isIncoming) {
+        if (!isIncoming) return
+        if (isGroup) {
             context.resources.getDimensionPixelSize(R.dimen.conditional_left_conversation_margin).let {
                 (messageBubble.layoutParams as MarginLayoutParams)
                     .apply { leftMargin = it }
