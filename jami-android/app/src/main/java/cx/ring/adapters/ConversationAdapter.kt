@@ -1287,9 +1287,9 @@ class ConversationAdapter(
     private fun updateMessageLeftMargin(
         context: Context,
         messageBubble: View, replyBubble: View?,
-        isGroup: Boolean, isIncoming: Boolean
+        isGroup: Boolean
     ) {
-        if (isGroup && isIncoming) {
+        if (isGroup) {
             context.resources.getDimensionPixelSize(R.dimen.conditional_left_conversation_margin).let {
                 (messageBubble.layoutParams as MarginLayoutParams)
                     .apply { leftMargin = it }
@@ -1379,12 +1379,13 @@ class ConversationAdapter(
             isDeleted = isDeleted,
             isIncoming = textMessage.isIncoming
         )
-        // Manage the left margin of the message bubble.
-        updateMessageLeftMargin(
-            context, messageBubble, replyBubble,
-            isGroup = presenter.isGroup(),
-            isIncoming = textMessage.isIncoming
-        )
+
+        // Manage the left margin of incoming message bubble.
+        if (textMessage.isIncoming)
+            updateMessageLeftMargin(
+                context, messageBubble, replyBubble,
+                isGroup = presenter.isGroup()
+            )
 
         // Manage long press.
         messageBubble.setOnLongClickListener { v: View ->
