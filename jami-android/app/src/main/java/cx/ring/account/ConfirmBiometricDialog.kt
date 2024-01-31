@@ -19,44 +19,28 @@ package cx.ring.account
 import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
-import android.view.KeyEvent
+import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
-import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.R
 import cx.ring.databinding.DialogConfirmRevocationBinding
-import net.jami.services.AccountService
 
-class BackupAccountDialog : DialogFragment() {
-    private var mAccountId: String? = null
-    private var mListener: UnlockAccountListener? = null
+class ConfirmBiometricDialog : DialogFragment() {
+    private var mListener: ((String) -> Unit)? = null
     private var binding: DialogConfirmRevocationBinding? = null
-    fun setListener(listener: UnlockAccountListener?) {
+    fun setListener(listener: (String) -> Unit) {
         mListener = listener
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         binding = DialogConfirmRevocationBinding.inflate(requireActivity().layoutInflater)
-        arguments?.let { args ->
-            mAccountId = args.getString(AccountEditionFragment.ACCOUNT_ID_KEY)
-        }
-        binding!!.passwordTxt.setOnEditorActionListener { v: TextView?, actionId: Int, event: KeyEvent? ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                val validationResult = validate()
-                if (validationResult) {
-                    dialog!!.dismiss()
-                }
-                return@setOnEditorActionListener validationResult
-            }
-            false
-        }
         val result = MaterialAlertDialogBuilder(requireContext())
+            .setView(binding!!.root)
             .setTitle(R.string.account_enter_password)
             .setMessage(R.string.account_new_device_password)
-            .setView(binding!!.root)
             .setPositiveButton(android.R.string.ok, null) //Set to null. We override the onclick
             .setNegativeButton(android.R.string.cancel) { dialog: DialogInterface?, whichButton: Int -> dismiss() }
             .create()
@@ -69,22 +53,37 @@ class BackupAccountDialog : DialogFragment() {
             }
         }
         result.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
+        binding!!.passwordTxt.setOnEditorActionListener { _, actionId: Int, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                val validationResult = validate()
+                if (validationResult) {
+                    dialog!!.dismiss()
+                }
+                return@setOnEditorActionListener validationResult
+            }
+            false
+        }
         return result
     }
 
+    private fun checkInput(): Boolean {
+        if (binding!!.passwordTxt.text.toString().isEmpty()) {
+            binding!!.passwordTxtBox.isErrorEnabled = true
+            binding!!.passwordTxtBox.error = getText(R.string.enter_password)
+            return false
+        }
+        return true
+    }
+
     private fun validate(): Boolean {
-        if (mListener != null) {
-            mListener!!.onUnlockAccount(mAccountId!!, AccountService.ACCOUNT_SCHEME_PASSWORD, binding!!.passwordTxt.text.toString())
+        if (checkInput() && mListener != null) {
+            mListener!!(binding!!.passwordTxt.text.toString())
             return true
         }
         return false
     }
 
-    interface UnlockAccountListener {
-        fun onUnlockAccount(accountId: String, scheme: String, password: String)
-    }
-
     companion object {
-        val TAG = BackupAccountDialog::class.simpleName!!
+        val TAG = ConfirmBiometricDialog::class.simpleName!!
     }
 }

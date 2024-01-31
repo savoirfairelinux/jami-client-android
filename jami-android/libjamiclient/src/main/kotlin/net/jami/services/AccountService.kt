@@ -651,9 +651,10 @@ class AccountService(
         }
     }
 
-    fun exportToFile(accountId: String, absolutePath: String, password: String): Completable =
+    fun exportToFile(accountId: String, absolutePath: String, scheme: String, password: String): Completable =
         Completable.fromAction {
-            require(JamiService.exportToFile(accountId, absolutePath, "password", password)) { "Can't export archive" }
+            Log.w(TAG, "exportToFile() $accountId $absolutePath $scheme")
+            require(JamiService.exportToFile(accountId, absolutePath, scheme, password)) { "Can't export archive" }
         }.subscribeOn(scheduler)
 
     /**
@@ -1092,6 +1093,10 @@ class AccountService(
             }
         }
         mDeviceRevocationSubject.onNext(DeviceRevocationResult(accountId, device, state))
+    }
+
+    fun refreshAccount(accountId: String) {
+        getAccount(accountId)?.let { observableAccounts.onNext(it) }
     }
 
     fun setConversationPreferences(accountId: String, conversationId: String, info: Map<String, String>) {
@@ -1585,6 +1590,10 @@ class AccountService(
         private const val PIN_GENERATION_SUCCESS = 0
         private const val PIN_GENERATION_WRONG_PASSWORD = 1
         private const val PIN_GENERATION_NETWORK_ERROR = 2
+
+        const val ACCOUNT_SCHEME_NONE = ""
+        const val ACCOUNT_SCHEME_PASSWORD = "password"
+        const val ACCOUNT_SCHEME_KEY = "key"
 
         private fun getDataTransferError(errorCode: Long): DataTransferError = try {
             DataTransferError.values()[errorCode.toInt()]
