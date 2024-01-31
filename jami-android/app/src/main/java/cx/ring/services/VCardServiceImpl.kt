@@ -61,6 +61,12 @@ class VCardServiceImpl(private val mContext: Context) : VCardService() {
 
     override fun loadVCardProfile(vcard: VCard): Single<Profile> = Companion.loadVCardProfile(vcard)
 
+    override fun loadVCard(vcard: File): Single<Profile> =
+        Single.fromCallable { readData(VCardUtils.loadFromDisk(vcard)) }
+            .onErrorReturn { Profile.EMPTY_PROFILE }
+            .subscribeOn(Schedulers.io())
+            .cache()
+
     override fun peerProfileReceived(accountId: String, peerId: String, vcard: File): Single<Profile> =
         VCardUtils.peerProfileReceived(mContext.filesDir, accountId, peerId, vcard)
             .map { vc -> readData(vc) }
@@ -74,8 +80,8 @@ class VCardServiceImpl(private val mContext: Context) : VCardService() {
             val title = info["title"]
             Profile(if (title.isNullOrBlank()) null else title, BitmapUtils.base64ToBitmap(info["avatar"]), info["description"])
         }
-            .cache()
             .subscribeOn(Schedulers.computation())
+            .cache()
 
     override fun base64ToBitmap(base64: String?): Any? = BitmapUtils.base64ToBitmap(base64)
 

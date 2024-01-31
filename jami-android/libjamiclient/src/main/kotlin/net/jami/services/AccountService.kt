@@ -395,34 +395,6 @@ class AccountService(
         mExecutor.execute { JamiService.subscribeBuddy(accountID, uri, flag) }
     }
 
-    /**
-     * Send profile through SIP
-     */
-    fun sendProfile(callId: String, accountId: String) {
-        mVCardService.loadSmallVCard(accountId, VCardService.MAX_SIZE_SIP)
-            .subscribeOn(Schedulers.computation())
-            .observeOn(scheduler)
-            .subscribe({ vcard: VCard ->
-                var stringVCard = VCardUtils.vcardToString(vcard)!!
-                val nbTotal = stringVCard.length / VCARD_CHUNK_SIZE + if (stringVCard.length % VCARD_CHUNK_SIZE != 0) 1 else 0
-                var i = 1
-                val r = Random(System.currentTimeMillis())
-                val key = r.nextInt().absoluteValue
-                Log.d(TAG, "sendProfile, vcard $callId")
-                while (i <= nbTotal) {
-                    Log.d(TAG, "length vcard ${stringVCard.length} id $key part $i nbTotal $nbTotal")
-                    val chunk = HashMap<String, String>()
-                    val keyHashMap = "${VCardUtils.MIME_PROFILE_VCARD}; id=$key,part=$i,of=$nbTotal"
-                    chunk[keyHashMap] = stringVCard.substring(0, min(VCARD_CHUNK_SIZE, stringVCard.length))
-                    JamiService.sendTextMessage(accountId, callId, StringMap.toSwig(chunk), "Me", false)
-                    if (stringVCard.length > VCARD_CHUNK_SIZE) {
-                        stringVCard = stringVCard.substring(VCARD_CHUNK_SIZE)
-                    }
-                    i++
-                }
-            }) { e: Throwable -> Log.w(TAG, "Not sending empty profile", e) }
-    }
-
     fun setMessageDisplayed(accountId: String?, conversationUri: Uri, messageId: String) {
         mExecutor.execute { JamiService.setMessageDisplayed(accountId, conversationUri.uri, messageId, 3) }
     }
@@ -1040,16 +1012,11 @@ class AccountService(
         val account = getAccount(accountId) ?: return
         Log.w(TAG, "profileReceived: $accountId, $peerId, $vcardPath")
         val contact = account.getContactFromCache(peerId)
+        val vcard = mVCardService.loadVCard(File(vcardPath))
         if (contact.isUser) {
-            mVCardService.accountProfileReceived(accountId, File(vcardPath))
-                .subscribe({ profile: Profile ->
-                    account.loadedProfile = Single.just(profile)
-                }) { e -> Log.e(TAG, "Error saving contact profile", e) }
+            account.loadedProfile = vcard
         } else {
-            mVCardService.peerProfileReceived(accountId, peerId, File(vcardPath))
-                .subscribe({ profile -> contact.setProfile(profile) })
-                    { e -> Log.e(TAG, "Error saving contact profile", e) }
-            //contact.setProfile(mVCardService.peerProfileReceived(accountId, peerId, File(vcardPath)))
+            contact.setProfile(vcard)
         }
     }
 
