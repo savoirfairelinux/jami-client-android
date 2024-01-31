@@ -132,7 +132,7 @@ object VCardUtils {
     }
 
     @Throws(IOException::class)
-    fun loadPeerProfileFromDisk(filesDir: File, filename: String?, accountId: String): VCard? {
+    fun loadPeerProfileFromDisk(filesDir: File, filename: String, accountId: String): VCard? {
         val profileFolder = peerProfilePath(filesDir, accountId)
         return loadFromDisk(File(profileFolder, filename))
     }
@@ -154,8 +154,8 @@ object VCardUtils {
      * @return the VCard or null
      */
     @Throws(IOException::class)
-    private fun loadFromDisk(path: File?): VCard? {
-        if (path == null || !path.exists()) {
+    fun loadFromDisk(path: File): VCard? {
+        if (!path.exists()) {
             // Log.d(TAG, "vcardPath not exist " + path);
             return null
         }
