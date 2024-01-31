@@ -16,6 +16,7 @@
  */
 package cx.ring.adapters
 
+import android.R.attr
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ValueAnimator
@@ -24,13 +25,12 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
-import android.graphics.BitmapFactory
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.SurfaceTexture
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.LayerDrawable
-import androidx.exifinterface.media.ExifInterface
 import android.media.MediaPlayer
 import android.net.Uri
 import android.text.format.DateUtils
@@ -57,7 +57,16 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.vectordrawable.graphics.drawable.Animatable2Compat
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool
+import com.bumptech.glide.load.resource.bitmap.BitmapTransformation
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.target.SimpleTarget
+import com.bumptech.glide.request.transition.Transition
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.R
@@ -87,11 +96,78 @@ import net.jami.utils.Log
 import net.jami.utils.StringUtils
 import org.commonmark.node.SoftLineBreak
 import java.io.File
-import java.io.IOException
+import java.nio.charset.Charset
+import java.security.AccessController.getContext
+import java.security.MessageDigest
 import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.math.max
 
+
+class ScaleConservingRatio(val context: Context) : BitmapTransformation() {
+
+    companion object {
+        private const val ID = "ScaleConservingRatio"
+        private val ID_BYTES = ID.toByteArray(Charset.forName("UTF-8"))
+    }
+
+    override fun transform(pool: BitmapPool, toTransform: Bitmap, width: Int, height: Int): Bitmap {
+//        if (toTransform.width == outWidth && toTransform.height == outHeight) {
+//            return toTransform
+//        }
+
+//        Log.w("devdebug", "transform: width=$width, height=$height")
+//        Log.w("devdebug", "transform: toTransform.width= ${toTransform.width}, toTransform.height= ${toTransform.height}")
+
+        var outHeight = height
+        var outWidth = width
+        val ratio = maxOf(toTransform.width, toTransform.height).toFloat() / minOf(toTransform.width, toTransform.height)
+        val isPortrait = toTransform.width <= toTransform.height
+        val isWidthToHeightRatioAdequate = ratio < 5
+
+        when(Pair(isPortrait, isWidthToHeightRatioAdequate)){
+            Pair(true, true) -> { // Portrait and ratio acceptable
+                outHeight = context.resources.getDimensionPixelOffset(R.dimen.image_maximum_size)
+                outWidth = (outHeight.toFloat() / ratio).toInt()
+                Log.w("devdebug", "case1 transform: outHeight=$outHeight outWidth=$outWidth")
+            }
+            Pair(true, false) -> { // Portrait and ratio too high
+                outWidth = context.resources.getDimensionPixelOffset(R.dimen.image_minimum_size)
+                outHeight = context.resources.getDimensionPixelOffset(R.dimen.image_maximum_size)
+                Log.w("devdebug", "case2 transform: outHeight=$outHeight outWidth=$outWidth")
+
+                return Bitmap.createBitmap(toTransform, 0, 0, outWidth, outHeight)
+            }
+            Pair(false, true) -> { // Landscape and ratio acceptable
+                outWidth = context.resources.getDimensionPixelOffset(R.dimen.image_maximum_size)
+                outHeight = (outWidth.toFloat() / ratio).toInt()
+                Log.w("devdebug", "case3 transform: outHeight=$outHeight outWidth=$outWidth")
+
+            }
+            Pair(false, false) -> { // Landscape and ratio too high
+                outWidth = context.resources.getDimensionPixelOffset(R.dimen.image_maximum_size)
+                outHeight = context.resources.getDimensionPixelOffset(R.dimen.image_minimum_size)
+                Log.w("devdebug", "case4 transform: outHeight=$outHeight outWidth=$outWidth")
+
+                return Bitmap.createBitmap(toTransform, 0, 0, outWidth, outHeight)
+            }
+        }
+
+        return Bitmap.createScaledBitmap(toTransform, outWidth, outHeight, true)
+    }
+
+    override fun equals(other: Any?): Boolean {
+        return other is ScaleConservingRatio
+    }
+
+    override fun hashCode(): Int {
+        return ID.hashCode()
+    }
+
+    override fun updateDiskCacheKey(messageDigest: MessageDigest) {
+        messageDigest.update(ID_BYTES)
+    }
+}
 
 class ConversationAdapter(
     private val conversationFragment: ConversationFragment,
@@ -663,78 +739,130 @@ class ConversationAdapter(
         val image = viewHolder.mImage ?: return
         image.clipToOutline = true
 
-        val options = BitmapFactory.Options()
-        options.inJustDecodeBounds = true
-        BitmapFactory.decodeFile(path.absolutePath, options)
-
-        fun getImageRotation(filePath: String): Int {
-            var rotation = 0
-            try {
-                val exif = ExifInterface(filePath)
-                val orientation = exif.getAttributeInt(
-                    ExifInterface.TAG_ORIENTATION,
-                    ExifInterface.ORIENTATION_NORMAL
-                )
-                rotation = when (orientation) {
-                    ExifInterface.ORIENTATION_ROTATE_90 -> 90
-                    ExifInterface.ORIENTATION_ROTATE_180 -> 180
-                    ExifInterface.ORIENTATION_ROTATE_270 -> 270
-                    else -> 0
-                }
-            } catch (_: IOException) {
-            }
-            return rotation
-        }
-
-        fun getRatio(options: BitmapFactory.Options): Int =
-            maxOf(options.outWidth, options.outHeight) / minOf(options.outWidth, options.outHeight)
-
-        fun isPortrait(options: BitmapFactory.Options, imageRotation: Int): Boolean =
-            when (imageRotation) {
-                90, 270 -> options.outWidth >= options.outHeight
-                else -> options.outWidth <= options.outHeight
-            }
-
-        image.setImageDrawable(null)
-        val isPortrait = isPortrait(options, getImageRotation(path.absolutePath))
-        // Tells if the ratio between image width and height is enough or not
-        val isWidthToHeightRatioAdequate = getRatio(options) < 5
-
-        when(Pair(isPortrait, isWidthToHeightRatioAdequate)){
-            Pair(true, true) -> { // Portrait and ratio acceptable
-                image.updateLayoutParams {
-                    image.scaleType = ImageView.ScaleType.FIT_CENTER
-                    width = ViewGroup.LayoutParams.WRAP_CONTENT
-                    height = context.resources.getDimensionPixelOffset(R.dimen.image_maximum_size)
-                }
-            }
-            Pair(true, false) -> { // Portrait and ratio too high
-                image.scaleType = ImageView.ScaleType.CENTER_CROP
-                image.updateLayoutParams {
-                    width = context.resources.getDimensionPixelOffset(R.dimen.image_minimum_size)
-                    height = context.resources.getDimensionPixelOffset(R.dimen.image_maximum_size)
-                }
-            }
-            Pair(false, true) -> { // Landscape and ratio acceptable
-                image.scaleType = ImageView.ScaleType.FIT_CENTER
-                image.updateLayoutParams {
-                    width = context.resources.getDimensionPixelOffset(R.dimen.image_maximum_size)
-                    height = ViewGroup.LayoutParams.WRAP_CONTENT
-                }
-            }
-            Pair(false, false) -> { // Landscape and ratio too high
-                image.scaleType = ImageView.ScaleType.CENTER_CROP
-                image.updateLayoutParams {
-                    width = context.resources.getDimensionPixelOffset(R.dimen.image_maximum_size)
-                    height = context.resources.getDimensionPixelOffset(R.dimen.image_minimum_size)
-                }
-            }
-        }
-
+        Log.w("devdebug", "configureImage: path=$path, displayName=$displayName")
         Glide.with(context)
             .load(path)
-            .transition(withCrossFade())
+//            .diskCacheStrategy(DiskCacheStrategy.NONE)
+//            .skipMemoryCache(true)
+            .transform(ScaleConservingRatio(context))
+//            .listener(object : RequestListener<Drawable> {
+//
+//                override fun onLoadFailed(
+//                    e: GlideException?,
+//                    model: Any?,
+//                    target: com.bumptech.glide.request.target.Target<Drawable>?,
+//                    isFirstResource: Boolean
+//                ): Boolean {
+//                    TODO("Not yet implemented")
+//                }
+//
+//                override fun onResourceReady(
+//                    resource: Drawable?,
+//                    model: Any?,
+//                    target: com.bumptech.glide.request.target.Target<Drawable>?,
+//                    dataSource: DataSource?,
+//                    isFirstResource: Boolean
+//                ): Boolean {
+//
+//                    // Une fois que l'image est chargée, récupérez ses dimensions
+//                    val imageWidth = resource?.intrinsicWidth ?: 50
+//                    val imageHeight = resource?.intrinsicHeight ?: 50
+//
+//                    if (maxOf(imageWidth, imageHeight) > 450) {
+//                        Log.e(
+//                            "devdebug",
+//                            "onResourceReady ERROR: width=$imageWidth, height=$imageHeight"
+//                        )
+//                        return true
+//                    }
+//                    Log.w("devdebug", "onResourceReady: width=$imageWidth, height=$imageHeight")
+//
+//                    image.updateLayoutParams {
+////                        image.scaleType = scaleType
+//                        width = imageWidth
+//                        height = imageHeight
+//                    }
+//                    return false
+//
+//                    var outHeight = 0
+//                    var outWidth = 0
+//                    val ratio:Float = maxOf(imageWidth, imageHeight).toFloat() / minOf(imageWidth, imageHeight)
+//                    val isPortrait = imageWidth <= imageHeight
+//                    Log.w("devdebug", "onResourceReady: isPortrait=$isPortrait")
+//                    val isWidthToHeightRatioAdequate = ratio < 5
+//                    var scaleType = ImageView.ScaleType.FIT_CENTER
+//                    Log.w("devdebug", "onResourceReady: isWidthToHeightRatioAdequate=$isWidthToHeightRatioAdequate")
+//Log.w("devdebug", "onResourceReady: ratio=$ratio")
+//                    Log.w("devdebug", "max = ${context.resources.getDimensionPixelOffset(R.dimen.image_maximum_size)}")
+//                    Log.w("devdebug", "max/ratio = ${context.resources.getDimensionPixelOffset(R.dimen.image_maximum_size)/ratio}")
+//                    Log.w("devdebug", "min = ${context.resources.getDimensionPixelOffset(R.dimen.image_minimum_size)}")
+//
+//                    when(Pair(isPortrait, isWidthToHeightRatioAdequate)){
+//                        Pair(true, true) -> { // Portrait and ratio acceptable
+//                            outHeight = context.resources.getDimensionPixelOffset(R.dimen.image_maximum_size)
+//                            outWidth = (outHeight.toFloat() / ratio).toInt()
+//                            scaleType = ImageView.ScaleType.FIT_CENTER
+//                            Log.w("devdebug", "case1 onResourceReady: outHeight=$outHeight outWidth=$outWidth")
+//                        }
+//                        Pair(true, false) -> { // Portrait and ratio too high
+//                            scaleType = ImageView.ScaleType.CENTER_CROP
+//                            outWidth = context.resources.getDimensionPixelOffset(R.dimen.image_minimum_size)
+//                            outHeight = context.resources.getDimensionPixelOffset(R.dimen.image_maximum_size)
+//                            Log.w("devdebug", "case2 onResourceReady: outHeight=$outHeight outWidth=$outWidth")
+//                        }
+//                        Pair(false, true) -> { // Landscape and ratio acceptable
+//scaleType = ImageView.ScaleType.FIT_CENTER
+//                            outWidth = context.resources.getDimensionPixelOffset(R.dimen.image_maximum_size)
+//                            outHeight = (outWidth.toFloat() / ratio).toInt()
+//                            Log.w("devdebug", "case3 onResourceReady: outHeight=$outHeight outWidth=$outWidth")
+//                        }
+//                        Pair(false, false) -> { // Landscape and ratio too high
+//                            scaleType = ImageView.ScaleType.CENTER_CROP
+//                            outWidth = context.resources.getDimensionPixelOffset(R.dimen.image_maximum_size)
+//                            outHeight = context.resources.getDimensionPixelOffset(R.dimen.image_minimum_size)
+//                            Log.w("devdebug", "case4 onResourceReady: outHeight=$outHeight outWidth=$outWidth")
+//                        }
+//                    }
+//
+//                    // Ajustez la taille de votre ImageView
+//                    image.updateLayoutParams {
+//                        image.scaleType = scaleType
+//                        width = outWidth
+//                        height = outHeight
+//                    }
+//
+//                    return false
+//                }
+//            })
             .into(image)
+
+//        Glide.with(getContext().getApplicationContext())
+//            .asBitmap()
+//            .load(attr.path)
+//            .into(object : SimpleTarget<Bitmap?>() {
+//                fun onResourceReady(
+//                    bitmap: Bitmap,
+//                    transition: Transition<in Bitmap>?
+//                ) {
+//
+//                    /*
+//                        requestLayout()
+//                        Call this when something has changed which has
+//                        invalidated the layout of this view.
+//                */
+//                    image.requestLayout()
+//                    image.getLayoutParams().height = bitmap.height
+//                    image.getLayoutParams().width = bitmap.width
+//
+//
+//                    // Set the scale type for ImageView image scaling
+//                    image.setScaleType(ImageView.ScaleType.FIT_XY)
+//                    image.setImageBitmap(bitmap)
+//                }
+//            })
+
+//            .into(image)
+
         image.setOnClickListener { v: View ->
             try {
                 val contentUri =
