@@ -34,6 +34,24 @@
       "parentUuid": "36f9aacd_96fb17d6",
       "revId": "a73730c35bd8a4880cb5dd65849a3764269787f4",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "150b2f5e_1f1b55da",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-01-31T17:48:11Z",
+      "side": 1,
+      "message": "About the issues mentioned by sec-consult.com:\n\n* our implementation uses crypto\n* we use `setUserAuthenticationRequired(true)`\n* the protected data is literally the archive encryption key, so it\u0027s crucial for authentication",
+      "parentUuid": "e7cfe9d6_a3d0029e",
+      "revId": "a73730c35bd8a4880cb5dd65849a3764269787f4",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
