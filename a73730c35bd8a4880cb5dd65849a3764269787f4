@@ -16,6 +16,24 @@
       "message": "What will happen if the user downgrades to an older version of Jami?\n\nOr uses a modified version without this patch?\n\nCan the biometric authentication be bypassed?\nOr other methods https://sec-consult.com/blog/detail/bypassing-android-biometric-authentication/ ?\nhttps://blog.compass-security.com/2021/09/ionic-identity-vault-biometric-authentication-bypass/",
       "revId": "a73730c35bd8a4880cb5dd65849a3764269787f4",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e7cfe9d6_a3d0029e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-01-31T17:44:29Z",
+      "side": 1,
+      "message": "Biometric authentication:\n* will always be optional\n* will only be offered for password-protected accounts, optionally providing an additional authentication mechanism.\n* uses the same encryption mechanism as with a password. The biometric API allows to securely access the encryption key for the Jami account without having to provide the password.\n* In case of downgrade, or if the user unregisters his biometrics from the device, biometric authentication would stop being possible and the user would be required to use his password to administrate the account.",
+      "parentUuid": "36f9aacd_96fb17d6",
+      "revId": "a73730c35bd8a4880cb5dd65849a3764269787f4",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
