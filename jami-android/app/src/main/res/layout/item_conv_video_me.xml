@@ -44,21 +44,24 @@
         android:layout_height="wrap_content"
         android:paddingStart="72dp"
         android:paddingEnd="0dp">
-
+<!--probleme affichage de l'heure-size-duree si on met ou pas un minimum de largeur-->
         <androidx.cardview.widget.CardView
             android:id="@+id/video_frame"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="24dp"
-            android:foreground="@drawable/baseline_play_arrow_24"
+            android:contentDescription="@string/video_content_description_outgoing"
+            android:foreground="@drawable/video_bg_play_arrow"
             android:foregroundGravity="center"
+            android:minWidth="160dp"
+            android:minHeight="@dimen/conversation_avatar_size"
             app:cardCornerRadius="@dimen/conversation_message_radius">
 
             <TextureView
                 android:id="@+id/video"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/video_maximum_size"
                 android:adjustViewBounds="true"
                 android:maxHeight="200dp"
                 android:transitionName="picture" />
@@ -73,22 +76,52 @@
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="5dp" />
 
-        <TextView
-            android:id="@+id/file_time"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignStart="@id/video_frame"
             android:layout_alignEnd="@id/video_frame"
             android:layout_alignBottom="@id/video_frame"
             android:background="@drawable/background_item_conv_image_time"
+            android:orientation="horizontal"
             android:elevation="2dp"
             android:gravity="end"
             android:paddingHorizontal="8dp"
             android:paddingTop="8dp"
-            android:paddingBottom="4dp"
-            android:textColor="@color/white"
-            android:textSize="@dimen/conversation_timestamp_textsize"
-            tools:text="11:36am" />
+            android:paddingBottom="4dp">
+
+            <TextView
+                android:id="@+id/file_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="2dp"
+                android:maxLines="1"
+                android:textColor="@color/white"
+                android:textSize="@dimen/conversation_timestamp_textsize"
+                tools:text="11:36am" />
+
+            <TextView
+                android:id="@+id/video_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="2dp"
+                android:maxLines="1"
+                android:textColor="@color/white"
+                android:textSize="@dimen/conversation_timestamp_textsize"
+                tools:text=" - 30 Mo" />
+
+            <TextView
+                android:id="@+id/video_duration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="2dp"
+                android:maxLines="1"
+                android:textColor="@color/white"
+                android:textSize="@dimen/conversation_timestamp_textsize"
+                tools:text=" - 1:30" />
+
+        </LinearLayout>
+
 
         <TextView
             android:id="@+id/reaction_chip"

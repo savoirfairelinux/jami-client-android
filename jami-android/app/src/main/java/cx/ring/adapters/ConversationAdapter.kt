@@ -29,6 +29,7 @@ import android.graphics.SurfaceTexture
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.LayerDrawable
+import android.media.MediaMetadataRetriever
 import android.media.MediaPlayer
 import android.net.Uri
 import android.text.format.DateUtils
@@ -753,19 +754,30 @@ class ConversationAdapter(
             return
         }
         val player = MediaPlayer.create(context, contentUri) ?: return
-
         viewHolder.player = player
-        val playBtn =
-            ContextCompat.getDrawable(cardLayout.context, R.drawable.baseline_play_arrow_24)!!
-                .mutate()
-        DrawableCompat.setTint(playBtn, Color.WHITE)
-        cardLayout.foreground = playBtn
+        // Display the duration of the video.
+        player.duration.let { duration ->
+                val minutes = TimeUnit.MILLISECONDS.toMinutes(duration.toLong())
+                val seconds = TimeUnit.MILLISECONDS.toSeconds(duration.toLong())
+                viewHolder.mVideoDuration?.text =
+                    String.format(" - %02d:%02d", minutes, seconds % 60)
+            }
+        // Change the color of the arrow in the play button.
+        val playBtn = ContextCompat.getDrawable(
+            cardLayout.context, R.drawable.video_bg_play_arrow
+        ) as? LayerDrawable
+        if (playBtn != null) {
+            val secondLayer = playBtn.getDrawable(1)
+            if (secondLayer != null) {
+                DrawableCompat.setTint(secondLayer, Color.WHITE)
+            }
+            cardLayout.foreground = playBtn
+        }
         player.setOnCompletionListener { mp: MediaPlayer ->
             if (mp.isPlaying) mp.pause()
             mp.seekTo(1)
             cardLayout.foreground = playBtn
         }
-
         player.setOnVideoSizeChangedListener { _: MediaPlayer, width: Int, height: Int ->
             Log.w(TAG, "OnVideoSizeChanged " + width + "x" + height)
             val p = video.layoutParams as FrameLayout.LayoutParams
@@ -1062,20 +1074,26 @@ class ConversationAdapter(
         val timeString = TextUtils.timestampToTime(context, formatter, file.timestamp)
         viewHolder.mFileTime?.text = timeString
         viewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
-            viewHolder.mFileSize?.text = when (val status = file.status) {
-                InteractionStatus.TRANSFER_FINISHED -> String.format("%s - %s",
-                    Formatter.formatFileSize(context, file.totalSize),
-                    TextUtils.getReadableFileTransferStatus(context, status)
-                )
-                InteractionStatus.TRANSFER_ONGOING -> String.format("%s / %s - %s",
-                    Formatter.formatFileSize(context, file.bytesProgress),
-                    Formatter.formatFileSize(context, file.totalSize),
-                    TextUtils.getReadableFileTransferStatus(context, status)
-                )
-                else -> String.format(
+            // To have time - fileSize - duration displayed.
+            if (file.isVideo && file.isComplete) {
+                viewHolder.mFileSize?.text = String.format(" - %s",
                     Formatter.formatFileSize(context, file.totalSize)
                 )
-            }
+            } else
+                viewHolder.mFileSize?.text = when (val status = file.status) {
+                    InteractionStatus.TRANSFER_FINISHED -> String.format("%s - %s",
+                        Formatter.formatFileSize(context, file.totalSize),
+                        TextUtils.getReadableFileTransferStatus(context, status)
+                    )
+                    InteractionStatus.TRANSFER_ONGOING -> String.format("%s / %s - %s",
+                        Formatter.formatFileSize(context, file.bytesProgress),
+                        Formatter.formatFileSize(context, file.totalSize),
+                        TextUtils.getReadableFileTransferStatus(context, status)
+                    )
+                    else -> String.format(
+                        Formatter.formatFileSize(context, file.totalSize)
+                    )
+                }
         })
         val isDateShown = hasPermanentDateString(file, position)
         if (isDateShown) {
