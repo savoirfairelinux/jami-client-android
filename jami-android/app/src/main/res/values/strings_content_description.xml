@@ -10,4 +10,6 @@
     <string name="control_play">Play</string>
     <string name="control_replay">Replay</string>
     <string name="control_pause">Pause</string>
+    <string name="video_content_description_outgoing">Your video</string>
+    <string name="video_content_description_incoming">Video received</string>
 </resources>

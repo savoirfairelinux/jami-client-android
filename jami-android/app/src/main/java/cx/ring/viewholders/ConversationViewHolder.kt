@@ -23,6 +23,8 @@ import androidx.core.widget.ContentLoadingProgressBar
 import android.view.TextureView
 import android.widget.LinearLayout
 import android.animation.ValueAnimator
+import android.graphics.drawable.Drawable
+import android.graphics.drawable.DrawableWrapper
 import android.media.MediaPlayer
 import android.view.Surface
 import android.view.View
@@ -30,6 +32,7 @@ import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.RelativeLayout
+import androidx.constraintlayout.helper.widget.Layer
 import androidx.constraintlayout.widget.ConstraintLayout
 import cx.ring.R
 import cx.ring.views.CustomMessageBubble
@@ -135,6 +138,7 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
         MessageType.OUTGOING_VIDEO -> v.findViewById(R.id.video)
         else -> null
     }
+//    val mVideoBtn = Drawable?: v.findViewById(R.id.video_bg_play_arrow)
     var mMsgLayout: ViewGroup? = null
     var mCallInfoText: TextView? = null
     var mCallTime : TextView? = null
@@ -145,6 +149,7 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
     var mFileDownloadButton: ImageButton? = null
     var mAudioInfoLayout: LinearLayout? = null
     var mAudioMessageLayout: RelativeLayout? = null
+    var mVideoDuration: TextView? = null
 
     val mLayoutStatusIconId: View? = when (type) {
         MessageType.OUTGOING_CALL_INFORMATION-> v.findViewById(R.id.callLayout)
@@ -242,6 +247,8 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
                 mAnswerLayout = v.findViewById(R.id.imageLayout)
                 mMsgDetailTxt = v.findViewById(R.id.msg_details_txt)
                 mMsgDetailTxtPerm = v.findViewById(R.id.msg_details_txt_perm)
+                mFileSize = v.findViewById(R.id.video_size)
+                mVideoDuration = v.findViewById(R.id.video_duration)
                 primaryClickableView = video
             }
             else ->  {}

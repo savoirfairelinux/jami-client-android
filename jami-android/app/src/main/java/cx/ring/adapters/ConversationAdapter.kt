@@ -85,6 +85,7 @@ import net.jami.utils.Log
 import net.jami.utils.StringUtils
 import org.commonmark.node.SoftLineBreak
 import java.io.File
+import java.lang.reflect.Array.getInt
 import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.math.max
@@ -753,18 +754,22 @@ class ConversationAdapter(
             return
         }
         val player = MediaPlayer.create(context, contentUri) ?: return
-
         viewHolder.player = player
+//        val playBtnDrawable = viewHolder. as LayerDrawable
         val playBtn =
-            ContextCompat.getDrawable(cardLayout.context, R.drawable.baseline_play_arrow_24)!!
-                .mutate()
-        DrawableCompat.setTint(playBtn, Color.WHITE)
-        cardLayout.foreground = playBtn
+            ContextCompat.getDrawable(cardLayout.context, R.drawable.video_bg_play_arrow)
+//
+//        val playBtnBackground = playBtnDrawable.getDrawable(0)
+//        val playBtnTRiangle = playBtnDrawable.getDrawable(1).mutate()
+//        DrawableCompat.setTint(playBtnTRiangle, Color.WHITE)
+//        cardLayout.foreground = playBtnDrawable
+
         player.setOnCompletionListener { mp: MediaPlayer ->
             if (mp.isPlaying) mp.pause()
             mp.seekTo(1)
             cardLayout.foreground = playBtn
         }
+        // TODO changer le bouton play ici avec son fond
 
         player.setOnVideoSizeChangedListener { _: MediaPlayer, width: Int, height: Int ->
             Log.w(TAG, "OnVideoSizeChanged " + width + "x" + height)
@@ -1076,6 +1081,21 @@ class ConversationAdapter(
                     Formatter.formatFileSize(context, file.totalSize)
                 )
             }
+            if (file.isVideo) {
+                viewHolder.mFileSize?.text =String.format(" - %s",
+                    Formatter.formatFileSize(context, file.totalSize)
+                )
+                MediaMetadataRetriever().apply {
+                    setDataSource(path.absolutePath)
+                        extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)?.let { duration ->
+                            val minutes = TimeUnit.MILLISECONDS.toMinutes(
+                                duration.toLong())
+                            val seconds = TimeUnit.MILLISECONDS.toSeconds(duration.toLong())
+                            viewHolder.mVideoDuration?.text = String.format(" - %02d:%02d", minutes, seconds % 60)
+                        }
+                }
+            }
+            // TODO : la resize bien + le fond du bouton play a mettre
         })
         val isDateShown = hasPermanentDateString(file, position)
         if (isDateShown) {
