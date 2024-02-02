@@ -104,10 +104,10 @@ class JamiAccountSummaryPresenter @Inject constructor(
             return account.deviceName
         }
 
-    fun downloadAccountsArchive(dest: File, password: String?) {
+    fun downloadAccountsArchive(dest: File, scheme: String, password: String?) {
         view?.showExportingProgressDialog()
         mCompositeDisposable.add(
-            mAccountService.exportToFile(mAccountID!!, dest.absolutePath, password!!)
+            mAccountService.exportToFile(mAccountID!!, dest.absolutePath, scheme, password!!)
                 .observeOn(mUiScheduler)
                 .subscribe({ view?.displayCompleteArchive(dest) })
                 { view?.passwordChangeEnded(false) })
