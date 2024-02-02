@@ -74,17 +74,18 @@ class ChangePasswordDialog : DialogFragment() {
     }
 
     private fun checkInput(): Boolean {
-        if (!binding!!.newPasswordTxt.text.toString().contentEquals(binding!!.newPasswordRepeatTxt.text)) {
-            binding!!.newPasswordTxtBox.isErrorEnabled = true
-            binding!!.newPasswordTxtBox.error = getText(R.string.error_passwords_not_equals)
-            binding!!.newPasswordRepeatTxtBox.isErrorEnabled = true
-            binding!!.newPasswordRepeatTxtBox.error = getText(R.string.error_passwords_not_equals)
+        val binding = binding ?: return false
+        if (!binding.newPasswordTxt.text.toString().contentEquals(binding.newPasswordRepeatTxt.text)) {
+            binding.newPasswordTxtBox.isErrorEnabled = true
+            binding.newPasswordTxtBox.error = getText(R.string.error_passwords_not_equals)
+            binding.newPasswordRepeatTxtBox.isErrorEnabled = true
+            binding.newPasswordRepeatTxtBox.error = getText(R.string.error_passwords_not_equals)
             return false
         } else {
-            binding!!.newPasswordTxtBox.isErrorEnabled = false
-            binding!!.newPasswordTxtBox.error = null
-            binding!!.newPasswordRepeatTxtBox.isErrorEnabled = false
-            binding!!.newPasswordRepeatTxtBox.error = null
+            binding.newPasswordTxtBox.isErrorEnabled = false
+            binding.newPasswordTxtBox.error = null
+            binding.newPasswordRepeatTxtBox.isErrorEnabled = false
+            binding.newPasswordRepeatTxtBox.error = null
         }
         return true
     }
