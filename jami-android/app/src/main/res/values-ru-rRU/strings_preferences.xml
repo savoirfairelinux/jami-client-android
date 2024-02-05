@@ -66,6 +66,9 @@
   <string name="plugin_install_failure">Не удалось установить плагин: <b>%1$s</b></string>
   <string name="plugin_recent_version_exception">У вас версия более свежая: <b>%1$s</b> </string>
   <string name="plugin_same_version_exception">У вас установлена та же самая<b>%1$s</b>версия</string>
+  <string name="plugin_invalid_signature"><b>%1$s</b> имеет недействительную подпись</string>
+  <string name="plugin_invalid_authority">Невозможно подтвердить полномочия для: <b>%1$s</b></string>
+  <string name="plugin_invalid_format">Неверный формат плагина: <b>%1$s</b></string>
   <string name="plugin_force_install">принудительная установка</string>
   <string name="plugin_path_image_add">Добавить новое изображение</string>
 </resources>

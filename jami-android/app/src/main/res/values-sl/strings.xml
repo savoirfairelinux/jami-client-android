@@ -400,4 +400,6 @@
   <string name="donation_setting_title">Opomnik za donacije</string>
   <string name="donation_setting_description">Omogoči opomnik za donacije</string>
   <!--Plugin-->
+  <string name="load_sucess">%1$s: omogočeno</string>
+  <string name="unload_sucess">%1$s: onemogočeno</string>
 </resources>
