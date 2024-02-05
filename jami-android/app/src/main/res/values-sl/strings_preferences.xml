@@ -66,6 +66,8 @@
   <string name="plugin_install_failure">Namestiev vtičnika ni uspela: <b>%1$s</b></string>
   <string name="plugin_recent_version_exception">Nameščeno imate novejšo različico <b>%1$s</b></string>
   <string name="plugin_same_version_exception">Nameščeno imate isto različico <b>%1$s</b></string>
+  <string name="plugin_invalid_signature"><b>%1$s</b> ima neveljaven podpis</string>
+  <string name="plugin_invalid_format">Neveljavna oblika vstavka: <b>%1$s</b></string>
   <string name="plugin_force_install">prisili \n namestitev</string>
   <string name="plugin_path_image_add">Dodaj novo sliko</string>
 </resources>

@@ -22,6 +22,7 @@
   <string name="developed_by">Разработчики</string>
   <string name="designed_by">Дизайнер </string>
   <string name="ringtones_by">Рингтоны от </string>
+  <string name="credits_volunteers">И волонтёры, которые поддержали этот проект!</string>
   <!--RingActivity-->
   <string name="error_no_network">Отсутствует сетевое подключение</string>
   <string name="error_account_offline">Учетная запись находится offline</string>
@@ -102,6 +103,7 @@
   <string name="ongoing_call">Текущий вызов</string>
   <string name="hist_in_call">Входящий вызов от %1$s</string>
   <string name="hist_out_call">Исходящий вызов от %1$s</string>
+  <string name="call_duration">Длилось %s</string>
   <string name="start_error_title">Не удаётся запустить Jami !</string>
   <string name="start_error_mic_required">Для Jami необходимо разрешить доступ к микрофону.</string>
   <string name="action_call_accept">Совершить звонок</string>
@@ -123,6 +125,7 @@
   <string name="write_a_message">Написать сообщение</string>
   <string name="scan_qr">Сканировать QR-код</string>
   <string name="qr_code">QR-код</string>
+  <string name="new_swarm">Запустить Рой</string>
   <string name="ab_action_flipcamera">Перевернуть камеру</string>
   <string name="ab_action_hidepreview">Скрыть предпросмотр</string>
   <string name="remote_recording">%s запись...</string>
@@ -139,6 +142,7 @@
   <string name="conversation_send_video">Записать видеоклип </string>
   <string name="conversation_share_location">Поделиться местоположением</string>
   <string name="ongoing_group_call">Текущий вызов</string>
+  <string name="started_call">Начат звонок</string>
   <string name="in_reply_to">В ответ на</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Разрешение на использование камеры</string>
@@ -378,13 +382,27 @@
   <string name="picker_btn">Выбрать контакты</string>
   <string name="bottomsheet_contact">Контакт Jami\n%1$s</string>
   <string name="bottomsheet_remove">Удалить из беседы</string>
+  <string name="error_open_no_app_found">Не найдено приложения для обработки этого файла: %1$s</string>
   <!--JamiId-->
+  <string name="jami_id_copy">Скопировать JamiId</string>
+  <string name="jami_id_share">Поделиться JamiId</string>
   <string name="jami_id_validate">Зарегистрировать имя пользователя</string>
+  <string name="jami_id_available">Псевдоним доступен</string>
+  <string name="jami_id_not_available">Псевдоним недоступен\n• Максимум 32 символа\n• Разрешены специальные символы: тире (-), нижнее подчёркивание (_)</string>
+  <string name="jami_id_info">• Максимум 32 символа\n• Разрешены специальные символы: тире (-), нижнее подчёркивание (_)</string>
   <string name="jami_id_looking_for_availability">Проверка на доступность имени пользователя...</string>
   <string name="jami_id_choose_username">Выберите имя пользователя</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Добро пожаловать в Jami</string>
   <string name="welcome_jami_description">Поделитесь своим идентификатором Jami, чтобы с вами было проще связаться!</string>
   <!--Donation-->
+  <string name="donation_card_description">Если Вам нравится использовать Jami и Вы верите в нашу миссию, Вы бы сделали пожертвование?</string>
+  <string name="donation_card_not_now">Не сейчас</string>
+  <string name="donation_donate">Пожертвование</string>
+  <string name="donation_setting_title">Напоминание пожертвования</string>
+  <string name="donation_setting_description">Включить напоминание пожертвования</string>
   <!--Plugin-->
+  <string name="unable_to_load">Невозможно загрузить %1$s</string>
+  <string name="load_sucess">%1$s: включён</string>
+  <string name="unload_sucess">%1$s: отключён</string>
 </resources>

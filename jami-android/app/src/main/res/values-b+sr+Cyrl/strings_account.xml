@@ -79,6 +79,7 @@ Kasnije možete da uredite svoj nalog</string>
   <string name="account_video_enable">Omogući video</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Napredna</string>
+  <string name="account_chat_settings_title">Podešavanja ćaskanja</string>
   <string name="account_read_receipts_label">Омогућивање потврда за читање</string>
   <string name="account_read_receipts_summary">Пошаљи и прими квитанте који указују на приказану поруку.</string>
   <string name="account_call_settings_title">Podešavanje poziva</string>
