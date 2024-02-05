@@ -54,6 +54,7 @@
             android:layout_alignParentStart="true"
             android:layout_marginEnd="@dimen/conditional_left_conversation_margin"
             android:background="@null"
+            android:contentDescription="@null"
             android:gravity="start"
             android:scaleType="centerCrop" />
 
@@ -79,17 +80,18 @@
             android:layout_below="@id/peer_name"
             android:layout_marginEnd="20dp"
             android:layout_toEndOf="@+id/photo"
-            android:foreground="@drawable/baseline_play_arrow_24"
+            android:contentDescription="@string/video_content_description_incoming"
+            android:foreground="@drawable/video_bg_play_arrow"
             android:foregroundGravity="center"
+            android:minWidth="@dimen/conversation_avatar_size"
             android:minHeight="@dimen/conversation_avatar_size"
             app:cardCornerRadius="@dimen/conversation_message_radius">
 
             <TextureView
                 android:id="@+id/video"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/video_maximum_size"
                 android:adjustViewBounds="true"
-                android:maxHeight="200dp"
                 android:transitionName="picture" />
 
         </androidx.cardview.widget.CardView>

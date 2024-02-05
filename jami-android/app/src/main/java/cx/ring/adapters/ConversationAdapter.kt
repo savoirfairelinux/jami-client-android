@@ -753,13 +753,18 @@ class ConversationAdapter(
             return
         }
         val player = MediaPlayer.create(context, contentUri) ?: return
-
         viewHolder.player = player
-        val playBtn =
-            ContextCompat.getDrawable(cardLayout.context, R.drawable.baseline_play_arrow_24)!!
-                .mutate()
-        DrawableCompat.setTint(playBtn, Color.WHITE)
-        cardLayout.foreground = playBtn
+        // Change the color of the arrow in the play button.
+        val playBtn = ContextCompat.getDrawable(
+            cardLayout.context, R.drawable.video_bg_play_arrow
+        )?.mutate() as? LayerDrawable
+        playBtn?.let {button ->
+            val secondLayer = button.getDrawable(1)
+            secondLayer?.let { arrow ->
+                DrawableCompat.setTint(arrow, Color.WHITE)
+            }
+            cardLayout.foreground = button
+        }
         player.setOnCompletionListener { mp: MediaPlayer ->
             if (mp.isPlaying) mp.pause()
             mp.seekTo(1)
