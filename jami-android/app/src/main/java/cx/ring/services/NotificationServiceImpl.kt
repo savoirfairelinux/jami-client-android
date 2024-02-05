@@ -115,13 +115,20 @@ class NotificationServiceImpl(
     private fun buildCallNotification(conference: Conference): Notification? {
         val ongoingConference = currentCalls.values.firstOrNull { it !== conference && it.state == Call.CallStatus.CURRENT }
         val call = conference.firstCall!!
+        val accountId = call.account!!
         val callClass = if (DeviceUtils.isTv(mContext)) TVCallActivity::class.java else CallActivity::class.java
         val viewIntent = PendingIntent.getActivity(mContext, random.nextInt(), Intent(Intent.ACTION_VIEW)
             .setClass(mContext, callClass)
             .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             .putExtra(NotificationService.KEY_CALL_ID, call.daemonIdString), ContentUriHandler.immutable())
 
-        val contact = getProfile(call.account!!, call.contact!!)
+        val contact = getProfile(accountId, call.contact!!)
+        val caller = Person.Builder()
+            .setName(contact.displayName)
+            .setKey(ConversationPath.toKey(accountId, contact.contact.uri.uri))
+            .setIcon(IconCompat.createWithBitmap(getContactPicture(contact)!!))
+            .setImportant(true)
+            .build()
 
         val messageNotificationBuilder: NotificationCompat.Builder
         if (conference.isOnGoing) {
@@ -136,64 +143,38 @@ class NotificationServiceImpl(
                 .setUsesChronometer(true)
                 .setWhen(conference.timestampStart)
                 .setColor(ContextCompat.getColor(mContext, R.color.color_primary_light))
-                .addAction(R.drawable.baseline_call_end_24,
-                    mContext.getText(R.string.action_call_hangup),
-                    PendingIntent.getService(mContext, random.nextInt(),
+                .setStyle(
+                    NotificationCompat.CallStyle.forOngoingCall(caller, PendingIntent.getService(mContext, random.nextInt(),
                         Intent(DRingService.ACTION_CALL_END)
                             .setClass(mContext, DRingService::class.java)
                             .putExtra(NotificationService.KEY_CALL_ID, call.daemonIdString)
-                            .putExtra(ConversationPath.KEY_ACCOUNT_ID, call.account),
-
-            ContentUriHandler.immutable(PendingIntent.FLAG_ONE_SHOT)))
+                            .putExtra(ConversationPath.KEY_ACCOUNT_ID, accountId),
+                        ContentUriHandler.immutable(PendingIntent.FLAG_ONE_SHOT)))
+                    .setIsVideo(conference.hasVideo()))
         } else if (conference.isRinging) {
             if (conference.isIncoming) {
                 messageNotificationBuilder = NotificationCompat.Builder(mContext, NOTIF_CHANNEL_INCOMING_CALL)
                 messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_incoming_call_title, contact.displayName))
-                    .setPriority(NotificationCompat.PRIORITY_HIGH)
+                    .setPriority(NotificationCompat.PRIORITY_MAX)
                     .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                     .setContentText(mContext.getText(R.string.notif_incoming_call))
                     .setContentIntent(viewIntent)
                     .setSound(null)
                     .setVibrate(null)
                     .setFullScreenIntent(viewIntent, true)
-                    .addAction(
-                        R.drawable.baseline_call_end_24, mContext.getText(R.string.action_call_decline),
-                        PendingIntent.getService(mContext, random.nextInt(), Intent(DRingService.ACTION_CALL_REFUSE)
-                            .setClass(mContext, DRingService::class.java)
-                            .putExtra(ConversationPath.KEY_ACCOUNT_ID, call.account)
-                            .putExtra(NotificationService.KEY_CALL_ID, call.daemonIdString), ContentUriHandler.immutable(PendingIntent.FLAG_ONE_SHOT)))
-
-                if (conference.hasVideo()){
-                    messageNotificationBuilder
-                        .addAction(R.drawable.baseline_videocam_24, if (ongoingConference == null) mContext.getText(R.string.action_call_accept_video) else mContext.getText(R.string.action_call_hold_accept_video),
+                    .setStyle(
+                        NotificationCompat.CallStyle.forIncomingCall(caller,
+                            PendingIntent.getService(mContext, random.nextInt(), Intent(DRingService.ACTION_CALL_REFUSE)
+                                .setClass(mContext, DRingService::class.java)
+                                .putExtra(ConversationPath.KEY_ACCOUNT_ID, accountId)
+                                .putExtra(NotificationService.KEY_CALL_ID, call.daemonIdString), ContentUriHandler.immutable(PendingIntent.FLAG_ONE_SHOT)),
                             PendingIntent.getActivity(mContext, random.nextInt(), Intent(DRingService.ACTION_CALL_ACCEPT)
                                 .setClass(mContext, callClass)
-                                .putExtra(ConversationPath.KEY_ACCOUNT_ID, call.account)
+                                .putExtra(ConversationPath.KEY_ACCOUNT_ID, accountId)
                                 .putExtra(NotificationService.KEY_CALL_ID, call.daemonIdString)
                                 .putExtra(CallPresenter.KEY_ACCEPT_OPTION, CallPresenter.ACCEPT_HOLD)
                                 .putExtra(CallFragment.KEY_HAS_VIDEO, true), ContentUriHandler.immutable(PendingIntent.FLAG_ONE_SHOT)))
-                } else {
-                    messageNotificationBuilder.addAction(
-                        R.drawable.baseline_call_24, if (ongoingConference == null) mContext.getText(R.string.action_call_accept_audio) else mContext.getText(R.string.action_call_end_accept),
-                        PendingIntent.getActivity(mContext, random.nextInt(), Intent(DRingService.ACTION_CALL_ACCEPT)
-                            .setClass(mContext, callClass)
-                            .putExtra(ConversationPath.KEY_ACCOUNT_ID, call.account)
-                            .putExtra(NotificationService.KEY_CALL_ID, call.daemonIdString)
-                            .putExtra(CallPresenter.KEY_ACCEPT_OPTION, CallPresenter.ACCEPT_END)
-                            .putExtra(CallFragment.KEY_HAS_VIDEO, false), ContentUriHandler.immutable(PendingIntent.FLAG_ONE_SHOT))
-                    )
-                }
-                if (ongoingConference != null) {
-                    messageNotificationBuilder.addAction(R.drawable.baseline_call_24,
-                        mContext.getText(R.string.action_call_hold_accept),
-                        PendingIntent.getActivity(mContext, random.nextInt(),
-                            Intent(DRingService.ACTION_CALL_ACCEPT)
-                                .setClass(mContext, callClass)
-                                .putExtra(ConversationPath.KEY_ACCOUNT_ID, call.account)
-                                .putExtra(NotificationService.KEY_CALL_ID, call.daemonIdString)
-                                .putExtra(CallPresenter.KEY_ACCEPT_OPTION, CallPresenter.ACCEPT_HOLD),
-                            ContentUriHandler.immutable(PendingIntent.FLAG_ONE_SHOT)))
-                }
+                            .setIsVideo(conference.hasVideo()))
             } else {
                 messageNotificationBuilder = NotificationCompat.Builder(mContext, NOTIF_CHANNEL_CALL_IN_PROGRESS)
                     .setContentTitle(mContext.getString(R.string.notif_outgoing_call_title, contact.displayName))
@@ -203,14 +184,15 @@ class NotificationServiceImpl(
                     .setSound(null)
                     .setVibrate(null)
                     .setColorized(true)
-                    .setColor(ContextCompat.getColor(mContext, R.color.color_primary_light))
-                    .addAction(R.drawable.baseline_call_end_24, mContext.getText(R.string.action_call_hangup),
-                        PendingIntent.getService(mContext, random.nextInt(),
+                    .setStyle(
+                        NotificationCompat.CallStyle.forOngoingCall(caller, PendingIntent.getService(mContext, random.nextInt(),
                             Intent(DRingService.ACTION_CALL_END)
                                 .setClass(mContext, DRingService::class.java)
                                 .putExtra(NotificationService.KEY_CALL_ID, call.daemonIdString)
-                                .putExtra(ConversationPath.KEY_ACCOUNT_ID, call.account),
+                                .putExtra(ConversationPath.KEY_ACCOUNT_ID, accountId),
                             ContentUriHandler.immutable(PendingIntent.FLAG_ONE_SHOT)))
+                        .setIsVideo(conference.hasVideo()))
+                    .setColor(ContextCompat.getColor(mContext, R.color.color_primary_light))
             }
         } else {
             return null
