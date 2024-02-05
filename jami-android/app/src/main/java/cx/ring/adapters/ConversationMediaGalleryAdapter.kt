@@ -151,7 +151,7 @@ class ConversationMediaGalleryAdapter(
             val scaleX = videoRatio / screenRatio
             if (scaleX >= 1f) {
                 video.video.scaleX = scaleX
-            } else {
+            } else if (scaleX != 0f){
                 video.video.scaleY = 1f / scaleX
             }
         }
