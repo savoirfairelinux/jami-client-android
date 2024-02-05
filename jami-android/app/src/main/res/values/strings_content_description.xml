@@ -12,4 +12,6 @@
     <string name="control_pause">Pause</string>
     <string name="content_description_image_received">Image received</string>
     <string name="content_description_image_sent">Image sent</string>
+    <string name="video_content_description_outgoing">Your video</string>
+    <string name="video_content_description_incoming">Video received</string>
 </resources>
