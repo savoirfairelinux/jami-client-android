@@ -448,11 +448,12 @@ class ContactServiceImpl(val mContext: Context, preferenceService: PreferencesSe
             vcard
         }
 
-    private fun loadVCardContactData(contact: Contact, accountId: String): Single<Profile> {
-        val id = contact.primaryNumber
-        return Single.fromCallable { VCardServiceImpl.readData(VCardUtils.loadPeerProfileFromDisk(mContext.filesDir, "$id.vcf", accountId)) }
+    private fun loadVCardContactData(contact: Contact, accountId: String): Single<Profile> =
+        Single.fromCallable {
+            val id = Base64.encodeToString(contact.primaryNumber.toByteArray(), Base64.NO_WRAP)
+            VCardServiceImpl.readData(VCardUtils.loadPeerProfileFromDisk(mContext.filesDir, "$id.vcf", accountId))
+        }
             .subscribeOn(Schedulers.io())
-    }
 
     private fun loadSystemContactData(contact: Contact): Single<Profile> {
         val contactUri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, contact.id)
