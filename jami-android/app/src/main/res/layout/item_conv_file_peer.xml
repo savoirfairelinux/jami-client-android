@@ -204,7 +204,7 @@
             android:layout_height="48dp"
             android:background="?selectableItemBackgroundBorderless"
             android:contentDescription="@string/file_download_button"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/fileInfoLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toEndOf="@id/fileInfoLayout"
