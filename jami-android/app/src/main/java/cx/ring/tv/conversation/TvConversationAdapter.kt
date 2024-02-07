@@ -584,6 +584,7 @@ class TvConversationAdapter(
             if (!file.isComplete) {
                 menu.removeItem(R.id.conv_action_download)
                 menu.removeItem(R.id.conv_action_share)
+                menu.removeItem(R.id.conv_action_open)
             }
             if (file.isIncoming) menu.removeItem(R.id.conv_action_delete)
         }
