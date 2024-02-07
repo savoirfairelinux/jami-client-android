@@ -51,7 +51,6 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.transition.TransitionManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.snackbar.Snackbar
 import cx.ring.R
 import cx.ring.client.ContactDetailsActivity
 import cx.ring.client.MediaViewerActivity
@@ -349,10 +348,9 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
             }
             startActivity(Intent.createChooser(sendIntent, null))
         } catch (e: Exception) {
-            Snackbar.make(requireView(),
-                "Error sharing file: ${e.localizedMessage}",
-                Snackbar.LENGTH_SHORT
-            ).show()
+            Log.i(TAG, "Error sharing file" + e.localizedMessage)
+            Toast.makeText(c, R.string.error_sharing_file, Toast.LENGTH_SHORT)
+                .show()
         }
     }
 
@@ -368,11 +366,9 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
             }
             startActivity(Intent.createChooser(openIntent, null))
         } catch (e: IllegalArgumentException) {
-            Snackbar.make(
-                requireView(),
-                "Error opening file: " + e.localizedMessage,
-                Snackbar.LENGTH_SHORT
-            ).show()
+            Log.i(TAG, "Error opening file" + e.localizedMessage)
+            Toast.makeText(c, R.string.error_opening_file, Toast.LENGTH_SHORT)
+                .show()
         }
     }
 
