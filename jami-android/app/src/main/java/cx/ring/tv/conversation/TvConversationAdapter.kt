@@ -19,9 +19,12 @@ package cx.ring.tv.conversation
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ValueAnimator
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.SurfaceTexture
+import android.graphics.drawable.GradientDrawable
+import android.graphics.drawable.LayerDrawable
 import android.media.MediaPlayer
 import android.text.format.DateUtils
 import android.text.format.Formatter
@@ -44,6 +47,7 @@ import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
+import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterInside
@@ -73,6 +77,7 @@ import net.jami.model.DataTransfer
 import net.jami.model.Interaction
 import net.jami.model.Interaction.InteractionStatus
 import net.jami.model.TextMessage
+import net.jami.utils.StringUtils
 import net.jami.utils.StringUtils.isOnlyEmoji
 import java.io.File
 import java.text.DateFormat
@@ -666,22 +671,27 @@ class TvConversationAdapter(
         val contact = textMessage.contact ?: return
         val account = interaction.account ?: return
         val isDeleted = textMessage.body.isNullOrEmpty()
+        val isEdited = interaction.history.size > 1
         val message = textMessage.body?.trim() ?: ""
-        val longPressView = convViewHolder.itemView
-        val isTimeShown = hasPermanentTimeString(textMessage, position)
-        val msgSequenceType = getMsgSequencing(position, isTimeShown)
-        val msgTxt = convViewHolder.mMsgTxt ?: return
-        val answerLayout = convViewHolder.mAnswerLayout
-        val avatar = convViewHolder.mAvatar
+
+        val messageContent = convViewHolder.mMessageContent ?: return
+        val messageBubble = convViewHolder.mMessageBubble ?: return
         val peerDisplayName = convViewHolder.mPeerDisplayName
 
+        val longPressView = convViewHolder.itemView
+        val isDateShown = hasPermanentTimeString(textMessage, position)
+        val msgSequenceType = getMsgSequencing(position, isDateShown)
+        val messageTime = TextUtils
+            .timestampToTime(context, formatter, mInteractions[position].timestamp)
+
+        // Implement animation while scrolling through messages.
         convViewHolder.itemView.onFocusChangeListener =
             View.OnFocusChangeListener { _, hasFocus ->
                 convViewHolder.itemView.setBackgroundResource(
                     if (hasFocus) R.drawable.tv_item_selected_background
                     else R.drawable.tv_item_unselected_background
                 )
-                msgTxt.animate().scaleY(if (hasFocus) 1.1f else 1f)
+                messageBubble.animate().scaleY(if (hasFocus) 1.1f else 1f)
                     .scaleX(if (hasFocus) 1.1f else 1f)
             }
         // Manage long press.
@@ -713,59 +723,70 @@ class TvConversationAdapter(
             )
             false
         }
-        // Manage background.
-        // Standard message, incoming or outgoing and first, single or last.
-        val resIndex =
-            msgSequenceType.ordinal + (if (textMessage.isIncoming) 1 else 0) * 4
-        msgTxt.background = ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
-        if (convColor != 0 && !textMessage.isIncoming) {
-            msgTxt.background.setTint(convColor)
+        // Add margin if message need to be separated.
+        val isMessageSeparationNeeded = isMessageSeparationNeeded(isDateShown, position)
+        convViewHolder.mMessageLayout?.updateLayoutParams<MarginLayoutParams> {
+            topMargin = if (!isMessageSeparationNeeded) 0 else context.resources
+                .getDimensionPixelSize(R.dimen.tv_conversation_message_separation)
         }
-        // Manage classic message
-        msgTxt.background.alpha = 255
-        msgTxt.textSize = 16f
-        msgTxt.setPadding(hPadding, vPadding, hPadding, vPadding)
-        msgTxt.text = markwon.toMarkdown(message)
-        val endOfSeq =
-            msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE
-        // Only show the peer avatar if it is a group conversation
-        if (presenter.isGroup()) {
-               // Manage animation for avatar.
-            // To only display the avatar of the last message.
-            val avatar = convViewHolder.mAvatar
-            if (endOfSeq) {
-                avatar?.setImageDrawable(
-                    conversationFragment.getConversationAvatar(contact.primaryNumber)
-                )
-                avatar?.visibility = View.VISIBLE
-            } else {
-                if (position == lastMsgPos - 1) {
-                    avatar?.let { ActionHelper.startFadeOutAnimation(avatar) }
-                } else {
-                    avatar?.setImageBitmap(null)
-                    avatar?.visibility = View.INVISIBLE
-                }
-            }
-        } // Do not show the avatar if it is a one to one conversation.
-        else avatar?.visibility = View.GONE
-        // Apply a bottom margin to the global layout if end of sequence needed.
+        messageBubble.background?.setTintList(null)
+        // Manage the background of the message bubble.
+        updateMessageBackground(
+            context, messageBubble, msgSequenceType,
+            isOnlyEmoji = isOnlyEmoji(message),
+            isDeleted = isDeleted,
+            isIncoming = textMessage.isIncoming
+        )
+        // Manage the message content.
+        if (isOnlyEmoji(message)) {
+            messageContent.updateEmoji(message, messageTime, isEdited)
+        } else {
+            messageContent.updateStandard(
+                markwon.toMarkdown(message), messageTime, isEdited
+            )
+        }
         val startOfSeq =
             msgSequenceType == SequenceType.FIRST || msgSequenceType == SequenceType.SINGLE
-        convViewHolder.mItem?.let { setBottomMargin(it, if (startOfSeq) 8 else 0) }
-        // Show the name of the contact if it is a group conversation
-        peerDisplayName?.apply {
-            if (presenter.isGroup() && endOfSeq) {
-                visibility = View.VISIBLE
-                convViewHolder.compositeDisposable.add(
-                    presenter.contactService
-                        .observeContact(account, contact, false)
-                        .observeOn(DeviceUtils.uiScheduler)
-                        .subscribe {
-                            text = it.displayName
-                        }
-                )
-            } else visibility = View.GONE
+        // Manage animation for avatar and name.
+        val avatar = convViewHolder.mAvatar
+        if (presenter.isGroup() && textMessage.isIncoming) {
+            avatar?.let {
+                if (startOfSeq) { // To only display the avatar of the last message.
+                    avatar.setImageDrawable(
+                        conversationFragment.getConversationAvatar(contact.primaryNumber)
+                    )
+                    avatar.visibility = View.VISIBLE
+                } else {
+                    if (position == lastMsgPos - 1) {
+                        ActionHelper.startFadeOutAnimation(avatar)
+                    } else {
+                        avatar.setImageBitmap(null)
+                        avatar.visibility = View.INVISIBLE
+                    }
+                }
+            }
+            val endOfSeq =
+                msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE
+            // Show the name of the contact.
+            peerDisplayName?.apply {
+                if (endOfSeq) {
+                    visibility = View.VISIBLE
+                    convViewHolder.compositeDisposable.add(
+                        presenter.contactService
+                            .observeContact(account, contact, false)
+                            .observeOn(DeviceUtils.uiScheduler)
+                            .subscribe { text = it.displayName }
+                    )
+                } else {
+                    visibility = View.GONE
+                    text = null
+                }
+            }
+        } else {
+            avatar?.visibility = View.GONE
+            peerDisplayName?.visibility = View.GONE
         }
+
         // Manage deleted message.
         if (isDeleted) {
             if (textMessage.isIncoming) {
@@ -774,72 +795,59 @@ class TvConversationAdapter(
                         .observeContact(account, contact, false)
                         .observeOn(DeviceUtils.uiScheduler)
                         .subscribe { username ->
-                            msgTxt.text = String.format(
-                                context.getString(R.string.conversation_message_deleted),
-                                username
-                            )
+                            messageContent.updateDeleted(messageTime, username.displayName)
                         }
                 )
             } else {
-                msgTxt.text = String.format(
-                    context.getString(R.string.conversation_message_deleted),
+                messageContent.updateDeleted(
+                    messageTime,
                     context.getString(R.string.conversation_info_contact_you)
                 )
             }
-            // Hide the link preview
-            answerLayout?.visibility = View.GONE
-            if (convColor != 0 && !textMessage.isIncoming) {
-                msgTxt.background.setTint(convColor)
-            }
-            msgTxt.textSize = 14f
-            longPressView.setOnLongClickListener(null)
-            return
+            messageBubble.setOnLongClickListener(null)
         }
-        // Manage emoji message
-        if (isOnlyEmoji(message)) {
-            msgTxt.background.alpha = 0
-            msgTxt.textSize = 32.0f
-            msgTxt.setPadding(0, 0, 0, 0)
-        }
-        if (isTimeShown) {
-            convViewHolder.compositeDisposable.add(
-                timestampUpdateTimer.subscribe { t: Long? ->
-                val timeSeparationString =
-                    TextUtils.timestampToDetailString(
-                        context,
-                        formatter,
-                        textMessage.timestamp
-                    )
-                convViewHolder.mMsgDetailTxtPerm?.text = timeSeparationString
-            })
-            convViewHolder.mMsgDetailTxtPerm?.visibility = View.VISIBLE
-        } else {
-            convViewHolder.mMsgDetailTxtPerm?.visibility = View.GONE
-            val isExpanded = position == expandedItemPosition
-            if (isExpanded) {
-                convViewHolder.compositeDisposable.add(
-                    timestampUpdateTimer.subscribe { t: Long? ->
-                    val timeSeparationString = TextUtils.timestampToDetailString(
-                        context,
-                        formatter,
-                        textMessage.timestamp
-                    )
-                    convViewHolder.mMsgDetailTxt?.text = timeSeparationString
-                })
-            }
-            setItemViewExpansionState(convViewHolder, isExpanded)
-            convViewHolder.itemView.setOnClickListener { v: View? ->
-                if (convViewHolder.animator != null && convViewHolder.animator!!.isRunning)
-                {
-                    return@setOnClickListener
+    }
+
+    /**
+     * Message Separation is used to highlight two group of messages.
+     * We don't need message separation if:
+     * - The message is the first of the conversation
+     * - The message is the first of the day (date already shown)
+     */
+    private fun isMessageSeparationNeeded(
+        isDateShown: Boolean,
+        messagePosition: Int,
+    ): Boolean = getPreviousInteractionFromPosition(messagePosition)?.let { firstInteraction ->
+        val secondInteraction = mInteractions[messagePosition]
+        !isDateShown && isSeqBreak(firstInteraction, secondInteraction)
+    } ?: false
+
+    /**
+     * Configures the background of the message bubble.
+     * It changes if it's an incoming/outgoing message, it position or if it's an emoji.
+     * ResIndex indicates how is considered the message (first, single, last, etc.).
+     */
+    private fun updateMessageBackground(
+        context: Context, messageBubble: View,
+        messageSequenceType: SequenceType,
+        isOnlyEmoji: Boolean, isDeleted: Boolean, isIncoming: Boolean,
+    ) {
+        if (isOnlyEmoji) messageBubble.background = null
+        else {
+            // Manage layout for standard message. Index refers to msgBGLayouts array.
+            val resIndex =
+                // Standard message, incoming or outgoing and first, single or last.
+                messageSequenceType.ordinal + (if (isIncoming) 1 else 0) * 4
+
+            messageBubble.background = ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
+
+            if (convColor != 0 && !isDeleted && !isIncoming) {
+                // Drawable is a layer list. Only need to change the color of the main bubble.
+                (messageBubble.background as LayerDrawable).apply {
+                    (findDrawableByLayerId(R.id.main_bubble) as GradientDrawable)
+                        .setColor(convColor)
                 }
-                if (expandedItemPosition >= 0) {
-                    val prev = expandedItemPosition
-                    notifyItemChanged(prev)
-                }
-                expandedItemPosition = if (isExpanded) -1 else position
-                notifyItemChanged(expandedItemPosition)
-            }
+            } else if (convColor != 0 && !isIncoming) messageBubble.background?.setTint(convColor)
         }
     }
 
