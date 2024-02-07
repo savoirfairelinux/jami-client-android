@@ -488,6 +488,8 @@ along with this program; if not, write to the Free Software
     <string name="audio_permission_rationale_message">Jami requires the microphone permission to use speech-to-text and record audio features. It will be asked in the next step.</string>
     <string name="camera_permission_rationale_message">Jami requires the camera permission to record video and place video call. It will be asked in the next step.</string>
     <string name="unable_to_start_recorder">Unable to start recording audio.</string>
+    <string name="error_sharing_file">Error sharing file.</string>
+    <string name="error_opening_file">Error opening file.</string>
 
     <!-- Wizard -->
     <string name="wizard_status_recommended">Recommended</string>
