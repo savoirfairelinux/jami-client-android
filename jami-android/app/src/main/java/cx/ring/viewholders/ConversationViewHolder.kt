@@ -98,8 +98,8 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
         MessageType.OUTGOING_FILE -> v.findViewById(R.id.file_time)
         else -> null
     }
-    var mMessageBubble: ConstraintLayout? = null
-    var mMessageLayout: ConstraintLayout? = null
+    var mMessageBubble: ViewGroup? = null
+    var mMessageLayout: ViewGroup? = null
     var mMessageContent: CustomMessageBubble? = null
     var mReplyBubble: LinearLayout? = null
     var mReplyName: TextView? = null
@@ -147,9 +147,8 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
     var mAudioMessageLayout: RelativeLayout? = null
 
     val mLayoutStatusIconId: View? = when (type) {
-        MessageType.OUTGOING_CALL_INFORMATION-> v.findViewById(R.id.callLayout)
-        MessageType.OUTGOING_TEXT_MESSAGE
-            -> v.findViewById(R.id.msg_txt) ?: v.findViewById(R.id.message_bubble)
+        MessageType.OUTGOING_CALL_INFORMATION -> v.findViewById(R.id.callLayout)
+        MessageType.OUTGOING_TEXT_MESSAGE -> v.findViewById(R.id.message_bubble)
         MessageType.OUTGOING_FILE -> v.findViewById(R.id.fileInfoLayout)
         MessageType.OUTGOING_IMAGE -> v.findViewById(R.id.image)
         MessageType.OUTGOING_AUDIO -> v.findViewById(R.id.audioInfoLayout)
@@ -195,17 +194,15 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
                 mReplyName = v.findViewById(R.id.reply_name)
                 mReplyBubble = v.findViewById(R.id.reply_bubble)
                 mReplyTxt = v.findViewById(R.id.reply_text)
-                mMsgTxt = v.findViewById(R.id.msg_txt)
                 mMessageBubble = v.findViewById(R.id.message_bubble)
                 mMessageLayout = v.findViewById(R.id.message_layout)
                 mMessageContent = v.findViewById(R.id.message_content)
-                mMsgDetailTxt = v.findViewById(R.id.msg_details_txt)
                 mMsgDetailTxtPerm = v.findViewById(R.id.message_time_permanent)
                 mAnswerLayout = v.findViewById(R.id.link_preview)
                 mHistTxt = v.findViewById(R.id.link_preview_title)
                 mHistDetailTxt = v.findViewById(R.id.link_preview_description)
                 mPreviewDomain = v.findViewById(R.id.link_preview_domain)
-                primaryClickableView = mMsgTxt
+                primaryClickableView = mMessageBubble
             }
             MessageType.INCOMING_FILE,
             MessageType.OUTGOING_FILE -> {
