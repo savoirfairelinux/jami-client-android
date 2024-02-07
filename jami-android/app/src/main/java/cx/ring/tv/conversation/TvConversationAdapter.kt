@@ -585,6 +585,9 @@ class TvConversationAdapter(
                 menu.removeItem(R.id.conv_action_download)
                 menu.removeItem(R.id.conv_action_share)
             }
+            if (file.isIncoming) {
+                menu.removeItem(R.id.conv_action_delete)
+            }
         }
         longPressView.setOnLongClickListener { v: View ->
             if (type == MessageType.TransferType.AUDIO || type == MessageType.TransferType.FILE) {
