@@ -698,9 +698,12 @@ class TvConversationAdapter(
             inflater.inflate(R.menu.conversation_item_actions_messages_tv, menu)
             if (interaction.status === InteractionStatus.SENDING) {
                 menu.removeItem(R.id.conv_action_delete)
+            } else if (textMessage.isIncoming) {
+                menu.removeItem(R.id.conv_action_delete)
+                menu.removeItem(R.id.conv_action_cancel_message)
             } else {
-                menu.findItem(R.id.conv_action_delete)
-                    .setTitle(R.string.menu_message_delete)
+                // Message is sent and outgoing
+                menu.findItem(R.id.conv_action_delete).setTitle(R.string.menu_message_delete)
                 menu.removeItem(R.id.conv_action_cancel_message)
             }
         }
