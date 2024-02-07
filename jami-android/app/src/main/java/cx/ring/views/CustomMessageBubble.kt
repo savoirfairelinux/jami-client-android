@@ -14,6 +14,7 @@ import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.core.widget.TextViewCompat
 import cx.ring.R
+import cx.ring.utils.DeviceUtils
 
 /**
  * Custom view that displays a message with time and edited indicator.
@@ -29,8 +30,10 @@ class CustomMessageBubble(context: Context, attrs: AttributeSet?) : ViewGroup(co
 
     // Dimensions
     private val infoTextSize = resources.getDimension(R.dimen.custom_message_bubble_info_text_size)
+    private val tvInfoTextSize = resources.getDimension(R.dimen.tv_custom_message_bubble_info_text_size)
     private val defaultTextSize =
         resources.getDimension(R.dimen.custom_message_bubble_default_text_size)
+    private val tvDefaultTextSize = resources.getDimension(R.dimen.tv_custom_message_bubble_default_text_size)
     private val emojiOnlyTextSize = resources
         .getDimension(R.dimen.custom_message_bubble_emoji_only_text_size)
     private val infoLeftPadding = resources
@@ -41,13 +44,17 @@ class CustomMessageBubble(context: Context, attrs: AttributeSet?) : ViewGroup(co
     // Colors
     private var defaultTextColor = context.getColor(R.color.colorOnSurface)
     private var contrastedDefaultTextColor = context.getColor(R.color.colorOnSurface)
+    private var tvContrastedDefaultTextColor = context.getColor(R.color.white)
 
     init {
         this.messageText.apply {
-            setTextSize(TypedValue.COMPLEX_UNIT_PX, defaultTextSize)
+            if (DeviceUtils.isTv(context)) {
+                setTextSize(TypedValue.COMPLEX_UNIT_PX, tvDefaultTextSize)
+            } else setTextSize(TypedValue.COMPLEX_UNIT_PX, defaultTextSize)
         }
         this.messageTime.apply {
-            setTextSize(TypedValue.COMPLEX_UNIT_PX, infoTextSize)
+            if (DeviceUtils.isTv(context)) setTextSize(TypedValue.COMPLEX_UNIT_PX, tvInfoTextSize)
+            else setTextSize(TypedValue.COMPLEX_UNIT_PX, infoTextSize)
             updatePadding(left = infoLeftPadding)
         }
         this.messageEdited.apply {
@@ -91,7 +98,9 @@ class CustomMessageBubble(context: Context, attrs: AttributeSet?) : ViewGroup(co
      */
     fun updateStandard(messageText: Spanned, messageTime: String, messageIsEdited: Boolean) {
         this.messageEdited.isVisible = messageIsEdited
-        this.messageText.setTextSize(TypedValue.COMPLEX_UNIT_PX, defaultTextSize)
+        if (DeviceUtils.isTv(context)) {
+            this.messageText.setTextSize(TypedValue.COMPLEX_UNIT_PX, tvDefaultTextSize)
+        } else this.messageText.setTextSize(TypedValue.COMPLEX_UNIT_PX, defaultTextSize)
         this.messageText.text = messageText
         this.messageTime.text = messageTime
         updateColor(defaultTextColor)
@@ -103,7 +112,9 @@ class CustomMessageBubble(context: Context, attrs: AttributeSet?) : ViewGroup(co
     fun updateDeleted(messageTime: String, username: String) {
         messageEdited.visibility = GONE
         this.messageTime.text = messageTime
-        messageText.setTextSize(TypedValue.COMPLEX_UNIT_PX, defaultTextSize)
+        if (DeviceUtils.isTv(context)) {
+            messageText.setTextSize(TypedValue.COMPLEX_UNIT_PX, tvDefaultTextSize)
+        } else messageText.setTextSize(TypedValue.COMPLEX_UNIT_PX, defaultTextSize)
         messageText.text =
             String.format(context.getString(R.string.conversation_message_deleted), username)
         updateColor(defaultTextColor)
@@ -118,7 +129,9 @@ class CustomMessageBubble(context: Context, attrs: AttributeSet?) : ViewGroup(co
         this.messageText.text = messageText
         this.messageTime.text = messageTime
         // Emoji is not in the bubble, so should be contrasted with conversation background.
-        updateColor(contrastedDefaultTextColor)
+        if (DeviceUtils.isTv(context)) updateColor(tvContrastedDefaultTextColor)
+        else updateColor(contrastedDefaultTextColor)
+
     }
 
     /**

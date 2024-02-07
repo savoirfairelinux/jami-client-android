@@ -134,11 +134,13 @@ along with this program; if not, write to the Free Software
     <dimen name="margin_with_avatar">52dp</dimen>
     <dimen name="base_left_conversation_margin">16dp</dimen>
     <dimen name="conditional_left_conversation_margin">12dp</dimen>
+    <dimen name="tv_left_conversation_margin">12dp</dimen>
     <dimen name="file_background_radius">5dp</dimen>
     <dimen name="file_background_padding">10dp</dimen>
     <dimen name="file_size">12sp</dimen>
     <dimen name="file_name">16sp</dimen>
     <dimen name="conversation_message_separation">15dp</dimen>
+    <dimen name="tv_conversation_message_separation">8dp</dimen>
     <dimen name="conversation_date_padding">15dp</dimen>
     <dimen name="reaction_chip_background_radius">5dp</dimen>
     <dimen name="message_reaction_stroke">2dp</dimen>
@@ -153,9 +155,11 @@ along with this program; if not, write to the Free Software
 
     <!--  Custom Message Bubble  -->
     <dimen name="custom_message_bubble_info_text_size">12sp</dimen>
+    <dimen name="tv_custom_message_bubble_info_text_size">14sp</dimen>
     <dimen name="custom_message_bubble_info_left_padding">8dp</dimen>
     <dimen name="custom_message_bubble_edited_drawable_padding">2dp</dimen>
     <dimen name="custom_message_bubble_default_text_size">14sp</dimen>
+    <dimen name="tv_custom_message_bubble_default_text_size">16sp</dimen>
     <dimen name="custom_message_bubble_emoji_only_text_size">32sp</dimen>
 
     <!--  Account List  -->

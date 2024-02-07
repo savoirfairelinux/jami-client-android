@@ -27,66 +27,62 @@ along with this program; if not, write to the Free Software
     android:clipToPadding="false"
     android:focusable="true"
     android:gravity="center"
-    android:orientation="vertical"
-    android:paddingBottom="@dimen/padding_xsmall">
+    android:orientation="vertical">
 
     <RelativeLayout
-        android:id="@+id/container"
+        android:id="@+id/message_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clipChildren="false"
         android:clipToPadding="false"
         android:paddingStart="@dimen/padding_large"
-        android:paddingEnd="0dp">
+        android:paddingEnd="0dp"
+        android:paddingBottom="@dimen/padding_xsmall">
 
         <cx.ring.views.MessageStatusView
             android:id="@+id/status_icon"
             android:layout_width="@dimen/conversation_status_icon_size"
             android:layout_height="@dimen/conversation_status_icon_size"
-            android:layout_alignBottom="@id/msg_txt"
+            android:layout_alignBottom="@id/message_bubble"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="5dp"
-            app:tint="@color/grey_500" />
+            tools:background="@color/pink_300" />
 
-        <TextView
-            android:id="@+id/msg_txt"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/message_bubble"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="72dp"
-            android:layout_marginEnd="24dp"
+            android:layout_marginEnd="@dimen/conversation_me_margin_end"
             android:background="@drawable/textmsg_bg_out"
             android:focusable="true"
             android:minWidth="@dimen/conversation_avatar_size"
-            android:minHeight="@dimen/conversation_avatar_size"
-            android:padding="@dimen/padding_medium"
-            android:singleLine="false"
-            android:textIsSelectable="true"
-            android:textSize="16sp"
-            android:theme="@style/OutgoingTextMesssage"
-            tools:text="yo this is the test of a long long text can not be_found_message" />
+            android:minHeight="@dimen/conversation_avatar_size">
+
+            <cx.ring.views.CustomMessageBubble
+                android:id="@+id/message_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_medium"
+                android:theme="@style/OutgoingTextMesssage"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:edited="true"
+                tools:message="This is a test !"
+                tools:time="11h05" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </RelativeLayout>
 
     <TextView
-        android:id="@+id/msg_details_txt_perm"
+        android:id="@+id/message_time_permanent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="4dp"
         android:paddingBottom="@dimen/padding_small"
-        android:textColor="@color/conversation_secondary_background"
-        android:textSize="14sp"
-        android:visibility="gone"
-        tools:text="@string/time_just_now"
-        tools:visibility="visible" />
-
-    <TextView
-        android:id="@+id/msg_details_txt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="4dp"
-        android:paddingBottom="@dimen/padding_xsmall"
         android:textColor="@color/conversation_secondary_background"
         android:textSize="14sp"
         android:visibility="gone"
