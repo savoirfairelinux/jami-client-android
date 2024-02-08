@@ -10,7 +10,7 @@ buildscript {
     }
 
     val kotlin_version by extra { "1.9.22" }
-    val hilt_version by extra { "2.48.1" }
+    val hilt_version by extra { "2.50" }
 
     dependencies {
         classpath ("com.android.tools.build:gradle:8.2.2")
