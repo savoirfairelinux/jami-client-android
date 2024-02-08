@@ -554,7 +554,7 @@ class TvConversationAdapter(
                 )
             }
         })
-        if (hasPermanentTimeString(file, position)) {
+        if (hasPermanentDateString(file, position)) {
             viewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
                 viewHolder.mMsgDetailTxtPerm?.text =
                     TextUtils.timestampToDate(context, formatter, file.timestamp)
@@ -676,7 +676,7 @@ class TvConversationAdapter(
         val peerDisplayName = convViewHolder.mPeerDisplayName
 
         val longPressView = convViewHolder.itemView
-        val isDateShown = hasPermanentTimeString(textMessage, position)
+        val isDateShown = hasPermanentDateString(textMessage, position)
         val msgSequenceType = getMsgSequencing(position, isDateShown)
         val messageTime = TextUtils
             .timestampToTime(context, formatter, mInteractions[position].timestamp)
@@ -849,7 +849,7 @@ class TvConversationAdapter(
         val context = viewHolder.itemView.context
 
         // Manage the date of the event.
-        val isDateShown = hasPermanentTimeString(event, position)
+        val isDateShown = hasPermanentDateString(event, position)
         viewHolder.mMsgDetailTxt?.apply {
             if (isDateShown || getPreviousInteractionFromPosition(position) == null) {
                 visibility = View.VISIBLE
@@ -918,7 +918,7 @@ class TvConversationAdapter(
         // displayed in conversation to inform the user about the call and invite him to join.
         if (call.isGroupCall) {
             val callStartedMsg = interaction as Call
-            val isTimeShown = hasPermanentTimeString(callStartedMsg, position)
+            val isTimeShown = hasPermanentDateString(callStartedMsg, position)
             val msgSequenceType = getMsgSequencing(position, isTimeShown)
             val peerDisplayName = convViewHolder.mPeerDisplayName
             val account = interaction.account ?: return
@@ -1031,7 +1031,7 @@ class TvConversationAdapter(
             // Remove the tint
             convViewHolder.mCallInfoLayout?.background?.setTintList(null)
 
-            val isDateShown = hasPermanentTimeString(interaction, position)
+            val isDateShown = hasPermanentDateString(interaction, position)
             val msgSequenceType = getMsgSequencing(position, isDateShown)
             val timePermanent = convViewHolder.mMsgDetailTxtPerm
             val callInfoLayout = convViewHolder.mCallInfoLayout ?: return
@@ -1220,7 +1220,8 @@ class TvConversationAdapter(
             }
             val nextMsg = getNextInteractionFromPosition(i)
             if (nextMsg != null) {
-                return if (isSeqBreak(msg, nextMsg) || hasPermanentTimeString(nextMsg, i + 1)) {
+                return if (isSeqBreak(msg, nextMsg)
+                    || hasPermanentDateString(nextMsg, i + 1)) {
                     SequenceType.SINGLE
                 } else {
                     SequenceType.FIRST
@@ -1237,7 +1238,7 @@ class TvConversationAdapter(
         val prevMsg = getPreviousInteractionFromPosition(i)
         val nextMsg = getNextInteractionFromPosition(i)
         if (prevMsg != null && nextMsg != null) {
-            val nextMsgHasTime = hasPermanentTimeString(nextMsg, i + 1)
+            val nextMsgHasTime = hasPermanentDateString(nextMsg, i + 1)
             if ((isSeqBreak(msg, prevMsg) || isTimeShown) && !(isSeqBreak(
                     msg,
                     nextMsg
@@ -1288,9 +1289,18 @@ class TvConversationAdapter(
         }
     }
 
-    private fun hasPermanentTimeString(msg: Interaction, position: Int): Boolean {
-        val prevMsg = getPreviousInteractionFromPosition(position)
-        return prevMsg != null && msg.timestamp - prevMsg.timestamp > 10 * DateUtils.MINUTE_IN_MILLIS
+    // Used to show the date between messages.
+    private fun hasPermanentDateString(message: Interaction, position: Int): Boolean {
+        val previousMessageTimestamp =
+            getPreviousInteractionFromPosition(position)?.timestamp ?: return false
+
+        // Create Calendar instances for each timestamp
+        val calendar1 = Calendar.getInstance().apply { timeInMillis = message.timestamp }
+        val calendar2 = Calendar.getInstance().apply { timeInMillis = previousMessageTimestamp }
+
+        // Compare the year, month, and day of year to check if they are different days
+        return calendar1.get(Calendar.YEAR) != calendar2.get(Calendar.YEAR)
+                || calendar1.get(Calendar.DAY_OF_YEAR) != calendar2.get(Calendar.DAY_OF_YEAR)
     }
 
     private fun lastOutgoingIndex(): Int {
