@@ -1009,152 +1009,133 @@ class TvConversationAdapter(
             // Remove the tint
             convViewHolder.mCallInfoLayout?.background?.setTintList(null)
 
-                val callMessage = interaction as Call
-                val isTimeShown = hasPermanentTimeString(callMessage, position)
-                val msgSequenceType = getMsgSequencing(position, isTimeShown)
-                val callInfoLayout = convViewHolder.mCallInfoLayout ?: return
-                callInfoLayout.background?.setTintList(null)
-                val callIcon = convViewHolder.mIcon ?: return
-                callIcon.drawable?.setTintList(null)
-                val typeCall = convViewHolder.mHistTxt ?: return
-                val detailCall = convViewHolder.mHistDetailTxt ?: return
-                val resIndex: Int
-                val typeCallTxt: String
-                val peerDisplayName = convViewHolder.mPeerDisplayName
-                val account = interaction.account ?: return
-                val contact = callMessage.contact ?: return
+            val isTimeShown = hasPermanentTimeString(interaction, position)
+            val msgSequenceType = getMsgSequencing(position, isTimeShown)
+            val callInfoLayout = convViewHolder.mCallInfoLayout ?: return
+            val callIcon = convViewHolder.mIcon ?: return
+            val typeCall = convViewHolder.mHistTxt ?: return
+            val detailCall = convViewHolder.mHistDetailTxt ?: return
+            val resIndex: Int
+            val typeCallTxt: String
+            val peerDisplayName = convViewHolder.mPeerDisplayName
+            val account = interaction.account ?: return
+            val contact = interaction.contact ?: return
 
-                // Manage the update of the timestamp
-                if (isTimeShown) {
-                    convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
-                        convViewHolder.mMsgDetailTxtPerm?.text =
-                            TextUtils.timestampToDetailString(
-                                context, formatter, call.timestamp
-                            )
-                    })
-                    convViewHolder.mMsgDetailTxtPerm?.visibility = View.VISIBLE
-                } else convViewHolder.mMsgDetailTxtPerm?.visibility = View.GONE
+            // After a call, a message is displayed with call information.
+            // Manage the call message layout.
+            if (interaction.isIncoming) {
+                // Same background for incoming calls.
+                resIndex = msgSequenceType.ordinal + 4
+                // Set the color of the time duration.
+                detailCall.setTextColor(
+                    convViewHolder.itemView.context.getColor(R.color.colorOnSurface)
+                )
+                // Set the call message color.
+                typeCall.setTextColor(
+                    convViewHolder.itemView.context.getColor(R.color.colorOnSurface)
+                )
+                if (interaction.isMissed) { // Call incoming missed.
+                    callIcon.setImageResource(R.drawable.baseline_missed_call_16)
+                    // Set the drawable color to red because it is missed.
+                    callIcon.drawable.setTint(context.getColor(R.color.call_missed))
+                    typeCallTxt = context.getString(R.string.notif_missed_incoming_call)
+                } else { // Call incoming not missed.
+                    callIcon.setImageResource(R.drawable.baseline_incoming_call_16)
+                    callIcon.drawable.setTint(context.getColor(R.color.colorOnSurface))
+                    typeCallTxt = context.getString(R.string.notif_incoming_call)
+                }
+                // Put the message to the left because it is incoming.
+                convViewHolder.mCallLayout?.gravity = Gravity.START
+                // Show the name of the contact if it is a group conversation
+                val endOfSeq = msgSequenceType == SequenceType.SINGLE
+                        || msgSequenceType == SequenceType.LAST
+                peerDisplayName?.apply {
+                    if (presenter.isGroup() && endOfSeq) {
+                        visibility = View.VISIBLE
+                        convViewHolder.compositeDisposable.add(
+                            presenter.contactService
+                                .observeContact(account, contact, false)
+                                .observeOn(DeviceUtils.uiScheduler)
+                                .subscribe {
+                                    text = it.displayName
+                                }
+                        )
+                    } else visibility = View.GONE
+                }
+            } else {
+                // Same background for outgoing calls.
+                resIndex = msgSequenceType.ordinal
+                typeCall.setTextColor(
+                    convViewHolder.itemView.context.getColor(
+                        R.color.call_text_outgoing_message
+                    )
+                )
+                // Set the color of the time duration.
+                detailCall.setTextColor(
+                    convViewHolder.itemView.context.getColor(
+                        R.color.call_text_outgoing_message
+                    )
+                )
+                if (interaction.isMissed) { // Outgoing call missed.
+                    callIcon.setImageResource(R.drawable.baseline_missed_call_16)
+                    // Set the drawable color to red because it is missed.
+                    callIcon.drawable.setTint(context.getColor(R.color.call_missed))
+                    typeCallTxt = context.getString(R.string.notif_missed_outgoing_call)
+                    // Flip the photo upside down to show a "missed outgoing call".
+                    callIcon.scaleX = -1f
+                } else { // Outgoing call not missed.
+                    callIcon.setImageResource(R.drawable.baseline_outgoing_call_16)
+                    callIcon.drawable.setTint(
+                        context.getColor(R.color.call_drawable_color)
+                    )
+                    typeCallTxt = context.getString(R.string.notif_outgoing_call)
+                }
+                // Put the message to the right because it is outgoing.
+                convViewHolder.mCallLayout?.gravity = Gravity.END
+            }
+            callInfoLayout.background =
+                ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
+            callInfoLayout.setPadding(callPadding)
+            // Manage background to convColor if it is outgoing.
+            if (convColor != 0 && !interaction.isIncoming) {
+                callInfoLayout.background.setTint(convColor)
+            }
+            typeCall.text = typeCallTxt
+            // Add the call duration if not null.
+            detailCall.text =
+                if (interaction.duration != 0L) {
+                    String.format(
+                        context.getString(R.string.call_duration),
+                        DateUtils.formatElapsedTime(
+                            recycle, interaction.duration!! / 1000
+                        )
+                    ).let { " - $it" }
+                } else null
 
-                // After a call, a message is displayed with call information.
-                // Manage the call message layout.
-                if (callMessage.isIncoming) {
-                    // Same background for incoming calls.
-                    resIndex = msgSequenceType.ordinal + 4
-                    // Set the color of the time duration.
-                    detailCall.setTextColor(
-                        convViewHolder.itemView.context.getColor(R.color.colorOnSurface)
+            // Do not show the avatar if it is a one to one conversation.
+            val avatar = convViewHolder.mAvatar
+            avatar?.visibility = View.GONE
+            // Only show the peer avatar if it is a group conversation
+            if (presenter.isGroup()) {
+                val endOfSeq =
+                    msgSequenceType == SequenceType.LAST
+                            || msgSequenceType == SequenceType.SINGLE
+                // Manage animation for avatar.
+                // To only display the avatar of the last message.
+                if (endOfSeq) {
+                    avatar?.setImageDrawable(
+                        conversationFragment.getConversationAvatar(contact.primaryNumber)
                     )
-                    // Set the call message color.
-                    typeCall.setTextColor(
-                        convViewHolder.itemView.context.getColor(R.color.colorOnSurface)
-                    )
-                    if (callMessage.isMissed) { // Call incoming missed.
-                        callIcon.setImageResource(R.drawable.baseline_missed_call_16)
-                        // Set the drawable color to red because it is missed.
-                        callIcon.drawable.setTint(context.getColor(R.color.call_missed))
-                        typeCallTxt = context.getString(R.string.notif_missed_incoming_call)
-                    } else { // Call incoming not missed.
-                        callIcon.setImageResource(R.drawable.baseline_incoming_call_16)
-                        callIcon.drawable.setTint(context.getColor(R.color.colorOnSurface))
-                        typeCallTxt = context.getString(R.string.notif_incoming_call)
-                    }
-                    // Put the message to the left because it is incoming.
-                    convViewHolder.mCallLayout?.gravity = Gravity.START
-                    // Show the name of the contact if it is a group conversation
-                    val endOfSeq = msgSequenceType == SequenceType.SINGLE
-                            || msgSequenceType == SequenceType.LAST
-                    peerDisplayName?.apply {
-                        if (presenter.isGroup() && endOfSeq) {
-                            visibility = View.VISIBLE
-                            convViewHolder.compositeDisposable.add(
-                                presenter.contactService
-                                    .observeContact(account, contact, false)
-                                    .observeOn(DeviceUtils.uiScheduler)
-                                    .subscribe {
-                                        text = it.displayName
-                                    }
-                            )
-                        } else visibility = View.GONE
-                    }
+                    avatar?.visibility = View.VISIBLE
                 } else {
-                    // Same background for outgoing calls.
-                    resIndex = msgSequenceType.ordinal
-                    typeCall.setTextColor(
-                        convViewHolder.itemView.context.getColor(
-                            R.color.call_text_outgoing_message
-                        )
-                    )
-                    // Set the color of the time duration.
-                    detailCall.setTextColor(
-                        convViewHolder.itemView.context.getColor(
-                            R.color.call_text_outgoing_message
-                        )
-                    )
-                    if (callMessage.isMissed) { // Outgoing call missed.
-                        callIcon.setImageResource(R.drawable.baseline_missed_call_16)
-                        // Set the drawable color to red because it is missed.
-                        callIcon.drawable.setTint(context.getColor(R.color.call_missed))
-                        typeCallTxt = context.getString(R.string.notif_missed_outgoing_call)
-                        // Flip the photo upside down to show a "missed outgoing call".
-                        callIcon.scaleX = -1f
-                    } else { // Outgoing call not missed.
-                        callIcon.setImageResource(R.drawable.baseline_outgoing_call_16)
-                        callIcon.drawable.setTint(
-                            context.getColor(R.color.call_drawable_color)
-                        )
-                        typeCallTxt = context.getString(R.string.notif_outgoing_call)
-                    }
-                    // Put the message to the right because it is outgoing.
-                    convViewHolder.mCallLayout?.gravity = Gravity.END
-                }
-                callInfoLayout.background =
-                    ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
-                callInfoLayout.setPadding(callPadding)
-                // Manage background to convColor if it is outgoing.
-                if (convColor != 0 && !callMessage.isIncoming) {
-                    callInfoLayout.background.setTint(convColor)
-                }
-                typeCall.text = typeCallTxt
-                // Add the call duration if not null.
-                detailCall.text =
-                    if (callMessage.duration != 0L) {
-                        String.format(
-                            context.getString(R.string.call_duration),
-                            DateUtils.formatElapsedTime(
-                                recycle, callMessage.duration!! / 1000
-                            )
-                        ).let { " - $it" }
-                    } else null
-                // Apply a bottom margin to the global layout if end of sequence needed.
-                val startOfSeq =
-                    msgSequenceType == SequenceType.FIRST ||
-                            msgSequenceType == SequenceType.SINGLE
-                convViewHolder.mItem?.let { setBottomMargin(it, if (startOfSeq) 8 else 0) }
-
-                // Do not show the avatar if it is a one to one conversation.
-                val avatar = convViewHolder.mAvatar
-                avatar?.visibility = View.GONE
-                // Only show the peer avatar if it is a group conversation
-                if (presenter.isGroup()) {
-                    val endOfSeq =
-                        msgSequenceType == SequenceType.LAST
-                                || msgSequenceType == SequenceType.SINGLE
-                    // Manage animation for avatar.
-                    // To only display the avatar of the last message.
-                    if (endOfSeq) {
-                        avatar?.setImageDrawable(
-                            conversationFragment.getConversationAvatar(contact.primaryNumber)
-                        )
-                        avatar?.visibility = View.VISIBLE
+                    if (position == lastMsgPos - 1) {
+                        avatar?.let { ActionHelper.startFadeOutAnimation(avatar) }
                     } else {
-                        if (position == lastMsgPos - 1) {
-                            avatar?.let { ActionHelper.startFadeOutAnimation(avatar) }
-                        } else {
-                            avatar?.setImageBitmap(null)
-                            avatar?.visibility = View.INVISIBLE
-                        }
+                        avatar?.setImageBitmap(null)
+                        avatar?.visibility = View.INVISIBLE
                     }
                 }
+            }
         }
     }
 
@@ -1295,19 +1276,7 @@ class TvConversationAdapter(
             R.drawable.textmsg_bg_in_last,
             R.drawable.textmsg_bg_in_middle,
             R.drawable.textmsg_bg_in_first,
-            R.drawable.textmsg_bg_in,
-            R.drawable.textmsg_bg_out_reply,
-            R.drawable.textmsg_bg_out_reply_first,
-            R.drawable.textmsg_bg_in_reply,
-            R.drawable.textmsg_bg_in_reply_first,
-            R.drawable.call_bg_missed_in_first,
-            R.drawable.call_bg_missed_in_middle,
-            R.drawable.call_bg_missed_in_last,
-            R.drawable.call_bg_missed,
-            R.drawable.call_bg_missed_out_first,
-            R.drawable.call_bg_missed_out_middle,
-            R.drawable.call_bg_missed_out_last,
-            R.drawable.call_bg_missed
+            R.drawable.textmsg_bg_in
         )
 
         private fun setBottomMargin(view: View, value: Int) {
