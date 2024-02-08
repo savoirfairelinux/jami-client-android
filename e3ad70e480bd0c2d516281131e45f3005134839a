@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "262d626d_d51a340d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-02-08T18:43:20Z",
+      "side": 1,
+      "message": "I\u0027m not sure to well understand what this patch is about? Would need a ticket.",
+      "revId": "e3ad70e480bd0c2d516281131e45f3005134839a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
