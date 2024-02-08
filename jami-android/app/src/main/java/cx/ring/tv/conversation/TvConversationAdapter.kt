@@ -256,7 +256,7 @@ class TvConversationAdapter(
                     interaction,
                     position
                 )
-                Interaction.InteractionType.CONTACT -> configureForContactEvent(holder, interaction)
+                Interaction.InteractionType.CONTACT -> configureForContactEvent(holder, interaction, position)
                 Interaction.InteractionType.DATA_TRANSFER -> configureForFileInfo(
                     holder,
                     interaction,
@@ -842,11 +842,40 @@ class TvConversationAdapter(
 
     private fun configureForContactEvent(
         viewHolder: ConversationViewHolder,
-        interaction: Interaction
+        interaction: Interaction,
+        position: Int
     ) {
         val event = interaction as ContactEvent
-        viewHolder.mMsgTxt?.setText(
-            when (event.event) {
+        val context = viewHolder.itemView.context
+
+        // Manage the date of the event.
+        val isDateShown = hasPermanentTimeString(event, position)
+        viewHolder.mMsgDetailTxt?.apply {
+            if (isDateShown || getPreviousInteractionFromPosition(position) == null) {
+                visibility = View.VISIBLE
+                text = TextUtils.timestampToDate(context, formatter, event.timestamp)
+            } else {
+                visibility = View.GONE
+            }
+        }
+        val timestamp = TextUtils.timestampToTime(context, formatter, event.timestamp)
+
+        if (interaction.isSwarm) {
+            viewHolder.compositeDisposable.add(
+                presenter.contactService.observeContact(event.account!!, event.contact!!, false)
+                    .observeOn(DeviceUtils.uiScheduler)
+                    .subscribe { vm ->
+                        val eventString = context.getString(when (event.event) {
+                            ContactEvent.Event.ADDED -> R.string.conversation_contact_added
+                            ContactEvent.Event.INVITED -> R.string.conversation_contact_invited
+                            ContactEvent.Event.REMOVED -> R.string.conversation_contact_left
+                            ContactEvent.Event.BANNED -> R.string.conversation_contact_banned
+                            else -> R.string.hist_contact_added
+                        }, vm.displayName)
+                        viewHolder.mMsgTxt?.text = "$eventString, $timestamp"
+                    })
+        } else {
+            val eventString = when (event.event) {
                 ContactEvent.Event.ADDED -> R.string.hist_contact_added
                 ContactEvent.Event.INVITED -> R.string.hist_contact_invited
                 ContactEvent.Event.REMOVED -> R.string.hist_contact_left
@@ -854,15 +883,8 @@ class TvConversationAdapter(
                 ContactEvent.Event.INCOMING_REQUEST -> R.string.hist_invitation_received
                 else -> R.string.hist_contact_added
             }
-        )
-        viewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe { t: Long? ->
-            val timeSeparationString = TextUtils.timestampToDetailString(
-                viewHolder.itemView.context,
-                formatter,
-                event.timestamp
-            )
-            viewHolder.mMsgDetailTxt?.text = timeSeparationString
-        })
+            viewHolder.mMsgTxt?.text = "$eventString, $timestamp"
+        }
     }
 
     /**
