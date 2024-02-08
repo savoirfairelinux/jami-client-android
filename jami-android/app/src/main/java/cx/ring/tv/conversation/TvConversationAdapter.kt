@@ -1009,8 +1009,9 @@ class TvConversationAdapter(
             // Remove the tint
             convViewHolder.mCallInfoLayout?.background?.setTintList(null)
 
-            val isTimeShown = hasPermanentTimeString(interaction, position)
-            val msgSequenceType = getMsgSequencing(position, isTimeShown)
+            val isDateShown = hasPermanentTimeString(interaction, position)
+            val msgSequenceType = getMsgSequencing(position, isDateShown)
+            val timePermanent = convViewHolder.mMsgDetailTxtPerm
             val callInfoLayout = convViewHolder.mCallInfoLayout ?: return
             val callIcon = convViewHolder.mIcon ?: return
             val typeCall = convViewHolder.mHistTxt ?: return
@@ -1021,6 +1022,25 @@ class TvConversationAdapter(
             val account = interaction.account ?: return
             val contact = interaction.contact ?: return
 
+            // Add margin if message need to be separated.
+            val isMessageSeparationNeeded = isMessageSeparationNeeded(isDateShown, position)
+            convViewHolder.mCallLayout?.updateLayoutParams<MarginLayoutParams> {
+                topMargin = if (!isMessageSeparationNeeded) 0 else context.resources
+                    .getDimensionPixelSize(R.dimen.tv_conversation_message_separation)
+            }
+            // Manage the update of the timestamp
+            if (isDateShown) {
+                convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
+                    timePermanent?.text = TextUtils
+                        .timestampToDate(context, formatter, call.timestamp)
+                })
+                convViewHolder.mMsgDetailTxtPerm?.visibility = View.VISIBLE
+            } else convViewHolder.mMsgDetailTxtPerm?.visibility = View.GONE
+            convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
+                val timeString =
+                    TextUtils.timestampToTime(context, formatter, call.timestamp)
+                convViewHolder.mCallTime?.text = timeString
+            })
             // After a call, a message is displayed with call information.
             // Manage the call message layout.
             if (interaction.isIncoming) {

@@ -58,7 +58,7 @@ along with this program; if not, write to the Free Software
             android:scrollHorizontally="true"
             android:singleLine="true"
             android:textColor="@color/call_text_outgoing_message"
-            android:textSize="13sp"
+            android:textSize="@dimen/tv_custom_message_bubble_default_text_size"
             tools:text="Outgoing call" />
 
         <TextView
@@ -66,9 +66,20 @@ along with this program; if not, write to the Free Software
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/colorOnSurface"
-            android:textSize="13sp"
+            android:textSize="@dimen/tv_custom_message_bubble_default_text_size"
             tools:text="- Lasted 17:26"
             tools:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/call_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/file_time_text_out"
+            android:textSize="@dimen/tv_custom_message_bubble_info_text_size"
+            tools:text="11:36am" />
 
     </LinearLayout>
 
