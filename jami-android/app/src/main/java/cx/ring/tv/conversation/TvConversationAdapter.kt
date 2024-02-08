@@ -680,6 +680,7 @@ class TvConversationAdapter(
         val msgSequenceType = getMsgSequencing(position, isDateShown)
         val messageTime = TextUtils
             .timestampToTime(context, formatter, mInteractions[position].timestamp)
+        val timePermanent = convViewHolder.mMsgDetailTxtPerm
 
         // Implement animation while scrolling through messages.
         convViewHolder.itemView.onFocusChangeListener =
@@ -726,6 +727,14 @@ class TvConversationAdapter(
             topMargin = if (!isMessageSeparationNeeded) 0 else context.resources
                 .getDimensionPixelSize(R.dimen.tv_conversation_message_separation)
         }
+        // Manage the update of the timestamp
+        if (isDateShown) {
+            convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
+                timePermanent?.text = TextUtils
+                    .timestampToDate(context, formatter, interaction.timestamp)
+            })
+            convViewHolder.mMsgDetailTxtPerm?.visibility = View.VISIBLE
+        } else convViewHolder.mMsgDetailTxtPerm?.visibility = View.GONE
         messageBubble.background?.setTintList(null)
         // Manage the background of the message bubble.
         updateMessageBackground(
