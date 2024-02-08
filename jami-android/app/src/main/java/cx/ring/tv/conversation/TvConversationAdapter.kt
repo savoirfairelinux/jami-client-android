@@ -537,7 +537,7 @@ class TvConversationAdapter(
         val file = interaction as DataTransfer
         val path = presenter.deviceRuntimeService.getConversationPath(file)
 
-        val timeString = TextUtils.timestampToDetailString(context, formatter, file.timestamp)
+        val timeString = TextUtils.timestampToTime(context, formatter, file.timestamp)
         viewHolder.mFileTime?.text = timeString
         viewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
             viewHolder.mFileSize?.text = when (val status = file.status) {
@@ -557,7 +557,7 @@ class TvConversationAdapter(
         if (hasPermanentTimeString(file, position)) {
             viewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
                 viewHolder.mMsgDetailTxtPerm?.text =
-                    TextUtils.timestampToDetailString(context, formatter, file.timestamp)
+                    TextUtils.timestampToDate(context, formatter, file.timestamp)
             })
             viewHolder.mMsgDetailTxtPerm?.visibility = View.VISIBLE
         } else {
