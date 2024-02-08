@@ -15,60 +15,40 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="end|bottom"
-    android:layout_marginTop="8dp"
-    android:layout_marginBottom="8dp"
+    android:layout_gravity="bottom"
+    android:background="@color/tv_contact_background"
     android:descendantFocusability="blocksDescendants"
     android:focusable="false"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp">
+    android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/imageView"
+    <TextView
+        android:id="@+id/contact_event_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="8dp"
-        android:layout_toStartOf="@id/contactDetailsGroup"
-        android:src="@drawable/baseline_person_24" />
+        android:layout_gravity="center_horizontal"
+        android:ellipsize="middle"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:maxLines="1"
+        android:paddingHorizontal="@dimen/padding_large"
+        android:paddingTop="@dimen/conversation_date_padding"
+        android:scrollHorizontally="true"
+        android:singleLine="true"
+        android:textColor="@color/conversation_secondary_background"
+        android:textSize="@dimen/tv_conversation_contact_event"
+        tools:text="Bob was invited, 15:28 PM" />
 
-    <LinearLayout
-        android:id="@+id/contactDetailsGroup"
+    <TextView
+        android:id="@+id/contact_event_details_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="8dp"
-        android:orientation="vertical"
-        android:paddingTop="4dp"
-        android:paddingBottom="4dp">
+        android:layout_gravity="center_horizontal"
+        android:paddingBottom="@dimen/conversation_date_padding"
+        android:textColor="@color/conversation_secondary_background"
+        android:textSize="@dimen/tv_conversation_contact_event"
+        tools:text="Aug 12" />
 
-        <TextView
-            android:id="@+id/contact_event_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:marqueeRepeatLimit="marquee_forever"
-            android:scrollHorizontally="true"
-            android:singleLine="false"
-            android:textColor="@color/conversation_secondary_background"
-            android:textSize="14sp"
-            tools:text="@string/hist_contact_added" />
-
-        <TextView
-            android:id="@+id/contact_event_details_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/conversation_secondary_background"
-            android:textSize="12sp"
-            tools:text="Adrien - 12 mars" />
-
-    </LinearLayout>
-
-</RelativeLayout>
+</LinearLayout>
