@@ -137,7 +137,7 @@ dependencies {
 
     // Glide
     implementation ("com.github.bumptech.glide:glide:4.15.1")
-    ksp("com.github.bumptech.glide:ksp:4.15.1")
+    ksp("com.github.bumptech.glide:ksp:4.16.0")
     // Android SVG
     implementation ("com.caverock:androidsvg-aar:1.4")
 
