@@ -51,6 +51,24 @@
       "message": "format",
       "revId": "e2dc362558863ef1df22045308af76040a734b05",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e4aaed67_f5406d83",
+        "filename": "jami-android/app/src/main/java/cx/ring/tv/conversation/TvConversationAdapter.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2024-02-09T20:13:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee5bd2a1_3d7765a2",
+      "revId": "e2dc362558863ef1df22045308af76040a734b05",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
