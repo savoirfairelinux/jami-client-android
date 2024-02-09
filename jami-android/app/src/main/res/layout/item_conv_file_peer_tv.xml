@@ -65,6 +65,23 @@
             tools:visibility="visible" />
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/peer_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxEms="8"
+        android:maxLines="1"
+        android:padding="4dp"
+        android:textColor="@color/msg_display_name"
+        android:textSize="@dimen/message_display_name_textsize"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/fileInfoLayout"
+        app:layout_constraintStart_toEndOf="@id/photo_layout"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Bob"
+        tools:visibility="visible" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/fileInfoLayout"
         android:layout_width="wrap_content"
@@ -73,7 +90,7 @@
         android:background="@drawable/filemsg_background_in"
         android:minWidth="160dp"
         app:layout_constraintStart_toEndOf="@id/photo_layout"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/peer_name">
 
         <LinearLayout
             android:id="@+id/file_icon_layout"
