@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d5e7c0fa_d2fa1076",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 761,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-02-09T16:31:01Z",
+      "side": 1,
+      "message": "format",
+      "range": {
+        "startLine": 761,
+        "startChar": 0,
+        "endLine": 761,
+        "endChar": 2
+      },
+      "revId": "80608adef40487a52b28bb0398c80d97859913ce",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be0a53bb_49240bbb",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 762,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-02-09T16:31:01Z",
+      "side": 1,
+      "message": "so don\u0027t need the use of a val if used only once",
+      "range": {
+        "startLine": 762,
+        "startChar": 16,
+        "endLine": 762,
+        "endChar": 27
+      },
+      "revId": "80608adef40487a52b28bb0398c80d97859913ce",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d1cfd3cb_b748a385",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 762,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-02-09T16:31:01Z",
+      "side": 1,
+      "message": "rather use findDrawableByLayerId (need to add an id into the corresponding item in video_bg_play_arrow.xml)",
+      "range": {
+        "startLine": 762,
+        "startChar": 0,
+        "endLine": 762,
+        "endChar": 2
+      },
+      "revId": "80608adef40487a52b28bb0398c80d97859913ce",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9f97b200_cf406280",
+        "filename": "jami-android/app/src/main/res/drawable/video_bg_play_arrow.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-02-09T16:31:01Z",
+      "side": 1,
+      "message": "add \"id\" to use as reference in the code when modifying the color",
+      "range": {
+        "startLine": 11,
+        "startChar": 4,
+        "endLine": 13,
+        "endChar": 35
+      },
+      "revId": "80608adef40487a52b28bb0398c80d97859913ce",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dffa564c_d53d348b",
+        "filename": "jami-android/app/src/main/res/layout/item_conv_video_me.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-02-09T16:31:01Z",
+      "side": 1,
+      "message": "attribute for linearLayout",
+      "range": {
+        "startLine": 89,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 2
+      },
+      "revId": "80608adef40487a52b28bb0398c80d97859913ce",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
