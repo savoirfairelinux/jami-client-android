@@ -62,6 +62,7 @@ import cx.ring.mvp.BaseSupportFragment
 import cx.ring.settings.AccountFragment
 import cx.ring.settings.pluginssettings.PluginsListSettingsFragment
 import cx.ring.utils.AndroidFileUtils
+import cx.ring.utils.BiometricHelper
 import cx.ring.utils.BitmapUtils
 import cx.ring.utils.ContentUriHandler
 import cx.ring.utils.DeviceUtils
@@ -96,7 +97,7 @@ class JamiAccountSummaryFragment :
     private var mWaitDialog: AlertDialog? = null
     private var mAccountHasPassword = true
     private var mBestName = ""
-    private var mAccountId: String? = ""
+    private var mAccount: Account? = null
     private var mCacheArchive: File? = null
     private var mProfilePhoto: ImageView? = null
     private var mSourcePhoto: Bitmap? = null
@@ -112,7 +113,7 @@ class JamiAccountSummaryFragment :
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         FragAccSummaryBinding.inflate(inflater, container, false).apply {
             scrollview.viewTreeObserver.addOnScrollChangedListener(this@JamiAccountSummaryFragment)
-            linkNewDevice.setOnClickListener { showWizard(mAccountId!!) }
+            linkNewDevice.setOnClickListener { showWizard(mAccount!!.accountId) }
             linkedDevices.setRightDrawableOnClickListener { onDeviceRename() }
             registerName.setOnClickListener { showUsernameRegistrationPopup() }
             chipMore.setOnClickListener {
@@ -235,8 +236,9 @@ class JamiAccountSummaryFragment :
     }
 
     override fun accountChanged(account: Account, profile: Profile) {
-        mAccountId = account.accountId
-        mBestName = account.registeredName ?: account.displayUsername ?: account.username!!
+        mAccount = account
+        //mAccountId = account.accountId
+        mBestName = account.registeredName.ifEmpty { account.displayUsername ?: account.username!! }
         mBestName = "$mBestName.gz"
         mBinding?.let { binding ->
             binding.userPhoto.setImageDrawable(AvatarDrawable.build(binding.root.context, account, profile, true))
@@ -328,25 +330,23 @@ class JamiAccountSummaryFragment :
     }
 
     fun onClickExport() {
-        if (mAccountHasPassword) {
-            onBackupAccount()
-        } else {
-            onUnlockAccount(mAccountId!!, "")
-        }
+        onBackupAccount()
     }
 
     private fun showUsernameRegistrationPopup() {
         RegisterNameDialog().apply {
             arguments = Bundle().apply {
-                putString(AccountEditionFragment.ACCOUNT_ID_KEY, mAccountId)
+                putString(AccountEditionFragment.ACCOUNT_ID_KEY, mAccount?.accountId)
                 putBoolean(AccountEditionFragment.ACCOUNT_HAS_PASSWORD_KEY, mAccountHasPassword)
             }
             setListener(this@JamiAccountSummaryFragment)
         }.show(parentFragmentManager, TAG)
     }
 
-    override fun onRegisterName(name: String, password: String?) {
-        presenter.registerName(name, password)
+    override fun onRegisterName(name: String) {
+        BiometricHelper.startAccountAuthentication(this, mAccount!!) { scheme: String, password: String ->
+            presenter.registerName(name, scheme, password)
+        }
     }
 
     override fun showExportingProgressDialog() {
@@ -399,18 +399,42 @@ class JamiAccountSummaryFragment :
     }
 
     private fun onBackupAccount() {
-        BackupAccountDialog().apply {
-            arguments = Bundle().apply {
-                putString(AccountEditionFragment.ACCOUNT_ID_KEY, mAccountId)
-            }
-            setListener(this@JamiAccountSummaryFragment)
-        }.show(parentFragmentManager, FRAGMENT_DIALOG_BACKUP)
+        val account = mAccount ?: return
+        BiometricHelper.startAccountAuthentication(this, account) { scheme: String, password: String ->
+            onUnlockAccount(account.accountId, scheme, password)
+        }
+    }
+
+    fun onBiometricChangeAsked() {
+        val accountId = mAccount?.accountId ?: return
+        val hasBiometric = BiometricHelper.loadAccountKey(requireContext(), accountId) != null
+        Log.w(TAG, "hasBiometric: $hasBiometric")
+        if (hasBiometric) {
+            BiometricHelper.deleteAccountKey(requireContext(), accountId)
+            mAccountService.refreshAccount(accountId)
+        } else {
+            ConfirmBiometricDialog().apply {
+                setListener { password: String ->
+                    Log.w(TAG, "ConfirmBiometricDialog: $password")
+                    BiometricHelper.BiometricEnroll(
+                        this@JamiAccountSummaryFragment,
+                        password,
+                        mAccountService.getObservableAccount(accountId),
+                        mAccountService
+                    ) { bi ->
+                        Log.w(TAG, "Biometric enrollment: $bi")
+                        mAccountService.refreshAccount(accountId)
+                    }
+                        .start()
+                }
+            }.show(parentFragmentManager, FRAGMENT_DIALOG_PASSWORD)
+        }
     }
 
     fun onPasswordChangeAsked() {
         ChangePasswordDialog().apply {
             arguments = Bundle().apply {
-                putString(AccountEditionFragment.ACCOUNT_ID_KEY, mAccountId)
+                putString(AccountEditionFragment.ACCOUNT_ID_KEY, mAccount?.accountId)
                 putBoolean(AccountEditionFragment.ACCOUNT_HAS_PASSWORD_KEY, mAccountHasPassword)
             }
             setListener(this@JamiAccountSummaryFragment)
@@ -421,14 +445,14 @@ class JamiAccountSummaryFragment :
         presenter.changePassword(oldPassword, newPassword)
     }
 
-    override fun onUnlockAccount(accountId: String, password: String) {
+    override fun onUnlockAccount(accountId: String, scheme: String, password: String) {
         val context = requireContext()
         val cacheDir = File(AndroidFileUtils.getTempShareDir(context), "archives")
         cacheDir.mkdirs()
         if (!cacheDir.canWrite()) Log.w(TAG, "Can't write to: $cacheDir")
         val dest = File(cacheDir, mBestName)
         if (dest.exists()) dest.delete()
-        presenter.downloadAccountsArchive(dest, password)
+        presenter.downloadAccountsArchive(dest, scheme, password)
     }
 
     override fun gotToImageCapture() {
@@ -650,15 +674,18 @@ class JamiAccountSummaryFragment :
             changeFragment(fragment, fragmentTag)
     }
 
-    override fun onConfirmRevocation(deviceId: String, password: String) {
-        presenter.revokeDevice(deviceId, password)
+    override fun onConfirmRevocation(deviceId: String) {
+        val account = mAccount ?: return
+        BiometricHelper.startAccountAuthentication(this, account) { scheme: String, password: String ->
+            onUnlockAccount(account.accountId, scheme, password)
+        }
     }
 
     override fun onDeviceRevocationAsked(deviceId: String) {
         ConfirmRevocationDialog().apply {
             arguments = Bundle().apply {
                 putString(ConfirmRevocationDialog.DEVICEID_KEY, deviceId)
-                putBoolean(ConfirmRevocationDialog.HAS_PASSWORD_KEY, mAccountHasPassword)
+                putBoolean(ConfirmRevocationDialog.HAS_PASSWORD_KEY, false)
             }
             setListener(this@JamiAccountSummaryFragment)
         }.show(parentFragmentManager, FRAGMENT_DIALOG_REVOCATION)

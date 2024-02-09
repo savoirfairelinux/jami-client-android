@@ -45,9 +45,9 @@ class JamiAccountSummaryPresenter @Inject constructor(
 ) : RootPresenter<JamiAccountSummaryView>() {
     private var mAccountID: String? = null
 
-    fun registerName(name: String, password: String?) {
+    fun registerName(name: String, scheme: String, password: String) {
         val account = mAccountService.getAccount(mAccountID) ?: return
-        mAccountService.registerName(account, password, name)
+        mAccountService.registerName(account, name, scheme, password)
         //view?.accountChanged(account, a.second)
     }
 
@@ -104,10 +104,10 @@ class JamiAccountSummaryPresenter @Inject constructor(
             return account.deviceName
         }
 
-    fun downloadAccountsArchive(dest: File, password: String?) {
+    fun downloadAccountsArchive(dest: File, scheme: String, password: String?) {
         view?.showExportingProgressDialog()
         mCompositeDisposable.add(
-            mAccountService.exportToFile(mAccountID!!, dest.absolutePath, password!!)
+            mAccountService.exportToFile(mAccountID!!, dest.absolutePath, scheme, password!!)
                 .observeOn(mUiScheduler)
                 .subscribe({ view?.displayCompleteArchive(dest) })
                 { view?.passwordChangeEnded(false) })
@@ -186,10 +186,10 @@ class JamiAccountSummaryPresenter @Inject constructor(
         view?.goToPlugin(mAccountID!!)
     }
 
-    fun revokeDevice(deviceId: String?, password: String?) {
+    fun revokeDevice(deviceId: String, scheme: String, password: String) {
         view?.showRevokingProgressDialog()
         mCompositeDisposable.add(mAccountService
-            .revokeDevice(mAccountID!!, password!!, deviceId!!)
+            .revokeDevice(mAccountID!!, deviceId, scheme, password)
             .observeOn(mUiScheduler)
             .subscribe { result: Int ->
                 val account = mAccountService.getAccount(mAccountID)!!

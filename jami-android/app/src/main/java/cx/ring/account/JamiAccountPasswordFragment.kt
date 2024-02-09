@@ -1,19 +1,18 @@
 /*
- * Copyright (C) 2004-2023 Savoir-faire Linux Inc.
+ *  Copyright (C) 2004-2023 Savoir-faire Linux Inc.
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 3 of the License, or
- * (at your option) any later version.
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *  GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 package cx.ring.account
 
@@ -28,7 +27,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import android.widget.CompoundButton
 import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import cx.ring.R
@@ -38,7 +36,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import net.jami.account.JamiAccountCreationPresenter
 import net.jami.account.JamiAccountCreationView
 import net.jami.account.JamiAccountCreationView.UsernameAvailabilityStatus
-import net.jami.model.AccountCreationModel
 
 @AndroidEntryPoint
 class JamiAccountPasswordFragment : BaseSupportFragment<JamiAccountCreationPresenter, JamiAccountCreationView>(),
@@ -81,12 +78,6 @@ class JamiAccountPasswordFragment : BaseSupportFragment<JamiAccountCreationPrese
 
                 override fun afterTextChanged(s: Editable) {}
             })
-            ringPasswordRepeat.setOnEditorActionListener { v: TextView?, actionId: Int, event: KeyEvent? ->
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    presenter.createAccount()
-                }
-                false
-            }
             ringPasswordRepeat.setOnEditorActionListener { v: TextView, actionId: Int, event: KeyEvent? ->
                 if (actionId == EditorInfo.IME_ACTION_DONE && binding!!.createAccount.isEnabled) {
                     val inputMethodManager = v.context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager?

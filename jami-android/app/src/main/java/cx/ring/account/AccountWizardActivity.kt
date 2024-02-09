@@ -17,6 +17,7 @@
 package cx.ring.account
 
 import android.Manifest
+import android.app.Activity
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Build
@@ -35,6 +36,7 @@ import cx.ring.fragments.AccountMigrationFragment
 import cx.ring.fragments.SIPAccountCreationFragment
 import cx.ring.mvp.BaseActivity
 import cx.ring.services.VCardServiceImpl
+import cx.ring.utils.BiometricHelper
 import dagger.hilt.android.AndroidEntryPoint
 import ezvcard.VCard
 import io.reactivex.rxjava3.core.Single
@@ -51,6 +53,7 @@ class AccountWizardActivity : BaseActivity<AccountWizardPresenter>(), AccountWiz
     private var mProgress: AlertDialog? = null
     private var mAccountType: String? = null
     private var mAlertDialog: AlertDialog? = null
+    private lateinit var biometricEnroll: BiometricHelper.BiometricEnroll
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -99,7 +102,19 @@ class AccountWizardActivity : BaseActivity<AccountWizardPresenter>(), AccountWiz
             alertDialog.dismiss()
             mAlertDialog = null
         }
+        biometricEnroll.dispose()
         super.onDestroy()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == BiometricHelper.REQUEST_CODE_ENROLL) {
+            if (resultCode == Activity.RESULT_OK) {
+                biometricEnroll.start()
+            } else {
+                doGoToProfileCreation()
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun saveProfile(account: Account): Single<VCard> {
@@ -141,6 +156,21 @@ class AccountWizardActivity : BaseActivity<AccountWizardPresenter>(), AccountWiz
     }
 
     override fun goToProfileCreation() {
+        val fragmentManager = supportFragmentManager
+        val fragment = fragmentManager.fragments.firstOrNull() ?: return
+        val model: AccountCreationViewModel by viewModels()
+        if (model.model.managementServer.isNullOrBlank()) {
+            biometricEnroll = BiometricHelper.BiometricEnroll(fragment, model.model.password, model.model.accountObservable!!, presenter.mAccountService) { info ->
+                model.model.biometricInfo = info
+                doGoToProfileCreation()
+            }
+            biometricEnroll.start()
+        } else {
+            doGoToProfileCreation()
+        }
+    }
+
+    private fun doGoToProfileCreation() {
         val fragments = supportFragmentManager.fragments
         if (fragments.size > 0) {
             val fragment = fragments[0]
@@ -231,17 +261,25 @@ class AccountWizardActivity : BaseActivity<AccountWizardPresenter>(), AccountWiz
         if (mAlertDialog != null && mAlertDialog!!.isShowing) {
             return
         }
-        requestPermissions(arrayOf(Manifest.permission.POST_NOTIFICATIONS), REQUEST_PERMISSION_NOTIF)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            requestPermissions(arrayOf(Manifest.permission.POST_NOTIFICATIONS), REQUEST_PERMISSION_NOTIF)
+        } else {
+            finishCreation()
+        }
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        if (requestCode == REQUEST_PERMISSION_NOTIF) {
-            setResult(RESULT_OK, Intent())
-            //unlock the screen orientation
-            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR
-            presenter.successDialogClosed()
-        } else
+        if (requestCode == REQUEST_PERMISSION_NOTIF)
+            finishCreation()
+        else
             super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
+
+    private fun finishCreation() {
+        setResult(RESULT_OK, Intent())
+        //unlock the screen orientation
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR
+        presenter.successDialogClosed()
     }
 
     fun profileCreated(saveProfile: Boolean) {
