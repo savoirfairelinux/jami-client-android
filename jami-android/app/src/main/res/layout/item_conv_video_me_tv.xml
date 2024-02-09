@@ -29,12 +29,13 @@
     tools:background="@color/tv_contact_background">
 
     <RelativeLayout
+        android:id="@+id/imageLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clipChildren="false"
         android:clipToPadding="false"
         android:paddingStart="72dp"
-        android:paddingEnd="2dp">
+        android:paddingEnd="0dp">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/video_frame"
@@ -42,9 +43,12 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="24dp"
-            android:foreground="@drawable/baseline_play_arrow_24"
+            android:contentDescription="@string/video_content_description_outgoing"
+            android:foreground="@drawable/video_bg_play_arrow"
             android:foregroundGravity="center"
-            app:cardCornerRadius="16dp">
+            android:minWidth="@dimen/conversation_avatar_size"
+            android:minHeight="@dimen/conversation_avatar_size"
+            app:cardCornerRadius="@dimen/conversation_message_radius">
 
             <TextureView
                 android:id="@+id/video"
@@ -66,17 +70,22 @@
             app:tint="@color/grey_500" />
 
         <TextView
-            android:id="@+id/msg_details_txt"
+            android:id="@+id/file_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/video_frame"
+            android:layout_alignStart="@id/video_frame"
             android:layout_alignEnd="@id/video_frame"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="@dimen/message_details_margin"
-            android:singleLine="true"
-            android:textColor="@color/conversation_secondary_background"
-            android:textSize="12sp"
-            tools:text="@string/time_just_now" />
+            android:layout_alignBottom="@id/video_frame"
+            android:background="@drawable/background_item_conv_image_time"
+            android:elevation="2dp"
+            android:gravity="end"
+            android:maxLines="1"
+            android:paddingHorizontal="8dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="4dp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/tv_conversation_default_text_size"
+            tools:text="11:36am" />
 
     </RelativeLayout>
 
@@ -87,7 +96,7 @@
         android:paddingTop="4dp"
         android:paddingBottom="@dimen/padding_small"
         android:textColor="@color/conversation_secondary_background"
-        android:textSize="14sp"
+        android:textSize="@dimen/tv_conversation_default_text_size"
         android:visibility="gone"
         tools:text="@string/time_just_now"
         tools:visibility="visible" />

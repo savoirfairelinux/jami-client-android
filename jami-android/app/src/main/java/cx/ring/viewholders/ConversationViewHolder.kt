@@ -234,7 +234,6 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
             MessageType.OUTGOING_VIDEO -> {
                 mLayout = v.findViewById(R.id.video_frame)
                 mAnswerLayout = v.findViewById(R.id.imageLayout)
-                mMsgDetailTxt = v.findViewById(R.id.msg_details_txt)
                 mMsgDetailTxtPerm = v.findViewById(R.id.msg_details_txt_perm)
                 primaryClickableView = video
             }
