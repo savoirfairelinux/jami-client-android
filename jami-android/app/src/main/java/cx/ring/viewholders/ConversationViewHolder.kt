@@ -217,7 +217,6 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
             MessageType.OUTGOING_IMAGE -> {
                 mAnswerLayout = v.findViewById(R.id.imageLayout)
                 mMsgDetailTxtPerm = v.findViewById(R.id.msg_details_txt_perm)
-                mMsgDetailTxt = v.findViewById(R.id.msg_details_txt)
                 primaryClickableView = mImage
             }
             MessageType.INCOMING_AUDIO,

@@ -34,69 +34,62 @@
         android:layout_height="wrap_content"
         android:clipChildren="false"
         android:clipToPadding="false"
+        android:minWidth="200dp"
         android:paddingStart="72dp"
         android:paddingEnd="0dp">
 
         <LinearLayout
+            android:id="@+id/imageLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:clipChildren="false"
-            android:clipToPadding="false"
             android:gravity="end"
+            android:minHeight="@dimen/conversation_avatar_size"
             android:orientation="vertical">
 
             <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:clipChildren="false"
-                android:clipToPadding="false"
-                android:minWidth="200dp">
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="180dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/conversation_me_margin_end"
+                    android:adjustViewBounds="true"
+                    android:maxHeight="200dp"
+                    android:contentDescription="@string/content_description_image_sent"
+                    android:minWidth="@dimen/conversation_avatar_size"
+                    android:minHeight="@dimen/conversation_avatar_size"
+                    android:transitionName="picture"
+                    tools:src="@drawable/ic_jami" />
 
                 <cx.ring.views.MessageStatusView
                     android:id="@+id/status_icon"
                     android:layout_width="14dp"
                     android:layout_height="14dp"
-                    android:layout_alignBottom="@id/imageLayout"
+                    android:layout_alignBottom="@id/image"
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="5dp"
                     app:tint="@color/grey_500" />
 
                 <TextView
-                    android:id="@+id/msg_details_txt"
+                    android:id="@+id/file_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/imageLayout"
-                    android:layout_alignEnd="@id/imageLayout"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="@dimen/conversation_message_radius"
-                    android:singleLine="true"
-                    android:textColor="@color/conversation_secondary_background"
-                    android:textSize="12sp"
-                    tools:text="Tue" />
+                    android:layout_alignStart="@id/image"
+                    android:layout_alignEnd="@id/image"
+                    android:layout_alignBottom="@id/image"
+                    android:background="@drawable/background_item_conv_image_time"
+                    android:gravity="end"
+                    android:paddingHorizontal="8dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="4dp"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/tv_conversation_default_text_size"
+                    tools:text="11:36am" />
 
-                <LinearLayout
-                    android:id="@+id/imageLayout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginEnd="24dp"
-                    android:gravity="center_vertical"
-                    android:minHeight="@dimen/conversation_avatar_size">
-
-                    <ImageView
-                        android:id="@+id/image"
-                        android:layout_width="wrap_content"
-                        android:layout_height="180dp"
-                        android:adjustViewBounds="true"
-                        android:maxHeight="200dp"
-                        android:minWidth="@dimen/conversation_avatar_size"
-                        android:minHeight="@dimen/conversation_avatar_size"
-                        android:transitionName="picture"
-                        tools:src="@drawable/ic_jami" />
-
-                </LinearLayout>
             </RelativeLayout>
         </LinearLayout>
     </RelativeLayout>
@@ -108,7 +101,7 @@
         android:paddingTop="4dp"
         android:paddingBottom="@dimen/padding_small"
         android:textColor="@color/conversation_secondary_background"
-        android:textSize="14sp"
+        android:textSize="@dimen/tv_conversation_default_text_size"
         android:visibility="gone"
         tools:text="@string/time_just_now"
         tools:visibility="visible" />

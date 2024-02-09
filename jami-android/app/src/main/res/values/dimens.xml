@@ -147,6 +147,7 @@ along with this program; if not, write to the Free Software
     <dimen name="conversation_text_size_small">12sp</dimen>
     <dimen name="conversation_reply_overlap">-6.5dp</dimen>
     <dimen name="tv_conversation_contact_event">14sp</dimen>
+    <dimen name="tv_conversation_default_text_size">14sp</dimen>
 
     <!--Text size-->
     <dimen name="text_size_small">13sp</dimen>

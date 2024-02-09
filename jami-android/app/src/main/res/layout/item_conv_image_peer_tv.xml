@@ -28,45 +28,41 @@
     android:paddingBottom="@dimen/padding_xsmall"
     tools:background="@color/tv_contact_background">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clipChildren="false"
-        android:clipToPadding="false"
-        android:paddingStart="@dimen/padding_medium"
-        android:paddingEnd="@dimen/padding_large">
 
-        <ImageView
-            android:id="@+id/photo"
-            android:layout_width="@dimen/conversation_avatar_size"
-            android:layout_height="@dimen/conversation_avatar_size"
-            android:layout_alignBottom="@id/imageLayout"
-            android:layout_alignParentStart="true"
-            android:layout_marginEnd="@dimen/conditional_left_conversation_margin"
-            android:background="@null"
-            android:gravity="start"
-            android:scaleType="centerCrop" />
-
-        <TextView
-            android:id="@+id/msg_details_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/imageLayout"
-            android:layout_alignStart="@+id/imageLayout"
-            android:layout_marginStart="@dimen/message_details_margin"
-            android:layout_marginTop="10dp"
-            android:textColor="@color/conversation_secondary_background"
-            android:textSize="12sp"
-            tools:text="@string/time_just_now" />
-
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/imageLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
-            android:layout_toEndOf="@+id/photo"
-            android:gravity="center_vertical"
-            android:minHeight="@dimen/conversation_avatar_size">
+            android:paddingStart="@dimen/padding_medium"
+            android:paddingEnd="@dimen/padding_large"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/photo"
+                android:layout_width="@dimen/conversation_avatar_size"
+                android:layout_height="@dimen/conversation_avatar_size"
+                android:layout_alignBottom="@id/image"
+                android:layout_alignParentStart="true"
+                android:layout_marginEnd="@dimen/conditional_left_conversation_margin"
+                android:background="@null"
+                android:contentDescription="@null"
+                android:gravity="start"
+                tools:background="@color/teal_700"
+                android:scaleType="centerCrop" />
+
+            <TextView
+                android:id="@+id/peer_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@id/image"
+                android:ellipsize="end"
+                android:maxEms="8"
+                android:maxLines="1"
+                android:padding="4dp"
+                android:textColor="@color/msg_display_name"
+                android:textSize="@dimen/tv_conversation_default_text_size"
+                android:visibility="gone"
+                tools:text="Bob"
+                tools:visibility="visible" />
 
             <ImageView
                 android:id="@+id/image"
@@ -74,11 +70,31 @@
                 android:layout_height="180dp"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
+                android:layout_marginEnd="20dp"
+                android:layout_toEndOf="@id/photo"
+                android:contentDescription="@string/content_description_image_received"
+                android:layout_below="@id/peer_name"
                 android:transitionName="picture"
                 tools:src="@drawable/ic_jami" />
 
-        </LinearLayout>
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/file_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@id/image"
+                android:layout_alignEnd="@id/image"
+                android:layout_alignBottom="@id/image"
+                android:background="@drawable/background_item_conv_image_time"
+                android:gravity="end"
+                android:paddingHorizontal="8dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="4dp"
+                android:textColor="@color/white"
+                android:textSize="@dimen/tv_conversation_default_text_size"
+                tools:text="11:36am" />
+
+        </RelativeLayout>
+
 
     <TextView
         android:id="@+id/msg_details_txt_perm"
@@ -87,7 +103,7 @@
         android:paddingTop="4dp"
         android:paddingBottom="@dimen/padding_small"
         android:textColor="@color/conversation_secondary_background"
-        android:textSize="14sp"
+        android:textSize="@dimen/tv_conversation_default_text_size"
         android:visibility="gone"
         tools:text="@string/time_just_now"
         tools:visibility="visible" />
