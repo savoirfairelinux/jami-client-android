@@ -561,18 +561,29 @@ class TvConversationAdapter(
         } else {
             viewHolder.mMsgDetailTxtPerm?.visibility = View.GONE
         }
-        val contact = interaction.contact
+        val contact = interaction.contact ?:return
         if (interaction.isIncoming && presenter.isGroup()) {
             viewHolder.mAvatar?.let { avatar ->
                 avatar.setImageBitmap(null)
                 avatar.visibility = View.VISIBLE
-                if (contact != null)
-                    avatar.setImageDrawable(
-                        conversationFragment.getConversationAvatar(contact.primaryNumber)
-                    )
+                avatar.setImageDrawable(
+                    conversationFragment.getConversationAvatar(contact.primaryNumber)
+                )
+            }
+            val account = interaction.account?: return
+            // Show the name of the contact.
+            viewHolder.mPeerDisplayName?.apply {
+                visibility = View.VISIBLE
+                viewHolder.compositeDisposable.add(
+                    presenter.contactService
+                        .observeContact(account, contact, false)
+                        .observeOn(DeviceUtils.uiScheduler)
+                        .subscribe { text = it.displayName }
+                )
             }
         } else {
             viewHolder.mAvatar?.visibility = View.GONE
+            viewHolder.mPeerDisplayName?.visibility = View.GONE
         }
         val type = viewHolder.type.transferType
         val longPressView = viewHolder.itemView
