@@ -1365,6 +1365,7 @@ class TvConversationAdapter(
                     || (second.type !== Interaction.InteractionType.TEXT
                         && (second.type !== Interaction.InteractionType.CALL))
                     || first.contact != second.contact
+                    || (second.timestamp - first.timestamp) > (10 * DateUtils.MINUTE_IN_MILLIS)
 
         private fun isAlwaysSingleMsg(msg: Interaction): Boolean =
             (msg.type !== Interaction.InteractionType.TEXT
