@@ -28,7 +28,7 @@ interface JamiAccountSummaryView {
     fun showPasswordError()
     fun showGenericError()
     fun showPIN(pin: String)
-    fun passwordChangeEnded(ok: Boolean)
+    fun passwordChangeEnded(accountId: String, ok: Boolean, newPassword: String = "")
     fun displayCompleteArchive(dest: File)
     fun gotToImageCapture()
     fun askCameraPermission()
