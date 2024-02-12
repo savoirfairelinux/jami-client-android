@@ -83,7 +83,7 @@ Kasnije možeš da izmeniš svoj nalog</string>
   <string name="account_read_receipts_label">Omogući potvrde o čitanju</string>
   <string name="account_read_receipts_summary">Slanje i primanje potvrda koje pokazuju da je poruka prikazana.</string>
   <string name="account_call_settings_title">Podešavanje poziva</string>
-  <string name="account_dht_public_in_calls_label">Omogući dolazne pozive nepoznatih kontakata</string>
+  <string name="account_dht_public_in_calls_label">Dozvoli dolazne pozive od nepoznatih kontakata</string>
   <string name="account_registration_exp_label">Registracija ističe</string>
   <string name="account_local_interface_label">Lokalni intefejs</string>
   <string name="account_local_port_label">Lokalni port</string>
@@ -247,7 +247,23 @@ Kasnije možeš da izmeniš svoj nalog</string>
   <string name="account_device_this_indicator">Ovaj uređaj</string>
   <string name="account_disabled_indicator">onesposobljen</string>
   <!--Link a new device-->
+  <string name="account_link_prompt_pin_manually">Унеси PIN ручно</string>
+  <string name="qr_invalid">Није QR код за Јами аутентификацију</string>
+  <string name="content_description_checkbox">Твој Qr код је исправан</string>
   <string name="error_format_not_supported">Format nije podržan</string>
+  <string name="account_link_info">У новој Јами апликацији скенирајте QR код или ручно унесите PIN.</string>
   <string name="account_link_device_title">Povežite novi uređaj</string>
+  <string name="account_link_password">Овај налог је шифрован лозинком, унесите лозинку да бисте генерисали PIN код.</string>
+  <string name="account_link_generate_button">Генериши</string>
+  <string name="account_link_time_valid">PIN код ће бити неважећи: %1$s.</string>
+  <string name="account_link_device_info">Изабери „Повежи нови уређај“ из друге Јами апликације да бисте приказали QR код или PIN</string>
+  <string name="account_generate_export_device">На другом уређају</string>
+  <string name="account_generate_export_info">Инсталирај и покрените Јами, изаберите „Увези са другог уређаја“ и скенирајте QR код.</string>
+  <string name="content_description_qr_generated">Твој Qr код</string>
+  <string name="account_generate_export_invalid">PIN више није важећи.\n Унеси лозинку и генериши другу да бисте повезали нови уређај.</string>
+  <string name="account_generate_export_invalid_two">ПИН више није важећи.\n Генериши још један да бисте повезали нови уређај.</string>
+  <string name="help_pin_info">Попуните ако је налог шифрован лозинком</string>
+  <string name="connect_device_scanqr">Скенирај QR код</string>
+  <string name="connect_device_enterPIN">Или унесите PIN</string>
   <string name="account_link_device_button">Poveži</string>
 </resources>

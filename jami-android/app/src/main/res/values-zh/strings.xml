@@ -22,6 +22,7 @@
   <string name="developed_by">開發由</string>
   <string name="designed_by">設計由</string>
   <string name="ringtones_by">铃声来自</string>
+  <string name="credits_volunteers">还有为这个项目做出贡献的志愿者们！</string>
   <!--RingActivity-->
   <string name="error_no_network">无网络连接</string>
   <string name="error_account_offline">账户离线</string>
@@ -375,10 +376,21 @@
   <string name="bottomsheet_remove">离开群众</string>
   <!--JamiId-->
   <string name="jami_id_validate">注册用户名</string>
+  <string name="jami_id_available">用户名可用</string>
+  <string name="jami_id_not_available">此用户名不可用\n• 最多32字符\n• 允许使用的特殊字符：横杠（-），下划线（_）</string>
+  <string name="jami_id_info">• 最多32字符\n• 允许使用的特殊字符：破折号（-），下划线（_）</string>
   <string name="jami_id_looking_for_availability">正在尋找使用者名稱的可用性…</string>
   <string name="jami_id_choose_username">选择一个用户名</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">欢迎来到 Jami</string>
+  <string name="welcome_jami_description">分享您的 Jami 识别码，以便更方便地与您联系！</string>
   <!--Donation-->
+  <string name="donation_card_description">如果您喜欢使用 Jami 并相信我们的使命，您愿意捐款吗？</string>
+  <string name="donation_donate">捐助</string>
+  <string name="donation_setting_title">捐赠提醒</string>
+  <string name="donation_setting_description">禁用捐赠提醒</string>
   <!--Plugin-->
+  <string name="unable_to_load">无法加载 %1$s</string>
+  <string name="load_sucess">%1$s: 已启用</string>
+  <string name="unload_sucess">%1$s: 已禁用</string>
 </resources>
