@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "358163ec_c84b6db7",
+        "filename": "jami-android/app/src/main/java/cx/ring/account/AccountWizardActivity.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-02-12T20:55:27Z",
+      "side": 1,
+      "message": "unrelated to the patch",
+      "parentUuid": "9d180e3f_6b87e9d8",
+      "range": {
+        "startLine": 60,
+        "startChar": 57,
+        "endLine": 60,
+        "endChar": 65
+      },
+      "revId": "c60d50b802b3f99ca7a2342e41ff3222a7343504",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "222b9c90_92c8c35d",
         "filename": "jami-android/app/src/main/java/cx/ring/account/ConfirmBiometricDialog.kt",
         "patchSetId": 7
@@ -49,6 +73,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9f967ae4_fa60b048",
+        "filename": "jami-android/app/src/main/java/cx/ring/account/ConfirmBiometricDialog.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-02-12T20:55:27Z",
+      "side": 1,
+      "message": "to be done in another patch",
+      "parentUuid": "222b9c90_92c8c35d",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 27
+      },
+      "revId": "c60d50b802b3f99ca7a2342e41ff3222a7343504",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "988f050f_130967f3",
         "filename": "jami-android/app/src/main/java/cx/ring/utils/BiometricHelper.kt",
         "patchSetId": 7
@@ -60,6 +108,30 @@
       "writtenOn": "2024-02-08T15:15:00Z",
       "side": 1,
       "message": "Should at least say where those value are from for future changes.",
+      "range": {
+        "startLine": 76,
+        "startChar": 66,
+        "endLine": 78,
+        "endChar": 45
+      },
+      "revId": "c60d50b802b3f99ca7a2342e41ff3222a7343504",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b3c4fff4_c647ad78",
+        "filename": "jami-android/app/src/main/java/cx/ring/utils/BiometricHelper.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-02-12T20:55:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "988f050f_130967f3",
       "range": {
         "startLine": 76,
         "startChar": 66,
@@ -141,6 +213,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3a221389_d020dc3a",
+        "filename": "jami-android/app/src/main/java/cx/ring/utils/BiometricHelper.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-02-12T20:55:27Z",
+      "side": 1,
+      "message": "to be done",
+      "parentUuid": "3fe4773c_3cbe3886",
+      "range": {
+        "startLine": 112,
+        "startChar": 68,
+        "endLine": 112,
+        "endChar": 74
+      },
+      "revId": "c60d50b802b3f99ca7a2342e41ff3222a7343504",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c8b91583_891d999e",
         "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/model/AccountCreationModel.kt",
         "patchSetId": 7
@@ -175,6 +271,30 @@
       "writtenOn": "2024-02-08T15:15:00Z",
       "side": 1,
       "message": "2024",
+      "range": {
+        "startLine": 2,
+        "startChar": 21,
+        "endLine": 2,
+        "endChar": 30
+      },
+      "revId": "c60d50b802b3f99ca7a2342e41ff3222a7343504",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b902e9a_10af5297",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/model/BiometricInfo.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-02-12T20:55:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c9fa538_9e47b6a7",
       "range": {
         "startLine": 2,
         "startChar": 21,
