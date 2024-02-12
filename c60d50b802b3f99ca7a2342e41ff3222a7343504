@@ -48,6 +48,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e92de262_1869166f",
+        "filename": "jami-android/app/src/main/java/cx/ring/account/AccountWizardActivity.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-02-12T23:13:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "358163ec_c84b6db7",
+      "range": {
+        "startLine": 60,
+        "startChar": 57,
+        "endLine": 60,
+        "endChar": 65
+      },
+      "revId": "c60d50b802b3f99ca7a2342e41ff3222a7343504",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "222b9c90_92c8c35d",
@@ -85,6 +109,30 @@
       "side": 1,
       "message": "to be done in another patch",
       "parentUuid": "222b9c90_92c8c35d",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 27
+      },
+      "revId": "c60d50b802b3f99ca7a2342e41ff3222a7343504",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2dc0ce8f_e103bb25",
+        "filename": "jami-android/app/src/main/java/cx/ring/account/ConfirmBiometricDialog.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-02-12T23:13:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f967ae4_fa60b048",
       "range": {
         "startLine": 2,
         "startChar": 17,
