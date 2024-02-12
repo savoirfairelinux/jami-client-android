@@ -75,6 +75,10 @@ along with this program; if not, write to the Free Software
     <string name="account_password_summary">Manage your account password.</string>
     <string name="account_password_change_wait_message">Changing account password</string>
 
+    <string name="account_biometric_change">Disable biometric authentication</string>
+    <string name="account_biometric_set">Enable biometric authentication</string>
+    <string name="account_biometric_summary">Manage biometric authentication for your account.</string>
+
     <!-- Basic Details -->
     <string name="account_preferences_basic_tab">General</string>
     <string name="account_basic_category">Basic Settings</string>
