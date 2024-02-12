@@ -3,6 +3,7 @@ package cx.ring.views
 import android.content.Context
 import android.content.res.ColorStateList
 import android.text.Spanned
+import android.text.method.LinkMovementMethod
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.ViewGroup
@@ -21,6 +22,7 @@ import cx.ring.R
 class CustomMessageBubble(context: Context, attrs: AttributeSet?) : ViewGroup(context, attrs) {
 
     private val messageText = AppCompatTextView(context)
+        .apply { movementMethod = LinkMovementMethod.getInstance() }
     private val messageTime = TextView(context)
     private val messageEdited = TextView(context)
 

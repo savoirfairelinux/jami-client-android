@@ -1451,7 +1451,6 @@ class ConversationAdapter(
                     }) { e -> Log.e(TAG, "Can't load preview", e) })
             } else answerLayout?.visibility = View.GONE
         }
-//                msgTxt.movementMethod = LinkMovementMethod.getInstance()
 
         val endOfSeq =
             msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE
