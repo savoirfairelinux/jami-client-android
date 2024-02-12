@@ -43,6 +43,7 @@
   <!--History Fragment-->
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
+  <string name="invitation_card_title">Otrzymano zaproszenia</string>
   <plurals name="home_conferences_title">
     <item quantity="one">%d Rozmowa</item>
     <item quantity="few">%d Rozmowy</item>
@@ -50,7 +51,7 @@
     <item quantity="other">%d Rozmowy</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Szukaj po nazwie lub numerze telefonu...</string>
+  <string name="searchbar_hint">Wyszukaj po nazwie lub numerze telefonu...</string>
   <string name="choose_number">Wybierz numer</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -74,6 +75,7 @@
   <string name="notif_channel_background_service">Usługa w tle</string>
   <string name="notif_channel_background_service_descr">Pozwala na odbieranie połączeń i wiadomości w dowolnym czasie.</string>
   <string name="notif_group_calls">Rozmowy</string>
+  <string name="notif_inprogress_group_call">Rozmowa w toku</string>
   <string name="notif_background_service">Jami działa teraz w tle</string>
   <string name="notif_mark_as_read">Zaznacz jako przeczytane</string>
   <string name="notif_dismiss">Odrzuć</string>
@@ -100,6 +102,7 @@
   <string name="ongoing_call">Trwa połączenie</string>
   <string name="hist_in_call">Czas przychodzączego połączenia: %1$s</string>
   <string name="hist_out_call">Czas wychodzączego połączenia: %1$s</string>
+  <string name="call_duration">Połączenie trwało %s</string>
   <string name="start_error_title">Nie udało się uruchomić Jami!</string>
   <string name="start_error_mic_required">Jami wymaga zezwolenia na korzystanie z mikrofonu, by działać.</string>
   <string name="action_call_accept">Odbierz</string>
@@ -121,6 +124,7 @@
   <string name="write_a_message">Napisz wiadomość</string>
   <string name="scan_qr">Zeskanuj kod QR</string>
   <string name="qr_code">Kod QR</string>
+  <string name="new_swarm">Rozpocznij rozmowę grupową</string>
   <string name="ab_action_flipcamera">Zamień kamerę</string>
   <string name="ab_action_hidepreview">Ukryj podgląd</string>
   <string name="remote_recording">%s nagrywanie...</string>
@@ -136,6 +140,8 @@
   <string name="conversation_send_audio">Nagraj klip dźwiękowy</string>
   <string name="conversation_send_video">Nagraj klip wideo</string>
   <string name="conversation_share_location">Udostępnij lokalizację</string>
+  <string name="ongoing_group_call">Rozmowa w toku</string>
+  <string name="started_call">Rozpoczęto połączenie głosowe </string>
   <string name="in_reply_to">W odpowiedzi na</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Uprawnienia do aparatu</string>
@@ -203,9 +209,9 @@
   <string name="conversation_type_group">Grupa Swarm</string>
   <string name="conversation_contact_invited">Zaproszono %1$s</string>
   <string name="conversation_contact_added">%1$s dołączony</string>
-  <string name="conversation_contact_left">%1$ jest lewy</string>
-  <string name="conversation_contact_banned">%1$s został zakazany</string>
-  <string name="conversation_search_hint">Szukaj rozmowy</string>
+  <string name="conversation_contact_left">%1$s opuścił rozmowę</string>
+  <string name="conversation_contact_banned">%1$s został usunięty i zablokowany</string>
+  <string name="conversation_search_hint">Przeszukaj konwersację</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Dodać %1$s?</string>
   <string name="prompt_new_password">Nowe hasło</string>
@@ -347,17 +353,17 @@
   <string name="chat_plugins">Wtyczki czatu</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Podziel się</string>
-  <string name="bottomSheet_dialpad_btn">Wykładnik</string>
+  <string name="bottomSheet_dialpad_btn">Klawiatura numeryczna</string>
   <string name="bottomSheet_plugins_btn">Dodatki</string>
   <string name="bottomSheet_add_participants_btn">Dodaj</string>
   <string name="bottomSheet_change_camera_btn">Zmień</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>
-  <string name="bottomSheet_hangup_btn">Skończ rozmowę</string>
+  <string name="bottomSheet_hangup_btn">Zakończ rozmowę</string>
   <string name="bottomSheet_mute_microphone_btn">Mikro</string>
-  <string name="bottomSheet_sound_output_btn">Dźwięk</string>
+  <string name="bottomSheet_sound_output_btn">Dźwięki</string>
   <string name="bottomSheet_raiseHand_btn">Podnieś rękę</string>
   <string name="open_account_plugin_settings">Otwórz ustawienia wtyczki konta</string>
-  <string name="open_general_plugin_settings">Otwórz ustawienia wtyczki</string>
+  <string name="open_general_plugin_settings">Otwórz Ogólne Ustawienia Wtyczki</string>
   <string name="uninstall">Odinstaluj</string>
   <string name="reset">Zresetuj</string>
   <!--Swarm Detail-->
@@ -367,20 +373,34 @@
   <string name="tab_about">O programie</string>
   <string name="tab_members">Użytkownicy</string>
   <string name="tab_documetn">Dokumenty</string>
-  <string name="dialogtitle_title">Edytor Swarm tytuł</string>
-  <string name="dialogtitle_description">Wymienić opis plamy</string>
+  <string name="dialogtitle_title">Zedytuj tytuł Grupy</string>
+  <string name="dialogtitle_description">Zedytuj opis Grupy</string>
   <string name="dialog_hint_title">Tytuł</string>
   <string name="dialog_hint_description">Opis</string>
   <string name="picker_title">Wybierz kontakty</string>
   <string name="picker_btn">Wybierz kontakty</string>
   <string name="bottomsheet_contact">Skontaktuj się z Jami\n%1$s</string>
-  <string name="bottomsheet_remove">Wyprowadź z rodu</string>
+  <string name="bottomsheet_remove">Usuń z Grupy</string>
+  <string name="error_open_no_app_found">Nie znaleziono aplikacji zdolnej do obsługi tego typu pliku %1$s</string>
   <!--JamiId-->
+  <string name="jami_id_copy">Skopiuj Jamild</string>
+  <string name="jami_id_share">Udostępnij Jamild</string>
   <string name="jami_id_validate">Zarejestruj nazwę użytkownika</string>
+  <string name="jami_id_available">Nazwa użytkownika jest dostępna</string>
+  <string name="jami_id_not_available">Nazwa użytkownika nie jest dostępna\n• maksymalnie 32 znaki\n• Następujące specjalne znaki są dozwolone: myślnik (-), podkreślnik (_)</string>
+  <string name="jami_id_info">• maksymalnie 32 znaki\n• Następujące specjalne znaki są dozwolone: myślnik (-), podkreślnik (_)</string>
   <string name="jami_id_looking_for_availability">Sprawdzanie dostępności nazwy użytkownika...</string>
   <string name="jami_id_choose_username">Wybierz nazwę użytkownika</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Witaj w Jami</string>
+  <string name="welcome_jami_description">Udostępnij swój identyfikator Jami aby ułatwić skontaktowanie się z Tobą!</string>
   <!--Donation-->
+  <string name="donation_card_not_now">Nie w tej chwili</string>
+  <string name="donation_donate">Przekaż darowiznę</string>
+  <string name="donation_setting_title">Przypomnienie o darowiźnie </string>
+  <string name="donation_setting_description">Włącz przypomnienie o darowiźnie </string>
   <!--Plugin-->
+  <string name="unable_to_load">Nie można załadować %1$s</string>
+  <string name="load_sucess">%1$s jest włączone</string>
+  <string name="unload_sucess">%1$s: wyłączone </string>
 </resources>

@@ -22,6 +22,7 @@
   <string name="developed_by">Développé par</string>
   <string name="designed_by">Conçu par</string>
   <string name="ringtones_by">Sonneries d\'appels réalisées par </string>
+  <string name="credits_volunteers">Et les volontaires qui contribuent à ce projet !</string>
   <!--RingActivity-->
   <string name="error_no_network">Pas d\'accès au réseau</string>
   <string name="error_account_offline">Le compte est déconnecté</string>
@@ -126,7 +127,7 @@
   <string name="new_swarm">Démarrer un Swarm</string>
   <string name="ab_action_flipcamera">Changer de caméra</string>
   <string name="ab_action_hidepreview">Masquer l\'aperçu</string>
-  <string name="remote_recording">%s En cours d\'enregistrement...</string>
+  <string name="remote_recording">%s en cours d\'enregistrement...</string>
   <!--Text messages-->
   <string name="send_message">Envoyer le message</string>
   <string name="message_sending">Envoi du message</string>
@@ -140,6 +141,7 @@
   <string name="conversation_send_video">Enregistrer un message vidéo</string>
   <string name="conversation_share_location">Partager votre position</string>
   <string name="ongoing_group_call">Appel en cours</string>
+  <string name="started_call">a commencé un appel</string>
   <string name="in_reply_to">En réponse à</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Permission d\'accès à la caméra</string>
@@ -178,7 +180,7 @@
   <string name="conversation_action_remove_this_title">Supprimer ce contact ?</string>
   <string name="conversation_action_remove_this_message">Cela supprimera définitivement ce contact et l\'historique de la conversation.</string>
   <string name="conversation_action_copy_peer_number">Copier le numéro ou identifiant Ring</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s copié vers leclipboard</string>
+  <string name="conversation_action_copied_peer_number_clipboard">%1$s copié dans le presse-papier</string>
   <string name="conversation_action_select_peer_number">Choisir un numéro</string>
   <string name="conversation_action_block_this">Bloquer le contact</string>
   <string name="conversation_action_unblock_this">Débloquer le contact</string>
@@ -385,8 +387,8 @@
   <string name="jami_id_share">Partager votre JamiId</string>
   <string name="jami_id_validate">Enregistrer le nom d\'utilisateur</string>
   <string name="jami_id_available">Ce nom est disponible</string>
-  <string name="jami_id_not_available">Ce nom n\'est pas disponible\n• 32 caractères maximum\n• Caractères spéciaux autorisés: tiré (-), souligné (_)</string>
-  <string name="jami_id_info">• 32 caractères maximum\n• Caractères spéciaux autorisés: tiré (-), souligné (_)</string>
+  <string name="jami_id_not_available">Ce nom n\'est pas disponible\n• 32 caractères maximum\n• Caractères spéciaux autorisés: tiret (-), souligné (_)</string>
+  <string name="jami_id_info">• 32 caractères maximum\n• Caractères spéciaux autorisés: tiret (-), souligné (_)</string>
   <string name="jami_id_looking_for_availability">Vérification de la disponibilité…</string>
   <string name="jami_id_choose_username">Choisir un nom d\'utilisateur</string>
   <!--WelcomeJami-->

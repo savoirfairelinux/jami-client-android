@@ -5,49 +5,49 @@
   <string name="ic_advanced_menu">Napredna podešavanja</string>
   <string name="ic_blacklist_menu">Blokirani kontakti</string>
   <!--Strings related to account creation-->
-  <string name="add_ring_account_title">Додајте рачун</string>
+  <string name="add_ring_account_title">Dodaj nalog</string>
   <string name="add_sip_account_title">Dodaj SIP nalog</string>
-  <string name="ring_account_default_name">Jami naloga %1$s</string>
+  <string name="ring_account_default_name">Jami nalog %1$s</string>
   <string name="prompt_alias">Alias</string>
   <string name="prompt_hostname">Ime hosta</string>
   <string name="prompt_username">Korisničko ime</string>
-  <string name="prompt_password">Šifra</string>
+  <string name="prompt_password">Lozinka</string>
   <string name="action_create">Napravi nalog</string>
   <string name="action_create_short">Napravi</string>
   <string name="action_register">Registruj se</string>
   <string name="action_settings">Podešavanja</string>
   <string name="error_field_required">Ovo polje je neophodno</string>
   <string name="dialog_wait_create">Dodavanje naloga</string>
-  <string name="dialog_wait_create_details">Sačekajte dok se dodaje Vaš nalog...</string>
+  <string name="dialog_wait_create_details">Sačekaj dok se dodaje tvoj novi nalog...</string>
   <string name="dialog_wait_update">Ažuriranje naloga</string>
-  <string name="dialog_wait_update_details">Sačekajte dok se ažurira Vaš nalog...</string>
-  <string name="dialog_warn_ip2ip_account_title">Napravite prazan SIP nalog</string>
-  <string name="dialog_warn_ip2ip_account_message">Napravićete SIP nalog bez važećeg imena hosta.
-Moći ćete da upućujete i primate samo direktne ip pozive.
-Kasnije možete da uredite svoj nalog</string>
-  <string name="account_type_ip2ip">Ip nalog</string>
-  <string name="help_ring">Jami nalog vam omogućava da putem potpuno distribuirane mreže sigurno dosegnete ljude u ravnopravnoj mreži.</string>
-  <string name="help_sip_title">Dodajte Vaš SIP nalog</string>
-  <string name="help_sip">Podestite već postoječi SIP nalog</string>
+  <string name="dialog_wait_update_details">Sačekaj dok se ažurira tvoj nalog...</string>
+  <string name="dialog_warn_ip2ip_account_title">Napravi prazan SIP nalog?</string>
+  <string name="dialog_warn_ip2ip_account_message">Upravo ćeš kreirati SIP nalog bez važećeg imena hosta.
+Moći ćeš samo da upućuješ i primaš direktne IP pozive.
+Kasnije možeš da izmeniš svoj nalog</string>
+  <string name="account_type_ip2ip">IP nalog</string>
+  <string name="help_ring">Jami nalog ti omogućava da bezbedno dođeš do ljudi peer to peer preko potpuno distribuirane mreže.</string>
+  <string name="help_sip_title">Dodaj svoj SIP nalog</string>
+  <string name="help_sip">Podesi postojeći SIP nalog</string>
   <string name="create_sip_account">Dodaj SIP nalog</string>
   <!--Strings related to account deletion-->
-  <string name="account_delete_dialog_title">Izbrišite nalog?</string>
-  <string name="account_delete_dialog_message">Ova akcija je nepovratna</string>
+  <string name="account_delete_dialog_title">Izbriši nalog?</string>
+  <string name="account_delete_dialog_message">Ova akcija se ne može opozvati</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Nema registrovanog naloga</string>
   <string name="normal_accounts_titles">Nalozi</string>
   <string name="normal_devices_titles">Povezni uređaji</string>
   <string name="account_device_revoke">Opozvati uređaj</string>
-  <string name="account_device_revocation_success_title">Usprešno</string>
+  <string name="account_device_revocation_success_title">Uspešno</string>
   <string name="account_device_revocation_success">Uređaj je opozvan!</string>
   <string name="account_device_revocation_error_title">Ne može da se opozove uređaj</string>
-  <string name="account_device_revocation_wrong_password">Pogrešna šifra.</string>
+  <string name="account_device_revocation_wrong_password">Pogrešna lozinka.</string>
   <string name="account_device_revocation_unknown_device">Nepoznat uređaj.</string>
   <string name="account_device_revocation_error_unknown">Nepoznata greška.</string>
-  <string name="account_password_change">Promenite šifru</string>
-  <string name="account_password_set">Postavite šifru</string>
-  <string name="account_password_summary">Podesite šifru naloga</string>
-  <string name="account_password_change_wait_message">Promenite šifru naloga</string>
+  <string name="account_password_change">Promeni lozinku</string>
+  <string name="account_password_set">Postavi lozinku</string>
+  <string name="account_password_summary">Upravljaj lozinkom naloga.</string>
+  <string name="account_password_change_wait_message">Promena lozinke naloga</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Opšte</string>
   <string name="account_basic_category">Osnovna podešavanja</string>
@@ -55,11 +55,11 @@ Kasnije možete da uredite svoj nalog</string>
   <string name="account_hostname_label">Ime hosta</string>
   <string name="account_bootstrap_label">Bootstrap</string>
   <string name="account_username_label">Korisničko ime</string>
-  <string name="account_password_label">Šifra</string>
+  <string name="account_password_label">Lozinka</string>
   <string name="account_optionnal_category">Opciona podešavanja</string>
   <string name="account_useragent_label">Korisnički agent</string>
   <string name="account_autoanswer_label">Automatski odgovor</string>
-  <string name="account_rendezvous_label">Režimu sastanka</string>
+  <string name="account_rendezvous_label">Režim sastanka</string>
   <string name="account_rendezvous_summary">U režimu sastanka, dolazni pozivi će se dodavati u konferencijsku sobu.</string>
   <string name="account_upnp_label">Omogući UPnP</string>
   <string name="account_proxy_field">Proxy</string>
@@ -67,33 +67,34 @@ Kasnije možete da uredite svoj nalog</string>
   <string name="account_preference_plugin_tab">Dodaci</string>
   <!--Audio Details-->
   <string name="account_audio_label">Zvuk</string>
-  <string name="account_preferences_media_tab">Medija</string>
+  <string name="account_preferences_media_tab">Mediji</string>
   <string name="account_ringtone_label">Melodija zvona</string>
   <string name="account_ringtone_enabled_label">Aktiviraj melodiju zvona</string>
-  <string name="account_ringtone_path_label">Put melodiju zvona</string>
-  <string name="account_ringtone_custom_label">Koristite prilagođenu melodiju zvona</string>
-  <string name="account_ringtone_title">Izaberite melodiju zvona</string>
-  <string name="account_ringtone_summary">Izaberite melodiju zvona ili Vašu</string>
+  <string name="account_ringtone_path_label">Putanja melodije zvona</string>
+  <string name="account_ringtone_custom_label">Koristi prilagođenu melodiju zvona</string>
+  <string name="account_ringtone_title">Izaberi melodiju zvona</string>
+  <string name="account_ringtone_summary">Izaberi melodiju zvona ili ličnu melodiju</string>
   <!--Video Details-->
   <string name="account_video_label">Video</string>
   <string name="account_video_enable">Omogući video</string>
   <!--Advanced Details-->
-  <string name="account_preferences_advanced_tab">Napredna</string>
-  <string name="account_read_receipts_label">Омогућивање потврда за читање</string>
-  <string name="account_read_receipts_summary">Пошаљи и прими квитанте који указују на приказану поруку.</string>
+  <string name="account_preferences_advanced_tab">Napredno</string>
+  <string name="account_chat_settings_title">Podešavanja ćaskanja</string>
+  <string name="account_read_receipts_label">Omogući potvrde o čitanju</string>
+  <string name="account_read_receipts_summary">Slanje i primanje potvrda koje pokazuju da je poruka prikazana.</string>
   <string name="account_call_settings_title">Podešavanje poziva</string>
-  <string name="account_dht_public_in_calls_label">Omogućite dolazne pozive nepoznatih kontakata</string>
-  <string name="account_registration_exp_label">Itekla registracija</string>
+  <string name="account_dht_public_in_calls_label">Dozvoli dolazne pozive od nepoznatih kontakata</string>
+  <string name="account_registration_exp_label">Registracija ističe</string>
   <string name="account_local_interface_label">Lokalni intefejs</string>
   <string name="account_local_port_label">Lokalni port</string>
   <string name="account_stun_enable_label">Koristi Stun</string>
   <string name="account_stun_server_label">Stun server</string>
-  <string name="account_accept_files">Automatsko prihvati podatke</string>
+  <string name="account_accept_files">Automatski prihvatajte dolazne datoteke</string>
   <string name="account_conversation_settings_title">Podešavanje četa</string>
-  <string name="account_accept_files_max_size">Maksimalna veličina fajla za automatsko prihvatanje</string>
+  <string name="account_accept_files_max_size">Maksimalna veličina datoteke koju treba automatski prihvatiti</string>
   <string name="account_accept_files_never">Nikada ne prihvataj automatski</string>
   <string name="account_accept_files_always">Uvek prihvataj automatski</string>
-  <string name="size_mb">%1$dMB</string>
+  <string name="size_mb">%1$d MB</string>
   <string name="account_turn_enable_label">Koristi TURN</string>
   <string name="account_turn_server_label">TURN server</string>
   <string name="account_turn_username_label">TURN korisničko ime</string>
@@ -101,8 +102,8 @@ Kasnije možete da uredite svoj nalog</string>
   <string name="account_published_same_as_local_label">Objavljeno isto kao u lokalu</string>
   <string name="account_published_port_label">Objavljeni Port</string>
   <string name="account_published_address_label">Objavljena adresa</string>
-  <string name="disabled">Дисакција</string>
-  <string name="enabled">Увођен</string>
+  <string name="disabled">Onemogućeno</string>
+  <string name="enabled">Omogućeno</string>
   <string name="account_proxy_label">DHT proxy</string>
   <string name="account_proxy_enable_label">Koristi DHT proxy</string>
   <string name="account_proxy_server_label">DHT proxy adresa</string>
@@ -112,9 +113,9 @@ Kasnije možete da uredite svoj nalog</string>
   <string name="account_peer_discovery_enable_label">Omogući otkrivanje lokalnih parnjaka</string>
   <string name="account_peer_discovery_enable_summary">Poveži se sa drugim DHT čvorovima koji se oglašavaju na našoj lokalnoj mreži</string>
   <!--Security Details-->
-  <string name="account_credentials_label">Уверовања</string>
-  <string name="account_credentials_edit">Редактирање акредитација</string>
-  <string name="account_credentials_add">Додавање акредитива</string>
+  <string name="account_credentials_label">Akredativi</string>
+  <string name="account_credentials_edit">Uredite akreditive</string>
+  <string name="account_credentials_add">Dodaj akreditive</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Bezbednost</string>
   <string name="account_srtp_switch_label">Šifruj medijski strim (SRTP)</string>
@@ -122,7 +123,7 @@ Kasnije možete da uredite svoj nalog</string>
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Koristi TLS prenos</string>
   <string name="account_tls_port_label">Port za TLS slušaoca</string>
-  <string name="account_tls_certificate_list_label">Учињеница сертификације</string>
+  <string name="account_tls_certificate_list_label">Autoriteti za sertifikaciju</string>
   <string name="account_tls_certificate_file_label">Fajl sertifikata</string>
   <string name="account_tls_private_key_file_label">Fajl sa privatnim ključem</string>
   <string name="account_tls_password_label">Lozinka za privatni ključ</string>
@@ -246,7 +247,23 @@ Kasnije možete da uredite svoj nalog</string>
   <string name="account_device_this_indicator">Ovaj uređaj</string>
   <string name="account_disabled_indicator">onesposobljen</string>
   <!--Link a new device-->
+  <string name="account_link_prompt_pin_manually">Унеси PIN ручно</string>
+  <string name="qr_invalid">Није QR код за Јами аутентификацију</string>
+  <string name="content_description_checkbox">Твој Qr код је исправан</string>
   <string name="error_format_not_supported">Format nije podržan</string>
+  <string name="account_link_info">У новој Јами апликацији скенирајте QR код или ручно унесите PIN.</string>
   <string name="account_link_device_title">Povežite novi uređaj</string>
+  <string name="account_link_password">Овај налог је шифрован лозинком, унесите лозинку да бисте генерисали PIN код.</string>
+  <string name="account_link_generate_button">Генериши</string>
+  <string name="account_link_time_valid">PIN код ће бити неважећи: %1$s.</string>
+  <string name="account_link_device_info">Изабери „Повежи нови уређај“ из друге Јами апликације да бисте приказали QR код или PIN</string>
+  <string name="account_generate_export_device">На другом уређају</string>
+  <string name="account_generate_export_info">Инсталирај и покрените Јами, изаберите „Увези са другог уређаја“ и скенирајте QR код.</string>
+  <string name="content_description_qr_generated">Твој Qr код</string>
+  <string name="account_generate_export_invalid">PIN више није важећи.\n Унеси лозинку и генериши другу да бисте повезали нови уређај.</string>
+  <string name="account_generate_export_invalid_two">ПИН више није важећи.\n Генериши још један да бисте повезали нови уређај.</string>
+  <string name="help_pin_info">Попуните ако је налог шифрован лозинком</string>
+  <string name="connect_device_scanqr">Скенирај QR код</string>
+  <string name="connect_device_enterPIN">Или унесите PIN</string>
   <string name="account_link_device_button">Poveži</string>
 </resources>
