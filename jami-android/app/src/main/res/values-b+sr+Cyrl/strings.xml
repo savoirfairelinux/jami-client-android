@@ -127,7 +127,7 @@
   <string name="new_swarm">Покрени рој</string>
   <string name="ab_action_flipcamera">Обрни камеру</string>
   <string name="ab_action_hidepreview">Сакриј преглед</string>
-  <string name="remote_recording">%s снимање…</string>
+  <string name="remote_recording">%s снима…</string>
   <!--Text messages-->
   <string name="send_message">Пошаљи поруку</string>
   <string name="message_sending">Слање поруке…</string>
@@ -370,7 +370,7 @@
   <string name="rename_btn">Потврди</string>
   <string name="rename_error">не може бити празно</string>
   <string name="swarm_description">Додај опис</string>
-  <string name="tab_about">О</string>
+  <string name="tab_about">О контакту</string>
   <string name="tab_members">Чланови</string>
   <string name="tab_documetn">Документи</string>
   <string name="dialogtitle_title">Уреди назив групе</string>

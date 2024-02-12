@@ -127,7 +127,7 @@
   <string name="new_swarm">Pokreni roj</string>
   <string name="ab_action_flipcamera">Obrni kameru</string>
   <string name="ab_action_hidepreview">Sakrij pregled</string>
-  <string name="remote_recording">%ssnimanje...</string>
+  <string name="remote_recording">%ssnima...</string>
   <!--Text messages-->
   <string name="send_message">Pošalji poruku</string>
   <string name="message_sending">Slanje poruke...</string>

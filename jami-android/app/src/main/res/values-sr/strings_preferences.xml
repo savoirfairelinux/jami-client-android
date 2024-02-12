@@ -66,6 +66,9 @@
   <string name="plugin_install_failure">Не успео да се инсталира плагин: <b>%1$s</b></string>
   <string name="plugin_recent_version_exception">Имате најновију верзију: <b>%1$s</b></string>
   <string name="plugin_same_version_exception">Уставили сте ту сличну верзију <b>%1$s</b></string>
+  <string name="plugin_invalid_signature"><b>%1$s</b> има неважећи потпис</string>
+  <string name="plugin_invalid_authority">Не могу да потврдим овлашћење за: <b>%1$s</b></string>
+  <string name="plugin_invalid_format">Неважећи формат додатка: <b>%1$s</b></string>
   <string name="plugin_force_install">присиљава \ n инсталирање</string>
   <string name="plugin_path_image_add">Додајте нову слику</string>
 </resources>
