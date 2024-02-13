@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b30f764f_36c8904c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2024-02-13T13:58:18Z",
+      "side": 1,
+      "message": "e: file:///home/amarok/Projects/jami-client-android/jami-android/app/src/main/java/cx/ring/fragments/LinkDeviceFragment.kt:76:33 Cannot access \u0027startBiometricLogin\u0027: it is private in \u0027BiometricHelper\u0027",
+      "range": {
+        "startLine": 7,
+        "startChar": 22,
+        "endLine": 7,
+        "endChar": 36
+      },
+      "revId": "f729834ace0036b136b2c06d853e4b89306140ab",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
