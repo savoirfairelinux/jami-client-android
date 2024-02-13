@@ -213,6 +213,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2c77ebc0_0ca51398",
+        "filename": "jami-android/app/src/main/java/cx/ring/utils/BiometricHelper.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2024-02-13T20:13:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4348752_b7e56bb5",
+      "range": {
+        "startLine": 92,
+        "startChar": 30,
+        "endLine": 92,
+        "endChar": 34
+      },
+      "revId": "c60d50b802b3f99ca7a2342e41ff3222a7343504",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "af9ae58e_35e2ee65",
