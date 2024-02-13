@@ -88,15 +88,15 @@ class ConfirmRevocationDialog : DialogFragment() {
 
     private fun validate(): Boolean {
         if (checkInput() && mListener != null) {
-            val password = binding!!.passwordTxt.text.toString()
-            mListener!!.onConfirmRevocation(mDeviceId!!, password)
+            //val password = binding!!.passwordTxt.text.toString()
+            mListener!!.onConfirmRevocation(mDeviceId!!)
             return true
         }
         return false
     }
 
     interface ConfirmRevocationListener {
-        fun onConfirmRevocation(deviceId: String, password: String)
+        fun onConfirmRevocation(deviceId: String)
     }
 
     companion object {

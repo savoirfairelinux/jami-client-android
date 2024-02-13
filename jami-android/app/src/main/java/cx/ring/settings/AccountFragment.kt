@@ -24,6 +24,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver.OnScrollChangedListener
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.R
@@ -31,6 +32,7 @@ import cx.ring.account.AccountEditionFragment
 import cx.ring.account.JamiAccountSummaryFragment
 import cx.ring.client.HomeActivity
 import cx.ring.databinding.FragAccountBinding
+import cx.ring.utils.BiometricHelper
 import cx.ring.utils.DeviceUtils
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -50,6 +52,7 @@ class AccountFragment : Fragment(), OnScrollChangedListener {
         FragAccountBinding.inflate(inflater, container, false).apply {
             scrollview.viewTreeObserver.addOnScrollChangedListener(this@AccountFragment)
             settingsChangePassword.setOnClickListener { (parentFragment as JamiAccountSummaryFragment).onPasswordChangeAsked() }
+            settingsBiometric.setOnClickListener { (parentFragment as JamiAccountSummaryFragment).onBiometricChangeAsked() }
             settingsExport.setOnClickListener { (parentFragment as JamiAccountSummaryFragment).onClickExport() }
             mBinding = this
         }.root
@@ -63,18 +66,23 @@ class AccountFragment : Fragment(), OnScrollChangedListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setHasOptionsMenu(true)
         val accountId = requireArguments().getString(AccountEditionFragment.ACCOUNT_ID_KEY)!!
-        mDisposable.add(mAccountService.getAccountSingle(accountId)
+        mDisposable.add(mAccountService.getObservableAccount(accountId)
             .observeOn(DeviceUtils.uiScheduler)
             .subscribe({ account: Account ->
-                mBinding?.let { binding ->
-                    binding.settingsChangePassword.visibility = if (account.hasManager()) View.GONE else View.VISIBLE
-                    binding.settingsExport.visibility = if (account.hasManager()) View.GONE else View.VISIBLE
-                    binding.systemChangePasswordTitle.setText(if (account.hasPassword()) R.string.account_password_change else R.string.account_password_set)
-                    binding.settingsDeleteAccount.setOnClickListener { createDeleteDialog(account.accountId).show() }
-                    binding.settingsBlackList.setOnClickListener {
-                        val summaryFragment = parentFragment as JamiAccountSummaryFragment?
-                        summaryFragment?.goToBlackList(account.accountId)
-                    }
+                val binding = mBinding ?: return@subscribe
+                val hasPassword = account.hasPassword()
+                binding.settingsChangePassword.visibility = if (account.hasManager()) View.GONE else View.VISIBLE
+                binding.settingsExport.visibility = if (account.hasManager()) View.GONE else View.VISIBLE
+                binding.systemChangePasswordTitle.setText(if (hasPassword) R.string.account_password_change else R.string.account_password_set)
+                binding.settingsDeleteAccount.setOnClickListener { createDeleteDialog(account.accountId).show() }
+                binding.settingsBlackList.setOnClickListener {
+                    val summaryFragment = parentFragment as JamiAccountSummaryFragment?
+                    summaryFragment?.goToBlackList(account.accountId)
+                }
+                binding.settingsBiometric.isVisible = hasPassword
+                if (hasPassword) {
+                    val hasBiometrics = BiometricHelper.loadAccountKey(requireContext(), account.accountId) != null
+                    binding.systemBiometricTitle.text = getText(if (hasBiometrics) R.string.account_biometric_disable else R.string.account_biometric_set)
                 }
             }) {
                 val summaryFragment = parentFragment as JamiAccountSummaryFragment?
@@ -96,6 +104,7 @@ class AccountFragment : Fragment(), OnScrollChangedListener {
             .setTitle(R.string.account_delete_dialog_title)
             .setPositiveButton(R.string.menu_delete) { dialog: DialogInterface?, whichButton: Int ->
                 mAccountService.removeAccount(accountId)
+                BiometricHelper.deleteAccountKey(requireContext(), accountId)
                 (activity as HomeActivity?)?.onBackPressedDispatcher?.onBackPressed()
             }
             .setNegativeButton(android.R.string.cancel, null)
