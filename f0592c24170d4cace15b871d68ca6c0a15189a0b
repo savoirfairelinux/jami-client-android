@@ -87,6 +87,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "222c6116_b372ccd7",
+        "filename": "jami-android/app/src/main/java/cx/ring/account/ConfirmBiometricDialog.kt",
+        "patchSetId": 13
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2024-02-13T20:13:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc7b1cec_73ccfac6",
+      "range": {
+        "startLine": 2,
+        "startChar": 16,
+        "endLine": 2,
+        "endChar": 26
+      },
+      "revId": "f0592c24170d4cace15b871d68ca6c0a15189a0b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8359eaf6_a18e10d9",
