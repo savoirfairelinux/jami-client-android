@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fbfafc07_f9ba6c98",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-02-14T21:30:20Z",
+      "side": 1,
+      "message": "From account parameters, \"enable biometric authentification\" ask for your password. There you can put whatever password (good or wrong), it will always sucess.",
+      "revId": "d24ca37a09c5f9384a7bb212eb1f50f9f3539223",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "35910a1b_899003d9",
+        "filename": "jami-android/app/src/main/java/cx/ring/account/JamiAccountSummaryFragment.kt",
+        "patchSetId": 14
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-02-14T21:30:20Z",
+      "side": 1,
+      "message": "uneeded",
+      "range": {
+        "startLine": 243,
+        "startChar": 0,
+        "endLine": 243,
+        "endChar": 2
+      },
+      "revId": "d24ca37a09c5f9384a7bb212eb1f50f9f3539223",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
