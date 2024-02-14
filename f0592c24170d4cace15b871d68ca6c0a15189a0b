@@ -64,6 +64,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "98cd0577_6675e069",
+        "filename": "jami-android/app/build.gradle.kts",
+        "patchSetId": 13
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-02-14T04:35:36Z",
+      "side": 1,
+      "message": "Linking a new device doesn\u0027t support biometrics for now, because it requires the actual password.\n\nWith the new scheme in development, the new device would need to enter the password, and the user might choose to enroll to biometry on the new device at this point.\n\nBiometry currently supports these operations:\n- Archive export/backup\n- Name registration\n- Device revocation",
+      "parentUuid": "1ccde4e1_d5b727d0",
+      "range": {
+        "startLine": 118,
+        "startChar": 40,
+        "endLine": 118,
+        "endChar": 49
+      },
+      "revId": "f0592c24170d4cace15b871d68ca6c0a15189a0b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cc7b1cec_73ccfac6",
