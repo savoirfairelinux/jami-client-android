@@ -29,15 +29,6 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/credits_volunteers"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:layout_marginHorizontal="@dimen/padding_small"
-            android:layout_marginBottom="@dimen/padding_small"
-            android:textColor="@color/colorOnSurface" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="@string/ringtones_by"
             android:textColor="?attr/colorOnBackground"
             android:textSize="18sp"
@@ -49,6 +40,32 @@
             android:text="@string/credits_ringtones"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:layout_margin="@dimen/padding_small"
+            android:textColor="@color/colorOnSurface" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/special_thanks"
+            android:textColor="?attr/colorOnBackground"
+            android:textSize="18sp"
+            android:layout_margin="@dimen/padding_small" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/special_volunteers"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_marginTop="@dimen/padding_small"
+            android:layout_marginHorizontal="@dimen/padding_small"
+            android:textColor="@color/colorOnSurface" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/credits_volunteers"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_marginHorizontal="@dimen/padding_small"
+            android:layout_marginBottom="@dimen/padding_small"
             android:textColor="@color/colorOnSurface" />
 
 

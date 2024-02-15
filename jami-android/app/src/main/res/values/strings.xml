@@ -52,6 +52,7 @@ along with this program; if not, write to the Free Software
     <string name="developed_by">Developed by</string>
     <string name="designed_by">Designed by</string>
     <string name="ringtones_by">Ringtones by</string>
+    <string name="special_thanks">Special thanks to</string>
     <string name="credits_developer" translatable="false">
         Adrien Béraud
         \nAlbert Babí
@@ -126,6 +127,10 @@ along with this program; if not, write to the Free Software
         \nVsevolod Ivanov
         \nXavier Jouslin de Noray
         \nYang Wang</string>
+    <string name="special_volunteers" translatable="false">
+        Ovari
+        \nElys
+    </string>
     <string name="credits_volunteers">And the volunteers who contribute to this project!</string>
     <string name="credits_ringtones" translatable="false">Loïc Bogino</string>
 
