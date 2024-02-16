@@ -41,6 +41,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "01a0eaea_62fd0568",
+        "filename": "jami-android/app/build.gradle.kts",
+        "patchSetId": 13
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-02-16T19:27:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98eecace_bd5f4aa1",
+      "range": {
+        "startLine": 116,
+        "startChar": 37,
+        "endLine": 116,
+        "endChar": 43
+      },
+      "revId": "f0592c24170d4cace15b871d68ca6c0a15189a0b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1ccde4e1_d5b727d0",
@@ -148,6 +172,30 @@
       "writtenOn": "2024-02-13T20:13:12Z",
       "side": 1,
       "message": "remove if un-necessary",
+      "range": {
+        "startLine": 91,
+        "startChar": 27,
+        "endLine": 91,
+        "endChar": 28
+      },
+      "revId": "f0592c24170d4cace15b871d68ca6c0a15189a0b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "668cdc37_621090e2",
+        "filename": "jami-android/app/src/main/java/cx/ring/account/ConfirmRevocationDialog.kt",
+        "patchSetId": 13
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-02-16T19:27:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8359eaf6_a18e10d9",
       "range": {
         "startLine": 91,
         "startChar": 27,
