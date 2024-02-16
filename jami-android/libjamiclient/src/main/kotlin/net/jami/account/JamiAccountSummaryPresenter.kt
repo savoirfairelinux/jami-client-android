@@ -45,9 +45,9 @@ class JamiAccountSummaryPresenter @Inject constructor(
 ) : RootPresenter<JamiAccountSummaryView>() {
     private var mAccountID: String? = null
 
-    fun registerName(name: String, password: String?) {
+    fun registerName(name: String, scheme: String, password: String) {
         val account = mAccountService.getAccount(mAccountID) ?: return
-        mAccountService.registerName(account, password, name)
+        mAccountService.registerName(account, name, scheme, password)
         //view?.accountChanged(account, a.second)
     }
 
@@ -87,30 +87,25 @@ class JamiAccountSummaryPresenter @Inject constructor(
     }
 
     fun changePassword(oldPassword: String, newPassword: String) {
+        val accountId = mAccountID ?: return
         view?.showPasswordProgressDialog()
-        mCompositeDisposable.add(mAccountService.setAccountPassword(mAccountID!!, oldPassword, newPassword)
+        mCompositeDisposable.add(mAccountService.setAccountPassword(accountId, oldPassword, newPassword)
             .observeOn(mUiScheduler)
-            .subscribe({ view?.passwordChangeEnded(true) })
-            { view?.passwordChangeEnded(false) })
+            .subscribe({ view?.passwordChangeEnded(accountId, true, newPassword) })
+            { view?.passwordChangeEnded(accountId, false) })
     }
 
     val deviceName: String?
-        get() {
-            val account = mAccountService.getAccount(mAccountID)
-            if (account == null) {
-                Log.w(TAG, "account not found!")
-                return null
-            }
-            return account.deviceName
-        }
+        get() = mAccountService.getAccount(mAccountID)?.deviceName
 
-    fun downloadAccountsArchive(dest: File, password: String?) {
+    fun downloadAccountsArchive(dest: File, scheme: String, password: String?) {
+        val accountId = mAccountID ?: return
         view?.showExportingProgressDialog()
         mCompositeDisposable.add(
-            mAccountService.exportToFile(mAccountID!!, dest.absolutePath, password!!)
+            mAccountService.exportToFile(accountId, dest.absolutePath, scheme, password!!)
                 .observeOn(mUiScheduler)
                 .subscribe({ view?.displayCompleteArchive(dest) })
-                { view?.passwordChangeEnded(false) })
+                { view?.passwordChangeEnded(accountId, false) })
     }
 
     fun saveVCardFormattedName(username: String?) {
@@ -186,10 +181,10 @@ class JamiAccountSummaryPresenter @Inject constructor(
         view?.goToPlugin(mAccountID!!)
     }
 
-    fun revokeDevice(deviceId: String?, password: String?) {
+    fun revokeDevice(deviceId: String, scheme: String, password: String) {
         view?.showRevokingProgressDialog()
         mCompositeDisposable.add(mAccountService
-            .revokeDevice(mAccountID!!, password!!, deviceId!!)
+            .revokeDevice(mAccountID!!, deviceId, scheme, password)
             .observeOn(mUiScheduler)
             .subscribe { result: Int ->
                 val account = mAccountService.getAccount(mAccountID)!!
