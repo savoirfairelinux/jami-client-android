@@ -265,7 +265,7 @@ class AccountService(
             try {
                 val info: Map<String, String> = JamiService.conversationInfos(account.accountId, conversationId).toNativeFromUtf8()
                 //info.forEach { (key, value) -> Log.w(TAG, "conversation info: $key $value") }
-                val mode = if ("true" == info["syncing"]) Conversation.Mode.Syncing else Conversation.Mode.values()[info["mode"]?.toInt() ?: Conversation.Mode.Syncing.ordinal]
+                val mode = if ("true" == info["syncing"]) Conversation.Mode.Syncing else Conversation.Mode.entries[info["mode"]?.toInt() ?: Conversation.Mode.Syncing.ordinal]
                 val conversation = account.newSwarm(conversationId, mode)
                 conversation.setProfile(mVCardService.loadConversationProfile(info))
                 JamiService.getActiveCalls(account.accountId, conversationId)
@@ -625,13 +625,13 @@ class AccountService(
      * @param deviceId  id of the device to revoke
      * @param password  password of the account
      */
-    fun revokeDevice(accountId: String, password: String, deviceId: String): Single<Int> =
+    fun revokeDevice(accountId: String, deviceId: String, scheme: String, password: String): Single<Int> =
         mDeviceRevocationSubject
             .filter { r: DeviceRevocationResult -> r.accountId == accountId && r.deviceId == deviceId }
             .firstOrError()
             .map { r: DeviceRevocationResult -> r.code }
             .doOnSubscribe { mExecutor.execute {
-                JamiService.revokeDevice(accountId, deviceId, "password", password)
+                JamiService.revokeDevice(accountId, deviceId, scheme, password)
             }}
             .subscribeOn(Schedulers.io())
 
@@ -651,9 +651,10 @@ class AccountService(
         }
     }
 
-    fun exportToFile(accountId: String, absolutePath: String, password: String): Completable =
+    fun exportToFile(accountId: String, absolutePath: String, scheme: String, password: String): Completable =
         Completable.fromAction {
-            require(JamiService.exportToFile(accountId, absolutePath, "password", password)) { "Can't export archive" }
+            Log.w(TAG, "exportToFile() $accountId $absolutePath $scheme")
+            require(JamiService.exportToFile(accountId, absolutePath, scheme, password)) { "Can't export archive" }
         }.subscribeOn(scheduler)
 
     /**
@@ -787,21 +788,21 @@ class AccountService(
     /**
      * Registers a new name on the blockchain for the account
      */
-    fun registerName(account: Account, password: String?, name: String) {
+    fun registerName(account: Account, name: String, scheme: String, password: String) {
         if (account.registeringUsername) {
             Log.w(TAG, "Already trying to register username")
             return
         }
         account.registeringUsername = true
-        registerName(account.accountId, password ?: "", name)
+        registerName(account.accountId, name, scheme, password)
     }
 
     /**
      * Register a new name on the blockchain for the account Id
      */
-    fun registerName(account: String, password: String, name: String) {
+    fun registerName(account: String, name: String, scheme: String, password: String) {
         Log.i(TAG, "registerName()")
-        mExecutor.execute { JamiService.registerName(account, name, "password", password) }
+        mExecutor.execute { JamiService.registerName(account, name, scheme, password) }
     }
     /* contact requests */
     /**
@@ -1092,6 +1093,10 @@ class AccountService(
             }
         }
         mDeviceRevocationSubject.onNext(DeviceRevocationResult(accountId, device, state))
+    }
+
+    fun refreshAccount(accountId: String) {
+        getAccount(accountId)?.let { observableAccounts.onNext(it) }
     }
 
     fun setConversationPreferences(accountId: String, conversationId: String, info: Map<String, String>) {
@@ -1585,6 +1590,10 @@ class AccountService(
         private const val PIN_GENERATION_SUCCESS = 0
         private const val PIN_GENERATION_WRONG_PASSWORD = 1
         private const val PIN_GENERATION_NETWORK_ERROR = 2
+
+        const val ACCOUNT_SCHEME_NONE = ""
+        const val ACCOUNT_SCHEME_PASSWORD = "password"
+        const val ACCOUNT_SCHEME_KEY = "key"
 
         private fun getDataTransferError(errorCode: Long): DataTransferError = try {
             DataTransferError.values()[errorCode.toInt()]

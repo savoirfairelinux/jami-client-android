@@ -90,12 +90,6 @@ class RegisterNameDialog : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val binding = FragRegisterNameBinding.inflate(layoutInflater).also { this.binding = it }
         val view: View = binding.root
-        var hasPassword = true
-        val args = arguments
-        if (args != null) {
-            hasPassword = args.getBoolean(AccountEditionFragment.ACCOUNT_HAS_PASSWORD_KEY, true)
-        }
-
         binding.inputUsername.filters = arrayOf<InputFilter>(RegisteredNameFilter())
         binding.inputUsername.addTextChangedListener(object: TextWatcher {
             val mLookingForAvailability = getString(R.string.looking_for_username_availability)
@@ -118,8 +112,7 @@ class RegisterNameDialog : DialogFragment() {
             }
         })
         // binding.inputUsername.setOnEditorActionListener((v, actionId, event) -> RegisterNameDialog.this.onEditorAction(v, actionId));
-        binding.passwordTxtBox.visibility = if (hasPassword) View.VISIBLE else View.GONE
-        binding.passwordTxt.setOnEditorActionListener { v: TextView, actionId: Int, event: KeyEvent? ->
+        binding.inputUsername.setOnEditorActionListener { v: TextView, actionId: Int, event: KeyEvent? ->
             onEditorAction(v, actionId)
         }
         val dialog = dialog as AlertDialog?
@@ -177,44 +170,33 @@ class RegisterNameDialog : DialogFragment() {
             }
             binding.inputUsernameTxtBox.isErrorEnabled = false
             binding.inputUsernameTxtBox.error = null
-            if (binding.passwordTxtBox.visibility == View.VISIBLE) {
-                if (binding.passwordTxt.text == null || binding.passwordTxt.text!!.isEmpty()) {
-                    binding.passwordTxtBox.isErrorEnabled = true
-                    binding.passwordTxtBox.error = getString(R.string.prompt_password)
-                    return false
-                } else {
-                    binding.passwordTxtBox.isErrorEnabled = false
-                    binding.passwordTxtBox.error = null
-                }
-            }
         }
         return true
     }
 
     private fun validate(): Boolean {
-        if (checkInput() && mListener != null) {
-            val username = binding!!.inputUsername.text!!.toString()
-            val password = binding!!.passwordTxt.text!!.toString()
-            mListener!!.onRegisterName(username, password)
+        val binding = binding
+        val listener = mListener
+        if (checkInput() && listener != null && binding != null) {
+            val username = binding.inputUsername.text!!.toString()
+            listener.onRegisterName(username)
             return true
         }
         return false
     }
 
     private fun onEditorAction(v: TextView, actionId: Int): Boolean {
-        if (v === binding?.passwordTxt) {
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                val validationResult = validate()
-                if (validationResult) {
-                    dialog?.dismiss()
-                }
-                return validationResult
+        if (actionId == EditorInfo.IME_ACTION_DONE) {
+            val validationResult = validate()
+            if (validationResult) {
+                dialog?.dismiss()
             }
+            return validationResult
         }
         return false
     }
 
     interface RegisterNameDialogListener {
-        fun onRegisterName(name: String, password: String?)
+        fun onRegisterName(name: String)
     }
 }
