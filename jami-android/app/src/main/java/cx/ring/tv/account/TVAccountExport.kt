@@ -148,7 +148,7 @@ class TVAccountExport : JamiGuidedStepFragment<JamiAccountSummaryPresenter, Jami
             .show()
     }
 
-    override fun passwordChangeEnded(ok: Boolean) {}
+    override fun passwordChangeEnded(accountId: String, ok: Boolean, newPassword: String) {}
     override fun displayCompleteArchive(dest: File) {
         val downloadManager = requireContext().getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
         downloadManager.addCompletedDownload(
