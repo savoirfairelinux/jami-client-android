@@ -16,6 +16,24 @@
       "message": "1 - Should be linked to a ticket :)\n\n2 - Format issues\n\n3 - I guess we should\u0027t use not-null assertion (!!)",
       "revId": "359f41d8eab2bd3846f130ca62df530baa02a4b1",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "12a5dffa_98da7741",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-02-18T23:05:28Z",
+      "side": 1,
+      "message": "* Done\n* What format issues ?\n* !! makes explicit that a null value would throw an exception. It\u0027s fine to use them if that\u0027s what you want.",
+      "parentUuid": "ba426c1c_92f8b90f",
+      "revId": "359f41d8eab2bd3846f130ca62df530baa02a4b1",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
