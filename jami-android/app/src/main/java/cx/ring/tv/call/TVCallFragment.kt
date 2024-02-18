@@ -344,17 +344,16 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
         }
         val rotation = activity.windowManager.defaultDisplay.rotation
         val rot = Surface.ROTATION_90 == rotation || Surface.ROTATION_270 == rotation
-        Log.w(TAG, "configureTransform " + viewWidth + "x" + viewHeight + " rot=" + rot + " mPreviewWidth=" + mPreviewWidth + " mPreviewHeight=" + mPreviewHeight)
         val matrix = Matrix()
         val viewRect = RectF(0f, 0f, viewWidth.toFloat(), viewHeight.toFloat())
         val centerX = viewRect.centerX()
         val centerY = viewRect.centerY()
+        val bufferRect = RectF(0f, 0f, mPreviewHeightRot.toFloat(), mPreviewWidthRot.toFloat())
+        bufferRect.offset(centerX - bufferRect.centerX(), centerY - bufferRect.centerY())
+        matrix.setRectToRect(viewRect, bufferRect, Matrix.ScaleToFit.FILL)
+        val scale = max(viewHeight.toFloat() / mPreviewHeightRot, viewWidth.toFloat() / mPreviewWidthRot)
+        matrix.postScale(scale, scale, centerX, centerY)
         if (rot) {
-            val bufferRect = RectF(0f, 0f, mPreviewHeightRot.toFloat(), mPreviewWidthRot.toFloat())
-            bufferRect.offset(centerX - bufferRect.centerX(), centerY - bufferRect.centerY())
-            matrix.setRectToRect(viewRect, bufferRect, Matrix.ScaleToFit.FILL)
-            val scale = max(viewHeight.toFloat() / mPreviewHeightRot, viewWidth.toFloat() / mPreviewWidthRot)
-            matrix.postScale(scale, scale, centerX, centerY)
             matrix.postRotate((90 * (rotation - 2)).toFloat(), centerX, centerY)
         } else if (Surface.ROTATION_180 == rotation) {
             matrix.postRotate(180f, centerX, centerY)
