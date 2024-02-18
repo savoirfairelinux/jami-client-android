@@ -498,11 +498,6 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             Log.w(TAG, " onSurfaceTextureAvailable -------->  width: $width, height: $height")
             mPreviewSurfaceWidth = width
             mPreviewSurfaceHeight = height
-            Log.w(
-                TAG,
-                " onSurfaceTextureAvailable -------->  mPreviewSurfaceWidth: $mPreviewSurfaceWidth, mPreviewSurfaceHeight: $mPreviewSurfaceHeight"
-            )
-
             presenter.previewVideoSurfaceCreated(binding!!.previewSurface)
         }
 
@@ -1143,12 +1138,13 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         val viewRect = RectF(0f, 0f, viewWidth.toFloat(), viewHeight.toFloat())
         val centerX = viewRect.centerX()
         val centerY = viewRect.centerY()
+
+        val bufferRect = RectF(0f, 0f, mPreviewHeight.toFloat(), mPreviewWidth.toFloat())
+        bufferRect.offset(centerX - bufferRect.centerX(), centerY - bufferRect.centerY())
+        matrix.setRectToRect(viewRect, bufferRect, Matrix.ScaleToFit.FILL)
+        val scale = max(viewHeight.toFloat() / mPreviewHeight, viewWidth.toFloat() / mPreviewWidth)
+        matrix.postScale(scale, scale, centerX, centerY)
         if (rot) {
-            val bufferRect = RectF(0f, 0f, mPreviewHeight.toFloat(), mPreviewWidth.toFloat())
-            bufferRect.offset(centerX - bufferRect.centerX(), centerY - bufferRect.centerY())
-            matrix.setRectToRect(viewRect, bufferRect, Matrix.ScaleToFit.FILL)
-            val scale = max(viewHeight.toFloat() / mPreviewHeight, viewWidth.toFloat() / mPreviewWidth)
-            matrix.postScale(scale, scale, centerX, centerY)
             matrix.postRotate((90 * (rotation - 2)).toFloat(), centerX, centerY)
         } else if (Surface.ROTATION_180 == rotation) {
             matrix.postRotate(180f, centerX, centerY)
