@@ -78,6 +78,7 @@ import net.jami.utils.takeFirstWhile
 import org.json.JSONObject
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import kotlin.math.max
 
 @AndroidEntryPoint
 class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicked {
@@ -281,7 +282,10 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
                         }
                     }
                 })
-        val targetSize = (AvatarFactory.SIZE_NOTIF * resources.displayMetrics.density).toInt()
+        val iconSize = max(ShortcutManagerCompat.getIconMaxHeight(this), ShortcutManagerCompat.getIconMaxWidth(this))
+        // Use about 20% padding for the adaptive icon as per
+        // https://developer.android.com/develop/ui/views/launch/icon_design_adaptive
+        val iconPadding = (iconSize*0.2).toInt()
         val maxShortcuts = getMaxShareShortcuts()
         mDisposable.add(mAccountService
             .currentAccountSubject
@@ -297,10 +301,11 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
                     Single.zip(conversations.mapTo(ArrayList(conversations.size))
                     { c -> mContactService.getLoadedConversation(c)
                         .observeOn(Schedulers.computation())
-                        .map { vm -> Pair(vm, BitmapUtils.drawableToBitmap(AvatarDrawable.Builder()
-                            .withViewModel(vm)
-                            .withCircleCrop(true)
-                            .build(this), targetSize))
+                        .map { vm ->
+                            Pair(vm, BitmapUtils.drawableToBitmap(AvatarDrawable.Builder()
+                                .withViewModel(vm)
+                                .withCircleCrop(false)
+                                .build(this), iconSize, iconPadding))
                         }
                     }) { obs -> obs }
             }
@@ -511,7 +516,7 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
             val conversation = c as Pair<ConversationItemViewModel, Bitmap>
             var icon: IconCompat? = null
             try {
-                icon = IconCompat.createWithBitmap(conversation.second)
+                icon = IconCompat.createWithAdaptiveBitmap(conversation.second)
             } catch (e: Exception) {
                 Log.w(TAG, "Failed to load icon", e)
             }
