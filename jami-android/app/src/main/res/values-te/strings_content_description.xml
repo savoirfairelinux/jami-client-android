@@ -6,4 +6,7 @@
   <string name="dial_numeric_pad">సంఖ్యా డయల్ పాడ్</string>
   <string name="contact_unblock">బ్లాక్ ను అన్బ్లాక్ చేయండి</string>
   <string name="video_plugins">వీడియో ప్లగిన్లు</string>
+  <string name="file_download_button">డౌన్లోడ్</string>
+  <string name="control_play">ఆడటం</string>
+  <string name="control_pause">విరామం</string>
 </resources>

@@ -6,4 +6,5 @@
   <string name="dial_numeric_pad">Bàn phím số</string>
   <string name="contact_unblock">Tháo khóa</string>
   <string name="video_plugins">Video Plugins</string>
+  <string name="control_play">Phát</string>
 </resources>

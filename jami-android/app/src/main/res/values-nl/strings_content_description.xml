@@ -6,4 +6,8 @@
   <string name="dial_numeric_pad">Numeriek toetsenbord</string>
   <string name="contact_unblock">Deblokkeren</string>
   <string name="video_plugins">Video-plugins</string>
+  <string name="file_download_button">Download</string>
+  <string name="control_play">Afspelen</string>
+  <string name="control_replay">Opnieuw afspelen</string>
+  <string name="control_pause">Pauze</string>
 </resources>

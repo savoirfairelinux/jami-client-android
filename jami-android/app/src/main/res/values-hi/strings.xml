@@ -193,7 +193,7 @@
   <string name="conversation_syncing">सहकर्मी से बातचीत डाउनलोड करना</string>
   <string name="conversation_blocked">यह संपर्क अवरुद्ध है.</string>
   <string name="conversation_ended">बातचीत समाप्त हो गई।</string>
-  <string name="conversation_message_deleted">(संदेश हटाया गया)</string>
+  <string name="conversation_reply_you">तुम</string>
   <string name="conversation_preference_color">वार्तालाप का रंग</string>
   <string name="conversation_preference_emoji">वार्तालाप इमोजी</string>
   <string name="conversation_type_contact">जमी संपर्क</string>

@@ -193,7 +193,6 @@
   <string name="conversation_syncing">Скачане на разговор от връстник</string>
   <string name="conversation_blocked">Контактът е блокиран.</string>
   <string name="conversation_ended">Разговорът приключи.</string>
-  <string name="conversation_message_deleted">(Пъсът е изтрит)</string>
   <string name="conversation_preference_color">Цвет на разговора</string>
   <string name="conversation_preference_emoji">Разговорни емотики</string>
   <string name="conversation_type_contact">Контакт с Джами</string>

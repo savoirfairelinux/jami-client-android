@@ -6,4 +6,8 @@
   <string name="dial_numeric_pad">pavé numérique</string>
   <string name="contact_unblock">débloquer</string>
   <string name="video_plugins">Module d\'extension Video</string>
+  <string name="file_download_button">Télécharger</string>
+  <string name="control_play">Jouer</string>
+  <string name="control_replay">Répéter</string>
+  <string name="control_pause">Pause</string>
 </resources>

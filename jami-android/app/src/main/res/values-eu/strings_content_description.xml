@@ -6,4 +6,7 @@
   <string name="dial_numeric_pad">Zenbakizko teklatua</string>
   <string name="contact_unblock">Desblokeatu</string>
   <string name="video_plugins">Bideo gehituak</string>
+  <string name="file_download_button">Deskargatu </string>
+  <string name="control_play">Jo</string>
+  <string name="control_pause">Pausatu</string>
 </resources>

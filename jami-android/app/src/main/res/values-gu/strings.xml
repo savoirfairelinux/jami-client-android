@@ -193,7 +193,7 @@
   <string name="conversation_syncing">પીઅર પરથી વાતચીત ડાઉનલોડ કરી રહ્યું છે</string>
   <string name="conversation_blocked">આ સંપર્ક અવરોધિત છે.</string>
   <string name="conversation_ended">વાતચીત પૂરી થઈ.</string>
-  <string name="conversation_message_deleted">(સંદેશ કાઢી નાખવામાં આવ્યો)</string>
+  <string name="conversation_reply_you">તમે</string>
   <string name="conversation_preference_color">વાતચીતનો રંગ</string>
   <string name="conversation_preference_emoji">વાતચીત ઇમોજી</string>
   <string name="conversation_type_contact">જમી સંપર્ક</string>

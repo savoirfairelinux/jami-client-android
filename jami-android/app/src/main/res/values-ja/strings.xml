@@ -196,7 +196,7 @@
   <string name="conversation_syncing">ピア接続先から会話をダウンロードしています</string>
   <string name="conversation_blocked">この連絡はブロックされています</string>
   <string name="conversation_ended">話し合いが終わった</string>
-  <string name="conversation_message_deleted">（メッセージ削除）</string>
+  <string name="conversation_reply_you">自分</string>
   <string name="conversation_preference_color">会話の色</string>
   <string name="conversation_preference_emoji">会話の絵文字</string>
   <string name="conversation_type_contact">Jamiの連絡先</string>
@@ -207,6 +207,7 @@
   <string name="conversation_contact_left">残り%1$s</string>
   <string name="conversation_contact_banned">%1$s は禁止されました</string>
   <string name="conversation_search_hint">会話を検索</string>
+  <string name="yesterday">昨日</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">%1$sを追加しますか？</string>
   <string name="prompt_new_password">新しいパスワード</string>

@@ -6,4 +6,7 @@
   <string name="dial_numeric_pad">Tastatură numerică</string>
   <string name="contact_unblock">Deblochează</string>
   <string name="video_plugins">Extensii Video</string>
+  <string name="file_download_button">Descarcă</string>
+  <string name="control_play">Start</string>
+  <string name="control_pause">Pauză</string>
 </resources>

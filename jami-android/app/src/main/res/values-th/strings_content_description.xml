@@ -6,4 +6,7 @@
   <string name="dial_numeric_pad">แป้นตัวเลข</string>
   <string name="contact_unblock">เลิกบล็อก</string>
   <string name="video_plugins">ปลั๊กอินวิดีโอ</string>
+  <string name="file_download_button">ดาวน์โหลด</string>
+  <string name="control_play">เล่น</string>
+  <string name="control_pause">หยุด</string>
 </resources>

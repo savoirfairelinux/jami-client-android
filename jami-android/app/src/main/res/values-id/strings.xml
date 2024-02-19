@@ -192,7 +192,7 @@
   <string name="conversation_syncing">Mengunduh obrolan dari teman</string>
   <string name="conversation_blocked">Kontak ini diblokir.</string>
   <string name="conversation_ended">Percakapan berakhir.</string>
-  <string name="conversation_message_deleted">(Message dihapus)</string>
+  <string name="conversation_reply_you">Anda</string>
   <string name="conversation_preference_color">Warna percakapan</string>
   <string name="conversation_preference_emoji">Emoji percakapan</string>
   <string name="conversation_type_contact">Kontak jami</string>
@@ -203,6 +203,7 @@
   <string name="conversation_contact_left">%1$s keluar</string>
   <string name="conversation_contact_banned">%1$s dibanned</string>
   <string name="conversation_search_hint">Cari percakapan</string>
+  <string name="yesterday">Kemarin</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Tambah %1$s?</string>
   <string name="prompt_new_password">Kata sandi baru</string>

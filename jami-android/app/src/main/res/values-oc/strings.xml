@@ -38,6 +38,7 @@
   <string name="menu_item_plugin_list">Ajustaments dels plugins</string>
   <string name="menu_item_share">Comparta mon compte</string>
   <string name="menu_item_about">A prepaus de Jami</string>
+  <string name="video_setting_title">Ajustaments de vidèo</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Fau un numèro</string>
   <!--History Fragment-->
@@ -193,7 +194,7 @@
   <string name="conversation_syncing">Descargar conversacion de pair</string>
   <string name="conversation_blocked">Aqueste contacte es blocat.</string>
   <string name="conversation_ended">La conversacion s\'acaba.</string>
-  <string name="conversation_message_deleted">(Mesaje suprimit)</string>
+  <string name="conversation_reply_you">Tu</string>
   <string name="conversation_preference_color">Color de conversacion</string>
   <string name="conversation_preference_emoji">Emoji de conversacion</string>
   <string name="conversation_type_contact">Contacte Jami</string>
@@ -204,6 +205,8 @@
   <string name="conversation_contact_left">%1$s a esquèrra</string>
   <string name="conversation_contact_banned">%1$s foguèt interdit</string>
   <string name="conversation_search_hint">Conversacion de cercaire</string>
+  <string name="today">Uèi</string>
+  <string name="yesterday">Ièr</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Ajustar %1$s?</string>
   <string name="prompt_new_password">Senhal novèl</string>

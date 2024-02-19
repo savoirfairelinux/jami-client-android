@@ -38,6 +38,7 @@
   <string name="menu_item_plugin_list">Nastavitve vtičnikov</string>
   <string name="menu_item_share">Deli moj račun</string>
   <string name="menu_item_about">O programu Jami</string>
+  <string name="video_setting_title">Nastavitve videa</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Kliči številko</string>
   <!--History Fragment-->
@@ -200,7 +201,7 @@
   <string name="conversation_syncing">Prenašanje pogovora od soležnika</string>
   <string name="conversation_blocked">Ta stik je blokiran.</string>
   <string name="conversation_ended">Pogovor končan.</string>
-  <string name="conversation_message_deleted">(izbrisano sporočilo)</string>
+  <string name="conversation_reply_you">Vi</string>
   <string name="conversation_preference_color">Barva pogovora</string>
   <string name="conversation_preference_emoji">Emoji pogovora</string>
   <string name="conversation_type_contact">Stik Jami</string>
@@ -211,6 +212,8 @@
   <string name="conversation_contact_left">%1$s je odšel/a</string>
   <string name="conversation_contact_banned">%1$s je blokiran/a</string>
   <string name="conversation_search_hint">Poišči pogovor</string>
+  <string name="today">Danes</string>
+  <string name="yesterday">Včeraj</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Dodaj %1$s?</string>
   <string name="prompt_new_password">Novo geslo</string>

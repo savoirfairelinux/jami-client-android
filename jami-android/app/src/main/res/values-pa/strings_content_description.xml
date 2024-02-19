@@ -5,4 +5,6 @@
   <string name="contact_picture_description">ਸੰਪਰਕ ਦੀ ਤਸਵੀਰ</string>
   <string name="dial_numeric_pad">ਅੰਕੀ ਡਾਇਲਪੈਡ</string>
   <string name="contact_unblock">ਅਣਬਲਾਕ ਕਰੋ</string>
+  <string name="control_play">ਚਲਾਓ</string>
+  <string name="control_pause">ਰੋਕੋ</string>
 </resources>

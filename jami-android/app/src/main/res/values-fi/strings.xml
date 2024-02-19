@@ -193,7 +193,6 @@
   <string name="conversation_syncing">Ladataan keskustelua vertaisverkosta</string>
   <string name="conversation_blocked">Tämä yhteys on estetty.</string>
   <string name="conversation_ended">Keskustelu päättyi.</string>
-  <string name="conversation_message_deleted">(viesti poistetaan)</string>
   <string name="conversation_preference_color">Keskustelun väri</string>
   <string name="conversation_preference_emoji">Keskustelun hymiö</string>
   <string name="conversation_type_contact">Jami yhteystieto</string>

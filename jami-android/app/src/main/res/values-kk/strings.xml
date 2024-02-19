@@ -193,7 +193,7 @@
   <string name="conversation_syncing">Жастармен әңгімелесуді жүктеу</string>
   <string name="conversation_blocked">Бұл байланыс бұғатталған.</string>
   <string name="conversation_ended">Әңгіме аяқталды.</string>
-  <string name="conversation_message_deleted">(Жекізат алынып тасталды)</string>
+  <string name="conversation_reply_you">Сендер</string>
   <string name="conversation_preference_color">Әңгімелеудің түсі</string>
   <string name="conversation_preference_emoji">Әңгімелеу эмоджисі</string>
   <string name="conversation_type_contact">Jami байланысы</string>
@@ -204,6 +204,7 @@
   <string name="conversation_contact_left">%1$s сол жақ</string>
   <string name="conversation_contact_banned">%1$s тыйым салынды</string>
   <string name="conversation_search_hint">Іздеу әңгімесі</string>
+  <string name="yesterday">Келесі күні</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">%1$s қосылсын ба?</string>
   <string name="prompt_new_password">Жаңа пароль</string>

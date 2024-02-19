@@ -6,4 +6,8 @@
   <string name="dial_numeric_pad">Tárcsázó</string>
   <string name="contact_unblock">Letiltás feloldása</string>
   <string name="video_plugins">Videó beépülő modulok</string>
+  <string name="file_download_button">Letöltés</string>
+  <string name="control_play">Lejátszás</string>
+  <string name="control_replay">Visszajátszás</string>
+  <string name="control_pause">Megállítás</string>
 </resources>

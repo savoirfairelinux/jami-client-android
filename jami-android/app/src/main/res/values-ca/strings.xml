@@ -193,7 +193,6 @@
   <string name="conversation_syncing">Descarregant la conversa d\'un igual</string>
   <string name="conversation_blocked">Aquest contacte està bloquejat.</string>
   <string name="conversation_ended">La conversa ha acabat.</string>
-  <string name="conversation_message_deleted">(Messatge suprimit)</string>
   <string name="conversation_preference_color">Color de conversa</string>
   <string name="conversation_preference_emoji">Emoticona de conversa</string>
   <string name="conversation_type_contact">Contacte de Jami</string>

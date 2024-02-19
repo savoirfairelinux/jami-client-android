@@ -6,4 +6,7 @@
   <string name="dial_numeric_pad">Сангийн дуудлага</string>
   <string name="contact_unblock">Блокийг нээж</string>
   <string name="video_plugins">Видео хувилбар</string>
+  <string name="file_download_button">Хөгжүүлнэ</string>
+  <string name="control_play">Уурхай тогло</string>
+  <string name="control_pause">Хаашаа</string>
 </resources>

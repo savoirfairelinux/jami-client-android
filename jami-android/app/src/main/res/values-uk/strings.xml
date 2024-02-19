@@ -38,6 +38,7 @@
   <string name="menu_item_plugin_list">Налаштування втулки</string>
   <string name="menu_item_share">Поділитися моїм обліковим записом</string>
   <string name="menu_item_about">Про Jami</string>
+  <string name="video_setting_title">Настройки відео</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Набрати номер</string>
   <!--History Fragment-->
@@ -200,7 +201,7 @@
   <string name="conversation_syncing">Завантаження розмови з вузла</string>
   <string name="conversation_blocked">Цей контакт заблокований.</string>
   <string name="conversation_ended">Розмова закінчилася.</string>
-  <string name="conversation_message_deleted">(Повідомлення видалено)</string>
+  <string name="conversation_reply_you">Ви</string>
   <string name="conversation_preference_color">Колір розмови</string>
   <string name="conversation_preference_emoji">Емоджи розмови</string>
   <string name="conversation_type_contact">Контакт Jami</string>
@@ -211,6 +212,8 @@
   <string name="conversation_contact_left">%1$ залишився</string>
   <string name="conversation_contact_banned">%1$s було заборонене</string>
   <string name="conversation_search_hint">Пошук розмов</string>
+  <string name="today">Сьогодні</string>
+  <string name="yesterday">Учора</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Додати %1$s?</string>
   <string name="prompt_new_password">Новий пароль</string>

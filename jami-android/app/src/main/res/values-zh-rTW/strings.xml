@@ -39,6 +39,7 @@
   <string name="menu_item_plugin_list">外掛程式設定</string>
   <string name="menu_item_share">分享我的帳號</string>
   <string name="menu_item_about">關於 Jami</string>
+  <string name="video_setting_title">视频设置</string>
   <!--Dialing Fragment-->
   <string name="dial_number">播打一個號碼</string>
   <!--History Fragment-->
@@ -194,7 +195,7 @@
   <string name="conversation_syncing">正在從 peer 下載對話</string>
   <string name="conversation_blocked">这种联系是被封闭的.</string>
   <string name="conversation_ended">我们的谈话结束了.</string>
-  <string name="conversation_message_deleted">(消息已删除)</string>
+  <string name="conversation_reply_you">您</string>
   <string name="conversation_preference_color">對話色彩</string>
   <string name="conversation_preference_emoji">對話表情符號</string>
   <string name="conversation_type_contact">Jami 聯絡人</string>
@@ -205,6 +206,8 @@
   <string name="conversation_contact_left">%1$s 已離開</string>
   <string name="conversation_contact_banned">%1$s 已被封鎖</string>
   <string name="conversation_search_hint">在会话中搜索</string>
+  <string name="today">今天</string>
+  <string name="yesterday">昨天</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">新增 %1$s？</string>
   <string name="prompt_new_password">新密碼</string>

@@ -198,7 +198,6 @@
   <string name="conversation_syncing">Descargando conversación del par</string>
   <string name="conversation_blocked">Éste contacto está bloqueado.</string>
   <string name="conversation_ended">Conversación terminada.</string>
-  <string name="conversation_message_deleted">(Mensaje borrado)</string>
   <string name="conversation_preference_color">Color de la conversación</string>
   <string name="conversation_preference_emoji">Emoji de la conversación</string>
   <string name="conversation_type_contact">Contacto de Jami</string>

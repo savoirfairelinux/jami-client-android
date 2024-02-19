@@ -6,4 +6,8 @@
   <string name="dial_numeric_pad">数字ダイヤルパッド</string>
   <string name="contact_unblock">ブロック解除</string>
   <string name="video_plugins">ビデオの追加機能</string>
+  <string name="file_download_button">入手</string>
+  <string name="control_play">再生</string>
+  <string name="control_replay">再生</string>
+  <string name="control_pause">一時停止</string>
 </resources>

@@ -89,6 +89,7 @@
   <string name="conversation_action_block_this">Njikọ na-ekpuchi</string>
   <string name="conversation_action_incoming_call">N\'ọhịa</string>
   <string name="conversation_members">Ndị otu</string>
+  <string name="yesterday">N\'ụbọchị gara aga</string>
   <!--Contacts-->
   <string name="account_create_title">Mepụta akaụntụ Jami</string>
   <string name="prompt_hint_username">Aha njirimara</string>

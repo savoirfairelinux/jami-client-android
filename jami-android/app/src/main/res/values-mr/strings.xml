@@ -38,6 +38,7 @@
   <string name="menu_item_plugin_list">प्लगइन सेटिंग्ज</string>
   <string name="menu_item_share">माझे खाते सामायिक करा</string>
   <string name="menu_item_about">जेमी बद्दल</string>
+  <string name="video_setting_title">व्हिडिओ सेटिंग्ज</string>
   <!--Dialing Fragment-->
   <string name="dial_number">एक नंबर डायल करा</string>
   <!--History Fragment-->
@@ -193,7 +194,7 @@
   <string name="conversation_syncing">पीरवरून संभाषण डाउनलोड करणे</string>
   <string name="conversation_blocked">हा संपर्क अवरुद्ध आहे.</string>
   <string name="conversation_ended">चर्चा संपली.</string>
-  <string name="conversation_message_deleted">(संदेश हटवला)</string>
+  <string name="conversation_reply_you">तू</string>
   <string name="conversation_preference_color">संभाषण रंग</string>
   <string name="conversation_preference_emoji">संभाषण इमोजी</string>
   <string name="conversation_type_contact">जमी संपर्क</string>
@@ -204,6 +205,7 @@
   <string name="conversation_contact_left">%1$ बाकी आहे</string>
   <string name="conversation_contact_banned">%1$s बंदी</string>
   <string name="conversation_search_hint">शोध संभाषण</string>
+  <string name="yesterday">काल</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">%1$s जोडणे?</string>
   <string name="prompt_new_password">नवीन संकेतशब्द</string>

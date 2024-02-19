@@ -193,7 +193,6 @@
   <string name="conversation_syncing">همتداشلاردان دانیشیق آلماق</string>
   <string name="conversation_blocked">بو تماس قامتلی دیر.</string>
   <string name="conversation_ended">مکالمه باشا چاتدي.</string>
-  <string name="conversation_message_deleted">(رساله لری حذف ائدیلدی)</string>
   <string name="conversation_preference_color">دانیشیق رنگینه</string>
   <string name="conversation_preference_emoji">مکالمات ایموجی</string>
   <string name="conversation_type_contact">جمی تماس</string>

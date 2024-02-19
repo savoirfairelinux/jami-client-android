@@ -193,7 +193,6 @@
   <string name="conversation_syncing">Elkarrizketa bat deskargatzen</string>
   <string name="conversation_blocked">Kontaktu hau blokeatuta dago.</string>
   <string name="conversation_ended">Amaitu da elkarrizketa.</string>
-  <string name="conversation_message_deleted">(Mezuak ezabatu dira)</string>
   <string name="conversation_preference_color">Elkarrizketaren kolorea</string>
   <string name="conversation_preference_emoji">Elkarrizketaren emojia</string>
   <string name="conversation_type_contact">Jami kontaktua</string>

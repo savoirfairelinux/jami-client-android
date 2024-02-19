@@ -193,7 +193,6 @@
   <string name="conversation_syncing">Download af samtale fra peer</string>
   <string name="conversation_blocked">Kontakt er blokeret.</string>
   <string name="conversation_ended">Samtalen er slut.</string>
-  <string name="conversation_message_deleted">(Meddel slettet)</string>
   <string name="conversation_preference_color">Samtalefarve</string>
   <string name="conversation_preference_emoji">Samtale emoji</string>
   <string name="conversation_type_contact">Jami kontakt</string>

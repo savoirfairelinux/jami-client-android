@@ -38,6 +38,7 @@
   <string name="menu_item_plugin_list">ప్లగిన్ సెట్టింగులు</string>
   <string name="menu_item_share">నా ఖాతాను పంచుకోండి</string>
   <string name="menu_item_about">జామి గురించి</string>
+  <string name="video_setting_title">వీడియో సెట్టింగులు</string>
   <!--Dialing Fragment-->
   <string name="dial_number">ఒక సంఖ్యను డయల్ చేయండి</string>
   <!--History Fragment-->
@@ -193,7 +194,7 @@
   <string name="conversation_syncing">పీర్ నుండి సంభాషణను డౌన్లోడ్ చేయడం</string>
   <string name="conversation_blocked">ఈ పరిచయం అడ్డుకుంది.</string>
   <string name="conversation_ended">సంభాషణ ముగిసింది.</string>
-  <string name="conversation_message_deleted">(సందేశం తొలగించబడింది)</string>
+  <string name="conversation_reply_you">మీరు</string>
   <string name="conversation_preference_color">సంభాషణ రంగు</string>
   <string name="conversation_preference_emoji">సంభాషణ ఎమోజీ</string>
   <string name="conversation_type_contact">జామి పరిచయం</string>
@@ -204,6 +205,8 @@
   <string name="conversation_contact_left">%1$s ఎడమవైపు</string>
   <string name="conversation_contact_banned">%1$s నిషేధించబడింది</string>
   <string name="conversation_search_hint">శోధన సంభాషణ</string>
+  <string name="today">నేడు</string>
+  <string name="yesterday">నిన్న</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">%1$s ను జోడించాలా?</string>
   <string name="prompt_new_password">కొత్త పాస్వర్డ్</string>

@@ -6,4 +6,8 @@
   <string name="dial_numeric_pad">Numerička tipkovnica</string>
   <string name="contact_unblock">Deblokiraj</string>
   <string name="video_plugins">Video ugrađivači</string>
+  <string name="file_download_button">Snimka</string>
+  <string name="control_play">izvodi</string>
+  <string name="control_replay">Odgovori</string>
+  <string name="control_pause">Pauza</string>
 </resources>

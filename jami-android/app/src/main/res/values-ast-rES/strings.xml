@@ -193,7 +193,6 @@
   <string name="conversation_syncing">Descargar conversación de pares</string>
   <string name="conversation_blocked">El contautu ye bloqueáu.</string>
   <string name="conversation_ended">La conversación acabó.</string>
-  <string name="conversation_message_deleted">(El mensaxe foi suprimíu)</string>
   <string name="conversation_preference_color">El color de la conversación</string>
   <string name="conversation_preference_emoji">Emoji de conversación</string>
   <string name="conversation_type_contact">El contautu Jami</string>

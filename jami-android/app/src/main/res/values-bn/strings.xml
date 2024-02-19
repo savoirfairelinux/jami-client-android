@@ -193,7 +193,6 @@
   <string name="conversation_syncing">পারস্পরিক কথোপকথন ডাউনলোড করা</string>
   <string name="conversation_blocked">এই যোগাযোগ বন্ধ।</string>
   <string name="conversation_ended">কথোপকথন শেষ।</string>
-  <string name="conversation_message_deleted">(বার্তা মুছে ফেলা হয়েছে)</string>
   <string name="conversation_preference_color">কথোপকথনের রঙ</string>
   <string name="conversation_preference_emoji">কথোপকথন ইমোজি</string>
   <string name="conversation_type_contact">জামি যোগাযোগ</string>

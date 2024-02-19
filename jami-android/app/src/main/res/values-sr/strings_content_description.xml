@@ -6,4 +6,7 @@
   <string name="dial_numeric_pad">Цифрови дијалпад</string>
   <string name="contact_unblock">Разблокирање</string>
   <string name="video_plugins">Видео уплејнови</string>
+  <string name="file_download_button">Preuzimanje</string>
+  <string name="control_play">Pusti</string>
+  <string name="control_pause">Pauziraj</string>
 </resources>

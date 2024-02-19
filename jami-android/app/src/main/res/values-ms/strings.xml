@@ -38,6 +38,7 @@
   <string name="menu_item_plugin_list">പ്ലഗിൻ ക്രമീകരണങ്ങൾ</string>
   <string name="menu_item_share">എന്റെ അക്കൌണ്ട് പങ്കുവെക്കുക</string>
   <string name="menu_item_about">ജാമിയെ കുറിച്ച്</string>
+  <string name="video_setting_title">വീഡിയോ ക്രമീകരണങ്ങൾ</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Dail nombor</string>
   <!--History Fragment-->
@@ -192,7 +193,7 @@
   <string name="conversation_syncing">സഹപ്രവർത്തകരുടെ സംഭാഷണം ഡൌൺലോഡ് ചെയ്യുക</string>
   <string name="conversation_blocked">ഈ സമ്പർക്കം തടഞ്ഞിരിക്കുന്നു.</string>
   <string name="conversation_ended">സംഭാഷണം അവസാനിച്ചു.</string>
-  <string name="conversation_message_deleted">(സന്ദേശം നീക്കം ചെയ്തു)</string>
+  <string name="conversation_reply_you">നീ</string>
   <string name="conversation_preference_color">സംഭാഷണ നിറം</string>
   <string name="conversation_preference_emoji">സംഭാഷണ ഇമോജി</string>
   <string name="conversation_type_contact">ജാമി കോൺടാക്ട്</string>
@@ -203,6 +204,7 @@
   <string name="conversation_contact_left">%1$ ഇടതുവശത്ത്</string>
   <string name="conversation_contact_banned">%1$s നിരോധിച്ചു</string>
   <string name="conversation_search_hint">തിരയൽ സംഭാഷണം</string>
+  <string name="yesterday">Semalam</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">%1$s ചേർക്കുക?</string>
   <string name="prompt_new_password">Kata laluan baharu</string>

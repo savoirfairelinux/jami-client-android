@@ -6,4 +6,5 @@
   <string name="dial_numeric_pad">לוח חיוג מספרי</string>
   <string name="contact_unblock">פותח את הבלוק</string>
   <string name="video_plugins">תוספים וידאו</string>
+  <string name="control_replay">נגן שוב</string>
 </resources>

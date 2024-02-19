@@ -38,6 +38,7 @@
   <string name="menu_item_plugin_list">Plugins instellingen</string>
   <string name="menu_item_share">Mijn account delen</string>
   <string name="menu_item_about">Over Jami</string>
+  <string name="video_setting_title">Video-instellingen</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Kies een nummer</string>
   <!--History Fragment-->
@@ -193,7 +194,7 @@
   <string name="conversation_syncing">Download van een gesprek van een peer</string>
   <string name="conversation_blocked">Dit contact is geblokkeerd.</string>
   <string name="conversation_ended">Het gesprek is voorbij.</string>
-  <string name="conversation_message_deleted">(Bericht verwijderd)</string>
+  <string name="conversation_reply_you">Jij?</string>
   <string name="conversation_preference_color">Kleur van het gesprek</string>
   <string name="conversation_preference_emoji">Conversatie emoji</string>
   <string name="conversation_type_contact">Jami contact</string>
@@ -204,6 +205,7 @@
   <string name="conversation_contact_left">%1$ is links</string>
   <string name="conversation_contact_banned">%1$s is verboden</string>
   <string name="conversation_search_hint">Zoek gesprek</string>
+  <string name="yesterday">Gisteren</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">%1$s toevoegen?</string>
   <string name="prompt_new_password">Nieuw wachtwoord</string>

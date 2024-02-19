@@ -6,4 +6,7 @@
   <string name="dial_numeric_pad">Թվային դիալպա</string>
   <string name="contact_unblock">Բաց թողնել</string>
   <string name="video_plugins">Տեսանյութերի հավելվածներ</string>
+  <string name="file_download_button">Ներբեռնել</string>
+  <string name="control_play">Խաղալ</string>
+  <string name="control_pause">Պահանջ</string>
 </resources>

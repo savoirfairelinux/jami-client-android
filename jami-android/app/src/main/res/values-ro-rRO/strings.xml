@@ -39,6 +39,7 @@
   <string name="menu_item_plugin_list">Reglări Extensii</string>
   <string name="menu_item_share">Distribuie contul meu</string>
   <string name="menu_item_about">Despre Jami</string>
+  <string name="video_setting_title">Reglări video</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Formează un număr</string>
   <!--History Fragment-->
@@ -201,7 +202,7 @@
   <string name="conversation_syncing">Se descarcă conversația de la utilizator</string>
   <string name="conversation_blocked">Acest contact este blocat.</string>
   <string name="conversation_ended">Conversație terminată.</string>
-  <string name="conversation_message_deleted">(Mesaj șters)</string>
+  <string name="conversation_reply_you">Tu</string>
   <string name="conversation_preference_color">Culoarea conversației</string>
   <string name="conversation_preference_emoji">Emoji de conversație</string>
   <string name="conversation_type_contact">Contact Jami</string>
@@ -212,6 +213,8 @@
   <string name="conversation_contact_left">%1$s a ieșit</string>
   <string name="conversation_contact_banned">%1$s a fost blocat</string>
   <string name="conversation_search_hint">Caută conversația</string>
+  <string name="today">Azi</string>
+  <string name="yesterday">Ieri</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Adaugi %1$s?</string>
   <string name="prompt_new_password">Parola nouă</string>

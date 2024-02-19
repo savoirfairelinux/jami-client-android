@@ -38,6 +38,7 @@
   <string name="menu_item_plugin_list">Modul inställningar</string>
   <string name="menu_item_share">Dela mitt konto</string>
   <string name="menu_item_about">Om Jami</string>
+  <string name="video_setting_title">Videonställningar</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Slå ett nummer</string>
   <!--History Fragment-->
@@ -193,7 +194,7 @@
   <string name="conversation_syncing">Ladda ner konversationen från \"peer\"</string>
   <string name="conversation_blocked">Kontakten är blockerad.</string>
   <string name="conversation_ended">Samtalet är slut.</string>
-  <string name="conversation_message_deleted">(Meddelande raderat)</string>
+  <string name="conversation_reply_you">Du</string>
   <string name="conversation_preference_color">Konversationsfärg</string>
   <string name="conversation_preference_emoji">Konversations emoji</string>
   <string name="conversation_type_contact">Jami kontakt</string>
@@ -204,6 +205,8 @@
   <string name="conversation_contact_left">%1$ är vänster</string>
   <string name="conversation_contact_banned">%1$s förbjuds</string>
   <string name="conversation_search_hint">Söksamtal</string>
+  <string name="today">I dag</string>
+  <string name="yesterday">I går</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Lägga till %1$s?</string>
   <string name="prompt_new_password">Nytt lösenord</string>

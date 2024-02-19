@@ -193,7 +193,7 @@
   <string name="conversation_syncing">Հեռացնել զրույցը զուգընկերներից</string>
   <string name="conversation_blocked">Այս շփումը արգելափակված է:</string>
   <string name="conversation_ended">Խոսքը ավարտվեց:</string>
-  <string name="conversation_message_deleted">(Խնդիրը ջնջվել է)</string>
+  <string name="conversation_reply_you">Դուք</string>
   <string name="conversation_preference_color">Զրույցի գույնը</string>
   <string name="conversation_preference_emoji">Զրույցի էմոգի</string>
   <string name="conversation_type_contact">Ջամիի շփումը</string>
@@ -204,6 +204,7 @@
   <string name="conversation_contact_left">%1$-ը ձախ է</string>
   <string name="conversation_contact_banned">%1$s-ը արգելվել է</string>
   <string name="conversation_search_hint">Հետազոտական զրույց</string>
+  <string name="yesterday">Երեկ</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">%1$s ավելացնել?</string>
   <string name="prompt_new_password">Նոր գաղտնաբառ</string>

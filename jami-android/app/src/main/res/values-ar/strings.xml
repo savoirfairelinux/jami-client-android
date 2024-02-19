@@ -197,7 +197,6 @@
   <string name="conversation_syncing">تحميل محادثة من أقرانه</string>
   <string name="conversation_blocked">هذا الاتصال محظور</string>
   <string name="conversation_ended">انتهت المحادثة</string>
-  <string name="conversation_message_deleted">(المساعدة مُحذوفة)</string>
   <string name="conversation_preference_color">لون المحادثة</string>
   <string name="conversation_preference_emoji">إيموجي المحادثة</string>
   <string name="conversation_type_contact">جهة اتصال جامي</string>

@@ -141,7 +141,7 @@
   <string name="conversation_send_video">Enregistrer un message vidéo</string>
   <string name="conversation_share_location">Partager votre position</string>
   <string name="ongoing_group_call">Appel en cours</string>
-  <string name="started_call">a commencé un appel</string>
+  <string name="started_call">A commencé un appel</string>
   <string name="in_reply_to">En réponse à</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Permission d\'accès à la caméra</string>
@@ -201,7 +201,6 @@
   <string name="conversation_syncing">Téléchargement de la conversation depuis le pair.</string>
   <string name="conversation_blocked">Le contact est bloqué</string>
   <string name="conversation_ended">La conversation est terminée.</string>
-  <string name="conversation_message_deleted">(Message supprimé)</string>
   <string name="conversation_preference_color">Couleur de conversation</string>
   <string name="conversation_preference_emoji">Émoji de la conversation</string>
   <string name="conversation_type_contact">Contact Jami</string>

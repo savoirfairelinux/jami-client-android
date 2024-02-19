@@ -6,4 +6,8 @@
   <string name="dial_numeric_pad">Numërator me shifra</string>
   <string name="contact_unblock">Zhbllokoje</string>
   <string name="video_plugins">Shtojca Videosh</string>
+  <string name="file_download_button">Shkarkoje</string>
+  <string name="control_play">Luaje</string>
+  <string name="control_replay">Riluaje</string>
+  <string name="control_pause">Pushim</string>
 </resources>

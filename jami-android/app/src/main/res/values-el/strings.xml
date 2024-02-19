@@ -193,7 +193,6 @@
   <string name="conversation_syncing">Λήψη συνομιλίας από χρήστη</string>
   <string name="conversation_blocked">Η επαφή είναι μπλοκαρισμένη.</string>
   <string name="conversation_ended">Η συζήτηση τελείωσε.</string>
-  <string name="conversation_message_deleted">(Μετάχυση διαγραφής)</string>
   <string name="conversation_preference_color">Χρώμα συνομιλίας</string>
   <string name="conversation_preference_emoji">Emoji συνομιλίας</string>
   <string name="conversation_type_contact">Επαφή Jami</string>

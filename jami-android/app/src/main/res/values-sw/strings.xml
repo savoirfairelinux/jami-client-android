@@ -38,6 +38,7 @@
   <string name="menu_item_plugin_list">Mipangilio ya Plugins</string>
   <string name="menu_item_share">Shiriki akaunti yangu</string>
   <string name="menu_item_about">Kuhusu Jami</string>
+  <string name="video_setting_title">Mipangilio ya Video</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Piga namba</string>
   <!--History Fragment-->
@@ -193,7 +194,7 @@
   <string name="conversation_syncing">Kupakua mazungumzo kutoka kwa wenzao</string>
   <string name="conversation_blocked">Mawasiliano haya yamefungwa.</string>
   <string name="conversation_ended">Mazungumzo yaliisha.</string>
-  <string name="conversation_message_deleted">(Ujumbe uliondolewa)</string>
+  <string name="conversation_reply_you">Wewe</string>
   <string name="conversation_preference_color">Rangi ya mazungumzo</string>
   <string name="conversation_preference_emoji">Emoji ya mazungumzo</string>
   <string name="conversation_type_contact">Wasiliana na Jami</string>
@@ -204,6 +205,8 @@
   <string name="conversation_contact_left">%1$s%1$ ni kushoto</string>
   <string name="conversation_contact_banned">%1$s ilipigwa marufuku</string>
   <string name="conversation_search_hint">Tafuta mazungumzo</string>
+  <string name="today">Leo</string>
+  <string name="yesterday">Jana</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Ongeza %1$s?</string>
   <string name="prompt_new_password">Nambari mpya</string>

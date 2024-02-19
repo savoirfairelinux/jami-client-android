@@ -196,7 +196,6 @@
   <string name="conversation_syncing">بارگیری مکالمه از طرف دیگر</string>
   <string name="conversation_blocked">اين تماس مسدود شده</string>
   <string name="conversation_ended">گفتگوي تموم شد</string>
-  <string name="conversation_message_deleted">(رساله حذف شده)</string>
   <string name="conversation_preference_color">رنگ گفتگو</string>
   <string name="conversation_preference_emoji">شکلَک گفتگو</string>
   <string name="conversation_type_contact">مخاطب جامی</string>

@@ -6,4 +6,7 @@
   <string name="dial_numeric_pad">숫자 다이얼패드</string>
   <string name="contact_unblock">차단 해제</string>
   <string name="video_plugins">비디오 플러그인</string>
+  <string name="file_download_button">다운로드</string>
+  <string name="control_play">재생</string>
+  <string name="control_pause">멈춤</string>
 </resources>

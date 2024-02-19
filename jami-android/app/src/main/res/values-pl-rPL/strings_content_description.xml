@@ -6,4 +6,8 @@
   <string name="dial_numeric_pad">Klawiatura numeryczna</string>
   <string name="contact_unblock">Odblokuj</string>
   <string name="video_plugins">Wtyczki Wideo</string>
+  <string name="file_download_button">Pobierz</string>
+  <string name="control_play">Graj</string>
+  <string name="control_replay">Powtórz</string>
+  <string name="control_pause">Pauza</string>
 </resources>

@@ -38,6 +38,7 @@
   <string name="menu_item_plugin_list">செருகுநிரல்கள் அமைப்புகள்</string>
   <string name="menu_item_share">எனது கணக்கை பகிர்ந்து கொள்ளுங்கள்</string>
   <string name="menu_item_about">ஜாமி பற்றி</string>
+  <string name="video_setting_title">வீடியோ அமைப்புகள்</string>
   <!--Dialing Fragment-->
   <string name="dial_number">ஒரு எண்ணைத் தேர்ந்தெடுக்கவும்</string>
   <!--History Fragment-->
@@ -193,7 +194,7 @@
   <string name="conversation_syncing">சகலரும் பேசும் உரையாடலை பதிவிறக்கம் செய்தல்</string>
   <string name="conversation_blocked">இந்த தொடர்பு தடுக்கப்பட்டுள்ளது.</string>
   <string name="conversation_ended">உரையாடல் முடிந்தது.</string>
-  <string name="conversation_message_deleted">(செய்தி நீக்கப்பட்டது)</string>
+  <string name="conversation_reply_you">நீ</string>
   <string name="conversation_preference_color">உரையாடல் நிறம்</string>
   <string name="conversation_preference_emoji">உரையாடல் ஈமோஜி</string>
   <string name="conversation_type_contact">ஜாமி தொடர்பு</string>
@@ -204,6 +205,8 @@
   <string name="conversation_contact_left">%1$ இடது</string>
   <string name="conversation_contact_banned">%1$s தடை செய்யப்பட்டது</string>
   <string name="conversation_search_hint">தேடல் உரையாடல்</string>
+  <string name="today">இன்று</string>
+  <string name="yesterday">நேற்று</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">%1$s சேர்க்க?</string>
   <string name="prompt_new_password">புதிய கடவுச்சொல்</string>

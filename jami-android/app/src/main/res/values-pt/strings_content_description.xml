@@ -6,4 +6,8 @@
   <string name="dial_numeric_pad">Teclado numérico</string>
   <string name="contact_unblock">Desbloquear</string>
   <string name="video_plugins">Plugins de vídeo</string>
+  <string name="file_download_button">Obter</string>
+  <string name="control_play">Reproduzir</string>
+  <string name="control_replay">Reproduzir novamente</string>
+  <string name="control_pause">Pausa</string>
 </resources>

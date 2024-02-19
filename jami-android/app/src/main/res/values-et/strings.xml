@@ -193,7 +193,6 @@
   <string name="conversation_syncing">Lase alla sõnad eakaaslastest</string>
   <string name="conversation_blocked">See kontakt on blokeeritud.</string>
   <string name="conversation_ended">Rääkimine on lõppenud.</string>
-  <string name="conversation_message_deleted">(Tõstmine)</string>
   <string name="conversation_preference_color">Rääkimise värv</string>
   <string name="conversation_preference_emoji">Sõnalduse emojid</string>
   <string name="conversation_type_contact">Jami kontakt</string>

@@ -41,7 +41,6 @@
   <string name="unblock_contact_completed">%1$s fue desbloqueado.</string>
   <string name="conversation_blocked">Éste contacto está bloqueado.</string>
   <string name="conversation_ended">Conversación terminada.</string>
-  <string name="conversation_message_deleted">(Mensaje borrado)</string>
   <string name="conversation_type_private">Enjambre privado</string>
   <string name="conversation_type_group">Enjambre grupal</string>
   <string name="conversation_search_hint">Buscar conversación</string>

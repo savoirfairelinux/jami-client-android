@@ -6,4 +6,7 @@
   <string name="dial_numeric_pad">ಸಂಖ್ಯಾತ್ಮಕ ಡಯಲ್ಪ್ಯಾಡ್</string>
   <string name="contact_unblock">ಅನಿರ್ಬಂಧವನ್ನು ತೆರವುಗೊಳಿಸಿ</string>
   <string name="video_plugins">ವಿಡಿಯೋ ಪ್ಲಗಿನ್ಗಳು</string>
+  <string name="file_download_button">ಡೌನ್ಲೋಡ್ ಮಾಡಿ</string>
+  <string name="control_play">ಆಟವಾಡಿ</string>
+  <string name="control_pause">ವಿರಾಮ</string>
 </resources>

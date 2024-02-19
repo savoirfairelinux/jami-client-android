@@ -39,6 +39,7 @@
   <string name="menu_item_plugin_list">Настройки плагинов</string>
   <string name="menu_item_share">Поделиться своей контактной информацией</string>
   <string name="menu_item_about">О Jami</string>
+  <string name="video_setting_title">Настройки видео</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Набрать номер</string>
   <!--History Fragment-->
@@ -202,7 +203,7 @@
   <string name="conversation_syncing">Загрузка разговора с участником сети</string>
   <string name="conversation_blocked">Этот контакт заблокирован.</string>
   <string name="conversation_ended">Разговор закончился.</string>
-  <string name="conversation_message_deleted">(Сообщение удалено)</string>
+  <string name="conversation_reply_you">Ты</string>
   <string name="conversation_preference_color">Цвет беседы</string>
   <string name="conversation_preference_emoji">Эмоджи беседы</string>
   <string name="conversation_type_contact">Контакт Jami</string>
@@ -213,6 +214,8 @@
   <string name="conversation_contact_left">%1$s вышел</string>
   <string name="conversation_contact_banned">%1$s забанен</string>
   <string name="conversation_search_hint">Найти беседу</string>
+  <string name="today">Сегодня</string>
+  <string name="yesterday">Вчера</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Добавить %1$s?</string>
   <string name="prompt_new_password">Новый пароль</string>

@@ -6,4 +6,8 @@
   <string name="dial_numeric_pad">Ciferilo</string>
   <string name="contact_unblock">Malŝalti la blokon</string>
   <string name="video_plugins">Video Plugins</string>
+  <string name="file_download_button">Elŝutu</string>
+  <string name="control_play">Ludi</string>
+  <string name="control_replay">Reludi</string>
+  <string name="control_pause">Paŭzi</string>
 </resources>

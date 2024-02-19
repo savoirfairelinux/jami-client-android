@@ -38,6 +38,7 @@
   <string name="menu_item_plugin_list">Uzantı Ayarları</string>
   <string name="menu_item_share">Jami Hesabı </string>
   <string name="menu_item_about">Jami Hakkında</string>
+  <string name="video_setting_title">Görüntü Ayarları</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Numara çevir</string>
   <!--History Fragment-->
@@ -198,7 +199,7 @@
   <string name="conversation_syncing">Konuşma karşı taraftan indiriliyor</string>
   <string name="conversation_blocked">Bu kişi engellendi.</string>
   <string name="conversation_ended">Görüşme sona erdi.</string>
-  <string name="conversation_message_deleted">(İleti silindi)</string>
+  <string name="conversation_reply_you">Siz</string>
   <string name="conversation_preference_color">Görüşme rengi</string>
   <string name="conversation_preference_emoji">Görüşme emojisi</string>
   <string name="conversation_type_contact">Jami kişisi</string>
@@ -209,6 +210,8 @@
   <string name="conversation_contact_left">%1$s ayrıldı</string>
   <string name="conversation_contact_banned">%1$s yasaklandı</string>
   <string name="conversation_search_hint">Görüşmede ara</string>
+  <string name="today">Bugün</string>
+  <string name="yesterday">Dün</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">%1$s eklensin mi?</string>
   <string name="prompt_new_password">Yeni parola</string>

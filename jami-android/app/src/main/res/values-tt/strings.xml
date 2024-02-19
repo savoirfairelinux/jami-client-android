@@ -38,6 +38,7 @@
   <string name="menu_item_plugin_list">Плюгиннар өчен җайланмалар</string>
   <string name="menu_item_share">Минем хисабымны уртаклашыгыз</string>
   <string name="menu_item_about">Җәми турында</string>
+  <string name="video_setting_title">Видеолар көйләү</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Номерны сайла</string>
   <!--History Fragment-->
@@ -88,6 +89,8 @@
   <string name="conversation_action_block_this">Блок белән элемтә</string>
   <string name="conversation_action_incoming_call">Килүче чакыру</string>
   <string name="conversation_members">Депутатлар</string>
+  <string name="today">Бүген</string>
+  <string name="yesterday">Кичә</string>
   <!--Contacts-->
   <string name="account_create_title">Jami хисабы булдыру</string>
   <string name="prompt_hint_username">Исем кулланучы</string>

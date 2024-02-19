@@ -39,6 +39,7 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="menu_item_plugin_list">Configurações dos complementos</string>
   <string name="menu_item_share">Compartilhar minha conta</string>
   <string name="menu_item_about">Sobre Jami</string>
+  <string name="video_setting_title">Configurações de vídeo</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Disque um número</string>
   <!--History Fragment-->
@@ -199,7 +200,7 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="conversation_syncing">Baixando a conversação a partir do par</string>
   <string name="conversation_blocked">Este contato está bloqueado.</string>
   <string name="conversation_ended">Conversa finalizada.</string>
-  <string name="conversation_message_deleted">(Mensagem apagada)</string>
+  <string name="conversation_reply_you">Você</string>
   <string name="conversation_preference_color">Cor da conversação</string>
   <string name="conversation_preference_emoji">emoji da conversação</string>
   <string name="conversation_type_contact">Contato Jami</string>
@@ -210,6 +211,8 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="conversation_contact_left">%1$ é deixado</string>
   <string name="conversation_contact_banned">%1$s foi proibido</string>
   <string name="conversation_search_hint">Conversa de busca</string>
+  <string name="today">Hoje</string>
+  <string name="yesterday">Ontem</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Adicionar %1$s?</string>
   <string name="prompt_new_password">Nova senha</string>

@@ -192,7 +192,7 @@
   <string name="conversation_syncing">동료에서 대화를 다운로드 하는 것</string>
   <string name="conversation_blocked">이 연락이 차단됐습니다.</string>
   <string name="conversation_ended">대화가 끝났어</string>
-  <string name="conversation_message_deleted">(메세지가 삭제되었습니다)</string>
+  <string name="conversation_reply_you">- 네</string>
   <string name="conversation_preference_color">대화 색상</string>
   <string name="conversation_preference_emoji">대화 에모지</string>
   <string name="conversation_type_contact">자미 연락처</string>
@@ -203,6 +203,7 @@
   <string name="conversation_contact_left">%1$는 왼쪽</string>
   <string name="conversation_contact_banned">%1$s가 금지되었습니다</string>
   <string name="conversation_search_hint">검색 대화</string>
+  <string name="yesterday">어제</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">%1$s를 추가하세요?</string>
   <string name="prompt_new_password">새로운 비밀번호</string>

@@ -6,4 +6,7 @@
   <string name="dial_numeric_pad">Yığım klaviaturası</string>
   <string name="contact_unblock">قفلین آچماق</string>
   <string name="video_plugins">ویدئو پلگینلر</string>
+  <string name="file_download_button">دانلود</string>
+  <string name="control_play">اوینایین</string>
+  <string name="control_pause">توقف</string>
 </resources>

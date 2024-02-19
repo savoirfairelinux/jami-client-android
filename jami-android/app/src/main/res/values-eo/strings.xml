@@ -193,7 +193,6 @@
   <string name="conversation_syncing">Elŝutu konversacion de samuloj</string>
   <string name="conversation_blocked">Tiu kontakto estas blokita.</string>
   <string name="conversation_ended">La konversacio finiĝis.</string>
-  <string name="conversation_message_deleted">(Mesaĝo forigita)</string>
   <string name="conversation_preference_color">Koloro de konversacio</string>
   <string name="conversation_preference_emoji">Konversacio emoji</string>
   <string name="conversation_type_contact">Jam kontakto</string>

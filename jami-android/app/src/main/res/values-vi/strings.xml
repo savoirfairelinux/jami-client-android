@@ -38,6 +38,7 @@
   <string name="menu_item_plugin_list">Plugins Settings</string>
   <string name="menu_item_share">Chia sẻ tài khoản của tôi</string>
   <string name="menu_item_about">Về Jami</string>
+  <string name="video_setting_title">Định hướng video</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Đặt một số</string>
   <!--History Fragment-->
@@ -90,6 +91,8 @@
   <string name="conversation_action_incoming_call">Tiếp tục gọi</string>
   <string name="conversation_action_latest">Cuộn đến cuối cuộc hội thoại</string>
   <string name="conversation_members">Các thành viên</string>
+  <string name="today">Ngày nay</string>
+  <string name="yesterday">Hôm qua</string>
   <!--Contacts-->
   <string name="account_create_title">Tạo tài khoản Jami</string>
   <string name="prompt_hint_username">Username</string>

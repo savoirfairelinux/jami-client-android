@@ -6,4 +6,8 @@
   <string name="dial_numeric_pad">Цифровая клавиатура</string>
   <string name="contact_unblock">Разблокировать</string>
   <string name="video_plugins">Видео плагины</string>
+  <string name="file_download_button">Загрузить</string>
+  <string name="control_play">Воспроизвести</string>
+  <string name="control_replay">Ответ</string>
+  <string name="control_pause">Пауза</string>
 </resources>

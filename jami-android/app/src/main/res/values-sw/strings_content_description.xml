@@ -6,4 +6,7 @@
   <string name="dial_numeric_pad">Kibao cha namba</string>
   <string name="contact_unblock">Kufungua kizuizi</string>
   <string name="video_plugins">Vidokezo vya Video</string>
+  <string name="file_download_button">Pakua</string>
+  <string name="control_play">Kucheza</string>
+  <string name="control_pause">Kupumzika</string>
 </resources>

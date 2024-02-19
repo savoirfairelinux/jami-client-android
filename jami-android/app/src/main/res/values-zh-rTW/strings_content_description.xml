@@ -6,4 +6,8 @@
   <string name="dial_numeric_pad">電話按鍵鍵盤</string>
   <string name="contact_unblock">取消封鎖</string>
   <string name="video_plugins">視訊外掛程式</string>
+  <string name="file_download_button">下載</string>
+  <string name="control_play">播放</string>
+  <string name="control_replay">重放</string>
+  <string name="control_pause">暫停</string>
 </resources>

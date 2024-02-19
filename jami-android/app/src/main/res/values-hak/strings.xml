@@ -26,6 +26,7 @@
   <!--Settings-->
   <!--Conversation-->
   <string name="conversation_action_incoming_call">来电</string>
+  <string name="conversation_reply_you">您</string>
   <!--Contacts-->
   <!--Account Summary-->
   <!--Share fragment-->

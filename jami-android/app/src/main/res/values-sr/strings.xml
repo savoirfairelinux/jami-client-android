@@ -39,6 +39,7 @@
   <string name="menu_item_plugin_list">Podešavanja dodataka</string>
   <string name="menu_item_share">Podeli moj nalog</string>
   <string name="menu_item_about">O Jamiju</string>
+  <string name="video_setting_title">Постављања видео</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Birajte broj</string>
   <!--History Fragment-->
@@ -201,7 +202,7 @@
   <string name="conversation_syncing">Preuzimanje razgovora od članova</string>
   <string name="conversation_blocked">Ovaj kontakt je blokiran.</string>
   <string name="conversation_ended">Razgovor je završen.</string>
-  <string name="conversation_message_deleted">(izbrisana poruka)</string>
+  <string name="conversation_reply_you">Ti</string>
   <string name="conversation_preference_color">Boja razgovora</string>
   <string name="conversation_preference_emoji">Emodži za razgovor</string>
   <string name="conversation_type_contact">Jami kontakt</string>
@@ -212,6 +213,8 @@
   <string name="conversation_contact_left">%1$s je napustio</string>
   <string name="conversation_contact_banned">%1$s je dobio zabranu</string>
   <string name="conversation_search_hint">Pretraži konverzaciju</string>
+  <string name="today">Данас</string>
+  <string name="yesterday">Учерашњи</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Dodaj %1$s?</string>
   <string name="prompt_new_password">Nova lozinka</string>

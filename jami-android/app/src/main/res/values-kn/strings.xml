@@ -193,7 +193,7 @@
   <string name="conversation_syncing">ಪೀರ್ನಿಂದ ಸಂಭಾಷಣೆಯನ್ನು ಡೌನ್ಲೋಡ್ ಮಾಡುವುದು</string>
   <string name="conversation_blocked">ಈ ಸಂಪರ್ಕವನ್ನು ನಿರ್ಬಂಧಿಸಲಾಗಿದೆ.</string>
   <string name="conversation_ended">ಸಂಭಾಷಣೆ ಮುಗಿದಿದೆ.</string>
-  <string name="conversation_message_deleted">(ಸಂದೇಶವನ್ನು ಅಳಿಸಲಾಗಿದೆ)</string>
+  <string name="conversation_reply_you">ನೀನೇ</string>
   <string name="conversation_preference_color">ಸಂಭಾಷಣೆ ಬಣ್ಣ</string>
   <string name="conversation_preference_emoji">ಸಂಭಾಷಣೆ ಎಮೋಜಿ</string>
   <string name="conversation_type_contact">ಜಾಮಿ ಸಂಪರ್ಕ</string>
@@ -204,6 +204,7 @@
   <string name="conversation_contact_left">%1$ ಎಡಕ್ಕೆ</string>
   <string name="conversation_contact_banned">%1$s ನಿಷೇಧಿಸಲಾಗಿದೆ</string>
   <string name="conversation_search_hint">ಹುಡುಕಾಟ ಸಂಭಾಷಣೆ</string>
+  <string name="yesterday">ನಿನ್ನೆ</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">%1$s ಅನ್ನು ಸೇರಿಸುವುದೇ?</string>
   <string name="prompt_new_password">ಹೊಸ ಪಾಸ್ವರ್ಡ್</string>

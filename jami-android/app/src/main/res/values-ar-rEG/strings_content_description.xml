@@ -6,4 +6,8 @@
   <string name="dial_numeric_pad">لوحة إتصال رقمية</string>
   <string name="contact_unblock">إزالة حظر</string>
   <string name="video_plugins">إضافات فيديو</string>
+  <string name="file_download_button">تنزيل</string>
+  <string name="control_play">تشغيل</string>
+  <string name="control_replay">إعادة</string>
+  <string name="control_pause">إيقاف مؤقت</string>
 </resources>

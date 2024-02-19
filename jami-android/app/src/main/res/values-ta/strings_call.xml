@@ -16,7 +16,6 @@ along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 -->
 <resources>
-    <!-- Call error -->
     <string name="call_error_no_microphone">அழைப்பு ரத்து செய்யப்பட்டது. மைக்ரோஃபோன் கண்டறியப்படவில்லை.</string>
     <string name="call_error_no_camera_no_microphone">அழைப்பு ரத்து செய்யப்பட்டது. கேமரா அல்லது மைக்ரோஃபோன் கண்டறியப்படவில்லை.</string>
 

@@ -38,6 +38,7 @@
   <string name="menu_item_plugin_list">Ustawienia wtyczek</string>
   <string name="menu_item_share">Udostępnij moje konto</string>
   <string name="menu_item_about">O Jami</string>
+  <string name="video_setting_title">Ustawienia wideo</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Wykręć numer</string>
   <!--History Fragment-->
@@ -201,7 +202,7 @@
   <string name="conversation_syncing">Pobieranie rozmowy od peera</string>
   <string name="conversation_blocked">Ten kontakt jest zablokowany.</string>
   <string name="conversation_ended">Rozmowa się skończyła.</string>
-  <string name="conversation_message_deleted">(Zgłoszenie usunięte)</string>
+  <string name="conversation_reply_you">Ty</string>
   <string name="conversation_preference_color">Kolor rozmowy</string>
   <string name="conversation_preference_emoji">Emoji rozmowy</string>
   <string name="conversation_type_contact">Kontakty Jami</string>
@@ -212,6 +213,8 @@
   <string name="conversation_contact_left">%1$ jest lewy</string>
   <string name="conversation_contact_banned">%1$s został zakazany</string>
   <string name="conversation_search_hint">Szukaj rozmowy</string>
+  <string name="today">Dzisiaj</string>
+  <string name="yesterday">Wczoraj</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Dodać %1$s?</string>
   <string name="prompt_new_password">Nowe hasło</string>

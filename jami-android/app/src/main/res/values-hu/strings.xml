@@ -200,7 +200,7 @@
   <string name="conversation_syncing">Beszélgetés letöltése a társaktól</string>
   <string name="conversation_blocked">Ez a kapcsolat le van tiltva.</string>
   <string name="conversation_ended">Véget ért a beszélgetés.</string>
-  <string name="conversation_message_deleted">(Üzenet törölve)</string>
+  <string name="conversation_reply_you">Ön</string>
   <string name="conversation_preference_color">Beszélgetés színe</string>
   <string name="conversation_preference_emoji">Beszélgetés hangulatjel</string>
   <string name="conversation_type_contact">Jami-kapcsolat</string>
@@ -211,6 +211,7 @@
   <string name="conversation_contact_left">%1$s kilépett</string>
   <string name="conversation_contact_banned">%1$s letiltva lett</string>
   <string name="conversation_search_hint">Beszélgetés keresése</string>
+  <string name="yesterday">Tegnap</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Hozzáadja %1$s?</string>
   <string name="prompt_new_password">Új jelszó</string>

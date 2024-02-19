@@ -6,4 +6,8 @@
   <string name="dial_numeric_pad">شماره‌گیر عددی</string>
   <string name="contact_unblock">رفع مسدودی</string>
   <string name="video_plugins">افزونه‌های ویدیویی</string>
+  <string name="file_download_button">دانلود</string>
+  <string name="control_play">پخش</string>
+  <string name="control_replay">پاسخ</string>
+  <string name="control_pause">مکث</string>
 </resources>

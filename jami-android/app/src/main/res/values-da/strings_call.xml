@@ -16,7 +16,6 @@ along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 -->
 <resources>
-    <!-- Call error -->
     <string name="call_error_no_microphone">Opkald annulleret. Ingen mikrofon fundet.</string>
     <string name="call_error_no_camera_no_microphone">Opkald annulleret. Hverken kamera eller mikrofon fundet.</string>
 

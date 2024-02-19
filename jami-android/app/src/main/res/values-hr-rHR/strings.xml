@@ -77,7 +77,7 @@
   <string name="conversation_syncing">Preuzimanje razgovora od vrstevnika</string>
   <string name="conversation_blocked">Ovaj kontakt je blokiran.</string>
   <string name="conversation_ended">Razgovor je završen.</string>
-  <string name="conversation_message_deleted">(Povesti su izbrisane)</string>
+  <string name="conversation_reply_you">Ti si</string>
   <string name="conversation_preference_color">Boja razgovora</string>
   <string name="conversation_preference_emoji">Emoji razgovora</string>
   <string name="conversation_type_contact">Kontakt s Jamijem</string>

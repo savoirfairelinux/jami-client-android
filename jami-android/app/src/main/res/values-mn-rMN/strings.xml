@@ -38,6 +38,7 @@
   <string name="menu_item_plugin_list">Плюгинүүдийн тохируулалт</string>
   <string name="menu_item_share">Миний хуудас хуваалцаарай</string>
   <string name="menu_item_about">Жэмигийн тухай</string>
+  <string name="video_setting_title">Видеогийн тохируулалт</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Үргэлж</string>
   <!--History Fragment-->
@@ -193,7 +194,7 @@
   <string name="conversation_syncing">Хэлэлцүүлгийг хамтын хүмүүстэй суулгаж байна</string>
   <string name="conversation_blocked">Энэ холбоог хаасан.</string>
   <string name="conversation_ended">Хэлэлцүүлэг дууссан.</string>
-  <string name="conversation_message_deleted">(Энх мэдээг устгасан)</string>
+  <string name="conversation_reply_you">Та нар</string>
   <string name="conversation_preference_color">Хэлэлцүүлгийн өнгө</string>
   <string name="conversation_preference_emoji">Хэлэлцүүлгийн эможи</string>
   <string name="conversation_type_contact">Жэми-ийн холбоо</string>
@@ -204,6 +205,7 @@
   <string name="conversation_contact_left">%1$ нь үлдлээ</string>
   <string name="conversation_contact_banned">%1$s-ийг хориглосон</string>
   <string name="conversation_search_hint">Танд ярилцлага хайх</string>
+  <string name="yesterday">Өчигдөр</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">%1$s нэмнэ үү?</string>
   <string name="prompt_new_password">Шинэ нууц үг</string>
