@@ -45,17 +45,16 @@ class Uri : Serializable {
         get() = username ?: host
 
     val uri: String
-        get() {
-            if (isSwarm) return scheme + rawRingId
-            return if (isHexId) rawRingId else toString()
-        }
+        get() =
+            if (isSwarm) scheme + rawRingId
+            else if (isHexId) rawRingId
+            else toString()
+
     val rawUriString: String
-        get() {
-            if (isSwarm) return scheme + rawRingId
-            return if (isHexId) {
-                DEFAULT_CONTACT_SCHEME + rawRingId
-            } else toString()
-        }
+        get() =
+            if (isSwarm) scheme + rawRingId
+            else if (isHexId) DEFAULT_CONTACT_SCHEME + rawRingId
+            else toString()
 
     override fun toString(): String {
         val builder = StringBuilder(64)

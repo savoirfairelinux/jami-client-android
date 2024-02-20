@@ -369,7 +369,7 @@ class Account(
         synchronized(mContactCache) {
             return mContactCache.getOrPut(key) {
                 if (isSip) Contact.buildSIP(Uri.fromString(key))
-                else Contact.build(key, username == key)
+                else Contact(Uri(Uri.JAMI_URI_SCHEME, key), username == key)
             }
         }
     }

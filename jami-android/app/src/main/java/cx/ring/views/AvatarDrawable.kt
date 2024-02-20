@@ -31,6 +31,7 @@ import io.reactivex.rxjava3.core.Single
 import net.jami.model.*
 import net.jami.smartlist.ConversationItemViewModel
 import net.jami.utils.HashUtils
+import net.jami.utils.toHex
 import java.util.*
 import kotlin.math.min
 
@@ -102,7 +103,7 @@ class AvatarDrawable : Drawable {
             Builder()
                 .withPhoto(profile.avatar as Bitmap?)
                 .withNameData(profile.displayName, account.registeredName)
-                .withId(account.uri)
+                .withId(if (account.isSip) account.uri else Uri(Uri.JAMI_URI_SCHEME, account.username!!).rawUriString)
                 .withCircleCrop(crop)
                 .withOnlineState(isOnline)
                 .build(context)
@@ -156,11 +157,12 @@ class AvatarDrawable : Drawable {
 
         @ColorRes
         private fun getAvatarColor(id: String?): Int {
-            if (id == null) {
+            if (id.isNullOrBlank()) {
                 return R.color.grey_500
             }
-            val md5 = HashUtils.md5(id)
-            return contactColors[(md5[0].toUInt() % contactColors.size.toUInt()).toInt()]
+            val md5 = HashUtils.md5(id).toHex()
+            val index = Integer.parseInt(md5[0].toString(), 16)
+            return contactColors[index % contactColors.size]
         }
     }
 
@@ -218,7 +220,7 @@ class AvatarDrawable : Drawable {
 
         fun withContact(contact: ContactViewModel?) = if (contact == null) this else
             withPhoto(contact.profile.avatar as? Bitmap?)
-                .withId(contact.contact.primaryNumber)
+                .withId(contact.contact.uri.toString())
                 .withPresence(contact.presence)
                 .withOnlineState(contact.presence)
                 .withNameData(contact.profile.displayName, contact.registeredName)
@@ -258,7 +260,7 @@ class AvatarDrawable : Drawable {
 
         fun withConversation(conversation: Conversation, profile: Profile, contacts: List<ContactViewModel>): Builder =
             if (conversation.isSwarm && conversation.mode.blockingFirst() != Conversation.Mode.OneToOne)
-                withId(conversation.uri.rawRingId)
+                withId(conversation.uri.rawUriString)
                     .withContacts(profile, contacts)
                     .setGroup()
             else
@@ -271,7 +273,7 @@ class AvatarDrawable : Drawable {
 
         fun withViewModel(vm: ConversationItemViewModel): Builder =
             if (vm.isGroup())
-                withId(vm.uri.rawRingId)
+                withId(vm.uri.rawUriString)
                     .withContacts(vm.conversationProfile, vm.contacts)
                     .setGroup()
             else withContact(ConversationItemViewModel.getContact(vm.contacts))
