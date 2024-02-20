@@ -21,6 +21,7 @@ import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.text.TextUtils
 import android.widget.ImageView
+import androidx.core.graphics.drawable.IconCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestBuilder
 import com.bumptech.glide.RequestManager
@@ -33,7 +34,6 @@ import net.jami.model.Profile
 import net.jami.smartlist.ConversationItemViewModel
 
 object AvatarFactory {
-    const val SIZE_AB = 36
     const val SIZE_NOTIF = 48
     const val SIZE_PADDING = 8
 
@@ -67,17 +67,18 @@ object AvatarFactory {
         getAvatar(context, conversation, profile, contacts, presence)
             .map { BitmapUtils.drawableToBitmap(it, size) }
 
-    fun getBitmapAvatar(context: Context, contact: ContactViewModel, size: Int, presence: Boolean): Single<Bitmap> =
+    fun getBitmapAvatar(context: Context, contact: ContactViewModel, size: Int, presence: Boolean = true): Single<Bitmap> =
         getAvatar(context, contact, presence)
             .map { BitmapUtils.drawableToBitmap(it, size) }
-
-    fun getBitmapAvatar(context: Context, contact: ContactViewModel, size: Int): Single<Bitmap> =
-        getBitmapAvatar(context, contact, size, true)
 
     fun getBitmapAvatar(context: Context, account: Account, size: Int): Single<Bitmap> =
         AvatarDrawable.load(context, account)
             .firstOrError()
             .map { BitmapUtils.drawableToBitmap(it, size) }
+    fun getAccountAdaptiveIcon(context: Context, account: Account, size: Int): Single<IconCompat> =
+        AvatarDrawable.load(context, account)
+            .firstOrError()
+            .map { it.toAdaptiveIcon(size) }
 
     private fun getDrawable(context: Context, photo: Bitmap?, profileName: String?, username: String?, id: String): Drawable =
         AvatarDrawable.Builder()
@@ -100,4 +101,12 @@ object AvatarFactory {
 
     fun loadGlideAvatar(view: ImageView, contact: ContactViewModel) = getGlideAvatar(view.context, contact).into(view)
 
+    fun AvatarDrawable.toBitmap(size: Int = -1): Bitmap = BitmapUtils.drawableToBitmap(this, size)
+    fun AvatarDrawable.toAdaptiveBitmap(size: Int = -1): Bitmap = BitmapUtils.drawableToAdaptiveBitmap(this, size)
+
+    fun AvatarDrawable.toIcon(size: Int): IconCompat =
+        IconCompat.createWithBitmap(BitmapUtils.drawableToBitmap(this, size))
+
+    fun AvatarDrawable.toAdaptiveIcon(size: Int): IconCompat =
+        IconCompat.createWithAdaptiveBitmap(toAdaptiveBitmap(size))
 }

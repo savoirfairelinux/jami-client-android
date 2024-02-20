@@ -123,6 +123,14 @@ object BitmapUtils {
         return bitmap
     }
 
+    /**
+     * Generate an Android Adaptive Bitmap from the given drawable and size in pixels
+     * Uses about 20% padding for the adaptive icon as per
+     * https://developer.android.com/develop/ui/views/launch/icon_design_adaptive
+     */
+    fun drawableToAdaptiveBitmap(drawable: Drawable, size: Int): Bitmap =
+        drawableToBitmap(drawable, size, size / 5)
+
     fun calculateInSampleSize(options: BitmapFactory.Options, reqWidth: Int, reqHeight: Int): Int {
         // Raw height and width of image
         val height = options.outHeight
