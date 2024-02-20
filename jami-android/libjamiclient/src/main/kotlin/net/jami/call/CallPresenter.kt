@@ -32,7 +32,6 @@ import net.jami.services.HardwareService.AudioState
 import net.jami.services.HardwareService.VideoEvent
 import net.jami.utils.Log
 import net.jami.utils.StringUtils.toNumber
-import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Named

@@ -373,9 +373,7 @@ class SwitchButton(context: Context, attrs: AttributeSet? = null, defStyle: Int 
         const val DEFAULT_THUMB_MARGIN_DP = 2
         const val DEFAULT_ANIMATION_DURATION = 250
         const val DEFAULT_SWITCH_WIDTH = 72
-        private fun ceil(dimen: Double): Int {
-            return kotlin.math.ceil(dimen).toInt()
-        }
+        private fun ceil(dimen: Double): Int = kotlin.math.ceil(dimen).toInt()
     }
 
     init {
