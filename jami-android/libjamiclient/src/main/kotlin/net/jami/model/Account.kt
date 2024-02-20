@@ -786,10 +786,10 @@ class Account(
         return null
     }
 
-    fun presenceUpdate(contactUri: String, isOnline: Boolean) {
+    fun presenceUpdate(contactUri: String, status: Int) {
         //Log.w(TAG, "presenceUpdate " + contactUri + " " + isOnline);
         val contact = getContactFromCache(contactUri)
-        contact.setPresence(isOnline)
+        contact.setPresence(status > 0)
         synchronized(conversations) {
             conversations[contactUri]?.let { conversationRefreshed(it) }
         }
