@@ -55,12 +55,13 @@ import cx.ring.service.CallNotificationService
 import cx.ring.service.DRingService
 import cx.ring.settings.SettingsFragment
 import cx.ring.tv.call.TVCallActivity
-import cx.ring.utils.BitmapUtils
 import cx.ring.utils.ContentUriHandler
 import cx.ring.utils.ConversationPath
 import cx.ring.utils.DeviceUtils
 import cx.ring.views.AvatarDrawable
 import cx.ring.views.AvatarFactory
+import cx.ring.views.AvatarFactory.toAdaptiveIcon
+import cx.ring.views.AvatarFactory.toBitmap
 import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.call.CallPresenter
 import net.jami.model.*
@@ -115,13 +116,20 @@ class NotificationServiceImpl(
     private fun buildCallNotification(conference: Conference): Notification? {
         val ongoingConference = currentCalls.values.firstOrNull { it !== conference && it.state == Call.CallStatus.CURRENT }
         val call = conference.firstCall!!
+        val accountId = call.account!!
         val callClass = if (DeviceUtils.isTv(mContext)) TVCallActivity::class.java else CallActivity::class.java
         val viewIntent = PendingIntent.getActivity(mContext, random.nextInt(), Intent(Intent.ACTION_VIEW)
             .setClass(mContext, callClass)
             .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             .putExtra(NotificationService.KEY_CALL_ID, call.daemonIdString), ContentUriHandler.immutable())
 
-        val contact = getProfile(call.account!!, call.contact!!)
+        val contact = getProfile(accountId, call.contact!!)
+        val caller = Person.Builder()
+            .setName(contact.displayName)
+            .setKey(ConversationPath.toKey(accountId, contact.contact.uri.uri))
+            .setIcon(getAdaptiveContactPicture(contact))
+            .setImportant(true)
+            .build()
 
         val messageNotificationBuilder: NotificationCompat.Builder
         if (conference.isOnGoing) {
@@ -136,64 +144,38 @@ class NotificationServiceImpl(
                 .setUsesChronometer(true)
                 .setWhen(conference.timestampStart)
                 .setColor(ContextCompat.getColor(mContext, R.color.color_primary_light))
-                .addAction(R.drawable.baseline_call_end_24,
-                    mContext.getText(R.string.action_call_hangup),
-                    PendingIntent.getService(mContext, random.nextInt(),
+                .setStyle(
+                    NotificationCompat.CallStyle.forOngoingCall(caller, PendingIntent.getService(mContext, random.nextInt(),
                         Intent(DRingService.ACTION_CALL_END)
                             .setClass(mContext, DRingService::class.java)
                             .putExtra(NotificationService.KEY_CALL_ID, call.daemonIdString)
-                            .putExtra(ConversationPath.KEY_ACCOUNT_ID, call.account),
-
-            ContentUriHandler.immutable(PendingIntent.FLAG_ONE_SHOT)))
+                            .putExtra(ConversationPath.KEY_ACCOUNT_ID, accountId),
+                        ContentUriHandler.immutable(PendingIntent.FLAG_ONE_SHOT)))
+                    .setIsVideo(conference.hasVideo()))
         } else if (conference.isRinging) {
             if (conference.isIncoming) {
                 messageNotificationBuilder = NotificationCompat.Builder(mContext, NOTIF_CHANNEL_INCOMING_CALL)
                 messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_incoming_call_title, contact.displayName))
-                    .setPriority(NotificationCompat.PRIORITY_HIGH)
+                    .setPriority(NotificationCompat.PRIORITY_MAX)
                     .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                     .setContentText(mContext.getText(R.string.notif_incoming_call))
                     .setContentIntent(viewIntent)
                     .setSound(null)
                     .setVibrate(null)
                     .setFullScreenIntent(viewIntent, true)
-                    .addAction(
-                        R.drawable.baseline_call_end_24, mContext.getText(R.string.action_call_decline),
-                        PendingIntent.getService(mContext, random.nextInt(), Intent(DRingService.ACTION_CALL_REFUSE)
-                            .setClass(mContext, DRingService::class.java)
-                            .putExtra(ConversationPath.KEY_ACCOUNT_ID, call.account)
-                            .putExtra(NotificationService.KEY_CALL_ID, call.daemonIdString), ContentUriHandler.immutable(PendingIntent.FLAG_ONE_SHOT)))
-
-                if (conference.hasVideo()){
-                    messageNotificationBuilder
-                        .addAction(R.drawable.baseline_videocam_24, if (ongoingConference == null) mContext.getText(R.string.action_call_accept_video) else mContext.getText(R.string.action_call_hold_accept_video),
+                    .setStyle(
+                        NotificationCompat.CallStyle.forIncomingCall(caller,
+                            PendingIntent.getService(mContext, random.nextInt(), Intent(DRingService.ACTION_CALL_REFUSE)
+                                .setClass(mContext, DRingService::class.java)
+                                .putExtra(ConversationPath.KEY_ACCOUNT_ID, accountId)
+                                .putExtra(NotificationService.KEY_CALL_ID, call.daemonIdString), ContentUriHandler.immutable(PendingIntent.FLAG_ONE_SHOT)),
                             PendingIntent.getActivity(mContext, random.nextInt(), Intent(DRingService.ACTION_CALL_ACCEPT)
                                 .setClass(mContext, callClass)
-                                .putExtra(ConversationPath.KEY_ACCOUNT_ID, call.account)
+                                .putExtra(ConversationPath.KEY_ACCOUNT_ID, accountId)
                                 .putExtra(NotificationService.KEY_CALL_ID, call.daemonIdString)
                                 .putExtra(CallPresenter.KEY_ACCEPT_OPTION, CallPresenter.ACCEPT_HOLD)
                                 .putExtra(CallFragment.KEY_HAS_VIDEO, true), ContentUriHandler.immutable(PendingIntent.FLAG_ONE_SHOT)))
-                } else {
-                    messageNotificationBuilder.addAction(
-                        R.drawable.baseline_call_24, if (ongoingConference == null) mContext.getText(R.string.action_call_accept_audio) else mContext.getText(R.string.action_call_end_accept),
-                        PendingIntent.getActivity(mContext, random.nextInt(), Intent(DRingService.ACTION_CALL_ACCEPT)
-                            .setClass(mContext, callClass)
-                            .putExtra(ConversationPath.KEY_ACCOUNT_ID, call.account)
-                            .putExtra(NotificationService.KEY_CALL_ID, call.daemonIdString)
-                            .putExtra(CallPresenter.KEY_ACCEPT_OPTION, CallPresenter.ACCEPT_END)
-                            .putExtra(CallFragment.KEY_HAS_VIDEO, false), ContentUriHandler.immutable(PendingIntent.FLAG_ONE_SHOT))
-                    )
-                }
-                if (ongoingConference != null) {
-                    messageNotificationBuilder.addAction(R.drawable.baseline_call_24,
-                        mContext.getText(R.string.action_call_hold_accept),
-                        PendingIntent.getActivity(mContext, random.nextInt(),
-                            Intent(DRingService.ACTION_CALL_ACCEPT)
-                                .setClass(mContext, callClass)
-                                .putExtra(ConversationPath.KEY_ACCOUNT_ID, call.account)
-                                .putExtra(NotificationService.KEY_CALL_ID, call.daemonIdString)
-                                .putExtra(CallPresenter.KEY_ACCEPT_OPTION, CallPresenter.ACCEPT_HOLD),
-                            ContentUriHandler.immutable(PendingIntent.FLAG_ONE_SHOT)))
-                }
+                            .setIsVideo(conference.hasVideo()))
             } else {
                 messageNotificationBuilder = NotificationCompat.Builder(mContext, NOTIF_CHANNEL_CALL_IN_PROGRESS)
                     .setContentTitle(mContext.getString(R.string.notif_outgoing_call_title, contact.displayName))
@@ -203,14 +185,15 @@ class NotificationServiceImpl(
                     .setSound(null)
                     .setVibrate(null)
                     .setColorized(true)
-                    .setColor(ContextCompat.getColor(mContext, R.color.color_primary_light))
-                    .addAction(R.drawable.baseline_call_end_24, mContext.getText(R.string.action_call_hangup),
-                        PendingIntent.getService(mContext, random.nextInt(),
+                    .setStyle(
+                        NotificationCompat.CallStyle.forOngoingCall(caller, PendingIntent.getService(mContext, random.nextInt(),
                             Intent(DRingService.ACTION_CALL_END)
                                 .setClass(mContext, DRingService::class.java)
                                 .putExtra(NotificationService.KEY_CALL_ID, call.daemonIdString)
-                                .putExtra(ConversationPath.KEY_ACCOUNT_ID, call.account),
+                                .putExtra(ConversationPath.KEY_ACCOUNT_ID, accountId),
                             ContentUriHandler.immutable(PendingIntent.FLAG_ONE_SHOT)))
+                        .setIsVideo(conference.hasVideo()))
+                    .setColor(ContextCompat.getColor(mContext, R.color.color_primary_light))
             }
         } else {
             return null
@@ -491,7 +474,7 @@ class NotificationServiceImpl(
             cancelTextNotification(conversation.accountId, conversation.uri)
             return
         }
-        if (texts.lastEntry().value.isNotified) {
+        if (texts.lastEntry()!!.value.isNotified) {
             return
         }
         Log.w(TAG, "showTextNotification " + conversation.accountId + " " + conversation.uri)
@@ -549,7 +532,7 @@ class NotificationServiceImpl(
             .setContentIntent(PendingIntent.getActivity(mContext, random.nextInt(), intentConversation, ContentUriHandler.immutable()))
             .setAutoCancel(true)
             .setColor(ResourcesCompat.getColor(mContext.resources, R.color.color_primary_dark, null))
-        messageNotificationBuilder.setLargeIcon(conversationProfile.first)
+            .setLargeIcon(conversationProfile.first)
 
         // Generate a unique notification ID
         val notificationId = getTextNotificationId(cpath.accountId, cvm.uri)
@@ -604,18 +587,22 @@ class NotificationServiceImpl(
         messageNotificationBuilder
             .setBubbleMetadata(NotificationCompat.BubbleMetadata.Builder(
                 PendingIntent.getActivity(mContext, 0, intentBubble, ContentUriHandler.mutable(PendingIntent.FLAG_UPDATE_CURRENT)),
-                IconCompat.createWithAdaptiveBitmap(conversationProfile.first))
+                AvatarDrawable.Builder()
+                    .withViewModel(cvm)
+                    .withCircleCrop(false)
+                    .withPresence(false)
+                    .build(mContext)
+                    .toAdaptiveIcon(avatarSize))
                 .setDesiredHeight(600)
                 .build())
             //.addPerson(conversationPerson)
             .setShortcutId(key)
         val account = mAccountService.getAccount(cpath.accountId)
         val profile = if (account == null) null else VCardServiceImpl.loadProfile(mContext, account).blockingFirst()
-        val myPic = account?.let { getContactPicture(it) }
         val userPerson = Person.Builder()
             .setKey(cpath.accountId)
             .setName(if (profile == null || TextUtils.isEmpty(profile.displayName)) "You" else profile.displayName)
-            .setIcon(if (myPic == null) null else IconCompat.createWithBitmap(myPic))
+            .setIcon(account?.let { getContactPicture(it) })
             .build()
         val history = NotificationCompat.MessagingStyle(userPerson)
         // Even if it's a group conversation, if there is only two people in it,
@@ -625,11 +612,10 @@ class NotificationServiceImpl(
         val persons = HashMap<String, Person>()
         for (contact in cvm.contacts) {
             if (contact.contact.isUser) continue
-            val contactPicture = getContactPicture(contact)
             val contactPerson = Person.Builder()
                 .setKey(ConversationPath.toKey(cpath.accountId, contact.contact.uri.uri))
                 .setName(contact.displayName)
-                .setIcon(if (contactPicture == null) null else IconCompat.createWithBitmap(contactPicture))
+                .setIcon(getAdaptiveContactPicture(contact))
                 .build()
             messageNotificationBuilder.addPerson(contactPerson)
             persons[contact.contact.uri.uri] = contactPerson
@@ -955,48 +941,61 @@ class NotificationServiceImpl(
         return (NOTIF_FILE_TRANSFER + path.toString() + dataTransferId).hashCode()
     }
 
-    private fun getContactPicture(contact: ContactViewModel): Bitmap? {
-        return try {
-            AvatarFactory.getBitmapAvatar(mContext, contact, avatarSize, false).blockingGet()
+    private fun getContactPicture(contact: ContactViewModel): Bitmap? =
+        try {
+            AvatarDrawable.Builder()
+                .withContact(contact)
+                .withCircleCrop(true)
+                .withPresence(false)
+                .build(mContext)
+                .toBitmap(avatarSize)
         } catch (e: Exception) {
             null
         }
-    }
 
-    private fun getContactPicture(conversation: Conversation): Bitmap? {
-        return try {
+    private fun getAdaptiveContactPicture(contact: ContactViewModel): IconCompat? =
+        try {
+            AvatarDrawable.Builder()
+                .withContact(contact)
+                .withCircleCrop(false)
+                .withPresence(false)
+                .build(mContext)
+                .toAdaptiveIcon(avatarSize)
+        } catch (e: Exception) {
+            null
+        }
+
+    private fun getContactPicture(conversation: Conversation): Bitmap? =
+        try {
             mContactService.getLoadedConversation(conversation).flatMap { vm ->
                 AvatarFactory.getAvatar(mContext, vm)
-                    .map { d -> BitmapUtils.drawableToBitmap(d, avatarSize) }
+                    .map { it.toBitmap(avatarSize) }
             }.blockingGet()
         } catch (e: Exception) {
             null
         }
-    }
 
-    private fun getContactPicture(account: Account): Bitmap {
-        return AvatarFactory.getBitmapAvatar(mContext, account, avatarSize).blockingGet()
-    }
+    private fun getContactPicture(account: Account): IconCompat =
+        AvatarFactory.getAccountAdaptiveIcon(mContext, account, avatarSize).blockingGet()
 
-    private fun getProfile(conversation: Conversation): Pair<Bitmap, String>? {
-        return try {
+    private fun getProfile(conversation: Conversation): Pair<Bitmap, String>? =
+        try {
             mContactService.getLoadedConversation(conversation)
                 .map { getProfile(it) }
                 .blockingGet()
         } catch (e: Exception) {
             null
         }
-    }
 
     private fun getProfile(vm: ConversationItemViewModel): Pair<Bitmap, String> =
-        Pair(BitmapUtils.drawableToBitmap(AvatarDrawable.Builder()
+        Pair(AvatarDrawable.Builder()
             .withViewModel(vm)
             .withCircleCrop(true)
-            .build(mContext), avatarSize), vm.title)
+            .build(mContext)
+            .toBitmap(avatarSize), vm.title)
 
-    private fun getProfile(accountId:String, contact: Contact): ContactViewModel {
-        return mContactService.getLoadedContact(accountId, contact).blockingGet()
-    }
+    private fun getProfile(accountId:String, contact: Contact): ContactViewModel =
+        mContactService.getLoadedContact(accountId, contact).blockingGet()
 
     private fun setContactPicture(contact: ContactViewModel, messageNotificationBuilder: NotificationCompat.Builder) {
         getContactPicture(contact)?.let { pic -> messageNotificationBuilder.setLargeIcon(pic) }
