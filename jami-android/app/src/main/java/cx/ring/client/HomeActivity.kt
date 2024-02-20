@@ -19,7 +19,6 @@ package cx.ring.client
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.res.Configuration
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -50,14 +49,13 @@ import cx.ring.fragments.HomeFragment
 import cx.ring.fragments.WelcomeJamiFragment
 import cx.ring.service.DRingService
 import cx.ring.settings.SettingsFragment
-import cx.ring.utils.BitmapUtils
 import cx.ring.utils.ContentUriHandler
 import cx.ring.utils.ConversationPath
 import cx.ring.utils.DeviceUtils
 import cx.ring.utils.getUiCustomizationFromConfigJson
 import cx.ring.viewmodel.WelcomeJamiViewModel
 import cx.ring.views.AvatarDrawable
-import cx.ring.views.AvatarFactory
+import cx.ring.views.AvatarFactory.toAdaptiveIcon
 import cx.ring.views.twopane.TwoPaneLayout
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.core.Single
@@ -78,6 +76,7 @@ import net.jami.utils.takeFirstWhile
 import org.json.JSONObject
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import kotlin.math.max
 
 @AndroidEntryPoint
 class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicked {
@@ -281,7 +280,7 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
                         }
                     }
                 })
-        val targetSize = (AvatarFactory.SIZE_NOTIF * resources.displayMetrics.density).toInt()
+        val iconSize = max(ShortcutManagerCompat.getIconMaxHeight(this), ShortcutManagerCompat.getIconMaxWidth(this))
         val maxShortcuts = getMaxShareShortcuts()
         mDisposable.add(mAccountService
             .currentAccountSubject
@@ -297,10 +296,12 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
                     Single.zip(conversations.mapTo(ArrayList(conversations.size))
                     { c -> mContactService.getLoadedConversation(c)
                         .observeOn(Schedulers.computation())
-                        .map { vm -> Pair(vm, BitmapUtils.drawableToBitmap(AvatarDrawable.Builder()
-                            .withViewModel(vm)
-                            .withCircleCrop(true)
-                            .build(this), targetSize))
+                        .map { vm ->
+                            Pair(vm, AvatarDrawable.Builder()
+                                .withViewModel(vm)
+                                .withCircleCrop(false)
+                                .build(this)
+                                .toAdaptiveIcon(iconSize))
                         }
                     }) { obs -> obs }
             }
@@ -405,7 +406,6 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
             arguments = path.toBundle()
         }
         Log.w(TAG, "startConversation $path old:$fConversation ${supportFragmentManager.backStackEntryCount}")
-        //mBinding!!.conversation.getFragment<>()
 
         // If a conversation is already displayed, we replace it,
         // else we add it
@@ -508,13 +508,7 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
 
     private fun setShareShortcuts(conversations: Array<Any>) {
         val shortcutInfoList = conversations.map { c ->
-            val conversation = c as Pair<ConversationItemViewModel, Bitmap>
-            var icon: IconCompat? = null
-            try {
-                icon = IconCompat.createWithBitmap(conversation.second)
-            } catch (e: Exception) {
-                Log.w(TAG, "Failed to load icon", e)
-            }
+            val conversation = c as Pair<ConversationItemViewModel, IconCompat>
             val title = conversation.first.title
             val path = ConversationPath(conversation.first.accountId, conversation.first.uri)
             val key = path.toKey()
@@ -526,7 +520,7 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
                     .setKey(key)
                     .build())
                 .setLongLived(true)
-                .setIcon(icon)
+                .setIcon(conversation.second)
                 .setCategories(setOf(CONVERSATIONS_CATEGORY))
                 .setIntent(Intent(Intent.ACTION_SEND, android.net.Uri.EMPTY, this, HomeActivity::class.java)
                         .putExtras(path.toBundle()))
