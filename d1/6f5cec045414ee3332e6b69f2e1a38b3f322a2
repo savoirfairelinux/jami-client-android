@@ -1,0 +1,9 @@
+Code-Review+2: Sébastien Blin <sebastien.blin@savoirfairelinux.com>
+Verified+1: Jenkins CI <jenkins@ring-packaging.cx>
+Submitted-by: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
+Submitted-at: Wed, 21 Feb 2024 15:05:17 -0500
+Reviewed-on: https://review.jami.net/c/jami-client-android/+/26372
+Comments-Total: 40
+Comments-Unresolved: 3
+Project: jami-client-android
+Branch: refs/heads/master
