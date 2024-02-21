@@ -21,6 +21,9 @@ on Debian/Ubuntu:
 On macOS:
 > brew install cmake automake autotools libtool pkg-config yasm swig
 
+On arch:
+(WIP)
+
 When using brew on macOS, the 'libtoolize' binary might be available as 'glibtoolize'.
 In that case, the following command makes it avaialble to the build system:
 > ln -s /opt/homebrew/bin/glibtoolize /opt/homebrew/bin/libtoolize
