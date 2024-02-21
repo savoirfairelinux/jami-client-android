@@ -168,9 +168,7 @@ class AccountService(
     private val conversationSearches: MutableMap<Long, Subject<ConversationSearchResult>> = ConcurrentHashMap()
     private val loadingTasks: MutableMap<Long, SingleSubject<List<Interaction>>> = ConcurrentHashMap()
 
-    class UserSearchResult(val accountId: String, val query: String, var state: Int = 0) {
-        var results: List<Contact>? = null
-    }
+    class UserSearchResult(val accountId: String, val query: String, val state: Int = 0, val results: List<Contact> = emptyList())
 
     private val registeredNameSubject: Subject<RegisteredName> = PublishSubject.create()
     private val searchResultSubject: Subject<UserSearchResult> = PublishSubject.create()
@@ -1167,8 +1165,7 @@ class AccountService(
 
     fun userSearchEnded(accountId: String, state: Int, query: String, results: List<Map<String, String>>) {
         val account = getAccount(accountId) ?: return
-        val r = UserSearchResult(accountId, query, state)
-        r.results = results.map { m ->
+        val r = UserSearchResult(accountId, query, state, results.map { m ->
             val uri = m["id"]!!
             account.getContactFromCache(uri).apply {
                 synchronized(this) {
@@ -1184,7 +1181,7 @@ class AccountService(
                     }.cache())
                 }
             }
-        }
+        })
         searchResultSubject.onNext(r)
     }
 
