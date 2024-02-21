@@ -379,7 +379,7 @@ class ConversationFacade(
             Single.just(SearchResult(query, listOf(account.getByUri(uri)!!)))
         } else if (account.canSearch() && !query.contains("@")) {
             mAccountService.searchUser(account.accountId, query)
-                .map { results -> SearchResult(query, results.results!!.map { contact -> account.getByUri(contact.conversationUri.blockingFirst())!! }) }
+                .map { results -> SearchResult(query, results.results.map { contact -> account.getByUri(contact.conversationUri.blockingFirst())!! }) }
         } else {
             mAccountService.findRegistrationByName(account.accountId, "", query)
                 .map { result: RegisteredName ->
