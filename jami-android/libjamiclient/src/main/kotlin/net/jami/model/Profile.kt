@@ -26,7 +26,7 @@ open class Profile(val displayName: String?, val avatar: Any?, val description: 
     }
 }
 
-class ContactViewModel(val contact: Contact, val profile: Profile, val registeredName: String? = null, val presence: Boolean = false) {
+class ContactViewModel(val contact: Contact, val profile: Profile, val registeredName: String? = null, val presence: Contact.PresenceStatus = Contact.PresenceStatus.OFFLINE) {
     val displayUri: String
         get() = registeredName ?: contact.uri.toString()
     val displayName: String

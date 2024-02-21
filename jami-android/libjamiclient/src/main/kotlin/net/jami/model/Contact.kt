@@ -29,8 +29,8 @@ class Contact constructor(val uri: Uri, val isUser: Boolean = false) {
     }
 
     var username: Single<String>? = null
-    var presenceUpdates: Observable<Boolean>? = null
-    private var mContactPresenceEmitter: Emitter<Boolean>? = null
+    var presenceUpdates: Observable<PresenceStatus>? = null
+    private var mContactPresenceEmitter: Emitter<PresenceStatus>? = null
     private val profileSubject: Subject<Single<Profile>> = BehaviorSubject.create()
     val profile: Observable<Profile> = profileSubject.switchMapSingle { single -> single }
     var loadedProfile: Single<Profile>? = null
@@ -63,7 +63,7 @@ class Contact constructor(val uri: Uri, val isUser: Boolean = false) {
     val updatesSubject: Observable<Contact>
         get() = mContactUpdates
 
-    fun setPresenceEmitter(emitter: Emitter<Boolean>?) {
+    fun setPresenceEmitter(emitter: Emitter<PresenceStatus>?) {
         mContactPresenceEmitter?.let { e ->
             if (e != emitter)
                 e.onComplete()
@@ -71,7 +71,13 @@ class Contact constructor(val uri: Uri, val isUser: Boolean = false) {
         mContactPresenceEmitter = emitter
     }
 
-    fun setPresence(present: Boolean) {
+    enum class PresenceStatus {
+        OFFLINE,
+        AVAILABLE,
+        CONNECTED
+    }
+
+    fun setPresence(present: PresenceStatus) {
         mContactPresenceEmitter?.onNext(present)
     }
 

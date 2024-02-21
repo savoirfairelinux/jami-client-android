@@ -107,7 +107,7 @@ class AccountAdapter(
                             profile.first,
                             profile.second,
                             true,
-                            profile.first.isRegistered
+                            profile.first.presenceStatus
                         )
                     )
                     holder.binding.title.text = getTitle(profile.first, profile.second)

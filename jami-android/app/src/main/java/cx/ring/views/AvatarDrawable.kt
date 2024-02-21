@@ -21,6 +21,7 @@ import android.graphics.*
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.VectorDrawable
 import android.util.TypedValue
+import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import cx.ring.R
@@ -65,9 +66,13 @@ class AvatarDrawable : Drawable {
     }
     private val presenceFillPaint: Paint
     private val presenceStrokePaint: Paint
+    @ColorInt
+    private val presenceConnectedColor: Int
+    @ColorInt
+    private val presenceAvailableColor: Int
     private val checkedPaint: Paint
     private val cropCircle: Boolean
-    private var isOnline = false
+    private var presenceStatus = Contact.PresenceStatus.OFFLINE
     private var isChecked = false
     private var showPresence = false
 
@@ -76,10 +81,6 @@ class AvatarDrawable : Drawable {
         private const val SIZE_AB = 36
         private const val SIZE_BORDER = 2
         private const val DEFAULT_TEXT_SIZE_PERCENTAGE = 0.5f
-        private const val PLACEHOLDER_ICON = R.drawable.baseline_account_crop_24
-        private const val PLACEHOLDER_ICON_GROUP = R.drawable.baseline_group_24
-        private const val CHECKED_ICON = R.drawable.baseline_check_circle_24
-        private const val PRESENCE_COLOR = R.color.online_indicator
         private val contactColors = intArrayOf(
             R.color.red_500, R.color.pink_500,
             R.color.purple_500, R.color.deep_purple_500,
@@ -99,13 +100,13 @@ class AvatarDrawable : Drawable {
             VCardServiceImpl.loadProfile(context, account)
                 .map { profile -> build(context, account, profile, crop) }
 
-        fun build(context: Context, account: Account, profile: Profile, crop: Boolean = true, isOnline: Boolean = false) =
+        fun build(context: Context, account: Account, profile: Profile, crop: Boolean = true, presenceStatus: Contact.PresenceStatus = Contact.PresenceStatus.OFFLINE) =
             Builder()
                 .withPhoto(profile.avatar as Bitmap?)
                 .withNameData(profile.displayName, account.registeredName)
                 .withId(if (account.isSip) account.uri else Uri(Uri.JAMI_URI_SCHEME, account.username!!).rawUriString)
                 .withCircleCrop(crop)
-                .withOnlineState(isOnline)
+                .withOnlineState(presenceStatus)
                 .build(context)
 
         private fun getSubBounds(bounds: Rect, total: Int, i: Int): Rect? {
@@ -171,7 +172,7 @@ class AvatarDrawable : Drawable {
         private var name: String? = null
         private var id: String? = null
         private var circleCrop = false
-        private var isOnline = false
+        private var presenceStatus = Contact.PresenceStatus.OFFLINE
         private var showPresence = true
         private var isChecked = false
         private var isGroup = false
@@ -200,8 +201,8 @@ class AvatarDrawable : Drawable {
             return this
         }
 
-        fun withOnlineState(isOnline: Boolean): Builder {
-            this.isOnline = isOnline
+        fun withOnlineState(status: Contact.PresenceStatus): Builder {
+            this.presenceStatus = status
             return this
         }
 
@@ -221,7 +222,7 @@ class AvatarDrawable : Drawable {
         fun withContact(contact: ContactViewModel?) = if (contact == null) this else
             withPhoto(contact.profile.avatar as? Bitmap?)
                 .withId(contact.contact.uri.toString())
-                .withPresence(contact.presence)
+                .withPresence(contact.presence != Contact.PresenceStatus.OFFLINE)
                 .withOnlineState(contact.presence)
                 .withNameData(contact.profile.displayName, contact.registeredName)
 
@@ -278,12 +279,12 @@ class AvatarDrawable : Drawable {
                     .setGroup()
             else withContact(ConversationItemViewModel.getContact(vm.contacts))
                 .withPresence(vm.showPresence)
-                .withOnlineState(vm.isOnline)
+                .withOnlineState(vm.presenceStatus)
                 .withCheck(vm.isChecked)
 
         fun build(context: Context): AvatarDrawable =
             AvatarDrawable(context, photos, name, id, circleCrop, isGroup).also {
-                it.setOnline(isOnline)
+                it.setPresenceStatus(presenceStatus)
                 it.setChecked(isChecked)
                 it.showPresence = showPresence
             }
@@ -296,7 +297,7 @@ class AvatarDrawable : Drawable {
         contact.profile.avatar?.let { photo ->
             bitmaps?.set(0, photo as Bitmap)
         }
-        isOnline = contact.presence
+        presenceStatus = contact.presence
         update = true
     }
 
@@ -310,8 +311,9 @@ class AvatarDrawable : Drawable {
         update = true
     }
 
-    fun setOnline(online: Boolean) {
-        isOnline = online
+    fun setPresenceStatus(status: Contact.PresenceStatus) {
+        presenceStatus = status
+        presenceFillPaint.color = if (status == Contact.PresenceStatus.CONNECTED) presenceConnectedColor else presenceAvailableColor
     }
 
     fun setChecked(checked: Boolean) {
@@ -363,17 +365,18 @@ class AvatarDrawable : Drawable {
             clipPaint = if (cropCircle) arrayOf(Paint()) else null
             if (avatarText == null) {
                 placeholder =
-                    context.getDrawable(if (isGroup) PLACEHOLDER_ICON_GROUP else PLACEHOLDER_ICON) as VectorDrawable?
+                    context.getDrawable(if (isGroup) R.drawable.baseline_group_24 else R.drawable.baseline_account_crop_24) as VectorDrawable?
             } else {
                 textPaint.color = Color.WHITE
                 textPaint.typeface = Typeface.SANS_SERIF
             }
         }
+        presenceAvailableColor = ContextCompat.getColor(context, R.color.available_indicator)
+        presenceConnectedColor = ContextCompat.getColor(context, R.color.online_indicator)
         presenceFillPaint = Paint().apply {
-            color = ContextCompat.getColor(context, PRESENCE_COLOR)
             style = Paint.Style.FILL
             isAntiAlias = true
-            color = ContextCompat.getColor(context, PRESENCE_COLOR)
+            color = presenceConnectedColor
         }
 
         val typedValue = TypedValue()
@@ -388,7 +391,7 @@ class AvatarDrawable : Drawable {
             style = Paint.Style.STROKE
             isAntiAlias = true
         }
-        checkedIcon = context.getDrawable(CHECKED_ICON) as VectorDrawable?
+        checkedIcon = context.getDrawable(R.drawable.baseline_check_circle_24) as VectorDrawable?
         checkedIcon?.setTint(ContextCompat.getColor(context, R.color.colorPrimary))
         checkedPaint = Paint().apply {
             color = ContextCompat.getColor(context, R.color.background)
@@ -415,9 +418,11 @@ class AvatarDrawable : Drawable {
         clipPaint = if (other.clipPaint == null) null else Array(other.clipPaint.size) { i -> Paint(other.clipPaint[i]).apply {
             shader = null
         } }
-        isOnline = other.isOnline
+        presenceStatus = other.presenceStatus
         isChecked = other.isChecked
         showPresence = other.showPresence
+        presenceConnectedColor = other.presenceConnectedColor
+        presenceAvailableColor = other.presenceAvailableColor
         presenceFillPaint = other.presenceFillPaint
         presenceStrokePaint = other.presenceStrokePaint
         checkedPaint = other.checkedPaint
@@ -468,7 +473,7 @@ class AvatarDrawable : Drawable {
         } else {
             finalCanvas.drawBitmap(firstWorkspace, null, bounds, drawPaint)
         }
-        if (showPresence && isOnline) {
+        if (showPresence && presenceStatus != Contact.PresenceStatus.OFFLINE) {
             drawPresence(finalCanvas)
         }
         if (isChecked) {

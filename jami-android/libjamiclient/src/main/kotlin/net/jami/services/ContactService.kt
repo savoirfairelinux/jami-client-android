@@ -75,14 +75,14 @@ abstract class ContactService(
         val uriString = contact.uri.rawRingId
         synchronized(contact) {
             val presenceUpdates = contact.presenceUpdates ?: run {
-                Observable.create { emitter: ObservableEmitter<Boolean> ->
-                    emitter.onNext(false)
+                Observable.create { emitter: ObservableEmitter<Contact.PresenceStatus> ->
+                    emitter.onNext(Contact.PresenceStatus.OFFLINE)
                     contact.setPresenceEmitter(emitter)
                     mAccountService.subscribeBuddy(accountId, uriString, true)
                     emitter.setCancellable {
                         mAccountService.subscribeBuddy(accountId, uriString, false)
                         contact.setPresenceEmitter(null)
-                        emitter.onNext(false)
+                        emitter.onNext(Contact.PresenceStatus.OFFLINE)
                     }
                 }
                     .replay(1)
@@ -105,7 +105,7 @@ abstract class ContactService(
 
             return if (contact.isUser) {
                 mAccountService.getObservableAccountProfile(accountId).map { profile ->
-                    ContactViewModel(contact, profile.second, profile.first.registeredName.ifEmpty { null }, withPresence && profile.first.isRegistered) }
+                    ContactViewModel(contact, profile.second, profile.first.registeredName.ifEmpty { null }, if (withPresence) profile.first.presenceStatus else Contact.PresenceStatus.OFFLINE) }
             } else {
                 if (contact.loadedProfile == null) {
                     contact.loadedProfile = loadContactData(contact, accountId).cache()
@@ -116,7 +116,7 @@ abstract class ContactService(
                     { profile, name, presence -> ContactViewModel(contact, profile, name.ifEmpty { null }, presence) }
                 else
                     Observable.combineLatest(contact.profile, username.toObservable())
-                    { profile, name -> ContactViewModel(contact, profile, name.ifEmpty { null }, false) }
+                    { profile, name -> ContactViewModel(contact, profile, name.ifEmpty { null }, Contact.PresenceStatus.OFFLINE) }
             }
         }
     }

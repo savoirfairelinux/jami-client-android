@@ -494,6 +494,11 @@ class Account(
         get() = registrationState == AccountConfig.RegistrationState.TRYING
     val isRegistered: Boolean
         get() = registrationState == AccountConfig.RegistrationState.REGISTERED
+    val presenceStatus: Contact.PresenceStatus
+        get() = if (isRegistered) Contact.PresenceStatus.CONNECTED
+        else if (isTrying) Contact.PresenceStatus.AVAILABLE
+        else Contact.PresenceStatus.OFFLINE
+
     val isInError: Boolean
         get() {
             val state = registrationState
@@ -787,9 +792,13 @@ class Account(
     }
 
     fun presenceUpdate(contactUri: String, status: Int) {
-        //Log.w(TAG, "presenceUpdate " + contactUri + " " + isOnline);
+        //Log.w(TAG, "presenceUpdate $contactUri $status");
         val contact = getContactFromCache(contactUri)
-        contact.setPresence(status > 0)
+        contact.setPresence(when (status) {
+            0 -> Contact.PresenceStatus.OFFLINE
+            1 -> Contact.PresenceStatus.AVAILABLE
+            else -> Contact.PresenceStatus.CONNECTED
+        })
         synchronized(conversations) {
             conversations[contactUri]?.let { conversationRefreshed(it) }
         }

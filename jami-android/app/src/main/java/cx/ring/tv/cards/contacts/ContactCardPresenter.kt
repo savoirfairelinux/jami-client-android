@@ -27,6 +27,7 @@ import cx.ring.tv.cards.CardView
 import cx.ring.views.AvatarDrawable
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import net.jami.model.Contact
 import net.jami.services.ConversationFacade
 
 class ContactCardPresenter(context: Context, val conversationFacade: ConversationFacade, resId: Int) :
@@ -42,7 +43,7 @@ class ContactCardPresenter(context: Context, val conversationFacade: Conversatio
         val title: String,
         val uri: String,
         val avatar: Drawable,
-        val isOnline: Boolean
+        val presenceStatus: Contact.PresenceStatus
     )
 
     override fun onBindViewHolder(card: Card, cardView: CardView, disposable: CompositeDisposable) {
@@ -52,12 +53,12 @@ class ContactCardPresenter(context: Context, val conversationFacade: Conversatio
                 .withViewModel(vm)
                 .withPresence(false)
                 .withCircleCrop(false)
-                .build(context), vm.isOnline) }
+                .build(context), vm.presenceStatus) }
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { vm -> cardView.apply {
                 titleText = vm.title
                 contentText = vm.uri
-                badgeImage = if (vm.isOnline) badge else null
+                badgeImage = if (vm.presenceStatus != Contact.PresenceStatus.OFFLINE) badge else null
                 setMainImage(vm.avatar, true)
             }
         })

@@ -42,6 +42,7 @@
     <color name="background_status_recommended">#8ee0d0</color>
     <color name="background_status_required">#fee4e9</color>
 
+    <color name="available_indicator">#E59028</color>
     <color name="online_indicator">#0B8271</color>
     <color name="menu_icon">#0A84FF</color>
 

@@ -524,7 +524,7 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
                             profile.first,
                             profile.second,
                             true,
-                            profile.first.isRegistered
+                            profile.first.presenceStatus
                         ),
                         TypedValue.applyDimension(
                             TypedValue.COMPLEX_UNIT_DIP,

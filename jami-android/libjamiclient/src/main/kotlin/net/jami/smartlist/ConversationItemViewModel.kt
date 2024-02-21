@@ -31,7 +31,18 @@ class ConversationItemViewModel(
     val mode: Conversation.Mode = conversation.mode.blockingFirst()
     val uuid: String = uri.rawUriString
     val title: String = getTitle(conversation, conversationProfile, contacts)
-    val isOnline: Boolean = showPresence && contacts.firstOrNull { it.presence } != null
+    val presenceStatus: Contact.PresenceStatus = if (showPresence)
+        contacts.let {
+            var status = Contact.PresenceStatus.OFFLINE
+            for (contact in it) {
+                if (contact.presence == Contact.PresenceStatus.CONNECTED)
+                    return@let Contact.PresenceStatus.CONNECTED
+                else if (contact.presence == Contact.PresenceStatus.AVAILABLE)
+                    status = Contact.PresenceStatus.AVAILABLE
+            }
+            status
+        } else Contact.PresenceStatus.OFFLINE
+
     var isChecked = false
     var selected: Observable<Boolean>? = conversation.getVisible()
         private set
@@ -79,7 +90,7 @@ class ConversationItemViewModel(
         if (other !is ConversationItemViewModel) return false
         return contacts === other.contacts
                 && title == other.title
-                && isOnline == other.isOnline
+                && presenceStatus == other.presenceStatus
     }
 
     companion object {
