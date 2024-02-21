@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b16d79cd_16d7317e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2024-02-21T15:08:01Z",
+      "side": 1,
+      "message": "If you enter a wrong password, then enter your finger, you will have \"Authentification succeeded\" as a toast.",
+      "parentUuid": "b59cf739_cf08e98b",
+      "revId": "d24ca37a09c5f9384a7bb212eb1f50f9f3539223",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "35910a1b_899003d9",
         "filename": "jami-android/app/src/main/java/cx/ring/account/JamiAccountSummaryFragment.kt",
         "patchSetId": 14
