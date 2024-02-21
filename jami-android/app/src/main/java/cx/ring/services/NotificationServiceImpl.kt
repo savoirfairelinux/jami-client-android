@@ -131,6 +131,8 @@ class NotificationServiceImpl(
             .setImportant(true)
             .build()
 
+        val hasVideo = conference.hasVideo()
+
         val messageNotificationBuilder: NotificationCompat.Builder
         if (conference.isOnGoing) {
             messageNotificationBuilder = NotificationCompat.Builder(mContext, NOTIF_CHANNEL_CALL_IN_PROGRESS)
@@ -151,7 +153,7 @@ class NotificationServiceImpl(
                             .putExtra(NotificationService.KEY_CALL_ID, call.daemonIdString)
                             .putExtra(ConversationPath.KEY_ACCOUNT_ID, accountId),
                         ContentUriHandler.immutable(PendingIntent.FLAG_ONE_SHOT)))
-                    .setIsVideo(conference.hasVideo()))
+                    .setIsVideo(hasVideo))
         } else if (conference.isRinging) {
             if (conference.isIncoming) {
                 messageNotificationBuilder = NotificationCompat.Builder(mContext, NOTIF_CHANNEL_INCOMING_CALL)
@@ -174,8 +176,8 @@ class NotificationServiceImpl(
                                 .putExtra(ConversationPath.KEY_ACCOUNT_ID, accountId)
                                 .putExtra(NotificationService.KEY_CALL_ID, call.daemonIdString)
                                 .putExtra(CallPresenter.KEY_ACCEPT_OPTION, CallPresenter.ACCEPT_HOLD)
-                                .putExtra(CallFragment.KEY_HAS_VIDEO, true), ContentUriHandler.immutable(PendingIntent.FLAG_ONE_SHOT)))
-                            .setIsVideo(conference.hasVideo()))
+                                .putExtra(CallFragment.KEY_HAS_VIDEO, hasVideo), ContentUriHandler.immutable(PendingIntent.FLAG_ONE_SHOT)))
+                            .setIsVideo(hasVideo))
             } else {
                 messageNotificationBuilder = NotificationCompat.Builder(mContext, NOTIF_CHANNEL_CALL_IN_PROGRESS)
                     .setContentTitle(mContext.getString(R.string.notif_outgoing_call_title, contact.displayName))
@@ -192,7 +194,7 @@ class NotificationServiceImpl(
                                 .putExtra(NotificationService.KEY_CALL_ID, call.daemonIdString)
                                 .putExtra(ConversationPath.KEY_ACCOUNT_ID, accountId),
                             ContentUriHandler.immutable(PendingIntent.FLAG_ONE_SHOT)))
-                        .setIsVideo(conference.hasVideo()))
+                        .setIsVideo(hasVideo))
                     .setColor(ContextCompat.getColor(mContext, R.color.color_primary_light))
             }
         } else {
