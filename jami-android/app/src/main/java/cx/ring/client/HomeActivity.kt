@@ -340,7 +340,7 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
                         isJamiAccount = account.isJami,
                         jamiId = account.registeredName,
                         jamiHash = account.username ?: "",
-                        onRegisterName = { mAccountService.registerName(account, null, it) },
+                        onRegisterName = { mAccountService.registerName(account, it, "", "") },
                         onCheckUsernameAvailability = { usernameAvailabilitySubject.onNext(it) },
                         uiCustomization = uiCustomization,
                     )

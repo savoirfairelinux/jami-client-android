@@ -74,6 +74,9 @@ along with this program; if not, write to the Free Software
     <string name="account_password_set">Set Password</string>
     <string name="account_password_summary">Manage your account password.</string>
     <string name="account_password_change_wait_message">Changing account password</string>
+    <string name="account_biometric_disable">Disable biometric authentication</string>
+    <string name="account_biometric_set">Enable biometric authentication</string>
+    <string name="account_biometric_summary">Manage biometric authentication for your account.</string>
 
     <!-- Basic Details -->
     <string name="account_preferences_basic_tab">General</string>
@@ -185,7 +188,7 @@ along with this program; if not, write to the Free Software
     <string name="error_passwords_not_equals">Passwords do not match</string>
     <string name="export_account_wait_title">Please wait…</string>
     <string name="export_account_wait_message">Exporting account information</string>
-    <string name="account_export_file">Backup Account</string>
+    <string name="account_export_file">Backup account</string>
     <string name="account_export_file_summary">Backup your account on your device to restore it later.</string>
     <string name="account_export_end_decryption_message">Couldn\'t unlock your account using the provided password.</string>
     <string name="account_export_end_network_title">Network error</string>
@@ -315,4 +318,20 @@ along with this program; if not, write to the Free Software
     <string name="connect_device_scanqr">Scan QR</string>
     <string name="connect_device_enterPIN">Or enter PIN</string>
     <string name="account_link_device_button">Connect</string>
+
+    <!-- Biometry -->
+    <string name="account_biometry_auth_title">Unlock Jami account</string>
+    <string name="account_biometry_auth_message">Use biometry to unlock your account</string>
+    <string name="account_biometry_enroll_title">Use biometric authentication?</string>
+    <string name="account_biometry_enroll_message">Your device supports secure biometric authentication.
+Biometric or device authentication adds a convenient way to locally unlock access to your Jami account. You will still be able to use your password.</string>
+    <string name="account_biometry_enroll_accept">Use biometrics</string>
+    <string name="no_thanks">No thanks</string>
+
+    <string name="account_biometry_enroll_auth_title">Add authentication for your Jami account</string>
+    <string name="account_biometry_enroll_auth_message">Add secure biometric or device authentication as an alternative to your password</string>
+    <string name="account_auth_error">Authentication error: %1$s</string>
+    <string name="account_auth_success">Authentication succeeded</string>
+    <string name="account_auth_key_error">Failed to decrypt account key</string>
+    <string name="account_auth_password">Use account password</string>
 </resources>
