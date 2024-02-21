@@ -18,6 +18,9 @@ Make sure to have autotools, autopoint, swig, yasm, m4, ninja-build and cmake av
 on Debian/Ubuntu:
 > apt install cmake build-essential swig yasm ninja-build m4 autotools-dev autopoint
 
+On Arch:
+> pacman -S cmake ninja automake swig yasm m4 patch autoconf pkgconf
+
 On macOS:
 > brew install cmake automake autotools libtool pkg-config yasm swig
 
