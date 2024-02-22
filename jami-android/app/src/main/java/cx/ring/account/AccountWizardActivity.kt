@@ -53,9 +53,9 @@ class AccountWizardActivity : BaseActivity<AccountWizardPresenter>(), AccountWiz
     private var mProgress: AlertDialog? = null
     private var mAccountType: String? = null
     private var mAlertDialog: AlertDialog? = null
-    private lateinit var biometricEnroll: BiometricHelper.BiometricEnroll
+    private var biometricEnroll: BiometricHelper.BiometricEnroll? = null
     private val enrollBiometricLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        biometricEnroll.onActivityResult(it.resultCode, it.data)
+        biometricEnroll?.onActivityResult(it.resultCode, it.data)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -105,7 +105,10 @@ class AccountWizardActivity : BaseActivity<AccountWizardPresenter>(), AccountWiz
             alertDialog.dismiss()
             mAlertDialog = null
         }
-        biometricEnroll.dispose()
+        biometricEnroll?.let {
+            it.dispose()
+            biometricEnroll = null
+        }
         super.onDestroy()
     }
 
@@ -160,8 +163,7 @@ class AccountWizardActivity : BaseActivity<AccountWizardPresenter>(), AccountWiz
                 { doGoToProfileCreation() },
                 model.model.accountObservable!!,
                 enrollBiometricLauncher
-            )
-            biometricEnroll.start()
+            ).apply { start() }
         } else {
             doGoToProfileCreation()
         }
