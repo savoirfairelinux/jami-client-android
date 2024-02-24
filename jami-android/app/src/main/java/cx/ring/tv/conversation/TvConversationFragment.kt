@@ -62,7 +62,7 @@ import cx.ring.services.SharedPreferencesServiceImpl.Companion.getConversationCo
 import cx.ring.tv.call.TVCallActivity
 import cx.ring.tv.camera.CustomCameraActivity
 import cx.ring.utils.AndroidFileUtils
-import cx.ring.utils.ContentUriHandler
+import cx.ring.utils.ContentUri
 import cx.ring.utils.ConversationPath
 import cx.ring.views.AvatarDrawable
 import cx.ring.views.AvatarFactory
@@ -339,7 +339,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
     override fun shareFile(path: File, displayName: String) {
         val c = context ?: return
         try {
-            val fileUri = ContentUriHandler.getUriForFile(c, ContentUriHandler.AUTHORITY_FILES, path)
+            val fileUri = ContentUri.getUriForFile(c, ContentUri.AUTHORITY_FILES, path)
             val type = c.contentResolver.getType(fileUri)
             val sendIntent = Intent(Intent.ACTION_SEND).apply {
                 setDataAndType(fileUri, type)
@@ -357,7 +357,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
     override fun openFile(path: File, displayName: String) {
         val c = context ?: return
         try {
-            val fileUri = ContentUriHandler.getUriForFile(c, ContentUriHandler.AUTHORITY_FILES, path)
+            val fileUri = ContentUri.getUriForFile(c, ContentUri.AUTHORITY_FILES, path)
             val type = c.contentResolver.getType(fileUri)
             val openIntent = Intent(Intent.ACTION_VIEW).apply {
                 setDataAndType(fileUri, type)

@@ -43,7 +43,7 @@ import cx.ring.application.JamiApplication
 import cx.ring.client.ConversationActivity
 import cx.ring.fragments.ConversationFragment
 import cx.ring.services.NotificationServiceImpl
-import cx.ring.utils.ContentUriHandler
+import cx.ring.utils.ContentUri
 import cx.ring.utils.ConversationPath
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -289,12 +289,12 @@ class LocationSharingService : Service(), LocationListener {
                         applicationContext,
                         mRandom.nextInt(),
                         stopIntent,
-                        ContentUriHandler.immutable()))
+                        ContentUri.immutable()))
                     .setContentIntent(PendingIntent.getActivity(
                         applicationContext,
                         mRandom.nextInt(),
                         contentIntent,
-                        ContentUriHandler.immutable()))
+                        ContentUri.immutable()))
                     .addAction(
                         R.drawable.baseline_location_disabled_24,
                         getText(R.string.notif_location_action_stop),
@@ -302,7 +302,7 @@ class LocationSharingService : Service(), LocationListener {
                             applicationContext,
                             0,
                             stopIntent,
-                            ContentUriHandler.immutable(PendingIntent.FLAG_ONE_SHOT)))
+                            ContentUri.immutable(PendingIntent.FLAG_ONE_SHOT)))
                     .build()
             }
             .subscribeOn(Schedulers.computation())

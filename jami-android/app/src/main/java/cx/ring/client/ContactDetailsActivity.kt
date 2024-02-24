@@ -290,7 +290,7 @@ class ContactDetailsActivity : AppCompatActivity(), TabLayout.OnTabSelectedListe
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         try {
             val file = AndroidFileUtils.createImageFile(this)
-            val uri = FileProvider.getUriForFile(this, ContentUriHandler.AUTHORITY_FILES, file)
+            val uri = FileProvider.getUriForFile(this, ContentUri.AUTHORITY_FILES, file)
             intent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
                 .addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
                 .putExtra("android.intent.extras.CAMERA_FACING", 1)

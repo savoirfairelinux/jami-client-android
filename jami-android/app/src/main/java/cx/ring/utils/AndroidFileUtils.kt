@@ -514,7 +514,7 @@ object AndroidFileUtils {
 
     fun shareFile(c: Context, path: File, displayName: String) {
         val fileUri: Uri = try {
-            ContentUriHandler.getUriForFile(c, ContentUriHandler.AUTHORITY_FILES, path, displayName)
+            ContentUri.getUriForFile(c, ContentUri.AUTHORITY_FILES, path, displayName)
         } catch (e: IllegalArgumentException) {
             Log.e("File Selector", "The selected file can't be shared: " + path.name)
             null
@@ -538,7 +538,7 @@ object AndroidFileUtils {
     fun openFile(c: Context, path: File, displayName: String) {
         var fileUri: Uri? = null
         try {
-            fileUri = ContentUriHandler.getUriForFile(c, ContentUriHandler.AUTHORITY_FILES, path, displayName)
+            fileUri = ContentUri.getUriForFile(c, ContentUri.AUTHORITY_FILES, path, displayName)
         } catch (e: IllegalArgumentException) {
             Log.e(TAG, "The selected file can't be shared: " + path.name)
         }

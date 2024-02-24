@@ -56,8 +56,8 @@ import cx.ring.adapters.MessageType
 import cx.ring.client.MediaViewerActivity
 import cx.ring.utils.ActionHelper
 import cx.ring.utils.ActionHelper.setPadding
-import cx.ring.utils.ContentUriHandler
-import cx.ring.utils.ContentUriHandler.getUriForFile
+import cx.ring.utils.ContentUri
+import cx.ring.utils.ContentUri.getUriForFile
 import cx.ring.utils.DeviceUtils
 import cx.ring.utils.TextUtils
 import cx.ring.viewholders.ConversationViewHolder
@@ -339,7 +339,7 @@ class TvConversationAdapter(
 
         viewHolder.itemView.setOnClickListener { v: View ->
             try {
-                val contentUri = getUriForFile(v.context, ContentUriHandler.AUTHORITY_FILES, path)
+                val contentUri = getUriForFile(v.context, ContentUri.AUTHORITY_FILES, path)
                 val i = Intent(context, MediaViewerActivity::class.java)
                     .setAction(Intent.ACTION_VIEW)
                     .setDataAndType(contentUri, "image/*")
@@ -373,7 +373,7 @@ class TvConversationAdapter(
             acceptBtn.setImageResource(R.drawable.baseline_play_arrow_24)
             val player = MediaPlayer.create(
                 context,
-                getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, path)
+                getUriForFile(context, ContentUri.AUTHORITY_FILES, path)
             )
             viewHolder.player = player
             if (player != null) {
@@ -438,7 +438,7 @@ class TvConversationAdapter(
         val cardLayout = viewHolder.mLayout as CardView
         val player = MediaPlayer.create(
             context,
-            getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, path)
+            getUriForFile(context, ContentUri.AUTHORITY_FILES, path)
         ) ?: return
         viewHolder.player = player
         val playBtn =

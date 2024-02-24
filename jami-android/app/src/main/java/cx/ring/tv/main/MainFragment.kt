@@ -48,7 +48,7 @@ import cx.ring.tv.settings.TVSettingsActivity
 import cx.ring.tv.views.CustomTitleView
 import cx.ring.utils.AndroidFileUtils
 import cx.ring.utils.BitmapUtils
-import cx.ring.utils.ContentUriHandler
+import cx.ring.utils.ContentUri
 import cx.ring.utils.ConversationPath
 import cx.ring.views.AvatarDrawable
 import cx.ring.views.AvatarFactory
@@ -61,7 +61,6 @@ import net.jami.model.Account
 import net.jami.model.Conversation
 import net.jami.model.Profile
 import net.jami.navigation.HomeNavigationViewModel
-import net.jami.services.ConversationFacade
 import net.jami.smartlist.ConversationItemViewModel
 import net.jami.utils.QRCodeUtils
 import java.io.BufferedOutputStream
@@ -339,9 +338,9 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
         private const val PREFERENCES_CHANNELS = "channels"
         private const val KEY_CHANNEL_CONVERSATIONS = "conversations"
         private val HOME_URI = Uri.Builder()
-            .scheme(ContentUriHandler.SCHEME_TV)
-            .authority(ContentUriHandler.AUTHORITY)
-            .appendPath(ContentUriHandler.PATH_TV_HOME)
+            .scheme(ContentUri.SCHEME_TV)
+            .authority(ContentUri.AUTHORITY)
+            .appendPath(ContentUri.PATH_TV_HOME)
             .build()
 
         private fun createHomeChannel(context: Context): Long {
@@ -381,7 +380,7 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
                         bitmapAvatar.compress(Bitmap.CompressFormat.PNG, 100, os)
                     }
                     bitmapAvatar.recycle()
-                    val uri = FileProvider.getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, file)
+                    val uri = FileProvider.getUriForFile(context, ContentUri.AUTHORITY_FILES, file)
 
                     // Grant permission to launcher
                     if (launcherName != null)
@@ -394,9 +393,9 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
                         .setPosterArtAspectRatio(TvContractCompat.PreviewPrograms.ASPECT_RATIO_1_1)
                         .setPosterArtUri(uri)
                         .setIntentUri(Uri.Builder()
-                            .scheme(ContentUriHandler.SCHEME_TV)
-                            .authority(ContentUriHandler.AUTHORITY)
-                            .appendPath(ContentUriHandler.PATH_TV_CONVERSATION)
+                            .scheme(ContentUri.SCHEME_TV)
+                            .authority(ContentUri.AUTHORITY)
+                            .appendPath(ContentUri.PATH_TV_CONVERSATION)
                             .appendPath(vm.accountId)
                             .appendPath(vm.uri.uri)
                             .build())
