@@ -28,7 +28,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import cx.ring.adapters.SmartListAdapter
-import cx.ring.client.ConversationActivity
+import cx.ring.client.HomeActivity
 import cx.ring.databinding.FragSharewithBinding
 import cx.ring.utils.ConversationPath
 import cx.ring.viewholders.SmartListViewHolder.SmartListListeners
@@ -67,7 +67,7 @@ class ShareWithFragment : Fragment() {
                         intent.putExtra(Intent.EXTRA_TEXT, binding!!.previewText.text.toString())
                     }
                     intent.putExtras(ConversationPath.toBundle(item.accountId, item.uri))
-                    intent.setClass(requireActivity(), ConversationActivity::class.java)
+                    intent.setClass(requireActivity(), HomeActivity::class.java)
                     startActivity(intent)
                 }
             }
