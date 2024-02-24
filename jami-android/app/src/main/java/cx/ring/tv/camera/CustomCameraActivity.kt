@@ -20,7 +20,7 @@ import android.animation.Animator
 import android.app.Activity
 import android.media.MediaRecorder
 import android.hardware.Camera.PictureCallback
-import cx.ring.utils.ContentUriHandler
+import cx.ring.utils.ContentUri
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import android.content.Intent
 import android.hardware.Camera
@@ -68,7 +68,7 @@ class CustomCameraActivity : Activity() {
                     out.write(input)
                     out.flush()
                 }
-                ContentUriHandler.getUriForFile(this, ContentUriHandler.AUTHORITY_FILES, file)
+                ContentUri.getUriForFile(this, ContentUri.AUTHORITY_FILES, file)
             }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -103,7 +103,7 @@ class CustomCameraActivity : Activity() {
             releaseMediaRecorder()
             mCameraPreview!!.stop()
             val intent = Intent()
-                .putExtra(MediaStore.EXTRA_OUTPUT, ContentUriHandler.getUriForFile(this, ContentUriHandler.AUTHORITY_FILES, mVideoFile!!))
+                .putExtra(MediaStore.EXTRA_OUTPUT, ContentUri.getUriForFile(this, ContentUri.AUTHORITY_FILES, mVideoFile!!))
                 .setType(TYPE_VIDEO)
             setResult(RESULT_OK, intent)
             binding!!.buttonVideo.setImageResource(R.drawable.baseline_videocam_24)

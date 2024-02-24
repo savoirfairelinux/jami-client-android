@@ -94,7 +94,7 @@ class ConversationMediaGalleryAdapter(
             .into(binding.image)
         binding.image.setOnClickListener { v: View ->
             try {
-                val contentUri = getUriForFile(v.context, ContentUriHandler.AUTHORITY_FILES, path, displayName)
+                val contentUri = getUriForFile(v.context, ContentUri.AUTHORITY_FILES, path, displayName)
                 val i = Intent(v.context, MediaViewerActivity::class.java)
                     .setAction(Intent.ACTION_VIEW)
                     .setDataAndType(contentUri, "image/*")
@@ -112,7 +112,7 @@ class ConversationMediaGalleryAdapter(
         val b = viewHolder.video!!
         try {
             b.playBtn.setImageResource(R.drawable.baseline_play_arrow_24)
-            val player = MediaPlayer.create(context, getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, path))
+            val player = MediaPlayer.create(context, getUriForFile(context, ContentUri.AUTHORITY_FILES, path))
             viewHolder.player = player
             if (player != null) {
                 player.setOnCompletionListener { mp: MediaPlayer ->
@@ -143,7 +143,7 @@ class ConversationMediaGalleryAdapter(
             it.release()
         }
         val video = viewHolder.video ?: return
-        val player = MediaPlayer.create(context, getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, path)) ?: return
+        val player = MediaPlayer.create(context, getUriForFile(context, ContentUri.AUTHORITY_FILES, path)) ?: return
         viewHolder.player = player
         player.setOnPreparedListener { mediaPlayer ->
             val videoRatio = mediaPlayer.videoWidth / mediaPlayer.videoHeight.toFloat()

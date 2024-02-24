@@ -31,17 +31,15 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
-import cx.ring.R
 import cx.ring.databinding.FragAccProfileCreateBinding
 import cx.ring.mvp.BaseSupportFragment
 import cx.ring.utils.AndroidFileUtils.createImageFile
 import cx.ring.utils.AndroidFileUtils.loadBitmap
-import cx.ring.utils.ContentUriHandler
-import cx.ring.utils.ContentUriHandler.getUriForFile
+import cx.ring.utils.ContentUri
+import cx.ring.utils.ContentUri.getUriForFile
 import cx.ring.views.AvatarDrawable
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.core.Single
@@ -133,7 +131,7 @@ class ProfileCreationFragment : BaseSupportFragment<ProfileCreationPresenter, Pr
         try {
             val context = requireContext()
             val file = createImageFile(context)
-            val uri = getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, file)
+            val uri = getUriForFile(context, ContentUri.AUTHORITY_FILES, file)
             val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
                 .putExtra(MediaStore.EXTRA_OUTPUT, uri)
                 .addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)

@@ -62,7 +62,7 @@ import cx.ring.settings.pluginssettings.PluginsListSettingsFragment
 import cx.ring.utils.AndroidFileUtils
 import cx.ring.utils.BiometricHelper
 import cx.ring.utils.BitmapUtils
-import cx.ring.utils.ContentUriHandler
+import cx.ring.utils.ContentUri
 import cx.ring.utils.DeviceUtils
 import cx.ring.views.AvatarDrawable
 import dagger.hilt.android.AndroidEntryPoint
@@ -476,7 +476,7 @@ class JamiAccountSummaryFragment :
         try {
             val context = requireContext()
             val file = AndroidFileUtils.createImageFile(context)
-            val uri = FileProvider.getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, file)
+            val uri = FileProvider.getUriForFile(context, ContentUri.AUTHORITY_FILES, file)
             intent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
                 .addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
                 .putExtra("android.intent.extras.CAMERA_FACING", 1)
