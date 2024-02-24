@@ -166,7 +166,7 @@ along with this program; if not, write to the Free Software
     </plurals>
 
     <!-- ContactList Fragment -->
-    <string name="searchbar_hint">Search name or phone number&#8230;</string>
+    <string name="searchbar_hint">Search name or conversation&#8230;</string>
     <string name="choose_number">Choose a number</string>
 
     <!-- FileExplorerDFragement -->
