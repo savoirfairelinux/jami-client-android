@@ -89,4 +89,31 @@ object ContentUri {
             }
         }
     }
+
+    class ShareItem(val type: String, val data: Uri? = null, val text: CharSequence? = null)
+
+    fun getShareItems(context: Context, intent: Intent): List<ShareItem> {
+        val mediaList = mutableListOf<ShareItem>()
+        val type = intent.type ?: ""
+        if (type.startsWith("text/")) {
+            mediaList.add(ShareItem(type, text = intent.getStringExtra(Intent.EXTRA_TEXT)))
+        } else {
+            val intentUri = intent.data
+            if (intentUri != null)
+                mediaList.add(ShareItem(type, intentUri))
+            val cr = context.contentResolver
+            intent.clipData?.let { clips ->
+                for (i in 0 until clips.itemCount) {
+                    clips.getItemAt(i)?.let { clip ->
+                        val mimeType = clip.uri?.let { cr.getType(it) } ?: clip.intent?.type ?: type
+                        if (mimeType.isNotEmpty() && intentUri != clip.uri)
+                            mediaList.add(ShareItem(mimeType, clip.uri, clip.text))
+                    }
+                }
+            }
+        }
+        return mediaList
+    }
+
+    fun Intent.getShareItems(context: Context): List<ShareItem> = getShareItems(context, this)
 }

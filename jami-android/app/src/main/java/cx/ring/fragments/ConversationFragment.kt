@@ -1221,7 +1221,8 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                 return
             }
             if (type.startsWith("text/plain")) {
-                binding!!.msgInputTxt.setText(intent.getStringExtra(Intent.EXTRA_TEXT))
+                val text = intent.getStringExtra(Intent.EXTRA_TEXT) ?: intent.data?.let { requireContext().contentResolver.openInputStream(it)?.bufferedReader()?.readText() }
+                binding!!.msgInputTxt.setText(text)
             } else {
                 val intentUri = intent.data
                 if (intentUri != null)
