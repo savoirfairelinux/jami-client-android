@@ -19,6 +19,7 @@ package cx.ring.utils
 import android.app.PendingIntent
 import android.content.ContentResolver
 import android.content.Context
+import android.content.Intent
 import android.content.res.Resources
 import android.net.Uri
 import androidx.core.content.FileProvider
@@ -32,8 +33,8 @@ import java.lang.IllegalArgumentException
 /**
  * This class distributes content uri used to pass along data in the app
  */
-object ContentUriHandler {
-    private val TAG = ContentUriHandler::class.simpleName!!
+object ContentUri {
+    private val TAG = ContentUri::class.simpleName!!
     const val AUTHORITY = BuildConfig.APPLICATION_ID
     const val AUTHORITY_FILES = "$AUTHORITY.file_provider"
     const val SCHEME_TV = "jamitv"

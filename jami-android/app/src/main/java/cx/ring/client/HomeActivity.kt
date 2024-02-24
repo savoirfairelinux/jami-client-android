@@ -49,7 +49,7 @@ import cx.ring.fragments.HomeFragment
 import cx.ring.fragments.WelcomeJamiFragment
 import cx.ring.service.DRingService
 import cx.ring.settings.SettingsFragment
-import cx.ring.utils.ContentUriHandler
+import cx.ring.utils.ContentUri
 import cx.ring.utils.ConversationPath
 import cx.ring.utils.DeviceUtils
 import cx.ring.utils.getUiCustomizationFromConfigJson
@@ -473,7 +473,7 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
                 .setClass(this, AccountWizardActivity::class.java)
                 .setData(
                     android.net.Uri.withAppendedPath(
-                        ContentUriHandler.ACCOUNTS_CONTENT_URI, account.accountId
+                        ContentUri.ACCOUNTS_CONTENT_URI, account.accountId
                     )
                 )
             startActivityForResult(intent, 1)

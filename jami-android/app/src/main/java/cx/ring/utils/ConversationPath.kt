@@ -43,7 +43,7 @@ data class ConversationPath(
     }
     fun toBundle() = toBundle(accountId, conversationId)
 
-    fun toUri(): android.net.Uri = ContentUriHandler.CONVERSATION_CONTENT_URI.buildUpon()
+    fun toUri(): android.net.Uri = ContentUri.CONVERSATION_CONTENT_URI.buildUpon()
         .appendEncodedPath(accountId)
         .appendEncodedPath(conversationId)
         .build()
@@ -55,13 +55,13 @@ data class ConversationPath(
         const val KEY_ACCOUNT_ID = "${BuildConfig.APPLICATION_ID}.accountId"
 
         fun toUri(accountId: String, contactId: String): android.net.Uri =
-            ContentUriHandler.CONVERSATION_CONTENT_URI.buildUpon()
+            ContentUri.CONVERSATION_CONTENT_URI.buildUpon()
                 .appendEncodedPath(accountId)
                 .appendEncodedPath(contactId)
                 .build()
 
         fun toUri(accountId: String, conversationUri: Uri): android.net.Uri =
-            ContentUriHandler.CONVERSATION_CONTENT_URI.buildUpon()
+            ContentUri.CONVERSATION_CONTENT_URI.buildUpon()
                 .appendEncodedPath(accountId)
                 .appendEncodedPath(conversationUri.uri)
                 .build()
@@ -98,7 +98,7 @@ data class ConversationPath(
 
         fun fromUri(uri: android.net.Uri?): ConversationPath? {
             if (uri == null) return null
-            if (ContentUriHandler.SCHEME_TV == uri.scheme || uri.toString().startsWith(ContentUriHandler.CONVERSATION_CONTENT_URI.toString())) {
+            if (ContentUri.SCHEME_TV == uri.scheme || uri.toString().startsWith(ContentUri.CONVERSATION_CONTENT_URI.toString())) {
                 val pathSegments = uri.pathSegments
                 if (pathSegments.size > 2) {
                     return ConversationPath(pathSegments[1], pathSegments[2])
@@ -134,7 +134,7 @@ data class InteractionPath(val conversation: ConversationPath, val messageId: St
     companion object {
         fun fromUri(uri: android.net.Uri?): InteractionPath? {
             if (uri == null) return null
-            if (ContentUriHandler.SCHEME_TV == uri.scheme || uri.toString().startsWith(ContentUriHandler.CONVERSATION_CONTENT_URI.toString())) {
+            if (ContentUri.SCHEME_TV == uri.scheme || uri.toString().startsWith(ContentUri.CONVERSATION_CONTENT_URI.toString())) {
                 val pathSegments = uri.pathSegments
                 if (pathSegments.size > 3) {
                     return InteractionPath(ConversationPath(pathSegments[1], pathSegments[2]), pathSegments[3])
@@ -144,7 +144,7 @@ data class InteractionPath(val conversation: ConversationPath, val messageId: St
         }
 
         fun toUri(accountId: String, conversationUri: Uri, messageId: String): android.net.Uri =
-            ContentUriHandler.CONVERSATION_CONTENT_URI.buildUpon()
+            ContentUri.CONVERSATION_CONTENT_URI.buildUpon()
                 .appendEncodedPath(accountId)
                 .appendEncodedPath(conversationUri.uri)
                 .appendEncodedPath(messageId)

@@ -54,7 +54,6 @@ import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
-import androidx.core.content.ContextCompat
 import androidx.core.view.*
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -69,7 +68,7 @@ import cx.ring.plugins.PluginUtils
 import cx.ring.service.DRingService
 import cx.ring.settings.pluginssettings.PluginDetails
 import cx.ring.utils.ActionHelper
-import cx.ring.utils.ContentUriHandler
+import cx.ring.utils.ContentUri
 import cx.ring.utils.ConversationPath
 import cx.ring.utils.DeviceUtils.isTablet
 import cx.ring.utils.DeviceUtils.isTv
@@ -454,7 +453,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                                 .setClass(context, DRingService::class.java)
                                 .putExtra(NotificationService.KEY_CALL_ID, callId)
                                 .putExtra(ConversationPath.KEY_ACCOUNT_ID, accountId),
-                            ContentUriHandler.immutable(PendingIntent.FLAG_ONE_SHOT)
+                            ContentUri.immutable(PendingIntent.FLAG_ONE_SHOT)
                         )
                     ))).build())
             } catch (e: Exception) {

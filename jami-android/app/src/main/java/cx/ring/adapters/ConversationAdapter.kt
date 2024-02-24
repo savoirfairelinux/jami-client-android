@@ -68,7 +68,7 @@ import cx.ring.linkpreview.PreviewData
 import cx.ring.utils.*
 import cx.ring.utils.ActionHelper.Padding
 import cx.ring.utils.ActionHelper.setPadding
-import cx.ring.utils.ContentUriHandler.getUriForFile
+import cx.ring.utils.ContentUri.getUriForFile
 import cx.ring.viewholders.ConversationViewHolder
 import cx.ring.views.AvatarDrawable
 import io.noties.markwon.AbstractMarkwonPlugin
@@ -666,7 +666,7 @@ class ConversationAdapter(
         image.setOnClickListener { v: View ->
             try {
                 val contentUri =
-                    getUriForFile(v.context, ContentUriHandler.AUTHORITY_FILES, path, displayName)
+                    getUriForFile(v.context, ContentUri.AUTHORITY_FILES, path, displayName)
                 val i = Intent(context, MediaViewerActivity::class.java)
                     .setAction(Intent.ACTION_VIEW)
                     .setDataAndType(contentUri, "image/*")
@@ -691,7 +691,7 @@ class ConversationAdapter(
             acceptBtn.setImageResource(R.drawable.baseline_play_arrow_24)
             val player = MediaPlayer.create(
                 context,
-                getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, path)
+                getUriForFile(context, ContentUri.AUTHORITY_FILES, path)
             )
             viewHolder.player = player
             if (player != null) {
@@ -747,7 +747,7 @@ class ConversationAdapter(
         val cardLayout = viewHolder.mLayout as CardView
 
         val contentUri = try {
-            getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, path)
+            getUriForFile(context, ContentUri.AUTHORITY_FILES, path)
         } catch (e: Exception) {
             Log.w(TAG, "Can't open video", e)
             return

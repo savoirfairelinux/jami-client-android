@@ -43,7 +43,7 @@ import cx.ring.application.JamiApplication
 import cx.ring.databinding.ActivityLogsBinding
 import cx.ring.databinding.CrashReportBinding
 import cx.ring.utils.AndroidFileUtils
-import cx.ring.utils.ContentUriHandler
+import cx.ring.utils.ContentUri
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Maybe
@@ -54,7 +54,6 @@ import net.jami.android.tombstone.TombstoneProtos.Tombstone
 import net.jami.services.HardwareService
 import java.io.File
 import java.io.FileOutputStream
-import java.io.IOException
 import java.io.InputStream
 import java.time.Instant
 import javax.inject.Inject
@@ -144,7 +143,7 @@ class LogsActivity : AppCompatActivity() {
             }
     private val logUri: Maybe<Uri>
         get() = logFile.map { file: File ->
-            ContentUriHandler.getUriForFile(this, ContentUriHandler.AUTHORITY_FILES, file)
+            ContentUri.getUriForFile(this, ContentUri.AUTHORITY_FILES, file)
         }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -197,7 +196,7 @@ class LogsActivity : AppCompatActivity() {
         }
         private val crashUri: Maybe<Uri> by lazy {
             crashFile.map { file: File ->
-                ContentUriHandler.getUriForFile(requireContext(), ContentUriHandler.AUTHORITY_FILES, file)
+                ContentUri.getUriForFile(requireContext(), ContentUri.AUTHORITY_FILES, file)
             }
         }
 
