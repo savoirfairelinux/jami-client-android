@@ -74,7 +74,7 @@ class SmartListViewHolder : RecyclerView.ViewHolder {
                 binding.convLastItem.text = ""
                 binding.convLastTime.text = ""
                 binding.convParticipant.text = ""
-                binding.photo.setImageDrawable(null)
+                binding.photo.setAvatar(null)
             }
 
             itemView.setOnClickListener { clickListener.onItemClick(conversation) }
@@ -119,8 +119,8 @@ class SmartListViewHolder : RecyclerView.ViewHolder {
                 .observeOn(DeviceUtils.uiScheduler)
                 .subscribe { conversationItemViewModel ->
                     binding.convParticipant.text = conversationItemViewModel.title
-                    val fade = binding.photo.drawable !is AvatarDrawable
-                    binding.photo.setImageDrawable(AvatarDrawable.Builder()
+                    val fade = binding.photo.background !is AvatarDrawable
+                    binding.photo.setAvatar(AvatarDrawable.Builder()
                         .withViewModel(conversationItemViewModel)
                         .withCircleCrop(true)
                         .build(binding.photo.context))
@@ -135,7 +135,7 @@ class SmartListViewHolder : RecyclerView.ViewHolder {
     }
 
     fun unbind() {
-        binding?.photo?.setImageDrawable(null)
+        binding?.photo?.background = null
         compositeDisposable.clear()
     }
 

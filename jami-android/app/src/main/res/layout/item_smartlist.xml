@@ -27,14 +27,15 @@ along with this program; if not, write to the Free Software
     android:paddingRight="16dp"
     android:paddingBottom="8dp">
 
-    <ImageView
+    <cx.ring.views.AvatarView
         android:id="@+id/photo"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_centerVertical="true"
         android:layout_marginEnd="16dp"
-        android:scaleType="fitCenter"
-        tools:src="@drawable/ic_contact_picture_fallback" />
+        tools:src="@drawable/ic_contact_picture_fallback"
+        tools:uri="@tools:sample/us_phones"
+        tools:avatar="@tools:sample/avatars" />
 
     <RelativeLayout
         android:id="@+id/conv_info"
@@ -58,7 +59,8 @@ along with this program; if not, write to the Free Software
             android:textColor="?attr/colorOnSurface"
             android:textSize="@dimen/text_size_medium"
             android:textStyle="bold"
-            tools:text="Person Name" />
+            tools:text="@tools:sample/full_names"
+            android:paddingBottom="4dp"/>
 
         <TextView
             android:id="@+id/conv_last_item"

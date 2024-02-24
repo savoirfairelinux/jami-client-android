@@ -20,35 +20,33 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.view.View
+import androidx.core.content.res.use
 import cx.ring.R
 import cx.ring.utils.BitmapUtils
 import kotlin.math.min
 
 class AvatarView @JvmOverloads constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int = 0, defStyleRes: Int = 0) :
     View(context, attrs, defStyleAttr, defStyleRes) {
-
-    private var uri: String? = null
-    private var username: String? = null
-    private var displayName: String? = null
-    private var avatar: Drawable? = null
-    private var avatarDrawable: AvatarDrawable
-    private var cropCircle: Boolean = true
-
     init {
-        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.AvatarView)
-        uri = typedArray.getString(R.styleable.AvatarView_uri)
-        username = typedArray.getString(R.styleable.AvatarView_username)
-        displayName = typedArray.getString(R.styleable.AvatarView_displayName)
-        avatar = typedArray.getDrawable(R.styleable.AvatarView_avatar)
-        cropCircle = typedArray.getBoolean(R.styleable.AvatarView_cropCircle, true)
-        typedArray.recycle()
-        avatarDrawable = AvatarDrawable.Builder()
-            .withId(uri)
-            .withNameData(displayName, username)
-            .withPhoto(avatar?.let { BitmapUtils.drawableToBitmap(it) })
-            .withCircleCrop(cropCircle)
-            .build(context)
-        background = avatarDrawable
+        context.obtainStyledAttributes(attrs, R.styleable.AvatarView).use { typedArray ->
+            val uri = typedArray.getString(R.styleable.AvatarView_uri)
+            if (uri != null || isInEditMode) {
+                val username = typedArray.getString(R.styleable.AvatarView_username)
+                val displayName = typedArray.getString(R.styleable.AvatarView_displayName)
+                val avatar = typedArray.getDrawable(R.styleable.AvatarView_avatar)
+                val cropCircle = typedArray.getBoolean(R.styleable.AvatarView_cropCircle, true)
+                setAvatar(AvatarDrawable.Builder()
+                    .withId(uri)
+                    .withNameData(displayName, username)
+                    .withPhoto(avatar?.let { BitmapUtils.drawableToBitmap(it) })
+                    .withCircleCrop(cropCircle)
+                    .build(context))
+            }
+        }
+    }
+
+    fun setAvatar(avatar: AvatarDrawable?) {
+        background = avatar
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
