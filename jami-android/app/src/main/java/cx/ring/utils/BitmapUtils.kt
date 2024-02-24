@@ -16,14 +16,19 @@
  */
 package cx.ring.utils
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.LayerDrawable
+import android.graphics.pdf.PdfRenderer
+import android.net.Uri
 import android.util.Base64
 import android.util.Log
+import android.util.TypedValue
+import androidx.annotation.AttrRes
 import ezvcard.parameter.ImageType
 import ezvcard.property.Photo
 import net.jami.utils.QRCodeUtils
@@ -124,6 +129,29 @@ object BitmapUtils {
         return bitmap
     }
 
+    fun documentToBitmap(context: Context, uri: Uri, maxSize: Int = -1): Bitmap? {
+        context.contentResolver.openFileDescriptor(uri, "r")?.use {  fd ->
+            PdfRenderer(fd).use { renderer ->
+                val pageCount = renderer.getPageCount()
+                for (i in 0 until pageCount) {
+                    renderer.openPage(i).use { page ->
+                        val w = page.width
+                        val h = page.height
+                        val size = if (maxSize > 0) {
+                            val ratio = w.toFloat() / h
+                            if (w > h) maxSize to (maxSize / ratio).toInt() else (maxSize * ratio).toInt() to maxSize
+                        } else w to h
+                        Log.w(TAG, "documentToBitmap: $size")
+                        val bitmap = Bitmap.createBitmap(size.first, size.second, Bitmap.Config.ARGB_8888)
+                        page.render(bitmap, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY)
+                        return bitmap
+                    }
+                }
+            }
+        }
+        return null
+    }
+
     /**
      * Generate an Android Adaptive Bitmap from the given drawable and size in pixels
      * Uses about 20% padding for the adaptive icon as per
@@ -161,4 +189,12 @@ object BitmapUtils {
         LayerDrawable(arrayOf(drawable)).apply {
             setLayerInset(0, padding, padding, padding, padding)
         }
+
+    fun getColorFromAttribute(context: Context, @AttrRes attrColor: Int): Int {
+        val typedValue = TypedValue()
+        val theme = context.theme
+        theme.resolveAttribute(attrColor, typedValue, true)
+        return typedValue.data
+    }
+
 }
