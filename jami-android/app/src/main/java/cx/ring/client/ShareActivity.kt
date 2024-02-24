@@ -30,7 +30,7 @@ class ShareActivity : AppCompatActivity() {
         val intent = intent
         val extra = intent.extras
         if (ConversationPath.fromBundle(extra) != null) {
-            intent.setClass(this, ConversationActivity::class.java)
+            intent.setClass(this, HomeActivity::class.java)
             startActivity(intent)
             finish()
             return

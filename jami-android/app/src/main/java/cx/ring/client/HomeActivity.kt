@@ -229,7 +229,7 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
             Intent.ACTION_SEND_MULTIPLE -> {
                 val path = ConversationPath.fromBundle(extra)
                 if (path != null) {
-                    startConversation(path)
+                    startConversation(path, intent)
                 } else {
                     intent.setClass(applicationContext, ShareActivity::class.java)
                     startActivity(intent)
@@ -401,7 +401,7 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
         startConversation(ConversationPath(accountId, conversationId))
     }
 
-    private fun startConversation(path: ConversationPath) {
+    private fun startConversation(path: ConversationPath, intent: Intent? = null) {
         val conversation = ConversationFragment().apply {
             arguments = path.toBundle()
         }
@@ -412,6 +412,9 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
         conversationBackPressedCallback.isEnabled = true
         supportFragmentManager.beginTransaction()
             .replace(R.id.conversation, conversation, ConversationFragment::class.java.simpleName)
+            .runOnCommit {
+                intent?.let { conversation.handleShareIntent(it) }
+            }
             .commit()
         fConversation = conversation
         mBinding!!.panel.openPane()
