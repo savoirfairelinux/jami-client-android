@@ -28,7 +28,7 @@
     android:gravity="center"
     android:paddingBottom="@dimen/padding_xsmall">
 
-    <FrameLayout
+    <View
         android:id="@+id/excluded_left_zone"
         android:layout_width="0dp"
         android:layout_height="0dp"
