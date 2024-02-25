@@ -32,7 +32,7 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import cx.ring.R
-import cx.ring.views.CustomMessageBubble
+import cx.ring.views.MessageBubble
 import cx.ring.adapters.MessageType
 import cx.ring.views.MessageStatusView
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -100,7 +100,7 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
     }
     var mMessageBubble: ConstraintLayout? = null
     var mMessageLayout: ConstraintLayout? = null
-    var mMessageContent: CustomMessageBubble? = null
+    var mMessageContent: MessageBubble? = null
     var mReplyBubble: LinearLayout? = null
     var mReplyName: TextView? = null
     var mReplyTxt: TextView? = null
