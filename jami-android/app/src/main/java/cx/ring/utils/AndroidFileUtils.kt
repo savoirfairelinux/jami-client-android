@@ -225,7 +225,7 @@ object AndroidFileUtils {
         return result ?: uri.lastPathSegment!!
     }
 
-    private fun getMimeType(cr: ContentResolver, uri: Uri): String? =
+    fun getMimeType(cr: ContentResolver, uri: Uri): String? =
         if (ContentResolver.SCHEME_CONTENT == uri.scheme)
             cr.getType(uri)
         else
