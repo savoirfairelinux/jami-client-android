@@ -34,6 +34,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import cx.ring.R
 import cx.ring.views.MessageBubble
 import cx.ring.adapters.MessageType
+import cx.ring.views.AvatarView
 import cx.ring.views.MessageStatusView
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 
@@ -49,7 +50,7 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
     var mMsgTxt: TextView? = null
     var mMsgDetailTxt: TextView? = null
     var mMsgDetailTxtPerm: TextView? = null
-    val mAvatar: ImageView? = when (type) {
+    val mAvatar: AvatarView? = when (type) {
         MessageType.INCOMING_CALL_INFORMATION,
         MessageType.INCOMING_TEXT_MESSAGE,
         MessageType.ONGOING_GROUP_CALL,

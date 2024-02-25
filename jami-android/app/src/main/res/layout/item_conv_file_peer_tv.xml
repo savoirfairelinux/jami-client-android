@@ -45,25 +45,14 @@
         tools:text="@string/time_just_now"
         tools:visibility="visible" />
 
-    <LinearLayout
-        android:id="@+id/photo_layout"
+    <cx.ring.views.AvatarView
+        android:id="@+id/photo"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/conversation_avatar_size"
+        android:paddingEnd="@dimen/conditional_left_conversation_margin"
         app:layout_constraintBottom_toBottomOf="@id/fileInfoLayout"
         app:layout_constraintEnd_toStartOf="@id/fileInfoLayout"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <ImageView
-            android:id="@+id/photo"
-            android:layout_width="@dimen/conversation_avatar_size"
-            android:layout_height="@dimen/conversation_avatar_size"
-            android:layout_marginEnd="@dimen/conditional_left_conversation_margin"
-            android:background="@null"
-            android:contentDescription="@null"
-            android:scaleType="centerCrop"
-            tools:background="@color/pink_400"
-            tools:visibility="visible" />
-    </LinearLayout>
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/peer_name"
@@ -77,7 +66,7 @@
         android:textSize="@dimen/message_display_name_textsize"
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/fileInfoLayout"
-        app:layout_constraintStart_toEndOf="@id/photo_layout"
+        app:layout_constraintStart_toStartOf="@id/fileInfoLayout"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Bob"
         tools:visibility="visible" />
@@ -89,7 +78,7 @@
         android:animateLayoutChanges="true"
         android:background="@drawable/filemsg_background_in"
         android:minWidth="160dp"
-        app:layout_constraintStart_toEndOf="@id/photo_layout"
+        app:layout_constraintStart_toEndOf="@id/photo"
         app:layout_constraintTop_toBottomOf="@id/peer_name">
 
         <LinearLayout

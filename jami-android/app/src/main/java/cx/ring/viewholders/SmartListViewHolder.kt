@@ -119,12 +119,10 @@ class SmartListViewHolder : RecyclerView.ViewHolder {
                 .observeOn(DeviceUtils.uiScheduler)
                 .subscribe { conversationItemViewModel ->
                     binding.convParticipant.text = conversationItemViewModel.title
-                    val fade = binding.photo.background !is AvatarDrawable
-                    binding.photo.setAvatar(AvatarDrawable.Builder()
+                    if (binding.photo.setAvatar(AvatarDrawable.Builder()
                         .withViewModel(conversationItemViewModel)
                         .withCircleCrop(true)
-                        .build(binding.photo.context))
-                    if (fade)
+                        .build(binding.photo.context)))
                         binding.photo.startAnimation(fadeIn())
                 })
 
@@ -135,7 +133,7 @@ class SmartListViewHolder : RecyclerView.ViewHolder {
     }
 
     fun unbind() {
-        binding?.photo?.background = null
+        binding?.photo?.setAvatar(null)
         compositeDisposable.clear()
     }
 
