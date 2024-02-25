@@ -27,8 +27,12 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 
 object DeviceUtils {
     fun isTv(context: Context): Boolean =
-        context.getSystemService(UiModeManager::class.java)
-            .currentModeType == Configuration.UI_MODE_TYPE_TELEVISION
+        try {
+            context.getSystemService(UiModeManager::class.java)
+                .currentModeType == Configuration.UI_MODE_TYPE_TELEVISION
+        } catch (e: Throwable) {
+            false
+        }
 
     fun getStatusBarHeight(context: Context): Int {
         val resourceId = context.resources
