@@ -131,7 +131,7 @@ class ProfileCreationFragment : BaseSupportFragment<ProfileCreationPresenter, Pr
         try {
             val context = requireContext()
             val file = createImageFile(context)
-            val uri = getUriForFile(context, ContentUri.AUTHORITY_FILES, file)
+            val uri = getUriForFile(context, file)
             val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
                 .putExtra(MediaStore.EXTRA_OUTPUT, uri)
                 .addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
