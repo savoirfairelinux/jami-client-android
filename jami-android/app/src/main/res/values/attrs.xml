@@ -11,6 +11,14 @@
         <attr name="text" format="string" />
     </declare-styleable>
 
+    <declare-styleable name="AvatarView">
+        <attr name="uri" format="string" />
+        <attr name="username" format="string" />
+        <attr name="displayName" format="string" />
+        <attr name="avatar" format="reference" />
+        <attr name="cropCircle" format="boolean" />
+    </declare-styleable>
+
     <declare-styleable name="SwitchButton">
         <attr name="backColor" format="color|reference"/>
         <attr name="status" format="string"/>
