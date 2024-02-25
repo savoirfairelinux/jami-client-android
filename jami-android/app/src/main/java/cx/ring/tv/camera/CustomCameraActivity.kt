@@ -68,7 +68,7 @@ class CustomCameraActivity : Activity() {
                     out.write(input)
                     out.flush()
                 }
-                ContentUri.getUriForFile(this, ContentUri.AUTHORITY_FILES, file)
+                ContentUri.getUriForFile(this, file)
             }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -103,7 +103,7 @@ class CustomCameraActivity : Activity() {
             releaseMediaRecorder()
             mCameraPreview!!.stop()
             val intent = Intent()
-                .putExtra(MediaStore.EXTRA_OUTPUT, ContentUri.getUriForFile(this, ContentUri.AUTHORITY_FILES, mVideoFile!!))
+                .putExtra(MediaStore.EXTRA_OUTPUT, ContentUri.getUriForFile(this, mVideoFile!!))
                 .setType(TYPE_VIDEO)
             setResult(RESULT_OK, intent)
             binding!!.buttonVideo.setImageResource(R.drawable.baseline_videocam_24)
