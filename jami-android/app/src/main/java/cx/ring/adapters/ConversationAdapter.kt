@@ -665,8 +665,7 @@ class ConversationAdapter(
             .into(image)
         image.setOnClickListener { v: View ->
             try {
-                val contentUri =
-                    getUriForFile(v.context, ContentUri.AUTHORITY_FILES, path, displayName)
+                val contentUri = getUriForFile(v.context, path, displayName)
                 val i = Intent(context, MediaViewerActivity::class.java)
                     .setAction(Intent.ACTION_VIEW)
                     .setDataAndType(contentUri, "image/*")
@@ -689,10 +688,7 @@ class ConversationAdapter(
             val acceptBtn = viewHolder.btnAccept as ImageView
             val refuseBtn = viewHolder.btnRefuse!!
             acceptBtn.setImageResource(R.drawable.baseline_play_arrow_24)
-            val player = MediaPlayer.create(
-                context,
-                getUriForFile(context, ContentUri.AUTHORITY_FILES, path)
-            )
+            val player = MediaPlayer.create(context, getUriForFile(context, path))
             viewHolder.player = player
             if (player != null) {
                 player.setOnCompletionListener { mp: MediaPlayer ->
@@ -747,7 +743,7 @@ class ConversationAdapter(
         val cardLayout = viewHolder.mLayout as CardView
 
         val contentUri = try {
-            getUriForFile(context, ContentUri.AUTHORITY_FILES, path)
+            getUriForFile(context, path)
         } catch (e: Exception) {
             Log.w(TAG, "Can't open video", e)
             return

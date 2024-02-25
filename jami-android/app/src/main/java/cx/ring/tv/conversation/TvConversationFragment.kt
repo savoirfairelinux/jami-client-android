@@ -339,7 +339,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
     override fun shareFile(path: File, displayName: String) {
         val c = context ?: return
         try {
-            val fileUri = ContentUri.getUriForFile(c, ContentUri.AUTHORITY_FILES, path)
+            val fileUri = ContentUri.getUriForFile(c, path)
             val type = c.contentResolver.getType(fileUri)
             val sendIntent = Intent(Intent.ACTION_SEND).apply {
                 setDataAndType(fileUri, type)
@@ -357,7 +357,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
     override fun openFile(path: File, displayName: String) {
         val c = context ?: return
         try {
-            val fileUri = ContentUri.getUriForFile(c, ContentUri.AUTHORITY_FILES, path)
+            val fileUri = ContentUri.getUriForFile(c, path)
             val type = c.contentResolver.getType(fileUri)
             val openIntent = Intent(Intent.ACTION_VIEW).apply {
                 setDataAndType(fileUri, type)
