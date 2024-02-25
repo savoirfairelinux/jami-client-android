@@ -50,6 +50,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.view.children
 import androidx.core.view.isVisible
+import androidx.core.view.setPadding
 import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.RecyclerView
 import androidx.vectordrawable.graphics.drawable.Animatable2Compat
@@ -77,6 +78,8 @@ import io.noties.markwon.MarkwonVisitor
 import io.noties.markwon.linkify.LinkifyPlugin
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.conversation.ConversationPresenter
 import net.jami.model.*
 import net.jami.model.Account.ComposingStatus
@@ -1059,10 +1062,7 @@ class ConversationAdapter(
         viewHolder.mFileTime?.text = timeString
         viewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
             viewHolder.mFileSize?.text = when (val status = file.status) {
-                InteractionStatus.TRANSFER_FINISHED -> String.format("%s - %s",
-                    Formatter.formatFileSize(context, file.totalSize),
-                    TextUtils.getReadableFileTransferStatus(context, status)
-                )
+                InteractionStatus.TRANSFER_FINISHED -> Formatter.formatFileSize(context, file.totalSize)
                 InteractionStatus.TRANSFER_ONGOING -> String.format("%s / %s - %s",
                     Formatter.formatFileSize(context, file.bytesProgress),
                     Formatter.formatFileSize(context, file.totalSize),
@@ -1172,6 +1172,10 @@ class ConversationAdapter(
                         .getDimensionPixelSize(R.dimen.conversation_message_separation)
                 }
                 val status = file.status
+                viewHolder.mIcon?.setPadding(res.getDimensionPixelSize(R.dimen.padding_large))
+                viewHolder.mIcon?.setClipToOutline(true)
+                viewHolder.mIcon?.imageTintList = context.getColorStateList(R.color.file_icon_out)
+                viewHolder.mIcon?.backgroundTintList = context.getColorStateList(if (file.isOutgoing) R.color.file_icon_background_out else R.color.file_icon_background_in)
                 viewHolder.mIcon?.setImageResource(
                     if (status.isError) R.drawable.baseline_warning_24
                     else R.drawable.baseline_attach_file_24
@@ -1198,6 +1202,22 @@ class ConversationAdapter(
                             viewHolder.progress?.show()
                         } else {
                             viewHolder.progress?.hide()
+                            val uri = getUriForFile(context, path)
+                            if (context.contentResolver.getType(uri) == "application/pdf") {
+                                val size = res.getDimensionPixelSize(R.dimen.conversation_file_preview)
+                                viewHolder.compositeDisposable.add(Single
+                                    .fromCallable { BitmapUtils.documentToBitmap(context, uri, size, size)!! }
+                                    .subscribeOn(Schedulers.computation())
+                                    .observeOn(DeviceUtils.uiScheduler)
+                                    .subscribe({ bitmap ->
+                                        viewHolder.mIcon?.setPadding(0)
+                                        viewHolder.mIcon?.imageTintList = null
+                                        viewHolder.mIcon?.backgroundTintList = context.getColorStateList(R.color.white)
+                                        viewHolder.mIcon?.setImageBitmap(bitmap)
+                                    }) {
+                                        Log.w(TAG, "Error loading PDF preview", it)
+                                    })
+                            }
                         }
                         viewHolder.mFileInfoLayout?.setOnClickListener { presenter.openFile(file) }
                     }
