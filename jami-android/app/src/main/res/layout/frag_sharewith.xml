@@ -17,44 +17,18 @@
         tools:menu="@menu/share_actions"
         tools:title="@string/title_share_with" />
 
-    <com.google.android.material.card.MaterialCardView
-        style="?attr/materialCardViewFilledStyle"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/mediaList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_share_media"
+        tools:itemCount="48"
         android:layout_gravity="center_horizontal"
-        android:layout_marginHorizontal="8dp"
-        android:layout_marginBottom="4dp"
-        android:elevation="2dp"
-        android:focusableInTouchMode="true">
-
-        <EditText
-            android:id="@+id/previewText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@null"
-            android:inputType="textMultiLine"
-            android:singleLine="false"
-            android:textColor="@color/colorOnSurface"
-            android:visibility="visible"
-            tools:text="Test text message" />
-
-        <ImageView
-            android:id="@+id/previewImage"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/share_preview_height"
-            android:adjustViewBounds="true"
-            android:visibility="gone"
-            tools:src="@tools:sample/backgrounds/scenic"
-            tools:visibility="gone" />
-
-        <cx.ring.views.PreviewVideoView
-            android:id="@+id/previewVideo"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/share_preview_height"
-            android:visibility="gone" />
-
-    </com.google.android.material.card.MaterialCardView>
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:clipToPadding="false"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/shareList"
