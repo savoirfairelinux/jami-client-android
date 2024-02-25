@@ -104,7 +104,7 @@ public class TwoPaneLayout extends ViewGroup implements Openable {
      * How far the panel is offset from its usual position.
      * range [0, 1] where 0 = open, 1 = closed.
      */
-    private float mSlideOffset = 1.f;
+    private boolean isOpened = false;
 
     private final List<PanelListener> mPanelListeners = new CopyOnWriteArrayList<>();
 
@@ -212,24 +212,7 @@ public class TwoPaneLayout extends ViewGroup implements Openable {
     }
 
     void updateObscuredViewsVisibility(View panel) {
-        final boolean isLayoutRtl = isLayoutRtlSupport();
-        final int startBound = isLayoutRtl ? (getWidth() - getPaddingRight()) : getPaddingLeft();
-        final int endBound = isLayoutRtl ? getPaddingLeft() : (getWidth() - getPaddingRight());
-        final int topBound = getPaddingTop();
-        final int bottomBound = getHeight() - getPaddingBottom();
-        final int left;
-        final int right;
-        final int top;
-        final int bottom;
-        if (panel != null && panel.isOpaque()) {
-            left = panel.getLeft();
-            right = panel.getRight();
-            top = panel.getTop();
-            bottom = panel.getBottom();
-        } else {
-            left = right = top = bottom = 0;
-        }
-
+        boolean visibility = !mCanSlide || !isOpened;
         for (int i = 0, childCount = getChildCount(); i < childCount; i++) {
             final View child = getChildAt(i);
 
@@ -239,21 +222,7 @@ public class TwoPaneLayout extends ViewGroup implements Openable {
             } else if (child.getVisibility() == GONE) {
                 continue;
             }
-
-            final int clampedChildLeft = Math.max(
-                    (isLayoutRtl ? endBound : startBound), child.getLeft());
-            final int clampedChildTop = Math.max(topBound, child.getTop());
-            final int clampedChildRight = Math.min(
-                    (isLayoutRtl ? startBound : endBound), child.getRight());
-            final int clampedChildBottom = Math.min(bottomBound, child.getBottom());
-            final int vis;
-            if (clampedChildLeft >= left && clampedChildTop >= top
-                    && clampedChildRight <= right && clampedChildBottom <= bottom) {
-                vis = INVISIBLE;
-            } else {
-                vis = VISIBLE;
-            }
-            child.setVisibility(vis);
+            child.setVisibility(visibility ? VISIBLE : INVISIBLE);
         }
     }
 
@@ -436,7 +405,7 @@ public class TwoPaneLayout extends ViewGroup implements Openable {
                 int childWidthSpec = MeasureSpec.makeMeasureSpec(splitView.width(),
                         MeasureSpec.AT_MOST);
                 child.measure(childWidthSpec, childHeightSpec);
-                if ((child.getMeasuredWidthAndState() & MEASURED_STATE_TOO_SMALL) == 1 || (
+                if ((child.getMeasuredWidthAndState() & MEASURED_STATE_TOO_SMALL) != 0 || (
                         getMinimumWidth(child) != 0
                                 && splitView.width() < getMinimumWidth(child))) {
                     childWidthSpec = MeasureSpec.makeMeasureSpec(widthAvailable - horizontalMargin,
@@ -496,7 +465,7 @@ public class TwoPaneLayout extends ViewGroup implements Openable {
         int nextXStart = xStart;
 
         if (mFirstLayout) {
-            mSlideOffset = mCanSlide && mPreservedOpenState ? 0.f : 1.f;
+            isOpened = mCanSlide && mPreservedOpenState;
         }
 
         for (int i = 0; i < childCount; i++) {
@@ -515,9 +484,8 @@ public class TwoPaneLayout extends ViewGroup implements Openable {
                 final int margin = lp.leftMargin + lp.rightMargin;
                 final int range = Math.min(nextXStart, width - paddingEnd) - xStart - margin;
                 final int lpMargin = isLayoutRtl ? lp.rightMargin : lp.leftMargin;
-                final int pos = (int) (range * mSlideOffset);
+                final int pos = (isOpened) ? 0 : range;
                 xStart += pos + lpMargin;
-                mSlideOffset = (float) pos / range;
             } else {
                 xStart = nextXStart;
             }
@@ -581,7 +549,7 @@ public class TwoPaneLayout extends ViewGroup implements Openable {
         if (!mCanSlide) {
             mPreservedOpenState = false;
         }
-        if (mFirstLayout || slideTo(1.f)) {
+        if (mFirstLayout || slideTo(false)) {
             mPreservedOpenState = false;
             return true;
         }
@@ -599,7 +567,7 @@ public class TwoPaneLayout extends ViewGroup implements Openable {
         if (!mCanSlide) {
             mPreservedOpenState = true;
         }
-        if (mFirstLayout || slideTo(0.f)) {
+        if (mFirstLayout || slideTo(true)) {
             mPreservedOpenState = true;
             return true;
         }
@@ -632,7 +600,7 @@ public class TwoPaneLayout extends ViewGroup implements Openable {
      */
     @Override
     public boolean isOpen() {
-        return !mCanSlide || mSlideOffset == 0;
+        return !mCanSlide || isOpened;
     }
 
     /**
@@ -673,21 +641,19 @@ public class TwoPaneLayout extends ViewGroup implements Openable {
     }
 
     /**
-     * Set mDraggingPane to the target X position within its range.
-     *
-     * @param slideOffset position to animate to
+     * @param opened position to switch to
      */
-    boolean slideTo(float slideOffset) {
+    boolean slideTo(boolean opened) {
         if (!mCanSlide) {
             // Nothing to do.
             return false;
         }
 
         View slideableView = mSlideableView;
-        mSlideOffset = slideOffset;
+        isOpened = opened;
+        mFirstLayout = true;
         requestLayout();
         invalidate();
-        boolean opened = slideOffset == 0.f;
         if (opened)
             dispatchOnPanelOpened(slideableView);
         else
@@ -746,7 +712,7 @@ public class TwoPaneLayout extends ViewGroup implements Openable {
 
     public static class LayoutParams extends ViewGroup.MarginLayoutParams {
         private static final int[] ATTRS = new int[]{
-                android.R.attr.layout_weight
+            android.R.attr.layout_weight
         };
 
         /**
