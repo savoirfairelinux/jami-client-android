@@ -1,5 +1,5 @@
 <resources>
-    <declare-styleable name="CustomMessageBubble">
+    <declare-styleable name="MessageBubble">
         <attr name="time" format="string"/>
         <attr name="message" format="string"/>
         <attr name="edited" format="boolean"/>
