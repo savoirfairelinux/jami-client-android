@@ -143,7 +143,7 @@ class LogsActivity : AppCompatActivity() {
             }
     private val logUri: Maybe<Uri>
         get() = logFile.map { file: File ->
-            ContentUri.getUriForFile(this, ContentUri.AUTHORITY_FILES, file)
+            ContentUri.getUriForFile(this, file)
         }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -196,7 +196,7 @@ class LogsActivity : AppCompatActivity() {
         }
         private val crashUri: Maybe<Uri> by lazy {
             crashFile.map { file: File ->
-                ContentUri.getUriForFile(requireContext(), ContentUri.AUTHORITY_FILES, file)
+                ContentUri.getUriForFile(requireContext(), file)
             }
         }
 
