@@ -63,7 +63,7 @@ object ContentUri {
      * https://stackoverflow.com/a/41309223
      */
     private const val HUAWEI_MANUFACTURER = "Huawei"
-    fun getUriForFile(context: Context, authority: String, file: File, displayName: String? = null): Uri {
+    fun getUriForFile(context: Context, file: File, displayName: String? = null, authority: String = AUTHORITY_FILES): Uri {
         return try {
             if (displayName == null)
                 FileProvider.getUriForFile(context, authority, file)

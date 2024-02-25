@@ -591,7 +591,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                     putExtra("android.intent.extras.LENS_FACING_FRONT", 1)
                     putExtra("android.intent.extra.USE_FRONT_CAMERA", true)
                     putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 0)
-                    putExtra(MediaStore.EXTRA_OUTPUT, ContentUri.getUriForFile(context, ContentUri.AUTHORITY_FILES, AndroidFileUtils.createVideoFile(context).apply {
+                    putExtra(MediaStore.EXTRA_OUTPUT, ContentUri.getUriForFile(context, AndroidFileUtils.createVideoFile(context).apply {
                         mCurrentPhoto = this
                     }))
                 }
@@ -612,7 +612,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         try {
             val photoFile = AndroidFileUtils.createImageFile(c)
             Log.i(TAG, "takePicture: trying to save to $photoFile")
-            val photoURI = ContentUri.getUriForFile(c, ContentUri.AUTHORITY_FILES, photoFile)
+            val photoURI = ContentUri.getUriForFile(c, photoFile)
             val takePictureIntent =
                 Intent(MediaStore.ACTION_IMAGE_CAPTURE).putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
                     .putExtra("android.intent.extras.CAMERA_FACING", 1)
