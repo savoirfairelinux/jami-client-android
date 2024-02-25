@@ -44,18 +44,13 @@
         android:paddingStart="@dimen/padding_large"
         android:paddingEnd="@dimen/padding_large">
 
-        <ImageView
+        <cx.ring.views.AvatarView
             android:id="@+id/photo"
             android:layout_width="@dimen/conversation_avatar_size"
             android:layout_height="@dimen/conversation_avatar_size"
             android:layout_alignBottom="@id/image"
             android:layout_alignParentStart="true"
-            android:layout_marginEnd="@dimen/conditional_left_conversation_margin"
-            android:background="@null"
-            android:contentDescription="@null"
-            android:gravity="start"
-            android:scaleType="centerCrop"
-            tools:background="@color/teal_700" />
+            android:layout_marginEnd="@dimen/conditional_left_conversation_margin" />
 
         <TextView
             android:id="@+id/peer_name"
