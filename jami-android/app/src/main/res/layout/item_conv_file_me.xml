@@ -74,28 +74,28 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <LinearLayout
-                android:id="@+id/file_icon_layout"
-                android:layout_width="56dp"
-                android:layout_height="56dp"
-                app:layout_constraintHorizontal_bias="0"
-                app:layout_constraintHorizontal_chainStyle="packed"
+            <ImageView
+                android:id="@+id/file_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
                 android:background="@drawable/file_icon_background"
                 android:backgroundTint="@color/file_icon_background_out"
+                android:maxWidth="@dimen/conversation_file_preview"
+                android:maxHeight="@dimen/conversation_file_preview"
+                android:padding="16dp"
+                android:scaleType="fitStart"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/file_title"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:id="@+id/file_icon"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:contentDescription="@null"
-                    app:srcCompat="@drawable/baseline_attach_file_24"
-                    app:tint="@color/file_icon_out" />
-            </LinearLayout>
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/baseline_attach_file_24"
+                app:tint="@color/file_icon_out"
+                tools:clipToOutline="true"
+                tools:padding="0dp"
+                tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
             <TextView
                 android:id="@+id/file_title"
@@ -111,7 +111,7 @@
                 android:textSize="16sp"
                 app:layout_constrainedWidth="true"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/file_icon_layout"
+                app:layout_constraintStart_toEndOf="@id/file_icon"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Title_document.pdf" />
 
@@ -143,21 +143,21 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <TextView
-        android:id="@+id/reaction_chip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="-6dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/background_reaction_chip"
-        android:lines="1"
-        android:maxLines="1"
-        android:outlineProvider="none"
-        android:padding="5dp"
-        android:singleLine="true"
-        app:layout_constraintEnd_toEndOf="@id/fileInfoLayout"
-        app:layout_constraintTop_toBottomOf="@id/fileInfoLayout"
-        tools:text="👍 😍 3" />
+        <TextView
+            android:id="@+id/reaction_chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-6dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/background_reaction_chip"
+            android:lines="1"
+            android:maxLines="1"
+            android:outlineProvider="none"
+            android:padding="5dp"
+            android:singleLine="true"
+            app:layout_constraintEnd_toEndOf="@id/fileInfoLayout"
+            app:layout_constraintTop_toBottomOf="@id/fileInfoLayout"
+            tools:text="👍 😍 3" />
 
         <cx.ring.views.MessageStatusView
             android:id="@+id/status_icon"
