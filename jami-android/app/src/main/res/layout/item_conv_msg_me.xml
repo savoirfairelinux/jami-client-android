@@ -20,17 +20,15 @@ along with this program; if not, write to the Free Software
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/padding_xsmall">
 
-    <FrameLayout
-        android:id="@+id/excluded_left_zone"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/message_layout"
-        app:layout_constraintTop_toTopOf="@id/message_time_permanent" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/right_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.1666667" />
 
     <TextView
         android:id="@+id/message_time_permanent"
@@ -40,138 +38,127 @@ along with this program; if not, write to the Free Software
         android:textColor="@color/textColorSecondary"
         android:textSize="@dimen/conversation_timestamp_textsize"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@id/message_layout"
+        app:layout_constraintBottom_toTopOf="@id/reply_bubble"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="@string/time_just_now"
         tools:visibility="visible" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <!--<androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/message_layout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/padding_xsmall"
         app:layout_constraintHorizontal_weight="5"
-        app:layout_constraintLeft_toRightOf="@+id/excluded_left_zone"
+        app:layout_constraintLeft_toRightOf="@+id/right_guideline"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/message_time_permanent">
-
-        <LinearLayout
-            android:id="@+id/reply_bubble"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginStart="70dp"
-            android:layout_marginEnd="@dimen/conversation_me_margin_end"
-            android:background="@drawable/textmsg_bg_out"
-            android:backgroundTint="@color/conversation_secondary_background"
-            android:padding="5dp"
-            android:visibility="gone"
-            app:layout_constrainedWidth="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:visibility="visible">
-
-            <TextView
-                android:id="@+id/reply_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:background="@drawable/reply_contact_msg_bg"
-                android:backgroundTint="@color/conversation_reply_background"
-                android:drawablePadding="5dp"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:padding="5dp"
-                android:textColor="#000000"
-                android:textSize="@dimen/message_display_name_textsize"
-                app:drawableStartCompat="@drawable/reply_contact_avatar_12px"
-                tools:text="Jean-Pascal" />
-
-            <TextView
-                android:id="@+id/reply_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:focusable="true"
-                android:maxLines="1"
-                android:padding="5dp"
-                android:textSize="@dimen/conversation_text_size_small"
-                android:theme="@style/IncomingTextMessage"
-                tools:text="Lorem ipsum" />
-
-        </LinearLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/message_bubble"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginTop="-6.5dp"
-            android:layout_marginEnd="@dimen/conversation_me_margin_end"
-            android:background="@drawable/textmsg_bg_out_reply"
-            android:paddingBottom="0dp"
-            app:layout_constrainedWidth="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/reply_bubble">
-
-            <cx.ring.views.MessageBubble
-                android:id="@+id/message_content"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="10dp"
-                android:paddingVertical="5dp"
-                android:theme="@style/OutgoingTextMesssage"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:edited="true"
-                tools:message="This is a test !"
-                tools:time="11h05" />
-
-            <include
-                android:id="@+id/link_preview"
-                layout="@layout/msg_link_preview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/message_content" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <cx.ring.views.MessageStatusView
-            android:id="@+id/status_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="5dp"
-            app:layout_constraintBottom_toBottomOf="@id/message_bubble"
-            app:layout_constraintEnd_toEndOf="parent"
-            tools:background="@color/purple_300"
-            tools:layout_height="@dimen/conversation_status_icon_size"
-            tools:layout_width="@dimen/conversation_status_icon_size"
-            tools:visibility="visible" />
+-->
+    <LinearLayout
+        android:id="@+id/reply_bubble"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginStart="70dp"
+        android:layout_marginEnd="@dimen/conversation_me_margin_end"
+        android:background="@drawable/textmsg_bg_out"
+        android:backgroundTint="@color/conversation_secondary_background"
+        android:padding="5dp"
+        android:visibility="gone"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/message_time_permanent"
+        tools:visibility="visible">
 
         <TextView
-            android:id="@+id/reaction_chip"
+            android:id="@+id/reply_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="-4dp"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/background_reaction_chip"
-            android:lines="1"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/reply_contact_msg_bg"
+            android:backgroundTint="@color/conversation_reply_background"
+            android:drawablePadding="5dp"
+            android:ellipsize="end"
             android:maxLines="1"
-            android:outlineProvider="none"
             android:padding="5dp"
-            android:singleLine="true"
-            app:layout_constraintEnd_toEndOf="@id/message_bubble"
-            app:layout_constraintTop_toBottomOf="@id/message_bubble"
-            tools:text="👍 😍 3" />
+            android:textColor="#000000"
+            android:textSize="@dimen/message_display_name_textsize"
+            app:drawableStartCompat="@drawable/reply_contact_avatar_12px"
+            tools:text="Jean-Pascal" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/reply_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:focusable="true"
+            android:maxLines="1"
+            android:padding="5dp"
+            android:textSize="@dimen/conversation_text_size_small"
+            android:theme="@style/IncomingTextMessage"
+            tools:text="Lorem ipsum" />
+
+    </LinearLayout>
+
+    <cx.ring.views.MessageBubble
+        android:id="@+id/message_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/textmsg_bg_out_reply"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="5dp"
+        android:clipToPadding="false"
+        android:theme="@style/OutgoingTextMesssage"
+        android:layout_marginTop="-6.5dp"
+        android:layout_marginEnd="@dimen/conversation_me_margin_end"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/right_guideline"
+        app:layout_constraintTop_toBottomOf="@id/reply_bubble"
+        app:layout_constraintHorizontal_bias="1"
+        tools:edited="true"
+        tools:message="This is an intellectually, constitutionally elongated message to push wrapping boundaries for the text in the message."
+        tools:time="11h05">
+        <include
+            android:id="@+id/link_preview"
+            layout="@layout/msg_link_preview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/message_content" />
+    </cx.ring.views.MessageBubble>
+
+    <cx.ring.views.MessageStatusView
+        android:id="@+id/status_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="5dp"
+        app:layout_constraintBottom_toBottomOf="@id/message_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:background="@color/purple_300"
+        tools:layout_height="@dimen/conversation_status_icon_size"
+        tools:layout_width="@dimen/conversation_status_icon_size"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/reaction_chip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-4dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/background_reaction_chip"
+        android:lines="1"
+        android:maxLines="1"
+        android:outlineProvider="none"
+        android:padding="5dp"
+        android:singleLine="true"
+        app:layout_constraintEnd_toEndOf="@id/message_content"
+        app:layout_constraintTop_toBottomOf="@id/message_content"
+        tools:text="👍 😍 3"
+        tools:visibility="visible" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
