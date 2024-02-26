@@ -30,6 +30,8 @@ class Contact constructor(val uri: Uri, val isUser: Boolean = false) {
 
     var username: Single<String>? = null
     var presenceUpdates: Observable<PresenceStatus>? = null
+    /** Cache presence in case the daemon emits presence updates without subscription */
+    private var cachedPresence: PresenceStatus? = null
     private var mContactPresenceEmitter: Emitter<PresenceStatus>? = null
     private val profileSubject: Subject<Single<Profile>> = BehaviorSubject.create()
     val profile: Observable<Profile> = profileSubject.switchMapSingle { single -> single }
@@ -64,6 +66,7 @@ class Contact constructor(val uri: Uri, val isUser: Boolean = false) {
         get() = mContactUpdates
 
     fun setPresenceEmitter(emitter: Emitter<PresenceStatus>?) {
+        cachedPresence?.let { presence -> emitter?.onNext(presence) }
         mContactPresenceEmitter?.let { e ->
             if (e != emitter)
                 e.onComplete()
@@ -78,6 +81,7 @@ class Contact constructor(val uri: Uri, val isUser: Boolean = false) {
     }
 
     fun setPresence(present: PresenceStatus) {
+        cachedPresence = present
         mContactPresenceEmitter?.onNext(present)
     }
 
