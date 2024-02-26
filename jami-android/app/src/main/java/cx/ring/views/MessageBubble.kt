@@ -30,6 +30,7 @@ import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.core.widget.TextViewCompat
 import cx.ring.R
+import kotlin.math.max
 
 /**
  * View that displays a text message with time and edited indicator.
@@ -68,6 +69,7 @@ class MessageBubble(context: Context, attrs: AttributeSet?) : ViewGroup(context,
         compoundDrawablePadding = resources
             .getDimensionPixelSize(R.dimen.custom_message_bubble_edited_drawable_padding)
     }
+    private var linkPreview: ViewGroup? = null
 
     init {
         context.obtainStyledAttributes(attrs, R.styleable.MessageBubble).use { a ->
@@ -136,6 +138,10 @@ class MessageBubble(context: Context, attrs: AttributeSet?) : ViewGroup(context,
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        if (linkPreview == null) {
+            linkPreview = findViewById(R.id.link_preview)
+        }
+
         measureChildren(widthMeasureSpec, heightMeasureSpec)
         val width = MeasureSpec.getSize(widthMeasureSpec)
 
@@ -145,11 +151,26 @@ class MessageBubble(context: Context, attrs: AttributeSet?) : ViewGroup(context,
         val desiredWidth = calculateDesiredWidth(calculatedCase)
         val desiredHeight = calculateDesiredHeight(calculatedCase)
 
-        val widthAtMostSpec = MeasureSpec.makeMeasureSpec(width, MeasureSpec.AT_MOST)
-        val measuredWidth = resolveSizeAndState(desiredWidth, widthAtMostSpec, messageText.measuredWidthAndState)
-        val measuredHeight = resolveSizeAndState(desiredHeight, heightMeasureSpec, messageText.measuredHeightAndState)
+        val link = linkPreview
+        if (link?.visibility == VISIBLE) {
+            val lp: LayoutParams = link.layoutParams
+            val childWidthMeasureSpec = getChildMeasureSpec(widthMeasureSpec, 0, lp.width)
+            val childHeightMeasureSpec = getChildMeasureSpec(heightMeasureSpec, paddingTop, lp.height)
+            link.measure(childWidthMeasureSpec, childHeightMeasureSpec)
 
-        setMeasuredDimension(measuredWidth, measuredHeight)
+            //link.measure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(width, MeasureSpec.AT_MOST))
+            val previewWidth = linkPreview?.measuredWidth ?: 0
+            val previewHeight = linkPreview?.measuredHeight ?: 0
+            //val widthSpec = MeasureSpec.makeMeasureSpec(width, MeasureSpec.AT_MOST)
+            val measuredWidth = resolveSizeAndState(max(previewWidth, desiredWidth), widthMeasureSpec, messageText.measuredWidthAndState or link.measuredWidthAndState)
+            val measuredHeight = resolveSizeAndState(desiredHeight + previewHeight, heightMeasureSpec, messageText.measuredHeightAndState or link.measuredHeightAndState)
+            setMeasuredDimension(measuredWidth, measuredHeight)
+        } else {
+            val widthSpec = MeasureSpec.makeMeasureSpec(width, MeasureSpec.AT_MOST)
+            val measuredWidth = resolveSizeAndState(desiredWidth, widthSpec, messageText.measuredWidthAndState)
+            val measuredHeight = resolveSizeAndState(desiredHeight, heightMeasureSpec, messageText.measuredHeightAndState)
+            setMeasuredDimension(measuredWidth, measuredHeight)
+        }
     }
 
     private fun calculateDesiredWidth(case: Case): Int = when (case) {
@@ -190,12 +211,11 @@ class MessageBubble(context: Context, attrs: AttributeSet?) : ViewGroup(context,
         val textLeft: Int = paddingLeft
         val textRight: Int
         val textTop: Int = paddingTop
-        val textBottom: Int
+        val textBottom: Int = textTop + messageText.measuredHeight
         // Time is always displayed on the bottom-right side of the bubble.
         val timeEnd: Int = measuredWidth - paddingRight
         val timeStart: Int = timeEnd - messageTime.measuredWidth
-        val timeBottom: Int = measuredHeight - paddingBottom
-        val timeTop: Int = timeBottom - messageTime.measuredHeight
+        val timeBottom: Int
         // Edited is always aligned with the time.
         val editedEnd: Int = timeStart
         val editedStart: Int = editedEnd - messageEdited.measuredWidth
@@ -203,8 +223,8 @@ class MessageBubble(context: Context, attrs: AttributeSet?) : ViewGroup(context,
         when (calculatedCase) {
             Case.NEW_LINE -> {
                 // Case 1: message is too long and time should be displayed on a new line.
-                textBottom = textTop + messageText.measuredHeight
                 textRight = textLeft + messageText.measuredWidth
+                timeBottom = textBottom + messageTime.measuredHeight
             }
             Case.LAST_LINE -> {
                 // Case 2: message is too long but time can be displayed next to the last line.
@@ -213,19 +233,29 @@ class MessageBubble(context: Context, attrs: AttributeSet?) : ViewGroup(context,
                             messageTime.measuredWidth +
                             if (messageEdited.isVisible) messageEdited.measuredWidth else 0
                 val finalLineWidth = maxOf(messageText.measuredWidth, minimumLineWidthRequired)
-                textBottom = textTop + messageText.measuredHeight
                 textRight = textLeft + finalLineWidth
+                timeBottom = textBottom
             }
             Case.SINGLE_LINE -> {
                 // Case 3: message is not too long and time can be displayed on the same line.
-                textBottom = textTop + messageText.measuredHeight
                 textRight = editedStart
+                timeBottom = textBottom
             }
         }
+        val timeTop: Int = timeBottom - messageTime.measuredHeight
+
         messageTime.layout(timeStart, timeTop, timeEnd, timeBottom)
         messageText.layout(textLeft, textTop, textRight, textBottom)
         if (messageEdited.isVisible)
             messageEdited.layout(editedStart, timeTop, editedEnd, timeBottom)
+
+        linkPreview?.let {
+            val previewWidth = it.measuredWidth
+            val previewHeight = it.measuredHeight
+            val previewLeft = 0
+            val previewTop = measuredHeight - previewHeight
+            it.layout(previewLeft, previewTop, previewLeft + previewWidth, previewTop + previewHeight)
+        }
     }
 
     private enum class Case {
