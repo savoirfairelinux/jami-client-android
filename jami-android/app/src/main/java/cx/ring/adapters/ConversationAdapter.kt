@@ -990,7 +990,7 @@ class ConversationAdapter(
                             .setAction(Intent.ACTION_EDIT)
                             .putExtra(
                                 Intent.EXTRA_TEXT,
-                                conversationViewHolder.mMessageContent!!.getText().toString()
+                                conversationViewHolder.mMessageBubble!!.getText().toString()
                             )
                         val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
                             conversationFragment.requireActivity(),
@@ -1331,7 +1331,6 @@ class ConversationAdapter(
         val isEdited = interaction.history.size > 1
         val isReplying = interaction.replyToId != null
 
-        val messageContent = convViewHolder.mMessageContent ?: return
         val messageBubble = convViewHolder.mMessageBubble ?: return
         val replyBubble = convViewHolder.mReplyBubble
         val answerLayout = convViewHolder.mAnswerLayout
@@ -1347,7 +1346,7 @@ class ConversationAdapter(
 
         // Add margin if message need to be separated.
         val isMessageSeparationNeeded = isMessageSeparationNeeded(isDateShown, position)
-        convViewHolder.mMessageLayout?.updateLayoutParams<MarginLayoutParams> {
+        convViewHolder.mMessageBubble?.updateLayoutParams<MarginLayoutParams> {
             topMargin = if (!isMessageSeparationNeeded) 0 else context.resources
                 .getDimensionPixelSize(R.dimen.conversation_message_separation)
         }
@@ -1406,11 +1405,9 @@ class ConversationAdapter(
         // Manage the message content.
         answerLayout?.visibility = View.GONE
         if (StringUtils.isOnlyEmoji(message) && !isReplying) {
-            messageContent.updateEmoji(message, messageTime, isEdited)
+            messageBubble.updateEmoji(message, messageTime, isEdited)
         } else {
-            messageContent.updateStandard(
-                markwon.toMarkdown(message), messageTime, isEdited
-            )
+            messageBubble.updateStandard(markwon.toMarkdown(message), messageTime, isEdited)
 
             // Manage layout for message with a link inside.
             if (showLinkPreviews && !isDeleted) {
@@ -1504,11 +1501,11 @@ class ConversationAdapter(
                         .observeContact(account, contact, false)
                         .observeOn(DeviceUtils.uiScheduler)
                         .subscribe { username ->
-                            messageContent.updateDeleted(messageTime, username.displayName)
+                            messageBubble.updateDeleted(messageTime, username.displayName)
                         }
                 )
             } else {
-                messageContent.updateDeleted(
+                messageBubble.updateDeleted(
                     messageTime,
                     context.getString(R.string.conversation_info_contact_you)
                 )
