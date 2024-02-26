@@ -18,6 +18,7 @@
   <string name="menu_item_advanced_settings">Napredne postavke</string>
   <string name="menu_item_account_settings">Nastavke računa</string>
   <string name="menu_item_plugin_list">Nastavke dodataka</string>
+  <string name="video_setting_title">Nastavke video</string>
   <!--Dialing Fragment-->
   <!--History Fragment-->
   <!--DetailsHistory Fragment-->
@@ -88,6 +89,8 @@
   <string name="conversation_contact_left">%1$ je lijevo</string>
   <string name="conversation_contact_banned">%1$s je zabranjen</string>
   <string name="conversation_search_hint">Razgovor za pretragu</string>
+  <string name="today">Danas</string>
+  <string name="yesterday">Jučer</string>
   <!--Contacts-->
   <string name="help_password_enter">Ubaci lozinku za glavni račun Jamija.</string>
   <string name="help_server_enter">Ubaci URL-a za upravljački server.</string>

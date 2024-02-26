@@ -40,6 +40,7 @@
   <string name="menu_item_plugin_list">تنظیمات افزونه ها</string>
   <string name="menu_item_share">به اشتراک گذاری حساب من</string>
   <string name="menu_item_about">درباره جمی</string>
+  <string name="video_setting_title">تنظیمات ویدیو</string>
   <!--Dialing Fragment-->
   <string name="dial_number">یک شماره بگیرید</string>
   <!--History Fragment-->
@@ -198,6 +199,7 @@
   <string name="conversation_syncing">بارگیری مکالمه از طرف دیگر</string>
   <string name="conversation_blocked">اين تماس مسدود شده</string>
   <string name="conversation_ended">گفتگوي تموم شد</string>
+  <string name="conversation_reply_you">شما</string>
   <string name="conversation_preference_color">رنگ گفتگو</string>
   <string name="conversation_preference_emoji">شکلَک گفتگو</string>
   <string name="conversation_type_contact">مخاطب جامی</string>
@@ -208,6 +210,8 @@
   <string name="conversation_contact_left">%1$s ترک کرد</string>
   <string name="conversation_contact_banned">%1$sمنع شد</string>
   <string name="conversation_search_hint">جستجو در گفتگو‌ها</string>
+  <string name="today">امروز</string>
+  <string name="yesterday">دیروز</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">افزودن %1$s؟</string>
   <string name="prompt_new_password">گذرواژه جدید</string>

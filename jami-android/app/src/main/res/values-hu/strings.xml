@@ -39,6 +39,7 @@
   <string name="menu_item_plugin_list">Beépülő modulok beállításai</string>
   <string name="menu_item_share">Fiók megosztása</string>
   <string name="menu_item_about">A Jami névjegye</string>
+  <string name="video_setting_title">Videóbeállítások</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Szám tárcsázása</string>
   <!--History Fragment-->
@@ -143,8 +144,8 @@
   <string name="started_call">Hívás kezdeményezve</string>
   <string name="in_reply_to">Válaszul erre:</string>
   <!--MediaPreferenceFragment-->
-  <string name="permission_dialog_camera_title">Kameraengedély</string>
-  <string name="permission_dialog_camera_message">A videóhívások működéséhez szükséges a kamera engedély. Fontolja meg az engedélyezését!</string>
+  <string name="permission_dialog_camera_title">Fényképezőgép engedély</string>
+  <string name="permission_dialog_camera_message">A videóhívások működéséhez szükséges a fényképezőgép engedély. Fontolja meg az engedélyezését!</string>
   <!--Ringtone activity-->
   <string name="ringtone_error_title">Hiba</string>
   <string name="ringtone_error_format_not_supported">Ez a formátum nem támogatott</string>
@@ -200,6 +201,7 @@
   <string name="conversation_syncing">Beszélgetés letöltése a társaktól</string>
   <string name="conversation_blocked">Ez a kapcsolat le van tiltva.</string>
   <string name="conversation_ended">Véget ért a beszélgetés.</string>
+  <string name="conversation_message_deleted">%s törölt egy üzenetet</string>
   <string name="conversation_reply_you">Ön</string>
   <string name="conversation_preference_color">Beszélgetés színe</string>
   <string name="conversation_preference_emoji">Beszélgetés hangulatjel</string>
@@ -211,6 +213,7 @@
   <string name="conversation_contact_left">%1$s kilépett</string>
   <string name="conversation_contact_banned">%1$s letiltva lett</string>
   <string name="conversation_search_hint">Beszélgetés keresése</string>
+  <string name="today">Ma</string>
   <string name="yesterday">Tegnap</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Hozzáadja %1$s?</string>
@@ -333,6 +336,16 @@
   <string name="tv_send_video">Média küldése</string>
   <string name="tv_action_more">Több</string>
   <string name="conversation_input_speech_hint">Mondjon valamit…</string>
+  <string name="audio_permission_denied">Kérjük, adjon hozzáférést a mikrofonhoz a Jami hang funkcióinak használatához.</string>
+  <string name="camera_permission_denied">Kérjük, adjon hozzáférést a fényképezőgéphez a Jami videó funkcióinak használatához.</string>
+  <string name="speech_recogniton_unavailable">A beszédfelismerés nem érhető el.</string>
+  <string name="audio_permission_rationale_title">Hangengedély szükséges</string>
+  <string name="camera_permission_rationale_title">Videóengedély szükséges</string>
+  <string name="audio_permission_rationale_message">A Jaminak mikrofonengedélyre van szüksége a beszéd-szövegké alakításhoz és a hangrögzítéshez. A következő lépésben rákérdez.</string>
+  <string name="camera_permission_rationale_message">Jaminak szüksége van a fényképezőgép engedélyére a videó rögzítéséhez és a videohívás kezdeményezéséhez. A következő lépésben rákérdez.</string>
+  <string name="unable_to_start_recorder">Nem sikerült elindítani a hangfelvételt.</string>
+  <string name="error_sharing_file">Hiba történt a fájl megosztásában.</string>
+  <string name="error_opening_file">Hiba történt a fájl megnyitásakor.</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Ajánlott</string>
   <string name="wizard_status_optional">Választható</string>

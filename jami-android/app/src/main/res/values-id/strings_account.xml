@@ -140,7 +140,7 @@
   <string name="error_passwords_not_equals">Kata sandi tidak cocok</string>
   <string name="export_account_wait_title">Harap tunggu...</string>
   <string name="export_account_wait_message">Mengekspor informasi akun</string>
-  <string name="account_export_file">Cadangkan Akun</string>
+  <string name="account_export_file">Cadangkan akun</string>
   <string name="account_export_file_summary">Cadangkan akun di perangkat anda untuk memulihkannya nanti.</string>
   <string name="account_export_end_decryption_message">Tidak dapat membuka akun Anda menggunakan kata sandi yang diberikan.</string>
   <string name="account_export_end_network_title">Galat jaringan</string>
@@ -247,4 +247,5 @@
   <string name="error_format_not_supported">Format tidak didukung.</string>
   <string name="account_link_device_title">Hubungkan perangkat baru</string>
   <string name="account_link_device_button">Hubungkan</string>
+  <!--Biometry-->
 </resources>

@@ -38,6 +38,7 @@
   <string name="menu_item_plugin_list">Opcions de complements</string>
   <string name="menu_item_share">Comparteix el meu compte</string>
   <string name="menu_item_about">Sobre Jami...</string>
+  <string name="video_setting_title">Configuracions de vídeo</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Marca un número</string>
   <!--History Fragment-->
@@ -193,6 +194,7 @@
   <string name="conversation_syncing">Descarregant la conversa d\'un igual</string>
   <string name="conversation_blocked">Aquest contacte està bloquejat.</string>
   <string name="conversation_ended">La conversa ha acabat.</string>
+  <string name="conversation_reply_you">Tu</string>
   <string name="conversation_preference_color">Color de conversa</string>
   <string name="conversation_preference_emoji">Emoticona de conversa</string>
   <string name="conversation_type_contact">Contacte de Jami</string>
@@ -203,6 +205,8 @@
   <string name="conversation_contact_left">%1$s ha sortit</string>
   <string name="conversation_contact_banned">%1$s ha estat bloquejat</string>
   <string name="conversation_search_hint">Conversació de cerca</string>
+  <string name="today">Avui</string>
+  <string name="yesterday">Ahir</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Afegir %1$s?</string>
   <string name="prompt_new_password">Contrasenya nova</string>

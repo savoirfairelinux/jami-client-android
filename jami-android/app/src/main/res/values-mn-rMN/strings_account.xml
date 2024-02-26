@@ -140,7 +140,7 @@
   <string name="error_passwords_not_equals">Хууль нууц үг нь тохиромжтой биш</string>
   <string name="export_account_wait_title">Та нар хүлээгээд...</string>
   <string name="export_account_wait_message">Экспортын дансны мэдээлэл</string>
-  <string name="account_export_file">Дахилгаж байгаа данс</string>
+  <string name="account_export_file">Давуу сан</string>
   <string name="account_export_file_summary">Танай хэрэгслийн хуудаснаар дансыг сэргээхэд архив аваарай.</string>
   <string name="account_export_end_decryption_message">Танай дансыг нууц үгээр нээлгэж чадахгүй байна.</string>
   <string name="account_export_end_network_title">Хүлжээний алдаа</string>
@@ -247,4 +247,5 @@
   <string name="error_format_not_supported">Энэ форматг дэмжихгүй.</string>
   <string name="account_link_device_title">Шинэ төхөөрөмжийг холбох</string>
   <string name="account_link_device_button">Харилцаа холбоо</string>
+  <!--Biometry-->
 </resources>

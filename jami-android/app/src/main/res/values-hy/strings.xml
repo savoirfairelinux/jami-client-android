@@ -38,6 +38,7 @@
   <string name="menu_item_plugin_list">Plugins Կարգավորումները</string>
   <string name="menu_item_share">Կիսվեք իմ հաշիվով</string>
   <string name="menu_item_about">Ջամիի մասին</string>
+  <string name="video_setting_title">Տեսանյութերի կարգավորումները</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Նշեք մի թիվ</string>
   <!--History Fragment-->
@@ -204,6 +205,7 @@
   <string name="conversation_contact_left">%1$-ը ձախ է</string>
   <string name="conversation_contact_banned">%1$s-ը արգելվել է</string>
   <string name="conversation_search_hint">Հետազոտական զրույց</string>
+  <string name="today">Այսօր</string>
   <string name="yesterday">Երեկ</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">%1$s ավելացնել?</string>

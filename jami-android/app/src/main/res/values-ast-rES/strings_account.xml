@@ -247,4 +247,5 @@
   <string name="error_format_not_supported">Esta versión nun ye compatible.</string>
   <string name="account_link_device_title">Enlazar un nuevu dispositivu</string>
   <string name="account_link_device_button">Conectar</string>
+  <!--Biometry-->
 </resources>

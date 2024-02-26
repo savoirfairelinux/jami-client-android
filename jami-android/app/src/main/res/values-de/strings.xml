@@ -39,6 +39,7 @@
   <string name="menu_item_plugin_list">Plugin-Einstellungen</string>
   <string name="menu_item_share">Mein Konto teilen</string>
   <string name="menu_item_about">Über Jami</string>
+  <string name="video_setting_title">Video-Einstellungen</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Nummer wählen</string>
   <!--History Fragment-->
@@ -200,6 +201,8 @@
   <string name="conversation_syncing">Unterhaltung des Teilnehmers herunterladen</string>
   <string name="conversation_blocked">Dieser Kontakt ist blockiert.</string>
   <string name="conversation_ended">Unterhaltung beendet.</string>
+  <string name="conversation_message_deleted">%s hat eine Nachricht gelöscht</string>
+  <string name="conversation_reply_you">Sie</string>
   <string name="conversation_preference_color">Farbe der Unterhaltung</string>
   <string name="conversation_preference_emoji">Emoji der Unterhaltung</string>
   <string name="conversation_type_contact">Jami-Kontakt</string>
@@ -210,6 +213,8 @@
   <string name="conversation_contact_left">%1$s hat die Unterhaltung verlassen</string>
   <string name="conversation_contact_banned">%1$s wurde blockiert</string>
   <string name="conversation_search_hint">Unterhaltung durchsuchen</string>
+  <string name="today">Heute</string>
+  <string name="yesterday">Gestern</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">%1$s hinzufügen?</string>
   <string name="prompt_new_password">Neues Passwort</string>
@@ -331,6 +336,16 @@
   <string name="tv_send_video">Medien senden</string>
   <string name="tv_action_more">Mehr</string>
   <string name="conversation_input_speech_hint">Sagen Sie etwas...</string>
+  <string name="audio_permission_denied">Bitte gewähren Sie Zugriff auf das Mikrofon, um die Audiofunktionen von Jami zu nutzen.</string>
+  <string name="camera_permission_denied">Bitte gewähren Sie Zugriff auf die Kamera, um die Jami-Videofunktionen nutzen zu können.</string>
+  <string name="speech_recogniton_unavailable">Spracherkennung ist nicht verfügbar.</string>
+  <string name="audio_permission_rationale_title">Audio-Zugriff erforderlich</string>
+  <string name="camera_permission_rationale_title">Video-Zugriff erforderlich</string>
+  <string name="audio_permission_rationale_message">Jami benötigt die Mikrofonberechtigung, um Sprache-zu-Text- und Audioaufzeichnungsfunktionen nutzen zu können. Im nächsten Schritt wird danach gefragt.</string>
+  <string name="camera_permission_rationale_message">Jami benötigt den Zugriff auf die Kamera, um Videos aufzunehmen und Videoanrufe zu tätigen. Im nächsten Schritt wird danach gefragt.</string>
+  <string name="unable_to_start_recorder">Audioaufnahme kann nicht gestartet werden.</string>
+  <string name="error_sharing_file">Fehler beim Teilen der Datei.</string>
+  <string name="error_opening_file">Fehler beim Öffnen der Datei.</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Empfohlen</string>
   <string name="wizard_status_optional">Optional</string>

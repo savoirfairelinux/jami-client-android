@@ -143,7 +143,7 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="error_passwords_not_equals">Die Passwörter stimmen nicht überein</string>
   <string name="export_account_wait_title">Bitte warten…</string>
   <string name="export_account_wait_message">Kontodaten werden exportiert</string>
-  <string name="account_export_file">Backup Konto</string>
+  <string name="account_export_file">Konto sichern</string>
   <string name="account_export_file_summary">Machen Sie eine Sicherheitskopie Ihrer Benutzerkennung auf ihrem Gerät um sie im Fehlerfall wiederherstellen zu können.</string>
   <string name="account_export_end_decryption_message">Ihr Konto konnte mit dem angegebenen Passwort nicht entsperrt werden</string>
   <string name="account_export_end_network_title">Netzwerkfehler</string>
@@ -266,4 +266,5 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="connect_device_scanqr">QR scannen</string>
   <string name="connect_device_enterPIN">Oder PIN eingeben</string>
   <string name="account_link_device_button">Verbinden</string>
+  <!--Biometry-->
 </resources>

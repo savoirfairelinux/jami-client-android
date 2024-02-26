@@ -38,6 +38,7 @@
   <string name="menu_item_plugin_list">Lisäosien asetukset</string>
   <string name="menu_item_share">Jaa tunnukseni</string>
   <string name="menu_item_about">Tietoa Jamista</string>
+  <string name="video_setting_title">Videon asetukset</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Valitse numero</string>
   <!--History Fragment-->
@@ -193,6 +194,7 @@
   <string name="conversation_syncing">Ladataan keskustelua vertaisverkosta</string>
   <string name="conversation_blocked">Tämä yhteys on estetty.</string>
   <string name="conversation_ended">Keskustelu päättyi.</string>
+  <string name="conversation_reply_you">Sinä</string>
   <string name="conversation_preference_color">Keskustelun väri</string>
   <string name="conversation_preference_emoji">Keskustelun hymiö</string>
   <string name="conversation_type_contact">Jami yhteystieto</string>
@@ -203,6 +205,8 @@
   <string name="conversation_contact_left">%1$ on vasemmisto</string>
   <string name="conversation_contact_banned">%1$s kiellettiin</string>
   <string name="conversation_search_hint">Etsintä keskustelu</string>
+  <string name="today">Tänään</string>
+  <string name="yesterday">Eilen</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Lisää %1$s?</string>
   <string name="prompt_new_password">Uusi salasana</string>

@@ -38,6 +38,7 @@
   <string name="menu_item_plugin_list">Nastavení zásuvných modulů</string>
   <string name="menu_item_share">Sdílet můj účet</string>
   <string name="menu_item_about">O Jami</string>
+  <string name="video_setting_title">Nastavení videa</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Vytočit číslo</string>
   <!--History Fragment-->
@@ -195,6 +196,7 @@
   <string name="conversation_syncing">Stahování konverzace z peeru</string>
   <string name="conversation_blocked">Tento kontakt je blokován</string>
   <string name="conversation_ended">Konverzace skončila.</string>
+  <string name="conversation_reply_you">Vy</string>
   <string name="conversation_preference_color">Barva konverzace</string>
   <string name="conversation_preference_emoji">Emoji konverzace</string>
   <string name="conversation_type_contact">Kontakt na Jami</string>
@@ -205,6 +207,8 @@
   <string name="conversation_contact_left">%1$sodešel</string>
   <string name="conversation_contact_banned">%1$sbyl zakázán</string>
   <string name="conversation_search_hint">Najít konverzaci</string>
+  <string name="today">Dnes</string>
+  <string name="yesterday">Včera</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Přidat %1$s?</string>
   <string name="prompt_new_password">Nové heslo</string>

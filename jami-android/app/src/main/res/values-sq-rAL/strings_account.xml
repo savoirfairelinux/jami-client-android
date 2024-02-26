@@ -143,7 +143,7 @@
   <string name="error_passwords_not_equals">Fjalëkalimet nuk përputhen</string>
   <string name="export_account_wait_title">Ju lutemi, pritni…</string>
   <string name="export_account_wait_message">Po eksportohen të dhëna llogarie</string>
-  <string name="account_export_file">Kopjeruani Llogari</string>
+  <string name="account_export_file">Kopjeruaje llogarinë</string>
   <string name="account_export_file_summary">Kopjeruajeni llogarinë tuaj në pajisjen tuaj për ta rikthyer më vonë.</string>
   <string name="account_export_end_decryption_message">S\’u zhbllokua dot llogaria juaj duke përdorur fjalëkalimin e dhënë.</string>
   <string name="account_export_end_network_title">Gabim rrjeti</string>
@@ -266,4 +266,5 @@
   <string name="connect_device_scanqr">Skanoni QR-in</string>
   <string name="connect_device_enterPIN">Ose jepni PIN-in</string>
   <string name="account_link_device_button">Lidhu</string>
+  <!--Biometry-->
 </resources>

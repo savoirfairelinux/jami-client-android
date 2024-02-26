@@ -39,6 +39,7 @@
   <string name="menu_item_plugin_list">Impostazioni plugin</string>
   <string name="menu_item_share">Condividi il mio account</string>
   <string name="menu_item_about">Informazioni su Jami</string>
+  <string name="video_setting_title">Impostazioni video</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Componi un numero</string>
   <!--History Fragment-->
@@ -201,6 +202,7 @@
   <string name="conversation_syncing">Download della conversazione dall\'utente</string>
   <string name="conversation_blocked">Questo contatto è bloccato.</string>
   <string name="conversation_ended">Conversazione terminata.</string>
+  <string name="conversation_message_deleted">%s ha cancellato il messaggio</string>
   <string name="conversation_reply_you">Tu</string>
   <string name="conversation_preference_color">Colore della conversazione</string>
   <string name="conversation_preference_emoji">Emoji conversazione</string>
@@ -212,6 +214,7 @@
   <string name="conversation_contact_left">%1$s è uscito</string>
   <string name="conversation_contact_banned">%1$s è stato bloccato</string>
   <string name="conversation_search_hint">Cerca conversazione</string>
+  <string name="today">Oggi</string>
   <string name="yesterday">Ieri</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Aggiungi %1$s?</string>
@@ -334,6 +337,16 @@
   <string name="tv_send_video">Invia media</string>
   <string name="tv_action_more">Di più</string>
   <string name="conversation_input_speech_hint">Di\' qualcosa…</string>
+  <string name="audio_permission_denied">Consentire l\'accesso al microfono per utilizzare le funzioni audio di Jami.</string>
+  <string name="camera_permission_denied">Consentire l\'accesso alla fotocamera per utilizzare le funzioni video di Jami.</string>
+  <string name="speech_recogniton_unavailable">Il riconoscimento vocale non è disponibile.</string>
+  <string name="audio_permission_rationale_title">È necessario il permesso per l\'audio</string>
+  <string name="camera_permission_rationale_title">È necessario il permesso per video</string>
+  <string name="audio_permission_rationale_message">Jami ha bisogno di accedere al microfono per trasformare il parlato in testo e registrare l\'audio. Questo verrà richiesto nella fase successiva.</string>
+  <string name="camera_permission_rationale_message">Jami ha bisogno di accedere alla fotocamera per registrare video ed effettuare videochiamate. Questo verrà richiesto nella fase successiva.</string>
+  <string name="unable_to_start_recorder">Impossibile avviare la registrazione audio.</string>
+  <string name="error_sharing_file">Errore condivisione file.</string>
+  <string name="error_opening_file">Errore nell\'apertura del file.</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Consigliato</string>
   <string name="wizard_status_optional">Facoltativo</string>

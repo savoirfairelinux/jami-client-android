@@ -38,6 +38,7 @@
   <string name="menu_item_plugin_list">Plugini seaded</string>
   <string name="menu_item_share">Jaa minu konto</string>
   <string name="menu_item_about">Jami kohta</string>
+  <string name="video_setting_title">Videoseisundid</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Nimetage number.</string>
   <!--History Fragment-->
@@ -193,6 +194,7 @@
   <string name="conversation_syncing">Lase alla sõnad eakaaslastest</string>
   <string name="conversation_blocked">See kontakt on blokeeritud.</string>
   <string name="conversation_ended">Rääkimine on lõppenud.</string>
+  <string name="conversation_reply_you">Sina...</string>
   <string name="conversation_preference_color">Rääkimise värv</string>
   <string name="conversation_preference_emoji">Sõnalduse emojid</string>
   <string name="conversation_type_contact">Jami kontakt</string>
@@ -203,6 +205,8 @@
   <string name="conversation_contact_left">%1$ on vasak</string>
   <string name="conversation_contact_banned">%1$s on keelatud</string>
   <string name="conversation_search_hint">Otsingühendus</string>
+  <string name="today">Tänapäeval</string>
+  <string name="yesterday">Eile.</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Lisada %1$s?</string>
   <string name="prompt_new_password">Uus parool</string>

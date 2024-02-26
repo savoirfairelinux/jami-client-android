@@ -248,4 +248,5 @@
   <string name="error_format_not_supported">या स्वरूपात समर्थन नाही.</string>
   <string name="account_link_device_title">नवीन डिव्हाइस लिंक करा</string>
   <string name="account_link_device_button">कनेक्ट करा</string>
+  <!--Biometry-->
 </resources>

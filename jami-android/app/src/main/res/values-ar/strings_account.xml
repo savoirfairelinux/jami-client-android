@@ -142,7 +142,7 @@
   <string name="error_passwords_not_equals">كلمة المرور غير متطابقة</string>
   <string name="export_account_wait_title">الرجاء الإنتظار...</string>
   <string name="export_account_wait_message">تصدير معلومات الحساب</string>
-  <string name="account_export_file">النسخ الإحتياطى للحساب</string>
+  <string name="account_export_file">حساب احتياطي</string>
   <string name="account_export_file_summary">قم بإجراء نسخ احتياطي لحسابك على جهازك لاستعادته في وقت لاحق.</string>
   <string name="account_export_end_decryption_message">تعذر إلغاء قفل حسابك باستخدام كلمة المرور التي تم توفيرها.</string>
   <string name="account_export_end_network_title">خطأ في الشبكة</string>
@@ -249,4 +249,5 @@
   <string name="error_format_not_supported">هذا التنسيق غير مدعوم.</string>
   <string name="account_link_device_title">ربط جهاز جديد</string>
   <string name="account_link_device_button">إتصال</string>
+  <!--Biometry-->
 </resources>

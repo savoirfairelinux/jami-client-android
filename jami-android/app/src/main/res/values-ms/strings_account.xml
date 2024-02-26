@@ -249,4 +249,5 @@ Anda masih akan dapat mengubah maklumat akaun anda pada masa hadapan</string>
   <string name="error_format_not_supported">Format ini tidak disokong.</string>
   <string name="account_link_device_title">പുതിയ ഉപകരണം ബന്ധിപ്പിക്കുക</string>
   <string name="account_link_device_button">ബന്ധിപ്പിക്കുക</string>
+  <!--Biometry-->
 </resources>

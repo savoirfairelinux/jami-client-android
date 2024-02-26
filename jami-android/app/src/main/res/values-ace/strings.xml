@@ -38,6 +38,7 @@
   <string name="menu_item_plugin_list">ڤلاڬين ڤڠاجرن</string>
   <string name="menu_item_share">مڠمبيل ڤڠاجرن ساي</string>
   <string name="menu_item_about">دري جامي</string>
+  <string name="video_setting_title">ڤڠاجرن ڤيديو</string>
   <!--Dialing Fragment-->
   <string name="dial_number">ديكلڠكن نومبر</string>
   <!--History Fragment-->
@@ -88,6 +89,8 @@
   <string name="conversation_action_block_this">ڤڠاجرن ڤڠاجرن</string>
   <string name="conversation_action_incoming_call">ڤڠاجين يڠ دڤرچايا?? ي</string>
   <string name="conversation_members">ڤڠڬونا</string>
+  <string name="today">هاري اين</string>
+  <string name="yesterday">ديري</string>
   <!--Contacts-->
   <string name="account_create_title">منوليسكن اکاونت Jami</string>
   <string name="prompt_hint_username">نام ڤڠڬونا</string>

@@ -38,6 +38,7 @@
   <string name="menu_item_plugin_list">Pengaturan Plugin</string>
   <string name="menu_item_share">Bagikan akun saya</string>
   <string name="menu_item_about">Tentang Jami</string>
+  <string name="video_setting_title">Pengaturan Video</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Tekan nomor</string>
   <!--History Fragment-->
@@ -203,6 +204,7 @@
   <string name="conversation_contact_left">%1$s keluar</string>
   <string name="conversation_contact_banned">%1$s dibanned</string>
   <string name="conversation_search_hint">Cari percakapan</string>
+  <string name="today">Hari ini</string>
   <string name="yesterday">Kemarin</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Tambah %1$s?</string>

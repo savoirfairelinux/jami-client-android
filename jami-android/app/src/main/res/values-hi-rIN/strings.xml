@@ -38,6 +38,7 @@
   <string name="menu_item_plugin_list">प्लग-इन सेटिंग्स</string>
   <string name="menu_item_share">मेरा खाता साझा करें</string>
   <string name="menu_item_about">जामी के बारे में</string>
+  <string name="video_setting_title">वीडियो सेटिंग्स</string>
   <!--Dialing Fragment-->
   <string name="dial_number">एक नम्बर डायल करें</string>
   <!--History Fragment-->
@@ -204,6 +205,8 @@
   <string name="conversation_contact_left">%1$ बाएं</string>
   <string name="conversation_contact_banned">%1$s पर प्रतिबंध लगा दिया गया था</string>
   <string name="conversation_search_hint">खोज वार्तालाप</string>
+  <string name="today">आज</string>
+  <string name="yesterday">कल</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">%1$s जोड़ें?</string>
   <string name="prompt_new_password">नया पासवर्ड</string>

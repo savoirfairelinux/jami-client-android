@@ -246,4 +246,5 @@
   <!--Link a new device-->
   <string name="account_link_device_title">Яңа җайланманы тоташтыру</string>
   <string name="account_link_device_button">Бәйләнешкә кертү</string>
+  <!--Biometry-->
 </resources>

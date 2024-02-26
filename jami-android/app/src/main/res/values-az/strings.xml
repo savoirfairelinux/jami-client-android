@@ -38,6 +38,7 @@
   <string name="menu_item_plugin_list">پلگین سیتیجلار</string>
   <string name="menu_item_share">حسابيمي بؤلوشدور</string>
   <string name="menu_item_about">جامی حاقّيندا</string>
+  <string name="video_setting_title">ویدئو تنظیمات</string>
   <!--Dialing Fragment-->
   <string name="dial_number">بیر سایی چال</string>
   <!--History Fragment-->
@@ -193,6 +194,7 @@
   <string name="conversation_syncing">همتداشلاردان دانیشیق آلماق</string>
   <string name="conversation_blocked">بو تماس قامتلی دیر.</string>
   <string name="conversation_ended">مکالمه باشا چاتدي.</string>
+  <string name="conversation_reply_you">سن</string>
   <string name="conversation_preference_color">دانیشیق رنگینه</string>
   <string name="conversation_preference_emoji">مکالمات ایموجی</string>
   <string name="conversation_type_contact">جمی تماس</string>
@@ -203,6 +205,8 @@
   <string name="conversation_contact_left">%1$ سولدو</string>
   <string name="conversation_contact_banned">%1$s قاییتدی</string>
   <string name="conversation_search_hint">بحث آختارماق</string>
+  <string name="today">بو گون</string>
+  <string name="yesterday">دونن</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">%1$s قوشماق؟</string>
   <string name="prompt_new_password">یئنی رمز</string>

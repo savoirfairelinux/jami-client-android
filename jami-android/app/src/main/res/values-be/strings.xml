@@ -38,6 +38,7 @@
   <string name="menu_item_plugin_list">Налады ўключальнікаў</string>
   <string name="menu_item_share">Падзяліцца маім рахункам</string>
   <string name="menu_item_about">Пра Джані</string>
+  <string name="video_setting_title">Налады відэа</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Пазначыць нумар</string>
   <!--History Fragment-->
@@ -88,6 +89,8 @@
   <string name="conversation_action_block_this">Блокальны кантакт</string>
   <string name="conversation_action_incoming_call">Паступны званок</string>
   <string name="conversation_members">Члены</string>
+  <string name="today">Сёння</string>
+  <string name="yesterday">Учора</string>
   <!--Contacts-->
   <string name="account_create_title">Стварэнне ўліковага запісу Jami</string>
   <string name="prompt_hint_username">Назва карыстальніка</string>

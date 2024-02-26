@@ -38,6 +38,7 @@
   <string name="menu_item_plugin_list">Plugins Settings</string>
   <string name="menu_item_share">Dividi mian konton</string>
   <string name="menu_item_about">Pri Jami</string>
+  <string name="video_setting_title">Video-aj agordoj</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Diski numeron</string>
   <!--History Fragment-->
@@ -193,6 +194,7 @@
   <string name="conversation_syncing">Elŝutu konversacion de samuloj</string>
   <string name="conversation_blocked">Tiu kontakto estas blokita.</string>
   <string name="conversation_ended">La konversacio finiĝis.</string>
+  <string name="conversation_reply_you">Vi</string>
   <string name="conversation_preference_color">Koloro de konversacio</string>
   <string name="conversation_preference_emoji">Konversacio emoji</string>
   <string name="conversation_type_contact">Jam kontakto</string>
@@ -203,6 +205,8 @@
   <string name="conversation_contact_left">%1$ estas maldekstre</string>
   <string name="conversation_contact_banned">%1$s estis malpermesita</string>
   <string name="conversation_search_hint">Serĉu konversacion</string>
+  <string name="today">Hodiaŭ</string>
+  <string name="yesterday">Hieraŭ</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Ĉu aldoni %1$s?</string>
   <string name="prompt_new_password">Nova pasvorto</string>

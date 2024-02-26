@@ -266,4 +266,5 @@
   <string name="connect_device_scanqr">Escanea o QR</string>
   <string name="connect_device_enterPIN">Ou escribe o PIN</string>
   <string name="account_link_device_button">Conectar</string>
+  <!--Biometry-->
 </resources>

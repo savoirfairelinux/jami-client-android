@@ -249,4 +249,5 @@
   <string name="error_format_not_supported">این قالب پشتیبانی نمی‌شود.</string>
   <string name="account_link_device_title">پیوند یک دستگاه جدید</string>
   <string name="account_link_device_button">اتصال</string>
+  <!--Biometry-->
 </resources>

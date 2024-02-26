@@ -266,4 +266,5 @@ Vous pourrez modifier votre compte plus tard.</string>
   <string name="connect_device_scanqr">Scanner le code QR</string>
   <string name="connect_device_enterPIN">ou entrer le NIP</string>
   <string name="account_link_device_button">Se connecter</string>
+  <!--Biometry-->
 </resources>

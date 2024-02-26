@@ -38,6 +38,7 @@
   <string name="menu_item_plugin_list">প্লাগইন সেটিংস</string>
   <string name="menu_item_share">আমার অ্যাকাউন্ট শেয়ার করুন</string>
   <string name="menu_item_about">জামি সম্পর্কে</string>
+  <string name="video_setting_title">ভিডিও সেটিং</string>
   <!--Dialing Fragment-->
   <string name="dial_number">একটি নম্বর ডায়াল করুন</string>
   <!--History Fragment-->
@@ -193,6 +194,7 @@
   <string name="conversation_syncing">পারস্পরিক কথোপকথন ডাউনলোড করা</string>
   <string name="conversation_blocked">এই যোগাযোগ বন্ধ।</string>
   <string name="conversation_ended">কথোপকথন শেষ।</string>
+  <string name="conversation_reply_you">তুমি</string>
   <string name="conversation_preference_color">কথোপকথনের রঙ</string>
   <string name="conversation_preference_emoji">কথোপকথন ইমোজি</string>
   <string name="conversation_type_contact">জামি যোগাযোগ</string>
@@ -203,6 +205,8 @@
   <string name="conversation_contact_left">%1$s বাম</string>
   <string name="conversation_contact_banned">%1$s নিষিদ্ধ করা হয়েছে</string>
   <string name="conversation_search_hint">অনুসন্ধান কথোপকথন</string>
+  <string name="today">আজ</string>
+  <string name="yesterday">গতকাল</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">%1$s যোগ করা?</string>
   <string name="prompt_new_password">নতুন পাসওয়ার্ড</string>

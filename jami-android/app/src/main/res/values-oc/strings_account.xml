@@ -247,4 +247,5 @@
   <string name="error_format_not_supported">Aqueste format es pas suportat.</string>
   <string name="account_link_device_title">Ligam un dispositiu novèl</string>
   <string name="account_link_device_button">Se connectar</string>
+  <!--Biometry-->
 </resources>

@@ -38,6 +38,7 @@
   <string name="menu_item_plugin_list">プラグイン設定</string>
   <string name="menu_item_share">アカウントの共有</string>
   <string name="menu_item_about">Jamiについて</string>
+  <string name="video_setting_title">ビデオ設定</string>
   <!--Dialing Fragment-->
   <string name="dial_number">電話番号を入力</string>
   <!--History Fragment-->
@@ -207,6 +208,7 @@
   <string name="conversation_contact_left">残り%1$s</string>
   <string name="conversation_contact_banned">%1$s は禁止されました</string>
   <string name="conversation_search_hint">会話を検索</string>
+  <string name="today">今日</string>
   <string name="yesterday">昨日</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">%1$sを追加しますか？</string>

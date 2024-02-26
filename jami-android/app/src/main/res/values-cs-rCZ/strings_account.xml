@@ -251,4 +251,5 @@ Prověřte, prosím, své heslo.</string>
   <string name="error_format_not_supported">Tento formát je nepodporovaný.</string>
   <string name="account_link_device_title">Připojit nové zařízení</string>
   <string name="account_link_device_button">Připojit</string>
+  <!--Biometry-->
 </resources>

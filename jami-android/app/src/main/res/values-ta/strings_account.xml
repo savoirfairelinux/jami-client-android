@@ -247,4 +247,5 @@
   <string name="error_format_not_supported">இந்த வடிவம் ஆதரிக்கப்படவில்லை.</string>
   <string name="account_link_device_title">புதிய சாதனத்தை இணைக்கவும்</string>
   <string name="account_link_device_button">இணைக்கவும்</string>
+  <!--Biometry-->
 </resources>

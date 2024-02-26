@@ -16,6 +16,8 @@ along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 -->
 <resources>
+    <!-- Call error -->
+    <string name="call_error">A apărut o eroare la începerea apelului.</string>
     <string name="call_error_no_microphone">Apel anulat. Nu a fost găsit niciun microfon.</string>
     <string name="call_error_no_camera_no_microphone">Apel anulat. Nu a fost găsită nicio fotocameră sau microfon.</string>
 

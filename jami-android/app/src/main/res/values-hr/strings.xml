@@ -38,6 +38,7 @@
   <string name="menu_item_plugin_list">Nastavke dodataka</string>
   <string name="menu_item_share">Dijeli moj račun</string>
   <string name="menu_item_about">O Jami-u</string>
+  <string name="video_setting_title">Nastavke video</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Pozovi broj</string>
   <!--History Fragment-->
@@ -205,6 +206,8 @@
   <string name="conversation_contact_left">%1$ je lijevo</string>
   <string name="conversation_contact_banned">%1$s je zabranjen</string>
   <string name="conversation_search_hint">Razgovor za pretragu</string>
+  <string name="today">Danas</string>
+  <string name="yesterday">Jučer</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Dodati %1$s?</string>
   <string name="prompt_new_password">Nova lozinka</string>

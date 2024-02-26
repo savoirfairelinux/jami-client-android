@@ -38,6 +38,7 @@
   <string name="menu_item_plugin_list">إعدادت الإضافات</string>
   <string name="menu_item_share">مشاركة حسابي</string>
   <string name="menu_item_about">حول جامي</string>
+  <string name="video_setting_title">إعدادات الفيديو</string>
   <!--Dialing Fragment-->
   <string name="dial_number">إتصال برقم</string>
   <!--History Fragment-->
@@ -189,6 +190,7 @@
   <string name="conversation_syncing">تحميل محادثة من أقرانه</string>
   <string name="conversation_blocked">هذا الاتصال محظور</string>
   <string name="conversation_ended">انتهت المحادثة</string>
+  <string name="conversation_reply_you">أنت</string>
   <string name="conversation_preference_color">لون المحادثة</string>
   <string name="conversation_preference_emoji">إيموجي المحادثة</string>
   <string name="conversation_type_contact">جهة اتصال جامي</string>
@@ -199,6 +201,8 @@
   <string name="conversation_contact_left">%1$ يسار</string>
   <string name="conversation_contact_banned">تم حظر %1$s</string>
   <string name="conversation_search_hint">بحث عن المحادثة</string>
+  <string name="today">اليوم</string>
+  <string name="yesterday">البارحة</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">إضافة %1$s؟</string>
   <string name="prompt_new_password">كلمة مرور جديدة</string>

@@ -143,7 +143,7 @@ Potrai modificare il tuo account successivamente</string>
   <string name="error_passwords_not_equals">Le password non corrispondono</string>
   <string name="export_account_wait_title">Attendere…</string>
   <string name="export_account_wait_message">Esportazione dell\'account in corso</string>
-  <string name="account_export_file">Salva l\'account</string>
+  <string name="account_export_file">Backup account</string>
   <string name="account_export_file_summary">Esegui il backup del tuo account sul tuo dispositivo per ripristinarlo in seguito.</string>
   <string name="account_export_end_decryption_message">Impossibile sbloccare l\'account x la con la password inserita.</string>
   <string name="account_export_end_network_title">Errore di rete</string>
@@ -266,4 +266,5 @@ Potrai modificare il tuo account successivamente</string>
   <string name="connect_device_scanqr">Scansiona QR</string>
   <string name="connect_device_enterPIN">O inserire il PIN</string>
   <string name="account_link_device_button">Connetti</string>
+  <!--Biometry-->
 </resources>

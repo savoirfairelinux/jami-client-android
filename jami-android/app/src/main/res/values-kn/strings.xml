@@ -38,6 +38,7 @@
   <string name="menu_item_plugin_list">ಪ್ಲಗಿನ್ ಸೆಟ್ಟಿಂಗ್ಗಳು</string>
   <string name="menu_item_share">ನನ್ನ ಖಾತೆಯನ್ನು ಹಂಚಿಕೊಳ್ಳಿ</string>
   <string name="menu_item_about">ಜಾಮಿ ಬಗ್ಗೆ</string>
+  <string name="video_setting_title">ವೀಡಿಯೊ ಸೆಟ್ಟಿಂಗ್ಗಳು</string>
   <!--Dialing Fragment-->
   <string name="dial_number">ಒಂದು ಸಂಖ್ಯೆಯನ್ನು ಡಯಲ್ ಮಾಡಿ</string>
   <!--History Fragment-->
@@ -204,6 +205,7 @@
   <string name="conversation_contact_left">%1$ ಎಡಕ್ಕೆ</string>
   <string name="conversation_contact_banned">%1$s ನಿಷೇಧಿಸಲಾಗಿದೆ</string>
   <string name="conversation_search_hint">ಹುಡುಕಾಟ ಸಂಭಾಷಣೆ</string>
+  <string name="today">ಇಂದು</string>
   <string name="yesterday">ನಿನ್ನೆ</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">%1$s ಅನ್ನು ಸೇರಿಸುವುದೇ?</string>

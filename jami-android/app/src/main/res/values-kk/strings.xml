@@ -38,6 +38,7 @@
   <string name="menu_item_plugin_list">Қосылмалар параметрлері</string>
   <string name="menu_item_share">Менің тіркелгімді бөліңіз</string>
   <string name="menu_item_about">Жами туралы</string>
+  <string name="video_setting_title">Видеоның параметрлері</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Номерді таңдаңыз</string>
   <!--History Fragment-->
@@ -204,6 +205,7 @@
   <string name="conversation_contact_left">%1$s сол жақ</string>
   <string name="conversation_contact_banned">%1$s тыйым салынды</string>
   <string name="conversation_search_hint">Іздеу әңгімесі</string>
+  <string name="today">Бүгінде</string>
   <string name="yesterday">Келесі күні</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">%1$s қосылсын ба?</string>

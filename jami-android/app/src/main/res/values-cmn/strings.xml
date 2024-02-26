@@ -6,6 +6,7 @@
   <!--RingActivity-->
   <!--AB menus-->
   <!--Sections-->
+  <string name="video_setting_title">视频设置</string>
   <!--Dialing Fragment-->
   <!--History Fragment-->
   <!--DetailsHistory Fragment-->
@@ -26,6 +27,9 @@
   <!--Settings-->
   <!--Conversation-->
   <string name="conversation_action_incoming_call">来电</string>
+  <string name="conversation_reply_you">您</string>
+  <string name="today">今天</string>
+  <string name="yesterday">昨天</string>
   <!--Contacts-->
   <!--Account Summary-->
   <!--Share fragment-->

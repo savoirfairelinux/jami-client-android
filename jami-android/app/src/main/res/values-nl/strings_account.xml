@@ -142,7 +142,7 @@ U kunt uw account later bewerken</string>
   <string name="error_passwords_not_equals">Wachtwoorden komen niet overeen</string>
   <string name="export_account_wait_title">Even geduld…</string>
   <string name="export_account_wait_message">Accountinformatie wordt geëxporteerd</string>
-  <string name="account_export_file">Backup account</string>
+  <string name="account_export_file">Reservekopie van account maken</string>
   <string name="account_export_file_summary">Backup je account op je apparaat om het later te herstellen.</string>
   <string name="account_export_end_decryption_message">Kon uw account niet ontgrendelen met het opgegeven wachtwoord.</string>
   <string name="account_export_end_network_title">Netwerkfout</string>
@@ -249,4 +249,5 @@ U kunt uw account later bewerken</string>
   <string name="error_format_not_supported">Dit formaat wordt niet ondersteund.</string>
   <string name="account_link_device_title">Een nieuw apparaat koppelen</string>
   <string name="account_link_device_button">Verbinden</string>
+  <!--Biometry-->
 </resources>

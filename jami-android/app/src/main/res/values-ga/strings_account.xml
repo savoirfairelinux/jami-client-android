@@ -140,7 +140,7 @@
   <string name="error_passwords_not_equals">Ní chomhlíonann pasfhocail</string>
   <string name="export_account_wait_title">Fan ar fad, le do thoil...</string>
   <string name="export_account_wait_message">faisnéis cuntas onnmhairithe</string>
-  <string name="account_export_file">Cunntas Cúltaca</string>
+  <string name="account_export_file">Cunntas cúltaca</string>
   <string name="account_export_file_summary">Cúltaca do chuntas ar do ghléas chun é a athshlánú níos déanaí.</string>
   <string name="account_export_end_decryption_message">Ní raibh sé in ann do chuntas a oscailt ag baint úsáide as an pasfhocal a thugtar.</string>
   <string name="account_export_end_network_title">Measáin</string>
@@ -246,4 +246,5 @@
   <!--Link a new device-->
   <string name="account_link_device_title">Déan nasc a dhéanamh ar ghléas nua</string>
   <string name="account_link_device_button">Déan nasc</string>
+  <!--Biometry-->
 </resources>

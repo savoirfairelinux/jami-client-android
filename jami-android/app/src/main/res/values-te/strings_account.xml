@@ -247,4 +247,5 @@
   <string name="error_format_not_supported">ఈ ఫార్మాట్కు మద్దతు లేదు.</string>
   <string name="account_link_device_title">కొత్త పరికరాన్ని లింక్ చేయండి</string>
   <string name="account_link_device_button">కనెక్ట్</string>
+  <!--Biometry-->
 </resources>

@@ -39,6 +39,7 @@
   <string name="menu_item_plugin_list">Paramètres des modules d\'extension</string>
   <string name="menu_item_share">Partager mon compte</string>
   <string name="menu_item_about">À propos de Jami</string>
+  <string name="video_setting_title">Paramètres vidéo </string>
   <!--Dialing Fragment-->
   <string name="dial_number">Composer un numéro</string>
   <!--History Fragment-->
@@ -201,6 +202,7 @@
   <string name="conversation_syncing">Téléchargement de la conversation depuis le pair.</string>
   <string name="conversation_blocked">Le contact  est bloqué</string>
   <string name="conversation_ended">La conversation est terminée</string>
+  <string name="conversation_reply_you">Vous</string>
   <string name="conversation_preference_color">Couleur de la conversation</string>
   <string name="conversation_preference_emoji">Émoji de conversation</string>
   <string name="conversation_type_contact">Contact Jami</string>
@@ -211,6 +213,8 @@
   <string name="conversation_contact_left">%1$s restant</string>
   <string name="conversation_contact_banned">%1$sa été banni</string>
   <string name="conversation_search_hint">Rechercher des conversations</string>
+  <string name="today">Aujourd\'hui</string>
+  <string name="yesterday">Hier</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Ajouter %1$s ?</string>
   <string name="prompt_new_password">Nouveau mot de passe</string>

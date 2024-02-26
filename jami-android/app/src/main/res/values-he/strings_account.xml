@@ -246,4 +246,5 @@
   <!--Link a new device-->
   <string name="account_link_device_title">קישור מכשיר חדש</string>
   <string name="account_link_device_button">חיבור</string>
+  <!--Biometry-->
 </resources>

@@ -202,6 +202,7 @@
   <string name="conversation_syncing">Se descarcă conversația de la utilizator</string>
   <string name="conversation_blocked">Acest contact este blocat.</string>
   <string name="conversation_ended">Conversație terminată.</string>
+  <string name="conversation_message_deleted">%s a șters mesajul</string>
   <string name="conversation_reply_you">Tu</string>
   <string name="conversation_preference_color">Culoarea conversației</string>
   <string name="conversation_preference_emoji">Emoji de conversație</string>
@@ -336,6 +337,16 @@
   <string name="tv_send_video">Trimite Media</string>
   <string name="tv_action_more">Mai mult</string>
   <string name="conversation_input_speech_hint">Spune ceva...</string>
+  <string name="audio_permission_denied">Permite accesul la microfon pentru a utiliza caracteristicile audio ale lui Jami.</string>
+  <string name="camera_permission_denied">Permite accesul la cameră pentru a utiliza caracteristicile video ale lui Jami.</string>
+  <string name="speech_recogniton_unavailable">Recunoașterea vorbirii nu este disponibilă.</string>
+  <string name="audio_permission_rationale_title">Permisiunea audio este necesară</string>
+  <string name="camera_permission_rationale_title">Permisiunea video este necesară</string>
+  <string name="audio_permission_rationale_message">Jami are nevoie de acces la microfon pentru a transforma vorbirea în text și pentru a înregistra audio. Acesta va fi solicitat la pasul următor.</string>
+  <string name="camera_permission_rationale_message">Jami are nevoie de acces la cameră pentru a înregistra video și a efectua apeluri video. Acesta va fi solicitat la pasul următor.</string>
+  <string name="unable_to_start_recorder">Nu se poate începe înregistrarea audio.</string>
+  <string name="error_sharing_file">Eroare la trimiterea fișierului.</string>
+  <string name="error_opening_file">Eroare la deschiderea fișierului.</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Recomandat</string>
   <string name="wizard_status_optional">Facultativ</string>

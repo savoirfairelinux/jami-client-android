@@ -142,7 +142,7 @@ Podeu editar el vostre compte més endavant.</string>
   <string name="error_passwords_not_equals">No coincideixen les contrasenyes</string>
   <string name="export_account_wait_title">Si us plau espereu...</string>
   <string name="export_account_wait_message">Exportant informació del compte</string>
-  <string name="account_export_file">Copia de seguretat del compte</string>
+  <string name="account_export_file">Fes còpia de seguretat del compte</string>
   <string name="account_export_file_summary">Copia de seguretat del compte al dispositiu per restablir-lo més tard.</string>
   <string name="account_export_end_decryption_message">No s\'ha pogut desbloquejar el vostre compte amb la contrasenya que heu proveït</string>
   <string name="account_export_end_network_title">Error de xarxa</string>
@@ -249,4 +249,5 @@ Podeu editar el vostre compte més endavant.</string>
   <string name="error_format_not_supported">Aquest format no és compatible.</string>
   <string name="account_link_device_title">Enllaça un nou dispositiu</string>
   <string name="account_link_device_button">Connectar</string>
+  <!--Biometry-->
 </resources>

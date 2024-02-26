@@ -249,4 +249,5 @@ Du kan ändra kontot senare.</string>
   <string name="error_format_not_supported">Detta format saknar stöd.</string>
   <string name="account_link_device_title">Koppla en ny enhet</string>
   <string name="account_link_device_button">Anslut</string>
+  <!--Biometry-->
 </resources>

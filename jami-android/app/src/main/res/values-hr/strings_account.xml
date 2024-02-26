@@ -249,4 +249,5 @@ Moćete urediti vaš račun kasnije</string>
   <string name="error_format_not_supported">Ovaj format nije podržan.</string>
   <string name="account_link_device_title">Povežite novi uređaj</string>
   <string name="account_link_device_button">Povezivanje</string>
+  <!--Biometry-->
 </resources>

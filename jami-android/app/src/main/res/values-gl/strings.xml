@@ -38,6 +38,7 @@
   <string name="menu_item_plugin_list">Axustes dos plugins</string>
   <string name="menu_item_share">Compartir a miña conta</string>
   <string name="menu_item_about">Acerca de Jami</string>
+  <string name="video_setting_title">Configuración de vídeo</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Marcar un número</string>
   <!--History Fragment-->
@@ -209,6 +210,8 @@
   <string name="conversation_contact_left">%1$s saíu</string>
   <string name="conversation_contact_banned">Vetouse a %1$s</string>
   <string name="conversation_search_hint">Buscar conversa</string>
+  <string name="today">Hoxe</string>
+  <string name="yesterday">Onte</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Engadir %1$s?</string>
   <string name="prompt_new_password">Novo contrasinal</string>

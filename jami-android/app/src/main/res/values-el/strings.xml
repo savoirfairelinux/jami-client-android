@@ -38,6 +38,7 @@
   <string name="menu_item_plugin_list">Ρυθμίσεις Προσθέτων</string>
   <string name="menu_item_share">Κοινοποίηση λογαριασμού</string>
   <string name="menu_item_about">Σχετικά με το Jami</string>
+  <string name="video_setting_title">Εποθέματα Βίντεο</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Κλήση αριθμού</string>
   <!--History Fragment-->
@@ -193,6 +194,7 @@
   <string name="conversation_syncing">Λήψη συνομιλίας από χρήστη</string>
   <string name="conversation_blocked">Η επαφή είναι μπλοκαρισμένη.</string>
   <string name="conversation_ended">Η συζήτηση τελείωσε.</string>
+  <string name="conversation_reply_you">Εσύ</string>
   <string name="conversation_preference_color">Χρώμα συνομιλίας</string>
   <string name="conversation_preference_emoji">Emoji συνομιλίας</string>
   <string name="conversation_type_contact">Επαφή Jami</string>
@@ -203,6 +205,8 @@
   <string name="conversation_contact_left">%1$s έφυγε</string>
   <string name="conversation_contact_banned">Το %1$s απαγορεύτηκε</string>
   <string name="conversation_search_hint">Ψάξτε για συζήτηση</string>
+  <string name="today">Σήμερα</string>
+  <string name="yesterday">Χθες</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Προσθήκη %1$s;</string>
   <string name="prompt_new_password">Νέο συνθηματικό</string>

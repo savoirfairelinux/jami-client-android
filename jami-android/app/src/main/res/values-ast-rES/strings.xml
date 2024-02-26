@@ -38,6 +38,7 @@
   <string name="menu_item_plugin_list">Les configuraciones de los plugins</string>
   <string name="menu_item_share">Compartir la mio cuenta</string>
   <string name="menu_item_about">Sobre Jami</string>
+  <string name="video_setting_title">La configuración de video</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Diálogu de un númberu</string>
   <!--History Fragment-->
@@ -193,6 +194,7 @@
   <string name="conversation_syncing">Descargar conversación de pares</string>
   <string name="conversation_blocked">El contautu ye bloqueáu.</string>
   <string name="conversation_ended">La conversación acabó.</string>
+  <string name="conversation_reply_you">El so padre.</string>
   <string name="conversation_preference_color">El color de la conversación</string>
   <string name="conversation_preference_emoji">Emoji de conversación</string>
   <string name="conversation_type_contact">El contautu Jami</string>
@@ -203,6 +205,8 @@
   <string name="conversation_contact_left">%1$ ye izquierdu</string>
   <string name="conversation_contact_banned">%1$s foi prohibíu</string>
   <string name="conversation_search_hint">La conversación de busca</string>
+  <string name="today">El so nome ye \"El pueblu de Dios\".</string>
+  <string name="yesterday">En xineru de 2011</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">¿Agregar %1$s?</string>
   <string name="prompt_new_password">Nueva contraseña</string>

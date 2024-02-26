@@ -249,4 +249,5 @@
   <string name="error_format_not_supported">Този формат не се поддържа.</string>
   <string name="account_link_device_title">Свържете ново устройство</string>
   <string name="account_link_device_button">Свържете се</string>
+  <!--Biometry-->
 </resources>

@@ -143,7 +143,7 @@
   <string name="error_passwords_not_equals">Пароли не совпадают</string>
   <string name="export_account_wait_title">Пожалуйста, подождите…</string>
   <string name="export_account_wait_message">Экспортирование аккаунта…</string>
-  <string name="account_export_file">Резервная копия аккаунта</string>
+  <string name="account_export_file">Создать резервную копию аккаунта</string>
   <string name="account_export_file_summary">Сделайте резервную копию своего аккаунта на устройстве, чтобы восстановить его позже.</string>
   <string name="account_export_end_decryption_message">Не удалось разблокировать аккаунт указанным паролем.</string>
   <string name="account_export_end_network_title">Ошибка сети</string>
@@ -266,4 +266,5 @@
   <string name="connect_device_scanqr">Сканировать QR-код</string>
   <string name="connect_device_enterPIN">Или ввести ПИН-код</string>
   <string name="account_link_device_button">Соединение</string>
+  <!--Biometry-->
 </resources>

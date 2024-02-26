@@ -201,6 +201,7 @@
   <string name="conversation_syncing">Po shkarkohet biseda nga ortaku</string>
   <string name="conversation_blocked">Ky kontakt është i bllokuar.</string>
   <string name="conversation_ended">Biseda përfundoi.</string>
+  <string name="conversation_message_deleted">%s fshiu një mesazh</string>
   <string name="conversation_reply_you">Ju</string>
   <string name="conversation_preference_color">Ngjyrë bisede</string>
   <string name="conversation_preference_emoji">Emoji bisede</string>
@@ -335,6 +336,16 @@
   <string name="tv_send_video">Dërgoni Media</string>
   <string name="tv_action_more">Më tepër</string>
   <string name="conversation_input_speech_hint">Thoni diçka…</string>
+  <string name="audio_permission_denied">Ju lutemi, që të përdoren veçori audio të Jami-t, akordoni leje mbi mikrofonin.</string>
+  <string name="camera_permission_denied">Ju lutemi, që të përdoren veçori video të Jami-t, akordoni leje mbi kamerën.</string>
+  <string name="speech_recogniton_unavailable">S’është e përdorshme njohja e të  folurit.</string>
+  <string name="audio_permission_rationale_title">Lypset leje audio</string>
+  <string name="camera_permission_rationale_title">Lypset leje video</string>
+  <string name="audio_permission_rationale_message">Që të përdorë veçori shndërrimi të folure në tekst dhe incizimi audio, Jami lyp leje mbi mikrofonin. Do të kërkohet në hapin pasues.</string>
+  <string name="camera_permission_rationale_message">Që të përdorë veçori regjistrimi videoje dhe për të bërë një thirrje me video, Jami lyp leje mbi kamerën. Do të kërkohet në hapin pasues.</string>
+  <string name="unable_to_start_recorder">S’arrihet të niset incizim audio.</string>
+  <string name="error_sharing_file">Gabim në ndarje kartele me të tjerë.</string>
+  <string name="error_opening_file">Gabim në hapje kartele.</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">E rekomanduar</string>
   <string name="wizard_status_optional">Opsionale</string>
