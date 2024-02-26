@@ -34,6 +34,7 @@ import androidx.core.view.doOnNextLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.commitNow
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.BuildConfig
@@ -377,13 +378,10 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
 
     fun showWelcomeFragment() {
         val welcomeJamiFragment = WelcomeJamiFragment()
-        supportFragmentManager.beginTransaction()
-            .replace(
-                R.id.conversation,
-                welcomeJamiFragment,
-                welcomeJamiFragment::class.java.simpleName
-            )
-            .commit()
+        supportFragmentManager.commitNow {
+            setReorderingAllowed(true)
+            replace(R.id.conversation, welcomeJamiFragment, welcomeJamiFragment::class.java.simpleName)
+        }
         fWelcomeJami = welcomeJamiFragment
         fConversation = null
     }
@@ -410,14 +408,25 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
         // If a conversation is already displayed, we replace it,
         // else we add it
         conversationBackPressedCallback.isEnabled = true
-        supportFragmentManager.beginTransaction()
+        val panel = mBinding?.panel ?: return
+
+        val transaction = supportFragmentManager.beginTransaction()
+            .setTransition(FragmentTransaction.TRANSIT_NONE)
+            .setReorderingAllowed(true)
             .replace(R.id.conversation, conversation, ConversationFragment::class.java.simpleName)
             .runOnCommit {
                 intent?.let { conversation.handleShareIntent(it) }
             }
-            .commit()
+
+        if (panel.isOpen) {
+            transaction.commitNow()
+        } else {
+            panel.openPane()
+            panel.doOnNextLayout {
+                transaction.commitNow()
+            }
+        }
         fConversation = conversation
-        mBinding!!.panel.openPane()
     }
 
     private fun presentTrustRequestFragment(accountId: String) {
