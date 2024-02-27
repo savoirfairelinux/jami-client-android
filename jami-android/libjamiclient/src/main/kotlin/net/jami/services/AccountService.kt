@@ -1207,7 +1207,6 @@ class AccountService(
                 val invited = message["invited"]!!
                 val invitedContact = conversation.findContact(Uri.fromId(invited)) ?: account.getContactFromCache(invited)
                 invitedContact.addedDate = Date(timestamp)
-                Log.w(TAG, "invited $invited $invitedContact")
                 ContactEvent(account.accountId, invitedContact).setEvent(ContactEvent.Event.INVITED)
             } else {
                 Interaction(conversation, Interaction.InteractionType.INVALID)
@@ -1215,7 +1214,6 @@ class AccountService(
             "member" -> {
                 val action = message["action"]!!
                 val uri = message["uri"]!!
-                Log.w(TAG, "member $action $uri")
                 val member = conversation.findContact(Uri.fromId(uri)) ?: account.getContactFromCache(uri)
                 member.addedDate = Date(timestamp)
                 ContactEvent(account.accountId, member).setEvent(ContactEvent.Event.fromConversationAction(action))
@@ -1235,7 +1233,6 @@ class AccountService(
                     }
                     val path = File(paths[0]!!)
                     val isComplete = path.exists() && progressA[0] == totalA[0]
-                    Log.w(TAG, "add $isComplete DataTransfer at ${paths[0]} with progress ${progressA[0]}/${totalA[0]}")
                     DataTransfer(fileId, account.accountId, author, fileName, contact.isUser, timestamp, totalA[0], progressA[0]).apply {
                         daemonPath = path
                         status = if (isComplete) InteractionStatus.TRANSFER_FINISHED else InteractionStatus.FILE_AVAILABLE
