@@ -214,15 +214,13 @@ class ConversationFacade(
      * @param account the user account
      * @return an account single
      */
-    private fun loadSmartlist(account: Account): Single<Account> {
+    private fun loadSmartlist(account: Account): Single<Account> =
         synchronized(account) {
-            account.historyLoader.let { loader ->
-                return loader ?: account.loaded.toSingleDefault(account).flatMap { getSmartlist(it) }.cache().apply {
-                    account.historyLoader = this
-                }
-            }
+            account.historyLoader ?: account.loaded
+                .andThen(getSmartlist(account))
+                .cache()
+                .apply { account.historyLoader = this }
         }
-    }
 
     /**
      * Loads history for a specific conversation from cache or database
