@@ -238,11 +238,13 @@ class AccountService(
         }
         mAccountList = newAccounts
         val scheduler = Schedulers.computation()
-        toLoad.forEach {
-            scheduler.createWorker().schedule {
-                loadAccount(it)
-                it.loadedSubject.onComplete()
-            }
+        toLoad.forEach { account ->
+            account.registrationStateObservable
+                .filter { it != AccountConfig.RegistrationState.UNLOADED && it != AccountConfig.RegistrationState.INITIALIZING }
+                .firstElement()
+                .observeOn(scheduler)
+                .flatMapCompletable { Completable.fromAction { loadAccount(account) } }
+                .subscribe(account.loadedSubject)
         }
         // Cleanup removed accounts
         for (acc in curList) if (!newAccounts.contains(acc)) acc.cleanup()
@@ -967,12 +969,6 @@ class AccountService(
             account.setVolatileDetails(JamiService.getVolatileAccountDetails(account.accountId).toNative())
         } else {
             account.setRegistrationState(state, code)
-            /*synchronized(account) {
-                if (!account.loadedSubject.hasValue()) {
-                    account.loadedSubject.onSuccess(Completable.fromAction { loadAccount(account) }
-                        .subscribeOn(Schedulers.computation()))
-                }
-            }*/
         }
         if (oldState != state) {
             observableAccounts.onNext(account)
