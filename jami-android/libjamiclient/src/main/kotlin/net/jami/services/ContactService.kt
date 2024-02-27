@@ -76,7 +76,6 @@ abstract class ContactService(
         synchronized(contact) {
             val presenceUpdates = contact.presenceUpdates ?: run {
                 Observable.create { emitter: ObservableEmitter<Contact.PresenceStatus> ->
-                    emitter.onNext(Contact.PresenceStatus.OFFLINE)
                     contact.setPresenceEmitter(emitter)
                     mAccountService.subscribeBuddy(accountId, uriString, true)
                     emitter.setCancellable {
