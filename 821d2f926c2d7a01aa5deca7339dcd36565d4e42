@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6cfa547c_67fae585",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ShareWithFragment.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-02-28T22:51:50Z",
+      "side": 1,
+      "message": "Is this really necessary ?",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 82,
+        "endChar": 2
+      },
+      "revId": "821d2f926c2d7a01aa5deca7339dcd36565d4e42",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f578608_478eb02a",
+        "filename": "jami-android/app/src/main/res/menu/share_actions.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-02-28T22:51:50Z",
+      "side": 1,
+      "message": "Todo ? or cleanup !",
+      "range": {
+        "startLine": 4,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 39
+      },
+      "revId": "821d2f926c2d7a01aa5deca7339dcd36565d4e42",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
