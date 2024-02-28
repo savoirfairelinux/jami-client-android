@@ -40,7 +40,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import cx.ring.R
 import cx.ring.application.JamiApplication
-import cx.ring.client.ConversationActivity
+import cx.ring.client.HomeActivity
 import cx.ring.fragments.ConversationFragment
 import cx.ring.services.NotificationServiceImpl
 import cx.ring.utils.ContentUri
@@ -92,13 +92,12 @@ class LocationSharingService : Service(), LocationListener {
     val contactSharing: Observable<Set<ConversationPath>>
         get() = mContactSharingSubject
 
-    fun getContactSharingExpiration(path: ConversationPath): Observable<Long> {
-        return Observable.timer(1, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
+    fun getContactSharingExpiration(path: ConversationPath): Observable<Long> =
+        Observable.timer(1, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
             .startWithItem(0L)
             .repeat()
             .map { contactLocationShare[path]!!.time - SystemClock.elapsedRealtime() }
             .onErrorComplete()
-    }
 
     override fun onCreate() {
         super.onCreate()
@@ -159,19 +158,17 @@ class LocationSharingService : Service(), LocationListener {
                     })
                 mDisposableBag.add(mMyLocationSubject
                     .throttleLatest(10, TimeUnit.SECONDS)
-                    .map { location ->
-                        val out = JSONObject()
-                        out.put("type", AccountService.Location.Type.Position.toString())
-                        out.put("lat", location.latitude)
-                        out.put("long", location.longitude)
-                        out.put("alt", location.altitude)
-                        out.put("time", location.elapsedRealtimeNanos / 1000000L)
+                    .map { location -> JSONObject().apply {
+                        put("type", AccountService.Location.Type.Position.toString())
+                        put("lat", location.latitude)
+                        put("long", location.longitude)
+                        put("alt", location.altitude)
+                        put("time", location.elapsedRealtimeNanos / 1000000L)
                         val bearing = location.bearing
-                        if (bearing != 0f) out.put("bearing", bearing.toDouble())
+                        if (bearing != 0f) put("bearing", bearing.toDouble())
                         val speed = location.speed
-                        if (speed != 0f) out.put("speed", speed.toDouble())
-                        out
-                    }
+                        if (speed != 0f) put("speed", speed.toDouble())
+                    } }
                     .subscribe { location: JSONObject ->
                         Log.w(TAG, "location send " + location + " to " + contactLocationShare.size)
                         val msgs = StringMap()
@@ -260,7 +257,7 @@ class LocationSharingService : Service(), LocationListener {
                     Intent.ACTION_VIEW,
                     firsPath.toUri(),
                     applicationContext,
-                    ConversationActivity::class.java
+                    HomeActivity::class.java
                 )
                     .putExtra(ConversationFragment.EXTRA_SHOW_MAP, true)
                     .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
