@@ -17,7 +17,6 @@
 package net.jami.services
 
 import com.google.gson.JsonParser
-import ezvcard.VCard
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Observable
@@ -32,7 +31,6 @@ import net.jami.model.*
 import net.jami.model.Interaction.InteractionStatus
 import net.jami.utils.Log
 import net.jami.utils.SwigNativeConverter
-import net.jami.utils.VCardUtils
 import java.io.File
 import java.io.UnsupportedEncodingException
 import java.net.SocketException
@@ -44,8 +42,6 @@ import java.util.concurrent.ScheduledFuture
 import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
-import kotlin.math.absoluteValue
-import kotlin.math.min
 
 /**
  * This service handles the accounts
@@ -85,7 +81,6 @@ class AccountService(
     private var mAccountList: List<Account> = ArrayList()
     private var mHasSipAccount = false
     private var mHasRingAccount = false
-    private var mStartingTransfer: DataTransfer? = null
     private val accountsSubject = BehaviorSubject.create<List<Account>>()
     private val observableAccounts: Subject<Account> = PublishSubject.create()
     val currentAccountSubject: Observable<Account> = accountsSubject
@@ -149,7 +144,7 @@ class AccountService(
                 })
             } catch (e: Exception) {
                 Log.w(TAG, "Failed to receive geolocation", e)
-                Maybe.empty<Location>()
+                Maybe.empty()
             }
         }
         .share()
@@ -966,6 +961,7 @@ class AccountService(
             account.setDetails(JamiService.getAccountDetails(account.accountId).toNative())
             account.setCredentials(JamiService.getCredentials(account.accountId).toNative())
             account.devices = JamiService.getKnownRingDevices(account.accountId).toNative()
+            // sets the registration state
             account.setVolatileDetails(JamiService.getVolatileAccountDetails(account.accountId).toNative())
         } else {
             account.setRegistrationState(state, code)
