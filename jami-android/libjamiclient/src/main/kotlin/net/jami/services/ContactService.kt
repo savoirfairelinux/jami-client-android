@@ -81,7 +81,6 @@ abstract class ContactService(
                     emitter.setCancellable {
                         mAccountService.subscribeBuddy(accountId, uriString, false)
                         contact.setPresenceEmitter(null)
-                        emitter.onNext(Contact.PresenceStatus.OFFLINE)
                     }
                 }
                     .replay(1)
@@ -131,9 +130,7 @@ abstract class ContactService(
                 if (!contact.isUser) observables.add(observeContact(accountId, contact, withPresence))
             }
             if (observables.isEmpty()) Observable.just(emptyList()) else Observable.combineLatest(observables) { a: Array<Any> ->
-                val obs: MutableList<ContactViewModel> = ArrayList(a.size)
-                for (o in a) obs.add(o as ContactViewModel)
-                obs
+                a.map { it as ContactViewModel }
             }
         }
 
@@ -155,12 +152,14 @@ abstract class ContactService(
             .flatMap { getLoadedConversation(it.getByUri(conversationUri)!!) }
 
     fun getLoadedConversation(conversation: Conversation): Single<ConversationItemViewModel> =
-        conversation.contactUpdates.firstOrError().flatMap { contacts -> Single.zip(getLoadedContact(
-            conversation.accountId, contacts, false),
-            conversation.profile.firstOrError()
-        ){ c, p ->
-            ConversationItemViewModel(conversation, p, c, false)
-        } }
+        conversation.contactUpdates
+            .firstOrError()
+            .flatMap { contacts ->
+                Single.zip(getLoadedContact(conversation.accountId, contacts, false),
+                            conversation.profile.firstOrError()) { c, p ->
+                    ConversationItemViewModel(conversation, p, c, false)
+                }
+            }
 
     fun observeLoadedContact(accountId: String, contacts: List<Contact>, withPresence: Boolean = false): List<Observable<ContactViewModel>> =
         contacts.map { contact -> observeContact(accountId, contact, withPresence) }
