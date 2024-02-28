@@ -41,9 +41,14 @@ class CallNotificationService : Service() {
             val startScreenshare = intent.getBooleanExtra(NotificationService.KEY_SCREENSHARE, false)
             if (notification != null) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE && !startScreenshare)
-                    startForeground(NotificationServiceImpl.NOTIF_CALL_ID, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_PHONE_CALL)
+                    startForeground(NotificationServiceImpl.NOTIF_CALL_ID, notification,
+                        ServiceInfo.FOREGROUND_SERVICE_TYPE_PHONE_CALL or ServiceInfo.FOREGROUND_SERVICE_TYPE_MICROPHONE or ServiceInfo.FOREGROUND_SERVICE_TYPE_CAMERA)
+                else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R)
+                    startForeground(NotificationServiceImpl.NOTIF_CALL_ID, notification,
+                        ServiceInfo.FOREGROUND_SERVICE_TYPE_PHONE_CALL or ServiceInfo.FOREGROUND_SERVICE_TYPE_MICROPHONE or ServiceInfo.FOREGROUND_SERVICE_TYPE_CAMERA or ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PROJECTION)
                 else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
-                    startForeground(NotificationServiceImpl.NOTIF_CALL_ID, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_PHONE_CALL or ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PROJECTION)
+                    startForeground(NotificationServiceImpl.NOTIF_CALL_ID, notification,
+                        ServiceInfo.FOREGROUND_SERVICE_TYPE_PHONE_CALL or ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PROJECTION)
                 else
                     startForeground(NotificationServiceImpl.NOTIF_CALL_ID, notification)
                 if (startScreenshare && confId != null)
