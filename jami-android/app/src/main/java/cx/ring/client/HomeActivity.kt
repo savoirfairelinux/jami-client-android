@@ -239,7 +239,7 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
             DRingService.ACTION_CONV_ACCEPT -> {
                 val path = ConversationPath.fromIntent(intent)
                 if (path != null)
-                    startConversation(path)
+                    startConversation(path, intent)
             }
         }
         if (Intent.ACTION_SEARCH == action) {
