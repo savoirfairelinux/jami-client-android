@@ -1427,6 +1427,7 @@ class AccountService(
     }
 
     fun swarmMessageReceived(accountId: String, conversationId: String, message: SwarmMessage) {
+        Log.w("devdebug", "AccountService:swarmMessageReceived()")
         getAccount(accountId)?.let { account -> account.getSwarm(conversationId)?.let { conversation ->
             synchronized(conversation) {
                 val interaction = addMessage(account, conversation, message, true)
