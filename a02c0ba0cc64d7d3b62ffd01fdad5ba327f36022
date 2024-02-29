@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a0187e2f_5dd1888a",
+        "filename": "jami-android/app/src/main/java/cx/ring/utils/BitmapUtils.kt",
+        "patchSetId": 8
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-02-29T18:58:47Z",
+      "side": 1,
+      "message": "Need a comment about the ratio strategy.",
+      "range": {
+        "startLine": 133,
+        "startChar": 0,
+        "endLine": 133,
+        "endChar": 2
+      },
+      "revId": "a02c0ba0cc64d7d3b62ffd01fdad5ba327f36022",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9ac753bf_efea90b5",
         "filename": "jami-android/app/src/main/java/cx/ring/utils/ContentUri.kt",
         "patchSetId": 8
