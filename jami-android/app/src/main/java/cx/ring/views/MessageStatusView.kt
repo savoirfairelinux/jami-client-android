@@ -39,21 +39,28 @@ class MessageStatusView @JvmOverloads constructor(
 ) : LinearLayout(context, attrs, defStyle) {
 
     private val iconSize = resources.getDimensionPixelSize(R.dimen.conversation_status_icon_size)
-    private val iconTint by lazy(LazyThreadSafetyMode.NONE) { ColorStateList.valueOf(ContextCompat.getColor(context, R.color.grey_500)) }
+    private val iconTint by lazy(LazyThreadSafetyMode.NONE) {
+        ColorStateList.valueOf(
+            ContextCompat.getColor(
+                context,
+                R.color.grey_500
+            )
+        )
+    }
+    //  Todo : private val iconTint: ColorStateList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.grey_500))
 
+    // Add or remove views to match the given count (corresponds to the number of contacts).
     private fun resize(count: Int) {
-        if (count == 0) {
-            removeAllViews()
-        } else if (childCount > count) {
-            while (childCount > count) {
+        if (count == 0) removeAllViews()
+        else if (childCount > count)
+            while (childCount > count)
                 removeViewAt(childCount - 1)
-            }
-        } else if (childCount < count) {
+        else if (childCount < count) {
             var i = childCount
             while (childCount < count) {
                 addView(ImageView(context).apply {
                     layoutParams = LayoutParams(iconSize, iconSize).apply {
-                        marginStart = if (i != 0) -iconSize/3  else 0
+                        marginStart = if (i != 0) -iconSize / 3 else 0
                     }
                 })
                 i++
@@ -61,36 +68,52 @@ class MessageStatusView @JvmOverloads constructor(
         }
     }
 
-    fun update(contacts: Collection<ContactViewModel>, status: Interaction.InteractionStatus, @IdRes resId: Int = View.NO_ID) {
-        val showStatus = contacts.isEmpty() && (status == Interaction.InteractionStatus.SUCCESS || status == Interaction.InteractionStatus.SENDING)
+    fun update(
+        seenBy: Collection<ContactViewModel>,
+        status: Interaction.InteractionStatus,
+        @IdRes resId: Int = View.NO_ID
+    ) {
+        Log.w(
+            "devdebug",
+            "MessageStatusView.update() contacts: $seenBy, status: $status, resId: $resId"
+        )
+        val showStatus = seenBy.isEmpty()
+                && (status == Interaction.InteractionStatus.SUCCESS
+                || status == Interaction.InteractionStatus.SENDING
+                || status == Interaction.InteractionStatus.UNKNOWN)
         if (showStatus) {
             resize(1)
             (getChildAt(0) as ImageView).apply {
-                setImageResource(when (status) {
-                    Interaction.InteractionStatus.FAILURE -> R.drawable.round_highlight_off_24
-                    Interaction.InteractionStatus.SENDING -> R.drawable.baseline_check_circle_outline_24
-                    Interaction.InteractionStatus.SUCCESS -> R.drawable.baseline_check_circle_24
-                    else -> -1 //R.drawable.baseline_check_circle_24
-                })
+                setImageResource(
+                    when (status) {
+                        Interaction.InteractionStatus.UNKNOWN -> R.drawable.sent
+                        Interaction.InteractionStatus.SUCCESS -> R.drawable.receive
+                        else -> -1
+                    }
+                )
                 ImageViewCompat.setImageTintList(this, iconTint)
             }
         } else {
-            resize(contacts.size)
-            contacts.forEachIndexed { index, contact ->
+            resize(seenBy.size)
+            seenBy.forEachIndexed { index, contact ->
                 (getChildAt(index) as ImageView).apply {
                     imageTintList = null
-                    setImageDrawable(AvatarDrawable.Builder()
-                        .withCircleCrop(true)
-                        .withContact(contact)
-                        .withPresence(false)
-                        .build(context))
+                    setImageDrawable(
+                        AvatarDrawable.Builder()
+                            .withCircleCrop(true)
+                            .withContact(contact)
+                            .withPresence(false)
+                            .build(context)
+                    )
                 }
             }
         }
+
+        // Position the avatars correctly depending on the layout type.
+        val fitRight = showStatus || seenBy.size < 2
         when (layoutParams) {
             is RelativeLayout.LayoutParams -> {
                 val params = layoutParams as RelativeLayout.LayoutParams? ?: return
-                val fitRight = showStatus || contacts.size < 2
                 if (fitRight) {
                     // Put the avatar on the right of the message if there is only one contact
                     params.removeRule(RelativeLayout.BELOW)
@@ -102,9 +125,9 @@ class MessageStatusView @JvmOverloads constructor(
                 }
                 layoutParams = params
             }
+
             is ConstraintLayout.LayoutParams -> {
                 val params = layoutParams as ConstraintLayout.LayoutParams? ?: return
-                val fitRight = showStatus || contacts.size < 2
                 if (fitRight) {
                     // Put the avatar on the right of the message if there is only one contact
                     params.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID
@@ -116,6 +139,7 @@ class MessageStatusView @JvmOverloads constructor(
                 }
                 layoutParams = params
             }
+
             else -> Log.w(TAG, "Error layout params.")
         }
     }

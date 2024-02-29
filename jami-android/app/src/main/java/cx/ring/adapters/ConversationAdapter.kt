@@ -328,7 +328,8 @@ class ConversationAdapter(
             )
             .observeOn(DeviceUtils.uiScheduler)
             .subscribe { contacts ->
-                conversationViewHolder.mStatusIcon?.isVisible = contacts.isNotEmpty()
+                Log.w("devdebug", "ConversationAdapter.configureDisplayIndicator() msg=${interaction.body}")
+//                conversationViewHolder.mStatusIcon?.isVisible = contacts.isNotEmpty()
                 conversationViewHolder.mStatusIcon?.update(
                     contacts,
                     interaction.status,
