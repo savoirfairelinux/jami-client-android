@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0285e04b_dcc12fb6",
+        "filename": "jami-android/app/src/main/java/cx/ring/utils/DeviceUtils.kt",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-02-29T19:10:32Z",
+      "side": 1,
+      "message": "Is this related to the patch?",
+      "revId": "714109d7efd887b0cca639d5404f157459533625",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "868ca393_ab535f45",
+        "filename": "jami-android/app/src/main/java/cx/ring/views/AvatarView.kt",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-02-29T19:10:32Z",
+      "side": 1,
+      "message": "format, would be nice to have a line return here",
+      "revId": "714109d7efd887b0cca639d5404f157459533625",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "45e523af_20a8213d",
+        "filename": "jami-android/app/src/main/java/cx/ring/views/AvatarView.kt",
+        "patchSetId": 11
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-02-29T19:10:32Z",
+      "side": 1,
+      "message": "What is this for?",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 2
+      },
+      "revId": "714109d7efd887b0cca639d5404f157459533625",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
