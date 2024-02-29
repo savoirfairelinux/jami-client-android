@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ac753bf_efea90b5",
+        "filename": "jami-android/app/src/main/java/cx/ring/utils/ContentUri.kt",
+        "patchSetId": 8
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-02-29T18:52:35Z",
+      "side": 1,
+      "message": "Why is this needed ?",
+      "revId": "a02c0ba0cc64d7d3b62ffd01fdad5ba327f36022",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
