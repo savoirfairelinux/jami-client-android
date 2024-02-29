@@ -16,14 +16,20 @@
  */
 package cx.ring.utils
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.LayerDrawable
+import android.graphics.pdf.PdfRenderer
+import android.graphics.pdf.PdfRenderer.Page
+import android.net.Uri
 import android.util.Base64
 import android.util.Log
+import android.util.TypedValue
+import androidx.annotation.AttrRes
 import ezvcard.parameter.ImageType
 import ezvcard.property.Photo
 import net.jami.utils.QRCodeUtils
@@ -124,6 +130,40 @@ object BitmapUtils {
         return bitmap
     }
 
+    private fun pageRenderSize(page: Page, maxWidth: Int, maxHeight: Int): Pair<Int, Int> =
+        if (maxHeight > 0) {
+            if (maxWidth > 0) {
+                val a = page.width * maxHeight
+                val b = page.height * maxWidth
+                if (a > b)
+                    (a / page.height) to maxHeight
+                else
+                    maxWidth to (b / page.width)
+            } else
+                (maxHeight * page.width / page.height) to maxHeight
+        } else if (maxWidth > 0) {
+            maxWidth to (maxWidth * page.height / page.width)
+        } else
+            page.width to page.height
+
+    private fun pageToBitmap(page: Page, maxWidth: Int, maxHeight: Int): Bitmap =
+        pageRenderSize(page, maxWidth, maxHeight)
+            .let { (w, h) -> Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888) }
+            .apply { page.render(this, null, null, Page.RENDER_MODE_FOR_DISPLAY) }
+
+    fun documentToBitmap(context: Context, uri: Uri, maxWidth: Int = -1, maxHeight: Int = -1): Bitmap? =
+        try {
+            context.contentResolver.openFileDescriptor(uri, "r")?.use { fd ->
+                PdfRenderer(fd).use { doc ->
+                    if (doc.pageCount == 0) null else
+                        doc.openPage(0).use { pageToBitmap(it, maxWidth, maxHeight) }
+                }
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "documentToBitmap: ", e)
+            null
+        }
+
     /**
      * Generate an Android Adaptive Bitmap from the given drawable and size in pixels
      * Uses about 20% padding for the adaptive icon as per
@@ -161,4 +201,12 @@ object BitmapUtils {
         LayerDrawable(arrayOf(drawable)).apply {
             setLayerInset(0, padding, padding, padding, padding)
         }
+
+    fun getColorFromAttribute(context: Context, @AttrRes attrColor: Int): Int {
+        val typedValue = TypedValue()
+        val theme = context.theme
+        theme.resolveAttribute(attrColor, typedValue, true)
+        return typedValue.data
+    }
+
 }
