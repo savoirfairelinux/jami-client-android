@@ -24,6 +24,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1fe44a03_b46b8d4d",
+        "filename": "jami-android/app/src/main/java/cx/ring/utils/BitmapUtils.kt",
+        "patchSetId": 8
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-02-29T20:06:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0187e2f_5dd1888a",
+      "range": {
+        "startLine": 133,
+        "startChar": 0,
+        "endLine": 133,
+        "endChar": 2
+      },
+      "revId": "a02c0ba0cc64d7d3b62ffd01fdad5ba327f36022",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9ac753bf_efea90b5",
@@ -54,6 +78,24 @@
       "writtenOn": "2024-02-29T19:07:36Z",
       "side": 1,
       "message": "I\u0027m talking about \n\n\tif (intentUri !\u003d null)\n\t\tmediaList.add(ShareItem(type, intentUri))",
+      "parentUuid": "9ac753bf_efea90b5",
+      "revId": "a02c0ba0cc64d7d3b62ffd01fdad5ba327f36022",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9d48c7c9_78b0e451",
+        "filename": "jami-android/app/src/main/java/cx/ring/utils/ContentUri.kt",
+        "patchSetId": 8
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-02-29T20:06:59Z",
+      "side": 1,
+      "message": "In some cases, the share item might be passed as the main intent URI. This code handles this case.\n\nThis is the standard way to handle Android share intent. Note that this is not new logic, merely a refactoring of the existing logic.",
       "parentUuid": "9ac753bf_efea90b5",
       "revId": "a02c0ba0cc64d7d3b62ffd01fdad5ba327f36022",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"

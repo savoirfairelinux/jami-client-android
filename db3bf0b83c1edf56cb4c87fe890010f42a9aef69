@@ -24,6 +24,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "16bc37a9_c089c1fa",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ShareWithFragment.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-02-29T20:06:59Z",
+      "side": 1,
+      "message": "The documentation doesn\u0027t guarantee recycle to be called in all cases. Having clear() here is safe and have negligeable performance impact.",
+      "parentUuid": "fd361474_638e43f9",
+      "range": {
+        "startLine": 88,
+        "startChar": 0,
+        "endLine": 88,
+        "endChar": 2
+      },
+      "revId": "db3bf0b83c1edf56cb4c87fe890010f42a9aef69",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f9ae9c57_a80ae289",
@@ -47,6 +71,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0ef54c0_86a914c8",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ShareWithFragment.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-02-29T20:06:59Z",
+      "side": 1,
+      "message": "Done: added fallback drawable",
+      "parentUuid": "f9ae9c57_a80ae289",
+      "range": {
+        "startLine": 106,
+        "startChar": 0,
+        "endLine": 106,
+        "endChar": 2
+      },
+      "revId": "db3bf0b83c1edf56cb4c87fe890010f42a9aef69",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "18a21ed7_a61b5b1f",
@@ -60,6 +108,30 @@
       "writtenOn": "2024-02-29T18:43:39Z",
       "side": 1,
       "message": "Values should be private.",
+      "range": {
+        "startLine": 182,
+        "startChar": 0,
+        "endLine": 182,
+        "endChar": 2
+      },
+      "revId": "db3bf0b83c1edf56cb4c87fe890010f42a9aef69",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b5d9fb06_d9e1d5e2",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ShareWithFragment.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-02-29T20:06:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18a21ed7_a61b5b1f",
       "range": {
         "startLine": 182,
         "startChar": 0,
