@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fd361474_638e43f9",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ShareWithFragment.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-02-29T18:43:39Z",
+      "side": 1,
+      "message": "Needed? Seems to be already done by recycle()?",
+      "range": {
+        "startLine": 88,
+        "startChar": 0,
+        "endLine": 88,
+        "endChar": 2
+      },
+      "revId": "db3bf0b83c1edf56cb4c87fe890010f42a9aef69",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f9ae9c57_a80ae289",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ShareWithFragment.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-02-29T18:43:39Z",
+      "side": 1,
+      "message": "What if load fails?",
+      "range": {
+        "startLine": 106,
+        "startChar": 0,
+        "endLine": 106,
+        "endChar": 2
+      },
+      "revId": "db3bf0b83c1edf56cb4c87fe890010f42a9aef69",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "18a21ed7_a61b5b1f",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ShareWithFragment.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-02-29T18:43:39Z",
+      "side": 1,
+      "message": "Values should be private.",
+      "range": {
+        "startLine": 182,
+        "startChar": 0,
+        "endLine": 182,
+        "endChar": 2
+      },
+      "revId": "db3bf0b83c1edf56cb4c87fe890010f42a9aef69",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
