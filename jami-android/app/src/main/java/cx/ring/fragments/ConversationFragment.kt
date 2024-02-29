@@ -66,6 +66,7 @@ import cx.ring.services.SharedPreferencesServiceImpl.Companion.getConversationCo
 import cx.ring.services.SharedPreferencesServiceImpl.Companion.getConversationPreferences
 import cx.ring.services.SharedPreferencesServiceImpl.Companion.getConversationSymbol
 import cx.ring.utils.*
+import cx.ring.utils.ContentUri.getShareItems
 import cx.ring.views.AvatarDrawable
 import cx.ring.views.AvatarFactory
 import dagger.hilt.android.AndroidEntryPoint
@@ -1215,23 +1216,11 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         Log.w(TAG, "handleShareIntent $intent")
         val action = intent.action
         if (Intent.ACTION_SEND == action || Intent.ACTION_SEND_MULTIPLE == action) {
-            val type = intent.type
-            if (type == null) {
-                Log.w(TAG, "Can't share with no type")
-                return
-            }
-            if (type.startsWith("text/plain")) {
-                binding!!.msgInputTxt.setText(intent.getStringExtra(Intent.EXTRA_TEXT))
-            } else {
-                val intentUri = intent.data
-                if (intentUri != null)
-                    startFileSend(AndroidFileUtils.getCacheFile(requireContext(), intentUri).flatMapCompletable { file -> sendFile(file) })
-                intent.clipData?.let { clipData ->
-                    for (i in 0 until clipData.itemCount) {
-                        val uri = clipData.getItemAt(i).uri
-                        if (uri != intentUri)
-                            startFileSend(AndroidFileUtils.getCacheFile(requireContext(), uri).flatMapCompletable { file -> sendFile(file) })
-                    }
+            intent.getShareItems(requireContext()).forEach { shareItem ->
+                if (shareItem.type == "text/plain" && shareItem.text != null) {
+                    binding!!.msgInputTxt.setText(shareItem.text)
+                } else if (shareItem.data != null){
+                    startFileSend(AndroidFileUtils.getCacheFile(requireContext(), shareItem.data).flatMapCompletable { file -> sendFile(file) })
                 }
             }
         } else if (Intent.ACTION_VIEW == action) {
