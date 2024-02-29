@@ -33,6 +33,42 @@
       "message": "Can\u0027t we directly define handleShareIntent() in HomeActivity instead of ConversationActivity ?",
       "revId": "2cf644cca743f19bc58ffc7672582bf17c16fec7",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c369c6d_37011504",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-02-29T02:18:57Z",
+      "side": 1,
+      "message": "There are still references to ConversationActivity to be removed in future patches (for instance, from location sharing).\n\nEven after that, the ConversationActivity will still be supported for some use-cases like Bubbles that require a separate Activity.\n\nI believe it\u0027s good for the ConversationActivity to support the same set of incoming Intents as the HomeActivity. The fact that the logic is handled by ConversationFragment prevents code duplication and makes maintenance easy.",
+      "parentUuid": "65503ea0_f70bc24f",
+      "revId": "2cf644cca743f19bc58ffc7672582bf17c16fec7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "350e4358_b3548787",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-02-29T02:18:57Z",
+      "side": 1,
+      "message": "You mean ConversationFragment ?\nSee comment above: it allows to handle incoming conversation intents form a single code.\nAlso, handleShareIntent performs actions specific to the conversation UI, for instance, when sharing a text it will set the text field with the shared text, so it makes sense for this logic to be in ConversationFragment.",
+      "parentUuid": "d46d0e8e_63c979ba",
+      "revId": "2cf644cca743f19bc58ffc7672582bf17c16fec7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
