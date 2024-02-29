@@ -58,13 +58,12 @@ along with this program; if not, write to the Free Software
         android:layout_marginEnd="24dp"
         android:gravity="start">
 
-        <ImageView
+        <cx.ring.views.AvatarView
             android:id="@+id/photo"
             android:layout_width="@dimen/conversation_avatar_size"
             android:layout_height="@dimen/conversation_avatar_size"
             android:layout_gravity="start|bottom"
             android:layout_marginEnd="@dimen/conditional_left_conversation_margin"
-            android:contentDescription="@null"
             tools:srcCompat="@color/blue_200"
             tools:visibility="visible" />
 
