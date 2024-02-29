@@ -17,16 +17,24 @@
 package cx.ring.fragments
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.InflateException
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import cx.ring.R
 import cx.ring.adapters.SmartListAdapter
 import cx.ring.client.HomeActivity
 import cx.ring.databinding.FragSharewithBinding
@@ -35,6 +43,8 @@ import cx.ring.viewholders.SmartListViewHolder.SmartListListeners
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.subjects.BehaviorSubject
+import io.reactivex.rxjava3.subjects.Subject
 import net.jami.model.Conversation
 import net.jami.services.ContactService
 import net.jami.services.ConversationFacade
@@ -56,6 +66,45 @@ class ShareWithFragment : Fragment() {
     private var mPendingIntent: Intent? = null
     private var adapter: SmartListAdapter? = null
     private var binding: FragSharewithBinding? = null
+    private var searchView: SearchView? = null
+
+    private val query: Subject<String> = BehaviorSubject.createDefault("")
+
+    private val searchBackPressedCallback = object : OnBackPressedCallback(false) {
+        override fun handleOnBackPressed() {
+            searchView?.setQuery("", false)
+            searchView?.isIconified = true
+        }
+    }
+
+    private val menuProvider = object : MenuProvider {
+        override fun onCreateMenu(menu: Menu, inflater: MenuInflater) {
+            inflater.inflate(R.menu.share_actions, menu)
+            val searchMenuItem = menu.findItem(R.id.contact_search)
+            (searchMenuItem.actionView as SearchView).let {
+                searchView = it
+                it.setOnCloseListener {
+                    query.onNext("")
+                    searchBackPressedCallback.isEnabled = false
+                    false
+                }
+                it.setOnSearchClickListener {
+                    searchBackPressedCallback.isEnabled = true
+                }
+                it.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                    override fun onQueryTextSubmit(query: String) = false
+
+                    override fun onQueryTextChange(newText: String): Boolean {
+                        query.onNext(newText)
+                        return true
+                    }
+                })
+                it.queryHint = getString(R.string.searchbar_hint)
+            }
+        }
+
+        override fun onMenuItemSelected(item: MenuItem): Boolean = false
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         adapter = SmartListAdapter(null, object : SmartListListeners {
@@ -85,7 +134,10 @@ class ShareWithFragment : Fragment() {
             activity.setSupportActionBar(binding.toolbar)
             val ab = activity.supportActionBar
             ab?.setDisplayHomeAsUpEnabled(true)
+            activity.addMenuProvider(menuProvider, viewLifecycleOwner)
+            binding.toolbar.setNavigationOnClickListener { requireActivity().onBackPressedDispatcher.onBackPressed() }
         }
+
         mPendingIntent?.let { pendingIntent -> pendingIntent.type?.let { type ->
             val clip = pendingIntent.clipData
             when {
@@ -119,6 +171,11 @@ class ShareWithFragment : Fragment() {
         return binding.root
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        requireActivity().onBackPressedDispatcher.addCallback(this, searchBackPressedCallback)
+    }
+
     override fun onStart() {
         super.onStart()
         if (mPendingIntent == null) {
@@ -126,7 +183,7 @@ class ShareWithFragment : Fragment() {
             return
         }
         mDisposable.add(mConversationFacade
-            .getConversationSmartlist()
+            .getFullConversationList(mConversationFacade.currentAccountSubject, query)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { list -> adapter?.update(list) })
         binding?.let { binding ->
