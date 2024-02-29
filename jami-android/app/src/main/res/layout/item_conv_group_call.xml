@@ -40,13 +40,11 @@ along with this program; if not, write to the Free Software
         android:paddingEnd="24dp"
         android:paddingBottom="@dimen/padding_xsmall">
 
-        <ImageView
+        <cx.ring.views.AvatarView
             android:id="@+id/photo"
             android:layout_width="@dimen/conversation_avatar_size"
             android:layout_height="@dimen/conversation_avatar_size"
-            android:layout_gravity="bottom"
-            android:contentDescription="@null"
-            tools:srcCompat="@tools:sample/avatars" />
+            android:layout_gravity="bottom" />
 
         <RelativeLayout
             android:id="@+id/msg_layout"
