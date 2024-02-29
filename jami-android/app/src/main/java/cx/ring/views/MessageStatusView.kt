@@ -32,27 +32,14 @@ import net.jami.model.ContactViewModel
 import net.jami.model.Interaction
 import net.jami.utils.Log
 
-class MessageStatusView : LinearLayout {
+class MessageStatusView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyle: Int = 0
+) : LinearLayout(context, attrs, defStyle) {
+
     private val iconSize = resources.getDimensionPixelSize(R.dimen.conversation_status_icon_size)
     private val iconTint by lazy(LazyThreadSafetyMode.NONE) { ColorStateList.valueOf(ContextCompat.getColor(context, R.color.grey_500)) }
-
-    constructor(context: Context) : super(context) {
-        //init(null, 0)
-    }
-
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
-        //init(attrs, 0)
-    }
-
-    constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle) {
-        //init(attrs, defStyle)
-    }
-
-    /*private fun init(attrs: AttributeSet?, defStyle: Int) {
-        if (isInEditMode) {
-            update(emptyList(), Interaction.InteractionStatus.SENDING)
-        }
-    }*/
 
     private fun resize(count: Int) {
         if (count == 0) {
