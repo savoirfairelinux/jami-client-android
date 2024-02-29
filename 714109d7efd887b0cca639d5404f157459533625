@@ -18,6 +18,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c67bd1c_44dce4ef",
+        "filename": "jami-android/app/src/main/java/cx/ring/utils/DeviceUtils.kt",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-02-29T20:11:15Z",
+      "side": 1,
+      "message": "Yes, otherwise it would crash in the Android Studio layout editor.",
+      "parentUuid": "0285e04b_dcc12fb6",
+      "revId": "714109d7efd887b0cca639d5404f157459533625",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "868ca393_ab535f45",
@@ -35,6 +53,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3b85fe1e_cae39cce",
+        "filename": "jami-android/app/src/main/java/cx/ring/views/AvatarView.kt",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-02-29T20:11:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "868ca393_ab535f45",
+      "revId": "714109d7efd887b0cca639d5404f157459533625",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "45e523af_20a8213d",
@@ -48,6 +84,30 @@
       "writtenOn": "2024-02-29T19:10:32Z",
       "side": 1,
       "message": "What is this for?",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 2
+      },
+      "revId": "714109d7efd887b0cca639d5404f157459533625",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e6fa5291_f7322bef",
+        "filename": "jami-android/app/src/main/java/cx/ring/views/AvatarView.kt",
+        "patchSetId": 11
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-02-29T20:11:15Z",
+      "side": 1,
+      "message": "Added documentation",
+      "parentUuid": "45e523af_20a8213d",
       "range": {
         "startLine": 51,
         "startChar": 0,
