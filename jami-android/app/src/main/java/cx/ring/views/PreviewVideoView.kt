@@ -31,18 +31,24 @@ class PreviewVideoView : VideoView {
 
     constructor(context: Context) : super(context)
 
-    override fun setVideoURI(uri: Uri) {
-        val retriever = MediaMetadataRetriever()
-        retriever.setDataSource(this.context, uri)
-        val videoWidth = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH)!!.toInt()
-        val videoHeight = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT)!!.toInt()
-        val rotation = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_ROTATION)!!.toInt()
-        if (rotation == 90 || rotation == 270) {
-            mVideoWidth = videoHeight
-            mVideoHeight = videoWidth
+    override fun setVideoURI(uri: Uri?) {
+        if (uri != null) {
+            val retriever = MediaMetadataRetriever().apply {
+                setDataSource(context, uri)
+            }
+            val videoWidth = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH)!!.toInt()
+            val videoHeight = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT)!!.toInt()
+            val rotation = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_ROTATION)!!.toInt()
+            if (rotation == 90 || rotation == 270) {
+                mVideoWidth = videoHeight
+                mVideoHeight = videoWidth
+            } else {
+                mVideoHeight = videoHeight
+                mVideoWidth = videoWidth
+            }
         } else {
-            mVideoHeight = videoHeight
-            mVideoWidth = videoWidth
+            mVideoWidth = 0
+            mVideoHeight = 0
         }
         super.setVideoURI(uri)
     }
