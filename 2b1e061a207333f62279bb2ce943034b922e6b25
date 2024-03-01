@@ -305,6 +305,30 @@
       },
       "revId": "2b1e061a207333f62279bb2ce943034b922e6b25",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "363b24c9_a1c3a4c3",
+        "filename": "jami-android/app/src/main/java/cx/ring/views/MessageBubble.kt",
+        "patchSetId": 10
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-03-01T18:57:14Z",
+      "side": 1,
+      "message": "Yes, that change was intentional. Using paddingStart and paddingEnd was an error. RTL was not handled before.",
+      "parentUuid": "ef56ad94_06c56dae",
+      "range": {
+        "startLine": 189,
+        "startChar": 8,
+        "endLine": 189,
+        "endChar": 68
+      },
+      "revId": "2b1e061a207333f62279bb2ce943034b922e6b25",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
