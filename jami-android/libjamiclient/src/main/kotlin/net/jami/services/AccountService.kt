@@ -1022,11 +1022,12 @@ class AccountService(
 
     fun accountMessageStatusChanged(accountId: String, conversationId: String, messageId: String, contactId: String, status: Int) {
         val newStatus = InteractionStatus.fromIntTextMessage(status)
+        val newStatusb = Interaction.MessageStates.fromInt(status)
         Log.d(TAG, "accountMessageStatusChanged: $accountId, $conversationId, $messageId, $contactId, $newStatus")
         val account = getAccount(accountId) ?: return
         if (conversationId.isEmpty() && !account.isJami) {
             mHistoryService
-                .accountMessageStatusChanged(accountId, messageId, contactId, newStatus)
+                .accountMessageStatusChanged(accountId, messageId, contactId, newStatus, newStatusb)
                 .subscribe({ t: TextMessage -> messageSubject.onNext(t) }) { e: Throwable ->
                     Log.e(TAG, "Error updating message: " + e.localizedMessage) }
         } else {
@@ -1285,11 +1286,20 @@ class AccountService(
         body["type"] = message.type
         body["linearizedParent"] = message.linearizedParent
 
+
         val interaction = getInteraction(account, conversation, body)
         val edits = message.editions.map { getInteraction(account, conversation, it.toNative()) }
         val reactions = message.reactions.map { getInteraction(account, conversation, it.toNative()) }
+//        val statusMap: Map<String, Interaction.MessageStates> =
+//        val statusMap = message.status.map { it.key to Interaction.MessageStates.fromInt(it.value) }
+
+        Log.w("devdebug", "AccountService.getInteractionFromSwarmMessage() statusMap: ${message.status}")
+        val statusMap = message.status.map { it.key to Interaction.MessageStates.fromInt(it.value) }.toMap()
+
         interaction.addEdits(edits)
         interaction.addReactions(reactions)
+        interaction.addStatusMap(statusMap)
+//        interaction.addStatus(message.status)
 
         return interaction
     }
