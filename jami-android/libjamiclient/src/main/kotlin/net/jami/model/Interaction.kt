@@ -36,6 +36,7 @@ open class Interaction {
     var reactToId: String? = null
     var reactions: MutableList<Interaction> = ArrayList()
     var history: MutableList<Interaction> = ArrayList<Interaction>(1).apply { add(this@Interaction) }
+    var statusMap: Map<String, MessageStates> = emptyMap()
 
     private var historySubject: Subject<List<Interaction>> = BehaviorSubject.createDefault(history)
 
@@ -184,6 +185,10 @@ open class Interaction {
     fun addReactions(interactions: List<Interaction>) {
         reactions.addAll(interactions)
         reactionSubject.onNext(ArrayList(reactions))
+    }
+
+    fun addStatusMap(statusMap: Map<String, MessageStates>) {
+        this.statusMap = statusMap
     }
 
     fun removeReaction(id: String) {

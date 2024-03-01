@@ -129,7 +129,7 @@ class DaemonService(
         }
 
         override fun accountMessageStatusChanged(accountId: String, conversationId: String, peer: String, messageId: String, status: Int) {
-            Log.w("devdebug", "DaemonService:accountMessageStatusChanged(): $accountId, $conversationId, $peer, $messageId, $status")
+//            Log.w("devdebug", "DaemonService:accountMessageStatusChanged(): $accountId, $conversationId, $peer, $messageId, $status")
             mExecutor.submit {
                 mAccountService.accountMessageStatusChanged(accountId, conversationId, messageId, peer, status)
             }
@@ -366,11 +366,12 @@ class DaemonService(
         }
 
         override fun swarmMessageReceived(accountId: String, conversationId: String, message: SwarmMessage) {
-            Log.w("devdebug", "DaemonService:swarmMessageReceived(): $accountId, $conversationId, ${message.status}")
+            Log.w("devdebug", "DaemonService:swarmMessageReceived(): ${message.status}")
             mAccountService.swarmMessageReceived(accountId, conversationId, message)
         }
 
         override fun swarmMessageUpdated(accountId: String, conversationId: String, message: SwarmMessage) {
+            Log.w("devdebug", "DaemonService:swarmMessageReceived(): ${message.status}")
             mAccountService.swarmMessageUpdated(accountId, conversationId, message)
         }
 
