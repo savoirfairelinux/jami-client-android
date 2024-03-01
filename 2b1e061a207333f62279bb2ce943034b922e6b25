@@ -55,6 +55,41 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d855d894_74dff90b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-03-01T15:13:40Z",
+      "side": 1,
+      "message": "Reviewer note: patch not tested",
+      "revId": "2b1e061a207333f62279bb2ce943034b922e6b25",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e9bdb93_54286396",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-03-01T15:13:40Z",
+      "side": 1,
+      "message": "unresolved",
+      "parentUuid": "527c2050_b61f1bb1",
+      "revId": "2b1e061a207333f62279bb2ce943034b922e6b25",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7ecee2eb_9a1347b8",
         "filename": "jami-android/app/src/main/java/cx/ring/views/MessageBubble.kt",
         "patchSetId": 10
