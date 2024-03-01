@@ -157,7 +157,7 @@ along with this program; if not, write to the Free Software
         android:layout_width="wrap_content"
         android:layout_height="@dimen/conversation_avatar_size"
         android:layout_marginStart="@dimen/base_left_conversation_margin"
-        android:paddingEnd="@dimen/base_left_conversation_margin"
+        android:paddingEnd="@dimen/conditional_left_conversation_margin"
         app:layout_constraintBottom_toBottomOf="@id/message_content"
         app:layout_constraintStart_toStartOf="parent"
         tools:srcCompat="@color/blue_200"

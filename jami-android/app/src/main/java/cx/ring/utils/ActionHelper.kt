@@ -27,6 +27,7 @@ import android.widget.ImageView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import cx.ring.R
+import cx.ring.views.AvatarView
 import net.jami.model.Contact
 import net.jami.model.Conversation.ConversationActionCallback
 import net.jami.model.Uri
@@ -166,7 +167,7 @@ object ActionHelper {
      * ImageView fade-out animation for the avatar. 
      * @param imageView the image view used for the animation.
      */
-    fun startFadeOutAnimation(imageView: ImageView) {
+    fun startFadeOutAnimation(imageView: AvatarView) {
         val fadeOutAnimation = AnimationUtils.loadAnimation(
             imageView.context,
             R.anim.fade_out
@@ -175,7 +176,7 @@ object ActionHelper {
                 override fun onAnimationStart(arg0: Animation) {}
                 override fun onAnimationRepeat(arg0: Animation) {}
                 override fun onAnimationEnd(arg0: Animation) {
-                    imageView.setImageBitmap(null)
+                    imageView.setAvatar(null)
                     imageView.visibility = View.INVISIBLE
                 }
             })
