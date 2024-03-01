@@ -98,9 +98,7 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
         MessageType.OUTGOING_FILE -> v.findViewById(R.id.file_time)
         else -> null
     }
-    var mMessageBubble: ConstraintLayout? = null
-    var mMessageLayout: ConstraintLayout? = null
-    var mMessageContent: MessageBubble? = null
+    var mMessageBubble: MessageBubble? = null
     var mReplyBubble: LinearLayout? = null
     var mReplyName: TextView? = null
     var mReplyTxt: TextView? = null
@@ -149,7 +147,7 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
     val mLayoutStatusIconId: View? = when (type) {
         MessageType.OUTGOING_CALL_INFORMATION-> v.findViewById(R.id.callLayout)
         MessageType.OUTGOING_TEXT_MESSAGE
-            -> v.findViewById(R.id.msg_txt) ?: v.findViewById(R.id.message_bubble)
+            -> v.findViewById(R.id.msg_txt) ?: v.findViewById(R.id.message_content)
         MessageType.OUTGOING_FILE -> v.findViewById(R.id.fileInfoLayout)
         MessageType.OUTGOING_IMAGE -> v.findViewById(R.id.image)
         MessageType.OUTGOING_AUDIO -> v.findViewById(R.id.audioInfoLayout)
@@ -196,9 +194,7 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
                 mReplyBubble = v.findViewById(R.id.reply_bubble)
                 mReplyTxt = v.findViewById(R.id.reply_text)
                 mMsgTxt = v.findViewById(R.id.msg_txt)
-                mMessageBubble = v.findViewById(R.id.message_bubble)
-                mMessageLayout = v.findViewById(R.id.message_layout)
-                mMessageContent = v.findViewById(R.id.message_content)
+                mMessageBubble = v.findViewById(R.id.message_content)
                 mMsgDetailTxt = v.findViewById(R.id.msg_details_txt)
                 mMsgDetailTxtPerm = v.findViewById(R.id.message_time_permanent)
                 mAnswerLayout = v.findViewById(R.id.link_preview)
