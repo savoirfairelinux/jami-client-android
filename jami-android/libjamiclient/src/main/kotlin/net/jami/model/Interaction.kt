@@ -36,6 +36,7 @@ open class Interaction {
     var reactToId: String? = null
     var reactions: MutableList<Interaction> = ArrayList()
     var history: MutableList<Interaction> = ArrayList<Interaction>(1).apply { add(this@Interaction) }
+    var statusMap: Map<String, MessageStates>? = null
 
     private var historySubject: Subject<List<Interaction>> = BehaviorSubject.createDefault(history)
 
@@ -186,6 +187,10 @@ open class Interaction {
         reactionSubject.onNext(ArrayList(reactions))
     }
 
+    fun addStatusMap(statusMap: Map<String, MessageStates>) {
+        this.statusMap = statusMap
+    }
+
     fun removeReaction(id: String) {
         reactions.removeAll { it.messageId == id }
         reactionSubject.onNext(ArrayList(reactions))
@@ -215,6 +220,31 @@ open class Interaction {
     }
 
     var preview: Any? = null
+
+    enum class MessageStates {
+        UNKNOWN,
+        SENDING,
+        SUCCESS,
+        DISPLAYED,
+        INVALID,
+        FAILURE,
+        CANCELLED;
+
+        companion object {
+            fun fromInt(value: Int): MessageStates {
+                return when (value) {
+                    0 -> UNKNOWN
+                    1 -> SENDING
+                    2 -> SUCCESS
+                    3 -> DISPLAYED
+                    4 -> INVALID
+                    5 -> FAILURE
+                    6 -> CANCELLED
+                    else -> throw IllegalArgumentException("Invalid enum integer value: $value")
+                }
+            }
+        }
+    }
 
     enum class InteractionStatus {
         UNKNOWN, SENDING, SUCCESS, DISPLAYED, INVALID, FAILURE, TRANSFER_CREATED,

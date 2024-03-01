@@ -70,26 +70,34 @@ class MessageStatusView @JvmOverloads constructor(
 
     fun update(
         seenBy: Collection<ContactViewModel>,
-        status: Interaction.InteractionStatus,
+        statusMap: Map<String, Interaction.MessageStates>,
         @IdRes resId: Int = View.NO_ID
     ) {
-        Log.w(
-            "devdebug",
-            "MessageStatusView.update() contacts: $seenBy, status: $status, resId: $resId"
-        )
-        val showStatus = seenBy.isEmpty()
-                && (status == Interaction.InteractionStatus.SUCCESS
-                || status == Interaction.InteractionStatus.SENDING
-                || status == Interaction.InteractionStatus.UNKNOWN)
-        if (showStatus) {
+
+
+        val sucess = statusMap.values.find { it == Interaction.MessageStates.SUCCESS } != null
+        val sending = statusMap.isEmpty()
+        val showStatus = sucess || sending
+
+        Log.w("devdebug", "statusMap: $statusMap, sucess: $sucess, sending: $sending")
+
+//        val showStatus = seenBy.isEmpty()
+//                && (
+//                status == Interaction.InteractionStatus.SUCCESS
+//                        || status == Interaction.InteractionStatus.SENDING
+//                )
+        if (sending || sucess) {
             resize(1)
             (getChildAt(0) as ImageView).apply {
                 setImageResource(
-                    when (status) {
-                        Interaction.InteractionStatus.UNKNOWN -> R.drawable.sent
-                        Interaction.InteractionStatus.SUCCESS -> R.drawable.receive
-                        else -> -1
-                    }
+                    if (sending) R.drawable.sent
+                    else if(sucess) R.drawable.receive
+                    else -1
+//                    when (status) {
+//                        Interaction.InteractionStatus.SENDING -> R.drawable.sent
+//                        Interaction.InteractionStatus.SUCCESS -> R.drawable.receive
+//                        else -> -1
+//                    }
                 )
                 ImageViewCompat.setImageTintList(this, iconTint)
             }

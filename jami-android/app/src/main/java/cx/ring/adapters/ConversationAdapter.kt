@@ -332,7 +332,7 @@ class ConversationAdapter(
 //                conversationViewHolder.mStatusIcon?.isVisible = contacts.isNotEmpty()
                 conversationViewHolder.mStatusIcon?.update(
                     contacts,
-                    interaction.status,
+                    interaction.statusMap!!,
                     conversationViewHolder.mLayoutStatusIconId?.id ?: View.NO_ID
                 )
             })
