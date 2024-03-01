@@ -22,6 +22,30 @@
       },
       "revId": "ca2cf51caeedb2dfeb9f4a0c8d531cd95fd770d8",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5816919c_2b87e950",
+        "filename": "jami-android/app/src/main/res/layout/item_conv_group_call_tv.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-03-01T19:04:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "256b3192_641bd769",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 2
+      },
+      "revId": "ca2cf51caeedb2dfeb9f4a0c8d531cd95fd770d8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
