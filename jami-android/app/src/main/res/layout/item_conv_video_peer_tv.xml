@@ -36,16 +36,13 @@
         android:paddingStart="@dimen/padding_medium"
         android:paddingEnd="@dimen/padding_large">
 
-        <ImageView
+        <cx.ring.views.AvatarView
             android:id="@+id/photo"
             android:layout_width="@dimen/conversation_avatar_size"
             android:layout_height="@dimen/conversation_avatar_size"
             android:layout_alignBottom="@id/video_frame"
             android:layout_alignParentStart="true"
-            android:layout_marginEnd="@dimen/conditional_left_conversation_margin"
-            android:background="@null"
-            android:gravity="start"
-            android:scaleType="centerCrop" />
+            android:layout_marginEnd="@dimen/conditional_left_conversation_margin" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/video_frame"

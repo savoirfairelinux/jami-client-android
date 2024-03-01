@@ -1090,11 +1090,8 @@ class ConversationAdapter(
         val contact = interaction.contact ?: return
         if (interaction.isIncoming && presenter.isGroup()) {
             viewHolder.mAvatar?.let { avatar ->
-                avatar.setImageBitmap(null)
+                avatar.setAvatar(conversationFragment.getConversationAvatar(contact.primaryNumber))
                 avatar.visibility = View.VISIBLE
-                avatar.setImageDrawable(
-                    conversationFragment.getConversationAvatar(contact.primaryNumber)
-                )
             }
             val account = interaction.account?: return
             // Show the name of the contact.
@@ -1290,22 +1287,12 @@ class ConversationAdapter(
         isGroup: Boolean
     ) {
         if (isGroup) {
-            context.resources.getDimensionPixelSize(R.dimen.conditional_left_conversation_margin).let {
-                (messageBubble.layoutParams as MarginLayoutParams)
-                    .apply { leftMargin = it }
-                replyBubble?.let { replyBubble ->
-                    (replyBubble.layoutParams as MarginLayoutParams)
-                        .apply { leftMargin = it }
-                }
-            }
+            (messageBubble.layoutParams as MarginLayoutParams).leftMargin = 0
+            (replyBubble?.layoutParams as MarginLayoutParams?)?.leftMargin = 0
         } else {
             context.resources.getDimensionPixelSize(R.dimen.base_left_conversation_margin).let {
-                (messageBubble.layoutParams as MarginLayoutParams)
-                    .apply { leftMargin = it }
-                replyBubble?.let { replyBubble ->
-                    (replyBubble.layoutParams as MarginLayoutParams)
-                        .apply { leftMargin = it }
-                }
+                (messageBubble.layoutParams as MarginLayoutParams).leftMargin = it
+                (replyBubble?.layoutParams as MarginLayoutParams?)?.leftMargin = it
             }
         }
     }
@@ -1456,15 +1443,13 @@ class ConversationAdapter(
         if (presenter.isGroup() && textMessage.isIncoming) {
             avatar?.let {
                 if (endOfSeq) { // To only display the avatar of the last message.
-                    avatar.setImageDrawable(
-                        conversationFragment.getConversationAvatar(contact.primaryNumber)
-                    )
+                    avatar.setAvatar(conversationFragment.getConversationAvatar(contact.primaryNumber))
                     avatar.visibility = View.VISIBLE
                 } else {
                     if (position == lastMsgPos - 1) {
                         ActionHelper.startFadeOutAnimation(avatar)
                     } else {
-                        avatar.setImageBitmap(null)
+                        avatar.setAvatar(null)
                         avatar.visibility = View.INVISIBLE
                     }
                 }
@@ -1650,15 +1635,13 @@ class ConversationAdapter(
             // Manage animation for avatar.
             // To only display the avatar of the last message.
             if (endOfSeq) {
-                avatar?.setImageDrawable(
-                    conversationFragment.getConversationAvatar(contact.primaryNumber)
-                )
+                avatar?.setAvatar(conversationFragment.getConversationAvatar(contact.primaryNumber))
                 avatar?.visibility = View.VISIBLE
             } else {
                 if (position == lastMsgPos - 1) {
                     avatar?.let { ActionHelper.startFadeOutAnimation(avatar) }
                 } else {
-                    avatar?.setImageBitmap(null)
+                    avatar?.setAvatar(null)
                     avatar?.visibility = View.INVISIBLE
                 }
             }
@@ -1720,16 +1703,13 @@ class ConversationAdapter(
 
                 // Manage animation to only display the avatar of the last message.
                 if (endOfSeq) {
-                    avatar?.setImageDrawable(
-                        conversationFragment
-                            .getConversationAvatar(contact.primaryNumber)
-                    )
+                    avatar?.setAvatar(conversationFragment.getConversationAvatar(contact.primaryNumber))
                     avatar?.visibility = View.VISIBLE
                 } else {
                     if (position == lastMsgPos - 1) {
                         avatar?.let { ActionHelper.startFadeOutAnimation(avatar) }
                     } else {
-                        avatar?.setImageBitmap(null)
+                        avatar?.setAvatar(null)
                         avatar?.visibility = View.INVISIBLE
                     }
                 }
