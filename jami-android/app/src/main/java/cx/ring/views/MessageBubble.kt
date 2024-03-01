@@ -18,6 +18,7 @@ package cx.ring.views
 
 import android.content.Context
 import android.content.res.ColorStateList
+import android.graphics.Color
 import android.text.Spanned
 import android.text.method.LinkMovementMethod
 import android.util.AttributeSet
@@ -31,6 +32,7 @@ import androidx.core.view.updatePadding
 import androidx.core.widget.TextViewCompat
 import cx.ring.R
 import kotlin.math.max
+import androidx.core.content.res.use
 
 /**
  * View that displays a text message with time and edited indicator.
@@ -48,7 +50,7 @@ class MessageBubble(context: Context, attrs: AttributeSet?) : ViewGroup(context,
         .getDimensionPixelSize(R.dimen.custom_message_bubble_info_left_padding)
 
     // Colors
-    private val defaultTextColor: Int
+    private var defaultTextColor: Int = Color.BLACK
     private var contrastedDefaultTextColor = context.getColor(R.color.colorOnSurface)
 
     private val messageText = WrapWidthTextView(context).apply {
