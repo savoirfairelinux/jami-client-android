@@ -53,15 +53,13 @@ along with this program; if not, write to the Free Software
             tools:visibility="visible" />
         <!--    maxEms="8" to have around 16 characters displayed   -->
 
-        <ImageView
+        <cx.ring.views.AvatarView
             android:id="@+id/photo"
             android:layout_width="@dimen/conversation_avatar_size"
             android:layout_height="@dimen/conversation_avatar_size"
             android:layout_alignBottom="@id/msg_txt"
             android:layout_alignParentStart="true"
-            android:layout_marginEnd="@dimen/conditional_left_conversation_margin"
-            android:background="@null"
-            android:scaleType="centerCrop" />
+            android:layout_marginEnd="@dimen/conditional_left_conversation_margin" />
 
         <TextView
             android:id="@+id/msg_txt"
