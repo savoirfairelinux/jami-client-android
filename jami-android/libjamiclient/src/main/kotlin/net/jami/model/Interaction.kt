@@ -216,6 +216,20 @@ open class Interaction {
 
     var preview: Any? = null
 
+    enum class MessageStates(val value: Int) {
+        UNKNOWN(0),
+        SENDING(1),
+        SUCCESS(2),
+        DISPLAYED(3),
+        INVALID(4),
+        FAILURE(5),
+        CANCELLED(6);
+
+        companion object {
+            fun fromInt(value: Int) = entries.first { it.value == value }
+        }
+    }
+
     enum class InteractionStatus {
         UNKNOWN, SENDING, SUCCESS, DISPLAYED, INVALID, FAILURE, TRANSFER_CREATED,
         TRANSFER_ACCEPTED, TRANSFER_CANCELED, TRANSFER_ERROR, TRANSFER_UNJOINABLE_PEER,
