@@ -216,6 +216,31 @@ open class Interaction {
 
     var preview: Any? = null
 
+    enum class MessageStates {
+        UNKNOWN,
+        SENDING,
+        SUCCESS,
+        DISPLAYED,
+        INVALID,
+        FAILURE,
+        CANCELLED;
+
+        companion object {
+            fun fromInt(value: Int): MessageStates {
+                return when (value) {
+                    0 -> UNKNOWN
+                    1 -> SENDING
+                    2 -> SUCCESS
+                    3 -> DISPLAYED
+                    4 -> INVALID
+                    5 -> FAILURE
+                    6 -> CANCELLED
+                    else -> throw IllegalArgumentException("Invalid enum integer value: $value")
+                }
+            }
+        }
+    }
+
     enum class InteractionStatus {
         UNKNOWN, SENDING, SUCCESS, DISPLAYED, INVALID, FAILURE, TRANSFER_CREATED,
         TRANSFER_ACCEPTED, TRANSFER_CANCELED, TRANSFER_ERROR, TRANSFER_UNJOINABLE_PEER,
