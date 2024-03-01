@@ -116,6 +116,30 @@
       },
       "revId": "714109d7efd887b0cca639d5404f157459533625",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4df2cba9_4ddad23b",
+        "filename": "jami-android/app/src/main/java/cx/ring/views/AvatarView.kt",
+        "patchSetId": 11
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-03-01T12:45:28Z",
+      "side": 1,
+      "message": "Hmm I just see why you needed this in your next commit !",
+      "parentUuid": "e6fa5291_f7322bef",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 2
+      },
+      "revId": "714109d7efd887b0cca639d5404f157459533625",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
