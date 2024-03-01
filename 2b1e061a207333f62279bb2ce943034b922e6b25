@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3e7c570e_8d6b1e1c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-03-01T14:59:07Z",
+      "side": 1,
+      "message": "Crash when using this patch.\n\n    Error inflating class cx.ring.views.MessageBubble",
+      "revId": "2b1e061a207333f62279bb2ce943034b922e6b25",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ecee2eb_9a1347b8",
+        "filename": "jami-android/app/src/main/java/cx/ring/views/MessageBubble.kt",
+        "patchSetId": 10
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-03-01T14:59:07Z",
+      "side": 1,
+      "message": "Wouldn\u0027t be more accurate?:\n\n\tmaxOf(\n\t\tmessageText.measuredHeight,\n\t\tmessageTime.measuredHeight,\n\t\tif (messageEdited.isVisible) messageEdited.measuredHeight else 0\n\t)",
+      "range": {
+        "startLine": 169,
+        "startChar": 0,
+        "endLine": 169,
+        "endChar": 2
+      },
+      "revId": "2b1e061a207333f62279bb2ce943034b922e6b25",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d7c33893_09823644",
+        "filename": "jami-android/app/src/main/java/cx/ring/views/MessageBubble.kt",
+        "patchSetId": 10
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-03-01T14:59:07Z",
+      "side": 1,
+      "message": "return if",
+      "range": {
+        "startLine": 179,
+        "startChar": 8,
+        "endLine": 179,
+        "endChar": 21
+      },
+      "revId": "2b1e061a207333f62279bb2ce943034b922e6b25",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ce1af116_78050301",
+        "filename": "jami-android/app/src/main/java/cx/ring/views/MessageBubble.kt",
+        "patchSetId": 10
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-03-01T14:59:07Z",
+      "side": 1,
+      "message": "How should we support right-to-left (RTL) and left-to-right (LTR)?",
+      "range": {
+        "startLine": 189,
+        "startChar": 8,
+        "endLine": 189,
+        "endChar": 68
+      },
+      "revId": "2b1e061a207333f62279bb2ce943034b922e6b25",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
