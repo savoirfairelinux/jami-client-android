@@ -15,23 +15,12 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 -->
-
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <FrameLayout
-        android:id="@+id/excluded_right_zone"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintStart_toEndOf="@+id/message_layout"
-        app:layout_constraintTop_toTopOf="parent" />
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/padding_xsmall">
 
     <TextView
         android:id="@+id/message_time_permanent"
@@ -47,148 +36,132 @@ along with this program; if not, write to the Free Software
         tools:text="@string/time_just_now"
         tools:visibility="visible" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/message_layout"
-        android:layout_width="0dp"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/right_guideline"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:paddingBottom="@dimen/padding_xsmall"
-        app:layout_constraintEnd_toStartOf="@+id/excluded_right_zone"
-        app:layout_constraintHorizontal_weight="5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/message_time_permanent">
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.833" />
+
+    <TextView
+        android:id="@+id/peer_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/conditional_left_conversation_margin"
+        android:ellipsize="end"
+        android:maxEms="8"
+        android:maxLines="1"
+        android:padding="4dp"
+        android:textColor="@color/msg_display_name"
+        android:textSize="@dimen/message_display_name_textsize"
+        android:visibility="gone"
+        app:layout_constraintStart_toEndOf="@id/photo"
+        app:layout_constraintTop_toBottomOf="@id/message_time_permanent"
+        tools:text="Bob"
+        tools:visibility="visible" />
+
+    <LinearLayout
+        android:id="@+id/reply_bubble"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/base_left_conversation_margin"
+        android:layout_marginEnd="70dp"
+        android:background="@drawable/textmsg_bg_in"
+        android:backgroundTint="@color/conversation_secondary_background"
+        android:gravity="start"
+        android:padding="5dp"
+        android:visibility="gone"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toEndOf="@id/photo"
+        app:layout_constraintTop_toBottomOf="@id/peer_name"
+        tools:visibility="visible">
 
         <TextView
-            android:id="@+id/peer_name"
+            android:id="@+id/reply_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/conditional_left_conversation_margin"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/reply_contact_msg_bg"
+            android:backgroundTint="@color/conversation_reply_background"
+            android:drawablePadding="5dp"
             android:ellipsize="end"
-            android:maxEms="8"
             android:maxLines="1"
-            android:padding="4dp"
-            android:textColor="@color/msg_display_name"
-            android:textSize="@dimen/message_display_name_textsize"
-            android:visibility="gone"
-            app:layout_constraintStart_toEndOf="@id/photo"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Bob"
-            tools:visibility="visible" />
-
-        <LinearLayout
-            android:id="@+id/reply_bubble"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/base_left_conversation_margin"
-            android:layout_marginEnd="70dp"
-            android:background="@drawable/textmsg_bg_in"
-            android:backgroundTint="@color/conversation_secondary_background"
-            android:gravity="start"
             android:padding="5dp"
-            android:visibility="gone"
-            app:layout_constrainedWidth="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintStart_toEndOf="@id/photo"
-            app:layout_constraintTop_toBottomOf="@id/peer_name"
-            tools:visibility="visible">
-
-            <TextView
-                android:id="@+id/reply_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:background="@drawable/reply_contact_msg_bg"
-                android:backgroundTint="@color/conversation_reply_background"
-                android:drawablePadding="5dp"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:padding="5dp"
-                android:textColor="@color/colorOnSurface"
-                android:textSize="@dimen/message_display_name_textsize"
-                app:drawableStartCompat="@drawable/reply_contact_avatar_12px"
-                tools:text="Jean-Pascal" />
-
-            <TextView
-                android:id="@+id/reply_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:focusable="true"
-                android:maxLines="1"
-                android:paddingHorizontal="5dp"
-                android:textSize="@dimen/conversation_text_size_small"
-                android:theme="@style/IncomingTextMessage"
-                android:translationY="5dp"
-                tools:text="Lorem ipsum" />
-
-        </LinearLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/message_bubble"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_marginStart="@dimen/base_left_conversation_margin"
-            android:layout_marginTop="-6.5dp"
-            android:background="@drawable/textmsg_bg_in_reply"
-            app:layout_constrainedWidth="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintStart_toEndOf="@id/photo"
-            app:layout_constraintTop_toBottomOf="@id/reply_bubble">
-
-            <cx.ring.views.MessageBubble
-                android:id="@+id/message_content"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="10dp"
-                android:paddingVertical="5dp"
-                android:theme="@style/IncomingTextMessage"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:edited="true"
-                tools:message="This is a test !"
-                tools:time="11h05" />
-
-            <include
-                android:id="@+id/link_preview"
-                layout="@layout/msg_link_preview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/message_content" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            android:textColor="@color/colorOnSurface"
+            android:textSize="@dimen/message_display_name_textsize"
+            app:drawableStartCompat="@drawable/reply_contact_avatar_12px"
+            tools:text="Jean-Pascal" />
 
         <TextView
-            android:id="@+id/reaction_chip"
+            android:id="@+id/reply_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="-4dp"
-            android:background="@drawable/background_reaction_chip"
-            android:lines="1"
+            android:ellipsize="end"
+            android:focusable="true"
             android:maxLines="1"
-            android:outlineProvider="none"
-            android:padding="5dp"
-            android:singleLine="true"
-            app:layout_constraintStart_toStartOf="@id/message_bubble"
-            app:layout_constraintTop_toBottomOf="@id/message_bubble"
-            tools:text="🤕🤒3" />
+            android:paddingHorizontal="5dp"
+            android:textSize="@dimen/conversation_text_size_small"
+            android:theme="@style/IncomingTextMessage"
+            android:translationY="5dp"
+            tools:text="Lorem ipsum" />
 
-        <ImageView
-            android:id="@+id/photo"
-            android:layout_width="@dimen/conversation_avatar_size"
-            android:layout_height="@dimen/conversation_avatar_size"
-            android:layout_marginStart="@dimen/base_left_conversation_margin"
-            android:contentDescription="@null"
-            app:layout_constraintBottom_toBottomOf="@id/message_bubble"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:srcCompat="@color/blue_200"
-            tools:visibility="gone" />
+    </LinearLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <cx.ring.views.MessageBubble
+        android:id="@+id/message_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-6.5dp"
+        android:background="@drawable/textmsg_bg_in_reply"
+        android:theme="@style/IncomingTextMessage"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="5dp"
+        android:clipToPadding="false"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintEnd_toEndOf="@+id/right_guideline"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toEndOf="@id/photo"
+        app:layout_constraintTop_toBottomOf="@id/reply_bubble"
+        tools:edited="true"
+        tools:message="This is an intellectually, constitutionally elongated message to push wrapping boundaries for the text in the message."
+        tools:time="11h05">
+        <include
+            android:id="@+id/link_preview"
+            layout="@layout/msg_link_preview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            tools:visibility="visible" />
+    </cx.ring.views.MessageBubble>
+
+    <TextView
+        android:id="@+id/reaction_chip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="-4dp"
+        android:background="@drawable/background_reaction_chip"
+        android:lines="1"
+        android:maxLines="1"
+        android:outlineProvider="none"
+        android:padding="5dp"
+        android:singleLine="true"
+        app:layout_constraintStart_toStartOf="@id/message_content"
+        app:layout_constraintTop_toBottomOf="@id/message_content"
+        tools:text="🤕🤒3" />
+
+    <cx.ring.views.AvatarView
+        android:id="@+id/photo"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/conversation_avatar_size"
+        android:layout_marginStart="@dimen/base_left_conversation_margin"
+        android:paddingEnd="@dimen/base_left_conversation_margin"
+        app:layout_constraintBottom_toBottomOf="@id/message_content"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:srcCompat="@color/blue_200"
+        tools:visibility="visible" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
