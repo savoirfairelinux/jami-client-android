@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1fc2c249_fc8305be",
+        "filename": "jami-android/app/src/main/res/layout/item_conv_msg_me.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-03-01T15:26:58Z",
+      "side": 1,
+      "message": "cleanup",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 2
+      },
+      "revId": "3cba7b506865d994cded6adf97088fc3f58f1602",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
