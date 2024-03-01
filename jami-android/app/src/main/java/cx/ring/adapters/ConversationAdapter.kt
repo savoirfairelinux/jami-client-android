@@ -205,6 +205,7 @@ class ConversationAdapter(
             mInteractions[it] = editedInteraction
             notifyItemChanged(it)
         }
+
     }
 
     fun remove(e: Interaction) {
@@ -315,27 +316,100 @@ class ConversationAdapter(
         conversationViewHolder: ConversationViewHolder,
         interaction: Interaction
     ) {
+        val statusIcon = conversationViewHolder.mStatusIcon ?: return
+        Log.w("devdebug", "ConversationAdapter.configureDisplayIndicator() msg=${interaction.body}")
         val conversation = interaction.conversation
         if (conversation == null || conversation !is Conversation) {
-            conversationViewHolder.mStatusIcon?.isVisible = false
+            statusIcon.isVisible = false
             return
         }
-        conversationViewHolder.compositeDisposable.add(presenter.conversationFacade
-            .getLoadedContact(
-                interaction.account!!,
-                conversation,
-                interaction.displayedContacts
-            )
-            .observeOn(DeviceUtils.uiScheduler)
-            .subscribe { contacts ->
-                Log.w("devdebug", "ConversationAdapter.configureDisplayIndicator() msg=${interaction.body}")
+//        conversationViewHolder.compositeDisposable.add(
+//            interaction.statusObservable
+//                .observeOn(DeviceUtils.uiScheduler)
+//                .subscribe {
+//                    Log.w("devdebug", "ConversationAdapter.configureDisplayIndicator() msg=${interaction.body} displayedContacts=${interaction.displayedContacts}")
+//                    conversationViewHolder.mStatusIcon?.update(
+//                        emptyList(),
+//                        interaction.statusMap!!,
+//                        conversationViewHolder.mLayoutStatusIconId?.id ?: View.NO_ID
+//                    )
+//                }
+//        )
+        val currentAccount = presenter.conversationFacade.currentAccountSubject.blockingFirst().uri
+
+        val modifiedStatusMap = interaction.statusMap.filter {
+//            it.key != currentAccount
+            !conversation.findContact(net.jami.model.Uri.fromId(it.key))!!.isUser
+        }
+
+        val contacts = modifiedStatusMap.map { it.key }
+
+        val isDisplayed = modifiedStatusMap.any { it.value == Interaction.MessageStates.DISPLAYED }
+        val isSending = modifiedStatusMap.isEmpty() or modifiedStatusMap.any { it.value == Interaction.MessageStates.SENDING }
+        val isReceived = modifiedStatusMap.any { it.value == Interaction.MessageStates.SUCCESS }
+
+        val lastDisplayedIdx = conversation.lastDisplayedMessages
+            .map { conversation.getMessage(it.value) }
+            .maxOf { mInteractions.indexOf(it) }
+
+        val currentIdx = mInteractions.indexOf(interaction)
+
+
+        val la = {
+            conversationViewHolder.compositeDisposable.add(
+                presenter.conversationFacade
+                    .getLoadedContact(
+                        interaction.account!!,
+                        conversation,
+                        contacts
+                    )
+                    .observeOn(DeviceUtils.uiScheduler)
+                    .subscribe { contacts ->
+                        statusIcon?.visibility = View.VISIBLE
+                        // remove user from statusmap
+
+                        Log.w("devdebug", "ConversationAdapter.configureDisplayIndicator() msg=${interaction.body} lastDisplayed=${conversation.lastDisplayedMessages} currentMessageId=${interaction.messageId}")
 //                conversationViewHolder.mStatusIcon?.isVisible = contacts.isNotEmpty()
-                conversationViewHolder.mStatusIcon?.update(
-                    contacts,
-                    interaction.status,
-                    conversationViewHolder.mLayoutStatusIconId?.id ?: View.NO_ID
-                )
-            })
+                        statusIcon?.update(
+                            contacts,
+                            modifiedStatusMap,
+                            conversationViewHolder.mLayoutStatusIconId?.id ?: View.NO_ID
+                        )
+                    })
+        }
+
+        Log.w("devdebug", "ConversationAdapter.configureDisplayIndicator() isDisplayed=$isDisplayed isSending=$isSending isReceived=$isReceived currentIdx=$currentIdx lastDisplayedIdx=$lastDisplayedIdx")
+        if(!isDisplayed && isSending){
+            // case 1
+            Log.w("devdebug", "ConversationAdapter.configureDisplayIndicator() case 1")
+//            la()
+            statusIcon.let {
+                it.visibility = View.VISIBLE
+                it.updateSending()
+            }
+        }
+        else if(!isDisplayed && isReceived){
+            // case 2
+            Log.w("devdebug", "ConversationAdapter.configureDisplayIndicator() case 2")
+//            la()
+            statusIcon.let {
+                it.visibility = View.VISIBLE
+                it.updateSuccess()
+            }
+        }
+        else if(isDisplayed && currentIdx == lastDisplayedIdx){
+            // case 3
+            Log.w("devdebug", "ConversationAdapter.configureDisplayIndicator() case 3")
+            la()
+        }
+        else{
+            // case 4
+            Log.w("devdebug", "ConversationAdapter.configureDisplayIndicator() case 4")
+            statusIcon?.visibility = View.GONE
+
+        }
+
+
     }
 
     /**

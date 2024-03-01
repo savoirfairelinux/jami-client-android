@@ -366,11 +366,12 @@ class DaemonService(
         }
 
         override fun swarmMessageReceived(accountId: String, conversationId: String, message: SwarmMessage) {
-            Log.w("devdebug", "DaemonService:swarmMessageReceived(): $accountId, $conversationId, ${message.status}")
+            Log.w("devdebug", "DaemonService:swarmMessageReceived(): ${message.status}")
             mAccountService.swarmMessageReceived(accountId, conversationId, message)
         }
 
         override fun swarmMessageUpdated(accountId: String, conversationId: String, message: SwarmMessage) {
+            Log.w("devdebug", "DaemonService:swarmMessageReceived(): ${message.status}")
             mAccountService.swarmMessageUpdated(accountId, conversationId, message)
         }
 

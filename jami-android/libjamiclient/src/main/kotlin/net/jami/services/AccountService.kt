@@ -1022,16 +1022,19 @@ class AccountService(
 
     fun accountMessageStatusChanged(accountId: String, conversationId: String, messageId: String, contactId: String, status: Int) {
         val newStatus = InteractionStatus.fromIntTextMessage(status)
+        val newStatusb = Interaction.MessageStates.fromInt(status)
         Log.d(TAG, "accountMessageStatusChanged: $accountId, $conversationId, $messageId, $contactId, $newStatus")
         val account = getAccount(accountId) ?: return
         if (conversationId.isEmpty() && !account.isJami) {
+            // Todo: looks like it handles here some stuff about non jami account (like SIP).
+            //  Should handle status change.
             mHistoryService
-                .accountMessageStatusChanged(accountId, messageId, contactId, newStatus)
+                .accountMessageStatusChanged(accountId, messageId, contactId, newStatus, newStatusb)
                 .subscribe({ t: TextMessage -> messageSubject.onNext(t) }) { e: Throwable ->
                     Log.e(TAG, "Error updating message: " + e.localizedMessage) }
         } else {
             account.getSwarm(conversationId)
-                ?.updateSwarmInteraction(messageId, Uri.fromId(contactId), newStatus)
+                ?.updateSwarmInteraction(messageId, Uri.fromId(contactId), newStatusb)
         }
     }
 
@@ -1282,11 +1285,20 @@ class AccountService(
         body["type"] = message.type
         body["linearizedParent"] = message.linearizedParent
 
+
         val interaction = getInteraction(account, conversation, body)
         val edits = message.editions.map { getInteraction(account, conversation, it.toNative()) }
         val reactions = message.reactions.map { getInteraction(account, conversation, it.toNative()) }
+//        val statusMap: Map<String, Interaction.MessageStates> =
+//        val statusMap = message.status.map { it.key to Interaction.MessageStates.fromInt(it.value) }
+
+        val statusMap = message.status.map { it.key to Interaction.MessageStates.fromInt(it.value) }.toMap()
+
         interaction.addEdits(edits)
         interaction.addReactions(reactions)
+        interaction.addStatusMap(statusMap)
+//        interaction.addStatus(message.status)
+        Log.w("devdebug", "AccountService.getInteractionFromSwarmMessage() message.body = ${message.body["body"]} statusMap: ${statusMap}")
 
         return interaction
     }
@@ -1303,7 +1315,9 @@ class AccountService(
             getAccount(accountId)?.let { account -> account.getSwarm(conversationId)?.let { conversation ->
                 val interactions: List<Interaction>
                 val subject = synchronized(conversation) {
-                    interactions = messages.map { addMessage(account, conversation, it, false) }
+                    interactions = messages.map {
+                        Log.w("devdebug", "AccountService:swarmLoaded(): ${it.body["body"]} ${it.status}")
+                        addMessage(account, conversation, it, false) }
                     conversation.stopLoading()
                 }
                 subject?.onSuccess(conversation)
