@@ -39,14 +39,15 @@ class MessageStatusView @JvmOverloads constructor(
 ) : LinearLayout(context, attrs, defStyle) {
 
     private val iconSize = resources.getDimensionPixelSize(R.dimen.conversation_status_icon_size)
-    private val iconTint by lazy(LazyThreadSafetyMode.NONE) {
-        ColorStateList.valueOf(
-            ContextCompat.getColor(
-                context,
-                R.color.grey_500
-            )
-        )
-    }
+//    private val iconTint by lazy(LazyThreadSafetyMode.NONE) {
+//        ColorStateList.valueOf(
+//            ContextCompat.getColor(
+//                context,
+//                R.color.grey_500
+//            )
+//        )
+//    }
+    private val iconTint: ColorStateList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.grey_500))
     //  Todo : private val iconTint: ColorStateList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.grey_500))
 
     // Add or remove views to match the given count (corresponds to the number of contacts).
@@ -68,32 +69,65 @@ class MessageStatusView @JvmOverloads constructor(
         }
     }
 
+    fun updateDisplayed(){}
+
+    fun updateSending(){
+        resize(1)
+        (getChildAt(0) as ImageView).apply {
+            setImageResource(R.drawable.sent)
+            ImageViewCompat.setImageTintList(this, iconTint)
+        }
+    }
+
+    fun updateSuccess(){
+        resize(1)
+        (getChildAt(0) as ImageView).apply {
+            setImageResource(R.drawable.receive)
+            ImageViewCompat.setImageTintList(this, iconTint)
+        }
+
+    }
+
     fun update(
         seenBy: Collection<ContactViewModel>,
-        status: Interaction.InteractionStatus,
+        statusMap: Map<String, Interaction.MessageStates>,
         @IdRes resId: Int = View.NO_ID
     ) {
-        Log.w(
-            "devdebug",
-            "MessageStatusView.update() contacts: $seenBy, status: $status, resId: $resId"
-        )
-        val showStatus = seenBy.isEmpty()
-                && (status == Interaction.InteractionStatus.SUCCESS
-                || status == Interaction.InteractionStatus.SENDING
-                || status == Interaction.InteractionStatus.UNKNOWN)
+
+
+
+        val isSuccess = statusMap.values.find { it == Interaction.MessageStates.SUCCESS } != null
+        val isSending = statusMap.isEmpty() or (statusMap.values.find { it == Interaction.MessageStates.SENDING } != null)
+        val displayedList = statusMap.entries.filter { it.value == Interaction.MessageStates.DISPLAYED }.map { it.key }
+        val displayedCount = displayedList.size
+        val isDisplayed = displayedCount > 0
+
+        val showStatus = (isSuccess || isSending ) && !isDisplayed
+
+        Log.w("devdebug", "MessageStatusView.statusMap(): $statusMap, sucess: $isSuccess, sending: $isSending, displayed : $isDisplayed")
+
+//        val showStatus = seenBy.isEmpty()
+//                && (
+//                status == Interaction.InteractionStatus.SUCCESS
+//                        || status == Interaction.InteractionStatus.SENDING
+//                )
         if (showStatus) {
             resize(1)
             (getChildAt(0) as ImageView).apply {
                 setImageResource(
-                    when (status) {
-                        Interaction.InteractionStatus.UNKNOWN -> R.drawable.sent
-                        Interaction.InteractionStatus.SUCCESS -> R.drawable.receive
-                        else -> -1
-                    }
+                    if(isSuccess) R.drawable.receive
+                    else if(isSending) R.drawable.sent
+                    else -1
+//                    when (status) {
+//                        Interaction.InteractionStatus.SENDING -> R.drawable.sent
+//                        Interaction.InteractionStatus.SUCCESS -> R.drawable.receive
+//                        else -> -1
+//                    }
                 )
                 ImageViewCompat.setImageTintList(this, iconTint)
             }
         } else {
+            Log.w("devdebug", "seenBy: $seenBy")
             resize(seenBy.size)
             seenBy.forEachIndexed { index, contact ->
                 (getChildAt(index) as ImageView).apply {

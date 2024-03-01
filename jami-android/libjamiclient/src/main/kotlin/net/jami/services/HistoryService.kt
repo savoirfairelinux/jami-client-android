@@ -179,7 +179,7 @@ abstract class HistoryService {
         txt
     }.subscribeOn(scheduler)
 
-    fun accountMessageStatusChanged(accountId: String, daemonId: String, peer: String, status: InteractionStatus): Single<TextMessage> = Single.fromCallable {
+    fun accountMessageStatusChanged(accountId: String, daemonId: String, peer: String, status: InteractionStatus, statusb: Interaction.MessageStates): Single<TextMessage> = Single.fromCallable {
         val textList = getInteractionDataDao(accountId).queryForEq(Interaction.COLUMN_DAEMON_ID, daemonId)
         if (textList == null || textList.isEmpty()) {
             throw RuntimeException("accountMessageStatusChanged: not able to find message with id $daemonId in database")
@@ -191,6 +191,8 @@ abstract class HistoryService {
         }
         val msg = TextMessage(text)
         msg.status = status
+        msg.addStatusMap(msg.statusMap.plus(accountId to statusb))
+//        msg.statusMap = msg.statusMap.plus(accountId to statusb)
         getInteractionDataDao(accountId).update(msg)
         msg.account = accountId
         msg
