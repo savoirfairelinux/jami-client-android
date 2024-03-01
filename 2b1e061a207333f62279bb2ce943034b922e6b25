@@ -142,6 +142,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e7802010_781d9f6a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-03-01T19:01:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a052b29_b5f1d36b",
+      "revId": "2b1e061a207333f62279bb2ce943034b922e6b25",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7ecee2eb_9a1347b8",
@@ -321,6 +339,30 @@
       "side": 1,
       "message": "Yes, that change was intentional. Using paddingStart and paddingEnd was an error. RTL was not handled before.",
       "parentUuid": "ef56ad94_06c56dae",
+      "range": {
+        "startLine": 189,
+        "startChar": 8,
+        "endLine": 189,
+        "endChar": 68
+      },
+      "revId": "2b1e061a207333f62279bb2ce943034b922e6b25",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3afc745b_7aceb258",
+        "filename": "jami-android/app/src/main/java/cx/ring/views/MessageBubble.kt",
+        "patchSetId": 10
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-03-01T19:01:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "363b24c9_a1c3a4c3",
       "range": {
         "startLine": 189,
         "startChar": 8,
