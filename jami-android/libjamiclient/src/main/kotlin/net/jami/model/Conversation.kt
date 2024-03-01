@@ -364,18 +364,20 @@ class Conversation : ConversationHistory {
     }
 
     @Synchronized
-    fun updateSwarmInteraction(messageId: String, contactUri: Uri, newStatus: Interaction.InteractionStatus) {
+    fun updateSwarmInteraction(messageId: String, contactUri: Uri, newStatus: Interaction.MessageStates) {
         val e = mMessages[messageId] ?: return
-        if (newStatus == Interaction.InteractionStatus.DISPLAYED) {
+        if (newStatus == Interaction.MessageStates.DISPLAYED) {
             Log.w(TAG, "updateSwarmInteraction DISPLAYED")
             findContact(contactUri)?.let { contact ->
                 if (!contact.isUser)
                     setLastMessageDisplayed(contactUri.host, messageId)
             }
-        } else if (newStatus != Interaction.InteractionStatus.SENDING) {
-            e.status = newStatus
-            updatedElementSubject.onNext(Pair(e, ElementStatus.UPDATE))
+        } else if (newStatus != Interaction.MessageStates.SENDING) {
+            e.status = Interaction.InteractionStatus.SENDING
         }
+
+        e.statusMap = e.statusMap.plus(Pair(contactUri.host, newStatus))
+        updatedElementSubject.onNext(Pair(e, ElementStatus.UPDATE))
     }
 
     @Synchronized
