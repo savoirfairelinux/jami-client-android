@@ -99,6 +99,24 @@
       "parentUuid": "9ac753bf_efea90b5",
       "revId": "a02c0ba0cc64d7d3b62ffd01fdad5ba327f36022",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "40f800ce_12b6bc24",
+        "filename": "jami-android/app/src/main/java/cx/ring/utils/ContentUri.kt",
+        "patchSetId": 8
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-03-01T12:42:46Z",
+      "side": 1,
+      "message": "Shouldn\u0027t be nice to have a comment in code? I didn\u0027t know about this.",
+      "parentUuid": "9d48c7c9_78b0e451",
+      "revId": "a02c0ba0cc64d7d3b62ffd01fdad5ba327f36022",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }

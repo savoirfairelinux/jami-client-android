@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "262250c2_02b9dcf5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-03-01T12:42:46Z",
+      "side": 1,
+      "message": "What if user want to share files with another account?\nShould we provide feature to also select account?",
+      "revId": "aa1fa596750f40ffaf00a7670f1bc95d6543685f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "59c01613_a917f3cc",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ShareWithFragment.kt",
+        "patchSetId": 10
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-03-01T12:42:46Z",
+      "side": 1,
+      "message": "Shouldn\u0027t mediaList and maxHeigh also be private ?",
+      "range": {
+        "startLine": 306,
+        "startChar": 0,
+        "endLine": 306,
+        "endChar": 2
+      },
+      "revId": "aa1fa596750f40ffaf00a7670f1bc95d6543685f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
