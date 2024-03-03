@@ -174,8 +174,8 @@ class CallServiceImpl(val mContext: Context, executor: ScheduledExecutorService,
     fun onIncomingCallResult(extras: Bundle, connection: CallConnection?, result: CallRequestResult = CallRequestResult.REJECTED) {
         val accountId = extras.getString(ConversationPath.KEY_ACCOUNT_ID) ?: return
         val callId = extras.getString(NotificationService.KEY_CALL_ID) ?: return
-        Log.w(TAG, "Telecom API: incoming call request for $callId has result $connection")
-        val call = incomingCallRequests.remove(callId)?.second
+        Log.w(TAG, "Telecom API: incoming call request for $callId has result $connection $result")
+        val call = if (result == CallRequestResult.SHOW_UI) incomingCallRequests[callId]?.second else incomingCallRequests.remove(callId)?.second
         if (call == null) {
             Log.e(TAG, "Telecom API: incoming call request for $callId has no pending request")
             connection?.dispose()
