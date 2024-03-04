@@ -211,21 +211,6 @@ public class TwoPaneLayout extends ViewGroup implements Openable {
         sendAccessibilityEvent(AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED);
     }
 
-    void updateObscuredViewsVisibility(View panel) {
-        boolean visibility = !mCanSlide || !isOpened;
-        for (int i = 0, childCount = getChildCount(); i < childCount; i++) {
-            final View child = getChildAt(i);
-
-            if (child == panel) {
-                // There are still more children above the panel but they won't be affected.
-                break;
-            } else if (child.getVisibility() == GONE) {
-                continue;
-            }
-            child.setVisibility(visibility ? VISIBLE : INVISIBLE);
-        }
-    }
-
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
@@ -515,10 +500,6 @@ public class TwoPaneLayout extends ViewGroup implements Openable {
             nextXStart += child.getWidth() + Math.abs(nextXOffset);
         }
 
-        if (mFirstLayout) {
-            updateObscuredViewsVisibility(mSlideableView);
-        }
-
         mFirstLayout = false;
     }
 
@@ -614,30 +595,6 @@ public class TwoPaneLayout extends ViewGroup implements Openable {
      */
     public boolean isSlideable() {
         return mCanSlide;
-    }
-
-    @Override
-    protected boolean drawChild(Canvas canvas, View child, long drawingTime) {
-        final LayoutParams lp = (LayoutParams) child.getLayoutParams();
-        boolean result;
-        final int save = canvas.save();
-
-        if (mCanSlide && !lp.slideable && mSlideableView != null) {
-            // Clip against the slider; no sense drawing what will immediately be covered.
-            canvas.getClipBounds(mTmpRect);
-            if (isLayoutRtlSupport()) {
-                mTmpRect.left = Math.max(mTmpRect.left, mSlideableView.getRight());
-            } else {
-                mTmpRect.right = Math.min(mTmpRect.right, mSlideableView.getLeft());
-            }
-            canvas.clipRect(mTmpRect);
-        }
-
-        result = super.drawChild(canvas, child, drawingTime);
-
-        canvas.restoreToCount(save);
-
-        return result;
     }
 
     /**
