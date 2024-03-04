@@ -140,7 +140,7 @@
   <string name="error_passwords_not_equals">Δεν ταιριάζουν τα κωδικά.</string>
   <string name="export_account_wait_title">Σε παρακαλώ, περίμενε...</string>
   <string name="export_account_wait_message">Πληροφορίες λογαριασμού εξαγωγής</string>
-  <string name="account_export_file">Λογαριασμός υποστήριξης</string>
+  <string name="account_export_file">Αντίγραφο ασφαλείας λογαριασμού</string>
   <string name="account_export_file_summary">Κάντε αντίγραφο ασφαλείας του λογαριασμού σας στην συσκευή σας για να το αποκαταστήσετε αργότερα.</string>
   <string name="account_export_end_decryption_message">Δεν μπόρεσα να ξεκλειδώσω το λογαριασμό σου χρησιμοποιώντας το κωδικό πρόσβασης.</string>
   <string name="account_export_end_network_title">Σφάλμα δικτύου</string>
@@ -247,4 +247,5 @@
   <string name="error_format_not_supported">Η μορφή δεν υποστιρίζεται.</string>
   <string name="account_link_device_title">Σύνδεση νέας συσκευής</string>
   <string name="account_link_device_button">Σύνδεση</string>
+  <!--Biometry-->
 </resources>

@@ -48,7 +48,6 @@
     <item quantity="other">%dบทสนทนา</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">ค้นหาชื่อหรือหมายเลขโทรศัพท์...</string>
   <string name="choose_number">เลือกหมายเลข</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->

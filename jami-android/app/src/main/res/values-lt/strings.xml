@@ -51,7 +51,6 @@
     <item quantity="other">%d pokalbių</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Ieškoti vardo ar telefono numerio…</string>
   <string name="choose_number">Pasirinkite skaičių</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -207,6 +206,7 @@
   <string name="conversation_contact_left">%1$s išėjo</string>
   <string name="conversation_contact_banned">%1$s uždraustas</string>
   <string name="conversation_search_hint">Paieška pokalbis</string>
+  <string name="today">Šiandien</string>
   <string name="yesterday">Vakar</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Pridėti %1$s?</string>

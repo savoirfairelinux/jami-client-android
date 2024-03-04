@@ -140,7 +140,7 @@
   <string name="error_passwords_not_equals">Salasanat eivät täsmää</string>
   <string name="export_account_wait_title">Odota hetki...</string>
   <string name="export_account_wait_message">Tilitietojen vieminen</string>
-  <string name="account_export_file">Varmuuskopioi tili</string>
+  <string name="account_export_file">Varakäyttäjätunnus</string>
   <string name="account_export_file_summary">Varmuuskopioi tili laitteellesi niin voit palauttaa sen myöhemmin.</string>
   <string name="account_export_end_decryption_message">Tiliäsi ei voitu avata toimitetulla salasanalla.</string>
   <string name="account_export_end_network_title">Verkkovirhe</string>
@@ -247,4 +247,5 @@
   <string name="error_format_not_supported">Tätä tiedostomuotoa ei tueta.</string>
   <string name="account_link_device_title">Linkitä uusi laite</string>
   <string name="account_link_device_button">Yhdistä</string>
+  <!--Biometry-->
 </resources>

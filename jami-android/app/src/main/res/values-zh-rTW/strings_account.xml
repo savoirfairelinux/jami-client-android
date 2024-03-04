@@ -250,4 +250,5 @@
   <string name="error_format_not_supported">不支援此格式。</string>
   <string name="account_link_device_title">連結新裝置</string>
   <string name="account_link_device_button">連線</string>
+  <!--Biometry-->
 </resources>

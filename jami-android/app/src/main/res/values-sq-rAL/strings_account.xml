@@ -48,6 +48,9 @@
   <string name="account_password_set">Caktoni Fjalëkalimin</string>
   <string name="account_password_summary">Administroni fjalëkalimin e llogarisë tuaj.</string>
   <string name="account_password_change_wait_message">Po ndryshohet fjalëkalim llogarie</string>
+  <string name="account_biometric_disable">Çaktivizo mirëfilltësim biometrik</string>
+  <string name="account_biometric_set">Aktivizo mirëfilltësim biometrik</string>
+  <string name="account_biometric_summary">Administroni mirëfilltësim biometrik për llogarinë tuaj.</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Të përgjithshme</string>
   <string name="account_basic_category">Rregullime Bazë</string>
@@ -143,7 +146,7 @@
   <string name="error_passwords_not_equals">Fjalëkalimet nuk përputhen</string>
   <string name="export_account_wait_title">Ju lutemi, pritni…</string>
   <string name="export_account_wait_message">Po eksportohen të dhëna llogarie</string>
-  <string name="account_export_file">Kopjeruani Llogari</string>
+  <string name="account_export_file">Kopjeruaje llogarinë</string>
   <string name="account_export_file_summary">Kopjeruajeni llogarinë tuaj në pajisjen tuaj për ta rikthyer më vonë.</string>
   <string name="account_export_end_decryption_message">S\’u zhbllokua dot llogaria juaj duke përdorur fjalëkalimin e dhënë.</string>
   <string name="account_export_end_network_title">Gabim rrjeti</string>
@@ -266,4 +269,18 @@
   <string name="connect_device_scanqr">Skanoni QR-in</string>
   <string name="connect_device_enterPIN">Ose jepni PIN-in</string>
   <string name="account_link_device_button">Lidhu</string>
+  <!--Biometry-->
+  <string name="account_biometry_auth_title">Shkyçni llogari Jami</string>
+  <string name="account_biometry_auth_message">Përdorni biometri për të shkyçur llogarinë tuaj</string>
+  <string name="account_biometry_enroll_title">Të përdoret mirëfilltësim biometrik?</string>
+  <string name="account_biometry_enroll_message">Pajisja juaj mbulon mirëfilltësim të siguruar biometrik.
+Mirëfilltësimi biometrik, ose përmes pajisjes, shton një rrugë të leverdishme për të shkyçur lokalisht hyrjen në llogarinë tuaj Jami. Do të jeni prapë në gjendje të përdorni fjalëkalimin tuaj.</string>
+  <string name="account_biometry_enroll_accept">Përdor biometri</string>
+  <string name="no_thanks">Jo, faleminderit</string>
+  <string name="account_biometry_enroll_auth_title">Shtoni mirëfilltësim për llogarinë tuaj Jami</string>
+  <string name="account_biometry_enroll_auth_message">Shtoni mirëfilltësim të siguruar biometrik, ose përmes pajisjes, si një alternativë e fjalëkalimit tuaj</string>
+  <string name="account_auth_error">Gabim mirëfilltësimi: %1$s</string>
+  <string name="account_auth_success">Mirëfilltësimi pat sukses</string>
+  <string name="account_auth_key_error">S’u arrit të shfehtëzohet kyçi i llogarisë</string>
+  <string name="account_auth_password">Përdorni fjalëkalim llogarie</string>
 </resources>

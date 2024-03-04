@@ -140,7 +140,7 @@
   <string name="error_passwords_not_equals">ڤاسرود تيدق مڠڬوناكن</string>
   <string name="export_account_wait_title">تكايه صبر كني...</string>
   <string name="export_account_wait_message">معلوماتي حساب صادراتي</string>
-  <string name="account_export_file">حساب ڤمبلاجرن</string>
+  <string name="account_export_file">حساب ڤڠاجرن</string>
   <string name="account_export_file_summary">كاوڤونكن ايكونت دالم ڤرودوک اونتوق مڠمبيلكنڽ لاين.</string>
   <string name="account_export_end_decryption_message">تيدق بوليه مڠهادڤكن ايكونت دڠن ڤرودوق يڠ دبريكن.</string>
   <string name="account_export_end_network_title">خطأ شبكه</string>
@@ -246,4 +246,5 @@
   <!--Link a new device-->
   <string name="account_link_device_title">منچيلكن ڤڠڬونا?? ن بارو</string>
   <string name="account_link_device_button">وصلكن</string>
+  <!--Biometry-->
 </resources>
