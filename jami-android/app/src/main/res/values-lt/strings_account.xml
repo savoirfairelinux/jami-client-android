@@ -142,7 +142,7 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="error_passwords_not_equals">Slaptažodžiai nesutampa</string>
   <string name="export_account_wait_title">Prašome palaukti...</string>
   <string name="export_account_wait_message">Eksportuojama paskyros informacija</string>
-  <string name="account_export_file">Paslauginė sąskaita</string>
+  <string name="account_export_file">Padaryti paskyros atsarginę kopiją</string>
   <string name="account_export_file_summary">Paslauginkite savo paskyrą į įrenginį, kad vėliau jį atkurtumėte.</string>
   <string name="account_export_end_decryption_message">Naudojant pateiktą slaptažodį, nepavyko atrakinti jūsų paskyros.</string>
   <string name="account_export_end_network_title">Tinklo klaida</string>
@@ -249,4 +249,5 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="error_format_not_supported">Šis formatas yra nepalaikomas.</string>
   <string name="account_link_device_title">Susieti naują įrenginį</string>
   <string name="account_link_device_button">Prisijungti</string>
+  <!--Biometry-->
 </resources>

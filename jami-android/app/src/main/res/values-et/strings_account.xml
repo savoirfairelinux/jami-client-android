@@ -247,4 +247,5 @@
   <string name="error_format_not_supported">See formaat ei toeta.</string>
   <string name="account_link_device_title">Siduge uus seade</string>
   <string name="account_link_device_button">Sõltuv</string>
+  <!--Biometry-->
 </resources>

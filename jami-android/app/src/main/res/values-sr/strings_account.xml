@@ -143,7 +143,7 @@ Kasnije možeš da izmeniš svoj nalog</string>
   <string name="error_passwords_not_equals">Lozinke nisu iste</string>
   <string name="export_account_wait_title">Molim da sačekate...</string>
   <string name="export_account_wait_message">Izvoz informacija o nalogu</string>
-  <string name="account_export_file">Rezervna kopija naloga</string>
+  <string name="account_export_file">Резервни рачун</string>
   <string name="account_export_file_summary">Pravi rezervnu kopiju naloga na vašem uređaju za kasnije ponovno uspostavljanje</string>
   <string name="account_export_end_decryption_message">Nije moguće otključati vaš nalog sa unetom lozinkom</string>
   <string name="account_export_end_network_title">Greška na mreži</string>
@@ -266,4 +266,5 @@ Kasnije možeš da izmeniš svoj nalog</string>
   <string name="connect_device_scanqr">Скенирај QR код</string>
   <string name="connect_device_enterPIN">Или унесите PIN</string>
   <string name="account_link_device_button">Poveži</string>
+  <!--Biometry-->
 </resources>

@@ -66,6 +66,9 @@
   <string name="plugin_install_failure">Fallo al instalar complemento: <b>%1$s</b></string>
   <string name="plugin_recent_version_exception">Tienes una versión más reciente de: <b>%1$s</b></string>
   <string name="plugin_same_version_exception">Tienes instalada la misma versión de <b>%1$s</b></string>
+  <string name="plugin_invalid_signature"><b>%1$s</b> tiene una firma inválida.</string>
+  <string name="plugin_invalid_authority">No se puede verificar la autoridad de: <b>%1$s</b></string>
+  <string name="plugin_invalid_format">Formato de complemento no válido: <b>%1$s</b></string>
   <string name="plugin_force_install">forzar \n la instalación</string>
   <string name="plugin_path_image_add">Añadir nueva imagen</string>
 </resources>

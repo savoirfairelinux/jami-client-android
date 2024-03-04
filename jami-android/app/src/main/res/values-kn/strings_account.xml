@@ -247,4 +247,5 @@
   <string name="error_format_not_supported">ಈ ಸ್ವರೂಪವನ್ನು ಬೆಂಬಲಿಸುವುದಿಲ್ಲ.</string>
   <string name="account_link_device_title">ಹೊಸ ಸಾಧನವನ್ನು ಸಂಪರ್ಕಿಸಿ</string>
   <string name="account_link_device_button">ಸಂಪರ್ಕ</string>
+  <!--Biometry-->
 </resources>
