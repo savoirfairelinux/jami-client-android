@@ -21,6 +21,7 @@ along with this program; if not, write to the Free Software
     android:layout_width="match_parent"
     android:layout_height="72dp"
     android:background="@drawable/background_item_smartlist"
+    android:foreground="?attr/selectableItemBackground"
     android:descendantFocusability="blocksDescendants"
     android:paddingLeft="16dp"
     android:paddingTop="8dp"
