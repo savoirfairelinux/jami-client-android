@@ -472,11 +472,11 @@ class NotificationServiceImpl(
 
     override fun showTextNotification(conversation: Conversation) {
         val texts = conversation.unreadTextMessages
-        if (texts.isEmpty() || conversation.isVisible) {
+        if (!conversation.isBubble && (texts.isEmpty() || conversation.isVisible)) {
             cancelTextNotification(conversation.accountId, conversation.uri)
             return
         }
-        if (texts.lastEntry()!!.value.isNotified) {
+        if ((conversation.isBubble && texts.isEmpty()) || texts.lastEntry()!!.value.isNotified) {
             return
         }
         Log.w(TAG, "showTextNotification " + conversation.accountId + " " + conversation.uri)

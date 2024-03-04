@@ -111,15 +111,16 @@ class ConversationPresenter @Inject constructor(
     fun pause() {
         mVisibilityDisposable.clear()
         mConversation?.isVisible = false
+        mConversation?.isBubble = false
     }
 
     fun resume(isBubble: Boolean) {
         Log.w(TAG, "resume $mConversationUri")
         mVisibilityDisposable.clear()
-        mVisibilityDisposable.add(
-            mConversationSubject
+        mVisibilityDisposable.add(mConversationSubject
             .subscribe({ conversation: Conversation ->
                 conversation.isVisible = true
+                conversation.isBubble = isBubble
                 accountService.getAccount(conversation.accountId)?.let { account ->
                     conversationFacade.readMessages(account, conversation, !isBubble)}
             }) { e -> Log.e(TAG, "Error loading conversation", e) })

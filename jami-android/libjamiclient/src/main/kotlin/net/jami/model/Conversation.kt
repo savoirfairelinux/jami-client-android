@@ -256,6 +256,9 @@ class Conversation : ConversationHistory {
             mVisibleSubject.onNext(mVisible)
         }
 
+    /** Flags that notification should not be removed */
+    var isBubble = false
+
     fun getVisible(): Observable<Boolean> = mVisibleSubject
 
     val contact: Contact?
