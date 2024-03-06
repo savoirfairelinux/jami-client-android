@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "32225272_482c21c8",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/NotificationServiceImpl.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 691,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-03-06T23:29:23Z",
+      "side": 1,
+      "message": "remove debug code",
+      "range": {
+        "startLine": 676,
+        "startChar": 0,
+        "endLine": 691,
+        "endChar": 7
+      },
+      "revId": "86f9804af37b06df6b46a2992c55810782415a80",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "19a879fd_611ec135",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/NotificationService.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-03-06T23:29:23Z",
+      "side": 1,
+      "message": "remove if not needed",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 2
+      },
+      "revId": "86f9804af37b06df6b46a2992c55810782415a80",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
