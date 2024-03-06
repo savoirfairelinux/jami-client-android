@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9bf0c518_af027b13",
+        "filename": "jami-android/app/src/main/AndroidManifest.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-03-06T23:30:02Z",
+      "side": 1,
+      "message": "was actually already handled -_-",
+      "range": {
+        "startLine": 131,
+        "startChar": 0,
+        "endLine": 133,
+        "endChar": 2
+      },
+      "revId": "bb297b73caad64a3fe7e8cc6a1ebed7855232edc",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
