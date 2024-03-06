@@ -59,6 +59,7 @@ class MessageBubble(context: Context, attrs: AttributeSet?) : ViewGroup(context,
 
     private val messageText = WrapWidthTextView(context).apply {
         movementMethod = LinkMovementMethod.getInstance()
+        setTextIsSelectable(true)
         setTextSize(TypedValue.COMPLEX_UNIT_PX, defaultTextSize)
     }
     private val messageTime = TextView(context).apply {
@@ -95,6 +96,11 @@ class MessageBubble(context: Context, attrs: AttributeSet?) : ViewGroup(context,
         addView(messageText)
         addView(messageTime)
         addView(messageEdited)
+    }
+
+    override fun setOnLongClickListener(l: OnLongClickListener?) {
+        super.setOnLongClickListener(l)
+        messageText.setOnLongClickListener { l?.onLongClick(this) ?: false }
     }
 
     fun getText(): CharSequence = messageText.text
