@@ -129,6 +129,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:theme="@style/AppTheme.Navigation"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
