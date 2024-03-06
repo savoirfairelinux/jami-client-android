@@ -76,6 +76,7 @@ import cx.ring.databinding.FragHomeBinding
 import cx.ring.utils.TextUtils
 import cx.ring.utils.ActionHelper.openJamiDonateWebPage
 import io.reactivex.rxjava3.disposables.Disposable
+import net.jami.services.NotificationService
 
 @AndroidEntryPoint
 class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
@@ -354,10 +355,6 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
             height = ViewGroup.LayoutParams.MATCH_PARENT
         }
 
-        val insetsCompat = ViewCompat.getRootWindowInsets(binding.invitationCard.invitationGroup) ?: return
-        val insets = insetsCompat.getInsets(WindowInsetsCompat.Type.systemBars())
-        binding.appBar.updatePadding(bottom = insets.bottom)
-
         // Adapt the margins of the invitation card.
         requireContext().resources.getDimensionPixelSize(R.dimen.bottom_sheet_radius).let {
             (binding.invitationCard.invitationGroup.layoutParams as ViewGroup.MarginLayoutParams)
@@ -379,6 +376,10 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
 
         // Enable back press.
         conversationBackPressedCallback.isEnabled = true
+
+        val insetsCompat = ViewCompat.getRootWindowInsets(binding.invitationCard.invitationGroup) ?: return
+        val insets = insetsCompat.getInsets(WindowInsetsCompat.Type.systemBars())
+        binding.appBar.updatePadding(bottom = insets.bottom)
     }
 
     fun collapsePendingView() {
@@ -560,21 +561,25 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
     }
 
     fun handleIntent(intent: Intent) {
-        val searchView = mSearchView ?: return
+        //val searchView = mSearchView ?: return
         when (intent.action) {
             Intent.ACTION_CALL -> {
                 expandSearchActionView()
-                searchView.setQuery(intent.dataString, true)
+                mSearchView?.setQuery(intent.dataString, true)
             }
 
             Intent.ACTION_DIAL -> {
                 expandSearchActionView()
-                searchView.setQuery(intent.dataString, false)
+                mSearchView?.setQuery(intent.dataString, false)
             }
 
             Intent.ACTION_SEARCH -> {
                 expandSearchActionView()
-                searchView.setQuery(intent.getStringExtra(SearchManager.QUERY), true)
+                mSearchView?.setQuery(intent.getStringExtra(SearchManager.QUERY), true)
+            }
+
+            NotificationService.NOTIF_TRUST_REQUEST_MULTIPLE -> {
+                expandPendingView()
             }
 
             else -> {}
