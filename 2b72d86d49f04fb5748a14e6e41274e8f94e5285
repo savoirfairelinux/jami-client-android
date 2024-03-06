@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "10ab47b8_3a9f5044",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/ConversationFacade.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-03-06T23:33:35Z",
+      "side": 1,
+      "message": "remove log",
+      "range": {
+        "startLine": 726,
+        "startChar": 0,
+        "endLine": 726,
+        "endChar": 2
+      },
+      "revId": "2b72d86d49f04fb5748a14e6e41274e8f94e5285",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
