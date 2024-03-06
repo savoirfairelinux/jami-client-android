@@ -25,19 +25,22 @@ along with this program; if not, write to the Free Software
     <cx.ring.views.twopane.TwoPaneLayout
         android:id="@+id/panel"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:background="@color/blue_300">
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/home_fragment"
             android:name="cx.ring.fragments.HomeFragment"
             android:layout_width="380dp"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            tools:background="@color/red_300"/>
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/conversation"
             android:layout_width="300dp"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            tools:background="@color/yellow_300"/>
 
     </cx.ring.views.twopane.TwoPaneLayout>
 
