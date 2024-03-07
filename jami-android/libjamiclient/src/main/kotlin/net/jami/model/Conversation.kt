@@ -585,6 +585,7 @@ class Conversation : ConversationHistory {
                 interaction.displayedContacts.add(contactId)
             }
         }
+        if(!interaction.contact!!.isUser) setLastMessageDisplayed(interaction.contact!!.uri.uri, id)
         if (lastRead != null && lastRead == id) interaction.read()
         if (lastNotified != null && lastNotified == id) interaction.isNotified = true
         var newLeaf = false
