@@ -335,36 +335,34 @@ class ConversationAdapter(
             .filter { !conversation.findContact(net.jami.model.Uri.fromId(it.key))!!.isUser }
 
         val isDisplayed = modifiedStatusMap.any { it.value == Interaction.MessageStates.DISPLAYED }
-        val isSending = modifiedStatusMap.isEmpty() or
-                modifiedStatusMap.any { it.value == Interaction.MessageStates.SENDING }
         val isReceived = modifiedStatusMap.any { it.value == Interaction.MessageStates.SUCCESS }
         val lastDisplayedIdx = conversation.lastDisplayedMessages
-            .map { conversation.getMessage(it.value) }
-            .maxOf { mInteractions.indexOf(it) }
+            .mapValues { mInteractions.indexOf(conversation.getMessage(it.value)) }
         val currentIdx = mInteractions.indexOf(interaction)
+        val contacts = lastDisplayedIdx.filter { it.value == currentIdx }.map { it.key }
 
         // Case 1: Message is sending
-        if(!isDisplayed && isSending){
+        if(!isDisplayed && !isReceived){
             statusIcon.let {
                 it.visibility = View.VISIBLE
                 it.updateSending()
             }
         }
         // Case 2: Message is received by at least one contact
-        else if(!isDisplayed && isReceived){
+        else if(!isDisplayed){
             statusIcon.let {
                 it.visibility = View.VISIBLE
                 it.updateSuccess()
             }
         }
         // Case 3: Message is displayed
-        else if (isDisplayed && currentIdx == lastDisplayedIdx) {
+        else if (contacts.isNotEmpty()) {
             conversationViewHolder.compositeDisposable.add(
                 presenter.conversationFacade
                     .getLoadedContact(
                         accountId = interaction.account!!,
                         conversation = conversation,
-                        contactIds = modifiedStatusMap.map { it.key }
+                        contactIds = contacts
                     )
                     .observeOn(DeviceUtils.uiScheduler)
                     .subscribe { seenBy ->
