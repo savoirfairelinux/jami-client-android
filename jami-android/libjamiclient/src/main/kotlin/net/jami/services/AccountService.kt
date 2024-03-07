@@ -1016,18 +1016,27 @@ class AccountService(
         incomingMessageSubject.onNext(Message(accountId, messageId, callId, from, messages))
     }
 
-    fun accountMessageStatusChanged(accountId: String, conversationId: String, messageId: String, contactId: String, status: Int) {
-        val newStatus = InteractionStatus.fromIntTextMessage(status)
-        Log.d(TAG, "accountMessageStatusChanged: $accountId, $conversationId, $messageId, $contactId, $newStatus")
+    fun accountMessageStatusChanged(
+        accountId: String,
+        conversationId: String,
+        messageId: String,
+        contactId: String,
+        status: Int,
+    ) {
         val account = getAccount(accountId) ?: return
+        val interactionStatus = InteractionStatus.fromIntTextMessage(status)
+        val messageState = Interaction.MessageStates.fromInt(status)
+
         if (conversationId.isEmpty() && !account.isJami) {
             mHistoryService
-                .accountMessageStatusChanged(accountId, messageId, contactId, newStatus)
-                .subscribe({ t: TextMessage -> messageSubject.onNext(t) }) { e: Throwable ->
-                    Log.e(TAG, "Error updating message: " + e.localizedMessage) }
+                .accountMessageStatusChanged(
+                    accountId, messageId, contactId, interactionStatus, messageState
+                )
+                .blockingSubscribe({ t: TextMessage -> messageSubject.onNext(t) })
+                { e: Throwable -> Log.e(TAG, "Error updating message: " + e.localizedMessage) }
         } else {
             account.getSwarm(conversationId)
-                ?.updateSwarmInteraction(messageId, Uri.fromId(contactId), newStatus)
+                ?.updateSwarmInteraction(messageId, Uri.fromId(contactId), messageState)
         }
     }
 
@@ -1281,8 +1290,11 @@ class AccountService(
         val interaction = getInteraction(account, conversation, body)
         val edits = message.editions.map { getInteraction(account, conversation, it.toNative()) }
         val reactions = message.reactions.map { getInteraction(account, conversation, it.toNative()) }
+        val statusMap = message.status.mapValues { Interaction.MessageStates.fromInt(it.value) }
+
         interaction.addEdits(edits)
         interaction.addReactions(reactions)
+        interaction.statusMap = statusMap
 
         return interaction
     }

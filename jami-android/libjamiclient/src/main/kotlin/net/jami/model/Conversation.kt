@@ -35,7 +35,7 @@ class Conversation : ConversationHistory {
     private val currentCalls = ArrayList<Conference>()
     val aggregateHistory = ArrayList<Interaction>(32)
 
-    private val lastDisplayedMessages: MutableMap<String, String> = HashMap()
+    val lastDisplayedMessages: MutableMap<String, String> = HashMap()
     private val updatedElementSubject: Subject<Pair<Interaction, ElementStatus>> = PublishSubject.create()
     private val clearedSubject: Subject<List<Interaction>> = PublishSubject.create()
     private val callsSubject: Subject<List<Conference>> = BehaviorSubject.createDefault(emptyList())
@@ -358,8 +358,20 @@ class Conversation : ConversationHistory {
                 updatedElementSubject.onNext(Pair(e, ElementStatus.UPDATE))
             }
         }
-        // Add contact to new displayed interaction
-        lastDisplayedMessages[contactId] = messageId
+
+        // Check if the new message is after the last displayed message (could be not the case).
+        val currentLastMessageDisplayed: Interaction? =
+            lastDisplayedMessages[contactId]?.let { getMessage(it) }
+        val newPotentialMessageDisplayed = getMessage(messageId)
+        val isAfter =
+            if (currentLastMessageDisplayed != null && newPotentialMessageDisplayed != null) {
+                isAfter(currentLastMessageDisplayed, newPotentialMessageDisplayed)
+            } else false
+
+        // Update the last displayed message
+        if (isAfter or (currentLastMessageDisplayed == null))
+            lastDisplayedMessages[contactId] = messageId
+
         mMessages[messageId]?.let { e ->
             e.displayedContacts.add(contactId)
             updatedElementSubject.onNext(Pair(e, ElementStatus.UPDATE))
@@ -367,18 +379,23 @@ class Conversation : ConversationHistory {
     }
 
     @Synchronized
-    fun updateSwarmInteraction(messageId: String, contactUri: Uri, newStatus: Interaction.InteractionStatus) {
-        val e = mMessages[messageId] ?: return
-        if (newStatus == Interaction.InteractionStatus.DISPLAYED) {
-            Log.w(TAG, "updateSwarmInteraction DISPLAYED")
+    fun updateSwarmInteraction(
+        messageId: String,
+        contactUri: Uri,
+        newStatus: Interaction.MessageStates,
+    ) {
+        val interaction = mMessages[messageId] ?: return
+        if (newStatus == Interaction.MessageStates.DISPLAYED) {
             findContact(contactUri)?.let { contact ->
                 if (!contact.isUser)
                     setLastMessageDisplayed(contactUri.host, messageId)
             }
-        } else if (newStatus != Interaction.InteractionStatus.SENDING) {
-            e.status = newStatus
-            updatedElementSubject.onNext(Pair(e, ElementStatus.UPDATE))
+        } else if (newStatus != Interaction.MessageStates.SENDING) {
+            interaction.status = Interaction.InteractionStatus.SENDING
         }
+
+        interaction.statusMap = interaction.statusMap.plus(Pair(contactUri.host, newStatus))
+        updatedElementSubject.onNext(Pair(interaction, ElementStatus.UPDATE))
     }
 
     @Synchronized

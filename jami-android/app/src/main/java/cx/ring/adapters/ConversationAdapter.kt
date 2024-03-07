@@ -318,26 +318,62 @@ class ConversationAdapter(
         conversationViewHolder: ConversationViewHolder,
         interaction: Interaction
     ) {
+        val statusIcon = conversationViewHolder.mStatusIcon ?: return
+        val messageToAttach = conversationViewHolder.mLayoutStatusIconId?.id ?: return
+
         val conversation = interaction.conversation
         if (conversation == null || conversation !is Conversation) {
-            conversationViewHolder.mStatusIcon?.isVisible = false
+            statusIcon.isVisible = false
             return
         }
-        conversationViewHolder.compositeDisposable.add(presenter.conversationFacade
-            .getLoadedContact(
-                interaction.account!!,
-                conversation,
-                interaction.displayedContacts
-            )
-            .observeOn(DeviceUtils.uiScheduler)
-            .subscribe { contacts ->
-                conversationViewHolder.mStatusIcon?.isVisible = contacts.isNotEmpty()
-                conversationViewHolder.mStatusIcon?.update(
-                    contacts,
-                    interaction.status,
-                    conversationViewHolder.mLayoutStatusIconId?.id ?: View.NO_ID
-                )
-            })
+
+        // Attach the statusIcon to the message layout.
+        statusIcon.attachToMessage(messageToAttach)
+
+        // Remove user from statusMap.
+        val modifiedStatusMap = interaction.statusMap
+            .filter { !conversation.findContact(net.jami.model.Uri.fromId(it.key))!!.isUser }
+
+        val isDisplayed = modifiedStatusMap.any { it.value == Interaction.MessageStates.DISPLAYED }
+        val isSending = modifiedStatusMap.isEmpty() or modifiedStatusMap.any { it.value == Interaction.MessageStates.SENDING }
+        val isReceived = modifiedStatusMap.any { it.value == Interaction.MessageStates.SUCCESS }
+        val lastDisplayedIdx = conversation.lastDisplayedMessages
+            .map { conversation.getMessage(it.value) }
+            .maxOf { mInteractions.indexOf(it) }
+        val currentIdx = mInteractions.indexOf(interaction)
+
+        // Case 1: Message is sending
+        if(!isDisplayed && isSending){
+            statusIcon.let {
+                it.visibility = View.VISIBLE
+                it.updateSending()
+            }
+        }
+        // Case 2: Message is received by at least one contact
+        else if(!isDisplayed && isReceived){
+            statusIcon.let {
+                it.visibility = View.VISIBLE
+                it.updateSuccess()
+            }
+        }
+        // Case 3: Message is displayed
+        else if (isDisplayed && currentIdx == lastDisplayedIdx) {
+            conversationViewHolder.compositeDisposable.add(
+                presenter.conversationFacade
+                    .getLoadedContact(
+                        accountId = interaction.account!!,
+                        conversation = conversation,
+                        contactIds = modifiedStatusMap.map { it.key }
+                    )
+                    .observeOn(DeviceUtils.uiScheduler)
+                    .subscribe { seenBy ->
+                        statusIcon.visibility = View.VISIBLE
+                        statusIcon.updateDisplayed(seenBy)
+                    })
+        }
+        // Case 4: Message is displayed but not the last displayed message
+        else statusIcon.visibility = View.GONE
+
     }
 
     /**
