@@ -369,7 +369,9 @@ class Conversation : ConversationHistory {
             } else false
 
         // Update the last displayed message
-        if (isAfter or (currentLastMessageDisplayed == null))
+        if (newPotentialMessageDisplayed?.type != Interaction.InteractionType.INVALID &&
+            newPotentialMessageDisplayed?.type != null &&
+            (isAfter || (currentLastMessageDisplayed == null))) {
             lastDisplayedMessages[contactId] = messageId
 
         mMessages[messageId]?.let { e ->
@@ -585,6 +587,7 @@ class Conversation : ConversationHistory {
                 interaction.displayedContacts.add(contactId)
             }
         }
+        if(!interaction.contact!!.isUser) setLastMessageDisplayed(interaction.contact!!.uri.uri, id)
         if (lastRead != null && lastRead == id) interaction.read()
         if (lastNotified != null && lastNotified == id) interaction.isNotified = true
         var newLeaf = false
