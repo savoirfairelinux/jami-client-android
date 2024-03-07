@@ -79,7 +79,6 @@ open class Interaction {
     var mExtraFlag = JsonObject().toString()
 
     var isNotified = false
-    val displayedContacts: MutableList<String> = ArrayList()
 
     // Swarm
     var conversationId: String? = null

@@ -351,14 +351,6 @@ class Conversation : ConversationHistory {
 
     @Synchronized
     fun setLastMessageDisplayed(contactId: String, messageId: String) {
-        // Remove contact from previous interaction
-        lastDisplayedMessages[contactId]?.let { mId ->
-            mMessages[mId]?.let { e ->
-                e.displayedContacts.remove(contactId)
-                updatedElementSubject.onNext(Pair(e, ElementStatus.UPDATE))
-            }
-        }
-
         // Check if the new message is after the last displayed message (could be not the case).
         val currentLastMessageDisplayed: Interaction? =
             lastDisplayedMessages[contactId]?.let { getMessage(it) }
@@ -369,12 +361,22 @@ class Conversation : ConversationHistory {
             } else false
 
         // Update the last displayed message
-        if (isAfter or (currentLastMessageDisplayed == null))
+        if (newPotentialMessageDisplayed?.type != Interaction.InteractionType.INVALID &&
+            newPotentialMessageDisplayed?.type != null &&
+            (isAfter || (currentLastMessageDisplayed == null))) {
             lastDisplayedMessages[contactId] = messageId
 
-        mMessages[messageId]?.let { e ->
-            e.displayedContacts.add(contactId)
-            updatedElementSubject.onNext(Pair(e, ElementStatus.UPDATE))
+            updatedElementSubject.onNext(Pair(newPotentialMessageDisplayed, ElementStatus.UPDATE))
+            // Also update the previous messages (such as change from sent to displayed)
+            var interaction: Interaction? = newPotentialMessageDisplayed
+            while (interaction?.messageId != currentLastMessageDisplayed?.messageId
+                && interaction != null
+                && currentLastMessageDisplayed != null
+            ) {
+                interaction = mMessages[interaction.parentId]?.apply {
+                    updatedElementSubject.onNext(Pair(this, ElementStatus.UPDATE))
+                }
+            }
         }
     }
 
@@ -580,11 +582,13 @@ class Conversation : ConversationHistory {
         }
         val id = interaction.messageId!!
         val previous = mMessages.put(id, interaction)
-        for ((contactId, messageId) in lastDisplayedMessages.entries) {
-            if (id == messageId) {
-                interaction.displayedContacts.add(contactId)
-            }
-        }
+
+        // Update lastDisplayedMessages
+        interaction.statusMap.entries
+            .filter { it.value == Interaction.MessageStates.DISPLAYED }
+            .filter { !findContact(Uri.fromString(it.key))!!.isUser }
+            .forEach { setLastMessageDisplayed(it.key, id) }
+
         if (lastRead != null && lastRead == id) interaction.read()
         if (lastNotified != null && lastNotified == id) interaction.isNotified = true
         var newLeaf = false
