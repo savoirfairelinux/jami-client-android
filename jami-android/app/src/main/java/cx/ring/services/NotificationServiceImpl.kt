@@ -44,7 +44,6 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.IconCompat
 import com.bumptech.glide.Glide
 import cx.ring.R
-import cx.ring.account.AccountEditionFragment
 import cx.ring.application.JamiApplication
 import cx.ring.client.CallActivity
 import cx.ring.client.ConversationActivity
@@ -662,8 +661,8 @@ class NotificationServiceImpl(
         mNotificationBuilders.put(notificationId, messageNotificationBuilder)
     }
 
-    private fun getRequestNotificationBuilder(accountId: String): NotificationCompat.Builder {
-        val builder = NotificationCompat.Builder(mContext, NOTIF_CHANNEL_REQUEST)
+    private fun getRequestNotificationBuilder(): NotificationCompat.Builder {
+        return NotificationCompat.Builder(mContext, NOTIF_CHANNEL_REQUEST)
             .setDefaults(NotificationCompat.DEFAULT_ALL)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
@@ -671,13 +670,7 @@ class NotificationServiceImpl(
             .setSmallIcon(R.drawable.ic_ring_logo_white)
             .setCategory(NotificationCompat.CATEGORY_SOCIAL)
             .setContentTitle(mContext.getString(R.string.contact_request_title))
-        val intentOpenTrustRequestFragment = Intent(HomeActivity.ACTION_PRESENT_TRUST_REQUEST_FRAGMENT)
-            .setClass(mContext, HomeActivity::class.java)
-            .putExtra(AccountEditionFragment.ACCOUNT_ID_KEY, accountId)
-        builder.setContentIntent(PendingIntent.getActivity(mContext, random.nextInt(), intentOpenTrustRequestFragment,
-            ContentUri.immutable(PendingIntent.FLAG_ONE_SHOT)))
-        builder.color = ResourcesCompat.getColor(mContext.resources, R.color.color_primary_dark, null)
-        return builder
+            .setColor(ResourcesCompat.getColor(mContext.resources, R.color.color_primary_dark, null))
     }
 
     override fun showIncomingTrustRequestNotification(account: Account) {
@@ -695,9 +688,15 @@ class NotificationServiceImpl(
                 return
             }
             mContactService.getLoadedConversation(request).subscribe({ vm ->
-                val builder = getRequestNotificationBuilder(account.accountId)
                 mPreferencesService.saveRequestPreferences(account.accountId, contactKey)
                 val info = ConversationPath.toUri(account.accountId, request.uri)
+                val builder = getRequestNotificationBuilder()
+
+                builder.setContentIntent(PendingIntent.getActivity(mContext, random.nextInt(),
+                    Intent(Intent.ACTION_VIEW, info, mContext, HomeActivity::class.java),
+                    ContentUri.immutable(PendingIntent.FLAG_ONE_SHOT))
+                )
+
                 builder.setContentText(vm.uriTitle)
                     .addAction(R.drawable.baseline_person_add_24, mContext.getText(R.string.accept), PendingIntent.getService(
                         mContext, random.nextInt(),
@@ -715,7 +714,7 @@ class NotificationServiceImpl(
                 notificationManager.notify(notificationId, builder.build())
             }) { e: Throwable -> Log.w(TAG, "error showing notification", e) }
         } else {
-            val builder = getRequestNotificationBuilder(account.accountId)
+            val builder = getRequestNotificationBuilder()
             var newRequest = false
             for (request in requests) {
                 val contact = request.contact
@@ -728,6 +727,14 @@ class NotificationServiceImpl(
                 }
             }
             if (!newRequest) return
+
+            builder.setContentIntent(PendingIntent.getActivity(mContext, random.nextInt(),
+                    Intent(mContext, HomeActivity::class.java)
+                            .setAction(NotificationService.NOTIF_TRUST_REQUEST_MULTIPLE)
+                            .putExtra(NotificationService.NOTIF_TRUST_REQUEST_ACCOUNT_ID, account.accountId),
+                    ContentUri.immutable(PendingIntent.FLAG_ONE_SHOT))
+            )
+
             builder.setContentText(String.format(mContext.getString(R.string.contact_request_msg), requests.size))
             builder.setLargeIcon(null as Icon?)
             notificationManager.notify(notificationId, builder.build())
@@ -908,8 +915,7 @@ class NotificationServiceImpl(
     }
 
     override fun cancelTrustRequestNotification(accountID: String) {
-        val notificationId = getIncomingTrustNotificationId(accountID)
-        notificationManager.cancel(notificationId)
+        notificationManager.cancel(getIncomingTrustNotificationId(accountID))
     }
 
     override fun cancelCallNotification() {

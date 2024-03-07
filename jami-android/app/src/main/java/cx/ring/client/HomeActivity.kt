@@ -36,7 +36,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import cx.ring.BuildConfig
 import cx.ring.R
 import cx.ring.about.AboutFragment
 import cx.ring.account.AccountEditionFragment
@@ -220,14 +219,20 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
 
     private fun handleIntent(intent: Intent) {
         Log.d(TAG, "handleIntent: $intent")
-        val extra = intent.extras
-        val action = intent.action
-        when (action) {
-            ACTION_PRESENT_TRUST_REQUEST_FRAGMENT ->
-                presentTrustRequestFragment(extra?.getString(AccountEditionFragment.ACCOUNT_ID_KEY) ?: return)
-            Intent.ACTION_SEND,
-            Intent.ACTION_SEND_MULTIPLE -> {
-                val path = ConversationPath.fromBundle(extra)
+        when (intent.action) {
+
+            NotificationService.NOTIF_TRUST_REQUEST_MULTIPLE -> {
+                val accountId = intent.getStringExtra(NotificationService.NOTIF_TRUST_REQUEST_ACCOUNT_ID)
+
+                // Select the current account if it's not active
+                if (mAccountService.currentAccount?.accountId != accountId)
+                    mAccountService.currentAccount = mAccountService.getAccount(accountId)
+
+                mHomeFragment!!.handleIntent(intent)
+            }
+
+            Intent.ACTION_SEND, Intent.ACTION_SEND_MULTIPLE -> {
+                val path = ConversationPath.fromBundle(intent.extras)
                 if (path != null) {
                     startConversation(path, intent)
                 } else {
@@ -235,15 +240,21 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
                     startActivity(intent)
                 }
             }
-            Intent.ACTION_VIEW,
-            DRingService.ACTION_CONV_ACCEPT -> {
-                val path = ConversationPath.fromIntent(intent)
-                if (path != null)
+
+            Intent.ACTION_VIEW, DRingService.ACTION_CONV_ACCEPT -> {
+                val path = ConversationPath.fromUri(intent.data)
+                if (path != null) {
+                    // Select the current account if it's not active
+                    if (mAccountService.currentAccount?.accountId != path.accountId)
+                        mAccountService.currentAccount = mAccountService.getAccount(path.accountId)
+
                     startConversation(path, intent)
+                }
             }
-        }
-        if (Intent.ACTION_SEARCH == action) {
-            mHomeFragment!!.handleIntent(intent)
+
+            Intent.ACTION_SEARCH -> {
+                mHomeFragment!!.handleIntent(intent)
+            }
         }
     }
 
@@ -558,8 +569,6 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
         const val ACCOUNTS_TAG = "Accounts"
         const val ABOUT_TAG = "About"
         const val SETTINGS_TAG = "Prefs"
-        const val ACTION_PRESENT_TRUST_REQUEST_FRAGMENT =
-            BuildConfig.APPLICATION_ID + "presentTrustRequestFragment"
         private const val CONVERSATIONS_CATEGORY = "conversations"
         private const val fragmentContainerId: Int = R.id.frame
     }

@@ -45,9 +45,8 @@ class ConversationFacade(
     private val mPreferencesService: PreferencesService
 ) {
     private val mDisposableBag = CompositeDisposable()
-    val currentAccountSubject: Observable<Account> = mAccountService
-        .currentAccountSubject
-        .switchMapSingle { account: Account -> loadSmartlist(account) }
+    val currentAccountSubject: Observable<Account> = mAccountService.currentAccountSubject
+            .switchMapSingle { account: Account -> loadSmartlist(account) }
 
     /**
      * Two cases: Swarm conversation or non-swarm conversation.
@@ -720,14 +719,16 @@ class ConversationFacade(
         mDisposableBag.add(mCallService.confsUpdates
             .observeOn(Schedulers.io())
             .subscribe { conference: Conference -> onConfStateChange(conference) })
-        mDisposableBag.add(currentAccountSubject
-            .switchMap { a: Account -> a.getPendingSubject()
-                    .doOnNext { mNotificationService.showIncomingTrustRequestNotification(a) } }
-            .subscribe())
-        mDisposableBag.add(mAccountService.incomingRequests
-            .concatMapSingle { r: TrustRequest -> getAccountSubject(r.accountId) }
-            .subscribe({ account: Account -> mNotificationService.showIncomingTrustRequestNotification(account) })
-                { Log.e(TAG, "Error showing contact request") })
+
+        mDisposableBag.add(mAccountService.observableAccountList
+                .switchMap { accounts ->
+                    Observable.merge(accounts.map { a -> a.getPendingSubject().map { Pair(a, it) } })
+                }
+                .subscribe { (account, pending) ->
+                    Log.e(TAG, "Pending contacts for account ${account}: ${pending.size}")
+                    mNotificationService.showIncomingTrustRequestNotification(account)
+                })
+
         mDisposableBag.add(mAccountService
             .incomingMessages
             .concatMapSingle { msg: TextMessage -> getAccountSubject(msg.account!!)
