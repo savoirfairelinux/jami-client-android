@@ -673,24 +673,6 @@ class NotificationServiceImpl(
             .setColor(ResourcesCompat.getColor(mContext.resources, R.color.color_primary_dark, null))
     }
 
-//    override fun sendTestNotification(account: Account) {
-//        val notificationId = getIncomingTrustNotificationId("")
-//
-//        val builder = getRequestNotificationBuilder()
-//        builder.setContentIntent(PendingIntent.getActivity(mContext, random.nextInt(),
-//                Intent(mContext, HomeActivity::class.java)
-//                        .setAction(NotificationService.NOTIF_TRUST_REQUEST_MULTIPLE)
-//                        .putExtra(NotificationService.NOTIF_TRUST_REQUEST_ACCOUNT_ID, account.accountId),
-//                ContentUri.immutable(PendingIntent.FLAG_ONE_SHOT))
-//        )
-//
-//        builder.setContentText("Content text")
-//        builder.setLargeIcon(null as Icon?)
-//        notificationManager.notify(notificationId, builder.build())
-//
-//    }
-
-    @SuppressLint("CheckResult")
     override fun showIncomingTrustRequestNotification(account: Account) {
         val notificationId = getIncomingTrustNotificationId(account.accountId)
         val notifiedRequests = mPreferencesService.loadRequestsPreferences(account.accountId)

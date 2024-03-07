@@ -30,8 +30,6 @@ interface NotificationService {
     fun showTextNotification(conversation: Conversation)
     fun cancelTextNotification(accountId: String, contact: Uri)
     fun cancelAll()
-
-    //fun sendTestNotification(account: Account)
     fun showIncomingTrustRequestNotification(account: Account)
     fun cancelTrustRequestNotification(accountID: String)
     fun showFileTransferNotification(conversation: Conversation, info: DataTransfer)
@@ -49,9 +47,7 @@ interface NotificationService {
 
     companion object {
         const val NOTIF_TRUST_REQUEST_ACCOUNT_ID = "NOTIF_TRUST_REQUEST_ACCOUNT_ID"
-        //const val TRUST_REQUEST_NOTIFICATION_FROM = "trustRequestNotificationFrom"
         const val NOTIF_TRUST_REQUEST_MULTIPLE = "NOTIFICATION_TRUST_REQUEST_MULTIPLE"
-        const val NOTIF_TRUST_REQUEST_SINGLE = "NOTIFICATION_TRUST_REQUEST_SINGLE"
         const val KEY_CALL_ID = "callId"
         const val KEY_HOLD_ID = "holdId"
         const val KEY_END_ID = "endId"

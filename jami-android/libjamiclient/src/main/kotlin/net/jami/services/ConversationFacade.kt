@@ -722,10 +722,7 @@ class ConversationFacade(
 
         mDisposableBag.add(mAccountService.observableAccountList
                 .switchMap { accounts ->
-                    Observable.merge(accounts.map { a -> a.getPendingSubject().map {
-                        Log.e(TAG, "a.getPendingSubject ${a.accountId}: ${it.size}")
-                        Pair(a, it) }
-                    })
+                    Observable.merge(accounts.map { a -> a.getPendingSubject().map { Pair(a, it) } })
                 }
                 .subscribe { (account, pending) ->
                     Log.e(TAG, "Pending contacts for account ${account}: ${pending.size}")
