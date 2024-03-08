@@ -42,6 +42,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import net.jami.account.AccountEditionPresenter
 import net.jami.account.AccountEditionView
 import net.jami.utils.DonationUtils
+import net.jami.utils.Log
 
 @AndroidEntryPoint
 class AccountEditionFragment : BaseSupportFragment<AccountEditionPresenter, AccountEditionView>(),
@@ -70,7 +71,6 @@ class AccountEditionFragment : BaseSupportFragment<AccountEditionPresenter, Acco
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        setHasOptionsMenu(true)
         super.onViewCreated(view, savedInstanceState)
 
         mAccountId = requireArguments().getString(ACCOUNT_ID_KEY)
