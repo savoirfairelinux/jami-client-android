@@ -39,6 +39,7 @@ import android.view.ViewGroup
 import android.view.ViewGroup.MarginLayoutParams
 import android.widget.FrameLayout
 import android.widget.ImageView
+import android.widget.LinearLayout
 import androidx.annotation.ColorInt
 import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityOptionsCompat
@@ -1064,7 +1065,7 @@ class TvConversationAdapter(
                         typeCallTxt = context.getString(R.string.notif_incoming_call)
                     }
                     // Put the message to the left because it is incoming.
-                    convViewHolder.mCallLayout?.gravity = Gravity.START
+                    (convViewHolder.mCallLayout as LinearLayout?)?.gravity = Gravity.START
                     // Show the name of the contact if it is a group conversation
                     val endOfSeq = msgSequenceType == SequenceType.SINGLE
                             || msgSequenceType == SequenceType.LAST
@@ -1110,7 +1111,7 @@ class TvConversationAdapter(
                         typeCallTxt = context.getString(R.string.notif_outgoing_call)
                     }
                     // Put the message to the right because it is outgoing.
-                    convViewHolder.mCallLayout?.gravity = Gravity.END
+                    (convViewHolder.mCallLayout as LinearLayout?)?.gravity = Gravity.END
                 }
                 callInfoLayout.background =
                     ContextCompat.getDrawable(context, msgBGLayouts[resIndex])

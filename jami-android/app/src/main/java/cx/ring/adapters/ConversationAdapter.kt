@@ -1675,7 +1675,7 @@ class ConversationAdapter(
 
         // Add margin if message need to be separated.
         val isMessageSeparationNeeded = isMessageSeparationNeeded(isDateShown, position)
-        convViewHolder.mCallLayout?.updateLayoutParams<MarginLayoutParams> {
+        convViewHolder.mMsgLayout?.updateLayoutParams<MarginLayoutParams> {
             topMargin = if (!isMessageSeparationNeeded) 0 else context.resources
                 .getDimensionPixelSize(R.dimen.conversation_message_separation)
         }
@@ -1816,7 +1816,6 @@ class ConversationAdapter(
             val callInfoLayout = convViewHolder.mCallInfoLayout ?: return
             val detailCall = convViewHolder.mHistDetailTxt ?: return
             val callIcon = convViewHolder.mIcon ?: return
-            val callLayout = convViewHolder.mCallLayout
 
             val typeCallTxt: String
 
@@ -1851,8 +1850,6 @@ class ConversationAdapter(
                 typeCall.setTextColor(
                     context.getColor(R.color.colorOnSurface)
                 )
-                // Put the message to the left because it is incoming.
-                convViewHolder.mCallLayout?.gravity = Gravity.START
 
                 if (call.isMissed) { // Call incoming missed.
                     callIcon.setImageResource(R.drawable.baseline_missed_call_16)
@@ -1886,8 +1883,6 @@ class ConversationAdapter(
                         .setTint(context.getColor(R.color.call_drawable_color))
                     typeCallTxt = context.getString(R.string.notif_outgoing_call)
                 }
-                // Put the message to the right because it is outgoing.
-                callLayout?.gravity = Gravity.END
             }
 
             typeCall.text = typeCallTxt
