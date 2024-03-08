@@ -558,11 +558,17 @@ class Conversation : ConversationHistory {
      */
     @Synchronized
     fun addSwarmElement(interaction: Interaction, newMessage: Boolean) {
+        if(uri.toString() == "swarm:64f114ba88a7ca06c01bbdbf7c1e4ca60050d1cf")
+            Log.w("devdebug_sml", "addSwarmElement: ${interaction.messageId} ${interaction.type}")
         // Handle call interaction
         if (interaction is Call && interaction.confId != null) {
+            if (uri.toString() == "swarm:64f114ba88a7ca06c01bbdbf7c1e4ca60050d1cf")
+                Log.w("devdebug_sml", "newleaf checkpoint A confid=${interaction.confId}")
             // interaction.duration is changed when the call is ended.
             // It means duration=0 when the call is started and duration>0 when the call is ended.
             if (interaction.duration != 0L) {
+                if (uri.toString() == "swarm:64f114ba88a7ca06c01bbdbf7c1e4ca60050d1cf")
+                    Log.w("devdebug_sml", "newleaf checkpoint B")
                 val startedCall = conferenceStarted.remove(interaction.confId)
                 if (startedCall != null) {
                     startedCall.setEnded(interaction)
@@ -578,7 +584,10 @@ class Conversation : ConversationHistory {
                     }
                 addSwarmElement(invalidInteraction, newMessage)
                 return
+
             } else { // Call started but not ended
+                if (uri.toString() == "swarm:64f114ba88a7ca06c01bbdbf7c1e4ca60050d1cf")
+                    Log.w("devdebug_sml", "newleaf checkpoint C")
                 val endedCall = conferenceEnded.remove(interaction.confId)
                 if (endedCall != null) {
                     interaction.setEnded(endedCall)
@@ -600,19 +609,29 @@ class Conversation : ConversationHistory {
         if (lastNotified != null && lastNotified == id) interaction.isNotified = true
         var newLeaf = false
         var added = false
+        if (uri.toString() == "swarm:64f114ba88a7ca06c01bbdbf7c1e4ca60050d1cf")
+            Log.w("devdebug_sml", "newleaf checkpoint W aggregateHistory${aggregateHistory} ")
         if (aggregateHistory.isEmpty() || aggregateHistory.last().messageId == interaction.parentId) {
+            if (uri.toString() == "swarm:64f114ba88a7ca06c01bbdbf7c1e4ca60050d1cf")
+                Log.w("devdebug_sml", "newleaf checkpoint X")
             // New leaf
             added = true
             newLeaf = true
             aggregateHistory.add(interaction)
             updatedElementSubject.onNext(Pair(interaction, ElementStatus.ADD))
         } else {
+            if (uri.toString() == "swarm:64f114ba88a7ca06c01bbdbf7c1e4ca60050d1cf")
+                Log.w("devdebug_sml", "newleaf checkpoint Y")
             // New root or normal node
             for (i in aggregateHistory.indices) {
                 if (id == aggregateHistory[i].parentId) {
                     aggregateHistory.add(i, interaction)
                     updatedElementSubject.onNext(Pair(interaction, ElementStatus.ADD))
+                    if (uri.toString() == "swarm:64f114ba88a7ca06c01bbdbf7c1e4ca60050d1cf")
+                        Log.w("devdebug_sml", "newleaf checkpoint Y1")
                     added = true
+                    if (i == 0 && aggregateHistory.last().type == Interaction.InteractionType.INVALID)
+                        newLeaf = true
                     break
                 }
             }
@@ -629,12 +648,17 @@ class Conversation : ConversationHistory {
             }
         }
         if (newLeaf) {
+            if (uri.toString() == "swarm:64f114ba88a7ca06c01bbdbf7c1e4ca60050d1cf")
+                Log.w("devdebug_sml", "newleaf checkpoint Z")
             if (isVisible) {
                 interaction.read()
                 setLastMessageRead(id)
             }
-            if (interaction.type != Interaction.InteractionType.INVALID)
+            if (interaction.type != Interaction.InteractionType.INVALID) {
+                if (uri.toString() == "swarm:64f114ba88a7ca06c01bbdbf7c1e4ca60050d1cf")
+                    Log.w("devdebug_sml", "lastevent set ! ${interaction.messageId} ${interaction.type}")
                 lastEvent = interaction
+            }
         }
         if (!added) {
             Log.e(TAG, "Can't attach interaction $id with parent ${interaction.parentId}")

@@ -241,6 +241,7 @@ class Account(
         synchronized(conversations) {
             conversationsChanged = true
             if (historyLoaded) {
+                Log.w("devdebug_sml", "checkpoint 2")
                 conversationsSubject.onNext(ArrayList(getSortedConversations()))
                 updateUnreadConversations()
             }
@@ -258,6 +259,7 @@ class Account(
             }
             // TODO: remove next line when profile is updated through dedicated signal
             conversationSubject.onNext(conversation)
+            Log.w("devdebug_sml", "checkpoint 1")
             conversationsSubject.onNext(ArrayList(sortedConversations))
             updateUnreadConversations()
         }
@@ -725,10 +727,12 @@ class Account(
             if (conversations.isNotEmpty()) {
                 sortedConversations.addAll(conversations.values)
                 for (c in sortedConversations) c.sortHistory()
+                Log.w("devdebug_sml", "before sort: ${sortedConversations.map { it.uri }}")
                 Collections.sort(sortedConversations, ConversationComparator())
             }
             conversationsChanged = false
         }
+        Log.w("devdebug_sml", "sortedConversations: ${sortedConversations.map { it.uri }}")
         return sortedConversations
     }
 
@@ -918,8 +922,12 @@ class Account(
     }
 
     private class ConversationComparator : Comparator<Conversation> {
-        override fun compare(a: Conversation, b: Conversation): Int =
-            Interaction.compare(b.lastEvent, a.lastEvent)
+        override fun compare(a: Conversation, b: Conversation): Int {
+            val messageB = b.lastEvent
+            val messageA = a.lastEvent
+//            Log.w("devdebug_sml", "compare ${b.uri}:$messageB ${a.uri}:$messageA")
+            return Interaction.compare(messageB, messageA)
+        }
     }
 
     companion object {
