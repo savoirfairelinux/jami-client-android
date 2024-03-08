@@ -27,16 +27,12 @@
     android:gravity="center"
     android:paddingBottom="@dimen/padding_xsmall">
 
-    <FrameLayout
-        android:id="@+id/excluded_right_zone"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintStart_toEndOf="@+id/audio_message_layout"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/right_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.833" />
 
     <TextView
         android:id="@+id/msg_details_txt_perm"
@@ -58,7 +54,7 @@
         android:layout_height="wrap_content"
         android:paddingStart="@dimen/padding_large"
         android:paddingEnd="0dp"
-        app:layout_constraintEnd_toStartOf="@+id/excluded_right_zone"
+        app:layout_constraintEnd_toStartOf="@+id/right_guideline"
         app:layout_constraintHorizontal_weight="5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/msg_details_txt_perm">
