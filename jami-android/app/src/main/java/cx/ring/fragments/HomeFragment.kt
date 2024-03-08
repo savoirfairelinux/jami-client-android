@@ -96,12 +96,10 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
     }.distinctUntilChanged()
 
     @Inject
-    lateinit
-    var mAccountService: AccountService
+    lateinit var mAccountService: AccountService
 
     @Inject
-    lateinit
-    var mConversationFacade: ConversationFacade
+    lateinit var mConversationFacade: ConversationFacade
 
     private val searchBackPressedCallback = object : OnBackPressedCallback(false) {
         override fun handleOnBackPressed() {
@@ -328,16 +326,6 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
         mDisposable.add(disposable)
     }
 
-    /**
-     * Expand the appBarLayoutBottom to give fixed space between it and fragmentList.
-     */
-    private fun updateAppBarLayoutBottomPadding(hasInvites: Boolean) {
-        mBinding?.appBarContainer?.updatePadding(top = 0, bottom = if (hasInvites)
-            resources.getDimensionPixelSize(R.dimen.bottom_sheet_radius) else 0)
-        if (hasInvites)
-            (pagerContent as SmartListFragment).scrollToTop()
-    }
-
     private fun expandPendingView() {
         val binding = mBinding ?: return
 
@@ -551,13 +539,17 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
     private fun setInvitationBadge(conversations: List<Conversation>, snip: List<ConversationItemViewModel>) {
         val binding = mBinding ?: return
         pendingAdapter?.update(conversations)
-        val hasInvites = conversations.isNotEmpty()
-        binding.invitationCard.invitationGroup.isVisible = hasInvites
-        if (hasInvites) {
+        if (conversations.isNotEmpty()) {
+            binding.invitationCard.invitationGroup.isVisible = true
             binding.invitationCard.invitationBadge.text = conversations.size.toString()
             binding.invitationCard.invitationReceivedTxt.text = snip.joinToString(", ") { it.title }
-        }
-        updateAppBarLayoutBottomPadding(hasInvites)
+
+            // Expand the appBarLayoutBottom to give fixed space between it and fragmentList
+            (pagerContent as SmartListFragment).scrollToTop()
+            binding.appBarContainer.updatePadding(
+                top = 0, bottom = resources.getDimensionPixelSize(R.dimen.bottom_sheet_radius)
+            )
+        } else binding.appBarContainer.updatePadding(top = 0, bottom = 0)
     }
 
     fun handleIntent(intent: Intent) {
@@ -642,6 +634,5 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
         const val TAB_CONVERSATIONS = 0
         const val TAB_INVITATIONS = 1
     }
-
 
 }

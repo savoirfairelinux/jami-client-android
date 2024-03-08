@@ -42,7 +42,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import net.jami.account.AccountEditionPresenter
 import net.jami.account.AccountEditionView
 import net.jami.utils.DonationUtils
-import net.jami.utils.Log
 
 @AndroidEntryPoint
 class AccountEditionFragment : BaseSupportFragment<AccountEditionPresenter, AccountEditionView>(),
