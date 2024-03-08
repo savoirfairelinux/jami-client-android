@@ -26,16 +26,12 @@
     android:focusable="true"
     android:paddingBottom="@dimen/padding_xsmall">
 
-    <View
-        android:id="@+id/excluded_right_zone"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintStart_toEndOf="@+id/file_layout"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/right_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.833" />
 
     <TextView
         android:id="@+id/message_time_permanent"
@@ -58,7 +54,7 @@
         android:layout_marginStart="@dimen/base_left_conversation_margin"
         android:background="@android:color/transparent"
         app:layout_constrainedWidth="true"
-        app:layout_constraintEnd_toStartOf="@+id/excluded_right_zone"
+        app:layout_constraintEnd_toStartOf="@+id/right_guideline"
         app:layout_constraintHorizontal_weight="5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/message_time_permanent">
