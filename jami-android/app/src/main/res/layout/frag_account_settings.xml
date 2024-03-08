@@ -4,10 +4,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
+    android:fitsSystemWindows="true"
     tools:context=".account.AccountEditionFragment">
 
-    <RelativeLayout
+    <com.google.android.material.appbar.AppBarLayout
+        style="@style/Widget.Material3.AppBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
         android:fitsSystemWindows="true"
+        app:liftOnScroll="true">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:navigationIcon="@drawable/abc_ic_ab_back_material"
+            app:title="@string/menu_item_account_settings"/>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="?attr/actionBarSize">
@@ -16,8 +33,7 @@
             android:id="@+id/sliding_tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            />
+            android:layout_alignParentTop="true" />
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/pager"
@@ -34,44 +50,21 @@
 
     </RelativeLayout>
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
-
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:id="@+id/donate_button"
-            android:layout_width="wrap_content"
-            android:layout_height="56dp"
-            android:layout_gravity="bottom|end"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginVertical="10dp"
-            android:outlineProvider="none"
-            android:text="@string/donation_donate"
-            android:textColor="@color/black"
-            android:visibility="gone"
-            app:backgroundTint="@color/donation_card_background_color"
-            app:cornerRadius="16dp"
-            app:icon="@drawable/baseline_favorite_24"
-            app:iconPadding="16dp"
-            app:iconTint="@color/donation_card_favorite_color" />
-    </FrameLayout>
-
-    <com.google.android.material.appbar.AppBarLayout
-        style="@style/Widget.Material3.AppBarLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:liftOnScroll="true"
-        android:fitsSystemWindows="true">
-
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:navigationIcon="@drawable/abc_ic_ab_back_material"
-            app:title="@string/menu_item_account_settings"/>
-
-    </com.google.android.material.appbar.AppBarLayout>
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/donate_button"
+        android:layout_width="wrap_content"
+        android:layout_height="56dp"
+        android:layout_gravity="bottom|end"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginVertical="10dp"
+        android:outlineProvider="none"
+        android:text="@string/donation_donate"
+        android:textColor="@color/black"
+        android:visibility="gone"
+        app:backgroundTint="@color/donation_card_background_color"
+        app:cornerRadius="16dp"
+        app:icon="@drawable/baseline_favorite_24"
+        app:iconPadding="16dp"
+        app:iconTint="@color/donation_card_favorite_color" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

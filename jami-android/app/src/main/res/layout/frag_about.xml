@@ -24,7 +24,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         style="@style/Widget.Material3.AppBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fitsSystemWindows="true"
         app:layout_constraintTop_toTopOf="parent"
         app:liftOnScroll="true">
 
@@ -36,15 +35,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             app:title="@string/menu_item_about" />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <RelativeLayout
-        android:fitsSystemWindows="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="?attr/actionBarSize">
-
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
@@ -67,9 +61,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="72dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginVertical="16dp"
                 android:layout_marginEnd="16dp"
-                android:layout_marginBottom="16dp"
                 android:text="@string/description" />
 
             <com.google.android.material.button.MaterialButton
@@ -309,8 +302,4 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-    </RelativeLayout>
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-
