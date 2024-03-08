@@ -318,6 +318,7 @@ class ConversationAdapter(
         conversationViewHolder: ConversationViewHolder,
         interaction: Interaction
     ) {
+        Log.w("devdebug", "configureDisplayIndicator ${interaction.body} ${interaction.type}")
         val statusIcon = conversationViewHolder.mStatusIcon ?: return
         val messageToAttach = conversationViewHolder.mLayoutStatusIconId?.id ?: return
 
@@ -340,6 +341,8 @@ class ConversationAdapter(
             .mapValues { mInteractions.indexOf(conversation.getMessage(it.value)) }
         val currentIdx = mInteractions.indexOf(interaction)
         val contacts = lastDisplayedIdx.filter { it.value == currentIdx }.map { it.key }
+
+        Log.w("devdebug", "configureDisplayIndicator ${modifiedStatusMap} $isDisplayed $isReceived $contacts $currentIdx lastDisplayedMessages=${lastDisplayedIdx}")
 
         // Case 1: Message is sending
         if(!isDisplayed && !isReceived){

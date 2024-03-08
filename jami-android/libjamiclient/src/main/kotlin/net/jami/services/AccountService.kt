@@ -1310,7 +1310,9 @@ class AccountService(
             getAccount(accountId)?.let { account -> account.getSwarm(conversationId)?.let { conversation ->
                 val interactions: List<Interaction>
                 val subject = synchronized(conversation) {
-                    interactions = messages.map { addMessage(account, conversation, it, false) }
+                    interactions = messages.map {
+                        Log.w("devdebug", "AccountService:swarmLoaded(): ${it.body["body"]} ${it.status}")
+                        addMessage(account, conversation, it, false) }
                     conversation.stopLoading()
                 }
                 subject?.onSuccess(conversation)
@@ -1431,6 +1433,7 @@ class AccountService(
     }
 
     fun swarmMessageReceived(accountId: String, conversationId: String, message: SwarmMessage) {
+        Log.w("devdebug", "AccountService:swarmMessageReceived()")
         getAccount(accountId)?.let { account -> account.getSwarm(conversationId)?.let { conversation ->
             synchronized(conversation) {
                 val interaction = addMessage(account, conversation, message, true)
