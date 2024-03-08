@@ -212,4 +212,17 @@
             tools:text="👍😍 3" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <cx.ring.views.MessageStatusView
+        android:id="@+id/status_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="5dp"
+        app:layout_constraintBottom_toBottomOf="@id/file_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:tint="@color/grey_500"
+        tools:background="@color/amber_500"
+        tools:layout_height="@dimen/conversation_avatar_size_small"
+        tools:layout_width="@dimen/conversation_avatar_size_small" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
