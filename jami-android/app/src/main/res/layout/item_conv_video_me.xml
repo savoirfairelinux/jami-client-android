@@ -45,6 +45,17 @@
         android:paddingStart="72dp"
         android:paddingEnd="0dp">
 
+        <cx.ring.views.MessageStatusView
+            android:id="@+id/status_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/video_frame"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="5dp"
+            tools:background="@color/pink_200"
+            tools:layout_height="@dimen/conversation_avatar_size_small"
+            tools:layout_width="@dimen/conversation_avatar_size_small" />
+
         <androidx.cardview.widget.CardView
             android:id="@+id/video_frame"
             android:layout_width="wrap_content"
@@ -64,14 +75,6 @@
                 android:transitionName="picture" />
 
         </androidx.cardview.widget.CardView>
-
-        <cx.ring.views.MessageStatusView
-            android:id="@+id/status_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/video_frame"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="5dp" />
 
         <TextView
             android:id="@+id/file_time"
@@ -108,4 +111,5 @@
             tools:text="👍 😍 3" />
 
     </RelativeLayout>
+
 </LinearLayout>
