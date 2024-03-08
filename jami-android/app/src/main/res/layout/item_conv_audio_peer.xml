@@ -151,5 +151,16 @@
             android:padding="5dp"
             android:singleLine="true"
             tools:text="👍 😍 3" />
+
     </RelativeLayout>
+
+    <cx.ring.views.MessageStatusView
+        android:id="@+id/status_icon"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
+        android:layout_marginEnd="5dp"
+        app:layout_constraintBottom_toBottomOf="@id/audio_message_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:background="@color/teal_700" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
