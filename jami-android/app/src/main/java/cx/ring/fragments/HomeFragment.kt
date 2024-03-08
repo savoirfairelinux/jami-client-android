@@ -96,12 +96,10 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
     }.distinctUntilChanged()
 
     @Inject
-    lateinit
-    var mAccountService: AccountService
+    lateinit var mAccountService: AccountService
 
     @Inject
-    lateinit
-    var mConversationFacade: ConversationFacade
+    lateinit var mConversationFacade: ConversationFacade
 
     private val searchBackPressedCallback = object : OnBackPressedCallback(false) {
         override fun handleOnBackPressed() {
@@ -642,6 +640,5 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
         const val TAB_CONVERSATIONS = 0
         const val TAB_INVITATIONS = 1
     }
-
 
 }
