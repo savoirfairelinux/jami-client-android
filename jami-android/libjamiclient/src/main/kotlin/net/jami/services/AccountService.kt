@@ -1247,7 +1247,6 @@ class AccountService(
                     }
             }
             "application/update-profile" -> Interaction(conversation, Interaction.InteractionType.INVALID)
-            "merge" -> Interaction(conversation, Interaction.InteractionType.INVALID)
             else -> Interaction(conversation, Interaction.InteractionType.INVALID)
         }
         interaction.replyToId = replyTo
