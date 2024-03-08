@@ -136,6 +136,18 @@ along with this program; if not, write to the Free Software
             tools:visibility="visible" />
     </cx.ring.views.MessageBubble>
 
+    <cx.ring.views.MessageStatusView
+        android:id="@+id/status_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="5dp"
+        app:layout_constraintBottom_toBottomOf="@id/message_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:background="@color/purple_300"
+        tools:layout_height="@dimen/conversation_status_icon_size"
+        tools:layout_width="@dimen/conversation_status_icon_size"
+        tools:visibility="visible" />
+
     <TextView
         android:id="@+id/reaction_chip"
         android:layout_width="wrap_content"

@@ -69,8 +69,8 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
         else -> null
     }
     val mStatusIcon: MessageStatusView? = when (type) {
-        MessageType.OUTGOING_CALL_INFORMATION,
-        MessageType.OUTGOING_TEXT_MESSAGE,
+        MessageType.OUTGOING_CALL_INFORMATION, MessageType.INCOMING_CALL_INFORMATION,
+        MessageType.OUTGOING_TEXT_MESSAGE, MessageType.INCOMING_TEXT_MESSAGE,
         MessageType.OUTGOING_FILE,
         MessageType.OUTGOING_IMAGE,
         MessageType.OUTGOING_AUDIO,
@@ -146,13 +146,18 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
     var mAudioMessageLayout: RelativeLayout? = null
 
     val mLayoutStatusIconId: View? = when (type) {
-        MessageType.OUTGOING_CALL_INFORMATION-> v.findViewById(R.id.callLayout)
-        MessageType.OUTGOING_TEXT_MESSAGE
-            -> v.findViewById(R.id.msg_txt) ?: v.findViewById(R.id.message_content)
-        MessageType.OUTGOING_FILE -> v.findViewById(R.id.fileInfoLayout)
-        MessageType.OUTGOING_IMAGE -> v.findViewById(R.id.image)
-        MessageType.OUTGOING_AUDIO -> v.findViewById(R.id.audioInfoLayout)
-        MessageType.OUTGOING_VIDEO -> v.findViewById(R.id.video_frame)
+        MessageType.OUTGOING_CALL_INFORMATION, MessageType.INCOMING_CALL_INFORMATION ->
+            v.findViewById(R.id.callLayout)
+        MessageType.OUTGOING_TEXT_MESSAGE, MessageType.INCOMING_TEXT_MESSAGE ->
+            v.findViewById(R.id.msg_txt) ?: v.findViewById(R.id.message_content)
+        MessageType.OUTGOING_FILE, MessageType.INCOMING_FILE ->
+            v.findViewById(R.id.fileInfoLayout)
+        MessageType.OUTGOING_IMAGE, MessageType.INCOMING_IMAGE ->
+            v.findViewById(R.id.image)
+        MessageType.OUTGOING_AUDIO, MessageType.INCOMING_AUDIO ->
+            v.findViewById(R.id.audioInfoLayout)
+        MessageType.OUTGOING_VIDEO, MessageType.INCOMING_VIDEO ->
+            v.findViewById(R.id.video_frame)
         else -> null
     }
 

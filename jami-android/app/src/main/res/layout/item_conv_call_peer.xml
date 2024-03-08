@@ -15,12 +15,11 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/callLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     android:paddingBottom="@dimen/padding_xsmall">
 
     <TextView
@@ -32,6 +31,9 @@ along with this program; if not, write to the Free Software
         android:textColor="@color/textColorSecondary"
         android:textSize="@dimen/conversation_timestamp_textsize"
         android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="@string/time_just_now"
         tools:visibility="visible" />
 
@@ -47,16 +49,22 @@ along with this program; if not, write to the Free Software
         android:textColor="@color/msg_display_name"
         android:textSize="@dimen/message_display_name_textsize"
         android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@id/callLayout"
+        app:layout_constraintTop_toBottomOf="@id/msg_details_txt_perm"
         tools:text="Bob"
         tools:visibility="visible" />
-    <!--    maxEms="8" to have around 16 characters displayed   -->
+    <!-- maxEms="8" to have around 16 characters displayed -->
 
     <LinearLayout
+        android:id="@+id/callLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="24dp"
-        android:gravity="start">
+        android:gravity="start"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/msg_display_name">
 
         <cx.ring.views.AvatarView
             android:id="@+id/photo"
@@ -114,12 +122,29 @@ along with this program; if not, write to the Free Software
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:textColor="@color/file_time_text_in"
                 android:textSize="@dimen/conversation_timestamp_textsize"
-                android:maxLines="1"
-                android:ellipsize="end"
                 tools:text="11:36am" />
 
         </LinearLayout>
+
     </LinearLayout>
-</LinearLayout>
+
+    <cx.ring.views.MessageStatusView
+        android:id="@+id/status_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/callLayout"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="5dp"
+        app:layout_constraintBottom_toBottomOf="@id/callLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/callLayout"
+        tools:background="@color/pink_200"
+        tools:layout_height="@dimen/conversation_avatar_size_small"
+        tools:layout_width="@dimen/conversation_avatar_size_small"
+        tools:visibility="visible" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
