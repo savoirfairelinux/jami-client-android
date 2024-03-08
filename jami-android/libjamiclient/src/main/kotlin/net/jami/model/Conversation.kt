@@ -351,6 +351,7 @@ class Conversation : ConversationHistory {
 
     @Synchronized
     fun setLastMessageDisplayed(contactId: String, messageId: String) {
+        // Todo: maybe deleted
         // Remove contact from previous interaction
         lastDisplayedMessages[contactId]?.let { mId ->
             mMessages[mId]?.let { e ->
@@ -368,10 +369,17 @@ class Conversation : ConversationHistory {
                 isAfter(currentLastMessageDisplayed, newPotentialMessageDisplayed)
             } else false
 
-        // Update the last displayed message
-        if (isAfter or (currentLastMessageDisplayed == null))
-            lastDisplayedMessages[contactId] = messageId
+        Log.w("devdebug", "setLastMessageDisplayed: $contactId $messageId $isAfter")
 
+        // Update the last displayed message
+        if (newPotentialMessageDisplayed?.type != Interaction.InteractionType.INVALID &&
+            newPotentialMessageDisplayed?.type != null &&
+            (isAfter || (currentLastMessageDisplayed == null))) {
+            Log.w("devdebug", "type=${newPotentialMessageDisplayed?.type ?: "rien"}")
+            lastDisplayedMessages[contactId] = messageId
+        }
+
+        // Todo: maybe deleted
         mMessages[messageId]?.let { e ->
             e.displayedContacts.add(contactId)
             updatedElementSubject.onNext(Pair(e, ElementStatus.UPDATE))
@@ -532,6 +540,7 @@ class Conversation : ConversationHistory {
     @Synchronized
     fun addElement(interaction: Interaction) {
         setInteractionProperties(interaction)
+        Log.w("devdebug", "addElement: ${interaction.body}")
         when (interaction.type) {
             Interaction.InteractionType.TEXT -> addTextMessage(TextMessage(interaction))
             Interaction.InteractionType.CALL -> addCall(Call(interaction))
@@ -580,6 +589,7 @@ class Conversation : ConversationHistory {
         }
         val id = interaction.messageId!!
         val previous = mMessages.put(id, interaction)
+        // Todo: remove
         for ((contactId, messageId) in lastDisplayedMessages.entries) {
             if (id == messageId) {
                 interaction.displayedContacts.add(contactId)

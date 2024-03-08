@@ -79,7 +79,7 @@ open class Interaction {
     var mExtraFlag = JsonObject().toString()
 
     var isNotified = false
-    val displayedContacts: MutableList<String> = ArrayList()
+    val displayedContacts: MutableList<String> = ArrayList() // Todo maybe deleted
 
     // Swarm
     var conversationId: String? = null
