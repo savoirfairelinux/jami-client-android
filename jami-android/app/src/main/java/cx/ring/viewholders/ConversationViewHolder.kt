@@ -144,7 +144,7 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
     var mFileTitle: TextView? = null
     var mFileDownloadButton: ImageButton? = null
     var mAudioInfoLayout: LinearLayout? = null
-    var mAudioMessageLayout: RelativeLayout? = null
+    var mAudioLayout: ViewGroup? = null
 
     val mLayoutStatusIconId: View? = when (type) {
         MessageType.OUTGOING_CALL_INFORMATION, MessageType.INCOMING_CALL_INFORMATION ->
@@ -153,8 +153,8 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
             v.findViewById(R.id.msg_txt) ?: v.findViewById(R.id.message_content)
         MessageType.OUTGOING_FILE, MessageType.INCOMING_FILE -> v.findViewById(R.id.file_layout)
         MessageType.OUTGOING_IMAGE, MessageType.INCOMING_IMAGE -> v.findViewById(R.id.image)
-        MessageType.OUTGOING_AUDIO -> v.findViewById(R.id.audioInfoLayout)
-        MessageType.INCOMING_AUDIO -> v.findViewById(R.id.audio_message_layout)
+        MessageType.OUTGOING_AUDIO, MessageType.INCOMING_AUDIO ->
+            v.findViewById(R.id.audioInfoLayout)
         MessageType.OUTGOING_VIDEO, MessageType.INCOMING_VIDEO ->
             v.findViewById(R.id.video_frame)
         MessageType.ONGOING_GROUP_CALL -> v.findViewById(R.id.callAcceptLayout)
@@ -232,8 +232,8 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
                 btnAccept = v.findViewById(R.id.play)
                 btnRefuse = v.findViewById(R.id.replay)
                 mMsgTxt = v.findViewById(R.id.msg_txt)
+                mAudioLayout = v.findViewById(R.id.file_layout)
                 mAudioInfoLayout = v.findViewById(R.id.audioInfoLayout)
-                mAudioMessageLayout = v.findViewById(R.id.audio_message_layout)
                 mMsgDetailTxt = v.findViewById(R.id.file_details_txt)
                 mMsgDetailTxtPerm = v.findViewById(R.id.msg_details_txt_perm)
                 primaryClickableView = mAudioInfoLayout
