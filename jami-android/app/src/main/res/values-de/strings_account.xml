@@ -48,6 +48,9 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="account_password_set">Passwort festlegen</string>
   <string name="account_password_summary">Anpassen des Passworts für Ihre Benutzerkennung.</string>
   <string name="account_password_change_wait_message">Kontopasswort ändern</string>
+  <string name="account_biometric_disable">Biometrische Authentifizierung deaktivieren</string>
+  <string name="account_biometric_set">Biometrische Authentifizierung aktivieren</string>
+  <string name="account_biometric_summary">Biometrische Authentifizierung für Ihr Konto verwalten.</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Allgemein</string>
   <string name="account_basic_category">Grundlegende Einstellungen</string>
@@ -143,7 +146,7 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="error_passwords_not_equals">Die Passwörter stimmen nicht überein</string>
   <string name="export_account_wait_title">Bitte warten…</string>
   <string name="export_account_wait_message">Kontodaten werden exportiert</string>
-  <string name="account_export_file">Backup Konto</string>
+  <string name="account_export_file">Konto sichern</string>
   <string name="account_export_file_summary">Machen Sie eine Sicherheitskopie Ihrer Benutzerkennung auf ihrem Gerät um sie im Fehlerfall wiederherstellen zu können.</string>
   <string name="account_export_end_decryption_message">Ihr Konto konnte mit dem angegebenen Passwort nicht entsperrt werden</string>
   <string name="account_export_end_network_title">Netzwerkfehler</string>
@@ -266,4 +269,18 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="connect_device_scanqr">QR scannen</string>
   <string name="connect_device_enterPIN">Oder PIN eingeben</string>
   <string name="account_link_device_button">Verbinden</string>
+  <!--Biometry-->
+  <string name="account_biometry_auth_title">Jami-Konto entsperren</string>
+  <string name="account_biometry_auth_message">Biometrie verwenden um Ihr Konto zu entsperren</string>
+  <string name="account_biometry_enroll_title">Biometrische Authentifizierung verwenden?</string>
+  <string name="account_biometry_enroll_message">Ihr Gerät unterstützt die sichere biometrische Authentifizierung.
+Die biometrische oder Geräteauthentifizierung bietet eine bequeme Möglichkeit, den Zugriff auf Ihr Jami-Konto lokal freizuschalten. Sie können Ihr Passwort weiterhin verwenden.</string>
+  <string name="account_biometry_enroll_accept">Biometrie verwenden</string>
+  <string name="no_thanks">Nein danke</string>
+  <string name="account_biometry_enroll_auth_title">Authentifizierung für Ihr Jami-Konto hinzufügen</string>
+  <string name="account_biometry_enroll_auth_message">Als Alternative zu Ihrem Passwort eine sichere biometrische oder Geräteauthentifizierung hinzufügen</string>
+  <string name="account_auth_error">Authentifizierungsfehler: %1$s</string>
+  <string name="account_auth_success">Authentifizierung erfolgreich</string>
+  <string name="account_auth_key_error">Kontoschlüssel konnte nicht entschlüsselt werden</string>
+  <string name="account_auth_password">Kontopasswort verwenden</string>
 </resources>

@@ -247,4 +247,5 @@
   <string name="error_format_not_supported">Dette formatet er ikkje støtta.</string>
   <string name="account_link_device_title">Legg ein ny enhet til</string>
   <string name="account_link_device_button">Knytta</string>
+  <!--Biometry-->
 </resources>

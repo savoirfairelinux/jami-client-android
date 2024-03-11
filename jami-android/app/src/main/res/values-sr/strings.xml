@@ -52,7 +52,6 @@
     <item quantity="other">%d razgovora</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Pretraži ime ili broj telefona…</string>
   <string name="choose_number">Izaberi broj</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -172,7 +171,7 @@
   <!--Conversation-->
   <string name="conversation_details">Detalji o kontaktu</string>
   <string name="conversation_action_delete_this">Izbrišite ovu konverzaciju</string>
-  <string name="conversation_action_delete_this_title">Izbrišite ovu konverzaciju?</string>
+  <string name="conversation_action_delete_this_title">Izbrisati ovu konverzaciju ?</string>
   <string name="conversation_action_delete_this_message">Ova radnja se ne može opozvati.</string>
   <string name="conversation_action_history_clear">Očisti istoriju</string>
   <string name="conversation_action_history_clear_title">Očisti istoriju razgovora?</string>
@@ -202,6 +201,7 @@
   <string name="conversation_syncing">Preuzimanje razgovora od članova</string>
   <string name="conversation_blocked">Ovaj kontakt je blokiran.</string>
   <string name="conversation_ended">Razgovor je završen.</string>
+  <string name="conversation_message_deleted">%s obrisao poruku</string>
   <string name="conversation_reply_you">Ti</string>
   <string name="conversation_preference_color">Boja razgovora</string>
   <string name="conversation_preference_emoji">Emodži za razgovor</string>
@@ -336,6 +336,9 @@
   <string name="tv_send_video">Pošalji medije</string>
   <string name="tv_action_more">Više</string>
   <string name="conversation_input_speech_hint">Reci nešto...</string>
+  <string name="camera_permission_denied">Dozvolite pristup kameri da biste koristili Jami video funkcije.</string>
+  <string name="camera_permission_rationale_title">Potrebna je dozvola za video</string>
+  <string name="camera_permission_rationale_message">Jamiju je potrebna dozvola kamere da bi snimio video i uputio video poziv. To će biti postavljeno u sledećem koraku.</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Preporučeno</string>
   <string name="wizard_status_optional">Opciono</string>

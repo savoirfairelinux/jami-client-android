@@ -136,15 +136,15 @@ Kasnije možeš da izmeniš svoj nalog</string>
   <string name="account_tls_negotiation_timeout_sec">Преговарачки временски период (сец)</string>
   <string name="account_rtp_max_port">Maksimum</string>
   <string name="account_rtp_min_port">Minimum</string>
-  <string name="account_rtp_port_range">Аудио RTP порт Диапазон</string>
+  <string name="account_rtp_port_range">Opseg audio RTP portova</string>
   <!--restore/backup-->
   <string name="account_new_device_password">Unesi lozinku za otključavanje naloga</string>
   <string name="error_password_char_count">Minimalna dužina 6 karaktera</string>
   <string name="error_passwords_not_equals">Lozinke nisu iste</string>
   <string name="export_account_wait_title">Molim da sačekate...</string>
   <string name="export_account_wait_message">Izvoz informacija o nalogu</string>
-  <string name="account_export_file">Rezervna kopija naloga</string>
-  <string name="account_export_file_summary">Pravi rezervnu kopiju naloga na vašem uređaju za kasnije ponovno uspostavljanje</string>
+  <string name="account_export_file">Резервни рачун</string>
+  <string name="account_export_file_summary">Napravite rezervnu kopiju naloga na uređaju da biste ga kasnije vratili.</string>
   <string name="account_export_end_decryption_message">Nije moguće otključati vaš nalog sa unetom lozinkom</string>
   <string name="account_export_end_network_title">Greška na mreži</string>
   <string name="account_export_end_network_message">Nije moguće izvesti nalog na mrežu. Proverite da li ste povezani.</string>
@@ -196,7 +196,7 @@ Kasnije možeš da izmeniš svoj nalog</string>
   <string name="account_link_export_info">Da bi ste koristili ovaj nalog na drugim uređajima, prvo ga morate izložiti na Jamiju. Ovo će generisati PIN kod koji morate uneti na novom uređju da biste podesili nalog. PIN kod je validan sledećih 10 minuta.</string>
   <string name="account_start_export_button">Generiši PIN</string>
   <string name="account_end_export_button">zatvori</string>
-  <string name="account_end_export_infos">Vaš PIN je:\n\n %%\n\nDa biste završili proces morate otvoriti Jami na novom uređaju. Napravite novi nalog sa \"Poveži ovaj uređaj sa nalogom\". Vaš PIN je validan sledećih 10 minuta.</string>
+  <string name="account_end_export_infos">Vaš PIN je:\n\n%%\n\nDa biste dovršili proces, potrebno je da otvorite Jami na novom uređaju. Napravite novi nalog sa „Poveži ovaj uređaj sa nalogom“. Vaš PIN važi 10 minuta.</string>
   <string name="account_link_export_info_light">Da bi ste koristili ovaj nalog na drugim uređajima, prvo ga morate izložiti na Jamiju. Ovo će generisati PIN kod koji morate uneti na novom uređju da biste podesili nalog. PIN kod je validan sledećih 10 minuta.</string>
   <string name="account_export_title">Poveži nalog sa drugim uređajima</string>
   <string name="account_connect_server_button">Спрема на сервер управљања</string>
@@ -251,14 +251,14 @@ Kasnije možeš da izmeniš svoj nalog</string>
   <string name="qr_invalid">Није QR код за Јами аутентификацију</string>
   <string name="content_description_checkbox">Твој Qr код је исправан</string>
   <string name="error_format_not_supported">Format nije podržan</string>
-  <string name="account_link_info">У новој Јами апликацији скенирајте QR код или ручно унесите PIN.</string>
+  <string name="account_link_info">U novoj aplikaciji Jami skenirajte QR kod ili ručno unesite PIN.</string>
   <string name="account_link_device_title">Povežite novi uređaj</string>
   <string name="account_link_password">Овај налог је шифрован лозинком, унесите лозинку да бисте генерисали PIN код.</string>
   <string name="account_link_generate_button">Генериши</string>
-  <string name="account_link_time_valid">PIN код ће бити неважећи: %1$s.</string>
+  <string name="account_link_time_valid">PIN kod će biti nevažeći: %1$s.</string>
   <string name="account_link_device_info">Изабери „Повежи нови уређај“ из друге Јами апликације да бисте приказали QR код или PIN</string>
-  <string name="account_generate_export_device">На другом уређају</string>
-  <string name="account_generate_export_info">Инсталирај и покрените Јами, изаберите „Увези са другог уређаја“ и скенирајте QR код.</string>
+  <string name="account_generate_export_device">Na drugom uređaju</string>
+  <string name="account_generate_export_info">Instalirajte i pokrenite Jami, izaberite „Uvezi sa drugog uređaja“ i skenirajte QR kod.</string>
   <string name="content_description_qr_generated">Твој Qr код</string>
   <string name="account_generate_export_invalid">PIN више није важећи.\n Унеси лозинку и генериши другу да бисте повезали нови уређај.</string>
   <string name="account_generate_export_invalid_two">ПИН више није важећи.\n Генериши још један да бисте повезали нови уређај.</string>
@@ -266,4 +266,5 @@ Kasnije možeš da izmeniš svoj nalog</string>
   <string name="connect_device_scanqr">Скенирај QR код</string>
   <string name="connect_device_enterPIN">Или унесите PIN</string>
   <string name="account_link_device_button">Poveži</string>
+  <!--Biometry-->
 </resources>
