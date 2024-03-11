@@ -15,7 +15,9 @@
   ~ along with this program; if not, write to the Free Software
   ~  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
   -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/imageLayout"
     android:layout_width="match_parent"
@@ -23,8 +25,6 @@
     android:clickable="true"
     android:descendantFocusability="blocksDescendants"
     android:focusable="true"
-    android:gravity="center"
-    android:orientation="vertical"
     android:paddingBottom="@dimen/padding_xsmall">
 
     <TextView
@@ -35,86 +35,67 @@
         android:textColor="@color/textColorSecondary"
         android:textSize="@dimen/conversation_timestamp_textsize"
         android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="@string/time_just_now"
         tools:visibility="visible" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/image_maximum_size"
+        android:layout_marginEnd="24dp"
+        android:adjustViewBounds="true"
+        android:background="@drawable/background_item_conv_image"
+        android:contentDescription="@null"
+        android:padding="0dp"
+        android:transitionName="picture"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/msg_details_txt_perm"
+        tools:src="@tools:sample/backgrounds/scenic" />
+
+    <cx.ring.views.MessageStatusView
+        android:id="@+id/status_icon"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingStart="72dp"
-        android:paddingEnd="0dp">
+        android:layout_marginEnd="5dp"
+        app:layout_constraintBottom_toBottomOf="@id/image"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:background="@color/purple_300"
+        tools:layout_height="@dimen/conversation_status_icon_size"
+        tools:layout_width="@dimen/conversation_status_icon_size" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:gravity="end"
-            android:orientation="vertical">
+    <TextView
+        android:id="@+id/file_time"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_item_conv_image_time"
+        android:gravity="end"
+        android:paddingHorizontal="8dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="4dp"
+        android:textColor="@color/white"
+        android:textSize="@dimen/conversation_timestamp_textsize"
+        app:layout_constraintBottom_toBottomOf="@id/image"
+        app:layout_constraintEnd_toEndOf="@id/image"
+        app:layout_constraintStart_toStartOf="@id/image"
+        tools:text="11:36am" />
 
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/reaction_chip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-6dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/background_reaction_chip"
+        android:lines="1"
+        android:maxLines="1"
+        android:outlineProvider="none"
+        android:padding="5dp"
+        android:singleLine="true"
+        app:layout_constraintEnd_toEndOf="@id/image"
+        app:layout_constraintTop_toBottomOf="@id/image"
+        tools:text="👍 😍 3" />
 
-                <ImageView
-                    android:id="@+id/image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/image_maximum_size"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="24dp"
-                    android:adjustViewBounds="true"
-                    android:background="@drawable/background_item_conv_image"
-                    android:contentDescription="@null"
-                    android:padding="0dp"
-                    android:transitionName="picture"
-                    tools:src="@tools:sample/backgrounds/scenic" />
-
-                <cx.ring.views.MessageStatusView
-                    android:id="@+id/status_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@id/image"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="5dp"
-                    tools:background="@color/purple_300"
-                    tools:layout_height="@dimen/conversation_status_icon_size"
-                    tools:layout_width="@dimen/conversation_status_icon_size" />
-
-                <TextView
-                    android:id="@+id/file_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignStart="@id/image"
-                    android:layout_alignEnd="@id/image"
-                    android:layout_alignBottom="@id/image"
-                    android:background="@drawable/background_item_conv_image_time"
-                    android:gravity="end"
-                    android:paddingHorizontal="8dp"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="4dp"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/conversation_timestamp_textsize"
-                    tools:text="11:36am" />
-
-                <TextView
-                    android:id="@+id/reaction_chip"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/image"
-                    android:layout_alignEnd="@id/image"
-                    android:layout_marginTop="-6dp"
-                    android:layout_marginEnd="8dp"
-                    android:background="@drawable/background_reaction_chip"
-                    android:lines="1"
-                    android:maxLines="1"
-                    android:outlineProvider="none"
-                    android:padding="5dp"
-                    android:singleLine="true"
-                    tools:text="👍 😍 3" />
-
-            </RelativeLayout>
-
-        </LinearLayout>
-
-    </RelativeLayout>
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
