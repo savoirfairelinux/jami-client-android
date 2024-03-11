@@ -60,7 +60,6 @@
         android:layout_width="@dimen/conversation_avatar_size"
         android:layout_height="@dimen/conversation_avatar_size"
         android:layout_marginStart="@dimen/padding_large"
-        android:layout_marginEnd="@dimen/conditional_left_conversation_margin"
         app:layout_constraintBottom_toBottomOf="@id/video_frame"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -69,7 +68,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/peer_name"
-        android:layout_marginStart="@dimen/base_left_conversation_margin"
+        android:layout_marginStart="@dimen/conditional_left_conversation_margin"
         android:layout_marginEnd="20dp"
         android:foreground="@drawable/baseline_play_arrow_24"
         android:foregroundGravity="center"
@@ -116,7 +115,7 @@
         android:layout_below="@id/video_frame"
         android:layout_alignStart="@id/video_frame"
         android:layout_marginTop="-6dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:background="@drawable/background_reaction_chip"
         android:elevation="4dp"
         android:lines="1"
@@ -124,7 +123,7 @@
         android:outlineProvider="none"
         android:padding="5dp"
         android:singleLine="true"
-        app:layout_constraintEnd_toEndOf="@id/video_frame"
+        app:layout_constraintStart_toStartOf="@id/video_frame"
         app:layout_constraintTop_toBottomOf="@id/video_frame"
         tools:text="👍 😍 3" />
 
