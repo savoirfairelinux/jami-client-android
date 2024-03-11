@@ -1363,7 +1363,7 @@ class ConversationAdapter(
 
         // Add margin if message need to be separated.
         val isMessageSeparationNeeded = isMessageSeparationNeeded(isDateShown, position)
-        convViewHolder.mMessageBubble?.updateLayoutParams<MarginLayoutParams> {
+        convViewHolder.mMessageLayout?.updateLayoutParams<MarginLayoutParams> {
             topMargin = if (!isMessageSeparationNeeded) 0 else context.resources
                 .getDimensionPixelSize(R.dimen.conversation_message_separation)
         }
@@ -1648,7 +1648,7 @@ class ConversationAdapter(
 
         // Add margin if message need to be separated.
         val isMessageSeparationNeeded = isMessageSeparationNeeded(isDateShown, position)
-        convViewHolder.mMsgLayout?.updateLayoutParams<MarginLayoutParams> {
+        convViewHolder.mCallLayout?.updateLayoutParams<MarginLayoutParams> {
             topMargin = if (!isMessageSeparationNeeded) 0 else context.resources
                 .getDimensionPixelSize(R.dimen.conversation_message_separation)
         }
@@ -1691,6 +1691,7 @@ class ConversationAdapter(
             })
             convViewHolder.mMsgDetailTxtPerm?.visibility = View.VISIBLE
         } else convViewHolder.mMsgDetailTxtPerm?.visibility = View.GONE
+
         convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
             val timeString =
                 TextUtils.timestampToTime(context, formatter, call.timestamp)
