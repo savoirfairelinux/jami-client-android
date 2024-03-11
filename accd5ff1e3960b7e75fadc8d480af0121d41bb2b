@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b2936f4d_26333709",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-03-11T20:59:29Z",
+      "side": 1,
+      "message": "Tested on my device and works. Code looks fine.",
+      "revId": "accd5ff1e3960b7e75fadc8d480af0121d41bb2b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "798a5229_4724349a",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/HomeFragment.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-03-11T20:59:29Z",
+      "side": 1,
+      "message": "cleanup",
+      "range": {
+        "startLine": 564,
+        "startChar": 0,
+        "endLine": 564,
+        "endChar": 2
+      },
+      "revId": "accd5ff1e3960b7e75fadc8d480af0121d41bb2b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3147987_281d1c28",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/ConversationFacade.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-03-11T20:59:29Z",
+      "side": 1,
+      "message": "What is the purpose of getting pending if it is not used?\nPlease add a comment.\nAlso \"Log.e\" is for errors. Is this log happening in an error context? Not clear for me.",
+      "range": {
+        "startLine": 723,
+        "startChar": 8,
+        "endLine": 730,
+        "endChar": 18
+      },
+      "revId": "accd5ff1e3960b7e75fadc8d480af0121d41bb2b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
