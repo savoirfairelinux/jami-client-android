@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "54ab5607_a1d5066b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-03-11T20:32:44Z",
+      "side": 1,
+      "message": "Need a gitlab ticket link. I don\u0027t understand what this patch is about.",
+      "revId": "63fc27f5ea4366445a9289746b3a85e860a072b2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}

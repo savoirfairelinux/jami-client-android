@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ab2537a7_9d6273ce",
+        "filename": "daemon",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-03-11T20:32:44Z",
+      "side": 0,
+      "message": "Is this related to this patch?",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 2
+      },
+      "revId": "accd5ff1e3960b7e75fadc8d480af0121d41bb2b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
