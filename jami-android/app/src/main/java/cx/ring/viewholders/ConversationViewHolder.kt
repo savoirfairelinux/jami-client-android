@@ -101,6 +101,7 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
         else -> null
     }
     var mMessageBubble: MessageBubble? = null
+    var mMessageLayout: ViewGroup? = null
     var mReplyBubble: LinearLayout? = null
     var mReplyName: TextView? = null
     var mReplyTxt: TextView? = null
@@ -135,7 +136,6 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
         MessageType.OUTGOING_VIDEO -> v.findViewById(R.id.video)
         else -> null
     }
-    var mMsgLayout: ViewGroup? = null
     var mCallInfoText: TextView? = null
     var mCallTime : TextView? = null
     var mCallAcceptLayout: LinearLayout? = null
@@ -187,7 +187,8 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
                 primaryClickableView = mCallInfoLayout
             }
             MessageType.ONGOING_GROUP_CALL -> {
-                mMsgLayout = v.findViewById(R.id.msg_layout)
+                mMsgDetailTxtPerm = v.findViewById(R.id.msg_details_txt_perm)
+                mCallLayout = v.findViewById(R.id.callLayout)
                 mGroupCallLayout = v.findViewById(R.id.groupCallLayout)
                 mCallInfoText = v.findViewById(R.id.call_info_text)
                 mCallAcceptLayout = v.findViewById(R.id.callAcceptLayout)
@@ -201,6 +202,7 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
                 mReplyTxt = v.findViewById(R.id.reply_text)
                 mMsgTxt = v.findViewById(R.id.msg_txt)
                 mMessageBubble = v.findViewById(R.id.message_content)
+                mMessageLayout = v.findViewById(R.id.message_layout)
                 mMsgDetailTxt = v.findViewById(R.id.msg_details_txt)
                 mMsgDetailTxtPerm = v.findViewById(R.id.message_time_permanent)
                 mAnswerLayout = v.findViewById(R.id.link_preview)
