@@ -55,7 +55,7 @@ along with this program; if not, write to the Free Software
         android:textColor="@color/msg_display_name"
         android:textSize="@dimen/message_display_name_textsize"
         android:visibility="gone"
-        app:layout_constraintStart_toEndOf="@id/photo"
+        app:layout_constraintStart_toStartOf="@id/message_content"
         app:layout_constraintTop_toBottomOf="@id/message_time_permanent"
         tools:text="Bob"
         tools:visibility="visible" />
@@ -73,7 +73,7 @@ along with this program; if not, write to the Free Software
         app:layout_constrainedWidth="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintStart_toEndOf="@id/photo"
+        app:layout_constraintStart_toStartOf="@id/message_content"
         app:layout_constraintTop_toBottomOf="@id/peer_name"
         tools:visibility="visible">
 
@@ -112,6 +112,7 @@ along with this program; if not, write to the Free Software
         android:id="@+id/message_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/conditional_left_conversation_margin"
         android:layout_marginTop="-6.5dp"
         android:background="@drawable/textmsg_bg_in_reply"
         android:clipToPadding="false"
@@ -134,6 +135,7 @@ along with this program; if not, write to the Free Software
             android:layout_height="wrap_content"
             android:visibility="gone"
             tools:visibility="visible" />
+
     </cx.ring.views.MessageBubble>
 
     <cx.ring.views.MessageStatusView
@@ -169,7 +171,6 @@ along with this program; if not, write to the Free Software
         android:layout_width="wrap_content"
         android:layout_height="@dimen/conversation_avatar_size"
         android:layout_marginStart="@dimen/base_left_conversation_margin"
-        android:paddingEnd="@dimen/conditional_left_conversation_margin"
         app:layout_constraintBottom_toBottomOf="@id/message_content"
         app:layout_constraintStart_toStartOf="parent"
         tools:srcCompat="@color/blue_200"
