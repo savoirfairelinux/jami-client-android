@@ -596,6 +596,8 @@ class Conversation : ConversationHistory {
                     aggregateHistory.add(i, interaction)
                     updatedElementSubject.onNext(Pair(interaction, ElementStatus.ADD))
                     added = true
+                    newLeaf = (i == 0 // True if it is the last non-invalid message.
+                            && aggregateHistory.last().type == Interaction.InteractionType.INVALID)
                     break
                 }
             }
