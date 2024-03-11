@@ -16,7 +16,8 @@ along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 -->
 
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -38,7 +39,6 @@ along with this program; if not, write to the Free Software
         android:textColor="@color/textColorSecondary"
         android:textSize="@dimen/conversation_timestamp_textsize"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@id/reply_bubble"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -97,29 +97,30 @@ along with this program; if not, write to the Free Software
         android:id="@+id/message_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/textmsg_bg_out_reply"
-        android:paddingHorizontal="10dp"
-        android:paddingVertical="5dp"
-        android:clipToPadding="false"
-        android:theme="@style/OutgoingTextMesssage"
         android:layout_marginTop="-6.5dp"
         android:layout_marginEnd="@dimen/conversation_me_margin_end"
+        android:background="@drawable/textmsg_bg_out_reply"
+        android:clipToPadding="false"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="5dp"
+        android:theme="@style/OutgoingTextMesssage"
         app:layout_constrainedWidth="true"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1"
         app:layout_constraintStart_toStartOf="@id/left_guideline"
         app:layout_constraintTop_toBottomOf="@id/reply_bubble"
-        app:layout_constraintHorizontal_bias="1"
         tools:edited="true"
         tools:message="This is an intellectually, constitutionally elongated message to push wrapping boundaries for the text in the message."
         tools:time="11h05">
+
         <include
             android:id="@+id/link_preview"
             layout="@layout/msg_link_preview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/message_content" />
+            tools:visibility="visible" />
+
     </cx.ring.views.MessageBubble>
 
     <cx.ring.views.MessageStatusView
