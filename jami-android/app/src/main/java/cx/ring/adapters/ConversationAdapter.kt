@@ -1183,7 +1183,7 @@ class ConversationAdapter(
             }
             MessageType.TransferType.AUDIO -> {
                 // Add margin if message need to be separated.
-                viewHolder.mAudioMessageLayout?.updateLayoutParams<MarginLayoutParams> {
+                viewHolder.mAudioLayout?.updateLayoutParams<MarginLayoutParams> {
                     topMargin = if (!isMessageSeparationNeeded) 0 else context.resources
                         .getDimensionPixelSize(R.dimen.conversation_message_separation)
                 }
@@ -1273,7 +1273,7 @@ class ConversationAdapter(
             )
         } else {
             layoutParams.setMargins(
-                res.getDimensionPixelSize(R.dimen.base_left_conversation_margin), 0,
+                res.getDimensionPixelSize(R.dimen.conditional_left_conversation_margin), 0,
                 0, 0
             )
         }
@@ -1324,26 +1324,6 @@ class ConversationAdapter(
                         .setColor(convColor)
                 }
             } else if (convColor != 0 && !isIncoming) messageBubble.background?.setTint(convColor)
-        }
-    }
-
-    /**
-     * Configures the left margin of the message bubble.
-     * It changes if it's a group (avatar is displayed) or not (avatar is gone).
-     */
-    private fun updateMessageLeftMargin(
-        context: Context,
-        messageBubble: View, replyBubble: View?,
-        isGroup: Boolean
-    ) {
-        if (isGroup) {
-            (messageBubble.layoutParams as MarginLayoutParams).leftMargin = 0
-            (replyBubble?.layoutParams as MarginLayoutParams?)?.leftMargin = 0
-        } else {
-            context.resources.getDimensionPixelSize(R.dimen.base_left_conversation_margin).let {
-                (messageBubble.layoutParams as MarginLayoutParams).leftMargin = it
-                (replyBubble?.layoutParams as MarginLayoutParams?)?.leftMargin = it
-            }
         }
     }
 
@@ -1415,13 +1395,6 @@ class ConversationAdapter(
             isDeleted = isDeleted,
             isIncoming = textMessage.isIncoming
         )
-
-        // Manage the left margin of incoming message bubble.
-        if (textMessage.isIncoming)
-            updateMessageLeftMargin(
-                context, messageBubble, replyBubble,
-                isGroup = presenter.isGroup()
-            )
 
         // Manage long press.
         messageBubble.setOnLongClickListener { v: View ->
