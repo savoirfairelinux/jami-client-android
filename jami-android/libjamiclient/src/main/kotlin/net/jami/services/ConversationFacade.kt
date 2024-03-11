@@ -475,7 +475,9 @@ class ConversationFacade(
 
     fun getConversationList(currentAccount: Observable<Account>): Observable<ConversationList> =
         currentAccount.switchMap { account -> account.getConversationsSubject() }
-            .map { conversations -> ConversationList(conversations) }
+            .map { conversations ->
+                Log.w("devdebug_sml", "getConversationList ${conversations.map { it.uri }}")
+                ConversationList(conversations) }
 
     /**
      * Loads the smartlist from the database and updates the view

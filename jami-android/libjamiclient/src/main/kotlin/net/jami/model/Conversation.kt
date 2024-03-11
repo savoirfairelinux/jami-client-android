@@ -360,10 +360,13 @@ class Conversation : ConversationHistory {
                 isAfter(currentLastMessageDisplayed, newPotentialMessageDisplayed)
             } else false
 
+        Log.w("devdebug", "setLastMessageDisplayed: $contactId $messageId $isAfter")
+
         // Update the last displayed message
         if (newPotentialMessageDisplayed?.type != Interaction.InteractionType.INVALID &&
             newPotentialMessageDisplayed?.type != null &&
             (isAfter || (currentLastMessageDisplayed == null))) {
+            Log.w("devdebug", "type=${newPotentialMessageDisplayed?.type ?: "rien"}")
             lastDisplayedMessages[contactId] = messageId
             mMessages[messageId]
                 ?.let { updatedElementSubject.onNext(Pair(it, ElementStatus.UPDATE)) }
@@ -524,6 +527,7 @@ class Conversation : ConversationHistory {
     @Synchronized
     fun addElement(interaction: Interaction) {
         setInteractionProperties(interaction)
+        Log.w("devdebug", "addElement: ${interaction.body}")
         when (interaction.type) {
             Interaction.InteractionType.TEXT -> addTextMessage(TextMessage(interaction))
             Interaction.InteractionType.CALL -> addCall(Call(interaction))
@@ -608,12 +612,17 @@ class Conversation : ConversationHistory {
             }
         }
         if (newLeaf) {
+            if (uri.toString() == "swarm:dc59cbdca86be933fc5b22bca7138062731875c0")
+                Log.w("devdebug_sml", "newleaf checkpoint Z")
             if (isVisible) {
                 interaction.read()
                 setLastMessageRead(id)
             }
-            if (interaction.type != Interaction.InteractionType.INVALID)
+            if (interaction.type != Interaction.InteractionType.INVALID) {
+                if (uri.toString() == "swarm:dc59cbdca86be933fc5b22bca7138062731875c0")
+                    Log.w("devdebug_sml", "lastevent set ! ${interaction.messageId} ${interaction.type}")
                 lastEvent = interaction
+            }
         }
         if (!added) {
             Log.e(TAG, "Can't attach interaction $id with parent ${interaction.parentId}")
