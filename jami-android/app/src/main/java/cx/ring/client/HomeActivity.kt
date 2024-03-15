@@ -159,7 +159,9 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
         mHomeFragment = supportFragmentManager.findFragmentById(R.id.home_fragment) as? HomeFragment?
         frameContent = supportFragmentManager.findFragmentById(fragmentContainerId)
         supportFragmentManager.addOnBackStackChangedListener {
-            frameContent = supportFragmentManager.findFragmentById(fragmentContainerId)
+            frameContent = supportFragmentManager.findFragmentById(R.id.frame)
+            conversationBackPressedCallback.isEnabled =
+                fConversation != null && frameContent == null
         }
         if (frameContent != null) {
             mBinding!!.frame.isVisible = true
