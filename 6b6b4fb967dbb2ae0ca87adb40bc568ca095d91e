@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3d2b8b7d_0e5bb882",
+        "filename": "jami-android/app/src/main/res/layout/item_conv_file_me.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1058
+      },
+      "writtenOn": "2024-03-15T18:10:52Z",
+      "side": 1,
+      "message": "How do you chose the exact percentage (for all files in the commit) ? Should it be just 0.16 or 0.17 ?",
+      "range": {
+        "startLine": 34,
+        "startChar": 8,
+        "endLine": 34,
+        "endChar": 54
+      },
+      "revId": "6b6b4fb967dbb2ae0ca87adb40bc568ca095d91e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
