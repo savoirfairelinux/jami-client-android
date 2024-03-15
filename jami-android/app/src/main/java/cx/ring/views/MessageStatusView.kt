@@ -123,7 +123,7 @@ class MessageStatusView @JvmOverloads constructor(
         resize(1)
         (getChildAt(0) as ImageView).apply {
             setImageResource(R.drawable.receive)
-            ImageViewCompat.setImageTintList(this, iconTint)
+            ImageViewCompat.setImageTintList(this, null)
         }
     }
 
