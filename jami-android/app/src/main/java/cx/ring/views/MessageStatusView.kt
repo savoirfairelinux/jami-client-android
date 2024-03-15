@@ -121,10 +121,7 @@ class MessageStatusView @JvmOverloads constructor(
 
     fun updateSuccess() {
         resize(1)
-        (getChildAt(0) as ImageView).apply {
-            setImageResource(R.drawable.receive)
-            ImageViewCompat.setImageTintList(this, iconTint)
-        }
+        (getChildAt(0) as ImageView).apply { setImageResource(R.drawable.receive) }
     }
 
     fun updateDisplayed(seenBy: Collection<ContactViewModel>) {
