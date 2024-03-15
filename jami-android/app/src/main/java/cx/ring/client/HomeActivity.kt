@@ -81,7 +81,6 @@ import kotlin.math.max
 @AndroidEntryPoint
 class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicked {
     private val welcomeJamiViewModel by lazy { ViewModelProvider(this)[WelcomeJamiViewModel::class.java] }
-    private var frameContent: Fragment? = null
     private var fConversation: ConversationFragment? = null
     private var fWelcomeJami: WelcomeJamiFragment? = null
     private var mHomeFragment: HomeFragment? = null
@@ -157,12 +156,10 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         mHomeFragment = supportFragmentManager.findFragmentById(R.id.home_fragment) as? HomeFragment?
-        frameContent = supportFragmentManager.findFragmentById(fragmentContainerId)
         supportFragmentManager.addOnBackStackChangedListener {
-            frameContent = supportFragmentManager.findFragmentById(fragmentContainerId)
-        }
-        if (frameContent != null) {
-            mBinding!!.frame.isVisible = true
+            val frameContent = supportFragmentManager.findFragmentById(R.id.frame)
+            conversationBackPressedCallback.isEnabled =
+                fConversation != null && frameContent == null
         }
 
         fConversation = supportFragmentManager
@@ -187,7 +184,6 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
             if (isShowing) dismiss()
             mMigrationDialog = null
         }
-        frameContent = null
         mDisposable.dispose()
         mBinding = null
     }
@@ -425,11 +421,7 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
     }
 
     fun goToAdvancedSettings() {
-        if (frameContent is SettingsFragment) {
-            return
-        }
         val content = SettingsFragment()
-        frameContent = content
         supportFragmentManager
             .beginTransaction()
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
@@ -440,11 +432,7 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
     }
 
     fun goToAbout() {
-        if (frameContent is AboutFragment) {
-            return
-        }
         val content = AboutFragment()
-        frameContent = content
         mBinding!!.frame.isVisible = true
         supportFragmentManager
             .beginTransaction()
@@ -478,9 +466,6 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
                 )
             startActivityForResult(intent, 1)
         } else {
-            // If already on account settings, do nothing
-            if (frameContent is AccountEditionFragment) return
-
             // Create the fragment
             val accountEditionFragment = AccountEditionFragment()
             accountEditionFragment.arguments =
@@ -489,7 +474,6 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
                 }
 
             // Place it into the frame
-            frameContent = accountEditionFragment
             supportFragmentManager.beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .replace(fragmentContainerId, accountEditionFragment, ACCOUNTS_TAG)
