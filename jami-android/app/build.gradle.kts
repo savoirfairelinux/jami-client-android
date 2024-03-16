@@ -7,7 +7,7 @@ plugins {
     id("com.android.application")
     kotlin("android")
     id("dagger.hilt.android.plugin")
-    id("com.google.protobuf") version "0.9.3"
+    id("com.google.protobuf") version "0.9.4"
     id("com.google.devtools.ksp")
 }
 
@@ -117,7 +117,7 @@ dependencies {
     implementation ("com.google.android.material:material:1.11.0")
     implementation ("androidx.biometric:biometric:1.1.0")
     implementation ("com.google.android.flexbox:flexbox:3.0.0")
-    implementation ("com.google.protobuf:protobuf-javalite:3.23.2")
+    implementation ("com.google.protobuf:protobuf-javalite:4.26.0")
 
     // ORM
     implementation ("com.j256.ormlite:ormlite-android:5.7")
@@ -169,7 +169,7 @@ dependencies {
 
 protobuf {
     protoc {
-        artifact = "com.google.protobuf:protoc:3.23.2"
+        artifact = "com.google.protobuf:protoc:4.26.0"
     }
     generateProtoTasks {
         all().forEach { task ->
