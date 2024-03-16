@@ -128,6 +128,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.Navigation"
             android:windowSoftInputMode="adjustResize">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -137,22 +138,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <action android:name="android.intent.action.DIAL" />
                 <action android:name="android.intent.action.VIEW" />
                 <action android:name="android.intent.action.SEARCH" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-
                 <data android:scheme="sip" />
                 <data android:scheme="tel" />
-                <data
-                    android:host="ring.cx"
-                    android:pathPrefix="/id/"
-                    android:scheme="https" />
-                <data
-                    android:host="ring.cx"
-                    android:pathPrefix="/id/"
-                    android:scheme="http" />
                 <data android:scheme="ring" />
                 <data android:scheme="jami" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="http"/>
+                <data android:scheme="https"/>
+                <data android:host="link.jami.net"/>
             </intent-filter>
 
             <meta-data
