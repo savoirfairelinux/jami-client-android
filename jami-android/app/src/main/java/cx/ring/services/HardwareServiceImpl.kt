@@ -73,7 +73,7 @@ class HardwareServiceImpl(
     private var pendingScreenSharingSession: MediaProjection? = null
     private val shouldCapture = HashSet<String>()
     private var mShouldSpeakerphone = false
-    private val mHasSpeakerPhone: Boolean = hasSpeakerphone()
+    private val mHasSpeakerPhone: Boolean by lazy { hasSpeakerphone() }
     private var mIsChoosePlugin = false
     private var mMediaHandlerId: String? = null
     private var mPluginCallId: String? = null
