@@ -1236,7 +1236,7 @@ class ConversationAdapter(
                             viewHolder.progress?.show()
                         } else {
                             viewHolder.progress?.hide()
-                            val uri = getUriForFile(context, path)
+                            val uri = try { getUriForFile(context, path) } catch (e: Exception) { return }
                             if (context.contentResolver.getType(uri) == "application/pdf") {
                                 val size = res.getDimensionPixelSize(R.dimen.conversation_file_preview)
                                 viewHolder.compositeDisposable.add(Single
