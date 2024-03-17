@@ -159,12 +159,12 @@ dependencies {
         exclude(group= "com.fasterxml.jackson.core", module= "jackson-core")
     }
 
-    "withFirebaseImplementation"("com.google.firebase:firebase-messaging:23.4.0") {
+    "withFirebaseImplementation"("com.google.firebase:firebase-messaging:23.4.1") {
         exclude(group= "com.google.firebase", module= "firebase-core")
         exclude(group= "com.google.firebase", module= "firebase-analytics")
         exclude(group= "com.google.firebase", module= "firebase-measurement-connector")
     }
-    "withUnifiedPushImplementation"("com.github.UnifiedPush:android-connector:2.2.0")
+    "withUnifiedPushImplementation"("com.github.UnifiedPush:android-connector:2.4.0")
 }
 
 protobuf {
