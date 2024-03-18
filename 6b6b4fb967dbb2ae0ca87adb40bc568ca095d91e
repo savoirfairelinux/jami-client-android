@@ -22,6 +22,30 @@
       },
       "revId": "6b6b4fb967dbb2ae0ca87adb40bc568ca095d91e",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "21299952_aed32277",
+        "filename": "jami-android/app/src/main/res/layout/item_conv_file_me.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-03-18T11:19:43Z",
+      "side": 1,
+      "message": "It is 1/6 (it comes from the design) and could eventually be changed to 0.17. I don\u0027t know if it matters.",
+      "parentUuid": "3d2b8b7d_0e5bb882",
+      "range": {
+        "startLine": 34,
+        "startChar": 8,
+        "endLine": 34,
+        "endChar": 54
+      },
+      "revId": "6b6b4fb967dbb2ae0ca87adb40bc568ca095d91e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
