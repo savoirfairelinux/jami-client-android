@@ -247,4 +247,5 @@
   <string name="error_format_not_supported">Бұл форматты қолдамайды.</string>
   <string name="account_link_device_title">Жаңа құрылғыны қосу</string>
   <string name="account_link_device_button">Қосылыңыз</string>
+  <!--Biometry-->
 </resources>

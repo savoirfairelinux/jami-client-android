@@ -49,7 +49,6 @@
     <item quantity="other">%d Mazungumzo</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Tafuta jina au nambari ya simu...</string>
   <string name="choose_number">Chagua namba</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->

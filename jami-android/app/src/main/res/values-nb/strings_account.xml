@@ -249,4 +249,5 @@ Du kan endre kontoen din senere</string>
   <string name="error_format_not_supported">Dette formatet støttes ikke</string>
   <string name="account_link_device_title">Tilknytt ny enhet</string>
   <string name="account_link_device_button">Koble til</string>
+  <!--Biometry-->
 </resources>

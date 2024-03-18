@@ -38,6 +38,7 @@
   <string name="menu_item_plugin_list">Ntọala nke Plugins</string>
   <string name="menu_item_share">Kesaa akaụntụ m</string>
   <string name="menu_item_about">Banyere Jami</string>
+  <string name="video_setting_title">Ntọala nke Ihe Nlereanya</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Kpọọ nọmba</string>
   <!--History Fragment-->
@@ -89,6 +90,7 @@
   <string name="conversation_action_block_this">Njikọ na-ekpuchi</string>
   <string name="conversation_action_incoming_call">N\'ọhịa</string>
   <string name="conversation_members">Ndị otu</string>
+  <string name="today">Taa</string>
   <string name="yesterday">N\'ụbọchị gara aga</string>
   <!--Contacts-->
   <string name="account_create_title">Mepụta akaụntụ Jami</string>

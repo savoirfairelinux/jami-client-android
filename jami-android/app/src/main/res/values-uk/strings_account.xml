@@ -143,7 +143,7 @@
   <string name="error_passwords_not_equals">Паролі не збігаються</string>
   <string name="export_account_wait_title">Будь ласка зачекайте</string>
   <string name="export_account_wait_message">Експортування інформації про обліковий запис</string>
-  <string name="account_export_file">Створити резервну копію облікового запису</string>
+  <string name="account_export_file">Резервна копія облікового запису</string>
   <string name="account_export_file_summary">Завантажуйте свій обліковий запис на свій пристрій, щоб відновити його пізніше.</string>
   <string name="account_export_end_decryption_message">Не вдалося розблокувати обліковий запис з наданим паролем.</string>
   <string name="account_export_end_network_title">Збій мережі</string>
@@ -266,4 +266,5 @@
   <string name="connect_device_scanqr">Сканувати QR</string>
   <string name="connect_device_enterPIN">Або введіть PIN</string>
   <string name="account_link_device_button">З\'єднати</string>
+  <!--Biometry-->
 </resources>

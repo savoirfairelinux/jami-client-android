@@ -140,7 +140,7 @@
   <string name="error_passwords_not_equals">Nywila hazifanani</string>
   <string name="export_account_wait_title">Tafadhali subiri...</string>
   <string name="export_account_wait_message">Habari za akaunti ya kuuza nje</string>
-  <string name="account_export_file">Akaunti ya Backup</string>
+  <string name="account_export_file">Akaunti ya chelezo</string>
   <string name="account_export_file_summary">Fungua akaunti yako kwenye kifaa chako ili kuiweka upya baadaye.</string>
   <string name="account_export_end_decryption_message">Haikuweza kufungua akaunti yako kwa kutumia password iliyotolewa.</string>
   <string name="account_export_end_network_title">Kosa la mtandao</string>
@@ -247,4 +247,5 @@
   <string name="error_format_not_supported">Umbizo hili halitegemewi.</string>
   <string name="account_link_device_title">Unganisha kifaa kipya</string>
   <string name="account_link_device_button">Unganisha</string>
+  <!--Biometry-->
 </resources>

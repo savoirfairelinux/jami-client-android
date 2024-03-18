@@ -48,6 +48,9 @@
   <string name="account_password_set">Pune o parolă</string>
   <string name="account_password_summary">Gestionează parola contului tău.</string>
   <string name="account_password_change_wait_message">Se schimbă parola contului </string>
+  <string name="account_biometric_disable">Dezactivează autentificarea biometrică</string>
+  <string name="account_biometric_set">Activează autentificarea biometrică</string>
+  <string name="account_biometric_summary">Gestionează autentificarea biometrică pentru contul tău.</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Generale</string>
   <string name="account_basic_category">Reglări simple</string>
@@ -143,7 +146,7 @@
   <string name="error_passwords_not_equals">Parolele nu se potrivesc</string>
   <string name="export_account_wait_title">Așteaptă...</string>
   <string name="export_account_wait_message">Se exportă contul Jami</string>
-  <string name="account_export_file">Copiază contul</string>
+  <string name="account_export_file">Copie de rezervă a contului</string>
   <string name="account_export_file_summary">Fă o copie de rezervă a contului pentru a-l recupera la nevoie.</string>
   <string name="account_export_end_decryption_message">Contul tău nu poate fi deblocat cu parola furnizată.</string>
   <string name="account_export_end_network_title">Eroare de rețea</string>
@@ -266,4 +269,18 @@
   <string name="connect_device_scanqr">Scanează QR-ul</string>
   <string name="connect_device_enterPIN">Sau introdu codul PIN</string>
   <string name="account_link_device_button">Conectează</string>
+  <!--Biometry-->
+  <string name="account_biometry_auth_title">Deblochează contul Jami</string>
+  <string name="account_biometry_auth_message">Folosește biometria pentru a debloca contul tău.</string>
+  <string name="account_biometry_enroll_title">Folosești autentificarea biometrică?</string>
+  <string name="account_biometry_enroll_message">Aparatul tău permite autentificarea biometrică.
+Autentificarea biometrică adaugă o modalitate convenabilă de deblocare locală a accesului la contul tău Jami. Vei putea să folosești în continuare parola ta.</string>
+  <string name="account_biometry_enroll_accept">Folosește biometria</string>
+  <string name="no_thanks">Nu</string>
+  <string name="account_biometry_enroll_auth_title">Adaugă autentificarea pentru contul tău Jami</string>
+  <string name="account_biometry_enroll_auth_message">Adaugă autentificarea biometrică sau alta ca o alternativă la parola ta</string>
+  <string name="account_auth_error">Eroare de autentificare: %1$s</string>
+  <string name="account_auth_success">Autentificarea a reușit</string>
+  <string name="account_auth_key_error">Nu s-a reușit descifrarea cheii contului</string>
+  <string name="account_auth_password">Folosește parola contului</string>
 </resources>

@@ -43,8 +43,8 @@
   <string name="pref_logs_summary">Deschide reglările diagnozei</string>
   <string name="pref_logs_start">Pornește diagnoza</string>
   <string name="pref_logs_stop">Oprește diagnoza</string>
-  <string name="pref_typing_title">Arată indicatorul de scriere</string>
-  <string name="pref_typing_summary">Trimite și primește indicatori de scriere care arată că se scrie un mesaj.</string>
+  <string name="pref_typing_title">Arată indicatoare de scriere</string>
+  <string name="pref_typing_summary">Trimite și primește indicatoare de scriere care arată că se scrie un mesaj.</string>
   <string name="pref_block_record_title">Blochează captura de ecran și înregistrarea</string>
   <string name="pref_block_record_summary">Blochează captura de ecran și înregistrarea video.</string>
   <string name="pref_link_preview_title">Arată adresele web în discuții</string>

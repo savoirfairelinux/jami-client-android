@@ -17,6 +17,7 @@
   <!--SIP-->
   <!--TLS Details-->
   <!--restore/backup-->
+  <string name="account_export_file">备份账户</string>
   <string name="sip_account">SIP 账户</string>
   <!--TV-->
   <!--Name registration-->
@@ -28,4 +29,5 @@
   <string name="error_format_not_supported">不支援此格式。</string>
   <string name="account_link_device_title">关联新设备</string>
   <string name="account_link_device_button">连接</string>
+  <!--Biometry-->
 </resources>

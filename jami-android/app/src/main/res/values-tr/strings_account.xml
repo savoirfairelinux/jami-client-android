@@ -143,7 +143,7 @@
   <string name="error_passwords_not_equals">Parolalar eşleşmedi</string>
   <string name="export_account_wait_title">Lütfen bekleyin...</string>
   <string name="export_account_wait_message">Hesap bilgilerini dışa aktar</string>
-  <string name="account_export_file">Hesabı Yedekle</string>
+  <string name="account_export_file">Hesabı yedekle</string>
   <string name="account_export_file_summary">Daha sonra geri yüklemek için aygıtınızdaki hesabı yedekleyin.</string>
   <string name="account_export_end_decryption_message">Sağlanan parola kullanılarak hesabınızın kilidi açılamıyor.</string>
   <string name="account_export_end_network_title">Ağ hatası</string>
@@ -266,4 +266,5 @@
   <string name="connect_device_scanqr">QR kodu tara</string>
   <string name="connect_device_enterPIN">veya PIN\'i gir</string>
   <string name="account_link_device_button">Bağlan</string>
+  <!--Biometry-->
 </resources>

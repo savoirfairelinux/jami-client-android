@@ -49,7 +49,6 @@
     <item quantity="other">%d संभाषणे</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">नाव किंवा फोन नंबर शोधायचा.</string>
   <string name="choose_number">एक नंबर निवडा</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -205,6 +204,7 @@
   <string name="conversation_contact_left">%1$ बाकी आहे</string>
   <string name="conversation_contact_banned">%1$s बंदी</string>
   <string name="conversation_search_hint">शोध संभाषण</string>
+  <string name="today">आज</string>
   <string name="yesterday">काल</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">%1$s जोडणे?</string>

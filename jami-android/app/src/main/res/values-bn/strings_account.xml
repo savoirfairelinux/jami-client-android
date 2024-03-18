@@ -247,4 +247,5 @@
   <string name="error_format_not_supported">এই ফরম্যাট সমর্থিত নয়।</string>
   <string name="account_link_device_title">একটি নতুন ডিভাইস লিঙ্ক</string>
   <string name="account_link_device_button">সংযুক্ত করুন</string>
+  <!--Biometry-->
 </resources>
