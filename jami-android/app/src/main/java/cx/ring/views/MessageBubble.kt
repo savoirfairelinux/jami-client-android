@@ -22,6 +22,7 @@ import android.graphics.Color
 import android.text.Layout
 import android.text.Spanned
 import android.text.method.LinkMovementMethod
+import android.text.util.Linkify
 import android.util.AttributeSet
 import android.util.Log
 import android.util.TypedValue
@@ -58,6 +59,7 @@ class MessageBubble(context: Context, attrs: AttributeSet?) : ViewGroup(context,
     private var contrastedDefaultTextColor = context.getColor(R.color.colorOnSurface)
 
     private val messageText = WrapWidthTextView(context).apply {
+        autoLinkMask = Linkify.WEB_URLS
         movementMethod = LinkMovementMethod.getInstance()
         setTextIsSelectable(true)
         setTextSize(TypedValue.COMPLEX_UNIT_PX, defaultTextSize)
