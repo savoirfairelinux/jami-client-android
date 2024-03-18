@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <solid android:color="@color/conversation_secondary_background" />
+
+    <corners
+        android:bottomLeftRadius="@dimen/conversation_message_radius"
+        android:bottomRightRadius="@dimen/conversation_message_radius" />
+
+</shape>

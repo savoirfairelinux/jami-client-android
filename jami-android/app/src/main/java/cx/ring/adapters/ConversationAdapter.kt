@@ -1327,6 +1327,19 @@ class ConversationAdapter(
         }
     }
 
+    /** Configures the background of the LinkPreview to follow shape of MessageBubble. */
+    private fun updateLinkPreviewBackground(
+        linkPreviewLayout: ViewGroup,
+        messageSequenceType: SequenceType,
+    ) {
+        if (messageSequenceType == SequenceType.FIRST
+            || messageSequenceType == SequenceType.MIDDLE
+        ) linkPreviewLayout.setBackgroundResource(R.drawable.linkpreview_bg_out_first_or_middle)
+        else if (messageSequenceType == SequenceType.LAST
+            || messageSequenceType == SequenceType.SINGLE
+        ) linkPreviewLayout.setBackgroundResource(R.drawable.linkpreview_bg_out_last_or_single)
+    }
+
     /**
      * Configures the viewHolder to display a classic text message, ie. not a call info text message
      *
@@ -1431,6 +1444,7 @@ class ConversationAdapter(
                 convViewHolder.compositeDisposable.add(cachedPreview
                     .observeOn(DeviceUtils.uiScheduler)
                     .subscribe({ data ->
+                        val linkPreviewLayout = convViewHolder.mAnswerLayout ?: return@subscribe
                         Log.w(TAG, "got preview $data")
                         val image = convViewHolder.mImage ?: return@subscribe
                         if (data.imageUrl.isNotEmpty()) {
@@ -1449,10 +1463,14 @@ class ConversationAdapter(
                         } else {
                             convViewHolder.mHistDetailTxt?.visibility = View.GONE
                         }
-                        answerLayout?.visibility = View.VISIBLE
+                        updateLinkPreviewBackground(
+                            linkPreviewLayout = linkPreviewLayout,
+                            messageSequenceType = msgSequenceType
+                        )
+                        linkPreviewLayout.visibility = View.VISIBLE
                         val url = Uri.parse(data.baseUrl)
                         convViewHolder.mPreviewDomain?.text = url.host
-                        answerLayout?.setOnClickListener {
+                        linkPreviewLayout.setOnClickListener {
                             context.startActivity(Intent(Intent.ACTION_VIEW, url))
                         }
                     }) { e -> Log.e(TAG, "Can't load preview", e) })
