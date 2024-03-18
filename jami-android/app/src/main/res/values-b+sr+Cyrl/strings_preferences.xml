@@ -19,11 +19,11 @@
   <string name="pref_hwEncode_summary">Експериментална карактеристика</string>
   <string name="pref_videoBitrate_title">Брзина преноса видео записа</string>
   <string name="pref_videoBitrate_summary">Изабери подразумевану брзину одлазног видео записа (KB/s)</string>
-  <string name="pref_videoResolution_title">Резолуција видео снимака</string>
+  <string name="pref_videoResolution_title">Video rezolucija</string>
   <string name="pref_videoResolution_summary">Изабери подразумевану резолуцију одлазног видеа</string>
   <string name="pref_systemContacts_title">Користи системске контакте</string>
   <string name="pref_systemContacts_summary">Користи системске контакте да бисте приказали детаље позиваоца.</string>
-  <string name="pref_systemDialer_title">Упути системске позиве користећи Јами</string>
+  <string name="pref_systemDialer_title">Uputite sistemske pozive koristeći Jami</string>
   <string name="pref_systemDialer_summary">Користи Јами за упућивање системских позива када је то могуће.</string>
   <string name="pref_startOnBoot_title">Покрени Јами при покретању</string>
   <string name="pref_startOnBoot_summary">Покрени Јами у позадини када се систем покрене.</string>

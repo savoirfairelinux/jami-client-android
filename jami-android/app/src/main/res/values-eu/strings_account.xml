@@ -140,7 +140,7 @@
   <string name="error_passwords_not_equals">Pasahitzak ez datoz bat</string>
   <string name="export_account_wait_title">Itxaron mesedez...</string>
   <string name="export_account_wait_message">Kontuaren informazioa esportatzen</string>
-  <string name="account_export_file">Laguntza Kontua</string>
+  <string name="account_export_file">Egin kontuaren babes-kopia</string>
   <string name="account_export_file_summary">Zure kontua zure gailuan babestu eta gero berreskuratu.</string>
   <string name="account_export_end_decryption_message">Ezin izan dut zure kontua ireki eman duzun pasahitza erabiliz.</string>
   <string name="account_export_end_network_title">Sare errorea</string>
@@ -247,4 +247,5 @@
   <string name="error_format_not_supported">Formatu hau ez da onartzen.</string>
   <string name="account_link_device_title">Estekatu gailu berria</string>
   <string name="account_link_device_button">Konektatu</string>
+  <!--Biometry-->
 </resources>

@@ -38,6 +38,7 @@
   <string name="menu_item_plugin_list">הגדרות הפלוגינים</string>
   <string name="menu_item_share">לחלוק את החשבון שלי</string>
   <string name="menu_item_about">על אודות Jami</string>
+  <string name="video_setting_title">הגדרות הוידאו</string>
   <!--Dialing Fragment-->
   <string name="dial_number">צלקי מספר</string>
   <!--History Fragment-->
@@ -102,6 +103,8 @@
   <string name="conversation_action_incoming_call">שיחה נכנסת</string>
   <string name="conversation_action_latest">גלול לקצה השיחה</string>
   <string name="conversation_members">חברי</string>
+  <string name="today">היום</string>
+  <string name="yesterday">אתמול</string>
   <!--Contacts-->
   <string name="account_create_title">יצירת חשבון Jami</string>
   <string name="prompt_hint_username">שם משתמש</string>

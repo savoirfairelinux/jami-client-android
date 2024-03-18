@@ -38,6 +38,7 @@
   <string name="menu_item_plugin_list">Cluiche Cluiche Cluiche</string>
   <string name="menu_item_share">Comhroinn mo chuntas</string>
   <string name="menu_item_about">Maidir le Jami</string>
+  <string name="video_setting_title">Suíomh-bhreathnú</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Roghnaigh uimhir</string>
   <!--History Fragment-->
@@ -88,6 +89,8 @@
   <string name="conversation_action_block_this">Contae Bloc</string>
   <string name="conversation_action_incoming_call">Glacadh isteach</string>
   <string name="conversation_members">Comhaltaí</string>
+  <string name="today">Sa lá atá inniu ann</string>
+  <string name="yesterday">An-dè</string>
   <!--Contacts-->
   <string name="account_create_title">Déan cuntas Jami</string>
   <string name="prompt_hint_username">Ainm úsáideora</string>

@@ -22,6 +22,7 @@
   <string name="developed_by">Được phát triển bởi</string>
   <string name="designed_by">Được thiết kế bởi</string>
   <string name="ringtones_by">Nhạc tiếng</string>
+  <string name="credits_volunteers">Và các tình nguyện viên đóng góp vào dự án này!</string>
   <!--RingActivity-->
   <string name="error_no_network">Không có kết nối mạng</string>
   <string name="error_account_offline">Tài khoản đã bị tắt</string>
@@ -44,34 +45,57 @@
   <!--History Fragment-->
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
+  <string name="invitation_card_title">Lời mời nhận được</string>
+  <plurals name="home_conferences_title">
+    <item quantity="other">%d Cuộc trò chuyện</item>
+  </plurals>
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">Tìm tên hoặc cuộc trò chuyện...</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
   <string name="notif_missed_incoming_call">Lỡ cuộc gọi tiếp nhận</string>
   <string name="notif_missed_outgoing_call">Lỡ cuộc gọi ra ngoài</string>
+  <string name="notif_incoming_call_title">Cuộc gọi đến từ %1$s</string>
   <string name="notif_incoming_call">Tiếp tục gọi</string>
+  <string name="notif_outgoing_call_title">Cuộc gọi đi tới %1$s</string>
   <string name="notif_outgoing_call">Tiếp tục gọi</string>
+  <string name="notif_current_call_title">Cuộc gọi đang diễn ra với %1$s</string>
+  <string name="notif_current_call">Cuộc gọi đang diễn ra</string>
   <string name="notif_channel_calls">- Các cuộc gọi</string>
+  <string name="notif_channel_missed_calls">Cuộc gọi nhỡ</string>
+  <string name="notif_channel_incoming_calls">Cuộc gọi đến</string>
   <string name="notif_channel_messages">Thông điệp</string>
   <string name="notif_channel_file_transfer">Chuyển tập tin</string>
+  <string name="notif_channel_sync">Đồng bộ dữ liệu</string>
+  <string name="notif_channel_background_service">Dịch vụ dưới nền</string>
   <string name="notif_group_calls">- Các cuộc gọi</string>
+  <string name="notif_background_service">Jami hiện đang chạy dưới nền</string>
+  <string name="notif_mark_as_read">Đánh dấu là đã đọc</string>
   <string name="notif_dismiss">Tháo dỡ</string>
   <string name="notif_reply">Trả lời</string>
+  <string name="notif_sync_title">Đang đồng bộ dữ liệu...</string>
   <string name="location_share_action_stop">Ngừng chia sẻ</string>
   <string name="location_share_about_title">Thông tin bản đồ</string>
   <!--Call Fragment-->
+  <string name="you_txt_prefix">Bạn:</string>
   <string name="action_call_maximize">Tăng tối đa</string>
   <string name="action_call_minimize">Giảm</string>
   <string name="action_call_mute">Ngô</string>
   <string name="action_call_unmute">Không nói gì</string>
+  <string name="ongoing_call">Cuộc gọi đang diễn ra</string>
+  <string name="call_duration">Đã kéo dài %s</string>
   <string name="action_call_end_accept">Kết thúc cuộc gọi và trả lời</string>
   <string name="action_call_decline">Sự suy giảm</string>
   <string name="action_call_mic_mute">Tắt tiếng micrô</string>
   <string name="ab_action_contact_add">Thêm vào các liên hệ</string>
+  <string name="scan_qr">Quét mã QR</string>
+  <string name="qr_code">Mã QR</string>
   <!--Text messages-->
   <string name="message_failed">Thất bại</string>
   <string name="send_file">Gửi tập tin</string>
+  <string name="hist_file_sent">Tập tin đã gửi đi</string>
+  <string name="hist_file_received">Tập tin đã nhận</string>
   <string name="conversation_share_location">Địa điểm chia sẻ</string>
   <string name="in_reply_to">Trả lời</string>
   <!--MediaPreferenceFragment-->
@@ -87,10 +111,17 @@
   <string name="conversation_details">Thông tin liên lạc</string>
   <string name="conversation_action_delete_this_message">Hành động này không thể không được thực hiện.</string>
   <string name="conversation_action_history_clear">Lịch sử rõ ràng</string>
-  <string name="conversation_action_block_this">Khác tiếp xúc</string>
+  <string name="conversation_action_block_this">Chặn liên hệ</string>
+  <string name="conversation_action_unblock_this">Bỏ chặn liên hệ</string>
   <string name="conversation_action_incoming_call">Tiếp tục gọi</string>
   <string name="conversation_action_latest">Cuộn đến cuối cuộc hội thoại</string>
+  <string name="block_contact_dialog_title">Chặn %1$s?</string>
+  <string name="block_contact_dialog_message">%1$s sẽ không thể liên lạc với bạn cho đến khi bạn bỏ chặn họ.</string>
+  <string name="block_contact_completed">%1$s đã bị chặn.</string>
+  <string name="unblock_contact_dialog_title">Bỏ chặn %1$s?</string>
+  <string name="unblock_contact_completed">%1$s đã được bỏ chặn.</string>
   <string name="conversation_members">Các thành viên</string>
+  <string name="conversation_blocked">Liên hệ này đã bị chặn.</string>
   <string name="today">Ngày nay</string>
   <string name="yesterday">Hôm qua</string>
   <!--Contacts-->
@@ -115,7 +146,7 @@
   <!--Pending contact requests-->
   <string name="accept">Chấp nhận</string>
   <string name="refuse">Nhận không</string>
-  <string name="block">Blok</string>
+  <string name="block">Chặn</string>
   <!--Send contact requests-->
   <string name="send_request_button">Gửi đi</string>
   <!--Blacklist-->

@@ -22,6 +22,7 @@
   <string name="developed_by">Desarrollado por</string>
   <string name="designed_by">Diseñado por</string>
   <string name="ringtones_by">Timbres de llamada por</string>
+  <string name="credits_volunteers">¡Y los voluntarios que contribuyen a este proyecto!</string>
   <!--RingActivity-->
   <string name="error_no_network">Sin conexión de red</string>
   <string name="error_account_offline">La cuenta se encuentra desconectada</string>
@@ -38,6 +39,7 @@
   <string name="menu_item_plugin_list">Configuración de complementos</string>
   <string name="menu_item_share">Compartir mi cuenta</string>
   <string name="menu_item_about">Acerca de Jami</string>
+  <string name="video_setting_title">Ajustes de vídeo</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Marcar un numero</string>
   <!--History Fragment-->
@@ -45,7 +47,7 @@
   <!--Home Fragment-->
   <string name="invitation_card_title">Invitaciones recibidas</string>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Buscar nombre o numero de teléfono</string>
+  <string name="searchbar_hint">Buscar nombre o conversación...</string>
   <string name="choose_number">Seleccionar un numero</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -96,6 +98,7 @@
   <string name="ongoing_call">Llamada en curso</string>
   <string name="hist_in_call">Llamada entrante de %1$s</string>
   <string name="hist_out_call">Llamada saliente de %1$s</string>
+  <string name="call_duration">Último %s</string>
   <string name="start_error_title">¡No se ha podido iniciar Jami!</string>
   <string name="start_error_mic_required">Jami requiere permisos para acceder al micrófono para funcionar.</string>
   <string name="action_call_accept">Atender</string>
@@ -134,6 +137,7 @@
   <string name="conversation_send_video">Grabar clip de video</string>
   <string name="conversation_share_location">Compartir ubicación</string>
   <string name="ongoing_group_call">Llamada en curso</string>
+  <string name="started_call">Comenzó una llamada</string>
   <string name="in_reply_to">En respuesta a</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Permiso de cámara</string>
@@ -193,6 +197,8 @@
   <string name="conversation_syncing">Descargando conversación del par</string>
   <string name="conversation_blocked">Éste contacto está bloqueado.</string>
   <string name="conversation_ended">Conversación terminada.</string>
+  <string name="conversation_message_deleted">%s Eliminar mensaje</string>
+  <string name="conversation_reply_you">Tú</string>
   <string name="conversation_preference_color">Color de la conversación</string>
   <string name="conversation_preference_emoji">Emoji de la conversación</string>
   <string name="conversation_type_contact">Contacto de Jami</string>
@@ -203,6 +209,8 @@
   <string name="conversation_contact_left">%1$sse salió</string>
   <string name="conversation_contact_banned">%1$s fue prohibido</string>
   <string name="conversation_search_hint">Buscar conversación</string>
+  <string name="today">Hoy</string>
+  <string name="yesterday">Ayer</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">¿Añadir a %1$s?</string>
   <string name="prompt_new_password">Contraseña nueva</string>
@@ -324,6 +332,16 @@
   <string name="tv_send_video">Enviar un Archivo Multimedia</string>
   <string name="tv_action_more">Maś</string>
   <string name="conversation_input_speech_hint">Diga algo...</string>
+  <string name="audio_permission_denied">Por favor, otorgue acceso al micrófono para utilizar las funciones de audio de Jami.</string>
+  <string name="camera_permission_denied">Por favor, otorgue acceso a la cámara para utilizar las funciones de vídeo de Jami.</string>
+  <string name="speech_recogniton_unavailable">El reconocimiento de voz no está disponible.</string>
+  <string name="audio_permission_rationale_title">Permiso de audio requerido</string>
+  <string name="camera_permission_rationale_title">Permiso de vídeo requerido</string>
+  <string name="audio_permission_rationale_message">Jami requiere el permiso del micrófono para utilizar la función de texto a voz y grabar audio. Se solicitará en el siguiente paso.</string>
+  <string name="camera_permission_rationale_message">Jami requiere el permiso de la cámara para grabar vídeo y realizar vídeollamadas. Se solicitará en el siguiente paso.</string>
+  <string name="unable_to_start_recorder">No se puede iniciar la grabación de audio.</string>
+  <string name="error_sharing_file">Error al compartir el archivo.</string>
+  <string name="error_opening_file">Error al abrir el archivo.</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Recomendado</string>
   <string name="wizard_status_optional">Opcional</string>
@@ -389,5 +407,10 @@
   <string name="donation_card_description">Si disfruta usando Jami y cree en nuestra misión, ¿le gustaría hacer una donación?</string>
   <string name="donation_card_not_now">Ahora no</string>
   <string name="donation_donate">Donar</string>
+  <string name="donation_setting_title">Recordatorio de donación</string>
+  <string name="donation_setting_description">Habilitar el recordatorio de donación</string>
   <!--Plugin-->
+  <string name="unable_to_load">No se puede cargar %1$s</string>
+  <string name="load_sucess">%1$s: habilitado</string>
+  <string name="unload_sucess">%1$s: desactivado</string>
 </resources>

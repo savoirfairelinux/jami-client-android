@@ -48,6 +48,9 @@
   <string name="account_password_set">Постави лозинку</string>
   <string name="account_password_summary">Управљај лозинком налога.</string>
   <string name="account_password_change_wait_message">Промена лозинке налога</string>
+  <string name="account_biometric_disable">Onemogućite biometrijsku autentifikaciju</string>
+  <string name="account_biometric_set">Omogućite biometrijsku autentifikaciju</string>
+  <string name="account_biometric_summary">Upravljajte biometrijskom autentifikacijom za svoj nalog.</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Опште</string>
   <string name="account_basic_category">Основна подешавања</string>
@@ -143,7 +146,7 @@
   <string name="error_passwords_not_equals">Лозинке се не поклапају</string>
   <string name="export_account_wait_title">Молимо сачекај…</string>
   <string name="export_account_wait_message">Извоз информација о налогу</string>
-  <string name="account_export_file">Резервна копија налога</string>
+  <string name="account_export_file">Налог за резервну копију</string>
   <string name="account_export_file_summary">Направи резервну копију налога на уређају да бисте га касније вратили.</string>
   <string name="account_export_end_decryption_message">Откључавање вашег налога помоћу наведене лозинке није успело.</string>
   <string name="account_export_end_network_title">Грешка на мрежи</string>
@@ -194,7 +197,7 @@
   <string name="account_link_show_button">Прикажи %d више повезаних уређаја</string>
   <string name="account_link_hide_button">Сакриј повезани уређај</string>
   <string name="account_link_export_info">Да бисте користили овај налог на другим уређајима, прво га морате открити на Јами-ју. Ово ће генерисати PIN код који морате да унесете на новом уређају да бисте подесили налог. PIN важи 10 минута.</string>
-  <string name="account_start_export_button">Генериши PIN</string>
+  <string name="account_start_export_button">Генериши ПИН</string>
   <string name="account_end_export_button">затвори</string>
   <string name="account_end_export_infos">Ваш PIN је:\n\n%%\n\nДа бисте довршили процес, потребно је да отворите Јами на новом уређају. Направите нови налог са „Повежи овај уређај са налогом“. Ваш PIN важи 10 минута.</string>
   <string name="account_link_export_info_light">Да бисте користили овај налог на другим уређајима, прво га морате изложити на Јамију. Ово ће генерисати PIN  код који морате да унесете на нови налог да бисте подесили налог. PIN код је валидан следећих 10 минута.</string>
@@ -258,7 +261,7 @@
   <string name="account_link_time_valid">PIN код ће бити неважећи: %1$s.</string>
   <string name="account_link_device_info">Изабери „Повежи нови уређај“ из друге Јами апликације да бисте приказали QR код или PIN</string>
   <string name="account_generate_export_device">На другом уређају</string>
-  <string name="account_generate_export_info">Инсталирај и покрените Јами, изаберите „Увези са другог уређаја“ и скенирајте QR код.</string>
+  <string name="account_generate_export_info">Instalirajte i pokrenite Jami, izaberite „Uvezi sa drugog uređaja“ i skenirajte QR kod.</string>
   <string name="content_description_qr_generated">Твој Qr код</string>
   <string name="account_generate_export_invalid">PIN више није важећи.\n Унеси лозинку и генериши другу да бисте повезали нови уређај.</string>
   <string name="account_generate_export_invalid_two">ПИН више није важећи.\n Генериши још један да бисте повезали нови уређај.</string>
@@ -266,4 +269,17 @@
   <string name="connect_device_scanqr">Скенирај QR код</string>
   <string name="connect_device_enterPIN">Или унесите PIN</string>
   <string name="account_link_device_button">Повежи се</string>
+  <!--Biometry-->
+  <string name="account_biometry_auth_title">Otključajte Jami nalog</string>
+  <string name="account_biometry_auth_message">Koristite biometriju za otključavanje naloga</string>
+  <string name="account_biometry_enroll_title">Koristite biometrijsku autentifikaciju?</string>
+  <string name="account_biometry_enroll_message">Vaš uređaj podržava bezbednu biometrijsku autentifikaciju. Biometrijska autentifikacija ili autentifikacija uređaja dodaje zgodan način za lokalno otključavanje pristupa vašem Jami nalogu. I dalje ćete moći da koristite svoju lozinku.</string>
+  <string name="account_biometry_enroll_accept">Koristite biometriju</string>
+  <string name="no_thanks">Ne hvala</string>
+  <string name="account_biometry_enroll_auth_title">Dodajte autentifikaciju za svoj Jami nalog</string>
+  <string name="account_biometry_enroll_auth_message">Dodajte bezbednu biometrijsku ili autentifikaciju uređaja kao alternativu lozinki</string>
+  <string name="account_auth_error">Greška potvrda identiteta: %1$s</string>
+  <string name="account_auth_success">Autentifikacija je uspela</string>
+  <string name="account_auth_key_error">Dešifrovanje ključa naloga nije uspelo</string>
+  <string name="account_auth_password">Koristite lozinku naloga</string>
 </resources>

@@ -23,6 +23,7 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="developed_by">Desenvolvido por</string>
   <string name="designed_by">Projetado por</string>
   <string name="ringtones_by">Toques de chamada por</string>
+  <string name="credits_volunteers">E os voluntários que contribuem para este projeto!</string>
   <!--RingActivity-->
   <string name="error_no_network">Sem conectividade</string>
   <string name="error_account_offline">A conta está offline</string>
@@ -52,7 +53,7 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
     <item quantity="other">%d Conversas</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Buscar nome ou número de telefone</string>
+  <string name="searchbar_hint">Procurar nome ou conversa...</string>
   <string name="choose_number">Escolhe um número</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -103,6 +104,7 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="ongoing_call">Chamada em andamento</string>
   <string name="hist_in_call">Recebimento de chamada %1$s</string>
   <string name="hist_out_call">Chamada de saída %1$s</string>
+  <string name="call_duration">Último %s</string>
   <string name="start_error_title">Não é possível iniciar o Jami!</string>
   <string name="start_error_mic_required">O Jami requer permissão para uso do microfone para funcionar.</string>
   <string name="action_call_accept">Atender chamada</string>
@@ -141,6 +143,7 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="conversation_send_video">Gravar vídeo</string>
   <string name="conversation_share_location">Compartilhar localização</string>
   <string name="ongoing_group_call">Chamada em andamento</string>
+  <string name="started_call">Começar uma chamada</string>
   <string name="in_reply_to">Em resposta à</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Permissão de câmera</string>
@@ -200,6 +203,7 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="conversation_syncing">Baixando a conversação a partir do par</string>
   <string name="conversation_blocked">Este contato está bloqueado.</string>
   <string name="conversation_ended">Conversa finalizada.</string>
+  <string name="conversation_message_deleted">%sapagado uma mensagem</string>
   <string name="conversation_reply_you">Você</string>
   <string name="conversation_preference_color">Cor da conversação</string>
   <string name="conversation_preference_emoji">emoji da conversação</string>
@@ -334,6 +338,16 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="tv_send_video">Enviar Mídia</string>
   <string name="tv_action_more">Mais</string>
   <string name="conversation_input_speech_hint">Fale algo...</string>
+  <string name="audio_permission_denied">Por favor, permita o acesso ao microfone para usar os recursos de áudio.</string>
+  <string name="camera_permission_denied">Por favor, permita acesso à câmera para usar os recursos de vídeo.</string>
+  <string name="speech_recogniton_unavailable">Reconhecimento de voz não disponível.</string>
+  <string name="audio_permission_rationale_title">Permissão de áudio necessária</string>
+  <string name="camera_permission_rationale_title">Permissão de vídeo necessária</string>
+  <string name="audio_permission_rationale_message">Jamir requer a permissão de microfone para usar os recursos de leitura de texto e gravação de áudio. Será solicitado no próximo passo.</string>
+  <string name="camera_permission_rationale_message">Jami requer a permissão de câmera para gravar vídeo e para chamada de vídeo. Será solicitado no próximo passo.</string>
+  <string name="unable_to_start_recorder">Não é possível começar a gravar áudio.</string>
+  <string name="error_sharing_file">Erro ao compartilhar o arquivo.</string>
+  <string name="error_opening_file">Erro ao abrir o arquivo.</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Recomendado</string>
   <string name="wizard_status_optional">Opcional</string>
@@ -382,12 +396,27 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="picker_btn">Selecionar os contatos</string>
   <string name="bottomsheet_contact">Contacte Jami\n%1$s</string>
   <string name="bottomsheet_remove">Remova-se do enxame</string>
+  <string name="error_open_no_app_found">Nenhum aplicativo encontrado para abrir este arquivo: %1$s</string>
   <!--JamiId-->
+  <string name="jami_id_copy">Copiar identidade Jami</string>
+  <string name="jami_id_share">Compartilhar identidade Jami</string>
   <string name="jami_id_validate">Registrar nome de usuário</string>
+  <string name="jami_id_available">O nome de usuário não está disponível</string>
+  <string name="jami_id_not_available">O nome de usuário não está disponível\n• 32 número de caracteres máximo\n• Caracteres especiais permitidos: traço (-), underscore (_)</string>
+  <string name="jami_id_info">• 32 máximo caracteres\n• Caracteres especiais permitidos: traço (-), underscore (_)</string>
   <string name="jami_id_looking_for_availability">Buscando disponibilidade de usuário...</string>
   <string name="jami_id_choose_username">Escolha um nome de usuário</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Bem-vindo ao Jami</string>
+  <string name="welcome_jami_description">Compartilhe sua identidade Jami para ser contactado mais facilmente!</string>
   <!--Donation-->
+  <string name="donation_card_description">Se você está gostando do Jami e acredita na nossa missão, gostaria de fazer uma doação?</string>
+  <string name="donation_card_not_now">Não agora</string>
+  <string name="donation_donate">Doar</string>
+  <string name="donation_setting_title">Lembrete de doação</string>
+  <string name="donation_setting_description">Habilitar o lembrete de doação</string>
   <!--Plugin-->
+  <string name="unable_to_load">Incapaz de carregar %1$s</string>
+  <string name="load_sucess">%1$shabilitado</string>
+  <string name="unload_sucess">%1$sdesabilitado</string>
 </resources>

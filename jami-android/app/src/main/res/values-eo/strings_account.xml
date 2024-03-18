@@ -249,4 +249,5 @@
   <string name="error_format_not_supported">Tiu formato ne estas subtenata.</string>
   <string name="account_link_device_title">Ligigu novan aparaton</string>
   <string name="account_link_device_button">Konekti</string>
+  <!--Biometry-->
 </resources>

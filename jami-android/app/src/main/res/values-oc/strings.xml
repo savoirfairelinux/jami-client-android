@@ -49,7 +49,6 @@
     <item quantity="other">%d conversacions</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Recercar lo nom o lo numèro de telefòn...</string>
   <string name="choose_number">Escotar un nombre</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
