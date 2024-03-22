@@ -19,6 +19,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     android:layout_width="match_parent"
     android:layout_height="72dp"
     android:background="@drawable/background_item_smartlist"
+    android:foreground="?attr/selectableItemBackground"
     android:descendantFocusability="blocksDescendants"
     android:paddingLeft="16dp"
     android:paddingTop="8dp"
