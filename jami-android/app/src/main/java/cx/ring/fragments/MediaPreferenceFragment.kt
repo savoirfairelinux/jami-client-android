@@ -20,13 +20,14 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.ViewGroup
+import android.view.View
 import androidx.preference.Preference
 import androidx.preference.TwoStatePreference
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.R
 import cx.ring.account.AccountEditionFragment
 import cx.ring.client.RingtoneActivity
+import cx.ring.interfaces.AppBarStateListener
 import cx.ring.mvp.BasePreferenceFragment
 import dagger.hilt.android.AndroidEntryPoint
 import net.jami.model.Account
@@ -55,6 +56,11 @@ class MediaPreferenceFragment : BasePreferenceFragment<MediaPreferencePresenter>
         newOrder.addAll(video)
         presenter.codecChanged(newOrder)
         true
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        (parentFragment as? AppBarStateListener)?.onAppBarScrollTargetViewChanged(listView)
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
