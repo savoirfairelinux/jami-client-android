@@ -112,8 +112,11 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
     override fun handleCallWakelock(isAudioOnly: Boolean) {}
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return TvFragCallBinding.inflate(inflater, container, false).also { b ->
-            b.presenter = this
             binding = b
+            b.callAcceptBtn.setOnClickListener { acceptClicked() }
+            b.callRefuseBtn.setOnClickListener { refuseClicked() }
+            b.callHangupBtn.setOnClickListener { hangUpClicked() }
+            b.callAddBtn.setOnClickListener { addParticipant() }
         }.root
     }
 
