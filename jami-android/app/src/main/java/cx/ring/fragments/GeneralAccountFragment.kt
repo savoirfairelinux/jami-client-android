@@ -22,12 +22,14 @@ import android.content.DialogInterface
 import android.os.Bundle
 import android.text.format.Formatter
 import android.util.Log
+import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.appcompat.app.AlertDialog
 import androidx.preference.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.R
 import cx.ring.account.AccountEditionFragment
+import cx.ring.interfaces.AppBarStateListener
 import cx.ring.mvp.BasePreferenceFragment
 import cx.ring.services.SharedPreferencesServiceImpl
 import cx.ring.views.EditTextIntegerPreference
@@ -113,6 +115,11 @@ class GeneralAccountFragment : BasePreferenceFragment<GeneralAccountPresenter>()
         } else {
             Formatter.formatFileSize(requireContext(), size * 1000L * 1000L)
         }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        (parentFragment as? AppBarStateListener)?.onAppBarScrollTargetViewChanged(listView)
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
