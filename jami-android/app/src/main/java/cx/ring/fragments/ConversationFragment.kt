@@ -119,6 +119,12 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         mAdapter?.let { adapter ->
             adapter.updateDataset(conversation)
             loading = false
+            binding?.histList?.doOnNextLayout {
+                it.animate()
+                    .alpha(1f)
+                    .setDuration(220)
+                    .start()
+            }
         }
     }
 
@@ -452,6 +458,8 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     }
 
     fun openLocationSharing() {
+        if (binding!!.conversationLayout.layoutTransition == null)
+            binding!!.conversationLayout.layoutTransition = LayoutTransition()
         binding!!.conversationLayout.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
         val params = binding!!.mapCard.layoutParams as RelativeLayout.LayoutParams
         if (params.width != ViewGroup.LayoutParams.MATCH_PARENT) {
@@ -983,17 +991,27 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         }
     }
 
-    private fun setupActionbar(conversation: ConversationItemViewModel, img: AvatarDrawable) {
-        binding?.apply {
-            contactImage.setImageDrawable(img)
-            contactTitle.text = conversation.title
-            if (conversation.uriTitle != conversation.title) {
-                contactSubtitle.text = conversation.uriTitle
-                contactSubtitle.visibility = View.VISIBLE
-            } else {
-                contactSubtitle.text = ""
-                contactSubtitle.visibility = View.GONE
-            }
+    private fun setupActionbar(conversation: ConversationItemViewModel) {
+        val title = binding!!.contactTitle
+        val subtitle = binding!!.contactSubtitle
+        val logo = binding!!.contactImage
+        val toolbar = binding!!.tabletToolbar
+        logo.setImageDrawable(mConversationAvatar)
+        logo.visibility = View.VISIBLE
+        toolbar.setOnClickListener { openContact() }
+        title.text = conversation.title
+        title.textSize = 15f
+        title.setTypeface(null, Typeface.NORMAL)
+        if (conversation.uriTitle != conversation.title) {
+            subtitle.text = conversation.uriTitle
+            subtitle.visibility = View.VISIBLE
+        } else {
+            subtitle.text = ""
+            subtitle.visibility = View.GONE
+        }
+    }
+
+    fun blockContactRequest() {
         }
     }
 

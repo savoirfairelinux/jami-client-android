@@ -35,6 +35,7 @@ import androidx.core.view.doOnNextLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.commit
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.R
@@ -394,13 +395,10 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
 
     fun showWelcomeFragment() {
         val welcomeJamiFragment = WelcomeJamiFragment()
-        supportFragmentManager.beginTransaction()
-            .replace(
-                R.id.conversation,
-                welcomeJamiFragment,
-                welcomeJamiFragment::class.java.simpleName
-            )
-            .commit()
+        supportFragmentManager.commit {
+            setReorderingAllowed(true)
+            replace(R.id.conversation, welcomeJamiFragment, welcomeJamiFragment::class.java.simpleName)
+        }
         fWelcomeJami = welcomeJamiFragment
         fConversation = null
     }
@@ -433,7 +431,7 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
                 intent?.let { conversation.handleShareIntent(it) }
             }.commit()
         fConversation = conversation
-        mBinding!!.panel.openPane()
+        mBinding?.panel?.openPane()
     }
 
     fun goToAdvancedSettings() {

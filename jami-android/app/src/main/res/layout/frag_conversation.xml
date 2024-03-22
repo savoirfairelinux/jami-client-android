@@ -5,8 +5,8 @@
     android:id="@+id/conversationLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:animateLayoutChanges="true"
-    android:background="@color/background">
+    android:background="@color/background"
+    tools:context=".client.ConversationActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/toolbar_layout"
@@ -86,6 +86,7 @@
             android:paddingTop="8dp"
             android:paddingBottom="60dp"
             android:transcriptMode="normal"
+            android:alpha="0"
             app:layoutManager="LinearLayoutManager"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:stackFromEnd="true"
@@ -332,7 +333,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:animateLayoutChanges="true"
             android:background="@drawable/textmsg_bg_input"
             android:orientation="vertical">
 
@@ -345,7 +345,7 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="8dp"
                 android:minHeight="48dp"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:cardCornerRadius="@dimen/conversation_message_input_radius"
                 app:cardElevation="4dp"
                 tools:visibility="visible">
