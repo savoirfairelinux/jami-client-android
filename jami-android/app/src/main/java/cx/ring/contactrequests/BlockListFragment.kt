@@ -16,17 +16,15 @@
  */
 package cx.ring.contactrequests
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
 import androidx.recyclerview.widget.LinearLayoutManager
 import cx.ring.account.AccountEditionFragment
-import cx.ring.account.JamiAccountSummaryFragment
 import cx.ring.contactrequests.BlockListViewHolder.BlockListListeners
 import cx.ring.databinding.FragBlocklistBinding
+import cx.ring.interfaces.AppBarStateListener
 import cx.ring.mvp.BaseSupportFragment
 import dagger.hilt.android.AndroidEntryPoint
 import net.jami.contactrequests.BlockListPresenter
@@ -37,25 +35,17 @@ import net.jami.model.ContactViewModel
 @AndroidEntryPoint
 class BlockListFragment : BaseSupportFragment<BlockListPresenter, BlockListView>(), BlockListView,
     BlockListListeners {
-    private val mOnBackPressedCallback: OnBackPressedCallback =
-        object : OnBackPressedCallback(false) {
-            override fun handleOnBackPressed() {
-                this.isEnabled = false
-                val fragment = parentFragment as JamiAccountSummaryFragment?
-                fragment?.popBackStack()
-            }
-        }
+
     private var mAdapter: BlockListAdapter? = null
     private var binding: FragBlocklistBinding? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        binding = FragBlocklistBinding.inflate(inflater, container, false)
-        setHasOptionsMenu(true)
-        return binding!!.root
-    }
+    ) = FragBlocklistBinding.inflate(inflater, container, false).apply {
+        (parentFragment as? AppBarStateListener)?.onAppBarScrollTargetViewChanged(blocklist)
+        binding = this
+    }.root
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -65,13 +55,7 @@ class BlockListFragment : BaseSupportFragment<BlockListPresenter, BlockListView>
     override fun onResume() {
         super.onResume()
         val accountId = arguments?.getString(AccountEditionFragment.ACCOUNT_ID_KEY) ?: return
-        mOnBackPressedCallback.isEnabled = true
         presenter.setAccountId(accountId)
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        requireActivity().onBackPressedDispatcher.addCallback(this, mOnBackPressedCallback)
     }
 
     override fun onUnblockClicked(contact: Contact) {

@@ -45,10 +45,9 @@ import net.jami.utils.DonationUtils
 
 @AndroidEntryPoint
 class AccountEditionFragment : BaseSupportFragment<AccountEditionPresenter, AccountEditionView>(),
-    AccountEditionView, OnScrollChangedListener {
+    AccountEditionView {
     private var mBinding: FragAccountSettingsBinding? = null
     private var mAccountId: String? = null
-    private var mAccountIsJami = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         FragAccountSettingsBinding.inflate(inflater, container, false).apply {
@@ -74,24 +73,22 @@ class AccountEditionFragment : BaseSupportFragment<AccountEditionPresenter, Acco
         super.onViewCreated(view, savedInstanceState)
 
         mAccountId = requireArguments().getString(ACCOUNT_ID_KEY)
-        presenter.init(mAccountId!!)
+        initViewPager(mAccountId!!, false)
 
-        mBinding?.apply {
-            fragmentContainer.viewTreeObserver.addOnScrollChangedListener(this@AccountEditionFragment)
+        mBinding?.fragmentContainer?.viewTreeObserver?.addOnScrollChangedListener {
+            setupElevation()
         }
     }
 
     private fun updateAdapter(tabLayout: TabLayout, viewPager: ViewPager2, accountId: String, isJami: Boolean) {
         viewPager.adapter = PreferencesPagerAdapter(this@AccountEditionFragment, accountId, isJami)
         TabLayoutMediator(tabLayout, viewPager){ tab, position ->
-            tab.text = context?.getString(
-                if (mAccountIsJami) getJamiPanelTitle(position)
-                else getSIPPanelTitle(position))
+            tab.text = context?.getString(getSIPPanelTitle(position))
         }.attach()
     }
 
     override fun displaySummary(accountId: String) {
-        toggleView(accountId, true)
+        //toggleView(accountId, true)
         val fragmentManager = childFragmentManager
         val existingFragment = fragmentManager.findFragmentByTag(JamiAccountSummaryFragment.TAG)
         val args = Bundle().apply { putString(ACCOUNT_ID_KEY, accountId) }
@@ -111,7 +108,7 @@ class AccountEditionFragment : BaseSupportFragment<AccountEditionPresenter, Acco
     }
 
     override fun displaySIPView(accountId: String) {
-        toggleView(accountId, false)
+        //toggleView(accountId, false)
     }
 
     override fun initViewPager(accountId: String, isJami: Boolean) {
@@ -142,15 +139,15 @@ class AccountEditionFragment : BaseSupportFragment<AccountEditionPresenter, Acco
         }
     }
 
-    private fun toggleView(accountId: String?, isJami: Boolean) {
-        mAccountId = accountId
-        mAccountIsJami = isJami
-        mBinding?.apply {
-            slidingTabs.visibility = if (isJami) View.GONE else View.VISIBLE
-            pager.visibility = if (isJami) View.GONE else View.VISIBLE
-            fragmentContainer.visibility = if (isJami) View.VISIBLE else View.GONE
-        }
-    }
+//    private fun toggleView(accountId: String?, isJami: Boolean) {
+//        mAccountId = accountId
+//        mAccountIsJami = isJami
+//        mBinding?.apply {
+//            slidingTabs.visibility = if (isJami) View.GONE else View.VISIBLE
+//            pager.visibility = if (isJami) View.GONE else View.VISIBLE
+//            fragmentContainer.visibility = if (isJami) View.VISIBLE else View.GONE
+//        }
+//    }
 
     override fun exit() {
         activity?.onBackPressedDispatcher?.onBackPressed()
@@ -188,10 +185,6 @@ class AccountEditionFragment : BaseSupportFragment<AccountEditionPresenter, Acco
         }
     }
 
-    override fun onScrollChanged() {
-        setupElevation()
-    }
-
     private fun setupElevation() {
         val binding = mBinding ?: return
         val ll = binding.pager.getChildAt(binding.pager.currentItem) as? LinearLayout ?: return
@@ -208,15 +201,6 @@ class AccountEditionFragment : BaseSupportFragment<AccountEditionPresenter, Acco
         val ACCOUNT_ID_KEY = AccountEditionFragment::class.qualifiedName + "accountId"
         val ACCOUNT_HAS_PASSWORD_KEY = AccountEditionFragment::class.qualifiedName + "hasPassword"
         private const val SCROLL_DIRECTION_UP = -1
-
-        @StringRes
-        private fun getJamiPanelTitle(position: Int): Int = when (position) {
-            0 -> R.string.account_preferences_basic_tab
-            1 -> R.string.account_preferences_media_tab
-            2 -> R.string.account_preferences_advanced_tab
-            3 -> R.string.account_preference_plugin_tab
-            else -> -1
-        }
 
         @StringRes
         private fun getSIPPanelTitle(position: Int): Int = when (position) {

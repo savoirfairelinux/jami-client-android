@@ -18,6 +18,7 @@ package cx.ring.fragments
 
 import android.os.Bundle
 import android.text.TextUtils
+import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.preference.EditTextPreference
 import androidx.preference.ListPreference
@@ -25,6 +26,7 @@ import androidx.preference.Preference
 import androidx.preference.TwoStatePreference
 import cx.ring.R
 import cx.ring.account.AccountEditionFragment
+import cx.ring.interfaces.AppBarStateListener
 import cx.ring.mvp.BasePreferenceFragment
 import cx.ring.views.EditTextIntegerPreference
 import cx.ring.views.EditTextPreferenceDialog
@@ -39,6 +41,11 @@ import net.jami.settings.AdvancedAccountView
 class AdvancedAccountFragment : BasePreferenceFragment<AdvancedAccountPresenter>(),
     AdvancedAccountView, Preference.OnPreferenceChangeListener {
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        (parentFragment as? AppBarStateListener)?.onAppBarScrollTargetViewChanged(listView)
+    }
+
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         super.onCreatePreferences(savedInstanceState, rootKey)
 
@@ -52,22 +59,28 @@ class AdvancedAccountFragment : BasePreferenceFragment<AdvancedAccountPresenter>
         if (fragmentManager.findFragmentByTag(DIALOG_FRAGMENT_TAG) != null) {
             return
         }
-        if (preference is EditTextIntegerPreference) {
-            val f = EditTextPreferenceDialog.newInstance(
-                preference.getKey(),
-                EditorInfo.TYPE_CLASS_NUMBER
-            )
-            f.setTargetFragment(this, 0)
-            f.show(fragmentManager, DIALOG_FRAGMENT_TAG)
-        } else if (preference is PasswordPreference) {
-            val f = EditTextPreferenceDialog.newInstance(
-                preference.getKey(),
-                EditorInfo.TYPE_CLASS_TEXT or EditorInfo.TYPE_TEXT_VARIATION_PASSWORD
-            )
-            f.setTargetFragment(this, 0)
-            f.show(fragmentManager, DIALOG_FRAGMENT_TAG)
-        } else {
-            super.onDisplayPreferenceDialog(preference)
+
+        when (preference) {
+            is EditTextIntegerPreference -> {
+                val f = EditTextPreferenceDialog.newInstance(
+                        preference.getKey(),
+                        EditorInfo.TYPE_CLASS_NUMBER
+                )
+                f.setTargetFragment(this, 0)
+                f.show(fragmentManager, DIALOG_FRAGMENT_TAG)
+            }
+
+            is PasswordPreference -> {
+                val f = EditTextPreferenceDialog.newInstance(
+                        preference.getKey(),
+                        EditorInfo.TYPE_CLASS_TEXT or EditorInfo.TYPE_TEXT_VARIATION_PASSWORD
+                )
+                f.setTargetFragment(this, 0)
+                f.show(fragmentManager, DIALOG_FRAGMENT_TAG)
+            }
+
+            else -> super.onDisplayPreferenceDialog(preference)
+
         }
     }
 

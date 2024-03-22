@@ -18,14 +18,15 @@ package cx.ring.settings
 
 import android.content.Context
 import android.os.Bundle
+import android.view.View
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import cx.ring.R
+import cx.ring.interfaces.AppBarStateListener
 import cx.ring.services.SharedPreferencesServiceImpl
 
 class VideoSettingsFragment : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-        (parentFragment as SettingsFragment).setToolbarTitle(R.string.video_setting_title)
         val pm = preferenceManager
         pm.sharedPreferencesMode = Context.MODE_PRIVATE
         pm.sharedPreferencesName = SharedPreferencesServiceImpl.PREFS_VIDEO
@@ -40,6 +41,13 @@ class VideoSettingsFragment : PreferenceFragmentCompat() {
                     true
                 }
         }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val appbarHostFragment = parentFragment as? AppBarStateListener
+        appbarHostFragment?.onToolbarTitleChanged(getString(R.string.video_setting_title))
+        appbarHostFragment?.onAppBarScrollTargetViewChanged(listView)
     }
 
     companion object {

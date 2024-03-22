@@ -36,7 +36,6 @@ interface JamiAccountSummaryView {
     fun goToMedia(accountId: String)
     fun goToSystem(accountId: String)
     fun goToAdvanced(accountId: String)
-    fun goToPlugin(accountId: String)
     fun goToAccount(accountId: String)
     fun showRevokingProgressDialog()
     fun deviceRevocationEnded(device: String, status: Int)

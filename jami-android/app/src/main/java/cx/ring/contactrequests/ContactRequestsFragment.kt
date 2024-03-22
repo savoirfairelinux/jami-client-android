@@ -19,7 +19,6 @@ package cx.ring.contactrequests
 import android.os.Bundle
 import android.view.*
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import cx.ring.R
@@ -67,11 +66,6 @@ class ContactRequestsFragment :
                 binding.requestsList.adapter = this
             }
         }
-        binding.requestsList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                (activity as HomeActivity?)?.setToolbarElevation(recyclerView.canScrollVertically(SCROLL_DIRECTION_UP))
-            }
-        })
     }
 
     override fun updateItem(item: Conversation) {
@@ -110,6 +104,5 @@ class ContactRequestsFragment :
 
     companion object {
         private val TAG = ContactRequestsFragment::class.simpleName!!
-        private const val SCROLL_DIRECTION_UP = -1
     }
 }

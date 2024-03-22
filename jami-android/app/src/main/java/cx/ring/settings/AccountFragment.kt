@@ -16,13 +16,11 @@
  */
 package cx.ring.settings
 
-import android.app.Activity
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewTreeObserver.OnScrollChangedListener
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -32,6 +30,7 @@ import cx.ring.account.AccountEditionFragment
 import cx.ring.account.JamiAccountSummaryFragment
 import cx.ring.client.HomeActivity
 import cx.ring.databinding.FragAccountBinding
+import cx.ring.interfaces.AppBarStateListener
 import cx.ring.utils.BiometricHelper
 import cx.ring.utils.DeviceUtils
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,7 +40,7 @@ import net.jami.services.AccountService
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class AccountFragment : Fragment(), OnScrollChangedListener {
+class AccountFragment : Fragment() {
     private var mBinding: FragAccountBinding? = null
     private val mDisposable = CompositeDisposable()
 
@@ -50,10 +49,14 @@ class AccountFragment : Fragment(), OnScrollChangedListener {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         FragAccountBinding.inflate(inflater, container, false).apply {
-            scrollview.viewTreeObserver.addOnScrollChangedListener(this@AccountFragment)
-            settingsChangePassword.setOnClickListener { (parentFragment as JamiAccountSummaryFragment).onPasswordChangeAsked() }
-            settingsBiometric.setOnClickListener { (parentFragment as JamiAccountSummaryFragment).onBiometricChangeAsked() }
-            settingsExport.setOnClickListener { (parentFragment as JamiAccountSummaryFragment).onClickExport() }
+            val parent = parentFragment as? JamiAccountSummaryFragment
+            if (parent != null) {
+                settingsChangePassword.setOnClickListener { parent.onPasswordChangeAsked() }
+                settingsBiometric.setOnClickListener { parent.onBiometricChangeAsked() }
+                settingsExport.setOnClickListener { parent.onClickExport() }
+            }
+            (parentFragment as? AppBarStateListener)?.onAppBarScrollTargetViewChanged(scrollview)
+
             mBinding = this
         }.root
 
@@ -76,8 +79,7 @@ class AccountFragment : Fragment(), OnScrollChangedListener {
                 binding.systemChangePasswordTitle.setText(if (hasPassword) R.string.account_password_change else R.string.account_password_set)
                 binding.settingsDeleteAccount.setOnClickListener { createDeleteDialog(account.accountId).show() }
                 binding.settingsBlackList.setOnClickListener {
-                    val summaryFragment = parentFragment as JamiAccountSummaryFragment?
-                    summaryFragment?.goToBlackList(account.accountId)
+                    (parentFragment as? JamiAccountSummaryFragment)?.goToBlackList(account.accountId)
                 }
                 binding.settingsBiometric.isVisible = hasPassword
                 if (hasPassword) {
@@ -85,17 +87,8 @@ class AccountFragment : Fragment(), OnScrollChangedListener {
                     binding.systemBiometricTitle.text = getText(if (hasBiometrics) R.string.account_biometric_disable else R.string.account_biometric_set)
                 }
             }) {
-                val summaryFragment = parentFragment as JamiAccountSummaryFragment?
-                summaryFragment?.popBackStack()
+                parentFragment?.childFragmentManager?.popBackStack()
             })
-    }
-
-    override fun onScrollChanged() {
-        mBinding?.let { binding ->
-            val activity: Activity? = activity
-            if (activity is HomeActivity)
-                activity.setToolbarElevation(binding.scrollview.canScrollVertically(SCROLL_DIRECTION_UP))
-        }
     }
 
     private fun createDeleteDialog(accountId: String): AlertDialog {
@@ -118,7 +111,6 @@ class AccountFragment : Fragment(), OnScrollChangedListener {
 
     companion object {
         val TAG = AccountFragment::class.simpleName!!
-        private const val SCROLL_DIRECTION_UP = -1
         fun newInstance(accountId: String) = AccountFragment().apply {
             arguments = Bundle().apply {
                 putString(AccountEditionFragment.ACCOUNT_ID_KEY, accountId)
