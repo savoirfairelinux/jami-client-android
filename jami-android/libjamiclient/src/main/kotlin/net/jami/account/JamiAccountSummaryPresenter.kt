@@ -48,7 +48,6 @@ class JamiAccountSummaryPresenter @Inject constructor(
     fun registerName(name: String, scheme: String, password: String) {
         val account = mAccountService.getAccount(mAccountID) ?: return
         mAccountService.registerName(account, name, scheme, password)
-        //view?.accountChanged(account, a.second)
     }
 
     fun startAccountExport(password: String?) {
@@ -175,10 +174,6 @@ class JamiAccountSummaryPresenter @Inject constructor(
 
     fun goToAdvanced() {
         view?.goToAdvanced(mAccountID!!)
-    }
-
-    fun goToPlugins() {
-        view?.goToPlugin(mAccountID!!)
     }
 
     fun revokeDevice(deviceId: String, scheme: String, password: String) {

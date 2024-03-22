@@ -40,6 +40,7 @@ import cx.ring.R
 import cx.ring.about.AboutFragment
 import cx.ring.account.AccountEditionFragment
 import cx.ring.account.AccountWizardActivity
+import cx.ring.account.JamiAccountSummaryFragment
 import cx.ring.application.JamiApplication
 import cx.ring.databinding.ActivityHomeBinding
 import cx.ring.fragments.ContactPickerFragment
@@ -80,24 +81,21 @@ import kotlin.math.max
 @AndroidEntryPoint
 class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicked {
     private val welcomeJamiViewModel by lazy { ViewModelProvider(this)[WelcomeJamiViewModel::class.java] }
+    private var frameContent: Fragment? = null
     private var fConversation: ConversationFragment? = null
     private var fWelcomeJami: WelcomeJamiFragment? = null
     private var mHomeFragment: HomeFragment? = null
 
-    @Inject
-    lateinit
+    @Inject lateinit
     var mContactService: ContactService
 
-    @Inject
-    lateinit
+    @Inject lateinit
     var mAccountService: AccountService
 
-    @Inject
-    lateinit
+    @Inject lateinit
     var mConversationFacade: ConversationFacade
 
-    @Inject
-    lateinit
+    @Inject lateinit
     var mNotificationService: NotificationService
 
     private var mBinding: ActivityHomeBinding? = null
@@ -115,7 +113,7 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
                     mBinding?.panel?.closePane()
                 } else showWelcomeFragment()
 
-                // Next back press don't have to be handled by this callback.
+                // Next back press doesn't have to be handled by this callback.
                 isEnabled = false
             }
         }
@@ -154,11 +152,13 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
         }
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
-        mHomeFragment = supportFragmentManager.findFragmentById(R.id.home_fragment) as? HomeFragment?
+        mHomeFragment = supportFragmentManager.findFragmentById(R.id.home_fragment) as HomeFragment
+        frameContent = supportFragmentManager.findFragmentById(R.id.frame)
         supportFragmentManager.addOnBackStackChangedListener {
-            val frameContent = supportFragmentManager.findFragmentById(R.id.frame)
-            conversationBackPressedCallback.isEnabled =
-                fConversation != null && frameContent == null
+            frameContent = supportFragmentManager.findFragmentById(R.id.frame)
+        }
+        if (frameContent != null) {
+            mBinding!!.frame.isVisible = true
         }
 
         fConversation = supportFragmentManager
@@ -183,6 +183,8 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
             if (isShowing) dismiss()
             mMigrationDialog = null
         }
+        frameContent = null
+        mHomeFragment = null
         mDisposable.dispose()
         mBinding = null
     }
@@ -432,24 +434,32 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
     }
 
     fun goToAdvancedSettings() {
+        if (frameContent is SettingsFragment) {
+            return
+        }
         val content = SettingsFragment()
+        frameContent = content
         supportFragmentManager
             .beginTransaction()
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-            .replace(fragmentContainerId, content, SETTINGS_TAG)
+            .replace(R.id.frame, content, SETTINGS_TAG)
             .addToBackStack(SETTINGS_TAG)
             .commit()
         mBinding!!.frame.isVisible = true
     }
 
     fun goToAbout() {
+        if (frameContent is AboutFragment) {
+            return
+        }
         val content = AboutFragment()
+        frameContent = content
         mBinding!!.frame.isVisible = true
         supportFragmentManager
             .beginTransaction()
             //.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out, android.R.animator.fade_in, android.R.animator.fade_out)
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-            .replace(fragmentContainerId, content, ABOUT_TAG)
+            .replace(R.id.frame, content, ABOUT_TAG)
             .addToBackStack(ABOUT_TAG)
             .commit()
     }
@@ -477,28 +487,46 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
                 )
             startActivityForResult(intent, 1)
         } else {
-            // Create the fragment
-            val accountEditionFragment = AccountEditionFragment()
-            accountEditionFragment.arguments =
-                Bundle().apply {
+
+            if (account.isJami) {   // display JamiAccountSummary
+
+                if (frameContent is JamiAccountSummaryFragment) return
+
+                val fragment = JamiAccountSummaryFragment().apply {
+                    arguments = Bundle().apply { putString(AccountEditionFragment.ACCOUNT_ID_KEY, account.accountId) }
+                }
+
+                // Place it into the frame
+                frameContent = fragment
+                supportFragmentManager.beginTransaction()
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                        .replace(R.id.frame, fragment, ACCOUNT_JAMI_TAG)
+                        .addToBackStack(ACCOUNT_JAMI_TAG)
+                        .commit()
+
+            } else {    //is SIP account --> display SIPView
+
+                // If already on account settings, do nothing
+                if (frameContent is AccountEditionFragment) return
+
+                // Create the fragment
+                val fragment = AccountEditionFragment()
+                fragment.arguments = Bundle().apply {
                     putString(AccountEditionFragment.ACCOUNT_ID_KEY, account.accountId)
                 }
 
-            // Place it into the frame
-            supportFragmentManager.beginTransaction()
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                .replace(fragmentContainerId, accountEditionFragment, ACCOUNTS_TAG)
-                .addToBackStack(ACCOUNTS_TAG)
-                .commit()
+                // Place it into the frame
+                frameContent = fragment
+                supportFragmentManager.beginTransaction()
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                        .replace(R.id.frame, fragment, ACCOUNT_SIP_TAG)
+                        .addToBackStack(ACCOUNT_SIP_TAG)
+                        .commit()
+
+            }
 
             mBinding!!.frame.isVisible = true
         }
-    }
-
-
-
-    fun setToolbarElevation(enable: Boolean) {
-//        if (mBinding != null) mBinding!!.appBar.elevation = if (enable) resources.getDimension(R.dimen.toolbar_elevation) else 0f
     }
 
     private fun getMaxShareShortcuts() =
@@ -550,11 +578,11 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
         const val REQUEST_CODE_QR_CONVERSATION = 7
         const val REQUEST_PERMISSION_CAMERA = 113
         const val REQUEST_PERMISSION_READ_STORAGE = 114
-        const val ACCOUNTS_TAG = "Accounts"
+        const val ACCOUNT_JAMI_TAG = "Account_jami"
+        const val ACCOUNT_SIP_TAG = "Account_sip"
         const val ABOUT_TAG = "About"
         const val SETTINGS_TAG = "Prefs"
         private const val CONVERSATIONS_CATEGORY = "conversations"
-        private const val fragmentContainerId: Int = R.id.frame
     }
 
 }
