@@ -18,14 +18,14 @@ package cx.ring.views
 
 import android.content.Context
 import android.util.AttributeSet
-import android.widget.ScrollView
+import androidx.core.widget.NestedScrollView
 import cx.ring.R
 
-class BoundedScrollView : ScrollView {
+class BoundedScrollView : NestedScrollView {
     private val mBoundedWidth: Int
     private val mBoundedHeight: Int
 
-    constructor(context: Context?) : super(context) {
+    constructor(context: Context) : super(context) {
         mBoundedWidth = 0
         mBoundedHeight = 0
     }

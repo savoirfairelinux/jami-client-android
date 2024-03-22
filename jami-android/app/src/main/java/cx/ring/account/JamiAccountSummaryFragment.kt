@@ -33,7 +33,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewTreeObserver.OnScrollChangedListener
 import android.widget.*
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.PickVisualMediaRequest
@@ -56,9 +55,9 @@ import cx.ring.databinding.DialogProfileBinding
 import cx.ring.databinding.FragAccSummaryBinding
 import cx.ring.databinding.ItemProgressDialogBinding
 import cx.ring.fragments.*
+import cx.ring.interfaces.AppBarStateListener
 import cx.ring.mvp.BaseSupportFragment
 import cx.ring.settings.AccountFragment
-import cx.ring.settings.pluginssettings.PluginsListSettingsFragment
 import cx.ring.utils.AndroidFileUtils
 import cx.ring.utils.BiometricHelper
 import cx.ring.utils.BitmapUtils
@@ -80,15 +79,20 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class JamiAccountSummaryFragment :
     BaseSupportFragment<JamiAccountSummaryPresenter, JamiAccountSummaryView>(),
-    RegisterNameDialogListener, JamiAccountSummaryView,
-    UnlockAccountListener, OnScrollChangedListener, RenameDeviceListener, DeviceRevocationListener {
+    RegisterNameDialogListener, JamiAccountSummaryView, AppBarStateListener,
+    UnlockAccountListener, RenameDeviceListener, DeviceRevocationListener {
+
     private val mOnBackPressedCallback: OnBackPressedCallback = object : OnBackPressedCallback(false) {
         override fun handleOnBackPressed() {
-            if (mBinding!!.fragment.visibility == View.VISIBLE) {
-                mBinding!!.fragment.visibility = View.GONE
+            val binding = mBinding ?: return
+
+            if (childFragmentManager.backStackEntryCount == 1) {
+                onAppBarScrollTargetViewChanged(binding.scrollview)
+                binding.fragment.visibility = View.GONE
                 this.isEnabled = false
-                childFragmentManager.popBackStack()
             }
+
+            childFragmentManager.popBackStack()
         }
     }
     private var mWaitDialog: AlertDialog? = null
@@ -108,23 +112,26 @@ class JamiAccountSummaryFragment :
     }
 
     @Inject
-    lateinit
-    var mAccountService: AccountService
+    lateinit var mAccountService: AccountService
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         FragAccSummaryBinding.inflate(inflater, container, false).apply {
-            scrollview.viewTreeObserver.addOnScrollChangedListener(this@JamiAccountSummaryFragment)
+            onAppBarScrollTargetViewChanged(scrollview)
+            toolbar.setNavigationOnClickListener { activity?.onBackPressedDispatcher?.onBackPressed() }
             linkNewDevice.setOnClickListener { showWizard(mAccount!!.accountId) }
             linkedDevices.setRightDrawableOnClickListener { onDeviceRename() }
             registerName.setOnClickListener { showUsernameRegistrationPopup() }
             chipMore.setOnClickListener {
-                val binding = mBinding ?: return@setOnClickListener
-                if (binding.devicesList.visibility == View.GONE) {
-                    expand(binding.devicesList)
-                } else {
-                    collapse(binding.devicesList)
-                }
+                if (devicesList.visibility == View.GONE) {
+                    expand(devicesList)
+                } else collapse(devicesList)
             }
+
+            settingsAccount.setOnClickListener { presenter.goToAccount() }
+            settingsMedia.setOnClickListener { presenter.goToMedia() }
+            settingsMessages.setOnClickListener { presenter.goToSystem() }
+            settingsAdvanced.setOnClickListener { presenter.goToAdvanced() }
+
             mBinding = this
         }.root
 
@@ -147,41 +154,6 @@ class JamiAccountSummaryFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         presenter.setAccountId(requireArguments().getString(AccountEditionFragment.ACCOUNT_ID_KEY)!!)
-        val binding = mBinding ?: return
-        val adapter = SettingsAdapter(
-            view.context, R.layout.item_setting, listOf(
-                SettingItem(
-                    R.string.account,
-                    R.drawable.account_circle_24
-                ) { presenter.goToAccount() },
-                SettingItem(
-                    R.string.account_preferences_media_tab,
-                    R.drawable.perm_media_24
-                ) { presenter.goToMedia() },
-                SettingItem(
-                    R.string.notif_channel_messages,
-                    R.drawable.chat_bubble_24
-                ) { presenter.goToSystem() },
-                SettingItem(
-                    R.string.account_preferences_advanced_tab,
-                    R.drawable.settings_account_24
-                ) { presenter.goToAdvanced() }
-        ))
-        binding.settingsList.onItemClickListener =
-            AdapterView.OnItemClickListener { _, _, i: Int, _ ->
-                adapter.getItem(i)?.onClick()
-            }
-        binding.settingsList.adapter = adapter
-        var totalHeight = 0
-        for (i in 0 until adapter.count) {
-            val listItem = adapter.getView(i, null, binding.settingsList)
-            listItem.measure(0, 0)
-            totalHeight += listItem.measuredHeight
-        }
-        val par = binding.settingsList.layoutParams
-        par.height = totalHeight + binding.settingsList.dividerHeight * (adapter.count - 1)
-        binding.settingsList.layoutParams = par
-        binding.settingsList.requestLayout()
     }
 
     override fun onResume() {
@@ -197,6 +169,16 @@ class JamiAccountSummaryFragment :
         super.onPause()
         mBinding!!.accountSwitch.setOnCheckedChangeListener(null)
     }
+
+    //================= AppBar management =====================
+    override fun onAppBarScrollTargetViewChanged(v: View?) {
+        mBinding?.appBar?.setLiftOnScrollTargetView(v)
+    }
+
+    override fun onToolbarTitleChanged(title: String) {
+        mBinding?.toolbar?.title = title
+    }
+    //=============== AppBar management end ===================
 
     fun setAccount(accountId: String) {
         presenter.setAccountId(accountId)
@@ -271,8 +253,6 @@ class JamiAccountSummaryFragment :
 
         setSwitchStatus(account)
     }
-
-    fun onBackPressed() = false
 
     private fun showWizard(accountId: String) {
         LinkDeviceFragment.newInstance(accountId)
@@ -542,13 +522,6 @@ class JamiAccountSummaryFragment :
         }
     }
 
-    override fun onScrollChanged() {
-        if (mBinding != null) {
-            val activity = activity
-            if (activity is HomeActivity) activity.setToolbarElevation(mBinding!!.scrollview.canScrollVertically(SCROLL_DIRECTION_UP))
-        }
-    }
-
     private fun setSwitchStatus(account: Account) {
         val switchButton = mBinding!!.accountSwitch
         var color = R.color.red_400
@@ -650,7 +623,8 @@ class JamiAccountSummaryFragment :
             .beginTransaction()
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
             .replace(R.id.fragment, fragment, tag)
-            .addToBackStack(tag).commit()
+            .addToBackStack(tag)
+            .commit()
         mBinding!!.fragment.visibility = View.VISIBLE
         mOnBackPressedCallback.isEnabled = true
     }
@@ -671,23 +645,11 @@ class JamiAccountSummaryFragment :
         changeFragment(fragmentWithBundle(AdvancedAccountFragment(), accountId), AdvancedAccountFragment.TAG)
     }
 
-    override fun goToPlugin(accountId: String) {
-        changeFragment(PluginsListSettingsFragment.newInstance(accountId), PluginsListSettingsFragment.TAG)
-    }
-
     fun goToBlackList(accountId: String?) {
-        val blockListFragment = BlockListFragment().apply {
+        val fragment = BlockListFragment().apply {
             arguments = Bundle().apply { putString(AccountEditionFragment.ACCOUNT_ID_KEY, accountId) }
         }
-        changeFragment(blockListFragment, BlockListFragment.TAG)
-    }
-
-    fun popBackStack() {
-        childFragmentManager.popBackStackImmediate()
-        val fragmentTag = childFragmentManager.getBackStackEntryAt(childFragmentManager.backStackEntryCount - 1).name
-        val fragment = childFragmentManager.findFragmentByTag(fragmentTag)
-        if (fragment != null)
-            changeFragment(fragment, fragmentTag)
+        changeFragment(fragment, BlockListFragment.TAG)
     }
 
     override fun onDeviceRevocationAsked(deviceId: String) {
@@ -775,7 +737,6 @@ class JamiAccountSummaryFragment :
         private val FRAGMENT_DIALOG_PASSWORD = "$TAG.dialog.changePassword"
         private val FRAGMENT_DIALOG_BACKUP = "$TAG.dialog.backup"
         private const val WRITE_REQUEST_CODE = 43
-        private const val SCROLL_DIRECTION_UP = -1
 
         private fun slideAnimator(start: Int, end: Int, summary: View) = ValueAnimator.ofInt(start, end).apply {
              addUpdateListener { valueAnimator: ValueAnimator ->
