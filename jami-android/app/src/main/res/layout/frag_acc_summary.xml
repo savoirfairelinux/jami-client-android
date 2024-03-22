@@ -13,28 +13,46 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".client.HomeActivity">
+    android:background="@color/background"
+    android:fitsSystemWindows="true"
+    tools:context=".account.JamiAccountSummaryFragment">
 
-    <ScrollView
+    <!-- Attribute  app:liftOnScrollTargetViewId="@id/..." : is managed dynamically in fragment -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar"
+        style="@style/Widget.Material3.AppBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        app:liftOnScroll="true">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:navigationIcon="@drawable/abc_ic_ab_back_material"
+        app:title="@string/menu_item_account_settings"/>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clickable="true"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
             android:orientation="vertical"
-            android:paddingStart="16dp"
-            android:paddingTop="12dp"
-            android:paddingEnd="16dp">
+            android:paddingHorizontal="16dp"
+            android:paddingTop="12dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -239,8 +257,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:textColor="@color/text_color"
                     android:textStyle="bold"
                     android:textIsSelectable="true"
-                    android:ellipsize="end"
-                    />
+                    android:ellipsize="end" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -266,7 +283,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:divider="@null"
-                android:nestedScrollingEnabled="true"
+                android:nestedScrollingEnabled="false"
                 android:visibility="gone" />
 
             <com.google.android.material.button.MaterialButton
@@ -275,7 +292,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:drawableLeft="@drawable/baseline_add_24"
+                android:drawableStart="@drawable/baseline_add_24"
                 android:drawableTint="@color/colorOnPrimary"
                 android:text="@string/link_new_device" />
 
@@ -283,28 +300,87 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/title_margin"
-                android:layout_marginTop="4dp"
-                android:layout_marginBottom="4dp"
+                android:layout_marginVertical="4dp"
                 android:gravity="center_vertical"
                 android:text="@string/menu_item_settings"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/text_size_xlarge"
                 android:textStyle="bold" />
 
-            <ListView
-                android:id="@+id/settings_list"
+            <TextView
+                android:id="@+id/settings_account"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:nestedScrollingEnabled="true" />
+                android:gravity="center_vertical"
+                android:padding="12dp"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:drawablePadding="12dp"
+                android:text="@string/account"
+                app:drawableLeftCompat="@drawable/account_circle_24" />
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/settings_media"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:padding="12dp"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:drawablePadding="12dp"
+                android:text="@string/account_preferences_media_tab"
+                app:drawableLeftCompat="@drawable/perm_media_24" />
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/settings_messages"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:padding="12dp"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:drawablePadding="12dp"
+                android:text="@string/notif_channel_messages"
+                app:drawableLeftCompat="@drawable/chat_bubble_24" />
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/settings_advanced"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:padding="12dp"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:drawablePadding="12dp"
+                android:text="@string/account_preferences_advanced_tab"
+                app:drawableLeftCompat="@drawable/settings_account_24" />
 
         </LinearLayout>
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
-    <FrameLayout
+    <!-- Keep clickable="true" and focusable="true" attributes in order to prevent
+        click events propagating from child fragments to this fragment -->
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:background="@color/background"
         android:visibility="gone" />
 
