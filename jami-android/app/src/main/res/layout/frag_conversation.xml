@@ -161,7 +161,9 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
             android:listSelector="@color/transparent"
             android:paddingBottom="60dp"
             android:transcriptMode="normal"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:alpha="0"
+            app:layoutManager="LinearLayoutManager"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:stackFromEnd="true"
             tools:listitem="@layout/item_conv_msg_peer" />
 
@@ -328,7 +330,6 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:animateLayoutChanges="true"
             android:background="@drawable/textmsg_bg_input"
             android:orientation="vertical">
 

@@ -136,6 +136,12 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         mAdapter?.let { adapter ->
             adapter.updateDataset(conversation.toMutableList())
             loading = false
+            binding?.histList?.doOnNextLayout {
+                it.animate()
+                    .alpha(1f)
+                    .setDuration(220)
+                    .start()
+            }
         }
     }
 
@@ -1014,6 +1020,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             }
         }
     }
+
 
 //    fun blockContactRequest() {
 //        presenter.onBlockIncomingContactRequest()
