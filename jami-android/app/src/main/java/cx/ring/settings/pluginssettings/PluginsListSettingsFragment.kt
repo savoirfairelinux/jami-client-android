@@ -30,6 +30,7 @@ import com.google.android.material.snackbar.Snackbar
 import cx.ring.R
 import cx.ring.account.AccountEditionFragment
 import cx.ring.databinding.FragPluginsListSettingsBinding
+import cx.ring.interfaces.AppBarStateListener
 import cx.ring.plugins.PluginUtils.getInstalledPlugins
 import cx.ring.plugins.PluginUtils.loadPlugin
 import cx.ring.plugins.PluginUtils.unloadPlugin
@@ -51,10 +52,13 @@ class PluginsListSettingsFragment : Fragment(), PluginListItemListener {
         binding = FragPluginsListSettingsBinding.inflate(inflater, container, false)
         val accountId = requireArguments().getString(AccountEditionFragment.ACCOUNT_ID_KEY)!!
 
+        val appBarStateListener = parentFragment as? AppBarStateListener
+        appBarStateListener?.onToolbarTitleChanged(getString(R.string.menu_item_plugin_list))
+        appBarStateListener?.onAppBarScrollTargetViewChanged(binding!!.pluginsList)
+
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
         binding!!.pluginsList.setHasFixedSize(true)
-        (parentFragment as SettingsFragment).setToolbarTitle(R.string.menu_item_plugin_list)
 
         mAdapter = PluginsListAdapter(getInstalledPlugins(binding!!.pluginsList.context), this, accountId)
         binding!!.pluginsList.adapter = mAdapter

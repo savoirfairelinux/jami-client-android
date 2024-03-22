@@ -23,21 +23,18 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.*
-import android.view.ViewTreeObserver.OnScrollChangedListener
 import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.annotation.StringRes
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.snackbar.Snackbar
 import cx.ring.R
 import cx.ring.application.JamiApplication
-import cx.ring.client.HomeActivity
 import cx.ring.client.LogsActivity
 import cx.ring.databinding.FragSettingsBinding
+import cx.ring.interfaces.AppBarStateListener
 import cx.ring.mvp.BaseSupportFragment
 import cx.ring.settings.pluginssettings.PluginDetails
 import cx.ring.settings.pluginssettings.PluginPathPreferenceFragment
@@ -58,7 +55,7 @@ import net.jami.utils.DonationUtils.startDonationTimeMillis
 class SettingsFragment :
     BaseSupportFragment<SettingsPresenter, GenericView<SettingsViewModel>>(),
     GenericView<SettingsViewModel>,
-    OnScrollChangedListener {
+    AppBarStateListener {
     private var binding: FragSettingsBinding? = null
     private var currentSettings: Settings? = null
     private var currentDonationSettings: DonationSettings? = null
@@ -70,16 +67,15 @@ class SettingsFragment :
         override fun handleOnBackPressed() {
             val binding = binding ?: return
             binding.donateButton.isVisible = true
-            setToolbarTitle(R.string.menu_item_advanced_settings)
+            onAppBarScrollTargetViewChanged(binding.scrollview)
+            onToolbarTitleChanged(getString(R.string.menu_item_advanced_settings))
             popBackStack()
         }
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        requireActivity().onBackPressedDispatcher.let {
-            it.addCallback(this, backPressedCallback)
-        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, backPressedCallback)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
@@ -101,7 +97,6 @@ class SettingsFragment :
                     goToPluginsListSettings()
                 }
             }
-            scrollview.viewTreeObserver.addOnScrollChangedListener(this@SettingsFragment)
             settingsDarkTheme.setOnCheckedChangeListener { _, isChecked: Boolean ->
                 presenter.darkMode = isChecked
             }
@@ -159,7 +154,7 @@ class SettingsFragment :
         childFragmentManager
             .beginTransaction()
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-            .replace(fragmentContainerId, content, VIDEO_SETTINGS_TAG)
+            .replace(R.id.fragment_container, content, VIDEO_SETTINGS_TAG)
             .addToBackStack(VIDEO_SETTINGS_TAG).commit()
         binding.fragmentContainer.isVisible = true
         binding.donateButton.isVisible = false
@@ -173,7 +168,7 @@ class SettingsFragment :
         childFragmentManager
             .beginTransaction()
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-            .replace(fragmentContainerId, content, PLUGINS_LIST_SETTINGS_TAG)
+            .replace(R.id.fragment_container, content, PLUGINS_LIST_SETTINGS_TAG)
             .addToBackStack(PLUGINS_LIST_SETTINGS_TAG).commit()
         binding.fragmentContainer.isVisible = true
         binding.donateButton.isVisible = false
@@ -185,7 +180,7 @@ class SettingsFragment :
         val fragmentTransaction: FragmentTransaction = childFragmentManager
             .beginTransaction()
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-            .replace(fragmentContainerId, content, PLUGIN_SETTINGS_TAG)
+            .replace(R.id.fragment_container, content, PLUGIN_SETTINGS_TAG)
         if (fragment !is PluginSettingsFragment) {
             fragmentTransaction.addToBackStack(PLUGIN_SETTINGS_TAG)
         }
@@ -201,8 +196,7 @@ class SettingsFragment :
         childFragmentManager
             .beginTransaction()
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-            .replace(fragmentContainerId, content, PLUGIN_PATH_PREFERENCE_TAG
-            )
+            .replace(R.id.fragment_container, content, PLUGIN_PATH_PREFERENCE_TAG)
             .addToBackStack(PLUGIN_PATH_PREFERENCE_TAG).commit()
         binding!!.fragmentContainer.isVisible = true
         backPressedCallback.isEnabled = true
@@ -220,6 +214,7 @@ class SettingsFragment :
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
+        fragment = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -252,10 +247,6 @@ class SettingsFragment :
                 notificationVisibility = mNotificationVisibility,
             )
         )
-    }
-
-    fun setToolbarTitle(@StringRes resId: Int) {
-        binding!!.toolbar.title = getString(resId)
     }
 
     /**
@@ -302,16 +293,17 @@ class SettingsFragment :
         mNotificationVisibility = settings.notificationVisibility
     }
 
-    override fun onScrollChanged() {
-        binding?.let { binding ->
-            val activity: Activity? = activity
-            if (activity is HomeActivity)
-                activity.setToolbarElevation(binding.scrollview.canScrollVertically(SCROLL_DIRECTION_UP))
-        }
+    //================= AppBar management =====================
+    override fun onAppBarScrollTargetViewChanged(v: View?) {
+        binding?.appBar?.setLiftOnScrollTargetView(v)
     }
 
+    override fun onToolbarTitleChanged(title: String) {
+        binding?.toolbar?.title = title
+    }
+    //=============== AppBar management end ===================
+
     companion object {
-        private const val SCROLL_DIRECTION_UP = -1
         const val NOTIFICATION_PRIVATE = 0
         const val NOTIFICATION_PUBLIC = 1
         const val NOTIFICATION_SECRET = 2
@@ -319,6 +311,5 @@ class SettingsFragment :
         const val PLUGINS_LIST_SETTINGS_TAG = "PluginsListSettings"
         const val PLUGIN_SETTINGS_TAG = "PluginSettings"
         const val PLUGIN_PATH_PREFERENCE_TAG = "PluginPathPreference"
-        private const val fragmentContainerId: Int = R.id.fragment_container
     }
 }

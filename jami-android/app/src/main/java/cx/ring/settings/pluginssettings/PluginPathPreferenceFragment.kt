@@ -26,6 +26,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import cx.ring.databinding.FragPluginsPathPreferenceBinding
+import cx.ring.interfaces.AppBarStateListener
 import cx.ring.settings.pluginssettings.PathListAdapter.PathListItemListener
 import cx.ring.utils.AndroidFileUtils
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -116,6 +117,8 @@ class PluginPathPreferenceFragment : Fragment(), PathListItemListener {
             binding.currentPathItemName.visibility = View.INVISIBLE
             binding.pluginsPathPreferenceFab.performClick()
         }
+
+        (parentFragment as? AppBarStateListener)?.onAppBarScrollTargetViewChanged(binding.pathPreferences)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
