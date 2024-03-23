@@ -72,9 +72,9 @@ RUN (while sleep 1; do echo "y"; done) | sdkmanager --channel=1 --sdk_root=${AND
 	'platforms;android-34'\
 	'extras;android;m2repository'\
 	'extras;google;m2repository'\
-	'ndk;26.1.10909125'
+	'ndk;26.2.11394342'
 ENV ANDROID_SDK=${ANDROID_HOME}
-ENV ANDROID_NDK=${ANDROID_HOME}/ndk/26.1.10909125
+ENV ANDROID_NDK=${ANDROID_HOME}/ndk/26.2.11394342
 
 # Fastlane
 RUN gem install fastlane -NV

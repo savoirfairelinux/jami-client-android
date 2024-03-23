@@ -15,7 +15,7 @@ android {
     namespace = "cx.ring"
     compileSdk = 34
     buildToolsVersion = "34.0.0"
-    ndkVersion = "26.1.10909125"
+    ndkVersion = "26.2.11394342"
     defaultConfig {
         minSdk = 24
         targetSdk = 34
