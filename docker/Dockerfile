@@ -60,11 +60,11 @@ RUN wget -O /tmp/android-tools.zip https://dl.google.com/android/repository/comm
 	chown -R root:root ${ANDROID_HOME}
 ENV PATH=${PATH}:${ANDROID_HOME}/cmdline-tools/bin
 
-# Swig 4.1.1
-RUN wget -O /tmp/swig.tar.gz https://github.com/swig/swig/archive/v4.1.1.tar.gz && \
+# Swig
+RUN wget -O /tmp/swig.tar.gz https://github.com/swig/swig/archive/v4.2.1.tar.gz && \
 	tar xzf  /tmp/swig.tar.gz -C /opt && \
-	cd /opt/swig-4.1.1/ && ./autogen.sh && ./configure && make && make install && \
-	cd .. && rm -rf /opt/swig-4.1.1 /tmp/swig.tar.gz
+	cd /opt/swig-4.2.1/ && ./autogen.sh && ./configure && make && make install && \
+	cd .. && rm -rf /opt/swig-4.2.1 /tmp/swig.tar.gz
 
 # Android SDK libraries, NDK
 RUN sdkmanager --sdk_root=${ANDROID_HOME} --update
