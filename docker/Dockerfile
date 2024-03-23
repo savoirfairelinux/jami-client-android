@@ -53,7 +53,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN echo "prefer-family = IPv6" >> /etc/wgetrc
 ENV ANDROID_HOME=/opt/android-sdk
 ENV ANDROID_SDK_ROOT=${ANDROID_HOME}
-RUN wget -O /tmp/android-tools.zip https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip && \
+RUN wget -O /tmp/android-tools.zip https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip && \
 	mkdir -p ${ANDROID_HOME} && \
 	unzip -q -d ${ANDROID_HOME} /tmp/android-tools.zip && \
 	rm -f /tmp/android-tools.zip && \
