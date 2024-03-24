@@ -210,30 +210,6 @@ class Call : Interaction {
             field = direction == Direction.INCOMING
         }*/
 
-    fun appendToVCard(messages: Map<String, String>): VCard? {
-        for ((key, value) in messages) {
-            val messageKeyValue = VCardUtils.parseMimeAttributes(key)
-            val mimeType = messageKeyValue[VCardUtils.VCARD_KEY_MIME_TYPE]
-            if (VCardUtils.MIME_PROFILE_VCARD != mimeType) {
-                continue
-            }
-            val part = messageKeyValue[VCardUtils.VCARD_KEY_PART]!!.toInt()
-            val nbPart = messageKeyValue[VCardUtils.VCARD_KEY_OF]!!.toInt()
-            if (null == mProfileChunk) {
-                mProfileChunk = ProfileChunk(nbPart)
-            }
-            mProfileChunk?.let { profile ->
-                profile.addPartAtIndex(value, part)
-                if (profile.isProfileComplete) {
-                    val ret = Ezvcard.parse(profile.completeProfile).first()
-                    mProfileChunk = null
-                    return@appendToVCard ret
-                }
-            }
-        }
-        return null
-    }
-
     fun hasMedia(label: Media.MediaType): Boolean {
         val mediaList = mediaList ?: return false
         for (media in mediaList) {

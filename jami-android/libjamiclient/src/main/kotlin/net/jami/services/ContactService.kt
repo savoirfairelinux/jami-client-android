@@ -46,10 +46,6 @@ abstract class ContactService(
     abstract fun saveContact(uri: String, profile: Profile)
     abstract fun deleteContact(uri: String)
 
-
-    abstract fun saveVCardContactData(contact: Contact, accountId: String, vcard: VCard)
-    abstract fun saveVCardContact(accountId: String, uri: String?, displayName: String?, pictureB64: String?): Single<VCard>
-
     /**
      * Load contacts from system and generate a local contact cache
      *

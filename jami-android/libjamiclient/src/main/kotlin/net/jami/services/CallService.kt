@@ -626,11 +626,8 @@ abstract class CallService(
             Log.w(TAG, "incomingMessage: unknown call or no message: $callId $from")
             return
         }
-        call.appendToVCard(messages)?.let { vcard ->
-            mContactService.saveVCardContactData(call.contact!!, call.account!!, vcard)
-        }
         if (messages.containsKey(MIME_TEXT_PLAIN)) {
-            mAccountService.incomingAccountMessage(call.account!!, null, callId, from, messages)
+            mAccountService.incomingAccountMessage(accountId, null, callId, from, messages)
         }
     }
 
