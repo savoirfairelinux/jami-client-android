@@ -67,14 +67,6 @@ class VCardServiceImpl(private val mContext: Context) : VCardService() {
             .subscribeOn(Schedulers.io())
             .cache()
 
-    override fun peerProfileReceived(accountId: String, peerId: String, vcard: File): Single<Profile> =
-        VCardUtils.peerProfileReceived(mContext.filesDir, accountId, peerId, vcard)
-            .map { vc -> readData(vc) }
-
-    override fun accountProfileReceived(accountId: String, vcardFile: File): Single<Profile> =
-        VCardUtils.accountProfileReceived(mContext.filesDir, accountId, vcardFile)
-            .map { vcard -> readData(vcard) }
-
     override fun loadConversationProfile(info: Map<String, String>): Single<Profile> =
         Single.fromCallable {
             val title = info["title"]

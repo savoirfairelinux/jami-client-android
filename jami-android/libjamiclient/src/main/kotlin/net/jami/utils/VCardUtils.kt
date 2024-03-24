@@ -145,7 +145,7 @@ object VCardUtils {
 
     fun loadLocalProfileFromDiskWithDefault(filesDir: File, accountId: String): Single<VCard> =
         loadLocalProfileFromDisk(filesDir, accountId)
-            .onErrorReturn { setupDefaultProfile(filesDir, accountId) }
+            .onErrorReturn { defaultProfile(accountId) }
 
     /**
      * Loads the vcard file from the disk
@@ -197,20 +197,9 @@ object VCardUtils {
     private fun localProfilePath(filesDir: File, accountId: String): File =
         File(filesDir, accountId).apply { mkdir() }
 
-    private fun setupDefaultProfile(filesDir: File, accountId: String): VCard {
-        val vcard = VCard()
-        vcard.uid = Uid(accountId)
-        saveLocalProfileToDisk(vcard, accountId, filesDir)
-            .subscribeOn(Schedulers.io())
-            .subscribe({}) { e -> Log.e(TAG, "Error while saving vcard", e) }
-        return vcard
-    }
+    private fun defaultProfile(accountId: String): VCard = VCard().apply { Uid(accountId) }
 
-    fun accountProfileReceived(filesDir: File, accountId: String, vcard: File): Single<VCard> =
-        Single.fromCallable { loadFromDisk(vcard)!! }
-            .subscribeOn(Schedulers.io())
-
-    fun peerProfileReceived(filesDir: File, accountId: String, peerId: String, vcard: File): Single<VCard> =
+    fun loadProfile(vcard: File): Single<VCard> =
         Single.fromCallable { loadFromDisk(vcard)!! }
             .subscribeOn(Schedulers.io())
 

@@ -27,18 +27,15 @@ import java.io.File
 abstract class VCardService {
     abstract fun loadProfile(account: Account): Observable<Profile>
     abstract fun loadSmallVCard(accountId: String, maxSize: Int): Maybe<VCard>
-    fun loadSmallVCardWithDefault(accountId: String, maxSize: Int): Single<VCard> {
-        return loadSmallVCard(accountId, maxSize)
+    fun loadSmallVCardWithDefault(accountId: String, maxSize: Int): Single<VCard> =
+        loadSmallVCard(accountId, maxSize)
             .switchIfEmpty(Single.fromCallable { VCard() })
-    }
 
     abstract fun saveVCardProfile(accountId: String, uri: String?, displayName: String?, picture: String?): Single<VCard>
 
     abstract fun loadVCardProfile(vcard: VCard): Single<Profile>
     abstract fun loadVCard(vcard: File): Single<Profile>
-    abstract fun peerProfileReceived(accountId: String, peerId: String, vcard: File): Single<Profile>
     abstract fun loadConversationProfile(info: Map<String, String>): Single<Profile>
-    abstract fun accountProfileReceived(accountId: String, vcardFile: File): Single<Profile>
     abstract fun base64ToBitmap(base64: String?): Any?
 
     companion object {
