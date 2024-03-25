@@ -49,7 +49,6 @@
     <item quantity="other">%d Samtal</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Sjå etter namnet eller telefonnummeret...</string>
   <string name="choose_number">Velg eit nummer</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->

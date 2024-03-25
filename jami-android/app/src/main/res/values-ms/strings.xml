@@ -48,7 +48,6 @@
     <item quantity="other">%d Perbualan</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">തിരയൽ പേര്, ഫോൺ നമ്പർ...</string>
   <string name="choose_number">Pilih nombor</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -204,6 +203,7 @@
   <string name="conversation_contact_left">%1$ ഇടതുവശത്ത്</string>
   <string name="conversation_contact_banned">%1$s നിരോധിച്ചു</string>
   <string name="conversation_search_hint">തിരയൽ സംഭാഷണം</string>
+  <string name="today">Hari ini</string>
   <string name="yesterday">Semalam</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">%1$s ചേർക്കുക?</string>

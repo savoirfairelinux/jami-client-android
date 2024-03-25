@@ -247,4 +247,5 @@
   <string name="error_format_not_supported">بو فورمات دا معاون دئییل.</string>
   <string name="account_link_device_title">یئنی آلتی باغلا</string>
   <string name="account_link_device_button">باغلا</string>
+  <!--Biometry-->
 </resources>

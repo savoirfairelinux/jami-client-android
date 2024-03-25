@@ -52,7 +52,7 @@
     <item quantity="other">%d разговора</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Претражи име или број телефона…</string>
+  <string name="searchbar_hint">Pretraži ime ili konverzaciju…</string>
   <string name="choose_number">Изабери број</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -202,6 +202,7 @@
   <string name="conversation_syncing">Преузимање разговора од чланова</string>
   <string name="conversation_blocked">Овај контакт је блокиран.</string>
   <string name="conversation_ended">Разговор је завршен.</string>
+  <string name="conversation_message_deleted">%s обрисао поруку</string>
   <string name="conversation_reply_you">Ти</string>
   <string name="conversation_preference_color">Боја разговора</string>
   <string name="conversation_preference_emoji">Емоџи за разговор</string>
@@ -336,6 +337,16 @@
   <string name="tv_send_video">Пошаљи медије</string>
   <string name="tv_action_more">Више</string>
   <string name="conversation_input_speech_hint">Реци нешто…</string>
+  <string name="audio_permission_denied">Dozvolite pristup mikrofonu da biste koristili Jami audio funkcije.</string>
+  <string name="camera_permission_denied">Dozvolite pristup kameri da biste koristili Jami video funkcije.</string>
+  <string name="speech_recogniton_unavailable">Prepoznavanje govora nije dostupno.</string>
+  <string name="audio_permission_rationale_title">Potrebna je audio dozvola</string>
+  <string name="camera_permission_rationale_title">Potrebna je dozvola za video</string>
+  <string name="audio_permission_rationale_message">Jami-ju je potrebna dozvola mikrofona za korišćenje govora u tekst i snimanje audio funkcija. To će biti postavljeno u sledećem koraku.</string>
+  <string name="camera_permission_rationale_message">Jamiju je potrebna dozvola kamere da bi snimio video i uputio video poziv. To će biti postavljeno u sledećem koraku.</string>
+  <string name="unable_to_start_recorder">Nije moguće započeti snimanje zvuka.</string>
+  <string name="error_sharing_file">Greška pri deljenju datoteke.</string>
+  <string name="error_opening_file">Greška pri otvaranju datoteke.</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Препоручено</string>
   <string name="wizard_status_optional">Опционо</string>

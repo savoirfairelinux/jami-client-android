@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--Strings for xml content description of images-->
+  <string name="file_download_button">入手</string>
+  <string name="control_play">再生</string>
+  <string name="control_replay">再生</string>
+  <string name="control_pause">一時停止</string>
+</resources>

@@ -142,7 +142,7 @@
   <string name="error_passwords_not_equals">รหัสผ่านไม่ตรงกัน</string>
   <string name="export_account_wait_title">โปรดรอ…</string>
   <string name="export_account_wait_message">การส่งออกข้อมูลบัญชี</string>
-  <string name="account_export_file">บัญชีสำรอง</string>
+  <string name="account_export_file">บาคเกปบัญชี</string>
   <string name="account_export_file_summary">ทําสํารองบัญชีของคุณในเครื่องของคุณ เพื่อนํากลับมาในภายหลัง</string>
   <string name="account_export_end_decryption_message">ไม่สามารถเปิดบัญชีของคุณได้ โดยใช้คําว่าที่ให้</string>
   <string name="account_export_end_network_title">ความผิดพลาดในเครือข่าย</string>
@@ -249,4 +249,5 @@
   <string name="error_format_not_supported">ไม่รองรับรูปแบบนี้</string>
   <string name="account_link_device_title">เชื่อมโยงอุปกรณ์ใหม่</string>
   <string name="account_link_device_button">เชื่อมต่อ</string>
+  <!--Biometry-->
 </resources>
