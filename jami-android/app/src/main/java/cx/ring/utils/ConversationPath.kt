@@ -103,6 +103,12 @@ data class ConversationPath(
                 if (pathSegments.size > 2) {
                     return ConversationPath(pathSegments[1], pathSegments[2])
                 }
+            } else if (ContentUri.AUTHORITY_URL == uri.host) {
+                val accountId = uri.getQueryParameter(KEY_ACCOUNT_ID)
+                val contactId = uri.getQueryParameter(KEY_CONVERSATION_URI)
+                if (accountId != null && contactId != null) {
+                    return ConversationPath(accountId, contactId)
+                }
             }
             return null
         }

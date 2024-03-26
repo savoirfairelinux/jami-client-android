@@ -16,6 +16,7 @@
  */
 package cx.ring.client
 
+import android.app.SearchManager
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.res.Configuration
@@ -49,6 +50,8 @@ import cx.ring.fragments.WelcomeJamiFragment
 import cx.ring.service.DRingService
 import cx.ring.settings.SettingsFragment
 import cx.ring.utils.ContentUri
+import cx.ring.utils.ContentUri.isJamiLink
+import cx.ring.utils.ContentUri.toJamiLink
 import cx.ring.utils.ConversationPath
 import cx.ring.utils.DeviceUtils
 import cx.ring.utils.getUiCustomizationFromConfigJson
@@ -238,13 +241,19 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
             }
 
             Intent.ACTION_VIEW, DRingService.ACTION_CONV_ACCEPT -> {
-                val path = ConversationPath.fromUri(intent.data)
-                if (path != null) {
-                    // Select the current account if it's not active
-                    if (mAccountService.currentAccount?.accountId != path.accountId)
-                        mAccountService.currentAccount = mAccountService.getAccount(path.accountId)
-
-                    startConversation(path, intent)
+                val intentUri = intent.data
+                if (intentUri.isJamiLink()) {
+                    mHomeFragment!!.handleIntent(Intent(Intent.ACTION_SEARCH).apply {
+                        putExtra(SearchManager.QUERY, intentUri.toJamiLink())
+                    })
+                } else {
+                    val path = ConversationPath.fromUri(intent.data)
+                    if (path != null) {
+                        // Select the current account if it's not active
+                        if (mAccountService.currentAccount?.accountId != path.accountId)
+                            mAccountService.currentAccount = mAccountService.getAccount(path.accountId)
+                        startConversation(path, intent)
+                    }
                 }
             }
 

@@ -29,6 +29,8 @@ import cx.ring.BuildConfig
 import net.jami.utils.FileUtils
 import java.io.File
 import java.lang.IllegalArgumentException
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.contract
 
 /**
  * This class distributes content uri used to pass along data in the app
@@ -41,6 +43,7 @@ object ContentUri {
     const val PATH_TV_HOME = "home"
     const val PATH_TV_CONVERSATION = "conversation"
     private val AUTHORITY_URI = Uri.parse("content://$AUTHORITY")
+    const val AUTHORITY_URL = "link.jami.net"
 
     val CONVERSATION_CONTENT_URI: Uri = Uri.withAppendedPath(AUTHORITY_URI, "conversation")
     val ACCOUNTS_CONTENT_URI: Uri = Uri.withAppendedPath(AUTHORITY_URI, "accounts")
@@ -56,6 +59,18 @@ object ContentUri {
         .appendPath(resources.getResourceTypeName(resourceId))
         .appendPath(resources.getResourceEntryName(resourceId))
         .build()
+
+
+    @OptIn(ExperimentalContracts::class)
+    inline fun Uri?.isJamiLink(): Boolean {
+        contract {
+            returns(true) implies (this@isJamiLink != null)
+        }
+        return this != null && (scheme == "https" || scheme == "http")
+                && authority == AUTHORITY_URL
+    }
+
+    fun Uri.toJamiLink(): String? = lastPathSegment
 
     /**
      * The following is a workaround used to mitigate getUriForFile exceptions
