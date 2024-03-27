@@ -17,7 +17,11 @@
 package cx.ring.fragments
 
 import android.app.Dialog
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.graphics.Bitmap
+import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.text.format.DateUtils
@@ -28,7 +32,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
-import androidx.coordinatorlayout.widget.CoordinatorLayout
+import android.widget.Toast
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -53,15 +57,27 @@ class LinkDeviceFragment : BaseBottomSheetFragment<LinkDevicePresenter>(), LinkD
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View =
-        FragLinkDeviceBinding.inflate(inflater, container, false).apply {
-            btnStartExport.setOnClickListener { onClickStart() }
-            password.setOnEditorActionListener { pwd: TextView, actionId: Int, event: KeyEvent? ->
-                onPasswordEditorAction(pwd, actionId, event)
+    ): View = FragLinkDeviceBinding.inflate(inflater, container, false).apply {
+        btnStartExport.setOnClickListener { startAccountExport() }
+        password.setOnEditorActionListener { pwd: TextView, actionId: Int, event: KeyEvent? ->
+            onPasswordEditorAction(pwd, actionId, event)
+        }
+        pin.setOnClickListener {
+            val pinCode = pin.text
+            if (pinCode.isNotEmpty()) {
+                val clipboard = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager?
+                clipboard?.setPrimaryClip(ClipData.newPlainText(PIN_LABEL, pinCode))
+
+                // Android 13 and higher automatically provide visual feedback when an app copies content
+                // to the clipboard. Provide manual notification in Android 12L (API level 32) and lower
+                if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2)
+                    Toast.makeText(context, "Pin code copied", Toast.LENGTH_SHORT).show()
             }
-            mBinding = this
-            pageContainer.visibility = View.GONE
-        }.root
+        }
+
+        mBinding = this
+        pageContainer.visibility = View.GONE
+    }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -71,12 +87,9 @@ class LinkDeviceFragment : BaseBottomSheetFragment<LinkDevicePresenter>(), LinkD
             }
         }
         // go directly to the qr and pin page if there is no account password
-        if (!mAccountHasPassword) onClickStart()
+        if (!mAccountHasPassword) startAccountExport()
     }
 
-    /**
-     * Create dialog.
-     */
     override fun onDestroyView() {
         mBinding = null
         super.onDestroyView()
@@ -90,22 +103,6 @@ class LinkDeviceFragment : BaseBottomSheetFragment<LinkDevicePresenter>(), LinkD
         }
         return dialog
     }
-
-    override fun onResume() {
-        super.onResume()
-        view?.addOnLayoutChangeListener(object : View.OnLayoutChangeListener {
-            override fun onLayoutChange(v: View, left: Int, top: Int, right: Int, bottom: Int, oldLeft: Int, oldTop: Int, oldRight: Int, oldBottom: Int) {
-                bottomSheetBehaviour?.peekHeight = v.measuredHeight
-                v.removeOnLayoutChangeListener(this)
-            }
-        })
-    }
-
-    private val bottomSheetBehaviour: BottomSheetBehavior<*>?
-        get() {
-            val layoutParams = (requireView().parent as View).layoutParams as CoordinatorLayout.LayoutParams
-            return layoutParams.behavior as BottomSheetBehavior<*>?
-        }
 
     override fun showExportingProgress() {
         mBinding?.apply {
@@ -142,6 +139,7 @@ class LinkDeviceFragment : BaseBottomSheetFragment<LinkDevicePresenter>(), LinkD
     }
 
     override fun showNetworkError() {
+        dismiss()
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.account_export_end_network_title)
             .setMessage(R.string.account_export_end_network_message)
@@ -156,6 +154,7 @@ class LinkDeviceFragment : BaseBottomSheetFragment<LinkDevicePresenter>(), LinkD
     }
 
     override fun showGenericError() {
+        dismiss()
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.account_export_end_error_title)
             .setMessage(R.string.account_export_end_error_message)
@@ -166,6 +165,7 @@ class LinkDeviceFragment : BaseBottomSheetFragment<LinkDevicePresenter>(), LinkD
     override fun onStop() {
         super.onStop()
         counter?.cancel()
+        counter = null
     }
 
     override fun showPIN(pin: String) {
@@ -227,7 +227,7 @@ class LinkDeviceFragment : BaseBottomSheetFragment<LinkDevicePresenter>(), LinkD
         hideKeyboard(activity)
     }
 
-    private fun onClickStart() {
+    private fun startAccountExport() {
         mBinding?.let { binding ->
             binding.passwordLayout.error = null
             presenter.startAccountExport(binding.password.text.toString())
@@ -240,7 +240,7 @@ class LinkDeviceFragment : BaseBottomSheetFragment<LinkDevicePresenter>(), LinkD
             if (pwd.text.isEmpty()) {
                 pwd.error = getString(R.string.account_enter_password)
             } else {
-                onClickStart()
+                startAccountExport()
                 return true
             }
         }
@@ -249,6 +249,7 @@ class LinkDeviceFragment : BaseBottomSheetFragment<LinkDevicePresenter>(), LinkD
 
     companion object {
         val TAG = LinkDeviceFragment::class.simpleName!!
+        const val PIN_LABEL = "PIN_LABEL"
         fun newInstance(accountId: String) = LinkDeviceFragment().apply {
             arguments = Bundle().apply {
                 putString(AccountEditionFragment.ACCOUNT_ID_KEY, accountId)
