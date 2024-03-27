@@ -56,13 +56,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/background_pin_code"
+            android:drawablePadding="10dp"
             android:paddingHorizontal="20dp"
             android:paddingVertical="12dp"
             android:textColor="@color/colorPrimary"
             android:textSize="26sp"
-            tools:text="abcdefgh-12345678"
-            app:drawableEndCompat="@drawable/baseline_content_copy_28_color_primary"
-            android:drawablePadding="10dp"/>
+            app:drawableEndCompat="@drawable/baseline_content_copy_28"
+            app:drawableTint="@color/colorPrimary"
+            tools:text="abcdefgh-12345678" />
 
         <TextView
             android:id="@+id/pin_time_valid"
