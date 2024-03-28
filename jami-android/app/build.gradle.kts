@@ -16,6 +16,48 @@ android {
     compileSdk = 34
     buildToolsVersion = "34.0.0"
     ndkVersion = "26.2.11394342"
+    testBuildType = "uiTest"
+
+    buildTypes {
+        release {
+            ndk {
+                isMinifyEnabled = true
+                proguardFiles(
+                    getDefaultProguardFile("proguard-android-optimize.txt"),
+                    "proguard-rules.pro"
+                )
+                debugSymbolLevel = "FULL"
+                abiFilters += properties["archs"]?.toString()?.split(",") ?: listOf(
+                    "arm64-v8a",
+                    "x86_64",
+                    "armeabi-v7a"
+                )
+                println("ABIs for Release Build Variant: $abiFilters")
+            }
+        }
+        debug {
+            isDebuggable = true
+            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+            ndk {
+                debugSymbolLevel = "FULL"
+                abiFilters += properties["archs"]?.toString()?.split(",") ?: listOf(
+                    "arm64-v8a",
+                    "x86_64",
+                    "armeabi-v7a"
+                )
+                println("ABIs for Debug Build Variant: $abiFilters")
+            }
+        }
+        create("uiTest") {
+            manifestPlaceholders["hostName"] = "uitest.example.com"
+            applicationIdSuffix = ".uiTest"
+            ndk {
+                debugSymbolLevel = "FULL"
+                abiFilters += "x86_64"
+                println("ABIs for UITest Build Variant: $abiFilters")
+            }
+        }
+    }
     defaultConfig {
         minSdk = 24
         targetSdk = 34
@@ -37,11 +79,6 @@ android {
                     "-DJAMI_NATPMP=Off"
                 )
             }
-            ndk {
-                debugSymbolLevel = "FULL"
-                abiFilters += properties["archs"]?.toString()?.split(",") ?: listOf("arm64-v8a", "x86_64", "armeabi-v7a")
-                println ("Building for ABIs $abiFilters")
-            }
         }
 
         // The following argument makes the Android Test Orchestrator run its
@@ -52,16 +89,6 @@ android {
     }
     testOptions {
         execution= "ANDROID_TEST_ORCHESTRATOR"
-    }
-    buildTypes {
-        debug {
-            isDebuggable = true
-            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
-        }
-        release {
-            isMinifyEnabled = true
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-        }
     }
     buildFeatures {
         viewBinding = true
