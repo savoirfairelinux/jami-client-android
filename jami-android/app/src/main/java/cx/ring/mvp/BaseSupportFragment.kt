@@ -46,24 +46,19 @@ abstract class BaseSupportFragment<T : RootPresenter<in V>, in V> : Fragment() {
 
     protected open fun initPresenter(presenter: T) {}
 
-    protected fun replaceFragmentWithSlide(fragment: Fragment, @IdRes content: Int) {
-        parentFragmentManager
-            .beginTransaction()
+    protected fun replaceFragmentWithSlide(fragment: Fragment, tag: String?, @IdRes containerID: Int) {
+        parentFragmentManager.beginTransaction()
             .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right)
-            .replace(content, fragment, TAG)
-            .addToBackStack(TAG)
+            .replace(containerID, fragment, tag)
+            .addToBackStack(tag)
             .commit()
     }
 
-    protected fun replaceFragment(fragment: Fragment, @IdRes content: Int) {
-        parentFragmentManager
-            .beginTransaction()
-            .replace(content, fragment, TAG)
-            .addToBackStack(TAG)
+    protected fun replaceFragment(fragment: Fragment, tag: String?, @IdRes containerID: Int) {
+        parentFragmentManager.beginTransaction()
+            .replace(containerID, fragment, tag)
+            .addToBackStack(tag)
             .commit()
     }
 
-    companion object {
-        protected val TAG = BaseSupportFragment::class.simpleName!!
-    }
 }

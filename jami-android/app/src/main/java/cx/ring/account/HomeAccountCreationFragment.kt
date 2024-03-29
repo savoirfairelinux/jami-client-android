@@ -26,13 +26,13 @@ import androidx.fragment.app.activityViewModels
 import com.google.android.material.snackbar.Snackbar
 import cx.ring.R
 import cx.ring.databinding.FragAccHomeCreateBinding
+import cx.ring.fragments.SIPAccountCreationFragment
 import cx.ring.mvp.BaseSupportFragment
 import cx.ring.utils.AndroidFileUtils.getCacheFile
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import net.jami.account.HomeAccountCreationPresenter
 import net.jami.account.HomeAccountCreationView
-import net.jami.model.AccountConfig
 import java.io.File
 
 @AndroidEntryPoint
@@ -59,27 +59,25 @@ class HomeAccountCreationFragment :
 
     override fun goToAccountCreation() {
         model.model = AccountCreationModelImpl()
-        replaceFragmentWithSlide(JamiAccountCreationFragment(), R.id.wizard_container)
+        replaceFragmentWithSlide(JamiAccountCreationFragment(), JamiAccountCreationFragment.TAG, R.id.wizard_container)
     }
 
     override fun goToAccountLink() {
         model.model = AccountCreationModelImpl().apply {
             isLink = true
         }
-        replaceFragmentWithSlide(JamiLinkAccountFragment(), R.id.wizard_container)
+        replaceFragmentWithSlide(JamiLinkAccountFragment(), JamiLinkAccountFragment.TAG, R.id.wizard_container)
     }
 
     override fun goToAccountConnect() {
         model.model = AccountCreationModelImpl().apply {
             isLink = true
         }
-        replaceFragmentWithSlide(JamiAccountConnectFragment(), R.id.wizard_container)
+        replaceFragmentWithSlide(JamiAccountConnectFragment(), JamiAccountConnectFragment.TAG, R.id.wizard_container)
     }
 
     override fun goToSIPAccountCreation() {
-        val intent = Intent(activity, AccountWizardActivity::class.java)
-        intent.action = AccountConfig.ACCOUNT_TYPE_SIP
-        startActivityForResult(intent, ADD_SIP_ACCOUNT)
+        replaceFragmentWithSlide(SIPAccountCreationFragment(), SIPAccountCreationFragment.TAG, R.id.wizard_container)
     }
 
     private fun performFileSearch() {
@@ -103,20 +101,21 @@ class HomeAccountCreationFragment :
                             isLink = true
                             archive = file
                         }
-                        replaceFragmentWithSlide(JamiLinkAccountFragment(), R.id.wizard_container)
+                        replaceFragmentWithSlide(
+                                JamiLinkAccountFragment(), JamiLinkAccountFragment.TAG, R.id.wizard_container)
                     }) { e: Throwable ->
                         view?.let { v ->
                             Snackbar.make(v, "Can't import archive: " + e.message, Snackbar.LENGTH_LONG).show() }
                     }
             }
-        } else if (requestCode == ADD_SIP_ACCOUNT && resultCode == Activity.RESULT_OK) {
-            (activity as AccountWizardActivity?)?.displaySuccessDialog()
         }
+//        else if (requestCode == ADD_SIP_ACCOUNT && resultCode == Activity.RESULT_OK) {
+//            (activity as AccountWizardActivity?)?.displaySuccessDialog()
+//        }
     }
 
     companion object {
         private const val ARCHIVE_REQUEST_CODE = 42
-        private const val ADD_SIP_ACCOUNT = 101
         val TAG = HomeAccountCreationFragment::class.simpleName!!
     }
 }

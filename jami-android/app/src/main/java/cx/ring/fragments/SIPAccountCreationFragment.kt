@@ -16,9 +16,7 @@
  */
 package cx.ring.fragments
 
-import android.app.Activity
 import android.content.DialogInterface
-import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.KeyEvent
@@ -30,6 +28,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.R
+import cx.ring.account.AccountWizardActivity
 import cx.ring.databinding.FragAccSipCreateBinding
 import cx.ring.databinding.ItemProgressDialogBinding
 import cx.ring.mvp.BaseSupportFragment
@@ -126,9 +125,7 @@ class SIPAccountCreationFragment : BaseSupportFragment<SIPCreationPresenter, SIP
             getString(R.string.account_sip_register_anyway),
             { dialog: DialogInterface?, which: Int -> presenter.removeAccount() }
         ) { dialog: DialogInterface?, id: Int ->
-            val activity: Activity = requireActivity()
-            activity.setResult(Activity.RESULT_OK, Intent())
-            activity.finish()
+            (activity as? AccountWizardActivity)?.displaySuccessDialog()
         }
     }
 
@@ -139,9 +136,7 @@ class SIPAccountCreationFragment : BaseSupportFragment<SIPCreationPresenter, SIP
             getString(R.string.account_sip_register_anyway),
             { dialog: DialogInterface?, which: Int -> presenter.removeAccount() }
         ) { dialog: DialogInterface?, id: Int ->
-            val activity: Activity = requireActivity()
-            activity.setResult(Activity.RESULT_OK, Intent())
-            activity.finish()
+            (activity as? AccountWizardActivity)?.displaySuccessDialog()
         }
     }
 
@@ -152,9 +147,7 @@ class SIPAccountCreationFragment : BaseSupportFragment<SIPCreationPresenter, SIP
             getString(android.R.string.ok),
             null,
             { dialog: DialogInterface?, which: Int ->
-                val activity: Activity = requireActivity()
-                activity.setResult(Activity.RESULT_OK, Intent())
-                activity.finish()
+                (activity as? AccountWizardActivity)?.displaySuccessDialog()
             },
             null
         )

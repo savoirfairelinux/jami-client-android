@@ -27,7 +27,6 @@ import com.google.android.material.textfield.TextInputEditText
 import cx.ring.R
 import cx.ring.databinding.EditTextPinInputBinding
 import dagger.hilt.android.AndroidEntryPoint
-import net.jami.utils.Log
 
 @AndroidEntryPoint
 class EditTextPinInputFragment : Fragment() {
@@ -35,11 +34,6 @@ class EditTextPinInputFragment : Fragment() {
     private val viewModel: EditTextPinInputViewModel by viewModels({ requireParentFragment() })
     private lateinit var binding: EditTextPinInputBinding
 
-    companion object {
-        private val TAG = EditTextPinInputFragment::class.simpleName!!
-    }
-
-    // inflate the layout and link with viewModel
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -68,5 +62,9 @@ class EditTextPinInputFragment : Fragment() {
     private fun showErrorPanel() {
         binding.enterPin.error = getString(R.string.error_format_not_supported)
         binding.enterPin.requestFocus()
+    }
+
+    companion object {
+        private val TAG = EditTextPinInputFragment::class.simpleName!!
     }
 }

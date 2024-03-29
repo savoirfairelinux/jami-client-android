@@ -17,112 +17,162 @@
 package cx.ring.account
 
 import android.content.Context
+import android.content.res.Configuration
 import android.os.Bundle
-import android.util.SparseArray
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
+import android.view.inputmethod.InputMethodManager
+import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentStatePagerAdapter
-import androidx.viewpager.widget.ViewPager.OnPageChangeListener
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
+import cx.ring.R
+import cx.ring.account.pinInput.EditTextPinInputFragment
+import cx.ring.account.pinInput.EditTextPinInputViewModel
+import cx.ring.account.pinInput.QrCodePinInputFragment
+import cx.ring.account.pinInput.QrCodePinInputViewModel
 import cx.ring.databinding.FragAccJamiLinkBinding
+import cx.ring.mvp.BaseSupportFragment
+import dagger.hilt.android.AndroidEntryPoint
+import net.jami.account.JamiLinkAccountPresenter
+import net.jami.account.JamiLinkAccountView
 
-class JamiLinkAccountFragment : Fragment() {
-    private var mBinding: FragAccJamiLinkBinding? = null
-    private var mCurrentFragment: Fragment? = null
+@AndroidEntryPoint
+class JamiLinkAccountFragment :
+    BaseSupportFragment<JamiLinkAccountPresenter, JamiLinkAccountView>(),
+    JamiLinkAccountView {
+    private val model: AccountCreationViewModel by activityViewModels()
+    private var binding: FragAccJamiLinkBinding? = null
 
-    private val onBackPressedCallback: OnBackPressedCallback =
-        object : OnBackPressedCallback(false) {
-            override fun handleOnBackPressed() {
-                if (mCurrentFragment is ProfileCreationFragment) {
-                    //val fragment = mCurrentFragment as ProfileCreationFragment
-                    (activity as AccountWizardActivity).profileCreated(false)
-                    return
+    // the 2 view models connected to this fragment
+    private val qrCodePinInputViewModel by lazy {
+        ViewModelProvider(this)[QrCodePinInputViewModel::class.java]
+    }
+    private val editTextPinInputViewModel by lazy {
+        ViewModelProvider(this)[EditTextPinInputViewModel::class.java]
+    }
+
+    private fun setLayoutOrientation(linearLayout: LinearLayout?, conf: Configuration) {
+        linearLayout?.orientation = if (conf.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            LinearLayout.HORIZONTAL
+        } else LinearLayout.VERTICAL
+    }
+
+    override fun onCreateView(
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
+    ): View = FragAccJamiLinkBinding.inflate(inflater, container, false).apply {
+
+        setLayoutOrientation(root, resources.configuration)
+
+        val adapter = SectionsPagerAdapter(this@JamiLinkAccountFragment)
+        adapter.addFragment(QrCodePinInputFragment(), getString(R.string.connect_device_scanqr))
+        adapter.addFragment(EditTextPinInputFragment(), getString(R.string.connect_device_enterPIN))
+        pager.adapter = adapter
+        pager.currentItem = 0
+        TabLayoutMediator(tabLayout, pager) { tab, position ->
+            tab.text = adapter.getTabTitle(position)
+        }.attach()
+
+        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                presenter.resetPin()
+                // emit the pin again when switching tabs
+                if (tab?.position == 0) {
+                    qrCodePinInputViewModel.emitPinAgain()
+                } else {
+                    editTextPinInputViewModel.emitPinAgain()
                 }
-                mBinding!!.pager.currentItem = mBinding!!.pager.currentItem - 1
             }
-        }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
-        FragAccJamiLinkBinding.inflate(inflater, container, false).apply {
-            val pagerAdapter = ScreenSlidePagerAdapter(childFragmentManager)
-            pager.apply {
-                disableScroll(true)
-                adapter = pagerAdapter
-                addOnPageChangeListener(object : OnPageChangeListener {
-                    override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
+            override fun onTabUnselected(tab: TabLayout.Tab?) {}
 
-                    override fun onPageSelected(position: Int) {
-                        mCurrentFragment = pagerAdapter.getRegisteredFragment(position)
-                        onBackPressedCallback.isEnabled = mCurrentFragment is ProfileCreationFragment
-                    }
+            override fun onTabReselected(tab: TabLayout.Tab?) {}
+        })
 
-                    override fun onPageScrollStateChanged(state: Int) {}
-                })
+        linkButton.setOnClickListener { presenter.linkClicked() }
+
+        existingPassword.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable) {
+                presenter.passwordChanged(s.toString())
             }
-            mBinding = this
-        }.root
+        })
+        binding = this
+    }.root
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        qrCodePinInputViewModel.init({ presenter.pinChanged(it) }, { presenter.resetPin() })
+        editTextPinInputViewModel.init({ presenter.pinChanged(it) }, { presenter.resetPin() })
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        setLayoutOrientation(binding?.root, resources.configuration)
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        mBinding = null
+        binding = null
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        requireActivity().onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
+    override fun initPresenter(presenter: JamiLinkAccountPresenter) {
+        presenter.init(model.model)
     }
 
-    fun scrollPagerFragment() {
-        mBinding?.let { it.pager.currentItem = it.pager.currentItem + 1 }
-        //mBinding!!.pager.currentItem = mBinding!!.pager.currentItem + 1
-        /*if (accountCreationModel == null) {
-            mBinding!!.pager.currentItem = mBinding!!.pager.currentItem - 1
-            return
-        }
-        mBinding!!.pager.currentItem = mBinding!!.pager.currentItem + 1
-        for (fragment in childFragmentManager.fragments) {
-            if (fragment is JamiAccountPasswordFragment) {
-                fragment.setUsername(accountCreationModel.username)
-            }
-        }*/
+    override fun enableLinkButton(enable: Boolean) {
+        binding!!.linkButton.isEnabled = enable
     }
 
-    private class ScreenSlidePagerAdapter(fm: FragmentManager) :
-        FragmentStatePagerAdapter(fm) {
-        var mRegisteredFragments = SparseArray<Fragment>()
-        override fun getItem(position: Int): Fragment =
-            when (position) {
-                0 -> JamiLinkAccountPasswordFragment()
-                1 -> ProfileCreationFragment()
-                else -> throw IllegalArgumentException()
-            }
+    override fun showPin(show: Boolean) {
+        val binding = binding ?: return
+        binding.pager.visibility = if (show) View.VISIBLE else View.GONE
+        binding.tabLayout.visibility = if (show) View.VISIBLE else View.GONE
+        binding.linkButton.setText(if (show) R.string.account_link_device else R.string.account_link_archive_button)
+    }
 
-        override fun instantiateItem(container: ViewGroup, position: Int): Any {
-            val fragment = super.instantiateItem(container, position) as Fragment
-            mRegisteredFragments.put(position, fragment)
-            return super.instantiateItem(container, position)
+    override fun createAccount() {
+        (activity as AccountWizardActivity?)?.createAccount()
+        val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+        imm?.hideSoftInputFromWindow(binding!!.existingPassword.windowToken, 0)
+    }
+
+    override fun cancel() {
+        activity?.onBackPressedDispatcher?.onBackPressed()
+    }
+
+    internal class SectionsPagerAdapter(hostFragment: Fragment) : FragmentStateAdapter(hostFragment) {
+        private val mFragmentList = ArrayList<Fragment>(2)
+        private val mFragmentTitleList = ArrayList<String>(2)
+
+        fun getTabTitle(position: Int): String {
+            return mFragmentTitleList[position]
         }
 
-        override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
-            mRegisteredFragments.remove(position)
-            super.destroyItem(container, position, `object`)
+        fun addFragment(fragment: Fragment, title: String) {
+            mFragmentList.add(fragment)
+            mFragmentTitleList.add(title)
         }
 
-        override fun getCount(): Int {
-            return NUM_PAGES
+        override fun getItemCount(): Int {
+            return mFragmentList.size
         }
 
-        fun getRegisteredFragment(position: Int): Fragment {
-            return mRegisteredFragments[position]
+        override fun createFragment(position: Int): Fragment {
+            return mFragmentList[position]
         }
 
     }
-
     companion object {
         val TAG = JamiLinkAccountFragment::class.simpleName!!
-        private const val NUM_PAGES = 2
     }
 }
