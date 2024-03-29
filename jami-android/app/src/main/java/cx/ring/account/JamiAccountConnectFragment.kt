@@ -85,10 +85,14 @@ class JamiAccountConnectFragment : BaseSupportFragment<JamiAccountConnectPresent
     }
 
     override fun createAccount() {
-        (activity as AccountWizardActivity?)?.createAccount()
+        (activity as? AccountWizardActivity)?.createAccount()
     }
 
     override fun cancel() {
         activity?.onBackPressedDispatcher?.onBackPressed()
+    }
+
+    companion object {
+        val TAG = HomeAccountCreationFragment::class.simpleName!!
     }
 }

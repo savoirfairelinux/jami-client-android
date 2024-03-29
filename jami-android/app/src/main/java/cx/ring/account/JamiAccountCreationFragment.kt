@@ -121,4 +121,8 @@ class JamiAccountCreationFragment : Fragment() {
 
         fun getRegisteredFragment(position: Int): Fragment? = registeredFragments[position]
     }
+
+    companion object {
+        val TAG = JamiAccountCreationFragment::class.simpleName!!
+    }
 }

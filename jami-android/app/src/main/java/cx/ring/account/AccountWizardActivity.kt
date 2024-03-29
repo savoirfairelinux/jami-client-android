@@ -26,7 +26,6 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
-import androidx.fragment.app.Fragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.R
 import cx.ring.application.JamiApplication
@@ -47,11 +46,9 @@ import net.jami.model.Account
 import net.jami.model.AccountConfig
 import net.jami.utils.VCardUtils
 
-
 @AndroidEntryPoint
 class AccountWizardActivity : BaseActivity<AccountWizardPresenter>(), AccountWizardView {
     private var mProgress: AlertDialog? = null
-    private var mAccountType: String? = null
     private var mAlertDialog: AlertDialog? = null
     private var biometricEnroll: BiometricHelper.BiometricEnroll? = null
     private val enrollBiometricLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -60,39 +57,21 @@ class AccountWizardActivity : BaseActivity<AccountWizardPresenter>(), AccountWiz
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
-            onBackInvokedDispatcher.registerOnBackInvokedCallback(1) { onBackPressed() }
         JamiApplication.instance?.startDaemon(this)
-        val model: AccountCreationViewModel by viewModels()
         setContentView(R.layout.activity_wizard)
-        var accountToMigrate: String? = null
-        val intent = intent
-        if (intent != null) {
-            mAccountType = intent.action
-            val path = intent.data
-            if (path != null) {
-                accountToMigrate = path.lastPathSegment
+
+        // ======= check if migration is needed =======
+        val path = intent?.data?.lastPathSegment
+        if (path != null) {     // start migration
+            val fragment = AccountMigrationFragment().apply {
+                arguments = Bundle().apply { putString(AccountEditionFragment.ACCOUNT_ID_KEY, path) }
             }
-        }
-        if (mAccountType == null) {
-            mAccountType = AccountConfig.ACCOUNT_TYPE_JAMI
-        }
-        if (savedInstanceState == null) {
-            if (accountToMigrate != null) {
-                val fragment = AccountMigrationFragment().apply {
-                    arguments = Bundle().apply { putString(AccountEditionFragment.ACCOUNT_ID_KEY, accountToMigrate) }
-                }
-                supportFragmentManager
-                    .beginTransaction()
+
+            supportFragmentManager.beginTransaction()
                     .replace(R.id.wizard_container, fragment)
                     .commit()
-            } else {
-                presenter.init(getIntent().action ?: AccountConfig.ACCOUNT_TYPE_JAMI)
-            }
-        }
-        else{
-            presenter.init(getIntent().action ?: AccountConfig.ACCOUNT_TYPE_JAMI, true)
-        }
+        } else  // migration is not needed
+            presenter.init(intent.action ?: AccountConfig.ACCOUNT_TYPE_JAMI)
     }
 
     override fun onDestroy() {
@@ -136,18 +115,17 @@ class AccountWizardActivity : BaseActivity<AccountWizardPresenter>(), AccountWiz
     }
 
     override fun goToHomeCreation() {
-        val fragmentManager = supportFragmentManager
-        fragmentManager.beginTransaction()
-            .replace(R.id.wizard_container, HomeAccountCreationFragment(), HomeAccountCreationFragment.TAG)
-            .commit()
+        supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.wizard_container, HomeAccountCreationFragment(), HomeAccountCreationFragment.TAG)
+                .commit()
     }
 
     override fun goToSipCreation() {
-        val fragment: Fragment = SIPAccountCreationFragment()
-        val fragmentManager = supportFragmentManager
-        fragmentManager.beginTransaction()
-            .replace(R.id.wizard_container, fragment, SIPAccountCreationFragment.TAG)
-            .commit()
+        supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.wizard_container, SIPAccountCreationFragment(), SIPAccountCreationFragment.TAG)
+                .commit()
     }
 
     override fun goToProfileCreation() {
@@ -173,9 +151,7 @@ class AccountWizardActivity : BaseActivity<AccountWizardPresenter>(), AccountWiz
         val fragments = supportFragmentManager.fragments
         if (fragments.size > 0) {
             val fragment = fragments[0]
-            if (fragment is JamiLinkAccountFragment) {
-                fragment.scrollPagerFragment()
-            } else if (fragment is JamiAccountConnectFragment) {
+            if (fragment is JamiLinkAccountFragment || fragment is JamiAccountConnectFragment) {
                 profileCreated(false)
             }
         }

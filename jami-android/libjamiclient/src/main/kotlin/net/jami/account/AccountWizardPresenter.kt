@@ -19,7 +19,6 @@ package net.jami.account
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.core.Single
-import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import net.jami.model.Account
 import net.jami.model.AccountConfig
@@ -40,14 +39,12 @@ class AccountWizardPresenter @Inject constructor(
     private val mDeviceService: DeviceRuntimeService,
     @param:Named("UiScheduler") private val mUiScheduler: Scheduler
 ) : RootPresenter<AccountWizardView>() {
-    //private boolean mCreationError = false;
     private var mCreatingAccount = false
     private var mAccountType: String? = null
     private var newAccount: Observable<Account>? = null
 
-    fun init(accountType: String, restoredInstance: Boolean = false) {
+    fun init(accountType: String) {
         mAccountType = accountType
-        if (restoredInstance) return
 
         if (AccountConfig.ACCOUNT_TYPE_SIP == mAccountType) {
             view?.goToSipCreation()
