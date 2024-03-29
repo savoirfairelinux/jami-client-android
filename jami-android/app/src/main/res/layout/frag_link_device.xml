@@ -57,7 +57,6 @@
             android:layout_height="wrap_content"
             android:background="@drawable/background_pin_code"
             android:foreground="?attr/selectableItemBackground"
-            android:countDown="true"
             android:paddingHorizontal="20dp"
             android:paddingVertical="12dp"
             android:textColor="@color/colorPrimary"

@@ -1,38 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_primary_dark"
-    android:gravity="center_vertical"
-    android:orientation="vertical">
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingVertical="16dp">
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center">
+        android:layout_height="wrap_content">
 
-        <LinearLayout
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/text_margin"
-                android:text="@string/account_link_device"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-                android:textColor="@color/color_primary_light"
-                android:textStyle="bold" />
-
-        </LinearLayout>
+            android:layout_centerInParent="true"
+            android:text="@string/account_link_device"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+            android:textColor="@color/color_primary_light"
+            android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/background"
@@ -45,14 +34,84 @@
             app:tint="@color/white" />
     </RelativeLayout>
 
-    <cx.ring.views.WizardViewPager
-        android:id="@+id/pager"
-        android:layout_width="@dimen/wizard_card_width"
-        android:layout_height="500dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="22dp"
-        tools:background="@color/grey_400"
-        tools:layout_height="500dp" />
+    <Space
+        android:layout_width="180dp"
+        android:layout_height="0dp" />
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_rounded_12dp"
+        android:backgroundTint="@color/white">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp">
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white">
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/connect_device_scanqr" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/connect_device_enterPIN" />
+            </com.google.android.material.tabs.TabLayout>
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/pager"
+                android:layout_width="@dimen/wizard_card_width"
+                android:layout_height="@dimen/wizard_card_width"
+                tools:background="@color/grey_400" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/help_password_enter"
+                android:textAlignment="center"
+                android:textStyle="bold" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/password_txt_box"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:passwordToggleEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/existing_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/baseline_lock_24"
+                    android:drawablePadding="5dp"
+                    android:hint="@string/prompt_password"
+                    android:imeOptions="actionNext"
+                    android:inputType="textPassword" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/link_button"
+                style="@style/ButtonColored"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="16dp"
+                android:enabled="false"
+                android:text="@string/account_link_button"
+                android:textSize="12sp"
+                android:theme="@style/ButtonColoredInverse" />
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>
-
