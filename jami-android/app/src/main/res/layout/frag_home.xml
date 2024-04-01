@@ -48,6 +48,7 @@ along with this program; if not, write to the Free Software
             <!-- Search bar to search for a swarm or for new contacts -->
             <com.google.android.material.search.SearchBar
                 android:id="@+id/search_bar"
+                app:navigationContentDescription="@string/searchbar_navigation_account"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/searchbar_color"
