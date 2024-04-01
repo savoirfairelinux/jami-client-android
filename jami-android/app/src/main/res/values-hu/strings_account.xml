@@ -48,6 +48,9 @@
   <string name="account_password_set">Jelszó beállítása</string>
   <string name="account_password_summary">Fiók jelszava kezelése.</string>
   <string name="account_password_change_wait_message">Fiókjelszó megváltoztatása</string>
+  <string name="account_biometric_disable">Biometrikus hitelesítés letiltása</string>
+  <string name="account_biometric_set">Biometrikus hitelesítés engedélyezése</string>
+  <string name="account_biometric_summary">Fiók biometrikus hitelesítésének kezelése.</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Általános</string>
   <string name="account_basic_category">Alapbeállítások</string>
@@ -266,4 +269,18 @@
   <string name="connect_device_scanqr">QR-kód beolvasása</string>
   <string name="connect_device_enterPIN">Vagy PIN-kód megadása</string>
   <string name="account_link_device_button">Kapcsolódás</string>
+  <!--Biometry-->
+  <string name="account_biometry_auth_title">Jami-fiók feloldása</string>
+  <string name="account_biometry_auth_message">Biometria a fiók feloldásához</string>
+  <string name="account_biometry_enroll_title">Használja a biometrikus hitelesítést?</string>
+  <string name="account_biometry_enroll_message">Ez az eszköz támogatja a biztonságos biometrikus hitelesítést.
+A biometrikus vagy eszközhitelesítés kényelmes módot kínál a Jami-fiókhoz való hozzáférés helyi feloldására. A jelszó továbbra is használható.</string>
+  <string name="account_biometry_enroll_accept">Biometrikus adatok használata</string>
+  <string name="no_thanks">Köszönöm, nem</string>
+  <string name="account_biometry_enroll_auth_title">Hitelesítés hozzáadása a Jami-fiókhoz</string>
+  <string name="account_biometry_enroll_auth_message">Adjon hozzá biztonságos biometrikus vagy eszközhitelesítést jelszava helyett</string>
+  <string name="account_auth_error">Hitelesítési hiba: %1$s</string>
+  <string name="account_auth_success">Hitelesítés sikerült</string>
+  <string name="account_auth_key_error">Nem sikerült a fiókkulcs visszafejtése</string>
+  <string name="account_auth_password">Fiókjelszó használata</string>
 </resources>

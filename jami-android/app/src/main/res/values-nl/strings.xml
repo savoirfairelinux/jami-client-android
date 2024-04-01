@@ -49,7 +49,6 @@
     <item quantity="other">%d gesprekken</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Zoek op naam of telefoonnummer...</string>
   <string name="choose_number">Kies een nummer</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -205,6 +204,7 @@
   <string name="conversation_contact_left">%1$ is links</string>
   <string name="conversation_contact_banned">%1$s is verboden</string>
   <string name="conversation_search_hint">Zoek gesprek</string>
+  <string name="today">Vandaag</string>
   <string name="yesterday">Gisteren</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">%1$s toevoegen?</string>

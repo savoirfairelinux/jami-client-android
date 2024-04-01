@@ -140,7 +140,7 @@
   <string name="error_passwords_not_equals">비밀번호가 일치하지 않습니다</string>
   <string name="export_account_wait_title">잠깐만요</string>
   <string name="export_account_wait_message">수출 계좌 정보</string>
-  <string name="account_export_file">백업 계정</string>
+  <string name="account_export_file">백업 계좌</string>
   <string name="account_export_file_summary">나중에 복구하기 위해 계정을 장치에 백업하십시오.</string>
   <string name="account_export_end_decryption_message">제공된 비밀번호를 사용하여 계정을 열 수 없었습니다.</string>
   <string name="account_export_end_network_title">네트워크 오류</string>
@@ -247,4 +247,5 @@
   <string name="error_format_not_supported">이 형식은 지원되지 않습니다.</string>
   <string name="account_link_device_title">새로운 장치를 연결</string>
   <string name="account_link_device_button">연결</string>
+  <!--Biometry-->
 </resources>

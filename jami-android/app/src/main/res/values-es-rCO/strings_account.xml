@@ -48,6 +48,9 @@ Podrá editar su cuenta más tarde.</string>
   <string name="account_password_set">Establecé una contraseña</string>
   <string name="account_password_summary">Administra la contraseña de la cuenta</string>
   <string name="account_password_change_wait_message">Cambiando la contraseña de la cuenta</string>
+  <string name="account_biometric_disable">Desactivar autenticación biométrica</string>
+  <string name="account_biometric_set">Desactivar autenticación biométrica</string>
+  <string name="account_biometric_summary">Administre la autenticación biométrica para su cuenta.</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">General</string>
   <string name="account_basic_category">Parámetros básicos</string>
@@ -143,7 +146,7 @@ Podrá editar su cuenta más tarde.</string>
   <string name="error_passwords_not_equals">Las contraseñas no coinciden</string>
   <string name="export_account_wait_title">Por favor espere...</string>
   <string name="export_account_wait_message">Exportando información de la cuenta</string>
-  <string name="account_export_file">Respaldar tu cuenta</string>
+  <string name="account_export_file">Crear copia de seguridad de la cuenta</string>
   <string name="account_export_file_summary">Crear una copia de respaldo en tu dispositivo para luego poder recuperar tu cuenta.</string>
   <string name="account_export_end_decryption_message">No se pudo desbloquear la cuenta con la contraseña ingresada.</string>
   <string name="account_export_end_network_title">Error de red</string>
@@ -266,4 +269,18 @@ Podrá editar su cuenta más tarde.</string>
   <string name="connect_device_scanqr">Escanear QR</string>
   <string name="connect_device_enterPIN">O introducir PIN</string>
   <string name="account_link_device_button">Conectarse</string>
+  <!--Biometry-->
+  <string name="account_biometry_auth_title">Desbloquear cuenta de Jami</string>
+  <string name="account_biometry_auth_message">Utilice la biometría para desbloquear su cuenta</string>
+  <string name="account_biometry_enroll_title">¿Usar autenticación biométrica?</string>
+  <string name="account_biometry_enroll_message">Tu dispositivo admite autenticación biométrica segura.
+La autenticación biométrica o del dispositivo agrega una forma conveniente de desbloquear localmente el acceso a tu cuenta de Jami. Aún podrás usar tu contraseña.</string>
+  <string name="account_biometry_enroll_accept">Utilice biometría</string>
+  <string name="no_thanks">No gracias</string>
+  <string name="account_biometry_enroll_auth_title">Agregue autenticación para su cuenta de Jami.</string>
+  <string name="account_biometry_enroll_auth_message">Agregue autenticación biométrica o de dispositivo seguro como una alternativa a su contraseña.</string>
+  <string name="account_auth_error">Error de autenticación: %1$s</string>
+  <string name="account_auth_success">La autenticación se ha realizado correctamente</string>
+  <string name="account_auth_key_error">Error al descifrar la clave de la cuenta</string>
+  <string name="account_auth_password">Introduce la contraseña de la cuenta</string>
 </resources>

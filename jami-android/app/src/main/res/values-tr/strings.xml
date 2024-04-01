@@ -50,7 +50,6 @@
     <item quantity="other">%d görüşme</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Ad veya telefon numarası ara…</string>
   <string name="choose_number">Numara seç</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->

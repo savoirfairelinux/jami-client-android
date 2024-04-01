@@ -48,7 +48,6 @@
     <item quantity="other">%d ਗੱਲਾਂਬਾਤਾਂ</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">ਨਾਂ ਜਾਂ ਫ਼ੋਨ ਨੰਬਰ ਖੋਜੋ…</string>
   <string name="choose_number">ਨੰਬਰ ਚੁਣੋ</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->

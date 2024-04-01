@@ -39,7 +39,7 @@
   <string name="menu_item_plugin_list">Podešavanja dodataka</string>
   <string name="menu_item_share">Podeli moj nalog</string>
   <string name="menu_item_about">O Jamiju</string>
-  <string name="video_setting_title">Постављања видео</string>
+  <string name="video_setting_title">Podešavanja video zapisa</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Birajte broj</string>
   <!--History Fragment-->
@@ -52,7 +52,7 @@
     <item quantity="other">%d razgovora</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Pretraži ime ili broj telefona…</string>
+  <string name="searchbar_hint">Pretraži ime ili konverzaciju…</string>
   <string name="choose_number">Izaberi broj</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -128,7 +128,7 @@
   <string name="new_swarm">Pokreni roj</string>
   <string name="ab_action_flipcamera">Obrni kameru</string>
   <string name="ab_action_hidepreview">Sakrij pregled</string>
-  <string name="remote_recording">%ssnima...</string>
+  <string name="remote_recording">%s snima...</string>
   <!--Text messages-->
   <string name="send_message">Pošalji poruku</string>
   <string name="message_sending">Slanje poruke...</string>
@@ -172,7 +172,7 @@
   <!--Conversation-->
   <string name="conversation_details">Detalji o kontaktu</string>
   <string name="conversation_action_delete_this">Izbrišite ovu konverzaciju</string>
-  <string name="conversation_action_delete_this_title">Izbrišite ovu konverzaciju?</string>
+  <string name="conversation_action_delete_this_title">Izbrisati ovu konverzaciju ?</string>
   <string name="conversation_action_delete_this_message">Ova radnja se ne može opozvati.</string>
   <string name="conversation_action_history_clear">Očisti istoriju</string>
   <string name="conversation_action_history_clear_title">Očisti istoriju razgovora?</string>
@@ -181,7 +181,7 @@
   <string name="conversation_action_remove_this_title">Da li želite da izbrišete ovaj kontakt?</string>
   <string name="conversation_action_remove_this_message">Ovo će izbrisati kontakt i definitivno izbrisati istoriju razgovora.</string>
   <string name="conversation_action_copy_peer_number">Kopiraj broj</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$skopiran u privremenu memoriju</string>
+  <string name="conversation_action_copied_peer_number_clipboard">%1$s kopiran u privremenu memoriju</string>
   <string name="conversation_action_select_peer_number">Izaberi broj</string>
   <string name="conversation_action_block_this">Blokiraj kontakt</string>
   <string name="conversation_action_unblock_this">Odblokiraj kontakt</string>
@@ -202,6 +202,7 @@
   <string name="conversation_syncing">Preuzimanje razgovora od članova</string>
   <string name="conversation_blocked">Ovaj kontakt je blokiran.</string>
   <string name="conversation_ended">Razgovor je završen.</string>
+  <string name="conversation_message_deleted">%s obrisao poruku</string>
   <string name="conversation_reply_you">Ti</string>
   <string name="conversation_preference_color">Boja razgovora</string>
   <string name="conversation_preference_emoji">Emodži za razgovor</string>
@@ -213,8 +214,8 @@
   <string name="conversation_contact_left">%1$s je napustio</string>
   <string name="conversation_contact_banned">%1$s je dobio zabranu</string>
   <string name="conversation_search_hint">Pretraži konverzaciju</string>
-  <string name="today">Данас</string>
-  <string name="yesterday">Учерашњи</string>
+  <string name="today">Danas</string>
+  <string name="yesterday">Juče</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Dodaj %1$s?</string>
   <string name="prompt_new_password">Nova lozinka</string>
@@ -262,11 +263,11 @@
   <string name="refuse">Odbij</string>
   <string name="block">Blokiraj</string>
   <string name="contact_request_title">Novi zahtev za kontakt </string>
-  <string name="contact_request_msg">Imate %1$d zahteva za kontakt</string>
+  <string name="contact_request_msg">Imaš %1$d zahteva za kontakt</string>
   <string name="contact_request_account">Za %1$s</string>
   <string name="no_requests">Nemate nikakvih zahteva za kontakt</string>
-  <string name="message_contact_not_trusted_yet">%s još nije u vašim kontaktima. \nDa li prihvatate ili odbijate ovaj zahtev za kontakt?</string>
-  <string name="message_contact_not_trusted">%s nije u Vašim kontaktima.\nDodajte ga u kontakte?</string>
+  <string name="message_contact_not_trusted_yet">%s još nije u tvojim kontaktima. \nDa li prihvataš ili odbijaš ovaj zahtev za kontakt?</string>
+  <string name="message_contact_not_trusted">%s nije u tvojim kontaktima.\nDodaj ga u kontakte?</string>
   <!--Send contact requests-->
   <string name="send_request_button">Pošalji</string>
   <string name="send_request_title">Pošaljite zahtev za kontakt</string>
@@ -336,6 +337,16 @@
   <string name="tv_send_video">Pošalji medije</string>
   <string name="tv_action_more">Više</string>
   <string name="conversation_input_speech_hint">Reci nešto...</string>
+  <string name="audio_permission_denied">Dozvolite pristup mikrofonu da biste koristili Jami audio funkcije.</string>
+  <string name="camera_permission_denied">Dozvolite pristup kameri da biste koristili Jami video funkcije.</string>
+  <string name="speech_recogniton_unavailable">Prepoznavanje govora nije dostupno.</string>
+  <string name="audio_permission_rationale_title">Potrebna je audio dozvola</string>
+  <string name="camera_permission_rationale_title">Potrebna je dozvola za video</string>
+  <string name="audio_permission_rationale_message">Jamiju je potrebna dozvola mikrofona za korišćenje govora u tekst i snimanje audio funkcija. To će biti postavljeno u sledećem koraku.</string>
+  <string name="camera_permission_rationale_message">Jamiju je potrebna dozvola kamere da bi snimio video i uputio video poziv. To će biti postavljeno u sledećem koraku.</string>
+  <string name="unable_to_start_recorder">Nije moguće započeti snimanje zvuka.</string>
+  <string name="error_sharing_file">Greška pri deljenju datoteke.</string>
+  <string name="error_opening_file">Greška pri otvaranju datoteke.</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Preporučeno</string>
   <string name="wizard_status_optional">Opciono</string>

@@ -53,7 +53,6 @@
     <item quantity="other">%d беседы</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Поиск по имени или номеру телефона...</string>
   <string name="choose_number">Выбор номера</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
