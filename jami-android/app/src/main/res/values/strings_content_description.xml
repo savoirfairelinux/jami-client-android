@@ -10,4 +10,5 @@
     <string name="control_play">Play</string>
     <string name="control_replay">Replay</string>
     <string name="control_pause">Pause</string>
+    <string name="searchbar_navigation_account">Select account</string>
 </resources>
