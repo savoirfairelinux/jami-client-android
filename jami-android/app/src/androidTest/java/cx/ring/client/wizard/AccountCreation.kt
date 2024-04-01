@@ -13,6 +13,7 @@ import cx.ring.assertOnView
 import cx.ring.client.HomeActivity
 import cx.ring.doOnView
 import org.hamcrest.Matchers.allOf
+import org.junit.Before
 import org.junit.FixMethodOrder
 import org.junit.Rule
 import org.junit.Test
@@ -27,6 +28,20 @@ class AccountCreation {
     @Rule
     @JvmField
     var mActivityScenarioRule = ActivityScenarioRule(HomeActivity::class.java)
+
+    @Before
+    fun moveToAccountCreation() {
+        try {
+            val searchBarContentNavigationDescription = InstrumentationRegistry
+                .getInstrumentation().targetContext.getString(R.string.searchbar_navigation_account)
+            onView(withContentDescription(searchBarContentNavigationDescription)).perform(click())
+            val addAccountString = InstrumentationRegistry
+                .getInstrumentation().targetContext.getString(R.string.add_ring_account_title)
+            onView(withText(addAccountString)).perform(click())
+            Thread.sleep(5000)
+        } catch (_: Exception) {
+        }
+    }
 
     /**
      * Checks if an account can be created by skipping all the steps.
@@ -57,6 +72,8 @@ class AccountCreation {
 
         doOnView(allOf(withId(R.id.create_account_password), isDisplayed(), isEnabled()), click())
 
+        skipBiometrics()
+
         onView(allOf(withId(R.id.skip_create_account), isDisplayed())).perform(click())
     }
 
@@ -76,6 +93,8 @@ class AccountCreation {
         specifyPassword()
 
         doOnView(allOf(withId(R.id.create_account_password), isDisplayed(), isEnabled()), click())
+
+        skipBiometrics()
 
         onView(allOf(withId(R.id.skip_create_account), isDisplayed())).perform(click())
     }
@@ -299,5 +318,11 @@ class AccountCreation {
 
         onView(allOf(withId(R.id.ring_password_repeat), isDisplayed()))
             .perform(replaceText("123456"), closeSoftKeyboard())
+    }
+
+    private fun skipBiometrics() { // Skip biometrics popup
+        val noThanksSrc = InstrumentationRegistry
+            .getInstrumentation().targetContext.getString(R.string.no_thanks)
+        onView(allOf(withText(noThanksSrc), isDisplayed())).perform(click())
     }
 }
