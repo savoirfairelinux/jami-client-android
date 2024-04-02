@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a5ae3a0e_325a1b60",
+        "filename": "jami-android/app/build.gradle.kts",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-04-02T23:32:53Z",
+      "side": 1,
+      "message": "we need debug symbols in release to generate the necessary info to get backtraces from the Play Store. They are automatically striped when generating the release aab.",
+      "range": {
+        "startLine": 42,
+        "startChar": 16,
+        "endLine": 42,
+        "endChar": 41
+      },
+      "revId": "a34034bec93240fd967bb4549aafcdad6aa5519d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0298f01a_cae8f8ff",
+        "filename": "jami-android/app/build.gradle.kts",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-04-02T23:32:53Z",
+      "side": 1,
+      "message": "could be factored if possible ?",
+      "range": {
+        "startLine": 40,
+        "startChar": 12,
+        "endLine": 47,
+        "endChar": 17
+      },
+      "revId": "a34034bec93240fd967bb4549aafcdad6aa5519d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
