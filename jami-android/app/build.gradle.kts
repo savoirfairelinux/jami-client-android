@@ -16,7 +16,6 @@ android {
     compileSdk = 34
     buildToolsVersion = "34.0.0"
     ndkVersion = "26.2.11394342"
-    testBuildType = "uiTest"
 
     buildTypes {
         release {
@@ -40,21 +39,9 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
             ndk {
                 debugSymbolLevel = "FULL"
-                abiFilters += properties["archs"]?.toString()?.split(",") ?: listOf(
-                    "arm64-v8a",
-                    "x86_64",
-                    "armeabi-v7a"
-                )
+                abiFilters += properties["archs"]?.toString()?.split(",")
+                        ?: listOf("arm64-v8a", "x86_64", "armeabi-v7a")
                 println("ABIs for Debug Build Variant: $abiFilters")
-            }
-        }
-        create("uiTest") {
-            manifestPlaceholders["hostName"] = "uitest.example.com"
-            applicationIdSuffix = ".uiTest"
-            ndk {
-                debugSymbolLevel = "FULL"
-                abiFilters += "x86_64"
-                println("ABIs for UITest Build Variant: $abiFilters")
             }
         }
     }
@@ -84,12 +71,12 @@ android {
         // The following argument makes the Android Test Orchestrator run its
         // "pm clear" command after each test invocation. This command ensures
         // that the app's state is completely cleared between tests.
-        testInstrumentationRunnerArguments["clearPackageData"] ="true"
+//        testInstrumentationRunnerArguments["clearPackageData"] ="true"
 
     }
-    testOptions {
-        execution= "ANDROID_TEST_ORCHESTRATOR"
-    }
+//    testOptions {
+//        execution= "ANDROID_TEST_ORCHESTRATOR"
+//    }
     buildFeatures {
         viewBinding = true
         buildConfig = true
