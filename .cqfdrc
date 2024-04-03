@@ -6,9 +6,10 @@ name='jami'
 ; default behaviour
 command='./compile.sh'
 flavors='ci release daemon'
+env
 
 [ci]
-command='./compile.sh'
+command='./compile.sh --test'
 
 [daemon]
 command='./compile.sh --daemon'
