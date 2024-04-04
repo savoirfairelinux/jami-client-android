@@ -247,4 +247,5 @@
   <string name="error_format_not_supported">આ ફોર્મેટને સપોર્ટેડ નથી.</string>
   <string name="account_link_device_title">નવી ઉપકરણને લિંક કરો</string>
   <string name="account_link_device_button">કનેક્ટ કરો</string>
+  <!--Biometry-->
 </resources>

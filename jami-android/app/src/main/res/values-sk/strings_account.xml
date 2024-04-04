@@ -142,7 +142,7 @@
   <string name="error_passwords_not_equals">Heslá sa nezhodujú</string>
   <string name="export_account_wait_title">Čakajte, prosím...</string>
   <string name="export_account_wait_message">Exportovanie údajov o účte</string>
-  <string name="account_export_file">Záložný účet</string>
+  <string name="account_export_file">Zálohovať účet</string>
   <string name="account_export_file_summary">Zálohujte si účet na zariadenie, aby ste ho neskôr obnovili.</string>
   <string name="account_export_end_decryption_message">Nemohli sme odomknúť váš účet na základe zadaného hesla.</string>
   <string name="account_export_end_network_title">Chyba siete</string>
@@ -249,4 +249,5 @@
   <string name="error_format_not_supported">Tento formát nie je podporovaný.</string>
   <string name="account_link_device_title">Prepojiť nové zariadenie</string>
   <string name="account_link_device_button">Pripojiť</string>
+  <!--Biometry-->
 </resources>

@@ -39,6 +39,7 @@
   <string name="menu_item_plugin_list">Paramètres des modules d\'extension</string>
   <string name="menu_item_share">Partager mon compte</string>
   <string name="menu_item_about">À propos de Jami</string>
+  <string name="video_setting_title">Paramètres vidéo </string>
   <!--Dialing Fragment-->
   <string name="dial_number">Composer un numéro</string>
   <!--History Fragment-->
@@ -51,7 +52,7 @@
     <item quantity="other">%d conversation</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Rechercher un nom ou un numéro de téléphone...</string>
+  <string name="searchbar_hint">Rechercher un nom ou une conversation</string>
   <string name="choose_number">Choisissez un numéro</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -201,6 +202,8 @@
   <string name="conversation_syncing">Téléchargement de la conversation depuis le pair.</string>
   <string name="conversation_blocked">Le contact  est bloqué</string>
   <string name="conversation_ended">La conversation est terminée</string>
+  <string name="conversation_message_deleted">%s a supprimé un message</string>
+  <string name="conversation_reply_you">Vous</string>
   <string name="conversation_preference_color">Couleur de la conversation</string>
   <string name="conversation_preference_emoji">Émoji de conversation</string>
   <string name="conversation_type_contact">Contact Jami</string>
@@ -211,6 +214,8 @@
   <string name="conversation_contact_left">%1$s restant</string>
   <string name="conversation_contact_banned">%1$sa été banni</string>
   <string name="conversation_search_hint">Rechercher des conversations</string>
+  <string name="today">Aujourd\'hui</string>
+  <string name="yesterday">Hier</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Ajouter %1$s ?</string>
   <string name="prompt_new_password">Nouveau mot de passe</string>
@@ -332,6 +337,16 @@
   <string name="tv_send_video">Envoyer le média</string>
   <string name="tv_action_more">Plus</string>
   <string name="conversation_input_speech_hint">Dites quelque chose..</string>
+  <string name="audio_permission_denied">Veuillez autoriser l\'accès au microphone pour utiliser les fonctions audio de Jami.</string>
+  <string name="camera_permission_denied">Veuillez autoriser l\'accès à votre caméra pour utiliser les fonctions vidéo de Jami.</string>
+  <string name="speech_recogniton_unavailable">La reconnaissance vocale n\'est pas disponible.</string>
+  <string name="audio_permission_rationale_title">Autorisation audio nécessaire</string>
+  <string name="camera_permission_rationale_title">Autorisation vidéo nécessaire</string>
+  <string name="audio_permission_rationale_message">Jami a besoin de l\'autorisation du microphone pour utiliser les fonctions de synthèse vocale et d\'enregistrement audio. Cette autorisation sera demandée à l\'étape suivante.</string>
+  <string name="camera_permission_rationale_message">Jami a besoin de l\'autorisation de la caméra pour enregistrer des vidéos et passer des appels vidéo. Cette autorisation sera demandée à l\'étape suivante.</string>
+  <string name="unable_to_start_recorder">Impossible de démarrer l\'enregistrement audio.</string>
+  <string name="error_sharing_file">Erreur de partage de fichier.</string>
+  <string name="error_opening_file">Erreur d\'ouverture de fichier.</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Recommandé</string>
   <string name="wizard_status_optional">Optionnel</string>

@@ -247,4 +247,5 @@
   <string name="error_format_not_supported">यो ढाँचा समर्थित छैन।</string>
   <string name="account_link_device_title">नयाँ उपकरण जडान गर्नुहोस्</string>
   <string name="account_link_device_button">जोड्नुहोस्</string>
+  <!--Biometry-->
 </resources>

@@ -8,5 +8,6 @@
   <string name="video_plugins">Видео додаци</string>
   <string name="file_download_button">Преузимање</string>
   <string name="control_play">Пусти</string>
+  <string name="control_replay">Ponovi</string>
   <string name="control_pause">Паузирај</string>
 </resources>

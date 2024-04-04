@@ -142,7 +142,7 @@
   <string name="error_passwords_not_equals">As palavras-chave não são iguais</string>
   <string name="export_account_wait_title">Por favor aguarde...</string>
   <string name="export_account_wait_message">Exportar a informação da conta</string>
-  <string name="account_export_file">Backup da conta</string>
+  <string name="account_export_file">Conta de cópia de segurança</string>
   <string name="account_export_file_summary">Faça backup de sua conta no dispositivo para restaurá-la mais tarde.</string>
   <string name="account_export_end_decryption_message">Não foi possível desbloquear a sua conta utilizando a palavra-chave fornecida.</string>
   <string name="account_export_end_network_title">Erro de rede</string>
@@ -249,4 +249,5 @@
   <string name="error_format_not_supported">Este formato não é suportado.</string>
   <string name="account_link_device_title">Associar a um novo dispositivo</string>
   <string name="account_link_device_button">Ligar</string>
+  <!--Biometry-->
 </resources>
