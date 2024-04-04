@@ -38,6 +38,7 @@
   <string name="menu_item_plugin_list">플러그인 설정</string>
   <string name="menu_item_share">내 계정을 공유</string>
   <string name="menu_item_about">자미 에 관한 것</string>
+  <string name="video_setting_title">비디오 설정</string>
   <!--Dialing Fragment-->
   <string name="dial_number">번호를 호출</string>
   <!--History Fragment-->
@@ -47,7 +48,6 @@
     <item quantity="other">%d대화</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">검색 이름이나 전화번호...</string>
   <string name="choose_number">숫자를 선택</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -203,6 +203,7 @@
   <string name="conversation_contact_left">%1$는 왼쪽</string>
   <string name="conversation_contact_banned">%1$s가 금지되었습니다</string>
   <string name="conversation_search_hint">검색 대화</string>
+  <string name="today">오늘날</string>
   <string name="yesterday">어제</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">%1$s를 추가하세요?</string>

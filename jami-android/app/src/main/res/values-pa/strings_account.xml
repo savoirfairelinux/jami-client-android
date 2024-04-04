@@ -238,4 +238,5 @@
   <string name="error_format_not_supported">ਇਸ ਵੰਨਗੀ ਵਿੱਚ ਨਹੀਂ ਵਰਤ ਸਕਦੇ।</string>
   <string name="account_link_device_title">ਨਵਾਂ ਡੀਵਾਈਸ ਜੋੜੋ</string>
   <string name="account_link_device_button">ਜੋੜੋ</string>
+  <!--Biometry-->
 </resources>

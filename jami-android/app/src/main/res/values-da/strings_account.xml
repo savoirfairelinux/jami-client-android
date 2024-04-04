@@ -249,4 +249,5 @@ Du kan rette din konto senere</string>
   <string name="error_format_not_supported">Dette format understøttes ikke.</string>
   <string name="account_link_device_title">Tilknyt en ny enhed</string>
   <string name="account_link_device_button">Køb</string>
+  <!--Biometry-->
 </resources>

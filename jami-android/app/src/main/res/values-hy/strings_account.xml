@@ -247,4 +247,5 @@
   <string name="error_format_not_supported">Այս ձեւաչափը չի աջակցվում:</string>
   <string name="account_link_device_title">Կապակցեք նոր սարք</string>
   <string name="account_link_device_button">Կապակցել</string>
+  <!--Biometry-->
 </resources>
