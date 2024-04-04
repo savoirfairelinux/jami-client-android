@@ -20,7 +20,6 @@ import android.Manifest
 import android.animation.Animator
 import android.animation.ValueAnimator
 import android.app.Activity
-import androidx.appcompat.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
@@ -37,6 +36,7 @@ import android.widget.*
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.view.isVisible
@@ -442,8 +442,7 @@ class JamiAccountSummaryFragment :
     }
 
     override fun onUnlockAccount(scheme: String, password: String) {
-        val context = requireContext()
-        val cacheDir = File(AndroidFileUtils.getTempShareDir(context), "archives")
+        val cacheDir = File(AndroidFileUtils.getTempShareDir(requireContext()), "archives")
         cacheDir.mkdirs()
         if (!cacheDir.canWrite()) Log.w(TAG, "Can't write to: $cacheDir")
         val dest = File(cacheDir, mBestName)
@@ -659,12 +658,13 @@ class JamiAccountSummaryFragment :
             .setPositiveButton(R.string.revoke_device_title) { _, _ ->
                 mAccount?.let {  account ->
                     BiometricHelper.startAccountAuthentication(this, account, getString(R.string.revoke_device_title)) { scheme: String, password: String ->
-                        onUnlockAccount(scheme, password)
+                        presenter.revokeDevice(deviceId, scheme, password)
                     }
                 }
             }
             .setNegativeButton(android.R.string.cancel) { di, _ -> di.dismiss() }
             .create()
+            .show()
     }
 
     override fun onDeviceRename() {
@@ -675,7 +675,6 @@ class JamiAccountSummaryFragment :
     }
 
     override fun onDeviceRename(newName: String) {
-        Log.d(TAG, "onDeviceRename: " + presenter.deviceName + " -> " + newName)
         presenter.renameDevice(newName)
     }
 
@@ -732,7 +731,6 @@ class JamiAccountSummaryFragment :
 
     companion object {
         val TAG = JamiAccountSummaryFragment::class.simpleName!!
-        private val FRAGMENT_DIALOG_REVOCATION = "$TAG.dialog.deviceRevocation"
         private val FRAGMENT_DIALOG_RENAME = "$TAG.dialog.deviceRename"
         private val FRAGMENT_DIALOG_PASSWORD = "$TAG.dialog.changePassword"
         private val FRAGMENT_DIALOG_BACKUP = "$TAG.dialog.backup"

@@ -45,17 +45,11 @@ class DeviceAdapter(
         notifyDataSetChanged()
     }
 
-    override fun getCount(): Int {
-        return mDevices.size
-    }
+    override fun getCount(): Int = mDevices.size
 
-    override fun getItem(i: Int): Any {
-        return mDevices[i]
-    }
+    override fun getItem(i: Int): Any = mDevices[i]
 
-    override fun getItemId(i: Int): Long {
-        return 0
-    }
+    override fun getItemId(i: Int): Long = 0
 
     override fun getView(i: Int, convertView: View?, parent: ViewGroup): View {
         val view = convertView ?: LayoutInflater.from(mContext).inflate(R.layout.item_device, parent, false)

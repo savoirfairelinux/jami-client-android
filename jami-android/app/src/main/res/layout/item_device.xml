@@ -15,33 +15,31 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
     android:paddingVertical="8dp">
 
     <cx.ring.views.TwoButtonEditText
         android:id="@+id/txt_device_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tint="@color/button_border"
-        android:singleLine="true"
         android:enabled="false"
-        />
+        android:singleLine="true"
+        app:tint="@color/button_border" />
 
     <TextView
         android:id="@+id/txt_device_thisflag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/account_device_this_indicator"
-        android:textStyle="italic|bold"
-        android:textColor="@color/colorPrimary"
         android:layout_alignParentEnd="true"
-        android:textSize="11sp"
-        android:layout_marginEnd="42dp"
         android:layout_marginTop="10dp"
+        android:layout_marginEnd="42dp"
+        android:text="@string/account_device_this_indicator"
+        android:textColor="@color/colorPrimary"
+        android:textSize="11sp"
+        android:textStyle="italic|bold"
         android:visibility="gone"
-        tools:visibility="visible"
-        />
+        tools:visibility="visible" />
 
 </RelativeLayout>
