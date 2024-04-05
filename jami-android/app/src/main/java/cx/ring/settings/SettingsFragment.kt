@@ -304,6 +304,7 @@ class SettingsFragment :
     //=============== AppBar management end ===================
 
     companion object {
+        val TAG = SettingsFragment::class.simpleName!!
         const val NOTIFICATION_PRIVATE = 0
         const val NOTIFICATION_PUBLIC = 1
         const val NOTIFICATION_SECRET = 2

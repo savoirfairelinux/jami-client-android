@@ -17,9 +17,6 @@
 package net.jami.account
 
 interface AccountEditionView {
-    fun exit()
-    fun displaySummary(accountId: String)
-    fun initViewPager(accountId: String, isJami: Boolean)
+    fun initViewPager(accountId: String)
     fun goToBlackList(accountId: String)
-    fun displaySIPView(accountId: String)
 }
