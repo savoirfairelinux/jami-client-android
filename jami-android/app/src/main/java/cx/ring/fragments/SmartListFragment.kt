@@ -17,18 +17,14 @@
 package cx.ring.fragments
 
 import android.app.Activity
-import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DefaultItemAnimator
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.snackbar.Snackbar
 import cx.ring.R
 import cx.ring.adapters.SmartListAdapter
 import cx.ring.client.CallActivity
@@ -41,23 +37,18 @@ import cx.ring.utils.TextUtils
 import cx.ring.viewholders.SmartListViewHolder.SmartListListeners
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.subjects.BehaviorSubject
 import net.jami.model.Conversation
 import net.jami.model.Conversation.ConversationActionCallback
 import net.jami.model.Uri
-import net.jami.services.AccountService
 import net.jami.services.ConversationFacade
 import net.jami.smartlist.SmartListPresenter
 import net.jami.smartlist.SmartListView
-import javax.inject.Inject
-
 
 @AndroidEntryPoint
 class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>(),
     SmartListListeners, ConversationActionCallback, SmartListView {
     private var mSmartListAdapter: SmartListAdapter? = null
     private var binding: FragSmartlistBinding? = null
-    private var mHomeFragment: HomeFragment? = null
 
     override fun onSaveInstanceState(outState: Bundle) {
         binding?.apply { outState.putBoolean(STATE_LOADING, loadingIndicator.isShown) }
@@ -66,7 +57,7 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         FragSmartlistBinding.inflate(inflater, container, false).apply {
-            (confsList.itemAnimator as DefaultItemAnimator?)?.supportsChangeAnimations = false
+            (confsList.itemAnimator as? DefaultItemAnimator)?.supportsChangeAnimations = false
             binding = this
         }.root
 
@@ -75,13 +66,6 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
-    }
-
-    override fun onStart() {
-        super.onStart()
-        if (mHomeFragment == null)
-            mHomeFragment =
-                    requireActivity().supportFragmentManager.findFragmentById(R.id.home_fragment) as HomeFragment?
     }
 
     override fun setLoading(loading: Boolean) {
@@ -110,18 +94,15 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
                     .setClass(context, CallActivity::class.java)
                     .setData(android.net.Uri.parse(selected.toString()))
                 startActivityForResult(intent, HomeActivity.REQUEST_CODE_CALL)
-            }
-            .show()
+            }.show()
     }
 
     override fun displayNoConversationMessage() {
         binding!!.placeholder.visibility = View.VISIBLE
-        //(activity as HomeActivity).toggleConversationVisibility(false)
     }
 
     override fun hideNoConversationMessage() {
         binding!!.placeholder.visibility = View.GONE
-        //(activity as HomeActivity).toggleConversationVisibility(true)
     }
 
     override fun displayConversationDialog(conversationItemViewModel: Conversation) {
@@ -166,17 +147,18 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
         mSmartListAdapter?.update(ConversationFacade.ConversationList())
     }
 
-    override fun updateList(conversations: ConversationFacade.ConversationList, conversationFacade: ConversationFacade, parentDisposable: CompositeDisposable) {
-        //Log.w(TAG, "updateList ${conversations.publicDirectory.size} ${conversations.conversations.size}")
+    override fun updateList(
+        conversations: ConversationFacade.ConversationList,
+        conversationFacade: ConversationFacade,
+        parentDisposable: CompositeDisposable
+    ) {
         binding?.apply {
             if (confsList.adapter == null) {
-                confsList.adapter = SmartListAdapter(conversations, this@SmartListFragment, conversationFacade, parentDisposable).apply {
-                    mSmartListAdapter = this
-                }
+                confsList.adapter = SmartListAdapter(
+                        conversations, this@SmartListFragment, conversationFacade, parentDisposable
+                ).apply { mSmartListAdapter = this }
+
                 confsList.setHasFixedSize(true)
-                confsList.layoutManager = LinearLayoutManager(requireContext()).apply {
-                    orientation = RecyclerView.VERTICAL
-                }
             } else {
                 mSmartListAdapter?.update(conversations)
             }
@@ -204,7 +186,7 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
 
     override fun goToConversation(accountId: String, conversationUri: Uri) {
         Log.w(TAG, "goToConversation $accountId $conversationUri")
-        (mHomeFragment as HomeFragment).collapseSearchActionView()
+        (parentFragment as? HomeFragment)?.collapseSearchActionView()
         (requireActivity() as HomeActivity).startConversation(accountId, conversationUri)
     }
 
@@ -218,7 +200,7 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
     }
 
     override fun scrollToTop() {
-        binding?.apply { confsList.scrollToPosition(0) }
+        binding?.confsList?.scrollToPosition(0)
     }
 
     override fun onItemClick(item: Conversation) {
@@ -232,7 +214,6 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
     companion object {
         val TAG = SmartListFragment::class.simpleName!!
         private val STATE_LOADING = "$TAG.STATE_LOADING"
-        private const val SCROLL_DIRECTION_UP = -1
     }
 
 }

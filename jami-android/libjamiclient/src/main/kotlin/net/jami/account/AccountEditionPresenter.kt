@@ -31,6 +31,7 @@ class AccountEditionPresenter @Inject constructor(
     fun init(accountId: String) {
         val account = mAccountService.getAccount(accountId)
         account?.let { init(it) }
+
         mCompositeDisposable.add(mAccountService
             .currentAccountSubject
             .observeOn(mUiScheduler)
@@ -43,12 +44,6 @@ class AccountEditionPresenter @Inject constructor(
 
     fun init(account: Account) {
         mAccount = account
-        val view = view ?: return
-        if (account.isJami) {
-            view.displaySummary(account.accountId)
-        } else {
-            view.displaySIPView(account.accountId)
-        }
-        view.initViewPager(account.accountId, account.isJami)
+        view?.initViewPager(account.accountId)
     }
 }

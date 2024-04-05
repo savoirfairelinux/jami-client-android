@@ -156,6 +156,8 @@ along with this program; if not, write to the Free Software
                 android:id="@+id/searchResult"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:orientation="vertical"
                 android:clipToPadding="false"
                 android:divider="@null"
                 android:paddingBottom="8dp"

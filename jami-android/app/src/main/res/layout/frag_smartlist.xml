@@ -22,8 +22,7 @@ along with this program; if not, write to the Free Software
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    android:fitsSystemWindows="true"
-    >
+    android:fitsSystemWindows="true">
 
     <!-- Will be displayed when no accounts are available -->
     <LinearLayout
@@ -41,7 +40,8 @@ along with this program; if not, write to the Free Software
             android:layout_width="128dp"
             android:layout_height="128dp"
             android:src="@drawable/baseline_forum_24"
-            app:tint="@color/darker_gray" />
+            app:tint="@color/darker_gray"
+            android:contentDescription="@string/conversation_placeholder" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -60,7 +60,7 @@ along with this program; if not, write to the Free Software
         android:indeterminate="true"
         tools:visibility="gone" />
 
-    <!-- Will display loaded accounts -->
+    <!-- Display loaded accounts -->
     <!-- paddingTop allows to have list items under searchbar and invitation received toolbar -->
     <!-- TODO: Determine if layout_constraintTop_toBottomOf is still needed -->
     <androidx.recyclerview.widget.RecyclerView
@@ -69,6 +69,8 @@ along with this program; if not, write to the Free Software
         android:layout_height="match_parent"
         android:layout_marginStart="0dp"
         android:clipToPadding="false"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:orientation="vertical"
         android:divider="@null"
         android:elevation="2dp"
         android:paddingBottom="8dp"
