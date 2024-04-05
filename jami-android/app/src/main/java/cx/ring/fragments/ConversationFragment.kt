@@ -1307,13 +1307,11 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     }
 
     companion object {
-        private val TAG = ConversationFragment::class.simpleName
+        val TAG = ConversationFragment::class.simpleName
         const val REQ_ADD_CONTACT = 42
         const val KEY_PREFERENCE_PENDING_MESSAGE = "pendingMessage"
-        const val KEY_PREFERENCE_CONVERSATION_COLOR = "color"
         @Deprecated("Use daemon feature")
         const val KEY_PREFERENCE_CONVERSATION_LAST_READ = "lastRead"
-        const val KEY_PREFERENCE_CONVERSATION_SYMBOL = "symbol"
         const val EXTRA_SHOW_MAP = "showMap"
         private const val REQUEST_CODE_FILE_PICKER = 1000
         private const val REQUEST_PERMISSION_CAMERA = 1001

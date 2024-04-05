@@ -72,4 +72,8 @@ class AboutFragment : Fragment() {
             }
         }
     }
+
+    companion object {
+        val TAG = AboutFragment::class.simpleName!!
+    }
 }

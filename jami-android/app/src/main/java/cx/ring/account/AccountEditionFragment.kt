@@ -18,15 +18,12 @@ package cx.ring.account
 
 import android.os.Bundle
 import android.view.*
-import android.view.ViewTreeObserver.OnScrollChangedListener
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.annotation.StringRes
 import androidx.fragment.app.*
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import androidx.viewpager2.widget.ViewPager2
-import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import cx.ring.R
 import cx.ring.contactrequests.BlockListFragment
@@ -47,7 +44,6 @@ import net.jami.utils.DonationUtils
 class AccountEditionFragment : BaseSupportFragment<AccountEditionPresenter, AccountEditionView>(),
     AccountEditionView {
     private var mBinding: FragAccountSettingsBinding? = null
-    private var mAccountId: String? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         FragAccountSettingsBinding.inflate(inflater, container, false).apply {
@@ -69,54 +65,26 @@ class AccountEditionFragment : BaseSupportFragment<AccountEditionPresenter, Acco
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        setHasOptionsMenu(true)
         super.onViewCreated(view, savedInstanceState)
 
-        mAccountId = requireArguments().getString(ACCOUNT_ID_KEY)
-        initViewPager(mAccountId!!, false)
+        //presenter.init(requireArguments().getString(ACCOUNT_ID_KEY)!!)
+        initViewPager(requireArguments().getString(ACCOUNT_ID_KEY)!!)
 
         mBinding?.fragmentContainer?.viewTreeObserver?.addOnScrollChangedListener {
             setupElevation()
         }
     }
 
-    private fun updateAdapter(tabLayout: TabLayout, viewPager: ViewPager2, accountId: String, isJami: Boolean) {
-        viewPager.adapter = PreferencesPagerAdapter(this@AccountEditionFragment, accountId, isJami)
-        TabLayoutMediator(tabLayout, viewPager){ tab, position ->
-            tab.text = context?.getString(getSIPPanelTitle(position))
-        }.attach()
-    }
-
-    override fun displaySummary(accountId: String) {
-        //toggleView(accountId, true)
-        val fragmentManager = childFragmentManager
-        val existingFragment = fragmentManager.findFragmentByTag(JamiAccountSummaryFragment.TAG)
-        val args = Bundle().apply { putString(ACCOUNT_ID_KEY, accountId) }
-        if (existingFragment == null) {
-            val fragment = JamiAccountSummaryFragment().apply {
-                arguments = args
-            }
-            fragmentManager.beginTransaction()
-                .add(R.id.fragment_container, fragment, JamiAccountSummaryFragment.TAG)
-                .commitAllowingStateLoss()
-        } else {
-            if (existingFragment is JamiAccountSummaryFragment) {
-                if (!existingFragment.isStateSaved) existingFragment.arguments = args
-                existingFragment.setAccount(accountId)
-            }
-        }
-    }
-
-    override fun displaySIPView(accountId: String) {
-        //toggleView(accountId, false)
-    }
-
-    override fun initViewPager(accountId: String, isJami: Boolean) {
+    override fun initViewPager(accountId: String) {
         mBinding?.apply {
             pager.offscreenPageLimit = 4
-            updateAdapter(slidingTabs, pager, accountId, isJami)
+            pager.adapter = PreferencesPagerAdapter(this@AccountEditionFragment, accountId)
+            TabLayoutMediator(slidingTabs, pager) { tab, position ->
+                tab.text = context?.getString(getSIPPanelTitle(position))
+            }.attach()
         }
-        val existingFragment = childFragmentManager.findFragmentByTag(BlockListFragment.TAG) as BlockListFragment?
+
+        val existingFragment = childFragmentManager.findFragmentByTag(BlockListFragment.TAG) as? BlockListFragment
         if (existingFragment != null) {
             if (!existingFragment.isStateSaved)
                 existingFragment.arguments = Bundle().apply { putString(ACCOUNT_ID_KEY, accountId) }
@@ -139,39 +107,13 @@ class AccountEditionFragment : BaseSupportFragment<AccountEditionPresenter, Acco
         }
     }
 
-//    private fun toggleView(accountId: String?, isJami: Boolean) {
-//        mAccountId = accountId
-//        mAccountIsJami = isJami
-//        mBinding?.apply {
-//            slidingTabs.visibility = if (isJami) View.GONE else View.VISIBLE
-//            pager.visibility = if (isJami) View.GONE else View.VISIBLE
-//            fragmentContainer.visibility = if (isJami) View.VISIBLE else View.GONE
-//        }
-//    }
-
-    override fun exit() {
-        activity?.onBackPressedDispatcher?.onBackPressed()
-    }
-
     private class PreferencesPagerAdapter(
         f: Fragment,
-        private val accountId: String,
-        private val isJamiAccount: Boolean
+        private val accountId: String
     ) : FragmentStateAdapter(f) {
-        override fun getItemCount(): Int = if (isJamiAccount) 3 else 4
+        override fun getItemCount(): Int = 4
 
-        override fun createFragment(position: Int): Fragment =
-            if (isJamiAccount) getJamiPanel(position) else getSIPPanel(position)
-
-        private fun getJamiPanel(position: Int): Fragment = when (position) {
-            0 -> fragmentWithBundle(GeneralAccountFragment())
-            1 -> fragmentWithBundle(MediaPreferenceFragment())
-            2 -> fragmentWithBundle(AdvancedAccountFragment())
-            3 -> fragmentWithBundle(PluginsListSettingsFragment())
-            else -> throw IllegalArgumentException()
-        }
-
-        private fun getSIPPanel(position: Int): Fragment = when (position) {
+        override fun createFragment(position: Int): Fragment = when (position) {
             0 -> GeneralAccountFragment.newInstance(accountId)
             1 -> MediaPreferenceFragment.newInstance(accountId)
             2 -> fragmentWithBundle(AdvancedAccountFragment())
@@ -197,7 +139,7 @@ class AccountEditionFragment : BaseSupportFragment<AccountEditionPresenter, Acco
     }
 
     companion object {
-        private val TAG = AccountEditionFragment::class.simpleName
+        val TAG = AccountEditionFragment::class.simpleName!!
         val ACCOUNT_ID_KEY = AccountEditionFragment::class.qualifiedName + "accountId"
         val ACCOUNT_HAS_PASSWORD_KEY = AccountEditionFragment::class.qualifiedName + "hasPassword"
         private const val SCROLL_DIRECTION_UP = -1

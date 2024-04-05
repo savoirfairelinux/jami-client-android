@@ -35,10 +35,8 @@ import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import androidx.core.widget.addTextChangedListener
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.AutoTransition
 import androidx.transition.ChangeBounds
@@ -83,7 +81,7 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
     SearchView.OnQueryTextListener, HomeView {
 
     private var mBinding: FragHomeBinding? = null
-    private var pagerContent: Fragment? = null
+    private var mSmartListFragment: SmartListFragment? = null
     private val mDisposable = CompositeDisposable()
     private var mSearchView: SearchView? = null
     private var searchDisposable: Disposable? = null
@@ -96,12 +94,10 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
     }.distinctUntilChanged()
 
     @Inject
-    lateinit
-    var mAccountService: AccountService
+    lateinit var mAccountService: AccountService
 
     @Inject
-    lateinit
-    var mConversationFacade: ConversationFacade
+    lateinit var mConversationFacade: ConversationFacade
 
     private val searchBackPressedCallback = object : OnBackPressedCallback(false) {
         override fun handleOnBackPressed() {
@@ -127,196 +123,178 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View =
-        FragHomeBinding.inflate(inflater, container, false).let { binding ->
+    ): View = FragHomeBinding.inflate(inflater, container, false).apply {
 
-            // Connect SearchView buttons:
-            // - QRCode
-            // - New Swarm
-            binding.qrCode.setOnClickListener {
-                presenter.clickQRSearch()
-            }
-            binding.newSwarm.setOnClickListener {
-                presenter.clickNewSwarm()
-            }
+        qrCode.setOnClickListener {
+            presenter.clickQRSearch()
+        }
+        newSwarm.setOnClickListener {
+            presenter.clickNewSwarm()
+        }
 
-            //updateAppBarLayoutBottomPadding(false)
-
-            // SearchBar is composed of:
-            // - Account selection (navigation)
-            // - Search bar (search for swarms or for new contacts)
-            // - Menu (for settings, about jami)
-            binding.searchBar.setNavigationOnClickListener { // Account selection
-                val accounts = mAccountService.observableAccountList.blockingFirst()
-                MaterialAlertDialogBuilder(requireContext())
-                    .setTitle("Select Account")
-                    .setAdapter(
+        // SearchBar is composed of:
+        // - Account selection (navigation)
+        // - Search bar (search for swarms or for new contacts)
+        // - Menu (for settings, about jami)
+        searchBar.setNavigationOnClickListener { // Account selection
+            val accounts = mAccountService.observableAccountList.blockingFirst()
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle("Select Account")
+                .setAdapter(
                         AccountAdapter(
                             requireContext(),
                             accounts,
                             mDisposable, mAccountService, mConversationFacade
                         )
-                    ) { _, index ->
-                        if (index >= accounts.size) // Add account
-                            startActivity(Intent(activity, AccountWizardActivity::class.java))
-                        else if (mAccountService.currentAccount != accounts[index]) {
-                            // Disable account settings menu option when account is loading
-                            binding.searchBar.menu.findItem(R.id.menu_account_settings)
-                                .isEnabled = false
-                            mAccountService.currentAccount = accounts[index]
-                        }
+                ) { _, index ->
+                    if (index >= accounts.size) // Add account
+                        startActivity(Intent(activity, AccountWizardActivity::class.java))
+                    else if (mAccountService.currentAccount != accounts[index]) {
+                        // Disable account settings menu option when account is loading
+                        searchBar.menu.findItem(R.id.menu_account_settings).isEnabled = false
+                        mAccountService.currentAccount = accounts[index]
                     }
-                    .show()
-            }
-            binding.searchView.editText.addTextChangedListener { // Search bar
-                querySubject.onNext(it.toString())
-            }
-            // Inflate Menu and connect it
-            binding.searchBar.inflateMenu(R.menu.smartlist_menu)
-            binding.searchBar.setOnMenuItemClickListener {
-                when (it.itemId) {
-                    R.id.menu_account_settings -> {
-                        (requireActivity() as HomeActivity).goToAccountSettings()
-                    }
-
-                    R.id.menu_advanced_settings -> {
-                        (requireActivity() as HomeActivity).goToAdvancedSettings()
-                    }
-
-                    R.id.menu_about -> {
-                        (requireActivity() as HomeActivity).goToAbout()
-                    }
-
-                    R.id.menu_donate -> {
-                        openJamiDonateWebPage(requireContext())
-                    }
-                }
-                true
-            }
-            // Update padding of the list depending on the AppBarLayout height
-            binding.appBar.addOnLayoutChangeListener { _, _, top, _, bottom, _, _, _, _ ->
-                (pagerContent as SmartListFragment).getRecyclerView()
-                    ?.setPadding(
-                        0,
-                        binding.appBar.height - DeviceUtils.getStatusBarHeight(requireContext()),
-                        0, 0
-                    )
-            }
-            // Make the appBarLayout not going under the status bar.
-            binding.appBar.statusBarForeground =
-                MaterialShapeDrawable.createWithElevationOverlay(requireContext())
-
-            // Setup search result adapter
-            binding.searchResult.adapter =
-                SmartListAdapter(
-                    null,
-                    object : SmartListViewHolder.SmartListListeners {
-                        override fun onItemClick(item: Conversation) {
-                            collapseSearchActionView()
-                            (requireActivity() as HomeActivity).startConversation(
-                                item.accountId,
-                                item.uri
-                            )
-                        }
-
-                        override fun onItemLongClick(item: Conversation) {}
-                    },
-                    mConversationFacade,
-                    mDisposable
-                ).apply { searchAdapter = this }
-            // Setup search result list
-            binding.searchResult.setHasFixedSize(true)
-            binding.searchResult.layoutManager =
-                LinearLayoutManager(requireContext()).apply { orientation = RecyclerView.VERTICAL }
-
-            binding.searchView.addTransitionListener { _, previousState, newState ->
-                // When using the SearchView, we have to :
-                // - Manage back press
-                // - Manage search results
-
-                if (newState === TransitionState.SHOWN) { // Shown
-                    // Hide AppBar and SmartList to avoid weird animation
-                    binding.fragmentContainer.isVisible = false
-                    binding.appBar.isVisible = false
-
-                    searchBackPressedCallback.isEnabled = true
-                } else if (previousState === TransitionState.SHOWN) { // Hiding
-                    // Make SmartList and appbar visible again
-                    binding.fragmentContainer.isVisible = true
-                    binding.appBar.isVisible = true
-
-                    searchBackPressedCallback.isEnabled = false
-                }
-
-                if (newState === TransitionState.HIDDEN) { // Hidden
-                    // Hide floating button to avoid weird animation
-                    binding.newSwarmFab.isVisible = true
-
-                    searchDisposable?.dispose()
-                    querySubject.onNext("")
-                    searchAdapter?.update(ConversationFacade.ConversationList())
-                    searchDisposable = null
-                } else if (previousState === TransitionState.HIDDEN) { // Showing
-                    binding.newSwarmFab.isVisible = false
-                    startSearch()
-                }
-            }
-
-            // Setup floating button.
-            binding.newSwarmFab.setOnClickListener { expandSearchActionView() }
-
-            // Setup donation card
-            binding.donationCard.donationCard.visibility = View.GONE
-            binding.donationCard.donationCard.setOnClickListener {
-                openJamiDonateWebPage(requireContext())
-            }
-            binding.donationCard.donationCardDonateButton.setOnClickListener {
-                openJamiDonateWebPage(requireContext())
-            }
-            binding.donationCard.donationCardNotNowButton.setOnClickListener {
-                presenter.setDonationReminderDismissed()
-            }
-
-            // Setup invitation card adapter.
-            binding.invitationCard.pendingList.adapter =
-                SmartListAdapter(
-                    null,
-                    object : SmartListViewHolder.SmartListListeners {
-                        override fun onItemClick(item: Conversation) {
-                            (requireActivity() as HomeActivity).startConversation(
-                                item.accountId,
-                                item.uri
-                            )
-                        }
-
-                        override fun onItemLongClick(item: Conversation) {
-                            displayConversationRequestDialog(item)
-                        }
-                    },
-                    mConversationFacade,
-                    mDisposable
-                ).apply { pendingAdapter = this }
-            // Setup invitation card
-            binding.invitationCard.invitationGroup.setOnClickListener {
-                expandPendingView()
-            }
-            binding.invitationCard.pendingToolbar // Return to search
-                .setNavigationOnClickListener { collapsePendingView() }
-
-            mBinding = binding
-            binding.root
+                }.show()
+        }
+        searchView.editText.addTextChangedListener { // Search bar
+            querySubject.onNext(it.toString())
         }
 
-    fun displayConversationRequestDialog(conversation: Conversation) {
+        // Inflate Menu and connect it
+        searchBar.inflateMenu(R.menu.smartlist_menu)
+        searchBar.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.menu_account_settings -> {
+                    (requireActivity() as HomeActivity).goToAccountSettings()
+                }
+
+                R.id.menu_advanced_settings -> {
+                    (requireActivity() as HomeActivity).goToAdvancedSettings()
+                }
+
+                R.id.menu_about -> {
+                    (requireActivity() as HomeActivity).goToAbout()
+                }
+
+                R.id.menu_donate -> {
+                    openJamiDonateWebPage(requireContext())
+                }
+            }
+            true
+        }
+
+        // Update padding of the list depending on the AppBarLayout height
+        appBar.addOnLayoutChangeListener { _, _, top, _, bottom, _, _, _, _ ->
+            mSmartListFragment?.getRecyclerView()?.setPadding(
+                    0,
+                    appBar.height - DeviceUtils.getStatusBarHeight(requireContext()),
+                    0, 0
+            )
+        }
+
+        // Make the appBarLayout not going under the status bar.
+        appBar.statusBarForeground = MaterialShapeDrawable.createWithElevationOverlay(requireContext())
+
+        // Setup search result list
+        searchResult.setHasFixedSize(true)
+        searchResult.adapter = SmartListAdapter(null,
+                object : SmartListViewHolder.SmartListListeners {
+                    override fun onItemClick(item: Conversation) {
+                        collapseSearchActionView()
+                        (requireActivity() as HomeActivity).startConversation(item.accountId, item.uri)
+                    }
+
+                    override fun onItemLongClick(item: Conversation) {}
+                },
+                mConversationFacade,
+                mDisposable
+        ).apply { searchAdapter = this }
+
+        searchView.addTransitionListener { _, previousState, newState ->
+            // When using the SearchView, we have to :
+            // - Manage back press
+            // - Manage search results
+
+            if (newState === TransitionState.SHOWN) { // Shown
+                // Hide AppBar and SmartList to avoid weird animation
+                fragmentContainer.isVisible = false
+                appBar.isVisible = false
+
+                searchBackPressedCallback.isEnabled = true
+            } else if (previousState === TransitionState.SHOWN) { // Hiding
+                // Make SmartList and appbar visible again
+                fragmentContainer.isVisible = true
+                appBar.isVisible = true
+
+                searchBackPressedCallback.isEnabled = false
+            }
+
+            if (newState === TransitionState.HIDDEN) { // Hidden
+                // Hide floating button to avoid weird animation
+                newSwarmFab.isVisible = true
+
+                searchDisposable?.dispose()
+                querySubject.onNext("")
+                searchAdapter?.update(ConversationFacade.ConversationList())
+                searchDisposable = null
+            } else if (previousState === TransitionState.HIDDEN) { // Showing
+                newSwarmFab.isVisible = false
+                startSearch()
+            }
+        }
+
+        // Setup floating button.
+        newSwarmFab.setOnClickListener { expandSearchActionView() }
+
+        // Setup donation card
+        donationCard.donationCard.visibility = View.GONE
+        donationCard.donationCard.setOnClickListener {
+            openJamiDonateWebPage(requireContext())
+        }
+        donationCard.donationCardDonateButton.setOnClickListener {
+            openJamiDonateWebPage(requireContext())
+        }
+        donationCard.donationCardNotNowButton.setOnClickListener {
+            presenter.setDonationReminderDismissed()
+        }
+
+        // Setup invitation card adapter.
+        invitationCard.pendingList.adapter = SmartListAdapter(null,
+                object : SmartListViewHolder.SmartListListeners {
+                    override fun onItemClick(item: Conversation) {
+                        (requireActivity() as HomeActivity).startConversation(item.accountId, item.uri)
+                    }
+
+                    override fun onItemLongClick(item: Conversation) {
+                        displayConversationRequestDialog(item)
+                    }
+                },
+                mConversationFacade,
+                mDisposable
+        ).apply { pendingAdapter = this }
+
+        // Setup invitation card
+        invitationCard.invitationGroup.setOnClickListener {
+            expandPendingView()
+        }
+
+        // Return to search
+        invitationCard.pendingToolbar.setNavigationOnClickListener { collapsePendingView() }
+
+        mBinding = this
+    }.root
+
+    private fun displayConversationRequestDialog(conversation: Conversation) {
         MaterialAlertDialogBuilder(requireContext())
             .setItems(R.array.swarm_actions) { dialog, which ->
                 when (which) {
-                    0 -> TextUtils.copyToClipboard(requireContext(), (conversation.contact?.uri ?: conversation.uri).toString())
+                    0 -> TextUtils.copyToClipboard(
+                            requireContext(),
+                            (conversation.contact?.uri ?: conversation.uri).toString())
                     1 -> mConversationFacade.discardRequest(conversation.accountId, conversation.uri)
                     2 -> mConversationFacade.banConversation(conversation.accountId, conversation.uri)
                 }
-            }
-            .show()
+            }.show()
     }
 
     private fun startSearch() {
@@ -335,7 +313,7 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
         mBinding?.appBarContainer?.updatePadding(top = 0, bottom = if (hasInvites)
             resources.getDimensionPixelSize(R.dimen.bottom_sheet_radius) else 0)
         if (hasInvites)
-            (pagerContent as SmartListFragment).scrollToTop()
+            mSmartListFragment?.scrollToTop()
     }
 
     private fun expandPendingView() {
@@ -434,8 +412,7 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
     // Will hide the floating button when scrolling down and show it when scrolling up.
     private val fabScrollListener = object : RecyclerView.OnScrollListener() {
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-            val canScrollUp =
-                recyclerView.canScrollVertically(-1)
+            val canScrollUp = recyclerView.canScrollVertically(-1)
             val isExtended = mBinding!!.newSwarmFab.isExtended
             if (dy > 0 && isExtended) { // Going down
                 mBinding!!.newSwarmFab.shrink()
@@ -447,32 +424,31 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        pagerContent = mBinding!!.fragmentContainer.getFragment()
+        mSmartListFragment = mBinding!!.fragmentContainer.getFragment()
 
         disableAppBarScroll()
 
         // Subscribe on fragmentContainer to add scroll listener on the recycler view.
-        mBinding!!.fragmentContainer.getFragment<SmartListFragment>().viewLifecycleOwnerLiveData
-            .observe(viewLifecycleOwner) {
-                it.lifecycle.addObserver(object : DefaultLifecycleObserver {
-                    override fun onCreate(owner: LifecycleOwner) {
-                        (pagerContent as SmartListFragment).getRecyclerView()!!
-                            .addOnScrollListener(fabScrollListener)
-                    }
+        mSmartListFragment?.viewLifecycleOwnerLiveData?.observe(viewLifecycleOwner) {
+            it.lifecycle.addObserver(object : DefaultLifecycleObserver {
+                override fun onCreate(owner: LifecycleOwner) {
+                    mSmartListFragment?.getRecyclerView()?.addOnScrollListener(fabScrollListener)
+                }
 
-                    override fun onDestroy(owner: LifecycleOwner) {
-                        (pagerContent as SmartListFragment).getRecyclerView()!!
-                            .removeOnScrollListener(fabScrollListener)
-                    }
-                })
-            }
+                override fun onDestroy(owner: LifecycleOwner) {
+                    mSmartListFragment?.getRecyclerView()?.removeOnScrollListener(fabScrollListener)
+                }
+            })
+        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        pagerContent = null
-        mDisposable.dispose()
+        mSmartListFragment = null
+        pendingAdapter = null
+        searchAdapter = null
         mBinding = null
+        mDisposable.dispose()
     }
 
     override fun onStart() {
@@ -483,9 +459,7 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
         mDisposable.add(mAccountService.currentAccountSubject
             .observeOn(DeviceUtils.uiScheduler)
             .subscribe {
-                mBinding?.let {
-                    it.searchBar.menu.findItem(R.id.menu_account_settings).isEnabled = true
-                }
+                mBinding?.searchBar?.menu?.findItem(R.id.menu_account_settings)?.isEnabled = true
             }
         )
 
@@ -505,8 +479,9 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
             .observeOn(DeviceUtils.uiScheduler)
             .subscribe { count ->
                 // Collapse pending view if there is no more pending invitations
-                if(count.first.isEmpty())
+                if(count.first.isEmpty()) {
                     collapsePendingView()
+                }
                 setInvitationBadge(count.second, count.first)
             }
         )
@@ -595,9 +570,7 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
         mBinding?.fragmentContainer?.getFragment<SmartListFragment>()?.scrollToTop()
     }
 
-    override fun onQueryTextSubmit(query: String?): Boolean {
-        return true
-    }
+    override fun onQueryTextSubmit(query: String?) = true
 
     override fun onQueryTextChange(newText: String): Boolean {
         querySubject.onNext(newText)
@@ -638,9 +611,6 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
 
     companion object {
         private val TAG = HomeFragment::class.simpleName!!
-        const val TAB_CONVERSATIONS = 0
-        const val TAB_INVITATIONS = 1
     }
-
 
 }
