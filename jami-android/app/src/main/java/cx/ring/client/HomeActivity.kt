@@ -438,21 +438,17 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
         mBinding!!.panel.openPane()
     }
 
-    private fun presentTrustRequestFragment(accountId: String) {
-        mNotificationService.cancelTrustRequestNotification(accountId)
-    }
-
     fun goToAdvancedSettings() {
         if (frameContent is SettingsFragment) {
             return
         }
-        val content = SettingsFragment()
-        frameContent = content
+        val fragment = SettingsFragment()
+        frameContent = fragment
         supportFragmentManager
             .beginTransaction()
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-            .replace(R.id.frame, content, SETTINGS_TAG)
-            .addToBackStack(SETTINGS_TAG)
+            .replace(R.id.frame, fragment, SettingsFragment.TAG)
+            .addToBackStack(SettingsFragment.TAG)
             .commit()
         mBinding!!.frame.isVisible = true
     }
@@ -461,25 +457,21 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
         if (frameContent is AboutFragment) {
             return
         }
-        val content = AboutFragment()
-        frameContent = content
+        val fragment = AboutFragment()
+        frameContent = fragment
         mBinding!!.frame.isVisible = true
         supportFragmentManager
             .beginTransaction()
             //.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out, android.R.animator.fade_in, android.R.animator.fade_out)
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-            .replace(R.id.frame, content, ABOUT_TAG)
-            .addToBackStack(ABOUT_TAG)
+            .replace(R.id.frame, fragment, AboutFragment.TAG)
+            .addToBackStack(AboutFragment.TAG)
             .commit()
     }
 
-    /**
-     * Go to "account settings" parameters.
-     * Should be called only if an account is loaded.
-     */
+    /** Go to "account settings" parameters. Should be called only if an account is loaded. */
     fun goToAccountSettings() {
         val account = mAccountService.currentAccount
-
         if (account == null) {
             Log.e(TAG, "No account loaded, cannot open \"Account settings\"")
             return
@@ -487,8 +479,7 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
 
         if (account.needsMigration()) {
             Log.d(TAG, "launchAccountMigrationActivity: Launch account migration activity")
-            val intent = Intent()
-                .setClass(this, AccountWizardActivity::class.java)
+            val intent = Intent(this, AccountWizardActivity::class.java)
                 .setData(
                     android.net.Uri.withAppendedPath(
                         ContentUri.ACCOUNTS_CONTENT_URI, account.accountId
@@ -509,8 +500,8 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
                 frameContent = fragment
                 supportFragmentManager.beginTransaction()
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                        .replace(R.id.frame, fragment, ACCOUNT_JAMI_TAG)
-                        .addToBackStack(ACCOUNT_JAMI_TAG)
+                        .replace(R.id.frame, fragment, JamiAccountSummaryFragment.TAG)
+                        .addToBackStack(JamiAccountSummaryFragment.TAG)
                         .commit()
 
             } else {    //is SIP account --> display SIPView
@@ -528,8 +519,8 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
                 frameContent = fragment
                 supportFragmentManager.beginTransaction()
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                        .replace(R.id.frame, fragment, ACCOUNT_SIP_TAG)
-                        .addToBackStack(ACCOUNT_SIP_TAG)
+                        .replace(R.id.frame, fragment, AccountEditionFragment.TAG)
+                        .addToBackStack(AccountEditionFragment.TAG)
                         .commit()
 
             }
@@ -587,10 +578,6 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
         const val REQUEST_CODE_QR_CONVERSATION = 7
         const val REQUEST_PERMISSION_CAMERA = 113
         const val REQUEST_PERMISSION_READ_STORAGE = 114
-        const val ACCOUNT_JAMI_TAG = "Account_jami"
-        const val ACCOUNT_SIP_TAG = "Account_sip"
-        const val ABOUT_TAG = "About"
-        const val SETTINGS_TAG = "Prefs"
         private const val CONVERSATIONS_CATEGORY = "conversations"
     }
 

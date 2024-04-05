@@ -93,6 +93,6 @@ class JamiAccountConnectFragment : BaseSupportFragment<JamiAccountConnectPresent
     }
 
     companion object {
-        val TAG = HomeAccountCreationFragment::class.simpleName!!
+        val TAG = JamiAccountConnectFragment::class.simpleName!!
     }
 }
