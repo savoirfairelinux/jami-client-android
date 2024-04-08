@@ -6,12 +6,11 @@ RED='\033[0;31m'
 YE='\033[1;33m'
 NC='\033[0m' # No Color
 
-emulator_name=${EMULATOR_NAME}
-PATH=${EXTRA_PATH}
-ADB=$(which adb)
-echo $ADB
+emulator_name="${EMULATOR_NAME}"
 
-function check_hardware_acceleration() {
+set -x
+
+function check_hardware_acceleration () {
     if [[ "$HW_ACCEL_OVERRIDE" != "" ]]; then
         hw_accel_flag="$HW_ACCEL_OVERRIDE"
     else
@@ -37,7 +36,7 @@ function check_hardware_acceleration() {
 hw_accel_flag=$(check_hardware_acceleration)
 
 function launch_emulator () {
-  ${ADB} devices | grep emulator | cut -f1 | xargs -I {} ${ADB} -s "{}" emu kill
+  adb devices | grep emulator | cut -f1 | xargs -I {} adb -s "{}" emu kill
   options="@${emulator_name} -no-window -no-snapshot -noaudio -no-boot-anim -memory 2048 ${hw_accel_flag} -camera-back none"
   if [[ "$OSTYPE" == *linux* ]]; then
     echo "${OSTYPE}: emulator ${options} -gpu off"
@@ -64,12 +63,12 @@ function check_emulator_status () {
   timeout=${EMULATOR_TIMEOUT:-300}
 
   while true; do
-    result=$(${ADB} shell getprop sys.boot_completed 2>&1)
+    result=$(adb shell getprop sys.boot_completed 2>&1)
 
     if [ "$result" == "1" ]; then
       printf "\e[K${G}==> \u2713 Emulator is ready : '$result'           ${NC}\n"
-      ${ADB} devices -l
-      ${ADB} shell input keyevent 82
+      adb devices -l
+      adb shell input keyevent 82
       break
     elif [ "$result" == "" ]; then
       printf "${YE}==> Emulator is partially Booted! 😕 ${spinner[$i]} ${NC}\r"
@@ -90,13 +89,13 @@ function check_emulator_status () {
 
 
 function disable_animation() {
-  ${ADB} shell "settings put global window_animation_scale 0.0"
-  ${ADB} shell "settings put global transition_animation_scale 0.0"
-  ${ADB} shell "settings put global animator_duration_scale 0.0"
+  adb shell "settings put global window_animation_scale 0.0"
+  adb shell "settings put global transition_animation_scale 0.0"
+  adb shell "settings put global animator_duration_scale 0.0"
 };
 
 function hidden_policy() {
-  ${ADB} shell "settings put global hidden_api_policy_pre_p_apps 1;settings put global hidden_api_policy_p_apps 1;settings put global hidden_api_policy 1"
+  adb shell "settings put global hidden_api_policy_pre_p_apps 1;settings put global hidden_api_policy_p_apps 1;settings put global hidden_api_policy 1"
 };
 
 launch_emulator
