@@ -53,6 +53,7 @@
     <item quantity="other">%d беседы</item>
   </plurals>
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">Поиск по имени или разговору...</string>
   <string name="choose_number">Выбор номера</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -202,6 +203,7 @@
   <string name="conversation_syncing">Загрузка разговора с участником сети</string>
   <string name="conversation_blocked">Этот контакт заблокирован.</string>
   <string name="conversation_ended">Разговор закончился.</string>
+  <string name="conversation_message_deleted">%s удалил сообщение</string>
   <string name="conversation_reply_you">Ты</string>
   <string name="conversation_preference_color">Цвет беседы</string>
   <string name="conversation_preference_emoji">Эмоджи беседы</string>
@@ -336,6 +338,16 @@
   <string name="tv_send_video">Отправить Медиа</string>
   <string name="tv_action_more">Подробнее</string>
   <string name="conversation_input_speech_hint">Скажите что-нибудь...</string>
+  <string name="audio_permission_denied">Предоставьте доступ к микрофону, чтобы использовать аудиофункции Jami.</string>
+  <string name="camera_permission_denied">Предоставьте доступ к камере, чтобы использовать функции видео Jami.</string>
+  <string name="speech_recogniton_unavailable">Распознавание речи недоступно.</string>
+  <string name="audio_permission_rationale_title">Требуется разрешение на аудио</string>
+  <string name="camera_permission_rationale_title">Требуется разрешение на видео</string>
+  <string name="audio_permission_rationale_message">Для использования функций преобразования речи в текст и записи звука Jami требуется разрешение на использование микрофона. Оно будет запрошено на следующем шаге.</string>
+  <string name="camera_permission_rationale_message">Для записи видео и осуществления видеозвонков Jami требуется разрешение камеры. Оно будет запрошено на следующем шаге.</string>
+  <string name="unable_to_start_recorder">Невозможно начать запись звука.</string>
+  <string name="error_sharing_file">Ошибка обмена файлом.</string>
+  <string name="error_opening_file">Ошибка открытия файла.</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Рекомендуется</string>
   <string name="wizard_status_optional">По желанию</string>
