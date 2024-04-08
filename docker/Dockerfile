@@ -49,19 +49,23 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	yasm \
 	zip \
 	&& locale-gen $LANG $LC_ALL && update-locale $LANG $LC_ALL
-	
+
 # Fastlane
 RUN gem install fastlane -NV
 
+
 # Configure wget 
 RUN echo "prefer-family = IPv6" >> /etc/wgetrc
+
+
+
+
 
 # Swig 4.1.1
 RUN wget -O /tmp/swig.tar.gz https://github.com/swig/swig/archive/v4.1.1.tar.gz && \
 	tar xzf  /tmp/swig.tar.gz -C /opt && \
 	cd /opt/swig-4.1.1/ && ./autogen.sh && ./configure && make && make install && \
 	cd .. && rm -rf /opt/swig-4.1.1 /tmp/swig.tar.gz
-
 
 
 # Commandlinetools 11076708
@@ -106,5 +110,9 @@ WORKDIR /tmp
 
 COPY . /tmp
 ENV EXTRA_PATH "$PATH:$ANDROID_SDK_ROOT/cmdline-tools/tools:$ANDROID_SDK_ROOT/cmdline-tools/tools/bin:$ANDROID_SDK_ROOT/emulator:$ANDROID_SDK_ROOT/tools/bin:$ANDROID_SDK_ROOT/platform-tools:$ANDROID_SDK_ROOT/build-tools/${BUILD_TOOLS}"
+
+
+# RUN chown -R $UID:$GID /root/
+# RUN chown -R $UID:$GID /opt/android
 
 CMD [ "/bin/bash" ]
