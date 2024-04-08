@@ -63,9 +63,10 @@ if [[ $DAEMON_ONLY -eq 0 ]]; then
         cd $ANDROID_APP_DIR  && ./gradlew $GRADLE_PROPERTIES assembleRelease bundleRelease
     elif [[ $TEST -eq 1 ]]; then
     		echo "Executing tests true"
-        cd $ANDROID_APP_DIR # && ./gradlew $GRADLE_PROPERTIES assembleDebug assembleAndroidTest
-        /start_emu_headless.sh
-        .java -jar spoon-runner.jar \ --apk ./app/build/outputs/apk/noPush/debug/app-noPush-debug.apk --test-apk ./app/build/outputs/apk/androidTest/noPush/debug/app-noPush-debug-androidTest.apk --sdk /opt/android/
+        cd $ANDROID_APP_DIR && ./gradlew $GRADLE_PROPERTIES assembleDebug assembleAndroidTest
+        # ls ..
+        ../start_emu_headless.sh
+        java -jar /spoon-runner.jar --apk ./app/build/outputs/apk/noPush/debug/app-noPush-debug.apk --test-apk ./app/build/outputs/apk/androidTest/noPush/debug/app-noPush-debug-androidTest.apk --sdk /opt/android/
         
         # 1 - start emu
         # 2 - get filepath apk et apk test
