@@ -1,0 +1,77 @@
+/*
+ * Copyright (C) 2022-2024 Savoir-faire Linux Inc.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation; either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public
+ * License along with this program.  If not, see
+ * <https://www.gnu.org/licenses/>.
+ */
+ 
+ pipeline {
+    agent {
+        node {
+            label 'jami-buildmachine-04.mtl.sfl'
+        }
+    }
+    
+    triggers {
+    gerrit customUrl: '',
+        gerritProjects: [
+            [branches: [[compareType: 'PLAIN', pattern: 'master']],
+             compareType: 'PLAIN',
+             disableStrictForbiddenFileVerification: false,
+             pattern: 'jami-client-android']],
+        triggerOnEvents: [
+            commentAddedContains('!build'),
+            patchsetCreated(excludeDrafts: true, excludeNoCodeChange: true,
+                excludeTrivialRebase: true)]
+    }
+
+    options {
+        ansiColor('xterm')
+    }
+
+    parameters {
+        string(name: 'GERRIT_REFSPEC',
+                defaultValue: 'refs/heads/master',
+                description: 'The Gerrit refspec to fetch.')
+    }
+
+    
+    stage('SCM Checkout') {
+		  steps {
+		      // Wipe workspace and fetch jami-daemon
+		      checkout changelog: true, poll: false,
+		          scm: [$class: 'GitSCM',
+		              branches: [[name: 'FETCH_HEAD']],
+		              doGenerateSubmoduleConfigurations: false,
+		              extensions: [
+		                  [$class: 'CloneOption', noTags: true, reference: '', shallow: true],
+		                  [$class: 'WipeWorkspace']],
+		              submoduleCfg: [],
+		              userRemoteConfigs: [[refspec: '${GERRIT_REFSPEC}', url: 'https://${JAMI_GERRIT_URL}/jami-client-android']]]
+		  }
+	}
+
+  stage('Init repository') {
+      steps {
+          script {
+              sh """
+                  git rev-parse HEAD
+                  git submodule update --init --recursive
+              """
+          }
+      }
+  }
+
+}
+
