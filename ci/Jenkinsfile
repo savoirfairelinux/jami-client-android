@@ -46,31 +46,32 @@
                 description: 'The Gerrit refspec to fetch.')
     }
 
-    
-    stage('SCM Checkout') {
-		  steps {
-		      // Wipe workspace and fetch jami-daemon
-		      checkout changelog: true, poll: false,
-		          scm: [$class: 'GitSCM',
-		              branches: [[name: 'FETCH_HEAD']],
-		              doGenerateSubmoduleConfigurations: false,
-		              extensions: [
-		                  [$class: 'CloneOption', noTags: true, reference: '', shallow: true],
-		                  [$class: 'WipeWorkspace']],
-		              submoduleCfg: [],
-		              userRemoteConfigs: [[refspec: '${GERRIT_REFSPEC}', url: 'https://${JAMI_GERRIT_URL}/jami-client-android']]]
-		  }
-	}
+    stages {
+		  stage('SCM Checkout') {
+				steps {
+				    // Wipe workspace and fetch jami-daemon
+				    checkout changelog: true, poll: false,
+				        scm: [$class: 'GitSCM',
+				            branches: [[name: 'FETCH_HEAD']],
+				            doGenerateSubmoduleConfigurations: false,
+				            extensions: [
+				                [$class: 'CloneOption', noTags: true, reference: '', shallow: true],
+				                [$class: 'WipeWorkspace']],
+				            submoduleCfg: [],
+				            userRemoteConfigs: [[refspec: '${GERRIT_REFSPEC}', url: 'https://${JAMI_GERRIT_URL}/jami-client-android']]]
+				}
+		}
 
-  stage('Init repository') {
-      steps {
-          script {
-              sh """
-                  git rev-parse HEAD
-                  git submodule update --init --recursive
-              """
-          }
-      }
+		stage('Init repository') {
+		    steps {
+		        script {
+		            sh """
+		                git rev-parse HEAD
+		                git submodule update --init --recursive
+		            """
+		        }
+		    }
+		}
   }
 
 }
