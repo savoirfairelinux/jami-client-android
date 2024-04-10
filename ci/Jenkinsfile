@@ -22,8 +22,8 @@
             label 'jami-buildmachine-04.mtl.sfl'
         }
     }
-    
-    triggers {
+
+triggers {
     gerrit customUrl: '',
         gerritProjects: [
             [branches: [[compareType: 'PLAIN', pattern: 'master']],
@@ -46,7 +46,7 @@
                 description: 'The Gerrit refspec to fetch.')
     }
 
-    
+
     stage('SCM Checkout') {
 		  steps {
 		      // Wipe workspace and fetch jami-daemon
@@ -73,5 +73,62 @@
       }
   }
 
-}
 
+
+        stage('Copy Google Services plugin configuration') {
+            steps {
+                sh 'cp /etc/certs/google-services.json jami-android/app'
+            }
+        }
+
+        stage('Install pre-fetched tarballs') {
+            steps {
+                script {
+                    def daemonDir = pwd() + '/daemon'
+                    if (fileExists(RING_EXTRATOOLS_TARBALLS)) {
+                        sh "cp ${RING_EXTRATOOLS_TARBALLS}/* ${daemonDir}/extras/tools/ || echo 'No extras-tools tarballs cache'"
+                    }
+                    if (fileExists(RING_CONTRIB_TARBALLS)) {
+                        sh "cp ${RING_CONTRIB_TARBALLS}/* ${daemonDir}/contrib/tarballs/ || echo 'No contribs tarballs cache'"
+                    }
+                }
+            }
+        }
+
+        stage('Build and test client') {
+            agent {
+                docker {
+                    dockerfile true
+                    args '-v /var/lib/jenkins/workspace/client-android2:/jami-client-android'
+                    environment {
+                            BATCH_MODE = '1'
+                            RING_CONTRIB_TARBALLS = '/opt/ring-contrib'
+                            RING_EXTRATOOLS_TARBALLS = '/opt/ring-extras-tools'
+                            ANDROID_ABI = 'x86_64'
+                            RING_BUILD_FIREBASE = '1'
+                        }
+                }
+            }
+            steps {
+                script {
+                    cd ".."
+                    sh '/jami-client-android androidBuildAndTestContainer ./compile.sh --test'
+                }
+            }
+        }
+
+        stage('Update pre-fetched tarballs directory') {
+            steps {
+                script {
+                    def daemonDir = pwd() + '/daemon'
+                    if (fileExists(RING_CONTRIB_TARBALLS)) {
+                        sh "rsync -u ${daemonDir}/contrib/tarballs/* ${RING_CONTRIB_TARBALLS}/ || echo 'contribs tarballs cache backup failed'"
+                    }
+                    if (fileExists(RING_EXTRATOOLS_TARBALLS)) {
+                        sh "rsync -u ${daemonDir}/extras/tools/*.tar.* ${RING_EXTRATOOLS_TARBALLS}/ || echo 'extras-tools tarballs cache backup failed'"
+                    }
+                }
+            }
+        }
+    }
+}
