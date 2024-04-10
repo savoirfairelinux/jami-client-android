@@ -1,0 +1,92 @@
+/*
+ * Copyright (C) 2022-2024 Savoir-faire Linux Inc.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation; either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public
+ * License along with this program.  If not, see
+ * <https://www.gnu.org/licenses/>.
+ */
+ 
+ pipeline {
+    agent {
+        node {
+            label 'jami-buildmachine-04.mtl.sfl'
+        }
+    }
+
+    stages {
+        stage('Initialization') {
+            steps {
+                script {
+                    sh 'git submodule init'
+                    sh 'git submodule update --remote
+                }
+            }
+        }
+
+        stage('Copy Google Services plugin configuration') {
+            steps {
+                sh 'cp /etc/certs/google-services.json jami-android/app'
+            }
+        }
+
+        stage('Install pre-fetched tarballs') {
+            steps {
+                script {
+                    def daemonDir = pwd() + '/daemon'
+                    if (fileExists(RING_EXTRATOOLS_TARBALLS)) {
+                        sh "cp ${RING_EXTRATOOLS_TARBALLS}/* ${daemonDir}/extras/tools/ || echo 'No extras-tools tarballs cache'"
+                    }
+                    if (fileExists(RING_CONTRIB_TARBALLS)) {
+                        sh "cp ${RING_CONTRIB_TARBALLS}/* ${daemonDir}/contrib/tarballs/ || echo 'No contribs tarballs cache'"
+                    }
+                }
+            }
+        }
+
+        stage('Build and test client') {
+            agent {
+                docker {
+                    dockerfile true
+                    args '-v /var/lib/jenkins/workspace/client-android2:/jami-client-android'
+                    environment {
+                            BATCH_MODE = '1'
+                            RING_CONTRIB_TARBALLS = '/opt/ring-contrib'
+                            RING_EXTRATOOLS_TARBALLS = '/opt/ring-extras-tools'
+                            ANDROID_ABI = 'x86_64'
+                            RING_BUILD_FIREBASE = '1'
+                        }
+                }
+            }
+            steps {
+                script {
+                    cd ".."
+                    sh '/jami-client-android androidBuildAndTestContainer ./compile.sh --test'
+                }
+            }
+        }
+
+        stage('Update pre-fetched tarballs directory') {
+            steps {
+                script {
+                    def daemonDir = pwd() + '/daemon'
+                    if (fileExists(RING_CONTRIB_TARBALLS)) {
+                        sh "rsync -u ${daemonDir}/contrib/tarballs/* ${RING_CONTRIB_TARBALLS}/ || echo 'contribs tarballs cache backup failed'"
+                    }
+                    if (fileExists(RING_EXTRATOOLS_TARBALLS)) {
+                        sh "rsync -u ${daemonDir}/extras/tools/*.tar.* ${RING_EXTRATOOLS_TARBALLS}/ || echo 'extras-tools tarballs cache backup failed'"
+                    }
+                }
+            }
+        }
+    }
+}
