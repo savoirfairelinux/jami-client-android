@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3394d7b_36bc1ec5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2024-04-11T20:06:51Z",
+      "side": 1,
+      "message": "incorrect commit message",
+      "range": {
+        "startLine": 7,
+        "startChar": 7,
+        "endLine": 7,
+        "endChar": 18
+      },
+      "revId": "ae7bb1a9cb2c51987209ac1cf53629f066af1e6b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4711e7de_5d334d57",
+        "filename": "ci/Jenkinsfile",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2024-04-11T20:06:51Z",
+      "side": 1,
+      "message": "refs/heads/master",
+      "range": {
+        "startLine": 45,
+        "startChar": 28,
+        "endLine": 45,
+        "endChar": 52
+      },
+      "revId": "ae7bb1a9cb2c51987209ac1cf53629f066af1e6b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "586c60eb_8f32ed74",
+        "filename": "ci/Jenkinsfile",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2024-04-11T20:06:51Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 71,
+        "startChar": 19,
+        "endLine": 73,
+        "endChar": 21
+      },
+      "revId": "ae7bb1a9cb2c51987209ac1cf53629f066af1e6b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c40a5e9c_1e51581f",
+        "filename": "ci/Jenkinsfile",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2024-04-11T20:06:51Z",
+      "side": 1,
+      "message": "tabs and space mixed",
+      "range": {
+        "startLine": 79,
+        "startChar": 1,
+        "endLine": 79,
+        "endChar": 2
+      },
+      "revId": "ae7bb1a9cb2c51987209ac1cf53629f066af1e6b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "993048a4_ba8514ea",
+        "filename": "ci/Jenkinsfile",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2024-04-11T20:06:51Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 81,
+        "startChar": 19,
+        "endLine": 81,
+        "endChar": 48
+      },
+      "revId": "ae7bb1a9cb2c51987209ac1cf53629f066af1e6b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a82f8709_0bc54d45",
+        "filename": "ci/Jenkinsfile",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2024-04-11T20:06:51Z",
+      "side": 1,
+      "message": "should not be necessary for validating commit from gerrit (just for release)",
+      "range": {
+        "startLine": 81,
+        "startChar": 62,
+        "endLine": 81,
+        "endChar": 80
+      },
+      "revId": "ae7bb1a9cb2c51987209ac1cf53629f066af1e6b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a958c980_3346416c",
+        "filename": "ci/Jenkinsfile",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2024-04-11T20:06:51Z",
+      "side": 1,
+      "message": "we should rename those variables",
+      "range": {
+        "startLine": 88,
+        "startChar": 16,
+        "endLine": 88,
+        "endChar": 37
+      },
+      "revId": "ae7bb1a9cb2c51987209ac1cf53629f066af1e6b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "741aa370_73bc7432",
+        "filename": "ci/Jenkinsfile",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2024-04-11T20:06:51Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 109,
+        "startChar": 16,
+        "endLine": 109,
+        "endChar": 35
+      },
+      "revId": "ae7bb1a9cb2c51987209ac1cf53629f066af1e6b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9c20d90b_759cabab",
+        "filename": "ci/Jenkinsfile",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2024-04-11T20:06:51Z",
+      "side": 1,
+      "message": "maybe not needed as mounted",
+      "range": {
+        "startLine": 117,
+        "startChar": 22,
+        "endLine": 117,
+        "endChar": 93
+      },
+      "revId": "ae7bb1a9cb2c51987209ac1cf53629f066af1e6b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eec3b742_b8a26d2c",
+        "filename": "ci/Jenkinsfile",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2024-04-11T20:06:51Z",
+      "side": 1,
+      "message": "you\u0027re already in jami-client-android",
+      "range": {
+        "startLine": 123,
+        "startChar": 37,
+        "endLine": 123,
+        "endChar": 60
+      },
+      "revId": "ae7bb1a9cb2c51987209ac1cf53629f066af1e6b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
