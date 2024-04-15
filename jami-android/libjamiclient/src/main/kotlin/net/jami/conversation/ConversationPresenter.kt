@@ -38,7 +38,7 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class ConversationPresenter @Inject constructor(
-    val callService: CallService,
+    //val callService: CallService,
     val contactService: ContactService,
     private val accountService: AccountService,
     private val hardwareService: HardwareService,

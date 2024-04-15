@@ -59,6 +59,7 @@
     <color name="icon_background_color">#202020</color>
     <color name="border_color">#515151</color>
     <color name="link_peer_color">#03B9E9</color>
+    <color name="msg_display_name">#D7D7D7</color>
     <color name="menu_conversation_icons">@color/white</color>
     <color name="accept_call_button">#CAC4D0</color>
     <color name="file_icon_background_in">#4D000000</color>

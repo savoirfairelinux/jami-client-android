@@ -32,7 +32,6 @@ interface SmartListView {
     fun hideList()
     fun hideNoConversationMessage()
     fun updateList(conversations: ConversationFacade.ConversationList, conversationFacade: ConversationFacade, parentDisposable: CompositeDisposable)
-    fun update(model: Conversation)
     fun update(position: Int)
     fun goToConversation(accountId: String, conversationUri: Uri)
     fun goToCallActivity(accountId: String, conversationUri: Uri, contactId: String)

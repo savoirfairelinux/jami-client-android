@@ -98,11 +98,11 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
     }
 
     override fun displayNoConversationMessage() {
-        binding!!.placeholder.visibility = View.VISIBLE
+        binding?.placeholder?.visibility = View.VISIBLE
     }
 
     override fun hideNoConversationMessage() {
-        binding!!.placeholder.visibility = View.GONE
+        binding?.placeholder?.visibility = View.GONE
     }
 
     override fun displayConversationDialog(conversationItemViewModel: Conversation) {
@@ -171,10 +171,6 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
         mSmartListAdapter?.notifyItemChanged(position)
     }
 
-    override fun update(model: Conversation) {
-        //mSmartListAdapter?.update(model)
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == HomeActivity.REQUEST_CODE_QR_CONVERSATION && data != null && resultCode == Activity.RESULT_OK) {
@@ -187,7 +183,7 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
     override fun goToConversation(accountId: String, conversationUri: Uri) {
         Log.w(TAG, "goToConversation $accountId $conversationUri")
         (parentFragment as? HomeFragment)?.collapseSearchActionView()
-        (requireActivity() as HomeActivity).startConversation(accountId, conversationUri)
+        (activity as? HomeActivity)?.startConversation(accountId, conversationUri)
     }
 
     override fun goToCallActivity(accountId: String, conversationUri: Uri, contactId: String) {
