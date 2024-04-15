@@ -52,14 +52,13 @@ class ConversationActivity : AppCompatActivity() {
             return
         }
 
-        conversationPath = path
         val isBubble = getIntent().getBooleanExtra(NotificationServiceImpl.EXTRA_BUBBLE, false)
         JamiApplication.instance?.startDaemon(this)
         val binding = ActivityConversationBinding.inflate(layoutInflater)
         setContentView(binding.root)
         if (mConversationFragment == null) {
             mConversationFragment = ConversationFragment().apply {
-                arguments = conversationPath.toBundle().apply {
+                arguments = path.toBundle().apply {
                     putBoolean(NotificationServiceImpl.EXTRA_BUBBLE, isBubble)
                 }
             }
@@ -71,7 +70,6 @@ class ConversationActivity : AppCompatActivity() {
             mPendingIntent = intent
         }
     }
-
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         if (!DeviceUtils.isTablet(this)) {

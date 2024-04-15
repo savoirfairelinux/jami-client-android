@@ -16,7 +16,6 @@
  */
 package cx.ring.fragments
 
-import android.app.Activity
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
@@ -49,11 +48,6 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
     SmartListListeners, ConversationActionCallback, SmartListView {
     private var mSmartListAdapter: SmartListAdapter? = null
     private var binding: FragSmartlistBinding? = null
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        binding?.apply { outState.putBoolean(STATE_LOADING, loadingIndicator.isShown) }
-        super.onSaveInstanceState(outState)
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         FragSmartlistBinding.inflate(inflater, container, false).apply {
@@ -98,14 +92,14 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
     }
 
     override fun displayNoConversationMessage() {
-        binding!!.placeholder.visibility = View.VISIBLE
+        binding?.placeholder?.visibility = View.VISIBLE
     }
 
     override fun hideNoConversationMessage() {
-        binding!!.placeholder.visibility = View.GONE
+        binding?.placeholder?.visibility = View.GONE
     }
 
-    override fun displayConversationDialog(conversationItemViewModel: Conversation) {
+    private fun displayConversationDialog(conversationItemViewModel: Conversation) {
         if (conversationItemViewModel.isSwarm) {
             MaterialAlertDialogBuilder(requireContext())
                 .setItems(R.array.swarm_actions) { dialog, which ->
@@ -166,28 +160,10 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
         }
     }
 
-    override fun update(position: Int) {
-        Log.w(TAG, "update $position $mSmartListAdapter")
-        mSmartListAdapter?.notifyItemChanged(position)
-    }
-
-    override fun update(model: Conversation) {
-        //mSmartListAdapter?.update(model)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == HomeActivity.REQUEST_CODE_QR_CONVERSATION && data != null && resultCode == Activity.RESULT_OK) {
-            data.getStringExtra(ConversationPath.KEY_CONVERSATION_URI)?.let { contactId ->
-                presenter.startConversation(Uri.fromString(contactId))
-            }
-        }
-    }
-
-    override fun goToConversation(accountId: String, conversationUri: Uri) {
+    private fun goToConversation(accountId: String, conversationUri: Uri) {
         Log.w(TAG, "goToConversation $accountId $conversationUri")
         (parentFragment as? HomeFragment)?.collapseSearchActionView()
-        (requireActivity() as HomeActivity).startConversation(accountId, conversationUri)
+        (activity as? HomeActivity)?.startConversation(accountId, conversationUri)
     }
 
     override fun goToCallActivity(accountId: String, conversationUri: Uri, contactId: String) {
@@ -204,16 +180,15 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
     }
 
     override fun onItemClick(item: Conversation) {
-        presenter.conversationClicked(item)
+        goToConversation(item.accountId, item.uri)
     }
 
     override fun onItemLongClick(item: Conversation) {
-        presenter.conversationLongClicked(item)
+        displayConversationDialog(item)
     }
 
     companion object {
         val TAG = SmartListFragment::class.simpleName!!
-        private val STATE_LOADING = "$TAG.STATE_LOADING"
     }
 
 }
