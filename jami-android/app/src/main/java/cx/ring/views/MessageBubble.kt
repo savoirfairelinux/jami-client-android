@@ -19,15 +19,15 @@ package cx.ring.views
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
-import android.text.Layout
+import android.graphics.Typeface
 import android.text.Spanned
 import android.text.method.LinkMovementMethod
 import android.text.util.Linkify
 import android.util.AttributeSet
-import android.util.Log
 import android.util.TypedValue
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.use
 import androidx.core.graphics.ColorUtils
@@ -55,7 +55,9 @@ class MessageBubble(context: Context, attrs: AttributeSet?) : ViewGroup(context,
         .getDimensionPixelSize(R.dimen.custom_message_bubble_info_left_padding)
 
     // Colors
+    @ColorInt
     private var defaultTextColor: Int = Color.BLACK
+    @ColorInt
     private var contrastedDefaultTextColor = context.getColor(R.color.colorOnSurface)
 
     private val messageText = WrapWidthTextView(context).apply {
@@ -93,7 +95,7 @@ class MessageBubble(context: Context, attrs: AttributeSet?) : ViewGroup(context,
             messageText.text = message
             messageTime.text = time
             messageEdited.isVisible = edited
-            updateColor(defaultTextColor)
+            updateTextColor(defaultTextColor)
         }
         addView(messageText)
         addView(messageTime)
@@ -115,7 +117,7 @@ class MessageBubble(context: Context, attrs: AttributeSet?) : ViewGroup(context,
         messageText.setTextSize(TypedValue.COMPLEX_UNIT_PX, defaultTextSize)
         messageText.text = text
         messageTime.text = time
-        updateColor(defaultTextColor)
+        updateTextColor(defaultTextColor)
     }
 
     /**
@@ -125,8 +127,11 @@ class MessageBubble(context: Context, attrs: AttributeSet?) : ViewGroup(context,
         messageEdited.visibility = GONE
         messageTime.text = time
         messageText.setTextSize(TypedValue.COMPLEX_UNIT_PX, defaultTextSize)
+        messageText.setTypeface(null, Typeface.ITALIC)
         messageText.text = String.format(context.getString(R.string.conversation_message_deleted), username)
-        updateColor(defaultTextColor)
+
+        background.setTint(context.getColor(R.color.conversation_secondary_background))
+        updateTextColor(context.getColor(R.color.msg_display_name))
     }
 
     /**
@@ -138,14 +143,14 @@ class MessageBubble(context: Context, attrs: AttributeSet?) : ViewGroup(context,
         messageText.text = text
         messageTime.text = time
         // Emoji is not in the bubble, so should be contrasted with conversation background.
-        updateColor(contrastedDefaultTextColor)
+        updateTextColor(contrastedDefaultTextColor)
     }
 
     /**
      * Updates the color of the text.
      * The time and edited text have opacity added.
      */
-    private fun updateColor(color: Int) {
+    private fun updateTextColor(@ColorInt color: Int) {
         val colorAlpha60 = ColorUtils.setAlphaComponent(color, 0x99)
         messageText.setTextColor(color)
         messageTime.setTextColor(colorAlpha60)
