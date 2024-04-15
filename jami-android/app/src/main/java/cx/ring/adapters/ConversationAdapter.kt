@@ -118,13 +118,11 @@ class ConversationAdapter(
 
     private var lastDeliveredPosition = -1
     private val timestampUpdateTimer: Observable<Long> =
-        Observable.interval(10, TimeUnit.SECONDS, DeviceUtils.uiScheduler)
-            .startWithItem(0L)
+        Observable.interval(10, TimeUnit.SECONDS, DeviceUtils.uiScheduler).startWithItem(0L)
     private var lastMsgPos = -1
     private var isComposing = false
     var showLinkPreviews = true
-    private val markwon: Markwon =
-        Markwon.builder(conversationFragment.requireContext())
+    private val markwon: Markwon = Markwon.builder(conversationFragment.requireContext())
             .usePlugin(LinkifyPlugin.create())
             // Plugin to add a new line when a soft break is used.
             .usePlugin(object : AbstractMarkwonPlugin() {
@@ -136,7 +134,6 @@ class ConversationAdapter(
 
     /**
      * Refreshes the data and notifies the changes
-     *
      * @param list an arraylist of interactions
      */
     @SuppressLint("NotifyDataSetChanged")
@@ -308,7 +305,7 @@ class ConversationAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ConversationViewHolder {
-        val type = MessageType.values()[viewType]
+        val type = MessageType.entries[viewType]
         val v = if (type == MessageType.INVALID) FrameLayout(parent.context)
         else (LayoutInflater.from(parent.context).inflate(type.layout, parent, false) as ViewGroup)
         return ConversationViewHolder(v, type)
@@ -568,77 +565,60 @@ class ConversationAdapter(
             configureForTypingIndicator(conversationViewHolder)
             return
         }
+
         val interaction = mInteractions[position]
         conversationViewHolder.compositeDisposable.clear()
-        /*if (position > lastMsgPos) {
-            lastMsgPos = position
-            val animation = AnimationUtils.loadAnimation(conversationViewHolder.itemView.context, R.anim.fade_in)
-            animation.startOffset = 150
-            conversationViewHolder.itemView.startAnimation(animation)
-        }*/
+
+        when (interaction.type) {
+            Interaction.InteractionType.INVALID -> {
+                conversationViewHolder.itemView.visibility = View.GONE
+                return
+            }
+            Interaction.InteractionType.TEXT -> configureForTextMessage(
+                    conversationViewHolder,
+                    interaction,
+                    position
+            )
+            Interaction.InteractionType.CALL -> configureForCallInfo(
+                    conversationViewHolder,
+                    interaction,
+                    position
+            )
+            Interaction.InteractionType.CONTACT -> configureForContactEvent(
+                    conversationViewHolder,
+                    interaction,
+                    position
+            )
+            Interaction.InteractionType.DATA_TRANSFER -> configureForFileInfo(
+                    conversationViewHolder,
+                    interaction,
+                    position
+            )
+        }
 
         conversationViewHolder.mStatusIcon?.let {
-            configureDisplayIndicator(
-                conversationViewHolder,
-                interaction
-            )
+            configureDisplayIndicator(conversationViewHolder, interaction)
         }
+
         conversationViewHolder.mReplyName?.let {
-            configureReplyIndicator(
-                conversationViewHolder,
-                interaction
-            )
+            configureReplyIndicator(conversationViewHolder, interaction)
         }
+
         conversationViewHolder.reactionChip?.let {
-            configureReactions(
-                conversationViewHolder,
-                interaction
-            )
+            configureReactions(conversationViewHolder, interaction)
         }
 
-        val type = interaction.type
-        //Log.w(TAG, "onBindViewHolder $type $interaction");
-        if (type == Interaction.InteractionType.INVALID) {
-            conversationViewHolder.itemView.visibility = View.GONE
-        } else {
-            conversationViewHolder.itemView.visibility = View.VISIBLE
-            when (type) {
-                Interaction.InteractionType.TEXT -> configureForTextMessage(
-                    conversationViewHolder,
-                    interaction,
-                    position
-                )
-                Interaction.InteractionType.CALL -> configureForCallInfo(
-                    conversationViewHolder,
-                    interaction,
-                    position
-                )
-                Interaction.InteractionType.CONTACT -> configureForContactEvent(
-                    conversationViewHolder,
-                    interaction,
-                    position
-                )
-                Interaction.InteractionType.DATA_TRANSFER -> configureForFileInfo(
-                    conversationViewHolder,
-                    interaction,
-                    position
-                )
-
-                else -> {}
-            }
-        }
         if (isSearch)
             configureSearchResult(conversationViewHolder, interaction)
     }
 
     override fun onViewRecycled(holder: ConversationViewHolder) {
         holder.itemView.setOnLongClickListener(null)
-        if (holder.mImage != null) {
-            holder.mImage.setOnLongClickListener(null)
-        }
-        if (holder.video != null) {
-            holder.video.setOnClickListener(null)
-            holder.video.surfaceTextureListener = null
+        holder.mImage?.setOnLongClickListener(null)
+
+        holder.video?.let { video ->
+            video.setOnClickListener(null)
+            video.surfaceTextureListener = null
         }
         holder.surface?.release()
         holder.surface = null
@@ -670,9 +650,9 @@ class ConversationAdapter(
         val composing = composingStatus == ComposingStatus.Active
         if (isComposing != composing) {
             isComposing = composing
-            if (composing) notifyItemInserted(mInteractions.size) else notifyItemRemoved(
-                mInteractions.size
-            )
+            if (composing)
+                notifyItemInserted(mInteractions.size)
+            else notifyItemRemoved(mInteractions.size)
         }
     }
 
@@ -875,10 +855,6 @@ class ConversationAdapter(
 
     /**
      * Display and manage the popup that allows user to react/reply/share/edit/delete message ...
-     *
-     * @param conversationViewHolder the view layout.
-     * @param view
-     * @param interaction
      */
     private fun openItemMenu(
         conversationViewHolder: ConversationViewHolder, view: View, interaction: Interaction
@@ -894,8 +870,7 @@ class ConversationAdapter(
             convActionOpenText.isVisible = interaction is DataTransfer && interaction.isComplete
             convActionDownloadText.isVisible = interaction is DataTransfer && interaction.isComplete
             convActionCopyText.isVisible = !isDeleted && interaction !is DataTransfer
-            convActionEdit.isVisible =
-                !isDeleted && !interaction.isIncoming && interaction !is DataTransfer
+            convActionEdit.isVisible = !isDeleted && !interaction.isIncoming && interaction !is DataTransfer
             convActionDelete.isVisible = !isDeleted && !interaction.isIncoming
             convActionHistory.isVisible = !isDeleted && history.size > 1
             root.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
@@ -1302,18 +1277,20 @@ class ConversationAdapter(
         messageSequenceType: SequenceType,
         isOnlyEmoji: Boolean, isReplying: Boolean, isDeleted: Boolean, isIncoming: Boolean,
     ) {
-        if (isOnlyEmoji && !isReplying) messageBubble.background = null
+        if (isOnlyEmoji && !isReplying)
+            messageBubble.background = null
         else {
             // Manage layout for standard message. Index refers to msgBGLayouts array.
-            val resIndex =
-                if (isReplying && !isDeleted) {
-                    // Reply message incoming, first or single.
-                    if (isIncoming) if (messageSequenceType == SequenceType.FIRST) 11 else 10
-                    // Reply message outgoing, first or single
-                    else if (messageSequenceType == SequenceType.FIRST) 9 else 8
-                }
+            val resIndex = if (isReplying && !isDeleted) {
+                // Reply message incoming, first or single.
+                if (isIncoming)
+                    if (messageSequenceType == SequenceType.FIRST) 11 else 10
+                // Reply message outgoing, first or single
+                else if (messageSequenceType == SequenceType.FIRST) 9 else 8
+            } else {
                 // Standard message, incoming or outgoing and first, single or last.
-                else messageSequenceType.ordinal + (if (isIncoming) 1 else 0) * 4
+                messageSequenceType.ordinal + (if (isIncoming) 1 else 0) * 4
+            }
 
             messageBubble.background = ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
 
@@ -1395,8 +1372,7 @@ class ConversationAdapter(
         // with the answered message bubble.
         if (textMessage.replyToId != null && !isDeleted)
             messageBubble.updateLayoutParams<MarginLayoutParams> {
-                topMargin = context.resources
-                    .getDimensionPixelSize(R.dimen.conversation_reply_overlap)
+                topMargin = context.resources.getDimensionPixelSize(R.dimen.conversation_reply_overlap)
             }
         else messageBubble.updateLayoutParams<MarginLayoutParams> { topMargin = 0 }
 
@@ -1434,8 +1410,7 @@ class ConversationAdapter(
 
             // Manage layout for message with a link inside.
             if (showLinkPreviews && !isDeleted) {
-                val cachedPreview =
-                    textMessage.preview as? Maybe<PreviewData>? ?: LinkPreview
+                val cachedPreview = textMessage.preview as? Maybe<PreviewData> ?: LinkPreview
                         .getFirstUrl(message)
                         .flatMap { url -> LinkPreview.load(url) }
                         .cache()
@@ -1477,8 +1452,7 @@ class ConversationAdapter(
             } else answerLayout?.visibility = View.GONE
         }
 
-        val endOfSeq =
-            msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE
+        val endOfSeq = msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE
         // Manage animation for avatar and name.
         val avatar = convViewHolder.mAvatar
         if (presenter.isGroup() && textMessage.isIncoming) {
@@ -1774,10 +1748,8 @@ class ConversationAdapter(
                 }
                 // Use the original color of the icons.
                 callInfoText.setTextColor(context.getColor(R.color.colorOnSurface))
-                acceptCallAudioButton
-                    .setColorFilter(context.getColor(R.color.accept_call_button))
-                acceptCallVideoButton
-                    .setColorFilter(context.getColor(R.color.accept_call_button))
+                acceptCallAudioButton.setColorFilter(context.getColor(R.color.accept_call_button))
+                acceptCallVideoButton.setColorFilter(context.getColor(R.color.accept_call_button))
                 callAcceptLayout.background.setTint(
                     context.getColor(R.color.conversation_secondary_background)
                 )
