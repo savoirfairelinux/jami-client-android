@@ -6,8 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
-    android:background="@color/background"
-    tools:context=".client.ConversationActivity">
+    android:background="@color/background">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/toolbar_layout"
@@ -24,7 +23,8 @@
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize">
+            android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="@drawable/abc_ic_ab_back_material">
 
             <RelativeLayout
                 android:id="@+id/tablet_toolbar"
@@ -167,7 +167,6 @@
                 app:tint="?attr/colorOnPrimary" />
 
         </LinearLayout>
-
 
         <LinearLayout
             android:id="@+id/trustRequestMessageLayout"
@@ -342,9 +341,7 @@
             android:layout_alignParentBottom="true"
             android:animateLayoutChanges="true"
             android:background="@drawable/textmsg_bg_input"
-            android:orientation="vertical"
-            android:visibility="visible"
-            tools:visibility="visible">
+            android:orientation="vertical">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cvMessageInput"

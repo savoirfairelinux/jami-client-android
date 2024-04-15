@@ -96,7 +96,6 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     private var currentBottomView: View? = null
     private var mAdapter: ConversationAdapter? = null
     private var mSearchAdapter: ConversationAdapter? = null
-    private var marginPx = 0
     private var marginPxTotal = 0
     private val animation = ValueAnimator()
     private var mPreferences: SharedPreferences? = null
@@ -125,9 +124,9 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 
     fun getConversationAvatar(uri: String): AvatarDrawable? = mParticipantAvatars[uri]
 
-    fun getSmallConversationAvatar(uri: String): AvatarDrawable? {
-        synchronized(mSmallParticipantAvatars) { return mSmallParticipantAvatars[uri] }
-    }
+//    fun getSmallConversationAvatar(uri: String): AvatarDrawable? {
+//        synchronized(mSmallParticipantAvatars) { return mSmallParticipantAvatars[uri] }
+//    }
 
     override fun refreshView(conversation: List<Interaction>) {
         if (binding != null) binding!!.pbLoading.visibility = View.GONE
@@ -149,14 +148,15 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         val histList = binding?.histList ?: return
         mAdapter?.let { adapter ->
             val position = adapter.getMessagePosition(messageId)
-            if(position == -1)
+            if (position == -1)
                 return
-            binding!!.histList.scrollToPosition(position)
 
-            if(highlight) {
+            histList.scrollToPosition(position)
+
+            if (highlight) {
                 histList.doOnNextLayout {
                     histList.layoutManager?.findViewByPosition(position)
-                        ?.setBackgroundColor(resources.getColor(R.color.surface))
+                        ?.setBackgroundColor(requireContext().getColor(R.color.surface))
                 }
             }
         }
@@ -185,40 +185,21 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         Toast.makeText(requireContext(), errorString, Toast.LENGTH_LONG).show()
     }
 
-    private val onBackPressedCallback: OnBackPressedCallback =
-        object : OnBackPressedCallback(false) {
-            override fun handleOnBackPressed() {
-                val count = childFragmentManager.backStackEntryCount
-                if (count > 0) {
-                    childFragmentManager.popBackStack()
-                    if (count == 1)
-                        isEnabled = false
-                }
-            }
-        }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        activity?.onBackPressedDispatcher?.addCallback(this, onBackPressedCallback)
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val res = resources
-        marginPx = res.getDimensionPixelSize(R.dimen.conversation_message_input_margin)
         mapWidth = res.getDimensionPixelSize(R.dimen.location_sharing_minmap_width)
         mapHeight = res.getDimensionPixelSize(R.dimen.location_sharing_minmap_height)
-        marginPxTotal = marginPx
+        marginPxTotal = res.getDimensionPixelSize(R.dimen.conversation_message_input_margin)
 
         requireActivity().addMenuProvider(menuProvider, viewLifecycleOwner)
 
-        return FragConversationBinding.inflate(inflater, container, false).let { binding ->
-            this@ConversationFragment.binding = binding
+        return FragConversationBinding.inflate(inflater, container, false).apply {
             animation.duration = 150
-            animation.addUpdateListener { valueAnimator: ValueAnimator -> binding.histList.updatePadding(bottom = valueAnimator.animatedValue as Int) }
+            animation.addUpdateListener { valueAnimator: ValueAnimator -> histList.updatePadding(bottom = valueAnimator.animatedValue as Int) }
 
-            (activity as AppCompatActivity?)!!.setSupportActionBar(binding.toolbar)
+            (activity as? AppCompatActivity)?.setSupportActionBar(toolbar)
 
-            val layoutToAnimate = binding.relativeLayout
+            val layoutToAnimate = relativeLayout
             if (Build.VERSION.SDK_INT >= 30) {
                 ViewCompat.setWindowInsetsAnimationCallback(
                     layoutToAnimate,
@@ -246,12 +227,8 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                 WindowInsetsCompat.CONSUMED
             }
 
-
             // Content may be both text and non-text (HTML, images, videos, audio files, etc).
-            ViewCompat.setOnReceiveContentListener(
-                binding.msgInputTxt,
-                SUPPORTED_MIME_TYPES
-            ) { _, payload ->
+            ViewCompat.setOnReceiveContentListener(msgInputTxt, SUPPORTED_MIME_TYPES) { _, payload ->
                 // Split the incoming content into two groups: content URIs and everything else.
                 // This way we can implement custom handling for URIs and delegate the rest.
                 val split = payload.partition { item -> item.uri != null }
@@ -271,13 +248,13 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                 remaining
             }
 
-            binding.msgInputTxt.setOnEditorActionListener { _, actionId: Int, _ -> actionSendMsgText(actionId) }
-            binding.msgInputTxt.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus: Boolean ->
+            msgInputTxt.setOnEditorActionListener { _, actionId: Int, _ -> actionSendMsgText(actionId) }
+            msgInputTxt.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus: Boolean ->
                 if (hasFocus) {
-                    (childFragmentManager.findFragmentById(R.id.mapLayout) as LocationSharingFragment?)?.hideControls()
+                    (childFragmentManager.findFragmentById(R.id.mapLayout) as? LocationSharingFragment)?.hideControls()
                 }
             }
-            binding.msgInputTxt.addTextChangedListener(object : TextWatcher {
+            msgInputTxt.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
                 override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
                 override fun afterTextChanged(s: Editable) {
@@ -285,11 +262,11 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                     val hasMessage = !TextUtils.isEmpty(message)
                     presenter.onComposingChanged(hasMessage)
                     if (hasMessage) {
-                        binding.msgSend.visibility = View.VISIBLE
-                        binding.emojiSend.visibility = View.GONE
+                        msgSend.visibility = View.VISIBLE
+                        emojiSend.visibility = View.GONE
                     } else {
-                        binding.msgSend.visibility = View.GONE
-                        binding.emojiSend.visibility = View.VISIBLE
+                        msgSend.visibility = View.GONE
+                        emojiSend.visibility = View.VISIBLE
                     }
                     mPreferences?.let { preferences ->
                         if (hasMessage)
@@ -299,36 +276,36 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                     }
                 }
             })
-            binding.replyCloseBtn.setOnClickListener {
+            replyCloseBtn.setOnClickListener {
                 clearReply()
             }
-            binding.fabLatest.setOnClickListener {
+            fabLatest.setOnClickListener {
                 scrollToEnd()
             }
-            binding.toolbar.setNavigationIcon(androidx.appcompat.R.drawable.abc_ic_ab_back_material)
-            binding.toolbar.setNavigationOnClickListener {
+            toolbar.setNavigationOnClickListener {
                 activity?.onBackPressedDispatcher?.onBackPressed()
             }
-            binding.ongoingCallPane.setOnClickListener { presenter.clickOnGoingPane() }
-            binding.ringingCallPane.setOnClickListener {
+            ongoingCallPane.setOnClickListener { presenter.clickOnGoingPane() }
+            ringingCallPane.setOnClickListener {
                 presenter.clickRingingPane(IncomingCallAction.VIEW_ONLY)
             }
-            binding.acceptAudioCallButton.setOnClickListener {
+            acceptAudioCallButton.setOnClickListener {
                 presenter.clickRingingPane(IncomingCallAction.ACCEPT_AUDIO)
             }
-            binding.acceptVideoCallButton.setOnClickListener {
+            acceptVideoCallButton.setOnClickListener {
                 presenter.clickRingingPane(IncomingCallAction.ACCEPT_VIDEO)
             }
-            binding.msgSend.setOnClickListener { sendMessageText() }
-            binding.emojiSend.setOnClickListener { sendEmoji() }
-            binding.btnMenu.setOnClickListener { expandMenu(it) }
-            binding.btnTakePicture.setOnClickListener { takePicture() }
-            binding.unknownContactButton.setOnClickListener { presenter.onAddContact() }
-            binding.btnBlock.setOnClickListener { presenter.onBlockIncomingContactRequest() }
-            binding.btnRefuse.setOnClickListener { presenter.onRefuseIncomingContactRequest() }
-            binding.btnAccept.setOnClickListener { presenter.onAcceptIncomingContactRequest() }
-            binding.root
-        }
+            msgSend.setOnClickListener { sendMessageText() }
+            emojiSend.setOnClickListener { sendEmoji() }
+            btnMenu.setOnClickListener { expandMenu(it) }
+            btnTakePicture.setOnClickListener { takePicture() }
+            unknownContactButton.setOnClickListener { presenter.onAddContact() }
+            btnBlock.setOnClickListener { presenter.onBlockIncomingContactRequest() }
+            btnRefuse.setOnClickListener { presenter.onRefuseIncomingContactRequest() }
+            btnAccept.setOnClickListener { presenter.onAcceptIncomingContactRequest() }
+
+            binding = this
+        }.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -383,7 +360,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                 }
             })
 
-            val animator = binding.histList.itemAnimator as DefaultItemAnimator?
+            val animator = binding.histList.itemAnimator as? DefaultItemAnimator
             animator?.supportsChangeAnimations = false
             binding.histList.adapter = mAdapter
         }
@@ -603,7 +580,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         }
     }
 
-    fun takePicture() {
+    private fun takePicture() {
         if (!presenter.deviceRuntimeService.hasVideoPermission()) {
             requestPermissions(arrayOf(Manifest.permission.CAMERA), REQUEST_CODE_TAKE_PICTURE)
             return
@@ -889,10 +866,6 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         return true
     }
 
-    fun openContact() {
-        presenter.openContact()
-    }
-
     override fun addSearchResults(results: List<Interaction>) {
         mSearchAdapter?.addSearchResults(results)
     }
@@ -909,15 +882,15 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         mIsBubble = requireArguments().getBoolean(NotificationServiceImpl.EXTRA_BUBBLE)
         Log.w(TAG, "initPresenter $path")
         if (path == null) return
-        val uri = path.conversationUri
         mAdapter = ConversationAdapter(this, presenter)
-        presenter.init(uri, path.accountId)
+        presenter.init(path.conversationUri, path.accountId)
 
         // Load shared preferences. Usually useful for non-swarm conversations.
         try {
-            mPreferences = getConversationPreferences(requireContext(), path.accountId, uri)
-                .also { sharedPreferences ->
-                    sharedPreferences.edit().remove(KEY_PREFERENCE_CONVERSATION_LAST_READ).apply()
+            mPreferences = getConversationPreferences(
+                    requireContext(), path.accountId, path.conversationUri
+            ).also { sharedPreferences ->
+                sharedPreferences.edit().remove(KEY_PREFERENCE_CONVERSATION_LAST_READ).apply()
             }
         } catch (e: Exception) {
             Log.e(TAG, "Can't load conversation preferences")
@@ -930,9 +903,8 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                     Log.w(TAG, "onServiceConnected")
                     val binder = service as LocationSharingService.LocalBinder
                     val locationService = binder.service
-                    //val path = ConversationPath(presenter.path)
                     if (locationService.isSharing(path)) {
-                        showMap(path.accountId, uri.uri, false)
+                        showMap(path.accountId, path.conversationUri.uri, false)
                     }
                     /*try {
                         requireContext().unbindService(locationServiceConnection!!)
@@ -1014,11 +986,6 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         }
     }
 
-    override fun goToAddContact(contact: Contact) {
-        startActivityForResult(ActionHelper.getAddNumberIntentForContact(contact), REQ_ADD_CONTACT)
-    }
-
-
     override fun goToContactActivity(accountId: String, uri: net.jami.model.Uri) {
         val logo = binding!!.contactImage
         val intent = Intent(Intent.ACTION_VIEW, ConversationPath.toUri(accountId, uri))
@@ -1088,20 +1055,19 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         val title = binding!!.contactTitle
         val subtitle = binding!!.contactSubtitle
         val logo = binding!!.contactImage
-        val toolbar = binding!!.tabletToolbar
+        binding?.tabletToolbar?.setOnClickListener { presenter.openContact() }
         logo.setImageDrawable(mConversationAvatar)
         logo.visibility = View.VISIBLE
-        toolbar.setOnClickListener { openContact() }
         title.text = conversation.title
         title.textSize = 15f
-       title.setTypeface(null, Typeface.NORMAL)
-       if (conversation.uriTitle != conversation.title) {
+        title.setTypeface(null, Typeface.NORMAL)
+        if (conversation.uriTitle != conversation.title) {
             subtitle.text = conversation.uriTitle
             subtitle.visibility = View.VISIBLE
         } else {
             subtitle.text = ""
             subtitle.visibility = View.GONE
-       }
+        }
     }
 
     fun blockContactRequest() {
@@ -1290,9 +1256,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     }
 
     override fun setSettings(linkPreviews: Boolean) {
-        mAdapter?.apply {
-            showLinkPreviews = linkPreviews
-        }
+        mAdapter?.showLinkPreviews = linkPreviews
     }
 
     override fun hideErrorPanel() {
