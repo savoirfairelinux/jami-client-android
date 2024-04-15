@@ -53,7 +53,7 @@
   <string name="account_basic_category">Основные настройки</string>
   <string name="account_alias_label">Имя аккаунта</string>
   <string name="account_hostname_label">Имя узла</string>
-  <string name="account_bootstrap_label">Инициализация</string>
+  <string name="account_bootstrap_label">Сервер начальной загрузки</string>
   <string name="account_username_label">Имя пользователя</string>
   <string name="account_password_label">Пароль</string>
   <string name="account_optionnal_category">Дополнительные настройки</string>

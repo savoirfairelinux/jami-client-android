@@ -7,7 +7,7 @@
   <string name="sponsor_section">Jami este un program liber, creat și susținut de</string>
   <string name="copyright_section">Drepturi de autor</string>
   <string name="contribute_section">Contribuie</string>
-  <string name="version_section">Versiune</string>
+  <string name="version_section">Versiunea</string>
   <string name="no_email_app_installed">Nu a fost găsită o aplicație de e-mail. Instalează una pentru a ne putea trimite un raport.</string>
   <string name="no_browser_app_installed">Nu a fost găsită o aplicație de navigare în internet. Instalează una pentru a vedea această pagină.</string>
   <string name="email_chooser_title">Trimite e-mail folosind...</string>
