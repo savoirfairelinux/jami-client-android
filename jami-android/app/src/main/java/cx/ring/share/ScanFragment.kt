@@ -107,8 +107,7 @@ class ScanFragment : Fragment() {
 
     private fun initializeBarcode() {
         barcodeView?.apply {
-            barcodeView.decoderFactory =
-                DefaultDecoderFactory(listOf(BarcodeFormat.QR_CODE))
+            barcodeView.decoderFactory = DefaultDecoderFactory(listOf(BarcodeFormat.QR_CODE))
             //barcodeView.initializeFromIntent(getActivity().getIntent());
             decodeContinuous(callback)
         }
@@ -116,14 +115,8 @@ class ScanFragment : Fragment() {
 
     private val callback: BarcodeCallback = object : BarcodeCallback {
         override fun barcodeResult(result: BarcodeResult) {
-            if (result.text != null) {
-                val contactUri = result.text
-                if (contactUri != null) {
-                    val parent = parentFragment as QRCodeFragment?
-                    parent?.dismiss()
-                    goToConversation(contactUri)
-                }
-            }
+            (parentFragment as? QRCodeFragment)?.dismiss()
+            goToConversation(result.text)
         }
 
         override fun possibleResultPoints(resultPoints: List<ResultPoint>) {}

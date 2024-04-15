@@ -66,7 +66,6 @@ class SmartListViewHolder : RecyclerView.ViewHolder {
     }
 
     fun bind(conversationFacade: ConversationFacade, clickListener: SmartListListeners, conversation: Conversation) {
-        //Log.w("SmartListViewHolder", "bind " + smartListViewModel.getContact() + " " +smartListViewModel.showPresence());
         compositeDisposable.clear()
         if (binding != null) {
             if (conversation.uri != currentUri) {
@@ -128,7 +127,7 @@ class SmartListViewHolder : RecyclerView.ViewHolder {
 
             compositeDisposable.add(conversation.getVisible()
                 .observeOn(DeviceUtils.uiScheduler)
-                .subscribe { activated -> binding.itemLayout.isActivated = activated })
+                .subscribe { activated -> binding.root.isActivated = activated })
         }
     }
 
