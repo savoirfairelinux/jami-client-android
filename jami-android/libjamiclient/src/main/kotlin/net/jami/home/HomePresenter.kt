@@ -60,15 +60,4 @@ class HomePresenter @Inject constructor(
         )
     }
 
-    fun clickQRSearch() {
-        view?.goToQRFragment()
-    }
-
-    fun clickNewSwarm() {
-        view?.startNewSwarm()
-    }
-
-    companion object {
-        private val TAG = HomePresenter::class.simpleName!!
-    }
 }

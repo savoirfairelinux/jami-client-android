@@ -614,7 +614,6 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
     override fun hideNumberSpinner() {}
     override fun clearMsgEdit() {}
     override fun goToHome() {}
-    override fun goToAddContact(contact: Contact) {}
     override fun goToCallActivity(conferenceId: String, hasVideo: Boolean) {}
     override fun acceptAndGoToCallActivity(call: Call, withCamera: Boolean) {}
     override fun goToCallActivityWithResult(

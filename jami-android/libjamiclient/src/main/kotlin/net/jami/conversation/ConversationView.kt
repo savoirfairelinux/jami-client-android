@@ -34,7 +34,6 @@ interface ConversationView {
     fun hideNumberSpinner()
     fun clearMsgEdit()
     fun goToHome()
-    fun goToAddContact(contact: Contact)
     fun goToCallActivity(conferenceId: String, withCamera: Boolean)
     fun acceptAndGoToCallActivity(call: Call, withCamera: Boolean)
     fun goToCallActivityWithResult(accountId: String, conversationUri: Uri, contactUri: Uri, withCamera: Boolean)

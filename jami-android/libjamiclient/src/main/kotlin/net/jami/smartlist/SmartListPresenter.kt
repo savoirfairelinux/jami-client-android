@@ -16,35 +16,25 @@
  */
 package net.jami.smartlist
 
-import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.schedulers.Schedulers
-import io.reactivex.rxjava3.subjects.BehaviorSubject
-import net.jami.model.Account
 import net.jami.model.Conversation
 import net.jami.model.Uri
 import net.jami.mvp.RootPresenter
 import net.jami.services.ConversationFacade
-import net.jami.services.PreferencesService
-import net.jami.utils.Log
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Named
 
 class SmartListPresenter @Inject constructor(
     private val conversationFacade: ConversationFacade,
-    private val preferencesService: PreferencesService,
     @param:Named("UiScheduler") private val uiScheduler: Scheduler
 ) : RootPresenter<SmartListView>() {
-    private val accountSubject: Observable<Account> = conversationFacade
-        .currentAccountSubject
-        .doOnNext { a: Account -> currentAccountId = a.accountId }
-    private var currentAccountId: String = ""
 
     override fun bindView(view: SmartListView) {
         super.bindView(view)
         view.setLoading(true)
-        mCompositeDisposable.add(conversationFacade.getConversationList(accountSubject)
+        mCompositeDisposable.add(conversationFacade.getConversationList(conversationFacade.currentAccountSubject)
             .throttleLatest(150, TimeUnit.MILLISECONDS, uiScheduler)
             .observeOn(uiScheduler)
             .subscribe { list ->
@@ -60,32 +50,12 @@ class SmartListPresenter @Inject constructor(
             })
     }
 
-    fun conversationClicked(viewModel: Conversation) {
-        startConversation(viewModel.accountId, viewModel.uri)
-    }
-
-    fun conversationLongClicked(conversationItemViewModel: Conversation) {
-        view?.displayConversationDialog(conversationItemViewModel)
-    }
-
-    private fun startConversation(accountId: String, conversationUri: Uri?) {
-        Log.w(TAG, "startConversation $accountId $conversationUri")
-        val view = view
-        if (view != null && conversationUri != null) {
-            view.goToConversation(accountId, conversationUri)
-        }
-    }
-
-    fun startConversation(uri: Uri) {
-        view?.goToConversation(currentAccountId, uri)
-    }
-
-    fun copyNumber(conversationItemViewModel: Conversation) {
-        val contact = conversationItemViewModel.contact
+    fun copyNumber(conversation: Conversation) {
+        val contact = conversation.contact
         if (contact != null) {
             view?.copyNumber(contact.uri)
         } else {
-            view?.copyNumber(conversationItemViewModel.uri)
+            view?.copyNumber(conversation.uri)
         }
     }
 
@@ -112,7 +82,4 @@ class SmartListPresenter @Inject constructor(
         conversationFacade.banConversation(conversation.accountId, conversation.uri)
     }
 
-    companion object {
-        private val TAG = SmartListPresenter::class.simpleName!!
-    }
 }

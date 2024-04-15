@@ -126,10 +126,10 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
     ): View = FragHomeBinding.inflate(inflater, container, false).apply {
 
         qrCode.setOnClickListener {
-            presenter.clickQRSearch()
+            goToQRFragment()
         }
         newSwarm.setOnClickListener {
-            presenter.clickNewSwarm()
+            startNewSwarm()
         }
 
         // SearchBar is composed of:
@@ -164,21 +164,13 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
         searchBar.inflateMenu(R.menu.smartlist_menu)
         searchBar.setOnMenuItemClickListener {
             when (it.itemId) {
-                R.id.menu_account_settings -> {
-                    (requireActivity() as HomeActivity).goToAccountSettings()
-                }
+                R.id.menu_account_settings -> (activity as? HomeActivity)?.goToAccountSettings()
 
-                R.id.menu_advanced_settings -> {
-                    (requireActivity() as HomeActivity).goToAdvancedSettings()
-                }
+                R.id.menu_advanced_settings -> (activity as? HomeActivity)?.goToAdvancedSettings()
 
-                R.id.menu_about -> {
-                    (requireActivity() as HomeActivity).goToAbout()
-                }
+                R.id.menu_about -> (activity as? HomeActivity)?.goToAbout()
 
-                R.id.menu_donate -> {
-                    openJamiDonateWebPage(requireContext())
-                }
+                R.id.menu_donate -> openJamiDonateWebPage(requireContext())
             }
             true
         }
@@ -562,9 +554,7 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
 
     override fun showDonationReminder(show: Boolean) {
         mBinding?.appBar?.let {
-            TransitionManager.beginDelayedTransition(
-                it, AutoTransition()
-            )
+            TransitionManager.beginDelayedTransition(it, AutoTransition())
         }
         mBinding?.donationCard?.donationCard?.isVisible = show
         mBinding?.fragmentContainer?.getFragment<SmartListFragment>()?.scrollToTop()
@@ -577,26 +567,23 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
         return true
     }
 
-    override fun goToQRFragment() {
+    private fun goToQRFragment() {
         val qrCodeFragment = QRCodeFragment.newInstance(QRCodeFragment.INDEX_SCAN)
         qrCodeFragment.show(parentFragmentManager, QRCodeFragment.TAG)
         collapseSearchActionView()
     }
 
-    override fun startNewSwarm() {
+    private fun startNewSwarm() {
         ContactPickerFragment().show(parentFragmentManager, ContactPickerFragment.TAG)
         collapseSearchActionView()
     }
 
-    private fun expandSearchActionView(): Boolean {
-        val b = mBinding ?: return false
-        b.searchView.show()
-        return true
+    private fun expandSearchActionView() {
+        mBinding?.searchView?.show()
     }
 
     fun collapseSearchActionView() {
-        val b = mBinding ?: return
-        b.searchView.hide()
+        mBinding?.searchView?.hide()
     }
 
     /** Prevent appbar to be collapsed by direct scroll. */
