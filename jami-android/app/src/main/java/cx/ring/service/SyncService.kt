@@ -24,6 +24,7 @@ import android.content.pm.ServiceInfo
 import android.os.Build
 import android.os.Handler
 import android.os.IBinder
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import cx.ring.R
 import cx.ring.application.JamiApplication
@@ -68,10 +69,14 @@ class SyncService : Service() {
                     .setContentIntent(PendingIntent.getActivity(applicationContext, mRandom.nextInt(), contentIntent, ContentUri.immutable()))
                     .build()
             }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
-                startForeground(NOTIF_SYNC_SERVICE_ID, notification!!, ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC)
-            else
-                startForeground(NOTIF_SYNC_SERVICE_ID, notification)
+            try {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
+                    startForeground(NOTIF_SYNC_SERVICE_ID, notification!!, ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC)
+                else
+                    startForeground(NOTIF_SYNC_SERVICE_ID, notification)
+            } catch (e: Exception) {
+                Log.e(TAG, "Error in startForeground", e)
+            }
             if (serviceUsers == 0) {
                 JamiApplication.instance?.startDaemon(this)
             }
@@ -103,6 +108,7 @@ class SyncService : Service() {
     override fun onBind(intent: Intent): IBinder? = null
 
     companion object {
+        const val TAG = "SyncService"
         const val NOTIF_SYNC_SERVICE_ID = 1004
         const val ACTION_START = "startService"
         const val ACTION_STOP = "stopService"

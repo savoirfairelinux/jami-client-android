@@ -49,20 +49,26 @@ class DataTransferService : Service() {
         val action = intent.action
         if (ACTION_START == action) {
             serviceNotifications.add(notificationId)
-            val notification = mNotificationService.getDataTransferNotification(notificationId) as Notification
+            val notification = mNotificationService.getDataTransferNotification(notificationId) as Notification? ?: return START_NOT_STICKY
             // Log.w(TAG, "Updating notification " + intent);
             if (!started) {
                 Log.w(TAG, "starting transfer service $intent")
                 serviceNotificationId = notificationId
                 started = true
             }
-            if (notificationId == serviceNotificationId) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
-                    startForeground(NOTIF_FILE_SERVICE_ID, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC)
-                else
-                    startForeground(NOTIF_FILE_SERVICE_ID, notification)
-            } else {
-                notificationManager.notify(notificationId, notification)
+            try {
+                if (notificationId == serviceNotificationId) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
+                        startForeground(NOTIF_FILE_SERVICE_ID, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC)
+                    else
+                        startForeground(NOTIF_FILE_SERVICE_ID, notification)
+                } else {
+                    notificationManager.notify(notificationId, notification)
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Failed to update notification", e)
+                stopSelfResult(startId)
+                started = false
             }
         } else if (ACTION_STOP == action) {
             serviceNotifications.remove(notificationId)
