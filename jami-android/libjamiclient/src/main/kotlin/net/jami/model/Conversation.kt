@@ -721,7 +721,12 @@ class Conversation : ConversationHistory {
         val existingInteraction = interaction.messageId?.let { getMessage(it) } ?: return
         interaction.parentId?.let { existingInteraction.updateParent(it) }
         existingInteraction.replaceEdits(interaction.history)
-        updatedElementSubject.onNext(Pair(interaction, ElementStatus.UPDATE))
+        existingInteraction.replaceReactions(interaction.reactions)
+        existingInteraction.body = interaction.body
+        updatedElementSubject.onNext(Pair(existingInteraction, ElementStatus.UPDATE))
+        if (lastEvent == existingInteraction) {
+            lastEventSubject.onNext(existingInteraction)
+        }
     }
 
     data class ActiveCall(val confId: String, val uri: String, val device: String) {

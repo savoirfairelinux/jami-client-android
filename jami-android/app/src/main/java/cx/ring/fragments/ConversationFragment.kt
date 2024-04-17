@@ -118,10 +118,6 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 
     fun getConversationAvatar(uri: String): AvatarDrawable? = mParticipantAvatars[uri]
 
-//    fun getSmallConversationAvatar(uri: String): AvatarDrawable? {
-//        synchronized(mSmallParticipantAvatars) { return mSmallParticipantAvatars[uri] }
-//    }
-
     override fun refreshView(conversation: List<Interaction>) {
         if (binding != null) binding!!.pbLoading.visibility = View.GONE
         mAdapter?.let { adapter ->
@@ -1058,10 +1054,6 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 //    fun acceptContactRequest() {
 //        presenter.onAcceptIncomingContactRequest()
 //    }
-
-    fun addContact() {
-        presenter.onAddContact()
-    }
 
     override fun switchToUnknownView(name: String) {
         binding?.apply {

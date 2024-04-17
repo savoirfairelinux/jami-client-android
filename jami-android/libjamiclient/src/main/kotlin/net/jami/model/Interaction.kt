@@ -190,6 +190,11 @@ open class Interaction {
         reactions.removeAll { it.messageId == id }
         reactionSubject.onNext(ArrayList(reactions))
     }
+    fun replaceReactions(interactions: List<Interaction>) {
+        reactions.clear()
+        reactions.addAll(interactions)
+        reactionSubject.onNext(ArrayList(reactions))
+    }
 
     fun addEdit(interaction: Interaction, newMessage: Boolean) {
         history.remove(interaction)
@@ -199,6 +204,7 @@ open class Interaction {
             history.add(0, interaction)
         historySubject.onNext(ArrayList(history))
     }
+
     fun addEdits(interactions: List<Interaction>) {
         history.addAll(interactions)
         historySubject.onNext(ArrayList(history))
