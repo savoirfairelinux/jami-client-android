@@ -750,7 +750,7 @@ abstract class CallService(
     }
 
     fun hangUpAny(accountId: String, callId: String) {
-        calls.filterValues { it.daemonIdString == callId }.firstNotNullOf {
+        calls.filterValues { it.daemonIdString == callId }.forEach {
             val confId = it.value.confId
             if(confId != null)
                 hangUpConference(accountId, confId)

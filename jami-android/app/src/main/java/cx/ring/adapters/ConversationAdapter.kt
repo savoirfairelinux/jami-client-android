@@ -332,7 +332,7 @@ class ConversationAdapter(
 
         // Remove user from statusMap.
         val modifiedStatusMap = interaction.statusMap
-            .filter { !conversation.findContact(net.jami.model.Uri.fromId(it.key))!!.isUser }
+            .filter { conversation.findContact(net.jami.model.Uri.fromId(it.key))?.isUser != true }
 
         val isDisplayed = modifiedStatusMap.any { it.value == Interaction.MessageStates.DISPLAYED }
         val isReceived = modifiedStatusMap.any { it.value == Interaction.MessageStates.SUCCESS }

@@ -149,9 +149,12 @@ class ConversationMediaGalleryAdapter(
             val videoRatio = mediaPlayer.videoWidth / mediaPlayer.videoHeight.toFloat()
             val screenRatio = video.video.width / video.video.height.toFloat()
             val scaleX = videoRatio / screenRatio
-            if (scaleX >= 1f) {
+            if (scaleX.isNaN() || scaleX.isInfinite() || scaleX <= 0f) {
+                video.video.scaleX = 1f
+                video.video.scaleY = 1f
+            } else if (scaleX >= 1f) {
                 video.video.scaleX = scaleX
-            } else if (scaleX != 0f){
+            } else {
                 video.video.scaleY = 1f / scaleX
             }
         }
