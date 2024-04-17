@@ -27,7 +27,7 @@ dependencies {
     // RxJava
     implementation ("io.reactivex.rxjava3:rxjava:3.1.8")
     // gson
-    implementation ("com.google.code.gson:gson:2.10")
+    implementation ("com.google.code.gson:gson:2.10.1")
     api("com.google.dagger:dagger:$hilt_version")
     kapt("com.google.dagger:dagger-compiler:$hilt_version")
 }
