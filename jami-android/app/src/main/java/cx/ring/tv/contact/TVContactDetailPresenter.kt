@@ -43,7 +43,7 @@ class TVContactDetailPresenter : Presenter() {
             val fragmentManager = (view.context as FragmentActivity).supportFragmentManager
             fragmentManager.beginTransaction()
                 .replace(R.id.content, fragment, FRAGMENT_TAG)
-                .commit()
+                .commitNow()
         }
     }
 
