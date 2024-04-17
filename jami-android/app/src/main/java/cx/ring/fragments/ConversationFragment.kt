@@ -24,7 +24,6 @@ import android.app.Activity
 import android.app.ActivityOptions
 import android.content.*
 import android.content.pm.PackageManager
-import android.graphics.Typeface
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -38,11 +37,9 @@ import android.util.Log
 import android.view.*
 import android.view.inputmethod.EditorInfo
 import android.widget.*
-import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.ColorInt
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.view.menu.MenuPopupHelper
 import androidx.appcompat.widget.PopupMenu
@@ -91,8 +88,6 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     ConversationView, SearchView.OnQueryTextListener {
     private var locationServiceConnection: ServiceConnection? = null
     private var binding: FragConversationBinding? = null
-    private var mAudioCallBtn: MenuItem? = null
-    private var mVideoCallBtn: MenuItem? = null
     private var currentBottomView: View? = null
     private var mAdapter: ConversationAdapter? = null
     private var mSearchAdapter: ConversationAdapter? = null
@@ -105,7 +100,6 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     private var mSelectedPosition = 0
     private var replyingTo: Interaction? = null
     private var mIsBubble = false
-    private var mConversationAvatar: AvatarDrawable? = null
     private val mParticipantAvatars: MutableMap<String, AvatarDrawable> = HashMap()
     private val mSmallParticipantAvatars: MutableMap<String, AvatarDrawable> = HashMap()
     private var mapWidth = 0
@@ -124,23 +118,18 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 
     fun getConversationAvatar(uri: String): AvatarDrawable? = mParticipantAvatars[uri]
 
-//    fun getSmallConversationAvatar(uri: String): AvatarDrawable? {
-//        synchronized(mSmallParticipantAvatars) { return mSmallParticipantAvatars[uri] }
-//    }
-
     override fun refreshView(conversation: List<Interaction>) {
         if (binding != null) binding!!.pbLoading.visibility = View.GONE
         mAdapter?.let { adapter ->
             adapter.updateDataset(conversation)
             loading = false
         }
-        requireActivity().invalidateOptionsMenu()
     }
 
     override fun scrollToEnd() {
         mAdapter?.let { adapter ->
             if (adapter.itemCount > 0)
-                binding!!.histList.scrollToPosition(adapter.itemCount - 1)
+                binding?.histList?.scrollToPosition(adapter.itemCount - 1)
         }
     }
 
@@ -162,18 +151,6 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         }
     }
 
-    private fun updateListPadding() {
-        /* val binding = binding ?: return
-        val bottomView = currentBottomView ?: return
-        val bottomViewHeight = bottomView.height
-        if (bottomViewHeight != 0) {
-            val padding = bottomViewHeight + marginPxTotal
-            val params = binding.mapCard.layoutParams as RelativeLayout.LayoutParams
-            params.bottomMargin = padding
-            binding.mapCard.layoutParams = params
-        } */
-    }
-
     override fun displayErrorToast(error: Error) {
         val errorString: String = when (error) {
             Error.NO_INPUT -> getString(R.string.call_error_no_camera_no_microphone)
@@ -191,13 +168,9 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         mapHeight = res.getDimensionPixelSize(R.dimen.location_sharing_minmap_height)
         marginPxTotal = res.getDimensionPixelSize(R.dimen.conversation_message_input_margin)
 
-        requireActivity().addMenuProvider(menuProvider, viewLifecycleOwner)
-
         return FragConversationBinding.inflate(inflater, container, false).apply {
             animation.duration = 150
             animation.addUpdateListener { valueAnimator: ValueAnimator -> histList.updatePadding(bottom = valueAnimator.animatedValue as Int) }
-
-            (activity as? AppCompatActivity)?.setSupportActionBar(toolbar)
 
             val layoutToAnimate = relativeLayout
             if (Build.VERSION.SDK_INT >= 30) {
@@ -217,6 +190,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                         }
                     })
             }
+
             ViewCompat.setOnApplyWindowInsetsListener(layoutToAnimate) { _, insets: WindowInsetsCompat ->
                 if (animating == 0) {
                     layoutToAnimate.updatePadding(
@@ -282,9 +256,11 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             fabLatest.setOnClickListener {
                 scrollToEnd()
             }
-            toolbar.setNavigationOnClickListener {
-                activity?.onBackPressedDispatcher?.onBackPressed()
-            }
+
+            toolbar.setNavigationOnClickListener { activity?.onBackPressedDispatcher?.onBackPressed() }
+            toolbar.setOnClickListener { presenter.openContact() }
+            toolbar.addMenuProvider(menuProvider)
+
             ongoingCallPane.setOnClickListener { presenter.clickOnGoingPane() }
             ringingCallPane.setOnClickListener {
                 presenter.clickRingingPane(IncomingCallAction.VIEW_ONLY)
@@ -310,28 +286,30 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding?.let { binding ->
+        binding?.apply {
             mPreferences?.let { preferences ->
                 val pendingMessage = preferences.getString(KEY_PREFERENCE_PENDING_MESSAGE, null)
                 if (!pendingMessage.isNullOrEmpty()) {
-                    binding.msgInputTxt.setText(pendingMessage)
-                    binding.msgSend.visibility = View.VISIBLE
-                    binding.emojiSend.visibility = View.GONE
+                    msgInputTxt.setText(pendingMessage)
+                    msgSend.visibility = View.VISIBLE
+                    emojiSend.visibility = View.GONE
                 }
             }
-            binding.msgInputTxt.addOnLayoutChangeListener { _, _, _, _, _, oldLeft, oldTop, oldRight, oldBottom ->
+
+            msgInputTxt.addOnLayoutChangeListener { _, _, _, _, _, oldLeft, oldTop, oldRight, oldBottom ->
                 if (oldBottom == 0 && oldTop == 0) {
-                    updateListPadding()
+                    //updateListPadding()
                 } else {
                     if (animation.isStarted) animation.cancel()
                     animation.setIntValues(
-                        binding.histList.paddingBottom,
+                        histList.paddingBottom,
                         (currentBottomView?.height ?: 0) + marginPxTotal
                     )
                     animation.start()
                 }
             }
-            binding.histList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+
+            histList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 // The minimum amount of items to have below current scroll position
                 // before loading more.
                 val visibleLoadThreshold = 3
@@ -341,7 +319,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {}
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     val layoutManager = recyclerView.layoutManager as LinearLayoutManager? ?: return
-                    if (!loading && binding.histList.adapter != mSearchAdapter
+                    if (!loading && histList.adapter != mSearchAdapter
                         && layoutManager.findFirstVisibleItemPosition() < visibleLoadThreshold
                     ) {
                         loading = true
@@ -355,14 +333,13 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                     val lastVisibleItemPosition =
                         layoutManager.findLastCompletelyVisibleItemPosition()
                     if (layoutManager.itemCount - lastVisibleItemPosition > visibleLatestThreshold)
-                        binding.fabLatest.show()
-                    else binding.fabLatest.hide()
+                        fabLatest.show()
+                    else fabLatest.hide()
                 }
             })
 
-            val animator = binding.histList.itemAnimator as? DefaultItemAnimator
-            animator?.supportsChangeAnimations = false
-            binding.histList.adapter = mAdapter
+            (histList.itemAnimator as? DefaultItemAnimator)?.supportsChangeAnimations = false
+            histList.adapter = mAdapter
         }
     }
 
@@ -780,10 +757,6 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         else -> false
     }
 
-    fun onClick() {
-        presenter.clickOnGoingPane()
-    }
-
     override fun onStart() {
         super.onStart()
         presenter.resume(mIsBubble)
@@ -801,19 +774,12 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 
     private val menuProvider = object : MenuProvider {
         override fun onCreateMenu(menu: Menu, inflater: MenuInflater) {
-            if (!isVisible)
-                return
-            menu.clear()
-            inflater.inflate(R.menu.conversation_actions, menu)
-            mAudioCallBtn = menu.findItem(R.id.conv_action_audiocall)
-            mVideoCallBtn = menu.findItem(R.id.conv_action_videocall)
             val searchMenuItem = menu.findItem(R.id.conv_search)
             searchMenuItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
                 override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
                     val binding = binding ?: return false
                     presenter.stopSearch()
                     binding.histList.adapter = mAdapter
-                    updateListPadding()
                     currentBottomView?.isVisible = true
                     if (animation.isStarted) animation.cancel()
                     animation.setIntValues(
@@ -826,8 +792,9 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 
                 override fun onMenuItemActionExpand(item: MenuItem): Boolean {
                     val binding = binding ?: return false
-                    mSearchAdapter = ConversationAdapter(this@ConversationFragment, presenter, true)
-                    mSearchAdapter?.setPrimaryColor(mAdapter!!.getPrimaryColor())
+                    mSearchAdapter = ConversationAdapter(this@ConversationFragment, presenter, true).apply {
+                        setPrimaryColor(getPrimaryColor())
+                    }
                     presenter.startSearch()
                     currentBottomView?.isVisible = false
                     binding.histList.adapter = mSearchAdapter
@@ -946,9 +913,8 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 
     override fun displayContact(conversation: ConversationItemViewModel) {
         val avatar = AvatarFactory.getAvatar(requireContext(), conversation).blockingGet()
-        mConversationAvatar = avatar
         mParticipantAvatars[conversation.uri.rawRingId] = AvatarDrawable(avatar)
-        setupActionbar(conversation)
+        setupActionbar(conversation, avatar)
     }
 
     override fun displayOnGoingCallPane(display: Boolean) {
@@ -1051,47 +1017,31 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         }
     }
 
-    private fun setupActionbar(conversation: ConversationItemViewModel) {
-        val title = binding!!.contactTitle
-        val subtitle = binding!!.contactSubtitle
-        val logo = binding!!.contactImage
-        binding?.tabletToolbar?.setOnClickListener { presenter.openContact() }
-        logo.setImageDrawable(mConversationAvatar)
-        logo.visibility = View.VISIBLE
-        title.text = conversation.title
-        title.textSize = 15f
-        title.setTypeface(null, Typeface.NORMAL)
-        if (conversation.uriTitle != conversation.title) {
-            subtitle.text = conversation.uriTitle
-            subtitle.visibility = View.VISIBLE
-        } else {
-            subtitle.text = ""
-            subtitle.visibility = View.GONE
+    private fun setupActionbar(conversation: ConversationItemViewModel, img: AvatarDrawable) {
+        binding?.apply {
+            contactImage.setImageDrawable(img)
+            contactTitle.text = conversation.title
+            if (conversation.uriTitle != conversation.title) {
+                contactSubtitle.text = conversation.uriTitle
+                contactSubtitle.visibility = View.VISIBLE
+            } else {
+                contactSubtitle.text = ""
+                contactSubtitle.visibility = View.GONE
+            }
         }
     }
 
-    fun blockContactRequest() {
-        presenter.onBlockIncomingContactRequest()
-    }
-
-    fun refuseContactRequest() {
-        presenter.onRefuseIncomingContactRequest()
-    }
-
-    fun acceptContactRequest() {
-        presenter.onAcceptIncomingContactRequest()
-    }
-
-    fun addContact() {
-        presenter.onAddContact()
-    }
-
-    override fun onPrepareOptionsMenu(menu: Menu) {
-        super.onPrepareOptionsMenu(menu)
-        val visible = binding!!.cvMessageInput.visibility == View.VISIBLE
-        mAudioCallBtn?.isVisible = visible
-        mVideoCallBtn?.isVisible = visible
-    }
+//    fun blockContactRequest() {
+//        presenter.onBlockIncomingContactRequest()
+//    }
+//
+//    fun refuseContactRequest() {
+//        presenter.onRefuseIncomingContactRequest()
+//    }
+//
+//    fun acceptContactRequest() {
+//        presenter.onAcceptIncomingContactRequest()
+//    }
 
     override fun switchToUnknownView(name: String) {
         binding?.apply {
@@ -1102,8 +1052,6 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             trustRequestMessageLayout.visibility = View.VISIBLE
             currentBottomView = unknownContactPrompt
         }
-        requireActivity().invalidateMenu()
-        updateListPadding()
     }
 
     override fun switchToIncomingTrustRequestView(name: String) {
@@ -1115,8 +1063,6 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             trustRequestMessageLayout.visibility = View.VISIBLE
             currentBottomView = trustRequestPrompt
         }
-        requireActivity().invalidateMenu()
-        updateListPadding()
     }
 
     override fun switchToConversationView() {
@@ -1127,8 +1073,6 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             trustRequestMessageLayout.visibility = View.GONE
             currentBottomView = cvMessageInput
         }
-        requireActivity().invalidateMenu()
-        updateListPadding()
     }
 
     override fun switchToSyncingView() {
@@ -1140,8 +1084,6 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             tvTrustRequestMessage.text = getText(R.string.conversation_syncing)
         }
         currentBottomView = null
-        requireActivity().invalidateMenu()
-        updateListPadding()
     }
 
     override fun switchToBannedView() {
@@ -1163,8 +1105,6 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             tvTrustRequestMessage.text = getText(R.string.conversation_ended)
         }
         currentBottomView = null
-        requireActivity().invalidateMenu()
-        updateListPadding()
     }
 
     private fun setLoading(isLoading: Boolean) {
