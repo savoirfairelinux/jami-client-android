@@ -16,9 +16,6 @@
  */
 package cx.ring.adapters
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
-import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -879,10 +876,8 @@ class ConversationAdapter(
             val popupWindow = PopupWindow(
                 root, LinearLayout.LayoutParams.WRAP_CONTENT, root.measuredHeight, true
             )
-                .apply {
-                    elevation = view.context.resources.getDimension(R.dimen.call_preview_elevation)
-                    showAsDropDown(view)
-                }
+            popupWindow.elevation = view.context.resources.getDimension(R.dimen.call_preview_elevation)
+            popupWindow.showAsDropDown(view)
 
             val textViews = listOf(
                 convActionEmoji1.chip, convActionEmoji2.chip,
@@ -1309,12 +1304,14 @@ class ConversationAdapter(
         linkPreviewLayout: ViewGroup,
         messageSequenceType: SequenceType,
     ) {
-        if (messageSequenceType == SequenceType.FIRST
-            || messageSequenceType == SequenceType.MIDDLE
-        ) linkPreviewLayout.setBackgroundResource(R.drawable.linkpreview_bg_out_first_or_middle)
-        else if (messageSequenceType == SequenceType.LAST
-            || messageSequenceType == SequenceType.SINGLE
-        ) linkPreviewLayout.setBackgroundResource(R.drawable.linkpreview_bg_out_last_or_single)
+        when (messageSequenceType) {
+            SequenceType.FIRST, SequenceType.MIDDLE -> {
+                linkPreviewLayout.setBackgroundResource(R.drawable.linkpreview_bg_out_first_or_middle)
+            }
+            SequenceType.LAST, SequenceType.SINGLE -> {
+                linkPreviewLayout.setBackgroundResource(R.drawable.linkpreview_bg_out_last_or_single)
+            }
+        }
     }
 
     /**
@@ -1521,8 +1518,7 @@ class ConversationAdapter(
     ) {
         val context = viewHolder.itemView.context
         val event = interaction as ContactEvent
-        Log.w(
-            TAG,
+        Log.w(TAG,
             "configureForContactEvent ${event.account} ${event.event} ${event.contact} ${event.author} "
         )
         // Manage the date of the event.
@@ -1827,13 +1823,11 @@ class ConversationAdapter(
                 }
             } else {
                 // Set the call message color.
-                typeCall.setTextColor(
-                    context.getColor(R.color.call_text_outgoing_message)
-                )
+                typeCall.setTextColor(context.getColor(R.color.call_text_outgoing_message))
+
                 // Set the color of the time duration.
-                detailCall.setTextColor(
-                    context.getColor(R.color.call_text_outgoing_message)
-                )
+                detailCall.setTextColor(context.getColor(R.color.call_text_outgoing_message))
+
                 if (call.isMissed) { // Outgoing call missed.
                     callIcon.setImageResource(R.drawable.baseline_missed_call_16)
                     // Set the drawable color to red because it is missed.
@@ -1843,8 +1837,7 @@ class ConversationAdapter(
                     callIcon.scaleX = -1f
                 } else { // Outgoing call not missed.
                     callIcon.setImageResource(R.drawable.baseline_outgoing_call_16)
-                    callIcon.drawable
-                        .setTint(context.getColor(R.color.call_drawable_color))
+                    callIcon.drawable.setTint(context.getColor(R.color.call_drawable_color))
                     typeCallTxt = context.getString(R.string.notif_outgoing_call)
                 }
             }
@@ -1853,10 +1846,7 @@ class ConversationAdapter(
         }
     }
 
-    private fun configureSearchResult(
-        convViewHolder: ConversationViewHolder,
-        interaction: Interaction
-    ) {
+    private fun configureSearchResult(convViewHolder: ConversationViewHolder, interaction: Interaction) {
         disableClicking(convViewHolder.itemView)
         val messageId = interaction.messageId ?: return
         val clickView = convViewHolder.primaryClickableView ?: convViewHolder.itemView
@@ -1876,118 +1866,78 @@ class ConversationAdapter(
 
     /**
      * Helper method to return the previous Interaction relative to an initial position.
-     *
      * @param position The initial position
      * @return the previous Interaction if any, null otherwise
      */
-    private fun getPreviousInteractionFromPosition(position: Int): Interaction? =
-        if (mInteractions.isNotEmpty() && position > 0) {
-            if (mInteractions[position - 1].type == Interaction.InteractionType.INVALID) {
-                // Recursive function to ignore invalid interactions.
-                getPreviousInteractionFromPosition(position - 1)
-            } else mInteractions[position - 1]
-        } else null
+    private fun getPreviousInteractionFromPosition(position: Int): Interaction? {
+        val startIndex = if (position > mInteractions.size) mInteractions.size - 1 else position
+        for (i in startIndex - 1 downTo 0) {
+            if (mInteractions[i].type != Interaction.InteractionType.INVALID) {
+                return mInteractions[i]
+            }
+        }
+        return null
+    }
 
     /**
      * Helper method to return the next Interaction relative to an initial position.
-     *
      * @param position The initial position
      * @return the next Interaction if any, null otherwise
      */
-    private fun getNextInteractionFromPosition(position: Int): Interaction? =
-        if (mInteractions.isNotEmpty() && position < mInteractions.size - 1) {
-            if (mInteractions[position + 1].type == Interaction.InteractionType.INVALID) {
-                // Recursive function to ignore invalid interactions.
-                getNextInteractionFromPosition(position + 1)
-            } else mInteractions[position + 1]
-        } else null
+    private fun getNextInteractionFromPosition(position: Int): Interaction? {
+        val startIndex = if (position < 0) 0 else position
+        for (i in startIndex + 1 ..< mInteractions.size) {
+            if (mInteractions[i].type != Interaction.InteractionType.INVALID) {
+                return mInteractions[i]
+            }
+        }
+        return null
+    }
 
     /**
      * Returns a SequenceType object which tell what type is the Interaction.
-     *
-     * @param i             index of the interaction to analyse from interactions array.
+     * @param position             index of the interaction to analyse from interactions array.
      * @param isTimeShown   meta data of the interaction telling if the time is shown.
      * @return              the SequenceType of the analyzed interaction.
      */
-    private fun getMsgSequencing(i: Int, isTimeShown: Boolean): SequenceType {
-        val msg = mInteractions[i]
+    private fun getMsgSequencing(position: Int, isTimeShown: Boolean): SequenceType {
+        val msg = mInteractions[position]
 
         // Manage specific interaction which are always single (ex : emoji).
         if (isAlwaysSingleMsg(msg)) {
             return SequenceType.SINGLE
         }
 
+        val prevMsg = getPreviousInteractionFromPosition(position)
+        val nextMsg = getNextInteractionFromPosition(position)
+
         // Check for extremes (first or last or only one interaction).
-        if (getPreviousInteractionFromPosition(i) == null) {
+        if (prevMsg == null) {
             // Get the next interaction (if null it means there is only one interaction).
-            val nextMsg = getNextInteractionFromPosition(i) ?: return SequenceType.SINGLE
+            if (nextMsg == null)
+                return SequenceType.SINGLE
             // Check if sequence break needed.
-            return if (isSeqBreak(msg, nextMsg) || hasPermanentDateString(nextMsg, i + 1))
+            return if (isSeqBreak(msg, nextMsg) || hasPermanentDateString(nextMsg, position + 1))
                 SequenceType.SINGLE
-            else
-                SequenceType.FIRST
-        } else if (getNextInteractionFromPosition(i) == null) {
+            else SequenceType.FIRST
+        } else if (nextMsg == null) {
             // Get the previous interaction and if exists check if sequence break needed.
-            val prevMsg = getPreviousInteractionFromPosition(i)
-            if (prevMsg != null)
-                return if (isSeqBreak(prevMsg, msg) || isTimeShown)
-                    SequenceType.SINGLE
-                else SequenceType.LAST
+            return if (isSeqBreak(prevMsg, msg) || isTimeShown)
+                SequenceType.SINGLE
+            else SequenceType.LAST
         }
 
         // If not the first, nor the last and if there is not only one interaction.
         // Get the next and previous interactions and if exists check if sequence break needed.
-        val prevMsg = getPreviousInteractionFromPosition(i)
-        val nextMsg = getNextInteractionFromPosition(i)
-        if (prevMsg != null && nextMsg != null) {
-            val nextMsgHasDate = hasPermanentDateString(nextMsg, i + 1)
-            return if ((isSeqBreak(prevMsg, msg) || isTimeShown)
-                && !(isSeqBreak(msg, nextMsg) || nextMsgHasDate)
-            ) {
-                SequenceType.FIRST
-            } else if (!isSeqBreak(prevMsg, msg) && !isTimeShown && isSeqBreak(msg, nextMsg)) {
-                SequenceType.LAST
-            } else if (!isSeqBreak(prevMsg, msg) && !isTimeShown && !isSeqBreak(msg, nextMsg)) {
-                if (nextMsgHasDate) SequenceType.LAST else SequenceType.MIDDLE
-            } else {
-                SequenceType.SINGLE
-            }
-        }
-        return SequenceType.SINGLE
-    }
-
-    private fun setItemViewExpansionState(viewHolder: ConversationViewHolder, expanded: Boolean) {
-        val view: View = viewHolder.mMsgDetailTxt ?: return
-        if (view.height == 0 && !expanded) return
-        (viewHolder.animator ?: ValueAnimator().apply {
-            duration = 200
-            addListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator) {
-                    val va = animation as ValueAnimator
-                    if (va.animatedValue as Int == 0) {
-                        view.visibility = View.GONE
-                    }
-                    viewHolder.animator = null
-                }
-            })
-            addUpdateListener { animation: ValueAnimator ->
-                view.layoutParams.height = (animation.animatedValue as Int)
-                view.requestLayout()
-            }
-            viewHolder.animator = this
-        }).apply {
-            if (isRunning) {
-                reverse()
-            } else {
-                view.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
-                setIntValues(0, view.measuredHeight)
-            }
-            if (expanded) {
-                view.visibility = View.VISIBLE
-                start()
-            } else {
-                reverse()
-            }
+        val nextMsgHasDate = hasPermanentDateString(nextMsg, position + 1)
+        return if ((isSeqBreak(prevMsg, msg) || isTimeShown) && !(isSeqBreak(msg, nextMsg) || nextMsgHasDate)) {
+            SequenceType.FIRST
+        } else if (!isSeqBreak(prevMsg, msg) && !isTimeShown && isSeqBreak(msg, nextMsg)) {
+            SequenceType.LAST
+        } else if (!isSeqBreak(prevMsg, msg) && !isTimeShown && !isSeqBreak(msg, nextMsg)) {
+            if (nextMsgHasDate) SequenceType.LAST else SequenceType.MIDDLE
+        } else {
+            SequenceType.SINGLE
         }
     }
 
