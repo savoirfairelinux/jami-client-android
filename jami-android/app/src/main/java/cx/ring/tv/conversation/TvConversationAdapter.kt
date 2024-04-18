@@ -16,9 +16,6 @@
  */
 package cx.ring.tv.conversation
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
-import android.animation.ValueAnimator
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.SurfaceTexture
@@ -834,7 +831,7 @@ class TvConversationAdapter(
                     convViewHolder.mMsgDetailTxt?.text = timeSeparationString
                 })
             }
-            setItemViewExpansionState(convViewHolder, isExpanded)
+            convViewHolder.setItemViewExpansionState(isExpanded)
             convViewHolder.itemView.setOnClickListener { v: View? ->
                 if (convViewHolder.animator != null && convViewHolder.animator!!.isRunning)
                 {
@@ -1164,42 +1161,48 @@ class TvConversationAdapter(
 
     /**
      * Helper method to return the previous Interaction relative to an initial position.
-     *
      * @param position The initial position
      * @return the previous Interaction if any, null otherwise
      */
-    private fun getPreviousInteractionFromPosition(position: Int): Interaction? =
-        if (mInteractions.isNotEmpty() && position > 0) {
-            if (mInteractions[position - 1].type == Interaction.InteractionType.INVALID) {
-                // Recursive function to ignore invalid interactions.
-                getPreviousInteractionFromPosition(position - 1)
-            } else mInteractions[position - 1]
-        } else null
+    private fun getPreviousInteractionFromPosition(position: Int): Interaction? {
+        val startIndex = if (position > mInteractions.size) mInteractions.size - 1 else position
+        for (i in startIndex - 1 downTo 0) {
+            if (mInteractions[i].type != Interaction.InteractionType.INVALID) {
+                return mInteractions[i]
+            }
+        }
+        return null
+    }
 
     /**
      * Helper method to return the next Interaction relative to an initial position.
-     *
      * @param position The initial position
      * @return the next Interaction if any, null otherwise
      */
-    private fun getNextInteractionFromPosition(position: Int): Interaction? =
-        if (mInteractions.isNotEmpty() && position < mInteractions.size - 1) {
-            if (mInteractions[position + 1].type == Interaction.InteractionType.INVALID) {
-                // Recursive function to ignore invalid interactions.
-                getNextInteractionFromPosition(position + 1)
-            } else mInteractions[position + 1]
-        } else null
+    private fun getNextInteractionFromPosition(position: Int): Interaction? {
+        val startIndex = if (position < 0) 0 else position
+        for (i in startIndex + 1 ..< mInteractions.size) {
+            if (mInteractions[i].type != Interaction.InteractionType.INVALID) {
+                return mInteractions[i]
+            }
+        }
+        return null
+    }
 
     private fun getMsgSequencing(i: Int, isTimeShown: Boolean): SequenceType {
         val msg = mInteractions[i]
         if (isAlwaysSingleMsg(msg)) {
             return SequenceType.SINGLE
         }
+
+        val prevMsg = getPreviousInteractionFromPosition(i)
+        val nextMsg = getNextInteractionFromPosition(i)
+
         if (mInteractions.size == 1 || i == 0) {
             if (mInteractions.size == i + 1) {
                 return SequenceType.SINGLE
             }
-            val nextMsg = getNextInteractionFromPosition(i)
+
             if (nextMsg != null) {
                 return if (isSeqBreak(msg, nextMsg) || hasPermanentTimeString(nextMsg, i + 1)) {
                     SequenceType.SINGLE
@@ -1207,23 +1210,17 @@ class TvConversationAdapter(
                     SequenceType.FIRST
                 }
             }
-        } else if (getNextInteractionFromPosition(i) == null) { // If this is the last interaction.
-            val prevMsg = getPreviousInteractionFromPosition(i)
+        } else if (nextMsg == null) { // If this is the last interaction.
             if (prevMsg != null) {
                 return if (isSeqBreak(msg, prevMsg) || isTimeShown) {
                     SequenceType.SINGLE
                 } else SequenceType.LAST
             }
         }
-        val prevMsg = getPreviousInteractionFromPosition(i)
-        val nextMsg = getNextInteractionFromPosition(i)
+
         if (prevMsg != null && nextMsg != null) {
             val nextMsgHasTime = hasPermanentTimeString(nextMsg, i + 1)
-            if ((isSeqBreak(msg, prevMsg) || isTimeShown) && !(isSeqBreak(
-                    msg,
-                    nextMsg
-                ) || nextMsgHasTime)
-            ) {
+            if ((isSeqBreak(msg, prevMsg) || isTimeShown) && !(isSeqBreak(msg, nextMsg) || nextMsgHasTime)) {
                 return SequenceType.FIRST
             } else if (!isSeqBreak(msg, prevMsg) && !isTimeShown && isSeqBreak(msg, nextMsg)) {
                 return SequenceType.LAST
@@ -1234,55 +1231,9 @@ class TvConversationAdapter(
         return SequenceType.SINGLE
     }
 
-    private fun setItemViewExpansionState(viewHolder: ConversationViewHolder, expanded: Boolean) {
-        val view: View = viewHolder.mMsgDetailTxt ?: return
-        if (view.height == 0 && !expanded) return
-        (viewHolder.animator ?: ValueAnimator().apply {
-            duration = 200
-            addListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator) {
-                    val va = animation as ValueAnimator
-                    if (va.animatedValue as Int == 0) {
-                        view.visibility = View.GONE
-                    }
-                    viewHolder.animator = null
-                }
-            })
-            addUpdateListener { animation: ValueAnimator ->
-                view.layoutParams.height = (animation.animatedValue as Int)
-                view.requestLayout()
-            }
-            viewHolder.animator = this
-        }).apply {
-            if (isRunning) {
-                reverse()
-            } else {
-                view.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
-                setIntValues(0, view.measuredHeight)
-            }
-            if (expanded) {
-                view.visibility = View.VISIBLE
-                start()
-            } else {
-                reverse()
-            }
-        }
-    }
-
     private fun hasPermanentTimeString(msg: Interaction, position: Int): Boolean {
         val prevMsg = getPreviousInteractionFromPosition(position)
         return prevMsg != null && msg.timestamp - prevMsg.timestamp > 10 * DateUtils.MINUTE_IN_MILLIS
-    }
-
-    private fun lastOutgoingIndex(): Int {
-        var i: Int = mInteractions.size - 1
-        while (i >= 0) {
-            if (!mInteractions[i].isIncoming) {
-                break
-            }
-            i--
-        }
-        return i
     }
 
     private enum class SequenceType {
