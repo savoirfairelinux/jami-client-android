@@ -83,7 +83,7 @@ RUN wget -O /spoon-runner.jar "https://search.maven.org/remote_content?g=com.squ
 # Android SDK libraries, NDK
 ARG ARCH="x86_64"
 ARG TARGET="google_apis_playstore"
-ARG API_LEVEL="34"
+ARG API_LEVEL="33"
 ARG BUILD_TOOLS="34.0.0"
 ARG EMULATOR_PACKAGE="system-images;android-${API_LEVEL};${TARGET};${ARCH}"
 RUN sdkmanager --update
@@ -91,7 +91,7 @@ RUN yes Y | sdkmanager --licenses
 RUN sdkmanager --channel=1 --no_https "platforms;android-${API_LEVEL}" \
 	'extras;android;m2repository' \
 	'extras;google;m2repository' \
-	'ndk;26.2.11394342' \
+	'ndk;26.3.11579264' \
 	"system-images;android-${API_LEVEL};${TARGET};${ARCH}" \
 	"$EMULATOR_PACKAGE" \
 	"build-tools;${BUILD_TOOLS}" \
