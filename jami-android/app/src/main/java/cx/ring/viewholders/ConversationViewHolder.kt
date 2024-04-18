@@ -16,6 +16,8 @@
  */
 package cx.ring.viewholders
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import android.widget.TextView
@@ -29,7 +31,6 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.ImageView
-import android.widget.RelativeLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import cx.ring.R
 import cx.ring.views.MessageBubble
@@ -161,7 +162,6 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
         else -> null
     }
 
-
     var player: MediaPlayer? = null
     var surface: Surface? = null
     var animator: ValueAnimator? = null
@@ -251,4 +251,42 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
             else ->  {}
         }
     }
+
+    fun setItemViewExpansionState(expanded: Boolean) {
+        val view: View = mMsgDetailTxt ?: return
+        if (view.height == 0 && !expanded) return
+
+        (animator ?: ValueAnimator().apply {
+            duration = 200
+            addListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator) {
+                    val va = animation as ValueAnimator
+                    if (va.animatedValue as Int == 0) {
+                        view.visibility = View.GONE
+                    }
+                    animator = null
+                }
+            })
+
+            addUpdateListener { animation: ValueAnimator ->
+                view.layoutParams.height = (animation.animatedValue as Int)
+                view.requestLayout()
+            }
+            animator = this
+
+            if (isRunning) {
+                reverse()
+            } else {
+                view.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
+                setIntValues(0, view.measuredHeight)
+            }
+            if (expanded) {
+                view.visibility = View.VISIBLE
+                start()
+            } else {
+                reverse()
+            }
+        })
+    }
+
 }
