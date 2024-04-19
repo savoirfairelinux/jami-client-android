@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="2dp">
+    android:padding="4dp">
 
     <com.google.android.material.chip.Chip
         android:id="@+id/chip"
@@ -14,13 +14,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:elevation="0dp"
-        android:textAppearance="@style/EmojiReactionDetail"
+        android:paddingVertical="4dp"
+        android:textSize="30dp"
         app:checkedIconEnabled="false"
-        app:chipEndPadding="0dp"
+        app:chipBackgroundColor="@color/selector_checked_state_color"
         app:chipMinTouchTargetSize="0dp"
         app:chipStartPadding="0dp"
-        app:textEndPadding="8dp"
+        app:chipEndPadding="0dp"
+        app:textStartPadding="4dp"
+        app:textEndPadding="4dp"
         tools:checked="true"
-        tools:text="🥰" />
+        tools:text="🥰"
+        tools:ignore="SpUsage" />
 
 </LinearLayout>
