@@ -122,6 +122,7 @@
                 script {
                     sh 'whoami && pwd && ls && cd /jami-client-android && ls ./daemon && ./start_emu_headless.sh'
                     sh 'su jenkins -c "cd /jami-client-android && ./compile.sh"'
+                    sh 'su jenkins -c "cd /jami-client-android && ./test.sh"'
                 }
             }
         }
