@@ -83,9 +83,9 @@ RUN wget -O /spoon-runner.jar "https://search.maven.org/remote_content?g=com.squ
 # Android SDK libraries, NDK
 ARG ARCH="x86_64"
 ARG TARGET="google_apis_playstore"
-ARG API_LEVEL="33"
+ARG API_LEVEL="34"
 ARG BUILD_TOOLS="34.0.0"
-ARG EMULATOR_PACKAGE="system-images;android-${API_LEVEL};${TARGET};${ARCH}"
+ARG EMULATOR_PACKAGE="system-images;android-34;google_apis_playstore;x86_64"
 RUN sdkmanager --update
 RUN yes Y | sdkmanager --licenses
 RUN sdkmanager --channel=1 --no_https "platforms;android-${API_LEVEL}" \
@@ -94,10 +94,11 @@ RUN sdkmanager --channel=1 --no_https "platforms;android-${API_LEVEL}" \
 	'ndk;26.3.11579264' \
 	"system-images;android-${API_LEVEL};${TARGET};${ARCH}" \
 	"$EMULATOR_PACKAGE" \
+	"emulator" \
 	"build-tools;${BUILD_TOOLS}" \
 	'platform-tools'
 ENV ANDROID_SDK=${ANDROID_SDK_ROOT}
-ENV ANDROID_NDK=${ANDROID_SDK_ROOT}/ndk/26.2.11394342
+ENV ANDROID_NDK=${ANDROID_SDK_ROOT}/ndk/26.3.11579264
 
 # Create emulator
 ARG EMULATOR_NAME="nexus"
@@ -109,10 +110,25 @@ RUN echo "no" | avdmanager --verbose create avd --force --name "${EMULATOR_NAME}
 WORKDIR /tmp
 
 COPY . /tmp
-ENV EXTRA_PATH "$PATH:$ANDROID_SDK_ROOT/cmdline-tools/tools:$ANDROID_SDK_ROOT/cmdline-tools/tools/bin:$ANDROID_SDK_ROOT/emulator:$ANDROID_SDK_ROOT/tools/bin:$ANDROID_SDK_ROOT/platform-tools:$ANDROID_SDK_ROOT/build-tools/${BUILD_TOOLS}"
+#ENV EXTRA_PATH "$PATH:$ANDROID_SDK_ROOT/cmdline-tools/tools:$ANDROID_SDK_ROOT/cmdline-tools/tools/bin:$ANDROID_SDK_ROOT/emulator:$ANDROID_SDK_ROOT/tools/bin:$ANDROID_SDK_ROOT/platform-tools:$ANDROID_SDK_ROOT/build-tools/${BUILD_TOOLS}"
 
 
 # RUN chown -R $UID:$GID /root/
 # RUN chown -R $UID:$GID /opt/android
+
+#RUN groupadd -r jenkins && useradd --no-log-init -r -g jenkins jenkins -m
+
+ARG HOST_UID
+ARG HOST_GID
+
+RUN groupadd -g $HOST_GID jenkins && \
+    useradd --no-log-init -r -u $HOST_UID -g jenkins jenkins -m
+    
+USER jenkins
+
+ENV JAVA_HOME=/opt/java/openjdk 
+ENV ANDROID_ABI=x86_64
+ENV ANDROID_HOME=/opt/android
+ENV PATH="$PATH:/opt/java/openjdk/bin:$ANDROID_SDK_ROOT/cmdline-tools/tools:$ANDROID_SDK_ROOT/cmdline-tools/tools/bin:$ANDROID_SDK_ROOT/emulator:$ANDROID_SDK_ROOT/tools/bin:$ANDROID_SDK_ROOT/platform-tools:$ANDROID_SDK_ROOT/build-tools/${BUILD_TOOLS}"
 
 CMD [ "/bin/bash" ]

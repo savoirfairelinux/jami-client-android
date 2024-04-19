@@ -22,9 +22,9 @@
             label 'jami-buildmachine-04.mtl.sfl'
         }
     }
-
+    
     triggers {
-        gerrit customUrl: '',
+    gerrit customUrl: '',
         gerritProjects: [
             [branches: [[compareType: 'PLAIN', pattern: 'master']],
              compareType: 'PLAIN',
@@ -33,7 +33,7 @@
         triggerOnEvents: [
             commentAddedContains('!build'),
             patchsetCreated(excludeDrafts: true, excludeNoCodeChange: true,
-            excludeTrivialRebase: true)]
+                excludeTrivialRebase: true)]
     }
 
     options {
@@ -42,43 +42,43 @@
 
     parameters {
         string(name: 'GERRIT_REFSPEC',
-            defaultValue: 'refs/changes/19/28019/1',
-            description: 'The Gerrit refspec to fetch.')
+                defaultValue: 'refs/heads/master',
+                description: 'The Gerrit refspec to fetch.')
     }
 
     stages {
-        stage('SCM Checkout') {
-            steps {
-                // Wipe workspace and fetch jami-daemon
-                checkout changelog: true, poll: false,
-                    scm: [$class: 'GitSCM',
-                        branches: [[name: 'FETCH_HEAD']],
-                        doGenerateSubmoduleConfigurations: false,
-                        extensions: [
-                            [$class: 'CloneOption', noTags: true, reference: '', shallow: true],
-                            [$class: 'WipeWorkspace']],
-                        submoduleCfg: [],
-                        userRemoteConfigs: [[refspec: '${GERRIT_REFSPEC}', url: 'https://${JAMI_GERRIT_URL}/jami-client-android']]]
-            }
-        }
+                  stage('SCM Checkout') {
+                                steps {
+                                    // Wipe workspace and fetch jami-daemon
+                                    checkout changelog: true, poll: false,
+                                        scm: [$class: 'GitSCM',
+                                            branches: [[name: 'FETCH_HEAD']],
+                                            doGenerateSubmoduleConfigurations: false,
+                                            extensions: [
+                                                [$class: 'CloneOption', noTags: true, reference: '', shallow: true],
+                                                [$class: 'WipeWorkspace']],
+                                            submoduleCfg: [],
+                                            userRemoteConfigs: [[refspec: '${GERRIT_REFSPEC}', url: 'https://${JAMI_GERRIT_URL}/jami-client-android']]]
+                                }
+                }
 
-		stage('Init repository') {
-		    steps {
-		        script {
-		            sh """
-		                git rev-parse HEAD
-		                git submodule update --init --recursive
-		                echo salut
-		                ls ./daemon
-		                pwd
-		            """
-		        }
-		    }
-		}
-
-		stage('Copy Google Services plugin configuration') {
+                stage('Init repository') {
+                    steps {
+                        script {
+                            sh """
+                                git rev-parse HEAD
+                                git submodule update --init --recursive
+                            """
+                        }
+                    }
+                }
+                
+                stage('Copy Google Services plugin configuration') {
             steps {
-                sh 'echo bonjour && pwd && ls && cp /etc/certs/google-services.json jami-android/app && ls jami-android/app'
+                script {
+                    def a = pwd()
+                    sh 'cp /etc/certs/google-services.json /var/lib/jenkins/workspace/client-android3/jami-android/app'
+                }
             }
         }
 
@@ -114,16 +114,32 @@
                     reuseNode true
                     dir 'docker'
                     filename 'Dockerfile'
-                    args '-v /var/lib/jenkins/workspace/client-android3:/jami-client-android'
+                    args '-u root --privileged -v /var/lib/jenkins/workspace/client-android3:/jami-client-android'
                     additionalBuildArgs '--build-arg ANDROID_ABI=x86_64 --build-arg BATCH_MODE=1 --build-arg RING_BUILD_FIREBASE=1'
                 }
             }
             steps {
                 script {
-                    sh 'pwd && ls && cd /jami-client-android && ls ./daemon && ./compile.sh --test'
+                    sh 'whoami && pwd && ls && cd /jami-client-android && ls ./daemon && ./compile.sh --test'
                 }
             }
         }
 
-   }
- }
+        stage('Update pre-fetched tarballs directory') {
+            steps {
+                script {
+                    def daemonDir = pwd() + '/daemon'
+                    if (fileExists(RING_CONTRIB_TARBALLS)) {
+                        sh "rsync -u ${daemonDir}/contrib/tarballs/* ${RING_CONTRIB_TARBALLS}/ || echo 'contribs tarballs cache backup failed'"
+                    }
+                    if (fileExists(RING_EXTRATOOLS_TARBALLS)) {
+                        sh "rsync -u ${daemonDir}/extras/tools/*.tar.* ${RING_EXTRATOOLS_TARBALLS}/ || echo 'extras-tools tarballs cache backup failed'"
+                    }
+                }
+            }
+        }
+                
+                
+  }
+
+}
