@@ -4,16 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingStart="16dp"
-    android:paddingTop="8dp"
-    android:paddingEnd="16dp"
-    android:paddingBottom="8dp">
+    android:paddingHorizontal="16dp"
+    android:paddingVertical="8dp">
 
     <TextView
         android:id="@+id/contact_info"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:layout_marginTop="8dp"
         android:drawablePadding="8dp"
         android:ellipsize="end"
         android:gravity="center_vertical"
@@ -23,7 +22,6 @@
         android:textAppearance="@style/ListPrimary"
         tools:drawableStart="@drawable/ic_jami_48"
         tools:text="Chateaubrillant De Longnom" />
-
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/contact_reactions_table"
