@@ -131,4 +131,6 @@ ENV ANDROID_ABI=x86_64
 ENV ANDROID_HOME=/opt/android
 ENV PATH="$PATH:/opt/java/openjdk/bin:$ANDROID_SDK_ROOT/cmdline-tools/tools:$ANDROID_SDK_ROOT/cmdline-tools/tools/bin:$ANDROID_SDK_ROOT/emulator:$ANDROID_SDK_ROOT/tools/bin:$ANDROID_SDK_ROOT/platform-tools:$ANDROID_SDK_ROOT/build-tools/${BUILD_TOOLS}"
 
+USER root
+
 CMD [ "/bin/bash" ]
