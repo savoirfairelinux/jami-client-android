@@ -126,7 +126,7 @@ RUN groupadd -g $HOST_GID jenkins && \
     
 USER jenkins
 
-ENV JAVA_HOME=/opt/java/openjdk 
+ENV JAVA_HOME=/opt/java/openjdk/
 ENV ANDROID_ABI=x86_64
 ENV ANDROID_HOME=/opt/android
 ENV PATH="$PATH:/opt/java/openjdk/bin:$ANDROID_SDK_ROOT/cmdline-tools/tools:$ANDROID_SDK_ROOT/cmdline-tools/tools/bin:$ANDROID_SDK_ROOT/emulator:$ANDROID_SDK_ROOT/tools/bin:$ANDROID_SDK_ROOT/platform-tools:$ANDROID_SDK_ROOT/build-tools/${BUILD_TOOLS}"
