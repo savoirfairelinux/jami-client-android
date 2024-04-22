@@ -24,7 +24,7 @@
     }
     
     triggers {
-    gerrit customUrl: '',
+        gerrit customUrl: '',
         gerritProjects: [
             [branches: [[compareType: 'PLAIN', pattern: 'master']],
              compareType: 'PLAIN',
@@ -42,38 +42,38 @@
 
     parameters {
         string(name: 'GERRIT_REFSPEC',
-                defaultValue: 'refs/heads/master',
-                description: 'The Gerrit refspec to fetch.')
+            defaultValue: 'refs/heads/master',
+            description: 'The Gerrit refspec to fetch.')
     }
 
     stages {
-                  stage('SCM Checkout') {
-                                steps {
-                                    // Wipe workspace and fetch jami-daemon
-                                    checkout changelog: true, poll: false,
-                                        scm: [$class: 'GitSCM',
-                                            branches: [[name: 'FETCH_HEAD']],
-                                            doGenerateSubmoduleConfigurations: false,
-                                            extensions: [
-                                                [$class: 'CloneOption', noTags: true, reference: '', shallow: true],
-                                                [$class: 'WipeWorkspace']],
-                                            submoduleCfg: [],
-                                            userRemoteConfigs: [[refspec: '${GERRIT_REFSPEC}', url: 'https://${JAMI_GERRIT_URL}/jami-client-android']]]
-                                }
-                }
+        stage('SCM Checkout') {
+            steps {
+                // Wipe workspace and fetch jami-daemon
+                checkout changelog: true, poll: false,
+                    scm: [$class: 'GitSCM',
+                        branches: [[name: 'FETCH_HEAD']],
+                        doGenerateSubmoduleConfigurations: false,
+                        extensions: [
+                            [$class: 'CloneOption', noTags: true, reference: '', shallow: true],
+                            [$class: 'WipeWorkspace']],
+                        submoduleCfg: [],
+                        userRemoteConfigs: [[refspec: '${GERRIT_REFSPEC}', url: 'https://${JAMI_GERRIT_URL}/jami-client-android']]]
+            }
+        }
 
-                stage('Init repository') {
-                    steps {
-                        script {
-                            sh """
-                                git rev-parse HEAD
-                                git submodule update --init --recursive
-                            """
-                        }
-                    }
+        stage('Init repository') {
+            steps {
+                script {
+                    sh """
+                        git rev-parse HEAD
+                        git submodule update --init --recursive
+                    """
                 }
+            }
+        }
                 
-                stage('Copy Google Services plugin configuration') {
+        stage('Copy Google Services plugin configuration') {
             steps {
                 script {
                     def a = pwd()
@@ -120,7 +120,7 @@
             }
             steps {
                 script {
-                    sh 'whoami && pwd && ls && cd /jami-client-android && ls ./daemon && ./start_emu_headless.sh'
+                    sh 'cd /jami-client-android && ./start_emu_headless.sh'
                     sh 'su jenkins -c "cd /jami-client-android && ./compile.sh"'
                     sh 'su jenkins -c "cd /jami-client-android && ./test.sh"'
                 }
@@ -147,8 +147,5 @@
                 }
             }
         }
-                
-                
-  }
-
+    }
 }
