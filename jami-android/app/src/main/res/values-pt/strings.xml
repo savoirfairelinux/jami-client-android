@@ -351,9 +351,9 @@
   <string name="wizard_status_recommended">Recomendado</string>
   <string name="wizard_status_optional">Opcional</string>
   <string name="wizard_status_required">Requerido</string>
-  <string name="wizard_username_info">Escolha nome de usuário para sua conta</string>
-  <string name="wizard_username_button">Escolha nome de usuário</string>
-  <string name="wizard_username_skip">Pular a escolha do nome do usuário</string>
+  <string name="wizard_username_info">Escolha nome de utilizador para sua conta</string>
+  <string name="wizard_username_button">Escolha o nome de utilizador</string>
+  <string name="wizard_username_skip">Saltar a escolha do nome de utilizador</string>
   <string name="wizard_password_info">Senha da conta</string>
   <string name="wizard_password_placeholder">Escolha uma senha para criptografar a chave da conta neste dispositivo</string>
   <string name="wizard_password_button">Escolha senha</string>
@@ -400,11 +400,11 @@
   <string name="jami_id_copy">Copiar identidade Jami</string>
   <string name="jami_id_share">Compartilhar identidade Jami</string>
   <string name="jami_id_validate">Registar nome de utilizador</string>
-  <string name="jami_id_available">O nome de usuário não está disponível</string>
-  <string name="jami_id_not_available">O nome de usuário não está disponível\n• 32 número de caracteres máximo\n• Caracteres especiais permitos: traço (-), underscore (_)</string>
-  <string name="jami_id_info">• 32 máximo caracteres\n• Caracteres especiais permitidos: traço (-), underscore (_)</string>
+  <string name="jami_id_available">O nome de utilizador não está disponível</string>
+  <string name="jami_id_not_available">O nome de utilizador não está disponível\n• 32 número de caracteres máximo\n• Caracteres especiais permitidos: traço (-), traço inferior (_)</string>
+  <string name="jami_id_info">• 32 máximo caracteres\n• Caracteres especiais permitidos: traço (-), traço inferior (_)</string>
   <string name="jami_id_looking_for_availability">A pesquisar pela disponibilidade do nome de utilizador…</string>
-  <string name="jami_id_choose_username">Escolha um nome de usuário</string>
+  <string name="jami_id_choose_username">Escolha um nome de utilizador</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Bem-vindo ao Jami</string>
   <string name="welcome_jami_description">Compartilhe sua identidade Jami para ser contactado mais facilmente!</string>

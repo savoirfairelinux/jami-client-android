@@ -66,6 +66,9 @@
   <string name="plugin_install_failure">Falha na instalação do complemento: <b>%1$s</b></string>
   <string name="plugin_recent_version_exception">Você tem uma versão mais recente de: <b>%1$s</b></string>
   <string name="plugin_same_version_exception">Você tem a mesma versão de <b>%1$s</b> instalada</string>
+  <string name="plugin_invalid_signature"><b>%1$s</b> tem uma assinatura inválida</string>
+  <string name="plugin_invalid_authority">Não é possível verificar a autoridade de: <b>%1$s</b></string>
+  <string name="plugin_invalid_format">Formato de módulo inválido: <b>%1$s</b></string>
   <string name="plugin_force_install">forçar a instalação</string>
   <string name="plugin_path_image_add">Adicionar uma nova imagem</string>
 </resources>

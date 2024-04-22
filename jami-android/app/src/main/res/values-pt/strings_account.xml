@@ -76,7 +76,7 @@
   <string name="account_ringtone_summary">Selecionar toque de chamada ou escolher o seu próprio</string>
   <!--Video Details-->
   <string name="account_video_label">Vídeo</string>
-  <string name="account_video_enable">Ativar Vídeo</string>
+  <string name="account_video_enable">Ativar vídeo</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Avançado</string>
   <string name="account_read_receipts_label">Ativar verificação de leitura</string>

@@ -1,12 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--Strings for xml content description of images-->
-  <string name="contact_quick_call_description">Chamada Rápida</string>
-  <string name="contact_picture_description">Imagem do Contacto</string>
+  <string name="contact_quick_call_description">Chamada rápida</string>
+  <string name="contact_picture_description">Imagem do contacto</string>
   <string name="dial_numeric_pad">Teclado numérico</string>
   <string name="contact_unblock">Desbloquear</string>
   <string name="video_plugins">Plugins de vídeo</string>
-  <string name="file_download_button">Obter</string>
+  <string name="file_download_button">Descarregar</string>
   <string name="control_play">Reproduzir</string>
   <string name="control_replay">Reproduzir novamente</string>
   <string name="control_pause">Pausa</string>
