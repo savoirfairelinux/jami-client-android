@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c272e6cb_383968e4",
+        "filename": ".cqfdrc",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2024-04-25T17:40:16Z",
+      "side": 0,
+      "message": "can just be another Dockerfile to avoid to remove cqfd things",
+      "range": {
+        "startLine": 5,
+        "startChar": 6,
+        "endLine": 5,
+        "endChar": 7
+      },
+      "revId": "bb0fbf9d6731a05b06f6cf9a16067ea575fa9420",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}

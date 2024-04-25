@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1fc53375_1387aeb5",
+        "filename": "ci/Dockerfile",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2024-04-25T17:40:16Z",
+      "side": 1,
+      "message": "needed?",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 17
+      },
+      "revId": "6f241f15a893efe56b5c403abced68de8a605829",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "460601b0_a6d0e309",
+        "filename": "ci/Dockerfile",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2024-04-25T17:40:16Z",
+      "side": 1,
+      "message": "configure your editor to remove trailing spaces",
+      "range": {
+        "startLine": 53,
+        "startChar": 15,
+        "endLine": 53,
+        "endChar": 17
+      },
+      "revId": "6f241f15a893efe56b5c403abced68de8a605829",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f02cb9b0_230a39e8",
+        "filename": "ci/Dockerfile",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2024-04-25T17:40:16Z",
+      "side": 1,
+      "message": "needed?",
+      "range": {
+        "startLine": 54,
+        "startChar": 14,
+        "endLine": 54,
+        "endChar": 30
+      },
+      "revId": "6f241f15a893efe56b5c403abced68de8a605829",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "13f83ea7_20542ea9",
+        "filename": "ci/Jenkinsfile",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2024-04-25T17:40:16Z",
+      "side": 1,
+      "message": "remove trailing",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 4
+      },
+      "revId": "6f241f15a893efe56b5c403abced68de8a605829",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "786e27f4_f40be4b0",
+        "filename": "ci/Jenkinsfile",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2024-04-25T17:40:16Z",
+      "side": 1,
+      "message": "TODO remove",
+      "range": {
+        "startLine": 79,
+        "startChar": 35,
+        "endLine": 79,
+        "endChar": 69
+      },
+      "revId": "6f241f15a893efe56b5c403abced68de8a605829",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "737f1eee_226916d4",
+        "filename": "ci/compile.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2024-04-25T17:40:16Z",
+      "side": 1,
+      "message": "if used outside docker this will break. I guess docker can move to the good directory",
+      "range": {
+        "startLine": 28,
+        "startChar": 2,
+        "endLine": 28,
+        "endChar": 23
+      },
+      "revId": "6f241f15a893efe56b5c403abced68de8a605829",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe928963_c352d76a",
+        "filename": "ci/compile.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2024-04-25T17:40:16Z",
+      "side": 1,
+      "message": "remove debug \u0026 tabs/space mixed up",
+      "range": {
+        "startLine": 65,
+        "startChar": 6,
+        "endLine": 65,
+        "endChar": 15
+      },
+      "revId": "6f241f15a893efe56b5c403abced68de8a605829",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "472120fc_4f7d0a6d",
+        "filename": "ci/start_emu_headless.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2024-04-25T17:40:16Z",
+      "side": 1,
+      "message": "why the sleep are needed?",
+      "range": {
+        "startLine": 102,
+        "startChar": 4,
+        "endLine": 102,
+        "endChar": 7
+      },
+      "revId": "6f241f15a893efe56b5c403abced68de8a605829",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
