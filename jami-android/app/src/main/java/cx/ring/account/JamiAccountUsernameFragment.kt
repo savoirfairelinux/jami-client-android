@@ -48,7 +48,7 @@ class JamiAccountUsernameFragment : BaseSupportFragment<JamiAccountCreationPrese
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         FragAccJamiUsernameBinding.inflate(inflater, container, false).apply {
             inputUsername.filters = arrayOf<InputFilter>(RegisteredNameFilter())
-            createAccount.setOnClickListener { presenter.createAccount() }
+            createAccountUsername.setOnClickListener { presenter.createAccount() }
             skip.setOnClickListener {
                 presenter.registerUsernameChanged(false)
                 presenter.createAccount()
@@ -61,7 +61,7 @@ class JamiAccountUsernameFragment : BaseSupportFragment<JamiAccountCreationPrese
                 }
             })
             inputUsername.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
-                if (actionId == EditorInfo.IME_ACTION_DONE && binding!!.createAccount.isEnabled) {
+                if (actionId == EditorInfo.IME_ACTION_DONE && binding!!.createAccountUsername.isEnabled) {
                     val inputMethodManager =
                         requireContext().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
                     inputMethodManager.hideSoftInputFromWindow(requireActivity().currentFocus!!.windowToken, 0)
@@ -132,7 +132,7 @@ class JamiAccountUsernameFragment : BaseSupportFragment<JamiAccountCreationPrese
     override fun showInvalidPasswordError(display: Boolean) {}
     override fun showNonMatchingPasswordError(display: Boolean) {}
     override fun enableNextButton(enabled: Boolean) {
-        binding!!.createAccount.isEnabled = enabled
+        binding!!.createAccountUsername.isEnabled = enabled
     }
 
     override fun goToAccountCreation() {
