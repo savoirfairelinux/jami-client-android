@@ -25,8 +25,8 @@ if [ -z "$ANDROID_SDK_ROOT" ]; then
 fi
 
 SCRIPT_DIRECTORY=$(dirname "$0")
-APK_PATH=$SCRIPT_DIRECTORY/jami-android/app/build/outputs/apk/noPush/debug/app-noPush-debug.apk
-TEST_APK_PATH=$SCRIPT_DIRECTORY/jami-android/app/build/outputs/apk/androidTest/noPush/debug/app-noPush-debug-androidTest.apk
+APK_PATH=$SCRIPT_DIRECTORY/../jami-android/app/build/outputs/apk/noPush/debug/app-noPush-debug.apk
+TEST_APK_PATH=$SCRIPT_DIRECTORY/../jami-android/app/build/outputs/apk/androidTest/noPush/debug/app-noPush-debug-androidTest.apk
 
 # Check the existence of the APK_PATH file
 if [ ! -f "$APK_PATH" ]; then

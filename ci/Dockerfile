@@ -50,25 +50,23 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	zip \
 	&& locale-gen $LANG $LC_ALL && update-locale $LANG $LC_ALL
 
-# Fastlane
-RUN gem install fastlane -NV
-
-
 # Configure wget 
 RUN echo "prefer-family = IPv6" >> /etc/wgetrc
 
-
-
-
-
-# Swig 4.1.1
+# Install Swig
 RUN wget -O /tmp/swig.tar.gz https://github.com/swig/swig/archive/v4.1.1.tar.gz && \
 	tar xzf  /tmp/swig.tar.gz -C /opt && \
 	cd /opt/swig-4.1.1/ && ./autogen.sh && ./configure && make && make install && \
 	cd .. && rm -rf /opt/swig-4.1.1 /tmp/swig.tar.gz
 
+# Install Fastlane
+RUN gem install fastlane -NV
 
-# Commandlinetools 11076708
+# Install Spoon (test manager).
+ENV SPOON_RUNNER_PATH=/spoon-runner.jar
+RUN wget -O /spoon-runner.jar "https://search.maven.org/remote_content?g=com.squareup.spoon&a=spoon-runner&v=LATEST&c=jar-with-dependencies"
+
+# Install Commandlinetools.
 ENV ANDROID_SDK_ROOT=/opt/android
 ARG ANDROID_CMD="commandlinetools-linux-11076708_latest.zip"
 RUN wget https://dl.google.com/android/repository/${ANDROID_CMD} -P /tmp && \
@@ -77,10 +75,7 @@ RUN wget https://dl.google.com/android/repository/${ANDROID_CMD} -P /tmp && \
   cd $ANDROID_SDK_ROOT/cmdline-tools/tools && ls
 ENV PATH "$PATH:$ANDROID_SDK_ROOT/cmdline-tools/tools:$ANDROID_SDK_ROOT/cmdline-tools/tools/bin:$ANDROID_SDK_ROOT/emulator:$ANDROID_SDK_ROOT/tools/bin:$ANDROID_SDK_ROOT/platform-tools:$ANDROID_SDK_ROOT/build-tools/${BUILD_TOOLS}"
 
-# Spoon (test-manager) 
-RUN wget -O /spoon-runner.jar "https://search.maven.org/remote_content?g=com.squareup.spoon&a=spoon-runner&v=LATEST&c=jar-with-dependencies"
-
-# Android SDK libraries, NDK
+# Install android SDK libraries, NDK.
 ARG ARCH="x86_64"
 ARG TARGET="google_apis_playstore"
 ARG API_LEVEL="34"
@@ -100,37 +95,24 @@ RUN sdkmanager --channel=1 --no_https "platforms;android-${API_LEVEL}" \
 ENV ANDROID_SDK=${ANDROID_SDK_ROOT}
 ENV ANDROID_NDK=${ANDROID_SDK_ROOT}/ndk/26.3.11579264
 
-# Create emulator
+# Create emulator.
 ARG EMULATOR_NAME="nexus"
 ARG EMULATOR_DEVICE="Nexus 6"
 ENV EMULATOR_NAME=$EMULATOR_NAME
 ENV DEVICE_NAME=$EMULATOR_DEVICE
 RUN echo "no" | avdmanager --verbose create avd --force --name "${EMULATOR_NAME}" --device "${EMULATOR_DEVICE}" --package "${EMULATOR_PACKAGE}"
 
-WORKDIR /tmp
-
-COPY . /tmp
-#ENV EXTRA_PATH "$PATH:$ANDROID_SDK_ROOT/cmdline-tools/tools:$ANDROID_SDK_ROOT/cmdline-tools/tools/bin:$ANDROID_SDK_ROOT/emulator:$ANDROID_SDK_ROOT/tools/bin:$ANDROID_SDK_ROOT/platform-tools:$ANDROID_SDK_ROOT/build-tools/${BUILD_TOOLS}"
-
-
-# RUN chown -R $UID:$GID /root/
-# RUN chown -R $UID:$GID /opt/android
-
-#RUN groupadd -r jenkins && useradd --no-log-init -r -g jenkins jenkins -m
-
+# Create non-root user with identical host uid/gid.
+# It will helps with permissions on shared volumes.
 ARG HOST_UID
 ARG HOST_GID
-
 RUN groupadd -g $HOST_GID jenkins && \
-    useradd --no-log-init -r -u $HOST_UID -g jenkins jenkins -m
+    useradd --no-log-init --system --uid $HOST_UID --gid jenkins jenkins --create-home
     
-USER jenkins
-
+# Define environment variables.
 ENV JAVA_HOME=/opt/java/openjdk/
 ENV ANDROID_ABI=x86_64
 ENV ANDROID_HOME=/opt/android
 ENV PATH="$PATH:/opt/java/openjdk/bin:$ANDROID_SDK_ROOT/cmdline-tools/tools:$ANDROID_SDK_ROOT/cmdline-tools/tools/bin:$ANDROID_SDK_ROOT/emulator:$ANDROID_SDK_ROOT/tools/bin:$ANDROID_SDK_ROOT/platform-tools:$ANDROID_SDK_ROOT/build-tools/${BUILD_TOOLS}"
-
-USER root
 
 CMD [ "/bin/bash" ]
