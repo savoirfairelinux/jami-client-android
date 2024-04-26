@@ -20,7 +20,6 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.KeyEvent
-import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import cx.ring.R
@@ -80,11 +79,6 @@ class ConversationActivity : AppCompatActivity() {
             }
         }
         super.onConfigurationChanged(newConfig)
-    }
-
-    override fun onContextMenuClosed(menu: Menu) {
-        mConversationFragment?.updateAdapterItem()
-        super.onContextMenuClosed(menu)
     }
 
     override fun onStart() {

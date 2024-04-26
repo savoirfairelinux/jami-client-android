@@ -19,7 +19,6 @@ package cx.ring.fragments
 import android.Manifest
 import android.animation.LayoutTransition
 import android.animation.ValueAnimator
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.ActivityOptions
 import android.content.*
@@ -40,8 +39,6 @@ import android.widget.*
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.ColorInt
-import androidx.appcompat.view.menu.MenuBuilder
-import androidx.appcompat.view.menu.MenuPopupHelper
 import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.*
@@ -97,7 +94,6 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     private var mCurrentPhoto: File? = null
     private var mCurrentFileAbsolutePath: String? = null
     private val mCompositeDisposable = CompositeDisposable()
-    private var mSelectedPosition = 0
     private var replyingTo: Interaction? = null
     private var mIsBubble = false
     private val mParticipantAvatars: MutableMap<String, AvatarDrawable> = HashMap()
@@ -310,15 +306,14 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             }
 
             histList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                // The minimum amount of items to have below current scroll position
-                // before loading more.
+                // The minimum amount of items to have below current scroll position before loading more.
                 val visibleLoadThreshold = 3
                 // The amount of items to have below the current scroll position to display
                 // the scroll to latest button.
                 val visibleLatestThreshold = 8
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {}
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    val layoutManager = recyclerView.layoutManager as LinearLayoutManager? ?: return
+                    val layoutManager = recyclerView.layoutManager as? LinearLayoutManager ?: return
                     if (!loading && histList.adapter != mSearchAdapter
                         && layoutManager.findFirstVisibleItemPosition() < visibleLoadThreshold
                     ) {
@@ -344,7 +339,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     }
 
     override fun setConversationColor(@ColorInt color: Int) {
-        mAdapter?.setPrimaryColor(getConversationColor(requireContext(), color))
+        mAdapter?.convColor = getConversationColor(requireContext(), color)
     }
 
     override fun setConversationSymbol(symbol: CharSequence) {
@@ -367,13 +362,6 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         binding = null
     }
 
-    fun updateAdapterItem() {
-        if (mSelectedPosition != -1) {
-            mAdapter?.notifyItemChanged(mSelectedPosition)
-            mSelectedPosition = -1
-        }
-    }
-
     private fun clearReply() {
         if (replyingTo != null) {
             replyingTo = null
@@ -394,10 +382,8 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         clearReply()
     }
 
-    @SuppressLint("RestrictedApi")
-    fun expandMenu(v: View) {
-        val context = requireContext()
-        val popup = PopupMenu(context, v)
+    private fun expandMenu(v: View) {
+        val popup = PopupMenu(requireContext(), v)
         popup.inflate(R.menu.conversation_share_actions)
         popup.setOnMenuItemClickListener { item: MenuItem ->
             when (item.itemId) {
@@ -411,9 +397,8 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             false
         }
         popup.menu.findItem(R.id.chat_plugins).isVisible = JamiService.getPluginsEnabled() && !JamiService.getChatHandlers().isEmpty()
-        val menuHelper = MenuPopupHelper(context, (popup.menu as MenuBuilder), v)
-        menuHelper.setForceShowIcon(true)
-        menuHelper.show()
+        popup.setForceShowIcon(true)
+        popup.show()
     }
 
     override fun showPluginListHandlers(accountId: String, contactId: String) {
@@ -478,13 +463,6 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 
     override fun startShareLocation(accountId: String, conversationId: String) {
         showMap(accountId, conversationId, true)
-    }
-
-    /**
-     * Used to update with the past adapter position when a long click was registered
-     */
-    fun updatePosition(position: Int) {
-        mSelectedPosition = position
     }
 
     override fun showMap(accountId: String, contactId: String, open: Boolean) {
@@ -777,34 +755,32 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             val searchMenuItem = menu.findItem(R.id.conv_search)
             searchMenuItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
                 override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
-                    val binding = binding ?: return false
+                    val convList = binding?.histList ?: return false
                     presenter.stopSearch()
-                    binding.histList.adapter = mAdapter
+                    convList.adapter = mAdapter
                     currentBottomView?.isVisible = true
                     if (animation.isStarted) animation.cancel()
-                    animation.setIntValues(
-                        binding.histList.paddingBottom,
-                        (currentBottomView?.height ?: 0) + marginPxTotal
+                    animation.setIntValues(convList.paddingBottom,
+                            (currentBottomView?.height ?: 0) + marginPxTotal
                     )
                     animation.start()
                     return true
                 }
 
                 override fun onMenuItemActionExpand(item: MenuItem): Boolean {
-                    val binding = binding ?: return false
-                    mSearchAdapter = ConversationAdapter(this@ConversationFragment, presenter, true).apply {
-                        setPrimaryColor(getPrimaryColor())
-                    }
+                    val convList = binding?.histList ?: return false
+                    mSearchAdapter = ConversationAdapter(this@ConversationFragment, presenter, true)
                     presenter.startSearch()
                     currentBottomView?.isVisible = false
-                    binding.histList.adapter = mSearchAdapter
+                    convList.adapter = mSearchAdapter
                     if (animation.isStarted) animation.cancel()
-                    animation.setIntValues(binding.histList.paddingBottom, marginPxTotal)
+                    animation.setIntValues(convList.paddingBottom, marginPxTotal)
                     animation.start()
                     return true
                 }
             })
-            (searchMenuItem.actionView as SearchView).let {
+
+            (searchMenuItem.actionView as? SearchView)?.let {
                 it.setOnQueryTextListener(this@ConversationFragment)
                 it.queryHint = getString(R.string.conversation_search_hint)
             }
@@ -930,7 +906,6 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 
     override fun displayNumberSpinner(conversation: Conversation, number: net.jami.model.Uri) {
         binding!!.numberSelector.visibility = View.VISIBLE
-        //binding.numberSelector.setAdapter(new NumberAdapter(getActivity(), conversation.getContact(), false));
         binding!!.numberSelector.setSelection(getIndex(binding!!.numberSelector, number))
     }
 
@@ -944,11 +919,12 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     }
 
     override fun goToHome() {
-        if (activity is ConversationActivity) {
-            requireActivity().finish()
+        val hostActivity = activity
+        if (hostActivity is ConversationActivity) {
+            hostActivity.finish()
         } else {
             // Post because we might be currently executing a fragment transaction
-            view?.post { activity?.onBackPressedDispatcher?.onBackPressed() }
+            view?.post { hostActivity?.onBackPressedDispatcher?.onBackPressed() }
         }
     }
 

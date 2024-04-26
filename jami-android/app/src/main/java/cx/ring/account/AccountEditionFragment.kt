@@ -66,13 +66,7 @@ class AccountEditionFragment : BaseSupportFragment<AccountEditionPresenter, Acco
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        //presenter.init(requireArguments().getString(ACCOUNT_ID_KEY)!!)
         initViewPager(requireArguments().getString(ACCOUNT_ID_KEY)!!)
-
-        mBinding?.fragmentContainer?.viewTreeObserver?.addOnScrollChangedListener {
-            setupElevation()
-        }
     }
 
     override fun initViewPager(accountId: String) {
@@ -124,17 +118,6 @@ class AccountEditionFragment : BaseSupportFragment<AccountEditionPresenter, Acco
 
         private fun fragmentWithBundle(result: Fragment): Fragment = result.apply {
             arguments = Bundle().apply { putString(ACCOUNT_ID_KEY, accountId) }
-        }
-    }
-
-    private fun setupElevation() {
-        val binding = mBinding ?: return
-        val ll = binding.pager.getChildAt(binding.pager.currentItem) as? LinearLayout ?: return
-        val rv = (ll.getChildAt(0) as FrameLayout).getChildAt(0) as RecyclerView
-        if (rv.canScrollVertically(SCROLL_DIRECTION_UP)) {
-            binding.slidingTabs.elevation = binding.slidingTabs.resources.getDimension(R.dimen.toolbar_elevation)
-        } else {
-            binding.slidingTabs.elevation = 0f
         }
     }
 

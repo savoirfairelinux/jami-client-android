@@ -32,7 +32,6 @@ import android.text.format.DateUtils
 import android.text.format.Formatter
 import android.util.TypedValue
 import android.view.*
-import android.view.ContextMenu.ContextMenuInfo
 import android.view.TextureView.SurfaceTextureListener
 import android.view.ViewGroup.MarginLayoutParams
 import android.widget.FrameLayout
@@ -89,7 +88,6 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.math.max
 
-
 class ConversationAdapter(
     private val conversationFragment: ConversationFragment,
     private val presenter: ConversationPresenter,
@@ -99,11 +97,18 @@ class ConversationAdapter(
     private val res = conversationFragment.resources
     private val mPictureMaxSize =
         TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 200f, res.displayMetrics).toInt()
-    private var mCurrentLongItem: RecyclerViewContextMenuInfo? = null
+
     @ColorInt
-    private var convColor = 0
+    var convColor = 0
+        set(value) {
+            field = value
+            convColorTint = MaterialColors.compositeARGBWithAlpha(value, (MaterialColors.ALPHA_LOW * 255).toInt())
+            notifyDataSetChanged()
+        }
+
     @ColorInt
     private var convColorTint = 0
+
     private val formatter = Formatter(StringBuilder(64), Locale.getDefault())
 
     private val callPadding = Padding(
@@ -113,7 +118,6 @@ class ConversationAdapter(
         res.getDimensionPixelSize(R.dimen.padding_call_vertical)
     )
 
-    private var lastDeliveredPosition = -1
     private val timestampUpdateTimer: Observable<Long> =
         Observable.interval(10, TimeUnit.SECONDS, DeviceUtils.uiScheduler).startWithItem(0L)
     private var lastMsgPos = -1
@@ -194,13 +198,10 @@ class ConversationAdapter(
     }
 
     fun update(editedInteraction: Interaction) {
-        if (!editedInteraction.isIncoming && editedInteraction.status == InteractionStatus.SUCCESS)
-            notifyItemChanged(lastDeliveredPosition)
-
-        mInteractions.indexOfLast { it.messageId == editedInteraction.messageId }.let {
-            if (it == -1) return
-            mInteractions[it] = editedInteraction
-            notifyItemChanged(it)
+        mInteractions.indexOfLast { it.messageId == editedInteraction.messageId }.let { position ->
+            if (position == -1) return
+            mInteractions[position] = editedInteraction
+            notifyItemChanged(position)
         }
     }
 
@@ -264,27 +265,31 @@ class ConversationAdapter(
     }
 
     override fun getItemViewType(position: Int): Int {
-        // This function will be called for each item in the list, to know which layout to use.
 
         // Composing indicator
         if (isComposing && position == mInteractions.size)
             return MessageType.COMPOSING_INDICATION.ordinal
 
-        val interaction = mInteractions[position] // Get the interaction
+        val interaction = mInteractions[position]
         return when (interaction.type) {
             Interaction.InteractionType.CONTACT -> MessageType.CONTACT_EVENT.ordinal
-            Interaction.InteractionType.CALL ->
+
+            Interaction.InteractionType.CALL -> {
                 if ((interaction as Call).isGroupCall) {
                     MessageType.ONGOING_GROUP_CALL.ordinal
                 } else if (interaction.isIncoming) {
                     MessageType.INCOMING_CALL_INFORMATION.ordinal
                 } else MessageType.OUTGOING_CALL_INFORMATION.ordinal
-            Interaction.InteractionType.TEXT ->
+            }
+
+            Interaction.InteractionType.TEXT -> {
                 if (interaction.isIncoming) {
                     MessageType.INCOMING_TEXT_MESSAGE.ordinal
                 } else {
                     MessageType.OUTGOING_TEXT_MESSAGE.ordinal
                 }
+            }
+
             Interaction.InteractionType.DATA_TRANSFER -> {
                 val file = interaction as DataTransfer
                 val out = if (interaction.isIncoming) 0 else 4
@@ -297,6 +302,7 @@ class ConversationAdapter(
                 }
                 out
             }
+
             Interaction.InteractionType.INVALID -> MessageType.INVALID.ordinal
         }
     }
@@ -634,15 +640,6 @@ class ConversationAdapter(
         holder.compositeDisposable.clear()
     }
 
-    fun setPrimaryColor(@ColorInt color: Int) {
-        convColor = color
-        convColorTint =
-            MaterialColors.compositeARGBWithAlpha(color, (MaterialColors.ALPHA_LOW * 255).toInt())
-        notifyDataSetChanged()
-    }
-
-    fun getPrimaryColor() = convColor
-
     fun setComposingStatus(composingStatus: ComposingStatus) {
         val composing = composingStatus == ComposingStatus.Active
         if (isComposing != composing) {
@@ -653,16 +650,11 @@ class ConversationAdapter(
         }
     }
 
-    private class RecyclerViewContextMenuInfo(
-        val position: Int,
-        val id: Long
-    ) : ContextMenuInfo
-
     private fun addToClipboard(text: String?) {
         if (text.isNullOrEmpty()) return
         val clipboard = conversationFragment.requireActivity()
-            .getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        clipboard.setPrimaryClip(ClipData.newPlainText("Copied Message", text))
+            .getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
+        clipboard?.setPrimaryClip(ClipData.newPlainText("Copied Message", text))
     }
 
     private fun configureImage(
@@ -853,19 +845,16 @@ class ConversationAdapter(
     /**
      * Display and manage the popup that allows user to react/reply/share/edit/delete message ...
      */
-    private fun openItemMenu(
-        conversationViewHolder: ConversationViewHolder, view: View, interaction: Interaction
-    ) {
-
-        // Inflate design from XML.
+    private fun openItemMenu(viewHolder: ConversationViewHolder, view: View, interaction: Interaction) {
         MenuConversationBinding.inflate(LayoutInflater.from(view.context)).apply {
             val history = interaction.historyObservable.blockingFirst()
             val lastElement = history.last()
             val isDeleted = lastElement is TextMessage && lastElement.body.isNullOrEmpty()
 
             // Configure what should be displayed
-            convActionOpenText.isVisible = interaction is DataTransfer && interaction.isComplete
-            convActionDownloadText.isVisible = interaction is DataTransfer && interaction.isComplete
+            convActionFileOpen.isVisible = interaction is DataTransfer && interaction.isComplete
+            convActionFileSave.isVisible = interaction is DataTransfer && interaction.isComplete
+            convActionFileDelete.isVisible = false //interaction is DataTransfer && interaction.isComplete
             convActionCopyText.isVisible = !isDeleted && interaction !is DataTransfer
             convActionEdit.isVisible = !isDeleted && !interaction.isIncoming && interaction !is DataTransfer
             convActionDelete.isVisible = !isDeleted && !interaction.isIncoming
@@ -901,17 +890,17 @@ class ConversationAdapter(
                     }
                     popupWindow.update()
                 }
-            conversationViewHolder.compositeDisposable.add(disposable)
+            viewHolder.compositeDisposable.add(disposable)
 
             popupWindow.setOnDismissListener {
-                val type = conversationViewHolder.type.transferType
+                val type = viewHolder.type.transferType
                 if (convColor != 0 && (interaction.type == Interaction.InteractionType.TEXT
                             || type == MessageType.TransferType.FILE
                             || type == MessageType.TransferType.AUDIO ) && !interaction.isIncoming
                 ) view.background?.setTint(convColor)
                 else view.background?.setTintList(null)
                 // Remove disposable.
-                conversationViewHolder.compositeDisposable.remove(disposable)
+                viewHolder.compositeDisposable.remove(disposable)
             }
 
             // Callback executed when emoji is clicked.
@@ -919,7 +908,7 @@ class ConversationAdapter(
             // If set we want to remove, else we want to append.
             val emojiCallback = View.OnClickListener { view ->
                 // Subscribe to know which are the current reactions.
-                conversationViewHolder.compositeDisposable.add(interaction.reactionObservable
+                viewHolder.compositeDisposable.add(interaction.reactionObservable
                     .observeOn(DeviceUtils.uiScheduler)
                     .firstOrError()
                     .subscribe { reactions ->
@@ -961,12 +950,12 @@ class ConversationAdapter(
             }
 
             // Open file
-            convActionOpenText.setOnClickListener {
+            convActionFileOpen.setOnClickListener {
                 presenter.openFile(interaction)
             }
 
             // Save file
-            convActionDownloadText.setOnClickListener {
+            convActionFileSave.setOnClickListener {
                 presenter.saveFile(interaction)
             }
 
@@ -993,11 +982,11 @@ class ConversationAdapter(
                             .setAction(Intent.ACTION_EDIT)
                             .putExtra(
                                 Intent.EXTRA_TEXT,
-                                conversationViewHolder.mMessageBubble!!.getText().toString()
+                                viewHolder.mMessageBubble!!.getText().toString()
                             )
                         val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
                             conversationFragment.requireActivity(),
-                            conversationViewHolder.mMessageBubble!!,
+                            viewHolder.mMessageBubble!!,
                             "messageEdit"
                         )
                         conversationFragment.startActivityForResult(
@@ -1021,6 +1010,10 @@ class ConversationAdapter(
                 convActionDelete.setOnClickListener(null)
             }
 
+//            convActionFileDelete.setOnClickListener {
+//                TODO()
+//            }
+
             // Share
             convActionShare.setOnClickListener {
                 if (interaction is DataTransfer)
@@ -1033,7 +1026,7 @@ class ConversationAdapter(
             // Message history
             if (convActionHistory.isVisible)
                 convActionHistory.setOnClickListener {
-                    conversationViewHolder.compositeDisposable.add(
+                    viewHolder.compositeDisposable.add(
                         interaction.historyObservable.firstOrError().subscribe { c ->
                             Log.w(TAG, "Message history ${c.size}")
                             c.forEach {
@@ -1053,7 +1046,6 @@ class ConversationAdapter(
         }
     }
 
-    @SuppressLint("RestrictedApi", "ClickableViewAccessibility")
     private fun configureForFileInfo(
         viewHolder: ConversationViewHolder,
         interaction: Interaction,
@@ -1072,9 +1064,7 @@ class ConversationAdapter(
                     Formatter.formatFileSize(context, file.totalSize),
                     TextUtils.getReadableFileTransferStatus(context, status)
                 )
-                else -> String.format(
-                    Formatter.formatFileSize(context, file.totalSize)
-                )
+                else -> String.format(Formatter.formatFileSize(context, file.totalSize))
             }
         })
         val isDateShown = hasPermanentDateString(file, position)
@@ -1115,12 +1105,13 @@ class ConversationAdapter(
             MessageType.TransferType.AUDIO -> viewHolder.mAudioInfoLayout
             else -> viewHolder.mFileInfoLayout
         } ?: return
+
         if (type == MessageType.TransferType.AUDIO || type == MessageType.TransferType.FILE) {
             longPressView.background?.setTintList(null)
         }
+
         longPressView.setOnLongClickListener { v: View ->
             if (type == MessageType.TransferType.AUDIO || type == MessageType.TransferType.FILE) {
-                conversationFragment.updatePosition(viewHolder.bindingAdapterPosition)
                 if (file.isIncoming) {
                     longPressView.background.setTint(context.getColor(R.color.grey_500))
                 } else {
@@ -1128,8 +1119,6 @@ class ConversationAdapter(
                 }
             }
             openItemMenu(viewHolder, v, file)
-            mCurrentLongItem =
-                RecyclerViewContextMenuInfo(viewHolder.bindingAdapterPosition, v.id.toLong())
             true
         }
 
@@ -1163,13 +1152,12 @@ class ConversationAdapter(
                     viewHolder.mAudioInfoLayout?.background?.setTint(convColor)
                 } else {
                     viewHolder.mAudioInfoLayout?.background?.setTint(
-                        viewHolder.itemView.context.getColor
-                            (R.color.conversation_secondary_background)
+                        viewHolder.itemView.context.getColor(R.color.conversation_secondary_background)
                     )
                 }
                 configureAudio(viewHolder, path)
             }
-            else -> {
+            MessageType.TransferType.FILE -> {
                 // Add margin if message need to be separated.
                 viewHolder.mLayout?.updateLayoutParams<MarginLayoutParams> {
                     topMargin = if (!isMessageSeparationNeeded) 0 else context.resources
@@ -1200,9 +1188,7 @@ class ConversationAdapter(
                         viewHolder.mFileDownloadButton?.visibility = View.GONE
                         if (status == InteractionStatus.TRANSFER_ONGOING) {
                             viewHolder.progress?.max = (file.totalSize / 1024).toInt()
-                            viewHolder.progress?.setProgress(
-                                (file.bytesProgress / 1024).toInt(), true
-                            )
+                            viewHolder.progress?.setProgress((file.bytesProgress / 1024).toInt(), true)
                             viewHolder.progress?.show()
                         } else {
                             viewHolder.progress?.hide()
@@ -1243,8 +1229,7 @@ class ConversationAdapter(
             )
         } else {
             layoutParams.setMargins(
-                res.getDimensionPixelSize(R.dimen.conditional_left_conversation_margin), 0,
-                0, 0
+                res.getDimensionPixelSize(R.dimen.conditional_left_conversation_margin), 0, 0, 0
             )
         }
         viewHolder.mTypingIndicatorLayout?.layoutParams = layoutParams
@@ -1385,16 +1370,11 @@ class ConversationAdapter(
         // Manage long press.
         messageBubble.setOnLongClickListener { v: View ->
             openItemMenu(convViewHolder, v, interaction)
-            conversationFragment.updatePosition(convViewHolder.bindingAdapterPosition)
             if (textMessage.isIncoming) {
                 messageBubble.background?.setTint(context.getColor(R.color.grey_500))
             } else {
                 messageBubble.background?.setTint(convColorTint)
             }
-            mCurrentLongItem = RecyclerViewContextMenuInfo(
-                convViewHolder.bindingAdapterPosition,
-                v.id.toLong()
-            )
             true
         }
 
@@ -1585,7 +1565,6 @@ class ConversationAdapter(
         interaction: Interaction,
         position: Int
     ) {
-        val recycle: StringBuilder = StringBuilder()
         val context = convViewHolder.itemView.context
         // Reset the scale of the icon
         convViewHolder.mIcon?.scaleX = 1f
@@ -1594,26 +1573,12 @@ class ConversationAdapter(
         if (!interaction.isSwarm) {
             convViewHolder.mCallInfoLayout?.apply {
                 background?.setTintList(null) // Remove the tint
-                // Define Context Menu, call when long pressed (see definition below)
-                setOnCreateContextMenuListener { menu: ContextMenu, v: View, menuInfo:
-                ContextMenuInfo? ->
-                    conversationFragment.onCreateContextMenu(menu, v, menuInfo)
-                    // Inflate the view and set it up
-                    val inflater = conversationFragment.requireActivity().menuInflater
-                    inflater.inflate(R.menu.conversation_item_actions_messages, menu)
-                    menu.findItem(R.id.conv_action_delete).setTitle(R.string.menu_delete)
-                    menu.removeItem(R.id.conv_action_cancel_message)
-                    menu.removeItem(R.id.conv_action_copy_text)
-                }
-                // When long clicked...
-                setOnLongClickListener { v: View ->
-                    background?.setTint(context.getColor(R.color.grey_500))
-                    // Open Context Menu
-                    conversationFragment.updatePosition(convViewHolder.adapterPosition)
-                    mCurrentLongItem =
-                        RecyclerViewContextMenuInfo(convViewHolder.adapterPosition, v.id.toLong())
-                    false
-                }
+
+                TODO("define popup menu to invoke in onLongClickListener")
+//                setOnLongClickListener {
+//                    background?.setTint(context.getColor(R.color.grey_500))
+//                    false
+//                }
             }
         }
 
@@ -1789,27 +1754,21 @@ class ConversationAdapter(
                 callInfoLayout.background.setTintList(null)
             }
             // Add the call duration if not null.
-            detailCall.text =
-                if (call.duration != 0L) {
-                    String.format(
+            detailCall.text = if (call.duration != 0L) {
+                String.format(
                         context.getString(R.string.call_duration),
-                        DateUtils.formatElapsedTime(
-                            recycle, call.duration!! / 1000
-                        )
-                    ).let { " - $it" }
-                } else null
+                        DateUtils.formatElapsedTime(null, call.duration!! / 1000)
+                ).let { " - $it" }
+            } else null
 
             // After a call, a message is displayed with call information.
             // Manage the call message layout.
             if (call.isIncoming) {
                 // Set the color of the time duration.
-                detailCall.setTextColor(
-                    context.getColor(R.color.colorOnSurface)
-                )
+                detailCall.setTextColor(context.getColor(R.color.colorOnSurface))
+
                 // Set the call message color.
-                typeCall.setTextColor(
-                    context.getColor(R.color.colorOnSurface)
-                )
+                typeCall.setTextColor(context.getColor(R.color.colorOnSurface))
 
                 if (call.isMissed) { // Call incoming missed.
                     callIcon.setImageResource(R.drawable.baseline_missed_call_16)
