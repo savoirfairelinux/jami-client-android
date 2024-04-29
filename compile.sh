@@ -1,14 +1,19 @@
 #! /bin/bash
+
 # Build Jami daemon and client APK for Android
 # Flags:
-
+  # --test: build in test mode
   # --release: build in release mode
   # --daemon: Only build the daemon for the selected archs
 
+TEST=0
 RELEASE=0
 DAEMON_ONLY=0
-for i in ${@}; do
+for i in "${@}"; do
     case "$i" in
+        test|--test)
+        TEST=1
+        ;;
         release|--release)
         RELEASE=1
         ;;
@@ -19,6 +24,7 @@ for i in ${@}; do
         ;;
     esac
 done
+
 export RELEASE
 
 if [ -z "$DAEMON_DIR" ]; then
@@ -35,15 +41,15 @@ fi
 export DAEMON_DIR
 
 JNIDIR=$DAEMON_DIR/bin/jni
-ANDROID_TOPLEVEL_DIR="`pwd`"
+ANDROID_TOPLEVEL_DIR="$(pwd)"
 ANDROID_APP_DIR="${ANDROID_TOPLEVEL_DIR}/jami-android"
 GRADLE_PROPERTIES=
-if [ ! -z "$ANDROID_ABI" ]; then
+if [ -n "$ANDROID_ABI" ]; then
     GRADLE_PROPERTIES="-Parchs=${ANDROID_ABI}"
 fi
 
 # Generate JNI interface
-cd $JNIDIR
+cd "$JNIDIR" || exit 1
 PACKAGEDIR=$ANDROID_APP_DIR/libjamiclient/src/main/java ./make-swig.sh
 
 if [[ $DAEMON_ONLY -eq 0 ]]; then
@@ -54,11 +60,13 @@ if [[ $DAEMON_ONLY -eq 0 ]]; then
         echo "Building with Firebase support"
     fi
     if [[ $RELEASE -eq 1 ]]; then
-        cd $ANDROID_APP_DIR && ./gradlew $GRADLE_PROPERTIES assembleRelease bundleRelease
+        cd "$ANDROID_APP_DIR"  && ./gradlew "$GRADLE_PROPERTIES" assembleRelease bundleRelease
+    elif [[ $TEST -eq 1 ]]; then
+        cd "$ANDROID_APP_DIR" && ./gradlew "$GRADLE_PROPERTIES" assembleDebug assembleAndroidTest
     else
-        cd $ANDROID_APP_DIR && ./gradlew $GRADLE_PROPERTIES assembleDebug
+        cd "$ANDROID_APP_DIR" && ./gradlew "$GRADLE_PROPERTIES" assembleDebug
     fi
 else
     echo "Building daemon only"
-    cd $ANDROID_APP_DIR && ./gradlew $GRADLE_PROPERTIES buildCMakeDebug
+    cd "$ANDROID_APP_DIR" && ./gradlew "$GRADLE_PROPERTIES" buildCMakeDebug
 fi

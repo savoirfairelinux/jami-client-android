@@ -15,16 +15,16 @@
  * License along with this program.  If not, see
  * <https://www.gnu.org/licenses/>.
  */
- 
- pipeline {
+
+pipeline {
     agent {
         node {
             label 'jami-buildmachine-04.mtl.sfl'
         }
     }
-    
+
     triggers {
-    gerrit customUrl: '',
+        gerrit customUrl: '',
         gerritProjects: [
             [branches: [[compareType: 'PLAIN', pattern: 'master']],
              compareType: 'PLAIN',
@@ -42,37 +42,94 @@
 
     parameters {
         string(name: 'GERRIT_REFSPEC',
-                defaultValue: 'refs/heads/master',
-                description: 'The Gerrit refspec to fetch.')
+            defaultValue: 'refs/heads/master',
+            description: 'The Gerrit refspec to fetch.')
     }
 
     stages {
-		  stage('SCM Checkout') {
-				steps {
-				    // Wipe workspace and fetch jami-daemon
-				    checkout changelog: true, poll: false,
-				        scm: [$class: 'GitSCM',
-				            branches: [[name: 'FETCH_HEAD']],
-				            doGenerateSubmoduleConfigurations: false,
-				            extensions: [
-				                [$class: 'CloneOption', noTags: true, reference: '', shallow: true],
-				                [$class: 'WipeWorkspace']],
-				            submoduleCfg: [],
-				            userRemoteConfigs: [[refspec: '${GERRIT_REFSPEC}', url: 'https://${JAMI_GERRIT_URL}/jami-client-android']]]
-				}
-		}
+        stage('SCM Checkout') {
+            steps {
+                // Wipe workspace and fetch jami-daemon
+                checkout changelog: true, poll: false,
+                    scm: [$class: 'GitSCM',
+                        branches: [[name: 'FETCH_HEAD']],
+                        doGenerateSubmoduleConfigurations: false,
+                        extensions: [
+                            [$class: 'CloneOption', noTags: true, reference: '', shallow: true],
+                            [$class: 'WipeWorkspace']],
+                        submoduleCfg: [],
+                        userRemoteConfigs: [[refspec: '${GERRIT_REFSPEC}', url: 'https://${JAMI_GERRIT_URL}/jami-client-android']]]
+            }
+        }
 
-		stage('Init repository') {
-		    steps {
-		        script {
-		            sh """
-		                git rev-parse HEAD
-		                git submodule update --init --recursive
-		            """
-		        }
-		    }
-		}
-  }
+        stage('Init repository') {
+            steps {
+                script {
+                    sh """
+                        git rev-parse HEAD
+                        git submodule update --init --recursive
+                    """
+                }
+            }
+        }
 
+        stage('Install pre-fetched tarballs') {
+            environment {
+                RING_CONTRIB_TARBALLS = '/opt/ring-contrib'
+                RING_EXTRATOOLS_TARBALLS = '/opt/ring-extras-tools'
+            }
+            steps {
+                script {
+                    def daemonDir = pwd() + '/daemon'
+                    if (fileExists(RING_EXTRATOOLS_TARBALLS)) {
+                        sh "cp ${RING_EXTRATOOLS_TARBALLS}/* ${daemonDir}/extras/tools/ || echo 'No extras-tools tarballs cache'"
+                    }
+                    if (fileExists(RING_CONTRIB_TARBALLS)) {
+                        sh "cp ${RING_CONTRIB_TARBALLS}/* ${daemonDir}/contrib/tarballs/ || echo 'No contribs tarballs cache'"
+                    }
+                }
+            }
+        }
+
+        stage('Build and test client') {
+            environment {
+                ANDROID_ABI = "x86_64"
+                BATCH_MODE = '1'
+            }
+            agent {
+                dockerfile {
+                    reuseNode true
+                    dir 'ci'
+                    filename '../docker/Dockerfile'
+                    args "-u root --privileged -v ${pwd()}/:/jami-client-android -w /jami-client-android"
+                    additionalBuildArgs '--build-arg HOST_UID=1001 --build-arg HOST_GID=1001 --build-arg ANDROID_ABI=x86_64 --build-arg BATCH_MODE=1'
+                }
+            }
+            steps {
+                script {
+                    sh 'su jenkins -c "cd /jami-client-android && ./compile.sh --test"'
+                    sh 'cd /jami-client-android/ci && ./start_emu_headless.sh'
+                    sh 'su jenkins -c "cd /jami-client-android/ci && ./jami_test.sh"'
+                }
+            }
+        }
+
+        stage('Update pre-fetched tarballs directory') {
+            environment {
+                RING_CONTRIB_TARBALLS = '/opt/ring-contrib'
+                RING_EXTRATOOLS_TARBALLS = '/opt/ring-extras-tools'
+            }
+            steps {
+                script {
+                    def daemonDir = pwd() + '/daemon'
+                    if (fileExists(RING_CONTRIB_TARBALLS)) {
+                        sh "rsync -u ${daemonDir}/contrib/tarballs/* ${RING_CONTRIB_TARBALLS}/ || echo 'contribs tarballs cache backup failed'"
+                    }
+                    if (fileExists(RING_EXTRATOOLS_TARBALLS)) {
+                        sh "rsync -u ${daemonDir}/extras/tools/*.tar.* ${RING_EXTRATOOLS_TARBALLS}/ || echo 'extras-tools tarballs cache backup failed'"
+                    }
+                }
+            }
+        }
+    }
 }
-
