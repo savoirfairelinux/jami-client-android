@@ -4,6 +4,7 @@ name='jami'
 
 [build]
 ; default behaviour
+build_context='--target build'
 command='./compile.sh'
 flavors='ci release daemon'
 
