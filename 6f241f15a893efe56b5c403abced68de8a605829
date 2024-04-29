@@ -24,6 +24,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a427724f_abec3ae2",
+        "filename": "ci/Dockerfile",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 930
+      },
+      "writtenOn": "2024-04-29T19:55:13Z",
+      "side": 1,
+      "message": "Doesn\u0027t appear to be.",
+      "parentUuid": "1fc53375_1387aeb5",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 17
+      },
+      "revId": "6f241f15a893efe56b5c403abced68de8a605829",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "460601b0_a6d0e309",
@@ -72,6 +96,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b624a26b_ee4417c1",
+        "filename": "ci/Dockerfile",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 930
+      },
+      "writtenOn": "2024-04-29T19:55:13Z",
+      "side": 1,
+      "message": "Inherited from the cqfd Dockerfile. Not sure why it was added https://review.jami.net/c/jami-client-android/+/17806",
+      "parentUuid": "f02cb9b0_230a39e8",
+      "range": {
+        "startLine": 54,
+        "startChar": 14,
+        "endLine": 54,
+        "endChar": 30
+      },
+      "revId": "6f241f15a893efe56b5c403abced68de8a605829",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "13f83ea7_20542ea9",
         "filename": "ci/Jenkinsfile",
         "patchSetId": 4
@@ -83,6 +131,30 @@
       "writtenOn": "2024-04-25T17:40:16Z",
       "side": 1,
       "message": "remove trailing",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 4
+      },
+      "revId": "6f241f15a893efe56b5c403abced68de8a605829",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "faf7b277_0a6b5652",
+        "filename": "ci/Jenkinsfile",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 930
+      },
+      "writtenOn": "2024-04-29T19:55:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13f83ea7_20542ea9",
       "range": {
         "startLine": 25,
         "startChar": 0,
@@ -139,6 +211,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b5efbd94_93a84778",
+        "filename": "ci/compile.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 930
+      },
+      "writtenOn": "2024-04-29T19:55:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "737f1eee_226916d4",
+      "range": {
+        "startLine": 28,
+        "startChar": 2,
+        "endLine": 28,
+        "endChar": 23
+      },
+      "revId": "6f241f15a893efe56b5c403abced68de8a605829",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fe928963_c352d76a",
@@ -152,6 +248,30 @@
       "writtenOn": "2024-04-25T17:40:16Z",
       "side": 1,
       "message": "remove debug \u0026 tabs/space mixed up",
+      "range": {
+        "startLine": 65,
+        "startChar": 6,
+        "endLine": 65,
+        "endChar": 15
+      },
+      "revId": "6f241f15a893efe56b5c403abced68de8a605829",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "65110598_f0c6ad83",
+        "filename": "ci/compile.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 930
+      },
+      "writtenOn": "2024-04-29T19:55:13Z",
+      "side": 1,
+      "message": "if you mean the assembleDebug before the assembleAndroidTest, it\u0027s required.",
+      "parentUuid": "fe928963_c352d76a",
       "range": {
         "startLine": 65,
         "startChar": 6,
