@@ -61,16 +61,9 @@ class SettingsFragment :
     private var currentDonationSettings: DonationSettings? = null
     private var mIsRefreshingViewFromPresenter = true
     private var mNotificationVisibility = NOTIFICATION_PRIVATE
-    private var fragment: Fragment? = null
 
     private val backPressedCallback = object : OnBackPressedCallback(false) {
-        override fun handleOnBackPressed() {
-            val binding = binding ?: return
-            binding.donateButton.isVisible = true
-            onAppBarScrollTargetViewChanged(binding.scrollview)
-            onToolbarTitleChanged(getString(R.string.menu_item_advanced_settings))
-            popBackStack()
-        }
+        override fun handleOnBackPressed() { popBackStack() }
     }
 
     override fun onAttach(context: Context) {
@@ -150,7 +143,6 @@ class SettingsFragment :
     private fun goToVideoSettings() {
         val binding = binding ?: return
         val content = VideoSettingsFragment()
-        fragment = content
         childFragmentManager
             .beginTransaction()
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
@@ -164,7 +156,6 @@ class SettingsFragment :
     private fun goToPluginsListSettings(accountId: String? = "") {
         val binding = binding ?: return
         val content = PluginsListSettingsFragment.newInstance(accountId)
-        fragment = content
         childFragmentManager
             .beginTransaction()
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
@@ -175,24 +166,25 @@ class SettingsFragment :
         backPressedCallback.isEnabled = true
     }
 
-    fun gotToPluginSettings(pluginDetails: PluginDetails) {
+    fun goToPluginSettings(pluginDetails: PluginDetails) {
         val content = PluginSettingsFragment.newInstance(pluginDetails)
-        val fragmentTransaction: FragmentTransaction = childFragmentManager
+        val fragmentTransaction = childFragmentManager
             .beginTransaction()
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
             .replace(R.id.fragment_container, content, PLUGIN_SETTINGS_TAG)
-        if (fragment !is PluginSettingsFragment) {
-            fragmentTransaction.addToBackStack(PLUGIN_SETTINGS_TAG)
+        val backStackEntryCount = childFragmentManager.backStackEntryCount
+        if(backStackEntryCount > 0) {
+            val topBackStackEntry = childFragmentManager.getBackStackEntryAt(backStackEntryCount-1)
+            if (topBackStackEntry.name != PLUGIN_SETTINGS_TAG)
+                fragmentTransaction.addToBackStack(PLUGIN_SETTINGS_TAG)
         }
         fragmentTransaction.commit()
-        fragment = content
         binding!!.fragmentContainer.isVisible = true
         backPressedCallback.isEnabled = true
     }
 
-    fun gotToPluginPathPreference(pluginDetails: PluginDetails, preferenceKey: String) {
+    fun goToPluginPathPreference(pluginDetails: PluginDetails, preferenceKey: String) {
         val content = PluginPathPreferenceFragment.newInstance(pluginDetails, preferenceKey)
-        fragment = content
         childFragmentManager
             .beginTransaction()
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
@@ -205,16 +197,18 @@ class SettingsFragment :
     fun popBackStack() {
         childFragmentManager.popBackStackImmediate()
         if (childFragmentManager.backStackEntryCount == 0) {
+            val binding = binding ?: return
+            binding.donateButton.isVisible = true
+            onAppBarScrollTargetViewChanged(binding.scrollview)
+            onToolbarTitleChanged(getString(R.string.menu_item_advanced_settings))
             backPressedCallback.isEnabled = false
-            binding!!.fragmentContainer.isVisible = false
-            fragment = null
+            binding.fragmentContainer.isVisible = false
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
-        fragment = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

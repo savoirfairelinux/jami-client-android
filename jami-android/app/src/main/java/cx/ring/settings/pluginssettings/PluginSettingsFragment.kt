@@ -46,7 +46,6 @@ class PluginSettingsFragment : PreferenceFragmentCompat() {
         ppds = PluginPreferencesDataStore(details)
         pluginDetails = details
         preferenceManager.preferenceDataStore = ppds
-        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -58,12 +57,6 @@ class PluginSettingsFragment : PreferenceFragmentCompat() {
         }
         preferenceScreen = screen
         return root
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.plugin_edition, menu)
-        val item = menu.findItem(R.id.menuitem_delete)
-        item.isVisible = false
     }
 
     /**
@@ -113,7 +106,7 @@ class PluginSettingsFragment : PreferenceFragmentCompat() {
                 .setMessage(message)
                 .setPositiveButton(android.R.string.ok) { dialog: DialogInterface?, id: Int ->
                     JamiService.resetPluginPreferencesValues(pluginDetails!!.rootPath, pluginDetails!!.accountId)
-                    requireActivity().supportFragmentManager.popBackStack()
+                    parentFragmentManager.popBackStack()
                 }
                 .setNegativeButton(android.R.string.cancel) { dialog: DialogInterface?, whichButton: Int -> }
                 .show()
@@ -125,7 +118,7 @@ class PluginSettingsFragment : PreferenceFragmentCompat() {
                 .setPositiveButton(android.R.string.ok) { dialog: DialogInterface?, whichButton: Int ->
                     pluginDetails!!.isEnabled = false
                     JamiService.uninstallPlugin(pluginDetails!!.rootPath)
-                    requireActivity().supportFragmentManager.popBackStack()
+                    parentFragmentManager.popBackStack()
                 }
                 .setNegativeButton(android.R.string.cancel, null)
                 .show()
@@ -134,9 +127,9 @@ class PluginSettingsFragment : PreferenceFragmentCompat() {
             if (accountId!!.isEmpty()) {
                 val act = requireActivity() as HomeActivity
                 val acc = act.mAccountService.currentAccount!!.accountId
-                (parentFragment as SettingsFragment).gotToPluginSettings(PluginDetails(pluginDetails!!.name, pluginDetails!!.rootPath, pluginDetails!!.isEnabled, null, acc))
+                (parentFragment as SettingsFragment).goToPluginSettings(PluginDetails(pluginDetails!!.name, pluginDetails!!.rootPath, pluginDetails!!.isEnabled, null, acc))
             } else {
-                (parentFragment as SettingsFragment).gotToPluginSettings(PluginDetails(pluginDetails!!.name, pluginDetails!!.rootPath, pluginDetails!!.isEnabled))
+                (parentFragment as SettingsFragment).goToPluginSettings(PluginDetails(pluginDetails!!.name, pluginDetails!!.rootPath, pluginDetails!!.isEnabled))
             }
         }
         return preference
@@ -178,7 +171,7 @@ class PluginSettingsFragment : PreferenceFragmentCompat() {
     private fun createPathPreference(preferenceModel: Map<String, String>): Preference {
         val preference = Preference(requireContext())
         preference.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-            (parentFragment as SettingsFragment).gotToPluginPathPreference(pluginDetails!!, preferenceModel["key"]!!)
+            (parentFragment as SettingsFragment).goToPluginPathPreference(pluginDetails!!, preferenceModel["key"]!!)
             false
         }
         setPreferenceAttributes(preference, preferenceModel)
