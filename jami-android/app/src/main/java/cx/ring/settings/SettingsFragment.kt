@@ -207,8 +207,8 @@ class SettingsFragment :
         if (childFragmentManager.backStackEntryCount == 0) {
             backPressedCallback.isEnabled = false
             binding!!.fragmentContainer.isVisible = false
-            fragment = null
         }
+        fragment = childFragmentManager.fragments.firstOrNull()
     }
 
     override fun onDestroyView() {
