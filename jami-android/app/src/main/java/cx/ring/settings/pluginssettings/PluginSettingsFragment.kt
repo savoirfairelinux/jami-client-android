@@ -113,7 +113,7 @@ class PluginSettingsFragment : PreferenceFragmentCompat() {
                 .setMessage(message)
                 .setPositiveButton(android.R.string.ok) { dialog: DialogInterface?, id: Int ->
                     JamiService.resetPluginPreferencesValues(pluginDetails!!.rootPath, pluginDetails!!.accountId)
-                    requireActivity().supportFragmentManager.popBackStack()
+                    parentFragmentManager.popBackStack()
                 }
                 .setNegativeButton(android.R.string.cancel) { dialog: DialogInterface?, whichButton: Int -> }
                 .show()
@@ -125,7 +125,7 @@ class PluginSettingsFragment : PreferenceFragmentCompat() {
                 .setPositiveButton(android.R.string.ok) { dialog: DialogInterface?, whichButton: Int ->
                     pluginDetails!!.isEnabled = false
                     JamiService.uninstallPlugin(pluginDetails!!.rootPath)
-                    requireActivity().supportFragmentManager.popBackStack()
+                    parentFragmentManager.popBackStack()
                 }
                 .setNegativeButton(android.R.string.cancel, null)
                 .show()
