@@ -82,7 +82,7 @@ class PluginsListSettingsFragment : Fragment(), PluginListItemListener {
      * @param pluginDetails instance of a plugin details that is sent to PluginSettingsFragment
      */
     override fun onPluginItemClicked(pluginDetails: PluginDetails) {
-        (parentFragment as SettingsFragment).gotToPluginSettings(pluginDetails)
+        (parentFragment as SettingsFragment).goToPluginSettings(pluginDetails)
     }
 
     /**
