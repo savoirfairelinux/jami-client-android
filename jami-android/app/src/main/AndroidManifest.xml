@@ -124,7 +124,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:name=".client.HomeActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize|orientation"
             android:exported="true"
-            android:icon="@mipmap/ic_launcher"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.Navigation"
             android:windowSoftInputMode="adjustResize">
@@ -165,7 +164,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <activity
             android:name=".client.ShareActivity"
             android:exported="true"
-            android:icon="@mipmap/ic_launcher"
             android:label="@string/title_share_with"
             android:parentActivityName=".client.HomeActivity"
             android:theme="@style/AppTheme">
@@ -187,7 +185,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:name=".account.AccountWizardActivity"
             android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
             android:exported="false"
-            android:icon="@mipmap/ic_launcher"
             android:resizeableActivity="true"
             android:theme="@style/AppThemeBase.Light"
             android:windowSoftInputMode="adjustResize" />
@@ -195,7 +192,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:name=".client.RingtoneActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:exported="false"
-            android:icon="@mipmap/ic_launcher"
             android:label="@string/account_ringtone_title"
             android:theme="@style/Theme.Material3.DayNight.Dialog.MinWidth" />
 
@@ -319,7 +315,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:allowEmbedded="true"
             android:configChanges="screenSize|screenLayout|smallestScreenSize|orientation"
             android:exported="false"
-            android:icon="@mipmap/ic_launcher"
             android:parentActivityName=".client.HomeActivity"
             android:resizeableActivity="true"
             android:theme="@style/AppTheme.Fullscreen"
@@ -335,7 +330,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <activity
             android:name=".tv.main.HomeActivity"
             android:exported="true"
-            android:icon="@mipmap/ic_launcher"
             android:theme="@style/Theme.Jami.Leanback.Main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -373,23 +367,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:name=".tv.account.TVAccountWizard"
             android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
             android:exported="false"
-            android:icon="@mipmap/ic_launcher"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".tv.search.SearchActivity"
             android:exported="false"
-            android:icon="@mipmap/ic_launcher"
             android:theme="@style/Theme.Leanback" />
         <activity
             android:name=".tv.account.TVShareActivity"
             android:exported="false"
-            android:icon="@mipmap/ic_launcher"
             android:theme="@style/Theme.Ring.Leanback" />
         <activity
             android:name=".tv.call.TVCallActivity"
             android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
             android:exported="false"
-            android:icon="@mipmap/ic_launcher"
             android:resizeableActivity="true"
             android:showOnLockScreen="true"
             android:supportsPictureInPicture="true"
@@ -403,7 +393,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <activity
             android:name=".tv.camera.CustomCameraActivity"
             android:exported="false"
-            android:icon="@mipmap/ic_launcher"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="cx.ring.action.CALL" />
@@ -414,7 +403,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <activity
             android:name=".tv.contact.TVContactActivity"
             android:exported="true"
-            android:icon="@mipmap/ic_launcher"
             android:theme="@style/Theme.Leanback.Details">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -450,7 +438,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <activity
             android:name=".client.MediaViewerActivity"
             android:exported="false"
-            android:icon="@mipmap/ic_launcher"
             android:label="@string/title_media_viewer"
             android:theme="@style/AppTheme.MediaViewer" />
 
@@ -463,7 +450,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:name=".client.ContactDetailsActivity"
             android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
             android:exported="false"
-            android:icon="@mipmap/ic_launcher"
             android:label="@string/conversation_details"
             android:resizeableActivity="true"
             android:theme="@style/AppTheme.Fullscreen"
@@ -472,7 +458,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:name=".client.ConversationSelectionActivity"
             android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
             android:exported="false"
-            android:icon="@mipmap/ic_launcher"
             android:label="Choose a contact or conversation"
             android:theme="@style/Theme.Material3.DayNight.Dialog.Alert"
             android:windowSoftInputMode="adjustResize" />
