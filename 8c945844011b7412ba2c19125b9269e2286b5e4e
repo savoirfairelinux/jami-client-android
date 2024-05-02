@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0911214e_564de1cb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 930
+      },
+      "writtenOn": "2024-05-02T16:33:32Z",
+      "side": 1,
+      "message": "Shouldn\u0027t be merged until this is resolved as the loading popup blocks the app completely https://git.jami.net/savoirfairelinux/jami-client-android/-/issues/1652",
+      "revId": "8c945844011b7412ba2c19125b9269e2286b5e4e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
