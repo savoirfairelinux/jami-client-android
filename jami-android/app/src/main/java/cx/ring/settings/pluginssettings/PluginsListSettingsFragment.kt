@@ -18,6 +18,8 @@ package cx.ring.settings.pluginssettings
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -25,11 +27,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import cx.ring.R
 import cx.ring.account.AccountEditionFragment
 import cx.ring.databinding.FragPluginsListSettingsBinding
+import cx.ring.databinding.ItemProgressDialogBinding
 import cx.ring.interfaces.AppBarStateListener
 import cx.ring.plugins.PluginUtils.getInstalledPlugins
 import cx.ring.plugins.PluginUtils.loadPlugin
@@ -47,6 +52,7 @@ class PluginsListSettingsFragment : Fragment(), PluginListItemListener {
     private var binding: FragPluginsListSettingsBinding? = null
     private var mAdapter: PluginsListAdapter? = null
     private val mCompositeDisposable = CompositeDisposable()
+    private var mProgress: AlertDialog? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragPluginsListSettingsBinding.inflate(inflater, container, false)
@@ -139,7 +145,20 @@ class PluginsListSettingsFragment : Fragment(), PluginListItemListener {
         }
     }
 
+    private fun showLoading(show: Boolean) {
+        val progress = mProgress
+        if(show && (progress == null || !progress.isShowing))
+            mProgress = MaterialAlertDialogBuilder(requireContext())
+                    .setView(ItemProgressDialogBinding.inflate(layoutInflater).root)
+                    .setBackground(ColorDrawable(Color.TRANSPARENT))
+                    .setCancelable(false)
+                    .show()
+        else if(!show && progress != null && progress.isShowing)
+            progress.dismiss()
+    }
+
     private fun installPluginFromUri(uri: Uri, force: Boolean) {
+        showLoading(true)
         mCompositeDisposable.add(
             getCacheFile(requireContext(), uri)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -154,6 +173,7 @@ class PluginsListSettingsFragment : Fragment(), PluginListItemListener {
                         }
                     }
                     mAdapter!!.updatePluginsList(getInstalledPlugins(requireContext()))
+                    showLoading(false)
                     Toast.makeText(requireContext(), "Plugin: $filename successfully installed", Toast.LENGTH_LONG)
                         .show()
                 }) { e: Throwable ->
@@ -162,6 +182,7 @@ class PluginsListSettingsFragment : Fragment(), PluginListItemListener {
                         sb.setAction(R.string.plugin_force_install) { v: View? -> installPluginFromUri(uri, true) }
                         sb.show()
                     }
+                    showLoading(false)
                 })
     }
 
