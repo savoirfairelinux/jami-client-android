@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "82229c56_657ac227",
+        "filename": "jami-android/app/src/main/java/cx/ring/settings/SettingsFragment.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1058
+      },
+      "writtenOn": "2024-05-03T16:27:18Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 169,
+        "startChar": 10,
+        "endLine": 169,
+        "endChar": 13
+      },
+      "revId": "ad333e1f606878e3ca8358928ab68386158ee2a5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9f672485_1f555dd7",
+        "filename": "jami-android/app/src/main/java/cx/ring/settings/SettingsFragment.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1058
+      },
+      "writtenOn": "2024-05-03T16:27:18Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 186,
+        "startChar": 10,
+        "endLine": 186,
+        "endChar": 13
+      },
+      "revId": "ad333e1f606878e3ca8358928ab68386158ee2a5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
