@@ -156,7 +156,6 @@ class PluginsListSettingsFragment : Fragment(), PluginListItemListener {
                     mAdapter!!.updatePluginsList(getInstalledPlugins(requireContext()))
                     Toast.makeText(requireContext(), "Plugin: $filename successfully installed", Toast.LENGTH_LONG)
                         .show()
-                    mCompositeDisposable.dispose()
                 }) { e: Throwable ->
                     if (binding != null) {
                         val sb = Snackbar.make(binding!!.listLayout, "" + e.message, Snackbar.LENGTH_LONG)
