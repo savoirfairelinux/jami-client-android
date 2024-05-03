@@ -24,6 +24,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "970c1e2b_49d25ed9",
+        "filename": "jami-android/app/src/main/java/cx/ring/settings/pluginssettings/PluginSettingsFragment.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 930
+      },
+      "writtenOn": "2024-05-03T18:24:54Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "550a55b6_fff03d00",
+      "range": {
+        "startLine": 49,
+        "startChar": 8,
+        "endLine": 49,
+        "endChar": 31
+      },
+      "revId": "3e92358727972782fd2a3323d108ae97d3b8ccd9",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "157de892_d78d119c",
@@ -37,6 +61,30 @@
       "writtenOn": "2024-05-03T16:27:18Z",
       "side": 0,
       "message": "It seems, we do not use this menu: inside R.menu.plugin_edition there is only 1 item, and here it is hidden here in this function. Check and remove this function completely, as well as R.menu.plugin_edition  menu file.",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 5
+      },
+      "revId": "3e92358727972782fd2a3323d108ae97d3b8ccd9",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c1bb9ad6_5a055c45",
+        "filename": "jami-android/app/src/main/java/cx/ring/settings/pluginssettings/PluginSettingsFragment.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 930
+      },
+      "writtenOn": "2024-05-03T18:24:54Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "157de892_d78d119c",
       "range": {
         "startLine": 63,
         "startChar": 0,
