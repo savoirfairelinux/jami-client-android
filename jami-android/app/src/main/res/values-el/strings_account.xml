@@ -74,20 +74,20 @@
   <string name="account_ringtone_summary">Επιλέξτε ένα χτυπήμα ή επιλέξτε το δικό σας</string>
   <!--Video Details-->
   <string name="account_video_label">Βίντεο</string>
-  <string name="account_video_enable">Ενεργοποίση βίνταο</string>
+  <string name="account_video_enable">Ενεργοποίηση βίντεο</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Για προχωρημένους</string>
   <string name="account_read_receipts_label">Ενεργοποιήστε τις αποδείξεις ανάγνωσης</string>
   <string name="account_read_receipts_summary">Στείλτε και λάβετε αποδείξεις που δείχνουν ότι έχει εμφανιστεί ένα μήνυμα.</string>
   <string name="account_call_settings_title">Ρυθμίσεις κλήσης</string>
   <string name="account_dht_public_in_calls_label">Να επιτρέπονται κλήσεις από άγνωστες επαφές</string>
-  <string name="account_registration_exp_label">Η εγγραφή λήγει</string>
-  <string name="account_local_interface_label">Τοπική Επαγγελματική Επαγγελματική Σύνδεση</string>
-  <string name="account_local_port_label">Τοπικό λιμάνι</string>
-  <string name="account_stun_enable_label">Χρησιμοποιήστε το Stun</string>
-  <string name="account_stun_server_label">Στάουν Σέρβερ</string>
-  <string name="account_accept_files">Αποδέχεται αυτόματα εισερχόμενα αρχεία</string>
-  <string name="account_conversation_settings_title">Συγκρίσεις συνομιλίας</string>
+  <string name="account_registration_exp_label">Λήξη εγγραφής</string>
+  <string name="account_local_interface_label">Τοπική διεπαφή</string>
+  <string name="account_local_port_label">Τοπική θύρα</string>
+  <string name="account_stun_enable_label">Χρήση STUN</string>
+  <string name="account_stun_server_label">Διακομιστής STUN</string>
+  <string name="account_accept_files">Αυτόματη αποδοχή εισερχομένων αρχείων</string>
+  <string name="account_conversation_settings_title">Ρυθμίσεις συνομιλίας</string>
   <string name="account_accept_files_max_size">Μέγιστο μέγεθος αρχείου για να γίνει αυτόματα αποδεκτή</string>
   <string name="account_accept_files_never">Ποτέ μην αποδέχεσαι αυτόματα</string>
   <string name="account_accept_files_always">Πάντα να δέχεσαι αυτόματα</string>
@@ -101,7 +101,7 @@
   <string name="account_published_address_label">Δημοσιευμένη διεύθυνση</string>
   <string name="disabled">Αναπηρία</string>
   <string name="enabled">Ενεργοποιημένο</string>
-  <string name="account_proxy_label">Δοκιμαστικό DHT</string>
+  <string name="account_proxy_label">Διαμεσολαβητής DHT</string>
   <string name="account_proxy_enable_label">Χρησιμοποιήστε DHT proxy</string>
   <string name="account_proxy_server_label">Δικτυακή διεύθυνση DHT</string>
   <string name="account_proxy_server_list_label">Δικτυακή διεύθυνση λίστας DHT proxy</string>

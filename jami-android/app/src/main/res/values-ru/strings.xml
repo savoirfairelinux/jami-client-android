@@ -235,7 +235,7 @@
   <string name="hist_contact_invited">Контакт приглашён</string>
   <string name="hist_contact_added">Контакт добавлен</string>
   <string name="hist_contact_left">Контакт вышел</string>
-  <string name="hist_contact_banned">Контакт запрещён</string>
+  <string name="hist_contact_banned">Контакт заблокирован</string>
   <string name="hist_invitation_received">Получено приглашение</string>
   <!--Account Summary-->
   <string name="profile">Профиль</string>
