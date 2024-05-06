@@ -4,10 +4,10 @@
     android:height="108dp"
     android:viewportWidth="116"
     android:viewportHeight="116">
-  <group android:scaleX="0.5242991"
-      android:scaleY="0.5242991"
-      android:translateX="27.309086"
-      android:translateY="27.590654">
+  <group android:scaleX="0.46261683"
+      android:scaleY="0.46261683"
+      android:translateX="30.919783"
+      android:translateY="31.168224">
       <path android:pathData="M54.9,55.8l7.1,-0.2l-3.6,6.6z">
           <aapt:attr name="android:fillColor">
               <gradient android:endX="56.3581" android:endY="54.437"
