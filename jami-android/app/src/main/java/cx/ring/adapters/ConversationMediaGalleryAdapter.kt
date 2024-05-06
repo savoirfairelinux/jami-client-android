@@ -216,6 +216,12 @@ class ConversationMediaGalleryAdapter(
         player.seekTo(1)
     }
 
+    private fun configureFile(viewHolder: ConversationMediaViewHolder, file: DataTransfer) {
+        val fileBinding = viewHolder.file ?: return
+        fileBinding.name.text = file.body
+        fileBinding.size.text = Formatter.formatFileSize(fileBinding.root.context, file.totalSize)
+    }
+
     private fun configureForFileInfo(viewHolder: ConversationMediaViewHolder, file: DataTransfer, position: Int) {
         Log.w(TAG, "configureForFileInfo $position")
         val path = deviceRuntimeService.getConversationPath(file)
@@ -224,11 +230,10 @@ class ConversationMediaGalleryAdapter(
                 file.isPicture -> configureImage(viewHolder.image!!, path, file.body!!)
                 file.isAudio -> configureAudio(viewHolder, path)
                 file.isVideo -> configureVideo(viewHolder, path)
+                else -> configureFile(viewHolder, file)
             }
         } else {
-            val fileBinding = viewHolder.file ?: return
-            fileBinding.name.text = file.body
-            fileBinding.size.text = Formatter.formatFileSize(fileBinding.root.context, file.totalSize)
+            configureFile(viewHolder, file)
             Log.w(TAG, "configureForFileInfo not complete")
         }
     }
