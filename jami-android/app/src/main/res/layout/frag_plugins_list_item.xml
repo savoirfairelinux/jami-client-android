@@ -55,13 +55,14 @@ along with this program; if not, write to the Free Software
         android:textSize="16sp"
         tools:text="@tools:sample/full_names" />
 
-    <com.google.android.material.checkbox.MaterialCheckBox
+    <com.google.android.material.materialswitch.MaterialSwitch
         android:id="@+id/plugin_item_enable_checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/colorPrimary"
+        android:checked="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:checked="true" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </LinearLayout>
