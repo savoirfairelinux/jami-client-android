@@ -17,10 +17,10 @@
 package cx.ring.viewholders
 
 import android.view.View
-import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.materialswitch.MaterialSwitch
 import cx.ring.R
 import cx.ring.settings.pluginssettings.PluginDetails
 import cx.ring.settings.pluginssettings.PluginsListAdapter.PluginListItemListener
@@ -28,7 +28,7 @@ import cx.ring.settings.pluginssettings.PluginsListAdapter.PluginListItemListene
 class PluginSettingViewHolder(itemView: View, listener: PluginListItemListener) : RecyclerView.ViewHolder(itemView) {
     private val pluginIcon: ImageView = itemView.findViewById(R.id.plugin_item_icon)
     private val pluginNameTextView: TextView = itemView.findViewById(R.id.plugin_item_name)
-    private val pluginItemEnableCheckbox: CheckBox = itemView.findViewById(R.id.plugin_item_enable_checkbox)
+    private val pluginItemEnableCheckbox: MaterialSwitch = itemView.findViewById(R.id.plugin_item_enable_checkbox)
     private var details: PluginDetails? = null
 
     fun setDetails(details: PluginDetails) {
