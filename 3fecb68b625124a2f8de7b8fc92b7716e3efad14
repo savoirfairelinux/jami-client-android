@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "669a0fdd_f3cdbe12",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 930
+      },
+      "writtenOn": "2024-05-09T18:18:26Z",
+      "side": 1,
+      "message": "Tests fail on older API levels (checked on api 24).\nCould be pertinent since we may want to run tests on more than just the most recent API level.",
+      "revId": "3fecb68b625124a2f8de7b8fc92b7716e3efad14",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
