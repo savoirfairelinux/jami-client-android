@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a8a911bd_4247c81e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 930
+      },
+      "writtenOn": "2024-05-10T21:05:42Z",
+      "side": 1,
+      "message": "Possible improvement to the plugin activate / deactivate ui. Could just keep the fixed checkbox or try something else.",
+      "revId": "0768b9a9202b4414c5571442d8f1bbc41c9b0e55",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
