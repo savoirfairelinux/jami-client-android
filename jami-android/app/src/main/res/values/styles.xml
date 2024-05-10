@@ -80,7 +80,6 @@
         <item name="colorPrimary">@color/white</item>
         <item name="colorSecondary">@color/color_primary_light</item>
         <item name="colorError">@color/colorError</item>
-        <item name="colorOnPrimary">@color/white</item>
         <item name="colorOnSecondary">@color/white</item>
         <item name="colorPrimaryContainer">@color/colorPrimary</item>
         <item name="colorOnPrimaryContainer">@color/background</item>
