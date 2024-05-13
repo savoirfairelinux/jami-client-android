@@ -258,7 +258,7 @@
   <string name="account_link_device_title">Asociază alt aparat</string>
   <string name="account_link_password">Acest cont este cifrat cu parolă. Introdu parola pentru a genera codul PIN.</string>
   <string name="account_link_generate_button">Generează</string>
-  <string name="account_link_time_valid">Codul PIN va fi valabil: %1$s.</string>
+  <string name="account_link_time_valid">Codul PIN expiră: %1$s.</string>
   <string name="account_link_device_info">Alege „Asociază alt aparat” din cealaltă aplicație Jami pentru a afișa codul QR sau PIN-ul.</string>
   <string name="account_generate_export_device">În celălalt aparat</string>
   <string name="account_generate_export_info">Instalează și pornește Jami, alege „Importă din alt aparat” și scanează codul QR.</string>

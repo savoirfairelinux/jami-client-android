@@ -258,7 +258,7 @@ Potrai modificare il tuo account successivamente</string>
   <string name="account_link_device_title">Associa un altro dispositivo</string>
   <string name="account_link_password">Questo account è protetto da password; immettere la password per generare il codice PIN.</string>
   <string name="account_link_generate_button">Genera</string>
-  <string name="account_link_time_valid">Il codice PIN sarà valido: %1$s.</string>
+  <string name="account_link_time_valid">Il codice PIN scadrà: %1$s.</string>
   <string name="account_link_device_info">Scegliere \"Associa un altro dispositivo\" dall\'altra applicazione Jami per mostrare il codice QR o il PIN.</string>
   <string name="account_generate_export_device">Nell\'altro dispositivo</string>
   <string name="account_generate_export_info">Installa e avvia Jami, seleziona \"Importa da un altro dispositivo\" e scansiona il codice QR.</string>
