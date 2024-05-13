@@ -1329,10 +1329,6 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         )
     }
 
-    override fun toggleCallMediaHandler(id: String, callId: String, toggle: Boolean) {
-        JamiService.toggleCallMediaHandler(id, callId, toggle)
-    }
-
     fun getCallMediaHandlerDetails(id: String): Map<String, String> {
         return JamiService.getCallMediaHandlerDetails(id).toNative()
     }

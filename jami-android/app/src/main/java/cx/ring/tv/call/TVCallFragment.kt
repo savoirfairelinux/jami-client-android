@@ -507,10 +507,6 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
         }
     }
 
-    override fun toggleCallMediaHandler(id: String, callId: String, toggle: Boolean) {
-        JamiService.toggleCallMediaHandler(id, callId, toggle)
-    }
-
     override fun getMediaProjection(resultCode: Int, data: Any): Any {
         TODO("Not yet implemented")
     }
