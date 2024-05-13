@@ -49,6 +49,5 @@ interface CallView {
     fun displayPluginsButton(): Boolean
     fun updateConfInfo(info: List<ParticipantInfo>)
     fun updateParticipantRecording(contacts: List<ContactViewModel>)
-    fun toggleCallMediaHandler(id: String, callId: String, toggle: Boolean)
     fun getMediaProjection(resultCode: Int, data: Any): Any
 }
