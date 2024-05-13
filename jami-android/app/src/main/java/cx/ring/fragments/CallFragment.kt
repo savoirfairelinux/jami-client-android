@@ -875,7 +875,9 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             }
         binding.root.post { setBottomSheet() }
 
-        if(callMediaHandlers == null) callMediaHandlers = PluginUtils.getInstalledPlugins(binding.pluginslistContainer.context)
+        if(callMediaHandlers == null)
+            callMediaHandlers = PluginUtils.getInstalledPlugins(binding.pluginslistContainer.context)
+                    .filter { !it.handlerId.isNullOrEmpty() }
         pluginsAdapter = PluginsAdapter(
             mList = callMediaHandlers!!,
             listener = object : PluginsAdapter.PluginListItemListener {
