@@ -20,6 +20,7 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.disposables.Disposable
+import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.daemon.JamiService
 import net.jami.services.ConversationFacade
 import net.jami.model.*
@@ -535,7 +536,9 @@ class CallPresenter @Inject constructor(
     fun toggleCallMediaHandler(id: String, toggle: Boolean) {
         val conference = mConference ?: return
         if (conference.isOnGoing && conference.hasVideo()) {
-            view?.toggleCallMediaHandler(id, conference.id, toggle)
+            mCompositeDisposable.add(Observable.fromCallable {
+                JamiService.toggleCallMediaHandler(id, conference.id, toggle)
+            }.subscribeOn(Schedulers.io()).subscribe())
         }
     }
 
