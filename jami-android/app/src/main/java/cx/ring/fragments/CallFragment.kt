@@ -875,9 +875,23 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             }
         binding.root.post { setBottomSheet() }
 
-        if(callMediaHandlers == null)
+        if(callMediaHandlers == null) {
             callMediaHandlers = PluginUtils.getInstalledPlugins(binding.pluginslistContainer.context)
                     .filter { !it.handlerId.isNullOrEmpty() }
+            // TODO is this placed well here?
+            val autoEnablePlugins = callMediaHandlers?.filter { it.isAutoEnabled() }
+            if(!autoEnablePlugins.isNullOrEmpty()) {
+                autoEnablePlugins.forEach {
+                    it.isRunning = true
+                    if (!isChoosePluginMode) {
+                        presenter.startPlugin(it.handlerId!!)
+                        isChoosePluginMode = true
+                    } else {
+                        presenter.toggleCallMediaHandler(it.handlerId!!, true)
+                    }
+                }
+            }
+        }
         pluginsAdapter = PluginsAdapter(
             mList = callMediaHandlers!!,
             listener = object : PluginsAdapter.PluginListItemListener {

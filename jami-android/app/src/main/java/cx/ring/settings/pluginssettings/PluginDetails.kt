@@ -56,6 +56,11 @@ class PluginDetails(val name: String, val rootPath: String, var isEnabled: Boole
         return JamiService.setPluginPreference(rootPath, accountId, key, value)
     }
 
+    fun isAutoEnabled(): Boolean {
+        // TODO
+        return true
+    }
+
     companion object {
         val TAG = PluginDetails::class.simpleName!!
     }
