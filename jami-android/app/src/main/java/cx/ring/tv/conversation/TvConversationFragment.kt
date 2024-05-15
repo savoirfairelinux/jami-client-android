@@ -716,14 +716,6 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
         }
     }
 
-    override fun refuseFile(accountId: String, conversationUri: net.jami.model.Uri, transfer: DataTransfer) {
-        requireActivity().startService(Intent(DRingService.ACTION_FILE_CANCEL)
-            .setClass(requireContext(), DRingService::class.java)
-            .setData(ConversationPath.toUri(accountId, conversationUri))
-            .putExtra(DRingService.KEY_MESSAGE_ID, transfer.messageId)
-            .putExtra(DRingService.KEY_TRANSFER_ID, transfer.fileId))
-    }
-
     private fun openVideoRecorder() {
         val intent = Intent(activity, CustomCameraActivity::class.java)
             .setAction(MediaStore.ACTION_VIDEO_CAPTURE)
@@ -848,7 +840,6 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
 
     companion object {
         private val TAG = TvConversationFragment::class.java.simpleName
-        private const val ARG_MODEL = "model"
         private const val KEY_AUDIOFILE = "audiofile"
         private const val REQUEST_CODE_PHOTO = 101
         private const val REQUEST_CODE_SAVE_FILE = 103

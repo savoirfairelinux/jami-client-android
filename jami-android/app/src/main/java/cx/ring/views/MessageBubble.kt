@@ -112,10 +112,14 @@ class MessageBubble(context: Context, attrs: AttributeSet?) : ViewGroup(context,
     /**
      * Updates the view to display a standard message.
      */
-    fun updateStandard(text: Spanned, time: String, messageIsEdited: Boolean) {
+    fun updateStandard(message: Spanned, time: String, messageIsEdited: Boolean) {
         messageEdited.isVisible = messageIsEdited
-        messageText.setTextSize(TypedValue.COMPLEX_UNIT_PX, defaultTextSize)
-        messageText.text = text
+        messageText.apply {
+            setTextSize(TypedValue.COMPLEX_UNIT_PX, defaultTextSize)
+            setTypeface(null, Typeface.NORMAL)
+            setTextIsSelectable(true)
+            text = message
+        }
         messageTime.text = time
         updateTextColor(defaultTextColor)
     }
@@ -129,6 +133,7 @@ class MessageBubble(context: Context, attrs: AttributeSet?) : ViewGroup(context,
         messageText.setTextSize(TypedValue.COMPLEX_UNIT_PX, defaultTextSize)
         messageText.setTypeface(null, Typeface.ITALIC)
         messageText.text = String.format(context.getString(R.string.conversation_message_deleted), username)
+        messageText.setTextIsSelectable(false)
 
         background.setTint(context.getColor(R.color.conversation_secondary_background))
         updateTextColor(context.getColor(R.color.msg_display_name))
@@ -140,7 +145,9 @@ class MessageBubble(context: Context, attrs: AttributeSet?) : ViewGroup(context,
     fun updateEmoji(text: String, time: String, messageIsEdited: Boolean) {
         messageEdited.isVisible = messageIsEdited
         messageText.setTextSize(TypedValue.COMPLEX_UNIT_PX, emojiOnlyTextSize)
+        messageText.setTypeface(null, Typeface.NORMAL)
         messageText.text = text
+        messageText.setTextIsSelectable(true)
         messageTime.text = time
         // Emoji is not in the bubble, so should be contrasted with conversation background.
         updateTextColor(contrastedDefaultTextColor)

@@ -72,17 +72,14 @@ class ConversationPresenter @Inject constructor(
                         }
                     else
                         Observable.just(conversation)
-                }.switchMapSingle { conversation ->
-                    conversationFacade.loadConversationHistory(conversation)
-                        .map { Pair(account, it) }
+                }.switchMapSingle { conv ->
+                    conversationFacade.loadConversationHistory(conv).map { Pair(account, it) }
                 }
             }
             .observeOn(uiScheduler)
-            .subscribe(
-                { (account, conversation) ->
-                    setConversation(account, conversation)
-                }
-            ) { error: Throwable ->
+            .subscribe({ (account, conversation) ->
+                setConversation(account, conversation)
+            }) { error: Throwable ->
                 view?.goToHome()
                 Log.e(TAG, "Error loading conversation", error)
             }
@@ -304,12 +301,13 @@ class ConversationPresenter @Inject constructor(
         view?.goToGroupCall(mConversation!!, mConversation!!.uri, media)
     }
 
-    fun refuseFile(transfer: DataTransfer) {
-        view?.refuseFile(mConversation!!.accountId, mConversationUri!!, transfer)
-    }
-
     fun deleteConversationItem(element: Interaction) {
         conversationFacade.deleteConversationItem(mConversation!!, element)
+    }
+
+    fun deleteConversationFile(element: Interaction) {
+        if (element is DataTransfer)
+            conversationFacade.deleteConversationFile(mConversation!!, element)
     }
 
     fun startReplyTo(interaction: Interaction) {

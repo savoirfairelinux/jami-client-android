@@ -158,42 +158,52 @@ class ConversationFacade(
         return Completable.complete()
     }
 
+    fun deleteConversationFile(conversation: Conversation, transfer: DataTransfer) {
+        if (transfer.status === InteractionStatus.TRANSFER_ONGOING) {
+            mAccountService.cancelDataTransfer(
+                conversation.accountId, conversation.uri.rawRingId, transfer.messageId, transfer.fileId!!
+            )
+        } else {
+            val file = mDeviceRuntimeService.getConversationPath(conversation.accountId, conversation.uri.rawRingId, transfer.storagePath)
+            if (conversation.isSwarm) {
+                mDisposableBag.add(Completable.fromAction {
+                    file.delete()
+                    transfer.bytesProgress = 0
+                }.subscribeOn(Schedulers.io())
+                .subscribe({
+                    transfer.status = InteractionStatus.FILE_AVAILABLE
+                    conversation.updateInteraction(transfer)
+                }) { e: Throwable -> Log.e(TAG, "Can't delete file", e) })
+            }
+//            else {
+//                // Remove item from conversation list
+//                mDisposableBag.add(Completable.mergeArrayDelayError(
+//                        mHistoryService.deleteInteraction(transfer.id, transfer.account!!),
+//                        Completable.fromAction { file.delete() }
+//                                .subscribeOn(Schedulers.io()))
+//                        .subscribe({ conversation.removeInteraction(transfer) }) { e: Throwable ->
+//                            Log.e(TAG, "Can't delete file transfer", e)
+//                        })
+//            }
+        }
+    }
+
     fun deleteConversationItem(conversation: Conversation, element: Interaction) {
         if (element.type === Interaction.InteractionType.DATA_TRANSFER) {
-            val transfer = element as DataTransfer
-            if (transfer.status === InteractionStatus.TRANSFER_ONGOING) {
-                mAccountService.cancelDataTransfer(conversation.accountId, conversation.uri.rawRingId, transfer.messageId, transfer.fileId!!)
-            } else {
-                val file = mDeviceRuntimeService.getConversationPath(conversation.accountId, conversation.uri.rawRingId, transfer.storagePath)
-                if (conversation.isSwarm) {
-                    mDisposableBag.add(Completable.fromAction {
-                        file.delete()
-                        transfer.bytesProgress = 0
-                    }
-                        .subscribeOn(Schedulers.io())
-                        .subscribe({
-                            transfer.status = InteractionStatus.FILE_AVAILABLE
-                            conversation.updateInteraction(transfer)
-                        })
-                        { e: Throwable -> Log.e(TAG, "Can't delete file transfer", e) })
-                } else {
-                    mDisposableBag.add(Completable.mergeArrayDelayError(
-                        mHistoryService.deleteInteraction(element.id, element.account!!),
-                        Completable.fromAction { file.delete() }
-                            .subscribeOn(Schedulers.io()))
-                        .subscribe({ conversation.removeInteraction(transfer) })
-                        { e: Throwable -> Log.e(TAG, "Can't delete file transfer", e) })
-                }
-            }
+            deleteConversationFile(conversation, element as DataTransfer)
         } else {
             // handling is the same for calls and texts
             if (conversation.isSwarm) {
+                if ((element as? DataTransfer)?.status === InteractionStatus.TRANSFER_ONGOING) {
+                    mAccountService.cancelDataTransfer(conversation.accountId, conversation.uri.rawRingId, element.messageId, element.fileId!!)
+                }
                 mAccountService.deleteConversationMessage(conversation.accountId, conversation.uri, element.messageId!!)
             } else {
                 mDisposableBag.add(mHistoryService.deleteInteraction(element.id, element.account!!)
                     .subscribeOn(Schedulers.io())
-                    .subscribe({ conversation.removeInteraction(element) })
-                    { e: Throwable -> Log.e(TAG, "Can't delete message", e) })
+                    .subscribe({ conversation.removeInteraction(element) }) { e: Throwable ->
+                        Log.e(TAG, "Can't delete message", e)
+                    })
             }
         }
     }
@@ -616,8 +626,7 @@ class ConversationFacade(
         if (incomingCall) {
             mNotificationService.handleCallNotification(conference!!, false)
             mHardwareService.setPreviewSettings()
-        } else if (newState === CallStatus.CURRENT
-            || newState === CallStatus.RINGING && !call.isIncoming) {
+        } else if (newState === CallStatus.CURRENT || newState === CallStatus.RINGING && !call.isIncoming) {
             mNotificationService.handleCallNotification(conference!!, false)
         } else if (newState.isOver) {
             if (conference != null)
@@ -711,8 +720,9 @@ class ConversationFacade(
     }
 
     init {
-        mDisposableBag.add(mCallService.callsUpdates
-            .subscribe { call: Call -> onCallStateChange(call) })
+        mDisposableBag.add(mCallService.callsUpdates.subscribe { call: Call ->
+            onCallStateChange(call)
+        })
 
         /*mDisposableBag.add(mCallService.getConnectionUpdates()
                     .subscribe(mNotificationService::onConnectionUpdate));*/
@@ -728,27 +738,28 @@ class ConversationFacade(
                     mNotificationService.showIncomingTrustRequestNotification(account)
                 })
 
-        mDisposableBag.add(mAccountService
-            .incomingMessages
+        mDisposableBag.add(mAccountService.incomingMessages
             .concatMapSingle { msg: TextMessage -> getAccountSubject(msg.account!!)
                     .map { a: Account -> a.addTextMessage(msg)
                         msg }
             }
             .subscribe({ txt: TextMessage -> parseNewMessage(txt) })
                 { e: Throwable -> Log.e(TAG, "Error adding text message", e) })
+
         mDisposableBag.add(mAccountService.incomingSwarmMessages
                 .subscribe({ txt: TextMessage -> parseNewMessage(txt) },
                     { e: Throwable -> Log.e(TAG, "Error adding text message", e) }))
+
         mDisposableBag.add(mAccountService.locationUpdates
             .concatMapSingle { location: AccountService.Location ->
-                getAccountSubject(location.account)
-                    .map { a: Account ->
-                        val expiration = a.onLocationUpdate(location)
-                        mDisposableBag.add(Completable.timer(expiration, TimeUnit.MILLISECONDS)
-                                .subscribe { a.maintainLocation() })
-                        location
-                    } }
-            .subscribe())
+                getAccountSubject(location.account).map { a: Account ->
+                    val expiration = a.onLocationUpdate(location)
+                    mDisposableBag.add(Completable.timer(expiration, TimeUnit.MILLISECONDS)
+                            .subscribe { a.maintainLocation() })
+                    location
+                }
+            }.subscribe())
+
         mDisposableBag.add(mAccountService.observableAccountList
             .switchMap { accounts -> Observable.merge(accounts.map { a -> a.locationUpdates.map { Pair(a, it) } }) }
             .distinctUntilChanged()
@@ -757,9 +768,10 @@ class ConversationFacade(
                 mNotificationService.showLocationNotification(t.first, t.second.contact, t.second.conversation)
                 mDisposableBag.add(t.second.location.doOnComplete {
                     mNotificationService.cancelLocationNotification(t.first, t.second.contact)
-                }.subscribe()) })
-        mDisposableBag.add(mAccountService
-            .messageStateChanges
+                }.subscribe())
+            })
+
+        mDisposableBag.add(mAccountService.messageStateChanges
             .concatMapMaybe { e: Interaction ->
                 getAccountSubject(e.account!!)
                     .flatMapMaybe { a: Account -> Maybe.fromCallable {
@@ -772,11 +784,14 @@ class ConversationFacade(
                     .doOnSuccess { conversation -> conversation.updateInteraction(e) }
             }
             .subscribe({}) { e: Throwable -> Log.e(TAG, "Error updating text message", e) })
+
         mDisposableBag.add(mAccountService.dataTransfers
                 .subscribe({ transfer: DataTransfer -> handleDataTransferEvent(transfer) },
                      { e: Throwable -> Log.e(TAG, "Error adding data transfer", e) }))
+
         mDisposableBag.add(mAccountService.incomingGroupCall
             .subscribe({ c -> mNotificationService.showGroupCallNotification(c) },
                 { e: Throwable -> Log.e(TAG, "Error showing group call notification", e) }))
     }
+
 }

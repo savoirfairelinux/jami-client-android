@@ -707,16 +707,6 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         )
     }
 
-    override fun refuseFile(accountId: String, conversationUri: net.jami.model.Uri, transfer: DataTransfer) {
-        if (transfer.messageId == null && transfer.fileId == null)
-            return
-        requireActivity().startService(Intent(DRingService.ACTION_FILE_CANCEL, ConversationPath.toUri(accountId, conversationUri),
-            requireContext(), DRingService::class.java)
-            .putExtra(DRingService.KEY_MESSAGE_ID, transfer.messageId)
-            .putExtra(DRingService.KEY_TRANSFER_ID, transfer.fileId)
-        )
-    }
-
     override fun shareFile(path: File, displayName: String) {
         val c = context ?: return
         AndroidFileUtils.shareFile(c, path, displayName)
