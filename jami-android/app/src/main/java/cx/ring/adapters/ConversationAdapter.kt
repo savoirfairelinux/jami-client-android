@@ -292,15 +292,27 @@ class ConversationAdapter(
 
             Interaction.InteractionType.DATA_TRANSFER -> {
                 val file = interaction as DataTransfer
-                val out = if (interaction.isIncoming) 0 else 4
                 if (file.isComplete) {
-                    when {
-                        file.isPicture -> return MessageType.INCOMING_IMAGE.ordinal + out
-                        file.isAudio -> return MessageType.INCOMING_AUDIO.ordinal + out
-                        file.isVideo -> return MessageType.INCOMING_VIDEO.ordinal + out
+                    if (interaction.isIncoming) {
+                        when {
+                            file.isPicture -> MessageType.INCOMING_IMAGE.ordinal
+                            file.isAudio -> MessageType.INCOMING_AUDIO.ordinal
+                            file.isVideo -> MessageType.INCOMING_VIDEO.ordinal
+                            else -> MessageType.INCOMING_FILE.ordinal
+                        }
+                    } else {
+                        when {
+                            file.isPicture -> MessageType.OUTGOING_IMAGE.ordinal
+                            file.isAudio -> MessageType.OUTGOING_AUDIO.ordinal
+                            file.isVideo -> MessageType.OUTGOING_VIDEO.ordinal
+                            else -> MessageType.OUTGOING_FILE.ordinal
+                        }
                     }
+                } else {
+                    if (interaction.isIncoming) {
+                        MessageType.INCOMING_FILE.ordinal
+                    } else MessageType.OUTGOING_FILE.ordinal
                 }
-                out
             }
 
             Interaction.InteractionType.INVALID -> MessageType.INVALID.ordinal
@@ -484,7 +496,6 @@ class ConversationAdapter(
         conversationViewHolder: ConversationViewHolder,
         interaction: Interaction
     ) {
-
         val context = conversationViewHolder.itemView.context
         val conversation = interaction.conversation
         if (conversation == null || conversation !is Conversation) {
@@ -757,9 +768,7 @@ class ConversationAdapter(
         val player = MediaPlayer.create(context, contentUri) ?: return
 
         viewHolder.player = player
-        val playBtn =
-            ContextCompat.getDrawable(cardLayout.context, R.drawable.baseline_play_arrow_24)!!
-                .mutate()
+        val playBtn = ContextCompat.getDrawable(cardLayout.context, R.drawable.baseline_play_arrow_24)!!.mutate()
         DrawableCompat.setTint(playBtn, Color.WHITE)
         cardLayout.foreground = playBtn
         player.setOnCompletionListener { mp: MediaPlayer ->
@@ -781,12 +790,14 @@ class ConversationAdapter(
             }
             video.layoutParams = p
         }
+
         if (video.isAvailable) {
             if (viewHolder.surface == null) {
                 viewHolder.surface = Surface(video.surfaceTexture)
             }
             player.setSurface(viewHolder.surface)
         }
+
         video.surfaceTextureListener = object : SurfaceTextureListener {
             override fun onSurfaceTextureAvailable(
                 surfaceTexture: SurfaceTexture,
@@ -808,8 +819,7 @@ class ConversationAdapter(
                 surface: SurfaceTexture,
                 width: Int,
                 height: Int
-            ) {
-            }
+            ) { }
 
             override fun onSurfaceTextureDestroyed(surface: SurfaceTexture): Boolean {
                 try {
@@ -826,6 +836,7 @@ class ConversationAdapter(
 
             override fun onSurfaceTextureUpdated(surface: SurfaceTexture) {}
         }
+
         video.setOnClickListener {
             try {
                 if (player.isPlaying) {
@@ -850,14 +861,15 @@ class ConversationAdapter(
             val history = interaction.historyObservable.blockingFirst()
             val lastElement = history.last()
             val isDeleted = lastElement is TextMessage && lastElement.body.isNullOrEmpty()
+            val isFileMenu = interaction is DataTransfer && interaction.isComplete
 
             // Configure what should be displayed
-            convActionFileOpen.isVisible = interaction is DataTransfer && interaction.isComplete
-            convActionFileSave.isVisible = interaction is DataTransfer && interaction.isComplete
-            convActionFileDelete.isVisible = false //interaction is DataTransfer && interaction.isComplete
+            convActionFileOpen.isVisible = isFileMenu
+            convActionFileSave.isVisible = isFileMenu
+            convActionFileDelete.isVisible = isFileMenu
             convActionCopyText.isVisible = !isDeleted && interaction !is DataTransfer
-            convActionEdit.isVisible = !isDeleted && !interaction.isIncoming && interaction !is DataTransfer
-            convActionDelete.isVisible = !isDeleted && !interaction.isIncoming
+            convActionEdit.isVisible = !isDeleted && !interaction.isIncoming && interaction is TextMessage
+            convActionDelete.isVisible = !isDeleted && !interaction.isIncoming && interaction is TextMessage
             convActionHistory.isVisible = !isDeleted && history.size > 1
             root.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
 
@@ -897,9 +909,10 @@ class ConversationAdapter(
                 if (convColor != 0 && (interaction.type == Interaction.InteractionType.TEXT
                             || type == MessageType.TransferType.FILE
                             || type == MessageType.TransferType.AUDIO ) && !interaction.isIncoming
-                ) view.background?.setTint(convColor)
-                else view.background?.setTintList(null)
-                // Remove disposable.
+                ) {
+                    view.background?.setTint(convColor)
+                } else view.background?.setTintList(null)
+
                 viewHolder.compositeDisposable.remove(disposable)
             }
 
@@ -965,6 +978,10 @@ class ConversationAdapter(
                 popupWindow.dismiss()
             }
 
+            convActionFileDelete.setOnClickListener {
+                presenter.deleteConversationFile(interaction)
+            }
+
             // Manage Edit and Delete actions
             if (!interaction.isIncoming) {
                 // Edit
@@ -1009,10 +1026,6 @@ class ConversationAdapter(
                 convActionEdit.setOnClickListener(null)
                 convActionDelete.setOnClickListener(null)
             }
-
-//            convActionFileDelete.setOnClickListener {
-//                TODO()
-//            }
 
             // Share
             convActionShare.setOnClickListener {
@@ -1067,6 +1080,7 @@ class ConversationAdapter(
                 else -> String.format(Formatter.formatFileSize(context, file.totalSize))
             }
         })
+
         val isDateShown = hasPermanentDateString(file, position)
         if (isDateShown) {
             viewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
@@ -1077,6 +1091,7 @@ class ConversationAdapter(
         } else {
             viewHolder.mMsgDetailTxtPerm?.visibility = View.GONE
         }
+
         val contact = interaction.contact ?: return
         if (interaction.isIncoming && presenter.isGroup()) {
             viewHolder.mAvatar?.let { avatar ->
@@ -1132,6 +1147,7 @@ class ConversationAdapter(
                 }
                 configureImage(viewHolder, path, file.body)
             }
+
             MessageType.TransferType.VIDEO -> {
                 // Add margin if message need to be separated.
                 viewHolder.mAnswerLayout?.updateLayoutParams<MarginLayoutParams> {
@@ -1140,6 +1156,7 @@ class ConversationAdapter(
                 }
                 configureVideo(viewHolder, path)
             }
+
             MessageType.TransferType.AUDIO -> {
                 // Add margin if message need to be separated.
                 viewHolder.mAudioLayout?.updateLayoutParams<MarginLayoutParams> {
@@ -1152,17 +1169,19 @@ class ConversationAdapter(
                     viewHolder.mAudioInfoLayout?.background?.setTint(convColor)
                 } else {
                     viewHolder.mAudioInfoLayout?.background?.setTint(
-                        viewHolder.itemView.context.getColor(R.color.conversation_secondary_background)
+                        context.getColor(R.color.conversation_secondary_background)
                     )
                 }
                 configureAudio(viewHolder, path)
             }
+
             MessageType.TransferType.FILE -> {
                 // Add margin if message need to be separated.
                 viewHolder.mLayout?.updateLayoutParams<MarginLayoutParams> {
                     topMargin = if (!isMessageSeparationNeeded) 0 else context.resources
                         .getDimensionPixelSize(R.dimen.conversation_message_separation)
                 }
+
                 val status = file.status
                 viewHolder.mIcon?.setPadding(res.getDimensionPixelSize(R.dimen.padding_large))
                 viewHolder.mIcon?.setClipToOutline(true)
@@ -1184,6 +1203,7 @@ class ConversationAdapter(
                             it.setOnClickListener { presenter.acceptFile(file) }
                         }
                     }
+
                     else -> {
                         viewHolder.mFileDownloadButton?.visibility = View.GONE
                         if (status == InteractionStatus.TRANSFER_ONGOING) {
@@ -1224,8 +1244,7 @@ class ConversationAdapter(
         )
         if (presenter.isGroup()) {
             layoutParams.setMargins(
-                res.getDimensionPixelSize(R.dimen.margin_with_avatar), 0,
-                0, 0
+                res.getDimensionPixelSize(R.dimen.margin_with_avatar), 0, 0, 0
             )
         } else {
             layoutParams.setMargins(
@@ -1344,8 +1363,7 @@ class ConversationAdapter(
         // Manage the update of the timestamp
         if (isDateShown) {
             convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
-                timePermanent?.text = TextUtils
-                    .timestampToDate(context, formatter, interaction.timestamp)
+                timePermanent?.text = TextUtils.timestampToDate(context, formatter, interaction.timestamp)
             })
             convViewHolder.mMsgDetailTxtPerm?.visibility = View.VISIBLE
         } else convViewHolder.mMsgDetailTxtPerm?.visibility = View.GONE

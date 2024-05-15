@@ -435,9 +435,9 @@ class Conversation : ConversationHistory {
         }
     }
 
-
     val currentCall: Conference?
         get() = if (currentCalls.isEmpty()) null else currentCalls[0]
+
     private val callHistory: Collection<Call>
         get() {
             val result: MutableList<Call> = ArrayList()
@@ -448,6 +448,7 @@ class Conversation : ConversationHistory {
             }
             return result
         }
+
     val unreadTextMessages: TreeMap<Long, TextMessage>
         get() {
             val texts = TreeMap<Long, TextMessage>()
@@ -638,7 +639,7 @@ class Conversation : ConversationHistory {
     }
 
     fun updateFileTransfer(transfer: DataTransfer, eventCode: Interaction.InteractionStatus) {
-        val dataTransfer = (if (isSwarm) transfer else findConversationElement(transfer.id)) as DataTransfer?
+        val dataTransfer = (if (isSwarm) transfer else findConversationElement(transfer.id)) as? DataTransfer
         if (dataTransfer != null) {
             dataTransfer.status = eventCode
             updatedElementSubject.onNext(Pair(dataTransfer, ElementStatus.UPDATE))

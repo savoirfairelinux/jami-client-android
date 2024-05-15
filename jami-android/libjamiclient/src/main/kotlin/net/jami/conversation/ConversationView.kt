@@ -42,13 +42,11 @@ interface ConversationView {
     fun switchToIncomingTrustRequestView(name: String)
     fun switchToConversationView()
     fun switchToBannedView()
-
     fun switchToSyncingView()
     fun switchToEndedView()
     fun openFilePicker()
     fun acceptFile(accountId: String, conversationUri: Uri, transfer: DataTransfer)
     fun goToGroupCall(conversation: Conversation, contactUri: net.jami.model.Uri, hasVideo: Boolean)
-    fun refuseFile(accountId: String, conversationUri: Uri, transfer: DataTransfer)
     fun shareFile(path: File, displayName: String)
     fun openFile(path: File, displayName: String)
     fun addElement(element: Interaction)

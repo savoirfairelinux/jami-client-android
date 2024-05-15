@@ -248,10 +248,10 @@ open class Interaction {
             get() = isError || this == TRANSFER_FINISHED
 
         companion object {
-            fun fromString(str: String): InteractionStatus = values().firstOrNull { it.name == str } ?: INVALID
+            fun fromString(str: String): InteractionStatus = entries.firstOrNull { it.name == str } ?: INVALID
 
             fun fromIntTextMessage(n: Int): InteractionStatus = try {
-                values()[n]
+                entries[n]
             } catch (e: ArrayIndexOutOfBoundsException) {
                 INVALID
             }
