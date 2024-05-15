@@ -54,6 +54,8 @@ class Conversation : ConversationHistory {
         private set
     var lastNotified: String? = null
         private set
+    var lastSent: String? = null
+        private set
     private val mMode: Subject<Mode>
 
     private val profileSubject: Subject<Single<Profile>> = BehaviorSubject.createDefault(Profile.EMPTY_PROFILE_SINGLE)
@@ -381,6 +383,21 @@ class Conversation : ConversationHistory {
     }
 
     @Synchronized
+    fun setLastMessageSent(messageId: String) {
+        val currentLastSentMessage: Interaction? = lastSent?.let { getMessage(it) }
+        val newPotentialLastSentMessage: Interaction? = getMessage(messageId)
+        val isAfter =
+                if (currentLastSentMessage != null && newPotentialLastSentMessage != null) {
+                    isAfter(currentLastSentMessage, newPotentialLastSentMessage)
+                } else false
+        if (newPotentialLastSentMessage?.type != Interaction.InteractionType.INVALID &&
+                newPotentialLastSentMessage?.type != null &&
+                (isAfter || (currentLastSentMessage == null))) {
+            lastSent = messageId
+        }
+    }
+
+    @Synchronized
     fun updateSwarmInteraction(
         messageId: String,
         contactUri: Uri,
@@ -394,6 +411,9 @@ class Conversation : ConversationHistory {
             }
         } else if (newStatus != Interaction.MessageStates.SENDING) {
             interaction.status = Interaction.InteractionStatus.SENDING
+        }
+        if(newStatus == Interaction.MessageStates.SUCCESS) {
+            setLastMessageSent(messageId)
         }
 
         interaction.statusMap = interaction.statusMap.plus(Pair(contactUri.host, newStatus))
@@ -584,11 +604,17 @@ class Conversation : ConversationHistory {
         val id = interaction.messageId!!
         val previous = mMessages.put(id, interaction)
 
-        // Update lastDisplayedMessages
-        interaction.statusMap.entries
-            .filter { it.value == Interaction.MessageStates.DISPLAYED }
-            .filter { !findContact(Uri.fromString(it.key))!!.isUser }
-            .forEach { setLastMessageDisplayed(it.key, id) }
+        // Update lastDisplayedMessages and lastSent
+        interaction.statusMap.entries.forEach {
+            if (!findContact(Uri.fromString(it.key))!!.isUser) {
+                if (it.value == Interaction.MessageStates.DISPLAYED) {
+                    setLastMessageDisplayed(it.key, id)
+                }
+                if (it.value == Interaction.MessageStates.SUCCESS) {
+                    setLastMessageSent(id)
+                }
+            }
+        }
 
         if (lastRead != null && lastRead == id) interaction.read()
         if (lastNotified != null && lastNotified == id) interaction.isNotified = true

@@ -48,6 +48,10 @@ class MessageStatusView @JvmOverloads constructor(
     private val iconTint: ColorStateList =
         ColorStateList.valueOf(ContextCompat.getColor(context, R.color.grey_500))
 
+    enum class IconState { NONE, SENDING, SUCCESS, DISPLAYED }
+    var iconState = IconState.NONE
+        private set
+
     // Add or remove views to match the given count.
     // "Sending" or "Sent" need 1 view, "Displayed" needs as many views as there are contacts.
     private fun resize(count: Int) {
@@ -111,12 +115,19 @@ class MessageStatusView @JvmOverloads constructor(
         layout(childCount)
     }
 
+    fun updateNone() {
+        visibility = View.GONE
+        iconState = IconState.NONE
+    }
+
     fun updateSending() {
         resize(1)
         (getChildAt(0) as ImageView).apply {
             setImageResource(R.drawable.sent)
             ImageViewCompat.setImageTintList(this, iconTint)
+            iconState = IconState.SENDING
         }
+        visibility = View.VISIBLE
     }
 
     fun updateSuccess() {
@@ -124,7 +135,9 @@ class MessageStatusView @JvmOverloads constructor(
         (getChildAt(0) as ImageView).apply {
             setImageResource(R.drawable.receive)
             ImageViewCompat.setImageTintList(this, null)
+            iconState = IconState.SUCCESS
         }
+        visibility = View.VISIBLE
     }
 
     fun updateDisplayed(seenBy: Collection<ContactViewModel>) {
@@ -139,8 +152,10 @@ class MessageStatusView @JvmOverloads constructor(
                         .withPresence(false)
                         .build(context)
                 )
+                iconState = IconState.DISPLAYED
             }
         }
+        visibility = View.VISIBLE
     }
 
     companion object {
