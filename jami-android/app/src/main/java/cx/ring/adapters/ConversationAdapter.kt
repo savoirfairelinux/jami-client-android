@@ -68,6 +68,7 @@ import cx.ring.utils.ActionHelper.setPadding
 import cx.ring.utils.ContentUri.getUriForFile
 import cx.ring.viewholders.ConversationViewHolder
 import cx.ring.views.AvatarDrawable
+import cx.ring.views.MessageStatusView
 import io.noties.markwon.AbstractMarkwonPlugin
 import io.noties.markwon.Markwon
 import io.noties.markwon.MarkwonVisitor
@@ -97,6 +98,7 @@ class ConversationAdapter(
     private val res = conversationFragment.resources
     private val mPictureMaxSize =
         TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 200f, res.displayMetrics).toInt()
+    private var successView: ConversationViewHolder? = null
 
     @ColorInt
     var convColor = 0
@@ -343,17 +345,14 @@ class ConversationAdapter(
 
         // Case 1: Message is sending
         if(!isDisplayed && !isReceived){
-            statusIcon.let {
-                it.visibility = View.VISIBLE
-                it.updateSending()
-            }
+            statusIcon.updateSending()
         }
         // Case 2: Message is received by at least one contact
-        else if(!isDisplayed){
-            statusIcon.let {
-                it.visibility = View.VISIBLE
-                it.updateSuccess()
-            }
+        else if(!isDisplayed) {
+            if(interaction.messageId == conversation.lastSent)
+                updateSuccess(conversationViewHolder)
+            else
+                statusIcon.updateNone()
         }
         // Case 3: Message is displayed
         else if (contacts.isNotEmpty()) {
@@ -366,12 +365,11 @@ class ConversationAdapter(
                     )
                     .observeOn(DeviceUtils.uiScheduler)
                     .subscribe { seenBy ->
-                        statusIcon.visibility = View.VISIBLE
                         statusIcon.updateDisplayed(seenBy)
                     })
         }
         // Case 4: Message is displayed but not the last displayed message
-        else statusIcon.visibility = View.GONE
+        else statusIcon.updateNone()
     }
 
     /**
@@ -1912,6 +1910,15 @@ class ConversationAdapter(
         // Compare the year, month, and day of year to check if they are different days
         return calendar1.get(Calendar.YEAR) != calendar2.get(Calendar.YEAR)
                 || calendar1.get(Calendar.DAY_OF_YEAR) != calendar2.get(Calendar.DAY_OF_YEAR)
+    }
+
+    private fun updateSuccess(view: ConversationViewHolder) {
+        if(view.mStatusIcon == null)
+            return
+        if(successView?.mStatusIcon?.iconState == MessageStatusView.IconState.SUCCESS)
+            successView?.mStatusIcon?.updateNone()
+        view.mStatusIcon.updateSuccess()
+        successView = view
     }
 
     private enum class SequenceType { FIRST, MIDDLE, LAST, SINGLE }
