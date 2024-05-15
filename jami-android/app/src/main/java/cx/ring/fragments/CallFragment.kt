@@ -875,9 +875,17 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             }
         binding.root.post { setBottomSheet() }
 
-        if(callMediaHandlers == null)
+        if(callMediaHandlers == null) {
             callMediaHandlers = PluginUtils.getInstalledPlugins(binding.pluginslistContainer.context)
                     .filter { !it.handlerId.isNullOrEmpty() }
+            val autoEnablePlugins = callMediaHandlers?.filter { it.isAutoEnabled() }
+            if(!autoEnablePlugins.isNullOrEmpty()) {
+                autoEnablePlugins.forEach {
+                    it.isRunning = true
+                    enablePlugin(it)
+                }
+            }
+        }
         pluginsAdapter = PluginsAdapter(
             mList = callMediaHandlers!!,
             listener = object : PluginsAdapter.PluginListItemListener {
@@ -885,20 +893,16 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
 
                 override fun onPluginEnabled(pluginDetails: PluginDetails) {
                     pluginDetails.isRunning = !pluginDetails.isRunning
-                    if (!isChoosePluginMode) {
-                        presenter.startPlugin(pluginDetails.handlerId!!)
-                        isChoosePluginMode = true
+                    if(pluginDetails.isRunning) {
+                        enablePlugin(pluginDetails)
                     } else {
-                        if (pluginDetails.isRunning) {
-                            presenter.toggleCallMediaHandler(pluginDetails.handlerId!!, true)
-                        } else {
-                            presenter.toggleCallMediaHandler(pluginDetails.handlerId!!, false)
-                            for (handler in callMediaHandlers!!)
-                                if (handler.isRunning) break
-                                else {
-                                    presenter.stopPlugin()
-                                    isChoosePluginMode = false
-                                }
+                        presenter.toggleCallMediaHandler(pluginDetails.handlerId!!, false)
+                        for (handler in callMediaHandlers!!) {
+                            if (handler.isRunning) break
+                            else {
+                                presenter.stopPlugin()
+                                isChoosePluginMode = false
+                            }
                         }
                     }
                 }
@@ -906,6 +910,15 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             accountId = if (participantInfo.isNotEmpty()) participantInfo[0].call?.account else null
         )
         binding.pluginslistContainer.adapter = pluginsAdapter
+    }
+
+    private fun enablePlugin(pluginDetails: PluginDetails) {
+        if (!isChoosePluginMode) {
+            presenter.startPlugin(pluginDetails.handlerId!!)
+            isChoosePluginMode = true
+        } else {
+            presenter.toggleCallMediaHandler(pluginDetails.handlerId!!, true)
+        }
     }
 
     private fun generateParticipantOverlay(participantsInfo: List<ParticipantInfo>) {
