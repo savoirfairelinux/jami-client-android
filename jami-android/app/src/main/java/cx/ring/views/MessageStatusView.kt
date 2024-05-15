@@ -47,6 +47,7 @@ class MessageStatusView @JvmOverloads constructor(
     private val iconSize = resources.getDimensionPixelSize(R.dimen.conversation_status_icon_size)
     private val iconTint: ColorStateList =
         ColorStateList.valueOf(ContextCompat.getColor(context, R.color.grey_500))
+    private var iconState: // todo add icon states
 
     // Add or remove views to match the given count.
     // "Sending" or "Sent" need 1 view, "Displayed" needs as many views as there are contacts.

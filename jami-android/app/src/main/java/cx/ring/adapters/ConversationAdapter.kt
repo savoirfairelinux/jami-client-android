@@ -97,6 +97,7 @@ class ConversationAdapter(
     private val res = conversationFragment.resources
     private val mPictureMaxSize =
         TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 200f, res.displayMetrics).toInt()
+    private var lastSentView: ConversationViewHolder? = null
 
     @ColorInt
     var convColor = 0
@@ -349,11 +350,11 @@ class ConversationAdapter(
             }
         }
         // Case 2: Message is received by at least one contact
-        else if(!isDisplayed){
-            statusIcon.let {
-                it.visibility = View.VISIBLE
-                it.updateSuccess()
-            }
+        else if(!isDisplayed) {
+            if(interaction.messageId == conversation.lastSent)
+                updateLastSent(conversationViewHolder)
+            else
+                statusIcon.visibility = View.GONE
         }
         // Case 3: Message is displayed
         else if (contacts.isNotEmpty()) {
@@ -1912,6 +1913,15 @@ class ConversationAdapter(
         // Compare the year, month, and day of year to check if they are different days
         return calendar1.get(Calendar.YEAR) != calendar2.get(Calendar.YEAR)
                 || calendar1.get(Calendar.DAY_OF_YEAR) != calendar2.get(Calendar.DAY_OF_YEAR)
+    }
+
+    private fun updateLastSent(view: ConversationViewHolder) {
+        if(view.mStatusIcon == null)
+            return
+        if(lastSentView?.mStatusIcon?.)
+            lastSentView?.mStatusIcon?.visibility = View.GONE
+        view.mStatusIcon.updateSuccess()
+        lastSentView = view
     }
 
     private enum class SequenceType { FIRST, MIDDLE, LAST, SINGLE }
