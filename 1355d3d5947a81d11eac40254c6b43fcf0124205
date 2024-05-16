@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f5849e40_bb63efc4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 930
+      },
+      "writtenOn": "2024-05-16T17:04:52Z",
+      "side": 1,
+      "message": "This may be usable to fix auto-enabling once we have some working plugins but for now a simpler fix has been made for the only relevant case of plugins working in the daemon https://review.jami.net/c/jami-daemon/+/28204",
+      "revId": "1355d3d5947a81d11eac40254c6b43fcf0124205",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
