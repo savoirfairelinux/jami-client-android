@@ -99,31 +99,6 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
         binding?.placeholder?.visibility = View.GONE
     }
 
-    private fun displayConversationDialog(conversationItemViewModel: Conversation) {
-        if (conversationItemViewModel.isSwarm) {
-            MaterialAlertDialogBuilder(requireContext())
-                .setItems(R.array.swarm_actions) { dialog, which ->
-                    when (which) {
-                        0 -> presenter.copyNumber(conversationItemViewModel)
-                        1 -> presenter.removeConversation(conversationItemViewModel)
-                        2 -> presenter.banContact(conversationItemViewModel)
-                    }
-                }
-                .show()
-        } else {
-            MaterialAlertDialogBuilder(requireContext())
-                .setItems(R.array.conversation_actions) { dialog, which ->
-                    when (which) {
-                        ActionHelper.ACTION_COPY -> presenter.copyNumber(conversationItemViewModel)
-                        ActionHelper.ACTION_CLEAR -> presenter.clearConversation(conversationItemViewModel)
-                        ActionHelper.ACTION_DELETE -> presenter.removeConversation(conversationItemViewModel)
-                        ActionHelper.ACTION_BLOCK -> presenter.banContact(conversationItemViewModel)
-                    }
-                }
-                .show()
-        }
-    }
-
     override fun displayClearDialog(accountId: String, conversationUri: Uri) {
         ActionHelper.launchClearAction(requireContext(), accountId, conversationUri, this@SmartListFragment)
     }
@@ -184,7 +159,34 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
     }
 
     override fun onItemLongClick(item: Conversation) {
-        displayConversationDialog(item)
+        if (item.isSwarm) {
+            if (item.contacts.size == 2) {
+                MaterialAlertDialogBuilder(requireContext()).setItems(R.array.swarm_actions) { dialog, which ->
+                    when (which) {
+                        0 -> presenter.copyNumber(item)
+                        1 -> presenter.removeConversation(item)
+                        2 -> presenter.banContact(item)
+                    }
+                }.show()
+            } else {
+                // swarm group
+                MaterialAlertDialogBuilder(requireContext()).setItems(R.array.swarm_group_actions) { dialog, which ->
+                    when (which) {
+                        1 -> presenter.removeConversation(item)
+                        2 -> presenter.banContact(item)
+                    }
+                }.show()
+            }
+        } else {
+            MaterialAlertDialogBuilder(requireContext()).setItems(R.array.conversation_actions) { dialog, which ->
+                when (which) {
+                    ActionHelper.ACTION_COPY -> presenter.copyNumber(item)
+                    ActionHelper.ACTION_CLEAR -> presenter.clearConversation(item)
+                    ActionHelper.ACTION_DELETE -> presenter.removeConversation(item)
+                    ActionHelper.ACTION_BLOCK -> presenter.banContact(item)
+                }
+            }.show()
+        }
     }
 
     companion object {
