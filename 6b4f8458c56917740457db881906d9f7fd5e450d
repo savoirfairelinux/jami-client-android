@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "95306c4b_6b57fab8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 930
+      },
+      "writtenOn": "2024-05-16T15:36:09Z",
+      "side": 1,
+      "message": "Fix no longer works. There seems to be larger problem with the tracking of last seen messages at the daemon level as it affects all client when \"special\" message like conversation joins are involved.",
+      "revId": "6b4f8458c56917740457db881906d9f7fd5e450d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
