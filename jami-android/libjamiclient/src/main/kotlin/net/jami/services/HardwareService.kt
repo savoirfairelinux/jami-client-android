@@ -106,8 +106,8 @@ abstract class HardwareService(
     abstract val isPreviewFromFrontCamera: Boolean
     abstract fun shouldPlaySpeaker(): Boolean
     abstract fun unregisterCameraDetectionCallback()
-    abstract fun startMediaHandler(mediaHandlerId: String?)
-    abstract fun stopMediaHandler()
+    abstract fun setMediaHandler(mediaHandlerId: String?)
+    abstract fun clearMediaHandler()
     abstract fun setPendingScreenShareProjection(screenCaptureSession: Any?)
     fun connectivityChanged(isConnected: Boolean) {
         Log.i(TAG, "connectivityChange() $isConnected")

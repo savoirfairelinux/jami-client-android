@@ -74,7 +74,6 @@ class HardwareServiceImpl(
     private val shouldCapture = HashSet<String>()
     private var mShouldSpeakerphone = false
     private val mHasSpeakerPhone: Boolean by lazy { hasSpeakerphone() }
-    private var mIsChoosePlugin = false
     private var mMediaHandlerId: String? = null
     private var mPluginCallId: String? = null
 
@@ -451,8 +450,7 @@ class HardwareServiceImpl(
         cameraService.setParameters(camId, format, width, height, rate, windowManager.defaultDisplay.rotation)
     }
 
-    override fun startMediaHandler(mediaHandlerId: String?) {
-        mIsChoosePlugin = true
+    override fun setMediaHandler(mediaHandlerId: String?) {
         mMediaHandlerId = mediaHandlerId
     }
 
@@ -460,14 +458,13 @@ class HardwareServiceImpl(
         if (mMediaHandlerId != null) JamiService.toggleCallMediaHandler(mMediaHandlerId, callId, true)
     }
 
-    override fun stopMediaHandler() {
-        mIsChoosePlugin = false
+    override fun clearMediaHandler() {
         mMediaHandlerId = null
     }
 
     override fun startCapture(camId: String?) {
         val cam = camId ?: cameraService.switchInput(true) ?: return
-        Log.i(TAG, "startCapture > camId: $camId, cam: $cam, mIsChoosePlugin: $mIsChoosePlugin")
+        Log.i(TAG, "startCapture > camId: $camId, cam: $cam, mMediaHandler: $mMediaHandlerId")
         shouldCapture.add(cam)
         val videoParams = cameraService.getParams(cam) ?: return
         if (videoParams.isCapturing) return
@@ -481,7 +478,7 @@ class HardwareServiceImpl(
         }
         val conf = mCameraPreviewCall.get()
         val useHardwareCodec =
-            mPreferenceService.isHardwareAccelerationEnabled && (conf == null || !conf.isConference) && !mIsChoosePlugin
+            mPreferenceService.isHardwareAccelerationEnabled && (conf == null || !conf.isConference) && mMediaHandlerId == null
         if (conf != null && useHardwareCodec) {
             val call = conf.call
             if (call != null) {
@@ -512,10 +509,9 @@ class HardwareServiceImpl(
                             if (mMediaHandlerId != null) {
                                 JamiService.toggleCallMediaHandler(mMediaHandlerId, currentCall,false)
                             }
-                            mIsChoosePlugin = false
                             mMediaHandlerId = null
                             mPluginCallId = null
-                        } else if (mIsChoosePlugin && mMediaHandlerId != null) {
+                        } else if (mMediaHandlerId != null) {
                             mPluginCallId = currentCall
                             toggleMediaHandler(currentCall)
                         }
