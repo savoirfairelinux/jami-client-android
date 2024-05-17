@@ -16,6 +16,24 @@
       "message": "Seems like there is a lot of cleanup / formatting type changes included here. The commit message should at least mention that if even be split into a separate patch.",
       "revId": "7cfc08416167a1dc454321695923259b32456857",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c013673_a8d38c25",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-05-17T14:04:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d127c28b_69e9dabc",
+      "revId": "7cfc08416167a1dc454321695923259b32456857",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
