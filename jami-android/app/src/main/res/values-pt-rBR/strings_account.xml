@@ -48,6 +48,9 @@
   <string name="account_password_set">Configurar senha</string>
   <string name="account_password_summary">Gerenciar a senha da sua conta.</string>
   <string name="account_password_change_wait_message">Alterando senha da conta</string>
+  <string name="account_biometric_disable">Desativar autenticação biométrica</string>
+  <string name="account_biometric_set">Ativar autenticação biométrica</string>
+  <string name="account_biometric_summary">Gerir a autenticação biométrica da sua conta.</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Geral</string>
   <string name="account_basic_category">Configurações básicas</string>
@@ -79,6 +82,7 @@
   <string name="account_video_enable">Habilitar Vídeo</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Avançado</string>
+  <string name="account_chat_settings_title">Configurações de conversação</string>
   <string name="account_read_receipts_label">Ativar verificação de leitura</string>
   <string name="account_read_receipts_summary">Enviar e receber verificações indicando que a mensagem foi mostrada.</string>
   <string name="account_call_settings_title">Configurações de chamada</string>
@@ -246,8 +250,37 @@
   <string name="account_device_this_indicator">Este dispositivo</string>
   <string name="account_disabled_indicator">desabilitado</string>
   <!--Link a new device-->
+  <string name="account_link_prompt_pin_manually">Introduzir o PIN manualmente</string>
+  <string name="qr_invalid">Não é um código QR de autenticação Jami</string>
+  <string name="content_description_checkbox">O seu código QR é válido</string>
   <string name="error_format_not_supported">Este formato não é suportado.</string>
+  <string name="account_link_info">Na nova aplicação Jami, digitalize o código QR ou introduza manualmente o PIN.</string>
   <string name="account_link_device_title">Associar um novo dispositivo</string>
+  <string name="account_link_password">Esta conta é encriptada por palavra-passe, introduza a palavra-passe para gerar o código PIN.</string>
+  <string name="account_link_generate_button">Gerar</string>
+  <string name="account_link_time_valid">O código PIN não é válido: %1$s.</string>
+  <string name="account_link_device_info">Escolha \"Associar um novo dispositivo\" na outra aplicação Jami para mostrar o código QR ou o PIN</string>
+  <string name="account_generate_export_device">No outro dispositivo</string>
+  <string name="account_generate_export_info">Instale e inicie o Jami, selecione \"Importar de outro dispositivo\" e leia o código QR.</string>
+  <string name="content_description_qr_generated">O seu código QR</string>
+  <string name="account_generate_export_invalid">O PIN já não é válido.\n Introduza a palavra-passe e crie outra para vincular o novo dispositivo.</string>
+  <string name="account_generate_export_invalid_two">O PIN já não é válido.\nGerar outro para vincular o novo dispositivo.</string>
+  <string name="help_pin_info">Preencher se a conta estiver encriptada por palavra-passe</string>
+  <string name="connect_device_scanqr">Digitalizar QR</string>
+  <string name="connect_device_enterPIN">Ou introduzir PIN</string>
   <string name="account_link_device_button">Conectar</string>
   <!--Biometry-->
+  <string name="account_biometry_auth_title">Desbloquear a conta Jami</string>
+  <string name="account_biometry_auth_message">Utilizar a biometria para desbloquear a sua conta</string>
+  <string name="account_biometry_enroll_title">Utilizar a autenticação biométrica?</string>
+  <string name="account_biometry_enroll_message">O seu dispositivo suporta a autenticação biométrica segura.
+A autenticação biométrica ou do dispositivo adiciona uma forma conveniente de desbloquear localmente o acesso à sua conta Jami. Continuará a poder utilizar a sua palavra-passe.</string>
+  <string name="account_biometry_enroll_accept">Utilizar biometria</string>
+  <string name="no_thanks">Não obrigado</string>
+  <string name="account_biometry_enroll_auth_title">Adicionar autenticação à sua conta Jami</string>
+  <string name="account_biometry_enroll_auth_message">Adicione uma autenticação biométrica ou de dispositivo segura como alternativa à sua palavra-passe</string>
+  <string name="account_auth_error">Erro de autenticação: %1$s</string>
+  <string name="account_auth_success">A autenticação foi bem sucedida</string>
+  <string name="account_auth_key_error">Falha ao desencriptar a chave da conta</string>
+  <string name="account_auth_password">Utilizar a palavra-passe da conta</string>
 </resources>

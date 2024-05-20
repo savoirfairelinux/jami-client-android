@@ -125,7 +125,7 @@
   <string name="write_a_message">Escrever uma mensagem</string>
   <string name="scan_qr">Digitalizar Código QR</string>
   <string name="qr_code">Código QR</string>
-  <string name="new_swarm">Iniciar Enxame</string>
+  <string name="new_swarm">Iniciar enxame</string>
   <string name="ab_action_flipcamera">Virar câmara</string>
   <string name="ab_action_hidepreview">Oculta visualização</string>
   <string name="remote_recording">%sgravando...</string>
@@ -207,8 +207,8 @@
   <string name="conversation_preference_color">Cor da conversação</string>
   <string name="conversation_preference_emoji">emoji da conversação</string>
   <string name="conversation_type_contact">Contato Jami</string>
-  <string name="conversation_type_private">Swarm privado</string>
-  <string name="conversation_type_group">Grupo de Enxames</string>
+  <string name="conversation_type_private">Enxame privado</string>
+  <string name="conversation_type_group">Grupo de enxames</string>
   <string name="conversation_contact_invited">%1$s foi convidado</string>
   <string name="conversation_contact_added">%1$s juntado</string>
   <string name="conversation_contact_left">%1$s esquerdo</string>
@@ -218,14 +218,14 @@
   <string name="yesterday">Ontem</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Adicionar %1$s?</string>
-  <string name="prompt_new_password">Nova palavra-chave</string>
-  <string name="prompt_new_password_optional">Nova palavra-chave (opcional)</string>
-  <string name="prompt_new_password_repeat">Repita a nova palavra-chave</string>
+  <string name="prompt_new_password">Nova palavra-passe</string>
+  <string name="prompt_new_password_optional">Nova palavra-passe (opcional)</string>
+  <string name="prompt_new_password_repeat">Repita a nova palavra-passe</string>
   <string name="account_create_title">Criar uma conta Jami</string>
   <string name="prompt_new_username">Introduza o seu nome de utilizador</string>
   <string name="prompt_hint_username">Nome de utilizador</string>
-  <string name="help_password_choose">Escolha uma palavra-chave forte que se lembre para proteger a sua conta Jami.</string>
-  <string name="help_password_enter">Digite a senha principal da sua conta Jami.</string>
+  <string name="help_password_choose">Escolha uma palavra-passe forte que se lembre para proteger a sua conta Jami.</string>
+  <string name="help_password_enter">Introduza a palavra-passe da sua conta Jami principal.</string>
   <string name="help_server_enter">Digite URL do servidor de gerenciamento.</string>
   <string name="help_pin_enter">Introduza o seu PIN de uma outra conta Jami já configurada. Utilize a opção \"Exportar conta no Jami\" para obter um PIN.</string>
   <string name="wizard_next">Próximo</string>
@@ -354,12 +354,12 @@
   <string name="wizard_username_info">Escolha nome de utilizador para sua conta</string>
   <string name="wizard_username_button">Escolha o nome de utilizador</string>
   <string name="wizard_username_skip">Saltar a escolha do nome de utilizador</string>
-  <string name="wizard_password_info">Senha da conta</string>
-  <string name="wizard_password_placeholder">Escolha uma senha para criptografar a chave da conta neste dispositivo</string>
-  <string name="wizard_password_button">Escolha senha</string>
+  <string name="wizard_password_info">Palavra-passe da conta</string>
+  <string name="wizard_password_placeholder">Escolha uma palavra-passe para encriptar a chave da conta neste dispositivo</string>
+  <string name="wizard_password_button">Escolha a palavra-passe</string>
   <string name="wizard_password_skip">Criar conta</string>
-  <string name="wizard_password_switch">Criptografar conta com senha</string>
-  <string name="wizard_password_warning">Note que a senha não pode ser recuperada</string>
+  <string name="wizard_password_switch">Encriptar a conta com uma palavra-passe</string>
+  <string name="wizard_password_warning">Note que a palavra-passe não pode ser recuperada</string>
   <string name="wizard_profile_info">O perfil só é compartilhado com contatos</string>
   <string name="wizard_profile_button">Salvar perfil</string>
   <string name="wizard_profile_skip">Pular e fazer depois</string>
@@ -387,14 +387,14 @@
   <string name="tab_about">Sobre</string>
   <string name="tab_members">Membros</string>
   <string name="tab_documetn">Documentos</string>
-  <string name="dialogtitle_title">Edição de título Swarm</string>
-  <string name="dialogtitle_description">Edição Descrição de enxame</string>
+  <string name="dialogtitle_title">Editar título do enxame</string>
+  <string name="dialogtitle_description">Editar descrição do enxame</string>
   <string name="dialog_hint_title">Título</string>
   <string name="dialog_hint_description">Descrição</string>
   <string name="picker_title">Selecionar os contatos</string>
   <string name="picker_btn">Selecionar os contatos</string>
   <string name="bottomsheet_contact">Contacte Jami\n%1$s</string>
-  <string name="bottomsheet_remove">Remova-se do enxame</string>
+  <string name="bottomsheet_remove">Retirar do enxame</string>
   <string name="error_open_no_app_found">Nenhum aplicativo encontrado para abrir este arquivo: %1$s</string>
   <!--JamiId-->
   <string name="jami_id_copy">Copiar identidade Jami</string>

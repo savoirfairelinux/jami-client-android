@@ -218,13 +218,13 @@
   <string name="yesterday">Ontem</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Adicionar %1$s?</string>
-  <string name="prompt_new_password">Nova palavra-chave</string>
-  <string name="prompt_new_password_optional">Nova palavra-chave (opcional)</string>
-  <string name="prompt_new_password_repeat">Repita a nova palavra-chave</string>
+  <string name="prompt_new_password">Nova palavra-passe</string>
+  <string name="prompt_new_password_optional">Nova palavra-passe (opcional)</string>
+  <string name="prompt_new_password_repeat">Repita a nova palavra-passe</string>
   <string name="account_create_title">Criar uma conta Jami</string>
   <string name="prompt_new_username">Introduza o seu nome de utilizador</string>
   <string name="prompt_hint_username">Nome de utilizador</string>
-  <string name="help_password_choose">Escolha uma palavra-chave forte que se lembre para proteger a sua conta Jami.</string>
+  <string name="help_password_choose">Escolha uma palavra-passe forte que se lembre para proteger a sua conta Jami.</string>
   <string name="help_password_enter">Introduza a palavra-passe da sua conta principal do Jami.</string>
   <string name="help_server_enter">Introduzir o URL do servidor de gestão.</string>
   <string name="help_pin_enter">Introduzir o PIN de outra conta Jami configurada. Utilizar a funcionalidade \"exportar conta Jami\" para obter um PIN.</string>
@@ -248,7 +248,7 @@
   <string name="identity">Identidade</string>
   <string name="account">Conta</string>
   <string name="link_new_device">Associar a um novo dispositivo</string>
-  <string name="devices">Dispositivos associados</string>
+  <string name="devices">Dispositivos vinculados</string>
   <string name="total_devices">Total de dispositivos:</string>
   <!--Share fragment-->
   <string name="share_message">Digitalize este código com o Jami</string>

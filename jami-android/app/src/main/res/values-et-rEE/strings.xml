@@ -22,6 +22,7 @@
   <string name="developed_by">Arendatud</string>
   <string name="designed_by">Projekteeritud</string>
   <string name="ringtones_by">Ringtones</string>
+  <string name="credits_volunteers">ja kõik vabatahtlikud, kes projektis osalesid!</string>
   <!--RingActivity-->
   <string name="error_no_network">Võrguühendus puudub</string>
   <string name="error_account_offline">Konto on välja lülitatud.</string>
@@ -44,11 +45,13 @@
   <!--History Fragment-->
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
+  <string name="invitation_card_title">Sulle on kutseid</string>
   <plurals name="home_conferences_title">
     <item quantity="one">%d vestlus</item>
     <item quantity="other">%d vestlused</item>
   </plurals>
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">Otsi nime või vestlust…</string>
   <string name="choose_number">Valige number</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -72,6 +75,7 @@
   <string name="notif_channel_background_service">Taustateenus</string>
   <string name="notif_channel_background_service_descr">Võtab kõnet ja sõnumit igal ajal saada.</string>
   <string name="notif_group_calls">Helistused</string>
+  <string name="notif_inprogress_group_call">Kõne on pooleli</string>
   <string name="notif_background_service">Jami jooksis praegu taustal.</string>
   <string name="notif_mark_as_read">Märk, mida lugutakse</string>
   <string name="notif_dismiss">Võtmine</string>
@@ -98,6 +102,7 @@
   <string name="ongoing_call">Läbilaskmine</string>
   <string name="hist_in_call">Sisuline kõnelus %1$s</string>
   <string name="hist_out_call">Lähtuv kõne %1$s</string>
+  <string name="call_duration">Ketus: %s</string>
   <string name="start_error_title">Ma ei saa Jami\'t alustada!</string>
   <string name="start_error_mic_required">Jami vajab mikrofonil töötama luba.</string>
   <string name="action_call_accept">Võta kõne.</string>
@@ -119,6 +124,7 @@
   <string name="write_a_message">Kirjuta sõnum.</string>
   <string name="scan_qr">QR-koodi skanneerimine</string>
   <string name="qr_code">QR-kood</string>
+  <string name="new_swarm">Alusta parvlemist</string>
   <string name="ab_action_flipcamera">Pöörkamera</string>
   <string name="ab_action_hidepreview">Peatise nägemist varjata</string>
   <string name="remote_recording">%s-salvestus...</string>
@@ -134,6 +140,8 @@
   <string name="conversation_send_audio">Salvestada audioklip</string>
   <string name="conversation_send_video">Salvestada videokliip</string>
   <string name="conversation_share_location">Jagada asukoht</string>
+  <string name="ongoing_group_call">Pooleliolev kõne</string>
+  <string name="started_call">Alustas kõnet</string>
   <string name="in_reply_to">Vastavalt</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kaamerate luba</string>
@@ -193,6 +201,7 @@
   <string name="conversation_syncing">Lase alla sõnad eakaaslastest</string>
   <string name="conversation_blocked">See kontakt on blokeeritud.</string>
   <string name="conversation_ended">Rääkimine on lõppenud.</string>
+  <string name="conversation_message_deleted">%s kustutas sõnumi</string>
   <string name="conversation_reply_you">Sina...</string>
   <string name="conversation_preference_color">Rääkimise värv</string>
   <string name="conversation_preference_emoji">Sõnalduse emojid</string>
@@ -327,6 +336,16 @@
   <string name="tv_send_video">Küsi meedia</string>
   <string name="tv_action_more">Rohkem</string>
   <string name="conversation_input_speech_hint">Ütle midagi...</string>
+  <string name="audio_permission_denied">Et heliga seotud funktsionaalsused toimiks, palun anna Jamile õigus mikrofoni kasutada.</string>
+  <string name="camera_permission_denied">Et videoga seotud funktsionaalsused toimiks, palun anna Jamile õigus nutiseadme kaamerat kasutada.</string>
+  <string name="speech_recogniton_unavailable">Kõnetuvastus pole saadaval.</string>
+  <string name="audio_permission_rationale_title">Vajalikud on õigused heli salvestamiseks</string>
+  <string name="camera_permission_rationale_title">Vajalikud on õigused video jäädvustamiseks</string>
+  <string name="audio_permission_rationale_message">Selleks et kõnetuvastus ja heli salvestamine toimiks, vajab Jami õigusi kasutada mikrofoni. Me küsime sult seda järgmises sammus.</string>
+  <string name="camera_permission_rationale_message">Selleks et video salvestamine ja videokõned toimiksid, vajab Jami õigusi kasutada kaamerat. Me küsime sult seda järgmises sammus.</string>
+  <string name="unable_to_start_recorder">Ei õnnestu alustada heli salvestamist.</string>
+  <string name="error_sharing_file">Viga faili jagamisel.</string>
+  <string name="error_opening_file">Viga faili avamisel.</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Soovitatav</string>
   <string name="wizard_status_optional">Võimaline</string>
@@ -375,12 +394,27 @@
   <string name="picker_btn">Vali kontaktid</string>
   <string name="bottomsheet_contact">Võta ühendust Jami\n%1$s</string>
   <string name="bottomsheet_remove">Võta ta roost välja.</string>
+  <string name="error_open_no_app_found">Selle faili avamiseks ei leidu rakendust: %1$s</string>
   <!--JamiId-->
+  <string name="jami_id_copy">Kopeeri JamiId</string>
+  <string name="jami_id_share">Jaga JamiId</string>
   <string name="jami_id_validate">Kasutaja nimi registreerimine</string>
+  <string name="jami_id_available">Kasutajanimi pole saadaval</string>
+  <string name="jami_id_not_available">See kasutajanimi pole saadaval\n• kuni 32 tähemärki\n• lubatud erimärgid: sidekriips (-), alakriips (_)</string>
+  <string name="jami_id_info">• kuni 32 tähemärki\n• lubatud erimärgid: sidekriips (-), alakriips (_)</string>
   <string name="jami_id_looking_for_availability">Otsime kasutajanimi kättesaadavust...</string>
   <string name="jami_id_choose_username">Vali kasutajanimi</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Tere tulemast Jami\'sse.</string>
+  <string name="welcome_jami_description">Et sinuga oleks lihtsam ühendust võtta, palun jaga oma Jami kasutajatunnust</string>
   <!--Donation-->
+  <string name="donation_card_description">Kui sulle Jami meeldib ja sa usud meie visiooni, siis kas sa oleksid nõus meid rahaliselt toetama?</string>
+  <string name="donation_card_not_now">Mitte praegu</string>
+  <string name="donation_donate">Toeta meid</string>
+  <string name="donation_setting_title">Annetuse meeldetuletus</string>
+  <string name="donation_setting_description">Luba kuvada rahalise toetuse meeldetuletust</string>
   <!--Plugin-->
+  <string name="unable_to_load">Laadimine ei õnnestu: %1$s</string>
+  <string name="load_sucess">%1$s: kasutusel</string>
+  <string name="unload_sucess">%1$s: pole kasutusel</string>
 </resources>
