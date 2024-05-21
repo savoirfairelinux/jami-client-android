@@ -497,6 +497,7 @@ class CallPresenter @Inject constructor(
             view.displayLocalVideo(true)
         }
         if (event.started) {
+            Log.d("ASDF", "startcam ${event.w} ${event.h} ${event.rot}")
             view.resetPreviewVideoSize(event.w, event.h, event.rot)
         }
     }

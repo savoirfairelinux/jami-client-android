@@ -446,7 +446,7 @@ class HardwareServiceImpl(
     }
 
     override fun setParameters(camId: String, format: Int, width: Int, height: Int, rate: Int) {
-        Log.d(TAG, "setParameters: $camId, $format, $width, $height, $rate")
+        Log.d("ASDF", "setParameters: $camId, $format, $width, $height, $rate")
         val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
         cameraService.setParameters(camId, format, width, height, rate, windowManager.defaultDisplay.rotation)
     }

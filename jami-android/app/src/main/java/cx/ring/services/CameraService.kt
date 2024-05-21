@@ -153,11 +153,11 @@ class CameraService internal constructor(c: Context) {
     }
 
     fun getParams(camId: String?): VideoParams? {
-        Log.w(TAG, "getParams() $camId")
+        Log.w("ASDF", "getParams() $camId ${mParams[camId]}")
         if (camId != null) {
             return mParams[camId]
         } else if (!devices?.cameras.isNullOrEmpty()) {
-            Log.w(TAG, "getParams() fallback")
+            Log.w(TAG, "getParams() fallback ${mParams[devices!!.cameras[0]]}}")
             devices!!.currentId = devices!!.cameras[0]
             return mParams[devices!!.currentId]
         }

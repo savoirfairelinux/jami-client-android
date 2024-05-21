@@ -256,6 +256,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             binding.pluginPreviewSurface.holder.setFormat(PixelFormat.RGBX_8888)
             binding.pluginPreviewSurface.holder.addCallback(object : SurfaceHolder.Callback {
                 override fun surfaceCreated(holder: SurfaceHolder) {
+                    Log.d("ASDF", "${holder.surfaceFrame.width()} ${holder.surfaceFrame.height()}")
                     presenter.pluginSurfaceCreated(holder)
                 }
 
@@ -274,7 +275,14 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             // todo: doublon with CallActivity.onConfigurationChanged ??
             mOrientationListener = object : OrientationEventListener(context) {
                 override fun onOrientationChanged(orientation: Int) {
-                    val rot = windowManager.defaultDisplay.rotation
+                    var display: Display? = null
+                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R)
+                        display = requireContext().display
+                    if(display == null)
+                        display = windowManager.defaultDisplay
+                    val rot = display!!.rotation
+//                    Log.d("ASDF", "orientation: $orientation")
+//                    Log.d("ASDF", "display rotation: $rot")
                     if (mCurrentOrientation != rot) {
                         mCurrentOrientation = rot
                         presenter.configurationChanged(rot)
@@ -503,14 +511,14 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
 
     private val listener: SurfaceTextureListener = object : SurfaceTextureListener {
         override fun onSurfaceTextureAvailable(surface: SurfaceTexture, width: Int, height: Int) {
-            Log.w(TAG, " onSurfaceTextureAvailable -------->  width: $width, height: $height")
+            Log.w("ASDF", " onSurfaceTextureAvailable -------->  width: $width, height: $height")
             mPreviewSurfaceWidth = width
             mPreviewSurfaceHeight = height
             presenter.previewVideoSurfaceCreated(binding!!.previewSurface)
         }
 
         override fun onSurfaceTextureSizeChanged(surface: SurfaceTexture, width: Int, height: Int) {
-            Log.w(TAG, " onSurfaceTextureSizeChanged ------>  width: $width, height: $height")
+            Log.w("ASDF", " onSurfaceTextureSizeChanged ------>  width: $width, height: $height")
             mPreviewSurfaceWidth = width
             mPreviewSurfaceHeight = height
             configurePreview(width, 1f)
@@ -1122,6 +1130,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
 
     // change le ratio de la video mais ne change pas la taille du container
     override fun resetPreviewVideoSize(previewWidth: Int?, previewHeight: Int?, rot: Int) {
+        Log.d("ASDF", "resetPreviewVideoSize $previewWidth $previewHeight $rot")
         if (previewWidth == -1 && previewHeight == -1) return
         if (previewWidth != null ) mPreviewWidth = previewWidth
         if (previewHeight != null ) mPreviewHeight = previewHeight
@@ -1140,6 +1149,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     }
 
     private fun configureTransform(viewWidth: Int, viewHeight: Int) {
+        Log.d("ASDF", "configureTransform $viewWidth $viewHeight $mPreviewWidth $mPreviewHeight")
         val activity = activity ?: return
         val binding = binding ?: return
         val rotation = activity.windowManager.defaultDisplay.rotation
@@ -1151,7 +1161,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
 
         val bufferRect = RectF(0f, 0f, mPreviewHeight.toFloat(), mPreviewWidth.toFloat())
         bufferRect.offset(centerX - bufferRect.centerX(), centerY - bufferRect.centerY())
-        matrix.setRectToRect(viewRect, bufferRect, Matrix.ScaleToFit.FILL)
+        Log.d("ASDF", "${matrix.setRectToRect(viewRect, bufferRect, Matrix.ScaleToFit.FILL)}")
         val scale = max(viewHeight.toFloat() / mPreviewHeight, viewWidth.toFloat() / mPreviewWidth)
         matrix.postScale(scale, scale, centerX, centerY)
         if (rot) {
@@ -1160,6 +1170,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             matrix.postRotate(180f, centerX, centerY)
         }
         if (!isChoosePluginMode) {
+            Log.d("ASDF", "$matrix")
             binding.previewSurface.setTransform(matrix)
         }
     }
