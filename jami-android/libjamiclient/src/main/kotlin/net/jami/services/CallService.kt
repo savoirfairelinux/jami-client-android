@@ -678,7 +678,7 @@ abstract class CallService(
 
     fun getConference(id: String): Conference? = conferences[id]
 
-    fun conferenceCreated(accountId: String, confId: String) {
+    fun conferenceCreated(accountId: String, conversationId: String, confId: String) {
         Log.d(TAG, "conference created: $confId")
         val conf = conferences.getOrPut(confId) { Conference(accountId, confId) }
         val participants = JamiService.getParticipantList(accountId, confId)

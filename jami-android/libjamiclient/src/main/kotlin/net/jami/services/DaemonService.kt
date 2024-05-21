@@ -247,8 +247,8 @@ class DaemonService(
             mExecutor.submit { mCallService.incomingMessage(accountId, callId, from, jmessages) }
         }
 
-        override fun conferenceCreated(accountId: String, confId: String) {
-            mCallService.conferenceCreated(accountId, confId)
+        override fun conferenceCreated(accountId: String, conversationId: String, confId: String) {
+            mCallService.conferenceCreated(accountId, conversationId, confId)
         }
 
         override fun conferenceRemoved(accountId: String, confId: String) {
