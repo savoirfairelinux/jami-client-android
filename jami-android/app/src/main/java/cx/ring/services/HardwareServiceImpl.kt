@@ -375,12 +375,12 @@ class HardwareServiceImpl(
     }
 
     override fun decodingStarted(id: String, shmPath: String, width: Int, height: Int, isMixer: Boolean) {
-        Log.i(TAG, "decodingStarted() " + id + " " + width + "x" + height)
         val shm = Shm(id, width, height)
         synchronized(videoInputs) {
             videoInputs[id] = shm
             videoEvents.onNext(VideoEvent(id, start = true, w = shm.w, h = shm.h))
             videoSurfaces[id]?.get()?.let { holder ->
+                Log.i("ASDF", "decodingStarted $id w:$width h:$height sw:${holder.surfaceFrame.width()} sh:${holder.surfaceFrame.height()}")
                 shm.window = startVideo(id, holder.surface, width, height)
                 if (shm.window == 0L) {
                     Log.w(TAG, "decodingStarted() no window !")
@@ -446,7 +446,7 @@ class HardwareServiceImpl(
     }
 
     override fun setParameters(camId: String, format: Int, width: Int, height: Int, rate: Int) {
-        Log.d(TAG, "setParameters: $camId, $format, $width, $height, $rate")
+        Log.d("ASDF", "setParameters: $camId, w:$width, h:$height, r:${width.toFloat()/height.toFloat()}")
         val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
         cameraService.setParameters(camId, format, width, height, rate, windowManager.defaultDisplay.rotation)
     }
@@ -559,6 +559,7 @@ class HardwareServiceImpl(
             val shm = videoInputs[id]
             val surfaceHolder = WeakReference(holder)
             videoSurfaces[id] = surfaceHolder
+            Log.i("ASDF", "addVideoSurface $id w:${shm?.w} h:${shm?.h} sw:${holder.surfaceFrame.width()} sh:${holder.surfaceFrame.height()}")
             if (shm != null && shm.window == 0L) {
                 shm.window = startVideo(shm.id, holder.surface, shm.w, shm.h)
             }
@@ -594,6 +595,7 @@ class HardwareServiceImpl(
         synchronized(videoInputs) {
             Log.w(TAG, "addPreviewVideoSurface > holder:$holder")
             if (holder !is TextureView) return
+            Log.d("ASDF", "addPreviewVideoSurface w:${holder.width} h:${holder.height} cw:${mCameraPreviewSurface.get()?.width} ch:${mCameraPreviewSurface.get()?.height}")
             if (mCameraPreviewSurface.get() === holder) return
             mCameraPreviewSurface = WeakReference(holder)
             mCameraPreviewCall = WeakReference(conference)

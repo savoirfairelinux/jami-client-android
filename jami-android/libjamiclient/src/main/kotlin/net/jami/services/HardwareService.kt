@@ -130,7 +130,7 @@ abstract class HardwareService(
     }
 
     fun startVideo(inputId: String, surface: Any, width: Int, height: Int): Long {
-        Log.i(TAG, "startVideo $inputId ${width}x$height")
+        Log.i("ASDF", "startVideo $inputId w:$width h:$height")
         val inputWindow = JamiService.acquireNativeWindow(surface)
         if (inputWindow != 0L) {
             JamiService.setNativeWindowGeometry(inputWindow, width, height)
