@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ea8facb_d2b77cd0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 930
+      },
+      "writtenOn": "2024-05-23T20:13:31Z",
+      "side": 1,
+      "message": "Problem potentially stems from the TextureView initially given to the HardwareService having a different ratio then what the view is changed to afterwords.\n\n(ex: 168x300 vs 200x300)\nconfigureTransform w1:0 h1:0 w2:720 h2:1280 r2:0.5625 rot:3\nonSurfaceTextureAvailable w:168 h:300 r:0.56\naddPreviewVideoSurface w:168 h:300 cw:null ch:null\nstartcam w:720 h:480 r:1.5\nresetPreviewVideoSize w:720 h:480 r:1.5\nonSurfaceTextureSizeChanged w:300 h:200 r:1.5\nconfigureTransform w1:300 h1:200 r1:1.5 w2:720 h2:480 r2:1.5 rot:3\n\nMay need to either fix the initial values, properly propagate changes in the ratio to the TextureView, or ensure the original ratio is respected.",
+      "revId": "680cc372e644c2c687dce5b2844c31b49dc0633e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
