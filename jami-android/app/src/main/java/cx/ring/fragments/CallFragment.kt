@@ -256,6 +256,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             binding.pluginPreviewSurface.holder.setFormat(PixelFormat.RGBX_8888)
             binding.pluginPreviewSurface.holder.addCallback(object : SurfaceHolder.Callback {
                 override fun surfaceCreated(holder: SurfaceHolder) {
+                    Log.d("ASDF", "surfaceCreated w:${holder.surfaceFrame.width()} h:${holder.surfaceFrame.height()} r:${holder.surfaceFrame.width().toFloat()/holder.surfaceFrame.height().toFloat()}")
                     presenter.pluginSurfaceCreated(holder)
                 }
 
@@ -503,14 +504,14 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
 
     private val listener: SurfaceTextureListener = object : SurfaceTextureListener {
         override fun onSurfaceTextureAvailable(surface: SurfaceTexture, width: Int, height: Int) {
-            Log.w(TAG, " onSurfaceTextureAvailable -------->  width: $width, height: $height")
+            Log.w("ASDF", "onSurfaceTextureAvailable w:$width h:$height r:${width.toFloat()/height.toFloat()}")
             mPreviewSurfaceWidth = width
             mPreviewSurfaceHeight = height
             presenter.previewVideoSurfaceCreated(binding!!.previewSurface)
         }
 
         override fun onSurfaceTextureSizeChanged(surface: SurfaceTexture, width: Int, height: Int) {
-            Log.w(TAG, " onSurfaceTextureSizeChanged ------>  width: $width, height: $height")
+            Log.w("ASDF", "onSurfaceTextureSizeChanged w:$width h:$height r:${width.toFloat()/height.toFloat()}")
             mPreviewSurfaceWidth = width
             mPreviewSurfaceHeight = height
             configurePreview(width, 1f)
@@ -1122,6 +1123,10 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
 
     // change le ratio de la video mais ne change pas la taille du container
     override fun resetPreviewVideoSize(previewWidth: Int?, previewHeight: Int?, rot: Int) {
+        var a = "resetPreviewVideoSize w:$previewWidth h:$previewHeight"
+        if(previewWidth != null && previewHeight != null)
+            a += " r:${previewWidth.toFloat()/previewHeight.toFloat()}"
+        Log.d("ASDF", a)
         if (previewWidth == -1 && previewHeight == -1) return
         if (previewWidth != null ) mPreviewWidth = previewWidth
         if (previewHeight != null ) mPreviewHeight = previewHeight
@@ -1140,10 +1145,17 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     }
 
     private fun configureTransform(viewWidth: Int, viewHeight: Int) {
+        var a = "configureTransform w1:$viewWidth h1:$viewHeight"
+        if(viewHeight != 0)
+            a += " r1:${viewWidth.toFloat()/viewHeight.toFloat()}"
+        a += " w2:$mPreviewWidth h2:$mPreviewHeight"
+        if(mPreviewHeight != 0)
+            a += " r2:${mPreviewWidth.toFloat()/mPreviewHeight.toFloat()}"
         val activity = activity ?: return
         val binding = binding ?: return
         val rotation = activity.windowManager.defaultDisplay.rotation
         val rot = Surface.ROTATION_90 == rotation || Surface.ROTATION_270 == rotation
+        Log.d("ASDF", "$a rot:$rotation")
         val matrix = Matrix()
         val viewRect = RectF(0f, 0f, viewWidth.toFloat(), viewHeight.toFloat())
         val centerX = viewRect.centerX()
