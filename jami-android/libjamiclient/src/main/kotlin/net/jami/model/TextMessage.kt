@@ -34,7 +34,7 @@ class TextMessage : Interaction {
             }
         }
         timestamp = System.currentTimeMillis()
-        mType = InteractionType.TEXT.toString()
+        type = InteractionType.TEXT
         this.conversation = conversation
         isIncoming = author != null
         body = message
@@ -44,7 +44,7 @@ class TextMessage : Interaction {
         this.author = author
         this.account = account
         this.timestamp = timestamp
-        mType = InteractionType.TEXT.toString()
+        type = InteractionType.TEXT
         this.conversation = conversation
         this.isIncoming = isIncoming
         body = message
@@ -55,8 +55,8 @@ class TextMessage : Interaction {
         id = interaction.id
         author = interaction.author
         timestamp = interaction.timestamp
-        mType = interaction.type.toString()
-        mStatus = interaction.status.toString()
+        type = InteractionType.TEXT
+        status = interaction.status
         conversation = interaction.conversation
         isIncoming = author != null
         daemonId = interaction.daemonId

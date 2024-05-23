@@ -80,7 +80,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.conversation.ConversationPresenter
 import net.jami.model.*
 import net.jami.model.Account.ComposingStatus
-import net.jami.model.Interaction.InteractionStatus
+import net.jami.model.Interaction.TransferStatus
 import net.jami.utils.Log
 import net.jami.utils.StringUtils
 import org.commonmark.node.SoftLineBreak
@@ -1068,9 +1068,9 @@ class ConversationAdapter(
         val timeString = TextUtils.timestampToTime(context, formatter, file.timestamp)
         viewHolder.mFileTime?.text = timeString
         viewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
-            viewHolder.mFileSize?.text = when (val status = file.status) {
-                InteractionStatus.TRANSFER_FINISHED -> Formatter.formatFileSize(context, file.totalSize)
-                InteractionStatus.TRANSFER_ONGOING -> String.format("%s / %s - %s",
+            viewHolder.mFileSize?.text = when (val status = file.transferStatus) {
+                TransferStatus.TRANSFER_FINISHED -> Formatter.formatFileSize(context, file.totalSize)
+                TransferStatus.TRANSFER_ONGOING -> String.format("%s / %s - %s",
                     Formatter.formatFileSize(context, file.bytesProgress),
                     Formatter.formatFileSize(context, file.totalSize),
                     TextUtils.getReadableFileTransferStatus(context, status)
@@ -1180,7 +1180,7 @@ class ConversationAdapter(
                         .getDimensionPixelSize(R.dimen.conversation_message_separation)
                 }
 
-                val status = file.status
+                val status = file.transferStatus
                 viewHolder.mIcon?.setPadding(res.getDimensionPixelSize(R.dimen.padding_large))
                 viewHolder.mIcon?.setClipToOutline(true)
                 viewHolder.mIcon?.imageTintList = context.getColorStateList(R.color.file_icon_out)
@@ -1195,7 +1195,7 @@ class ConversationAdapter(
                 if (file.isOutgoing) viewHolder.mFileInfoLayout?.background?.setTint(convColor)
                 // Show the download button
                 when (status) {
-                    InteractionStatus.TRANSFER_AWAITING_HOST, InteractionStatus.FILE_AVAILABLE -> {
+                    TransferStatus.TRANSFER_AWAITING_HOST, TransferStatus.FILE_AVAILABLE -> {
                         viewHolder.mFileDownloadButton?.let {
                             it.visibility = View.VISIBLE
                             it.setOnClickListener { presenter.acceptFile(file) }
@@ -1204,7 +1204,7 @@ class ConversationAdapter(
 
                     else -> {
                         viewHolder.mFileDownloadButton?.visibility = View.GONE
-                        if (status == InteractionStatus.TRANSFER_ONGOING) {
+                        if (status == TransferStatus.TRANSFER_ONGOING) {
                             viewHolder.progress?.max = (file.totalSize / 1024).toInt()
                             viewHolder.progress?.setProgress((file.bytesProgress / 1024).toInt(), true)
                             viewHolder.progress?.show()
@@ -1590,7 +1590,7 @@ class ConversationAdapter(
             convViewHolder.mCallInfoLayout?.apply {
                 background?.setTintList(null) // Remove the tint
 
-                TODO("define popup menu to invoke in onLongClickListener")
+                //TODO define popup menu to invoke in onLongClickListener
 //                setOnLongClickListener {
 //                    background?.setTint(context.getColor(R.color.grey_500))
 //                    false

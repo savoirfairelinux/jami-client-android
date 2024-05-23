@@ -105,7 +105,7 @@ class Call : Interaction {
         this.conversation = conversation
         isIncoming = direction == Direction.INCOMING
         timestamp = System.currentTimeMillis()
-        mType = InteractionType.CALL.toString()
+        type = InteractionType.CALL
         this.contact = contact
         mIsRead = 1
         //this.mediaList = mediaList
@@ -117,8 +117,8 @@ class Call : Interaction {
         conversation = interaction.conversation
         isIncoming = author != null
         timestamp = interaction.timestamp
-        mType = InteractionType.CALL.toString()
-        mStatus = interaction.status.toString()
+        type = InteractionType.CALL
+        status = interaction.status
         daemonId = interaction.daemonId
         daemonIdString = super.daemonIdString
         mIsRead = if (interaction.isRead) 1 else 0
@@ -141,7 +141,7 @@ class Call : Interaction {
         author = if (direction == Direction.INCOMING) contactNumber else null
         this.contactNumber = contactNumber
         this.timestamp = timestamp
-        mType = InteractionType.CALL.toString()
+        type = InteractionType.CALL
         mIsRead = 1
     }
 
@@ -186,11 +186,11 @@ class Call : Interaction {
         this.callStatus = callStatus
         if (callStatus == CallStatus.CURRENT) {
             isMissed = false
-            mStatus = InteractionStatus.SUCCESS.toString()
+            status = InteractionStatus.SUCCESS
         } else if (isRinging || isOnGoing) {
-            mStatus = InteractionStatus.SUCCESS.toString()
+            status = InteractionStatus.SUCCESS
         } else if (this.callStatus == CallStatus.FAILURE) {
-            mStatus = InteractionStatus.FAILURE.toString()
+            status = InteractionStatus.FAILURE
         }
     }
 

@@ -28,7 +28,7 @@ import io.reactivex.rxjava3.subjects.SingleSubject
 import io.reactivex.rxjava3.subjects.Subject
 import net.jami.daemon.*
 import net.jami.model.*
-import net.jami.model.Interaction.InteractionStatus
+import net.jami.model.Interaction.TransferStatus
 import net.jami.utils.Log
 import net.jami.utils.SwigNativeConverter
 import java.io.File
@@ -312,7 +312,7 @@ class AccountService(
                     requestData["received"]!!.toLong() * 1000L,
                     Uri(Uri.SWARM_SCHEME, conversationId),
                     mVCardService.loadConversationProfile(requestData),
-                    requestData["mode"]?.let { m -> Conversation.Mode.values()[m.toInt()] } ?: Conversation.Mode.OneToOne))
+                    requestData["mode"]?.let { m -> Conversation.Mode.entries[m.toInt()] } ?: Conversation.Mode.OneToOne))
             } catch (e: Exception) {
                 Log.w(TAG, "Error loading request", e)
             }
@@ -1024,7 +1024,7 @@ class AccountService(
         status: Int,
     ) {
         val account = getAccount(accountId) ?: return
-        val interactionStatus = InteractionStatus.fromIntTextMessage(status)
+        val interactionStatus = Interaction.InteractionStatus.fromIntTextMessage(status)
         val messageState = Interaction.MessageStates.fromInt(status)
 
         if (conversationId.isEmpty() && !account.isJami) {
@@ -1240,7 +1240,7 @@ class AccountService(
                     val isComplete = path.exists() && progressA[0] == totalA[0]
                     DataTransfer(fileId, account.accountId, author, fileName, contact.isUser, timestamp, totalA[0], progressA[0]).apply {
                         daemonPath = path
-                        status = if (isComplete) InteractionStatus.TRANSFER_FINISHED else InteractionStatus.FILE_AVAILABLE
+                        transferStatus = if (isComplete) TransferStatus.TRANSFER_FINISHED else TransferStatus.FILE_AVAILABLE
                     }
                 } catch (e: Exception) {
                     Interaction(conversation, Interaction.InteractionType.INVALID)
@@ -1365,7 +1365,7 @@ class AccountService(
         /*for (Map.Entry<String, String> i : info.entrySet()) {
             Log.w(TAG, "conversation info: " + i.getKey() + " " + i.getValue());
         }*/
-        val mode = Conversation.Mode.values()[info["mode"]!!.toInt()]
+        val mode = Conversation.Mode.entries[info["mode"]!!.toInt()]
         val uri = Uri(Uri.SWARM_SCHEME, conversationId)
         var c = account.getByUri(uri)//getSwarm(conversationId) ?: account.getByUri(Uri(Uri.SWARM_SCHEME, conversationId))
         var setMode = false
@@ -1427,7 +1427,7 @@ class AccountService(
             metadata["received"]!!.toLong() * 1000L,
             Uri(Uri.SWARM_SCHEME, conversationId),
             mVCardService.loadConversationProfile(metadata),
-            metadata["mode"]?.let { m -> Conversation.Mode.values()[m.toInt()] } ?: Conversation.Mode.OneToOne))
+            metadata["mode"]?.let { m -> Conversation.Mode.entries[m.toInt()] } ?: Conversation.Mode.OneToOne))
     }
 
     fun swarmMessageReceived(accountId: String, conversationId: String, message: SwarmMessage) {
@@ -1512,7 +1512,7 @@ class AccountService(
         )
         override fun run() {
             synchronized(toUpdate) {
-                if (toUpdate.status == InteractionStatus.TRANSFER_ONGOING) {
+                if (toUpdate.transferStatus == Interaction.TransferStatus.TRANSFER_ONGOING) {
                     dataTransferEvent(account, conversation, toUpdate.messageId, toUpdate.fileId!!, 5)
                 } else {
                     scheduledTask.cancel(false)
@@ -1530,7 +1530,7 @@ class AccountService(
     }
 
     fun dataTransferEvent(account: Account, conversation: Conversation, interactionId: String?, fileId: String, eventCode: Int) {
-        val transferStatus = InteractionStatus.fromIntFile(eventCode)
+        val transferStatus = TransferStatus.fromIntFile(eventCode)
         Log.d(TAG, "Data Transfer $interactionId $fileId $transferStatus")
         val transfer = account.getDataTransfer(fileId) ?: conversation.getMessage(interactionId!!) as DataTransfer? ?: return
         val paths = arrayOfNulls<String>(1)
@@ -1540,13 +1540,13 @@ class AccountService(
         val progress = progressA[0]
         val total = totalA[0]
         synchronized(transfer) {
-            val oldState = transfer.status
+            val oldState = transfer.transferStatus
             transfer.conversation = conversation
             transfer.daemonPath = File(paths[0]!!)
-            transfer.status = transferStatus
+            transfer.transferStatus = transferStatus
             transfer.bytesProgress = progress
             if (oldState != transferStatus) {
-                if (transferStatus == InteractionStatus.TRANSFER_ONGOING) {
+                if (transferStatus == Interaction.TransferStatus.TRANSFER_ONGOING) {
                     DataTransferRefreshTask(account, conversation, transfer)
                 } else if (transferStatus.isError) {
                     if (!transfer.isOutgoing) {
@@ -1559,7 +1559,7 @@ class AccountService(
             }
             // Hack to prevent notifications from being sent for data transfer uploads done on
             // images which aren't owned by the local account
-            if (oldState == InteractionStatus.TRANSFER_FINISHED && oldState == transferStatus)
+            if (oldState == TransferStatus.TRANSFER_FINISHED && oldState == transferStatus)
                 return
         }
         Log.d(TAG, "Data Transfer dataTransferSubject.onNext")
@@ -1591,12 +1591,5 @@ class AccountService(
         const val ACCOUNT_SCHEME_NONE = ""
         const val ACCOUNT_SCHEME_PASSWORD = "password"
         const val ACCOUNT_SCHEME_KEY = "key"
-
-        private fun getDataTransferError(errorCode: Long): DataTransferError = try {
-            DataTransferError.values()[errorCode.toInt()]
-        } catch (ignored: ArrayIndexOutOfBoundsException) {
-            Log.e(TAG, "getDataTransferError: invalid data transfer error from daemon")
-            DataTransferError.UNKNOWN
-        }
     }
 }

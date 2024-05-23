@@ -63,10 +63,18 @@ open class Interaction {
     var body: String? = null
 
     @DatabaseField(columnName = COLUMN_TYPE)
-    var mType: String? = null
+    var type = InteractionType.INVALID
 
-    @DatabaseField(columnName = COLUMN_STATUS)
-    var mStatus = InteractionStatus.UNKNOWN.toString()
+    @DatabaseField(unknownEnumName = "INVALID", columnName = COLUMN_STATUS)
+    var status = InteractionStatus.INVALID
+        set(status) {
+            if (status == InteractionStatus.DISPLAYED)
+                mIsRead = 1
+            field = status
+        }
+
+    // should not be saved to the database ==> SIP does not support data transfers
+    var transferStatus = TransferStatus.INVALID
 
     @DatabaseField(columnName = COLUMN_DAEMON_ID)
     var daemonId: Long? = null
@@ -95,10 +103,10 @@ open class Interaction {
         type = InteractionType.INVALID
     }
 
-    constructor(conversation: Conversation, type: InteractionType) {
+    constructor(conversation: Conversation, mType: InteractionType) {
         this.conversation = conversation
         account = conversation.accountId
-        mType = type.toString()
+        type = mType
     }
 
     constructor(
@@ -107,8 +115,8 @@ open class Interaction {
         conversation: ConversationHistory?,
         timestamp: String,
         body: String?,
-        type: String?,
-        status: String,
+        mType: String,
+        st: String,
         daemonId: String?,
         isRead: String,
         extraFlag: String
@@ -118,8 +126,8 @@ open class Interaction {
         this.conversation = conversation
         this.timestamp = timestamp.toLong()
         this.body = body
-        mType = type
-        mStatus = status
+        type = InteractionType.fromString(mType)
+        status = InteractionStatus.fromString(st)
         try {
             this.daemonId = daemonId?.toLong()
         } catch (e: NumberFormatException) {
@@ -133,17 +141,6 @@ open class Interaction {
         mIsRead = 1
     }
 
-    var type: InteractionType
-        get() = if (mType != null) InteractionType.fromString(mType!!) else InteractionType.INVALID
-        set(type) {
-            mType = type.toString()
-        }
-    var status: InteractionStatus
-        get() = InteractionStatus.fromString(mStatus)
-        set(status) {
-            if (status == InteractionStatus.DISPLAYED) mIsRead = 1
-            mStatus = status.toString()
-        }
     val extraFlag: JsonObject
         get() = toJson(mExtraFlag)
 
@@ -237,15 +234,7 @@ open class Interaction {
     }
 
     enum class InteractionStatus {
-        UNKNOWN, SENDING, SUCCESS, DISPLAYED, INVALID, FAILURE, TRANSFER_CREATED,
-        TRANSFER_ACCEPTED, TRANSFER_CANCELED, TRANSFER_ERROR, TRANSFER_UNJOINABLE_PEER,
-        TRANSFER_ONGOING, TRANSFER_AWAITING_PEER, TRANSFER_AWAITING_HOST, TRANSFER_TIMEOUT_EXPIRED,
-        TRANSFER_FINISHED, FILE_AVAILABLE;
-
-        val isError: Boolean
-            get() = this == TRANSFER_ERROR || this == TRANSFER_UNJOINABLE_PEER || this == TRANSFER_CANCELED || this == TRANSFER_TIMEOUT_EXPIRED || this == FAILURE
-        val isOver: Boolean
-            get() = isError || this == TRANSFER_FINISHED
+        UNKNOWN, SENDING, SUCCESS, DISPLAYED, INVALID, FAILURE;
 
         companion object {
             fun fromString(str: String): InteractionStatus = entries.firstOrNull { it.name == str } ?: INVALID
@@ -255,8 +244,21 @@ open class Interaction {
             } catch (e: ArrayIndexOutOfBoundsException) {
                 INVALID
             }
+        }
+    }
 
-            fun fromIntFile(n: Int): InteractionStatus = when (n) {
+    enum class TransferStatus {
+        INVALID, FAILURE, TRANSFER_CREATED, TRANSFER_ACCEPTED, TRANSFER_CANCELED, TRANSFER_ERROR, TRANSFER_UNJOINABLE_PEER,
+        TRANSFER_ONGOING, TRANSFER_AWAITING_PEER, TRANSFER_AWAITING_HOST, TRANSFER_TIMEOUT_EXPIRED,
+        TRANSFER_FINISHED, FILE_AVAILABLE, FILE_REMOVED;
+
+        val isError: Boolean
+            get() = this == TRANSFER_ERROR || this == TRANSFER_UNJOINABLE_PEER || this == TRANSFER_CANCELED || this == TRANSFER_TIMEOUT_EXPIRED || this == FAILURE
+        val isOver: Boolean
+            get() = isError || this == TRANSFER_FINISHED
+
+        companion object {
+            fun fromIntFile(n: Int): TransferStatus = when (n) {
                 0 -> INVALID
                 1 -> TRANSFER_CREATED
                 2, 9 -> TRANSFER_ERROR
@@ -266,7 +268,7 @@ open class Interaction {
                 6 -> TRANSFER_FINISHED
                 7, 8, 10 -> TRANSFER_UNJOINABLE_PEER
                 11 -> TRANSFER_TIMEOUT_EXPIRED
-                else -> UNKNOWN
+                else -> INVALID
             }
         }
     }

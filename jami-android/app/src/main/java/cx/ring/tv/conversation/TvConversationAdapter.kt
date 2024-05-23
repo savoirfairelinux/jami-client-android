@@ -69,6 +69,7 @@ import net.jami.model.ContactEvent
 import net.jami.model.DataTransfer
 import net.jami.model.Interaction
 import net.jami.model.Interaction.InteractionStatus
+import net.jami.model.Interaction.TransferStatus
 import net.jami.model.TextMessage
 import net.jami.utils.StringUtils.isOnlyEmoji
 import java.io.File
@@ -532,12 +533,12 @@ class TvConversationAdapter(
         val timeString = TextUtils.timestampToDetailString(context, formatter, file.timestamp)
         viewHolder.mFileTime?.text = timeString
         viewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
-            viewHolder.mFileSize?.text = when (val status = file.status) {
-                InteractionStatus.TRANSFER_FINISHED -> String.format("%s - %s",
+            viewHolder.mFileSize?.text = when (val status = file.transferStatus) {
+                TransferStatus.TRANSFER_FINISHED -> String.format("%s - %s",
                     Formatter.formatFileSize(context, file.totalSize),
                     TextUtils.getReadableFileTransferStatus(context, status)
                 )
-                InteractionStatus.TRANSFER_ONGOING -> String.format("%s / %s - %s",
+                TransferStatus.TRANSFER_ONGOING -> String.format("%s / %s - %s",
                     Formatter.formatFileSize(context, file.bytesProgress),
                     Formatter.formatFileSize(context, file.totalSize),
                     TextUtils.getReadableFileTransferStatus(context, status))
@@ -618,7 +619,7 @@ class TvConversationAdapter(
                             ?.scaleY(if (hasFocus) 1.1f else 1f)
                             ?.scaleX(if (hasFocus) 1.1f else 1f)
                     }
-                val status = file.status
+                val status = file.transferStatus
                 viewHolder.mIcon?.setImageResource(
                     if (status.isError) R.drawable.baseline_warning_24
                     else R.drawable.baseline_attach_file_24
@@ -629,7 +630,7 @@ class TvConversationAdapter(
                 if (file.isOutgoing) viewHolder.mFileInfoLayout?.background?.setTint(convColor)
                 // Show the download button
                 when (status) {
-                    InteractionStatus.FILE_AVAILABLE, InteractionStatus.TRANSFER_AWAITING_HOST -> {
+                    TransferStatus.FILE_AVAILABLE, TransferStatus.TRANSFER_AWAITING_HOST -> {
                         viewHolder.mFileDownloadButton?.let {
                             it.visibility = View.VISIBLE
                             it.setOnClickListener { presenter.acceptFile(file) }
@@ -637,7 +638,7 @@ class TvConversationAdapter(
                     }
                     else -> {
                         viewHolder.mFileDownloadButton?.visibility = View.GONE
-                        if (status == InteractionStatus.TRANSFER_ONGOING) {
+                        if (status == TransferStatus.TRANSFER_ONGOING) {
                             viewHolder.progress?.max = (file.totalSize / 1024).toInt()
                             viewHolder.progress?.setProgress(
                                 (file.bytesProgress / 1024).toInt(), true

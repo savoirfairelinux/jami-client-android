@@ -24,9 +24,9 @@ class ContactEvent : Interaction {
         id = interaction.id
         conversation = interaction.conversation
         author = interaction.author
-        mType = InteractionType.CONTACT.toString()
+        type = InteractionType.CONTACT
         timestamp = interaction.timestamp
-        mStatus = interaction.status.toString()
+        status = interaction.status
         mIsRead = 1
         contact = interaction.contact
         event = getEventFromStatus(interaction.status)
@@ -35,9 +35,9 @@ class ContactEvent : Interaction {
     constructor() {
         author = null
         event = Event.ADDED
-        mType = InteractionType.CONTACT.toString()
+        type = InteractionType.CONTACT
         timestamp = System.currentTimeMillis()
-        mStatus = InteractionStatus.SUCCESS.toString()
+        status = InteractionStatus.SUCCESS
         mIsRead = 1
     }
 
@@ -45,9 +45,9 @@ class ContactEvent : Interaction {
         this.contact = contact
         account = accountId
         author = contact.uri.uri
-        mType = InteractionType.CONTACT.toString()
+        type = InteractionType.CONTACT
         event = Event.ADDED
-        mStatus = InteractionStatus.SUCCESS.toString()
+        status = InteractionStatus.SUCCESS
         timestamp = contact.addedDate!!.time
         mIsRead = 1
     }
@@ -58,9 +58,9 @@ class ContactEvent : Interaction {
         this.contact = contact
         author = contact.uri.uri
         timestamp = request.timestamp
-        mType = InteractionType.CONTACT.toString()
+        type = InteractionType.CONTACT
         event = Event.INCOMING_REQUEST
-        mStatus = InteractionStatus.UNKNOWN.toString()
+        status = InteractionStatus.UNKNOWN
         mIsRead = 1
     }
 
