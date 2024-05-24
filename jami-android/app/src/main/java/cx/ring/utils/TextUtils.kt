@@ -22,7 +22,7 @@ import android.content.Context
 import android.text.TextUtils
 import android.text.format.DateUtils
 import cx.ring.R
-import net.jami.model.Interaction.InteractionStatus
+import net.jami.model.Interaction.TransferStatus
 import java.util.*
 
 object TextUtils {
@@ -105,17 +105,17 @@ object TextUtils {
             .out().toString().uppercase(Locale.getDefault())
     }
 
-    fun getReadableFileTransferStatus(context: Context, transferStatus: InteractionStatus): String {
+    fun getReadableFileTransferStatus(context: Context, transferStatus: TransferStatus): String {
         return when (transferStatus) {
-            InteractionStatus.TRANSFER_CREATED -> context.getString(R.string.file_transfer_status_created)
-            InteractionStatus.TRANSFER_AWAITING_PEER -> context.getString(R.string.file_transfer_status_wait_peer_acceptance)
-            InteractionStatus.TRANSFER_AWAITING_HOST -> context.getString(R.string.file_transfer_status_wait_host_acceptance)
-            InteractionStatus.TRANSFER_ONGOING -> context.getString(R.string.file_transfer_status_ongoing)
-            InteractionStatus.TRANSFER_FINISHED -> context.getString(R.string.file_transfer_status_finished)
-            InteractionStatus.TRANSFER_CANCELED -> context.getString(R.string.file_transfer_status_cancelled)
-            InteractionStatus.TRANSFER_UNJOINABLE_PEER -> context.getString(R.string.file_transfer_status_unjoinable_peer)
-            InteractionStatus.TRANSFER_ERROR -> context.getString(R.string.file_transfer_status_error)
-            InteractionStatus.TRANSFER_TIMEOUT_EXPIRED -> context.getString(R.string.file_transfer_status_timed_out)
+            TransferStatus.TRANSFER_CREATED -> context.getString(R.string.file_transfer_status_created)
+            TransferStatus.TRANSFER_AWAITING_PEER -> context.getString(R.string.file_transfer_status_wait_peer_acceptance)
+            TransferStatus.TRANSFER_AWAITING_HOST -> context.getString(R.string.file_transfer_status_wait_host_acceptance)
+            TransferStatus.TRANSFER_ONGOING -> context.getString(R.string.file_transfer_status_ongoing)
+            TransferStatus.TRANSFER_FINISHED -> context.getString(R.string.file_transfer_status_finished)
+            TransferStatus.TRANSFER_CANCELED -> context.getString(R.string.file_transfer_status_cancelled)
+            TransferStatus.TRANSFER_UNJOINABLE_PEER -> context.getString(R.string.file_transfer_status_unjoinable_peer)
+            TransferStatus.TRANSFER_ERROR -> context.getString(R.string.file_transfer_status_error)
+            TransferStatus.TRANSFER_TIMEOUT_EXPIRED -> context.getString(R.string.file_transfer_status_timed_out)
             else -> ""
         }
     }

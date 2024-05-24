@@ -25,7 +25,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.model.*
 import net.jami.model.Account.ContactLocationEntry
 import net.jami.model.Call.CallStatus
-import net.jami.model.Interaction.InteractionStatus
+import net.jami.model.Interaction.TransferStatus
 import net.jami.services.AccountService.RegisteredName
 import net.jami.smartlist.ConversationItemViewModel
 import net.jami.utils.FileUtils.moveFile
@@ -159,7 +159,7 @@ class ConversationFacade(
     }
 
     fun deleteConversationFile(conversation: Conversation, transfer: DataTransfer) {
-        if (transfer.status === InteractionStatus.TRANSFER_ONGOING) {
+        if (transfer.transferStatus === TransferStatus.TRANSFER_ONGOING) {
             mAccountService.cancelDataTransfer(
                 conversation.accountId, conversation.uri.rawRingId, transfer.messageId, transfer.fileId!!
             )
@@ -171,7 +171,7 @@ class ConversationFacade(
                     transfer.bytesProgress = 0
                 }.subscribeOn(Schedulers.io())
                 .subscribe({
-                    transfer.status = InteractionStatus.FILE_AVAILABLE
+                    transfer.transferStatus = TransferStatus.FILE_AVAILABLE
                     conversation.updateInteraction(transfer)
                 }) { e: Throwable -> Log.e(TAG, "Can't delete file", e) })
             }
@@ -189,22 +189,18 @@ class ConversationFacade(
     }
 
     fun deleteConversationItem(conversation: Conversation, element: Interaction) {
-        if (element.type === Interaction.InteractionType.DATA_TRANSFER) {
-            deleteConversationFile(conversation, element as DataTransfer)
+        // handling is the same for calls, texts and files
+        if (conversation.isSwarm) {
+            if ((element as? DataTransfer)?.transferStatus === TransferStatus.TRANSFER_ONGOING) {
+                mAccountService.cancelDataTransfer(conversation.accountId, conversation.uri.rawRingId, element.messageId, element.fileId!!)
+            }
+            mAccountService.deleteConversationMessage(conversation.accountId, conversation.uri, element.messageId!!)
         } else {
-            // handling is the same for calls and texts
-            if (conversation.isSwarm) {
-                if ((element as? DataTransfer)?.status === InteractionStatus.TRANSFER_ONGOING) {
-                    mAccountService.cancelDataTransfer(conversation.accountId, conversation.uri.rawRingId, element.messageId, element.fileId!!)
-                }
-                mAccountService.deleteConversationMessage(conversation.accountId, conversation.uri, element.messageId!!)
-            } else {
-                mDisposableBag.add(mHistoryService.deleteInteraction(element.id, element.account!!)
+            mDisposableBag.add(mHistoryService.deleteInteraction(element.id, element.account!!)
                     .subscribeOn(Schedulers.io())
                     .subscribe({ conversation.removeInteraction(element) }) { e: Throwable ->
                         Log.e(TAG, "Can't delete message", e)
                     })
-            }
         }
     }
 
@@ -583,9 +579,9 @@ class ConversationFacade(
     private fun handleDataTransferEvent(transfer: DataTransfer) {
         val account = transfer.account!!
         val conversation = mAccountService.getAccount(account)!!.onDataTransferEvent(transfer)
-        val status = transfer.status
+        val status = transfer.transferStatus
         Log.d(TAG, "handleDataTransferEvent $status " + transfer.canAutoAccept(mPreferencesService.getMaxFileAutoAccept(account)))
-        if (status === InteractionStatus.TRANSFER_AWAITING_HOST || status === InteractionStatus.FILE_AVAILABLE) {
+        if (status === TransferStatus.TRANSFER_AWAITING_HOST || status === TransferStatus.FILE_AVAILABLE) {
             if (transfer.canAutoAccept(mPreferencesService.getMaxFileAutoAccept(account))) {
                 mAccountService.acceptFileTransfer(conversation, transfer.fileId!!, transfer)
                 return

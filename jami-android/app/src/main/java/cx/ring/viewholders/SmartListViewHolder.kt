@@ -159,13 +159,13 @@ class SmartListViewHolder : RecyclerView.ViewHolder {
                 return ""
             }
         } else if (e.type == Interaction.InteractionType.DATA_TRANSFER) {
-            return if (e.status == Interaction.InteractionStatus.TRANSFER_FINISHED) {
+            return if (e.transferStatus == Interaction.TransferStatus.TRANSFER_FINISHED) {
                 if (!e.isIncoming) {
                     context.getString(R.string.hist_file_sent)
                 } else {
                     context.getString(R.string.hist_file_received)
                 }
-            } else TextUtils.getReadableFileTransferStatus(context, e.status)
+            } else TextUtils.getReadableFileTransferStatus(context, e.transferStatus)
         }
         return null
     }

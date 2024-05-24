@@ -64,7 +64,7 @@ import cx.ring.views.AvatarFactory.toBitmap
 import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.call.CallPresenter
 import net.jami.model.*
-import net.jami.model.Interaction.InteractionStatus
+import net.jami.model.Interaction.TransferStatus
 import net.jami.services.*
 import net.jami.smartlist.ConversationItemViewModel
 import java.io.BufferedInputStream
@@ -743,8 +743,8 @@ class NotificationServiceImpl(
 
     @SuppressLint("RestrictedApi")
     override fun showFileTransferNotification(conversation: Conversation, info: DataTransfer) {
-        val event = info.status
-        if (event == InteractionStatus.FILE_AVAILABLE)
+        val event = info.transferStatus
+        if (event == TransferStatus.FILE_AVAILABLE)
             return
         val path = ConversationPath.toUri(conversation)
         Log.d(TAG, "showFileTransferNotification $path")
@@ -790,7 +790,7 @@ class NotificationServiceImpl(
         val messageNotificationBuilder = mNotificationBuilders[notificationId] ?: NotificationCompat.Builder(mContext, NOTIF_CHANNEL_FILE_TRANSFER).apply {
             mNotificationBuilders.put(notificationId, this)
         }
-        val ongoing = event == InteractionStatus.TRANSFER_ONGOING || event == InteractionStatus.TRANSFER_ACCEPTED
+        val ongoing = event == TransferStatus.TRANSFER_ONGOING || event == TransferStatus.TRANSFER_ACCEPTED
         messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_incoming_file_transfer_title, author.displayName))
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
@@ -800,7 +800,7 @@ class NotificationServiceImpl(
             .setCategory(NotificationCompat.CATEGORY_PROGRESS)
             .setOnlyAlertOnce(true)
             .setContentText(
-                if (event == InteractionStatus.TRANSFER_ONGOING)
+                if (event == TransferStatus.TRANSFER_ONGOING)
                     Formatter.formatFileSize(mContext, info.bytesProgress) + " / " + Formatter.formatFileSize(mContext, info.totalSize)
                 else
                     info.displayName + ": " + cx.ring.utils.TextUtils.getReadableFileTransferStatus(mContext, event)
@@ -814,7 +814,7 @@ class NotificationServiceImpl(
             ongoing -> messageNotificationBuilder.setProgress(info.totalSize.toInt(), info.bytesProgress.toInt(), false)
             else -> messageNotificationBuilder.setProgress(0, 0, true)
         }
-        if (event == InteractionStatus.TRANSFER_CREATED) {
+        if (event == TransferStatus.TRANSFER_CREATED) {
             messageNotificationBuilder.setDefaults(NotificationCompat.DEFAULT_VIBRATE)
             mNotificationBuilders.put(notificationId, messageNotificationBuilder)
             // updateNotification(messageNotificationBuilder.build(), notificationId);
@@ -823,7 +823,7 @@ class NotificationServiceImpl(
             messageNotificationBuilder.setDefaults(NotificationCompat.DEFAULT_LIGHTS)
         }
         messageNotificationBuilder.mActions.clear()
-        if (event == InteractionStatus.TRANSFER_AWAITING_HOST) {
+        if (event == TransferStatus.TRANSFER_AWAITING_HOST) {
             messageNotificationBuilder
                 .addAction(R.drawable.baseline_call_received_24, mContext.getText(R.string.accept),
                     PendingIntent.getService(mContext, random.nextInt(),

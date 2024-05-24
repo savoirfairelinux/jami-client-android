@@ -50,8 +50,8 @@ class DataTransfer : Interaction {
         this.totalSize = totalSize
         this.bytesProgress = bytesProgress
         body = displayName
-        mStatus = InteractionStatus.TRANSFER_CREATED.toString()
-        mType = InteractionType.DATA_TRANSFER.toString()
+        transferStatus = TransferStatus.TRANSFER_CREATED
+        type = InteractionType.DATA_TRANSFER
         timestamp = System.currentTimeMillis()
         mIsRead = 1
         isIncoming = !isOutgoing
@@ -69,15 +69,14 @@ class DataTransfer : Interaction {
         daemonId = interaction.daemonId
         author = interaction.author
         conversation = interaction.conversation
-        // mPeerId = interaction.getConversation().getParticipant();
         body = interaction.body
-        mStatus = interaction.status.toString()
-        mType = interaction.type.toString()
+        transferStatus = interaction.transferStatus
+        type = interaction.type
         timestamp = interaction.timestamp
         account = interaction.account
         contact = interaction.contact
         mIsRead = 1
-        isIncoming = interaction.isIncoming //mAuthor != null;
+        isIncoming = interaction.isIncoming
     }
 
     constructor(
@@ -98,7 +97,7 @@ class DataTransfer : Interaction {
         this.totalSize = totalSize
         this.bytesProgress = bytesProgress
         this.timestamp = timestamp
-        mType = InteractionType.DATA_TRANSFER.toString()
+        type = InteractionType.DATA_TRANSFER
     }
 
     val extension: String?
@@ -115,7 +114,7 @@ class DataTransfer : Interaction {
     val isVideo: Boolean
         get() = VIDEO_EXTENSIONS.contains(extension)
     val isComplete: Boolean
-        get() = InteractionStatus.TRANSFER_FINISHED.toString() == mStatus
+        get() = TransferStatus.TRANSFER_FINISHED == transferStatus
 
     fun showPicture(): Boolean = isPicture && isComplete
 
@@ -132,7 +131,7 @@ class DataTransfer : Interaction {
     val isOutgoing: Boolean
         get() = !isIncoming
     val isError: Boolean
-        get() = status.isError
+        get() = transferStatus.isError
 
     fun canAutoAccept(maxSize: Int): Boolean {
         return maxSize == UNLIMITED_SIZE || totalSize <= maxSize
@@ -149,7 +148,6 @@ class DataTransfer : Interaction {
         private val IMAGE_EXTENSIONS = setOf("jpg", "jpeg", "png", "gif", "webp", "svg", "bmp", "heic", "heif")
         private val AUDIO_EXTENSIONS = setOf("ogg", "mp3", "aac", "flac", "m4a")
         private val VIDEO_EXTENSIONS = setOf("webm", "mp4", "mkv")
-        private const val MAX_SIZE = 32 * 1024 * 1024
         private const val UNLIMITED_SIZE = 256 * 1024 * 1024
     }
 }

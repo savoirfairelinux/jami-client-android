@@ -22,7 +22,7 @@ import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.CompletableSubject
 import io.reactivex.rxjava3.subjects.PublishSubject
 import io.reactivex.rxjava3.subjects.Subject
-import net.jami.model.Interaction.InteractionStatus
+import net.jami.model.Interaction.TransferStatus
 import net.jami.services.AccountService
 import net.jami.utils.Log
 import java.util.Collections
@@ -349,9 +349,9 @@ class Account(
     fun onDataTransferEvent(transfer: DataTransfer): Conversation {
         Log.d(TAG, "Account onDataTransferEvent " + transfer.messageId)
         val conversation = transfer.conversation as Conversation
-        val transferEventCode = transfer.status
+        val transferEventCode = transfer.transferStatus
         synchronized(conversation) {
-            if (transferEventCode == InteractionStatus.TRANSFER_CREATED) {
+            if (transferEventCode == TransferStatus.TRANSFER_CREATED) {
                 conversation.addFileTransfer(transfer)
                 updated(conversation)
             } else {

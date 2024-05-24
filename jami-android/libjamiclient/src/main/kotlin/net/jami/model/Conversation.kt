@@ -290,7 +290,7 @@ class Conversation : ConversationHistory {
         if (interaction.contact == null) {
             if (contacts.size == 1) interaction.contact = contacts[0] else {
                 if (interaction.author == null) {
-                    Log.e(TAG, "Can't set interaction properties: no author for type:" + interaction.type + " id:" + interaction.id + " status:" + interaction.mStatus)
+                    Log.e(TAG, "Can't set interaction properties: no author for type:" + interaction.type + " id:" + interaction.id + " status:" + interaction.status)
                 } else {
                     interaction.contact = findContact(Uri.fromString(interaction.author!!))
                 }
@@ -664,10 +664,10 @@ class Conversation : ConversationHistory {
         mPendingMessages.remove(id)?.onSuccess(interaction)
     }
 
-    fun updateFileTransfer(transfer: DataTransfer, eventCode: Interaction.InteractionStatus) {
+    fun updateFileTransfer(transfer: DataTransfer, eventCode: Interaction.TransferStatus) {
         val dataTransfer = (if (isSwarm) transfer else findConversationElement(transfer.id)) as? DataTransfer
         if (dataTransfer != null) {
-            dataTransfer.status = eventCode
+            dataTransfer.transferStatus = eventCode
             updatedElementSubject.onNext(Pair(dataTransfer, ElementStatus.UPDATE))
         }
     }
