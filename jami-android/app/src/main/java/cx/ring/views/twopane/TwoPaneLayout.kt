@@ -138,7 +138,7 @@ class TwoPaneLayout @JvmOverloads constructor(
     private val mFoldingFeatureObserver: FoldingFeatureObserver?
     init {
         ViewCompat.setAccessibilityDelegate(this, AccessibilityDelegate())
-        ViewCompat.setImportantForAccessibility(this, ViewCompat.IMPORTANT_FOR_ACCESSIBILITY_YES)
+        importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_YES
         val repo = WindowInfoTracker.getOrCreate(context)
         val mainExecutor = ContextCompat.getMainExecutor(context)
         mFoldingFeatureObserver = FoldingFeatureObserver(repo, mainExecutor)
@@ -344,7 +344,7 @@ class TwoPaneLayout @JvmOverloads constructor(
                 val childHeightSpec = MeasureSpec.makeMeasureSpec(child.measuredHeight, MeasureSpec.EXACTLY)
                 var childWidthSpec = MeasureSpec.makeMeasureSpec(splitView.width(), MeasureSpec.AT_MOST)
                 child.measure(childWidthSpec, childHeightSpec)
-                if ((getMinimumWidth(child) != 0 && splitView.width() < getMinimumWidth(child))) {
+                if ((child.minimumWidth != 0 && splitView.width() < child.minimumWidth)) {
                     childWidthSpec = MeasureSpec.makeMeasureSpec(widthAvailable - horizontalMargin, MeasureSpec.EXACTLY)
                     child.measure(childWidthSpec, childHeightSpec)
                     // Skip first child (list pane), the list pane is always a non-sliding pane.
@@ -605,9 +605,9 @@ class TwoPaneLayout @JvmOverloads constructor(
             superNode.recycle()
             info.className = ACCESSIBILITY_CLASS_NAME
             info.setSource(host)
-            val parent = ViewCompat.getParentForAccessibility(host)
+            val parent = host.parentForAccessibility
             if (parent is View) {
-                info.setParent(parent as View?)
+                info.setParent(parent as View)
             }
 
             // This is a best-approximation of addChildrenForAccessibility()
@@ -617,7 +617,7 @@ class TwoPaneLayout @JvmOverloads constructor(
                 val child = getChildAt(i)
                 if (child.visibility == VISIBLE) {
                     // Force importance to "yes" since we can't read the value.
-                    ViewCompat.setImportantForAccessibility(child, ViewCompat.IMPORTANT_FOR_ACCESSIBILITY_YES)
+                    child.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES)
                     info.addChild(child)
                 }
             }
@@ -655,7 +655,7 @@ class TwoPaneLayout @JvmOverloads constructor(
     }
 
     private val isLayoutRtlSupport: Boolean
-        get() = ViewCompat.getLayoutDirection(this) == ViewCompat.LAYOUT_DIRECTION_RTL
+        get() = layoutDirection == View.LAYOUT_DIRECTION_RTL
 
 
     /**
@@ -736,9 +736,6 @@ class TwoPaneLayout @JvmOverloads constructor(
 
         /** Class name may be obfuscated by Proguard. Hardcode the string for accessibility usage.  */
         private const val ACCESSIBILITY_CLASS_NAME = "cx.ring.views.twopane.TwoPaneLayout"
-        private fun getMinimumWidth(child: View): Int {
-            return ViewCompat.getMinimumWidth(child)
-        }
 
         private fun measureChildHeight(child: View, spec: Int, padding: Int): Int {
             val lp = child.layoutParams as LayoutParams
