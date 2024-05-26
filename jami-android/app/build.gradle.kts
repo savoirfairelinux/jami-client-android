@@ -122,7 +122,7 @@ dependencies {
 
     // Barcode scanning
     implementation("com.journeyapps:zxing-android-embedded:4.3.0") { isTransitive = false }
-    implementation ("com.google.zxing:core:3.5.1")
+    implementation ("com.google.zxing:core:3.5.3")
 
     // Dagger dependency injection
     implementation("com.google.dagger:hilt-android:$hilt_version")
