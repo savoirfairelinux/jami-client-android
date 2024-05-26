@@ -50,6 +50,7 @@ class ConversationActivity : AppCompatActivity() {
             finish()
             return
         }
+        conversationPath = path
 
         val isBubble = getIntent().getBooleanExtra(NotificationServiceImpl.EXTRA_BUBBLE, false)
         JamiApplication.instance?.startDaemon(this)
