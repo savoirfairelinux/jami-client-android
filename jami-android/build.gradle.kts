@@ -13,7 +13,7 @@ buildscript {
     val hilt_version by extra { "2.51.1" }
 
     dependencies {
-        classpath ("com.android.tools.build:gradle:8.3.1")
+        classpath ("com.android.tools.build:gradle:8.4.1")
         classpath ("com.google.gms:google-services:4.4.1")
         classpath ("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
         classpath ("com.google.dagger:hilt-android-gradle-plugin:$hilt_version")
