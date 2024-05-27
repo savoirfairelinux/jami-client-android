@@ -321,8 +321,11 @@ class AccountCreation {
     }
 
     private fun skipBiometrics() { // Skip biometrics popup
-        val noThanksSrc = InstrumentationRegistry
-            .getInstrumentation().targetContext.getString(R.string.no_thanks)
-        onView(allOf(withText(noThanksSrc), isDisplayed())).perform(click())
+        // only on P+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+            val noThanksSrc = InstrumentationRegistry
+                .getInstrumentation().targetContext.getString(R.string.no_thanks)
+            onView(allOf(withText(noThanksSrc), isDisplayed())).perform(click())
+        }
     }
 }
