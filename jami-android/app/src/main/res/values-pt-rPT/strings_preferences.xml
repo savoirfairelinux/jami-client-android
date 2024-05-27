@@ -40,7 +40,7 @@
   <string name="pref_newGroup_title">Ativar a conversação em grupo</string>
   <string name="pref_newGroup_summary">Permitir a criação de grupos no Jami.</string>
   <string name="pref_logs_title">Registos de diagnóstico</string>
-  <string name="pref_logs_summary">Abrir definições do registo de diagnóstico</string>
+  <string name="pref_logs_summary">Abrir configurações do registo de diagnóstico</string>
   <string name="pref_logs_start">Iniciar o registo</string>
   <string name="pref_logs_stop">Parar o registo</string>
   <string name="pref_typing_title">Ativar indicadores de digitação</string>
@@ -59,9 +59,9 @@
   <string name="fab_plugins_add">Adicionar um novo módulo</string>
   <string name="plugin_uninstall_title">Desinstalar o módulo?</string>
   <string name="plugin_reset_preferences">Repor as preferências do módulo</string>
-  <string name="plugin_reset_preferences_summary">As definições do módulo serão restauradas</string>
-  <string name="plugin_reset_preferences_ask">Quer restaurar as definições gerais do módulo?</string>
-  <string name="plugin_reset_account_preferences_ask">Quer restaurar as definições do módulo da conta?</string>
+  <string name="plugin_reset_preferences_summary">As configurações do módulo serão restauradas para as de origem</string>
+  <string name="plugin_reset_preferences_ask">Quer restaurar as configurações gerais do módulo?</string>
+  <string name="plugin_reset_account_preferences_ask">Quer restaurar as configurações do módulo da conta?</string>
   <string name="plugin_successfully_installed">Módulo <b>%1$s</b> instalado com êxito</string>
   <string name="plugin_install_failure">Falha ao instalar o módulo: <b>%1$s</b></string>
   <string name="plugin_recent_version_exception">Tem uma versão mais recente de: <b>%1$s</b></string>

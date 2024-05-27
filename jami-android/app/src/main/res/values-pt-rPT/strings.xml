@@ -52,13 +52,13 @@
     <item quantity="other">%d conversas</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Procurar nome ou conversa...</string>
+  <string name="searchbar_hint">Procurar nome ou conversa…</string>
   <string name="choose_number">Escolher um número</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
-  <string name="notif_missed_incoming_call">Chamadas recebidas perdidas</string>
-  <string name="notif_missed_outgoing_call">Chamadas efetuadas perdidas</string>
+  <string name="notif_missed_incoming_call">Chamada recebida perdida</string>
+  <string name="notif_missed_outgoing_call">Chamada efetuada perdida</string>
   <string name="notif_incoming_call_title">Chamada recebida de %1$s</string>
   <string name="notif_incoming_call">Chamada recebida</string>
   <string name="notif_outgoing_call_title">Chamada efetuada para %1$s</string>
@@ -88,7 +88,7 @@
   <string name="notif_location_title">A partilhar localização com %1$s</string>
   <string name="location_share_contact">%1$s está a partilhar a localização consigo</string>
   <string name="notif_location_multi_title">A partilhar a localização com %1$d contactos</string>
-  <string name="notif_location_remaining">%1$dminutos restantes</string>
+  <string name="notif_location_remaining">%1$d minutos restantes</string>
   <string name="notif_location_action_stop">Parar a partilha de localização</string>
   <string name="location_share_action_start">Iniciar a partilha</string>
   <string name="location_share_action_stop">Parar a partilha</string>
@@ -109,8 +109,8 @@
   <string name="action_call_accept">Atender chamada</string>
   <string name="action_call_accept_audio">Responder em áudio</string>
   <string name="action_call_accept_video">Responder em vídeo</string>
-  <string name="action_call_hold_accept">Colocar em espera e fazer uma chamada em áudio</string>
-  <string name="action_call_hold_accept_video">Colocar em espera e fazer uma chamada em vídeo</string>
+  <string name="action_call_hold_accept">Colocar em espera e fazer uma chamada de áudio</string>
+  <string name="action_call_hold_accept_video">Colocar em espera e fazer uma chamada de vídeo</string>
   <string name="action_call_end_accept">Terminar e atender a chamada</string>
   <string name="action_call_decline">Rejeitar</string>
   <string name="action_call_mic_mute">Silenciar microfone</string>
@@ -150,7 +150,7 @@
   <!--Ringtone activity-->
   <string name="ringtone_error_title">Erro</string>
   <string name="ringtone_error_format_not_supported">Este formato não é suportado.</string>
-  <string name="ringtone_error_size_too_big">Este ficheiro é grande demais. O tamanho máximo é %1$dkB.</string>
+  <string name="ringtone_error_size_too_big">Este ficheiro é grande demais. O tamanho máximo é %1$d kB.</string>
   <string name="ringtone_custom_prompt">Configurar um toque de chamada personalizado</string>
   <string name="ringtone_custom_label">Personalizado</string>
   <string name="ringtone_jami_tones">Toques do Jami</string>
@@ -201,8 +201,8 @@
   <string name="conversation_members">Membros</string>
   <string name="conversation_syncing">A descarregar conversa de um par</string>
   <string name="conversation_blocked">Este contacto está bloqueado.</string>
-  <string name="conversation_ended">Conversa finalizada.</string>
-  <string name="conversation_message_deleted">%s apagou uma mensagem</string>
+  <string name="conversation_ended">A conversa terminou.</string>
+  <string name="conversation_message_deleted">%s eliminou uma mensagem</string>
   <string name="conversation_reply_you">Você</string>
   <string name="conversation_preference_color">Cor da conversação</string>
   <string name="conversation_preference_emoji">Emoji da conversação</string>
@@ -233,7 +233,7 @@
   <string name="wizard_skip">Ignorar</string>
   <string name="hist_contact_invited">Contacto convidado</string>
   <string name="hist_contact_added">Contacto adicionado</string>
-  <string name="hist_contact_left">Contacto saiu</string>
+  <string name="hist_contact_left">O contacto saiu</string>
   <string name="hist_contact_banned">Contacto banido</string>
   <string name="hist_invitation_received">Convite recebido</string>
   <!--Account Summary-->
@@ -247,7 +247,7 @@
   <string name="no_registered_name">Sem nome registado</string>
   <string name="identity">Identidade</string>
   <string name="account">Conta</string>
-  <string name="link_new_device">Associar a um novo dispositivo</string>
+  <string name="link_new_device">Vincular um novo dispositivo</string>
   <string name="devices">Dispositivos vinculados</string>
   <string name="total_devices">Total de dispositivos:</string>
   <!--Share fragment-->
@@ -271,7 +271,7 @@
   <!--Send contact requests-->
   <string name="send_request_button">Enviar</string>
   <string name="send_request_title">Enviar um pedido de contacto</string>
-  <string name="send_request_msg">Deve enviar um pedido de contacto para se comunicar com este utilizador. Enquanto o seu contacto não aceitar o pedido, pode enviar mensagens, mas ele não poderá respondê-las.</string>
+  <string name="send_request_msg">É necessário enviar um pedido de contacto para comunicar com este utilizador. Enquanto o seu contacto não tiver aceite o pedido, pode enviar mensagens, mas ele não poderá responder.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Sem contactos bloqueados</string>
   <!--Smartlist-->
@@ -298,10 +298,10 @@
   <string name="file_transfer_status_invalid_pathname">diretório inválido</string>
   <string name="file_transfer_status_unjoinable_peer">contacto indisponível</string>
   <string name="file_transfer_status_cancelled">cancelada</string>
-  <string name="file_transfer_status_error">falhou devido a erro</string>
+  <string name="file_transfer_status_error">falhou devido a um erro</string>
   <string name="file_transfer_status_timed_out">expirou o tempo</string>
-  <string name="file_saved_in">Ficheiro gravado em %s</string>
-  <string name="file_saved_successfully">Ficheiro gravado com sucesso</string>
+  <string name="file_saved_in">Ficheiro guardado em %s</string>
+  <string name="file_saved_successfully">Ficheiro guardado com sucesso</string>
   <string name="file_download">Descarregar</string>
   <string name="no_space_left_on_device">Sem espaço disponível no dispositivo</string>
   <string name="title_media_viewer">Visualizador de média</string>
@@ -401,8 +401,8 @@
   <string name="jami_id_share">Partilhar Jami ID</string>
   <string name="jami_id_validate">Registar nome de utilizador</string>
   <string name="jami_id_available">O nome de utilizador está disponível</string>
-  <string name="jami_id_not_available">O nome de utilizador não está disponível\n- 32 caracteres no máximo\n- Caracteres especiais permitidos: traço (-), traço inferior (_)</string>
-  <string name="jami_id_info">• 32 máximo caracteres\n• Caracteres especiais permitidos: traço (-), traço inferior (_)</string>
+  <string name="jami_id_not_available">O nome de utilizador não está disponível\n• 32 caracteres no máximo\n• Caracteres especiais permitidos: traço (-), traço inferior (_)</string>
+  <string name="jami_id_info">• 32 caracteres no máximo\n• Caracteres especiais permitidos: traço (-), traço inferior (_)</string>
   <string name="jami_id_looking_for_availability">A procurar a disponibilidade do nome de utilizador…</string>
   <string name="jami_id_choose_username">Escolha um nome de utilizador</string>
   <!--WelcomeJami-->

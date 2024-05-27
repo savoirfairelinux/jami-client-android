@@ -22,6 +22,7 @@
   <string name="developed_by">Ontwikkeld door</string>
   <string name="designed_by">Ontworpen door</string>
   <string name="ringtones_by">Beltonen door</string>
+  <string name="credits_volunteers">En de vrijwilligers die bijdragen aan dit project!</string>
   <!--RingActivity-->
   <string name="error_no_network">Geen netwerkverbinding</string>
   <string name="error_account_offline">Het account is offline</string>
@@ -44,11 +45,13 @@
   <!--History Fragment-->
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
+  <string name="invitation_card_title">Uitnodigingen ontvangen</string>
   <plurals name="home_conferences_title">
     <item quantity="one">%d gesprek</item>
     <item quantity="other">%d gesprekken</item>
   </plurals>
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">Zoek op naam of gesprek</string>
   <string name="choose_number">Kies een nummer</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -72,6 +75,7 @@
   <string name="notif_channel_background_service">Achtergronddienst</string>
   <string name="notif_channel_background_service_descr">Maakt het mogelijk om op elk moment oproepen en berichten te ontvangen.</string>
   <string name="notif_group_calls">Oproepen</string>
+  <string name="notif_inprogress_group_call">Oproep bezig</string>
   <string name="notif_background_service">Jami draait momenteel in de achtergrond</string>
   <string name="notif_mark_as_read">Markeren als gelezen</string>
   <string name="notif_dismiss">Negeren</string>
@@ -98,6 +102,7 @@
   <string name="ongoing_call">Lopende oproep</string>
   <string name="hist_in_call">Inkomende oproep van %1$s</string>
   <string name="hist_out_call">Uitgaande oproep van %1$s</string>
+  <string name="call_duration">Duurde %s</string>
   <string name="start_error_title">Jami kan niet opgestart worden!</string>
   <string name="start_error_mic_required">Jami vereist toestemming om de microfoon te kunnen gebruiken.</string>
   <string name="action_call_accept">Oproep aannemen</string>
@@ -119,6 +124,7 @@
   <string name="write_a_message">Schrijf een bericht</string>
   <string name="scan_qr">QR-code scannen</string>
   <string name="qr_code">QR-code</string>
+  <string name="new_swarm">Start Zwerm</string>
   <string name="ab_action_flipcamera">Camera draaien</string>
   <string name="ab_action_hidepreview">Verberg voorbeeld</string>
   <string name="remote_recording">%s aan het opnemen...</string>
@@ -134,6 +140,8 @@
   <string name="conversation_send_audio">Geluidsbericht opnemen</string>
   <string name="conversation_send_video">Videobericht opnemen</string>
   <string name="conversation_share_location">Uw locatie delen</string>
+  <string name="ongoing_group_call">Lopende Oproep</string>
+  <string name="started_call">Oproep gestart</string>
   <string name="in_reply_to">In antwoord op</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Cameramachtiging</string>
@@ -193,6 +201,7 @@
   <string name="conversation_syncing">Download van een gesprek van een peer</string>
   <string name="conversation_blocked">Dit contact is geblokkeerd.</string>
   <string name="conversation_ended">Het gesprek is voorbij.</string>
+  <string name="conversation_message_deleted">%s verwijderde een bericht</string>
   <string name="conversation_reply_you">Jij?</string>
   <string name="conversation_preference_color">Kleur van het gesprek</string>
   <string name="conversation_preference_emoji">Conversatie emoji</string>
@@ -327,6 +336,16 @@
   <string name="tv_send_video">Verstuur Media</string>
   <string name="tv_action_more">Meer</string>
   <string name="conversation_input_speech_hint">Zeg iets...</string>
+  <string name="audio_permission_denied">Verschaf a.u.b. toegang tot de microfoon om Jami audio functies te gebruiken</string>
+  <string name="camera_permission_denied">Verschaf a.u.b. toegang tot de camera om Jami video functies te gebruiken</string>
+  <string name="speech_recogniton_unavailable">Spraak herkenning is niet beschikbaar</string>
+  <string name="audio_permission_rationale_title">Audio-toestemming vereist</string>
+  <string name="camera_permission_rationale_title">Video-toestemming vereist</string>
+  <string name="audio_permission_rationale_message">Jami heeft microfoon-toegang nodig voor spraak-naar-text en audio-opname functies. Het zal in de volgende step gevraagd worden</string>
+  <string name="camera_permission_rationale_message">Jami heeft camera-toegang nodig voor het opnemen van video en video-bellen. Het zal in de volgende step gevraagd worden</string>
+  <string name="unable_to_start_recorder">Niet in staat om de audio opname te starten</string>
+  <string name="error_sharing_file">Fout bij bestandsdeling.</string>
+  <string name="error_opening_file">Fout bij openen bestand.</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Aanbevolen</string>
   <string name="wizard_status_optional">Optioneel</string>
@@ -375,12 +394,27 @@
   <string name="picker_btn">Selecteer contacten</string>
   <string name="bottomsheet_contact">Neem contact op met Jami\n%1$s</string>
   <string name="bottomsheet_remove">Verwijder uit de zwerm.</string>
+  <string name="error_open_no_app_found">Geen applicatie gevonden om dit bestand te verwerken: %1$s</string>
   <!--JamiId-->
+  <string name="jami_id_copy">Jami-ID Kopiëren</string>
+  <string name="jami_id_share">Jami-ID Delen</string>
   <string name="jami_id_validate">Gebruikersnaam registreren</string>
+  <string name="jami_id_available">De gebruikersnaam is beschikbaar</string>
+  <string name="jami_id_not_available">De gebruikersnaam is niet beschikbaar\n• Maximaal 32 karakters\n•  Speciale karakters toegestaan: streep(-), laag streepje(_)</string>
+  <string name="jami_id_info">• Maximaal 32 karakters\n• Speciale karakters toegestaan: streep(-), laag streepje(_)</string>
   <string name="jami_id_looking_for_availability">Beschikbaarheid van gebruikersnaam wordt gecontroleerd…</string>
   <string name="jami_id_choose_username">Kies een gebruikersnaam</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Welkom bij Jami</string>
+  <string name="welcome_jami_description">Deel uw Jami Identifier zodat u makkelijker bereikbaar bent!</string>
   <!--Donation-->
+  <string name="donation_card_description">Als u van Jami geniet en in onze missie gelooft, zou u een donatie wilen doen?</string>
+  <string name="donation_card_not_now">Niet nu</string>
+  <string name="donation_donate">Doneren</string>
+  <string name="donation_setting_title">Donatie herinnering</string>
+  <string name="donation_setting_description">Donatie herinnering inschakelen</string>
   <!--Plugin-->
+  <string name="unable_to_load">Niet in staat %1$s te laden</string>
+  <string name="load_sucess">%1$s: ingeschakeld</string>
+  <string name="unload_sucess">%1$s: uitgeschakeld</string>
 </resources>
