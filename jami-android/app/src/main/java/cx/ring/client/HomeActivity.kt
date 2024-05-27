@@ -329,15 +329,13 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
 
         // Subject to check if a username is available
         val usernameAvailabilitySubject = PublishSubject.create<String>()
-        val usernameIsAvailableObservable =
-            usernameAvailabilitySubject
-                .debounce(500, TimeUnit.MILLISECONDS)
-                .switchMapSingle { mAccountService.findRegistrationByName("", "", it) }
-                .observeOn(DeviceUtils.uiScheduler)
         mDisposable.add(
-            usernameIsAvailableObservable.subscribe {
-                welcomeJamiViewModel.checkIfUsernameIsAvailableResult(it)
-            }
+            mAccountService.currentAccountSubject
+                .switchMap { account -> usernameAvailabilitySubject.map { Pair(account, it) } }
+                .debounce(500, TimeUnit.MILLISECONDS)
+                .switchMapSingle { (account, username) -> mAccountService.findRegistrationByName(account.accountId, "", username) }
+                .observeOn(DeviceUtils.uiScheduler)
+                .subscribe { welcomeJamiViewModel.checkIfUsernameIsAvailableResult(it) }
         )
 
         // Subscribe on account to display correct welcome fragment
