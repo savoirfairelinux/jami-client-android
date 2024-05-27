@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "411b6f3d_8f874fa8",
+        "filename": "ci/Dockerfile",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-05-27T20:28:09Z",
+      "side": 1,
+      "message": "avoid duplicating Dockerfile if possible",
+      "range": {
+        "startLine": 1,
+        "startChar": 23,
+        "endLine": 29,
+        "endChar": 10
+      },
+      "revId": "7d3c3d34c4c96f87fffd30ccaee62b176f390a07",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
