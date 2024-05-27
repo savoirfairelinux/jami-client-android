@@ -18,9 +18,9 @@
   <string name="action_settings">Configurações</string>
   <string name="error_field_required">Este campo é obrigatório</string>
   <string name="dialog_wait_create">Adicionar conta</string>
-  <string name="dialog_wait_create_details">Por favor aguarde enquanto a sua nova conta é adicionada...</string>
+  <string name="dialog_wait_create_details">Por favor aguarde enquanto a sua nova conta é adicionada…</string>
   <string name="dialog_wait_update">A atualizar a conta</string>
-  <string name="dialog_wait_update_details">Por favor aguarde enquanto a sua nova conta é atualizada...</string>
+  <string name="dialog_wait_update_details">Por favor aguarde enquanto a sua nova conta é atualizada…</string>
   <string name="dialog_warn_ip2ip_account_title">Criar uma conta SIP vazia?</string>
   <string name="dialog_warn_ip2ip_account_message">Está prestes a criar uma conta SIP com nenhum nome de servidor válido.
         Só poderá fazer e receber chamadas diretas de IP.
@@ -67,7 +67,7 @@
   <string name="account_upnp_label">Ativar UPnP</string>
   <string name="account_proxy_field">Proxy</string>
   <!--Plugin Details-->
-  <string name="account_preference_plugin_tab">Complementos</string>
+  <string name="account_preference_plugin_tab">Módulos</string>
   <!--Audio Details-->
   <string name="account_audio_label">Áudio</string>
   <string name="account_preferences_media_tab">Média</string>
@@ -92,9 +92,9 @@
   <string name="account_local_port_label">Porta local</string>
   <string name="account_stun_enable_label">Usar Stun</string>
   <string name="account_stun_server_label">Servidor Stun</string>
-  <string name="account_accept_files">Permitir receber ficheiros automáticamente</string>
+  <string name="account_accept_files">Aceitar automaticamente os ficheiros recebidos</string>
   <string name="account_conversation_settings_title">Configurações de conversa</string>
-  <string name="account_accept_files_max_size">Tamanho máximo de ficheiro a aceitar automáticamente</string>
+  <string name="account_accept_files_max_size">Tamanho máximo de ficheiro a aceitar automaticamente</string>
   <string name="account_accept_files_never">Nunca aceitar automaticamente</string>
   <string name="account_accept_files_always">Aceitar sempre automaticamente</string>
   <string name="size_mb">%1$d MB</string>
@@ -113,7 +113,7 @@
   <string name="account_proxy_server_list_label">URL de lista de proxy DHT</string>
   <string name="account_sip_proxy_label">Proxy</string>
   <string name="account_peer_discovery_label">Descoberta de membros locais</string>
-  <string name="account_peer_discovery_enable_label">Ativar a descoberta de membros locais</string>
+  <string name="account_peer_discovery_enable_label">Ativar a descoberta de pares locais</string>
   <string name="account_peer_discovery_enable_summary">Conectar a outros nós de DHT a anunciar na rede local</string>
   <!--Security Details-->
   <string name="account_credentials_label">Credenciais</string>
@@ -121,7 +121,7 @@
   <string name="account_credentials_add">Adicionar credenciais</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Segurança</string>
-  <string name="account_srtp_switch_label">Encriptar fluxo de média (SRTP)</string>
+  <string name="account_srtp_switch_label">Encriptar fluxos de multimédia (SRTP)</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Usar transporte TLS</string>
@@ -144,9 +144,9 @@
   <string name="account_new_device_password">Introduza a palavra-passe principal para desbloquear a conta</string>
   <string name="error_password_char_count">Pelo menos 6 caracteres</string>
   <string name="error_passwords_not_equals">As palavras-passe não são iguais</string>
-  <string name="export_account_wait_title">Por favor aguarde...</string>
+  <string name="export_account_wait_title">Por favor aguarde…</string>
   <string name="export_account_wait_message">Exportar a informação da conta</string>
-  <string name="account_export_file">Cópia de segurança da conta</string>
+  <string name="account_export_file">Fazer uma cópia de segurança da conta</string>
   <string name="account_export_file_summary">Faça uma cópia de segurança da sua conta no seu dispositivo para a restaurar mais tarde.</string>
   <string name="account_export_end_decryption_message">Não foi possível desbloquear a sua conta utilizando a palavra-passe fornecida.</string>
   <string name="account_export_end_network_title">Erro de rede</string>
@@ -182,7 +182,7 @@
   <string name="account_tv_settings_header">Configurações da conta</string>
   <string name="account_tv_advance_settings_header">Configurações avançadas</string>
   <string name="account_tv_add_contact">Adicionar contacto</string>
-  <string name="account_tv_advanced_settings">Mude as configurações gerais</string>
+  <string name="account_tv_advanced_settings">Alterar as configurações gerais</string>
   <string name="account_tv_about">Sobre o Jami</string>
   <string name="tv_about_version">Versão</string>
   <string name="tv_about_license">Licença</string>
@@ -193,17 +193,17 @@
   <string name="account_link_archive_button">Conectar da cópia de segurança</string>
   <string name="account_link_prompt_pin">Introduza o PIN</string>
   <string name="account_new_button">Criar uma conta Jami</string>
-  <string name="account_link_export_button">Associar a um novo dispositivo</string>
+  <string name="account_link_export_button">Vincular um novo dispositivo</string>
   <string name="account_link_show_button">Mostrar %d mais dispositivos vinculados</string>
   <string name="account_link_hide_button">Ocultar dispositivo vinculado</string>
   <string name="account_link_export_info">Para usar esta conta noutros dispositivos, necessita primeiro de expo-lo ao Jami. Isto irá gerar um código PIN que necessita de introduzir no novo dispositivo para configurar a sua conta. O PIN é válido por apenas 10 minutos.</string>
   <string name="account_start_export_button">Gerar código PIN</string>
   <string name="account_end_export_button">fechar</string>
-  <string name="account_end_export_infos">O seu código PIN é:\n\n%%\n\nPara completar o processo, tem de abrir o Jami no novo dispositivo. Crie uma nova conta com \"Associar este dispositivo a uma conta\". O seu código PIN é válido por 10 minutos.</string>
+  <string name="account_end_export_infos">O seu código PIN é:\n\n%%\n\nPara completar o processo, tem de abrir o Jami no novo dispositivo. Crie uma nova conta com \"Vincular este dispositivo a uma conta\". O seu código PIN é válido por 10 minutos.</string>
   <string name="account_link_export_info_light">Para usar esta conta noutros dispositivos, necessita primeiro de expo-lo ao Jami. Isto irá gerar um código PIN que necessita de introduzir no novo dispositivo para configurar a sua conta. O PIN é válido por apenas 10 minutos.</string>
-  <string name="account_export_title">Conectar a conta a outros dispositivos</string>
-  <string name="account_connect_server_button">Ligar ao servidor de gestão</string>
-  <string name="account_connect_button">Ligar</string>
+  <string name="account_export_title">Vincular a conta a outros dispositivos</string>
+  <string name="account_connect_server_button">Conectar ao servidor de gestão</string>
+  <string name="account_connect_button">Conectar</string>
   <string name="prompt_server">URL do servidor de gestão do Jami</string>
   <string name="help_credentials_enter">Introduza as credenciais da sua organização</string>
   <string name="help_connect_password_enter">Introduza a palavra-passe da sua organização</string>
@@ -212,7 +212,7 @@
   <string name="error_username_empty">Introduza um nome de utilizador</string>
   <string name="no_registered_name_for_account">Sem nome registado</string>
   <string name="username_available">Nome de utilizador disponível!</string>
-  <string name="register_name">Nome de registo</string>
+  <string name="register_name">Registar nome</string>
   <string name="trying_to_register_name">A tentar registar o nome</string>
   <string name="registered_username">Nome de utilizador registado</string>
   <string name="register_username">Registar nome de utilizador público</string>
@@ -229,18 +229,18 @@
   <string name="account_status_error">Erro</string>
   <!--Create account-->
   <string name="account_creation_home">Bem-vindo ao Jami</string>
-  <string name="account_creation_profile">Criar o seu perfil</string>
+  <string name="account_creation_profile">Crie o seu perfil</string>
   <string name="account_creation_ring">Crie a sua conta Jami</string>
-  <string name="account_link_title">Associar este dispositivo</string>
+  <string name="account_link_title">Vincular este dispositivo</string>
   <string name="account_sip_cannot_be_registered">Não foi possível registar a conta</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">Editar minha conta</string>
+  <string name="account_edit_profile">Editar a minha conta</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Introduza a palavra-passe para confirmar</string>
   <string name="enter_password">Introduza a palavra-passe</string>
   <string name="revoke_device_title">Revogar dispositivo</string>
-  <string name="revoke_device_message">Tem certeza que deseja revogar %1$s ?</string>
-  <string name="revoke_device_wait_title">Por favor aguarde...</string>
+  <string name="revoke_device_message">Tem certeza que deseja revogar %1$s?</string>
+  <string name="revoke_device_wait_title">Por favor aguarde…</string>
   <string name="revoke_device_wait_message">A revogar o dispositivo</string>
   <string name="rename_device_title">Alterar o nome deste dispositivo</string>
   <string name="rename_device_message">Escolha um novo nome para identificar este dispositivo na sua conta Jami</string>
@@ -250,20 +250,20 @@
   <string name="account_device_this_indicator">Este dispositivo</string>
   <string name="account_disabled_indicator">desativado</string>
   <!--Link a new device-->
-  <string name="account_link_prompt_pin_manually">Introduzir o PIN manualmente</string>
+  <string name="account_link_prompt_pin_manually">Introduzir PIN manualmente</string>
   <string name="qr_invalid">Não é um código QR de autenticação Jami</string>
   <string name="content_description_checkbox">O seu código QR é válido</string>
   <string name="error_format_not_supported">Este formato não é suportado.</string>
   <string name="account_link_info">Na nova aplicação Jami, digitalize o código QR ou introduza manualmente o PIN.</string>
-  <string name="account_link_device_title">Associar a um novo dispositivo</string>
+  <string name="account_link_device_title">Vincular um novo dispositivo</string>
   <string name="account_link_password">Esta conta é encriptada por palavra-passe, introduza a palavra-passe para gerar o código PIN.</string>
   <string name="account_link_generate_button">Gerar</string>
   <string name="account_link_time_valid">O código PIN não é válido: %1$s.</string>
-  <string name="account_link_device_info">Escolha \"Associar um novo dispositivo\" na outra aplicação Jami para mostrar o código QR ou o PIN</string>
+  <string name="account_link_device_info">Escolha \"Vincular um novo dispositivo\" na outra aplicação Jami para mostrar o código QR ou o PIN</string>
   <string name="account_generate_export_device">No outro dispositivo</string>
   <string name="account_generate_export_info">Instale e inicie o Jami, selecione \"Importar de outro dispositivo\" e leia o código QR.</string>
   <string name="content_description_qr_generated">O seu código QR</string>
-  <string name="account_generate_export_invalid">O PIN já não é válido.\n Introduza a palavra-passe e crie outra para vincular o novo dispositivo.</string>
+  <string name="account_generate_export_invalid">O PIN já não é válido.\n Introduza a palavra-passe e crie outro para vincular o novo dispositivo.</string>
   <string name="account_generate_export_invalid_two">O PIN já não é válido.\nGerar outro para vincular o novo dispositivo.</string>
   <string name="help_pin_info">Preencher se a conta estiver encriptada por palavra-passe</string>
   <string name="connect_device_scanqr">Digitalizar QR</string>
