@@ -280,6 +280,9 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
             .show()
     }
 
+    private val iconSize by lazy { max(ShortcutManagerCompat.getIconMaxHeight(this), ShortcutManagerCompat.getIconMaxWidth(this)) }
+    private val maxShortcuts by lazy { getMaxShareShortcuts() }
+
     override fun onStart() {
         Log.d(TAG, "onStart")
         super.onStart()
@@ -298,8 +301,6 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
                         }
                     }
                 })
-        val iconSize = max(ShortcutManagerCompat.getIconMaxHeight(this), ShortcutManagerCompat.getIconMaxWidth(this))
-        val maxShortcuts = getMaxShareShortcuts()
         mDisposable.add(mAccountService
             .currentAccountSubject
             .switchMap { obj -> obj.getConversationsSubject() }
