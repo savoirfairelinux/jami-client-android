@@ -8,5 +8,6 @@
   <string name="video_plugins">Videovähed</string>
   <string name="file_download_button">Lase alla</string>
   <string name="control_play">Mängi</string>
+  <string name="control_replay">Korda esitust</string>
   <string name="control_pause">Pause</string>
 </resources>

@@ -46,6 +46,9 @@
   <string name="account_password_set">Lahjend seadmine</string>
   <string name="account_password_summary">Hoia oma konto parooli.</string>
   <string name="account_password_change_wait_message">Konto parooli muutmine</string>
+  <string name="account_biometric_disable">Lülita välja biomeetriline autentimine</string>
+  <string name="account_biometric_set">Võta biomeetriline autentimine kasutusele</string>
+  <string name="account_biometric_summary">Halda oma kasutajakonto biomeetrilist autentimist.</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Üldne</string>
   <string name="account_basic_category">Põhilised seadmed</string>
@@ -77,6 +80,7 @@
   <string name="account_video_enable">Video aktiveerimine</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Eelseisv</string>
+  <string name="account_chat_settings_title">Vestkuse seadistused</string>
   <string name="account_read_receipts_label">Võimalda lugemisrecepti.</string>
   <string name="account_read_receipts_summary">Saada ja saada kviitid, mis näitavad, et sõnum on näidatud.</string>
   <string name="account_call_settings_title">Kõnesõnumite seaded</string>
@@ -244,8 +248,37 @@
   <string name="account_device_this_indicator">See seadme</string>
   <string name="account_disabled_indicator">puudega</string>
   <!--Link a new device-->
+  <string name="account_link_prompt_pin_manually">Sisesta PIN-kood käsitsi</string>
+  <string name="qr_invalid">See pole Jami autentimiseks mõeldud QR-kood</string>
+  <string name="content_description_checkbox">Sinu näidatud QR-kood on vigane</string>
   <string name="error_format_not_supported">See formaat ei toeta.</string>
+  <string name="account_link_info">Uues Jami rakenduses kas skaneeri seda QR-koodi või sisesta PIN-kood käsitsi.</string>
   <string name="account_link_device_title">Sõlgke uus seadme</string>
+  <string name="account_link_password">Selle kasutajakonto andmed on krüptitud salasõnaga. PIN-koodi loomiseks palun sisesta oma salasõna.</string>
+  <string name="account_link_generate_button">Loo</string>
+  <string name="account_link_time_valid">See PIN-kood saab olema vigane: %1$s.</string>
+  <string name="account_link_device_info">Oma teisest Jami rakendusest vali „Seo uus seade“ ning kuva QR-koodi või sisesta PIN-kood</string>
+  <string name="account_generate_export_device">Teises seadmes</string>
+  <string name="account_generate_export_info">Paigalda ja käivita Jami ning vali „Impordi teisest seadmest“ ning skaneeri QR-koodi.</string>
+  <string name="content_description_qr_generated">Sinu QR-kood</string>
+  <string name="account_generate_export_invalid">See PIN-kood enam ei kehti. Uue seadme sidumiseks sisesta salasõna ja loo uus PIN-kood.</string>
+  <string name="account_generate_export_invalid_two">See PIN-kood enam ei kehti. Uue seadme sidumiseks loo uus PIN-kood.</string>
+  <string name="help_pin_info">Täida, kui konto on salasõnaga krüptitud</string>
+  <string name="connect_device_scanqr">Skaneeri QR-koodi</string>
+  <string name="connect_device_enterPIN">või sisesta PIN-kood</string>
   <string name="account_link_device_button">Sõltuv</string>
   <!--Biometry-->
+  <string name="account_biometry_auth_title">Eemalda Jami kasutajakonto lukustus</string>
+  <string name="account_biometry_auth_message">Oma kasutajakonto avamiseks kasuta biomeetrilist tuvastust</string>
+  <string name="account_biometry_enroll_title">Kas kasutame biomeetrilist autentimist?</string>
+  <string name="account_biometry_enroll_message">Sinu nutiseade võimaldab kasutada biomeetrilist tuvastamist
+See pakub täiendava mugava ligipääsu sinu Jami kasutajakontole. Jätkuvalt jääb alles võimalus kasutada salasõna.</string>
+  <string name="account_biometry_enroll_accept">Kasuta biomeetrilist tuvastamist</string>
+  <string name="no_thanks">Tänan, ei</string>
+  <string name="account_biometry_enroll_auth_title">Lisa oma Jami kasutajakontole autentimine</string>
+  <string name="account_biometry_enroll_auth_message">Alternatiiviks salasõnale lisa oma kasutajakontole biomeetriline või seadmepõhine autentimine</string>
+  <string name="account_auth_error">Viga autentimisel: %1$s</string>
+  <string name="account_auth_success">Tuvastamine õnnestus</string>
+  <string name="account_auth_key_error">Kasutajakonto võtme dekrüptimine ei õnnestunud</string>
+  <string name="account_auth_password">Kasuta konto salasõna</string>
 </resources>
