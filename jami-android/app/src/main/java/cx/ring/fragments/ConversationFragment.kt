@@ -340,6 +340,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 
     override fun setConversationColor(@ColorInt color: Int) {
         mAdapter?.convColor = getConversationColor(requireContext(), color)
+        mSearchAdapter?.convColor = getConversationColor(requireContext(), color)
     }
 
     override fun setConversationSymbol(symbol: CharSequence) {
@@ -765,6 +766,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                         isSearch = true
                     ).apply {
                         showLinkPreviews = mAdapter!!.showLinkPreviews
+                        convColor = mAdapter!!.convColor
                     }
                     presenter.startSearch()
                     currentBottomView?.isVisible = false
