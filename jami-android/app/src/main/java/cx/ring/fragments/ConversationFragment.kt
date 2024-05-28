@@ -759,7 +759,13 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 
                 override fun onMenuItemActionExpand(item: MenuItem): Boolean {
                     val convList = binding?.histList ?: return false
-                    mSearchAdapter = ConversationAdapter(this@ConversationFragment, presenter, true)
+                    mSearchAdapter = ConversationAdapter(
+                        conversationFragment = this@ConversationFragment,
+                        presenter = presenter,
+                        isSearch = true
+                    ).apply {
+                        showLinkPreviews = mAdapter!!.showLinkPreviews
+                    }
                     presenter.startSearch()
                     currentBottomView?.isVisible = false
                     convList.adapter = mSearchAdapter
@@ -1163,6 +1169,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 
     override fun setSettings(linkPreviews: Boolean) {
         mAdapter?.showLinkPreviews = linkPreviews
+        mSearchAdapter?.showLinkPreviews = linkPreviews
     }
 
     override fun hideErrorPanel() {
