@@ -322,7 +322,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         <service
             android:name=".service.DRingService"
-            android:exported="false">
+            android:exported="false"
+            android:foregroundServiceType="dataSync">
             <intent-filter>
                 <action android:name=".service.DRingService" />
             </intent-filter>
