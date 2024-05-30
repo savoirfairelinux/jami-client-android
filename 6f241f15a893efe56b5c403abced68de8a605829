@@ -71,6 +71,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f7abf4ab_ec7f648d",
+        "filename": "ci/Dockerfile",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-05-30T14:19:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "460601b0_a6d0e309",
+      "range": {
+        "startLine": 53,
+        "startChar": 15,
+        "endLine": 53,
+        "endChar": 17
+      },
+      "revId": "6f241f15a893efe56b5c403abced68de8a605829",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f02cb9b0_230a39e8",
@@ -108,6 +132,30 @@
       "side": 1,
       "message": "Inherited from the cqfd Dockerfile. Not sure why it was added https://review.jami.net/c/jami-client-android/+/17806",
       "parentUuid": "f02cb9b0_230a39e8",
+      "range": {
+        "startLine": 54,
+        "startChar": 14,
+        "endLine": 54,
+        "endChar": 30
+      },
+      "revId": "6f241f15a893efe56b5c403abced68de8a605829",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb7435ad_e18436d2",
+        "filename": "ci/Dockerfile",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-05-30T14:19:05Z",
+      "side": 1,
+      "message": "Removed, let\u0027s put it back if really needed.",
+      "parentUuid": "b624a26b_ee4417c1",
       "range": {
         "startLine": 54,
         "startChar": 14,
@@ -282,6 +330,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3b095b72_aa3a871a",
+        "filename": "ci/compile.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-05-30T14:19:05Z",
+      "side": 1,
+      "message": "No, he meant `echo \"Executing tests false\"` and \"Executing tests true\"`.\nDone",
+      "parentUuid": "65110598_f0c6ad83",
+      "range": {
+        "startLine": 65,
+        "startChar": 6,
+        "endLine": 65,
+        "endChar": 15
+      },
+      "revId": "6f241f15a893efe56b5c403abced68de8a605829",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "472120fc_4f7d0a6d",
@@ -295,6 +367,30 @@
       "writtenOn": "2024-04-25T17:40:16Z",
       "side": 1,
       "message": "why the sleep are needed?",
+      "range": {
+        "startLine": 102,
+        "startChar": 4,
+        "endLine": 102,
+        "endChar": 7
+      },
+      "revId": "6f241f15a893efe56b5c403abced68de8a605829",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a268cfee_51a52071",
+        "filename": "ci/start_emu_headless.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-05-30T14:19:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "472120fc_4f7d0a6d",
       "range": {
         "startLine": 102,
         "startChar": 4,
