@@ -57,7 +57,7 @@ class RegisterNameDialog : DialogFragment() {
         mListener = l
     }
 
-    private fun onLookupResult(name: String, address: String?, state: Int) {
+    private fun onLookupResult(name: String, address: String?, state: AccountService.LookupState) {
         binding?.let { binding ->
             val actualName = binding.inputUsername.text?.toString() ?: ""
             if (actualName.isEmpty()) {
@@ -68,12 +68,12 @@ class RegisterNameDialog : DialogFragment() {
             if (name != actualName)
                 return
             when (state) {
-                0 -> {
+                AccountService.LookupState.Success -> {
                     // on found
                     binding.inputUsernameTxtBox.isErrorEnabled = true
                     binding.inputUsernameTxtBox.error = getText(R.string.username_already_taken)
                 }
-                1 -> {
+                AccountService.LookupState.Invalid -> {
                     // invalid name
                     binding.inputUsernameTxtBox.isErrorEnabled = true
                     binding.inputUsernameTxtBox.error = getText(R.string.invalid_username)
