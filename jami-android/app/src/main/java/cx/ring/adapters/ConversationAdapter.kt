@@ -294,7 +294,7 @@ class ConversationAdapter(
 
             Interaction.InteractionType.DATA_TRANSFER -> {
                 val file = interaction as DataTransfer
-                if (file.isComplete) {
+                if (file.transferStatus == TransferStatus.TRANSFER_FINISHED) {
                     if (interaction.isIncoming) {
                         when {
                             file.isPicture -> MessageType.INCOMING_IMAGE.ordinal
@@ -310,6 +310,12 @@ class ConversationAdapter(
                             else -> MessageType.OUTGOING_FILE.ordinal
                         }
                     }
+                } else if (file.transferStatus == TransferStatus.FILE_REMOVED) {
+                    // display msg for a user in the same way as deleted text messages
+                    interaction.type = Interaction.InteractionType.TEXT
+                    if (interaction.isIncoming) {
+                        MessageType.INCOMING_TEXT_MESSAGE.ordinal
+                    } else MessageType.OUTGOING_TEXT_MESSAGE.ordinal
                 } else {
                     if (interaction.isIncoming) {
                         MessageType.INCOMING_FILE.ordinal
@@ -867,7 +873,7 @@ class ConversationAdapter(
             convActionFileDelete.isVisible = isFileMenu
             convActionCopyText.isVisible = !isDeleted && interaction !is DataTransfer
             convActionEdit.isVisible = !isDeleted && !interaction.isIncoming && interaction is TextMessage
-            convActionDelete.isVisible = !isDeleted && !interaction.isIncoming && interaction is TextMessage
+            convActionDelete.isVisible = !isDeleted && !interaction.isIncoming
             convActionHistory.isVisible = !isDeleted && history.size > 1
             root.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
 
@@ -1319,40 +1325,37 @@ class ConversationAdapter(
     /**
      * Configures the viewHolder to display a classic text message, ie. not a call info text message
      *
-     * @param convViewHolder The conversation viewHolder
+     * @param viewHolder The conversation viewHolder
      * @param interaction    The conversation element to display
      * @param position       The position of the viewHolder
      */
     private fun configureForTextMessage(
-        convViewHolder: ConversationViewHolder,
+        viewHolder: ConversationViewHolder,
         interaction: Interaction,
         position: Int
     ) {
-        val context = convViewHolder.itemView.context
-
-        val textMessage = interaction as TextMessage
+        val context = viewHolder.itemView.context
         val account = interaction.account ?: return
-        val contact = textMessage.contact ?: return
-        val isDeleted = textMessage.body.isNullOrEmpty()
+        val contact = interaction.contact ?: return
+        val isDeleted = interaction.body.isNullOrEmpty() || interaction.transferStatus == TransferStatus.FILE_REMOVED
         val isEdited = interaction.history.size > 1
         val isReplying = interaction.replyToId != null
 
-        val messageBubble = convViewHolder.mMessageBubble ?: return
-        val replyBubble = convViewHolder.mReplyBubble
-        val answerLayout = convViewHolder.mAnswerLayout
-        val peerDisplayName = convViewHolder.mPeerDisplayName
+        val messageBubble = viewHolder.mMessageBubble ?: return
+        val replyBubble = viewHolder.mReplyBubble
+        val answerLayout = viewHolder.mAnswerLayout
+        val peerDisplayName = viewHolder.mPeerDisplayName
 
         val isDateShown = hasPermanentDateString(interaction, position)
         val msgSequenceType = getMsgSequencing(position, isDateShown)
 
-        val message = textMessage.body?.trim() ?: ""
-        val messageTime = TextUtils
-            .timestampToTime(context, formatter, mInteractions[position].timestamp)
-        val timePermanent = convViewHolder.mMsgDetailTxtPerm
+        val message = interaction.body?.trim() ?: ""
+        val messageTime = TextUtils.timestampToTime(context, formatter, mInteractions[position].timestamp)
+        val timePermanent = viewHolder.mMsgDetailTxtPerm
 
         // Add margin if message need to be separated.
         val isMessageSeparationNeeded = isMessageSeparationNeeded(isDateShown, position)
-        convViewHolder.mMessageLayout?.updateLayoutParams<MarginLayoutParams> {
+        viewHolder.mMessageLayout?.updateLayoutParams<MarginLayoutParams> {
             topMargin = if (!isMessageSeparationNeeded) 0 else context.resources
                 .getDimensionPixelSize(R.dimen.conversation_message_separation)
         }
@@ -1360,15 +1363,15 @@ class ConversationAdapter(
         messageBubble.background?.setTintList(null)
         // Manage the update of the timestamp
         if (isDateShown) {
-            convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
+            viewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
                 timePermanent?.text = TextUtils.timestampToDate(context, formatter, interaction.timestamp)
             })
-            convViewHolder.mMsgDetailTxtPerm?.visibility = View.VISIBLE
-        } else convViewHolder.mMsgDetailTxtPerm?.visibility = View.GONE
+            viewHolder.mMsgDetailTxtPerm?.visibility = View.VISIBLE
+        } else viewHolder.mMsgDetailTxtPerm?.visibility = View.GONE
 
         // If in a replying bubble, we need to overlap the message bubble
         // with the answered message bubble.
-        if (textMessage.replyToId != null && !isDeleted)
+        if (interaction.replyToId != null && !isDeleted)
             messageBubble.updateLayoutParams<MarginLayoutParams> {
                 topMargin = context.resources.getDimensionPixelSize(R.dimen.conversation_reply_overlap)
             }
@@ -1380,13 +1383,13 @@ class ConversationAdapter(
             isOnlyEmoji = StringUtils.isOnlyEmoji(message),
             isReplying = isReplying,
             isDeleted = isDeleted,
-            isIncoming = textMessage.isIncoming
+            isIncoming = interaction.isIncoming
         )
 
         // Manage long press.
         messageBubble.setOnLongClickListener { v: View ->
-            openItemMenu(convViewHolder, v, interaction)
-            if (textMessage.isIncoming) {
+            openItemMenu(viewHolder, v, interaction)
+            if (interaction.isIncoming) {
                 messageBubble.background?.setTint(context.getColor(R.color.grey_500))
             } else {
                 messageBubble.background?.setTint(convColorTint)
@@ -1403,18 +1406,18 @@ class ConversationAdapter(
 
             // Manage layout for message with a link inside.
             if (showLinkPreviews && !isDeleted) {
-                val cachedPreview = textMessage.preview as? Maybe<PreviewData> ?: LinkPreview
+                val cachedPreview = interaction.preview as? Maybe<PreviewData> ?: LinkPreview
                         .getFirstUrl(message)
                         .flatMap { url -> LinkPreview.load(url) }
                         .cache()
                         .apply { interaction.preview = this }
 
-                convViewHolder.compositeDisposable.add(cachedPreview
+                viewHolder.compositeDisposable.add(cachedPreview
                     .observeOn(DeviceUtils.uiScheduler)
                     .subscribe({ data ->
-                        val linkPreviewLayout = convViewHolder.mAnswerLayout ?: return@subscribe
+                        val linkPreviewLayout = viewHolder.mAnswerLayout ?: return@subscribe
                         Log.w(TAG, "got preview $data")
-                        val image = convViewHolder.mImage ?: return@subscribe
+                        val image = viewHolder.mImage ?: return@subscribe
                         if (data.imageUrl.isNotEmpty()) {
                             Glide.with(context)
                                 .load(data.imageUrl)
@@ -1424,12 +1427,12 @@ class ConversationAdapter(
                         } else {
                             image.visibility = View.GONE
                         }
-                        convViewHolder.mHistTxt?.text = data.title
+                        viewHolder.mHistTxt?.text = data.title
                         if (data.description.isNotEmpty()) {
-                            convViewHolder.mHistDetailTxt?.visibility = View.VISIBLE
-                            convViewHolder.mHistDetailTxt?.text = data.description
+                            viewHolder.mHistDetailTxt?.visibility = View.VISIBLE
+                            viewHolder.mHistDetailTxt?.text = data.description
                         } else {
-                            convViewHolder.mHistDetailTxt?.visibility = View.GONE
+                            viewHolder.mHistDetailTxt?.visibility = View.GONE
                         }
                         updateLinkPreviewBackground(
                             linkPreviewLayout = linkPreviewLayout,
@@ -1437,7 +1440,7 @@ class ConversationAdapter(
                         )
                         linkPreviewLayout.visibility = View.VISIBLE
                         val url = Uri.parse(data.baseUrl)
-                        convViewHolder.mPreviewDomain?.text = url.host
+                        viewHolder.mPreviewDomain?.text = url.host
                         linkPreviewLayout.setOnClickListener {
                             context.startActivity(Intent(Intent.ACTION_VIEW, url))
                         }
@@ -1447,8 +1450,8 @@ class ConversationAdapter(
 
         val endOfSeq = msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE
         // Manage animation for avatar and name.
-        val avatar = convViewHolder.mAvatar
-        if (presenter.isGroup() && textMessage.isIncoming) {
+        val avatar = viewHolder.mAvatar
+        if (presenter.isGroup() && interaction.isIncoming) {
             avatar?.let {
                 if (endOfSeq) { // To only display the avatar of the last message.
                     avatar.setAvatar(conversationFragment.getConversationAvatar(contact.primaryNumber))
@@ -1469,7 +1472,7 @@ class ConversationAdapter(
             peerDisplayName?.apply {
                 if (startOfSeq) {
                     visibility = View.VISIBLE
-                    convViewHolder.compositeDisposable.add(
+                    viewHolder.compositeDisposable.add(
                         presenter.contactService
                             .observeContact(account, contact, false)
                             .observeOn(DeviceUtils.uiScheduler)
@@ -1488,8 +1491,8 @@ class ConversationAdapter(
         // Manage deleted message.
         if (isDeleted) {
             replyBubble?.visibility = View.GONE
-            if (textMessage.isIncoming) {
-                convViewHolder.compositeDisposable.add(
+            if (interaction.isIncoming) {
+                viewHolder.compositeDisposable.add(
                     presenter.contactService
                         .observeContact(account, contact, false)
                         .observeOn(DeviceUtils.uiScheduler)
@@ -1688,8 +1691,7 @@ class ConversationAdapter(
             }
 
             // Set the background to the call started message.
-            callAcceptLayout.background =
-                ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
+            callAcceptLayout.background = ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
 
             if (call.isIncoming) {
                 // Show the avatar of the caller if last or single.
@@ -1760,8 +1762,7 @@ class ConversationAdapter(
 
             val typeCallTxt: String
 
-            callInfoLayout.background =
-                ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
+            callInfoLayout.background = ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
             callInfoLayout.setPadding(callPadding)
             // Manage background to convColor if it is outgoing and not missed.
             if (convColor != 0 && !call.isIncoming) {

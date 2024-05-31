@@ -29,7 +29,6 @@ class DataTransfer : Interaction {
     //private final String mPeerId;
     private var mExtension: String? = null
     var fileId: String? = null
-        private set
     var destination: File? = null
     var daemonPath: File? = null
 
