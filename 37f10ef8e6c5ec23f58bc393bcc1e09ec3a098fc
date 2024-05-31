@@ -22,6 +22,30 @@
       },
       "revId": "37f10ef8e6c5ec23f58bc393bcc1e09ec3a098fc",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9a4edfcd_5479027e",
+        "filename": "jami-android/app/src/main/java/cx/ring/share/ScanFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1006
+      },
+      "writtenOn": "2024-05-31T17:26:37Z",
+      "side": 1,
+      "message": "😵‍💫isHexId confuse me.\n\n\u003e Also the weird thing is that a conversation is created with jami:jami:http://hello-world, so there is some other bugguy places\n\nShould check in ConversationPath or client/HomeActivity?",
+      "parentUuid": "31c035be_c48ea527",
+      "range": {
+        "startLine": 120,
+        "startChar": 17,
+        "endLine": 120,
+        "endChar": 35
+      },
+      "revId": "37f10ef8e6c5ec23f58bc393bcc1e09ec3a098fc",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
