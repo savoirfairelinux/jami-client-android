@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "31c035be_c48ea527",
+        "filename": "jami-android/app/src/main/java/cx/ring/share/ScanFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2024-05-31T13:12:38Z",
+      "side": 1,
+      "message": "This will not work\njami:amarok is a valid username ;)\n\nAlso the weird thing is that a conversation is created with jami:jami:http://hello-world, so there is some other bugguy places",
+      "range": {
+        "startLine": 120,
+        "startChar": 17,
+        "endLine": 120,
+        "endChar": 35
+      },
+      "revId": "37f10ef8e6c5ec23f58bc393bcc1e09ec3a098fc",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
