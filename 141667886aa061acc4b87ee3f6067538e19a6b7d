@@ -1,4 +1,51 @@
 {
-  "comments": [],
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0703e376_9a55fb1a",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2024-05-31T14:25:13Z",
+      "side": 1,
+      "message": "Not related, but we need 3 pcre?",
+      "range": {
+        "startLine": 33,
+        "startChar": 4,
+        "endLine": 35,
+        "endChar": 18
+      },
+      "revId": "141667886aa061acc4b87ee3f6067538e19a6b7d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ede7a988_5cb4fe3e",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 5
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2024-05-31T14:25:13Z",
+      "side": 1,
+      "message": "I think this should not be needed. You do not use any file from the repo in the build after this point, so you should not need to copy the whole context inside the docker. Mounting a volume at the `docker run` step should be enough? Or I miss something",
+      "range": {
+        "startLine": 85,
+        "startChar": 2,
+        "endLine": 85,
+        "endChar": 8
+      },
+      "revId": "141667886aa061acc4b87ee3f6067538e19a6b7d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ],
   "submitRequirementResults": []
 }
