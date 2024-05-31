@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b819558a_d6a3d8ee",
+        "filename": "jami-android/app/src/main/AndroidManifest.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2024-05-31T19:37:00Z",
+      "side": 1,
+      "message": "what\u0027s the diff with this?",
+      "revId": "d08caea23f4cb8ad6f323a5d6df9df2889a20aa9",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
