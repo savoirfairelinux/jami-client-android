@@ -30,8 +30,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
     lib32stdc++6 \
     lib32z1 \
-    libpcre2-dev \
-    libpcre3 \
     libpcre3-dev \
     libtool \
     locales \
@@ -81,8 +79,6 @@ ENV ANDROID_NDK=${ANDROID_SDK_ROOT}/ndk/26.3.11579264
 
 
 FROM build as test
-
-COPY . .
 
 # Jami build dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \

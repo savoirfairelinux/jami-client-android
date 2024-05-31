@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# File origin : https://github.com/amrsa1/Android-Emulator-image/blob/main/start_emu_headless.sh
+
 BL='\033[0;34m'
 G='\033[0;32m'
 RED='\033[0;31m'
