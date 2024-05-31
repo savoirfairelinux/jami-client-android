@@ -144,7 +144,7 @@ class JamiAccountCreationPresenter @Inject constructor(
             view?.updateUsernameAvailability(JamiAccountCreationView.UsernameAvailabilityStatus.AVAILABLE)
     }
 
-    private fun onLookupResult(name: String, address: String?, state: Int) {
+    private fun onLookupResult(name: String, address: String?, state: AccountService.LookupState) {
         val view = view
         //Once we get the result, we can show the loading animation again when the user types
         showLoadingAnimation = true
@@ -156,17 +156,17 @@ class JamiAccountCreationPresenter @Inject constructor(
             isUsernameCorrect = false
         } else {
             when (state) {
-                0 -> {
+                AccountService.LookupState.Success -> {
                     // on found
                     view.updateUsernameAvailability(JamiAccountCreationView.UsernameAvailabilityStatus.ERROR_USERNAME_TAKEN)
                     isUsernameCorrect = false
                 }
-                1 -> {
+                AccountService.LookupState.Invalid -> {
                     // invalid name
                     view.updateUsernameAvailability(JamiAccountCreationView.UsernameAvailabilityStatus.ERROR_USERNAME_INVALID)
                     isUsernameCorrect = false
                 }
-                2 -> {
+                AccountService.LookupState.NotFound -> {
                     // available
                     view.updateUsernameAvailability(JamiAccountCreationView.UsernameAvailabilityStatus.AVAILABLE)
                     accountCreationModel?.username = name

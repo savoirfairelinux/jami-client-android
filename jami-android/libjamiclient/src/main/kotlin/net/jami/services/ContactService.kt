@@ -87,7 +87,7 @@ abstract class ContactService(
                 mAccountService.findRegistrationByAddress(accountId, "", uriString)
                     .map { registration ->
                         // Log.w(TAG, "username lookup response $registration")
-                        if (registration.state > 2)
+                        if (registration.state == AccountService.LookupState.NetworkError)
                             throw RuntimeException("lookup failed")
                         registration.name
                     }
