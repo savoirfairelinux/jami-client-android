@@ -374,31 +374,6 @@ class ConversationFacade(
         }
     }
 
-    private fun getConversationSearchResults(account: Account, query: String): Single<SearchResult> {
-        val uri = Uri.fromString(query)
-        return if (uri.isEmpty) {
-            Single.just(SearchResult.EMPTY_RESULT)
-        } else if (account.isSip || uri.isHexId) {
-            Single.just(SearchResult(query, listOf(account.getByUri(uri)!!)))
-        } else if (account.canSearch() && !query.contains("@")) {
-            mAccountService.searchUser(account.accountId, query)
-                .map { results -> SearchResult(query, results.results.map { contact -> account.getByUri(contact.conversationUri.blockingFirst())!! }) }
-        } else {
-            mAccountService.findRegistrationByName(account.accountId, "", query)
-                .map { result: RegisteredName ->
-                    if (result.state == 0)
-                        SearchResult(query, listOf(account.getByKey(Uri(Uri.DEFAULT_CONTACT_SCHEME, result.address!!)).apply {
-                            contact?.let { c -> synchronized(c) {
-                                if (c.username == null)
-                                    c.username = Single.just(result.name)
-                            }}
-                        }))
-                    else
-                        SearchResult.EMPTY_RESULT
-                }
-        }
-    }
-
     data class ConversationList(val conversations: List<Conversation> = emptyList(), val searchResult: SearchResult = SearchResult.EMPTY_RESULT, val latestQuery: String = "") {
         fun isEmpty(): Boolean = conversations.isEmpty() && searchResult.result.isEmpty()
 
@@ -422,26 +397,13 @@ class ConversationFacade(
         }
     }
 
-    /*fun getFilteredConversationList(currentAccount: Observable<Account>, query: Observable<String>): Observable<List<Conversation>> =
-        currentAccount.switchMap { account ->
-            Observable.combineLatest(account.getConversationsSubject(), query) { conversations, q -> ConversationList(conversations, emptyList(), q) }
-                .flatMapSingle { list ->
-                    if (list.query.isNotEmpty() && list.conversations.isNotEmpty()) {
-                        val lq = list.query.lowercase()
-                        Maybe.concatEager(list.conversations.map { c -> mContactService.getLoadedConversation(c)
-                            .filter { it.matches(lq) }.map { c }
-                        }).toList()
-                    } else Single.just(list.conversations)
-                }
-        }*/
-
     fun getSearchResults(
         query: Observable<String>, currentAccount: Observable<Account> = currentAccountSubject,
     ): Observable<ConversationList> =
         currentAccount.switchMap { account ->
             Observable.combineLatest(
                 account.getConversationsSubject(),
-                query.switchMapSingle { getConversationSearchResults(account, it) },
+                query.switchMapSingle { mAccountService.getConversationSearchResults(account, it) },
                 query
             ) { conversations, searchResults, q ->
                 ConversationList(conversations, searchResults, q)
@@ -466,7 +428,7 @@ class ConversationFacade(
         currentAccount.switchMap { account ->
             Observable.combineLatest(
                 account.getConversationsSubject(withBanned),
-                query.switchMapSingle { getConversationSearchResults(account, it) },
+                query.switchMapSingle { mAccountService.getConversationSearchResults(account, it) },
                 query
             ) { conversations, searchResults, q -> ConversationList(conversations, searchResults, q) }
         }.switchMapSingle { list ->

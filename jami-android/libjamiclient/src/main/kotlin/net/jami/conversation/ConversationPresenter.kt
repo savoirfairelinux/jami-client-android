@@ -63,8 +63,8 @@ class ConversationPresenter @Inject constructor(
         view?.setSettings(settings.enableLinkPreviews)
         mConversationUri = conversationUri
         mCompositeDisposable.add(conversationFacade.getAccountSubject(accountId)
-            .flatMapObservable { account: Account ->
-                val conversation = account.getByUri(conversationUri)!!
+            .flatMap { account: Account -> accountService.getConversationByUri(account, conversationUri).map { Pair(it, account) } }
+            .flatMapObservable { (conversation: Conversation, account: Account) ->
                 conversation.mode.flatMap { conversationMode: Conversation.Mode ->
                     if (conversationMode === Conversation.Mode.Legacy)
                         conversation.contact!!.conversationUri.switchMapSingle { uri ->

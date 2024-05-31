@@ -29,6 +29,7 @@ import io.reactivex.rxjava3.subjects.Subject
 import net.jami.daemon.*
 import net.jami.model.*
 import net.jami.model.Interaction.TransferStatus
+import net.jami.services.ConversationFacade.SearchResult
 import net.jami.utils.Log
 import net.jami.utils.SwigNativeConverter
 import java.io.File
@@ -919,6 +920,51 @@ class AccountService(
     fun lookupAddress(account: String, nameserver: String, address: String) {
         //Log.w(TAG, "lookupAddress $address")
         mExecutor.execute { JamiService.lookupAddress(account, nameserver, address) }
+    }
+
+    fun getConversationByUri(account: Account, conversationUri: Uri): Single<Conversation> =
+        if (conversationUri.isSwarm)
+            Single.just(account.getSwarm(conversationUri.rawRingId)!!)
+        else if (conversationUri.isHexId) {
+            val conversation = account.getByUri(conversationUri)
+            if (conversation != null) {
+                Single.just(conversation)
+            } else {
+                Single.error(IllegalArgumentException())
+            }
+        } else if (conversationUri.isJami) {
+            findRegistrationByName(account.accountId, "", conversationUri.uri)
+                .map { result ->
+                    if (result.state != 0) {
+                        throw IllegalArgumentException()
+                    }
+                    account.getByKey(Uri(Uri.DEFAULT_CONTACT_SCHEME, result.address!!))
+                }
+        } else Single.error(IllegalArgumentException())
+
+    fun getConversationSearchResults(account: Account, query: String): Single<SearchResult> {
+        val uri = Uri.fromString(query)
+        return if (uri.isEmpty) {
+            Single.just(SearchResult.EMPTY_RESULT)
+        } else if (account.isSip || uri.isHexId) {
+            Single.just(SearchResult(query, listOf(account.getByUri(uri)!!)))
+        } else if (account.canSearch() && !query.contains("@")) {
+            searchUser(account.accountId, query)
+                .map { results -> SearchResult(query, results.results.map { contact -> account.getByUri(contact.conversationUri.blockingFirst())!! }) }
+        } else {
+            findRegistrationByName(account.accountId, "", query)
+                .map { result: RegisteredName ->
+                    if (result.state == 0)
+                        SearchResult(query, listOf(account.getByKey(Uri(Uri.DEFAULT_CONTACT_SCHEME, result.address!!)).apply {
+                            contact?.let { c -> synchronized(c) {
+                                if (c.username == null)
+                                    c.username = Single.just(result.name)
+                            }}
+                        }))
+                    else
+                        SearchResult.EMPTY_RESULT
+                }
+        }
     }
 
     fun pushNotificationReceived(from: String, data: Map<String, String>) {
