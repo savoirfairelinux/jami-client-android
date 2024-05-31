@@ -79,6 +79,8 @@ class Uri : Serializable {
         get() = HEX_ID_PATTERN.matcher(host).find() || username != null && HEX_ID_PATTERN.matcher(username).find()
     val isSwarm: Boolean
         get() = SWARM_SCHEME == scheme
+    val isJami: Boolean
+        get() = JAMI_URI_SCHEME == scheme || RING_URI_SCHEME == scheme || (scheme.isNullOrEmpty() && isHexId)
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {
