@@ -60,10 +60,14 @@ if [[ $DAEMON_ONLY -eq 0 ]]; then
         echo "Building with Firebase support"
     fi
     if [[ $RELEASE -eq 1 ]]; then
+        echo "Building in release mode"
         cd "$ANDROID_APP_DIR"  && ./gradlew "$GRADLE_PROPERTIES" assembleRelease bundleRelease
     elif [[ $TEST -eq 1 ]]; then
+        echo "Building in test mode"
         cd "$ANDROID_APP_DIR" && ./gradlew "$GRADLE_PROPERTIES" assembleDebug assembleAndroidTest
     else
+        echo "Building in debug mode"
+        echo "$GRADLE_PROPERTIES" assembleDebug
         cd "$ANDROID_APP_DIR" && ./gradlew "$GRADLE_PROPERTIES" assembleDebug
     fi
 else
