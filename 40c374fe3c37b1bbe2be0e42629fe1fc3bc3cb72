@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3ce74531_78e4a341",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-05-31T18:25:57Z",
+      "side": 1,
+      "message": "Every thing else is working as expected.",
+      "revId": "40c374fe3c37b1bbe2be0e42629fe1fc3bc3cb72",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "56165e79_d5a20a36",
+        "filename": "jami-android/app/src/main/java/cx/ring/share/ScanFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-05-31T18:25:57Z",
+      "side": 1,
+      "message": "Not a big fan of showing the message only once.\nWe don\u0027t know if user acknowledged the message or not.\nImo, it needs to show up every time. Else, popup would be better.",
+      "range": {
+        "startLine": 118,
+        "startChar": 8,
+        "endLine": 118,
+        "endChar": 44
+      },
+      "revId": "40c374fe3c37b1bbe2be0e42629fe1fc3bc3cb72",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "81be59a6_5e7c5f80",
+        "filename": "jami-android/app/src/main/java/cx/ring/share/ScanFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-05-31T18:25:57Z",
+      "side": 1,
+      "message": "Need to be translated.",
+      "range": {
+        "startLine": 123,
+        "startChar": 45,
+        "endLine": 123,
+        "endChar": 71
+      },
+      "revId": "40c374fe3c37b1bbe2be0e42629fe1fc3bc3cb72",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
