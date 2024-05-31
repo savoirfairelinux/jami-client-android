@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2fbe4bab_4cf2dff9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-05-31T18:11:59Z",
+      "side": 1,
+      "message": "@Lanius-collaris - Thanks a lot for the patch :) We investigated the issue in depth as well as your commit, and published a list of commit to fix the problem:\n* https://review.jami.net/c/jami-client-android/+/28341\n* https://review.jami.net/c/jami-client-android/+/28342\n* https://review.jami.net/c/jami-client-android/+/28350",
+      "revId": "37f10ef8e6c5ec23f58bc393bcc1e09ec3a098fc",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "31c035be_c48ea527",
