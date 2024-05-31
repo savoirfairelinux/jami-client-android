@@ -412,6 +412,7 @@ class Conversation : ConversationHistory {
         } else if (newStatus != Interaction.MessageStates.SENDING) {
             interaction.status = Interaction.InteractionStatus.SENDING
         }
+
         if(newStatus == Interaction.MessageStates.SUCCESS) {
             setLastMessageSent(messageId)
         }
@@ -750,6 +751,12 @@ class Conversation : ConversationHistory {
         existingInteraction.replaceEdits(interaction.history)
         existingInteraction.replaceReactions(interaction.reactions)
         existingInteraction.body = interaction.body
+
+        if (interaction is DataTransfer && interaction.fileId == "") {
+            (existingInteraction as? DataTransfer)?.fileId = interaction.fileId
+            existingInteraction.transferStatus = Interaction.TransferStatus.FILE_REMOVED
+        }
+
         updatedElementSubject.onNext(Pair(existingInteraction, ElementStatus.UPDATE))
         if (lastEvent == existingInteraction) {
             lastEventSubject.onNext(existingInteraction)
