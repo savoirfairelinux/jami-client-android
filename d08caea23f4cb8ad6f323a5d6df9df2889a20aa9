@@ -16,6 +16,24 @@
       "message": "what\u0027s the diff with this?",
       "revId": "d08caea23f4cb8ad6f323a5d6df9df2889a20aa9",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e751794_8eec129e",
+        "filename": "jami-android/app/src/main/AndroidManifest.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-05-31T20:32:57Z",
+      "side": 1,
+      "message": "it\u0027s the new key to use according to the documentation:\nhttps://firebase.google.com/docs/cloud-messaging/android/client",
+      "parentUuid": "b819558a_d6a3d8ee",
+      "revId": "d08caea23f4cb8ad6f323a5d6df9df2889a20aa9",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
