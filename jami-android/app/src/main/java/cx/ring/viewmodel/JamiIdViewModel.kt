@@ -44,11 +44,6 @@ data class JamiIdUiState(
     val editedUsername: String = "",
 )
 
-enum class RegisteredState(val state: Int) {
-    ALREADY_REGISTERED(0),
-    NOT_REGISTERED(2),
-}
-
 class JamiIdViewModel : ViewModel() {
     // Expose screen UI state
     private val _uiState = MutableStateFlow(JamiIdUiState())
@@ -154,7 +149,7 @@ class JamiIdViewModel : ViewModel() {
         if (uiState.value.jamiIdStatus != JamiIdStatus.EDITING_USERNAME_LOADING)
             return
 
-        if (registeredName.state == RegisteredState.NOT_REGISTERED.state) {
+        if (registeredName.state == AccountService.LookupState.NotFound) {
             Log.d(TAG, "Username '${registeredName.name}' is available.")
             changeJamiIdStatus(JamiIdStatus.EDITING_USERNAME_AVAILABLE)
         } else {
