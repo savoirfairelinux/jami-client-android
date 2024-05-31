@@ -1293,7 +1293,10 @@ class AccountService(
                     val isComplete = path.exists() && progressA[0] == totalA[0]
                     DataTransfer(fileId, account.accountId, author, fileName, contact.isUser, timestamp, totalA[0], progressA[0]).apply {
                         daemonPath = path
-                        transferStatus = if (isComplete) TransferStatus.TRANSFER_FINISHED else TransferStatus.FILE_AVAILABLE
+                        transferStatus = if (isComplete)
+                            TransferStatus.TRANSFER_FINISHED
+                        else if (fileId == "") TransferStatus.FILE_REMOVED
+                        else TransferStatus.FILE_AVAILABLE
                     }
                 } catch (e: Exception) {
                     Interaction(conversation, Interaction.InteractionType.INVALID)
