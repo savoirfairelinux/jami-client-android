@@ -153,11 +153,20 @@ class AccountService(
     val dataTransfers: Subject<DataTransfer> = PublishSubject.create()
     private val incomingRequestsSubject: Subject<TrustRequest> = PublishSubject.create()
 
+    enum class LookupState(state: Int) {
+        Success(0),
+        Invalid(1),
+        NotFound(2),
+        NetworkError(3);
+        companion object {
+            fun fromInt(state: Int) = entries[state]
+        }
+    }
     data class RegisteredName(
         val accountId: String,
         val name: String,
         val address: String? = null,
-        val state: Int = 0
+        val state: LookupState = LookupState.Success
     )
 
     data class ConversationSearchResult(val results: List<Interaction>)
@@ -935,7 +944,7 @@ class AccountService(
         } else if (conversationUri.isJami) {
             findRegistrationByName(account.accountId, "", conversationUri.uri)
                 .map { result ->
-                    if (result.state != 0) {
+                    if (result.state != LookupState.Success) {
                         throw IllegalArgumentException()
                     }
                     account.getByKey(Uri(Uri.DEFAULT_CONTACT_SCHEME, result.address!!))
@@ -954,7 +963,7 @@ class AccountService(
         } else {
             findRegistrationByName(account.accountId, "", query)
                 .map { result: RegisteredName ->
-                    if (result.state == 0)
+                    if (result.state == LookupState.Success)
                         SearchResult(query, listOf(account.getByKey(Uri(Uri.DEFAULT_CONTACT_SCHEME, result.address!!)).apply {
                             contact?.let { c -> synchronized(c) {
                                 if (c.username == null)
@@ -1204,7 +1213,7 @@ class AccountService(
 
     fun registeredNameFound(accountId: String, state: Int, address: String, name: String) {
         try {
-            registeredNameSubject.onNext(RegisteredName(accountId, name, address, state))
+            registeredNameSubject.onNext(RegisteredName(accountId, name, address, LookupState.fromInt(state)))
         } catch (e: Exception) {
             Log.w(TAG, "registeredNameFound exception", e)
         }
@@ -1551,7 +1560,7 @@ class AccountService(
         private val conversation: Conversation,
         private val toUpdate: DataTransfer
     ) : Runnable {
-        val scheduledTask: ScheduledFuture<*> = mExecutor.scheduleAtFixedRate(
+        val scheduledTask: ScheduledFuture<*> = mExecutor.scheduleWithFixedDelay(
             this,
             DATA_TRANSFER_REFRESH_PERIOD,
             DATA_TRANSFER_REFRESH_PERIOD, TimeUnit.MILLISECONDS
