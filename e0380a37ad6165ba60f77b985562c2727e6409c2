@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb97769e_8f6b6634",
+        "filename": "ci/Jenkinsfile",
+        "patchSetId": 11
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2024-05-31T14:28:07Z",
+      "side": 0,
+      "message": "remove trailing",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 2
+      },
+      "revId": "e0380a37ad6165ba60f77b985562c2727e6409c2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
