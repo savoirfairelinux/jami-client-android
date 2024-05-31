@@ -60,8 +60,11 @@ class ConversationFacade(
         preferences: Map<String, String>,
     ) {
         if (conversationUri.isSwarm) {
+            val old = mAccountService.getConversationPreferences(
+                accountId, conversationUri.rawRingId
+            )
             mAccountService.setConversationPreferences(
-                accountId, conversationUri.rawRingId, preferences
+                accountId, conversationUri.rawRingId, old.plus(preferences)
             )
         } else {
             mPreferencesService.setConversationPreferences(accountId, conversationUri, preferences)
