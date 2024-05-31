@@ -390,7 +390,7 @@ class ConversationFacade(
             mAccountService.findRegistrationByName(account.accountId, "", query)
                 .map { result: RegisteredName ->
                     if (result.state == 0)
-                        SearchResult(query, listOf(account.getByKey(result.address!!).apply {
+                        SearchResult(query, listOf(account.getByKey(Uri(Uri.DEFAULT_CONTACT_SCHEME, result.address!!)).apply {
                             contact?.let { c -> synchronized(c) {
                                 if (c.username == null)
                                     c.username = Single.just(result.name)
