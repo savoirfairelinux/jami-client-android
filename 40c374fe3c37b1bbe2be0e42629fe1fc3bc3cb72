@@ -62,6 +62,30 @@
       },
       "revId": "40c374fe3c37b1bbe2be0e42629fe1fc3bc3cb72",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b14871ff_6c81c6b3",
+        "filename": "jami-android/app/src/main/java/cx/ring/share/ScanFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-05-31T18:26:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81be59a6_5e7c5f80",
+      "range": {
+        "startLine": 123,
+        "startChar": 45,
+        "endLine": 123,
+        "endChar": 71
+      },
+      "revId": "40c374fe3c37b1bbe2be0e42629fe1fc3bc3cb72",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
