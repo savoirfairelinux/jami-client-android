@@ -335,11 +335,11 @@ class Account(
     fun addTextMessage(txt: TextMessage) {
         var conversation: Conversation? = null
         val daemonId = txt.daemonIdString
-        if (daemonId != null && daemonId.isNotEmpty()) {
+        if (!daemonId.isNullOrEmpty()) {
             conversation = getConversationByCallId(daemonId)
         }
         if (conversation == null) {
-            conversation = getByKey(txt.conversation!!.participant!!)
+            conversation = getByKey(Uri.fromString(txt.conversation!!.participant!!))
             txt.contact = conversation.contact
         }
         conversation.addTextMessage(txt)
@@ -364,18 +364,21 @@ class Account(
     val bannedContactsUpdates: Observable<Collection<Contact>>
         get() = contactListSubject.map { list -> list.filterTo(ArrayList(list.size), Contact::isBanned) }
 
-    fun getContactFromCache(key: String): Contact {
-        if (key.isEmpty()) throw IllegalStateException()
+    fun getContactFromCache(key: Uri): Contact {
+        Log.w(TAG, "getContactFromCache $key")
         synchronized(mContactCache) {
-            return mContactCache.getOrPut(key) {
-                if (isSip) Contact.buildSIP(Uri.fromString(key))
-                else Contact(Uri(Uri.JAMI_URI_SCHEME, key), username == key)
+            return mContactCache.getOrPut(key.uri) {
+                if (isSip) Contact.buildSIP(key)
+                else Contact(key, username == key.rawRingId)
             }
         }
     }
 
-    fun getContactFromCache(uri: Uri): Contact {
-        return getContactFromCache(uri.uri)
+    fun getContactFromCache(key: String): Contact {
+        if (key.isEmpty()) throw IllegalArgumentException()
+        val uri = Uri.fromString(key)
+        if (isJami && (!uri.isHexId || uri.isSwarm || !uri.isJami)) throw IllegalArgumentException()
+        return getContactFromCache(uri)
     }
 
     fun dispose() {
@@ -624,8 +627,9 @@ class Account(
 
     fun addRequest(request: TrustRequest) {
         synchronized(pending) {
-            val key = request.conversationUri.uri
-            if (pending[key] == null) {
+            val key = request.conversationUri
+            val uriString = key.uri
+            if (pending[uriString] == null) {
                 val conversation = if (request.conversationUri.isSwarm)
                     Conversation(accountId, request.conversationUri, Conversation.Mode.Request).apply {
                         val contact = getContactFromCache(request.from).apply {
@@ -648,7 +652,7 @@ class Account(
                 conversation.request = request
 
                 //Log.w(TAG, "pendingRequestAdded $key")
-                pending[key] = conversation
+                pending[uriString] = conversation
                 if (!conversation.isSwarm) {
                     val contact = getContactFromCache(request.from)
                     conversation.addRequestEvent(request, contact)
@@ -696,13 +700,14 @@ class Account(
     fun getByUri(uri: Uri?): Conversation? =
         if (uri == null || uri.isEmpty) null
         else if (uri.isSwarm) getSwarm(uri.rawRingId) ?: pending[uri.uri]
-        else getByKey(uri.uri)
+        else if (uri.isJami) getByKey(uri)
+        else null
 
     fun getByUri(uri: String?): Conversation? =
         if (uri != null) getByUri(Uri.fromString(uri)) else null
 
-    fun getByKey(key: String): Conversation =
-        cache.getOrPut(key) { Conversation(accountId, getContactFromCache(key)) }
+    fun getByKey(key: Uri): Conversation =
+        cache.getOrPut(key.uri) { Conversation(accountId, getContactFromCache(key)) }
 
     fun setHistoryLoaded(conversations: List<Conversation> = emptyList()) {
         synchronized(this.conversations) {
@@ -757,7 +762,7 @@ class Account(
             synchronized(pending) {
                 var pendingConversation = pending[key]
                 if (pendingConversation == null) {
-                    pendingConversation = getByKey(key)
+                    pendingConversation = getByKey(uri)
                     conversations[key] = pendingConversation
                 } else {
                     pending.remove(key)
