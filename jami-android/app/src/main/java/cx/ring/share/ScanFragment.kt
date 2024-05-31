@@ -39,6 +39,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import cx.ring.client.HomeActivity
 import dagger.hilt.android.AndroidEntryPoint
+import net.jami.model.Uri
+import java.util.regex.Pattern
 
 @AndroidEntryPoint
 class ScanFragment : Fragment() {
@@ -115,8 +117,16 @@ class ScanFragment : Fragment() {
 
     private val callback: BarcodeCallback = object : BarcodeCallback {
         override fun barcodeResult(result: BarcodeResult) {
-            (parentFragment as? QRCodeFragment)?.dismiss()
-            goToConversation(result.text)
+            val JAMI_ID_PATTERN = Pattern.compile("^\\p{XDigit}{40}$", Pattern.CASE_INSENSITIVE)
+            if (result.text != null) {
+                val uri = Uri.fromString(result.text)
+                val isJamiId = JAMI_ID_PATTERN.matcher(uri.host).find()
+                if (!isJamiId) {
+                    return
+                }
+                (parentFragment as? QRCodeFragment)?.dismiss()
+                goToConversation(uri.host)
+            }
         }
 
         override fun possibleResultPoints(resultPoints: List<ResultPoint>) {}
