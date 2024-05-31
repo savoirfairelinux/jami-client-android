@@ -115,8 +115,14 @@ class ScanFragment : Fragment() {
 
     private val callback: BarcodeCallback = object : BarcodeCallback {
         override fun barcodeResult(result: BarcodeResult) {
-            (parentFragment as? QRCodeFragment)?.dismiss()
-            goToConversation(result.text)
+            if (result.text != null) {
+                val uri = net.jami.model.Uri.fromString(result.text)
+                if (!uri.isHexId) {
+                    return
+                }
+                (parentFragment as? QRCodeFragment)?.dismiss()
+                goToConversation(result.text)
+            }
         }
 
         override fun possibleResultPoints(resultPoints: List<ResultPoint>) {}
