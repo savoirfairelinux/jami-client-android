@@ -192,10 +192,20 @@ class ConversationFacade(
     }
 
     fun deleteConversationItem(conversation: Conversation, element: Interaction) {
-        // handling is the same for calls, texts and files
         if (conversation.isSwarm) {
-            if ((element as? DataTransfer)?.transferStatus === TransferStatus.TRANSFER_ONGOING) {
-                mAccountService.cancelDataTransfer(conversation.accountId, conversation.uri.rawRingId, element.messageId, element.fileId!!)
+            if (element is DataTransfer) {
+                if (element.transferStatus === TransferStatus.TRANSFER_ONGOING) {
+                    mAccountService.cancelDataTransfer(conversation.accountId, conversation.uri.rawRingId, element.messageId, element.fileId!!)
+                }
+                // remove the actual file
+                val file = mDeviceRuntimeService.getConversationPath(conversation.accountId, conversation.uri.rawRingId, element.storagePath)
+                mDisposableBag.add(Completable.fromAction {
+                    file.delete()
+                    element.bytesProgress = 0
+                }.subscribeOn(Schedulers.io())
+                 .subscribe({
+                     element.transferStatus = TransferStatus.FILE_REMOVED
+                 }) { e: Throwable -> Log.e(TAG, "Can't delete file", e) })
             }
             mAccountService.deleteConversationMessage(conversation.accountId, conversation.uri, element.messageId!!)
         } else {
