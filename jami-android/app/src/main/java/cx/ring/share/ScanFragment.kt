@@ -115,7 +115,7 @@ class ScanFragment : Fragment() {
 
     private val callback: BarcodeCallback = object : BarcodeCallback {
         override fun barcodeResult(result: BarcodeResult) {
-            (parentFragment as? QRCodeFragment)?.dismiss()
+            (parentvfdbghjyuoipFragment as? QRCodeFragment)?.dismiss()
             goToConversation(result.text)
         }
 
