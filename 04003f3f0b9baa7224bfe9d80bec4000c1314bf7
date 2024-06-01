@@ -16,6 +16,29 @@
       "message": "!build",
       "revId": "04003f3f0b9baa7224bfe9d80bec4000c1314bf7",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "54d166a2_add9cfdb",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-06-01T01:22:46Z",
+      "side": 1,
+      "message": "Should strings be sentence case, i.e. \"Not a Jami contact QR code\"?\n\nIs Jami contact implied? Can the string be \"Invalid QR code\"?\n\nThank you",
+      "range": {
+        "startLine": 574,
+        "startChar": 35,
+        "endLine": 574,
+        "endChar": 61
+      },
+      "revId": "04003f3f0b9baa7224bfe9d80bec4000c1314bf7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
