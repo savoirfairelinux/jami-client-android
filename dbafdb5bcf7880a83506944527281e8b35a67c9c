@@ -66,6 +66,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cf621b49_697726d4",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1058
+      },
+      "writtenOn": "2024-06-03T16:12:33Z",
+      "side": 1,
+      "message": "It is crucial and needed: a file removal operation is a final state of the message, and cannot be reverted (as well as text msg removal). Therefore we can put the corresponding viewholder into the final state too. Also, if we change a viewholder type to \"InteractionType.TEXT\", we can completely reuse the existing logic of removed text messages",
+      "parentUuid": "5354e8b7_dfc347d1",
+      "range": {
+        "startLine": 315,
+        "startChar": 20,
+        "endLine": 315,
+        "endChar": 71
+      },
+      "revId": "dbafdb5bcf7880a83506944527281e8b35a67c9c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "69a454ec_178b5d80",
         "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
         "patchSetId": 2
@@ -123,6 +147,30 @@
       "writtenOn": "2024-06-03T15:54:18Z",
       "side": 1,
       "message": "should be updated by the daemon automatically",
+      "range": {
+        "startLine": 204,
+        "startChar": 0,
+        "endLine": 204,
+        "endChar": 2
+      },
+      "revId": "dbafdb5bcf7880a83506944527281e8b35a67c9c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3612746c_2911db43",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/ConversationFacade.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1058
+      },
+      "writtenOn": "2024-06-03T16:12:33Z",
+      "side": 1,
+      "message": "Daemon doesn\u0027t handle this state. It is new, and was introduced specifically for this type of operation. Moreover, we also assign a new state for file removal operation in the same way: in ConversationFacade class (line 174                      transfer.transferStatus \u003d TransferStatus.FILE_AVAILABLE)",
+      "parentUuid": "d0998bda_6063dafc",
       "range": {
         "startLine": 204,
         "startChar": 0,
