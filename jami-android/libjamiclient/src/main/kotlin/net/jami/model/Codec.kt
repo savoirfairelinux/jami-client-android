@@ -49,5 +49,5 @@ class Codec(val payload: Long, audioCodecDetails: Map<String, String>, enabled: 
     }
 
     val isSpeex: Boolean
-        get() = mName.contentEquals("speex")
+        get() = mName.contentEquals("Speex")
 }
