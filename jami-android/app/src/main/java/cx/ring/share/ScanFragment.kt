@@ -34,6 +34,7 @@ import com.journeyapps.barcodescanner.BarcodeResult
 import cx.ring.fragments.QRCodeFragment
 import com.google.zxing.ResultPoint
 import android.view.View
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -114,7 +115,19 @@ class ScanFragment : Fragment() {
     }
 
     private val callback: BarcodeCallback = object : BarcodeCallback {
+        private var lastFailTime: Long = 0
         override fun barcodeResult(result: BarcodeResult) {
+            val uri = net.jami.model.Uri.fromString(result.text)
+            if (uri.isEmpty || !uri.isJami) {
+                val now = System.currentTimeMillis()
+                if (now - lastFailTime > INVALID_SCAN_MIN_TIME) {
+                    Toast.makeText(context, getString(R.string.qr_code_not_contact), Toast.LENGTH_SHORT).show()
+                    lastFailTime = now
+                }
+                return
+            }
+            barcodeView?.pause()
+            barcodeView?.barcodeView?.stopDecoding()
             (parentFragment as? QRCodeFragment)?.dismiss()
             goToConversation(result.text)
         }
@@ -141,5 +154,6 @@ class ScanFragment : Fragment() {
 
     companion object {
         val TAG = ScanFragment::class.simpleName!!
+        const val INVALID_SCAN_MIN_TIME = 5000L
     }
 }
