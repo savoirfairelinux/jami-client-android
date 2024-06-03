@@ -65,6 +65,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "18cf820a_63a72978",
+        "filename": "jami-android/app/src/main/java/cx/ring/share/ScanFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-06-03T02:47:34Z",
+      "side": 1,
+      "message": "Instead of checking if it\u0027s the same text we now simply throttle the messages",
+      "parentUuid": "9dd34671_5e228bfb",
+      "range": {
+        "startLine": 118,
+        "startChar": 8,
+        "endLine": 118,
+        "endChar": 44
+      },
+      "revId": "40c374fe3c37b1bbe2be0e42629fe1fc3bc3cb72",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "81be59a6_5e7c5f80",
