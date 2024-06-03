@@ -41,6 +41,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e3b16c0e_10407eac",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1058
+      },
+      "writtenOn": "2024-06-03T16:21:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34a2d72b_6aa26613",
+      "range": {
+        "startLine": 297,
+        "startChar": 38,
+        "endLine": 297,
+        "endChar": 98
+      },
+      "revId": "dbafdb5bcf7880a83506944527281e8b35a67c9c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5354e8b7_dfc347d1",
@@ -111,6 +135,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "14b7b467_37a8fcfd",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 1338,
+      "author": {
+        "id": 1058
+      },
+      "writtenOn": "2024-06-03T16:21:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69a454ec_178b5d80",
+      "range": {
+        "startLine": 1338,
+        "startChar": 0,
+        "endLine": 1338,
+        "endChar": 2
+      },
+      "revId": "dbafdb5bcf7880a83506944527281e8b35a67c9c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e5eafa11_45c3b213",
@@ -124,6 +172,30 @@
       "writtenOn": "2024-06-03T15:54:18Z",
       "side": 1,
       "message": "cleanup",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 2
+      },
+      "revId": "dbafdb5bcf7880a83506944527281e8b35a67c9c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c13fb545_4e3ccac2",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/model/DataTransfer.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1058
+      },
+      "writtenOn": "2024-06-03T16:21:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5eafa11_45c3b213",
       "range": {
         "startLine": 32,
         "startChar": 0,
@@ -204,6 +276,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d3ed7cd4_d17dc570",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/ConversationFacade.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1058
+      },
+      "writtenOn": "2024-06-03T16:21:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee394f2e_476612e3",
+      "range": {
+        "startLine": 205,
+        "startChar": 0,
+        "endLine": 205,
+        "endChar": 2
+      },
+      "revId": "dbafdb5bcf7880a83506944527281e8b35a67c9c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6d747859_00a8ac30",
@@ -217,6 +313,30 @@
       "writtenOn": "2024-06-03T15:54:18Z",
       "side": 1,
       "message": "cleanup",
+      "range": {
+        "startLine": 207,
+        "startChar": 13,
+        "endLine": 207,
+        "endChar": 20
+      },
+      "revId": "dbafdb5bcf7880a83506944527281e8b35a67c9c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "933e28b1_f091a878",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/ConversationFacade.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1058
+      },
+      "writtenOn": "2024-06-03T16:21:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d747859_00a8ac30",
       "range": {
         "startLine": 207,
         "startChar": 13,
