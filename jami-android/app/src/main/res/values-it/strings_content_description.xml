@@ -10,4 +10,5 @@
   <string name="control_play">Riproduci</string>
   <string name="control_replay">Ripeti</string>
   <string name="control_pause">Pausa</string>
+  <string name="searchbar_navigation_account">Seleziona account</string>
 </resources>
