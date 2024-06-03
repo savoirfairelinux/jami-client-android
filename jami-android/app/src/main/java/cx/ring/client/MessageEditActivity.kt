@@ -37,5 +37,8 @@ class MessageEditActivity : AppCompatActivity() {
                 .putExtra(Intent.EXTRA_TEXT, editText.text.toString()))
             onBackPressedDispatcher.onBackPressed()
         }
+        findViewById<View>(R.id.message_edit_overlay).setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
     }
 }
