@@ -94,4 +94,9 @@
             </LinearLayout>
         </LinearLayout>
 
-    </androidx.cardview.widget.CardView></FrameLayout>
+    </androidx.cardview.widget.CardView>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/message_edit_overlay"/>
+</FrameLayout>
