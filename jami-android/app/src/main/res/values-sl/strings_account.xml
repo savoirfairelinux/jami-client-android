@@ -48,6 +48,8 @@
   <string name="account_password_set">Določi geslo</string>
   <string name="account_password_summary">Upravljanje gesla računa</string>
   <string name="account_password_change_wait_message">Spreminjanje gesla računa</string>
+  <string name="account_biometric_disable">Onemogoči biometrično overjanje</string>
+  <string name="account_biometric_set">Omogoči biometrično overjanje</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Splošno</string>
   <string name="account_basic_category">Osnovne nastavitve</string>
@@ -267,4 +269,12 @@
   <string name="connect_device_enterPIN">Ali vnesite PIN</string>
   <string name="account_link_device_button">Poveži</string>
   <!--Biometry-->
+  <string name="account_biometry_auth_title">Odkleni račun Jami</string>
+  <string name="account_biometry_enroll_accept">Uporabi biometriko</string>
+  <string name="no_thanks">Ne, hvala</string>
+  <string name="account_biometry_enroll_auth_title">Dodaj overjanje za račun Jami</string>
+  <string name="account_auth_error">Napaka overjanja: %1$s</string>
+  <string name="account_auth_success">Overjanje je uspelo</string>
+  <string name="account_auth_key_error">Ključa računa ni bilo možno dešifrirati</string>
+  <string name="account_auth_password">Uporabi geslo računa</string>
 </resources>

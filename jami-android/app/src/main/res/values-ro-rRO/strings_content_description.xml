@@ -10,4 +10,5 @@
   <string name="control_play">Start</string>
   <string name="control_replay">Repornire</string>
   <string name="control_pause">Pauză</string>
+  <string name="searchbar_navigation_account">Alege contul</string>
 </resources>

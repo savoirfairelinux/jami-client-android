@@ -22,6 +22,7 @@
   <string name="developed_by">Razvoj</string>
   <string name="designed_by">Oblikovanje</string>
   <string name="ringtones_by">Zvonenja </string>
+  <string name="credits_volunteers">In prostovoljcem, ki prispevajo k temu projektu!</string>
   <!--RingActivity-->
   <string name="error_no_network">Ni omrežne povezave</string>
   <string name="error_account_offline">Račun ni povezan</string>
@@ -52,6 +53,7 @@
     <item quantity="other">%d pogovorov</item>
   </plurals>
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">Poišči osebo ali pogovor ...</string>
   <string name="choose_number">Izberi številko</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -141,6 +143,7 @@
   <string name="conversation_send_video">Snemaj video posnetek</string>
   <string name="conversation_share_location">Deli lokacijo</string>
   <string name="ongoing_group_call">Aktivni klic</string>
+  <string name="started_call">Je začel/a klic</string>
   <string name="in_reply_to">Kot odgovor</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Dovoljenja za kamero</string>
@@ -200,6 +203,7 @@
   <string name="conversation_syncing">Prenašanje pogovora od soležnika</string>
   <string name="conversation_blocked">Ta stik je blokiran.</string>
   <string name="conversation_ended">Pogovor končan.</string>
+  <string name="conversation_message_deleted">%s je izbrisal/a sporočilo</string>
   <string name="conversation_reply_you">Vi</string>
   <string name="conversation_preference_color">Barva pogovora</string>
   <string name="conversation_preference_emoji">Emoji pogovora</string>
@@ -334,6 +338,10 @@
   <string name="tv_send_video">Pošlji medij</string>
   <string name="tv_action_more">Dodatno</string>
   <string name="conversation_input_speech_hint">Recite nekaj ...</string>
+  <string name="speech_recogniton_unavailable">Razpoznavanje govora ni na voljo.</string>
+  <string name="unable_to_start_recorder">Snemanja zvoka ni možno sprožiti.</string>
+  <string name="error_sharing_file">Napaka pri deljenju datoteke.</string>
+  <string name="error_opening_file">Napaka pri odpiranju datoteke.</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Priporočeno</string>
   <string name="wizard_status_optional">Izbirno</string>

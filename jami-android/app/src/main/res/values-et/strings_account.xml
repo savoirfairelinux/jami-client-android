@@ -62,8 +62,8 @@ Saad oma kontot hiljem muuta</string>
   <string name="account_optionnal_category">Täiendavad seadistused</string>
   <string name="account_useragent_label">Rakenduse tunnusnimi</string>
   <string name="account_autoanswer_label">Automaatne vastamine</string>
-  <string name="account_rendezvous_label">Koosoleku režiim</string>
-  <string name="account_rendezvous_summary">Koosolekurežiimiis lisatakse uued sisenevad kõned konverentsikõnele.</string>
+  <string name="account_rendezvous_label">Kohtumispaiga režiim</string>
+  <string name="account_rendezvous_summary">Kohtumispaiga režiimiis lisatakse uued sisenevad kõned konverentsikõnele.</string>
   <string name="account_upnp_label">Võta UPnP kasutusele</string>
   <string name="account_proxy_field">Proksiserver</string>
   <!--Plugin Details-->
