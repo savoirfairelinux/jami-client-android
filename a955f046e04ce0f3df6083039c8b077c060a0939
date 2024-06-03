@@ -33,6 +33,24 @@
       "message": "```\n--- a/jami-android/app/src/main/java/cx/ring/service/DRingService.kt\n+++ b/jami-android/app/src/main/java/cx/ring/service/DRingService.kt\n@@ -22,6 +22,7 @@ import android.content.BroadcastReceiver\n import android.content.Context\n import android.content.Intent\n import android.content.IntentFilter\n+import android.content.pm.ServiceInfo\n import android.database.ContentObserver\n import android.net.*\n import android.net.ConnectivityManager.NetworkCallback\n@@ -179,7 +180,10 @@ class DRingService : Service() {\n     private fun showSystemNotification(settings: Settings) {\n         try {\n             if (settings.enablePermanentService) {\n-                startForeground(NOTIFICATION_ID, mNotificationService.serviceNotification as Notification)\n+                if (Build.VERSION.SDK_INT \u003e\u003d Build.VERSION_CODES.Q)\n+                    startForeground(NOTIFICATION_ID, mNotificationService.serviceNotification as Notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC)\n+                else\n+                    startForeground(NOTIFICATION_ID, mNotificationService.serviceNotification as Notification)\n             } else {\n                 stopForeground(true)\n             }\n```",
       "revId": "a955f046e04ce0f3df6083039c8b077c060a0939",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "603fa0a3_8ad3af0c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 597
+      },
+      "writtenOn": "2024-06-03T19:22:53Z",
+      "side": 1,
+      "message": "Actually I read in the Android documentation that it will take by default what is in the manifest file. \n`If the foreground service type is not specified in the call, the type defaults to the values defined in the manifest`\nhttps://developer.android.com/about/versions/14/changes/fgs-types-required#include-fgs-type-runtime",
+      "parentUuid": "c4a99973_d79e72b9",
+      "revId": "a955f046e04ce0f3df6083039c8b077c060a0939",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
