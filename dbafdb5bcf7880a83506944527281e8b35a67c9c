@@ -16,6 +16,167 @@
       "message": "!build",
       "revId": "dbafdb5bcf7880a83506944527281e8b35a67c9c",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "34a2d72b_6aa26613",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-06-03T15:54:18Z",
+      "side": 1,
+      "message": "cleanup",
+      "range": {
+        "startLine": 297,
+        "startChar": 38,
+        "endLine": 297,
+        "endChar": 98
+      },
+      "revId": "dbafdb5bcf7880a83506944527281e8b35a67c9c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5354e8b7_dfc347d1",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-06-03T15:54:18Z",
+      "side": 1,
+      "message": "should not be needed (it changes the model in a view logic)",
+      "range": {
+        "startLine": 315,
+        "startChar": 20,
+        "endLine": 315,
+        "endChar": 71
+      },
+      "revId": "dbafdb5bcf7880a83506944527281e8b35a67c9c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "69a454ec_178b5d80",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 1338,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-06-03T15:54:18Z",
+      "side": 1,
+      "message": "cleanup",
+      "range": {
+        "startLine": 1338,
+        "startChar": 0,
+        "endLine": 1338,
+        "endChar": 2
+      },
+      "revId": "dbafdb5bcf7880a83506944527281e8b35a67c9c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e5eafa11_45c3b213",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/model/DataTransfer.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-06-03T15:54:18Z",
+      "side": 1,
+      "message": "cleanup",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 2
+      },
+      "revId": "dbafdb5bcf7880a83506944527281e8b35a67c9c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d0998bda_6063dafc",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/ConversationFacade.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-06-03T15:54:18Z",
+      "side": 1,
+      "message": "should be updated by the daemon automatically",
+      "range": {
+        "startLine": 204,
+        "startChar": 0,
+        "endLine": 204,
+        "endChar": 2
+      },
+      "revId": "dbafdb5bcf7880a83506944527281e8b35a67c9c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee394f2e_476612e3",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/ConversationFacade.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-06-03T15:54:18Z",
+      "side": 1,
+      "message": "cleanup",
+      "range": {
+        "startLine": 205,
+        "startChar": 0,
+        "endLine": 205,
+        "endChar": 2
+      },
+      "revId": "dbafdb5bcf7880a83506944527281e8b35a67c9c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d747859_00a8ac30",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/ConversationFacade.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-06-03T15:54:18Z",
+      "side": 1,
+      "message": "cleanup",
+      "range": {
+        "startLine": 207,
+        "startChar": 13,
+        "endLine": 207,
+        "endChar": 20
+      },
+      "revId": "dbafdb5bcf7880a83506944527281e8b35a67c9c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
