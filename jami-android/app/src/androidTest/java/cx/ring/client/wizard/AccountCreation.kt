@@ -38,7 +38,6 @@ class AccountCreation {
             val addAccountString = InstrumentationRegistry
                 .getInstrumentation().targetContext.getString(R.string.add_ring_account_title)
             onView(withText(addAccountString)).perform(click())
-            Thread.sleep(5000)
         } catch (_: Exception) {
         }
     }
