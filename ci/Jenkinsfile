@@ -110,6 +110,12 @@ pipeline {
                     sh 'su jenkins -c "cd /jami-client-android && ./compile.sh --test"'
                     sh 'cd /jami-client-android/ci && ./start_emu_headless.sh'
                     sh 'su jenkins -c "cd /jami-client-android/ci && ./jami_test.sh"'
+
+                    // Zip the artifact directory
+                    sh 'zip -r /jami-client-android/ci/ui-test-output.zip /jami-client-android/ci/spoon-output'
+
+                    // Archive the zipped artifact
+                    archiveArtifacts artifacts: 'ci/ui-test-output.zip', allowEmptyArchive: false
                 }
             }
         }
