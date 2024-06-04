@@ -932,9 +932,7 @@ class AccountService(
     }
 
     fun getConversationByUri(account: Account, conversationUri: Uri): Single<Conversation> =
-        if (conversationUri.isSwarm)
-            Single.just(account.getSwarm(conversationUri.rawRingId)!!)
-        else if (conversationUri.isHexId) {
+        if (conversationUri.isHexId) {
             val conversation = account.getByUri(conversationUri)
             if (conversation != null) {
                 Single.just(conversation)
