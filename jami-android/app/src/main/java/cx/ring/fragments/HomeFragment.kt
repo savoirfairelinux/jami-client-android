@@ -574,7 +574,9 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
     }
 
     private fun startNewSwarm() {
-        ContactPickerFragment().show(parentFragmentManager, ContactPickerFragment.TAG)
+        val picker = ContactPickerFragment()
+        picker.newSwarm()
+        picker.show(parentFragmentManager, ContactPickerFragment.TAG)
         collapseSearchActionView()
     }
 

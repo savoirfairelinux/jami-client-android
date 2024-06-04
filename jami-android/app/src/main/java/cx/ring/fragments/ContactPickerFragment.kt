@@ -48,6 +48,7 @@ class ContactPickerFragment : BottomSheetDialogFragment() {
     private val mDisposableBag = CompositeDisposable()
     private var mAccountId: String? = null
     private val mCurrentSelection: MutableSet<Contact> = HashSet()
+    private var isNewSwarm = false
     lateinit var dataPasser: OnContactedPicked
 
     @Inject
@@ -82,7 +83,8 @@ class ContactPickerFragment : BottomSheetDialogFragment() {
                 val contact = item.getContact() ?: return
                 val remover = Runnable {
                     mCurrentSelection.remove(contact.contact)
-                    if (mCurrentSelection.isEmpty()) binding!!.createGroupBtn.isEnabled = false
+                    if (mCurrentSelection.isEmpty() && !isNewSwarm)
+                        binding!!.createGroupBtn.isEnabled = false
                     item.isChecked = false
                     adapter!!.update(item)
                     val v = binding!!.selectedContacts.findViewWithTag<View>(item)
@@ -112,7 +114,16 @@ class ContactPickerFragment : BottomSheetDialogFragment() {
 
             override fun onItemLongClick(item: ConversationItemViewModel) {}
         })
+        //Allow to create an empty group
+        if (isNewSwarm) {
+            val btn=binding!!.createGroupBtn
+            btn.isEnabled = true
+            btn.text=getString(R.string.picker_btn_new_swarm)
+        }
         binding!!.createGroupBtn.setOnClickListener { v: View? ->
+            if (mAccountId == null){
+                mAccountId = mConversationFacade.currentAccountSubject.blockingFirst().accountId
+            }
             passData(mAccountId!!, mCurrentSelection)
             val dialog = dialog
             dialog?.cancel()
@@ -135,6 +146,10 @@ class ContactPickerFragment : BottomSheetDialogFragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         dataPasser = context as OnContactedPicked
+    }
+
+    fun newSwarm(){
+        isNewSwarm = true
     }
 
     companion object {
