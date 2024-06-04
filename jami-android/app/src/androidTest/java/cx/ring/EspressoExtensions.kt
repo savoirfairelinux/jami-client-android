@@ -1,5 +1,7 @@
 package cx.ring
 
+// Code from https://stackoverflow.com/a/56499223/12911704.
+
 import android.view.View
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.NoMatchingViewException
