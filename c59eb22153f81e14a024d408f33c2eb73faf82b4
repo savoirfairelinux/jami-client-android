@@ -16,6 +16,24 @@
       "message": "icon is much too large",
       "revId": "c59eb22153f81e14a024d408f33c2eb73faf82b4",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1caa263c_f9ab5fdd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1058
+      },
+      "writtenOn": "2024-06-05T16:06:37Z",
+      "side": 1,
+      "message": "padding changed from 5% to 10%  (ie, an image takes 90% of the space)",
+      "parentUuid": "9f9f8e84_1514e48e",
+      "revId": "c59eb22153f81e14a024d408f33c2eb73faf82b4",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
