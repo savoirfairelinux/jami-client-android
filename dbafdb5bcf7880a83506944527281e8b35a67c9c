@@ -136,6 +136,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e78ba52e_dfb6f52c",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1058
+      },
+      "writtenOn": "2024-06-05T16:16:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "123f7c13_24ceb1c8",
+      "range": {
+        "startLine": 315,
+        "startChar": 20,
+        "endLine": 315,
+        "endChar": 71
+      },
+      "revId": "dbafdb5bcf7880a83506944527281e8b35a67c9c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "69a454ec_178b5d80",
@@ -291,6 +315,30 @@
       "side": 1,
       "message": "The daemon will signal a new commit with an empty fileId. This should be used to update the transferStatus of the element, for this device and every other devices synchronized with it.",
       "parentUuid": "3612746c_2911db43",
+      "range": {
+        "startLine": 204,
+        "startChar": 0,
+        "endLine": 204,
+        "endChar": 2
+      },
+      "revId": "dbafdb5bcf7880a83506944527281e8b35a67c9c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b30c622_03d3080c",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/ConversationFacade.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1058
+      },
+      "writtenOn": "2024-06-05T16:16:43Z",
+      "side": 1,
+      "message": "I think, we should keep this status assign here, because we rely on it in ConversationAdapter class.",
+      "parentUuid": "1be102a4_6ade93dc",
       "range": {
         "startLine": 204,
         "startChar": 0,
