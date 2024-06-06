@@ -156,15 +156,9 @@ class ConversationPresenter @Inject constructor(
         }
 
         view.hideNumberSpinner()
-        disposable.add(c.mode
-            .switchMap { mode: Conversation.Mode ->
-                conversationFacade.observeConversation(account, c, true)
-                    .observeOn(uiScheduler)
-                    .doOnNext { convViewModel -> initContact(account, convViewModel, this.view!!) }
-            }
-            .subscribe())
+
         disposable.add(Observable.combineLatest(hardwareService.connectivityState, accountService.getObservableAccount(account))
-            { isConnected: Boolean, a: Account -> isConnected || a.isRegistered }
+        { isConnected: Boolean, a: Account -> isConnected || a.isRegistered }
             .observeOn(uiScheduler)
             .subscribe { isOk: Boolean ->
                 this.view?.let { v ->
@@ -175,32 +169,42 @@ class ConversationPresenter @Inject constructor(
                     }
                 }
             })
-        disposable.add(c.sortedHistory
-            .observeOn(uiScheduler)
-            .subscribe({ conversation -> this.view?.refreshView(conversation) })
-                { e -> Log.e(TAG, "Can't update element", e) })
-        disposable.add(c.cleared
-            .observeOn(uiScheduler)
-            .subscribe({ conversation -> this.view?.refreshView(conversation) })
-                { e -> Log.e(TAG, "Can't update elements", e) })
-        disposable.add(c.contactUpdates
-            .switchMap { contacts -> Observable.merge(contactService.observeLoadedContact(c.accountId, contacts, true)) }
-            .observeOn(uiScheduler)
-            .subscribe { contact: ContactViewModel -> this.view?.updateContact(contact) })
-        disposable.add(c.updatedElements
-            .observeOn(uiScheduler)
-            .subscribe({ elementTuple ->
-                val v = this.view ?: return@subscribe
-                when (elementTuple.second) {
-                    ElementStatus.ADD -> v.addElement(elementTuple.first)
-                    ElementStatus.UPDATE -> v.updateElement(elementTuple.first)
-                    ElementStatus.REMOVE -> v.removeElement(elementTuple.first)
+
+        synchronized(c) {
+            disposable.add(c.mode
+                .switchMap { mode: Conversation.Mode ->
+                    conversationFacade.observeConversation(account, c, true)
+                        .observeOn(uiScheduler)
+                        .doOnNext { convViewModel -> initContact(account, convViewModel, this.view!!) }
                 }
-            }, { e: Throwable -> Log.e(TAG, "Can't update element", e) }))
-        if (showTypingIndicator()) {
-            disposable.add(c.composingStatus
+                .subscribe())
+            disposable.add(c.sortedHistory
                 .observeOn(uiScheduler)
-                .subscribe { composingStatus: ComposingStatus -> this.view?.setComposingStatus(composingStatus) })
+                .subscribe({ conversation -> this.view?.refreshView(conversation) })
+                    { e -> Log.e(TAG, "Can't update element", e) })
+            disposable.add(c.cleared
+                .observeOn(uiScheduler)
+                .subscribe({ conversation -> this.view?.refreshView(conversation) })
+                    { e -> Log.e(TAG, "Can't update elements", e) })
+            disposable.add(c.contactUpdates
+                .switchMap { contacts -> Observable.merge(contactService.observeLoadedContact(c.accountId, contacts, true)) }
+                .observeOn(uiScheduler)
+                .subscribe { contact: ContactViewModel -> this.view?.updateContact(contact) })
+            disposable.add(c.updatedElements
+                .observeOn(uiScheduler)
+                .subscribe({ elementTuple ->
+                    val v = this.view ?: return@subscribe
+                    when (elementTuple.second) {
+                        ElementStatus.ADD -> v.addElement(elementTuple.first)
+                        ElementStatus.UPDATE -> v.updateElement(elementTuple.first)
+                        ElementStatus.REMOVE -> v.removeElement(elementTuple.first)
+                    }
+                }, { e: Throwable -> Log.e(TAG, "Can't update element", e) }))
+            if (showTypingIndicator()) {
+                disposable.add(c.composingStatus
+                    .observeOn(uiScheduler)
+                    .subscribe { composingStatus: ComposingStatus -> this.view?.setComposingStatus(composingStatus) })
+            }
         }
         disposable.add(
             Observable.combineLatest(

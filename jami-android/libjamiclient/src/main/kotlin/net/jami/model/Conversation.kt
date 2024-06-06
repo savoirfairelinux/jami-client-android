@@ -300,6 +300,7 @@ class Conversation : ConversationHistory {
 
     fun findContact(uri: Uri): Contact? = contacts.firstOrNull { it.uri == uri }
 
+    @Synchronized
     fun addTextMessage(txt: TextMessage) {
         if (mVisible)
             txt.read()
@@ -310,6 +311,7 @@ class Conversation : ConversationHistory {
         updatedElementSubject.onNext(Pair(txt, ElementStatus.ADD))
     }
 
+    @Synchronized
     fun addRequestEvent(request: TrustRequest, contact: Contact) {
         if (isSwarm) return
         val event = ContactEvent(accountId, contact, request)
@@ -322,12 +324,14 @@ class Conversation : ConversationHistory {
         addContactEvent(ContactEvent(accountId, contact))
     }
 
+    @Synchronized
     fun addContactEvent(contactEvent: ContactEvent) {
         mDirty = true
         aggregateHistory.add(contactEvent)
         updatedElementSubject.onNext(Pair(contactEvent, ElementStatus.ADD))
     }
 
+    @Synchronized
     fun addFileTransfer(dataTransfer: DataTransfer) {
         if (aggregateHistory.contains(dataTransfer)) {
             return
