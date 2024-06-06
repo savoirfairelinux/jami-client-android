@@ -319,10 +319,12 @@ class Conversation : ConversationHistory {
     }
 
     fun addContactEvent(contact: Contact) {
+        Log.w("devdebug", "addContactEvent: ${contact.uri}")
         addContactEvent(ContactEvent(accountId, contact))
     }
 
     fun addContactEvent(contactEvent: ContactEvent) {
+        Log.w("devdebug", "addContactEvent: ${contactEvent.contact?.uri}")
         mDirty = true
         aggregateHistory.add(contactEvent)
         updatedElementSubject.onNext(Pair(contactEvent, ElementStatus.ADD))

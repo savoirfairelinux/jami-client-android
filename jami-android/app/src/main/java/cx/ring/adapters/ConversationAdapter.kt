@@ -142,6 +142,11 @@ class ConversationAdapter(
     @SuppressLint("NotifyDataSetChanged")
     fun updateDataset(list: List<Interaction>) {
         Log.d(TAG, "updateDataset: list size=" + list.size)
+        list.forEach{
+            if (it is ContactEvent) {
+                Log.d("devdebug", "ConversationAdapter updateDataset event= ${it.event}")
+            }
+        }
         when {
             mInteractions.isEmpty() -> {
                 mInteractions.addAll(list)
@@ -161,6 +166,9 @@ class ConversationAdapter(
     }
 
     fun add(e: Interaction): Boolean {
+        if (e is ContactEvent) {
+            Log.d("devdebug", "ConversationAdapter add event= ${e.event}")
+        }
         if (e.isSwarm) {
             if (mInteractions.isEmpty() || mInteractions[mInteractions.size - 1].messageId == e.parentId) {
                 val update = mInteractions.isNotEmpty()
@@ -200,6 +208,9 @@ class ConversationAdapter(
     }
 
     fun update(editedInteraction: Interaction) {
+        if (editedInteraction is ContactEvent) {
+            Log.d("devdebug", "ConversationAdapter update event= ${editedInteraction.event}")
+        }
         mInteractions.indexOfLast { it.messageId == editedInteraction.messageId }.let { position ->
             if (position == -1) return
             mInteractions[position] = editedInteraction
@@ -1512,9 +1523,10 @@ class ConversationAdapter(
         interaction: Interaction,
         position: Int
     ) {
+        Log.w("devdebug", "ConversationAdapter configureForContactEvent")
         val context = viewHolder.itemView.context
         val event = interaction as ContactEvent
-        Log.w(TAG,
+        Log.w("devdebug",
             "configureForContactEvent ${event.account} ${event.event} ${event.contact} ${event.author} "
         )
         // Manage the date of the event.
@@ -1530,10 +1542,12 @@ class ConversationAdapter(
         val timestamp = TextUtils.timestampToTime(context, formatter, event.timestamp)
 
         if (interaction.isSwarm) {
+            Log.w("devdebug", "ConversationAdapter Subscribe to contact service")
             viewHolder.compositeDisposable.add(
                 presenter.contactService.observeContact(event.account!!, event.contact!!, false)
                     .observeOn(DeviceUtils.uiScheduler)
                 .subscribe { vm ->
+                    Log.w("devdebug", "ConversationAdapter Contact service update")
                     val eventString = context.getString(when (event.event) {
                         ContactEvent.Event.ADDED -> R.string.conversation_contact_added
                         ContactEvent.Event.INVITED -> R.string.conversation_contact_invited

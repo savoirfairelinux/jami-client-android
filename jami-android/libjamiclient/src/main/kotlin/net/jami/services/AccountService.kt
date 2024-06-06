@@ -1487,6 +1487,9 @@ class AccountService(
         getAccount(accountId)?.let { account -> account.getSwarm(conversationId)?.let { conversation ->
             synchronized(conversation) {
                 val interaction = addMessage(account, conversation, message, true)
+                if (interaction is ContactEvent) {
+                    Log.w("devdebug", "AccountService swarmMessageReceived $accountId ${interaction.event}")
+                }
                 account.conversationUpdated(conversation)
                 val isIncoming = !interaction.contact!!.isUser
                 if (isIncoming)
@@ -1503,6 +1506,10 @@ class AccountService(
         getAccount(accountId)?.let { account -> account.getSwarm(conversationId)?.let { conversation ->
             synchronized(conversation) {
                 val interaction = getInteractionFromSwarmMessage(account, conversation, message)
+                if (interaction is ContactEvent)
+                {
+                    Log.w("devdebug", "AccountService swarmMessageUpdated $accountId ${interaction.event}")
+                }
                 conversation.updateSwarmMessage(interaction)
             }
         }}
