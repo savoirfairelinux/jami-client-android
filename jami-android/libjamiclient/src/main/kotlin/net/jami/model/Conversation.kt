@@ -449,7 +449,9 @@ class Conversation : ConversationHistory {
     @Synchronized
     fun sortHistory() {
         if (mDirty) {
-            aggregateHistory.sortWith { c1, c2 -> c1.timestamp.compareTo(c2.timestamp) }
+            if (!isSwarm) {
+                aggregateHistory.sortWith { c1, c2 -> c1.timestamp.compareTo(c2.timestamp) }
+            }
             lastEvent = aggregateHistory.lastOrNull { it.type != Interaction.InteractionType.INVALID }
             mDirty = false
         }
