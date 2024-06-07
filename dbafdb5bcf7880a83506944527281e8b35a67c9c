@@ -349,6 +349,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cba38271_39d24f6c",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/ConversationFacade.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1058
+      },
+      "writtenOn": "2024-06-07T19:49:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b30c622_03d3080c",
+      "range": {
+        "startLine": 204,
+        "startChar": 0,
+        "endLine": 204,
+        "endChar": 2
+      },
+      "revId": "dbafdb5bcf7880a83506944527281e8b35a67c9c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ee394f2e_476612e3",
