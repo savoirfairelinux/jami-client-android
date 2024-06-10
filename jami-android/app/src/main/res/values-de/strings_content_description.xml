@@ -10,4 +10,5 @@
   <string name="control_play">Abspielen</string>
   <string name="control_replay">Erneut wiedergeben</string>
   <string name="control_pause">Pause</string>
+  <string name="searchbar_navigation_account">Konto auswählen</string>
 </resources>

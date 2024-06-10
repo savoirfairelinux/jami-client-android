@@ -18,15 +18,15 @@
   <string name="action_settings">Configurações</string>
   <string name="error_field_required">Este campo é obrigatório</string>
   <string name="dialog_wait_create">Adicionando conta</string>
-  <string name="dialog_wait_create_details">Por favor, aguarde enquanto sua nova conta é adicionada...</string>
+  <string name="dialog_wait_create_details">Aguarde enquanto sua nova conta é adicionada…</string>
   <string name="dialog_wait_update">Atualizando conta</string>
-  <string name="dialog_wait_update_details">Por favor, aguarde enquanto sua nova conta é atualizada...</string>
+  <string name="dialog_wait_update_details">Aguarde enquanto sua nova conta é atualizada…</string>
   <string name="dialog_warn_ip2ip_account_title">Criar uma conta SIP vazia?</string>
   <string name="dialog_warn_ip2ip_account_message">Você está prestes a criar uma conta SIP com nenhum nome de servidor válido.
         Você só poderá fazer e receber chamadas diretas de IP.
         Pode editar a sua conta mais tarde</string>
   <string name="account_type_ip2ip">IP da conta</string>
-  <string name="help_ring">Uma conta do Jami permite que você entre em contato com pessoas de forma segura em uma rede possoa-a-pessoa totalmente distribuída.</string>
+  <string name="help_ring">Uma conta Jami permite que você entre em contato com as pessoas de forma segura, ponto a ponto, por meio de uma rede totalmente distribuída.</string>
   <string name="help_sip_title">Adicionar sua conta SIP</string>
   <string name="help_sip">Configurar uma conta SIP existente.</string>
   <string name="create_sip_account">Adicionar conta SIP</string>
@@ -36,11 +36,11 @@
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Nenhuma conta registrada</string>
   <string name="normal_accounts_titles">Contas</string>
-  <string name="normal_devices_titles">Dispositivos ligados</string>
+  <string name="normal_devices_titles">Dispositivos vinculados</string>
   <string name="account_device_revoke">Revogar dispositivo</string>
   <string name="account_device_revocation_success_title">Sucesso</string>
   <string name="account_device_revocation_success">Dispositivo foi revogado!</string>
-  <string name="account_device_revocation_error_title">Não é possível revogar dispositivo</string>
+  <string name="account_device_revocation_error_title">Não é possível revogar o dispositivo</string>
   <string name="account_device_revocation_wrong_password">Senha Incorreta.</string>
   <string name="account_device_revocation_unknown_device">Dispositivo desconhecido.</string>
   <string name="account_device_revocation_error_unknown">Erro desconhecido.</string>
@@ -62,8 +62,8 @@
   <string name="account_optionnal_category">Configurações opcionais</string>
   <string name="account_useragent_label">Agente de usuário</string>
   <string name="account_autoanswer_label">Resposta automática</string>
-  <string name="account_rendezvous_label">Modo de Encontro</string>
-  <string name="account_rendezvous_summary">No Modo de Encontro, as chamadas recebidas serão adicionadas a uma sala de conferência.</string>
+  <string name="account_rendezvous_label">Modo de encontro</string>
+  <string name="account_rendezvous_summary">No modo de encontro, as chamadas recebidas serão adicionadas a uma sala de conferência.</string>
   <string name="account_upnp_label">Habilitar UPnP</string>
   <string name="account_proxy_field">Proxy</string>
   <!--Plugin Details-->
@@ -79,17 +79,17 @@
   <string name="account_ringtone_summary">Selecione um toque ou escolha seu próprio</string>
   <!--Video Details-->
   <string name="account_video_label">Vídeo</string>
-  <string name="account_video_enable">Habilitar Vídeo</string>
+  <string name="account_video_enable">Habilitar vídeo</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Avançado</string>
-  <string name="account_chat_settings_title">Configurações de conversação</string>
-  <string name="account_read_receipts_label">Ativar verificação de leitura</string>
-  <string name="account_read_receipts_summary">Enviar e receber verificações indicando que a mensagem foi mostrada.</string>
+  <string name="account_chat_settings_title">Configurações de bate-papo</string>
+  <string name="account_read_receipts_label">Habilitar confirmações de leitura</string>
+  <string name="account_read_receipts_summary">Enviar e receber confirmações indicando que uma mensagem foi mostrada</string>
   <string name="account_call_settings_title">Configurações de chamada</string>
   <string name="account_dht_public_in_calls_label">Permitir chamadas de contatos desconhecidos</string>
   <string name="account_registration_exp_label">Registro expirou</string>
   <string name="account_local_interface_label">Interface local</string>
-  <string name="account_local_port_label">Porta Local</string>
+  <string name="account_local_port_label">Porta local</string>
   <string name="account_stun_enable_label">Usar Stun</string>
   <string name="account_stun_server_label">Servidor Stun</string>
   <string name="account_accept_files">Aceitar arquivos recebidos automaticamente</string>
@@ -102,7 +102,7 @@
   <string name="account_turn_server_label">Servidor TURN</string>
   <string name="account_turn_username_label">Nome de usuário TURN</string>
   <string name="account_turn_password_label">Senha TURN</string>
-  <string name="account_published_same_as_local_label">Publicado como local</string>
+  <string name="account_published_same_as_local_label">Publicado igual ao local</string>
   <string name="account_published_port_label">Porta publicada</string>
   <string name="account_published_address_label">Endereço publicado</string>
   <string name="disabled">Desabilitado</string>
@@ -121,30 +121,30 @@
   <string name="account_credentials_add">Adicionar credenciais</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Segurança</string>
-  <string name="account_srtp_switch_label">Encriptar fluxo de mídia (SRTP)</string>
+  <string name="account_srtp_switch_label">Encriptar fluxos de mídia (SRTP)</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Use transporte TLS</string>
   <string name="account_tls_port_label">Ouvinte da porta TLS</string>
-  <string name="account_tls_certificate_list_label">Autoridades de Certificação</string>
+  <string name="account_tls_certificate_list_label">Autoridades de certificação</string>
   <string name="account_tls_certificate_file_label">Arquivo de certificado</string>
-  <string name="account_tls_private_key_file_label">Arquivo chave privada</string>
-  <string name="account_tls_password_label">Senha chave privada</string>
+  <string name="account_tls_private_key_file_label">Arquivo de chave privada</string>
+  <string name="account_tls_password_label">Senha da chave privada</string>
   <string name="account_tls_method_label">Método TLS</string>
   <string name="account_tls_ciphers_label">Cifras TLS</string>
   <string name="account_tls_server_name_label">Nome do servidor</string>
-  <string name="account_tls_verify_server_label">Verificar Servidor</string>
-  <string name="account_tls_verify_client_label">Verificar Cliente</string>
-  <string name="account_require_client_certificate_label">TLS Requer Certificado de Cliente</string>
+  <string name="account_tls_verify_server_label">Verificar servidor</string>
+  <string name="account_tls_verify_client_label">Verificar cliente</string>
+  <string name="account_require_client_certificate_label">TLS requer certificado de cliente</string>
   <string name="account_tls_negotiation_timeout_sec">Tempo espera negociação (seg)</string>
   <string name="account_rtp_max_port">Máximo</string>
   <string name="account_rtp_min_port">Mínimo</string>
-  <string name="account_rtp_port_range">Variação de portas de áudio RTP</string>
+  <string name="account_rtp_port_range">Intervalo de portas RTP de áudio</string>
   <!--restore/backup-->
-  <string name="account_new_device_password">Entre com a senha principal para desbloquear conta</string>
+  <string name="account_new_device_password">Digite a senha principal para desbloquear a conta</string>
   <string name="error_password_char_count">Pelo menos 6 caracteres</string>
   <string name="error_passwords_not_equals">Senhas não correspondem</string>
-  <string name="export_account_wait_title">Por favor, aguarde...</string>
+  <string name="export_account_wait_title">Por favor, aguarde…</string>
   <string name="export_account_wait_message">Exportando informações da conta</string>
   <string name="account_export_file">Cópia de segurança da conta</string>
   <string name="account_export_file_summary">Faça backup de sua conta no dispositivo para restaurá-la mais tarde.</string>
@@ -153,10 +153,10 @@
   <string name="account_export_end_network_message">Não foi possível exportar a conta na rede. Verifique sua conexão.</string>
   <string name="account_export_end_error_title">Erro</string>
   <string name="account_export_end_error_message">Não foi possível exportar a conta. Um erro desconhecido ocorreu.</string>
-  <string name="account_enter_password">Entre a senha</string>
+  <string name="account_enter_password">Digite a senha</string>
   <string name="account_share_body">Entre em contato comigo utilizando \"%1$s\" na plataforma Jami de comunicação distribuída: %2$s</string>
   <string name="account_share_body_with_username">Entre em contato comigo utilziando \"%1$s\" ou via meu usuário público \"%2$s\" na plataforma Jami de comunicação distribuída: %3$s</string>
-  <string name="account_contact_me">Encontre-me no Jami !</string>
+  <string name="account_contact_me">Encontre-me no Jami!</string>
   <string name="update_account">Atualize a conta</string>
   <string name="account_migration">Sua conta no Jami pode ser atualizada.\nPor favor insira sua senha.</string>
   <string name="ring_account">Conta Jami</string>
@@ -165,7 +165,7 @@
   <string name="account_migration_title_dialog">Migração de conta</string>
   <string name="account_migration_message_dialog">Sua conta precisa ser atualizada. Você deseja ir na tela de administração da conta para fazer isto?</string>
   <string name="account_update_needed">Atualização necessária</string>
-  <string name="account_cannot_be_found_title">Não foi possível localizar conta</string>
+  <string name="account_cannot_be_found_title">Não é possível encontrar a conta</string>
   <string name="account_cannot_be_found_message">Não foi possível localizar a conta na rede do Jami.\nCertifique-se de que foi exportada no Jami de um dispositivo existente, e que as informações fornecidas estão corretas.</string>
   <string name="account_sip_cannot_be_registered_message">Você pode continuar com o processo de criação de conta ou editar suas informações aqui. A edição também é possível mais tarde nas configurações de conta.</string>
   <string name="account_no_network_title">Não foi possível conectar-se à rede.</string>
@@ -189,29 +189,29 @@
   <string name="tv_about_author">Direitos de autor</string>
   <string name="tv_about_credits">Créditos</string>
   <string name="account_link_device">Conectar de outro dispositivo</string>
-  <string name="account_link_button">Conecte-se de outra rede</string>
-  <string name="account_link_archive_button">Conectar-se a partir do backup</string>
-  <string name="account_link_prompt_pin">Entre o PIN</string>
+  <string name="account_link_button">Conectar a partir da rede</string>
+  <string name="account_link_archive_button">Conectar a partir do backup</string>
+  <string name="account_link_prompt_pin">Digite o PIN</string>
   <string name="account_new_button">Criar uma conta no Jami</string>
-  <string name="account_link_export_button">Associar um novo dispositivo</string>
-  <string name="account_link_show_button">Mostrar %d mais dispositivos vinculados</string>
+  <string name="account_link_export_button">Vincular um novo dispositivo</string>
+  <string name="account_link_show_button">Mostrar mais %d dispositivo(s) vinculado(s)</string>
   <string name="account_link_hide_button">Ocultar dispositivo vinculado</string>
   <string name="account_link_export_info">Para usar esta conta em outros dispositivos, você deve antes expô-la no Jami. Isso gerará um código PIN que você deverá entrar no novo dispositivo para configurar a conta. Este PIN é válido por 10 minutos.</string>
   <string name="account_start_export_button">Gerar código PIN</string>
   <string name="account_end_export_button">fechar</string>
-  <string name="account_end_export_infos">Seu PIN é:\n\n%%\n\nPara completar o processo, você deve abrir o Jami no novo dispositivo. Crie uma nova conta com \"Associar este dispositivo à uma conta\". Seu PIN é válido por 10 minutos.</string>
+  <string name="account_end_export_infos">Seu PIN é:\n\n%%\n\nPara completar o processo, você deve abrir o Jami no novo dispositivo. Crie uma nova conta com \"Vincular este dispositivo a uma conta\". Seu PIN é válido por 10 minutos.</string>
   <string name="account_link_export_info_light">Para usar esta conta em outros dispositivos, você deve antes expô-la no Jami. Isso gerará um código PIN que você deverá entrar no novo dispositivo para configurar a conta. Este PIN é válido por 10 minutos.</string>
-  <string name="account_export_title">Conectar a conta a outros dispositivos</string>
+  <string name="account_export_title">Vincular a conta a outros dispositivos</string>
   <string name="account_connect_server_button">Conectar ao servidor de gerenciamento</string>
   <string name="account_connect_button">Conectar</string>
   <string name="prompt_server">URL do servidor de gerenciamento Jami</string>
-  <string name="help_credentials_enter">Insira as credenciais da sua organização</string>
+  <string name="help_credentials_enter">Digite as credenciais da sua organização</string>
   <string name="help_connect_password_enter">Digite a senha da sua organização</string>
   <string name="account_connect_prompt_username">Nome de usuário</string>
   <!--Name registration-->
-  <string name="error_username_empty">Entre um nome de usuário</string>
+  <string name="error_username_empty">Digite um nome de usuário</string>
   <string name="no_registered_name_for_account">Sem nome registrado</string>
-  <string name="username_available">Nome de usuário disponível !</string>
+  <string name="username_available">Nome de usuário disponível!</string>
   <string name="register_name">Nome de registro</string>
   <string name="trying_to_register_name">Tentando registrar nome</string>
   <string name="registered_username">Nome de usuário registrado</string>
@@ -220,7 +220,7 @@
   <string name="username_already_taken">Nome de usuário já em uso</string>
   <string name="invalid_username">Nome de usuário inválido</string>
   <string name="unknown_error">Erro desconhecido. Por favor, verifique sua conexão de rede!</string>
-  <string name="looking_for_username_availability">Buscando disponibilidade de usuário...</string>
+  <string name="looking_for_username_availability">Procurando disponibilidade de nome de usuário…</string>
   <string name="account_status_connecting">Conectando</string>
   <string name="account_status_connection_error">Erro de conexão</string>
   <string name="account_status_online">Online</string>
@@ -229,58 +229,58 @@
   <string name="account_status_error">Erro</string>
   <!--Create account-->
   <string name="account_creation_home">Bem-vindo ao Jami</string>
-  <string name="account_creation_profile">Criar um Perfil</string>
-  <string name="account_creation_ring">Criar sua conta do Jami</string>
-  <string name="account_link_title">Conectar este dispositivo</string>
+  <string name="account_creation_profile">Crie seu perfil</string>
+  <string name="account_creation_ring">Crie sua conta Jami</string>
+  <string name="account_link_title">Vincular este dispositivo</string>
   <string name="account_sip_cannot_be_registered">Impossível registrar conta.</string>
   <!--Edit profile-->
   <string name="account_edit_profile">Editar minha conta</string>
   <!--Devices-->
-  <string name="account_revoke_device_hint">Digite senha para confirmar</string>
-  <string name="enter_password">Entre a senha</string>
+  <string name="account_revoke_device_hint">Digite a senha para confirmar</string>
+  <string name="enter_password">Digite a senha</string>
   <string name="revoke_device_title">Revogar dispositivo</string>
-  <string name="revoke_device_message">Tem certeza que você deseja revogar %1$s ?</string>
-  <string name="revoke_device_wait_title">Por favor, aguarde...</string>
+  <string name="revoke_device_message">Tem certeza que você deseja revogar %1$s?</string>
+  <string name="revoke_device_wait_title">Por favor, aguarde…</string>
   <string name="revoke_device_wait_message">Revogando dispositivo</string>
   <string name="rename_device_title">Renomear este dispositivo</string>
   <string name="rename_device_message">Escolha um novo nome para identificar este dispositivo na sua conta do Jami</string>
   <string name="rename_device_button">Renomear dispositivo</string>
   <string name="account_rename_device_hint">Escolher novo nome de dispositivo</string>
-  <string name="account_device_name_empty">Nome do dispositivo não pode estar vazio</string>
+  <string name="account_device_name_empty">O nome do dispositivo não pode estar vazio</string>
   <string name="account_device_this_indicator">Este dispositivo</string>
   <string name="account_disabled_indicator">desabilitado</string>
   <!--Link a new device-->
-  <string name="account_link_prompt_pin_manually">Introduzir o PIN manualmente</string>
+  <string name="account_link_prompt_pin_manually">Digite o PIN manualmente</string>
   <string name="qr_invalid">Não é um código QR de autenticação Jami</string>
-  <string name="content_description_checkbox">O seu código QR é válido</string>
+  <string name="content_description_checkbox">Seu código QR é válido</string>
   <string name="error_format_not_supported">Este formato não é suportado.</string>
-  <string name="account_link_info">Na nova aplicação Jami, digitalize o código QR ou introduza manualmente o PIN.</string>
-  <string name="account_link_device_title">Associar um novo dispositivo</string>
-  <string name="account_link_password">Esta conta é encriptada por palavra-passe, introduza a palavra-passe para gerar o código PIN.</string>
+  <string name="account_link_info">No novo aplicativo Jami, escaneie o código QR ou digite o PIN manualmente.</string>
+  <string name="account_link_device_title">Vincular um novo dispositivo</string>
+  <string name="account_link_password">Essa conta é criptografada por senha. Digite a senha para gerar o código PIN.</string>
   <string name="account_link_generate_button">Gerar</string>
-  <string name="account_link_time_valid">O código PIN não é válido: %1$s.</string>
-  <string name="account_link_device_info">Escolha \"Associar um novo dispositivo\" na outra aplicação Jami para mostrar o código QR ou o PIN</string>
+  <string name="account_link_time_valid">O código PIN será inválido: %1$s.</string>
+  <string name="account_link_device_info">Escolha \"Vincular um novo dispositivo\" no outro aplicativo Jami para exibir o código QR ou o PIN</string>
   <string name="account_generate_export_device">No outro dispositivo</string>
   <string name="account_generate_export_info">Instale e inicie o Jami, selecione \"Importar de outro dispositivo\" e leia o código QR.</string>
-  <string name="content_description_qr_generated">O seu código QR</string>
-  <string name="account_generate_export_invalid">O PIN já não é válido.\n Introduza a palavra-passe e crie outra para vincular o novo dispositivo.</string>
-  <string name="account_generate_export_invalid_two">O PIN já não é válido.\nGerar outro para vincular o novo dispositivo.</string>
-  <string name="help_pin_info">Preencher se a conta estiver encriptada por palavra-passe</string>
-  <string name="connect_device_scanqr">Digitalizar QR</string>
-  <string name="connect_device_enterPIN">Ou introduzir PIN</string>
+  <string name="content_description_qr_generated">Seu código QR</string>
+  <string name="account_generate_export_invalid">O PIN não é mais válido.\n Digite a senha e gere outra para vincular o novo dispositivo.</string>
+  <string name="account_generate_export_invalid_two">O PIN não é mais válido.\n Gere outro para vincular o novo dispositivo.</string>
+  <string name="help_pin_info">Preencher se a conta for criptografada por senha</string>
+  <string name="connect_device_scanqr">Escanear QR</string>
+  <string name="connect_device_enterPIN">Ou digite o PIN</string>
   <string name="account_link_device_button">Conectar</string>
   <!--Biometry-->
   <string name="account_biometry_auth_title">Desbloquear a conta Jami</string>
-  <string name="account_biometry_auth_message">Utilizar a biometria para desbloquear a sua conta</string>
-  <string name="account_biometry_enroll_title">Utilizar a autenticação biométrica?</string>
-  <string name="account_biometry_enroll_message">O seu dispositivo suporta a autenticação biométrica segura.
-A autenticação biométrica ou do dispositivo adiciona uma forma conveniente de desbloquear localmente o acesso à sua conta Jami. Continuará a poder utilizar a sua palavra-passe.</string>
-  <string name="account_biometry_enroll_accept">Utilizar biometria</string>
-  <string name="no_thanks">Não obrigado</string>
-  <string name="account_biometry_enroll_auth_title">Adicionar autenticação à sua conta Jami</string>
-  <string name="account_biometry_enroll_auth_message">Adicione uma autenticação biométrica ou de dispositivo segura como alternativa à sua palavra-passe</string>
+  <string name="account_biometry_auth_message">Use a biometria para desbloquear sua conta</string>
+  <string name="account_biometry_enroll_title">Usar autenticação biométrica?</string>
+  <string name="account_biometry_enroll_message">Seu dispositivo é compatível com a autenticação biométrica segura.
+A autenticação biométrica ou de dispositivo adiciona uma maneira conveniente de desbloquear localmente o acesso à sua conta Jami. Você ainda poderá usar sua senha.</string>
+  <string name="account_biometry_enroll_accept">Use biometria</string>
+  <string name="no_thanks">Não, obrigado</string>
+  <string name="account_biometry_enroll_auth_title">Adicionar autenticação para sua conta Jami</string>
+  <string name="account_biometry_enroll_auth_message">Adicione autenticação biométrica ou de dispositivo segura como uma alternativa à sua senha</string>
   <string name="account_auth_error">Erro de autenticação: %1$s</string>
   <string name="account_auth_success">A autenticação foi bem sucedida</string>
-  <string name="account_auth_key_error">Falha ao desencriptar a chave da conta</string>
-  <string name="account_auth_password">Utilizar a palavra-passe da conta</string>
+  <string name="account_auth_key_error">Falha ao descriptografar a chave da conta</string>
+  <string name="account_auth_password">Usar a senha da conta</string>
 </resources>

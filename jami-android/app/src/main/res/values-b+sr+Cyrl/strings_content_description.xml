@@ -10,4 +10,5 @@
   <string name="control_play">Пусти</string>
   <string name="control_replay">Ponovi</string>
   <string name="control_pause">Паузирај</string>
+  <string name="searchbar_navigation_account">Izaberi nalog</string>
 </resources>

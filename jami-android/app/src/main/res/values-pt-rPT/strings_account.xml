@@ -9,7 +9,7 @@
   <string name="add_sip_account_title">Adicionar conta SIP</string>
   <string name="ring_account_default_name">Conta Jami %1$s</string>
   <string name="prompt_alias">Pseudónimo</string>
-  <string name="prompt_hostname">Servidor</string>
+  <string name="prompt_hostname">Nome do hospedeiro</string>
   <string name="prompt_username">Nome de utilizador</string>
   <string name="prompt_password">Palavra-passe</string>
   <string name="action_create">Criar conta</string>
@@ -22,11 +22,11 @@
   <string name="dialog_wait_update">A atualizar a conta</string>
   <string name="dialog_wait_update_details">Por favor aguarde enquanto a sua nova conta é atualizada…</string>
   <string name="dialog_warn_ip2ip_account_title">Criar uma conta SIP vazia?</string>
-  <string name="dialog_warn_ip2ip_account_message">Está prestes a criar uma conta SIP com nenhum nome de servidor válido.
+  <string name="dialog_warn_ip2ip_account_message">Está prestes a criar uma conta SIP com nenhum nome de servidor hospedeiro válido.
         Só poderá fazer e receber chamadas diretas de IP.
         Pode editar a sua conta mais tarde</string>
   <string name="account_type_ip2ip">IP da conta</string>
-  <string name="help_ring">Uma conta Jami permite-lhe que entre em contacto com pessoas de forma segura numa rede ponto-a-ponto totalmente distribuída.</string>
+  <string name="help_ring">Uma conta Jami permite-lhe que entre em contacto com pessoas de forma segura numa rede ponto a ponto totalmente distribuída.</string>
   <string name="help_sip_title">Adicionar a sua conta SIP</string>
   <string name="help_sip">Configurar uma conta SIP existente.</string>
   <string name="create_sip_account">Adicionar conta SIP</string>
@@ -55,7 +55,7 @@
   <string name="account_preferences_basic_tab">Geral</string>
   <string name="account_basic_category">Configurações básicas</string>
   <string name="account_alias_label">Nome da conta</string>
-  <string name="account_hostname_label">Servidor</string>
+  <string name="account_hostname_label">Nome do hospedeiro</string>
   <string name="account_bootstrap_label">Inicialização</string>
   <string name="account_username_label">Nome de utilizador</string>
   <string name="account_password_label">Palavra-passe</string>
@@ -83,8 +83,8 @@
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Avançado</string>
   <string name="account_chat_settings_title">Configurações de conversação</string>
-  <string name="account_read_receipts_label">Ativar verificação de leitura</string>
-  <string name="account_read_receipts_summary">Enviar e receber verificações indicando que a mensagem foi mostrada.</string>
+  <string name="account_read_receipts_label">Ativar confirmações de leitura</string>
+  <string name="account_read_receipts_summary">Enviar e receber confirmações de leitura que indicam que a mensagem foi mostrada.</string>
   <string name="account_call_settings_title">Configurações de chamada</string>
   <string name="account_dht_public_in_calls_label">Permitir receber chamadas de contactos desconhecidos</string>
   <string name="account_registration_exp_label">O registo expirou</string>
@@ -112,7 +112,7 @@
   <string name="account_proxy_server_label">Endereço do proxy DHT</string>
   <string name="account_proxy_server_list_label">URL de lista de proxy DHT</string>
   <string name="account_sip_proxy_label">Proxy</string>
-  <string name="account_peer_discovery_label">Descoberta de membros locais</string>
+  <string name="account_peer_discovery_label">Descoberta de pares locais</string>
   <string name="account_peer_discovery_enable_label">Ativar a descoberta de pares locais</string>
   <string name="account_peer_discovery_enable_summary">Conectar a outros nós de DHT a anunciar na rede local</string>
   <!--Security Details-->
@@ -154,7 +154,7 @@
   <string name="account_export_end_error_title">Erro</string>
   <string name="account_export_end_error_message">Não foi possível exportar a conta. Ocorreu um erro desconhecido.</string>
   <string name="account_enter_password">Introduza a palavra-passe</string>
-  <string name="account_share_body">Contacte-me utilizando \'%1$s\' na plataforma de comunicação distribuida Jami: %2$s</string>
+  <string name="account_share_body">Contacte-me utilizando \'%1$s\' na plataforma de comunicação distribuída Jami Jami: %2$s</string>
   <string name="account_share_body_with_username">Contacte-me utilizando \'%1$s\' ou o meu nome público de utilizador \'%2$s\' na plataforma de comunicação distribuída Jami: %3$s</string>
   <string name="account_contact_me">Contacte-me no Jami!</string>
   <string name="update_account">Atualizar conta</string>
@@ -194,7 +194,7 @@
   <string name="account_link_prompt_pin">Introduza o PIN</string>
   <string name="account_new_button">Criar uma conta Jami</string>
   <string name="account_link_export_button">Vincular um novo dispositivo</string>
-  <string name="account_link_show_button">Mostrar %d mais dispositivos vinculados</string>
+  <string name="account_link_show_button">Mostrar mais %d dispositivo(s) vinculado(s)</string>
   <string name="account_link_hide_button">Ocultar dispositivo vinculado</string>
   <string name="account_link_export_info">Para usar esta conta noutros dispositivos, necessita primeiro de expo-lo ao Jami. Isto irá gerar um código PIN que necessita de introduzir no novo dispositivo para configurar a sua conta. O PIN é válido por apenas 10 minutos.</string>
   <string name="account_start_export_button">Gerar código PIN</string>
@@ -258,7 +258,7 @@
   <string name="account_link_device_title">Vincular um novo dispositivo</string>
   <string name="account_link_password">Esta conta é encriptada por palavra-passe, introduza a palavra-passe para gerar o código PIN.</string>
   <string name="account_link_generate_button">Gerar</string>
-  <string name="account_link_time_valid">O código PIN não é válido: %1$s.</string>
+  <string name="account_link_time_valid">O código PIN será válido: %1$s.</string>
   <string name="account_link_device_info">Escolha \"Vincular um novo dispositivo\" na outra aplicação Jami para mostrar o código QR ou o PIN</string>
   <string name="account_generate_export_device">No outro dispositivo</string>
   <string name="account_generate_export_info">Instale e inicie o Jami, selecione \"Importar de outro dispositivo\" e leia o código QR.</string>
