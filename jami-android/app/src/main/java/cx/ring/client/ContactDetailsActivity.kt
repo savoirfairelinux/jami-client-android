@@ -299,7 +299,11 @@ class ContactDetailsActivity : AppCompatActivity(), TabLayout.OnTabSelectedListe
             tmpProfilePhotoUri = uri
             cameraResultLauncher.launch(intent)
         } catch (e: Exception) {
-            Toast.makeText(this, "Error starting camera: " + e.localizedMessage, Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this,
+                getString(R.string.camera_error),
+                Toast.LENGTH_SHORT
+            ).show()
             Log.e(TAG, "Can't create temp file", e)
         }
     }

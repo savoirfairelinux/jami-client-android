@@ -193,8 +193,14 @@ class JamiAccountSummaryFragment :
                             .observeOn(DeviceUtils.uiScheduler)
                             .subscribe({}) { e: Throwable ->
                                 val v = view
-                                if (v != null)
-                                    Snackbar.make(v, "Can't export archive: " + e.message, Snackbar.LENGTH_LONG).show()
+                                if (v != null) {
+                                    Log.e(TAG, "Error exporting archive", e)
+                                    Snackbar.make(
+                                        v,
+                                        getString(R.string.export_archive_error),
+                                        Snackbar.LENGTH_LONG
+                                    ).show()
+                                }
                             }
                     }
                 }
@@ -464,7 +470,11 @@ class JamiAccountSummaryFragment :
             tmpProfilePhotoUri = uri
             startActivityForResult(intent, HomeActivity.REQUEST_CODE_PHOTO)
         } catch (e: Exception) {
-            Toast.makeText(requireContext(), "Error starting camera: " + e.localizedMessage, Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                requireContext(),
+                getString(R.string.starting_camera_error),
+                Toast.LENGTH_SHORT
+            ).show()
             Log.e(TAG, "Can't create temp file", e)
         }
     }
