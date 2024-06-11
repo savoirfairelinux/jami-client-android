@@ -111,10 +111,7 @@ class PluginsListSettingsFragment : Fragment(), PluginListItemListener {
             unloadPlugin(pluginDetails.rootPath)
             status = getString(R.string.unload_sucess, pluginDetails.name)
         }
-        Toast.makeText(
-            requireContext(), status,
-            Toast.LENGTH_SHORT
-        ).show()
+        Toast.makeText(requireContext(), status, Toast.LENGTH_SHORT).show()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -174,11 +171,12 @@ class PluginsListSettingsFragment : Fragment(), PluginListItemListener {
                     }
                     mAdapter!!.updatePluginsList(getInstalledPlugins(requireContext()))
                     showLoading(false)
-                    Toast.makeText(requireContext(), "Plugin: $filename successfully installed", Toast.LENGTH_LONG)
+                    Toast.makeText(requireContext(), getString(R.string.install_sucess, filename), Toast.LENGTH_LONG)
                         .show()
                 }) { e: Throwable ->
                     if (binding != null) {
-                        val sb = Snackbar.make(binding!!.listLayout, "" + e.message, Snackbar.LENGTH_LONG)
+                        Log.e(TAG, "Error importing plugin", e)
+                        val sb = Snackbar.make(binding!!.listLayout, getString(R.string.install_error), Snackbar.LENGTH_LONG)
                         sb.setAction(R.string.plugin_force_install) { v: View? -> installPluginFromUri(uri, true) }
                         sb.show()
                     }

@@ -71,7 +71,7 @@ class LinkDeviceFragment : BaseBottomSheetFragment<LinkDevicePresenter>(), LinkD
                 // Android 13 and higher automatically provide visual feedback when an app copies content
                 // to the clipboard. Provide manual notification in Android 12L (API level 32) and lower
                 if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2)
-                    Toast.makeText(context, "Pin code copied", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, getString(R.string.pin_copied), Toast.LENGTH_SHORT).show()
             }
         }
 

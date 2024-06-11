@@ -38,7 +38,7 @@ along with this program; if not, write to the Free Software
     <string name="no_browser_app_installed">No web browser app found, install one to view this page</string>
     <string name="email_chooser_title">Send mail using…</string>
     <string name="website_chooser_title">View website using…</string>
-    <string name="license">This software is provided \"as is\", without warranty of any kind. For details, see <u>GNU General Public License version 3 or later</u></string>
+    <string name="license">This software is provided \“as is\”, without warranty of any kind. For details, see <u>GNU General Public License version 3 or later</u></string>
     <string name="description">Jami is free software for universal communication which respects the freedoms and privacy of its users.</string>
     <string name="credits">Credits</string>
     <string name="pip_title">Jami Conference</string>
@@ -270,6 +270,7 @@ along with this program; if not, write to the Free Software
     <!-- MediaPreferenceFragment -->
     <string name="permission_dialog_camera_title">Camera permission</string>
     <string name="permission_dialog_camera_message">Video conversations require the camera permission to work. Please consider enabling it.</string>
+    <string name="camera_error">An error occurred while starting the camera.</string>
 
     <!-- Ringtone activity -->
     <string name="ringtone_error_title">Error</string>
@@ -277,7 +278,7 @@ along with this program; if not, write to the Free Software
     <string name="ringtone_error_size_too_big">This file is too big. The maximum size is %1$dkB.</string>
     <string name="ringtone_custom_prompt">Set a custom ringtone</string>
     <string name="ringtone_custom_label">Custom</string>
-    <string name="ringtone_jami_tones">Jami Tones</string>
+    <string name="ringtone_jami_tones">Jami ringtones</string>
     <string name="ringtone_default_name" translatable="false">1 AfroNigeria.opus</string>
     <string name="ca_root_file" translatable="false">cacert.pem</string>
 
@@ -348,6 +349,20 @@ along with this program; if not, write to the Free Software
     <string name="conversation_contact_banned">%1$s was banned</string>
     <string name="conversation_search_hint">Search conversation</string>
 
+    <string name="audio_recorder_error">Audio recorder app was not found.</string>
+    <string name="video_recorder_error">Video recorder app was not found.</string>
+    <string name="taking_picture_error">An error occurred while taking a picture.</string>
+    <string name="find_picture_error">Unable to find picture.</string>
+    <string name="open_camera_error">An error occurred while opening the camera.</string>
+    <string name="starting_recorder_error">An error occurred while starting the recorder.</string>
+    <string name="starting_camera_error">An error occurred while starting the camera.</string>
+    <string name="browser_error">No file browser available on this device.</string>
+    <string name="import_archive_error">An error occurred while importing the archive.</string>
+    <string name="export_archive_error">An error occurred while exporting the archive.</string>
+    <string name="load_ringtone_error">An error occurred while loading ringtone.</string>
+    <string name="sharing_log_error">An error occurred while sharing logs.</string>
+    <string name="no_native_crash">No recent native crash</string>
+
     <string name="today">Today</string>
     <string name="yesterday">Yesterday</string>
 
@@ -362,7 +377,8 @@ along with this program; if not, write to the Free Software
     <string name="help_password_choose">Choose a strong password you will remember to protect your Jami account.</string>
     <string name="help_password_enter">Enter your main Jami account password.</string>
     <string name="help_server_enter">Enter URL of management server.</string>
-    <string name="help_pin_enter">Enter the PIN from another configured Jami account. Use the \"export Jami account\" feature to obtain a PIN.</string>
+    <string name="help_pin_enter">Enter the PIN from another configured Jami account. Use the \“export Jami account\” feature to obtain a PIN.</string>
+    <string name="pin_copied">PIN code copied to clipboard.</string>
     <string name="wizard_next">Next</string>
     <string name="wizard_back">Back</string>
     <string name="wizard_skip">Skip</string>
@@ -456,6 +472,7 @@ along with this program; if not, write to the Free Software
     <string name="menu_file_share">Share file</string>
     <string name="menu_message_copy">Copy</string>
     <string name="menu_message_edit">Edit message</string>
+    <string name="menu_message_history">Message history</string>
     <string name="menu_message_delete">Delete message</string>
     <string name="menu_message_cancel">Cancel message</string>
     <string name="menu_message_reply">Reply</string>
@@ -545,6 +562,7 @@ along with this program; if not, write to the Free Software
     <string name="bottomsheet_contact">Contact Jami\n%1$s</string>
     <string name="bottomsheet_remove">Remove from the swarm</string>
     <string name="error_open_no_app_found">No application found to handle this file: %1$s</string>
+    <string name="swarm_detail_no_document">You have no documents yet.</string>
 
     <!--  JamiId  -->
     <string name="jami_id_copy">Copy JamiId</string>
@@ -568,9 +586,11 @@ along with this program; if not, write to the Free Software
     <string name="donation_setting_description">Enable the donation reminder</string>
     <string name="donation_url" translatable="false">https://crowdfunding.lfx.linuxfoundation.org/projects/jami-a-gnu-package</string>
 
-    <!--  Plugin  -->
+    <!--  Extensions  -->
     <string name="unable_to_load">Unable to load %1$s</string>
     <string name="load_sucess">%1$s: enabled</string>
     <string name="unload_sucess">%1$s: disabled</string>
+    <string name="install_sucess">Extension %1$s has been successfully installed.</string>
+    <string name="install_error">An error occurred while importing the extension.</string>
 
 </resources>
