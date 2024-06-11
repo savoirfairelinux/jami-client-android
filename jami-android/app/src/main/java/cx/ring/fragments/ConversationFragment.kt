@@ -508,7 +508,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                 startActivityForResult(intent, REQUEST_CODE_CAPTURE_AUDIO)
             } catch (ex: Exception) {
                 Log.e(TAG, "sendAudioMessage: error", ex)
-                Toast.makeText(activity, "Can't find audio recorder app", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, getString(R.string.audio_recorder_error), Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -531,7 +531,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                 startActivityForResult(intent, REQUEST_CODE_CAPTURE_VIDEO)
             } catch (ex: Exception) {
                 Log.e(TAG, "sendVideoMessage: error", ex)
-                Toast.makeText(activity, "Can't find video recorder app", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, getString(R.string.video_recorder_error), Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -554,7 +554,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             mCurrentPhoto = photoFile
             startActivityForResult(takePictureIntent, REQUEST_CODE_TAKE_PICTURE)
         } catch (e: Exception) {
-            Toast.makeText(c, "Error taking picture: " + e.localizedMessage, Toast.LENGTH_SHORT)
+            Toast.makeText(c, getString(R.string.taking_picture_error), Toast.LENGTH_SHORT)
                 .show()
         }
     }
@@ -624,7 +624,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             if (sendingFile != null)
                 startFileSend(sendingFile.flatMapCompletable { f -> sendFile(f) })
             else
-                Toast.makeText(activity, "Can't find picture", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, getString(R.string.find_picture_error), Toast.LENGTH_SHORT).show()
         } else if (requestCode == REQUEST_CODE_SAVE_FILE) {
             val uri = resultData?.data
             if (resultCode == Activity.RESULT_OK && uri != null) {

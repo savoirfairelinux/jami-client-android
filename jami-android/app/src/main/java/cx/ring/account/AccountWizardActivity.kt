@@ -180,8 +180,11 @@ class AccountWizardActivity : BaseActivity<AccountWizardPresenter>(), AccountWiz
     }
 
     override fun displayCreationError() {
-        Toast.makeText(this@AccountWizardActivity, "Error creating account", Toast.LENGTH_SHORT)
-            .show()
+        Toast.makeText(
+            this@AccountWizardActivity,
+            getString(R.string.account_creation_error),
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
     override fun blockOrientation() {

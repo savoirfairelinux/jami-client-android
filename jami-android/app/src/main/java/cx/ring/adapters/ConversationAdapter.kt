@@ -1049,7 +1049,7 @@ class ConversationAdapter(
                                 Log.w(TAG, "Message ${it.type} ${it.body} $it")
                             }
                             MaterialAlertDialogBuilder(it.context)
-                                .setTitle("Message history")
+                                .setTitle(it.context.getString(R.string.menu_message_history))
                                 .setItems(c.filterIsInstance<TextMessage>().map { it.body!! }
                                     .toTypedArray())
                                 { dialog, _ -> dialog.dismiss() }

@@ -18,6 +18,7 @@ package cx.ring.client
 
 import android.Manifest
 import android.app.Activity
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
@@ -72,6 +73,7 @@ import net.jami.services.DeviceRuntimeService
 import net.jami.services.HardwareService
 import net.jami.services.NotificationService
 import java.io.ByteArrayOutputStream
+import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -299,9 +301,16 @@ class ContactDetailsActivity : AppCompatActivity(), TabLayout.OnTabSelectedListe
                 .putExtra("android.intent.extra.USE_FRONT_CAMERA", true)
             tmpProfilePhotoUri = uri
             cameraResultLauncher.launch(intent)
-        } catch (e: Exception) {
-            Toast.makeText(this, "Error starting camera: " + e.localizedMessage, Toast.LENGTH_SHORT).show()
+        } catch (e: IOException) {
             Log.e(TAG, "Can't create temp file", e)
+        } catch (e: IllegalArgumentException) {
+            Log.e(TAG, "File is outside the paths supported by the provider", e)
+        } catch (e: ActivityNotFoundException) {
+            Log.e(TAG, "No camera app found", e)
+        } catch (e: Exception) {
+            Log.e(TAG, "Error launching camera", e)
+        } finally {
+            Toast.makeText(this, getString(R.string.camera_error), Toast.LENGTH_SHORT).show()
         }
     }
 
