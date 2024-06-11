@@ -158,7 +158,7 @@
             android:focusable="true"
             android:gravity="center_vertical"
             android:paddingHorizontal="16dp"
-            android:text="Message history"
+            android:text="@string/menu_message_history"
             android:textColor="@color/text_color"
             app:drawableStartCompat="@drawable/baseline_history_16" />
 

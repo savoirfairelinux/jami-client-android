@@ -58,6 +58,6 @@
         android:textAppearance="@style/TextAppearance.Material3.LabelSmall"
         android:ellipsize="middle"
         android:singleLine="true"
-        android:text="2.7GB" />
+        tools:text="2.7GB" />
 
 </RelativeLayout>

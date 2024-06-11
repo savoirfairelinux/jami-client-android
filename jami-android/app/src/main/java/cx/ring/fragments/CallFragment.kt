@@ -1275,8 +1275,11 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                 displayLocalVideo(false)
             }
         } else {
-            Toast.makeText(requireContext(), "Can't start screen sharing", Toast.LENGTH_SHORT)
-                .show()
+            Toast.makeText(
+                requireContext(),
+                getString(R.string.screen_sharing_error),
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 

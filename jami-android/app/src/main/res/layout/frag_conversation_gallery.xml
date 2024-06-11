@@ -47,7 +47,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/text_margin"
-            android:text="You have no document yet" />
+            android:text="@string/swarm_detail_no_document" />
 
     </LinearLayout>
 

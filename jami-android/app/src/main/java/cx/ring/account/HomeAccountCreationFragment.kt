@@ -33,6 +33,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import net.jami.account.HomeAccountCreationPresenter
 import net.jami.account.HomeAccountCreationView
+import net.jami.utils.Log
 import java.io.File
 
 @AndroidEntryPoint
@@ -87,7 +88,7 @@ class HomeAccountCreationFragment :
                 .setType("*/*"), ARCHIVE_REQUEST_CODE)
         } catch (e: Exception) {
             view?.let { v ->
-                Snackbar.make(v, "No file browser available on this device", Snackbar.LENGTH_SHORT).show() }
+                Snackbar.make(v, getString(R.string.browser_error), Snackbar.LENGTH_SHORT).show() }
         }
     }
 
@@ -104,8 +105,9 @@ class HomeAccountCreationFragment :
                         replaceFragmentWithSlide(
                                 JamiLinkAccountFragment(), JamiLinkAccountFragment.TAG, R.id.wizard_container)
                     }) { e: Throwable ->
+                        Log.e(TAG, "Error importing archive", e)
                         view?.let { v ->
-                            Snackbar.make(v, "Can't import archive: " + e.message, Snackbar.LENGTH_LONG).show() }
+                            Snackbar.make(v, getString(R.string.import_archive_error), Snackbar.LENGTH_LONG).show() }
                     }
             }
         }
