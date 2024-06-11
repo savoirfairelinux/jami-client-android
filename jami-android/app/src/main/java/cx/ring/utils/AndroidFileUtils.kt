@@ -255,6 +255,7 @@ object AndroidFileUtils {
 
     private val dateFormat = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US)
 
+    @Throws(IOException::class)
     fun createImageFile(context: Context): File =
         File.createTempFile("img_${dateFormat.format(Date())}_", ".jpg", getTempShareDir(context))
 

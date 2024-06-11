@@ -139,7 +139,7 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
         searchBar.setNavigationOnClickListener { // Account selection
             val accounts = mAccountService.observableAccountList.blockingFirst()
             MaterialAlertDialogBuilder(requireContext())
-                .setTitle("Select Account")
+                .setTitle(getString(R.string.account_selection))
                 .setAdapter(
                         AccountAdapter(
                             requireContext(),

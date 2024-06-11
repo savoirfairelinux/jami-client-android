@@ -118,7 +118,8 @@ class LogsActivity : AppCompatActivity() {
                 }
                 startActivity(Intent.createChooser(sendIntent, null))
             }) { e: Throwable ->
-                Snackbar.make(binding.root, "Error sharing logs: " + e.localizedMessage, Snackbar.LENGTH_SHORT).show()
+                Log.e(TAG, "Error sharing logs", e)
+                Snackbar.make(binding.root, getString(R.string.sharing_log_error), Snackbar.LENGTH_SHORT).show()
             })
     }
     fun saveFile(fileMaybe: Maybe<File>) {
@@ -246,7 +247,7 @@ class LogsActivity : AppCompatActivity() {
                 }
             }.show(supportFragmentManager, CrashBottomSheet.TAG)
         } else if (userInitiated) {
-            Snackbar.make(binding.root, "No recent native crash", Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(binding.root, getString(R.string.no_native_crash), Snackbar.LENGTH_SHORT).show()
         }
     }
 

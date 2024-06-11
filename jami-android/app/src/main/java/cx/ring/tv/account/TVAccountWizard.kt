@@ -124,7 +124,7 @@ class TVAccountWizard : BaseActivity<AccountWizardPresenter>(), AccountWizardVie
     }
 
     override fun displayCreationError() {
-        Toast.makeText(this@TVAccountWizard, "Error creating account", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this@TVAccountWizard, getString(R.string.account_creation_error), Toast.LENGTH_SHORT).show()
     }
 
     override fun blockOrientation() {
