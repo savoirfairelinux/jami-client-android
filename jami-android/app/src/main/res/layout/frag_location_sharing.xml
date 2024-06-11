@@ -93,14 +93,14 @@
                 android:layout_height="wrap_content"
                 android:checkable="true"
                 android:checked="true"
-                android:text="1 hour" />
+                tools:text="1 hour" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_share_time_10m"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checkable="true"
-                android:text="10 minutes" />
+                tools:text="10 minutes" />
 
         </com.google.android.material.chip.ChipGroup>
 

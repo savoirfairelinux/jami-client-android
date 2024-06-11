@@ -92,7 +92,7 @@ class CustomCameraActivity : Activity() {
             try {
                 mCamera!!.takePicture(null, null, mPicture)
             } catch (e: Exception) {
-                Toast.makeText(this, "Error taking picture", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, getString(R.string.taking_picture_error), Toast.LENGTH_LONG).show()
                 finish()
             }
         }
@@ -173,7 +173,7 @@ class CustomCameraActivity : Activity() {
                     }
                 }
             }) { e: Throwable ->
-                Toast.makeText(this, "Can't open camera", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, getString(R.string.open_camera_error), Toast.LENGTH_LONG).show()
                 finish()
             })
     }
@@ -249,7 +249,8 @@ class CustomCameraActivity : Activity() {
             recorder!!.prepare()
             recorder!!.start()
         } catch (e: Exception) {
-            Toast.makeText(this, "Error starting the recorder: " + e.localizedMessage, Toast.LENGTH_LONG).show()
+            Toast.makeText(this, getString(R.string.starting_recorder_error), Toast.LENGTH_LONG).show()
+            Log.e(TAG, "Error starting recorder", e)
             finish()
         }
     }

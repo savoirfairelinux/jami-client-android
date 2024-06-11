@@ -313,7 +313,11 @@ class RingtoneActivity : AppCompatActivity() {
                 AndroidFileUtils.getCacheFile(this, uri)
                     .observeOn(DeviceUtils.uiScheduler)
                     .subscribe({ ringtone: File -> onFileFound(ringtone) }) {
-                        Toast.makeText(this, "Can't load ringtone !", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            this,
+                            getString(R.string.load_ringtone_error),
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
             }
         }
