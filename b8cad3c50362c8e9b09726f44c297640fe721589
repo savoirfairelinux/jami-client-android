@@ -24,6 +24,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "aaad8bc9_8414ebd3",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-06-12T17:50:01Z",
+      "side": 1,
+      "message": "Done\n\nFyi, most of the hardcoded strings were in toast popups.",
+      "parentUuid": "c3693b2f_4fdbf888",
+      "range": {
+        "startLine": 273,
+        "startChar": 32,
+        "endLine": 273,
+        "endChar": 53
+      },
+      "revId": "b8cad3c50362c8e9b09726f44c297640fe721589",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bb0e9721_f5ff9a30",
@@ -37,6 +61,30 @@
       "writtenOn": "2024-06-12T03:06:11Z",
       "side": 1,
       "message": "Sentence case?\n\n`Jami tones`\n\nDoes `tones` refer to `ringtones`? If so, should this be\n`Jami ringtones`",
+      "range": {
+        "startLine": 281,
+        "startChar": 39,
+        "endLine": 281,
+        "endChar": 49
+      },
+      "revId": "b8cad3c50362c8e9b09726f44c297640fe721589",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f4c6fbfb_d79a0ed0",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-06-12T17:50:01Z",
+      "side": 1,
+      "message": "Done\n\nIt is displayed as heading in settings, to select the ringtone you want.",
+      "parentUuid": "bb0e9721_f5ff9a30",
       "range": {
         "startLine": 281,
         "startChar": 39,
@@ -70,6 +118,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "84fd9bd4_a1151cad",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-06-12T17:50:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef9ac5a7_0217b891",
+      "range": {
+        "startLine": 352,
+        "startChar": 40,
+        "endLine": 352,
+        "endChar": 70
+      },
+      "revId": "b8cad3c50362c8e9b09726f44c297640fe721589",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8d3ce1e0_5c7f319f",
@@ -83,6 +155,30 @@
       "writtenOn": "2024-06-12T03:06:11Z",
       "side": 1,
       "message": "`Video recorder app was not found.`",
+      "range": {
+        "startLine": 353,
+        "startChar": 40,
+        "endLine": 353,
+        "endChar": 70
+      },
+      "revId": "b8cad3c50362c8e9b09726f44c297640fe721589",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2ff73fb2_6c499c39",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-06-12T17:50:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d3ce1e0_5c7f319f",
       "range": {
         "startLine": 353,
         "startChar": 40,
@@ -116,6 +212,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "42ed91e1_66a8103a",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-06-12T17:50:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b074a512_a0236a06",
+      "range": {
+        "startLine": 354,
+        "startChar": 40,
+        "endLine": 354,
+        "endChar": 60
+      },
+      "revId": "b8cad3c50362c8e9b09726f44c297640fe721589",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "43271c55_87ed48f7",
@@ -129,6 +249,30 @@
       "writtenOn": "2024-06-12T03:06:11Z",
       "side": 1,
       "message": "`Unable to find picture`",
+      "range": {
+        "startLine": 355,
+        "startChar": 38,
+        "endLine": 355,
+        "endChar": 57
+      },
+      "revId": "b8cad3c50362c8e9b09726f44c297640fe721589",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "33c363f9_69ff1eed",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-06-12T17:50:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43271c55_87ed48f7",
       "range": {
         "startLine": 355,
         "startChar": 38,
@@ -162,6 +306,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8aa1117_92aded0e",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-06-12T17:50:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a57c302_8ad3e9c3",
+      "range": {
+        "startLine": 356,
+        "startChar": 37,
+        "endLine": 356,
+        "endChar": 55
+      },
+      "revId": "b8cad3c50362c8e9b09726f44c297640fe721589",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d76541f7_6b16dcee",
@@ -175,6 +343,30 @@
       "writtenOn": "2024-06-12T03:06:11Z",
       "side": 1,
       "message": "`An error occurred while starting the recorder.`",
+      "range": {
+        "startLine": 357,
+        "startChar": 43,
+        "endLine": 357,
+        "endChar": 70
+      },
+      "revId": "b8cad3c50362c8e9b09726f44c297640fe721589",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8f83c85_b6a74006",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-06-12T17:50:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d76541f7_6b16dcee",
       "range": {
         "startLine": 357,
         "startChar": 43,
@@ -208,6 +400,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2ceb27c6_eb575291",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-06-12T17:50:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a28d0493_7fc03cdc",
+      "range": {
+        "startLine": 358,
+        "startChar": 41,
+        "endLine": 358,
+        "endChar": 62
+      },
+      "revId": "b8cad3c50362c8e9b09726f44c297640fe721589",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2b1c8971_03227b5b",
@@ -221,6 +437,30 @@
       "writtenOn": "2024-06-12T03:06:11Z",
       "side": 1,
       "message": "`An error occurred while importing the archive.`",
+      "range": {
+        "startLine": 360,
+        "startChar": 40,
+        "endLine": 360,
+        "endChar": 61
+      },
+      "revId": "b8cad3c50362c8e9b09726f44c297640fe721589",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c75722e_7f3b5887",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-06-12T17:50:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b1c8971_03227b5b",
       "range": {
         "startLine": 360,
         "startChar": 40,
@@ -254,6 +494,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a8d30480_3b7c2023",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-06-12T17:50:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6014db82_c0055e23",
+      "range": {
+        "startLine": 361,
+        "startChar": 40,
+        "endLine": 361,
+        "endChar": 61
+      },
+      "revId": "b8cad3c50362c8e9b09726f44c297640fe721589",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "02042292_fb3aa623",
@@ -277,6 +541,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c4b12332_8f827761",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-06-12T17:50:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02042292_fb3aa623",
+      "range": {
+        "startLine": 362,
+        "startChar": 39,
+        "endLine": 362,
+        "endChar": 59
+      },
+      "revId": "b8cad3c50362c8e9b09726f44c297640fe721589",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "39e07744_eeda29ac",
@@ -290,6 +578,30 @@
       "writtenOn": "2024-06-12T03:06:11Z",
       "side": 1,
       "message": "`An error occurred while sharing logs.`",
+      "range": {
+        "startLine": 363,
+        "startChar": 37,
+        "endLine": 363,
+        "endChar": 55
+      },
+      "revId": "b8cad3c50362c8e9b09726f44c297640fe721589",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e4607d54_1ad3337b",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-06-12T17:50:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39e07744_eeda29ac",
       "range": {
         "startLine": 363,
         "startChar": 37,
@@ -346,6 +658,54 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d5159a94_9fee7670",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-06-12T17:50:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5fe8ffe_90add512",
+      "range": {
+        "startLine": 380,
+        "startChar": 115,
+        "endLine": 380,
+        "endChar": 117
+      },
+      "revId": "b8cad3c50362c8e9b09726f44c297640fe721589",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0dc7c594_c6b1333b",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-06-12T17:50:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef95d42a_bb723b26",
+      "range": {
+        "startLine": 380,
+        "startChar": 94,
+        "endLine": 380,
+        "endChar": 96
+      },
+      "revId": "b8cad3c50362c8e9b09726f44c297640fe721589",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "631db516_65a7c240",
@@ -359,6 +719,30 @@
       "writtenOn": "2024-06-12T03:06:11Z",
       "side": 1,
       "message": "Should `PIN` be in all uppercase?\n\n`PIN code copied to clipboard`",
+      "range": {
+        "startLine": 381,
+        "startChar": 30,
+        "endLine": 381,
+        "endChar": 45
+      },
+      "revId": "b8cad3c50362c8e9b09726f44c297640fe721589",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "97683de0_a8d4e0c9",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-06-12T17:50:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "631db516_65a7c240",
       "range": {
         "startLine": 381,
         "startChar": 30,
@@ -392,6 +776,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "06dff37b_168ebb5a",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-06-12T17:50:01Z",
+      "side": 1,
+      "message": "Done\n\n\u003e `You have no documents yet.`\n\nIt when you click on your contact and go to \"document\"tab. This sentence is displayed if there is no documents.",
+      "parentUuid": "0c92fdc6_dbaca12a",
+      "range": {
+        "startLine": 565,
+        "startChar": 44,
+        "endLine": 565,
+        "endChar": 68
+      },
+      "revId": "b8cad3c50362c8e9b09726f44c297640fe721589",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "79755ca4_0276954e",
@@ -405,6 +813,30 @@
       "writtenOn": "2024-06-12T03:06:11Z",
       "side": 1,
       "message": "The qt-client refers to `Extensions`. Is this the same?",
+      "range": {
+        "startLine": 589,
+        "startChar": 10,
+        "endLine": 589,
+        "endChar": 16
+      },
+      "revId": "b8cad3c50362c8e9b09726f44c297640fe721589",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "87cdaea5_7f7243ec",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-06-12T17:50:01Z",
+      "side": 1,
+      "message": "Yes it is the same.\nI got a discussion with aberraud and it got decided to use the term `extension` now.",
+      "parentUuid": "79755ca4_0276954e",
       "range": {
         "startLine": 589,
         "startChar": 10,
@@ -438,6 +870,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "207ce79d_94ad3d82",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-06-12T17:50:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a26ece11_43572c5a",
+      "range": {
+        "startLine": 593,
+        "startChar": 34,
+        "endLine": 593,
+        "endChar": 68
+      },
+      "revId": "b8cad3c50362c8e9b09726f44c297640fe721589",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cfdd22d6_83d7f6a6",
@@ -451,6 +907,30 @@
       "writtenOn": "2024-06-12T03:06:11Z",
       "side": 1,
       "message": "`An error occurred while importing the extension.`",
+      "range": {
+        "startLine": 594,
+        "startChar": 33,
+        "endLine": 594,
+        "endChar": 55
+      },
+      "revId": "b8cad3c50362c8e9b09726f44c297640fe721589",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "141129c0_2286f94d",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-06-12T17:50:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfdd22d6_83d7f6a6",
       "range": {
         "startLine": 594,
         "startChar": 33,
@@ -484,6 +964,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b13dbe94_5540bda0",
+        "filename": "jami-android/app/src/main/res/values/strings_account.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-06-12T17:50:01Z",
+      "side": 1,
+      "message": "Done\n\nIt is displayed when you want to select your account from your account list.",
+      "parentUuid": "01c76f80_3cf3a066",
+      "range": {
+        "startLine": 27,
+        "startChar": 37,
+        "endLine": 27,
+        "endChar": 51
+      },
+      "revId": "b8cad3c50362c8e9b09726f44c297640fe721589",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0869e8de_621c4b99",
@@ -507,6 +1011,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "226d9d46_631dfbcd",
+        "filename": "jami-android/app/src/main/res/values/strings_account.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-06-12T17:50:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0869e8de_621c4b99",
+      "range": {
+        "startLine": 31,
+        "startChar": 42,
+        "endLine": 31,
+        "endChar": 64
+      },
+      "revId": "b8cad3c50362c8e9b09726f44c297640fe721589",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c08e364a_0d831bdf",
@@ -520,6 +1048,30 @@
       "writtenOn": "2024-06-12T03:06:11Z",
       "side": 1,
       "message": "`An error occurred while starting the screen share.`",
+      "range": {
+        "startLine": 23,
+        "startChar": 40,
+        "endLine": 23,
+        "endChar": 67
+      },
+      "revId": "b8cad3c50362c8e9b09726f44c297640fe721589",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dc17f077_3fcdb811",
+        "filename": "jami-android/app/src/main/res/values/strings_call.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-06-12T17:50:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c08e364a_0d831bdf",
       "range": {
         "startLine": 23,
         "startChar": 40,
