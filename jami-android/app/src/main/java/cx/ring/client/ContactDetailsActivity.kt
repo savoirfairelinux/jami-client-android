@@ -179,7 +179,8 @@ class ContactDetailsActivity : AppCompatActivity(), TabLayout.OnTabSelectedListe
                     binding.description.text = getString(R.string.swarm_description)
                 else
                     binding.description.text = vm.conversationProfile.description
-                if (vm.mode == Conversation.Mode.OneToOne) {
+                // Note: For a random account from search results, mode will be Legacy
+                if (vm.mode == Conversation.Mode.OneToOne || vm.mode == Conversation.Mode.Legacy) {
                     binding.title.setOnClickListener(null)
                     binding.description.setOnClickListener(null)
                     binding.contactImage.setOnClickListener(null)
