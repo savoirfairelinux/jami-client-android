@@ -95,6 +95,10 @@ class ConversationActionsFragment : Fragment(), Colorable {
                 R.drawable.item_color_background, 0,
                 getText(R.string.conversation_preference_color)
             ) {
+                // If it's a trust request, disable color customization
+                if(conversation.mode.blockingFirst() == Conversation.Mode.Request)
+                    return@ContactAction
+
                 ColorChooserBottomSheet { color -> // Color chosen by the user (onclick method).
                     val rgbColor = String.format("#%06X", 0xFFFFFF and color)
                     mConversationFacade.setConversationPreferences(
@@ -112,6 +116,10 @@ class ConversationActionsFragment : Fragment(), Colorable {
 
             // Setup an action to allow the user to select an Emoji for the conversation.
             symbolAction = ContactAction(0, getText(R.string.conversation_preference_emoji)) {
+                // If it's a trust request, disable emoji customization
+                if(conversation.mode.blockingFirst() == Conversation.Mode.Request)
+                    return@ContactAction
+
                 EmojiChooserBottomSheet { emoji -> // Emoji chosen by the user (onclick method).
                     if (emoji == null) return@EmojiChooserBottomSheet
                     mConversationFacade.setConversationPreferences(
