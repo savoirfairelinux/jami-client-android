@@ -90,41 +90,43 @@ class ConversationActionsFragment : Fragment(), Colorable {
             colorActionPosition = 0
             symbolActionPosition = 1
 
-            // Setup an action to allow the user to select a color for the conversation.
-            colorAction = ContactAction(
-                R.drawable.item_color_background, 0,
-                getText(R.string.conversation_preference_color)
-            ) {
-                ColorChooserBottomSheet { color -> // Color chosen by the user (onclick method).
-                    val rgbColor = String.format("#%06X", 0xFFFFFF and color)
-                    mConversationFacade.setConversationPreferences(
-                        path.accountId,
-                        path.conversationUri,
-                        mapOf(Conversation.KEY_PREFERENCE_CONVERSATION_COLOR to rgbColor)
-                    )
-                    // Need to manually update the color of the conversation as will not get the
-                    // update signal from daemon.
-                    if (!path.conversationUri.isSwarm) conversation.setColor(color)
-                }.show(parentFragmentManager, "colorChooser")
-            }
-            // Add the action to the list of actions.
-            adapter.actions.add(colorAction!!)
+            if (conversation.mode.blockingFirst().isSwarm) {
+                // Setup an action to allow the user to select a color for the conversation.
+                colorAction = ContactAction(
+                    R.drawable.item_color_background, 0,
+                    getText(R.string.conversation_preference_color)
+                ) {
+                    ColorChooserBottomSheet { color -> // Color chosen by the user (onclick method).
+                        val rgbColor = String.format("#%06X", 0xFFFFFF and color)
+                        mConversationFacade.setConversationPreferences(
+                            path.accountId,
+                            path.conversationUri,
+                            mapOf(Conversation.KEY_PREFERENCE_CONVERSATION_COLOR to rgbColor)
+                        )
+                        // Need to manually update the color of the conversation as will not get the
+                        // update signal from daemon.
+                        if (!path.conversationUri.isSwarm) conversation.setColor(color)
+                    }.show(parentFragmentManager, "colorChooser")
+                }
+                // Add the action to the list of actions.
+                adapter.actions.add(colorAction!!)
 
-            // Setup an action to allow the user to select an Emoji for the conversation.
-            symbolAction = ContactAction(0, getText(R.string.conversation_preference_emoji)) {
-                EmojiChooserBottomSheet { emoji -> // Emoji chosen by the user (onclick method).
-                    if (emoji == null) return@EmojiChooserBottomSheet
-                    mConversationFacade.setConversationPreferences(
-                        path.accountId,
-                        path.conversationUri,
-                        mapOf(Conversation.KEY_PREFERENCE_CONVERSATION_SYMBOL to emoji)
-                    )
-                    // Need to manually update the symbol of the conversation as will not get the
-                    // update signal from daemon.
-                    if(!path.conversationUri.isSwarm) conversation.setSymbol(emoji.toString())
-                }.show(parentFragmentManager, "colorChooser")
+                // Setup an action to allow the user to select an Emoji for the conversation.
+                symbolAction = ContactAction(0, getText(R.string.conversation_preference_emoji)) {
+                    EmojiChooserBottomSheet { emoji -> // Emoji chosen by the user (onclick method).
+                        if (emoji == null) return@EmojiChooserBottomSheet
+                        mConversationFacade.setConversationPreferences(
+                            path.accountId,
+                            path.conversationUri,
+                            mapOf(Conversation.KEY_PREFERENCE_CONVERSATION_SYMBOL to emoji)
+                        )
+                        // Need to manually update the symbol of the conversation as will not get the
+                        // update signal from daemon.
+                        if(!path.conversationUri.isSwarm) conversation.setSymbol(emoji.toString())
+                    }.show(parentFragmentManager, "colorChooser")
+                }
+                adapter.actions.add(symbolAction!!)
             }
-            adapter.actions.add(symbolAction!!)
 
             // Update color on RX color signal.
             mDisposableBag.add(conversation.getColor()
