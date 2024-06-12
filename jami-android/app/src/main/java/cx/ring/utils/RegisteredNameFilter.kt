@@ -30,7 +30,8 @@ class RegisteredNameFilter : InputFilter {
         for (i in start until end) {
             val c = source[i]
             if (isCharAllowed(c)) {
-                sb.append(c)
+                sb.append(c.lowercase())
+                if (c.isUpperCase()) keepOriginal = false
             } else {
                 keepOriginal = false
             }
