@@ -26,6 +26,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3938304e_e3bcb6c1",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-06-13T09:48:38Z",
+      "side": 1,
+      "message": "Does it also work if the HTML Entity `\u0026#8230;` is replaced by `…`?\n\nhttps://www.compart.com/en/unicode/U+2026",
+      "range": {
+        "startLine": 169,
+        "startChar": 61,
+        "endLine": 169,
+        "endChar": 68
+      },
+      "revId": "f53074dd79478f5d4c6132b3ff2e56b68b8b61f2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9b24b779_3857a78e",
         "filename": "jami-android/app/src/main/res/values/strings.xml",
         "patchSetId": 5
@@ -65,6 +88,52 @@
         "startChar": 75,
         "endLine": 289,
         "endChar": 91
+      },
+      "revId": "f53074dd79478f5d4c6132b3ff2e56b68b8b61f2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5306b46a_f73cf910",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-06-13T09:48:38Z",
+      "side": 1,
+      "message": "Should `can not` be changed to `cannot`? If so, should a global find and replace be done if appropriate?\n\n\u003e Don’t use *can not* when you mean *cannot*. The only time you’re likely to see *can not* written as separate words is when the word “can” happens to precede some other phrase that happens to start with “not”…\n\u003e In formal writing and where contractions are frowned upon, use *cannot*.\nhttps://www.grammarly.com/blog/cannot-or-can-not/",
+      "range": {
+        "startLine": 308,
+        "startChar": 71,
+        "endLine": 308,
+        "endChar": 78
+      },
+      "revId": "f53074dd79478f5d4c6132b3ff2e56b68b8b61f2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "43fd7f05_92de053f",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-06-13T09:48:38Z",
+      "side": 1,
+      "message": "If this string refers to an error as given by the name of the variable `find_picture_error`, then\n`An error occurred while finding picture.`\n\nOtherwise, should the string be either\n`Picture not found.`\nor\n`Picture was not found.`",
+      "range": {
+        "startLine": 355,
+        "startChar": 38,
+        "endLine": 355,
+        "endChar": 61
       },
       "revId": "f53074dd79478f5d4c6132b3ff2e56b68b8b61f2",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
@@ -180,6 +249,29 @@
         "startChar": 26,
         "endLine": 593,
         "endChar": 32
+      },
+      "revId": "f53074dd79478f5d4c6132b3ff2e56b68b8b61f2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a17ad5b2_7ca298b1",
+        "filename": "jami-android/app/src/main/res/values/strings_account.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-06-13T09:48:38Z",
+      "side": 1,
+      "message": "Is this the same as `Banned contacts` (cf. qt-client)? If so, blocked seems better.\n\nShould a global find and replace, where appropriated happen to:\n1. change `banned` to `blocked`\n2. change `ban` to `block`?",
+      "range": {
+        "startLine": 24,
+        "startChar": 37,
+        "endLine": 24,
+        "endChar": 44
       },
       "revId": "f53074dd79478f5d4c6132b3ff2e56b68b8b61f2",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
