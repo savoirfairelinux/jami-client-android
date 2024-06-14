@@ -475,7 +475,7 @@ class ConversationAdapter(
                                     context.resources
                                         .getDimensionPixelSize(R.dimen.message_reaction_stroke),
                                     if (!interaction.isIncoming) convColor
-                                    else context.getColor(R.color.border_color)
+                                    else context.getColor(R.color.conversation_secondary_background)
                                 )
                             }
 

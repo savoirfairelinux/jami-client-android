@@ -23,6 +23,7 @@ import android.app.Activity
 import android.app.ActivityOptions
 import android.content.*
 import android.content.pm.PackageManager
+import android.graphics.drawable.AnimatedVectorDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -50,7 +51,6 @@ import cx.ring.adapters.ConversationAdapter
 import cx.ring.client.CallActivity
 import cx.ring.client.ContactDetailsActivity
 import cx.ring.client.ConversationActivity
-import cx.ring.client.HomeActivity
 import cx.ring.databinding.FragConversationBinding
 import cx.ring.mvp.BaseSupportFragment
 import cx.ring.service.DRingService
@@ -68,9 +68,7 @@ import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
-import net.jami.call.CallPresenter
 import net.jami.conversation.ConversationPresenter
-import net.jami.conversation.ConversationPresenter.IncomingCallAction
 import net.jami.conversation.ConversationView
 import net.jami.daemon.JamiService
 import net.jami.model.*
@@ -102,6 +100,22 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     private var mapHeight = 0
     private var loading = true
     private var animating = 0
+    private var lastInsets: WindowInsetsCompat? = null
+
+    private fun updatePaddings(windowInsets: WindowInsetsCompat) {
+        val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+        binding?.apply {
+            if (errorMsgPane.isVisible) {
+                errorMsgPane.updatePadding(top = insets.top)
+                appbar.updatePadding(top = 0)
+            } else {
+                errorMsgPane.updatePadding(top = 0)
+                appbar.updatePadding(top = insets.top)
+            }
+
+            mainContainer.updatePadding(bottom = insets.bottom)
+        }
+    }
 
     private val pickMultipleMedia =
         registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia(8)) { uris ->
@@ -168,16 +182,15 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             animation.duration = 150
             animation.addUpdateListener { valueAnimator: ValueAnimator -> histList.updatePadding(bottom = valueAnimator.animatedValue as Int) }
 
-            val layoutToAnimate = relativeLayout
             if (Build.VERSION.SDK_INT >= 30) {
                 ViewCompat.setWindowInsetsAnimationCallback(
-                    layoutToAnimate,
+                    mainContainer,
                     object : WindowInsetsAnimationCompat.Callback(DISPATCH_MODE_STOP) {
                         override fun onPrepare(animation: WindowInsetsAnimationCompat) {
                             animating++
                         }
                         override fun onProgress(insets: WindowInsetsCompat, runningAnimations: List<WindowInsetsAnimationCompat>): WindowInsetsCompat {
-                            layoutToAnimate.updatePadding(bottom = insets.systemWindowInsetBottom)
+                            mainContainer.updatePadding(bottom = insets.systemWindowInsetBottom)
                             return insets
                         }
 
@@ -187,12 +200,10 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                     })
             }
 
-            ViewCompat.setOnApplyWindowInsetsListener(layoutToAnimate) { _, insets: WindowInsetsCompat ->
+            ViewCompat.setOnApplyWindowInsetsListener(root) { _, windowInsets ->
+                lastInsets = windowInsets
                 if (animating == 0) {
-                    layoutToAnimate.updatePadding(
-                        top = insets.systemWindowInsetTop,
-                        bottom = insets.systemWindowInsetBottom
-                    )
+                    updatePaddings(windowInsets)
                 }
                 WindowInsetsCompat.CONSUMED
             }
@@ -224,6 +235,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                     (childFragmentManager.findFragmentById(R.id.mapLayout) as? LocationSharingFragment)?.hideControls()
                 }
             }
+
             msgInputTxt.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
                 override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
@@ -241,32 +253,19 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                     mPreferences?.let { preferences ->
                         if (hasMessage)
                             preferences.edit().putString(KEY_PREFERENCE_PENDING_MESSAGE, message).apply()
-                        else
-                            preferences.edit().remove(KEY_PREFERENCE_PENDING_MESSAGE).apply()
+                        else preferences.edit().remove(KEY_PREFERENCE_PENDING_MESSAGE).apply()
                     }
                 }
             })
-            replyCloseBtn.setOnClickListener {
-                clearReply()
-            }
-            fabLatest.setOnClickListener {
-                scrollToEnd()
-            }
+
+            replyCloseBtn.setOnClickListener { clearReply() }
+            fabLatest.setOnClickListener { scrollToEnd() }
 
             toolbar.setNavigationOnClickListener { activity?.onBackPressedDispatcher?.onBackPressed() }
             toolbar.setOnClickListener { presenter.openContact() }
             toolbar.addMenuProvider(menuProvider)
 
             ongoingCallPane.setOnClickListener { presenter.clickOnGoingPane() }
-            ringingCallPane.setOnClickListener {
-                presenter.clickRingingPane(IncomingCallAction.VIEW_ONLY)
-            }
-            acceptAudioCallButton.setOnClickListener {
-                presenter.clickRingingPane(IncomingCallAction.ACCEPT_AUDIO)
-            }
-            acceptVideoCallButton.setOnClickListener {
-                presenter.clickRingingPane(IncomingCallAction.ACCEPT_VIDEO)
-            }
             msgSend.setOnClickListener { sendMessageText() }
             emojiSend.setOnClickListener { sendEmoji() }
             btnMenu.setOnClickListener { expandMenu(it) }
@@ -325,8 +324,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                     // the model and interaction relationship).
                     // Because of bug #1251, we use findLastCompletelyVisibleItemPosition because
                     // findLastVisibleItemPosition ignores invisible items (don't understand why).
-                    val lastVisibleItemPosition =
-                        layoutManager.findLastCompletelyVisibleItemPosition()
+                    val lastVisibleItemPosition = layoutManager.findLastCompletelyVisibleItemPosition()
                     if (layoutManager.itemCount - lastVisibleItemPosition > visibleLatestThreshold)
                         fabLatest.show()
                     else fabLatest.hide()
@@ -452,10 +450,12 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         if (!isSharing) hideMap()
     }
 
-    fun openLocationSharing() {
-        binding!!.conversationLayout.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
+    fun expandMapView() {
+        // The binding.root view must have android:animateLayoutChanges="true"
+        binding!!.root.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
         val params = binding!!.mapCard.layoutParams as RelativeLayout.LayoutParams
         if (params.width != ViewGroup.LayoutParams.MATCH_PARENT) {
+            params.setMargins(0, 0,0, binding!!.cvMessageInput.height)
             params.width = ViewGroup.LayoutParams.MATCH_PARENT
             params.height = ViewGroup.LayoutParams.MATCH_PARENT
             binding!!.mapCard.layoutParams = params
@@ -468,19 +468,17 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 
     override fun showMap(accountId: String, contactId: String, open: Boolean) {
         if (binding!!.mapCard.visibility == View.GONE) {
-            Log.w(TAG, "showMap $accountId $contactId")
-            val fragmentManager = childFragmentManager
+            expandMapView()
+
             val fragment = LocationSharingFragment.newInstance(accountId, contactId, open)
-            fragmentManager.beginTransaction()
+            childFragmentManager.beginTransaction()
                 .add(R.id.mapLayout, fragment, "map")
                 .commit()
             binding!!.mapCard.visibility = View.VISIBLE
         }
         if (open) {
             val fragment = childFragmentManager.findFragmentById(R.id.mapLayout)
-            if (fragment != null) {
-                (fragment as LocationSharingFragment).showControls()
-            }
+            (fragment as? LocationSharingFragment)?.showControls()
         }
     }
 
@@ -750,10 +748,11 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                     presenter.stopSearch()
                     convList.adapter = mAdapter
                     currentBottomView?.isVisible = true
-                    if (animation.isStarted) animation.cancel()
-                    animation.setIntValues(convList.paddingBottom,
-                            (currentBottomView?.height ?: 0) + marginPxTotal
-                    )
+
+                    if (animation.isStarted)
+                        animation.cancel()
+
+                    animation.setIntValues(convList.paddingBottom, (currentBottomView?.height ?: 0) + marginPxTotal)
                     animation.start()
                     return true
                 }
@@ -771,7 +770,10 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                     presenter.startSearch()
                     currentBottomView?.isVisible = false
                     convList.adapter = mSearchAdapter
-                    if (animation.isStarted) animation.cancel()
+
+                    if (animation.isStarted)
+                        animation.cancel()
+
                     animation.setIntValues(convList.paddingBottom, marginPxTotal)
                     animation.start()
                     return true
@@ -786,7 +788,6 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 
         override fun onMenuItemSelected(item: MenuItem): Boolean {
             when (item.itemId) {
-                android.R.id.home -> startActivity(Intent(activity, HomeActivity::class.java))
                 R.id.conv_action_audiocall -> presenter.goToCall(false)
                 R.id.conv_action_videocall -> presenter.goToCall(true)
                 R.id.conv_contact_details -> presenter.openContact()
@@ -822,7 +823,9 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         val path = ConversationPath.fromBundle(arguments)
         mIsBubble = requireArguments().getBoolean(NotificationServiceImpl.EXTRA_BUBBLE)
         Log.w(TAG, "initPresenter $path")
-        if (path == null) return
+        if (path == null)
+            return
+
         mAdapter = ConversationAdapter(this, presenter)
         presenter.init(path.conversationUri, path.accountId)
 
@@ -891,15 +894,21 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         setupActionbar(conversation, avatar)
     }
 
-    override fun displayOnGoingCallPane(display: Boolean) {
-        binding!!.ongoingCallPane.visibility = if (display) View.VISIBLE else View.GONE
-    }
-
-    override fun displayRingingCallPane(display: Boolean, withCamera: Boolean) {
-        binding!!.ringingCallPane.visibility =
-            if (display) View.VISIBLE else View.GONE
-        binding!!.acceptVideoCallButton.visibility =
-            if (withCamera) View.VISIBLE else View.GONE
+    override fun displayOngoingCallPane(display: Boolean, hasVideo: Boolean) {
+        val binding = binding ?: return
+        if (display) {
+            (binding.returnActiveCallIcon.background as? AnimatedVectorDrawable)?.start()
+            val icon = if (hasVideo) R.drawable.outline_videocam_24 else R.drawable.outline_call_24
+            binding.returnActiveCallIcon.setImageResource(icon)
+            binding.toolbar.menu.findItem(R.id.conv_action_videocall).setVisible(false)
+            binding.toolbar.menu.findItem(R.id.conv_action_audiocall).setVisible(false)
+            binding.ongoingCallPane.visibility = View.VISIBLE
+        } else {
+            (binding.returnActiveCallIcon.background as? AnimatedVectorDrawable)?.stop()
+            binding.toolbar.menu.findItem(R.id.conv_action_videocall).setVisible(true)
+            binding.toolbar.menu.findItem(R.id.conv_action_audiocall).setVisible(true)
+            binding.ongoingCallPane.visibility = View.GONE
+        }
     }
 
     override fun displayNumberSpinner(conversation: Conversation, number: net.jami.model.Uri) {
@@ -932,17 +941,6 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             .setClass(requireContext().applicationContext, ContactDetailsActivity::class.java)
         startActivity(intent,
             ActivityOptions.makeSceneTransitionAnimation(activity, logo, "conversationIcon").toBundle())
-    }
-
-    override fun acceptAndGoToCallActivity(call: Call, withCamera: Boolean) {
-        startActivity(
-            Intent(DRingService.ACTION_CALL_ACCEPT)
-                .setClass(requireContext().applicationContext, CallActivity::class.java)
-                .putExtra(ConversationPath.KEY_ACCOUNT_ID, call.account)
-                .putExtra(NotificationService.KEY_CALL_ID, call.daemonIdString)
-                .putExtra(CallPresenter.KEY_ACCEPT_OPTION, CallPresenter.ACCEPT_HOLD)
-                .putExtra(CallFragment.KEY_HAS_VIDEO, withCamera)
-        )
     }
 
     override fun goToCallActivity(conferenceId: String, withCamera: Boolean) {
@@ -1156,6 +1154,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             errorMsgPane.setOnClickListener(null)
             errorMsgPane.setText(R.string.error_no_network)
         }
+        lastInsets?.let { updatePaddings(it) }
     }
 
     override fun displayAccountOfflineErrorPanel() {
@@ -1167,6 +1166,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                 btnContainer.getChildAt(idx).isEnabled = false
             }
         }
+        lastInsets?.let { updatePaddings(it) }
     }
 
     override fun setSettings(linkPreviews: Boolean) {
@@ -1176,6 +1176,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 
     override fun hideErrorPanel() {
         binding?.errorMsgPane?.visibility = View.GONE
+        lastInsets?.let { updatePaddings(it) }
     }
 
     override fun goToSearchMessage(messageId: String) {

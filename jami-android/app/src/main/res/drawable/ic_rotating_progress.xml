@@ -1,0 +1,42 @@
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt">
+
+    <target
+        android:name="background"
+        android:animation="@animator/rotate_clockwise" />
+
+    <aapt:attr name="android:drawable">
+        <vector
+            android:width="24dp"
+            android:height="24dp"
+            android:viewportWidth="24"
+            android:viewportHeight="24">
+
+            <path
+                android:fillColor="#20C68D"
+                android:pathData="M12,2 a10,10 0 5,0 0.001,0" />
+
+            <group
+                android:name="background"
+                android:pivotX="12"
+                android:pivotY="12">
+
+                <path
+                    android:pathData="M12,1 a11,11 0 5,0 0.001,0"
+                    android:strokeWidth="2">
+
+                    <aapt:attr name="android:strokeColor">
+                        <gradient
+                            android:centerX="12"
+                            android:centerY="12"
+                            android:endColor="#93FFDA"
+                            android:startColor="@android:color/transparent"
+                            android:type="sweep" />
+                    </aapt:attr>
+                </path>
+
+            </group>
+        </vector>
+    </aapt:attr>
+
+</animated-vector>

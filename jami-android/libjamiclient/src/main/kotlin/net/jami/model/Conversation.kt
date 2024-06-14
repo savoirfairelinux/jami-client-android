@@ -39,8 +39,7 @@ class Conversation : ConversationHistory {
     private val updatedElementSubject: Subject<Pair<Interaction, ElementStatus>> = PublishSubject.create()
     private val clearedSubject: Subject<List<Interaction>> = PublishSubject.create()
     private val callsSubject: Subject<List<Conference>> = BehaviorSubject.createDefault(emptyList())
-    private val activeCallsSubject: Subject<List<ActiveCall>> =
-        BehaviorSubject.createDefault(emptyList())
+    private val activeCallsSubject: Subject<List<ActiveCall>> = BehaviorSubject.createDefault(emptyList())
     private val composingStatusSubject: Subject<Account.ComposingStatus> = BehaviorSubject.createDefault(Account.ComposingStatus.Idle)
     private val color: Subject<Int> = BehaviorSubject.createDefault(0)
     private val symbol: Subject<CharSequence> = BehaviorSubject.createDefault("")
@@ -102,8 +101,19 @@ class Conversation : ConversationHistory {
     val calls: Observable<List<Conference>>
         get() = callsSubject
 
-    val activeCallsObservable: Observable<List<ActiveCall>>
+    val activeCalls: Observable<List<ActiveCall>>
         get() = activeCallsSubject
+
+//
+//    val rr: Observable<Pair<List<Conference>, Boolean>>
+//        get() = calls.switchMap { confList ->
+//        Observable.combineLatest(confList.map { it.hasVideo }) { args ->
+//            for (item in args) {
+//                if (item == true) return@combineLatest (confList to true)
+//            }
+//            confList to false
+//        }
+//    }
 
     val composingStatus: Observable<Account.ComposingStatus>
         get() = composingStatusSubject
@@ -229,6 +239,7 @@ class Conversation : ConversationHistory {
     }
 
     fun addConference(conference: Conference?) {
+        Log.i("currentCall", "addConference")
         if (conference == null) {
             return
         }
@@ -238,7 +249,9 @@ class Conversation : ConversationHistory {
                 return
             }
             if (currentConference.id == conference.id) {
+                Log.i("currentCall", "addConference set")
                 currentCalls[i] = conference
+                callsSubject.onNext(currentCalls)
                 return
             }
         }

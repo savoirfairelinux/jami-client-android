@@ -16,16 +16,16 @@
  */
 package net.jami.model
 
-import ezvcard.Ezvcard
-import ezvcard.VCard
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.SingleSubject
+import io.reactivex.rxjava3.subjects.Subject
 import net.jami.services.CallService
 import net.jami.utils.Log
-import net.jami.utils.ProfileChunk
-import net.jami.utils.VCardUtils
 import java.lang.UnsupportedOperationException
 import java.util.*
+import kotlin.collections.ArrayList
 
 class Call : Interaction {
     override val daemonIdString: String?
@@ -62,17 +62,28 @@ class Call : Interaction {
         }
     var isMissed = true
         private set
+
     var audioCodec: String? = null
         private set
+
     var videoCodec: String? = null
         private set
+
     var contactNumber: String? = null
         private set
+
     var confId: String? = null
 
-    var mediaList: List<Media>? = null
+    val mediaList = ArrayList<Media>()
+    private val mediaListSubject: Subject<List<Media>> = BehaviorSubject.createDefault(mediaList)
+    val mediaListObservable: Observable<List<Media>>
+        get() = mediaListSubject
 
-    private var mProfileChunk: ProfileChunk? = null
+    fun setMediaList(media: List<Media>) {
+        mediaList.clear()
+        mediaList.addAll(media)
+        mediaListSubject.onNext(mediaList)
+    }
 
     private val systemConnectionSubject: SingleSubject<CallService.SystemCall> = SingleSubject.create()
     fun setSystemConnection(value: CallService.SystemCall?) {
@@ -211,7 +222,6 @@ class Call : Interaction {
         }*/
 
     fun hasMedia(label: Media.MediaType): Boolean {
-        val mediaList = mediaList ?: return false
         for (media in mediaList) {
             // todo check -> isEnabled est il utile ? Si le media n'est pas activé alors le daemon ne nous le transmets pas ?
             if (media.isEnabled && media.mediaType == label) {
@@ -221,7 +231,6 @@ class Call : Interaction {
         return false
     }
     fun hasActiveMedia(label: Media.MediaType): Boolean {
-        val mediaList = mediaList ?: return false
         for (media in mediaList) {
             if (media.isEnabled && !media.isMuted && media.mediaType == label)
                 return true
@@ -230,7 +239,6 @@ class Call : Interaction {
     }
 
     fun hasActiveScreenSharing(): Boolean {
-        val mediaList = mediaList ?: return false
         for (media in mediaList) {
             if (media.source == "camera://desktop" && media.isEnabled && !media.isMuted)
                 return true
