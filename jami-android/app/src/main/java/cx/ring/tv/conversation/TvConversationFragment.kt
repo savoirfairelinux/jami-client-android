@@ -605,17 +605,15 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
     override fun addSearchResults(results: List<Interaction>) {}
     override fun goToSearchMessage(messageId: String) {}
     override fun shareText(body: String) {
-        TODO("Not yet implemented")
+        // TODO: Not yet implemented
     }
 
-    override fun displayOnGoingCallPane(display: Boolean) {}
-    override fun displayRingingCallPane(display: Boolean, withCamera: Boolean) {}
+    override fun displayOngoingCallPane(display: Boolean, hasVideo: Boolean) {}
     override fun displayNumberSpinner(conversation: Conversation, number: net.jami.model.Uri) {}
     override fun hideNumberSpinner() {}
     override fun clearMsgEdit() {}
     override fun goToHome() {}
     override fun goToCallActivity(conferenceId: String, hasVideo: Boolean) {}
-    override fun acceptAndGoToCallActivity(call: Call, withCamera: Boolean) {}
     override fun goToCallActivityWithResult(
         accountId: String,
         conversationUri: net.jami.model.Uri,
