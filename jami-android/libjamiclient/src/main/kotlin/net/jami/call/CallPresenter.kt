@@ -325,7 +325,7 @@ class CallPresenter @Inject constructor(
         val conference = mConference ?: return
         var newId : String
         if (conference.hasActiveVideo()) {
-            val mediaList = conference.getMediaList()!!
+            val mediaList = conference.getMediaList()
             for (m in mediaList) if (m.mediaType == Media.MediaType.MEDIA_TYPE_VIDEO) {
                 newId = m.source!!
                 if (newId != currentPluginSurfaceId) {
@@ -669,15 +669,11 @@ class CallPresenter @Inject constructor(
     fun startPlugin(mediaHandlerId: String) {
         mHardwareService.startMediaHandler(mediaHandlerId)
         val conference = mConference ?: return
-        val media = conference.getMediaList() ?: return
+        val media = conference.getMediaList()
         val source = media.firstOrNull {
             it.mediaType == Media.MediaType.MEDIA_TYPE_VIDEO && it.source != "camera://desktop"
         }?.source ?: return
-        mHardwareService.switchInput(
-            conference.accountId,
-            conference.id,
-            source
-        )
+        mHardwareService.switchInput(conference.accountId, conference.id, source)
     }
 
     fun stopPlugin() {

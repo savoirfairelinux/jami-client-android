@@ -22,7 +22,6 @@ import io.reactivex.rxjava3.subjects.Subject
 import net.jami.model.Call.CallStatus
 import net.jami.model.Call.CallStatus.Companion.fromConferenceString
 import java.util.*
-import kotlin.collections.ArrayList
 import kotlin.math.min
 
 class Conference(val accountId: String, val id: String) {
@@ -51,13 +50,17 @@ class Conference(val accountId: String, val id: String) {
     }
 
     private val mParticipantInfo: Subject<List<ParticipantInfo>> = BehaviorSubject.createDefault(emptyList())
-    private val mPendingCalls: MutableList<ParticipantInfo> = java.util.ArrayList()
+    private val mPendingCalls: MutableList<ParticipantInfo> = ArrayList()
     private val mPendingSubject: Subject<List<ParticipantInfo>> = BehaviorSubject.createDefault(mPendingCalls)
 
     private val mParticipantRecordingSet: MutableSet<Contact> = HashSet()
     private val mParticipantRecording: Subject<Set<Contact>> = BehaviorSubject.createDefault(emptySet())
     private var mConfState: CallStatus? = null
     private val mParticipants: ArrayList<Call> = ArrayList()
+    private val mParticipantsSubject: Subject<List<Call>> = BehaviorSubject.createDefault(mParticipants)
+
+    val participantsObservable: Observable<List<Call>>
+        get() = mParticipantsSubject
 
     private var mRecording: Boolean = false
     var maximizedParticipant: Contact? = null
@@ -72,13 +75,6 @@ class Conference(val accountId: String, val id: String) {
         mParticipants.add(call)
     }
 
-    /*constructor(c: Conference) {
-        id = c.id
-        mConfState = c.mConfState
-        mParticipants = ArrayList(c.mParticipants)
-        mRecording = c.mRecording
-    }*/
-
     val isRinging: Boolean
         get() = mParticipants.isNotEmpty() && mParticipants[0].isRinging
     val isConference: Boolean
@@ -91,12 +87,15 @@ class Conference(val accountId: String, val id: String) {
         get() = if (mParticipants.isNotEmpty()) {
             mParticipants[0]
         } else null
+
     val pluginId: String
         get() = "local"
+
     val state: CallStatus?
         get() = if (isSimpleCall) {
             mParticipants[0].callStatus
         } else mConfState
+
     val confState: CallStatus?
         get() = if (mParticipants.size == 1) {
             mParticipants[0].callStatus
@@ -160,9 +159,23 @@ class Conference(val accountId: String, val id: String) {
     val isOnGoing: Boolean
         get() = mParticipants.size == 1 && mParticipants[0].isOnGoing || mParticipants.size > 1
 
-    fun getMediaList(): List<Media>? {
+    @Deprecated("not working with groups/conferences")
+    fun getMediaList(): List<Media> {
         return if (mParticipants.size == 1) mParticipants[0].mediaList else ArrayList()
     }
+
+    val hasVideo: Observable<Boolean> =
+        mParticipantsSubject.switchMap { participants -> Observable.combineLatest(participants.map { it.mediaListObservable })
+            { mediaLists ->
+                for (mediaList in mediaLists) {
+                    for (media in mediaList as List<Media>) {
+                        if (media.mediaType == Media.MediaType.MEDIA_TYPE_VIDEO)
+                            return@combineLatest true
+                    }
+                }
+                false
+            }
+        }
 
     fun hasAudioMedia(): Boolean {
         return mParticipants.size == 1  && mParticipants[0].hasMedia(Media.MediaType.MEDIA_TYPE_AUDIO)
@@ -172,10 +185,6 @@ class Conference(val accountId: String, val id: String) {
         for (call in mParticipants) if (call.hasMedia(Media.MediaType.MEDIA_TYPE_VIDEO)) return true
         return false
     }
-
- /*   fun hasVideoMedia(): Boolean {
-        return mParticipants.size == 1 && mParticipants[0].hasMedia(Media.MediaType.MEDIA_TYPE_VIDEO)
-    }*/
 
     fun hasActiveScreenSharing(): Boolean {
         for (call in mParticipants)
@@ -192,7 +201,7 @@ class Conference(val accountId: String, val id: String) {
 
     fun hasActiveNonScreenShareVideo(): Boolean {
         return mParticipants.any { call ->
-            val mediaList = call.mediaList ?: return@any false
+            val mediaList = call.mediaList
             mediaList.any { media ->
                 media.isEnabled &&
                 !media.isMuted &&
