@@ -70,8 +70,7 @@ class ConversationPresenter @Inject constructor(
                         conversation.contact!!.conversationUri.switchMapSingle { uri ->
                             conversationFacade.startConversation(accountId, uri)
                         }
-                    else
-                        Observable.just(conversation)
+                    else Observable.just(conversation)
                 }.switchMapSingle { conv ->
                     conversationFacade.loadConversationHistory(conv).map { Pair(account, it) }
                 }
@@ -128,7 +127,7 @@ class ConversationPresenter @Inject constructor(
             if (c.mode === Conversation.Mode.Syncing) {
                 view.switchToSyncingView()
             } else if (c.mode == Conversation.Mode.Request) {
-                view.switchToIncomingTrustRequestView(c.uriTitle/*ConversationItemViewModel.getUriTitle(conversation.uri, contacts)*/)
+                view.switchToIncomingTrustRequestView(c.uriTitle)
             } else if (c.isSwarm || account.isContact(c.uri)) {
                 if ((c.mode == Conversation.Mode.OneToOne) && c.getContact()?.contact?.isBanned == true) {
                     view.switchToBannedView()
@@ -175,18 +174,22 @@ class ConversationPresenter @Inject constructor(
                     }
                 }
             })
+
         disposable.add(c.sortedHistory
             .observeOn(uiScheduler)
             .subscribe({ conversation -> this.view?.refreshView(conversation) })
-                { e -> Log.e(TAG, "Can't update element", e) })
+            { e -> Log.e(TAG, "Can't update element", e) })
+
         disposable.add(c.cleared
             .observeOn(uiScheduler)
             .subscribe({ conversation -> this.view?.refreshView(conversation) })
-                { e -> Log.e(TAG, "Can't update elements", e) })
+            { e -> Log.e(TAG, "Can't update elements", e) })
+
         disposable.add(c.contactUpdates
             .switchMap { contacts -> Observable.merge(contactService.observeLoadedContact(c.accountId, contacts, true)) }
             .observeOn(uiScheduler)
             .subscribe { contact: ContactViewModel -> this.view?.updateContact(contact) })
+
         disposable.add(c.updatedElements
             .observeOn(uiScheduler)
             .subscribe({ elementTuple ->
@@ -202,30 +205,30 @@ class ConversationPresenter @Inject constructor(
                 .observeOn(uiScheduler)
                 .subscribe { composingStatus: ComposingStatus -> this.view?.setComposingStatus(composingStatus) })
         }
-        disposable.add(
-            Observable.combineLatest(
-                mConversationSubject.switchMap { it.calls },
-                mConversationSubject.switchMap { it.activeCallsObservable })
-            { _, activeCalls: List<Conversation.ActiveCall> -> activeCalls }
+
+        disposable.add(c.calls
             .observeOn(uiScheduler)
             .subscribe({
-                updateOngoingCallView(c)
-                updateRingingCallView(it)
+                //Log.i("currentCall", "size: ${it.size}  state: ${c.currentCall?.state.toString()}")
+                val hasVideo = c.currentCall?.hasVideo() ?: false
+                view.displayOngoingCallPane(it.isNotEmpty(), hasVideo)
             }) { e: Throwable ->
                 Log.e(TAG, "Can't update call view", e)
             })
+
         disposable.add(c.getColor()
             .observeOn(uiScheduler)
             .subscribe({ integer: Int -> this.view?.setConversationColor(integer) }) { e: Throwable ->
                 Log.e(TAG, "Can't update conversation color", e)
             })
+
         disposable.add(c.getSymbol()
             .observeOn(uiScheduler)
             .subscribe({ symbol: CharSequence -> this.view?.setConversationSymbol(symbol) }) { e: Throwable ->
                 Log.e(TAG, "Can't update conversation color", e)
             })
-        disposable.add(account
-            .getLocationUpdates(c.uri)
+
+        disposable.add(account.getLocationUpdates(c.uri)
             .observeOn(uiScheduler)
             .subscribe {
                 Log.e(TAG, "getLocationUpdates: update")
@@ -334,53 +337,7 @@ class ConversationPresenter @Inject constructor(
         if (conf != null) {
             view?.goToCallActivity(conf.id, conf.hasActiveVideo())
         } else {
-            view?.displayOnGoingCallPane(false)
-        }
-    }
-
-    enum class IncomingCallAction { ACCEPT_AUDIO, ACCEPT_VIDEO, VIEW_ONLY }
-
-    fun clickRingingPane(action: IncomingCallAction) {
-        val conference = mConversation?.currentCall
-
-        if (conference != null) {
-            when (action) { // One to one call.
-                IncomingCallAction.ACCEPT_AUDIO -> {
-                    view?.acceptAndGoToCallActivity(conference.firstCall ?: return, false)
-                }
-
-                IncomingCallAction.ACCEPT_VIDEO -> {
-                    view?.acceptAndGoToCallActivity(conference.firstCall ?: return, true)
-                }
-
-                IncomingCallAction.VIEW_ONLY -> {
-                    view?.goToCallActivity(conference.id, conference.hasActiveVideo())
-                }
-            }
-        } else { // Case for group calls.
-            val conversation = mConversation ?: return
-            mCompositeDisposable.add(
-                conversation.activeCallsObservable
-                    .firstOrError()
-                    .subscribe { activeCalls ->
-                        val activeCall = activeCalls.firstOrNull()
-                        if (activeCall != null) {
-                            when (action) {
-                                IncomingCallAction.ACCEPT_AUDIO -> {
-                                    view?.goToGroupCall(conversation, conversation.uri, false)
-                                }
-
-                                IncomingCallAction.ACCEPT_VIDEO -> {
-                                    view?.goToGroupCall(conversation, conversation.uri, true)
-                                }
-
-                                IncomingCallAction.VIEW_ONLY -> {}
-                            }
-                        } else { // Seems there is no call ringing.
-                            view?.displayRingingCallPane(false)
-                        }
-                    }
-            )
+            view?.displayOngoingCallPane(false)
         }
     }
 
@@ -423,23 +380,6 @@ class ConversationPresenter @Inject constructor(
                     }
                 }
             })
-    }
-
-    private fun updateOngoingCallView(conversation: Conversation?) {
-        val conf = conversation?.currentCall
-        view?.displayOnGoingCallPane(
-            conf?.state === Call.CallStatus.CURRENT || conf?.state === Call.CallStatus.HOLD
-        )
-    }
-
-    private fun updateRingingCallView(activeCalls: List<Conversation.ActiveCall>) {
-        val call = mConversation?.currentCall
-        val activeCall = activeCalls.isNotEmpty() // Group call
-        view?.displayRingingCallPane(
-            display = (call?.state === Call.CallStatus.RINGING) ||
-                    (call == null && activeCall),
-            withCamera = (call?.hasActiveVideo() ?: false) || activeCall
-        )
     }
 
     fun onBlockIncomingContactRequest() {

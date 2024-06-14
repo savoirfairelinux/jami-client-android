@@ -39,8 +39,7 @@ class Conversation : ConversationHistory {
     private val updatedElementSubject: Subject<Pair<Interaction, ElementStatus>> = PublishSubject.create()
     private val clearedSubject: Subject<List<Interaction>> = PublishSubject.create()
     private val callsSubject: Subject<List<Conference>> = BehaviorSubject.createDefault(emptyList())
-    private val activeCallsSubject: Subject<List<ActiveCall>> =
-        BehaviorSubject.createDefault(emptyList())
+    private val activeCallsSubject: Subject<List<ActiveCall>> = BehaviorSubject.createDefault(emptyList())
     private val composingStatusSubject: Subject<Account.ComposingStatus> = BehaviorSubject.createDefault(Account.ComposingStatus.Idle)
     private val color: Subject<Int> = BehaviorSubject.createDefault(0)
     private val symbol: Subject<CharSequence> = BehaviorSubject.createDefault("")
@@ -102,7 +101,7 @@ class Conversation : ConversationHistory {
     val calls: Observable<List<Conference>>
         get() = callsSubject
 
-    val activeCallsObservable: Observable<List<ActiveCall>>
+    val activeCalls: Observable<List<ActiveCall>>
         get() = activeCallsSubject
 
     val composingStatus: Observable<Account.ComposingStatus>

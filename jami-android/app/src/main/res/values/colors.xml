@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="background">@color/grey_25</color>
+    <color name="background_primary">#FFF</color>
     <color name="surface">@color/grey_150</color>
 
     <color name="colorPrimary">@color/color_primary_dark</color>
@@ -97,7 +98,6 @@
     <color name="call_drawable_color">@color/white</color>
     <color name="call_missed_text_message">#A7A7A7</color>
     <color name="icon_background_color">#FFFFFF</color>
-    <color name="border_color">#E5E5E5</color>
     <color name="link_peer_color">#005699</color>
     <color name="msg_display_name">#A7A7A7</color>
     <color name="menu_conversation_icons">#005699</color>
