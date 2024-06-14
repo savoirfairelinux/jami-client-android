@@ -248,9 +248,8 @@ class LocationSharingFragment : Fragment() {
                 val p = parentFragment
                 if (p is ConversationFragment) {
                     if (state == MapState.FULL)
-                        p.openLocationSharing()
-                    else
-                        p.closeLocationSharing(state == MapState.MINI)
+                        p.expandMapView()
+                    else p.closeLocationSharing(state == MapState.MINI)
                 }
             })
         mDisposableBag.add(mIsContactSharingSubject

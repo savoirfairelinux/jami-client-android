@@ -1,24 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/conversationLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:animateLayoutChanges="true"
     android:background="@color/background">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/toolbar_layout"
-        style="@style/Widget.Material3.AppBarLayout"
+        android:fitsSystemWindows="true"
+        android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="top"
         android:elevation="4dp"
-        android:fitsSystemWindows="true"
-        app:elevation="4dp"
-        app:liftOnScroll="true"
-        app:liftOnScrollTargetViewId="@id/hist_list">
+        app:liftOnScroll="false"
+        android:background="?attr/colorSurfaceContainer"
+        android:animateLayoutChanges="true">
+
+        <TextView
+            android:id="@+id/error_msg_pane"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorError"
+            android:gravity="center"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="?attr/colorOnError"
+            android:textStyle="bold"
+            android:visibility="gone"
+            android:paddingBottom="8dp"
+            tools:text="No connectivity"
+            tools:visibility="visible"
+            android:fitsSystemWindows="true" />
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
@@ -66,13 +79,44 @@
 
         </com.google.android.material.appbar.MaterialToolbar>
 
+        <LinearLayout
+            android:id="@+id/ongoing_call_pane"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/background_rounded_24"
+            android:backgroundTint="@color/background_primary"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="15dp"
+                android:text="@string/conversation_action_go_to_call"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="?attr/colorOnSurface" />
+
+            <ImageView
+                android:id="@+id/return_active_call_icon"
+                android:layout_width="46dp"
+                android:layout_height="46dp"
+                android:background="@drawable/ic_rotating_progress"
+                android:contentDescription="@string/conversation_action_go_to_call"
+                android:padding="8dp"
+                app:tint="@color/black"
+                tools:src="@drawable/outline_call_24" />
+
+        </LinearLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
     <RelativeLayout
-        android:id="@+id/relativeLayout"
+        android:id="@+id/main_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="?attr/actionBarSize"
+        android:layout_height="match_parent"
         android:fitsSystemWindows="true">
 
         <androidx.recyclerview.widget.RecyclerView
@@ -83,89 +127,17 @@
             android:clipToPadding="false"
             android:divider="@null"
             android:listSelector="@color/transparent"
-            android:paddingTop="8dp"
             android:paddingBottom="60dp"
             android:transcriptMode="normal"
-            app:layoutManager="LinearLayoutManager"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:stackFromEnd="true"
             tools:listitem="@layout/item_conv_msg_peer" />
-
-        <TextView
-            android:id="@+id/error_msg_pane"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_alignParentTop="true"
-            android:background="?attr/colorError"
-            android:gravity="center_vertical|center_horizontal"
-            android:padding="8dp"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="?attr/colorOnError"
-            android:textStyle="bold"
-            android:visibility="gone"
-            tools:text="No connectivity"
-            tools:visibility="visible" />
-
-        <TextView
-            android:id="@+id/ongoing_call_pane"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_below="@id/error_msg_pane"
-            android:background="?attr/colorSecondary"
-            android:gravity="center"
-            android:padding="8dp"
-            android:text="@string/conversation_action_go_to_call"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="?attr/colorOnPrimary"
-            android:textStyle="bold"
-            android:visibility="gone"
-            tools:visibility="visible" />
-
-        <LinearLayout
-            android:id="@+id/ringing_call_pane"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/ongoing_call_pane"
-            android:background="?attr/colorSecondary"
-            android:gravity="center"
-            android:padding="8dp"
-            android:visibility="gone"
-            tools:visibility="visible">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/conversation_action_incoming_call"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="?attr/colorOnPrimary"
-                android:textStyle="bold" />
-
-            <ImageButton
-                android:id="@+id/acceptAudioCallButton"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginStart="8dp"
-                android:contentDescription="@string/action_call_accept_audio"
-                android:src="@drawable/baseline_call_24"
-                app:tint="?attr/colorOnPrimary" />
-
-            <ImageButton
-                android:id="@+id/acceptVideoCallButton"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:contentDescription="@string/action_call_accept_video"
-                android:src="@drawable/baseline_videocam_24"
-                app:tint="?attr/colorOnPrimary" />
-
-        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/trustRequestMessageLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/ongoing_call_pane"
+            android:layout_alignParentTop="true"
             android:orientation="vertical"
             android:visibility="gone">
 
@@ -198,7 +170,7 @@
             android:id="@+id/mapCard"
             android:layout_width="@dimen/location_sharing_minmap_width"
             android:layout_height="@dimen/location_sharing_minmap_height"
-            android:layout_below="@id/ongoing_call_pane"
+            android:layout_below="@id/trustRequestMessageLayout"
             android:layout_centerHorizontal="true"
             android:layout_marginHorizontal="0dp"
             android:layout_marginVertical="16dp"
@@ -372,6 +344,7 @@
                             android:layout_height="40dp"
                             android:adjustViewBounds="true"
                             android:visibility="gone"
+                            tools:visibility="visible"
                             tools:src="@tools:sample/backgrounds/scenic" />
 
                         <TextView
@@ -476,4 +449,4 @@
 
     </RelativeLayout>
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</LinearLayout>

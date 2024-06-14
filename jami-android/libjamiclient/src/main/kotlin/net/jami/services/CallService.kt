@@ -247,7 +247,7 @@ abstract class CallService(
         mExecutor.execute {
             Log.i(TAG, "accept() running... $callId")
             val call = calls[callId] ?: return@execute
-            val mediaList = call.mediaList ?: return@execute
+            val mediaList = call.mediaList
             val vectMapMedia = mediaList.mapTo(VectMap().apply { reserve(mediaList.size.toLong()) }) { media ->
                 if (!hasVideo && media.mediaType == Media.MediaType.MEDIA_TYPE_VIDEO)
                     media.copy(isMuted = true).toMap()
@@ -450,7 +450,7 @@ abstract class CallService(
                 val conversation =
                     if (conversationUri == from) account.getByUri(from) else account.getSwarm(conversationUri.rawRingId)
                 Call(callId, from.uri, accountId, conversation, contact, direction)
-            }.apply { mediaList = media }
+            }.apply { setMediaList(media) }
         }
 
     private fun addConference(call: Call): Conference {
@@ -585,7 +585,7 @@ abstract class CallService(
         val media = ml.mapTo(ArrayList(ml.size)) { media -> Media(media) }
         val call = synchronized(calls) {
             calls[callId]?.apply {
-                mediaList = media
+                setMediaList(media)
             }
         }
         callSubject.onNext(call ?: return)
@@ -600,7 +600,7 @@ abstract class CallService(
      */
     fun replaceVideoMedia(conf: Conference, uri: String, mute: Boolean) {
         val call = conf.firstCall ?: return
-        val mediaList = call.mediaList ?: return
+        val mediaList = call.mediaList
 
         var videoExists = false
         val proposedMediaList = mediaList.map {
