@@ -352,13 +352,12 @@ class ConversationAdapter(
         // Remove user from statusMap.
         val modifiedStatusMap = interaction.statusMap
             .filter { conversation.findContact(net.jami.model.Uri.fromId(it.key))?.isUser != true }
-
         val isDisplayed = modifiedStatusMap.any { it.value == Interaction.MessageStates.DISPLAYED }
         val isReceived = modifiedStatusMap.any { it.value == Interaction.MessageStates.SUCCESS }
-        val lastDisplayedIdx = conversation.lastDisplayedMessages
-            .mapValues { mInteractions.indexOf(conversation.getMessage(it.value)) }
-        val currentIdx = mInteractions.indexOf(interaction)
-        val contacts = lastDisplayedIdx.filter { it.value == currentIdx }.map { it.key }
+
+        val contacts = conversation.lastDisplayedMessages
+            .filter { it.value == interaction.messageId }
+            .map { it.key }
 
         // Case 1: Message is sending
         if(!isDisplayed && !isReceived){
