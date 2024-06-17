@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "29084804_1f01965b",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-06-17T22:44:43Z",
+      "side": 1,
+      "message": "Is the button called something different to \"export Jami account\" as this button string is not found by itself in Transifex.\n\nhttps://app.transifex.com/savoirfairelinux/jami/translate/#hu/$/285993095?q\u003dtext%3A\u0027export+Jami+account\u0027\n\nhttps://app.transifex.com/savoirfairelinux/jami/translate/#hu/$?q\u003dtext%3A\u0027export+account\u0027\n\nIs the text \"Backup account\"?\n\nhttps://app.transifex.com/savoirfairelinux/jami/translate/#hu/$/173908068?q\u003dtext%3A\u0027Backup+account\u0027\n\nSince it is relating to a PIN, should the text be \"Link new device\"?\n\nIf there are instances of \"Link a new device\" still in use, should they be changed to \"Link new device\"?\n\nThank you",
+      "range": {
+        "startLine": 380,
+        "startChar": 95,
+        "endLine": 380,
+        "endChar": 114
+      },
+      "revId": "90decbb22ef389ce1d5ab0bdce03614f69b0afa3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "85096cf2_3189b758",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-06-17T22:44:43Z",
+      "side": 1,
+      "message": "\u003e ack. aberaud don\u0027t want to modify string key as it will cause the string to be retranslated for every language.\nhttps://review.jami.net/c/jami-client-android/+/28398/5..6/jami-android/app/src/main/res/values/strings.xml#b592\n\nIt is understood that if there are two different string keys that have the same string value, then the string value is automatically copied into the string value of the untranslated string keys when one of them is translated.\n\nAdditionally, Transifex would show a suggestion that is a 100% match that can be used.\n\nIt seems beneficial to clean the code to reduce any technical debt, as if the strings are copied in the future to create slightly different string keys, the string key names will be homogenized.\n\nFurthermore, searching for `success` will find all occurrences.\n\nPlease to a global find (`sucess`) and replace (`success`).\n\nThank you for your understanding.",
+      "range": {
+        "startLine": 591,
+        "startChar": 23,
+        "endLine": 591,
+        "endChar": 29
+      },
+      "revId": "90decbb22ef389ce1d5ab0bdce03614f69b0afa3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4937cece_dd9985ed",
+        "filename": "jami-android/app/src/main/res/values/strings_account.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-06-17T22:44:43Z",
+      "side": 1,
+      "message": "Remove space (` `) before the question mark (`?`)?\n\n`Delete account?`\n\nCan a global find {for space (` `) then question mark (`?`)} and replace {with a question mark (`?`)} be done?\n\nThank you",
+      "range": {
+        "startLine": 61,
+        "startChar": 47,
+        "endLine": 61,
+        "endChar": 63
+      },
+      "revId": "90decbb22ef389ce1d5ab0bdce03614f69b0afa3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "02ec7b61_dedfb704",
+        "filename": "jami-android/app/src/main/res/values/strings_account.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-06-17T22:44:43Z",
+      "side": 1,
+      "message": "`Unable to revoke device.`\n\nIf a full stop `.` is not required:\n\n`Unable to revoke device`\n\nPlease do a global find (`Can\\\u0027t`) and replace (`Unable to`).\n\nThank you",
+      "range": {
+        "startLine": 71,
+        "startChar": 57,
+        "endLine": 71,
+        "endChar": 77
+      },
+      "revId": "90decbb22ef389ce1d5ab0bdce03614f69b0afa3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
