@@ -639,7 +639,7 @@ class Account(
             val uriString = key.uri
             if (pending[uriString] == null) {
                 val conversation = if (request.conversationUri.isSwarm)
-                    Conversation(accountId, request.conversationUri, Conversation.Mode.Request).apply {
+                    Conversation(accountId, request.conversationUri, request.mode).apply {
                         val contact = getContactFromCache(request.from).apply {
                             if (request.mode == Conversation.Mode.OneToOne && !conversationUri.blockingFirst().isSwarm)
                                 setConversationUri(request.conversationUri)

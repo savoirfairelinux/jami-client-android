@@ -103,8 +103,21 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
         ActionHelper.launchClearAction(requireContext(), accountId, conversationUri, this@SmartListFragment)
     }
 
-    override fun displayDeleteDialog(accountId: String, conversationUri: Uri) {
-        ActionHelper.launchDeleteAction(requireContext(), accountId, conversationUri, this@SmartListFragment)
+    override fun displayDeleteDialog(accountId: String, conversationUri: Uri, isGroup: Boolean) {
+        if (isGroup)
+            ActionHelper.launchDeleteSwarmGroupAction(
+                context = requireContext(),
+                accountId = accountId,
+                uri = conversationUri,
+                callback = this@SmartListFragment
+            )
+        else
+            ActionHelper.launchDeleteSwarmOneToOneAction(
+                context = requireContext(),
+                accountId = accountId,
+                uri = conversationUri,
+                callback = this@SmartListFragment
+            )
     }
 
     override fun copyNumber(uri: Uri) {
@@ -159,33 +172,39 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
     }
 
     override fun onItemLongClick(item: Conversation) {
+
         if (item.isSwarm) {
-            if (item.contacts.size == 2) {
-                MaterialAlertDialogBuilder(requireContext()).setItems(R.array.swarm_actions) { dialog, which ->
-                    when (which) {
-                        0 -> presenter.copyNumber(item)
-                        1 -> presenter.removeConversation(item)
-                        2 -> presenter.banContact(item)
+            // Don't display same menu item if swarm group or if swarm one to one.
+            if (item.isSwarmGroup()) {
+                MaterialAlertDialogBuilder(requireContext())
+                    .setItems(R.array.swarm_group_actions) { _, which ->
+                        when (which) {
+                            0 -> presenter.removeConversation(item)
+                        }
                     }
-                }.show()
+                    .show()
             } else {
-                // swarm group
-                MaterialAlertDialogBuilder(requireContext()).setItems(R.array.swarm_group_actions) { dialog, which ->
-                    when (which) {
-                        1 -> presenter.removeConversation(item)
-                        2 -> presenter.banContact(item)
+                MaterialAlertDialogBuilder(requireContext())
+                    .setItems(R.array.swarm_one_to_one_actions) { _, which ->
+                        when (which) {
+                            0 -> presenter.copyNumber(item)
+                            1 -> presenter.removeConversation(item)
+                            2 -> presenter.banContact(item)
+                        }
                     }
-                }.show()
+                    .show()
             }
         } else {
-            MaterialAlertDialogBuilder(requireContext()).setItems(R.array.conversation_actions) { dialog, which ->
-                when (which) {
-                    ActionHelper.ACTION_COPY -> presenter.copyNumber(item)
-                    ActionHelper.ACTION_CLEAR -> presenter.clearConversation(item)
-                    ActionHelper.ACTION_DELETE -> presenter.removeConversation(item)
-                    ActionHelper.ACTION_BLOCK -> presenter.banContact(item)
+            MaterialAlertDialogBuilder(requireContext())
+                .setItems(R.array.conversation_actions) { _, which ->
+                    when (which) {
+                        ActionHelper.ACTION_COPY -> presenter.copyNumber(item)
+                        ActionHelper.ACTION_CLEAR -> presenter.clearConversation(item)
+                        ActionHelper.ACTION_DELETE -> presenter.removeConversation(item)
+                        ActionHelper.ACTION_BLOCK -> presenter.banContact(item)
+                    }
                 }
-            }.show()
+                .show()
         }
     }
 

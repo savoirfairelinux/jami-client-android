@@ -278,16 +278,26 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
     }.root
 
     private fun displayConversationRequestDialog(conversation: Conversation) {
-        MaterialAlertDialogBuilder(requireContext())
-            .setItems(R.array.swarm_actions) { dialog, which ->
-                when (which) {
-                    0 -> TextUtils.copyToClipboard(
-                            requireContext(),
-                            (conversation.contact?.uri ?: conversation.uri).toString())
-                    1 -> mConversationFacade.discardRequest(conversation.accountId, conversation.uri)
-                    2 -> mConversationFacade.banConversation(conversation.accountId, conversation.uri)
-                }
-            }.show()
+        if (conversation.mode.blockingFirst() == Conversation.Mode.OneToOne)
+            MaterialAlertDialogBuilder(requireContext())
+                .setItems(R.array.swarm_request_one_to_one_actions) { _, which ->
+                    when (which) {
+                        0 -> mConversationFacade.acceptRequest(conversation)
+                        1 -> mConversationFacade
+                            .discardRequest(conversation.accountId, conversation.uri)
+                        2 -> mConversationFacade
+                            .banConversation(conversation.accountId, conversation.uri)
+                    }
+                }.show()
+        else
+            MaterialAlertDialogBuilder(requireContext())
+                .setItems(R.array.swarm_request_group_actions) { _, which ->
+                    when (which) {
+                        0 -> mConversationFacade.acceptRequest(conversation)
+                        1 -> mConversationFacade
+                            .discardRequest(conversation.accountId, conversation.uri)
+                    }
+                }.show()
     }
 
     private fun startSearch() {
