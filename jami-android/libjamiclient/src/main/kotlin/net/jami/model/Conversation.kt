@@ -725,7 +725,10 @@ class Conversation : ConversationHistory {
     fun isGroup() = isSwarm && contacts.size > 2
 
     /** Tells if the conversation is a swarm:group. No matter how many participants. */
-    fun isSwarmGroup() = isSwarm && mode.blockingFirst() != Mode.OneToOne
+    fun isSwarmGroup() = isSwarm && mode.blockingFirst().let {
+        if (it == Mode.Request) request?.mode != Mode.OneToOne
+        else it != Mode.OneToOne
+    }
 
     /** Return user. Maybe be null. */
     fun getUser(): Contact? = contacts.firstOrNull { it.isUser }
