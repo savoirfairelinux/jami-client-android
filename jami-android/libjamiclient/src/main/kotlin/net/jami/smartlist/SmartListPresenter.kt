@@ -69,9 +69,12 @@ class SmartListPresenter @Inject constructor(
             .subscribeOn(Schedulers.computation()).subscribe())
     }
 
-    fun removeConversation(conversation: Conversation) {
-        view?.displayDeleteDialog(conversation.accountId, conversation.uri)
-    }
+    fun removeConversation(conversation: Conversation) =
+        view?.displayDeleteDialog(
+            conversation.accountId,
+            conversation.uri,
+            conversation.isSwarmGroup()
+        )
 
     fun removeConversation(accountId: String, uri: Uri) {
         mCompositeDisposable.add(conversationFacade.removeConversation(accountId, uri)
