@@ -171,7 +171,7 @@ class PluginsListSettingsFragment : Fragment(), PluginListItemListener {
                     }
                     mAdapter!!.updatePluginsList(getInstalledPlugins(requireContext()))
                     showLoading(false)
-                    Toast.makeText(requireContext(), getString(R.string.install_sucess, filename), Toast.LENGTH_LONG)
+                    Toast.makeText(requireContext(), getString(R.string.install_success, filename), Toast.LENGTH_LONG)
                         .show()
                 }) { e: Throwable ->
                     if (binding != null) {

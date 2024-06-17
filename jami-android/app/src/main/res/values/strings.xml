@@ -38,7 +38,7 @@ along with this program; if not, write to the Free Software
     <string name="no_browser_app_installed">No web browser app found, install one to view this page</string>
     <string name="email_chooser_title">Send mail using…</string>
     <string name="website_chooser_title">View website using…</string>
-    <string name="license">This software is provided \"as is\", without warranty of any kind. For details, see <u>GNU General Public License version 3 or later</u></string>
+    <string name="license">This software is provided “as is”, without warranty of any kind. For details, see <u>GNU General Public License version 3 or later</u></string>
     <string name="description">Jami is free software for universal communication which respects the freedoms and privacy of its users.</string>
     <string name="credits">Credits</string>
     <string name="pip_title">Jami Conference</string>
@@ -166,7 +166,7 @@ along with this program; if not, write to the Free Software
     </plurals>
 
     <!-- ContactList Fragment -->
-    <string name="searchbar_hint">Search name or conversation&#8230;</string>
+    <string name="searchbar_hint">Search name or conversation…</string>
     <string name="choose_number">Choose a number</string>
 
     <!-- FileExplorerDFragement -->
@@ -278,15 +278,15 @@ along with this program; if not, write to the Free Software
     <string name="ringtone_error_size_too_big">This file is too big. The maximum size is %1$dkB.</string>
     <string name="ringtone_custom_prompt">Set a custom ringtone</string>
     <string name="ringtone_custom_label">Custom</string>
-    <string name="ringtone_jami_tones">Jami Tones</string>
+    <string name="ringtone_jami_tones">Jami ringtones</string>
     <string name="ringtone_default_name" translatable="false">1 AfroNigeria.opus</string>
     <string name="ca_root_file" translatable="false">cacert.pem</string>
 
     <!-- Read contacts permission -->
-    <string name="permission_dialog_read_contacts_message">Jami needs the "Read contacts" permission to enable this feature. Please grant it.</string>
+    <string name="permission_dialog_read_contacts_message">Jami needs the “Read contacts” permission to enable this feature. Please grant it.</string>
 
     <!-- Write call log permission -->
-    <string name="permission_dialog_write_call_log_message">Jami needs the "Write call log" permission to enable this feature. Please grant it.</string>
+    <string name="permission_dialog_write_call_log_message">Jami needs the “Write call log” permission to enable this feature. Please grant it.</string>
 
     <!-- QRCode Scan -->
     <string name="scan_qr_account_message">Scan the QR Code of the account you want to add.</string>
@@ -305,7 +305,7 @@ along with this program; if not, write to the Free Software
     <string name="conversation_details">Contact details</string>
     <string name="conversation_action_delete_this">Delete this conversation</string>
     <string name="conversation_action_delete_this_title">Delete this conversation ?</string>
-    <string name="conversation_action_delete_this_message">This action can not be undone.</string>
+    <string name="conversation_action_delete_this_message">This action cannot be undone.</string>
     <string name="conversation_action_history_clear">Clear history</string>
     <string name="conversation_action_history_clear_title">Clear the conversation history?</string>
     <string name="conversation_action_history_clear_message">This will definitely clear the conversation history.</string>
@@ -346,7 +346,7 @@ along with this program; if not, write to the Free Software
     <string name="conversation_contact_invited">%1$s was invited</string>
     <string name="conversation_contact_added">%1$s joined</string>
     <string name="conversation_contact_left">%1$s left</string>
-    <string name="conversation_contact_banned">%1$s was banned</string>
+    <string name="conversation_contact_banned">%1$s was blocked</string>
     <string name="conversation_search_hint">Search conversation</string>
 
     <string name="audio_recorder_error">Audio recorder app was not found.</string>
@@ -377,7 +377,7 @@ along with this program; if not, write to the Free Software
     <string name="help_password_choose">Choose a strong password you will remember to protect your Jami account.</string>
     <string name="help_password_enter">Enter your main Jami account password.</string>
     <string name="help_server_enter">Enter URL of management server.</string>
-    <string name="help_pin_enter">Enter the PIN from another configured Jami account. Use the \"export Jami account\" feature to obtain a PIN.</string>
+    <string name="help_pin_enter">Enter the PIN from another configured Jami account. Use the “export Jami account” feature to obtain a PIN.</string>
     <string name="pin_copied">PIN code copied to clipboard.</string>
     <string name="wizard_next">Next</string>
     <string name="wizard_back">Back</string>
@@ -385,7 +385,7 @@ along with this program; if not, write to the Free Software
     <string name="hist_contact_invited">Contact invited</string>
     <string name="hist_contact_added">Contact added</string>
     <string name="hist_contact_left">Contact left</string>
-    <string name="hist_contact_banned">Contact banned</string>
+    <string name="hist_contact_banned">Contact blocked</string>
     <string name="hist_invitation_received">Invitation received</string>
 
     <!-- Account Summary -->
@@ -463,7 +463,7 @@ along with this program; if not, write to the Free Software
     <string name="file_saved_in">File saved in %s</string>
     <string name="file_saved_successfully">File saved successfully</string>
     <string name="file_download">Download</string>
-    <string name="no_space_left_on_device">No space left on device</string>
+    <string name="no_space_left_on_device">No storage space available on the device</string>
     <string name="title_media_viewer">Media viewer</string>
     <string name="menu_file_open">Open file</string>
     <string name="menu_file_download">Download file</string>
@@ -586,11 +586,11 @@ along with this program; if not, write to the Free Software
     <string name="donation_setting_description">Enable the donation reminder</string>
     <string name="donation_url" translatable="false">https://crowdfunding.lfx.linuxfoundation.org/projects/jami-a-gnu-package</string>
 
-    <!--  Plugin  -->
+    <!--  Extensions  -->
     <string name="unable_to_load">Unable to load %1$s</string>
     <string name="load_sucess">%1$s: enabled</string>
     <string name="unload_sucess">%1$s: disabled</string>
-    <string name="install_sucess">Extension %1$s has been successfully installed.</string>
+    <string name="install_success">Extension %1$s has been successfully installed.</string>
     <string name="install_error">An error occurred while importing the extension.</string>
 
 </resources>

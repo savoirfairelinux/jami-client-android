@@ -59,7 +59,7 @@ along with this program; if not, write to the Free Software
 
     <!-- Strings related to account deletion -->
     <string name="account_delete_dialog_title">Delete account ?</string>
-    <string name="account_delete_dialog_message">This action can not be undone.</string>
+    <string name="account_delete_dialog_message">This action cannot be undone.</string>
 
     <!-- AccountManagementFragment -->
     <string name="empty_account_list">No account registered</string>
