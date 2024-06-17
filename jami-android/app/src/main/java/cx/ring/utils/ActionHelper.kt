@@ -115,14 +115,29 @@ object ActionHelper {
             .show()
     }
 
-    fun launchDeleteAction(context: Context, accountId: String, uri: Uri, callback: ConversationActionCallback) {
+    fun launchDeleteSwarmOneToOneAction(
+        context: Context, accountId: String, uri: Uri, callback: ConversationActionCallback,
+    ) {
         MaterialAlertDialogBuilder(context)
             .setTitle(R.string.conversation_action_remove_this_title)
             .setMessage(R.string.conversation_action_remove_this_message)
-            .setPositiveButton(android.R.string.ok) { dialog: DialogInterface?, whichButton: Int ->
+            .setPositiveButton(android.R.string.ok) { _, _ ->
                 callback.removeConversation(accountId, uri)
             }
-            .setNegativeButton(android.R.string.cancel) { dialog: DialogInterface?, whichButton: Int -> }
+            .setNegativeButton(android.R.string.cancel) { _, _ -> }
+            .show()
+    }
+
+    fun launchDeleteSwarmGroupAction(
+        context: Context, accountId: String, uri: Uri, callback: ConversationActionCallback,
+    ) {
+        MaterialAlertDialogBuilder(context)
+            .setTitle(R.string.swarm_group_action_leave_title)
+            .setMessage(R.string.swarm_group_action_leave_message)
+            .setPositiveButton(android.R.string.ok) { _, _ ->
+                callback.removeConversation(accountId, uri)
+            }
+            .setNegativeButton(android.R.string.cancel) { _, _ -> }
             .show()
     }
 
