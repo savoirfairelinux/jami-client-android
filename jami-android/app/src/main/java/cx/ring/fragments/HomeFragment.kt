@@ -279,7 +279,8 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
 
     private fun displayConversationRequestDialog(conversation: Conversation) {
         MaterialAlertDialogBuilder(requireContext())
-            .setItems(R.array.swarm_actions) { dialog, which ->
+            // Todo: GitLab 1548: swarm_one_to_one_actions is not accurate and should be customized.
+            .setItems(R.array.swarm_one_to_one_actions) { dialog, which ->
                 when (which) {
                     0 -> TextUtils.copyToClipboard(
                             requireContext(),

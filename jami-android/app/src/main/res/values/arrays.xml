@@ -23,14 +23,21 @@ along with this program; if not, write to the Free Software
         <item>@string/conversation_action_remove_this</item>
         <item>@string/conversation_action_block_this</item>
     </string-array>
-    <string-array name="swarm_actions">
+    <string-array name="swarm_one_to_one_actions">
         <item>@string/conversation_action_copy_peer_number</item>
         <item>@string/conversation_action_remove_this</item>
         <item>@string/conversation_action_block_this</item>
     </string-array>
     <string-array name="swarm_group_actions">
-        <item>@string/conversation_action_remove_this</item>
+        <item>@string/swarm_group_action_leave</item>
+    </string-array>
+    <string-array name="swarm_request_one_to_one_actions">
+        <item>@string/conversation_action_copy_peer_number</item>
+        <item>@string/delete_request</item>
         <item>@string/conversation_action_block_this</item>
+    </string-array>
+    <string-array name="swarm_request_group_actions">
+        <item>@string/delete_request</item>
     </string-array>
 
     <string-array name="video_bitrates">
