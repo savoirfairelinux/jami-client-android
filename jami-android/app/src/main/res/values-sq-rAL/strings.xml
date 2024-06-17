@@ -124,6 +124,7 @@
   <string name="write_a_message">Shkruani një mesazh</string>
   <string name="scan_qr">Skanoni Kodin QR</string>
   <string name="qr_code">Kod QR</string>
+  <string name="qr_code_not_contact">S’është kod QR kontakti Jami</string>
   <string name="new_swarm">Nisni Zgjua</string>
   <string name="ab_action_flipcamera">Rrotulloni kamerën</string>
   <string name="ab_action_hidepreview">Fshihe paraparjen</string>

@@ -124,6 +124,7 @@
   <string name="write_a_message">Sende eine Nachricht</string>
   <string name="scan_qr">QR-Code scannen</string>
   <string name="qr_code">QR-Code</string>
+  <string name="qr_code_not_contact">Kein Jami-Kontakt-QR-Code</string>
   <string name="new_swarm">Schwarm starten</string>
   <string name="ab_action_flipcamera">Kamera wechseln</string>
   <string name="ab_action_hidepreview">Vorschau ausblenden</string>

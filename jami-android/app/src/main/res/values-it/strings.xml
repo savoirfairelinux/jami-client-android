@@ -125,6 +125,7 @@
   <string name="write_a_message">Scrivi un messaggio</string>
   <string name="scan_qr">Scansiona codice QR</string>
   <string name="qr_code">Codice QR</string>
+  <string name="qr_code_not_contact">Non è un codice QR di contatto Jami</string>
   <string name="new_swarm">Nuovo gruppo</string>
   <string name="ab_action_flipcamera">Cambia fotocamera</string>
   <string name="ab_action_hidepreview">Nascondi anteprima</string>

@@ -125,6 +125,7 @@
   <string name="write_a_message">Escrever uma mensagem</string>
   <string name="scan_qr">Digitalizar código QR</string>
   <string name="qr_code">Código QR</string>
+  <string name="qr_code_not_contact">Não é um código QR de contacto Jami</string>
   <string name="new_swarm">Iniciar enxame</string>
   <string name="ab_action_flipcamera">Virar câmara</string>
   <string name="ab_action_hidepreview">Oculta pré-visualização</string>
