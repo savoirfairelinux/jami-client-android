@@ -49,6 +49,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b9d49ab2_8a0997af",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-06-18T11:20:55Z",
+      "side": 1,
+      "message": "\u003e It is understood that if there are two different string keys that have the same string value, then the string value is automatically copied into the string value of the untranslated string keys when one of them is translated.\n\nDo you have any documentation that can confirm this?\n\nI\u0027ll discuss about this with aberaud.",
+      "parentUuid": "85096cf2_3189b758",
+      "range": {
+        "startLine": 591,
+        "startChar": 23,
+        "endLine": 591,
+        "endChar": 29
+      },
+      "revId": "90decbb22ef389ce1d5ab0bdce03614f69b0afa3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4937cece_dd9985ed",
         "filename": "jami-android/app/src/main/res/values/strings_account.xml",
         "patchSetId": 1
