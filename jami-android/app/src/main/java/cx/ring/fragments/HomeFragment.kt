@@ -137,24 +137,25 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
         // - Search bar (search for swarms or for new contacts)
         // - Menu (for settings, about jami)
         searchBar.setNavigationOnClickListener { // Account selection
-            val accounts = mAccountService.observableAccountList.blockingFirst()
-            MaterialAlertDialogBuilder(requireContext())
-                .setTitle(getString(R.string.account_selection))
-                .setAdapter(
-                        AccountAdapter(
-                            requireContext(),
-                            accounts,
-                            mDisposable, mAccountService, mConversationFacade
-                        )
-                ) { _, index ->
-                    if (index >= accounts.size) // Add account
-                        startActivity(Intent(activity, AccountWizardActivity::class.java))
-                    else if (mAccountService.currentAccount != accounts[index]) {
-                        // Disable account settings menu option when account is loading
-                        searchBar.menu.findItem(R.id.menu_account_settings).isEnabled = false
-                        mAccountService.currentAccount = accounts[index]
-                    }
-                }.show()
+            mDisposable.add(mAccountService.observableAccountList.firstElement().subscribe { accounts ->
+                MaterialAlertDialogBuilder(requireContext())
+                    .setTitle(getString(R.string.account_selection))
+                    .setAdapter(
+                            AccountAdapter(
+                                requireContext(),
+                                accounts,
+                                mDisposable, mAccountService, mConversationFacade
+                            )
+                    ) { _, index ->
+                        if (index >= accounts.size) // Add account
+                            startActivity(Intent(activity, AccountWizardActivity::class.java))
+                        else if (mAccountService.currentAccount != accounts[index]) {
+                            // Disable account settings menu option when account is loading
+                            searchBar.menu.findItem(R.id.menu_account_settings).isEnabled = false
+                            mAccountService.currentAccount = accounts[index]
+                        }
+                    }.show()
+            })
         }
         searchView.editText.addTextChangedListener { // Search bar
             querySubject.onNext(it.toString())
