@@ -49,6 +49,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7cd3e151_86ce3a52",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-06-18T12:05:20Z",
+      "side": 1,
+      "message": "Perhaps `conversations` should be changed to `calls`?\n\n`Camera permission required for video calls.`",
+      "parentUuid": "7dc7e121_9daa5309",
+      "range": {
+        "startLine": 272,
+        "startChar": 52,
+        "endLine": 272,
+        "endChar": 110
+      },
+      "revId": "90decbb22ef389ce1d5ab0bdce03614f69b0afa3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8e7af791_b26cbf82",
         "filename": "jami-android/app/src/main/res/values/strings.xml",
         "patchSetId": 1
