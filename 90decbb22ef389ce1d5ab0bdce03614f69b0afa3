@@ -144,6 +144,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "402dc472_aa864a4d",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-06-18T11:46:41Z",
+      "side": 1,
+      "message": "Have also experienced this translating the Jami website. Strings in blog articles that are the same as previous blog articles are already (i.e. automatically) translated by Transifex.\n\nYou can see the German page at https://jami.net/de/astarte/ where \"Was kommt als Nächstes?\" is already in German; yet the rest of the webpage is in English.",
+      "parentUuid": "f9c597f1_98b1d7f9",
+      "range": {
+        "startLine": 591,
+        "startChar": 23,
+        "endLine": 591,
+        "endChar": 29
+      },
+      "revId": "90decbb22ef389ce1d5ab0bdce03614f69b0afa3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4937cece_dd9985ed",
         "filename": "jami-android/app/src/main/res/values/strings_account.xml",
         "patchSetId": 1
