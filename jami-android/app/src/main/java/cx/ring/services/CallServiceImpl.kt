@@ -110,7 +110,10 @@ class CallServiceImpl(val mContext: Context, executor: ScheduledExecutorService,
                     telecomService.placeCall(callUri, params)
                     return subject
                 } catch (e: SecurityException) {
-                    pendingCallRequests.remove(key)
+                    pendingCallRequests.remove(key)?.onSuccess(CALL_ALLOWED_VAL)
+                    Log.e(TAG, "Can't use the Telecom API to place call", e)
+                } catch (e: Exception) {
+                    pendingCallRequests.remove(key)?.onSuccess(CALL_ALLOWED_VAL)
                     Log.e(TAG, "Can't use the Telecom API to place call", e)
                 }
             }

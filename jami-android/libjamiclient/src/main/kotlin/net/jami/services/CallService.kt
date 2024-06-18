@@ -210,6 +210,7 @@ abstract class CallService(
 
     fun placeCallIfAllowed(account: String, conversationUri: Uri?, number: Uri, hasVideo: Boolean): Single<Call> =
         requestPlaceCall(account, conversationUri, number.rawUriString, hasVideo)
+            .onErrorReturnItem(CALL_ALLOWED_VAL)
             .flatMap { result ->
                 if (!result.allowed)
                     Single.error(SecurityException())
@@ -767,7 +768,8 @@ abstract class CallService(
         const val MEDIA_TYPE_AUDIO = "MEDIA_TYPE_AUDIO"
         const val MEDIA_TYPE_VIDEO = "MEDIA_TYPE_VIDEO"
 
-        val CALL_ALLOWED = Single.just(SystemCall(true))
+        val CALL_ALLOWED_VAL = SystemCall(true)
+        val CALL_ALLOWED = Single.just(CALL_ALLOWED_VAL)
         val CALL_DISALLOWED = Single.just(SystemCall(false))
     }
 }
