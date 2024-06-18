@@ -262,6 +262,18 @@ class ConversationFacade(
         }
     }
 
+    fun getConversationProfile(accountId: String, conversationUri: Uri): Single<ConversationItemViewModel> =
+        startConversation(accountId, conversationUri)
+            .flatMap { getConversationProfile(it) }
+
+    private fun getConversationProfile(conversation: Conversation): Single<ConversationItemViewModel> =
+        Observable.combineLatest(
+            conversation.profile,
+            conversation.contactUpdates.switchMap { c -> mContactService.observeContact(conversation.accountId, c, false) }
+        )
+        { profile, contacts -> ConversationItemViewModel(conversation, profile, contacts, false) }
+            .firstOrError()
+
     fun observeConversation(accountId: String, conversationUri: Uri, hasPresence: Boolean): Observable<ConversationItemViewModel> =
         startConversation(accountId, conversationUri)
             .flatMapObservable { conversation -> observeConversation(conversation, hasPresence) }

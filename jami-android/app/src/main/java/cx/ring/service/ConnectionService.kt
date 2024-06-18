@@ -56,7 +56,7 @@ class ConnectionService : ConnectionService() {
             val contactId = request.extras.getString(ConversationPath.KEY_CONVERSATION_URI)
             if (account != null && contactId != null) {
                 try {
-                    val profile = conversationFacade.observeConversation(account, Uri.fromString(contactId), false).blockingFirst()
+                    val profile = conversationFacade.getConversationProfile(account, Uri.fromString(contactId)).blockingGet()
                     Log.w(TAG, "Set connection metadata ${profile.title} ${android.net.Uri.parse(profile.uriTitle)}")
                     setCallerDisplayName(profile.title, TelecomManager.PRESENTATION_ALLOWED)
                     setAddress(android.net.Uri.parse(profile.uriTitle), TelecomManager.PRESENTATION_UNKNOWN)
