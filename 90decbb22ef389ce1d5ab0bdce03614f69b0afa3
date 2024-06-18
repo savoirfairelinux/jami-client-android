@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8e7af791_b26cbf82",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-06-18T11:38:29Z",
+      "side": 1,
+      "message": "Remove the space (` `) before the (`?`)?",
+      "range": {
+        "startLine": 307,
+        "startChar": 81,
+        "endLine": 307,
+        "endChar": 83
+      },
+      "revId": "90decbb22ef389ce1d5ab0bdce03614f69b0afa3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "29084804_1f01965b",
         "filename": "jami-android/app/src/main/res/values/strings.xml",
         "patchSetId": 1
