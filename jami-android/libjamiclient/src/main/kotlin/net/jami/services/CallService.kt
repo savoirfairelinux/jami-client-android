@@ -512,6 +512,10 @@ abstract class CallService(
         try {
             synchronized(calls) {
                 parseCallState(accountId, callId, newState, callDetails)?.let { call ->
+                    if (newState == "INCOMING") {
+                        Log.d(TAG, "call state changed: ignoring ringing call, waiting for signal")
+                        return
+                    }
                     callSubject.onNext(call)
                     if (call.callStatus === CallStatus.OVER) {
                         calls.remove(call.daemonIdString)
