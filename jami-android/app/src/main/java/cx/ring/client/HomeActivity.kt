@@ -108,16 +108,20 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
     private val conversationBackPressedCallback: OnBackPressedCallback =
         object : OnBackPressedCallback(false) {
             override fun handleOnBackPressed() {
-                removeFragment(fConversation)
-                fConversation = null
+                if (supportFragmentManager.backStackEntryCount == 0) {
+                    removeFragment(fConversation)
+                    fConversation = null
 
-                // Hiding the conversation
-                if (mBinding?.panel?.isSlideable == true) { // No space to keep the pane open
-                    mBinding?.panel?.closePane()
-                } else showWelcomeFragment()
+                    // Hiding the conversation
+                    if (mBinding?.panel?.isSlideable == true) { // No space to keep the pane open
+                        mBinding?.panel?.closePane()
+                    } else showWelcomeFragment()
 
-                // Next back press doesn't have to be handled by this callback.
-                isEnabled = false
+                    // Next back press doesn't have to be handled by this callback.
+                    isEnabled = false
+                } else {
+                    supportFragmentManager.popBackStack()
+                }
             }
         }
 
