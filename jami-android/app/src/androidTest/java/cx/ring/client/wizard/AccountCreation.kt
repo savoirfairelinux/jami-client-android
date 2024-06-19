@@ -62,6 +62,7 @@ class AccountCreation {
      */
     @Test
     fun accountCreation_SpecifyPasswordOnly() {
+        throw NotImplementedError("Not implemented yet")
         onView(withId(R.id.ring_create_btn)).perform(scrollTo(), click())
 
         onView(allOf(withId(R.id.skip), isDisplayed())).perform(click())
