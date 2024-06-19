@@ -1448,10 +1448,8 @@ class AccountService(
             }
             if (!conversation.lastElementLoadedSubject.hasValue())
                 conversation.lastElementLoadedSubject.onSuccess(loadMore(conversation, 8).ignoreElement().cache())
-            if (setMode)
-                conversation.setMode(mode)
         }
-        account.conversationStarted(conversation)
+        account.conversationStarted(conversation, if (setMode) mode else null)
         loadMore(conversation, 2)
     }
 

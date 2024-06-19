@@ -95,7 +95,7 @@ class Account(
 
     fun isContact(uri: Uri): Boolean = getContact(uri) != null
 
-    fun conversationStarted(conversation: Conversation) {
+    fun conversationStarted(conversation: Conversation, newMode: Conversation.Mode? = null) {
         //Log.w(TAG, "conversationStarted ${conversation.accountId} ${conversation.uri} ${conversation.isSwarm} ${conversation.contacts.size} ${conversation.mode.blockingFirst()}")
         synchronized(conversations) {
             if (conversation.isSwarm) {
@@ -103,7 +103,11 @@ class Account(
                 swarmConversations[conversation.uri.rawRingId] = conversation
             }
             conversations[conversation.uri.uri] = conversation
-            if (conversation.isSwarm && conversation.mode.blockingFirst() === Conversation.Mode.OneToOne) {
+
+            if (newMode != null) conversation.setMode(newMode)
+
+            val mode = newMode ?: conversation.mode.blockingFirst()
+            if (conversation.isSwarm && mode === Conversation.Mode.OneToOne) {
                 try {
                     val contact = conversation.contact!!
                     val key = contact.uri.uri
