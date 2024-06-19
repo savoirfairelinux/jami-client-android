@@ -109,7 +109,13 @@ pipeline {
                 script {
                     sh 'su jenkins -c "cd /jami-client-android && ./compile.sh --test"'
                     sh 'cd /jami-client-android/ci && ./start_emu_headless.sh'
-                    sh 'su jenkins -c "cd /jami-client-android/ci && ./jami_test.sh"'
+
+                    boolean errorOccurred = false
+                    try{
+                        sh 'su jenkins -c "cd /jami-client-android/ci && ./jami_test.sh"'
+                    } catch (Exception e) {
+                        errorOccurred = true
+                    }
 
                     // Archive tests output save it as Jenkins artifact
                     sh 'cd /jami-client-android/ci/spoon-output && zip -r ../ui-test-output.zip *'
@@ -124,6 +130,11 @@ pipeline {
                         reportFiles: 'index.html',
                         reportName: "Jami UI Test Report"
                     ])
+
+                    // Mark the build as failed if there was an error
+                    if (errorOccurred) {
+                        error("Pipeline failed due to errors in the test execution.")
+                    }
                 }
             }
         }
