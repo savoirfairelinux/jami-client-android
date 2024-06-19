@@ -1,3 +1,19 @@
+/*
+ *  Copyright (C) 2004-2024 Savoir-faire Linux Inc.
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
 package cx.ring.client.wizard
 
 import androidx.test.espresso.Espresso.onView
@@ -12,6 +28,12 @@ import cx.ring.R
 import cx.ring.assertOnView
 import cx.ring.client.HomeActivity
 import cx.ring.doOnView
+import io.reactivex.rxjava3.core.Single
+import net.jami.model.Account
+import net.jami.model.AccountConfig
+import net.jami.model.ConfigKey
+import net.jami.services.AccountService
+import net.jami.utils.Log
 import org.hamcrest.Matchers.allOf
 import org.junit.Before
 import org.junit.FixMethodOrder
@@ -19,6 +41,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.MethodSorters
+import java.util.HashMap
 
 @LargeTest
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -30,18 +53,7 @@ class AccountCreation {
     var mActivityScenarioRule = ActivityScenarioRule(HomeActivity::class.java)
 
     @Before
-    fun moveToAccountCreation() {
-        try {
-            val searchBarContentNavigationDescription = InstrumentationRegistry
-                .getInstrumentation().targetContext.getString(R.string.searchbar_navigation_account)
-            onView(withContentDescription(searchBarContentNavigationDescription)).perform(click())
-            val addAccountString = InstrumentationRegistry
-                .getInstrumentation().targetContext.getString(R.string.add_ring_account_title)
-            onView(withText(addAccountString)).perform(click())
-            Thread.sleep(5000)
-        } catch (_: Exception) {
-        }
-    }
+    fun moveToAccountCreation() = moveToWizard()
 
     /**
      * Checks if an account can be created by skipping all the steps.
@@ -54,7 +66,10 @@ class AccountCreation {
      * Skip others steps.
      */
     @Test
-    fun accountCreation_SpecifyUsernameOnly() = createAccountWithUsername()
+    fun accountCreation_SpecifyUsernameOnly() {
+        val randomUsername = "JamiTest_" + System.currentTimeMillis()
+        createAccountWithUsername(randomUsername)
+    }
 
     /**
      * Checks if an account can be created by specifying a password only.
@@ -84,7 +99,9 @@ class AccountCreation {
     fun accountCreation_SpecifyUsernameAndPassword() {
         onView(withId(R.id.ring_create_btn)).perform(scrollTo(), click())
 
-        specifyUsername()
+        val randomUsername = "JamiTest_" + System.currentTimeMillis()
+        onView(allOf(withId(R.id.input_username), isDisplayed()))
+            .perform(replaceText(randomUsername), closeSoftKeyboard())
 
         doOnView(allOf(withId(R.id.create_account_username), isDisplayed(), isEnabled()), click())
 
@@ -169,12 +186,6 @@ class AccountCreation {
         )
     }
 
-    private fun specifyUsername() {
-        val randomUsername = "JamiTest_" + System.currentTimeMillis()
-        onView(allOf(withId(R.id.input_username), isDisplayed()))
-            .perform(replaceText(randomUsername), closeSoftKeyboard())
-    }
-
     /**
      * Check what happens when writing a valid username.
      * Assert that the create account button is enabled.
@@ -183,7 +194,9 @@ class AccountCreation {
     fun usernameSelection_ValidUsername() {
         onView(allOf(withId(R.id.ring_create_btn), isDisplayed())).perform(scrollTo(), click())
 
-        specifyUsername()
+        val randomUsername = "JamiTest_" + System.currentTimeMillis()
+        onView(allOf(withId(R.id.input_username), isDisplayed()))
+            .perform(replaceText(randomUsername), closeSoftKeyboard())
 
         assertOnView(
             allOf(withId(R.id.create_account_username), isEnabled()),
@@ -300,17 +313,6 @@ class AccountCreation {
         onView(allOf(withId(R.id.skip_create_account), isDisplayed())).perform(click())
     }
 
-    private fun createAccountWithUsername() {
-        onView(withId(R.id.ring_create_btn)).perform(scrollTo(), click())
-
-        specifyUsername()
-
-        doOnView(allOf(withId(R.id.create_account_username), isDisplayed(), isEnabled()), click())
-
-        onView(allOf(withId(R.id.create_account_password), isDisplayed())).perform(click())
-
-        onView(allOf(withId(R.id.skip_create_account), isDisplayed())).perform(click())
-    }
 
     private fun specifyPassword() {
         onView(allOf(withId(R.id.password), isDisplayed()))
@@ -327,5 +329,96 @@ class AccountCreation {
                 .getInstrumentation().targetContext.getString(R.string.no_thanks)
             onView(allOf(withText(noThanksSrc), isDisplayed())).perform(click())
         }
+    }
+
+    private fun moveToWizard() {
+        try {
+            val searchBarContentNavigationDescription = InstrumentationRegistry
+                .getInstrumentation().targetContext.getString(R.string.searchbar_navigation_account)
+            onView(withContentDescription(searchBarContentNavigationDescription)).perform(click())
+
+            val addAccountString = InstrumentationRegistry
+                .getInstrumentation().targetContext.getString(R.string.add_ring_account_title)
+            onView(withText(addAccountString)).perform(click())
+        } catch (_: Exception) { // Already in the wizard ?
+            // Todo: Should check before exception where we are.
+        }
+    }
+
+    private fun createAccountWithUsername(username: String) {
+        onView(withId(R.id.ring_create_btn)).perform(scrollTo(), click())
+
+        onView(allOf(withId(R.id.input_username), isDisplayed()))
+            .perform(replaceText(username), closeSoftKeyboard())
+
+        doOnView(allOf(withId(R.id.create_account_username), isDisplayed(), isEnabled()), click())
+
+        onView(allOf(withId(R.id.create_account_password), isDisplayed())).perform(click())
+
+        onView(allOf(withId(R.id.skip_create_account), isDisplayed())).perform(click())
+
+        Log.d("devdebug", "Account created: $username")
+    }
+}
+
+object AccountCreationUtils {
+
+    private val TAG = AccountCreationUtils::class.java.simpleName
+
+    private const val NAME_SERVER_ADDRESS = "https://ns-test.jami.net/"
+
+    /**
+     * Create n accounts and register them.
+     * This function is blocking.
+     *
+     * @param accountService The account service to use.
+     * @param count The number of accounts to create.
+     * @return The list of registered account names.
+     */
+    fun createAccountAndRegister(accountService: AccountService, count: Int): List<Account> {
+
+        val baseUsername = "jamitest"
+        val time = System.currentTimeMillis()
+
+        val accountObservableList = (0..<count).map { accountCount ->
+            val username = "${baseUsername}_${time}_${accountCount}"
+            Log.d(TAG, "Account username: $username...")
+            accountService.getAccountTemplate(AccountConfig.ACCOUNT_TYPE_JAMI)
+                .map { accountDetails: HashMap<String, String> ->
+                    accountDetails[ConfigKey.ACCOUNT_ALIAS.key] = "Jami account $accountCount"
+                    accountDetails[ConfigKey.RINGNS_HOST.key] = NAME_SERVER_ADDRESS
+                    accountDetails
+                }.flatMapObservable { details ->
+                    Log.d(TAG, "Adding account ...")
+                    accountService.addAccount(details)
+                }
+                .filter { account: Account ->
+                    account.registrationState != AccountConfig.RegistrationState.INITIALIZING
+                }
+                .firstOrError()
+                .map { account: Account ->
+                    Log.d(TAG, "Registering account ...")
+                    accountService.registerName(
+                        account, username, AccountService.ACCOUNT_SCHEME_PASSWORD, ""
+                    )
+                    account
+                }
+        }
+
+        // Wait for all accounts to be created.
+        val accountList: List<Account> =
+            Single.zip(accountObservableList) { it.filterIsInstance<Account>() }.blockingGet()
+
+        // Wait for all accounts to be registered.
+        Single.zip(
+            accountList.map {
+                accountService.getObservableAccount(it)
+                    .filter { account: Account ->
+                        account.registrationState == AccountConfig.RegistrationState.REGISTERED
+                    }.firstOrError()
+            }
+        ) { it }.blockingSubscribe()
+
+        return accountList
     }
 }
