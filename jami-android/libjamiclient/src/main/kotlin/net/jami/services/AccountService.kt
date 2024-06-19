@@ -1431,7 +1431,6 @@ class AccountService(
             }
         } else {
             c.loaded = null
-            c.clearHistory(true)
             setMode = mode != c.mode.blockingFirst()
         }
         val conversation = c

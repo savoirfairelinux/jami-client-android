@@ -26,6 +26,7 @@ import io.reactivex.rxjava3.subjects.Subject
 import net.jami.utils.Log
 import net.jami.utils.StringUtils
 import java.util.*
+import kotlin.collections.ArrayList
 
 class Conversation : ConversationHistory {
     val accountId: String
@@ -110,7 +111,7 @@ class Conversation : ConversationHistory {
 
     val sortedHistory: Single<List<Interaction>> = Single.fromCallable {
         sortHistory()
-        aggregateHistory
+        ArrayList(aggregateHistory)
     }
     var lastEvent: Interaction? = null
         private set(e) {
@@ -539,7 +540,7 @@ class Conversation : ConversationHistory {
         mDirty = false
         if (!delete && !isSwarm && contacts.size == 1)
             aggregateHistory.add(ContactEvent(accountId, contacts[0]))
-        clearedSubject.onNext(aggregateHistory)
+        clearedSubject.onNext(ArrayList(aggregateHistory))
     }
 
     @Synchronized

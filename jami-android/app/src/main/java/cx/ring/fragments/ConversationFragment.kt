@@ -117,7 +117,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     override fun refreshView(conversation: List<Interaction>) {
         if (binding != null) binding!!.pbLoading.visibility = View.GONE
         mAdapter?.let { adapter ->
-            adapter.updateDataset(conversation)
+            adapter.updateDataset(conversation.toMutableList())
             loading = false
         }
     }
