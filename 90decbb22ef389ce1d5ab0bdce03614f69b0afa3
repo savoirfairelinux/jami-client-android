@@ -49,6 +49,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "83049096_3afa71e6",
+        "filename": "jami-android/app/src/main/java/cx/ring/settings/pluginssettings/PluginsListSettingsFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-06-20T10:24:05Z",
+      "side": 1,
+      "message": "Should `.jpl` (`J`ami `Pl`ugin) be `.jxa` (`J`ami e`X`tension for `A`ndroid)?\n\nTL;DR\n\n\u003e Should `.jpl` (`j`ami `pl`ugin) be changed to `.jex` (`j`ami `ex`tension)\n\nCf. https://git.jami.net/savoirfairelinux/jami-client-qt/-/issues/1256#note_46955\n\n\u003e Having the file extension differ for the Desktop (.jxd) and Android (.jxa) versions would enable saving the extensions in one location on a user\u0027s computer. Additionally the files could be saved in the same directory/folder as Jami accounts (.jac).\n\n.jxd \u003d `J`ami e`X`tension for `D`esktop\n\n.jxa \u003d `J`ami e`X`tension for `A`ndroid\n\nCf. https://git.jami.net/savoirfairelinux/jami-client-qt/-/issues/1256#note_47968",
+      "range": {
+        "startLine": 164,
+        "startChar": 49,
+        "endLine": 164,
+        "endChar": 53
+      },
+      "revId": "90decbb22ef389ce1d5ab0bdce03614f69b0afa3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fe1b9d39_43b0494a",
         "filename": "jami-android/app/src/main/java/cx/ring/settings/pluginssettings/PluginsListSettingsFragment.kt",
         "patchSetId": 1
