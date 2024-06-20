@@ -48,11 +48,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     zip \
     && locale-gen $LANG $LC_ALL && update-locale $LANG $LC_ALL
 
-# Install Swig 4.1.1
-RUN wget -O /tmp/swig.tar.gz https://github.com/swig/swig/archive/v4.1.1.tar.gz && \
-    tar xzf /tmp/swig.tar.gz -C /opt && \
-    cd /opt/swig-4.1.1/ && ./autogen.sh && ./configure && make && make install && \
-    cd .. && rm -rf /opt/swig-4.1.1 /tmp/swig.tar.gz
+# Swig
+RUN wget -O /tmp/swig.tar.gz https://github.com/swig/swig/archive/v4.2.1.tar.gz && \
+	tar xzf  /tmp/swig.tar.gz -C /opt && \
+	cd /opt/swig-4.2.1/ && ./autogen.sh && ./configure && make && make install && \
+	cd .. && rm -rf /opt/swig-4.2.1 /tmp/swig.tar.gz
 
 # Install Fastlane
 RUN gem install fastlane -NV
