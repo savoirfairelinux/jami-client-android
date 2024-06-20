@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "88f4b2c2_703f3242",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-06-20T14:30:59Z",
+      "side": 1,
+      "message": "\u003e The design is not 100% respected\n\nSeen with aberaud about this and looks fine.",
+      "parentUuid": "a7ef0d24_6f71b01b",
+      "revId": "c31c8956ab96af76e8f2bbc292da880215a13794",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ff7495e4_fdd99fea",
         "filename": "jami-android/app/src/main/res/layout/frag_conversation.xml",
         "patchSetId": 4
@@ -78,6 +96,30 @@
       "writtenOn": "2024-06-20T12:29:53Z",
       "side": 1,
       "message": "Bottom margin doesnt match the design (I can see more space on the design between the ongoing_call_pane bottom and appbar bottom).",
+      "range": {
+        "startLine": 83,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 2
+      },
+      "revId": "c31c8956ab96af76e8f2bbc292da880215a13794",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9113d13f_59874c26",
+        "filename": "jami-android/app/src/main/res/layout/frag_conversation.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-06-20T14:30:59Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "f05f0258_8412598f",
       "range": {
         "startLine": 83,
         "startChar": 0,
