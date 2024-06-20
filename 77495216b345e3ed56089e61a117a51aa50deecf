@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7811186c_4f1d418d",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 8
+      },
+      "lineNbr": 1065,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-06-20T14:44:11Z",
+      "side": 1,
+      "message": "make Account take ActiveCall to avoid double conversion",
+      "range": {
+        "startLine": 1065,
+        "startChar": 62,
+        "endLine": 1065,
+        "endChar": 73
+      },
+      "revId": "77495216b345e3ed56089e61a117a51aa50deecf",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
