@@ -3,6 +3,69 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a7ef0d24_6f71b01b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-06-20T12:29:53Z",
+      "side": 1,
+      "message": "Few comments:\n- The design is not 100% respected\n- Would be better to have more comments (to be more verbose enable code reviewer and future mainteners to better understand and be more quick).\n- Would be better to respect max line length when reformating. It is then better displayed in gerrit + in android studio for vertical display. Plus imo it improves general readibility.\n- Would be better to not modify out of context code (I can see changes about location, extensions, tab selector for account creation, ...)\n\nApart from this, I\u0027ve tested and it works nice, code looks fine.",
+      "revId": "c31c8956ab96af76e8f2bbc292da880215a13794",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ff7495e4_fdd99fea",
+        "filename": "jami-android/app/src/main/res/layout/frag_conversation.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-06-20T12:29:53Z",
+      "side": 1,
+      "message": "Not verticaly centered. Is it normal?",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 2
+      },
+      "revId": "c31c8956ab96af76e8f2bbc292da880215a13794",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f05f0258_8412598f",
+        "filename": "jami-android/app/src/main/res/layout/frag_conversation.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-06-20T12:29:53Z",
+      "side": 1,
+      "message": "Bottom margin doesnt match the design (I can see more space on the design between the ongoing_call_pane bottom and appbar bottom).",
+      "range": {
+        "startLine": 83,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 2
+      },
+      "revId": "c31c8956ab96af76e8f2bbc292da880215a13794",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "06a2c45e_262c3886",
         "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/model/Conversation.kt",
         "patchSetId": 4
