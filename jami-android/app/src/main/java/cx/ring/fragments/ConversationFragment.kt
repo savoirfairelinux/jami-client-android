@@ -454,14 +454,12 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     fun expandMapView() {
         // The binding.root view must have android:animateLayoutChanges="true"
         binding!!.root.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
+        val margin = resources.getDimensionPixelSize(R.dimen.location_sharing_minmap_margin)
         val params = binding!!.mapCard.layoutParams as RelativeLayout.LayoutParams
-        if (params.width != ViewGroup.LayoutParams.MATCH_PARENT) {
-            val margin = resources.getDimensionPixelSize(R.dimen.location_sharing_minmap_margin)
-            params.setMargins(0, 0,0, binding!!.cvMessageInput.height + margin)
-            params.width = ViewGroup.LayoutParams.MATCH_PARENT
-            params.height = ViewGroup.LayoutParams.MATCH_PARENT
-            binding!!.mapCard.layoutParams = params
-        }
+        params.setMargins(0, 0, 0, binding!!.cvMessageInput.height + margin)
+        params.width = ViewGroup.LayoutParams.MATCH_PARENT
+        params.height = ViewGroup.LayoutParams.MATCH_PARENT
+        binding!!.mapCard.layoutParams = params
     }
 
     override fun startShareLocation(accountId: String, conversationId: String) {
