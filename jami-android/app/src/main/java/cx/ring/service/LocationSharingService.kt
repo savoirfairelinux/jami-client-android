@@ -260,7 +260,7 @@ class LocationSharingService : Service(), LocationListener {
                     HomeActivity::class.java
                 )
                     .putExtra(ConversationFragment.EXTRA_SHOW_MAP, true)
-                    .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 if (contactCount == 1) {
                     stopIntent.data = firsPath.toUri()
                     title = getString(R.string.notif_location_title, conversation.title)

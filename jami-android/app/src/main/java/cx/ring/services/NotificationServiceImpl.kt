@@ -215,8 +215,8 @@ class NotificationServiceImpl(
         val profile = getProfile(conversation)
         val path = ConversationPath.toUri(conversation)
 
-        val intentConversation = Intent(Intent.ACTION_VIEW, path, mContext, ConversationActivity::class.java)
-            .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        val intentConversation = Intent(Intent.ACTION_VIEW, path, mContext, HomeActivity::class.java)
+            .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP)
             .putExtra(ConversationFragment.EXTRA_SHOW_MAP, true)
         val messageNotificationBuilder = NotificationCompat.Builder(mContext, NOTIF_CHANNEL_MESSAGE)
             .setCategory(NotificationCompat.CATEGORY_MESSAGE)

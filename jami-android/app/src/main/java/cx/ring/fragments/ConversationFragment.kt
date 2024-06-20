@@ -445,6 +445,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         if (params.width != mapWidth) {
             params.width = mapWidth
             params.height = mapHeight
+            params.updateMargins(top = resources.getDimensionPixelSize(R.dimen.location_sharing_minmap_margin))
             binding!!.mapCard.layoutParams = params
         }
         if (!isSharing) hideMap()
@@ -455,7 +456,8 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         binding!!.root.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
         val params = binding!!.mapCard.layoutParams as RelativeLayout.LayoutParams
         if (params.width != ViewGroup.LayoutParams.MATCH_PARENT) {
-            params.setMargins(0, 0,0, binding!!.cvMessageInput.height)
+            val margin = resources.getDimensionPixelSize(R.dimen.location_sharing_minmap_margin)
+            params.setMargins(0, 0,0, binding!!.cvMessageInput.height + margin)
             params.width = ViewGroup.LayoutParams.MATCH_PARENT
             params.height = ViewGroup.LayoutParams.MATCH_PARENT
             binding!!.mapCard.layoutParams = params
