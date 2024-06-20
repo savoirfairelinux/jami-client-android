@@ -26,6 +26,167 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "71184c1d_8c8b7aa9",
+        "filename": "jami-android/app/src/main/java/cx/ring/settings/pluginssettings/PluginsListSettingsFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-06-20T10:09:41Z",
+      "side": 1,
+      "message": "Change `plugin` to `extension`?\n\nShould a global find (`plugin`) and, where appropriate, replace (`extension`) be done?\n\nThank you",
+      "range": {
+        "startLine": 164,
+        "startChar": 24,
+        "endLine": 164,
+        "endChar": 30
+      },
+      "revId": "90decbb22ef389ce1d5ab0bdce03614f69b0afa3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe1b9d39_43b0494a",
+        "filename": "jami-android/app/src/main/java/cx/ring/settings/pluginssettings/PluginsListSettingsFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-06-20T10:09:41Z",
+      "side": 1,
+      "message": "Change `Plugins` to `Extensions`?\n\nShould a global find (`Plugins`) and, where appropriate, replace (`Extensions`) be done?\n\nThank you",
+      "range": {
+        "startLine": 165,
+        "startChar": 55,
+        "endLine": 165,
+        "endChar": 62
+      },
+      "revId": "90decbb22ef389ce1d5ab0bdce03614f69b0afa3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "12e33001_154ef005",
+        "filename": "jami-android/app/src/main/java/cx/ring/settings/pluginssettings/PluginsListSettingsFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-06-20T10:09:41Z",
+      "side": 1,
+      "message": "Change `Plugins` to `Extensions`?\n\nShould a global find (`Plugins`) and, where appropriate, replace (`Extensions`) be done?\n\nThank you",
+      "range": {
+        "startLine": 165,
+        "startChar": 33,
+        "endLine": 165,
+        "endChar": 40
+      },
+      "revId": "90decbb22ef389ce1d5ab0bdce03614f69b0afa3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ceadb13_22396660",
+        "filename": "jami-android/app/src/main/java/cx/ring/settings/pluginssettings/PluginsListSettingsFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-06-20T10:09:41Z",
+      "side": 1,
+      "message": "Change `plugin` to `extension`?\n\nShould a global find (`plugin`) and, where appropriate, replace (`extension`) be done?\n\nThank you",
+      "range": {
+        "startLine": 178,
+        "startChar": 52,
+        "endLine": 178,
+        "endChar": 58
+      },
+      "revId": "90decbb22ef389ce1d5ab0bdce03614f69b0afa3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f3289b6_ba96a862",
+        "filename": "jami-android/app/src/main/java/cx/ring/settings/pluginssettings/PluginsListSettingsFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-06-20T10:09:41Z",
+      "side": 1,
+      "message": "Change `Plugin` to `Extension`?\n\nShould a global find (`Plugin`) and, where appropriate, replace (`Extension`) be done?\n\nThank you",
+      "range": {
+        "startLine": 180,
+        "startChar": 89,
+        "endLine": 180,
+        "endChar": 95
+      },
+      "revId": "90decbb22ef389ce1d5ab0bdce03614f69b0afa3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "48f703b0_f3e4e3a7",
+        "filename": "jami-android/app/src/main/java/cx/ring/settings/pluginssettings/PluginsListSettingsFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-06-20T10:09:41Z",
+      "side": 1,
+      "message": "Change `plugin` to `extension`?\n\nShould a global find (`plugin`) and, where appropriate, replace (`extension`) be done?\n\nThank you",
+      "range": {
+        "startLine": 180,
+        "startChar": 46,
+        "endLine": 180,
+        "endChar": 52
+      },
+      "revId": "90decbb22ef389ce1d5ab0bdce03614f69b0afa3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "06f06b71_1136f900",
+        "filename": "jami-android/app/src/main/java/cx/ring/settings/pluginssettings/PluginsListSettingsFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-06-20T10:09:41Z",
+      "side": 1,
+      "message": "Change `Plugins` to `Extensions`?\n\nShould a global find (`Plugins`) and, where appropriate, replace (`Extensions`) be done?\n\nThank you",
+      "range": {
+        "startLine": 198,
+        "startChar": 18,
+        "endLine": 198,
+        "endChar": 25
+      },
+      "revId": "90decbb22ef389ce1d5ab0bdce03614f69b0afa3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e77a8578_3df45618",
         "filename": "jami-android/app/src/main/res/values/strings.xml",
         "patchSetId": 1
@@ -228,6 +389,29 @@
         "startChar": 31,
         "endLine": 388,
         "endChar": 37
+      },
+      "revId": "90decbb22ef389ce1d5ab0bdce03614f69b0afa3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ce455a8f_946cb5f6",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-06-20T10:09:41Z",
+      "side": 1,
+      "message": "Change `left` to `available`?\n\nThank you",
+      "range": {
+        "startLine": 466,
+        "startChar": 27,
+        "endLine": 466,
+        "endChar": 31
       },
       "revId": "90decbb22ef389ce1d5ab0bdce03614f69b0afa3",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
