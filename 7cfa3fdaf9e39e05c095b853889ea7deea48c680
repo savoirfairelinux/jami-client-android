@@ -22,6 +22,30 @@
       },
       "revId": "7cfa3fdaf9e39e05c095b853889ea7deea48c680",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d08bbe2d_fa75a7e0",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-06-20T22:39:12Z",
+      "side": 1,
+      "message": "Pierre Nicolas if you would like to discuss on Jami please advise your Jami ID.\n\nAdrien Béraud, feel free to call 1:1 or the Collaborative Editor swarm.\n\nThank you",
+      "parentUuid": "739e4a79_18596f58",
+      "range": {
+        "startLine": 313,
+        "startChar": 52,
+        "endLine": 313,
+        "endChar": 114
+      },
+      "revId": "7cfa3fdaf9e39e05c095b853889ea7deea48c680",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }

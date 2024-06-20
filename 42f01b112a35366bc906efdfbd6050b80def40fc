@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b32a1dd8_68ddf7e1",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-06-20T22:39:12Z",
+      "side": 1,
+      "message": "What does this refer to:\n\nScenario A\n1. Send an invitation request to a contact\n2. Contact has not yet accepted the request\n3. Is this string now to \"Delete request\"?\n\nScenario B\n1. Send an invitation request to a contact\n2. Contact accepts the request\n3. Is this string now to \"Delete request\"?\n\nIf so, a better string might be:\n`Cancel request`\n`Recall request`\n`Rescind request`\n\n`Rescind request` seems correct; however, common computer usage might mean that `Cancel request` is preferable.\n\nhttps://www.addictivetips.com/web/take-back-a-friend-request-on-facebook/",
+      "range": {
+        "startLine": 420,
+        "startChar": 34,
+        "endLine": 420,
+        "endChar": 48
+      },
+      "revId": "42f01b112a35366bc906efdfbd6050b80def40fc",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
