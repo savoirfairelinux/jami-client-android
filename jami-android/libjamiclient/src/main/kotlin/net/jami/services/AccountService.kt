@@ -681,7 +681,7 @@ class AccountService(
     fun setActiveCodecList(accountId: String, codecs: List<Long>) {
         mExecutor.execute {
             val list = UintVect()
-            list.reserve(codecs.size.toLong())
+            list.reserve(codecs.size)
             list.addAll(codecs)
             JamiService.setActiveCodecList(accountId, list)
             observableAccounts.onNext(getAccount(accountId) ?: return@execute)
