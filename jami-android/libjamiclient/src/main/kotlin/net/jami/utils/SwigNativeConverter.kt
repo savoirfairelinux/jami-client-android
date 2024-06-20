@@ -21,7 +21,7 @@ import java.util.ArrayList
 
 object SwigNativeConverter {
     fun toSwig(creds: List<Map<String, String>>): VectMap =
-        creds.mapTo(VectMap().apply { reserve(creds.size.toLong()) }) {
+        creds.mapTo(VectMap().apply { reserve(creds.size) }) {
             StringMap.toSwig(it)
         }
 

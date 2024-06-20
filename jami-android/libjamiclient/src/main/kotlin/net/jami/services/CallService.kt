@@ -223,7 +223,7 @@ abstract class CallService(
         Single.fromCallable<Call> {
             Log.i(TAG, "placeCall() thread running... $number hasVideo: $hasVideo")
             val media = VectMap()
-            media.reserve(if (hasVideo) 2L else 1L)
+            media.reserve(if (hasVideo) 2 else 1)
             media.add(Media.DEFAULT_AUDIO.toMap())
             if (hasVideo)
                 media.add(Media.DEFAULT_VIDEO.toMap())
@@ -248,7 +248,7 @@ abstract class CallService(
             Log.i(TAG, "accept() running... $callId")
             val call = calls[callId] ?: return@execute
             val mediaList = call.mediaList
-            val vectMapMedia = mediaList.mapTo(VectMap().apply { reserve(mediaList.size.toLong()) }) { media ->
+            val vectMapMedia = mediaList.mapTo(VectMap().apply { reserve(mediaList.size) }) { media ->
                 if (!hasVideo && media.mediaType == Media.MediaType.MEDIA_TYPE_VIDEO)
                     media.copy(isMuted = true).toMap()
                 else
@@ -619,7 +619,7 @@ abstract class CallService(
                 call.account,
                 call.daemonIdString,
                 proposedMediaList.mapTo(VectMap().apply {
-                    reserve(proposedMediaList.size.toLong())
+                    reserve(proposedMediaList.size)
                 }) { it.toMap() }
             )
         }
