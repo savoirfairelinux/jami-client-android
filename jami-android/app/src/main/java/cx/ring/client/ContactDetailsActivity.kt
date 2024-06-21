@@ -153,9 +153,7 @@ class ContactDetailsActivity : AppCompatActivity(), TabLayout.OnTabSelectedListe
         }
         JamiApplication.instance?.startDaemon(this)
         val conversation = try {
-            mConversationFacade
-                .startConversation(path!!.accountId, path!!.conversationUri)
-                .blockingGet()
+            mConversationFacade.startConversation(path!!.accountId, path!!.conversationUri).blockingGet()
         } catch (e: Throwable) {
             finish()
             return
@@ -186,7 +184,7 @@ class ContactDetailsActivity : AppCompatActivity(), TabLayout.OnTabSelectedListe
                     binding.title.setOnClickListener(null)
                     binding.description.setOnClickListener(null)
                     binding.contactImage.setOnClickListener(null)
-                    binding.tabLayout.removeTabAt(TAB_MEMBER)
+                    //binding.tabLayout.removeTabAt(TAB_MEMBER)
                 } else {
                     binding.addMember.isVisible = true
                     binding.description.isVisible = true
@@ -231,11 +229,9 @@ class ContactDetailsActivity : AppCompatActivity(), TabLayout.OnTabSelectedListe
         binding.pager.adapter = mPagerAdapter
 
         // Update color on RX color signal.
-        mDisposableBag.add(
-            conversation
-                .getColor()
-                .observeOn(DeviceUtils.uiScheduler)
-                .subscribe { setColor(getConversationColor(this, it)) }
+        mDisposableBag.add(conversation.getColor()
+            .observeOn(DeviceUtils.uiScheduler)
+            .subscribe { setColor(getConversationColor(this, it)) }
         )
 
         binding.pager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
@@ -250,7 +246,7 @@ class ContactDetailsActivity : AppCompatActivity(), TabLayout.OnTabSelectedListe
      * Set the color of the activity (appBar and addMember button).
      */
     override fun setColor(color: Int) {
-        binding?.appBar?.backgroundTintList = ColorStateList.valueOf(color)
+        //binding?.appBar?.backgroundTintList = ColorStateList.valueOf(color)
         binding?.addMember?.backgroundTintList = ColorStateList.valueOf(color)
     }
 
@@ -444,9 +440,9 @@ class ContactDetailsActivity : AppCompatActivity(), TabLayout.OnTabSelectedListe
 
     companion object {
         private val TAG = ContactDetailsActivity::class.simpleName!!
-        const val TAB_ABOUT = 0
-        const val TAB_MEMBER = 1
-        const val TAB_DOCUMENT = 2
+//        const val TAB_ABOUT = 0
+//        const val TAB_MEMBER = 1
+//        const val TAB_DOCUMENT = 2
         const val REQUEST_CODE_CALL = 3
         const val REQUEST_PERMISSION_READ_STORAGE = 114
     }

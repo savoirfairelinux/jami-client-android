@@ -12,10 +12,9 @@
         style="@style/Widget.Material3.AppBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:liftOnScroll="true"
-        app:liftOnScrollTargetViewId="@id/list"
-        android:fitsSystemWindows="true"
-        android:backgroundTint="@color/colorPrimary">
+        app:liftOnScroll="false"
+        android:fitsSystemWindows="true">
+        <!--android:backgroundTint="@color/colorPrimary" -->
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -59,6 +58,7 @@
                 android:textColor="@color/white"
                 android:textSize="15sp" />
 
+
             <TextView
                 android:id="@+id/description"
                 android:layout_width="wrap_content"
@@ -71,16 +71,76 @@
                 android:visibility="gone"
                 android:text="@string/swarm_description"/>
 
+            <LinearLayout
+                android:id="@+id/btn_panel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/title"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/background_rounded_16"
+                    android:backgroundTint="@color/background_secondary"
+                    android:padding="8dp"
+                    android:src="@drawable/outline_call_24"
+                    app:tint="@color/icon_tint" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/background_rounded_16"
+                    android:backgroundTint="@color/background_secondary"
+                    android:padding="8dp"
+                    android:src="@drawable/outline_videocam_24"
+                    app:tint="@color/icon_tint" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/background_rounded_16"
+                    android:backgroundTint="@color/background_secondary"
+                    android:padding="8dp"
+                    android:src="@drawable/outline_person_add_24"
+                    app:tint="@color/icon_tint" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
+            <!--
+            app:tabIndicatorColor="@color/white"
+            app:tabSelectedTextColor="@color/white"
+            app:tabTextColor="#80FFFFFF" -->
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tab_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:tabIndicatorColor="@color/white"
-                app:tabSelectedTextColor="@color/white"
-                app:tabTextColor="#80FFFFFF"
+
+
                 android:background="@null"
                 android:layout_marginTop="20dp"
-                android:layout_below="@id/description">
+                android:layout_below="@id/btn_panel">
 
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"

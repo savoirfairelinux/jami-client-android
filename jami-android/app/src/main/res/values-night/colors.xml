@@ -2,6 +2,8 @@
 <resources>
     <color name="background">#202020</color>
     <color name="background_primary">#515151</color>
+    <color name="background_secondary">#303030</color>
+    <color name="icon_tint">#FFF</color>
     <color name="surface">@color/grey_700</color>
 
     <color name="colorPrimary">@color/white</color>

@@ -2,6 +2,8 @@
 <resources>
     <color name="background">@color/grey_25</color>
     <color name="background_primary">#FFF</color>
+    <color name="background_secondary">#F0F0F0</color>
+    <color name="icon_tint">#000</color>
     <color name="surface">@color/grey_150</color>
 
     <color name="colorPrimary">@color/color_primary_dark</color>
