@@ -48,6 +48,7 @@ import net.jami.model.Settings
 import net.jami.mvp.GenericView
 import net.jami.settings.SettingsPresenter
 import net.jami.settings.SettingsViewModel
+import net.jami.utils.DonationUtils
 import net.jami.utils.DonationUtils.endDonationTimeMillis
 import net.jami.utils.DonationUtils.startDonationTimeMillis
 
@@ -74,7 +75,7 @@ class SettingsFragment :
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         FragSettingsBinding.inflate(inflater, container, false).apply {
 
-            if (System.currentTimeMillis() in startDonationTimeMillis until endDonationTimeMillis) {
+            if (DonationUtils.isDonationPeriod()) {
                 donateButton.visibility= View.VISIBLE
                 settingsDonateLayout.visibility = View.VISIBLE
                 donateButton.setOnClickListener {
@@ -198,7 +199,7 @@ class SettingsFragment :
         childFragmentManager.popBackStackImmediate()
         if (childFragmentManager.backStackEntryCount == 0) {
             val binding = binding ?: return
-            binding.donateButton.isVisible = true
+            binding.donateButton.isVisible = DonationUtils.isDonationPeriod()
             onAppBarScrollTargetViewChanged(binding.scrollview)
             onToolbarTitleChanged(getString(R.string.menu_item_advanced_settings))
             backPressedCallback.isEnabled = false
