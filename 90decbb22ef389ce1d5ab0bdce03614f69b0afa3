@@ -210,6 +210,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7c7aec59_daeb1c27",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-06-23T09:43:33Z",
+      "side": 1,
+      "message": "Convert to sentence case, i.e. change `C` to `c`? Thank you",
+      "range": {
+        "startLine": 266,
+        "startChar": 46,
+        "endLine": 266,
+        "endChar": 47
+      },
+      "revId": "90decbb22ef389ce1d5ab0bdce03614f69b0afa3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e77a8578_3df45618",
         "filename": "jami-android/app/src/main/res/values/strings.xml",
         "patchSetId": 1
@@ -419,6 +442,52 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "547e9e6b_0b879347",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-06-23T09:43:33Z",
+      "side": 1,
+      "message": "Add a space ` `? Thank you",
+      "range": {
+        "startLine": 447,
+        "startChar": 7,
+        "endLine": 447,
+        "endChar": 9
+      },
+      "revId": "90decbb22ef389ce1d5ab0bdce03614f69b0afa3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d1df3995_2679d084",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-06-23T09:43:33Z",
+      "side": 1,
+      "message": "Add a space ` `? Thank you",
+      "range": {
+        "startLine": 447,
+        "startChar": 20,
+        "endLine": 447,
+        "endChar": 22
+      },
+      "revId": "90decbb22ef389ce1d5ab0bdce03614f69b0afa3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ce455a8f_946cb5f6",
         "filename": "jami-android/app/src/main/res/values/strings.xml",
         "patchSetId": 1
@@ -435,6 +504,98 @@
         "startChar": 27,
         "endLine": 466,
         "endChar": 31
+      },
+      "revId": "90decbb22ef389ce1d5ab0bdce03614f69b0afa3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "27b60bd3_8c15926e",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-06-23T09:43:33Z",
+      "side": 1,
+      "message": "Once 1 space, i.e. remove space ` `? Thank you",
+      "range": {
+        "startLine": 577,
+        "startChar": 9,
+        "endLine": 577,
+        "endChar": 10
+      },
+      "revId": "90decbb22ef389ce1d5ab0bdce03614f69b0afa3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d18e9d6d_a22b05c8",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-06-23T09:43:33Z",
+      "side": 1,
+      "message": "Once 1 space, i.e. remove space ` `? Thank you",
+      "range": {
+        "startLine": 577,
+        "startChar": 21,
+        "endLine": 577,
+        "endChar": 22
+      },
+      "revId": "90decbb22ef389ce1d5ab0bdce03614f69b0afa3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aada9d4c_a3d0b47e",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-06-23T09:43:33Z",
+      "side": 1,
+      "message": "Once 1 space, i.e. remove space ` `? Thank you",
+      "range": {
+        "startLine": 589,
+        "startChar": 8,
+        "endLine": 589,
+        "endChar": 9
+      },
+      "revId": "90decbb22ef389ce1d5ab0bdce03614f69b0afa3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e8b2291e_bbd594f1",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-06-23T09:43:33Z",
+      "side": 1,
+      "message": "Once 1 space, i.e. remove space ` `? Thank you",
+      "range": {
+        "startLine": 589,
+        "startChar": 20,
+        "endLine": 589,
+        "endChar": 21
       },
       "revId": "90decbb22ef389ce1d5ab0bdce03614f69b0afa3",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
