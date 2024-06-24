@@ -43,7 +43,6 @@
   <!--Dialing Fragment-->
   <string name="dial_number">Marcar um número</string>
   <!--History Fragment-->
-  <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <string name="invitation_card_title">Convites recebidos</string>
   <plurals name="home_conferences_title">
@@ -186,7 +185,6 @@
   <string name="conversation_action_select_peer_number">Selecione um número</string>
   <string name="conversation_action_block_this">Bloquear contacto</string>
   <string name="conversation_action_unblock_this">Desbloquear contacto</string>
-  <string name="conversation_action_go_to_call">Voltar à chamada a decorrer</string>
   <string name="conversation_action_incoming_call">Chamada recebida</string>
   <string name="conversation_action_latest">Ir para a última</string>
   <string name="conversation_open_file_error">Não existe nenhuma aplicação instalada capaz de abrir este tipo de ficheiro.</string>

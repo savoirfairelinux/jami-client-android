@@ -18,7 +18,6 @@ along with this program; if not, write to the Free Software
 <resources>
     <string name="call_error_no_microphone">কল বাতিল করা হয়েছে। কোন মাইক্রোফোন সনাক্ত করা যায়নি.</string>
     <string name="call_error_no_camera_no_microphone">কল বাতিল করা হয়েছে। কোন ক্যামেরা বা মাইক্রোফোন সনাক্ত করা যায়নি.</string>
-
     <!-- SipCalls -->
     <string name="call_human_state_searching">অনুসন্ধান</string>
     <string name="call_human_state_incoming">আসছে</string>

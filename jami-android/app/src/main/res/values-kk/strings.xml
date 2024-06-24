@@ -42,7 +42,6 @@
   <!--Dialing Fragment-->
   <string name="dial_number">Номерді таңдаңыз</string>
   <!--History Fragment-->
-  <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="one">%d Әңгіме</item>
@@ -176,7 +175,6 @@
   <string name="conversation_action_select_peer_number">Санды таңдау</string>
   <string name="conversation_action_block_this">Блок контакт</string>
   <string name="conversation_action_unblock_this">Байланысты бұғаттау</string>
-  <string name="conversation_action_go_to_call">Ағымдағы шақыруға қайта келу</string>
   <string name="conversation_action_incoming_call">Келесі шақыру</string>
   <string name="conversation_action_latest">Соңғыға секіру</string>
   <string name="conversation_open_file_error">Бұл файл түрін ашуға қабілетті орнатылған қолданба жоқ.</string>

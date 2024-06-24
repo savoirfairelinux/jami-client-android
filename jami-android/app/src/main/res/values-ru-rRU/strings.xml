@@ -43,7 +43,6 @@
   <!--Dialing Fragment-->
   <string name="dial_number">Набрать номер</string>
   <!--History Fragment-->
-  <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <string name="invitation_card_title">Приглашения получены</string>
   <plurals name="home_conferences_title">
@@ -186,7 +185,6 @@
   <string name="conversation_action_select_peer_number">Выберите номер</string>
   <string name="conversation_action_block_this">Заблокировать контакт</string>
   <string name="conversation_action_unblock_this">Разблокировать контакт</string>
-  <string name="conversation_action_go_to_call">Вернуться к текущему вызову</string>
   <string name="conversation_action_incoming_call">Входящий вызов</string>
   <string name="conversation_action_latest">Прокрутить до конца беседы</string>
   <string name="conversation_open_file_error">Нет приложение. которое способно открыть файл с таким типом. </string>

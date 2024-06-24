@@ -42,7 +42,6 @@
   <!--Dialing Fragment-->
   <string name="dial_number">Pozovi broj</string>
   <!--History Fragment-->
-  <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="one">%d razgovor</item>
@@ -177,7 +176,6 @@
   <string name="conversation_action_select_peer_number">Odaberite broj</string>
   <string name="conversation_action_block_this">Blokiraj kontakt</string>
   <string name="conversation_action_unblock_this">Otključaj kontakt</string>
-  <string name="conversation_action_go_to_call">Vrati se na poziv u tijeku</string>
   <string name="conversation_action_incoming_call">Dolazni poziv</string>
   <string name="conversation_action_latest">Pomicanje na kraj razgovora</string>
   <string name="conversation_open_file_error">Ne postoji instalirana aplikacija koja može otvoriti ovaj tip datoteke.</string>

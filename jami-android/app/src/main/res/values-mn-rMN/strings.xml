@@ -42,7 +42,6 @@
   <!--Dialing Fragment-->
   <string name="dial_number">Үргэлж</string>
   <!--History Fragment-->
-  <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="one">%d яриа</item>
@@ -176,7 +175,6 @@
   <string name="conversation_action_select_peer_number">Үргэлж</string>
   <string name="conversation_action_block_this">Блок-тай холбоо тогтоох</string>
   <string name="conversation_action_unblock_this">Байлгын сүлжээг буулгах</string>
-  <string name="conversation_action_go_to_call">Урьдчилсан дуудлагад буцах</string>
   <string name="conversation_action_incoming_call">Цаашид ирсэн дуудлага</string>
   <string name="conversation_action_latest">Хамгийн сүүлийн үеийн</string>
   <string name="conversation_open_file_error">Энэ файлын хэлбэрийг нээж чадах орчин суурилсан хэрэгсэл байхгүй.</string>

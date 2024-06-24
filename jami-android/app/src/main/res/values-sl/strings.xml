@@ -43,7 +43,6 @@
   <!--Dialing Fragment-->
   <string name="dial_number">Kliči številko</string>
   <!--History Fragment-->
-  <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <string name="invitation_card_title">Prejetih povabil</string>
   <plurals name="home_conferences_title">
@@ -186,7 +185,6 @@
   <string name="conversation_action_select_peer_number">Izberi številko</string>
   <string name="conversation_action_block_this">Blokiraj stik</string>
   <string name="conversation_action_unblock_this">Odblokiraj stik</string>
-  <string name="conversation_action_go_to_call">Vrnitev na aktivni klic</string>
   <string name="conversation_action_incoming_call">Dohodni klic</string>
   <string name="conversation_action_latest">Premaknite se na konec pogovora</string>
   <string name="conversation_open_file_error">Ni nameščene aplikacije za odpiranje te vrste datotek.</string>

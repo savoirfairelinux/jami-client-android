@@ -20,7 +20,6 @@ along with this program; if not, write to the Free Software
     <string name="call_error">Ocurrió un error al iniciar la llamada.</string>
     <string name="call_error_no_microphone">Llamada cancelada. No hay micrófono detectado.</string>
     <string name="call_error_no_camera_no_microphone">Llamada cancelada. No hay cámara o micrófono detectado.</string>
-
     <!-- SipCalls -->
     <string name="call_human_state_searching">Buscando</string>
     <string name="call_human_state_incoming">Entrante</string>

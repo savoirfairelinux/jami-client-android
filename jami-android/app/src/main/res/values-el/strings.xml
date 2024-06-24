@@ -42,7 +42,6 @@
   <!--Dialing Fragment-->
   <string name="dial_number">Κλήση αριθμού</string>
   <!--History Fragment-->
-  <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="one">%dΣυνομιλία</item>
@@ -177,7 +176,6 @@
   <string name="conversation_action_select_peer_number">Επιλέξτε αριθμό </string>
   <string name="conversation_action_block_this">Μπλοκάρισμα επαφής</string>
   <string name="conversation_action_unblock_this">Ανοίξτε την επαφή</string>
-  <string name="conversation_action_go_to_call">Επιστροφή στην κλήση σε εξέλιξη</string>
   <string name="conversation_action_incoming_call">Εισερχόμενη κλήση</string>
   <string name="conversation_action_latest">Κύλιση στο τέλος της συνομιλίας</string>
   <string name="conversation_open_file_error">Δεν υπάρχει εγκατεστημένη εφαρμογή για το άνοιγμα αυτού του τύπου αρχείου</string>

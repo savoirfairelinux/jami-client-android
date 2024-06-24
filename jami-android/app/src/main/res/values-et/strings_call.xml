@@ -20,7 +20,6 @@ along with this program; if not, write to the Free Software
     <string name="call_error">Kõne alustamisel tekkis viga.</string>
     <string name="call_error_no_microphone">Kõne tühistati. Mikrofoni ei tuvastatud.</string>
     <string name="call_error_no_camera_no_microphone">Kõne tühistati. Kaamerat ega mikrofoni ei tuvastatud.</string>
-
     <!-- SipCalls -->
     <string name="call_human_state_searching">Otsime</string>
     <string name="call_human_state_incoming">Saabuv kõne</string>

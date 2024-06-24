@@ -43,7 +43,6 @@
   <!--Dialing Fragment-->
   <string name="dial_number">Nummer wählen</string>
   <!--History Fragment-->
-  <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <string name="invitation_card_title">Einladungen erhalten</string>
   <plurals name="home_conferences_title">
@@ -185,7 +184,6 @@
   <string name="conversation_action_select_peer_number">Eine Nummer auswählen</string>
   <string name="conversation_action_block_this">Kontakt blockieren</string>
   <string name="conversation_action_unblock_this">Blockierung des Kontakts aufheben</string>
-  <string name="conversation_action_go_to_call">Zurück zum laufenden Anruf</string>
   <string name="conversation_action_incoming_call">Eingehender Anruf</string>
   <string name="conversation_action_latest">Zum Ende der Unterhaltung scrollen</string>
   <string name="conversation_open_file_error">Es gibt keine installierte App, die diesen Dateityp öffnen kann.</string>

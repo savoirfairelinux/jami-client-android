@@ -18,7 +18,6 @@ along with this program; if not, write to the Free Software
 <resources>
     <string name="call_error_no_microphone">Voko nuligita. Neniu mikrofono detektita.</string>
     <string name="call_error_no_camera_no_microphone">Voko nuligita. Neniu fotilo aŭ mikrofono detektita.</string>
-
     <!-- SipCalls -->
     <string name="call_human_state_searching">Serĉado</string>
     <string name="call_human_state_incoming">Envenanta</string>

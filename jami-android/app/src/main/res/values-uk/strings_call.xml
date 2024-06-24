@@ -18,7 +18,6 @@ along with this program; if not, write to the Free Software
 <resources>
     <string name="call_error_no_microphone">Дзвінок закінчено. Мікрофон не знайдено.</string>
     <string name="call_error_no_camera_no_microphone">Дзвінок закінчено. Камеру або мікрофон не знайдено.</string>
-
     <!-- SipCalls -->
     <string name="call_human_state_searching">Шукаю</string>
     <string name="call_human_state_incoming">Викликає</string>

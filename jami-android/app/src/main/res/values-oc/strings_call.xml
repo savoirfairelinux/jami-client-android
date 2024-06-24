@@ -18,7 +18,6 @@ along with this program; if not, write to the Free Software
 <resources>
     <string name="call_error_no_microphone">L\'intervencion anulada.</string>
     <string name="call_error_no_camera_no_microphone">L\'intervencion es annulada, pas cap de camèra ni microfòn detectats.</string>
-
     <!-- SipCalls -->
     <string name="call_human_state_searching">Recèrca</string>
     <string name="call_human_state_incoming">En arribant</string>

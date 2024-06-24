@@ -18,7 +18,6 @@ along with this program; if not, write to the Free Software
 <resources>
     <string name="call_error_no_microphone">通話が取り消されました。マイクが見つかりません。</string>
     <string name="call_error_no_camera_no_microphone">通話が取り消されました。カメラかマイクが見つかりません。</string>
-
     <!-- SipCalls -->
     <string name="call_human_state_searching">検索中</string>
     <string name="call_human_state_incoming">着信</string>

@@ -18,7 +18,6 @@ along with this program; if not, write to the Free Software
 <resources>
     <string name="call_error_no_microphone">La llamada foi cancelada, nun se detectó micrófono.</string>
     <string name="call_error_no_camera_no_microphone">La llamada foi cancelada, nin cámara nin micrófono detectáu.</string>
-
     <!-- SipCalls -->
     <string name="call_human_state_searching">La busca</string>
     <string name="call_human_state_incoming">La entrada</string>

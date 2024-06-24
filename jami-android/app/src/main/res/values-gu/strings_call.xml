@@ -18,7 +18,6 @@ along with this program; if not, write to the Free Software
 <resources>
     <string name="call_error_no_microphone">કૉલ રદ કર્યો. કોઈ માઇક્રોફોન મળ્યો નથી.</string>
     <string name="call_error_no_camera_no_microphone">કૉલ રદ કર્યો. કોઈ કેમેરા કે માઇક્રોફોન મળ્યા નથી.</string>
-
     <!-- SipCalls -->
     <string name="call_human_state_searching">શોધ</string>
     <string name="call_human_state_incoming">આવનારી</string>

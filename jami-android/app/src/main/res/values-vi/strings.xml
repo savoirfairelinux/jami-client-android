@@ -43,7 +43,6 @@
   <!--Dialing Fragment-->
   <string name="dial_number">Đặt một số</string>
   <!--History Fragment-->
-  <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <string name="invitation_card_title">Lời mời nhận được</string>
   <plurals name="home_conferences_title">

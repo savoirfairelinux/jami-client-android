@@ -43,7 +43,6 @@
   <!--Dialing Fragment-->
   <string name="dial_number">Helista numbrile</string>
   <!--History Fragment-->
-  <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <string name="invitation_card_title">Sulle on kutseid</string>
   <plurals name="home_conferences_title">
@@ -184,7 +183,6 @@
   <string name="conversation_action_select_peer_number">Vali number</string>
   <string name="conversation_action_block_this">Blokeeri kontakt</string>
   <string name="conversation_action_unblock_this">Eemalda kontakti blokeering</string>
-  <string name="conversation_action_go_to_call">Tagasi poolelioleva kõne juurde</string>
   <string name="conversation_action_incoming_call">Sissetulev kõne</string>
   <string name="conversation_action_latest">Hüppa viimase kirje juurde</string>
   <string name="conversation_open_file_error">Seda faili tüüpi avamiseks ei ole sa paigaldanud sobivat rakendust.</string>

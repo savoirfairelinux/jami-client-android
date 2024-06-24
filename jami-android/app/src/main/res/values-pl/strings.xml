@@ -42,7 +42,6 @@
   <!--Dialing Fragment-->
   <string name="dial_number">Wykręć numer</string>
   <!--History Fragment-->
-  <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <string name="invitation_card_title">Otrzymano zaproszenia</string>
   <plurals name="home_conferences_title">
@@ -184,7 +183,6 @@
   <string name="conversation_action_select_peer_number">Wybierz numer</string>
   <string name="conversation_action_block_this">Blokuj kontakt</string>
   <string name="conversation_action_unblock_this">Odblokuj kontakt</string>
-  <string name="conversation_action_go_to_call">Powróć do trwającej rozmowy</string>
   <string name="conversation_action_incoming_call">Połączenie przychodzące</string>
   <string name="conversation_action_latest">Przewiń do końca konwersacji</string>
   <string name="conversation_open_file_error">Nie ma zainstalowanej aplikacji zdolnej otworzyć ten plik.</string>

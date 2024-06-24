@@ -42,7 +42,6 @@
   <!--Dialing Fragment-->
   <string name="dial_number">ಒಂದು ಸಂಖ್ಯೆಯನ್ನು ಡಯಲ್ ಮಾಡಿ</string>
   <!--History Fragment-->
-  <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="one">%d ಸಂಭಾಷಣೆ</item>
@@ -176,7 +175,6 @@
   <string name="conversation_action_select_peer_number">ಒಂದು ಸಂಖ್ಯೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ</string>
   <string name="conversation_action_block_this">ಬ್ಲಾಕ್ ಸಂಪರ್ಕ</string>
   <string name="conversation_action_unblock_this">ಸಂಪರ್ಕವನ್ನು ನಿರ್ಬಂಧಿಸಲು</string>
-  <string name="conversation_action_go_to_call">ನಡೆಯುತ್ತಿರುವ ಕರೆಗೆ ಹಿಂತಿರುಗಿ</string>
   <string name="conversation_action_incoming_call">ಒಳಬರುವ ಕರೆ</string>
   <string name="conversation_action_latest">ಸಂಭಾಷಣೆಯ ಕೊನೆಯ ಭಾಗಕ್ಕೆ ಸ್ಕ್ರಾಲ್ ಮಾಡಿ</string>
   <string name="conversation_open_file_error">ಈ ಫೈಲ್ ಪ್ರಕಾರವನ್ನು ತೆರೆಯಲು ಯಾವುದೇ ಸ್ಥಾಪಿತ ಅಪ್ಲಿಕೇಶನ್ ಇಲ್ಲ.</string>

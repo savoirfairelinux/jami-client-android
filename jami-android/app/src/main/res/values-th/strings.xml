@@ -42,7 +42,6 @@
   <!--Dialing Fragment-->
   <string name="dial_number">หมุนหมายเลข</string>
   <!--History Fragment-->
-  <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="other">%dบทสนทนา</item>
@@ -175,7 +174,6 @@
   <string name="conversation_action_select_peer_number">เลือกหมายเลข</string>
   <string name="conversation_action_block_this">บล็อคการติดต่อ</string>
   <string name="conversation_action_unblock_this">กดติดต่อ</string>
-  <string name="conversation_action_go_to_call">กลับไปที่สายที่สนทนาอยู่</string>
   <string name="conversation_action_incoming_call">สายเรียกเข้า</string>
   <string name="conversation_action_latest">เลื่อนไปยังจุดสิ้นสุดของการสนทนา</string>
   <string name="conversation_open_file_error">ไม่มีโปรแกรมติดตั้งที่สามารถเปิดไฟล์ประเภทนี้ได้</string>

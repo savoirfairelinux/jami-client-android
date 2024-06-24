@@ -42,7 +42,6 @@
   <!--Dialing Fragment-->
   <string name="dial_number">ఒక సంఖ్యను డయల్ చేయండి</string>
   <!--History Fragment-->
-  <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="one">%d సంభాషణ</item>
@@ -176,7 +175,6 @@
   <string name="conversation_action_select_peer_number">ఒక సంఖ్యను ఎంచుకోండి</string>
   <string name="conversation_action_block_this">బ్లాక్ కాంటాక్ట్</string>
   <string name="conversation_action_unblock_this">పరిచయాలను అన్బ్లాక్ చేయండి</string>
-  <string name="conversation_action_go_to_call">కొనసాగుతున్న కాల్కు తిరిగి రావాలి</string>
   <string name="conversation_action_incoming_call">ఇన్కమింగ్ కాల్</string>
   <string name="conversation_action_latest">సంభాషణ ముగింపులోకి స్క్రోల్ చేయండి</string>
   <string name="conversation_open_file_error">ఈ ఫైల్ రకాన్ని తెరవగల వ్యవస్థాపించిన అప్లికేషన్ లేదు.</string>

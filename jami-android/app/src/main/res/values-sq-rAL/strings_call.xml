@@ -20,7 +20,6 @@ along with this program; if not, write to the Free Software
     <string name="call_error">Ndodhi një gabim teksa fillohej thirrja</string>
     <string name="call_error_no_microphone">Thirrja u anulua. S\’u pikas mikrofon.</string>
     <string name="call_error_no_camera_no_microphone">Thirrja u anulua. S\’u pikas kamerë ose mikrofon.</string>
-
     <!-- SipCalls -->
     <string name="call_human_state_searching">Po kërkohet</string>
     <string name="call_human_state_incoming">Ardhëse</string>

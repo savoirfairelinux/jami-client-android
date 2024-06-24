@@ -18,7 +18,6 @@ along with this program; if not, write to the Free Software
 <resources>
     <string name="call_error_no_microphone">通话已取消。未检测到麦克风。</string>
     <string name="call_error_no_camera_no_microphone">通话已取消。未检测到摄像头或麦克风。</string>
-
     <!-- SipCalls -->
     <string name="call_human_state_searching">搜尋</string>
     <string name="call_human_state_incoming">來電</string>

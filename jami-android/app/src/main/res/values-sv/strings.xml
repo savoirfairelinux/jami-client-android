@@ -42,7 +42,6 @@
   <!--Dialing Fragment-->
   <string name="dial_number">Slå ett nummer</string>
   <!--History Fragment-->
-  <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="one">%d konversation</item>
@@ -176,7 +175,6 @@
   <string name="conversation_action_select_peer_number">Välj ett nummer</string>
   <string name="conversation_action_block_this">Blockera kontakt</string>
   <string name="conversation_action_unblock_this">Avblockera kontakt</string>
-  <string name="conversation_action_go_to_call">Återgå till pågående samtal</string>
   <string name="conversation_action_incoming_call">Inkommande samtal</string>
   <string name="conversation_action_latest">Rulla till slutet av konversationen</string>
   <string name="conversation_open_file_error">Det finns inget installerat program som kan öppna den här filtypen.</string>

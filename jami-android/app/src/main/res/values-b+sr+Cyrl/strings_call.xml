@@ -20,7 +20,6 @@ along with this program; if not, write to the Free Software
     <string name="call_error">Došlo je do greške pri pokretanju poziva.</string>
     <string name="call_error_no_microphone">Позив је отказан. Није откривен микрофон.</string>
     <string name="call_error_no_camera_no_microphone">Позив је отказан. Није откривена камера или микрофон.</string>
-
     <!-- SipCalls -->
     <string name="call_human_state_searching">Претрага</string>
     <string name="call_human_state_incoming">Долазни</string>

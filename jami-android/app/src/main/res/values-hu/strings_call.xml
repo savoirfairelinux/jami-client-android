@@ -20,7 +20,6 @@ along with this program; if not, write to the Free Software
     <string name="call_error">Hiba történt a hívás indításakor.</string>
     <string name="call_error_no_microphone">Hívás megszakítva. Nem található mikrofon.</string>
     <string name="call_error_no_camera_no_microphone">Hívás megszakítva. Nem található fényképezőgép vagy mikrofon.</string>
-
     <!-- SipCalls -->
     <string name="call_human_state_searching">Keresés</string>
     <string name="call_human_state_incoming">Bejövő</string>

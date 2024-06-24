@@ -42,7 +42,6 @@
   <!--Dialing Fragment-->
   <string name="dial_number">નંબર ડાયલ કરો</string>
   <!--History Fragment-->
-  <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="one">%d વાતચીત</item>
@@ -176,7 +175,6 @@
   <string name="conversation_action_select_peer_number">એક નંબર પસંદ કરો</string>
   <string name="conversation_action_block_this">બ્લોક સંપર્ક</string>
   <string name="conversation_action_unblock_this">સંપર્કને અનબ્લોક કરો</string>
-  <string name="conversation_action_go_to_call">ચાલુ કૉલ પર પાછા</string>
   <string name="conversation_action_incoming_call">આવનારી કૉલ</string>
   <string name="conversation_action_latest">વાતચીતના અંત સુધી સ્ક્રોલ કરો</string>
   <string name="conversation_open_file_error">આ ફાઇલ પ્રકારને ખોલવા માટે સક્ષમ કોઈ ઇન્સ્ટોલ કરેલ એપ્લિકેશન નથી.</string>

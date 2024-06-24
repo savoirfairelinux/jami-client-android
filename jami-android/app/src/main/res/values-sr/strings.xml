@@ -43,7 +43,6 @@
   <!--Dialing Fragment-->
   <string name="dial_number">Birajte broj</string>
   <!--History Fragment-->
-  <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <string name="invitation_card_title">Pozivnice primljene</string>
   <plurals name="home_conferences_title">
@@ -185,7 +184,6 @@
   <string name="conversation_action_select_peer_number">Izaberi broj</string>
   <string name="conversation_action_block_this">Blokiraj kontakt</string>
   <string name="conversation_action_unblock_this">Odblokiraj kontakt</string>
-  <string name="conversation_action_go_to_call">Vrati se na tekući poziv</string>
   <string name="conversation_action_incoming_call">Dolazni poziv</string>
   <string name="conversation_action_latest">Idi na najnovije</string>
   <string name="conversation_open_file_error">Ne postoji instalirana aplikacija koja može da otvori ovu vrstu datoteke.</string>

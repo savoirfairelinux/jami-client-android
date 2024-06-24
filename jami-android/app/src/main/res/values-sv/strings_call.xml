@@ -18,7 +18,6 @@ along with this program; if not, write to the Free Software
 <resources>
     <string name="call_error_no_microphone">Samtalet avbrutet. Ingen mikrofon hittades.</string>
     <string name="call_error_no_camera_no_microphone">Samtalet avbröts. Ingen kamera eller mikrofon hittades.</string>
-
     <!-- SipCalls -->
     <string name="call_human_state_searching">Söker</string>
     <string name="call_human_state_incoming">Inkommande</string>

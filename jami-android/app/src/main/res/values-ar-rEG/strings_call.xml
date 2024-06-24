@@ -18,7 +18,6 @@ along with this program; if not, write to the Free Software
 <resources>
     <string name="call_error_no_microphone">تم إلغاء المكالمة. لم يتم العثور على مايكروفون.</string>
     <string name="call_error_no_camera_no_microphone">تم إلغاء المكالمة. ﻻ يوجد ميكروفون أو كاميرا</string>
-
     <!-- SipCalls -->
     <string name="call_human_state_searching">يتم البحث</string>
     <string name="call_human_state_incoming">الوارد</string>

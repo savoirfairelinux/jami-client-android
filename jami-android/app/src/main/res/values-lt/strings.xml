@@ -42,7 +42,6 @@
   <!--Dialing Fragment-->
   <string name="dial_number">Rinkti numerį</string>
   <!--History Fragment-->
-  <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="one">%d pokalbis</item>
@@ -178,7 +177,6 @@
   <string name="conversation_action_select_peer_number">Pasirinkite numerį</string>
   <string name="conversation_action_block_this">Užblokuoti adresatą</string>
   <string name="conversation_action_unblock_this">Atblokuoti adresatą</string>
-  <string name="conversation_action_go_to_call">Grįžti prie nuolatinio skambučio</string>
   <string name="conversation_action_incoming_call">Gaunamasis skambutis</string>
   <string name="conversation_action_latest">Slinkite į pokalbio pabaigą</string>
   <string name="conversation_open_file_error">Nėra įdiegtos programos, kuri galėtų atverti šį failo tipą.</string>

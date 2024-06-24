@@ -42,7 +42,6 @@
   <!--Dialing Fragment-->
   <string name="dial_number">Նշեք մի թիվ</string>
   <!--History Fragment-->
-  <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="one">%d Խոսք</item>
@@ -176,7 +175,6 @@
   <string name="conversation_action_select_peer_number">Ընտրեք մի թիվ</string>
   <string name="conversation_action_block_this">Բլոկային շփումը</string>
   <string name="conversation_action_unblock_this">Բաց թողնել շփումը</string>
-  <string name="conversation_action_go_to_call">Վերադարձ դեպի Շարունակվող զանգը</string>
   <string name="conversation_action_incoming_call">Հեռախոսազանգ</string>
   <string name="conversation_action_latest">Հագնացիր վերջին</string>
   <string name="conversation_open_file_error">Այս ֆայլերի տեսակը բացելու համար տեղադրված ծրագիր չկա:</string>

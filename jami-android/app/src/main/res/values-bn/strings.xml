@@ -42,7 +42,6 @@
   <!--Dialing Fragment-->
   <string name="dial_number">একটি নম্বর ডায়াল করুন</string>
   <!--History Fragment-->
-  <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="one">%d কথোপকথন</item>
@@ -176,7 +175,6 @@
   <string name="conversation_action_select_peer_number">একটি নম্বর নির্বাচন করুন</string>
   <string name="conversation_action_block_this">ব্লক যোগাযোগ</string>
   <string name="conversation_action_unblock_this">যোগাযোগ বন্ধ করুন</string>
-  <string name="conversation_action_go_to_call">চলমান কল-এ ফেরত যান</string>
   <string name="conversation_action_incoming_call">ইনকামিং কল</string>
   <string name="conversation_action_latest">সর্বশেষতম</string>
   <string name="conversation_open_file_error">এই ফাইল টাইপটি খুলতে সক্ষম কোন অ্যাপ্লিকেশন ইনস্টল করা নেই।</string>

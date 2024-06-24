@@ -43,7 +43,6 @@
   <!--Dialing Fragment-->
   <string name="dial_number">Thirrni një numër</string>
   <!--History Fragment-->
-  <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <string name="invitation_card_title">Ftesat u morën</string>
   <plurals name="home_conferences_title">
@@ -185,7 +184,6 @@
   <string name="conversation_action_select_peer_number">Përzgjidhni një numër</string>
   <string name="conversation_action_block_this">Bllokojeni kontaktin</string>
   <string name="conversation_action_unblock_this">Zhbllokoje kontaktin</string>
-  <string name="conversation_action_go_to_call">Rikthehu te thirrja që po bëhej</string>
   <string name="conversation_action_incoming_call">Thirrje ardhëse</string>
   <string name="conversation_action_latest">Hidhu te më i riu</string>
   <string name="conversation_open_file_error">S’ka të instaluar aplikacion të aftë të hapë këtë lloj kartelash.</string>

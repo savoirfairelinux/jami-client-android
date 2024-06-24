@@ -18,7 +18,6 @@ along with this program; if not, write to the Free Software
 <resources>
     <string name="call_error_no_microphone">Poziv je otkazan. Nije otkriven mikrofon.</string>
     <string name="call_error_no_camera_no_microphone">Poziv je otkazan. Nije otkrivena kamera ili mikrofon.</string>
-
     <!-- SipCalls -->
     <string name="call_human_state_searching">Traženje</string>
     <string name="call_human_state_incoming">Dolazak</string>

@@ -42,7 +42,6 @@
   <!--Dialing Fragment-->
   <string name="dial_number">एक नंबर डायल करा</string>
   <!--History Fragment-->
-  <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="one">%d संभाषण</item>
@@ -176,7 +175,6 @@
   <string name="conversation_action_select_peer_number">एक नंबर निवडा</string>
   <string name="conversation_action_block_this">ब्लॉक संपर्क</string>
   <string name="conversation_action_unblock_this">संपर्क अवरोधित करा</string>
-  <string name="conversation_action_go_to_call">चालू कॉलवर परत जा</string>
   <string name="conversation_action_incoming_call">येणारे कॉल</string>
   <string name="conversation_action_latest">संभाषण संपवण्‍यासाठी स्‍क्रोल करा</string>
   <string name="conversation_open_file_error">या प्रकारच्या फाईल उघडण्यास सक्षम असलेले कोणतेही स्थापित अनुप्रयोग नाही.</string>

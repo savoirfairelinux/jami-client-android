@@ -42,7 +42,6 @@
   <!--Dialing Fragment-->
   <string name="dial_number">إتصال برقم</string>
   <!--History Fragment-->
-  <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="zero">%d مكالمة</item>
@@ -180,7 +179,6 @@
   <string name="conversation_action_select_peer_number">إختيار رقم</string>
   <string name="conversation_action_block_this">حظر جهة إتصال</string>
   <string name="conversation_action_unblock_this">فك الحظر على الاتصال</string>
-  <string name="conversation_action_go_to_call">العودة إلى المكالمة الجارية</string>
   <string name="conversation_action_incoming_call">مكالمة واردة</string>
   <string name="conversation_action_latest">التمرير إلى نهاية المحادثة</string>
   <string name="conversation_open_file_error">ﻻ يوجد برنامج مثبت يمكنه فتح هذا النوع من الملفات.</string>

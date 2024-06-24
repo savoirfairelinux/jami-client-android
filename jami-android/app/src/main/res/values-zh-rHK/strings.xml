@@ -43,7 +43,6 @@
   <!--Dialing Fragment-->
   <string name="dial_number">拨号</string>
   <!--History Fragment-->
-  <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <!--ContactList Fragment-->
   <string name="choose_number">选择一个数字</string>
@@ -174,7 +173,6 @@
   <string name="conversation_action_select_peer_number">选择一个数字</string>
   <string name="conversation_action_block_this">阻擋連絡人</string>
   <string name="conversation_action_unblock_this">取消屏蔽联系人</string>
-  <string name="conversation_action_go_to_call">返回正在进行的通话</string>
   <string name="conversation_action_incoming_call">来电</string>
   <string name="conversation_action_latest">跳到最新</string>
   <string name="conversation_open_file_error">没有适合打开这种文件类型的应用程序。</string>

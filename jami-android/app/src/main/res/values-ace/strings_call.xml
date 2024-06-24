@@ -18,7 +18,6 @@ along with this program; if not, write to the Free Software
 <resources>
     <string name="call_error_no_microphone">مكالمات تله دتاهن، تيدق ميكروفون دتيكت.</string>
     <string name="call_error_no_camera_no_microphone">مكالمات تله دتاهن، تيدق اد كاميرا اتاو ميكروفون يڠ دتاهن.</string>
-
     <!-- SipCalls -->
     <string name="call_human_state_searching">ڤرچاي</string>
     <string name="call_human_state_incoming">ڤڠاجين</string>

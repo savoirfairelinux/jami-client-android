@@ -20,7 +20,6 @@ along with this program; if not, write to the Free Software
     <string name="call_error">Une erreur s\'est produite lors du lancement de l\'appel.</string>
     <string name="call_error_no_microphone">Appel annulé. Aucun microphone détecté.</string>
     <string name="call_error_no_camera_no_microphone">Appel annulé. Aucune caméra ou microphone détecté.</string>
-
     <!-- SipCalls -->
     <string name="call_human_state_searching">Recherche en cours</string>
     <string name="call_human_state_incoming">Appel entrant</string>

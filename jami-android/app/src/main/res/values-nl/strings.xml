@@ -43,7 +43,6 @@
   <!--Dialing Fragment-->
   <string name="dial_number">Kies een nummer</string>
   <!--History Fragment-->
-  <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <string name="invitation_card_title">Uitnodigingen ontvangen</string>
   <plurals name="home_conferences_title">
@@ -184,7 +183,6 @@
   <string name="conversation_action_select_peer_number">Kies een nummer</string>
   <string name="conversation_action_block_this">Contact blokkeren</string>
   <string name="conversation_action_unblock_this">Contact deblokkeren</string>
-  <string name="conversation_action_go_to_call">Terug naar lopende oproep</string>
   <string name="conversation_action_incoming_call">Inkomende oproep</string>
   <string name="conversation_action_latest">Naar het einde van het gesprek schuiven</string>
   <string name="conversation_open_file_error">Er is geen toepassing geïnstalleerd om dit bestandstype te openen.</string>

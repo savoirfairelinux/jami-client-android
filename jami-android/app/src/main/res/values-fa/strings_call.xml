@@ -18,7 +18,6 @@ along with this program; if not, write to the Free Software
 <resources>
     <string name="call_error_no_microphone">تماس لغو شد. هیچ میکروفونی شناسایی نشد.</string>
     <string name="call_error_no_camera_no_microphone">تماس لغو شد. هیچ دوربین یا میکروفونی شناسایی نشد.</string>
-
     <!-- SipCalls -->
     <string name="call_human_state_searching">در حال جستجو</string>
     <string name="call_human_state_incoming">ورودی</string>

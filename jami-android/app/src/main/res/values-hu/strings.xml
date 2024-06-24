@@ -43,7 +43,6 @@
   <!--Dialing Fragment-->
   <string name="dial_number">Szám tárcsázása</string>
   <!--History Fragment-->
-  <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <string name="invitation_card_title">Meghívások megérkeztek</string>
   <plurals name="home_conferences_title">
@@ -185,7 +184,6 @@
   <string name="conversation_action_select_peer_number">Válasszon egy számot</string>
   <string name="conversation_action_block_this">Kapcsolat letiltása</string>
   <string name="conversation_action_unblock_this">Kapcsolat letiltás feloldása</string>
-  <string name="conversation_action_go_to_call">Visszatérés a folyamatban lévő híváshoz</string>
   <string name="conversation_action_incoming_call">Bejövő hívás</string>
   <string name="conversation_action_latest">Görgetés a beszélgetés végére</string>
   <string name="conversation_open_file_error">Nem található alkalmazás ehhez a fájltípushoz.</string>

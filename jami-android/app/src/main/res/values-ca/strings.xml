@@ -42,7 +42,6 @@
   <!--Dialing Fragment-->
   <string name="dial_number">Marca un número</string>
   <!--History Fragment-->
-  <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="one">%d Conversa</item>
@@ -176,7 +175,6 @@
   <string name="conversation_action_select_peer_number">Seleccioneu un número</string>
   <string name="conversation_action_block_this">Bloqueja el contacte</string>
   <string name="conversation_action_unblock_this">Desbloca contacte</string>
-  <string name="conversation_action_go_to_call">Torna a la trucada en curs</string>
   <string name="conversation_action_incoming_call">Trucada entrant</string>
   <string name="conversation_action_latest">Salta a l\'última</string>
   <string name="conversation_open_file_error">No hi ha cap aplicació instaŀlada que pugui obrir aquest tipus de fitxer.</string>

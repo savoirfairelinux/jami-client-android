@@ -18,7 +18,6 @@ along with this program; if not, write to the Free Software
 <resources>
     <string name="call_error_no_microphone">കോൾ റദ്ദാക്കി. മൈക്രോഫോണൊന്നും കണ്ടെത്തിയില്ല.</string>
     <string name="call_error_no_camera_no_microphone">കോൾ റദ്ദാക്കി. ക്യാമറയോ മൈക്രോഫോണോ കണ്ടെത്തിയില്ല.</string>
-
     <!-- SipCalls -->
     <string name="call_human_state_searching">തിരയൽ</string>
     <string name="call_human_state_incoming">വരാനിരിക്കുന്ന</string>

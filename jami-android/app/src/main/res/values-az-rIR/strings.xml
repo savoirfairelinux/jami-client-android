@@ -42,7 +42,6 @@
   <!--Dialing Fragment-->
   <string name="dial_number">بیر سایی چال</string>
   <!--History Fragment-->
-  <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="one">%d دانیشیق</item>
@@ -176,7 +175,6 @@
   <string name="conversation_action_select_peer_number">ساییچ سئچیب</string>
   <string name="conversation_action_block_this">بلاک کنتاکت</string>
   <string name="conversation_action_unblock_this">تماس رو باز کن</string>
-  <string name="conversation_action_go_to_call">داواملي چاغيرماغا قاييت</string>
   <string name="conversation_action_incoming_call">گئچن چاغ</string>
   <string name="conversation_action_latest">آخیرینا قایغیش</string>
   <string name="conversation_open_file_error">بو فایل تئلئپینی آچماغا قادیر اولان ایستیفاده نصب اولمامیش.</string>

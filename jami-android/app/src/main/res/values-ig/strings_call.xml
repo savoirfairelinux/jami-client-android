@@ -18,7 +18,6 @@ along with this program; if not, write to the Free Software
 <resources>
     <string name="call_error_no_microphone">Akagbuola oku. Ọnweghị igwe okwu achọpụtara.</string>
     <string name="call_error_no_camera_no_microphone">Akagbuola oku. Ọnweghị igwefoto ma ọ bụ igwe okwu achọpụtara.</string>
-
     <!-- SipCalls -->
     <string name="call_human_state_searching">Ịchọgharị</string>
     <string name="call_human_state_incoming">Ihe na-abata</string>

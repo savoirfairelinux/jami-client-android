@@ -18,7 +18,6 @@ along with this program; if not, write to the Free Software
 <resources>
     <string name="call_error_no_microphone">कॉल रद्द. किसी माइक्रोफ़ोन का पता नहीं चला.</string>
     <string name="call_error_no_camera_no_microphone">कॉल रद्द. किसी कैमरे या माइक्रोफ़ोन का पता नहीं चला.</string>
-
     <!-- SipCalls -->
     <string name="call_human_state_searching">खोज</string>
     <string name="call_human_state_incoming">आने वाला</string>

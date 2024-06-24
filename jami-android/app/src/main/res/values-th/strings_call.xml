@@ -18,7 +18,6 @@ along with this program; if not, write to the Free Software
 <resources>
     <string name="call_error_no_microphone">การโทรถูกยกเลิก ไม่พบไมโครโฟน</string>
     <string name="call_error_no_camera_no_microphone">การโทรถูกยกเลิก ไม่พบกล้องหรือไมโครโฟน</string>
-
     <!-- SipCalls -->
     <string name="call_human_state_searching">กำลังค้นหา</string>
     <string name="call_human_state_incoming">ขาเข้า</string>
