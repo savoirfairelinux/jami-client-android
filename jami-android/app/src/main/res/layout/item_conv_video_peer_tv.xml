@@ -74,7 +74,7 @@
             android:layout_marginStart="@dimen/message_details_margin"
             android:layout_marginTop="10dp"
             android:singleLine="true"
-            android:textColor="@color/conversation_secondary_background"
+            android:textColor="@color/text_color_primary_dark"
             android:textSize="12sp"
             tools:text="@string/time_just_now" />
 
@@ -86,7 +86,7 @@
         android:layout_height="wrap_content"
         android:paddingTop="4dp"
         android:paddingBottom="@dimen/padding_small"
-        android:textColor="@color/conversation_secondary_background"
+        android:textColor="@color/text_color_primary_dark"
         android:textSize="14sp"
         android:visibility="gone"
         tools:text="@string/time_just_now"

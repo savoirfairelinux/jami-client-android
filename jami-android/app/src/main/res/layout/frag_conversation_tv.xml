@@ -70,7 +70,7 @@
                     android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:textColor="@color/colorOnPrimary"
+                    android:textColor="@color/text_color_primary_dark"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
                     android:gravity="center" />
 
