@@ -22,6 +22,7 @@ import net.jami.model.AccountCreationModel
 import net.jami.mvp.RootPresenter
 import net.jami.services.AccountService
 import net.jami.services.AccountService.RegisteredName
+import net.jami.utils.Log
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Named
@@ -43,9 +44,14 @@ class JamiAccountCreationPresenter @Inject constructor(
         super.bindView(view)
         mCompositeDisposable.add(contactQuery
             .debounce(TYPING_DELAY, TimeUnit.MILLISECONDS)
-            .switchMapSingle { q: String -> accountService.findRegistrationByName("", "", q) }
+            .switchMapSingle { q: String ->
+                Log.d("devdebug", "JamiAccountCreationPresenter bindView1: $q")
+//                Log.d("devdebug", "is internet permission granted?:"
+                accountService.findRegistrationByName("", "", q) }
             .observeOn(uiScheduler)
-            .subscribe { q: RegisteredName -> onLookupResult(q.name, q.address, q.state) })
+            .subscribe { q: RegisteredName ->
+                Log.d("devdebug", "JamiAccountCreationPresenter bindView2: $q")
+                onLookupResult(q.name, q.address, q.state) })
     }
 
     fun init(model: AccountCreationModel?) {
@@ -146,6 +152,8 @@ class JamiAccountCreationPresenter @Inject constructor(
 
     private fun onLookupResult(name: String, address: String?, state: AccountService.LookupState) {
         val view = view
+        Log.d("devdebug", "JamiAccountCreationPresenter onLookupResult: $state")
+
         //Once we get the result, we can show the loading animation again when the user types
         showLoadingAnimation = true
         if (view == null) {

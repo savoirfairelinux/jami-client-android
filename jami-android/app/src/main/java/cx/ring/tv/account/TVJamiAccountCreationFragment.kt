@@ -141,6 +141,7 @@ class TVJamiAccountCreationFragment : JamiGuidedStepFragment<JamiAccountCreation
     }
 
     override fun updateUsernameAvailability(status: UsernameAvailabilityStatus) {
+        Log.d("devdebug", "TVJamiAccountCreationFragment updateUsernameAvailability: $status")
         val actionCheck = findActionById(CHECK) ?: return
         when (status) {
             UsernameAvailabilityStatus.ERROR -> {

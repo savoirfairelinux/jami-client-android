@@ -38,6 +38,7 @@ import net.jami.model.Conversation
 import net.jami.model.Uri
 import net.jami.services.NotificationService
 import net.jami.smartlist.ConversationItemViewModel
+import net.jami.utils.Log
 
 @AndroidEntryPoint
 class TVContactFragment : BaseDetailFragment<TVContactPresenter>(), TVContactView {
@@ -54,6 +55,7 @@ class TVContactFragment : BaseDetailFragment<TVContactPresenter>(), TVContactVie
             ConversationPath.fromIntent(requireActivity().intent)!!
         iconSize = resources.getDimensionPixelSize(R.dimen.tv_avatar_size)
         setupAdapter()
+        Log.w("devdebug", "onViewCreated: $mConversationPath")
         presenter.setContact(mConversationPath)
     }
 
@@ -75,6 +77,7 @@ class TVContactFragment : BaseDetailFragment<TVContactPresenter>(), TVContactVie
             prepareEntranceTransition()
         }
         detailsPresenter.onActionClickedListener = OnActionClickedListener { action: Action ->
+            Log.w("devdebug", "TVContactFragnment onActionClickedListener: ${action.id}")
             when (action.id) {
                 ACTION_CALL -> presenter.contactClicked()
                 ACTION_ADD_CONTACT -> presenter.onAddContact()
@@ -101,6 +104,7 @@ class TVContactFragment : BaseDetailFragment<TVContactPresenter>(), TVContactVie
     }
 
     override fun showContact(account: Account, model: ConversationItemViewModel) {
+        Log.w("devdebug", "TVContactFragment showContact: model.isSwarm: ${model.isSwarm} account.isContact(model.uri): ${account.isContact(model.uri)}")
         val context = requireContext()
         val row = DetailsOverviewRow(model)
         val avatar = AvatarDrawable.Builder()
@@ -110,14 +114,18 @@ class TVContactFragment : BaseDetailFragment<TVContactPresenter>(), TVContactVie
         avatar.setInSize(iconSize)
         row.imageDrawable = avatar
         val adapter = ArrayObjectAdapter()
-        if (model.mode == Conversation.Mode.Request) {
+        Log.w("devdebug", "TVContactFragment showContact model.mode: ${model.mode}")
+        if (model.mode == Conversation.Mode.Request) { // Request mode.
+            Log.w("devdebug", "TVContactFragment showContact: Request mode")
             adapter.add(Action(ACTION_ACCEPT, resources.getString(R.string.accept)))
             adapter.add(Action(ACTION_REFUSE, resources.getString(R.string.refuse)))
             adapter.add(Action(ACTION_BLOCK, resources.getString(R.string.block)))
         } else if (model.isSwarm || account.isContact(model.uri)) {
+            Log.w("devdebug", "TVContactFragment showContact: isSwarm or isContact")
             adapter.add(Action(ACTION_CALL, resources.getString(R.string.ab_action_video_call), null, context.getDrawable(R.drawable.baseline_videocam_24)))
             adapter.add(Action(ACTION_MORE, resources.getString(R.string.tv_action_more), null, context.getDrawable(R.drawable.baseline_more_vert_24)))
         } else {
+            Log.w("devdebug", "TVContactFragment showContact: else")
             if (model.request == null) {
                 adapter.add(Action(ACTION_ADD_CONTACT, resources.getString(R.string.ab_action_contact_add)))
             } else {
@@ -146,6 +154,7 @@ class TVContactFragment : BaseDetailFragment<TVContactPresenter>(), TVContactVie
     }
 
     override fun switchToConversationView() {
+        Log.w("devdebug", "TVContactFragment switchToConversationView")
         presenter.setContact(mConversationPath)
     }
 

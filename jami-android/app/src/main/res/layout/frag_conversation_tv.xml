@@ -76,7 +76,7 @@
 
                 <LinearLayout
                     android:id="@+id/conversation_action_group"
-                    tools:visibility="gone"
+                    tools:visibility="visible"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:baselineAligned="false"

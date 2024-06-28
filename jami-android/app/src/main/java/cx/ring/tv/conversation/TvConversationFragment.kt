@@ -640,6 +640,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
     }
 
     override fun switchToConversationView() {
+        Log.w("devdebug", "TVContactFragment switchToConversationView")
         binding?.apply {
             conversationActionGroup.isVisible = true
             conversationActionMessage.isVisible = false

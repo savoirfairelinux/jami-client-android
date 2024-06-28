@@ -57,32 +57,46 @@ class ConversationPresenter @Inject constructor(
     private var searchQuerySubject: Subject<String>? = null
 
     fun init(conversationUri: Uri, accountId: String) {
+        Log.w("devdebug", "ConversationPresenter init")
         if (conversationUri == mConversationUri) return
         Log.w(TAG, "init $conversationUri $accountId")
         val settings = preferencesService.settings
         view?.setSettings(settings.enableLinkPreviews)
         mConversationUri = conversationUri
-        mCompositeDisposable.add(conversationFacade.getAccountSubject(accountId)
-            .flatMap { account: Account -> accountService.getConversationByUri(account, conversationUri).map { Pair(it, account) } }
-            .flatMapObservable { (conversation: Conversation, account: Account) ->
-                conversation.mode.flatMap { conversationMode: Conversation.Mode ->
-                    if (conversationMode === Conversation.Mode.Legacy)
-                        conversation.contact!!.conversationUri.switchMapSingle { uri ->
-                            conversationFacade.startConversation(accountId, uri)
-                        }
-                    else
-                        Observable.just(conversation)
-                }.switchMapSingle { conv ->
-                    conversationFacade.loadConversationHistory(conv).map { Pair(account, it) }
+        mCompositeDisposable.add(
+            conversationFacade.getAccountSubject(accountId)
+                .flatMap { account: Account ->
+                    accountService.getConversationByUri(account, conversationUri)
+                        .map { Pair(it, account) }
                 }
-            }
-            .observeOn(uiScheduler)
-            .subscribe({ (account, conversation) ->
-                setConversation(account, conversation)
-            }) { error: Throwable ->
-                view?.goToHome()
-                Log.e(TAG, "Error loading conversation", error)
-            }
+                .flatMapObservable { (conversation: Conversation, account: Account) ->
+                    conversation.mode
+                        .flatMap { conversationMode: Conversation.Mode ->
+                            Log.w("devdebug", "ConversationPresenter init:flatMap mode is $conversationMode")
+                            if (conversationMode === Conversation.Mode.Legacy)
+                                conversation.contact!!.conversationUri.switchMapSingle { uri ->
+                                    Log.w("devdebug","ConversationPresenter init:switchMapSingle 1a")
+                                    conversationFacade.startConversation(accountId, uri)
+                                }
+                            else {
+                                Log.w("devdebug", "ConversationPresenter init:switchMapSingle 1b")
+                                Observable.just(conversation)
+                            }
+                        }.switchMapSingle { conv ->
+                        conversationFacade.loadConversationHistory(conv).map {
+                            Log.w("devdebug", "ConversationPresenter init:switchMapSingle 2")
+                            Pair(account, it)
+                        }
+                    }
+                }
+                .observeOn(uiScheduler)
+                .subscribe({ (account: Account, conversation: Conversation) ->
+                    Log.w("devdebug", "ConversationPresenter init:subscribe")
+                    setConversation(account, conversation)
+                }) { error: Throwable ->
+                    view?.goToHome()
+                    Log.e(TAG, "Error loading conversation", error)
+                }
         )
     }
 
@@ -97,11 +111,12 @@ class ConversationPresenter @Inject constructor(
     }
 
     private fun setConversation(account: Account, conversation: Conversation) {
-        Log.w(TAG, "setConversation ${conversation.aggregateHistory.size}")
+        Log.w("devdebug", "ConversationPresenter setConversation conversation:${conversation.uri} mode: ${conversation.mode.blockingFirst()}")
         if (mConversation == conversation) return
         mConversation = conversation
         mConversationSubject.onNext(conversation)
-        view?.let { initView(account, conversation, it) }
+        view?.let {
+            initView(account, conversation, it) }
     }
 
     fun pause() {
@@ -123,6 +138,7 @@ class ConversationPresenter @Inject constructor(
     }
 
     private fun initContact(account: Account, c: ConversationItemViewModel, view: ConversationView) {
+        Log.w("devdebug", "ConversationPresenter initContact")
         if (account.isJami) {
             Log.w(TAG, "initContact ${c.uri} mode: ${c.mode}")
             if (c.mode === Conversation.Mode.Syncing) {
@@ -160,7 +176,9 @@ class ConversationPresenter @Inject constructor(
             .switchMap { mode: Conversation.Mode ->
                 conversationFacade.observeConversation(account, c, true)
                     .observeOn(uiScheduler)
-                    .doOnNext { convViewModel -> initContact(account, convViewModel, this.view!!) }
+                    .doOnNext { convViewModel ->
+                        Log.w("devdebug", "ConversationPresenter initView:subscribe")
+                        initContact(account, convViewModel, this.view!!) }
             }
             .subscribe())
         disposable.add(Observable.combineLatest(hardwareService.connectivityState, accountService.getObservableAccount(account))
@@ -420,6 +438,7 @@ class ConversationPresenter @Inject constructor(
     }
 
     fun onAddContact() {
+        Log.w("devdebug", "ConversationPresenter onAddContact")
         sendTrustRequest()
         view?.switchToConversationView()
     }

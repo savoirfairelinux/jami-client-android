@@ -16,6 +16,7 @@
  */
 package cx.ring.tv.account
 
+import android.Manifest
 import android.os.Bundle
 import androidx.fragment.app.activityViewModels
 import androidx.leanback.widget.GuidanceStylist.Guidance
@@ -26,6 +27,7 @@ import cx.ring.account.AccountCreationViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import net.jami.account.HomeAccountCreationPresenter
 import net.jami.account.HomeAccountCreationView
+import net.jami.utils.Log
 
 @AndroidEntryPoint
 class TVHomeAccountCreationFragment : JamiGuidedStepFragment<HomeAccountCreationPresenter, HomeAccountCreationView>(),
@@ -68,6 +70,7 @@ class TVHomeAccountCreationFragment : JamiGuidedStepFragment<HomeAccountCreation
         val context = requireContext()
         addAction(context, actions, LINK_ACCOUNT, getString(R.string.account_link_button), "", true)
         addAction(context, actions, CREATE_ACCOUNT, getString(R.string.account_create_title), "", true)
+        Log.d("devdebug", "is internet permission granted?: ${context.checkSelfPermission(Manifest.permission.INTERNET)}")
     }
 
     override fun onGuidedActionClicked(action: GuidedAction) {

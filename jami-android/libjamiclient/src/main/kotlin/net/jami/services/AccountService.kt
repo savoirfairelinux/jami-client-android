@@ -896,12 +896,15 @@ class AccountService(
     }
 
     fun findRegistrationByName(account: String, nameserver: String, name: String): Single<RegisteredName> =
-        if (name.isEmpty())
+        if (name.isEmpty()) {
+            Log.d("devdebug", "AccountService findRegistrationByName: empty name")
             Single.just(RegisteredName(account, name))
+        }
         else registeredNames
             .filter { r: RegisteredName -> account == r.accountId && name == r.name }
             .firstOrError()
             .doOnSubscribe {
+                Log.d("devdebug", "AccountService bindView $account $nameserver $name")
                 mExecutor.execute { JamiService.lookupName(account, nameserver, name) }
             }
             .subscribeOn(scheduler)
@@ -1233,6 +1236,7 @@ class AccountService(
 
     fun registeredNameFound(accountId: String, state: Int, address: String, name: String) {
         try {
+            Log.d("devdebug" , "AccountService registeredNameFound $accountId $state $address $name")
             registeredNameSubject.onNext(RegisteredName(accountId, name, address, LookupState.fromInt(state)))
         } catch (e: Exception) {
             Log.w(TAG, "registeredNameFound exception", e)

@@ -20,6 +20,7 @@ import cx.ring.utils.ConversationPath
 import ezvcard.VCard
 import io.reactivex.rxjava3.core.Scheduler
 import net.jami.daemon.Blob
+import net.jami.model.Account
 import net.jami.services.ConversationFacade
 import net.jami.model.Call
 import net.jami.model.Conversation
@@ -28,6 +29,7 @@ import net.jami.mvp.RootPresenter
 import net.jami.services.AccountService
 import net.jami.services.VCardService
 import net.jami.smartlist.ConversationItemViewModel
+import net.jami.utils.Log
 import net.jami.utils.VCardUtils.vcardToString
 import javax.inject.Inject
 import javax.inject.Named
@@ -42,17 +44,32 @@ class TVContactPresenter @Inject constructor(
     private var mUri: Uri? = null
 
     fun setContact(path: ConversationPath) {
+        Log.w("devdebug", "TVContactPresenter setContact: $path")
         mAccountId = path.accountId
         mUri = path.conversationUri
         mCompositeDisposable.clear()
 
+        mCompositeDisposable.add(
+            mConversationService.getAccountSubject(path.accountId)
+                .flatMapObservable { account:Account ->
+                    val conversation = account.getByUri(path.conversationUri)!!
+                    Log.w("devdebug", "TVContactPresenter setContact:subscribe: conversation is ${conversation.uri}")
+                    conversation.mode
+                }
+                .subscribe({
+                    Log.w("devdebug", "TVContactPresenter setContact:subscribe: mode is $it")
+                })
+        )
+
         mCompositeDisposable.add(mConversationService.getAccountSubject(path.accountId)
-            .flatMapObservable { account ->
+            .flatMapObservable { account: Account ->
                 val conversation = account.getByUri(path.conversationUri)!!
                 mConversationService.observeConversation(account, conversation, true).map { vm -> Pair(account, vm) }
             }
             .observeOn(mUiScheduler)
-            .subscribe({(account, c) -> view?.showContact(account, c) }, {view?.finishView()}))
+            .subscribe({(account: Account, c: ConversationItemViewModel) ->
+                Log.w("devdebug", "TVContactPresenter setContact:subscribe: $account, $c")
+                view?.showContact(account, c) }, {view?.finishView()}))
     }
 
     fun contactClicked() {
@@ -73,6 +90,7 @@ class TVContactPresenter @Inject constructor(
     }
 
     fun onAddContact() {
+        Log.w("devdebug", "TVContactPresenter onAddContact")
         mAccountId?.let { accountId -> mUri?.let { uri ->
             sendTrustRequest(accountId, uri)
         } }
