@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:paddingTop="4dp"
         android:paddingBottom="@dimen/padding_small"
-        android:textColor="@color/conversation_secondary_background"
+        android:textColor="@color/white"
         android:textSize="14sp"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"

@@ -53,7 +53,7 @@
             android:layout_alignStart="@+id/audioInfoLayout"
             android:layout_marginStart="@dimen/message_details_margin"
             android:layout_marginTop="5dp"
-            android:textColor="@color/conversation_secondary_background"
+            android:textColor="@color/white"
             android:textSize="12sp"
             tools:text="1 mo - 12 mars" />
 
@@ -101,7 +101,7 @@
         android:layout_height="wrap_content"
         android:paddingTop="4dp"
         android:paddingBottom="@dimen/padding_small"
-        android:textColor="@color/conversation_secondary_background"
+        android:textColor="@color/white"
         android:textSize="14sp"
         android:visibility="gone"
         tools:text="@string/time_just_now"
