@@ -657,7 +657,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
     override fun switchToSyncingView() {
         binding?.apply {
             conversationActionGroup.isVisible = false
-            conversationActionMessage.text = getString(R.string.conversation_contact_banned, "")
+            conversationActionMessage.text = getString(R.string.conversation_syncing)
             conversationActionMessage.isVisible = true
         }
     }
