@@ -9,7 +9,6 @@
   <string name="pref_mobileData_title">Datu de movilidá</string>
   <string name="pref_mobileData_summary">Permitir Jami en redes 3G/LTE amás de Wi-Fi</string>
   <string name="pref_pushNotifications_title">Notificaciones de empuxa</string>
-  <string name="pref_pushNotif_summary" translatable="false"></string>
   <string name="pref_pushNotifications_summary">Utiliza servidores de Google pa permitir la recepción de llamadas/mensaxes en fondu</string>
   <string name="pref_unifiedPush_summary">Utiliza un serviciu UnifiedPush pa permitir la recepción d\'escuestes/mensaxes en fondu</string>
   <string name="pref_video_advanced_title">La configuración avanzada de video</string>

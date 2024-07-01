@@ -147,6 +147,7 @@
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Acces la fotocameră</string>
   <string name="permission_dialog_camera_message">Conversațiile video au nevoie de acces la fotocameră pentru a funcționa. Dacă vrei, activeaz-o.</string>
+  <string name="camera_error">A apărut o eroare la pornirea camerei.</string>
   <!--Ringtone activity-->
   <string name="ringtone_error_title">Eroare</string>
   <string name="ringtone_error_format_not_supported">Acest format nu este acceptat.</string>
@@ -181,10 +182,11 @@
   <string name="conversation_action_remove_this_title">Ștergi acest contact?</string>
   <string name="conversation_action_remove_this_message">Aceasta va șterge contactul și va elimina definitiv cronologia conversației.</string>
   <string name="conversation_action_copy_peer_number">Copiază numărul</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s copiat în notițe</string>
+  <string name="conversation_action_copied_peer_number_clipboard">%1$s copiat în memorie</string>
   <string name="conversation_action_select_peer_number">Alege un număr</string>
   <string name="conversation_action_block_this">Blochează contactul</string>
   <string name="conversation_action_unblock_this">Deblochează contactul</string>
+  <string name="conversation_action_go_to_call">Revino la apel</string>
   <string name="conversation_action_incoming_call">Apel primit</string>
   <string name="conversation_action_latest">Saltă la ultimul</string>
   <string name="conversation_open_file_error">Nu există o aplicație instalată capabilă să deschidă acest tip de fișier.</string>
@@ -213,6 +215,19 @@
   <string name="conversation_contact_left">%1$s a ieșit</string>
   <string name="conversation_contact_banned">%1$s a fost blocat</string>
   <string name="conversation_search_hint">Caută conversația</string>
+  <string name="audio_recorder_error">Aplicația de înregistrare audio nu a fost găsită.</string>
+  <string name="video_recorder_error">Aplicația de înregistrare video nu a fost găsită.</string>
+  <string name="taking_picture_error">A apărut o eroare în timpul fotografierii.</string>
+  <string name="find_picture_error">A apărut o eroare în timpul căutării imaginii.</string>
+  <string name="open_camera_error">A apărut o eroare la deschiderea camerei.</string>
+  <string name="starting_recorder_error">A apărut o eroare la pornirea înregistratorului.</string>
+  <string name="starting_camera_error">A apărut o eroare la pornirea camerei.</string>
+  <string name="browser_error">În acest aparat nu este disponibil niciun căutător de fișiere.</string>
+  <string name="import_archive_error">A apărut o eroare în timpul importării arhivei.</string>
+  <string name="export_archive_error">A apărut o eroare în timpul exportării arhivei.</string>
+  <string name="load_ringtone_error">A apărut o eroare în timpul încărcării soneriei.</string>
+  <string name="sharing_log_error">A apărut o eroare în timpul trimiterii jurnalului.</string>
+  <string name="no_native_crash">Nicio defecțiune recentă</string>
   <string name="today">Azi</string>
   <string name="yesterday">Ieri</string>
   <!--Contacts-->
@@ -227,6 +242,7 @@
   <string name="help_password_enter">Introdu parola contului tău principal Jami.</string>
   <string name="help_server_enter">Introdu URL-ul serverului de administrare</string>
   <string name="help_pin_enter">Introdu codul PIN obținut de la un cont Jami. Folosește opțiunea„ Exportă contul Jami” pentru a obține codul PIN.</string>
+  <string name="pin_copied">Cod PIN copiat în memorie.</string>
   <string name="wizard_next">Înainte</string>
   <string name="wizard_back">Înapoi</string>
   <string name="wizard_skip">Omite</string>
@@ -311,6 +327,7 @@
   <string name="menu_file_share">Trimite fișierul</string>
   <string name="menu_message_copy">Copiază</string>
   <string name="menu_message_edit">Modifică mesajul</string>
+  <string name="menu_message_history">Cronologia mesajelor</string>
   <string name="menu_message_delete">Șterge mesajul</string>
   <string name="menu_message_cancel">Anulează mesajul</string>
   <string name="menu_message_reply">Răspunde</string>
@@ -395,6 +412,7 @@
   <string name="bottomsheet_contact">Contactează Jami\n%1$s</string>
   <string name="bottomsheet_remove">Scoate din grup</string>
   <string name="error_open_no_app_found">Nu s-a găsit nicio aplicație care să gestioneze acest fișier: %1$s</string>
+  <string name="swarm_detail_no_document">Încă nu ai documente.</string>
   <!--JamiId-->
   <string name="jami_id_copy">Copiază JamiID</string>
   <string name="jami_id_share">Distribuie JamiID</string>
@@ -417,4 +435,6 @@
   <string name="unable_to_load">Nu se poate încărca %1$s</string>
   <string name="load_sucess">%1$s: activat</string>
   <string name="unload_sucess">%1$s: dezactivat</string>
+  <string name="install_sucess">Extensia %1$s a fost instalată cu succes.</string>
+  <string name="install_error">A apărut o eroare la importarea extensiei.</string>
 </resources>

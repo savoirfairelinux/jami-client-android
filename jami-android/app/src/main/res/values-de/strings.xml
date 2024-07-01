@@ -146,6 +146,7 @@
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kamera-Berechtigung</string>
   <string name="permission_dialog_camera_message">Für Video-Konversationen benötigt die Anwendung Zugriff auf die Kamera. Bitte aktivieren Sie diese Berechtigung.</string>
+  <string name="camera_error">Beim Starten der Kamera ist ein Fehler aufgetreten.</string>
   <!--Ringtone activity-->
   <string name="ringtone_error_title">Fehler</string>
   <string name="ringtone_error_format_not_supported">Dieses Format wird nicht unterstützt.</string>
@@ -184,6 +185,7 @@
   <string name="conversation_action_select_peer_number">Eine Nummer auswählen</string>
   <string name="conversation_action_block_this">Kontakt blockieren</string>
   <string name="conversation_action_unblock_this">Blockierung des Kontakts aufheben</string>
+  <string name="conversation_action_go_to_call">Zurück zum Anruf</string>
   <string name="conversation_action_incoming_call">Eingehender Anruf</string>
   <string name="conversation_action_latest">Zum Ende der Unterhaltung scrollen</string>
   <string name="conversation_open_file_error">Es gibt keine installierte App, die diesen Dateityp öffnen kann.</string>
@@ -212,6 +214,19 @@
   <string name="conversation_contact_left">%1$s hat die Unterhaltung verlassen</string>
   <string name="conversation_contact_banned">%1$s wurde blockiert</string>
   <string name="conversation_search_hint">Unterhaltung durchsuchen</string>
+  <string name="audio_recorder_error">Die Audiorecorder-App wurde nicht gefunden.</string>
+  <string name="video_recorder_error">Die Videorecorder-App wurde nicht gefunden.</string>
+  <string name="taking_picture_error">Beim Aufnehmen eines Bildes ist ein Fehler aufgetreten.</string>
+  <string name="find_picture_error">Beim Suchen des Bildes ist ein Fehler aufgetreten.</string>
+  <string name="open_camera_error">Beim Öffnen der Kamera ist ein Fehler aufgetreten.</string>
+  <string name="starting_recorder_error">Beim Starten des Rekorders ist ein Fehler aufgetreten.</string>
+  <string name="starting_camera_error">Beim Starten der Kamera ist ein Fehler aufgetreten.</string>
+  <string name="browser_error">Auf diesem Gerät ist kein Dateibrowser verfügbar.</string>
+  <string name="import_archive_error">Beim Importieren des Archivs ist ein Fehler aufgetreten.</string>
+  <string name="export_archive_error">Beim Importieren des Archivs ist ein Fehler aufgetreten.</string>
+  <string name="load_ringtone_error">Beim Laden des Klingeltons ist ein Fehler aufgetreten.</string>
+  <string name="sharing_log_error">Beim Teilen von Protokollen ist ein Fehler aufgetreten.</string>
+  <string name="no_native_crash">Kein aktueller nativer Absturz</string>
   <string name="today">Heute</string>
   <string name="yesterday">Gestern</string>
   <!--Contacts-->
@@ -226,6 +241,7 @@
   <string name="help_password_enter">Geben Sie Ihr Passwort für das Jami-Hauptkonto ein.</string>
   <string name="help_server_enter">URL des Management-Servers eingeben.</string>
   <string name="help_pin_enter">Geben Sie die PIN eines anderen konfigurierten Jami-Kontos ein. Benutzen Sie die Funktion \"Exportiere Jami-Konto\", um eine PIN zu erhalten.</string>
+  <string name="pin_copied">PIN-Code in die Zwischenablage kopiert.</string>
   <string name="wizard_next">Weiter</string>
   <string name="wizard_back">Zurück</string>
   <string name="wizard_skip">Überspringen</string>
@@ -310,6 +326,7 @@
   <string name="menu_file_share">Datei teilen</string>
   <string name="menu_message_copy">Kopieren</string>
   <string name="menu_message_edit">Nachricht bearbeiten</string>
+  <string name="menu_message_history">Nachrichtenverlauf</string>
   <string name="menu_message_delete">Nachricht löschen</string>
   <string name="menu_message_cancel">Nachricht abbrechen</string>
   <string name="menu_message_reply">Antworten</string>
@@ -394,6 +411,7 @@
   <string name="bottomsheet_contact">Kontakt Jami\n%1$s</string>
   <string name="bottomsheet_remove">Aus dem Schwarm entfernen</string>
   <string name="error_open_no_app_found">Keine Anwendung zur Verarbeitung dieser Datei gefunden:%1$s</string>
+  <string name="swarm_detail_no_document">Sie haben noch keine Dokumente.</string>
   <!--JamiId-->
   <string name="jami_id_copy">Jami-ID kopieren</string>
   <string name="jami_id_share">Jami-ID teilen</string>
@@ -416,4 +434,6 @@
   <string name="unable_to_load">Nicht möglich zu laden %1$s</string>
   <string name="load_sucess">%1$s: aktiviert</string>
   <string name="unload_sucess">%1$s: deaktiviert</string>
+  <string name="install_sucess">Die Erweiterung %1$s wurde erfolgreich installiert.</string>
+  <string name="install_error">Beim Importieren der Erweiterung ist ein Fehler aufgetreten.</string>
 </resources>

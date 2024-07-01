@@ -9,7 +9,6 @@
   <string name="pref_mobileData_title">Мобильные данные</string>
   <string name="pref_mobileData_summary">Разрешить Jami использовать 3G / LTE в дополнение к Wi-Fi</string>
   <string name="pref_pushNotifications_title">Всплывающие уведомления</string>
-  <string name="pref_pushNotif_summary" translatable="false"></string>
   <string name="pref_pushNotifications_summary">Использовать сервера Google, чтобы разрешить прием звонков/сообщений в фоновом режиме</string>
   <string name="pref_unifiedPush_summary">Используйте службу UnifiedPush для получения звонков и сообщений в фоновом режиме</string>
   <string name="pref_video_advanced_title">Расширенные настройки видео</string>

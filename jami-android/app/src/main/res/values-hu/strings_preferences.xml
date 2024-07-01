@@ -9,7 +9,6 @@
   <string name="pref_mobileData_title">Adathasználat</string>
   <string name="pref_mobileData_summary">A Jami engedélyezése 3G/LTE és Wi-Fi hálózatokon</string>
   <string name="pref_pushNotifications_title">Push-értesítések</string>
-  <string name="pref_pushNotif_summary" translatable="false"></string>
   <string name="pref_pushNotifications_summary">Használja a Google kiszolgálóit a háttérben lévő hívások és üzenetek fogadásához</string>
   <string name="pref_unifiedPush_summary">A UnifiedPush-szolgáltatás használata lehetővé teszi a hívások/üzenetek fogadását a háttérben</string>
   <string name="pref_video_advanced_title">Haladó videóbeállítások</string>
@@ -62,8 +61,8 @@
   <string name="plugin_reset_preferences_summary">Beépülő modul alapértelmezett beállításainak visszaállítása</string>
   <string name="plugin_reset_preferences_ask">Vissza szeretné állítani az általános beépülő modul beállításait?</string>
   <string name="plugin_reset_account_preferences_ask">Vissza szeretné állítani a fiók beépülő modul beállításait?</string>
-  <string name="plugin_successfully_installed">A(z) <b>%1$s</b> beépülő modul sikeresen telepítve</string>
-  <string name="plugin_install_failure">A beépülő modul telepítése nem sikerült: <b>%1$s</b></string>
+  <string name="plugin_successfully_installed">A(z) <b>%1$s</b> beépülő modul telepítése sikeresen megtörtént.</string>
+  <string name="plugin_install_failure">Hiba történt a következő bővítmény telepítésekor: <b>%1$s</b>.</string>
   <string name="plugin_recent_version_exception">A(z) <b>%1$s</b> újabb verziója már telepítve van</string>
   <string name="plugin_same_version_exception">A(z) <b>%1$s</b> ugyanazon verziója már telepítve van</string>
   <string name="plugin_invalid_signature"><b>%1$s</b> aláírása érvénytelen</string>

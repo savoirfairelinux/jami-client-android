@@ -9,7 +9,6 @@
   <string name="pref_mobileData_title">موبایل دیتاسی</string>
   <string name="pref_mobileData_summary">جمی نین Wi-Fi-دن علاوه 3G/LTE شبکه لرینده یئرلشمه سینی ائجازه ور</string>
   <string name="pref_pushNotifications_title">ایشلتمه خبرلری</string>
-  <string name="pref_pushNotif_summary" translatable="false"></string>
   <string name="pref_pushNotifications_summary">Google server لرینی ایستیفاده ائدیرمک اوچون فوندا چاغیرما/اتینتیشلر آلماق</string>
   <string name="pref_unifiedPush_summary">بیرلیگینده یاتاقلار/بایرنلرده یاتاقلار آلماق اوچون UnifiedPush خدمتینی ایستیفاده ائدیر</string>
   <string name="pref_video_advanced_title">گئنیش ویدئو تنظیماتلاری</string>

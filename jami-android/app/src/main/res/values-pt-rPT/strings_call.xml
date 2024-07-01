@@ -20,6 +20,8 @@ along with this program; if not, write to the Free Software
     <string name="call_error">"Ocorreu um erro ao iniciar a chamada."</string>
     <string name="call_error_no_microphone">A chamada foi cancelada. Não foi detetado nenhum microfone.</string>
     <string name="call_error_no_camera_no_microphone">A chamada foi cancelada. Não foi detetado nenhum microfone nem câmara.</string>
+    <string name="screen_sharing_error">Ocorreu um erro ao iniciar a partilha de ecrã.</string>
+
     <!-- SipCalls -->
     <string name="call_human_state_searching">A pesquisar</string>
     <string name="call_human_state_incoming">A receber</string>

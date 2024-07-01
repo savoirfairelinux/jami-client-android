@@ -9,6 +9,7 @@
   <string name="add_ring_account_title">Shtoni llogari</string>
   <string name="add_sip_account_title">Shtoni llogari SIP</string>
   <string name="ring_account_default_name">Llogari Jami %1$s</string>
+  <string name="account_creation_error">Ndodhi një gabim teksa krijohej llogaria.</string>
   <string name="prompt_alias">Alias</string>
   <string name="prompt_hostname">Strehëemër</string>
   <string name="prompt_username">Emër përdoruesi</string>

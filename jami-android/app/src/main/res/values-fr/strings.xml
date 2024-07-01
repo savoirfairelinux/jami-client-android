@@ -124,6 +124,7 @@
   <string name="write_a_message">Ecrire un message</string>
   <string name="scan_qr">Scanner un code QR</string>
   <string name="qr_code">Code QR</string>
+  <string name="qr_code_not_contact">QR code de contact Jami invalide</string>
   <string name="new_swarm">Démarrer un Swarm</string>
   <string name="ab_action_flipcamera">Changer de caméra</string>
   <string name="ab_action_hidepreview">Masquer l\'aperçu</string>
@@ -146,6 +147,7 @@
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Permission d\'accès à la caméra</string>
   <string name="permission_dialog_camera_message">Les conversation vidéo nécessitent la permission d\'utiliser l\'objectif. Merci de l\'autoriser.</string>
+  <string name="camera_error">Une erreur s\'est produite en démarrant la caméra.</string>
   <!--Ringtone activity-->
   <string name="ringtone_error_title">Erreur</string>
   <string name="ringtone_error_format_not_supported">Ce format de fichier n\'est pas supporté.</string>
@@ -184,6 +186,7 @@
   <string name="conversation_action_select_peer_number">Choisir un numéro</string>
   <string name="conversation_action_block_this">Bloquer le contact</string>
   <string name="conversation_action_unblock_this">Débloquer le contact</string>
+  <string name="conversation_action_go_to_call">Revenir à l\'appel</string>
   <string name="conversation_action_incoming_call">Appel entrant</string>
   <string name="conversation_action_latest">Faire défiler jusqu\'à la fin de la conversation</string>
   <string name="conversation_open_file_error">Il n\'y a aucune application installée capable d\'ouvrir ce type de fichier.</string>
@@ -212,6 +215,19 @@
   <string name="conversation_contact_left">%1$s restant(s)</string>
   <string name="conversation_contact_banned">%1$s a été banni</string>
   <string name="conversation_search_hint">Rechercher des conversations</string>
+  <string name="audio_recorder_error">L\'application d\'enregistrement audio n\'est pas trouvée.</string>
+  <string name="video_recorder_error">L\'application d\'enregistrement vidéo n\'est pas trouvée.</string>
+  <string name="taking_picture_error">Une erreur s\'est produite en prenant une photo.</string>
+  <string name="find_picture_error">Une erreur s\'est produite en recherchant une image.</string>
+  <string name="open_camera_error">Une erreur s\'est produite en démarrant la caméra.</string>
+  <string name="starting_recorder_error">Une erreur s\'est produite en démarrant l\'enregistreur.</string>
+  <string name="starting_camera_error">Une erreur s\'est produite en démarrant la caméra.</string>
+  <string name="browser_error">Aucun explorateur de fichier sur cet appareil. </string>
+  <string name="import_archive_error">Une erreur s\'est produite pendant l\'import de l\'archive.</string>
+  <string name="export_archive_error">Une erreur s\'est produite pendant l\'export de l\'archive.</string>
+  <string name="load_ringtone_error">Une erreur s\'est produite en chargeant la sonnerie.</string>
+  <string name="sharing_log_error">Une erreur s\'est produite lors du partage des journaux.</string>
+  <string name="no_native_crash">Aucun récent crash natif</string>
   <string name="today">Aujourd\'hui</string>
   <string name="yesterday">Hier</string>
   <!--Contacts-->
@@ -226,6 +242,7 @@
   <string name="help_password_enter">Saisissez le mot de passe de votre compte Jami principal</string>
   <string name="help_server_enter">Entrez l\'URL du serveur de gestion</string>
   <string name="help_pin_enter">Saisissez le NIP provenant d\'un autre compte Jami. Utilisez la fonction \"Exporter un compte Jami\" pour obtenir le NIP.</string>
+  <string name="pin_copied">Le NIP a été copié dans le presse-papier.</string>
   <string name="wizard_next">Suivant</string>
   <string name="wizard_back">Précédent</string>
   <string name="wizard_skip">Passer</string>
@@ -310,6 +327,7 @@
   <string name="menu_file_share">Partager le fichier</string>
   <string name="menu_message_copy">Copier</string>
   <string name="menu_message_edit">Modifier le message</string>
+  <string name="menu_message_history">Historique du message</string>
   <string name="menu_message_delete">Supprimer le message</string>
   <string name="menu_message_cancel">Annuler le message</string>
   <string name="menu_message_reply">Répondre</string>
@@ -394,6 +412,7 @@
   <string name="bottomsheet_contact">Contact Jami\n%1$s</string>
   <string name="bottomsheet_remove">Retirer du Swarm</string>
   <string name="error_open_no_app_found">Aucune application trouvée pour gérer le fichier %1$s</string>
+  <string name="swarm_detail_no_document">Vous n\'avez pas encore de documents.</string>
   <!--JamiId-->
   <string name="jami_id_copy">Copier le JamiId</string>
   <string name="jami_id_share">Partager votre JamiId</string>
@@ -416,4 +435,6 @@
   <string name="unable_to_load">Impossible de charger %1$s</string>
   <string name="load_sucess">%1$s: activé</string>
   <string name="unload_sucess">%1$s: désactivé</string>
+  <string name="install_sucess">L\'extension %1$s a été correctement installée.</string>
+  <string name="install_error">Une erreur s\'est produite pendant l\'import de l\'extension.</string>
 </resources>

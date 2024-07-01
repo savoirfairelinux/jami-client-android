@@ -9,7 +9,6 @@
   <string name="pref_mobileData_title">D\'informacions mòblas</string>
   <string name="pref_mobileData_summary">Permetre Jami sus de retes 3G/LTE en mai de Wi-Fi</string>
   <string name="pref_pushNotifications_title">Notificacions de emplegar</string>
-  <string name="pref_pushNotif_summary" translatable="false"></string>
   <string name="pref_pushNotifications_summary">Utiliza los servidors de Google per permetre la recepcion d\'apèls/messatges en foncion</string>
   <string name="pref_unifiedPush_summary">Utilizatz un servici UnifiedPush per permetre de recebre de trucs/messatges en foncion</string>
   <string name="pref_video_advanced_title">Ajustaments de vidèo avançats</string>

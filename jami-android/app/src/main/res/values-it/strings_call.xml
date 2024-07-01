@@ -20,6 +20,8 @@ along with this program; if not, write to the Free Software
     <string name="call_error">Si è verificato un errore durante l\'avvio della chiamata.</string>
     <string name="call_error_no_microphone">Chiamata annullata. Nessun microfono rilevato.</string>
     <string name="call_error_no_camera_no_microphone">Chiamata annullata. Nessuna fotocamera o microfono rilevati.</string>
+    <string name="screen_sharing_error">Si è verificato un errore durante l\'avvio della condivisione dello schermo.</string>
+
     <!-- SipCalls -->
     <string name="call_human_state_searching">Ricerca in corso...</string>
     <string name="call_human_state_incoming">In arrivo</string>

@@ -9,7 +9,6 @@
   <string name="pref_mobileData_title">मोबाइल डेटा</string>
   <string name="pref_mobileData_summary">वाई-फाई के अतिरिक्त 3जी/एलटीई नेटवर्क पर जामी को अनुमति दें</string>
   <string name="pref_pushNotifications_title">पुश सूचनाएं</string>
-  <string name="pref_pushNotif_summary" translatable="false"></string>
   <string name="pref_pushNotifications_summary">पृष्ठभूमि में कॉल/संदेश प्राप्त करने की अनुमति देने के लिए Google सर्वर का उपयोग करें</string>
   <string name="pref_unifiedPush_summary">पृष्ठभूमि में कॉल/संदेश प्राप्त करने की अनुमति देने के लिए एक UnifiedPush सेवा का उपयोग करें</string>
   <string name="pref_video_advanced_title">उन्नत वीडियो सेटिंग्स</string>

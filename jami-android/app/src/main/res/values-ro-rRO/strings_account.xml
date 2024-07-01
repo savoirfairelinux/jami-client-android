@@ -9,6 +9,7 @@
   <string name="add_ring_account_title">Adaugă un cont</string>
   <string name="add_sip_account_title">Adaugă un cont SIP</string>
   <string name="ring_account_default_name">Cont Jami %1$s</string>
+  <string name="account_creation_error">A apărut o eroare la crearea contului.</string>
   <string name="prompt_alias">Alias</string>
   <string name="prompt_hostname">Numele serverului</string>
   <string name="prompt_username">Nume de utilizator</string>
@@ -32,7 +33,7 @@
   <string name="help_sip">Configurează un cont SIP existent.</string>
   <string name="create_sip_account">Adaugă un cont SIP</string>
   <!--Strings related to account deletion-->
-  <string name="account_delete_dialog_title">Ștergi contul ?</string>
+  <string name="account_delete_dialog_title">Ștergi contul?</string>
   <string name="account_delete_dialog_message">Această acțiune este ireversibilă.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Niciun cont înscris</string>

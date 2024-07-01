@@ -9,6 +9,7 @@
   <string name="add_ring_account_title">Adaugă un cont</string>
   <string name="add_sip_account_title">Adaugă un cont SIP</string>
   <string name="ring_account_default_name">Cont Jami %1$s</string>
+  <string name="account_creation_error">A apărut o eroare la crearea contului.</string>
   <string name="prompt_alias">Alias</string>
   <string name="prompt_hostname">Numele serverului</string>
   <string name="prompt_username">Nume de utilizator</string>

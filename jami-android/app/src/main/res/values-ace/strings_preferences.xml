@@ -9,7 +9,6 @@
   <string name="pref_mobileData_title">داتا موبايل</string>
   <string name="pref_mobileData_summary">ممبريكن Jami دڠن 3G/LTE نيتر برساتو Wi-Fi</string>
   <string name="pref_pushNotifications_title">ڤمبلاجر ڤڠاجرن</string>
-  <string name="pref_pushNotif_summary" translatable="false"></string>
   <string name="pref_pushNotifications_summary">مڠڬوناكن سرڤير Google اونتوق ممبريكن ڤرليندوڠن/ميسيج دالم ڤڠڬوناكن</string>
   <string name="pref_unifiedPush_summary">مڠڬوناكن ڤڠڬونا UnifiedPush اونتوق ممبريكن ڤرلو مڠهادڤي ڤرساتوان/ميسيج دالم ڤڠڬونا</string>
   <string name="pref_video_advanced_title">ڤڠاجرن ڤيديو ڤرنه</string>

@@ -9,7 +9,6 @@
   <string name="pref_mobileData_title">મોબાઇલ ડેટા</string>
   <string name="pref_mobileData_summary">Wi-Fi ઉપરાંત 3G/LTE નેટવર્ક્સ પર જમીને પરવાનગી આપો</string>
   <string name="pref_pushNotifications_title">દબાણ સૂચનાઓ</string>
-  <string name="pref_pushNotif_summary" translatable="false"></string>
   <string name="pref_pushNotifications_summary">પૃષ્ઠભૂમિમાં કૉલ્સ / સંદેશાઓ પ્રાપ્ત કરવાની મંજૂરી આપવા માટે Google સર્વર્સનો ઉપયોગ કરો</string>
   <string name="pref_unifiedPush_summary">પૃષ્ઠભૂમિમાં કૉલ્સ / સંદેશાઓ પ્રાપ્ત કરવા માટે યુનિફાઇડપુશ સેવાનો ઉપયોગ કરો</string>
   <string name="pref_video_advanced_title">અદ્યતન વિડિઓ સેટિંગ્સ</string>

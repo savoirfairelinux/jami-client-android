@@ -146,6 +146,7 @@
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Leje për kamerën</string>
   <string name="permission_dialog_camera_message">Që të funksionojnë, bisedat me video lypin doemos leje për kamerën. Ju lutemi, shihni mundësinë e akordimit të saj.</string>
+  <string name="camera_error">Ndodhi një gabim teksa nisej kamera.</string>
   <!--Ringtone activity-->
   <string name="ringtone_error_title">Gabim</string>
   <string name="ringtone_error_format_not_supported">Ky format nuk mbulohet.</string>
@@ -184,6 +185,7 @@
   <string name="conversation_action_select_peer_number">Përzgjidhni një numër</string>
   <string name="conversation_action_block_this">Bllokojeni kontaktin</string>
   <string name="conversation_action_unblock_this">Zhbllokoje kontaktin</string>
+  <string name="conversation_action_go_to_call">Kthehu te thirrja</string>
   <string name="conversation_action_incoming_call">Thirrje ardhëse</string>
   <string name="conversation_action_latest">Hidhu te më i riu</string>
   <string name="conversation_open_file_error">S’ka të instaluar aplikacion të aftë të hapë këtë lloj kartelash.</string>
@@ -212,6 +214,18 @@
   <string name="conversation_contact_left">%1$s iku</string>
   <string name="conversation_contact_banned">%1$s u dëbua</string>
   <string name="conversation_search_hint">Kërkoni bisedë</string>
+  <string name="audio_recorder_error">S’u gjet aplikacion incizimi audio.</string>
+  <string name="video_recorder_error">S’u gjet aplikacion regjistrimi video.</string>
+  <string name="taking_picture_error">Ndodhi një gabim teksa bëhej një foto.</string>
+  <string name="find_picture_error">Ndodhi një gabim teksa gjendej një foto.</string>
+  <string name="open_camera_error">Ndodhi një gabim teksa hapej kamera.</string>
+  <string name="starting_recorder_error">Ndodhi një gabim teksa nisej incizuesi.</string>
+  <string name="starting_camera_error">Ndodhi një gabim teksa nisej kamera.</string>
+  <string name="browser_error">S’ka shfletues kartelash në këtë pajisje.</string>
+  <string name="import_archive_error">Ndodhi një gabim teksa importohej arkivi.</string>
+  <string name="export_archive_error">Ndodhi një gabim teksa eksportohej arkivi.</string>
+  <string name="load_ringtone_error">Ndodhi një gabim teksa ngarkohej zile.</string>
+  <string name="sharing_log_error">Ndodhi një gabim teksa jepeshin regjistra.</string>
   <string name="today">Sot</string>
   <string name="yesterday">Dje</string>
   <!--Contacts-->
@@ -226,6 +240,7 @@
   <string name="help_password_enter">Jepni fjalëkalimin e llogarisë tuaj kryesore Jami.</string>
   <string name="help_server_enter">Jepni URL-në e shërbyesit të administrimeve.</string>
   <string name="help_pin_enter">Jepni PIN-in prej një llogarie tjetër Jami të formësuar. Përdorni veçorinë \"eksportoje llogarinë në Jami\" që të merrni një PIN.</string>
+  <string name="pin_copied">Kodi PIN u kopjua në të papastër.</string>
   <string name="wizard_next">Pasuesi</string>
   <string name="wizard_back">Mbrapsht</string>
   <string name="wizard_skip">Anashkaloje</string>
@@ -310,6 +325,7 @@
   <string name="menu_file_share">Ndani kartelë me të tjerë</string>
   <string name="menu_message_copy">Kopjoje</string>
   <string name="menu_message_edit">Përpunojeni mesazhin</string>
+  <string name="menu_message_history">Historik mesazhesh</string>
   <string name="menu_message_delete">Fshije mesazhin</string>
   <string name="menu_message_cancel">Anuloje mesazhin</string>
   <string name="menu_message_reply">Përgjigjuni</string>
@@ -393,6 +409,7 @@
   <string name="bottomsheet_contact">Lidhuni me Jami-n\n%1$s</string>
   <string name="bottomsheet_remove">Hiqe prej zgjoi</string>
   <string name="error_open_no_app_found">S’u gjet aplikacion për trajtim të kësaj kartele: %1$s</string>
+  <string name="swarm_detail_no_document">Ende s’keni dokumente.</string>
   <!--JamiId-->
   <string name="jami_id_copy">Kopjo JamiId</string>
   <string name="jami_id_share">Ndajeni JamiId-në me të tjerë</string>
@@ -415,4 +432,6 @@
   <string name="unable_to_load">S’arrihet të ngarkohet %1$s</string>
   <string name="load_sucess">%1$s: e aktivizuar</string>
   <string name="unload_sucess">%1$s: e çaktivizuar</string>
+  <string name="install_sucess">Zgjerimi %1$s u instalua me sukses.</string>
+  <string name="install_error">Ndodhi një gabim teksa importohej zgjerimi.</string>
 </resources>

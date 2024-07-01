@@ -9,7 +9,6 @@
   <string name="pref_mobileData_title">sonraí soghluaiste</string>
   <string name="pref_mobileData_summary">Ceadaigh Jami ar líonraí 3G/LTE chomh maith le Wi-Fi</string>
   <string name="pref_pushNotifications_title">Cuir fógraí brú</string>
-  <string name="pref_pushNotif_summary" translatable="false"></string>
   <string name="pref_pushNotifications_summary">Úsáid servers Google chun ligean do ghlaochanna / teachtaireachtaí a fháil i gcúlra</string>
   <string name="pref_unifiedPush_summary">Úsáid seirbhís UnifiedPush chun glaonna/teachtaireachtaí a fháil i gcúlra a cheadú</string>
   <string name="pref_video_advanced_title">Agasú físeáin ard</string>

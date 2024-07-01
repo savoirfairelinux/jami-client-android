@@ -9,7 +9,6 @@
   <string name="pref_mobileData_title">Гар утасны мэдээлэл</string>
   <string name="pref_mobileData_summary">Jami-г Wi-Fi-ээс гадна 3G/LTE сүлжээний хэрэгслийн ашиглалтанд оруулаарай</string>
   <string name="pref_pushNotifications_title">Дашрамдсан мэдэгдэл</string>
-  <string name="pref_pushNotif_summary" translatable="false"></string>
   <string name="pref_pushNotifications_summary">Google сервер ашиглаж, хойноо дуудлага / мэдээ хүлээн авах боломжийг олгох</string>
   <string name="pref_unifiedPush_summary">UnifiedPush үйлчилгээг ашиглан дуудлага / мэдээллийг хяналд хүлээн авах боломжийг олгоно</string>
   <string name="pref_video_advanced_title">Видеоны дэвшилтэт тохируулалт</string>

@@ -9,7 +9,6 @@
   <string name="pref_mobileData_title">Մոբիլի տվյալներ</string>
   <string name="pref_mobileData_summary">Թույլ տվեք Jami- ին 3G / LTE ցանցերում Wi-Fi- ի հետ միասին</string>
   <string name="pref_pushNotifications_title">Հուշումներ</string>
-  <string name="pref_pushNotif_summary" translatable="false"></string>
   <string name="pref_pushNotifications_summary">Օգտագործեք Google սերվերներ ՝ ֆոնում զանգեր / հաղորդագրություններ ստանալու համար</string>
   <string name="pref_unifiedPush_summary">Օգտագործեք UnifiedPush ծառայություն ՝ ֆոնում զանգեր / հաղորդագրություններ ստանալու համար</string>
   <string name="pref_video_advanced_title">Հրատարակված տեսանյութի կարգավորումները</string>

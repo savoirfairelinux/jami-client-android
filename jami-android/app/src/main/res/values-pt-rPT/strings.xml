@@ -147,6 +147,7 @@
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Permissão de câmara</string>
   <string name="permission_dialog_camera_message">As conversas de vídeo requerem a permissão da câmara para funcionar. Considere a possibilidade de a ativar.</string>
+  <string name="camera_error">Ocorreu um erro ao iniciar a câmara.</string>
   <!--Ringtone activity-->
   <string name="ringtone_error_title">Erro</string>
   <string name="ringtone_error_format_not_supported">Este formato não é suportado.</string>
@@ -185,6 +186,7 @@
   <string name="conversation_action_select_peer_number">Selecione um número</string>
   <string name="conversation_action_block_this">Bloquear contacto</string>
   <string name="conversation_action_unblock_this">Desbloquear contacto</string>
+  <string name="conversation_action_go_to_call">Voltar a telefonar</string>
   <string name="conversation_action_incoming_call">Chamada recebida</string>
   <string name="conversation_action_latest">Ir para a última</string>
   <string name="conversation_open_file_error">Não existe nenhuma aplicação instalada capaz de abrir este tipo de ficheiro.</string>
@@ -213,6 +215,19 @@
   <string name="conversation_contact_left">%1$s saiu</string>
   <string name="conversation_contact_banned">%1$s foi banido</string>
   <string name="conversation_search_hint">Pesquisar conversa</string>
+  <string name="audio_recorder_error">A aplicação do gravador de áudio não foi encontrada.</string>
+  <string name="video_recorder_error">A aplicação do gravador de vídeo não foi encontrada.</string>
+  <string name="taking_picture_error">Ocorreu um erro ao tirar uma fotografia.</string>
+  <string name="find_picture_error">Ocorreu um erro ao encontrar a imagem.</string>
+  <string name="open_camera_error">Ocorreu um erro ao abrir a câmara.</string>
+  <string name="starting_recorder_error">Ocorreu um erro ao iniciar o gravador.</string>
+  <string name="starting_camera_error">Ocorreu um erro ao iniciar a câmara.</string>
+  <string name="browser_error">Ocorreu um erro ao iniciar a câmara.</string>
+  <string name="import_archive_error">Ocorreu um erro durante a importação do arquivo.</string>
+  <string name="export_archive_error">Ocorreu um erro ao exportar o arquivo.</string>
+  <string name="load_ringtone_error">Ocorreu um erro ao carregar o toque de telemóvel.</string>
+  <string name="sharing_log_error">Ocorreu um erro ao partilhar os registos.</string>
+  <string name="no_native_crash">Não houve nenhum crash nativo recente</string>
   <string name="today">Hoje</string>
   <string name="yesterday">Ontem</string>
   <!--Contacts-->
@@ -227,6 +242,7 @@
   <string name="help_password_enter">Introduza a palavra-passe da sua conta principal do Jami.</string>
   <string name="help_server_enter">Introduzir o URL do servidor de gestão.</string>
   <string name="help_pin_enter">Introduzir o PIN de outra conta Jami configurada. Utilizar a funcionalidade \"exportar conta Jami\" para obter um PIN.</string>
+  <string name="pin_copied">Código PIN copiado para a área de transferência.</string>
   <string name="wizard_next">Próximo</string>
   <string name="wizard_back">Voltar</string>
   <string name="wizard_skip">Ignorar</string>
@@ -311,6 +327,7 @@
   <string name="menu_file_share">Partilhar ficheiro</string>
   <string name="menu_message_copy">Copiar</string>
   <string name="menu_message_edit">Editar mensagem</string>
+  <string name="menu_message_history">Histórico de mensagens</string>
   <string name="menu_message_delete">Eliminar mensagem</string>
   <string name="menu_message_cancel">Cancelar mensagem</string>
   <string name="menu_message_reply">Responder</string>
@@ -395,6 +412,7 @@
   <string name="bottomsheet_contact">Contacte o Jami\n%1$s</string>
   <string name="bottomsheet_remove">Remover do enxame</string>
   <string name="error_open_no_app_found">Não foi encontrada nenhuma aplicação para lidar com este ficheiro: %1$s</string>
+  <string name="swarm_detail_no_document">Ainda não tem documentos.</string>
   <!--JamiId-->
   <string name="jami_id_copy">Copiar Jami ID</string>
   <string name="jami_id_share">Partilhar Jami ID</string>
@@ -417,4 +435,6 @@
   <string name="unable_to_load">Não foi possível carregar %1$s</string>
   <string name="load_sucess">%1$s: ativado</string>
   <string name="unload_sucess">%1$s: desativado</string>
+  <string name="install_sucess">A extensão %1$s foi instalada com sucesso.</string>
+  <string name="install_error">Ocorreu um erro ao importar a extensão.</string>
 </resources>

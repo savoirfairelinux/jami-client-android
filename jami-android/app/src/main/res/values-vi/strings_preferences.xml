@@ -9,7 +9,6 @@
   <string name="pref_mobileData_title">Dữ liệu di động</string>
   <string name="pref_mobileData_summary">Cho phép Jami trên mạng 3G / LTE ngoài Wi-Fi</string>
   <string name="pref_pushNotifications_title">Thông báo đẩy</string>
-  <string name="pref_pushNotif_summary" translatable="false"></string>
   <string name="pref_pushNotifications_summary">Sử dụng máy chủ Google để cho phép nhận cuộc gọi / tin nhắn trong nền</string>
   <string name="pref_unifiedPush_summary">Sử dụng dịch vụ UnifiedPush để cho phép nhận cuộc gọi/tin nhắn trong nền</string>
   <string name="pref_video_advanced_title">Thiết lập video nâng cao</string>

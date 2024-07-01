@@ -9,7 +9,6 @@
   <string name="pref_mobileData_title">Мобиль мәгълүматлар</string>
   <string name="pref_mobileData_summary">Җәмигә Wi-Fi белән өстәмә рәвештә 3G/LTE челтәрләрендә эшләргә рөхсәт итү</string>
   <string name="pref_pushNotifications_title">Элементлар</string>
-  <string name="pref_pushNotif_summary" translatable="false"></string>
   <string name="pref_pushNotifications_summary">Фоннарда шалтыратулар/сообщениялар кабул итүне рөхсәт итәр өчен Google серверларын куллан</string>
   <string name="pref_unifiedPush_summary">Бердәм Пуш хезмәте ярдәмендә фонда шалтыратулар/сообщениялар кабул итү мөмкин</string>
   <string name="pref_video_advanced_title">Алга таба видео көйләүләр</string>

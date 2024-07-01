@@ -9,7 +9,6 @@
   <string name="pref_mobileData_title">Mobildata</string>
   <string name="pref_mobileData_summary">Lat Jami ha 3G/LTE-nettverk i tillegg til Wi-Fi</string>
   <string name="pref_pushNotifications_title">Skriv med på nytt</string>
-  <string name="pref_pushNotif_summary" translatable="false"></string>
   <string name="pref_pushNotifications_summary">Bruk Google-server for å gje høve til å motta samtal/meldingar i bakgrunnen</string>
   <string name="pref_unifiedPush_summary">Bruk ein UnifiedPush-tjeneste for å gje høve til å motta samtal/meldingar i bakgrunnen</string>
   <string name="pref_video_advanced_title">Forteljande videoinnstillingar</string>

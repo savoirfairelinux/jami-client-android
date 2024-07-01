@@ -9,7 +9,6 @@
   <string name="pref_mobileData_title">Мобильді деректер</string>
   <string name="pref_mobileData_summary">Jami-ге Wi-Fi-ге қосымша 3G/LTE желілерінде рұқсат беру</string>
   <string name="pref_pushNotifications_title">Көшіру хабарламалары</string>
-  <string name="pref_pushNotif_summary" translatable="false"></string>
   <string name="pref_pushNotifications_summary">Google серверлерін қолдана отырып, қоңыраулар/хабарларды қоңырау шалып алуға мүмкіндік береді</string>
   <string name="pref_unifiedPush_summary">Бағытта шақыру/хабарларды қабылдау үшін UnifiedPush қызметін қолдану</string>
   <string name="pref_video_advanced_title">Жедел бейне параметрлері</string>

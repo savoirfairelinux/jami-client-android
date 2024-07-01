@@ -9,7 +9,6 @@
   <string name="pref_mobileData_title">मोबाईल डेटा</string>
   <string name="pref_mobileData_summary">जामीला वाय-फाय व्यतिरिक्त 3G/LTE नेटवर्कवर परवानगी द्या</string>
   <string name="pref_pushNotifications_title">पुश सूचना</string>
-  <string name="pref_pushNotif_summary" translatable="false"></string>
   <string name="pref_pushNotifications_summary">पार्श्वभूमीवर कॉल/संदेश प्राप्त करण्यास अनुमती देण्यासाठी Google सर्व्हरचा वापर करा</string>
   <string name="pref_unifiedPush_summary">पार्श्वभूमीवर कॉल/संदेश प्राप्त करण्यास परवानगी देण्यासाठी युनिफाइडपुश सेवा वापरा</string>
   <string name="pref_video_advanced_title">प्रगत व्हिडिओ सेटिंग्ज</string>

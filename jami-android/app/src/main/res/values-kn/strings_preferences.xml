@@ -9,7 +9,6 @@
   <string name="pref_mobileData_title">ಮೊಬೈಲ್ ಡೇಟಾ</string>
   <string name="pref_mobileData_summary">ವೈ-ಫೈ ಜೊತೆಗೆ 3ಜಿ/ಎಲ್ಟಿಇ ನೆಟ್ವರ್ಕ್ಗಳಲ್ಲಿ ಜಾಮಿಗೆ ಅವಕಾಶ</string>
   <string name="pref_pushNotifications_title">ಪುಶ್ ಅಧಿಸೂಚನೆಗಳು</string>
-  <string name="pref_pushNotif_summary" translatable="false"></string>
   <string name="pref_pushNotifications_summary">ಹಿನ್ನೆಲೆಯಲ್ಲಿ ಕರೆಗಳು/ಸಂದೇಶಗಳನ್ನು ಸ್ವೀಕರಿಸಲು Google ಸರ್ವರ್ಗಳನ್ನು ಬಳಸಿ</string>
   <string name="pref_unifiedPush_summary">ಹಿನ್ನೆಲೆಯಲ್ಲಿ ಕರೆಗಳು/ಸಂದೇಶಗಳನ್ನು ಸ್ವೀಕರಿಸಲು ಯುನಿಫೈಡ್ ಪುಶ್ ಸೇವೆಯನ್ನು ಬಳಸಿ</string>
   <string name="pref_video_advanced_title">ಸುಧಾರಿತ ವೀಡಿಯೊ ಸೆಟ್ಟಿಂಗ್ಗಳು</string>

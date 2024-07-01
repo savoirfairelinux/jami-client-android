@@ -9,7 +9,6 @@
   <string name="pref_mobileData_title">Мобилни подаци</string>
   <string name="pref_mobileData_summary">Дозволи Јами-у 3G/LTE мреже додатно поред Wi-Fi мреже</string>
   <string name="pref_pushNotifications_title">Пуш обавештења</string>
-  <string name="pref_pushNotif_summary" translatable="false"></string>
   <string name="pref_pushNotifications_summary">Користите Google сервере да бисте дозволили примање позива/порука у позадини</string>
   <string name="pref_unifiedPush_summary">Користите UnifiedPush услугу да бисте дозволили примање позива/порука у позадини</string>
   <string name="pref_video_advanced_title">Напредне видео поставке</string>

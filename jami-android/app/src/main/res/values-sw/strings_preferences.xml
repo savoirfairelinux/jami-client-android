@@ -9,7 +9,6 @@
   <string name="pref_mobileData_title">Data za simu</string>
   <string name="pref_mobileData_summary">Ruhusu Jami kwenye mitandao ya 3G / LTE pamoja na Wi-Fi</string>
   <string name="pref_pushNotifications_title">Kutuma taarifa</string>
-  <string name="pref_pushNotif_summary" translatable="false"></string>
   <string name="pref_pushNotifications_summary">Tumia seva za Google kuruhusu kupokea simu/ ujumbe katika background</string>
   <string name="pref_unifiedPush_summary">Tumia huduma ya UnifiedPush kuruhusu kupokea simu/ ujumbe katika background</string>
   <string name="pref_video_advanced_title">Mipangilio ya video ya juu</string>

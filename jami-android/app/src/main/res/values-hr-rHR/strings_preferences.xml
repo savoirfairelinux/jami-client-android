@@ -4,7 +4,6 @@
   <string name="pref_category_diagnostic">Diagnostika</string>
   <string name="pref_mobileData_summary">Dozvolite Jamiju na 3G/LTE mrežama osim Wi-Fi-a</string>
   <string name="pref_pushNotifications_title">Uložite obavijesti</string>
-  <string name="pref_pushNotif_summary" translatable="false"></string>
   <string name="pref_pushNotifications_summary">Koristite Google servere kako biste mogli primati pozive/poruke u pozadini</string>
   <string name="pref_unifiedPush_summary">Koristite uslugu UnifiedPush kako biste mogli primati pozive/poruke u pozadini</string>
   <string name="pref_video_advanced_title">Napredne video postavke</string>

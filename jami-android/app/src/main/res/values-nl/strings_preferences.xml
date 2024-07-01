@@ -9,7 +9,6 @@
   <string name="pref_mobileData_title">Mobiele data</string>
   <string name="pref_mobileData_summary">Sta Jami toe om 3G/LTE-netwerken te gebruiken naast wifi</string>
   <string name="pref_pushNotifications_title">Pushmeldingen</string>
-  <string name="pref_pushNotif_summary" translatable="false"></string>
   <string name="pref_pushNotifications_summary">Gebruik de servers van Google om oproepen/berichten in de achtergrond te kunnen ontvangen</string>
   <string name="pref_unifiedPush_summary">Gebruik een UnifiedPush-service om oproepen/berichten in de achtergrond te ontvangen</string>
   <string name="pref_video_advanced_title">Geavanceerde video-instellingen</string>

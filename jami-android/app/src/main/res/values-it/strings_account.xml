@@ -9,6 +9,7 @@
   <string name="add_ring_account_title">Aggiungi account</string>
   <string name="add_sip_account_title">Aggiungi account SIP</string>
   <string name="ring_account_default_name">Account Jami %1$s</string>
+  <string name="account_creation_error">Si è verificato un errore durante la creazione dell\'account.</string>
   <string name="prompt_alias">Alias</string>
   <string name="prompt_hostname">Nome host</string>
   <string name="prompt_username">Nome utente</string>

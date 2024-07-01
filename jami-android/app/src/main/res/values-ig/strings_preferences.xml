@@ -9,7 +9,6 @@
   <string name="pref_mobileData_title">Data mkpanaka</string>
   <string name="pref_mobileData_summary">Hapụ Jami na netwọk 3G / LTE na mgbakwunye na Wi-Fi</string>
   <string name="pref_pushNotifications_title">Nkwupụta ịkwanye</string>
-  <string name="pref_pushNotif_summary" translatable="false"></string>
   <string name="pref_pushNotifications_summary">Jiri ihe nkesa Google iji kwe ka ị nata oku / ozi na ndabere</string>
   <string name="pref_unifiedPush_summary">Jiri ọrụ UnifiedPush iji nye ohere ịnweta oku / ozi na ndabere</string>
   <string name="pref_video_advanced_title">Ntọala vidiyo dị elu</string>

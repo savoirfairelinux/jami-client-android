@@ -9,7 +9,6 @@
   <string name="pref_mobileData_title">মোবাইল ডেটা</string>
   <string name="pref_mobileData_summary">উই-ফাই ছাড়াও 3G/LTE নেটওয়ার্কে জামিকে অনুমতি দিন</string>
   <string name="pref_pushNotifications_title">ধাক্কা বিজ্ঞপ্তি</string>
-  <string name="pref_pushNotif_summary" translatable="false"></string>
   <string name="pref_pushNotifications_summary">ব্যাকগ্রাউন্ডে কল/বার্তা গ্রহণের অনুমতি দেওয়ার জন্য গুগল সার্ভার ব্যবহার করুন</string>
   <string name="pref_unifiedPush_summary">ব্যাকগ্রাউন্ডে কল/বার্তা গ্রহণের অনুমতি দেওয়ার জন্য ইউনিফাইডপশ পরিষেবা ব্যবহার করুন</string>
   <string name="pref_video_advanced_title">উন্নত ভিডিও সেটিংস</string>

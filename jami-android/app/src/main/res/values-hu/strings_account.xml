@@ -9,6 +9,7 @@
   <string name="add_ring_account_title">Fiók hozzáadása</string>
   <string name="add_sip_account_title">SIP-fiók hozzáadása</string>
   <string name="ring_account_default_name">Jami-fiók: %1$s</string>
+  <string name="account_creation_error">Hiba történt a fiók létrehozásakor.</string>
   <string name="prompt_alias">Álnév</string>
   <string name="prompt_hostname">Állomásnév</string>
   <string name="prompt_username">Felhasználónév</string>
@@ -144,7 +145,7 @@
   <!--restore/backup-->
   <string name="account_new_device_password">Adja meg a főjelszót a fiók feloldásához</string>
   <string name="error_password_char_count">Legalább 6 karakter</string>
-  <string name="error_passwords_not_equals">A jelszavak nem egyeznek</string>
+  <string name="error_passwords_not_equals">A jelszavak nem egyeznek.</string>
   <string name="export_account_wait_title">Kérem várjon…</string>
   <string name="export_account_wait_message">Fiókadatok exportálása</string>
   <string name="account_export_file">Fiók biztonsági mentése</string>
@@ -210,7 +211,7 @@
   <string name="help_connect_password_enter">Szervezet jelszavának megadása</string>
   <string name="account_connect_prompt_username">Felhasználónév</string>
   <!--Name registration-->
-  <string name="error_username_empty">Adjon meg egy felhasználónevet</string>
+  <string name="error_username_empty">Felhasználónév megadása</string>
   <string name="no_registered_name_for_account">Nincs bejegyzett név</string>
   <string name="username_available">A felhasználónév elérhető.</string>
   <string name="register_name">Név bejegyzése</string>
@@ -240,7 +241,7 @@
   <string name="account_revoke_device_hint">Adja meg a jelszót a megerősítéshez</string>
   <string name="enter_password">Adja meg a jelszót</string>
   <string name="revoke_device_title">Eszköz visszavonása</string>
-  <string name="revoke_device_message">Biztos, hogy visszavonja: %1$s?</string>
+  <string name="revoke_device_message">Biztosan szeretné leválasztani a(z) %1$s eszközt?</string>
   <string name="revoke_device_wait_title">Kérem várjon…</string>
   <string name="revoke_device_wait_message">Eszköz visszavonása</string>
   <string name="rename_device_title">Eszköz átnevezése</string>
@@ -251,13 +252,13 @@
   <string name="account_device_this_indicator">Ez az eszköz</string>
   <string name="account_disabled_indicator">letiltva</string>
   <!--Link a new device-->
-  <string name="account_link_prompt_pin_manually">Írja be kézzel a PIN-kódot</string>
+  <string name="account_link_prompt_pin_manually">PIN-kód kézi megadása</string>
   <string name="qr_invalid">Nem Jami hitelesítési QR-kód</string>
   <string name="content_description_checkbox">Érvényes QR-kód</string>
   <string name="error_format_not_supported">Ez a formátum nem támogatott</string>
-  <string name="account_link_info">Az új Jami alkalmazásban olvassa be a QR-kódot, vagy írja be kézzel a PIN-kódot.</string>
+  <string name="account_link_info">Az új Jami alkalmazásban QR-kód beolvasása vagy PIN-kód kézi megadása.</string>
   <string name="account_link_device_title">Új eszköz összekapcsolása</string>
-  <string name="account_link_password">Ez a fiók jelszóval titkosított, írja be a jelszót a PIN-kód létrehozásához.</string>
+  <string name="account_link_password">Ez a fiók jelszóval titkosított. Kérjük, adja meg a jelszót a PIN-kód létrehozásához.</string>
   <string name="account_link_generate_button">Létrehozás</string>
   <string name="account_link_time_valid">PIN-kód lejárata: %1$s.</string>
   <string name="account_link_device_info">Válassza az „Új eszköz összekapcsolása” lehetőséget a másik Jami alkalmazásban a QR- vagy PIN-kód megjelenítéséhez</string>
@@ -282,6 +283,6 @@ A biometrikus vagy eszközhitelesítés kényelmes módot kínál a Jami-fiókho
   <string name="account_biometry_enroll_auth_message">Adjon hozzá biztonságos biometrikus vagy eszközhitelesítést jelszava helyett</string>
   <string name="account_auth_error">Hitelesítési hiba: %1$s</string>
   <string name="account_auth_success">Hitelesítés sikerült</string>
-  <string name="account_auth_key_error">Nem sikerült a fiókkulcs visszafejtése</string>
+  <string name="account_auth_key_error">Hiba történt a fiókkulcs visszafejtése közben.</string>
   <string name="account_auth_password">Fiókjelszó használata</string>
 </resources>

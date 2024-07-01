@@ -9,7 +9,6 @@
   <string name="pref_mobileData_title">Porteblaj datumoj</string>
   <string name="pref_mobileData_summary">Permesu al Jami uzi 3G/LTE-retojn krom Wi-Fi</string>
   <string name="pref_pushNotifications_title">Poŝnotifikoj</string>
-  <string name="pref_pushNotif_summary" translatable="false"></string>
   <string name="pref_pushNotifications_summary">Uzu Google-servilon por permesi ricevi vokojn/mesaĝojn en la fono</string>
   <string name="pref_unifiedPush_summary">Uzu UnifiedPush-servon por permesi ricevi alvokojn/mesaĝojn en la fono</string>
   <string name="pref_video_advanced_title">Avancitaj videaj agordoj</string>

@@ -9,7 +9,6 @@
   <string name="pref_mobileData_title">మొబైల్ డేటా</string>
   <string name="pref_mobileData_summary">వై-ఫైతో పాటు 3జీ/ఎల్టీఇ నెట్వర్క్లలో జమీని అనుమతించండి</string>
   <string name="pref_pushNotifications_title">పుష్ నోటిఫికేషన్లు</string>
-  <string name="pref_pushNotif_summary" translatable="false"></string>
   <string name="pref_pushNotifications_summary">నేపథ్యంలో కాల్స్/సందేశాలు స్వీకరించడానికి గూగుల్ సర్వర్లను ఉపయోగించండి</string>
   <string name="pref_unifiedPush_summary">నేపథ్యంలో కాల్స్/సందేశాలను స్వీకరించడానికి యూనిఫైడ్ పుష్ సేవను ఉపయోగించండి</string>
   <string name="pref_video_advanced_title">ఆధునిక వీడియో సెట్టింగులు</string>
