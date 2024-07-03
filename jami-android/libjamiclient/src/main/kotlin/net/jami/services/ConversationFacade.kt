@@ -775,7 +775,7 @@ class ConversationFacade(
             mAccountService.activeCallsObservable.subscribe(
                 { conversationActiveCall ->
                     mAccountService.getAccount(accountId = conversationActiveCall.accountId)
-                        ?.getByUri(uri = conversationActiveCall.conversationId)
+                        ?.getByUri(conversationActiveCall.conversationUri)
                         ?.let {
                             mNotificationService.showGroupCallNotification(
                                 conversation = it,

@@ -92,7 +92,7 @@ class AccountService(
 
     data class ConversationActiveCalls(
         val accountId: String,
-        val conversationId: String,
+        val conversationUri: Uri,
         val activeCalls: List<Conversation.ActiveCall>
     )
 
@@ -1059,7 +1059,7 @@ class AccountService(
         activeCallsSubject.onNext(
             ConversationActiveCalls(
                 accountId,
-                conversationId,
+                Uri(Uri.SWARM_SCHEME, conversationId),
                 activeCallList
             )
         )
