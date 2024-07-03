@@ -239,7 +239,7 @@ class AvatarDrawable : Drawable {
             for (contact in contacts) {
                 if (contact.contact.isUser) continue
                 notTheUser++
-                val bitmap = profile.avatar as? Bitmap?
+                val bitmap = contact.profile.avatar as? Bitmap?
                 if (bitmap != null) {
                     bitmaps.add(bitmap)
                 }
