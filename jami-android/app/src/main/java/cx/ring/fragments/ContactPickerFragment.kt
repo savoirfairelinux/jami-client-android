@@ -16,18 +16,16 @@
  */
 package cx.ring.fragments
 
-import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialog
+import androidx.transition.AutoTransition
+import androidx.transition.TransitionManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.chip.Chip
-import cx.ring.R
 import cx.ring.adapters.ContactPickerAdapter
 import cx.ring.databinding.FragContactPickerBinding
 import cx.ring.viewholders.ContactPickerViewHolder.ContactPickerListeners
@@ -53,15 +51,6 @@ class ContactPickerFragment : BottomSheetDialogFragment() {
     @Inject
     lateinit var mConversationFacade: ConversationFacade
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val dialog = super.onCreateDialog(savedInstanceState)
-        (dialog as BottomSheetDialog).behavior.apply {
-            state = BottomSheetBehavior.STATE_EXPANDED
-            skipCollapsed = true
-        }
-        return dialog
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         mDisposableBag.add(mConversationFacade.getConversationViewModelList()
             .observeOn(AndroidSchedulers.mainThread())
@@ -71,7 +60,7 @@ class ContactPickerFragment : BottomSheetDialogFragment() {
             }){ e -> Log.e(TAG, "No contact to create a group!", e) })
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragContactPickerBinding.inflate(layoutInflater, container, false)
         adapter = ContactPickerAdapter(null, object : ContactPickerListeners {
             override fun onItemClick(item: ConversationItemViewModel) {
@@ -86,6 +75,7 @@ class ContactPickerFragment : BottomSheetDialogFragment() {
                     item.isChecked = false
                     adapter!!.update(item)
                     val v = binding!!.selectedContacts.findViewWithTag<View>(item)
+                    TransitionManager.beginDelayedTransition(binding!!.selectedContactsTooolbar, AutoTransition().setDuration(100))
                     if (v != null) binding!!.selectedContacts.removeView(v)
                 }
                 if (checked) {
@@ -102,6 +92,7 @@ class ContactPickerFragment : BottomSheetDialogFragment() {
                             tag = item
                             setOnCloseIconClickListener { remover.run() }
                         }
+                        TransitionManager.beginDelayedTransition(binding!!.selectedContactsTooolbar, AutoTransition().setDuration(100))
                         binding!!.selectedContacts.addView(chip)
                     }
                     binding!!.createGroupBtn.isEnabled = true

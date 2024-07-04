@@ -5,15 +5,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.ContactPickerFragment"
-    android:animateLayoutChanges="true">
+    tools:context=".fragments.ContactPickerFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/selected_contacts_tooolbar"
         style="@style/Widget.Material3.AppBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:animateLayoutChanges="true"
         android:background="@color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,7 +30,6 @@
             style="@style/Widget.Material3.ChipGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:animateLayoutChanges="true"
             android:minHeight="100dp"
             android:paddingHorizontal="8dp">
 
@@ -59,7 +56,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:animateLayoutChanges="true"
         android:enabled="false"
         android:text="@string/picker_btn"
         app:icon="@drawable/baseline_group_add_24"
