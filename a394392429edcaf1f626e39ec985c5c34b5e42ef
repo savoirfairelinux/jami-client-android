@@ -46,6 +46,30 @@
       },
       "revId": "a394392429edcaf1f626e39ec985c5c34b5e42ef",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "03dc156c_44819159",
+        "filename": "jami-android/app/src/main/res/layout/frag_conversation_tv.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1058
+      },
+      "writtenOn": "2024-07-05T19:33:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89343f9a_9d6a83ef",
+      "range": {
+        "startLine": 73,
+        "startChar": 46,
+        "endLine": 73,
+        "endChar": 51
+      },
+      "revId": "a394392429edcaf1f626e39ec985c5c34b5e42ef",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
