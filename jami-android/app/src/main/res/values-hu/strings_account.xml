@@ -155,7 +155,7 @@
   <string name="account_export_end_network_message">Nem sikerült exportálni a fiókot a hálózaton. Ellenőrizze a kapcsolatot.</string>
   <string name="account_export_end_error_title">Hiba</string>
   <string name="account_export_end_error_message">A fiók nem exportálása nem sikerült. Ismeretlen hiba történt.</string>
-  <string name="account_enter_password">Adja meg a jelszót</string>
+  <string name="account_enter_password">Jelszó megadása</string>
   <string name="account_share_body">Lépjen velem kapcsolatba a(z) „%1$s” használatával, a Jami elosztott kommunikációs platformon: %2$s</string>
   <string name="account_share_body_with_username">Lépjen velem kapcsolatba a(z) „%1$s” vagy a nyilvános felhasználónevem („%2$s”) használatával, a Jami elosztott kommunikációs platformon: %3$s</string>
   <string name="account_contact_me">Lépjen velem kapcsolatba a Jamin!</string>
@@ -238,8 +238,8 @@
   <!--Edit profile-->
   <string name="account_edit_profile">Fiók szerkesztése</string>
   <!--Devices-->
-  <string name="account_revoke_device_hint">Adja meg a jelszót a megerősítéshez</string>
-  <string name="enter_password">Adja meg a jelszót</string>
+  <string name="account_revoke_device_hint">Jelszó megadása megerősítéshez</string>
+  <string name="enter_password">Jelszó megadása</string>
   <string name="revoke_device_title">Eszköz visszavonása</string>
   <string name="revoke_device_message">Biztosan szeretné leválasztani a(z) %1$s eszközt?</string>
   <string name="revoke_device_wait_title">Kérem várjon…</string>

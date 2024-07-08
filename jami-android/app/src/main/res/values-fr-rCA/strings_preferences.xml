@@ -9,7 +9,6 @@
   <string name="pref_mobileData_title">Données mobiles</string>
   <string name="pref_mobileData_summary">Autoriser Jami sur les réseaux mobiles en plus du Wi-Fi</string>
   <string name="pref_pushNotifications_title">Notifications poussées</string>
-  <string name="pref_pushNotif_summary" translatable="false"></string>
   <string name="pref_pushNotifications_summary">Utiliser les serveurs de Google pour permettre la réception des appels et des messages en arrière plan.</string>
   <string name="pref_unifiedPush_summary">Utiliser un service UnifiedPush pour permettre la réception des appels et des messages en arrière-plan</string>
   <string name="pref_video_advanced_title">Paramètres vidéos avancés</string>

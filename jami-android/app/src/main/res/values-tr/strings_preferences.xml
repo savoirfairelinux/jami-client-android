@@ -9,7 +9,6 @@
   <string name="pref_mobileData_title">Hücresel veri</string>
   <string name="pref_mobileData_summary">Jami uygulamasına Wi-Fi bağlantınına ek olarak 3G/LTE ağlarında izin ver</string>
   <string name="pref_pushNotifications_title">Anlık bildirimler</string>
-  <string name="pref_pushNotif_summary" translatable="false"></string>
   <string name="pref_pushNotifications_summary">Arka planda çağrı/ileti alınmasına izin vermek için Google sunucularını kullan</string>
   <string name="pref_unifiedPush_summary">Arka planda çağrı/ileti alınmasına izin vermek için UnifiedPush hizmetini kullanın</string>
   <string name="pref_video_advanced_title">Gelişmiş görüntü ayarları</string>
