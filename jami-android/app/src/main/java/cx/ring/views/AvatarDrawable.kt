@@ -72,6 +72,7 @@ class AvatarDrawable : Drawable {
     private val presenceAvailableColor: Int
     private val checkedPaint: Paint
     private val cropCircle: Boolean
+    private val groupCircle: Boolean = false
     private var presenceStatus = Contact.PresenceStatus.OFFLINE
     private var isChecked = false
     private var showPresence = false
@@ -346,14 +347,14 @@ class AvatarDrawable : Drawable {
                 workspace = arrayOf(null)
             } else {
                 backgroundBounds = Array(bitmaps.size) { RectF() }
-                inBounds = if (cropCircle) arrayOfNulls(bitmaps.size) else Array(bitmaps.size) { Rect() }
-                clipPaint = if (cropCircle) Array(bitmaps.size) {Paint().apply {
+                inBounds = if (cropCircle && groupCircle) arrayOfNulls(bitmaps.size) else Array(bitmaps.size) { Rect() }
+                clipPaint = if (cropCircle) Array(if (groupCircle) bitmaps.size else 1) { Paint().apply {
                     strokeWidth = borderSize
                     color = Color.WHITE
                     style = Paint.Style.FILL
                 }} else null
                 workspace =
-                    if (cropCircle) arrayOfNulls(bitmaps.size) else arrayOf(null)
+                    if (cropCircle) arrayOfNulls(if (groupCircle) bitmaps.size else 1) else arrayOf(null)
             }
         } else {
             workspace = arrayOf(null)
@@ -455,19 +456,23 @@ class AvatarDrawable : Drawable {
             var r = (min(firstWorkspace.width, firstWorkspace.height) / 2).toFloat()
             val cx = firstWorkspace.width / 2 //getBounds().centerX();
             var cy = (firstWorkspace.height / 2).toFloat() //getBounds().height() / 2;
-            val ratio = 1.333333f
-            for ((i, paint) in clipPaint!!.withIndex()) {
-                finalCanvas.drawCircle(cx.toFloat(), firstWorkspace.height - cy, r, paint)
-                if (i != 0) {
-                    val s = paint.shader
-                    paint.shader = null
-                    paint.style = Paint.Style.STROKE
+            if (groupCircle) {
+                val ratio = 1.333333f
+                for ((i, paint) in clipPaint!!.withIndex()) {
                     finalCanvas.drawCircle(cx.toFloat(), firstWorkspace.height - cy, r, paint)
-                    paint.shader = s
-                    paint.style = Paint.Style.FILL
+                    if (i != 0) {
+                        val s = paint.shader
+                        paint.shader = null
+                        paint.style = Paint.Style.STROKE
+                        finalCanvas.drawCircle(cx.toFloat(), firstWorkspace.height - cy, r, paint)
+                        paint.shader = s
+                        paint.style = Paint.Style.FILL
+                    }
+                    r /= ratio
+                    cy /= ratio
                 }
-                r /= ratio
-                cy /= ratio
+            } else {
+                finalCanvas.drawCircle(cx.toFloat(), firstWorkspace.height - cy, r, clipPaint!![0])
             }
             finalCanvas.restore()
         } else {
@@ -483,15 +488,19 @@ class AvatarDrawable : Drawable {
 
     private fun drawActual(i: Int, canvas: Canvas) {
         if (bitmaps != null) {
-            if (cropCircle) {
+            if (cropCircle && groupCircle) {
                 canvas.drawBitmap(bitmaps[i], inBounds!![i], backgroundBounds!![i], drawPaint)
             } else {
                 if (backgroundBounds!!.size == bitmaps.size) {
-                    var n = 0
-                    val s = bitmaps.size
-                    while (n < s) {
-                        canvas.drawBitmap(bitmaps[n], inBounds!![n], backgroundBounds[n], drawPaint)
-                        n++
+                    if (bitmaps.size == 1) {
+                        canvas.drawBitmap(bitmaps[0], inBounds!![0], backgroundBounds[0], drawPaint)
+                    } else {
+                        var n = 0
+                        val s = bitmaps.size
+                        while (n < s) {
+                            canvas.drawBitmap(bitmaps[n], inBounds!![n], backgroundBounds[n], drawPaint)
+                            n++
+                        }
                     }
                 }
             }
@@ -570,7 +579,7 @@ class AvatarDrawable : Drawable {
         if (iw <= 0 || ih <= 0) {
             return
         }
-        if (cropCircle) {
+        if (cropCircle && groupCircle) {
             for (i in workspace.indices) {
                 val workspacei = Bitmap.createBitmap(iw, ih, Bitmap.Config.ARGB_8888)
                 workspace[i] = workspacei
@@ -579,9 +588,11 @@ class AvatarDrawable : Drawable {
         } else {
             workspace[0] =
                 Bitmap.createBitmap(bounds.width(), bounds.height(), Bitmap.Config.ARGB_8888)
+            if (cropCircle)
+                clipPaint!![0].shader = BitmapShader(workspace[0]!!, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP)
         }
         if (bitmaps != null) {
-            if (bitmaps.size == 1 || cropCircle) {
+            if (bitmaps.size == 1 || (cropCircle && groupCircle)) {
                 for (i in bitmaps.indices) {
                     val bitmap = bitmaps[i]
                     fit(iw, ih, bitmap.width, bitmap.height, true, backgroundBounds!![i])
