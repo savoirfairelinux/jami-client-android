@@ -92,7 +92,7 @@
                 android:contentDescription="@string/jami_id_copy"
                 android:minWidth="48dp"
                 android:minHeight="48dp"
-                android:src="@drawable/copy_24"
+                android:src="@drawable/outline_copy_24"
                 app:tint="@color/jami_id_surface_color" />
 
         </LinearLayout>
@@ -116,7 +116,7 @@
                 android:contentDescription="@string/jami_id_share"
                 android:minWidth="48dp"
                 android:minHeight="48dp"
-                android:src="@drawable/share_24"
+                android:src="@drawable/outline_share_24"
                 app:tint="@color/jami_id_surface_color" />
 
         </LinearLayout>
