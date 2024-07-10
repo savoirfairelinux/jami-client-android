@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="background">#202020</color>
-    <color name="background_primary">#515151</color>
+    <color name="background_secondary">#303030</color>
+    <color name="background_on_surface">#515151</color>
     <color name="surface">@color/grey_700</color>
+    <color name="icon_tint">#FFF</color>
 
     <color name="colorPrimary">@color/white</color>
     <color name="colorPrimaryTranslucent">#C0FFFFFF</color>
     <color name="colorOnPrimary">@color/color_primary_dark</color>
 
-    <color name="colorSecondary">@color/color_primary_light</color>
-    <color name="colorOnSecondary">@color/white</color>
-
+    <!--  Text color  -->
     <color name="colorOnSurface">@color/abc_primary_text_material_dark</color>
     <color name="textColorSecondary">@color/abc_secondary_text_material_dark</color>
-
     <color name="text_color_primary_dark">@color/abc_primary_text_material_dark</color>
     <color name="text_color_secondary_dark">@color/abc_primary_text_material_light</color>
 
@@ -52,9 +51,6 @@
     <color name="jami_id_validate_background_enabled_color">#CC03B9E9</color>
     <color name="jami_id_validate_icon_enabled_color">@color/black</color>
     <color name="jami_id_validate_icon_disabled_color">#4D000000</color>
-
-    <!--  WelcomeJami  -->
-    <color name="welcome_jami_surface_color">#FFFFFF</color>
 
     <!--  ChatView  -->
     <color name="icon_background_color">#202020</color>

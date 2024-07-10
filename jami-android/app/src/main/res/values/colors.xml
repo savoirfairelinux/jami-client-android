@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="background">@color/grey_25</color>
-    <color name="background_primary">#FFF</color>
+    <color name="background_secondary">#F0F0F0</color>
+    <color name="background_on_surface">#FFF</color>
     <color name="surface">@color/grey_150</color>
+    <color name="icon_tint">#000</color>
 
     <color name="colorPrimary">@color/color_primary_dark</color>
     <color name="colorPrimaryTranslucent">@color/color_primary_dark_translucent</color>
@@ -16,9 +18,9 @@
     <color name="colorError">@color/red_500</color>
     <color name="colorOnError">#ffffff</color>
 
+    <!--  Text color  -->
     <color name="colorOnSurface">@color/abc_primary_text_material_light</color>
     <color name="textColorSecondary">@color/abc_secondary_text_material_light</color>
-
     <color name="text_color_primary_dark">@color/abc_primary_text_material_dark</color>
     <color name="text_color_secondary_dark">@color/abc_secondary_text_material_dark</color>
 
@@ -45,7 +47,6 @@
 
     <color name="available_indicator">#E59028</color>
     <color name="online_indicator">#0B8271</color>
-    <color name="menu_icon">#0A84FF</color>
 
     <color name="icon_color">#656565</color>
     <color name="qr_background">@color/transparent</color>
@@ -88,9 +89,6 @@
     <color name="jami_id_validate_icon_disabled_color">#4DFFFFFF</color>
     <color name="jami_id_info_color">#4D4D4D</color>
     <color name="jami_id_edit_text_underline_color">#02B9E9</color>
-
-    <!--  WelcomeJami  -->
-    <color name="welcome_jami_surface_color">#000000</color>
 
     <!--  ChatView  -->
     <color name="call_missed">#FA2E30</color>

@@ -16,62 +16,392 @@ along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.          
 -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".client.ContactDetailsActivity">
 
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/info_card"
+    <LinearLayout
+        android:id="@+id/group1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        app:cardCornerRadius="@dimen/button_corner_radius"
-        app:cardElevation="2dp">
+        android:background="@drawable/background_rounded_16"
+        android:clickable="false"
+        android:clipToOutline="true"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/user_name_panel"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginVertical="1dp"
+            android:background="@drawable/background_clickable"
+            android:backgroundTint="@color/background_secondary"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="12dp">
+
+            <TextView
+                android:id="@+id/user_name_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:text="@string/jami_id_validate"
+                android:textColor="@color/colorOnSurface"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="50dp"
+                android:layout_toEndOf="@id/user_name_header"
+                android:ellipsize="end"
+                android:fontFamily="@font/jami"
+                android:maxLines="1"
+                android:textAlignment="textEnd"
+                android:textColor="@color/textColorSecondary"
+                android:textSize="14sp"
+                tools:text="Add" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginVertical="1dp"
+            android:background="@drawable/background_clickable"
+            android:backgroundTint="@color/background_secondary"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="12dp">
+
+            <TextView
+                android:id="@+id/identifier_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:text="@string/identifier"
+                android:textColor="@color/colorOnSurface"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/identifier"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_toEndOf="@id/identifier_header"
+                android:layout_marginStart="90dp"
+                android:fontFamily="@font/jami"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textAlignment="textEnd"
+                android:textColor="@color/textColorSecondary"
+                android:textSize="14sp"
+                tools:text="© dddd" />
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:layout_height="50dp"
+            android:layout_marginVertical="1dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/conversation_type"
-                style="@style/TextAppearance.LeanbackPreference.ListItem"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableStart="@drawable/baseline_info_24"
-                android:drawablePadding="16dp"
-                android:gravity="center_vertical"
-                tools:text="Private swarm" />
+            <ImageView
+                android:id="@+id/qr_code"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/background_clickable"
+                android:backgroundTint="@color/background_secondary"
+                android:padding="12dp"
+                android:src="@drawable/baseline_qr_code_2_black_24dp" />
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/conversation_id"
-                style="@style/TextAppearance.LeanbackPreference.ListItem.Secondary"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingStart="40dp"
-                android:singleLine="true"
-                android:ellipsize="middle"
-                tools:text="swarm:toto" />
+            <ImageView
+                android:id="@+id/share_button"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="2dp"
+                android:layout_weight="1"
+                android:background="@drawable/background_clickable"
+                android:backgroundTint="@color/background_secondary"
+                android:padding="12dp"
+                android:src="@drawable/outline_share_24" />
+
+            <ImageView
+                android:id="@+id/copy_button"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/background_clickable"
+                android:backgroundTint="@color/background_secondary"
+                android:padding="12dp"
+                android:src="@drawable/outline_copy_24" />
+
         </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
 
+    </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/contact_action_list"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clipToPadding="false"
-        android:nestedScrollingEnabled="true"
-        android:overScrollMode="never"
-        android:paddingVertical="8dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:itemCount="5"
-        tools:listitem="@layout/item_contact_action" />
+        android:background="@drawable/background_rounded_16"
+        android:layout_marginVertical="8dp"
+        android:clickable="false"
+        android:clipToOutline="true"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/description_panel"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginVertical="1dp"
+            android:background="@drawable/background_clickable"
+            android:backgroundTint="@color/background_secondary"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="12dp">
+
+            <TextView
+                android:id="@+id/description_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:text="@string/dialog_hint_description"
+                android:textColor="@color/colorOnSurface"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_toEndOf="@id/description_header"
+                android:layout_marginStart="50dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textAlignment="textEnd"
+                android:textColor="@color/textColorSecondary"
+                android:textSize="14sp"
+                tools:text="Add" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginVertical="1dp"
+            android:background="@color/background_secondary"
+            android:drawablePadding="12dp"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="12dp"
+            android:text="@string/secure_p2p_connection"
+            android:textColor="@color/colorOnSurface"
+            android:textSize="14sp"
+            app:drawableEndCompat="@drawable/outline_lock_24"
+            app:drawableTint="@color/textColorSecondary" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginVertical="1dp"
+            android:background="@color/background_secondary"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="12dp">
+
+            <TextView
+                android:id="@+id/conversation_type_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/swarm_type"
+                android:textColor="@color/colorOnSurface"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/conversation_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="50dp"
+                android:layout_toEndOf="@+id/conversation_type_header"
+                android:ellipsize="middle"
+                android:maxLines="1"
+                android:text="@string/Private"
+                android:textAlignment="textEnd"
+                android:textColor="@color/textColorSecondary" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/conversation_id_panel"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginVertical="1dp"
+            android:background="@color/background_secondary"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="12dp">
+
+            <TextView
+                android:id="@+id/conversation_id_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:text="@string/swarm_id"
+                android:textColor="@color/colorOnSurface"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/conversation_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="60dp"
+                android:layout_toEndOf="@+id/conversation_id_header"
+                android:ellipsize="middle"
+                android:maxLines="1"
+                android:textAlignment="textEnd"
+                android:textColor="@color/textColorSecondary"
+                android:textSize="14sp"
+                tools:text="eeeeeeeeeeeeeeeeewwwwwwwwwwwwwwwww" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_rounded_16"
+        android:clickable="false"
+        android:clipToOutline="true"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/color_pick_panel"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginVertical="1dp"
+            android:background="@drawable/background_clickable"
+            android:backgroundTint="@color/background_secondary"
+            android:paddingHorizontal="12dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="100dp"
+                android:layout_toStartOf="@id/color_pick"
+                android:text="@string/conversation_preference_color"
+                android:textColor="@color/colorOnSurface"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/color_pick"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/conversation_preference_color"
+                android:src="@drawable/item_color_background"
+                tools:tint="@color/green_700" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/emoji_pick_panel"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginVertical="1dp"
+            android:background="@drawable/background_clickable"
+            android:backgroundTint="@color/background_secondary"
+            android:paddingHorizontal="12dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@id/emoji_pick"
+                android:text="@string/conversation_preference_emoji"
+                android:textColor="@color/colorOnSurface"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/emoji_pick"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:textAlignment="textEnd"
+                android:textSize="24sp"
+                tools:text="@string/default_emoji_1" />
+
+        </RelativeLayout>
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/mute_switch"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginVertical="1dp"
+            android:background="@color/background_secondary"
+            android:paddingHorizontal="12dp"
+            android:text="Mute Conversation"
+            android:textAlignment="textStart"
+            android:textColor="@color/colorOnSurface"
+            tools:checked="true" />
+
+        <RelativeLayout
+            android:id="@+id/block_switch_panel"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginVertical="1dp"
+            android:background="@drawable/background_clickable"
+            android:backgroundTint="@color/background_secondary"
+            android:paddingHorizontal="12dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="100dp"
+                android:layout_toStartOf="@id/block_switch"
+                android:text="@string/conversation_action_block_this"
+                android:textColor="@color/colorOnSurface"
+                android:textSize="14sp" />
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/block_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:clickable="false" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/conversation_delete"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginVertical="4dp"
+        android:background="@drawable/background_rounded_16"
+        android:backgroundTint="@color/background_secondary"
+        android:drawablePadding="12dp"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="14dp"
+        android:textColor="@color/red_600"
+        android:textSize="14sp"
+        tools:text="Delete Conversation / Leave Swarm" />
 
 </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>
