@@ -12,10 +12,8 @@
         style="@style/Widget.Material3.AppBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:liftOnScroll="true"
-        app:liftOnScrollTargetViewId="@id/list"
         android:fitsSystemWindows="true"
-        android:backgroundTint="@color/colorPrimary">
+        app:liftOnScroll="false">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -26,22 +24,22 @@
                 android:id="@+id/back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
                 android:layout_alignParentStart="true"
-                android:padding="8dp"
-                android:layout_marginTop="12dp"
+                android:layout_alignParentTop="true"
                 android:layout_marginStart="8dp"
-                android:src="@drawable/abc_ic_ab_back_material"
+                android:layout_marginTop="12dp"
                 android:background="@null"
-                app:tint="@color/text_color_primary_dark" />
+                android:padding="8dp"
+                android:src="@drawable/abc_ic_ab_back_material"
+                app:tint="@color/colorOnSurface" />
 
             <ImageView
                 android:id="@+id/contact_image"
                 android:layout_width="92dp"
-                android:layout_alignParentTop="true"
                 android:layout_height="92dp"
-                android:layout_marginTop="24dp"
+                android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
+                android:layout_marginTop="24dp"
                 android:transitionName="conversationIcon"
                 tools:src="@tools:sample/avatars" />
 
@@ -52,54 +50,97 @@
                 android:layout_below="@id/contact_image"
                 android:layout_centerHorizontal="true"
                 android:layout_margin="15dp"
-                android:padding="5dp"
                 android:ellipsize="end"
-                android:fontFamily="@font/ubuntu_medium"
+                android:fontFamily="@font/jami"
                 android:maxLines="1"
-                android:textColor="@color/white"
-                android:textSize="15sp" />
-
-            <TextView
-                android:id="@+id/description"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/title"
-                android:textSize="13sp"
-                android:fontFamily="@font/ubuntu_regular"
-                android:layout_centerHorizontal="true"
-                android:textColor="@color/white"
-                android:visibility="gone"
-                android:text="@string/swarm_description"/>
-
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tab_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:tabIndicatorColor="@color/white"
-                app:tabSelectedTextColor="@color/white"
-                app:tabTextColor="#80FFFFFF"
-                android:background="@null"
-                android:layout_marginTop="20dp"
-                android:layout_below="@id/description">
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/tab_about"/>
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/tab_members"/>
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/tab_documetn"/>
-
-            </com.google.android.material.tabs.TabLayout>
+                android:padding="5dp"
+                android:textColor="@color/colorOnSurface"
+                android:textSize="15sp"
+                tools:text="12345, @User" />
 
         </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/btn_panel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="2" />
+
+            <ImageView
+                android:id="@+id/audio_call"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/background_rounded_16"
+                android:backgroundTint="@color/background_secondary"
+                android:padding="8dp"
+                android:src="@drawable/outline_call_24"
+                app:tint="@color/icon_tint" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/video_call"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/background_rounded_16"
+                android:backgroundTint="@color/background_secondary"
+                android:padding="8dp"
+                android:src="@drawable/outline_videocam_24"
+                app:tint="@color/icon_tint" />
+
+            <Space
+                android:id="@+id/add_member_space"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/add_member"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/background_rounded_16"
+                android:backgroundTint="@color/background_secondary"
+                android:padding="8dp"
+                android:src="@drawable/outline_person_add_24"
+                app:tint="@color/icon_tint" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="2" />
+
+        </LinearLayout>
+
+        <!--
+        app:tabIndicatorColor="@color/white"
+        app:tabTextColor="#80FFFFFF" -->
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@null"
+            app:tabRippleColor="@null">
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/details" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tab_files" />
+
+        </com.google.android.material.tabs.TabLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -107,16 +148,8 @@
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_member"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_margin="@dimen/fab_margin"
-        android:layout_gravity="bottom|end"
-        app:srcCompat="@drawable/baseline_group_add_24"
-        android:visibility="gone"/>
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="5dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

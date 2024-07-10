@@ -43,7 +43,6 @@ along with this program; if not, write to the Free Software
     <string name="credits">Credits</string>
     <string name="pip_title">Jami Conference</string>
 
-
     <string name="call_service_description">This service is necessary to keep your calls running in the foreground. It only runs during calls.</string>
     <string name="data_transfer_service_description">This service is necessary to display persistent notifications during file transfers. It only runs during file transfers.</string>
 
@@ -303,6 +302,8 @@ along with this program; if not, write to the Free Software
     <string name="conversation_details">Contact details</string>
     <string name="conversation_action_delete_this">Delete this conversation</string>
     <string name="conversation_action_delete_this_title">Delete this conversation ?</string>
+    <string name="delete_conversation">Delete conversation</string>
+    <string name="leave_swarm">Leave Swarm</string>
     <string name="conversation_action_delete_this_message">This action can not be undone.</string>
     <string name="conversation_action_history_clear">Clear history</string>
     <string name="conversation_action_history_clear_title">Clear the conversation history?</string>
@@ -396,6 +397,7 @@ along with this program; if not, write to the Free Software
     <string name="registered_name">Registered Name</string>
     <string name="no_registered_name">No name registered</string>
     <string name="identity">Identity</string>
+    <string name="identifier">Identifier</string>
     <string name="account">Account</string>
     <string name="link_new_device">Link a new device</string>
     <string name="devices">Linked devices</string>
@@ -551,6 +553,7 @@ along with this program; if not, write to the Free Software
     <string name="tab_about">About</string>
     <string name="tab_members">Members</string>
     <string name="tab_documetn">Documents</string>
+    <string name="tab_files">Files</string>
     <string name="dialogtitle_title">Edit Swarm title</string>
     <string name="dialogtitle_description">Edit Swarm description</string>
     <string name="dialog_hint_title">Title</string>
@@ -575,6 +578,13 @@ along with this program; if not, write to the Free Software
     <!--  WelcomeJami  -->
     <string name="welcome_jami_title">Welcome to Jami</string>
     <string name="welcome_jami_description">Share your Jami identifier in order to be contacted more easily!</string>
+
+    <!--  Conversation details  -->
+    <string name="details">Details</string>
+    <string name="secure_p2p_connection">Secure peer-to-peer connection</string>
+    <string name="swarm_type">Type of swarm</string>
+    <string name="Private">Private</string>
+    <string name="swarm_id">Swarm ID</string>
 
     <!-- Donation -->
     <string name="donation_card_description">If you enjoy using Jami and believe in our mission, would you make a donation?</string>

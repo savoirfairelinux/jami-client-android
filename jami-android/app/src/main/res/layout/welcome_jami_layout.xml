@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -53,7 +52,7 @@
                 android:fontFamily="@font/ubuntu_regular"
                 android:text="@string/welcome_jami_title"
                 android:textAlignment="center"
-                android:textColor="@color/welcome_jami_surface_color"
+                android:textColor="@color/colorOnSurface"
                 android:textSize="22sp"
                 android:visibility="gone"
                 tools:visibility="visible" />
@@ -67,7 +66,7 @@
                 android:fontFamily="@font/ubuntu_regular"
                 android:text="@string/welcome_jami_description"
                 android:textAlignment="center"
-                android:textColor="@color/welcome_jami_surface_color"
+                android:textColor="@color/colorOnSurface"
                 android:textSize="18sp" />
 
             <!-- Jami ID -->
