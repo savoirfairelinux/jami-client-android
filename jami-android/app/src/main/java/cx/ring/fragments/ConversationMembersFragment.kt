@@ -45,12 +45,11 @@ class ConversationMembersFragment : Fragment() {
 
     @Inject
     @Singleton
-    lateinit
-    var mConversationFacade: ConversationFacade
+    lateinit var mConversationFacade: ConversationFacade
+
     @Inject
     @Singleton
-    lateinit
-    var contactService: ContactService
+    lateinit var contactService: ContactService
 
     private var binding: FragConversationMembersBinding? = null
     private val mDisposableBag = CompositeDisposable()
@@ -97,19 +96,39 @@ class ConversationMembersFragment : Fragment() {
         binding = null
     }
 
+    private class ContactView(
+        val binding: ItemContactHorizontalBinding,
+        parentDisposable: CompositeDisposable
+    ) : RecyclerView.ViewHolder(binding.root) {
+
+        var callback: (() -> Unit)? = null
+        val disposable = CompositeDisposable()
+
+        init {
+            parentDisposable.add(disposable)
+            itemView.setOnClickListener {
+                try {
+                    callback?.invoke()
+                } catch (e: Exception) {
+                    android.util.Log.w(ContactDetailsActivity.TAG, "Error performing action", e)
+                }
+            }
+        }
+    }
+
     private class ContactViewAdapter(
         private val disposable: CompositeDisposable,
         private var contacts: List<ContactViewModel>,
         private val roles: Map<String, MemberRole>,
         private val callback: (Contact) -> Unit
-    ) : RecyclerView.Adapter<ContactDetailsActivity.ContactView>() {
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactDetailsActivity.ContactView {
+    ) : RecyclerView.Adapter<ContactView>() {
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactView {
             val layoutInflater = LayoutInflater.from(parent.context)
             val itemBinding = ItemContactHorizontalBinding.inflate(layoutInflater, parent, false)
-            return ContactDetailsActivity.ContactView(itemBinding, disposable)
+            return ContactView(itemBinding, disposable)
         }
 
-        override fun onBindViewHolder(holder: ContactDetailsActivity.ContactView, position: Int) {
+        override fun onBindViewHolder(holder: ContactView, position: Int) {
             val contact = contacts[position]
             holder.disposable.clear()
             holder.disposable.add(
@@ -128,7 +147,7 @@ class ConversationMembersFragment : Fragment() {
             notifyDataSetChanged()
         }
 
-        override fun onViewRecycled(holder: ContactDetailsActivity.ContactView) {
+        override fun onViewRecycled(holder: ContactView) {
             holder.disposable.clear()
             holder.binding.photo.setImageDrawable(null)
         }
@@ -139,7 +158,7 @@ class ConversationMembersFragment : Fragment() {
     }
 
     companion object {
-        private val TAG = ConversationMembersFragment::class.simpleName!!
+        val TAG = ConversationMembersFragment::class.simpleName!!
         fun newInstance(accountId: String, conversationId: Uri) = ConversationMembersFragment().apply {
             arguments = ConversationPath.toBundle(accountId, conversationId)
         }

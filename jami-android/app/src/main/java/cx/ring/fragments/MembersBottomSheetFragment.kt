@@ -19,9 +19,11 @@ package cx.ring.fragments
 import android.app.Dialog
 import android.content.ClipData
 import android.content.ClipboardManager
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -34,6 +36,7 @@ import cx.ring.databinding.FragMembersBottomsheetBinding
 import cx.ring.databinding.ItemMembersBottomsheetBinding
 import cx.ring.utils.ConversationPath
 import dagger.hilt.android.AndroidEntryPoint
+import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.model.Uri
 import net.jami.services.AccountService
@@ -70,34 +73,31 @@ class MembersBottomSheetFragment : BottomSheetDialogFragment() {
             .startConversation(path.accountId, path.conversationUri)
             .blockingGet()
 
-        adapter.actions.add(ConversationActionsFragment.ContactAction(null,
+        adapter.actions.add(ContactAction(null,
             getString(R.string.bottomsheet_contact, contactUri.host)) {
             copyAndShow(contactUri.host)
         })
 
-        adapter.actions.add(ConversationActionsFragment.ContactAction(null, getText(R.string.ab_action_audio_call)) {
-                (activity as ContactDetailsActivity).goToCallActivity(conversation, contactUri, false)
+        adapter.actions.add(ContactAction(null, getText(R.string.ab_action_audio_call)) {
+            (activity as? ContactDetailsActivity)?.goToCallActivity(conversation, contactUri, false)
         })
 
-        adapter.actions.add(ConversationActionsFragment.ContactAction(null, getText(R.string.ab_action_video_call)) {
-                (activity as ContactDetailsActivity).goToCallActivity(conversation, contactUri, true)
+        adapter.actions.add(ContactAction(null, getText(R.string.ab_action_video_call)) {
+            (activity as? ContactDetailsActivity)?.goToCallActivity(conversation, contactUri, true)
         })
 
-        adapter.actions.add(ConversationActionsFragment.ContactAction(null, getString(R.string.send_message)) {
-            (activity as ContactDetailsActivity).goToConversationActivity(path.accountId, contactUri)
+        adapter.actions.add(ContactAction(null, getString(R.string.send_message)) {
+            (activity as? ContactDetailsActivity)?.goToConversationActivity(path.accountId, contactUri)
         })
 
-        adapter.actions.add(
-            ConversationActionsFragment
-                .ContactAction(null, getString(R.string.bottomsheet_remove)) {
-                    mAccountService.removeConversationMember(
-                        path.accountId,
-                        conversationId = path.conversationUri.host,
-                        uri = contactUri
-                    )
-                    dismiss()
-                }
-        )
+        adapter.actions.add(ContactAction(null, getString(R.string.bottomsheet_remove)) {
+            mAccountService.removeConversationMember(
+                path.accountId,
+                conversationId = path.conversationUri.host,
+                uri = contactUri
+            )
+            dismiss()
+        })
 
         binding!!.actions.adapter = adapter
     }
@@ -125,7 +125,7 @@ class MembersBottomSheetFragment : BottomSheetDialogFragment() {
 
     private class ContactActionAdapter(private val disposable: CompositeDisposable) :
         RecyclerView.Adapter<ContactActionView>() {
-        val actions = ArrayList<ConversationActionsFragment.ContactAction>()
+        val actions = ArrayList<ContactAction>()
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactActionView {
             val layoutInflater = LayoutInflater.from(parent.context)
             val itemBinding = ItemMembersBottomsheetBinding.inflate(layoutInflater, parent, false)
@@ -148,7 +148,7 @@ class MembersBottomSheetFragment : BottomSheetDialogFragment() {
         }
     }
 
-    internal class ContactActionView(
+    private class ContactActionView(
         val binding: ItemMembersBottomsheetBinding,
         parentDisposable: CompositeDisposable
     ) : RecyclerView.ViewHolder(binding.root) {
@@ -165,6 +165,14 @@ class MembersBottomSheetFragment : BottomSheetDialogFragment() {
                 }
             }
         }
+    }
+
+    private class ContactAction(d: Single<Drawable>?, t: CharSequence, cb: () -> Unit) {
+        @DrawableRes
+        val icon: Int = 0
+        val drawable: Single<Drawable>? = d
+        val title: CharSequence = t
+        val callback: () -> Unit = cb
     }
 
     companion object {
