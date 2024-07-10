@@ -8,25 +8,55 @@ The Jami client for Android
 
 ## Environment
 
+### Submodule
+
 Download the project including the daemon submodule with:
-> git clone --recursive https://review.jami.net/jami-client-android
+
+```sh
+git clone --recursive https://review.jami.net/jami-client-android
+```
 
 Or to download the daemon submodule from the existing project directory:
-> git submodule update --init --recursive
 
-Make sure to have autotools, autopoint, swig, yasm, m4, ninja-build and cmake available on your system:
-on Debian/Ubuntu:
-> apt install cmake build-essential swig yasm ninja-build m4 autotools-dev autopoint
+```sh
+git submodule update --init --recursive
+```
 
-On Arch:
-> pacman -S cmake ninja automake swig yasm m4 patch autoconf pkgconf
+### Dependencies
 
-On macOS:
-> brew install cmake automake autotools libtool pkg-config yasm swig
+Make sure to have autotools, autopoint, swig, yasm, m4, ninja-build and cmake available on your system.
+
+> [!WARNING]
+>
+> Jami needs at least swig 4.2 to work. Else it will raise errors at compilation.
+> See if the package is available with this version from your package manager, else you will need to install it [from sources](https://github.com/swig/swig).
+
+##### On Debian/Ubuntu
+
+```sh
+apt install cmake build-essential swig yasm ninja-build m4 autotools-dev autopoint
+```
+
+##### On Arch
+
+```sh
+pacman -S cmake ninja automake swig yasm m4 patch autoconf pkgconf
+```
+
+##### On macOS:
+
+```sh
+brew install cmake automake autotools libtool pkg-config yasm swig
+```
 
 When using brew on macOS, the 'libtoolize' binary might be available as 'glibtoolize'.
 In that case, the following command makes it avaialble to the build system:
-> ln -s /opt/homebrew/bin/glibtoolize /opt/homebrew/bin/libtoolize
+
+```sh
+ln -s /opt/homebrew/bin/glibtoolize /opt/homebrew/bin/libtoolize
+```
+
+### Android SDK & NDK
 
 Make sure to have the Android SDK and NDK available.
 
@@ -46,12 +76,16 @@ cd jami-client-android/jami-android
 ## Update translations
 
 Update translations using the Transifex client (tx) :
-> ./update-translations.sh
+```sh
+./update-translations.sh
+```
 
 # Generate new release commit
 
 Generate a new release commit updating the version code and version string:
-> ./update_version.py --commit
+```sh
+./update_version.py --commit
+```
 
 # Report issues
 
