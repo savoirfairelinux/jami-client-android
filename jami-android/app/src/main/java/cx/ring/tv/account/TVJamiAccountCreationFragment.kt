@@ -19,6 +19,7 @@ package cx.ring.tv.account
 import android.app.Activity
 import android.os.Bundle
 import android.text.Editable
+import android.text.InputFilter
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
@@ -29,6 +30,7 @@ import androidx.leanback.widget.GuidanceStylist.Guidance
 import androidx.leanback.widget.GuidedAction
 import cx.ring.R
 import cx.ring.account.AccountCreationViewModel
+import cx.ring.utils.RegisteredNameFilter
 import dagger.hilt.android.AndroidEntryPoint
 import net.jami.account.JamiAccountCreationPresenter
 import net.jami.account.JamiAccountCreationView
@@ -86,6 +88,7 @@ class TVJamiAccountCreationFragment : JamiGuidedStepFragment<JamiAccountCreation
             val text = view.findViewById<EditText>(androidx.leanback.R.id.guidedactions_item_title)
             text.removeTextChangedListener(mUsernameWatcher)
             if (action.id == USERNAME) {
+                text.filters = arrayOf<InputFilter>(RegisteredNameFilter())
                 text.addTextChangedListener(mUsernameWatcher)
             }
         }
