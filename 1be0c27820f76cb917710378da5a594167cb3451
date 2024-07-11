@@ -53,6 +53,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "47ad9f12_0ff779fe",
+        "filename": "jami-android/app/src/androidTest/java/cx/ring/client/addcontact/AddContact.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-07-11T18:52:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d28f91f2_344888bd",
+      "revId": "1be0c27820f76cb917710378da5a594167cb3451",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fabac19d_1e19e2c8",
@@ -66,6 +84,24 @@
       "writtenOn": "2024-06-28T20:07:52Z",
       "side": 1,
       "message": "should include copyright header",
+      "revId": "1be0c27820f76cb917710378da5a594167cb3451",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "74a78b4e_8285f2c8",
+        "filename": "jami-android/app/src/androidTest/java/cx/ring/client/wizard/AccountCreation.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-07-11T18:52:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fabac19d_1e19e2c8",
       "revId": "1be0c27820f76cb917710378da5a594167cb3451",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
