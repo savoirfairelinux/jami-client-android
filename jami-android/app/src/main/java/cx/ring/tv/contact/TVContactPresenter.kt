@@ -18,8 +18,10 @@ package cx.ring.tv.contact
 
 import cx.ring.utils.ConversationPath
 import ezvcard.VCard
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Scheduler
 import net.jami.daemon.Blob
+import net.jami.model.Account
 import net.jami.services.ConversationFacade
 import net.jami.model.Call
 import net.jami.model.Conversation
@@ -46,13 +48,24 @@ class TVContactPresenter @Inject constructor(
         mUri = path.conversationUri
         mCompositeDisposable.clear()
 
-        mCompositeDisposable.add(mConversationService.getAccountSubject(path.accountId)
-            .flatMapObservable { account ->
-                val conversation = account.getByUri(path.conversationUri)!!
-                mConversationService.observeConversation(account, conversation, true).map { vm -> Pair(account, vm) }
-            }
-            .observeOn(mUiScheduler)
-            .subscribe({(account, c) -> view?.showContact(account, c) }, {view?.finishView()}))
+        mCompositeDisposable.add(
+            mConversationService.getAccountSubject(path.accountId)
+                .flatMapObservable { account: Account ->
+                    val conversation = account.getByUri(path.conversationUri)!!
+                    conversation.mode
+                        .flatMap { conversationMode: Conversation.Mode ->
+                            if (conversationMode === Conversation.Mode.Legacy)
+                                conversation.contact!!.conversationUri.switchMapSingle { uri ->
+                                    mConversationService.startConversation(account.accountId, uri)
+                                }
+                            else Observable.just(conversation)
+                        }.map { Pair(account, it) }
+                }.flatMap { (account: Account, conversation: Conversation) ->
+                    mConversationService.observeConversation(account, conversation, true)
+                        .map { vm -> Pair(account, vm) }
+                }.subscribe({(account: Account, c: ConversationItemViewModel) ->
+                    view?.showContact(account, c) }, {view?.finishView()})
+        )
     }
 
     fun contactClicked() {
