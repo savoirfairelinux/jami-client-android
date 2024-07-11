@@ -22,7 +22,7 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.core.view.ViewCompat;
 import androidx.leanback.widget.BaseCardView;
 
-import androidx.leanback.R;
+import cx.ring.R;
 
 public class CardView extends BaseCardView {
 
@@ -31,7 +31,6 @@ public class CardView extends BaseCardView {
     public static final int CARD_TYPE_FLAG_CONTENT = 2;
     public static final int CARD_TYPE_FLAG_ICON_RIGHT = 3;
     
-    private static final int CARD_HEIGHT = 290;
     private static final String ALPHA = "alpha";
 
     private ImageView mImageView;
@@ -52,12 +51,12 @@ public class CardView extends BaseCardView {
     }
 
     public CardView(Context context, AttributeSet attrs) {
-        this(context, attrs, R.attr.imageCardViewStyle);
+        this(context, attrs, androidx.leanback.R.attr.imageCardViewStyle);
     }
 
     public CardView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        buildImageCardView(attrs, defStyleAttr, R.style.Widget_Leanback_ImageCardView);
+        buildImageCardView(attrs, defStyleAttr, androidx.leanback.R.style.Widget_Leanback_ImageCardView);
     }
 
     @SuppressLint("CustomViewStyleable")
@@ -65,20 +64,23 @@ public class CardView extends BaseCardView {
         // Make sure the ImageCardView is focusable.
         setFocusable(true);
         setFocusableInTouchMode(true);
-        setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, CARD_HEIGHT));
+        setLayoutParams(new ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                getResources().getDimensionPixelSize(R.dimen.tv_avatar_card)
+        ));
 
         LayoutInflater inflater = LayoutInflater.from(getContext());
-        inflater.inflate(R.layout.lb_image_card_view, this);
-        TypedArray cardAttrs = getContext().obtainStyledAttributes(attrs, R.styleable.lbImageCardView, defStyleAttr, defStyle);
-        ViewCompat.saveAttributeDataForStyleable(this, getContext(), R.styleable.lbImageCardView, attrs, cardAttrs, defStyleAttr, defStyle);
-        int cardType = cardAttrs.getInt(R.styleable.lbImageCardView_lbImageCardViewType, CARD_TYPE_FLAG_IMAGE_ONLY);
+        inflater.inflate(androidx.leanback.R.layout.lb_image_card_view, this);
+        TypedArray cardAttrs = getContext().obtainStyledAttributes(attrs, androidx.leanback.R.styleable.lbImageCardView, defStyleAttr, defStyle);
+        ViewCompat.saveAttributeDataForStyleable(this, getContext(), androidx.leanback.R.styleable.lbImageCardView, attrs, cardAttrs, defStyleAttr, defStyle);
+        int cardType = cardAttrs.getInt(androidx.leanback.R.styleable.lbImageCardView_lbImageCardViewType, CARD_TYPE_FLAG_IMAGE_ONLY);
 
         boolean hasImageOnly = cardType == CARD_TYPE_FLAG_IMAGE_ONLY;
         boolean hasTitle = (cardType & CARD_TYPE_FLAG_TITLE) == CARD_TYPE_FLAG_TITLE;
         boolean hasContent = (cardType & CARD_TYPE_FLAG_CONTENT) == CARD_TYPE_FLAG_CONTENT;
         boolean hasIconRight = (cardType & CARD_TYPE_FLAG_ICON_RIGHT) == CARD_TYPE_FLAG_ICON_RIGHT;
 
-        mImageView = findViewById(R.id.main_image);
+        mImageView = findViewById(androidx.leanback.R.id.main_image);
         if (mImageView.getDrawable() == null) {
             mImageView.setVisibility(View.INVISIBLE);
         }
@@ -87,7 +89,7 @@ public class CardView extends BaseCardView {
         mFadeInAnimator = ObjectAnimator.ofFloat(mImageView, ALPHA, 1f);
         mFadeInAnimator.setDuration(mImageView.getResources().getInteger(android.R.integer.config_shortAnimTime));
 
-        mInfoArea = findViewById(R.id.info_field);
+        mInfoArea = findViewById(androidx.leanback.R.id.info_field);
 
         Typeface mulishBold = ResourcesCompat.getFont(getContext(), cx.ring.R.font.mulish_semibold);
         Typeface mulishRegular = ResourcesCompat.getFont(getContext(), cx.ring.R.font.mulish_regular);
@@ -99,7 +101,7 @@ public class CardView extends BaseCardView {
         }
 
         if (hasTitle) {
-            mTitleView = (TextView) inflater.inflate(R.layout.lb_image_card_view_themed_title, mInfoArea, false);
+            mTitleView = (TextView) inflater.inflate(androidx.leanback.R.layout.lb_image_card_view_themed_title, mInfoArea, false);
             mTitleView.setTextSize(12);
             mTitleView.setTypeface(mulishBold);
             mTitleView.setMaxLines(2);
@@ -108,7 +110,7 @@ public class CardView extends BaseCardView {
         }
 
         if (hasContent) {
-            mContentView = (TextView) inflater.inflate(R.layout.lb_image_card_view_themed_content, mInfoArea, false);
+            mContentView = (TextView) inflater.inflate(androidx.leanback.R.layout.lb_image_card_view_themed_content, mInfoArea, false);
             mContentView.setTextSize(10);
             mContentView.setTypeface(mulishRegular);
             mContentView.setTextColor(getResources().getColor(cx.ring.R.color.white));
@@ -116,7 +118,7 @@ public class CardView extends BaseCardView {
         }
 
         if (hasIconRight) {
-            int layoutId = R.layout.lb_image_card_view_themed_badge_right;
+            int layoutId = androidx.leanback.R.layout.lb_image_card_view_themed_badge_right;
             mBadgeImage = (ImageView) inflater.inflate(layoutId, mInfoArea, false);
             mInfoArea.addView(mBadgeImage);
         }
