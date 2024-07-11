@@ -94,6 +94,7 @@ enum class ConfigKey(val key: String, val isBool: Boolean = false) {
     DHT_PORT("DHT.port"),
     DHT_PUBLIC_IN("DHT.PublicInCalls", true),
     PROXY_ENABLED("Account.proxyEnabled", true),
+    PROXY_LIST_ENABLED("Account.proxyListEnabled", true),
     PROXY_SERVER("Account.proxyServer"),
     PROXY_SERVER_LIST("Account.dhtProxyListUrl"),
     PROXY_PUSH_TOKEN("Account.proxyPushToken"),
@@ -104,7 +105,7 @@ enum class ConfigKey(val key: String, val isBool: Boolean = false) {
     UI_CUSTOMIZATION("Account.uiCustomization");
 
     companion object {
-        private val keyMap = values().associateByTo(HashMap(values().size)) { it.key }
+        private val keyMap = entries.associateByTo(HashMap(entries.size)) { it.key }
         fun fromString(stringKey: String): ConfigKey? = keyMap[stringKey]
     }
 }
