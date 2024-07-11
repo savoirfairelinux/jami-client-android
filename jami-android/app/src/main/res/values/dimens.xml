@@ -63,6 +63,7 @@ along with this program; if not, write to the Free Software
     <dimen name="qr_code_scanner_size">300dp</dimen>
 
     <dimen name="tv_avatar_size">320dp</dimen>
+    <dimen name="tv_avatar_card">150dp</dimen>
 
     <dimen name="call_preview_elevation">8dp</dimen>
     <dimen name="call_preview_elevation_dragged">16dp</dimen>
