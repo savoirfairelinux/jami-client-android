@@ -14,7 +14,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <EditTextPreference
         android:key="Account.hostname"
@@ -61,13 +62,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:summary=""
             android:title="@string/account_proxy_server_label" />
 
+        <SwitchPreferenceCompat
+            android:icon="@drawable/baseline_article_24"
+            android:dependency="Account.proxyEnabled"
+            android:key="Account.proxyListEnabled"
+            android:persistent="false"
+            android:summaryOff="@string/disabled"
+            android:summaryOn="@string/enabled"
+            android:title="@string/account_proxy_list_enable_label" />
+
         <EditTextPreference
             android:defaultValue=""
-            android:dependency="Account.proxyEnabled"
+            android:dependency="Account.proxyListEnabled"
             android:key="Account.dhtProxyListUrl"
             android:persistent="false"
             android:summary=""
-            android:title="@string/account_proxy_server_list_label" />
+            android:title="@string/account_proxy_server_list_label"/>
+
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/account_peer_discovery_label">
