@@ -127,6 +127,11 @@ class AdvancedAccountFragment : BasePreferenceFragment<AdvancedAccountPresenter>
         dhtproxy?.parent?.isVisible = isJamiAccount
     }
 
+    override fun updateVolatileDetails(details: AccountConfig) {
+        findPreference<TwoStatePreference>(ConfigKey.PROXY_ENABLED.key)?.summaryOn =
+            getString(R.string.account_proxy_server_used, details[ConfigKey.PROXY_SERVER])
+    }
+
     override fun onPreferenceChange(preference: Preference, newValue: Any): Boolean {
         val key = ConfigKey.fromString(preference.key)!!
         presenter.preferenceChanged(key, newValue)
