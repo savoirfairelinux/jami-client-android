@@ -16,25 +16,31 @@
  */
 package net.jami.settings
 
+import io.reactivex.rxjava3.core.Scheduler
 import net.jami.model.Account
 import net.jami.model.ConfigKey
 import net.jami.mvp.RootPresenter
 import net.jami.services.AccountService
-import net.jami.services.ConversationFacade
 import net.jami.utils.Log
 import java.net.NetworkInterface
 import java.net.SocketException
 import java.util.*
 import javax.inject.Inject
+import javax.inject.Named
 
 class AdvancedAccountPresenter @Inject constructor(
-    private var mConversationFacade: ConversationFacade,
-    private var mAccountService: AccountService
+    private var accountService: AccountService,
+    @param:Named("UiScheduler") private val uiScheduler: Scheduler
 ) : RootPresenter<AdvancedAccountView>() {
     private var mAccount: Account? = null
     fun init(accountId: String) {
-        mAccount = mAccountService.getAccount(accountId)?.also { account ->
+        mAccount = accountService.getAccount(accountId)?.also { account ->
             view?.initView(account.config, networkInterfaces)
+            mCompositeDisposable.add(account.volatileDetails
+                .observeOn(uiScheduler)
+                .subscribe { details ->
+                    view?.updateVolatileDetails(details)
+                })
         }
     }
 
@@ -58,8 +64,8 @@ class AdvancedAccountPresenter @Inject constructor(
     }
 
     private fun updateAccount() {
-        mAccountService.setCredentials(mAccount!!.accountId, mAccount!!.credentialsHashMapList)
-        mAccountService.setAccountDetails(mAccount!!.accountId, mAccount!!.details)
+        accountService.setCredentials(mAccount!!.accountId, mAccount!!.credentialsHashMapList)
+        accountService.setAccountDetails(mAccount!!.accountId, mAccount!!.details)
     }
 
     private fun adjustRtpRange(newValue: Int): String {
