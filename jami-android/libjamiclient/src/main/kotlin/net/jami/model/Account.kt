@@ -36,6 +36,10 @@ class Account(
     volDetails: Map<String, String>
 ) {
     private var mVolatileDetails: AccountConfig = AccountConfig(volDetails)
+    private var volatileDetailsSubject = BehaviorSubject.createDefault(mVolatileDetails)
+    val volatileDetails: Observable<AccountConfig>
+        get() = volatileDetailsSubject
+
     var config: AccountConfig = AccountConfig(details)
         private set
     var username: String? = config[ConfigKey.ACCOUNT_USERNAME]
@@ -455,8 +459,10 @@ class Account(
     }
 
     fun setVolatileDetails(volatileDetails: Map<String, String>) {
-        mVolatileDetails = AccountConfig(volatileDetails)
-        setRegistrationState(AccountConfig.RegistrationState.valueOf(mVolatileDetails[ConfigKey.ACCOUNT_REGISTRATION_STATUS]))
+        val details = AccountConfig(volatileDetails)
+        mVolatileDetails = details
+        volatileDetailsSubject.onNext(details)
+        setRegistrationState(AccountConfig.RegistrationState.valueOf(details[ConfigKey.ACCOUNT_REGISTRATION_STATUS]))
     }
 
     val registeredName: String

@@ -20,5 +20,10 @@ import net.jami.model.AccountConfig
 import java.util.*
 
 interface AdvancedAccountView {
-    fun initView(config: AccountConfig, networkInterfaces: ArrayList<CharSequence>)
+    fun initView(
+        config: AccountConfig,
+        networkInterfaces: ArrayList<CharSequence>
+    )
+
+    fun updateVolatileDetails(details: AccountConfig)
 }
