@@ -94,7 +94,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:id="@+id/user_photo"
                     android:layout_width="82dp"
                     android:layout_height="82dp"
-                    android:src="@drawable/ic_contact_picture_fallback"
+                    tools:src="@drawable/ic_contact_picture_fallback"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -283,7 +283,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:divider="@null"
-                android:nestedScrollingEnabled="false"
+                android:nestedScrollingEnabled="true"
                 android:visibility="gone" />
 
             <com.google.android.material.button.MaterialButton
