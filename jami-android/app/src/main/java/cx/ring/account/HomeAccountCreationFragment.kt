@@ -45,11 +45,11 @@ class HomeAccountCreationFragment :
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         FragAccHomeCreateBinding.inflate(inflater, container, false).apply {
-            ringAddAccount.setOnClickListener {presenter.clickOnLinkAccount() }
-            ringCreateBtn.setOnClickListener { presenter.clickOnCreateAccount() }
-            accountConnectServer.setOnClickListener { presenter.clickOnConnectAccount() }
+            ringAddAccount.setOnClickListener { goToAccountLink() }
+            ringCreateBtn.setOnClickListener { goToAccountCreation() }
+            accountConnectServer.setOnClickListener { goToAccountConnect() }
             ringImportAccount.setOnClickListener { performFileSearch() }
-            sipAddAccount.setOnClickListener { presenter.clickOnCreateSIPAccount() }
+            sipAddAccount.setOnClickListener { goToSIPAccountCreation() }
             binding = this
         }.root
 
