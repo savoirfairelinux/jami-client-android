@@ -33,6 +33,24 @@
       "message": "needs to observed on UI Thread",
       "revId": "c399a6b7b8ebe502fcbeeabafedcb966c73ddebc",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b0680a39_0697a1e0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-07-12T17:21:27Z",
+      "side": 1,
+      "message": "unresolved",
+      "parentUuid": "347649ea_70cf07a6",
+      "revId": "c399a6b7b8ebe502fcbeeabafedcb966c73ddebc",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
