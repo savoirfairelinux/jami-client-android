@@ -690,9 +690,8 @@ class JamiAccountSummaryFragment :
 
     private fun expand(summary: View) {
         summary.visibility = View.VISIBLE
-        val widthSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
         summary.measure(
-            View.MeasureSpec.makeMeasureSpec(widthSpec, View.MeasureSpec.EXACTLY),
+            View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.EXACTLY),
             View.MeasureSpec.makeMeasureSpec(1200, View.MeasureSpec.AT_MOST)
         )
         val targetHeight = summary.measuredHeight
