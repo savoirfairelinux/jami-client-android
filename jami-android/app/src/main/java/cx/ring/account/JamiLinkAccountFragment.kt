@@ -25,7 +25,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
@@ -58,19 +57,10 @@ class JamiLinkAccountFragment :
         ViewModelProvider(this)[EditTextPinInputViewModel::class.java]
     }
 
-    private fun setLayoutOrientation(linearLayout: LinearLayout?, conf: Configuration) {
-        linearLayout?.orientation = if (conf.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            LinearLayout.HORIZONTAL
-        } else LinearLayout.VERTICAL
-    }
-
-    override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+    private fun setLayout(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
     ): View = FragAccJamiLinkBinding.inflate(inflater, container, false).apply {
-
-        setLayoutOrientation(root, resources.configuration)
 
         val adapter = SectionsPagerAdapter(this@JamiLinkAccountFragment)
         adapter.addFragment(QrCodePinInputFragment(), getString(R.string.connect_device_scanqr))
@@ -106,8 +96,15 @@ class JamiLinkAccountFragment :
                 presenter.passwordChanged(s.toString())
             }
         })
+
         binding = this
     }.root
+
+    override fun onCreateView(
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
+    ): View = setLayout(inflater, container)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -117,7 +114,9 @@ class JamiLinkAccountFragment :
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        setLayoutOrientation(binding?.root, resources.configuration)
+        val rootView = (view as ViewGroup)
+        rootView.removeAllViews()
+        rootView.addView(setLayout(LayoutInflater.from(activity), rootView))
     }
 
     override fun onDestroyView() {
