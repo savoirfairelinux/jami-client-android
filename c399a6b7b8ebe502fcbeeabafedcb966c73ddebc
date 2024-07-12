@@ -16,6 +16,23 @@
       "message": "I have a doubt about scheduling this on UI thread",
       "revId": "c399a6b7b8ebe502fcbeeabafedcb966c73ddebc",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "042f8914_ffeeba70",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-07-12T15:52:26Z",
+      "side": 1,
+      "message": "needs to observed on UI Thread",
+      "revId": "c399a6b7b8ebe502fcbeeabafedcb966c73ddebc",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
