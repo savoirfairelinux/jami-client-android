@@ -34,13 +34,8 @@ object StringUtils {
         Character.UnicodeBlock.TAGS
     ))
 
-    fun capitalize(s: String): String {
-        if (s.isEmpty()) {
-            return ""
-        }
-        val first = s[0]
-        return if (first.isUpperCase()) s else first.uppercase() + s.substring(1)
-    }
+    fun capitalize(s: String): String =
+        s.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
 
     fun toPassword(s: String): String {
         if (s.isEmpty()) return ""
