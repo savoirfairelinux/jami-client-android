@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "133a4b4a_1e0330bb",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ConversationActionsFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-07-13T19:02:30Z",
+      "side": 1,
+      "message": "Hi, thank you for helping us to improve jami. We are a little team and it\u0027s really appreciated! So sorry for the delay for the review.\n\nFrom a first read, I don\u0027t understand why you let the fragment create ContactAction() for color and symbol. I think we don\u0027t need them at all. I would just put the condition `if(conversation.mode.blockingFirst() \u003d\u003d Conversation.Mode.Request)` around all the stuff related to colorAction, symbolAction and lines adding them to the adapter.\n\nHowever I will test this on Monday and I\u0027ll let you know.",
+      "range": {
+        "startLine": 94,
+        "startChar": 12,
+        "endLine": 115,
+        "endChar": 46
+      },
+      "revId": "d6b6756778cfd6fb822aca26d4241f52255b402b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
