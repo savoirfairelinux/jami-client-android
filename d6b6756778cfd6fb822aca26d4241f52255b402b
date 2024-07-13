@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8671b1a3_d05d9fea",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-07-13T19:06:48Z",
+      "side": 1,
+      "message": "Also, looks like we can modify color and symbol for searched contact.\n\nSo you may not only filter for \"request\".",
+      "revId": "d6b6756778cfd6fb822aca26d4241f52255b402b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "133a4b4a_1e0330bb",
         "filename": "jami-android/app/src/main/java/cx/ring/fragments/ConversationActionsFragment.kt",
         "patchSetId": 1
