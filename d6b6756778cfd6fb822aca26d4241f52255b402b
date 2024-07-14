@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0e43b551_0af4229e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1006
+      },
+      "writtenOn": "2024-07-14T23:08:53Z",
+      "side": 1,
+      "message": "I am not sure if Legacy Mode conversations exist today.",
+      "parentUuid": "997dcdad_221b41c4",
+      "revId": "d6b6756778cfd6fb822aca26d4241f52255b402b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "133a4b4a_1e0330bb",
         "filename": "jami-android/app/src/main/java/cx/ring/fragments/ConversationActionsFragment.kt",
         "patchSetId": 1
