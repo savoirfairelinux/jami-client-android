@@ -221,7 +221,7 @@ abstract class CallService(
 
     private fun placeCall(account: String, conversationUri: Uri?, number: Uri, hasVideo: Boolean): Single<Call> =
         Single.fromCallable<Call> {
-            Log.i(TAG, "placeCall() thread running... $number hasVideo: $hasVideo")
+            Log.i(TAG, "placeCall() thread running… $number hasVideo: $hasVideo")
             val media = VectMap()
             media.reserve(if (hasVideo) 2 else 1)
             media.add(Media.DEFAULT_AUDIO.toMap())
@@ -237,7 +237,7 @@ abstract class CallService(
 
     fun refuse(accountId:String, callId: String) {
         mExecutor.execute {
-            Log.i(TAG, "refuse() running... $callId")
+            Log.i(TAG, "refuse() running… $callId")
             JamiService.refuse(accountId, callId)
             JamiService.hangUp(accountId, callId)
         }
@@ -245,7 +245,7 @@ abstract class CallService(
 
     fun accept(accountId:String, callId: String, hasVideo: Boolean = false) {
         mExecutor.execute {
-            Log.i(TAG, "accept() running... $callId")
+            Log.i(TAG, "accept() running… $callId")
             val call = calls[callId] ?: return@execute
             val mediaList = call.mediaList
             val vectMapMedia = mediaList.mapTo(VectMap().apply { reserve(mediaList.size) }) { media ->
@@ -261,28 +261,28 @@ abstract class CallService(
 
     fun hangUp(accountId:String, callId: String) {
         mExecutor.execute {
-            Log.i(TAG, "hangUp() running... $callId")
+            Log.i(TAG, "hangUp() running… $callId")
             JamiService.hangUp(accountId, callId)
         }
     }
 
     fun muteParticipant(accountId:String, confId: String, peerId: String, mute: Boolean) {
         mExecutor.execute {
-            Log.i(TAG, "mute participant... $peerId")
+            Log.i(TAG, "mute participant… $peerId")
             JamiService.muteParticipant(accountId, confId, peerId, mute)
         }
     }
 
     fun hangupParticipant(accountId:String, confId: String, peerId: String, deviceId: String = "") {
         mExecutor.execute {
-            Log.i(TAG, "hangup participant... $peerId")
+            Log.i(TAG, "hangup participant… $peerId")
             JamiService.hangupParticipant(accountId, confId, peerId, deviceId)
         }
     }
 
     fun raiseHand(accountId: String, confId: String, peerId: String, state: Boolean, deviceId:String?){
         mExecutor.execute {
-            Log.i(TAG, "participant $peerId raise hand... ")
+            Log.i(TAG, "participant $peerId raise hand…")
             JamiService.raiseHand(accountId, confId, peerId, deviceId ?: "", state)
         }
     }
@@ -302,14 +302,14 @@ abstract class CallService(
 
     fun hold(accountId:String, callId: String) {
         mExecutor.execute {
-            Log.i(TAG, "hold() running... $callId")
+            Log.i(TAG, "hold() running… $callId")
             JamiService.hold(accountId, callId)
         }
     }
 
     fun unhold(accountId:String, callId: String) {
         mExecutor.execute {
-            Log.i(TAG, "unhold() running... $callId")
+            Log.i(TAG, "unhold() running… $callId")
             JamiService.unhold(accountId, callId)
         }
     }
@@ -321,14 +321,14 @@ abstract class CallService(
 
     fun restartAudioLayer() {
         mExecutor.execute {
-            Log.i(TAG, "restartAudioLayer() running...")
+            Log.i(TAG, "restartAudioLayer() running…")
             JamiService.setAudioPlugin(JamiService.getCurrentAudioOutputPlugin())
         }
     }
 
     fun setAudioPlugin(audioPlugin: String) {
         mExecutor.execute {
-            Log.i(TAG, "setAudioPlugin() running...")
+            Log.i(TAG, "setAudioPlugin() running…")
             JamiService.setAudioPlugin(audioPlugin)
         }
     }
@@ -337,7 +337,7 @@ abstract class CallService(
         get() {
             try {
                 return mExecutor.submit<String> {
-                    Log.i(TAG, "getCurrentAudioOutputPlugin() running...")
+                    Log.i(TAG, "getCurrentAudioOutputPlugin() running…")
                     JamiService.getCurrentAudioOutputPlugin()
                 }.get()
             } catch (e: Exception) {
@@ -348,21 +348,21 @@ abstract class CallService(
 
     fun playDtmf(key: String) {
         mExecutor.execute {
-            Log.i(TAG, "playDTMF() running... $key")
+            Log.i(TAG, "playDTMF() running… $key")
             JamiService.playDTMF(key)
         }
     }
 
     fun setMuted(mute: Boolean) {
         mExecutor.execute {
-            Log.i(TAG, "muteCapture() running...")
+            Log.i(TAG, "muteCapture() running…")
             JamiService.muteCapture(mute)
         }
     }
 
     fun setLocalMediaMuted(accountId:String, callId: String, mediaType: String, mute: Boolean) {
         mExecutor.execute {
-            Log.i(TAG, "muteCapture() running...")
+            Log.i(TAG, "muteCapture() running…")
             JamiService.muteLocalMedia(accountId, callId, mediaType, mute)
         }
     }
@@ -372,7 +372,7 @@ abstract class CallService(
 
     fun transfer(accountId:String, callId: String, to: String) {
         mExecutor.execute {
-            Log.i(TAG, "transfer() thread running...")
+            Log.i(TAG, "transfer() thread running…")
             if (JamiService.transfer(accountId, callId, to)) {
                 Log.i(TAG, "OK")
             } else {
@@ -383,7 +383,7 @@ abstract class CallService(
 
     fun attendedTransfer(accountId:String, transferId: String, targetID: String) {
         mExecutor.execute {
-            Log.i(TAG, "attendedTransfer() thread running...")
+            Log.i(TAG, "attendedTransfer() thread running…")
             if (JamiService.attendedTransfer(accountId, transferId, targetID)) {
                 Log.i(TAG, "OK")
             } else {
@@ -421,7 +421,7 @@ abstract class CallService(
 
     fun sendTextMessage(accountId: String, callId: String, msg: String) {
         mExecutor.execute {
-            Log.i(TAG, "sendTextMessage() thread running...")
+            Log.i(TAG, "sendTextMessage() thread running…")
             val messages = StringMap().apply { setUnicode("text/plain", msg) }
             JamiService.sendTextMessage(accountId, callId, messages, "", false)
         }
@@ -429,7 +429,7 @@ abstract class CallService(
 
     fun sendAccountTextMessage(accountId: String, to: String, msg: String, flags: Int = 0): Single<Long> =
         Single.fromCallable {
-            Log.i(TAG, "sendAccountTextMessage() running... $accountId $to $msg")
+            Log.i(TAG, "sendAccountTextMessage() running… $accountId $to $msg")
             JamiService.sendAccountTextMessage(accountId, to, StringMap().apply {
                 setUnicode("text/plain", msg)
             }, flags)
@@ -437,7 +437,7 @@ abstract class CallService(
 
     fun cancelMessage(accountId: String, messageID: Long): Completable =
         Completable.fromAction {
-            Log.i(TAG, "CancelMessage() running...   Account ID:  $accountId Message ID  $messageID")
+            Log.i(TAG, "CancelMessage() running…   Account ID:  $accountId Message ID  $messageID")
             JamiService.cancelMessage(accountId, messageID)
         }.subscribeOn(Schedulers.from(mExecutor))
 
@@ -667,7 +667,7 @@ abstract class CallService(
     }
 
     fun hangUpConference(accountId: String, confId: String) {
-        Log.i(TAG, "hangUpConference() running... $confId")
+        Log.i(TAG, "hangUpConference() running… $confId")
         mExecutor.execute { JamiService.hangUpConference(accountId, confId) }
     }
 
