@@ -63,8 +63,8 @@ class CallServiceImpl(val mContext: Context, executor: ScheduledExecutorService,
 
     }
 
-    override fun requestPlaceCall(accountId: String, conversationUri: Uri?, contactUri: String, hasVideo: Boolean): Single<SystemCall> {
-        // Use the Android Telecom API to implement requestPlaceCall if available
+    override fun requestMakeCall(accountId: String, conversationUri: Uri?, contactUri: String, hasVideo: Boolean): Single<SystemCall> {
+        // Use the Android Telecom API to implement requestMakeCall if available
 
         // Disabled because doesn't seem well integrated. GitLab: #1337.
         if(DeviceUtils.isTv(mContext)) return CALL_ALLOWED
@@ -103,18 +103,18 @@ class CallServiceImpl(val mContext: Context, executor: ScheduledExecutorService,
                 val key = "$accountId/$callUri"
                 val subject = SingleSubject.create<SystemCall>()
 
-                // Place call request
+                // Make call request
                 pendingCallRequests[key] = subject
                 try {
                     Log.w(TAG, "Telecom API: new outgoing call request for $callUri")
-                    telecomService.placeCall(callUri, params)
+                    telecomService.makeCall(callUri, params)
                     return subject
                 } catch (e: SecurityException) {
                     pendingCallRequests.remove(key)?.onSuccess(CALL_ALLOWED_VAL)
-                    Log.e(TAG, "Can't use the Telecom API to place call", e)
+                    Log.e(TAG, "A Telecom API error occurred while making the call.", e)
                 } catch (e: Exception) {
                     pendingCallRequests.remove(key)?.onSuccess(CALL_ALLOWED_VAL)
-                    Log.e(TAG, "Can't use the Telecom API to place call", e)
+                    Log.e(TAG, "A Telecom API error occurred while making the call.", e)
                 }
             }
         }
@@ -123,7 +123,7 @@ class CallServiceImpl(val mContext: Context, executor: ScheduledExecutorService,
     }
 
     @RequiresApi(CONNECTION_SERVICE_TELECOM_API_SDK_COMPATIBILITY)
-    fun onPlaceCallResult(uri: android.net.Uri, extras: Bundle, result: CallConnection?) {
+    fun onMakeCallResult(uri: android.net.Uri, extras: Bundle, result: CallConnection?) {
         val accountId = extras.getString(ConversationPath.KEY_ACCOUNT_ID) ?: return
         Log.w(TAG, "Telecom API: outgoing call request for $uri has result $result")
         val call = pendingCallRequests.remove("$accountId/$uri")
@@ -157,7 +157,7 @@ class CallServiceImpl(val mContext: Context, executor: ScheduledExecutorService,
                 val key = call.daemonIdString!!
                 val subject = SingleSubject.create<SystemCall>()
 
-                // Place call request
+                // Make call request
                 incomingCallRequests[key] = Pair(call, subject)
                 try {
                     Log.w(TAG, "Telecom API: new incoming call request for $key")
@@ -165,7 +165,7 @@ class CallServiceImpl(val mContext: Context, executor: ScheduledExecutorService,
                     return subject
                 } catch (e: SecurityException) {
                     incomingCallRequests.remove(key)
-                    Log.e(TAG, "Can't use the Telecom API to place call", e)
+                    Log.e(TAG, "A Telecom API error occurred while making the call.", e)
                 }
             }
         }
