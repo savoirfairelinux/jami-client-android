@@ -111,10 +111,10 @@ class CallServiceImpl(val mContext: Context, executor: ScheduledExecutorService,
                     return subject
                 } catch (e: SecurityException) {
                     pendingCallRequests.remove(key)?.onSuccess(CALL_ALLOWED_VAL)
-                    Log.e(TAG, "Can't use the Telecom API to place call", e)
+                    Log.e(TAG, "A Telecom API error occurred while placing the call.", e)
                 } catch (e: Exception) {
                     pendingCallRequests.remove(key)?.onSuccess(CALL_ALLOWED_VAL)
-                    Log.e(TAG, "Can't use the Telecom API to place call", e)
+                    Log.e(TAG, "A Telecom API error occurred while placing the call.", e)
                 }
             }
         }
@@ -165,7 +165,7 @@ class CallServiceImpl(val mContext: Context, executor: ScheduledExecutorService,
                     return subject
                 } catch (e: SecurityException) {
                     incomingCallRequests.remove(key)
-                    Log.e(TAG, "Can't use the Telecom API to place call", e)
+                    Log.e(TAG, "A Telecom API error occurred while placing the call.", e)
                 }
             }
         }

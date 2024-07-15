@@ -236,8 +236,8 @@ along with this program; if not, write to the Free Software
     <string name="ab_action_speakerphone">Enable speaker</string>
     <string name="ab_action_contact_add">Add to contacts</string>
     <string name="ab_action_contact_add_question">Add to contacts?</string>
-    <string name="ab_action_audio_call">Audio call</string>
-    <string name="ab_action_video_call">Video call</string>
+    <string name="ab_action_audio_call">Start audio call</string>
+    <string name="ab_action_video_call">Start video call</string>
     <string name="ab_action_change_screen_orientation">Change screen orientation</string>
     <string name="share_via">Share via</string>
     <string name="write_a_message">Write a message</string>
