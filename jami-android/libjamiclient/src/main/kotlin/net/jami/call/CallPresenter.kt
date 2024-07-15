@@ -96,7 +96,7 @@ class CallPresenter @Inject constructor(
         }
         val pHasVideo = hasVideo && mHardwareService.hasCamera()
         val callObservable = mCallService
-            .placeCallIfAllowed(accountId, conversationUri, fromString(toNumber(contactUri)!!), pHasVideo)
+            .makeCallIfAllowed(accountId, conversationUri, fromString(toNumber(contactUri)!!), pHasVideo)
             .flatMapObservable { call: Call -> mCallService.getConfUpdates(call) }
             .share()
         mCompositeDisposable.add(callObservable
@@ -579,7 +579,7 @@ class CallPresenter @Inject constructor(
                     val contactUri = if (uri.isSwarm) conversation.contact!!.uri else uri
 
                     // Place new call, join to conference when answered
-                    val newCall = mCallService.placeCallObservable(accountId, null, contactUri, wantVideo)
+                    val newCall = mCallService.makeCallObservable(accountId, null, contactUri, wantVideo)
                         .takeWhile{ c -> !c.callStatus.isOver }
                         .doOnEach(pendingObserver)
                         .filter(Call::isOnGoing)

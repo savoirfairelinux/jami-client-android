@@ -74,13 +74,13 @@ class ConnectionService : ConnectionService() {
 
     override fun onCreateOutgoingConnection(account: PhoneAccountHandle?, request: ConnectionRequest): Connection {
         val connection = buildConnection(request)
-        (callService as CallServiceImpl).onPlaceCallResult(request.address, request.extras, connection)
+        (callService as CallServiceImpl).onMakeCallResult(request.address, request.extras, connection)
         return connection
     }
 
     override fun onCreateOutgoingConnectionFailed(account: PhoneAccountHandle?, request: ConnectionRequest) {
         Log.w(TAG, "onCreateOutgoingConnectionFailed $request")
-        (callService as CallServiceImpl).onPlaceCallResult(request.address, request.extras, null)
+        (callService as CallServiceImpl).onMakeCallResult(request.address, request.extras, null)
     }
 
     override fun onCreateIncomingConnection(account: PhoneAccountHandle?, request: ConnectionRequest): Connection {
