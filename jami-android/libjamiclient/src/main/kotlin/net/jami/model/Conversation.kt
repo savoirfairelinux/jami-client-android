@@ -785,7 +785,10 @@ class Conversation : ConversationHistory {
 
     enum class Mode {
         OneToOne, AdminInvitesOnly, InvitesOnly,  // Non-daemon modes
-        Syncing, Public, Legacy, Request
+        Syncing, Public, Legacy, Request;
+
+        val isSwarm: Boolean
+            get() = this == OneToOne || this == InvitesOnly || this == Public
     }
 
     interface ConversationActionCallback {
