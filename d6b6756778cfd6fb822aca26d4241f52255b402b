@@ -75,6 +75,30 @@
       },
       "revId": "d6b6756778cfd6fb822aca26d4241f52255b402b",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "876a1013_8510fca8",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ConversationActionsFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-07-15T15:21:39Z",
+      "side": 1,
+      "message": "Patch2 resolved this. Nice!",
+      "parentUuid": "133a4b4a_1e0330bb",
+      "range": {
+        "startLine": 94,
+        "startChar": 12,
+        "endLine": 115,
+        "endChar": 46
+      },
+      "revId": "d6b6756778cfd6fb822aca26d4241f52255b402b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }

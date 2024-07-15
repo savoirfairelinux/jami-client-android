@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0ed62ec1_530c1d16",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-07-15T15:21:39Z",
+      "side": 1,
+      "message": "Adrien added a new method to know if the conversation mode is a swarm. I\u0027ve updated your code to use it (don\u0027t forget to pull modifications) 😊",
+      "revId": "774fdcced10fba007f9f6553acce2b48ba9d76e4",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
