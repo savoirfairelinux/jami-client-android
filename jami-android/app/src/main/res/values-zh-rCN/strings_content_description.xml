@@ -10,4 +10,5 @@
   <string name="control_play">播放</string>
   <string name="control_replay">重放</string>
   <string name="control_pause">暂停</string>
+  <string name="searchbar_navigation_account">选择帐户</string>
 </resources>

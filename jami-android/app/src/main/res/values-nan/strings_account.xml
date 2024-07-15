@@ -14,29 +14,22 @@
   <!--Audio Details-->
   <!--Video Details-->
   <!--Advanced Details-->
-  <string name="account_chat_settings_title">聊天设置</string>
-  <string name="account_read_receipts_label">启用已读回执</string>
-  <string name="account_read_receipts_summary">接收并发送显示一个消息已读的回执。</string>
   <!--Security Details-->
   <!--SRTP Details-->
   <!--SIP-->
   <!--TLS Details-->
   <!--restore/backup-->
   <string name="account_export_file">备份账户</string>
-  <string name="sip_account">SIP 账户</string>
   <!--TV-->
   <!--Name registration-->
   <!--Create account-->
-  <string name="account_creation_home">欢迎使用 Jami</string>
   <!--Edit profile-->
   <!--Devices-->
   <!--Link a new device-->
   <string name="account_link_prompt_pin_manually">手动输入PIN</string>
   <string name="qr_invalid">不是Jami的身份验证二维码</string>
   <string name="content_description_checkbox">您的Qr代码有效</string>
-  <string name="error_format_not_supported">不支援此格式。</string>
   <string name="account_link_info">在新的Jami应用程序上，扫描二维码或手动输入PIN</string>
-  <string name="account_link_device_title">关联新设备</string>
   <string name="account_link_password">此帐户是密码加密的，请输入密码以生成PIN码</string>
   <string name="account_link_generate_button">生成</string>
   <string name="account_link_time_valid">PIN码将失效：%1$s</string>
@@ -49,7 +42,6 @@
   <string name="help_pin_info">如果帐户是密码加密的，请输入</string>
   <string name="connect_device_scanqr">扫描二维码</string>
   <string name="connect_device_enterPIN">或输入PIN</string>
-  <string name="account_link_device_button">连接</string>
   <!--Biometry-->
   <string name="account_biometry_auth_title">解锁Jami帐户</string>
   <string name="account_biometry_auth_message">使用生物特征解锁您的帐户</string>

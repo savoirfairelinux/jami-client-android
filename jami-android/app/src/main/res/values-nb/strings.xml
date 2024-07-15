@@ -43,6 +43,7 @@
   <string name="dial_number">Tast et nummer</string>
   <!--History Fragment-->
   <!--Home Fragment-->
+  <string name="invitation_card_title">Invitasjoner mottatt</string>
   <plurals name="home_conferences_title">
     <item quantity="one">%d samtale</item>
     <item quantity="other">%d samtaler</item>
@@ -380,5 +381,8 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Velkommen til Jami</string>
   <!--Donation-->
+  <string name="donation_card_description">Hvis du liker å bruke Jami og tror på prosjektet vårt, vil du gi en donasjon?</string>
+  <string name="donation_card_not_now">Ikke nå</string>
+  <string name="donation_donate">Doner</string>
   <!--Plugin-->
 </resources>

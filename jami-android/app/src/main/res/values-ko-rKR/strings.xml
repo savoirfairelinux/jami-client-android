@@ -3,16 +3,16 @@
   <!--About-->
   <string name="feedback_section">피드백</string>
   <string name="report"><u>우리에게 이메일을 보내</u></string>
-  <string name="section_license">면허</string>
+  <string name="section_license">라이센스</string>
   <string name="sponsor_section">자미는 자미에서 개발하고 지원하는 자유 소프트웨어입니다.</string>
   <string name="copyright_section">저작권</string>
   <string name="contribute_section">기여</string>
   <string name="version_section">버전</string>
-  <string name="no_email_app_installed">이메일 앱은 발견되지 않았습니다. 보고서를 보내기 위해 하나를 설치하세요.</string>
-  <string name="no_browser_app_installed">웹 브라우저 앱은 발견되지 않았습니다. 이 페이지를 보기 위해 하나를 설치하십시오.</string>
-  <string name="email_chooser_title">메일을 보내...</string>
-  <string name="website_chooser_title">웹 사이트를 사용해서 볼 수 있습니다.</string>
-  <string name="license">이 소프트웨어는 어떠한 보증도 없이 \"그대로\" 제공된다. 자세한 내용은 GNU 일반 공중 라이선스 버전 3 또는 후기를 참조하십시오.</string>
+  <string name="no_email_app_installed">이메일 앱을 찾지 못했습니다. 보고서를 제출하려면 설치하세요.</string>
+  <string name="no_browser_app_installed">웹 브라우저를 찾지 못했습니다. 이 페이지를 보려면 설치하세요.</string>
+  <string name="email_chooser_title">앱을 사용해 메일 보내기</string>
+  <string name="website_chooser_title">웹 사이트 열기</string>
+  <string name="license">이 소프트웨어는 어떠한 보증 없이 \"있는 그대로\" 제공됩니다. 자세한 내용은 GNU 일반 공중 라이선스 버전 3 혹은 그 이후 버전를 참조하십시오.</string>
   <string name="description">자미는 이용자의 자유와 사생활을 존중하는 보편적 통신을 위한 자유 소프트웨어입니다.</string>
   <string name="credits">신용</string>
   <string name="pip_title">자미 회의</string>
@@ -22,6 +22,7 @@
   <string name="developed_by">개발자:</string>
   <string name="designed_by">디자인:</string>
   <string name="ringtones_by">핑거스</string>
+  <string name="credits_volunteers">그리고 이 프로젝트에 기여해주신 자원봉사자 여러분!</string>
   <!--RingActivity-->
   <string name="error_no_network">네트워크 연결이 없습니다</string>
   <string name="error_account_offline">계정은 오프라인입니다</string>
@@ -47,6 +48,7 @@
     <item quantity="other">%d대화</item>
   </plurals>
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">이름이나 대화를 검색</string>
   <string name="choose_number">숫자를 선택</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -70,6 +72,7 @@
   <string name="notif_channel_background_service">배경 서비스</string>
   <string name="notif_channel_background_service_descr">언제든 전화와 메시지를 받을 수 있습니다.</string>
   <string name="notif_group_calls">전화</string>
+  <string name="notif_inprogress_group_call">통화 진행 중</string>
   <string name="notif_background_service">자미는 현재 배경에서 달리고 있습니다.</string>
   <string name="notif_mark_as_read">기록 된 표기</string>
   <string name="notif_dismiss">해고</string>
@@ -117,6 +120,7 @@
   <string name="write_a_message">메시지를 적어주세요</string>
   <string name="scan_qr">QR 코드를 스캔</string>
   <string name="qr_code">QR 코드</string>
+  <string name="qr_code_not_contact">Jami 연락처 QR 코드가 아닙니다</string>
   <string name="ab_action_flipcamera"> 카메라</string>
   <string name="ab_action_hidepreview">미리보기 숨기기</string>
   <string name="remote_recording">%s 기록...</string>
@@ -174,6 +178,7 @@
   <string name="conversation_action_select_peer_number">번호를 선택</string>
   <string name="conversation_action_block_this">차단 접촉</string>
   <string name="conversation_action_unblock_this">연결 차단</string>
+  <string name="conversation_action_go_to_call">통화로 돌아가기</string>
   <string name="conversation_action_incoming_call">수신 전화</string>
   <string name="conversation_action_latest">대화의 끝으로 스크롤</string>
   <string name="conversation_open_file_error">이 파일 타입을 열 수 있는 설치된 응용 프로그램은 없습니다.</string>
@@ -201,6 +206,10 @@
   <string name="conversation_contact_left">%1$는 왼쪽</string>
   <string name="conversation_contact_banned">%1$s가 금지되었습니다</string>
   <string name="conversation_search_hint">검색 대화</string>
+  <string name="audio_recorder_error">녹음 앱을 찾을 수 없음</string>
+  <string name="video_recorder_error">녹화 앱을 찾을 수 없음</string>
+  <string name="taking_picture_error">사진을 찍던 중 오류가 발생했습니다.</string>
+  <string name="open_camera_error">카메라를 열던 중 오류가 발생했습니다.</string>
   <string name="today">오늘날</string>
   <string name="yesterday">어제</string>
   <!--Contacts-->
@@ -215,6 +224,7 @@
   <string name="help_password_enter">주 주 자미 계정 비밀번호를 입력하세요.</string>
   <string name="help_server_enter">관리 서버의 URL를 입력하십시오.</string>
   <string name="help_pin_enter">다른 구성된 Jami 계정에서 PIN를 입력하고 \"Export Jami Account\" 기능을 사용하여 PIN을 얻으십시오.</string>
+  <string name="pin_copied">PIN 코드를 클립보드에 복사했습니다.</string>
   <string name="wizard_next">다음</string>
   <string name="wizard_back">돌아와</string>
   <string name="wizard_skip">스피프</string>
@@ -299,6 +309,7 @@
   <string name="menu_file_share">파일 공유하기</string>
   <string name="menu_message_copy">복사하기</string>
   <string name="menu_message_edit">메시지 편집</string>
+  <string name="menu_message_history">메시지 내역</string>
   <string name="menu_message_delete">메시지 삭제</string>
   <string name="menu_message_cancel">메시지 취소</string>
   <string name="menu_message_reply">답변</string>
@@ -324,6 +335,7 @@
   <string name="tv_send_video">미디어 를 보내</string>
   <string name="tv_action_more">더 많은</string>
   <string name="conversation_input_speech_hint">뭐라...</string>
+  <string name="audio_permission_denied">Jami 의 음성 관련 기능을 사용하려면 마이크 접근 권한을 허락해주세요.</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">추천</string>
   <string name="wizard_status_optional">선택 사항</string>

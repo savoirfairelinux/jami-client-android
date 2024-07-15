@@ -112,7 +112,7 @@
   <string name="account_proxy_label">DHT-meghatalmazás</string>
   <string name="account_proxy_enable_label">DHT-meghatalmazás használata</string>
   <string name="account_proxy_server_label">DHT-meghatalmazás-cím</string>
-  <string name="account_proxy_server_list_label">DHT-meghatalmazás lista URL-je</string>
+  <string name="account_proxy_server_list_label">DHT-meghatalmazáslista URL-címe</string>
   <string name="account_sip_proxy_label">Meghatalmazás</string>
   <string name="account_peer_discovery_label">Helyi partner felderítése</string>
   <string name="account_peer_discovery_enable_label">Helyi partner felderítése engedélyezése</string>

@@ -9,6 +9,7 @@
   <string name="add_ring_account_title">Dodaj nalog</string>
   <string name="add_sip_account_title">Dodaj SIP nalog</string>
   <string name="ring_account_default_name">Jami nalog %1$s</string>
+  <string name="account_creation_error">Desila se greška prilikom pravljenja naloga.</string>
   <string name="prompt_alias">Alias</string>
   <string name="prompt_hostname">Ime hosta</string>
   <string name="prompt_username">Korisničko ime</string>
