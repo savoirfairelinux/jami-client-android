@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 val kotlin_version: String by rootProject.extra
 val hilt_version: String by rootProject.extra
 val dokka_version: String by rootProject.extra
@@ -37,3 +39,8 @@ java {
     targetCompatibility = JavaVersion.VERSION_17
 }
 
+kotlin {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_17)
+    }
+}
