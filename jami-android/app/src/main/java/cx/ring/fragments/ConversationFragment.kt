@@ -25,7 +25,6 @@ import android.content.*
 import android.content.pm.PackageManager
 import android.graphics.drawable.AnimatedVectorDrawable
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.os.IBinder
@@ -103,7 +102,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     private var lastInsets: WindowInsetsCompat? = null
 
     private fun updatePaddings(windowInsets: WindowInsetsCompat) {
-        val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+        val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.ime())
         binding?.apply {
             if (errorMsgPane.isVisible) {
                 errorMsgPane.updatePadding(top = insets.top)
@@ -180,25 +179,29 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 
         return FragConversationBinding.inflate(inflater, container, false).apply {
             animation.duration = 150
-            animation.addUpdateListener { valueAnimator: ValueAnimator -> histList.updatePadding(bottom = valueAnimator.animatedValue as Int) }
-
-            if (Build.VERSION.SDK_INT >= 30) {
-                ViewCompat.setWindowInsetsAnimationCallback(
-                    mainContainer,
-                    object : WindowInsetsAnimationCompat.Callback(DISPATCH_MODE_STOP) {
-                        override fun onPrepare(animation: WindowInsetsAnimationCompat) {
-                            animating++
-                        }
-                        override fun onProgress(insets: WindowInsetsCompat, runningAnimations: List<WindowInsetsAnimationCompat>): WindowInsetsCompat {
-                            mainContainer.updatePadding(bottom = insets.systemWindowInsetBottom)
-                            return insets
-                        }
-
-                        override fun onEnd(animation: WindowInsetsAnimationCompat) {
-                            animating--
-                        }
-                    })
+            animation.addUpdateListener { valueAnimator: ValueAnimator ->
+                histList.updatePadding(bottom = valueAnimator.animatedValue as Int)
             }
+
+            ViewCompat.setWindowInsetsAnimationCallback(
+                mainContainer,
+                object : WindowInsetsAnimationCompat.Callback(DISPATCH_MODE_STOP) {
+                    override fun onPrepare(animation: WindowInsetsAnimationCompat) {
+                        animating++
+                    }
+
+                    override fun onProgress(
+                        insets: WindowInsetsCompat,
+                        runningAnimations: List<WindowInsetsAnimationCompat>
+                    ): WindowInsetsCompat {
+                        mainContainer.updatePadding(bottom = insets.systemWindowInsetBottom)
+                        return insets
+                    }
+
+                    override fun onEnd(animation: WindowInsetsAnimationCompat) {
+                        animating--
+                    }
+                })
 
             ViewCompat.setOnApplyWindowInsetsListener(root) { _, windowInsets ->
                 lastInsets = windowInsets
@@ -797,6 +800,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         }
     }
 
+    // ==================== OnQueryTextListener methods =======================
     override fun onQueryTextSubmit(query: String): Boolean {
         return true
     }
@@ -807,6 +811,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         mSearchAdapter?.clearSearchResults()
         return true
     }
+    // ================== OnQueryTextListener methods end =======================
 
     override fun addSearchResults(results: List<Interaction>) {
         mSearchAdapter?.addSearchResults(results)
