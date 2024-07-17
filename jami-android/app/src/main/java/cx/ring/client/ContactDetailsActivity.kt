@@ -408,9 +408,12 @@ class ContactDetailsActivity : AppCompatActivity(), TabLayout.OnTabSelectedListe
 
     override fun onTabReselected(tab: TabLayout.Tab?) {}
 
-    override fun onContactPicked(accountId: String, contacts: Set<Contact>) {
-        mAccountService.addConversationMembers(accountId, path!!.conversationUri.host, contacts.map { contact-> contact.uri.toString() })
-    }
+    override fun onContactPicked(accountId: String, contacts: Set<Contact>) =
+        mAccountService.addConversationMembers(
+            accountId,
+            conversationId = path!!.conversationUri.host,
+            uris = contacts.map { contact -> contact.uri }
+        )
 
     override fun onSwarmRename(key:String, newName: String) {
         val map: MutableMap<String, String> = HashMap()
