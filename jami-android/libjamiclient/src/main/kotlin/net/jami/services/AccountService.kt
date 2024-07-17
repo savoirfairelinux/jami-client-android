@@ -1190,21 +1190,15 @@ class AccountService(
     fun updateConversationInfo(accountId: String, conversationId: String, info: Map<String, String>) {
         JamiService.updateConversationInfos(accountId, conversationId, StringMap.toSwig(info))
     }
-    fun addConversationMembers(accountId: String, conversationId: String, uris: List<String>) {
+
+    fun addConversationMembers(accountId: String, conversationId: String, uris: List<Uri>) =
         mExecutor.execute {
             for (uri in uris)
-                JamiService.addConversationMember(accountId, conversationId, uri)
+                JamiService.addConversationMember(accountId, conversationId, uri.rawRingId)
         }
-    }
 
-    fun addConversationMember(accountId: String, conversationId: String, uri: String) {
-        // mExecutor.execute {
-        JamiService.addConversationMember(accountId, conversationId, uri)
-    }
-    fun removeConversationMember(accountId: String, conversationId: String, uri: String) {
-        // mExecutor.execute {
-        JamiService.removeConversationMember(accountId, conversationId, uri)
-    }
+    fun removeConversationMember(accountId: String, conversationId: String, uri: Uri) =
+        JamiService.removeConversationMember(accountId, conversationId, uri.rawRingId)
 
     fun contactAdded(accountId: String, uri: String, confirmed: Boolean) {
         getAccount(accountId)?.let { account ->

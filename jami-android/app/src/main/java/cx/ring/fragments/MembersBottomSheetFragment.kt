@@ -87,10 +87,17 @@ class MembersBottomSheetFragment : BottomSheetDialogFragment() {
             (activity as ContactDetailsActivity).goToConversationActivity(path.accountId, contactUri)
         })
 
-        adapter.actions.add(ConversationActionsFragment.ContactAction(null, getString(R.string.bottomsheet_remove)) {
-            mAccountService.removeConversationMember(path.accountId, path.conversationUri.host, contactUri.host)
-            dismiss()
-        })
+        adapter.actions.add(
+            ConversationActionsFragment
+                .ContactAction(null, getString(R.string.bottomsheet_remove)) {
+                    mAccountService.removeConversationMember(
+                        path.accountId,
+                        conversationId = path.conversationUri.host,
+                        uri = contactUri
+                    )
+                    dismiss()
+                }
+        )
 
         binding!!.actions.adapter = adapter
     }
