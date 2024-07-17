@@ -41,6 +41,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "222fb508_25458c1a",
+        "filename": "jami-android/app/src/androidTest/java/cx/ring/client/addcontact/AddContact.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-07-17T12:47:45Z",
+      "side": 1,
+      "message": "done x2",
+      "parentUuid": "e218fd6f_55377483",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 2
+      },
+      "revId": "9fe8af982dd06cd9b4a6a7b6d0c51b9dd7b28c5c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bd0f186c_35075b7a",
@@ -54,6 +78,24 @@
       "writtenOn": "2024-07-15T15:15:02Z",
       "side": 1,
       "message": "should include copyright header",
+      "revId": "9fe8af982dd06cd9b4a6a7b6d0c51b9dd7b28c5c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a93114d5_3eb013b4",
+        "filename": "jami-android/app/src/androidTest/java/cx/ring/client/wizard/AccountCreation.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-07-17T12:47:45Z",
+      "side": 1,
+      "message": "done x2",
+      "parentUuid": "bd0f186c_35075b7a",
       "revId": "9fe8af982dd06cd9b4a6a7b6d0c51b9dd7b28c5c",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
