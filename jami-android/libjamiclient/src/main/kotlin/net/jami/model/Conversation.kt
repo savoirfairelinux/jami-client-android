@@ -606,11 +606,11 @@ class Conversation : ConversationHistory {
             }
         }
         val id = interaction.messageId!!
-        val previous = mMessages.put(id, interaction)
 
         // Update lastDisplayedMessages and lastSent
         interaction.statusMap.entries.forEach {
-            if (!findContact(Uri.fromString(it.key))!!.isUser) {
+            val contact = findContact(Uri.fromString(it.key)) ?: return@forEach
+            if (!contact.isUser) {
                 if (it.value == Interaction.MessageStates.DISPLAYED) {
                     setLastMessageDisplayed(it.key, id)
                 }
