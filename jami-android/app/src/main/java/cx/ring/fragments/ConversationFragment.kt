@@ -194,7 +194,10 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                         insets: WindowInsetsCompat,
                         runningAnimations: List<WindowInsetsAnimationCompat>
                     ): WindowInsetsCompat {
-                        mainContainer.updatePadding(bottom = insets.systemWindowInsetBottom)
+                        val windowInsets = insets.getInsets(
+                            WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.ime()
+                        )
+                        mainContainer.updatePadding(bottom = windowInsets.bottom)
                         return insets
                     }
 
@@ -261,6 +264,20 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                 }
             })
 
+            msgInputTxt.addOnLayoutChangeListener { _, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
+                if (oldBottom == 0 && oldTop == 0) {
+                    // set initial list padding
+                    histList.updatePadding(bottom = (currentBottomView?.height ?: 0) + marginPxTotal)
+                } else {
+                    if (animation.isStarted) animation.cancel()
+                    animation.setIntValues(
+                        histList.paddingBottom,
+                        (currentBottomView?.height ?: 0) + marginPxTotal
+                    )
+                    animation.start()
+                }
+            }
+
             replyCloseBtn.setOnClickListener { clearReply() }
             fabLatest.setOnClickListener { scrollToEnd() }
 
@@ -291,19 +308,6 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                     msgInputTxt.setText(pendingMessage)
                     msgSend.visibility = View.VISIBLE
                     emojiSend.visibility = View.GONE
-                }
-            }
-
-            msgInputTxt.addOnLayoutChangeListener { _, _, _, _, _, oldLeft, oldTop, oldRight, oldBottom ->
-                if (oldBottom == 0 && oldTop == 0) {
-                    //updateListPadding()
-                } else {
-                    if (animation.isStarted) animation.cancel()
-                    animation.setIntValues(
-                        histList.paddingBottom,
-                        (currentBottomView?.height ?: 0) + marginPxTotal
-                    )
-                    animation.start()
                 }
             }
 
