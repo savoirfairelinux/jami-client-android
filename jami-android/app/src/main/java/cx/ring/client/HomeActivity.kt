@@ -55,6 +55,7 @@ import cx.ring.utils.ContentUri.isJamiLink
 import cx.ring.utils.ContentUri.toJamiLink
 import cx.ring.utils.ConversationPath
 import cx.ring.utils.DeviceUtils
+import cx.ring.utils.KeyboardVisibilityManager
 import cx.ring.utils.getUiCustomizationFromConfigJson
 import cx.ring.viewmodel.WelcomeJamiViewModel
 import cx.ring.views.AvatarDrawable
@@ -423,6 +424,7 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
     }
 
     private fun startConversation(path: ConversationPath, intent: Intent? = null) {
+        KeyboardVisibilityManager.hideKeyboard(this)
         val conversation = ConversationFragment().apply {
             arguments = path.toBundle()
         }
