@@ -606,6 +606,7 @@ class Conversation : ConversationHistory {
             }
         }
         val id = interaction.messageId!!
+        mMessages[id] = interaction
 
         // Update lastDisplayedMessages and lastSent
         interaction.statusMap.entries.forEach {
