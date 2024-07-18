@@ -73,6 +73,7 @@ import com.google.android.material.shape.MaterialShapeDrawable
 import cx.ring.databinding.FragHomeBinding
 import cx.ring.utils.TextUtils
 import cx.ring.utils.ActionHelper.openJamiDonateWebPage
+import cx.ring.utils.KeyboardVisibilityManager
 import io.reactivex.rxjava3.disposables.Disposable
 import net.jami.services.NotificationService
 
@@ -569,9 +570,10 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
     }
 
     private fun goToQRFragment() {
+        collapseSearchActionView()
+        KeyboardVisibilityManager.hideKeyboard(activity)
         val qrCodeFragment = QRCodeFragment.newInstance(QRCodeFragment.INDEX_SCAN)
         qrCodeFragment.show(parentFragmentManager, QRCodeFragment.TAG)
-        collapseSearchActionView()
     }
 
     private fun startNewSwarm() {

@@ -31,8 +31,8 @@ object KeyboardVisibilityManager {
         }
         Log.d(TAG, "showKeyboard: showing keyboard")
         viewToFocus.requestFocus()
-        val imm = viewToFocus.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.showSoftInput(viewToFocus, InputMethodManager.SHOW_IMPLICIT)
+        val imm = viewToFocus.context.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+        imm?.showSoftInput(viewToFocus, InputMethodManager.SHOW_IMPLICIT)
     }
 
     fun hideKeyboard(activity: Activity?) {
@@ -44,8 +44,8 @@ object KeyboardVisibilityManager {
         if (currentFocus != null) {
             Log.d(TAG, "hideKeyboard: hiding keyboard")
             currentFocus.clearFocus()
-            val inputManager = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            inputManager.hideSoftInputFromWindow(currentFocus.windowToken, 0)
+            val inputManager = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+            inputManager?.hideSoftInputFromWindow(currentFocus.windowToken, 0)
         }
     }
 }
