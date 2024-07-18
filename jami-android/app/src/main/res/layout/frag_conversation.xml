@@ -133,6 +133,23 @@
             app:stackFromEnd="true"
             tools:listitem="@layout/item_conv_msg_peer" />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/search_list"
+            android:elevation="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/background"
+            android:animateLayoutChanges="false"
+            android:clipToPadding="false"
+            android:paddingBottom="8dp"
+            android:divider="@null"
+            android:listSelector="@color/transparent"
+            android:transcriptMode="normal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:stackFromEnd="true"
+            android:visibility="gone"
+            tools:listitem="@layout/item_conv_msg_peer" />
+
         <LinearLayout
             android:id="@+id/trustRequestMessageLayout"
             android:layout_width="match_parent"
