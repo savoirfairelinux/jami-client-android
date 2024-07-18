@@ -876,8 +876,9 @@ class ConversationAdapter(
 
             // The popup that display all the buttons
             val popupWindow = PopupWindow(
-                root, LinearLayout.LayoutParams.WRAP_CONTENT, root.measuredHeight, true
+                root, LinearLayout.LayoutParams.WRAP_CONTENT, root.measuredHeight, false
             )
+            popupWindow.isOutsideTouchable = true
             popupWindow.elevation = view.context.resources.getDimension(R.dimen.call_preview_elevation)
             popupWindow.showAsDropDown(view)
 
