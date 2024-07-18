@@ -34,6 +34,7 @@ import android.text.TextUtils
 import android.text.TextWatcher
 import android.util.Log
 import android.view.*
+import android.view.animation.AnimationUtils
 import android.view.inputmethod.EditorInfo
 import android.widget.*
 import androidx.activity.result.PickVisualMediaRequest
@@ -85,7 +86,6 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     private var currentBottomView: View? = null
     private var mAdapter: ConversationAdapter? = null
     private var mSearchAdapter: ConversationAdapter? = null
-    private var marginPxTotal = 0
     private val animation = ValueAnimator()
     private var mPreferences: SharedPreferences? = null
     private var mCurrentPhoto: File? = null
@@ -175,7 +175,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         val res = resources
         mapWidth = res.getDimensionPixelSize(R.dimen.location_sharing_minmap_width)
         mapHeight = res.getDimensionPixelSize(R.dimen.location_sharing_minmap_height)
-        marginPxTotal = res.getDimensionPixelSize(R.dimen.conversation_message_input_margin)
+        val marginPxTotal = res.getDimensionPixelSize(R.dimen.conversation_message_input_margin)
 
         return FragConversationBinding.inflate(inflater, container, false).apply {
             animation.duration = 150
@@ -340,6 +340,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 
             (histList.itemAnimator as? DefaultItemAnimator)?.supportsChangeAnimations = false
             histList.adapter = mAdapter
+            searchList.adapter = mSearchAdapter
         }
     }
 
@@ -751,38 +752,15 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             val searchMenuItem = menu.findItem(R.id.conv_search)
             searchMenuItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
                 override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
-                    val convList = binding?.histList ?: return false
                     presenter.stopSearch()
-                    convList.adapter = mAdapter
-                    currentBottomView?.isVisible = true
-
-                    if (animation.isStarted)
-                        animation.cancel()
-
-                    animation.setIntValues(convList.paddingBottom, (currentBottomView?.height ?: 0) + marginPxTotal)
-                    animation.start()
+                    binding?.searchList?.isVisible = false
+                    currentBottomView?.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.fade_in))
                     return true
                 }
 
                 override fun onMenuItemActionExpand(item: MenuItem): Boolean {
-                    val convList = binding?.histList ?: return false
-                    mSearchAdapter = ConversationAdapter(
-                        conversationFragment = this@ConversationFragment,
-                        presenter = presenter,
-                        isSearch = true
-                    ).apply {
-                        showLinkPreviews = mAdapter!!.showLinkPreviews
-                        convColor = mAdapter!!.convColor
-                    }
                     presenter.startSearch()
-                    currentBottomView?.isVisible = false
-                    convList.adapter = mSearchAdapter
-
-                    if (animation.isStarted)
-                        animation.cancel()
-
-                    animation.setIntValues(convList.paddingBottom, marginPxTotal)
-                    animation.start()
+                    binding?.searchList?.isVisible = true
                     return true
                 }
             })
@@ -836,6 +814,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             return
 
         mAdapter = ConversationAdapter(this, presenter)
+        mSearchAdapter = ConversationAdapter(this, presenter, isSearch = true)
         presenter.init(path.conversationUri, path.accountId)
 
         // Load shared preferences. Usually useful for non-swarm conversations.
