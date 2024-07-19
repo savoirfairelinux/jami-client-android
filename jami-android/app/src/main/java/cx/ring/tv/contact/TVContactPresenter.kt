@@ -103,6 +103,12 @@ class TVContactPresenter @Inject constructor(
     }
 
     fun acceptTrustRequest() {
+        mAccountService.getAccount(mAccountId)?.let { account ->
+            val conversation = account.getByUri(mUri)!!
+            if (conversation.mode.blockingFirst() == Conversation.Mode.Request) {
+                conversation.setMode(Conversation.Mode.Syncing)
+            }
+        }
         mConversationService.acceptRequest(mAccountId!!, mUri!!)
         view?.switchToConversationView()
     }
