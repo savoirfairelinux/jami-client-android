@@ -18,67 +18,65 @@
 package cx.ring.client
 
 import android.view.View
-import androidx.test.espresso.Espresso
+import android.view.ViewTreeObserver
 import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.IdlingResource
-import androidx.test.espresso.ViewFinder
-import androidx.test.espresso.assertion.ViewAssertions
-import androidx.test.espresso.matcher.ViewMatchers
+import androidx.test.espresso.UiController
+import androidx.test.espresso.ViewAction
 import org.hamcrest.Matcher
-import java.lang.reflect.Field
+import org.hamcrest.Matchers.any
+import org.hamcrest.StringDescription
 
-// Cf https://stackoverflow.com/questions/50628219/is-it-possible-to-use-espressos-idlingresource-to-wait-until-a-certain-view-app
 /**
- * @param viewMatcher The matcher to find the view.
- * @param idleMatcher The matcher condition to be fulfilled to be considered idle.
+ * https://stackoverflow.com/questions/59141757/android-espresso-ui-test-use-idling-resource-to-wait-for-an-element-on-the-scr
  */
-class ViewIdlingResource(
-        private val viewMatcher: Matcher<View?>?,
-        private val idleMatcher: Matcher<View?>?
-) : IdlingResource {
+class ViewPropertyChangeCallback(
+    private val matcher: Matcher<View>,
+    private val view: View
+) : IdlingResource, ViewTreeObserver.OnDrawListener {
 
-    private var resourceCallback: IdlingResource.ResourceCallback? = null
+    private lateinit var callback: IdlingResource.ResourceCallback
+    private var matched = false
 
-    override fun isIdleNow(): Boolean {
-        val view: View? = getView(viewMatcher)
-        val isIdle: Boolean = idleMatcher?.matches(view) ?: false
-        if (isIdle) {
-            resourceCallback?.onTransitionToIdle()
-        }
-        return isIdle
+    override fun getName() = "View property change callback"
+
+    override fun isIdleNow() = matched
+
+    override fun registerIdleTransitionCallback(callback: IdlingResource.ResourceCallback) {
+        this.callback = callback
     }
 
-    override fun registerIdleTransitionCallback(resourceCallback: IdlingResource.ResourceCallback?) {
-        this.resourceCallback = resourceCallback
+    override fun onDraw() {
+        matched = matcher.matches(view)
+        callback.onTransitionToIdle()
     }
-
-    override fun getName(): String = "$this ${viewMatcher.toString()}"
-
-    private fun getView(viewMatcher: Matcher<View?>?): View? {
-        return try {
-            val viewInteraction = Espresso.onView(viewMatcher)
-            val finderField: Field? = viewInteraction.javaClass.getDeclaredField("viewFinder")
-            finderField?.isAccessible = true
-            val finder = finderField?.get(viewInteraction) as ViewFinder
-            finder.view
-        } catch (e: Exception) {
-            null
-        }
-    }
-
 }
 
+fun waitUntil(matcher: Matcher<View>) = object : ViewAction {
 
-/**
- * Waits for a matching View or throws an error if it's taking too long.
- */
-fun waitUntilViewIsDisplayed(matcher: Matcher<View?>) {
-    val idlingResource: IdlingResource = ViewIdlingResource(matcher, ViewMatchers.isDisplayed())
-    try {
-        IdlingRegistry.getInstance().register(idlingResource)
-        // First call to onView is to trigger the idler.
-        Espresso.onView(ViewMatchers.withId(0)).check(ViewAssertions.doesNotExist())
-    } finally {
-        IdlingRegistry.getInstance().unregister(idlingResource)
+    override fun getConstraints(): Matcher<View> {
+        return any(View::class.java)
+    }
+
+    override fun getDescription(): String {
+        return StringDescription().let {
+            matcher.describeTo(it)
+            "wait until: $it"
+        }
+    }
+
+    override fun perform(uiController: UiController, view: View) {
+        if (!matcher.matches(view)) {
+            ViewPropertyChangeCallback(matcher, view).run {
+                try {
+                    IdlingRegistry.getInstance().register(this)
+                    view.viewTreeObserver.addOnDrawListener(this)
+                    uiController.loopMainThreadUntilIdle()
+                } finally {
+                    view.viewTreeObserver.removeOnDrawListener(this)
+                    IdlingRegistry.getInstance().unregister(this)
+                }
+            }
+        }
     }
 }
