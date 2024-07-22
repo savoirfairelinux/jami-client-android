@@ -16,37 +16,34 @@ import org.hamcrest.Matcher
  * Perform action of waiting for a certain view within a single root view
  * @param matcher Generic Matcher used to find our view
  */
-fun searchFor(matcher: Matcher<View>): ViewAction {
+fun searchFor(matcher: Matcher<View>) = object : ViewAction {
 
-    return object : ViewAction {
+    override fun getConstraints(): Matcher<View> {
+        return isRoot()
+    }
 
-        override fun getConstraints(): Matcher<View> {
-            return isRoot()
-        }
+    override fun getDescription(): String {
+        return "searching for view $matcher in the root view"
+    }
 
-        override fun getDescription(): String {
-            return "searching for view $matcher in the root view"
-        }
+    override fun perform(uiController: UiController, view: View) {
 
-        override fun perform(uiController: UiController, view: View) {
+        var tries = 0
+        val childViews: Iterable<View> = TreeIterables.breadthFirstViewTraversal(view)
 
-            var tries = 0
-            val childViews: Iterable<View> = TreeIterables.breadthFirstViewTraversal(view)
-
-            // Look for the match in the tree of child views
-            childViews.forEach {
-                tries++
-                if (matcher.matches(it)) {
-                    // found the view
-                    return
-                }
+        // Look for the match in the tree of child views
+        childViews.forEach {
+            tries++
+            if (matcher.matches(it)) {
+                // found the view
+                return
             }
-
-            throw NoMatchingViewException.Builder()
-                .withRootView(view)
-                .withViewMatcher(matcher)
-                .build()
         }
+
+        throw NoMatchingViewException.Builder()
+            .withRootView(view)
+            .withViewMatcher(matcher)
+            .build()
     }
 }
 
