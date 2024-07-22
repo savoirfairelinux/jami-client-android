@@ -22,6 +22,7 @@
   <string name="developed_by">Rozwijany przez</string>
   <string name="designed_by">Zaprojektowany przez</string>
   <string name="ringtones_by">Dzwonki wykonane przez</string>
+  <string name="credits_volunteers">I wolontariusze, którzy przyczyniają się do tego projektu!</string>
   <!--RingActivity-->
   <string name="error_no_network">Brak połączenia z siecią</string>
   <string name="error_account_offline">To konto jest offline</string>
@@ -51,6 +52,7 @@
     <item quantity="other">%d Rozmowy</item>
   </plurals>
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">Wyszukaj nazwę lub rozmowę...</string>
   <string name="choose_number">Wybierz numer</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -123,6 +125,7 @@
   <string name="write_a_message">Napisz wiadomość</string>
   <string name="scan_qr">Zeskanuj kod QR</string>
   <string name="qr_code">Kod QR</string>
+  <string name="qr_code_not_contact">Nie jest to kod QR kontaktu Jami</string>
   <string name="new_swarm">Rozpocznij rozmowę grupową</string>
   <string name="ab_action_flipcamera">Zamień kamerę</string>
   <string name="ab_action_hidepreview">Ukryj podgląd</string>
@@ -145,6 +148,7 @@
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Uprawnienia do aparatu</string>
   <string name="permission_dialog_camera_message">Rozmowy wideo wymagają przyznania uprawnień dla aparatu. Proszę rozważyć udzielenie ich.</string>
+  <string name="camera_error">Wystąpił błąd podczas uruchamiania kamery.</string>
   <!--Ringtone activity-->
   <string name="ringtone_error_title">Błąd</string>
   <string name="ringtone_error_format_not_supported">Ten format nie jest obsługiwany.</string>
@@ -183,6 +187,7 @@
   <string name="conversation_action_select_peer_number">Wybierz numer</string>
   <string name="conversation_action_block_this">Blokuj kontakt</string>
   <string name="conversation_action_unblock_this">Odblokuj kontakt</string>
+  <string name="conversation_action_go_to_call">Powrót do połączenia</string>
   <string name="conversation_action_incoming_call">Połączenie przychodzące</string>
   <string name="conversation_action_latest">Przewiń do końca konwersacji</string>
   <string name="conversation_open_file_error">Nie ma zainstalowanej aplikacji zdolnej otworzyć ten plik.</string>
@@ -199,6 +204,7 @@
   <string name="conversation_syncing">Pobieranie rozmowy od peera</string>
   <string name="conversation_blocked">Ten kontakt jest zablokowany.</string>
   <string name="conversation_ended">Rozmowa się skończyła.</string>
+  <string name="conversation_message_deleted">%s usunął wiadomość</string>
   <string name="conversation_reply_you">Ty</string>
   <string name="conversation_preference_color">Kolor rozmowy</string>
   <string name="conversation_preference_emoji">Emoji rozmowy</string>
@@ -210,6 +216,19 @@
   <string name="conversation_contact_left">%1$ jest lewy</string>
   <string name="conversation_contact_banned">%1$s został zakazany</string>
   <string name="conversation_search_hint">Szukaj rozmowy</string>
+  <string name="audio_recorder_error">Nie znaleziono aplikacji rejestratora dźwięku.</string>
+  <string name="video_recorder_error">Nie znaleziono aplikacji do nagrywania wideo.</string>
+  <string name="taking_picture_error">Wystąpił błąd podczas robienia zdjęcia.</string>
+  <string name="find_picture_error">Wystąpił błąd podczas wyszukiwania obrazu.</string>
+  <string name="open_camera_error">Wystąpił błąd podczas otwierania kamery.</string>
+  <string name="starting_recorder_error">Wystąpił błąd podczas uruchamiania rejestratora.</string>
+  <string name="starting_camera_error">Wystąpił błąd podczas uruchamiania kamery.</string>
+  <string name="browser_error">Przeglądarka plików nie jest dostępna na tym urządzeniu.</string>
+  <string name="import_archive_error">Wystąpił błąd podczas importowania archiwum.</string>
+  <string name="export_archive_error">Wystąpił błąd podczas eksportowania archiwum.</string>
+  <string name="load_ringtone_error">Wystąpił błąd podczas ładowania dzwonka.</string>
+  <string name="sharing_log_error">Wystąpił błąd podczas udostępniania dzienników.</string>
+  <string name="no_native_crash">Brak ostatniej awarii natywnej</string>
   <string name="today">Dzisiaj</string>
   <string name="yesterday">Wczoraj</string>
   <!--Contacts-->
@@ -224,6 +243,7 @@
   <string name="help_password_enter">Wprowadź hasło do swojego głównego konta Jami</string>
   <string name="help_server_enter">Wprowadź URL serwera zarządzania.</string>
   <string name="help_pin_enter">Wprowadź PIN z innego konta Jami. Użyj funkcji \"wyeksportuj konto Jami\" aby uzyskać PIN.</string>
+  <string name="pin_copied">Kod PIN został skopiowany do schowka.</string>
   <string name="wizard_next">Następne</string>
   <string name="wizard_back">Wstecz</string>
   <string name="wizard_skip">Pomiń</string>
@@ -308,6 +328,7 @@
   <string name="menu_file_share">Podziel się plikiem</string>
   <string name="menu_message_copy">Skopiuj</string>
   <string name="menu_message_edit">Edycja wiadomości</string>
+  <string name="menu_message_history">Historia wiadomości</string>
   <string name="menu_message_delete">Usuń wiadomość</string>
   <string name="menu_message_cancel">Anuluj wiadomość</string>
   <string name="menu_message_reply">Odpowiedz</string>
@@ -333,6 +354,16 @@
   <string name="tv_send_video">Wyślij Multimedia</string>
   <string name="tv_action_more">Więcej</string>
   <string name="conversation_input_speech_hint">Powiedz coś...</string>
+  <string name="audio_permission_denied">Aby korzystać z funkcji audio Jami, należy przyznać dostęp do mikrofonu.</string>
+  <string name="camera_permission_denied">Aby korzystać z funkcji wideo Jami, należy przyznać dostęp do kamery.</string>
+  <string name="speech_recogniton_unavailable">Funkcja rozpoznawania mowy nie jest dostępna.</string>
+  <string name="audio_permission_rationale_title">Wymagane pozwolenie na odtwarzanie dźwięku</string>
+  <string name="camera_permission_rationale_title">Wymagane pozwolenie na odtwarzanie wideo</string>
+  <string name="audio_permission_rationale_message">Jami wymaga uprawnień mikrofonu do korzystania z funkcji zamiany mowy na tekst i nagrywania dźwięku. Zostaniesz o to poproszony/a w następnym kroku.</string>
+  <string name="camera_permission_rationale_message">Jami wymaga uprawnień kamery na nagrywanie wideo i wykonywanie połączeń wideo. Zostaniesz o to poproszony/a w następnym kroku.</string>
+  <string name="unable_to_start_recorder">Nie można rozpocząć nagrywania dźwięku.</string>
+  <string name="error_sharing_file">Błąd udostępniania pliku.</string>
+  <string name="error_opening_file">Błąd otwierania pliku.</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Zalecane</string>
   <string name="wizard_status_optional">Opcjonalne</string>
@@ -382,6 +413,7 @@
   <string name="bottomsheet_contact">Skontaktuj się z Jami\n%1$s</string>
   <string name="bottomsheet_remove">Wyprowadź z rodu</string>
   <string name="error_open_no_app_found">Nie znaleziono aplikacji zdolnej do obsługi tego typu pliku %1$s</string>
+  <string name="swarm_detail_no_document">Nie masz jeszcze żadnych dokumentów.</string>
   <!--JamiId-->
   <string name="jami_id_copy">Skopiuj Jamild</string>
   <string name="jami_id_share">Udostępnij Jamild</string>
@@ -395,6 +427,7 @@
   <string name="welcome_jami_title">Witaj w Jami</string>
   <string name="welcome_jami_description">Udostępnij swój identyfikator Jami aby ułatwić skontaktowanie się z Tobą!</string>
   <!--Donation-->
+  <string name="donation_card_description">Jeśli lubisz korzystać z Jami i wierzysz w naszą misję, czy mógłbyś przekazać darowiznę?</string>
   <string name="donation_card_not_now">Nie w tej chwili</string>
   <string name="donation_donate">Przekaż darowiznę</string>
   <string name="donation_setting_title">Przypomnienie o darowiźnie </string>
@@ -403,4 +436,6 @@
   <string name="unable_to_load">Nie można załadować %1$s</string>
   <string name="load_sucess">%1$s jest włączone</string>
   <string name="unload_sucess">%1$s: wyłączone </string>
+  <string name="install_sucess">Rozszerzenie %1$s zostało pomyślnie zainstalowane.</string>
+  <string name="install_error">Wystąpił błąd podczas importowania rozszerzenia.</string>
 </resources>

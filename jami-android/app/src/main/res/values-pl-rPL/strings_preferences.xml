@@ -65,6 +65,9 @@
   <string name="plugin_install_failure">Nie udało się zainstalować wtyczki: <b>%1$s</b></string>
   <string name="plugin_recent_version_exception">Masz nowszą wersję wtyczki: <b>%1$s</b></string>
   <string name="plugin_same_version_exception">Masz zainstalowaną tę samą wersję wtyczki <b>%1$s</b></string>
+  <string name="plugin_invalid_signature">%1$s ma nieprawidłowy podpis</string>
+  <string name="plugin_invalid_authority">Nie można zweryfikować uprawnień dla: %1$s</string>
+  <string name="plugin_invalid_format">Nieprawidłowy format wtyczki: %1$s</string>
   <string name="plugin_force_install">Wymuś instalacje</string>
   <string name="plugin_path_image_add">Dodaj nowy obraz</string>
 </resources>
