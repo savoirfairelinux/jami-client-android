@@ -90,6 +90,9 @@ class AccountService(
     val activeCallsObservable: Observable<ConversationActiveCalls> =
         activeCallsSubject
 
+    // This variable should only be used for testing purposes.
+    var customNameServer: String? = null
+
     data class ConversationActiveCalls(
         val accountId: String,
         val conversationUri: Uri,
@@ -588,8 +591,14 @@ class AccountService(
      */
     fun getAccountTemplate(accountType: String): Single<HashMap<String, String>> {
         Log.i(TAG, "getAccountTemplate() $accountType")
-        return Single.fromCallable { JamiService.getAccountTemplate(accountType).toNative() }
-            .subscribeOn(scheduler)
+        return Single.fromCallable {
+            JamiService.getAccountTemplate(accountType).toNative()
+        }.map { accountDetails: HashMap<String, String> ->
+            customNameServer?.let { // Use custom name server (only for testing)
+                if (it.isNotEmpty()) accountDetails[ConfigKey.RINGNS_HOST.key] = it
+            }
+            accountDetails
+        }.subscribeOn(scheduler)
     }
 
     /**
