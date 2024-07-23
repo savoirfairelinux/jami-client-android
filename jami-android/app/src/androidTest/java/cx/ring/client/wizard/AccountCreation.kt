@@ -31,6 +31,10 @@ class AccountCreation {
 
     @Before
     fun moveToAccountCreation() {
+        mActivityScenarioRule.scenario.onActivity { activity -> // Set custom name server
+            activity.mAccountService.customNameServer = "https://ns-test.jami.net"
+        }
+
         try {
             val searchBarContentNavigationDescription = InstrumentationRegistry
                 .getInstrumentation().targetContext.getString(R.string.searchbar_navigation_account)
