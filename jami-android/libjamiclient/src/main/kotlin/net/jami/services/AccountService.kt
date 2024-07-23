@@ -944,7 +944,7 @@ class AccountService(
     }
 
     fun getConversationByUri(account: Account, conversationUri: Uri): Single<Conversation> =
-        if (conversationUri.isHexId) {
+        if (conversationUri.isHexId || account.isSip) {
             val conversation = account.getByUri(conversationUri)
             if (conversation != null) {
                 Single.just(conversation)

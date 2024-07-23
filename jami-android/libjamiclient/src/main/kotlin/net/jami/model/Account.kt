@@ -708,7 +708,7 @@ class Account(
     fun getByUri(uri: Uri?): Conversation? =
         if (uri == null || uri.isEmpty) null
         else if (uri.isSwarm) getSwarm(uri.rawRingId) ?: pending[uri.uri]
-        else if (uri.isJami) getByKey(uri)
+        else if (uri.isJami || isSip) getByKey(uri)
         else null
 
     fun getByUri(uri: String?): Conversation? =
