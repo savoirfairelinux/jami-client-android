@@ -29,8 +29,20 @@ class AccountCreation {
     @JvmField
     var mActivityScenarioRule = ActivityScenarioRule(HomeActivity::class.java)
 
+    companion object {
+        @JvmStatic
+        private var nameServerChanged = false
+    }
+
     @Before
     fun moveToAccountCreation() {
+        if (!nameServerChanged) { // Use custom nameserver.
+            mActivityScenarioRule.scenario.onActivity { activity ->
+                activity.mAccountService.customNameServer = "192.168.50.4"
+            }
+            nameServerChanged = true
+        }
+
         try {
             val searchBarContentNavigationDescription = InstrumentationRegistry
                 .getInstrumentation().targetContext.getString(R.string.searchbar_navigation_account)
