@@ -100,6 +100,31 @@ function hidden_policy() {
     adb shell "settings put global hidden_api_policy_pre_p_apps 1;settings put global hidden_api_policy_p_apps 1;settings put global hidden_api_policy 1"
 };
 
+function enable_android_test_orchestrator() {
+    DEVICE_API_LEVEL=$(adb shell getprop ro.build.version.sdk)
+
+    FORCE_QUERYABLE_OPTION=""
+    if [[ $DEVICE_API_LEVEL -ge 30 ]]; then
+       FORCE_QUERYABLE_OPTION="--force-queryable"
+    fi
+
+    # uninstall old versions
+    adb uninstall androidx.test.services
+    adb uninstall androidx.test.orchestrator
+
+    # Install the test orchestrator.
+    adb install $FORCE_QUERYABLE_OPTION -r path/to/m2repository/androidx/test/orchestrator/1.4.2/orchestrator-1.4.2.apk
+
+    # Install test services.
+    adb install $FORCE_QUERYABLE_OPTION -r path/to/m2repository/androidx/test/services/test-services/1.4.2/test-services-1.4.2.apk
+
+    # Add "-e clearPackageData true" to clear your app's data in between runs.
+    adb shell 'CLASSPATH=$(pm path androidx.test.services) app_process / \
+     androidx.test.services.shellexecutor.ShellMain am instrument -w -e clearPackageData true -e \
+     targetInstrumentation cx.ring/androidx.test.runner.AndroidJUnitRunner \
+     androidx.test.orchestrator/.AndroidTestOrchestrator'
+};
+
 launch_emulator
 check_emulator_status
 disable_animation
