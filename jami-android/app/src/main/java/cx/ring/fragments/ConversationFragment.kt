@@ -97,6 +97,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     private val mSmallParticipantAvatars: MutableMap<String, AvatarDrawable> = HashMap()
     private var mapWidth = 0
     private var mapHeight = 0
+    private var marginPxTotal = 0
     private var loading = true
     private var animating = 0
     private var lastInsets: WindowInsetsCompat? = null
@@ -175,7 +176,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         val res = resources
         mapWidth = res.getDimensionPixelSize(R.dimen.location_sharing_minmap_width)
         mapHeight = res.getDimensionPixelSize(R.dimen.location_sharing_minmap_height)
-        val marginPxTotal = res.getDimensionPixelSize(R.dimen.conversation_message_input_margin)
+        marginPxTotal = res.getDimensionPixelSize(R.dimen.conversation_message_input_margin)
 
         return FragConversationBinding.inflate(inflater, container, false).apply {
             animation.duration = 150
@@ -1032,6 +1033,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             trustRequestPrompt.visibility = View.GONE
             trustRequestMessageLayout.visibility = View.GONE
             currentBottomView = cvMessageInput
+            histList.updatePadding(bottom = cvMessageInput.height + marginPxTotal)
         }
     }
 
