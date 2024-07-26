@@ -128,7 +128,6 @@ class TVContactFragment : BaseDetailFragment<TVContactPresenter>(), TVContactVie
         }
         //setupAdapter(isRequest)
         row.actionsAdapter = adapter
-        mAdapter?.clear()
         mAdapter?.add(row)
     }
 
