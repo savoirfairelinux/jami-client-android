@@ -126,10 +126,9 @@ class TVContactFragment : BaseDetailFragment<TVContactPresenter>(), TVContactVie
                 adapter.add(Action(ACTION_BLOCK, resources.getString(R.string.block)))
             }
         }
-        //setupAdapter(isRequest)
         row.actionsAdapter = adapter
-        mAdapter?.clear()
-        mAdapter?.add(row)
+        if (mAdapter?.size() == 0) mAdapter?.add(row)
+        else mAdapter?.replace(0, row)
     }
 
     override fun callContact(accountId: String, conversationUri: Uri, uri: Uri) {
