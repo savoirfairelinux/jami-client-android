@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "16b82205_459744b5",
+        "filename": "jami-android/app/build.gradle.kts",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-07-26T15:26:23Z",
+      "side": 1,
+      "message": "it is not an update",
+      "range": {
+        "startLine": 134,
+        "startChar": 0,
+        "endLine": 134,
+        "endChar": 2
+      },
+      "revId": "2af722f2f3cef4da8bcc7977419b869d0f20de30",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
