@@ -290,6 +290,7 @@ class HomeActivity : FragmentActivity() {
                     params.setPreviewSize(selectSize.width, selectSize.height)
                     camera.parameters = params
                     mBlurImage.visibility = View.VISIBLE
+                    mFadeView.visibility = View.VISIBLE
                     if (mCameraManager == null) {
                         mCameraManager = (getSystemService(CAMERA_SERVICE) as CameraManager).apply {
                             registerAvailabilityCallback((mCameraAvailabilityCallback), null)
