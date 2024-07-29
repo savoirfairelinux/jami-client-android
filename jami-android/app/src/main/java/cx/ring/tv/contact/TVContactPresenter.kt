@@ -106,6 +106,8 @@ class TVContactPresenter @Inject constructor(
         mAccountService.getAccount(mAccountId)?.let { account ->
             val conversation = account.getByUri(mUri)!!
             if (conversation.mode.blockingFirst() == Conversation.Mode.Request) {
+                conversation.loaded = null
+                conversation.clearHistory(true)
                 conversation.setMode(Conversation.Mode.Syncing)
             }
         }
