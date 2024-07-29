@@ -9,9 +9,9 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry
 import cx.ring.R
-import cx.ring.assertOnView
 import cx.ring.client.HomeActivity
-import cx.ring.doOnView
+import cx.ring.client.waitUntil
+import cx.ring.hasTextInputLayoutError
 import org.hamcrest.Matchers.allOf
 import org.junit.Before
 import org.junit.FixMethodOrder
@@ -74,7 +74,9 @@ class AccountCreation {
 
         specifyPassword()
 
-        doOnView(allOf(withId(R.id.create_account_password), isDisplayed(), isEnabled()), click())
+        onView(withId(R.id.create_account_password)).perform(
+            waitUntil(allOf(isDisplayed(), isEnabled())), click()
+        )
 
         skipBiometrics()
 
@@ -90,13 +92,17 @@ class AccountCreation {
 
         specifyUsername()
 
-        doOnView(allOf(withId(R.id.create_account_username), isDisplayed(), isEnabled()), click())
+        onView(withId(R.id.create_account_username)).perform(
+            waitUntil(allOf(isDisplayed(), isEnabled())), click()
+        )
 
         onView(allOf(withId(R.id.ring_password_switch), isDisplayed())).perform(click())
 
         specifyPassword()
 
-        doOnView(allOf(withId(R.id.create_account_password), isDisplayed(), isEnabled()), click())
+        onView(withId(R.id.create_account_password)).perform(
+            waitUntil(allOf(isDisplayed(), isEnabled())), click()
+        )
 
         skipBiometrics()
 
@@ -131,20 +137,13 @@ class AccountCreation {
 
         onView(allOf(withId(R.id.ring_create_btn), isDisplayed())).perform(scrollTo(), click())
 
-        onView(allOf(withId(R.id.input_username), isDisplayed()))
-            .perform(replaceText("ab"), closeSoftKeyboard())
+        onView(withId(R.id.input_username)).perform(replaceText("ab"), closeSoftKeyboard())
 
-        val errorString = InstrumentationRegistry
-            .getInstrumentation().targetContext.getString(R.string.invalid_username)
-        assertOnView(
-            allOf(withId(com.google.android.material.R.id.textinput_error), isDisplayed()),
-            matches(withText(errorString))
-        )
+        val errorString = InstrumentationRegistry.getInstrumentation().targetContext.getString(R.string.invalid_username)
 
-        assertOnView(
-            allOf(withId(R.id.create_account_username), isNotEnabled()),
-            matches(isDisplayed())
-        )
+        onView(withId(R.id.input_username_txt_box)).perform(waitUntil(hasTextInputLayoutError(errorString)))
+
+        onView(withId(R.id.create_account_username)).check(matches(allOf(isNotEnabled(), isDisplayed())))
     }
 
     /**
@@ -157,20 +156,14 @@ class AccountCreation {
 
         onView(allOf(withId(R.id.ring_create_btn), isDisplayed())).perform(scrollTo(), click())
 
-        onView(allOf(withId(R.id.input_username), isDisplayed()))
-            .perform(replaceText("abc"), closeSoftKeyboard())
+        onView(withId(R.id.input_username)).perform(replaceText("abc"), closeSoftKeyboard())
 
         val errorString = InstrumentationRegistry
             .getInstrumentation().targetContext.getString(R.string.username_already_taken)
-        assertOnView(
-            allOf(withId(com.google.android.material.R.id.textinput_error), isDisplayed()),
-            matches(withText(errorString))
-        )
 
-        assertOnView(
-            allOf(withId(R.id.create_account_username), isNotEnabled()),
-            matches(isDisplayed())
-        )
+        onView(withId(R.id.input_username_txt_box)).perform(waitUntil(hasTextInputLayoutError(errorString)))
+
+        onView(withId(R.id.create_account_username)).check(matches(allOf(isNotEnabled(), isDisplayed())))
     }
 
     private fun specifyUsername() {
@@ -189,10 +182,7 @@ class AccountCreation {
 
         specifyUsername()
 
-        assertOnView(
-            allOf(withId(R.id.create_account_username), isEnabled()),
-            matches(isDisplayed())
-        )
+        onView(withId(R.id.create_account_username)).check(matches(allOf(isNotEnabled(), isDisplayed())))
     }
 
     /**
@@ -208,9 +198,9 @@ class AccountCreation {
 
         onView(allOf(withId(R.id.ring_password_switch), isDisplayed())).perform(click())
 
-        onView(allOf(withId(R.id.create_account_password), isDisplayed()))
+        onView(withId(R.id.create_account_password)).check(matches(isDisplayed()))
 
-        onView(allOf(withId(R.id.ring_password_repeat_txt_box), isDisplayed()))
+        onView(withId(R.id.ring_password_repeat_txt_box)).check(matches(isDisplayed()))
     }
 
     /**
@@ -231,15 +221,10 @@ class AccountCreation {
 
         val errorString = InstrumentationRegistry
             .getInstrumentation().targetContext.getString(R.string.error_password_char_count)
-        assertOnView(
-            allOf(withId(com.google.android.material.R.id.textinput_error), isDisplayed()),
-            matches(withText(errorString))
-        )
 
-        assertOnView(
-            allOf(withId(R.id.create_account_password), isNotEnabled()),
-            matches(isDisplayed())
-        )
+        onView(withId(R.id.password_txt_box)).perform(waitUntil(hasTextInputLayoutError(errorString)))
+
+        onView(withId(R.id.create_account_password)).check(matches(allOf(isNotEnabled(), isDisplayed())))
     }
 
     /**
@@ -263,15 +248,10 @@ class AccountCreation {
 
         val errorString = InstrumentationRegistry
             .getInstrumentation().targetContext.getString(R.string.error_passwords_not_equals)
-        assertOnView(
-            allOf(withId(com.google.android.material.R.id.textinput_error), isDisplayed()),
-            matches(withText(errorString))
-        )
 
-        assertOnView(
-            allOf(withId(R.id.create_account_password), isNotEnabled()),
-            matches(isDisplayed())
-        )
+        onView(withId(R.id.ring_password_repeat_txt_box)).perform(waitUntil(hasTextInputLayoutError(errorString)))
+
+        onView(withId(R.id.create_account_password)).check(matches(allOf(isNotEnabled(), isDisplayed())))
     }
 
     /**
@@ -288,10 +268,7 @@ class AccountCreation {
 
         specifyPassword()
 
-        assertOnView(
-            allOf(withId(R.id.create_account_password), isEnabled()),
-            matches(isDisplayed())
-        )
+        onView(withId(R.id.create_account_password)).check(matches(allOf(isEnabled(), isDisplayed())))
     }
 
     private fun createDefaultAccount() {
@@ -309,7 +286,9 @@ class AccountCreation {
 
         specifyUsername()
 
-        doOnView(allOf(withId(R.id.create_account_username), isDisplayed(), isEnabled()), click())
+        onView(withId(R.id.create_account_username)).perform(
+            waitUntil(allOf(isDisplayed(), isEnabled())), click()
+        )
 
         onView(allOf(withId(R.id.create_account_password), isDisplayed())).perform(click())
 
