@@ -111,8 +111,10 @@ Si potra modificare questo account più tardi.</string>
   <string name="enabled">Attivato</string>
   <string name="account_proxy_label">Proxy DHT</string>
   <string name="account_proxy_enable_label">Usa proxy DHT</string>
+  <string name="account_proxy_list_enable_label">Usa lista proxy DHT</string>
   <string name="account_proxy_server_label">Indirizzo proxy DHT</string>
   <string name="account_proxy_server_list_label">URL della lista proxy DHT</string>
+  <string name="account_proxy_server_used">Utilizza: %1$s</string>
   <string name="account_sip_proxy_label">Proxy</string>
   <string name="account_peer_discovery_label">Scopri utenti locali</string>
   <string name="account_peer_discovery_enable_label">Attiva il rilevamento di utenti locali</string>

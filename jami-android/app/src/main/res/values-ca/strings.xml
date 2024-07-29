@@ -43,11 +43,13 @@
   <string name="dial_number">Marca un número</string>
   <!--History Fragment-->
   <!--Home Fragment-->
+  <string name="invitation_card_title">Invitacions rebudes</string>
   <plurals name="home_conferences_title">
     <item quantity="one">%d Conversa</item>
     <item quantity="other">%d Converses</item>
   </plurals>
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">Cerca nom o conversa...</string>
   <string name="choose_number">Trieu un número</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -71,6 +73,7 @@
   <string name="notif_channel_background_service">Servei en segon pla</string>
   <string name="notif_channel_background_service_descr">Permet rebre trucades i missatges en qualsevol moment.</string>
   <string name="notif_group_calls">Trucades</string>
+  <string name="notif_inprogress_group_call">Trucada en curs</string>
   <string name="notif_background_service">Jami s\'està executant en segon pla</string>
   <string name="notif_mark_as_read">Marca com a llegit</string>
   <string name="notif_dismiss">Ignora</string>
@@ -133,10 +136,13 @@
   <string name="conversation_send_audio">Enregistra un clip d\'àudio</string>
   <string name="conversation_send_video">Enregistra un clip de vídeo</string>
   <string name="conversation_share_location">Comparteix localització</string>
+  <string name="ongoing_group_call">Trucada en curs</string>
+  <string name="started_call">Trucada iniciada</string>
   <string name="in_reply_to">En resposta a</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Permís de la càmera</string>
   <string name="permission_dialog_camera_message">Habiliteu el permís de la càmera perquè funcionin les trucades de vídeo. </string>
+  <string name="camera_error">Ha succeït un error iniciant la càmera</string>
   <!--Ringtone activity-->
   <string name="ringtone_error_title">Error</string>
   <string name="ringtone_error_format_not_supported">Aquest format no és compatible.</string>
@@ -175,6 +181,7 @@
   <string name="conversation_action_select_peer_number">Seleccioneu un número</string>
   <string name="conversation_action_block_this">Bloqueja el contacte</string>
   <string name="conversation_action_unblock_this">Desbloca contacte</string>
+  <string name="conversation_action_go_to_call">Torna a la trucada</string>
   <string name="conversation_action_incoming_call">Trucada entrant</string>
   <string name="conversation_action_latest">Salta a l\'última</string>
   <string name="conversation_open_file_error">No hi ha cap aplicació instaŀlada que pugui obrir aquest tipus de fitxer.</string>
@@ -202,6 +209,7 @@
   <string name="conversation_contact_left">%1$s ha sortit</string>
   <string name="conversation_contact_banned">%1$s ha estat bloquejat</string>
   <string name="conversation_search_hint">Conversació de cerca</string>
+  <string name="starting_camera_error">Ha succeït un error iniciant la càmera</string>
   <string name="today">Avui</string>
   <string name="yesterday">Ahir</string>
   <!--Contacts-->
@@ -325,6 +333,8 @@
   <string name="tv_send_video">Envia mitjans</string>
   <string name="tv_action_more">Més</string>
   <string name="conversation_input_speech_hint">Digui alguna cosa…</string>
+  <string name="audio_permission_rationale_title">Es necessita permís d\'àudio</string>
+  <string name="camera_permission_rationale_title">Es necessita permís de vídeo</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Recomanat</string>
   <string name="wizard_status_optional">Opcional</string>
@@ -374,11 +384,22 @@
   <string name="bottomsheet_contact">Contacte amb Jami\n%1$s</string>
   <string name="bottomsheet_remove">Retirar de l\'esgarre</string>
   <!--JamiId-->
+  <string name="jami_id_copy">Copia el JamiId</string>
+  <string name="jami_id_share">Comparteix el JamiId</string>
   <string name="jami_id_validate">Registra nom d\'usuari</string>
+  <string name="jami_id_available">El nom d\'usuari està disponible</string>
+  <string name="jami_id_not_available">El nom d\'usuari no està disponible\n•  Màxim 32 caràcters\n•  Caràcters especials permesos: guionet (-),  guió baix (_)</string>
+  <string name="jami_id_info">•  Màxim 32 caràcters\n· Caràcters especials permesos: guionet (-), guió baix (_)</string>
   <string name="jami_id_looking_for_availability">Comprovant disponibilitat del nom d\'usuari…</string>
   <string name="jami_id_choose_username">Seleccioneu un nom d\'usuari</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Benvingut a Jami</string>
+  <string name="welcome_jami_description">Comparteix el teu identificador de Jami per tal de ser contactat mes fàcilment!</string>
   <!--Donation-->
+  <string name="donation_card_description">Si gaudeixes utilitzant el Jami i creus en la nostre missió, faries una donació?</string>
+  <string name="donation_card_not_now">Ara no</string>
+  <string name="donation_donate">Donar</string>
+  <string name="donation_setting_title">Recordatori de donació</string>
+  <string name="donation_setting_description">Activa el recordatori de donació</string>
   <!--Plugin-->
 </resources>

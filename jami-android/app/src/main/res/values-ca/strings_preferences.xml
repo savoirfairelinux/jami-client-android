@@ -65,6 +65,8 @@
   <string name="plugin_install_failure">Ha fallat la instal·lació del complement <b>%1$s</b></string>
   <string name="plugin_recent_version_exception">Tens una versió més recent de <b>%1$s</b> instal·lada</string>
   <string name="plugin_same_version_exception">Tens la mateixa versió de <b>%1$s </b>instal·lada</string>
+  <string name="plugin_invalid_signature"><b>%1$s</b> té una firma invàlida</string>
+  <string name="plugin_invalid_authority">No es pot verificar l\'autoritat per a: <b>%1$s</b></string>
   <string name="plugin_force_install">Força \n instalar</string>
   <string name="plugin_path_image_add">Afegeix una nova imatge</string>
 </resources>

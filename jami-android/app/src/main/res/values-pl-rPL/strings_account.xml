@@ -111,8 +111,10 @@ Możesz edytować swoje konto później</string>
   <string name="enabled">Włączone</string>
   <string name="account_proxy_label">Proxy DHT</string>
   <string name="account_proxy_enable_label">Używaj proxy DHT</string>
+  <string name="account_proxy_list_enable_label">Użyj listy proxy DHT</string>
   <string name="account_proxy_server_label">Adres proxy DHT</string>
   <string name="account_proxy_server_list_label">URL listy proxy DHT</string>
+  <string name="account_proxy_server_used">Użycie: %1$s</string>
   <string name="account_sip_proxy_label">Pełnomocnik</string>
   <string name="account_peer_discovery_label">Wyszukiwanie lokalnych partnerów</string>
   <string name="account_peer_discovery_enable_label">Aktywuj wyszukiwanie lokalnych partnerów</string>

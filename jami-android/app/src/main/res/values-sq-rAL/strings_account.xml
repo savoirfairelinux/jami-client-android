@@ -111,8 +111,10 @@
   <string name="enabled">Aktivizuar</string>
   <string name="account_proxy_label">Ndërmjetës DHT</string>
   <string name="account_proxy_enable_label">Përdor ndërmjetës DHT</string>
+  <string name="account_proxy_list_enable_label">Përdor listë ndërmjetësish DHT</string>
   <string name="account_proxy_server_label">Adresë ndërmjetësi DHT</string>
   <string name="account_proxy_server_list_label">URL liste ndërmjetësish DHT</string>
+  <string name="account_proxy_server_used">Po përdoret: %1$s</string>
   <string name="account_sip_proxy_label">Ndërmjetës</string>
   <string name="account_peer_discovery_label">Pikasje ortakësh vendorë</string>
   <string name="account_peer_discovery_enable_label">Aktivizo pikasje ortakësh vendorë</string>

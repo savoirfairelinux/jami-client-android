@@ -111,8 +111,10 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="enabled">Aktiviert</string>
   <string name="account_proxy_label">DHT Proxy</string>
   <string name="account_proxy_enable_label">DHT Proxy nutzen</string>
+  <string name="account_proxy_list_enable_label">DHT-Proxyliste verwenden</string>
   <string name="account_proxy_server_label">DHT Proxy Adresse</string>
   <string name="account_proxy_server_list_label">DHT Proxy Liste URL</string>
+  <string name="account_proxy_server_used">Verwendet: %1$s</string>
   <string name="account_sip_proxy_label">Proxy</string>
   <string name="account_peer_discovery_label">Lokale Teilnehmer-Erkennung</string>
   <string name="account_peer_discovery_enable_label">Erlaube das Finden von lokalen Teilnehmern</string>

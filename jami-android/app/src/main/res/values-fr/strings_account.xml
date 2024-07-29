@@ -113,8 +113,10 @@ Vous pouvez modifier votre compte plus tard.</string>
   <string name="enabled">Activé</string>
   <string name="account_proxy_label">DHT mandataire</string>
   <string name="account_proxy_enable_label">Utiliser un serveur délégataire </string>
+  <string name="account_proxy_list_enable_label">Utiliser la liste des serveurs mandataires DHT</string>
   <string name="account_proxy_server_label">Adresse du serveur mandataire DHT</string>
   <string name="account_proxy_server_list_label">URL de la liste des serveurs mandataires DHT</string>
+  <string name="account_proxy_server_used">Utilisé : %1$s</string>
   <string name="account_sip_proxy_label">Serveur mandataire</string>
   <string name="account_peer_discovery_label">Découverte des utilisateurs locaux</string>
   <string name="account_peer_discovery_enable_label">Activer la découverte des utilisateurs locaux</string>

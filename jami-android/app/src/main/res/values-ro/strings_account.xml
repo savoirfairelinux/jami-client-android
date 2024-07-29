@@ -111,8 +111,10 @@
   <string name="enabled">Activat</string>
   <string name="account_proxy_label">Proxy DHT</string>
   <string name="account_proxy_enable_label">Folosește proxy DHT</string>
+  <string name="account_proxy_list_enable_label">Folosește lista de proxy DHT</string>
   <string name="account_proxy_server_label">Adresa proxy DHT</string>
   <string name="account_proxy_server_list_label">URL-ul listei de proxy DHT</string>
+  <string name="account_proxy_server_used">Se folosește: %1$s</string>
   <string name="account_sip_proxy_label">Proxy</string>
   <string name="account_peer_discovery_label">Descoperă utilizatori locali</string>
   <string name="account_peer_discovery_enable_label">Activează descoperirea utilizatorilor locali</string>
