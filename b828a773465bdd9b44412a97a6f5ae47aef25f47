@@ -16,6 +16,23 @@
       "message": "This is wip",
       "revId": "b828a773465bdd9b44412a97a6f5ae47aef25f47",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d1a876cf_8f482b69",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-07-30T12:51:35Z",
+      "side": 1,
+      "message": "- Remove accounts at the end\n- One test \u003d one feature (send, receive)\n- Check message is displayed when sent\n- Do not recopy `AccountCreationUtils`",
+      "revId": "b828a773465bdd9b44412a97a6f5ae47aef25f47",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
