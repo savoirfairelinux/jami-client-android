@@ -16,6 +16,23 @@
       "message": "Nice, works much faster than before.",
       "revId": "061a22f018779052672edb20f2af54704fec2fc6",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5b84f2f2_075062b5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-07-30T12:41:20Z",
+      "side": 1,
+      "message": "I would prefer the maximum line length to be respected but the code is nice. 👍",
+      "revId": "061a22f018779052672edb20f2af54704fec2fc6",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
