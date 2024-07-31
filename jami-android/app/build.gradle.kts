@@ -34,7 +34,8 @@ android {
                     "-DJAMI_JNI=ON",
                     "-DJAMI_JNI_PACKAGEDIR="+rootProject.projectDir.resolve("libjamiclient/src/main/java"),
                     "-DJAMI_DATADIR=/data/data/$namespace/files",
-                    "-DJAMI_NATPMP=Off"
+                    "-DJAMI_NATPMP=Off",
+                    "-DCMAKE_BUILD_TYPE=Debug"
                 )
             }
             ndk {
@@ -42,6 +43,9 @@ android {
                 abiFilters += properties["archs"]?.toString()?.split(",") ?: listOf("arm64-v8a", "x86_64", "armeabi-v7a")
                 println ("Building for ABIs $abiFilters")
             }
+        }
+        packaging {
+            jniLibs.keepDebugSymbols.add("**.so") // ADD THIS! #2
         }
     }
     buildTypes {
