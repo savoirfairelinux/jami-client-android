@@ -70,8 +70,6 @@ class AddContact {
         GrantPermissionRule.grant(android.Manifest.permission.POST_NOTIFICATIONS)
 
     companion object {
-        @JvmStatic
-        private var accountsCreated = false
 
         @JvmStatic // Account A will be the one sending the trust request.
         private var accountA: Account? = null
@@ -132,8 +130,6 @@ class AddContact {
                 fakeDConversation,
                 accountDUri
             )
-
-            accountsCreated = true // To not redo account creation for every test.
         }
     }
 
@@ -349,7 +345,7 @@ class AddContact {
         onView(withId(R.id.menu_overflow)).perform(click())
 
         // Click on account settings
-        // Don't know wht but doesn't work to select by ID.
+        // Don't know why but doesn't work to select by ID.
         val accountSettingString = InstrumentationRegistry.getInstrumentation().targetContext
             .getString(R.string.menu_item_account_settings)
         onView(allOf(withText(accountSettingString), isDisplayed())).perform(click())
