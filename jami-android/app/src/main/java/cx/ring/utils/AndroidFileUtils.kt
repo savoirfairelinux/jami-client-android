@@ -316,10 +316,15 @@ object AndroidFileUtils {
     }.subscribeOn(Schedulers.io())
 
     fun moveToUri(cr: ContentResolver, input: File, outUri: Uri): Completable = Completable.fromAction {
+        Log.w("devdebug", "pt1")
         FileInputStream(input).use { inputStream ->
+            Log.w("devdebug", "pt2")
             cr.openOutputStream(outUri).use { output ->
+                Log.w("devdebug", "pt3")
                 if (output == null) throw FileNotFoundException()
+                Log.w("devdebug", "pt4")
                 FileUtils.copyFile(inputStream, output)
+                Log.w("devdebug", "pt5")
             }
         }
         input.delete()
