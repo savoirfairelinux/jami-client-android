@@ -317,15 +317,6 @@ class AccountCreation {
             .perform(replaceText("123456"), closeSoftKeyboard())
     }
 
-    private fun skipBiometrics() { // Skip biometrics popup
-        // only on P+
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
-            val noThanksSrc = InstrumentationRegistry
-                .getInstrumentation().targetContext.getString(R.string.no_thanks)
-            onView(allOf(withText(noThanksSrc), isDisplayed())).perform(click())
-        }
-    }
-
     private fun moveToWizard() {
         mActivityScenarioRule.scenario.onActivity { activity -> // Set custom name server
             activity.mAccountService.customNameServer = "https://ns-test.jami.net/"
@@ -359,5 +350,17 @@ class AccountCreation {
         onView(allOf(withId(R.id.skip_create_account), isDisplayed())).perform(click())
 
         Log.d("devdebug", "Account created: $username")
+    }
+
+    companion object{
+        fun skipBiometrics() { // Skip biometrics popup
+            // only on P+
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+                val noThanksSrc = InstrumentationRegistry
+                    .getInstrumentation().targetContext.getString(R.string.no_thanks)
+                onView(isRoot()).perform(waitUntil(hasDescendant(withText(noThanksSrc))))
+                onView(allOf(withText(noThanksSrc), isDisplayed())).perform(click())
+            }
+        }
     }
 }
