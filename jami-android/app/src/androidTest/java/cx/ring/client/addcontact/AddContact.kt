@@ -35,10 +35,10 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.GrantPermissionRule
+import cx.ring.AccountUtils
 import cx.ring.R
 import cx.ring.assertOnView
 import cx.ring.client.HomeActivity
-import cx.ring.client.wizard.AccountUtils
 import cx.ring.doOnView
 import net.jami.model.Account
 import net.jami.model.Conversation
