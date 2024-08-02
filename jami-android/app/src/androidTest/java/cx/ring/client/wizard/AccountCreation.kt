@@ -24,6 +24,7 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry
+import cx.ring.AccountUtils
 import cx.ring.R
 import cx.ring.assertOnView
 import cx.ring.client.HomeActivity
@@ -375,78 +376,5 @@ class AccountCreation {
         onView(allOf(withId(R.id.skip_create_account), isDisplayed())).perform(click())
 
         Log.d("devdebug", "Account created: $username")
-    }
-}
-
-object AccountUtils {
-
-    private val TAG = AccountUtils::class.java.simpleName
-
-    private const val NAME_SERVER_ADDRESS = "https://ns-test.jami.net"
-
-    /**
-     * Create n accounts and register them.
-     * This function is blocking.
-     *
-     * @param accountService The account service to use.
-     * @param count The number of accounts to create.
-     * @return The list of registered account names.
-     */
-    fun createAccountAndRegister(accountService: AccountService, count: Int): List<Account> {
-
-        val baseUsername = "jamitest"
-        val time = System.currentTimeMillis()
-
-        val accountObservableList = (0..<count).map { accountCount ->
-            val username = "${baseUsername}_${time}_${accountCount}"
-            Log.d(TAG, "Account username: $username...")
-            accountService.getAccountTemplate(AccountConfig.ACCOUNT_TYPE_JAMI)
-                .map { accountDetails: HashMap<String, String> ->
-                    accountDetails[ConfigKey.ACCOUNT_ALIAS.key] = "Jami account $accountCount"
-                    accountDetails[ConfigKey.RINGNS_HOST.key] = NAME_SERVER_ADDRESS
-                    accountDetails
-                }.flatMapObservable { details ->
-                    Log.d(TAG, "Adding account ...")
-                    accountService.addAccount(details)
-                }
-                .filter { account: Account ->
-                    account.registrationState != AccountConfig.RegistrationState.INITIALIZING
-                }
-                .firstOrError()
-                .map { account: Account ->
-                    Log.d(TAG, "Registering account ...")
-                    accountService.registerName(
-                        account, username, AccountService.ACCOUNT_SCHEME_PASSWORD, ""
-                    )
-                    account
-                }
-        }
-
-        // Wait for all accounts to be created.
-        val accountList: List<Account> =
-            Single.zip(accountObservableList) { it.filterIsInstance<Account>() }.blockingGet()
-
-        // Wait for all accounts to be registered.
-        Single.zip(
-            accountList.map {
-                accountService.getObservableAccount(it)
-                    .filter { account: Account ->
-                        account.registrationState == AccountConfig.RegistrationState.REGISTERED
-                    }.firstOrError()
-            }
-        ) { it }.blockingSubscribe()
-
-        return accountList
-    }
-
-    /**
-     * Remove all accounts.
-     *
-     * @param accountService The account service to use.
-     */
-    fun removeAllAccounts(accountService: AccountService) {
-        accountService.observableAccountList.blockingFirst().forEach {
-            accountService.removeAccount(it.accountId)
-        }
     }
 }
