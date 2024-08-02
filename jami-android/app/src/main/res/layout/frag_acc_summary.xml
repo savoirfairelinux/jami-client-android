@@ -116,6 +116,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         android:layout_height="wrap_content"
                         android:inputType="textPersonName"
                         android:maxLines="1"
+                        android:imeOptions="actionDone"
                         android:singleLine="true"
                         android:textColor="@color/text_color"
                         android:textStyle="bold" />
