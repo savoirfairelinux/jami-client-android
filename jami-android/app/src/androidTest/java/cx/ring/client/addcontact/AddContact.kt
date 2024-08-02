@@ -27,6 +27,7 @@ import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.hasDescendant
 import androidx.test.espresso.matcher.ViewMatchers.isDescendantOfA
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
+import androidx.test.espresso.matcher.ViewMatchers.isRoot
 import androidx.test.espresso.matcher.ViewMatchers.supportsInputMethods
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
@@ -37,9 +38,8 @@ import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.GrantPermissionRule
 import cx.ring.AccountUtils
 import cx.ring.R
-import cx.ring.assertOnView
 import cx.ring.client.HomeActivity
-import cx.ring.doOnView
+import cx.ring.waitUntil
 import net.jami.model.Account
 import net.jami.model.Conversation
 import net.jami.model.Uri
@@ -145,10 +145,17 @@ class AddContact {
         onView(allOf(supportsInputMethods(), isDescendantOfA(withId(R.id.search_view))))
             .perform(typeText(accountB!!.registeredName))
 
-        // Click on the search result for account B
-        assertOnView(
-            allOf(withId(R.id.conv_participant), withText(accountB!!.registeredName)),
-            matches(isDisplayed())
+        // Check account B is in the search results
+        onView(isRoot()).perform(
+            waitUntil(
+                hasDescendant(
+                    allOf(
+                        withId(R.id.conv_participant),
+                        withText(accountB!!.registeredName),
+                        isDisplayed()
+                    )
+                )
+            )
         )
     }
 
@@ -161,10 +168,17 @@ class AddContact {
         onView(allOf(supportsInputMethods(), isDescendantOfA(withId(R.id.search_view))))
             .perform(typeText(accountB!!.username))
 
-        // Click on the search result for account B
-        assertOnView(
-            allOf(withId(R.id.conv_participant), withText(accountB!!.registeredName)),
-            matches(isDisplayed())
+        // Check account B is in the search results
+        onView(isRoot()).perform(
+            waitUntil(
+                hasDescendant(
+                    allOf(
+                        withId(R.id.conv_participant),
+                        withText(accountB!!.registeredName),
+                        isDisplayed()
+                    )
+                )
+            )
         )
     }
 
@@ -177,11 +191,16 @@ class AddContact {
         onView(allOf(supportsInputMethods(), isDescendantOfA(withId(R.id.search_view))))
             .perform(typeText(accountB!!.registeredName))
 
-        // Click on the search result for account B
-        doOnView(
-            allOf(withId(R.id.conv_participant), withText(accountB!!.registeredName)),
-            click()
+        // Wait(for view to be displayed) then click on the search result for account B
+        onView(isRoot()).perform(
+            waitUntil(
+                hasDescendant(
+                    allOf(withId(R.id.conv_participant), withText(accountB!!.registeredName))
+                )
+            )
         )
+        onView(allOf(withId(R.id.conv_participant), withText(accountB!!.registeredName)))
+            .perform(click())
 
         // Click on "add contact" button
         onView(withId(R.id.unknownContactButton)).perform(click())
@@ -193,9 +212,12 @@ class AddContact {
                     .getString(R.string.conversation_contact_invited),
                 accountB!!.registeredName
             )
-        assertOnView(
-            withText(Matchers.containsString(contactInvitedString)),
-            matches(isDisplayed())
+        onView(isRoot()).perform(
+            waitUntil(
+                hasDescendant(
+                    allOf(withText(Matchers.containsString(contactInvitedString)), isDisplayed())
+                )
+            )
         )
     }
 
@@ -205,13 +227,24 @@ class AddContact {
         AccountNavigationUtils.moveToAccount(accountB!!.registeredName)
 
         // Check that the contact invitation has been received
-        assertOnView(withId(R.id.invitation_received_label), matches(isDisplayed()))
+        onView(isRoot()).perform(
+            waitUntil(hasDescendant(allOf(withId(R.id.invitation_received_label), isDisplayed())))
+        )
     }
 
     @Test
     fun c2_acceptContactInvite_hasOptions() {
+        // Wait for invitation to be received
+        onView(isRoot()).perform(
+            waitUntil(
+                hasDescendant(
+                    allOf(withId(R.id.invitation_received_label), isDisplayed())
+                )
+            )
+        )
+
         // Open invitations
-        doOnView(allOf(withId(R.id.invitation_received_label), isDisplayed()), click())
+        onView(withId(R.id.invitation_received_label)).perform(click())
 
         // Click on invitation
         onView(
@@ -222,15 +255,15 @@ class AddContact {
         ).perform(click())
 
         // Check there is three options: Block, Refuse and Accept
-        assertOnView(withId(R.id.btnBlock), matches(isDisplayed()))
-        assertOnView(withId(R.id.btnRefuse), matches(isDisplayed()))
-        assertOnView(withId(R.id.btnAccept), matches(isDisplayed()))
+        onView(withId(R.id.btnBlock)).check(matches(isDisplayed()))
+        onView(withId(R.id.btnRefuse)).check(matches(isDisplayed()))
+        onView(withId(R.id.btnAccept)).check(matches(isDisplayed()))
     }
 
     @Test
     fun c3_acceptContactInvite_accept() {
         // Open invitations
-        doOnView(withId(R.id.invitation_received_label), click())
+        onView(withId(R.id.invitation_received_label)).perform(click())
 
         // Click on invitation
         onView(
@@ -250,22 +283,26 @@ class AddContact {
                     .getString(R.string.conversation_contact_added),
                 accountB!!.registeredName.lowercase()
             )
-
-        assertOnView(
-            withText(Matchers.containsString(contactInvitedString)),
-            matches(isDisplayed())
+        onView(isRoot()).perform(
+            waitUntil(
+                hasDescendant(
+                    allOf(withText(Matchers.containsString(contactInvitedString)), isDisplayed())
+                )
+            )
         )
 
         // Going back to invitation list
         pressBack()
 
-        assertOnView(withId(R.id.confs_list), matches(hasDescendant(withId(R.id.conv_participant))))
+        // Check the smart list contains the contact
+        onView(withId(R.id.confs_list))
+            .perform(waitUntil(hasDescendant(withId(R.id.conv_participant))))
     }
 
     @Test
     fun c4_acceptContactInvite_InvitationReceivedBannerRemoved() {
         // Check that the contact invitation has been removed
-        assertOnView(withId(R.id.invitation_received_label), matches(not(isDisplayed())))
+        onView(withId(R.id.invitation_received_label)).check(matches(not(isDisplayed())))
     }
 
     @Test
@@ -274,7 +311,7 @@ class AddContact {
         AccountNavigationUtils.moveToAccount(accountC!!.registeredName)
 
         // Open invitations
-        doOnView(allOf(withId(R.id.invitation_received_label), isDisplayed()), click())
+        onView(withId(R.id.invitation_received_label)).perform(click())
 
         // Click on invitation
         onView(
@@ -291,17 +328,16 @@ class AddContact {
         // Check conversation fragment is well closed
         onView(withId(R.id.conversation_fragment)).check(doesNotExist())
 
-        // Check the smart list doesnt contain the contact
-        assertOnView(
-            withId(R.id.confs_list),
-            matches(not(hasDescendant(allOf(withId(R.id.conv_participant), isDisplayed()))))
+        // Check the smart list doesn't contain the contact
+        onView(withId(R.id.confs_list)).perform(
+            waitUntil(not(hasDescendant(allOf(withId(R.id.conv_participant), isDisplayed()))))
         )
     }
 
     @Test
     fun d2_refuseContactInvite_InvitationReceivedBannerRemoved() {
         // Check that the contact invitation has been removed
-        assertOnView(withId(R.id.invitation_received_label), matches(not(isDisplayed())))
+        onView(withId(R.id.invitation_received_label)).check(matches(not(isDisplayed())))
     }
 
     @Test
@@ -310,7 +346,7 @@ class AddContact {
         AccountNavigationUtils.moveToAccount(accountD!!.registeredName)
 
         // Open invitations
-        doOnView(withId(R.id.invitation_received_label), click())
+        onView(withId(R.id.invitation_received_label)).perform(click())
 
         // Click on invitation
         onView(
@@ -326,17 +362,16 @@ class AddContact {
         // Check conversation fragment is well closed
         onView(withId(R.id.conversation_fragment)).check(doesNotExist())
 
-        // Check the smart list doesnt contain the contact
-        assertOnView(
-            withId(R.id.confs_list),
-            matches(not(hasDescendant(withId(R.id.conv_participant))))
+        // Check the smart list doesn't contain the contact
+        onView(withId(R.id.confs_list)).perform(
+            waitUntil(not(hasDescendant(allOf(withId(R.id.conv_participant), isDisplayed()))))
         )
     }
 
     @Test
     fun e2_blockContactInvite_InvitationReceivedBannerRemoved() {
         // Check that the contact invitation has been removed
-        assertOnView(withId(R.id.invitation_received_label), matches(not(isDisplayed())))
+        onView(withId(R.id.invitation_received_label)).check(matches(not(isDisplayed())))
     }
 
     @Test
