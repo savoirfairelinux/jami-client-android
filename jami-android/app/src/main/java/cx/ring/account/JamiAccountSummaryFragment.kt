@@ -32,6 +32,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.PickVisualMediaRequest
@@ -248,6 +250,17 @@ class JamiAccountSummaryFragment :
             binding.btnQr.setOnClickListener {
                 QRCodeFragment.newInstance(QRCodeFragment.INDEX_CODE)
                     .show(parentFragmentManager, QRCodeFragment.TAG)
+            }
+            binding.username.setOnEditorActionListener { _, actionId, _ ->
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    val inputMethodManager = requireContext()
+                        .getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+                    inputMethodManager.hideSoftInputFromWindow(
+                        requireActivity().currentFocus!!.windowToken, 0
+                    )
+                    binding.username.clearFocus()
+                }
+                false
             }
             binding.username.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus: Boolean ->
                 val name = binding.username.text
