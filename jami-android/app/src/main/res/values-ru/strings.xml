@@ -185,6 +185,7 @@
   <string name="conversation_action_select_peer_number">Выбрать номер</string>
   <string name="conversation_action_block_this">Заблокировать контакт</string>
   <string name="conversation_action_unblock_this">Разблокировать контакт</string>
+  <string name="conversation_action_go_to_call">Вернуться к звонку</string>
   <string name="conversation_action_incoming_call">Входящий вызов</string>
   <string name="conversation_action_latest">Прокрутить до конца беседы</string>
   <string name="conversation_open_file_error">Отсутствует приложение для открытия данного типа файлов.</string>
@@ -311,6 +312,7 @@
   <string name="menu_file_share">Поделиться файлом</string>
   <string name="menu_message_copy">Копировать</string>
   <string name="menu_message_edit">Изменить сообщение</string>
+  <string name="menu_message_history">История сообщений</string>
   <string name="menu_message_delete">Удалить сообщение</string>
   <string name="menu_message_cancel">Отменить передачу сообщения</string>
   <string name="menu_message_reply">Ответить</string>

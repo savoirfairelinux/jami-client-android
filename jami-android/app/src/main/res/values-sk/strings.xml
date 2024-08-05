@@ -43,6 +43,7 @@
   <string name="dial_number">Zavolať na číslo</string>
   <!--History Fragment-->
   <!--Home Fragment-->
+  <string name="invitation_card_title">Prijaté pozvania</string>
   <!--ContactList Fragment-->
   <string name="choose_number">Vyberte číslo</string>
   <!--FileExplorerDFragement-->
@@ -376,5 +377,8 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Vitajte v Jami</string>
   <!--Donation-->
+  <string name="donation_card_description">Ak radi používate Jami a veríte v naše poslanie, prispeli by ste nám?</string>
+  <string name="donation_card_not_now">Teraz nie</string>
+  <string name="donation_donate">Prispejte</string>
   <!--Plugin-->
 </resources>
