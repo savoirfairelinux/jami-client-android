@@ -32,8 +32,8 @@
   <string name="pref_notification_summary">Установить видимость уведомлений приложения на экране блокировки. </string>
   <string name="pref_blackList_title">Черный список</string>
   <string name="pref_blackList_summary">Проверить список блокировок</string>
-  <string name="pref_delete_account_title">Удалить аккаунт</string>
-  <string name="pref_delete_account_summary">Удалить ваш аккаунт с этого устройства</string>
+  <string name="pref_delete_account_title">Удалить учетную запись</string>
+  <string name="pref_delete_account_summary">Удалить вашу учетную запись с этого устройства</string>
   <string name="pref_persistNotification_title">Работа в фоновом режиме</string>
   <string name="pref_persistNotification_summary">Разрешить работу в фоновом режиме для принятия звонков и сообщений.</string>
   <string name="pref_newGroup_title">Включить групповые чаты</string>

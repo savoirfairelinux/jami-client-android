@@ -43,6 +43,7 @@
   <string name="dial_number">Zavolať na číslo</string>
   <!--History Fragment-->
   <!--Home Fragment-->
+  <string name="invitation_card_title">Prijaté pozvania</string>
   <plurals name="home_conferences_title">
     <item quantity="one">%d Konverzácia</item>
     <item quantity="few">%d Konverzácie</item>
@@ -382,5 +383,8 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Vitajte v Jami</string>
   <!--Donation-->
+  <string name="donation_card_description">Ak radi používate Jami a veríte v naše poslanie, prispeli by ste nám?</string>
+  <string name="donation_card_not_now">Teraz nie</string>
+  <string name="donation_donate">Prispejte</string>
   <!--Plugin-->
 </resources>

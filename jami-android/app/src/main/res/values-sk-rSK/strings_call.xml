@@ -16,8 +16,12 @@ along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 -->
 <resources>
+    <!-- Call error -->
+    <string name="call_error">Pri spúšťaní hovoru sa vyskytla chyba.</string>
     <string name="call_error_no_microphone">Hovor zrušený. Nebol nájdený mikrofón.</string>
     <string name="call_error_no_camera_no_microphone">Hovor zrušený. Nebola nájdená kamera.</string>
+    <string name="screen_sharing_error">Pri spúšťaní zdieľania obrazovky sa vyskytla chyba.</string>
+
     <!-- SipCalls -->
     <string name="call_human_state_searching">Hľadanie</string>
     <string name="call_human_state_incoming">Prichádzajúci</string>
