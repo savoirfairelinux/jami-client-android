@@ -17,6 +17,7 @@ android {
     buildToolsVersion = "34.0.0"
     ndkVersion = "26.3.11579264"
     defaultConfig {
+        applicationId = "cx.ring.witness"
         minSdk = 24
         targetSdk = 34
         versionCode = 427

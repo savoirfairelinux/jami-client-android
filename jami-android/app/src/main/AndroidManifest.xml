@@ -431,7 +431,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="cx.ring.file_provider"
+            android:authorities="cx.ring.witness.file_provider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
