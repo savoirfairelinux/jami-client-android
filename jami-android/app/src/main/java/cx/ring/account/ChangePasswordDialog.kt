@@ -30,6 +30,7 @@ import androidx.fragment.app.DialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.R
 import cx.ring.databinding.DialogSetPasswordBinding
+import net.jami.account.JamiAccountCreationPresenter.Companion.PASSWORD_MIN_LENGTH
 
 class ChangePasswordDialog : DialogFragment() {
     private var mListener: PasswordChangedListener? = null
@@ -73,22 +74,37 @@ class ChangePasswordDialog : DialogFragment() {
         return result
     }
 
-    private fun checkInput(): Boolean {
-        val binding = binding ?: return false
-        if (!binding.newPasswordTxt.text.toString().contentEquals(binding.newPasswordRepeatTxt.text)) {
-            binding.newPasswordTxtBox.isErrorEnabled = true
-            binding.newPasswordTxtBox.error = getText(R.string.error_passwords_not_equals)
-            binding.newPasswordRepeatTxtBox.isErrorEnabled = true
-            binding.newPasswordRepeatTxtBox.error = getText(R.string.error_passwords_not_equals)
-            return false
-        } else {
-            binding.newPasswordTxtBox.isErrorEnabled = false
-            binding.newPasswordTxtBox.error = null
-            binding.newPasswordRepeatTxtBox.isErrorEnabled = false
-            binding.newPasswordRepeatTxtBox.error = null
-        }
-        return true
-    }
+    private fun checkInput(): Boolean =
+        binding?.run {
+            // Check password length and recopy.
+            return if (oldPasswordTxt.isVisible // Case where user want to delete password.
+                && newPasswordTxt.length() == 0 && newPasswordRepeatTxt.length() == 0
+            ) {
+                newPasswordTxtBox.isErrorEnabled = false
+                newPasswordTxtBox.error = null
+                newPasswordRepeatTxtBox.isErrorEnabled = false
+                newPasswordRepeatTxtBox.error = null
+                true
+            } else if (newPasswordTxt.length() < PASSWORD_MIN_LENGTH) {
+                newPasswordTxtBox.isErrorEnabled = true
+                newPasswordTxtBox.error = getText(R.string.error_password_char_count)
+                newPasswordRepeatTxtBox.isErrorEnabled = true
+                newPasswordRepeatTxtBox.error = getText(R.string.error_password_char_count)
+                false
+            } else if (!newPasswordTxt.text.contentEquals(newPasswordRepeatTxt.text)) {
+                newPasswordTxtBox.isErrorEnabled = true
+                newPasswordTxtBox.error = getText(R.string.error_passwords_not_equals)
+                newPasswordRepeatTxtBox.isErrorEnabled = true
+                newPasswordRepeatTxtBox.error = getText(R.string.error_passwords_not_equals)
+                false
+            } else {
+                newPasswordTxtBox.isErrorEnabled = false
+                newPasswordTxtBox.error = null
+                newPasswordRepeatTxtBox.isErrorEnabled = false
+                newPasswordRepeatTxtBox.error = null
+                true
+            }
+        } ?: false
 
     private fun validate(): Boolean {
         if (checkInput() && mListener != null) {
