@@ -188,7 +188,7 @@ class JamiAccountCreationPresenter @Inject constructor(
 
     companion object {
         val TAG = JamiAccountCreationPresenter::class.simpleName!!
-        private const val PASSWORD_MIN_LENGTH = 6
+        const val PASSWORD_MIN_LENGTH = 6
         const val TYPING_DELAY = 350L
     }
 }
