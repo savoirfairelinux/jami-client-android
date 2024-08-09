@@ -16,14 +16,27 @@
  */
 package cx.ring.client.wizard
 
+import android.app.Activity
+import android.app.Instrumentation
+import android.content.Intent
+import android.net.Uri
+import android.provider.MediaStore
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.*
+import androidx.test.espresso.intent.Intents
+import androidx.test.espresso.intent.Intents.intending
+import androidx.test.espresso.intent.matcher.IntentMatchers.hasAction
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
+import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.rule.GrantPermissionRule
+import androidx.test.runner.intent.IntentCallback
+import androidx.test.runner.intent.IntentMonitorRegistry
 import cx.ring.AccountUtils
+import cx.ring.ImageProvider
 import cx.ring.R
 import cx.ring.application.JamiApplication
 import cx.ring.client.HomeActivity
@@ -31,7 +44,11 @@ import cx.ring.waitUntil
 import cx.ring.hasTextInputLayoutError
 import net.jami.utils.Log
 import cx.ring.isDialogWithTitle
+import cx.ring.waitForView
+import cx.ring.utils.ContentUri.getUri
+import cx.ring.withImageUri
 import org.hamcrest.Matchers.allOf
+import org.hamcrest.Matchers.not
 import org.junit.Before
 import org.junit.FixMethodOrder
 import org.junit.Rule
@@ -47,6 +64,22 @@ class AccountCreation {
     @Rule
     @JvmField
     var mActivityScenarioRule = ActivityScenarioRule(HomeActivity::class.java)
+
+    @get:Rule
+    val grantPermissionRuleNotification: GrantPermissionRule =
+        GrantPermissionRule.grant(android.Manifest.permission.POST_NOTIFICATIONS)
+
+    @get:Rule
+    val grantPermissionRuleCamera: GrantPermissionRule =
+        GrantPermissionRule.grant(android.Manifest.permission.CAMERA)
+
+    @Test
+    fun a_setup() {
+        // Download image from URL.
+        mActivityScenarioRule.scenario.onActivity { activity ->
+            downloadedImagesUri = ImageProvider().downloadImagesToUri(activity, 2)
+        }
+    }
 
     @Before
     fun moveToAccountCreation() = moveToWizard()
@@ -116,11 +149,11 @@ class AccountCreation {
     }
 
     /**
-     * Checks if an account can be created by specifying a profile.
+     * Checks if an account can be created by specifying a profile name.
      * Skip others steps.
      */
     @Test
-    fun accountCreation_SpecifyProfile() {
+    fun accountCreation_SpecifyProfileName() {
         onView(withId(R.id.ring_create_btn)).perform(scrollTo(), click())
 
         onView(allOf(withId(R.id.skip), isDisplayed())).perform(click())
@@ -131,6 +164,161 @@ class AccountCreation {
             .perform(replaceText("Bonjour"), closeSoftKeyboard())
 
         onView(allOf(withId(R.id.next_create_account), isDisplayed())).perform(click())
+
+        // Check that we are in the home activity.
+        waitForView(withId(R.id.search_bar)).perform(waitUntil(isDisplayed()))
+
+        // Go to account settings. Click on search bar menu.
+        onView(withId(R.id.menu_overflow)).perform(click())
+
+        // Click on account settings. Don't know why but doesn't work to select by ID.
+        onView(allOf(withText(R.string.menu_item_account_settings), isDisplayed())).perform(click())
+
+        // Check if name is changed.
+        onView(withId(R.id.username)).check(matches(withText("Bonjour")))
+    }
+
+    /**
+     * Checks if an account can be created by specifying a profile picture (via camera).
+     * Skip others steps.
+     */
+    @Test
+    fun accountCreation_SpecifyProfilePictureViaCamera() {
+        onView(withId(R.id.ring_create_btn)).perform(scrollTo(), click())
+
+        onView(allOf(withId(R.id.skip), isDisplayed())).perform(click())
+
+        onView(allOf(withId(R.id.create_account_password), isDisplayed())).perform(click())
+
+        // Prepare the callback when we will intercept the camera intent.
+        val intentCallback = IntentCallback { intentCallback ->
+            if (intentCallback.action == MediaStore.ACTION_IMAGE_CAPTURE) {
+                intentCallback.extras!!.getUri(MediaStore.EXTRA_OUTPUT)!!.run {
+                    InstrumentationRegistry.getInstrumentation().targetContext.contentResolver.let {
+                        // Copy the downloaded image to the intent uri.
+                        val inStream = it.openInputStream(downloadedImagesUri[0])
+                        val outStream = it.openOutputStream(this)
+                        inStream?.use { input -> outStream?.use { output -> input.copyTo(output) } }
+                    }
+                }
+            }
+        }
+
+        // Start recording intents and subscribe to the callback.
+        Intents.init()
+        IntentMonitorRegistry.getInstance().addIntentCallback(intentCallback)
+
+        // Block the camera intent to propagate (prevent the camera from opening).
+        intending(hasAction(MediaStore.ACTION_IMAGE_CAPTURE))
+            .respondWith(Instrumentation.ActivityResult(Activity.RESULT_OK, null))
+
+        // Click on camera (should launch a camera intent).
+        onView(withId(R.id.camera)).perform(click())
+
+        // Stop recording intents and remove the callback.
+        IntentMonitorRegistry.getInstance().removeIntentCallback(intentCallback)
+        Intents.release()
+
+        // Check if the image is displayed.
+         onView(withId(R.id.profile_photo)).check(matches(withImageUri(downloadedImagesUri[0])))
+
+        onView(allOf(withId(R.id.next_create_account), isDisplayed())).perform(click())
+
+        // Check that we are in the home activity.
+        waitForView(withId(R.id.search_bar)).perform(waitUntil(isDisplayed()))
+
+        // Go to account settings. Click on search bar menu.
+        onView(withId(R.id.menu_overflow)).perform(click())
+
+        // Click on account settings. Don't know why but doesn't work to select by ID.
+        onView(allOf(withText(R.string.menu_item_account_settings), isDisplayed())).perform(click())
+
+        // Check if picture is changed in profile.
+        onView(withId(R.id.user_photo)).check(matches(withImageUri(downloadedImagesUri[0])))
+    }
+
+    /** Checks if an account can be created by specifying a profile picture (via camera).
+     * Skip others steps.
+     */
+    @Test
+    fun accountCreation_SpecifyProfilePictureViaGallery() {
+        onView(withId(R.id.ring_create_btn)).perform(scrollTo(), click())
+
+        onView(allOf(withId(R.id.skip), isDisplayed())).perform(click())
+
+        onView(allOf(withId(R.id.create_account_password), isDisplayed())).perform(click())
+
+        // Start recording intents and subscribe to the callback.
+        Intents.init()
+
+        intending(hasAction(MediaStore.ACTION_PICK_IMAGES))
+            .respondWith(
+                Instrumentation.ActivityResult(
+                    Activity.RESULT_OK,
+                    Intent().setData(downloadedImagesUri[1])
+                )
+            )
+
+        // Click on camera (should launch a gallery explorer).
+        onView(withId(R.id.gallery)).perform(click())
+
+        // Stop recording intents and remove the callback.
+        Intents.release()
+
+        // Check if the image is displayed.
+         onView(withId(R.id.profile_photo)).check(matches(withImageUri(downloadedImagesUri[1])))
+
+        onView(allOf(withId(R.id.next_create_account), isDisplayed())).perform(click())
+
+        // Check that we are in the home activity.
+        waitForView(withId(R.id.search_bar)).perform(waitUntil(isDisplayed()))
+
+        // Go to account settings. Click on search bar menu.
+        onView(withId(R.id.menu_overflow)).perform(click())
+
+        // Click on account settings. Don't know why but doesn't work to select by ID.
+        onView(allOf(withText(R.string.menu_item_account_settings), isDisplayed())).perform(click())
+
+        // Check if picture is changed in profile.
+        onView(withId(R.id.user_photo)).check(matches(withImageUri(downloadedImagesUri[1])))
+    }
+
+    /**
+     * Checks if a profile picture can be removed.
+     */
+    @Test
+    fun accountCreation_SpecifyProfilePicture_CanCancel(){
+        onView(withId(R.id.ring_create_btn)).perform(scrollTo(), click())
+
+        onView(allOf(withId(R.id.skip), isDisplayed())).perform(click())
+
+        onView(allOf(withId(R.id.create_account_password), isDisplayed())).perform(click())
+
+        // Start recording intents and subscribe to the callback.
+        Intents.init()
+
+        intending(hasAction(MediaStore.ACTION_PICK_IMAGES))
+            .respondWith(
+                Instrumentation.ActivityResult(
+                    Activity.RESULT_OK,
+                    Intent().setData(downloadedImagesUri[1])
+                )
+            )
+
+        // Click on camera (should launch a gallery explorer).
+        onView(withId(R.id.gallery)).perform(click())
+
+        // Stop recording intents and remove the callback.
+        Intents.release()
+
+        // Click on delete photo.
+        onView(allOf(withId(R.id.remove_photo), isDisplayed())).perform(click())
+
+        // Photo should be deleted.
+        onView(withId(R.id.profile_photo)).check(matches(not(withImageUri(downloadedImagesUri[1]))))
+
+        // Button to delete photo should be gone.
+        onView(withId(R.id.remove_photo)).check(matches(not(isDisplayed())))
     }
 
     /**
@@ -330,7 +518,7 @@ class AccountCreation {
     }
 
     companion object {
-        private const val TAG = "AccountCreation"
+        private val TAG = AccountCreation::class.java.simpleName
 
         fun skipBiometrics() { // Skip biometrics popup (only on P+)
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R)
@@ -338,5 +526,8 @@ class AccountCreation {
                     .inRoot(isDialogWithTitle(R.string.account_biometry_enroll_title))
                     .perform(waitUntil(isDisplayed()), click())
         }
+
+        @JvmStatic
+        private var downloadedImagesUri = listOf<Uri>()
     }
 }
