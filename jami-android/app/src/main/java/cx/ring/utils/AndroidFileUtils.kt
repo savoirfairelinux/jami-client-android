@@ -271,24 +271,25 @@ object AndroidFileUtils {
     /**
      * Copies a file from a uri whether locally on a remote location to the local cache
      * @param context Context to get access to cache directory
-     * @param uri uri of the
+     * @param inputFile uri of the input file
      * @return Single<File> which points to the newly created copy in the cache
     </File> */
-    fun getCacheFile(context: Context, uri: Uri): Single<File> {
-        val contentResolver = context.contentResolver
-        val cacheDir = context.cacheDir
-        return Single.fromCallable {
-            val file = File(cacheDir, getFilename(contentResolver, uri))
-            contentResolver.openInputStream(uri).use { inputStream ->
-                FileOutputStream(file).use { output ->
+    fun getCacheFile(context: Context, inputFile: Uri): Single<File> =
+        Single.fromCallable {
+            val outputFile = File(context.cacheDir, getFilename(context.contentResolver, inputFile))
+            if (outputFile.canonicalPath == inputFile.path?.let { File(it).canonicalPath }) {
+                Log.w(TAG, "Input and output files path are the same. Skipping copy.")
+                return@fromCallable outputFile
+            }
+            context.contentResolver.openInputStream(inputFile).use { inputStream ->
+                FileOutputStream(outputFile).use { output ->
                     if (inputStream == null) throw FileNotFoundException()
                     FileUtils.copyFile(inputStream, output)
                     output.flush()
                 }
             }
-            file
+            outputFile
         }.subscribeOn(Schedulers.io())
-    }
 
     fun getFileToSend(context: Context, conversation: Conversation, uri: Uri): Single<File> {
         val contentResolver = context.contentResolver
