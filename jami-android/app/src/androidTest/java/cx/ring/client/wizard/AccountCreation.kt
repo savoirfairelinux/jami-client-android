@@ -16,24 +16,32 @@
  */
 package cx.ring.client.wizard
 
+import android.app.Activity
+import android.app.Instrumentation
+import android.content.Intent
+import android.net.Uri
+import android.provider.MediaStore
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.*
+import androidx.test.espresso.intent.Intents
+import androidx.test.espresso.intent.Intents.intending
+import androidx.test.espresso.intent.matcher.IntentMatchers.hasAction
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.rule.GrantPermissionRule
+import androidx.test.runner.intent.IntentCallback
+import androidx.test.runner.intent.IntentMonitorRegistry
 import cx.ring.AccountUtils
+import cx.ring.ImageProvider
 import cx.ring.R
 import cx.ring.client.HomeActivity
 import cx.ring.waitUntil
 import cx.ring.hasTextInputLayoutError
-import io.reactivex.rxjava3.core.Single
-import net.jami.model.Account
-import net.jami.model.AccountConfig
-import net.jami.model.ConfigKey
-import net.jami.services.AccountService
+import cx.ring.utils.svg.getUri
 import net.jami.utils.Log
 import org.hamcrest.Matchers.allOf
 import org.junit.Before
@@ -42,7 +50,6 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.MethodSorters
-import java.util.HashMap
 
 @LargeTest
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -52,6 +59,22 @@ class AccountCreation {
     @Rule
     @JvmField
     var mActivityScenarioRule = ActivityScenarioRule(HomeActivity::class.java)
+
+    @get:Rule
+    val grantPermissionRuleNotification: GrantPermissionRule =
+        GrantPermissionRule.grant(android.Manifest.permission.POST_NOTIFICATIONS)
+
+    @get:Rule
+    val grantPermissionRuleCamera: GrantPermissionRule =
+        GrantPermissionRule.grant(android.Manifest.permission.CAMERA)
+
+    @Test
+    fun a_setup(){
+        // Download image from URL.
+        mActivityScenarioRule.scenario.onActivity { activity ->
+            downloadedImagesUri = ImageProvider().downloadImagesToUri(activity, 2)
+        }
+    }
 
     @Before
     fun moveToAccountCreation() = moveToWizard()
@@ -124,11 +147,11 @@ class AccountCreation {
     }
 
     /**
-     * Checks if an account can be created by specifying a profile.
+     * Checks if an account can be created by specifying a profile name.
      * Skip others steps.
      */
     @Test
-    fun accountCreation_SpecifyProfile() {
+    fun accountCreation_SpecifyProfileName() {
         onView(withId(R.id.ring_create_btn)).perform(scrollTo(), click())
 
         onView(allOf(withId(R.id.skip), isDisplayed())).perform(click())
@@ -139,6 +162,141 @@ class AccountCreation {
             .perform(replaceText("Bonjour"), closeSoftKeyboard())
 
         onView(allOf(withId(R.id.next_create_account), isDisplayed())).perform(click())
+
+        // Todo: Remove time sleep.
+        Thread.sleep(5000)
+
+        // Check that we are in the home activity.
+        onView(isRoot()).perform(waitUntil(hasDescendant(withId(R.id.search_bar))))
+
+        // Go to account settings. Click on search bar menu.
+        onView(withId(R.id.menu_overflow)).perform(click())
+
+        // Click on account settings. Don't know why but doesn't work to select by ID.
+        val accountSettingString = InstrumentationRegistry.getInstrumentation().targetContext
+            .getString(R.string.menu_item_account_settings)
+        onView(allOf(withText(accountSettingString), isDisplayed())).perform(click())
+
+        // Check if name is changed.
+        onView(withId(R.id.username)).check(matches(withText("Bonjour")))
+    }
+
+    /**
+     * Checks if an account can be created by specifying a profile picture (via camera).
+     * Skip others steps.
+     */
+    @Test
+    fun accountCreation_SpecifyProfilePictureViaCamera() {
+        onView(withId(R.id.ring_create_btn)).perform(scrollTo(), click())
+
+        onView(allOf(withId(R.id.skip), isDisplayed())).perform(click())
+
+        onView(allOf(withId(R.id.create_account_password), isDisplayed())).perform(click())
+
+        // Prepare the callback when we will intercept the camera intent.
+        val intentCallback = IntentCallback {
+            if (it.action == MediaStore.ACTION_IMAGE_CAPTURE) {
+                it.extras!!.getUri(MediaStore.EXTRA_OUTPUT)!!.run {
+                    mActivityScenarioRule.scenario.onActivity { activity ->
+                        // Copy the downloaded image to the intent uri.
+                        val inStream =
+                            activity.contentResolver.openInputStream(downloadedImagesUri[0])
+                        val outStream = activity.contentResolver.openOutputStream(this)
+                        inStream?.use { input -> outStream?.use { output -> input.copyTo(output) } }
+                    }
+                }
+            }
+        }
+
+        // Start recording intents and subscribe to the callback.
+        Intents.init()
+        IntentMonitorRegistry.getInstance().addIntentCallback(intentCallback)
+
+        // Block the camera intent to propagate (prevent the camera from opening).
+        intending(hasAction(MediaStore.ACTION_IMAGE_CAPTURE))
+            .respondWith(Instrumentation.ActivityResult(Activity.RESULT_OK, null))
+
+        // Click on camera (should launch a camera intent).
+        onView(withId(R.id.camera)).perform(click())
+
+        // Stop recording intents and remove the callback.
+        IntentMonitorRegistry.getInstance().removeIntentCallback(intentCallback)
+        Intents.release()
+
+        // Todo: Find a way to make the match work.
+        // Check if the image is displayed.
+        // onView(withId(R.id.profile_photo)).check(matches(withImageUri(downloadedImageUri!!)))
+
+        onView(allOf(withId(R.id.next_create_account), isDisplayed())).perform(click())
+
+        // Todo: Remove time sleep.
+        Thread.sleep(5000)
+
+        // Check that we are in the home activity.
+        onView(isRoot()).perform(waitUntil(hasDescendant(withId(R.id.search_bar))))
+
+        // Go to account settings. Click on search bar menu.
+        onView(withId(R.id.menu_overflow)).perform(click())
+
+        // Click on account settings. Don't know why but doesn't work to select by ID.
+        val accountSettingString = InstrumentationRegistry.getInstrumentation().targetContext
+            .getString(R.string.menu_item_account_settings)
+        onView(allOf(withText(accountSettingString), isDisplayed())).perform(click())
+
+        // Todo: Find a way to make the match work.
+        // Check if picture is changed in profile.
+    }
+
+    /** Checks if an account can be created by specifying a profile picture (via camera).
+    * Skip others steps.
+    */
+    @Test
+    fun accountCreation_SpecifyProfilePictureViaGallery() {
+        onView(withId(R.id.ring_create_btn)).perform(scrollTo(), click())
+
+        onView(allOf(withId(R.id.skip), isDisplayed())).perform(click())
+
+        onView(allOf(withId(R.id.create_account_password), isDisplayed())).perform(click())
+
+        // Start recording intents and subscribe to the callback.
+        Intents.init()
+
+        intending(hasAction(MediaStore.ACTION_PICK_IMAGES))
+            .respondWith(
+                Instrumentation.ActivityResult(
+                    Activity.RESULT_OK,
+                    Intent().setData(downloadedImagesUri[1])
+                )
+            )
+
+        // Click on camera (should launch a gallery explorer).
+        onView(withId(R.id.gallery)).perform(click())
+
+        // Stop recording intents and remove the callback.
+        Intents.release()
+
+        // Todo: Find a way to make the match work.
+        // Check if the image is displayed.
+        // onView(withId(R.id.profile_photo)).check(matches(withImageUri(downloadedImageUri!!)))
+
+        onView(allOf(withId(R.id.next_create_account), isDisplayed())).perform(click())
+
+        // Todo: Remove time sleep.
+        Thread.sleep(5000)
+
+        // Check that we are in the home activity.
+        onView(isRoot()).perform(waitUntil(hasDescendant(withId(R.id.search_bar))))
+
+        // Go to account settings. Click on search bar menu.
+        onView(withId(R.id.menu_overflow)).perform(click())
+
+        // Click on account settings. Don't know why but doesn't work to select by ID.
+        val accountSettingString = InstrumentationRegistry.getInstrumentation().targetContext
+            .getString(R.string.menu_item_account_settings)
+        onView(allOf(withText(accountSettingString), isDisplayed())).perform(click())
+
+        // Todo: Find a way to make the match work.
+        // Check if picture is changed in profile.
     }
 
     /**
@@ -362,5 +520,8 @@ class AccountCreation {
                 onView(allOf(withText(noThanksSrc), isDisplayed())).perform(click())
             }
         }
+
+        @JvmStatic
+        private var downloadedImagesUri = listOf<Uri>()
     }
 }
