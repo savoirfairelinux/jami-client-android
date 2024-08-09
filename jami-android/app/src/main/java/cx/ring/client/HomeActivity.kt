@@ -575,8 +575,6 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
         val TAG: String = HomeActivity::class.simpleName!!
         const val REQUEST_CODE_CALL = 3
         const val REQUEST_CODE_CONVERSATION = 4
-        const val REQUEST_CODE_PHOTO = 5
-        const val REQUEST_CODE_GALLERY = 6
         const val REQUEST_PERMISSION_CAMERA = 113
         const val REQUEST_PERMISSION_READ_STORAGE = 114
         private const val CONVERSATIONS_CATEGORY = "conversations"
