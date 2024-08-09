@@ -36,8 +36,10 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.PickVisualMediaRequest
-import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.result.contract.ActivityResultContracts.PickVisualMedia
+import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
@@ -64,6 +66,7 @@ import cx.ring.utils.AndroidFileUtils
 import cx.ring.utils.BiometricHelper
 import cx.ring.utils.BitmapUtils
 import cx.ring.utils.ContentUri
+import cx.ring.utils.ContentUri.getBitmap
 import cx.ring.utils.DeviceUtils
 import cx.ring.views.AvatarDrawable
 import dagger.hilt.android.AndroidEntryPoint
@@ -109,12 +112,48 @@ class JamiAccountSummaryFragment :
     private val mDisposableBag = CompositeDisposable()
     private var mBinding: FragAccSummaryBinding? = null
     private var biometricEnroll: BiometricHelper.BiometricEnroll? = null
-    private val enrollBiometricLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+    private val enrollBiometricLauncher = registerForActivityResult(StartActivityForResult()) {
         biometricEnroll?.onActivityResult(it.resultCode, it.data)
     }
 
     @Inject
     lateinit var mAccountService: AccountService
+
+    private val cameraLauncher: ActivityResultLauncher<Intent> =
+        registerForActivityResult(StartActivityForResult()) { result ->
+            if (result.resultCode != Activity.RESULT_OK) return@registerForActivityResult
+            tmpProfilePhotoUri.let { photoUri ->
+                if (photoUri == null) {
+                    result.data?.extras?.getBitmap("data")?.let { bitmap ->
+                        updatePhoto(Single.just(bitmap))
+                    }
+                } else {
+                    updatePhoto(photoUri)
+                }
+            }
+        }
+    private val exportBackupLauncher: ActivityResultLauncher<Intent> =
+        registerForActivityResult(StartActivityForResult()) { result ->
+            if (result.resultCode != Activity.RESULT_OK) return@registerForActivityResult
+            result.data?.data?.let { uri: Uri ->
+                mCacheArchive?.let { cacheArchive ->
+                    AndroidFileUtils.moveToUri(requireContext().contentResolver, cacheArchive, uri)
+                        .observeOn(DeviceUtils.uiScheduler)
+                        .subscribe({}) { e: Throwable ->
+                            val view = view
+                            if (view != null) {
+                                Log.e(TAG, "Error exporting archive", e)
+                                Snackbar.make(
+                                    view,
+                                    getString(R.string.export_archive_error),
+                                    Snackbar.LENGTH_LONG
+                                ).show()
+                            }
+                        }.let { mDisposableBag.add(it) }
+                }
+            }
+        }
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         FragAccSummaryBinding.inflate(inflater, container, false).apply {
@@ -184,46 +223,6 @@ class JamiAccountSummaryFragment :
 
     fun setAccount(accountId: String) {
         presenter.setAccountId(accountId)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, resultData: Intent?) {
-        when (requestCode) {
-            WRITE_REQUEST_CODE -> if (resultCode == Activity.RESULT_OK) {
-                resultData?.data?.let { uri ->
-                    mCacheArchive?.let { cacheArchive ->
-                        AndroidFileUtils.moveToUri(requireContext().contentResolver, cacheArchive, uri)
-                            .observeOn(DeviceUtils.uiScheduler)
-                            .subscribe({}) { e: Throwable ->
-                                val v = view
-                                if (v != null) {
-                                    Log.e(TAG, "Error exporting archive", e)
-                                    Snackbar.make(
-                                        v,
-                                        getString(R.string.export_archive_error),
-                                        Snackbar.LENGTH_LONG
-                                    ).show()
-                                }
-                            }
-                    }
-                }
-            }
-            HomeActivity.REQUEST_CODE_PHOTO -> {
-                tmpProfilePhotoUri.let { photoUri ->
-                    if (resultCode == Activity.RESULT_OK) {
-                        if (photoUri == null) {
-                            if (resultData != null)
-                                updatePhoto(Single.just(resultData.extras!!["data"] as Bitmap))
-                        } else {
-                            updatePhoto(photoUri)
-                        }
-                    }
-                    tmpProfilePhotoUri = null
-                }
-            }
-            HomeActivity.REQUEST_CODE_GALLERY -> if (resultCode == Activity.RESULT_OK && resultData != null) {
-                updatePhoto(resultData.data!!)
-            }
-        }
     }
 
     override fun accountChanged(account: Account, profile: Profile) {
@@ -397,19 +396,19 @@ class JamiAccountSummaryFragment :
         }
     }
 
-    private fun createFile(mimeType: String?, fileName: String) {
+    private fun selectBackupPath(mimeType: String?, fileName: String) {
         val intent = Intent(Intent.ACTION_CREATE_DOCUMENT)
         intent.addCategory(Intent.CATEGORY_OPENABLE)
         intent.type = mimeType
         intent.putExtra(Intent.EXTRA_TITLE, fileName)
-        startActivityForResult(intent, WRITE_REQUEST_CODE)
+        exportBackupLauncher.launch(intent)
     }
 
     override fun displayCompleteArchive(dest: File) {
         val type = AndroidFileUtils.getMimeType(dest.absolutePath)
         mCacheArchive = dest
         dismissWaitDialog()
-        createFile(type, mBestName)
+        selectBackupPath(type, mBestName)
     }
 
     private fun onBackupAccount() {
@@ -482,7 +481,7 @@ class JamiAccountSummaryFragment :
                 .putExtra("android.intent.extras.LENS_FACING_FRONT", 1)
                 .putExtra("android.intent.extra.USE_FRONT_CAMERA", true)
             tmpProfilePhotoUri = uri
-            startActivityForResult(intent, HomeActivity.REQUEST_CODE_PHOTO)
+            cameraLauncher.launch(intent)
         } catch (e: Exception) {
             Toast.makeText(
                 requireContext(),
@@ -501,13 +500,13 @@ class JamiAccountSummaryFragment :
     }
 
     private val pickProfilePicture =
-        registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+        registerForActivityResult(PickVisualMedia()) { uri ->
             if (uri != null)
                 updatePhoto(uri)
         }
 
     override fun goToGallery() {
-        pickProfilePicture.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+        pickProfilePicture.launch(PickVisualMediaRequest(PickVisualMedia.ImageOnly))
     }
 
     private fun updatePhoto(uriImage: Uri) {
@@ -757,7 +756,6 @@ class JamiAccountSummaryFragment :
         private val FRAGMENT_DIALOG_RENAME = "$TAG.dialog.deviceRename"
         private val FRAGMENT_DIALOG_PASSWORD = "$TAG.dialog.changePassword"
         private val FRAGMENT_DIALOG_BACKUP = "$TAG.dialog.backup"
-        private const val WRITE_REQUEST_CODE = 43
 
         private fun slideAnimator(start: Int, end: Int, summary: View) = ValueAnimator.ofInt(start, end).apply {
              addUpdateListener { valueAnimator: ValueAnimator ->

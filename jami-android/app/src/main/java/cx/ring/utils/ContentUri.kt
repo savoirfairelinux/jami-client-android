@@ -21,9 +21,11 @@ import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
+import android.graphics.Bitmap
 import android.net.Uri
 import androidx.core.content.FileProvider
 import android.os.Build
+import android.os.Bundle
 import android.util.Log
 import cx.ring.BuildConfig
 import net.jami.utils.FileUtils
@@ -131,4 +133,9 @@ object ContentUri {
     }
 
     fun Intent.getShareItems(context: Context): List<ShareItem> = getShareItems(context, this)
+
+    fun Bundle.getBitmap(key: String): Bitmap? =
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
+            getParcelable(key, Bitmap::class.java)
+        else @Suppress("DEPRECATION") getParcelable(key) as? Bitmap?
 }
