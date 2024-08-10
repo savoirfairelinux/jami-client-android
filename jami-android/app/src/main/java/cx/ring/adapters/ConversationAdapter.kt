@@ -976,7 +976,7 @@ class ConversationAdapter(
 
             // Manage copy
             convActionCopyText.setOnClickListener {
-                addToClipboard(lastElement.body)
+                addToClipboard(interaction.body)
                 popupWindow.dismiss()
             }
 
