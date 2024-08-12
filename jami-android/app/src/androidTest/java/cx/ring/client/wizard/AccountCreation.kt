@@ -23,17 +23,11 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
-import androidx.test.platform.app.InstrumentationRegistry
 import cx.ring.AccountUtils
 import cx.ring.R
 import cx.ring.client.HomeActivity
 import cx.ring.waitUntil
 import cx.ring.hasTextInputLayoutError
-import io.reactivex.rxjava3.core.Single
-import net.jami.model.Account
-import net.jami.model.AccountConfig
-import net.jami.model.ConfigKey
-import net.jami.services.AccountService
 import net.jami.utils.Log
 import org.hamcrest.Matchers.allOf
 import org.junit.Before
@@ -42,7 +36,6 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.MethodSorters
-import java.util.HashMap
 
 @LargeTest
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -150,11 +143,8 @@ class AccountCreation {
 
         onView(withId(R.id.input_username)).perform(replaceText("ab"), closeSoftKeyboard())
 
-        val errorString = InstrumentationRegistry.getInstrumentation()
-            .targetContext.getString(R.string.invalid_username)
-
         onView(withId(R.id.input_username_txt_box))
-            .perform(waitUntil(hasTextInputLayoutError(errorString)))
+            .perform(waitUntil(hasTextInputLayoutError(R.string.invalid_username)))
 
         onView(withId(R.id.create_account_username))
             .check(matches(allOf(isNotEnabled(), isDisplayed())))
@@ -172,11 +162,8 @@ class AccountCreation {
 
         onView(withId(R.id.input_username)).perform(replaceText("abc"), closeSoftKeyboard())
 
-        val errorString = InstrumentationRegistry
-            .getInstrumentation().targetContext.getString(R.string.username_already_taken)
-
         onView(withId(R.id.input_username_txt_box))
-            .perform(waitUntil(hasTextInputLayoutError(errorString)))
+            .perform(waitUntil(hasTextInputLayoutError(R.string.username_already_taken)))
 
         onView(withId(R.id.create_account_username))
             .check(matches(allOf(isNotEnabled(), isDisplayed())))
@@ -232,11 +219,8 @@ class AccountCreation {
         onView(allOf(withId(R.id.password), isDisplayed()))
             .perform(replaceText("test"), closeSoftKeyboard())
 
-        val errorString = InstrumentationRegistry
-            .getInstrumentation().targetContext.getString(R.string.error_password_char_count)
-
         onView(withId(R.id.password_txt_box))
-            .perform(waitUntil(hasTextInputLayoutError(errorString)))
+            .perform(waitUntil(hasTextInputLayoutError(R.string.error_password_char_count)))
 
         onView(withId(R.id.create_account_password))
             .check(matches(allOf(isNotEnabled(), isDisplayed())))
@@ -261,11 +245,8 @@ class AccountCreation {
         onView(allOf(withId(R.id.ring_password_repeat), isDisplayed()))
             .perform(replaceText("12345"), closeSoftKeyboard())
 
-        val errorString = InstrumentationRegistry
-            .getInstrumentation().targetContext.getString(R.string.error_passwords_not_equals)
-
         onView(withId(R.id.ring_password_repeat_txt_box))
-            .perform(waitUntil(hasTextInputLayoutError(errorString)))
+            .perform(waitUntil(hasTextInputLayoutError(R.string.error_passwords_not_equals)))
 
         onView(withId(R.id.create_account_password))
             .check(matches(allOf(isNotEnabled(), isDisplayed())))
@@ -323,11 +304,8 @@ class AccountCreation {
 
     private fun skipBiometrics() { // Skip biometrics popup
         // only on P+
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
-            val noThanksSrc = InstrumentationRegistry
-                .getInstrumentation().targetContext.getString(R.string.no_thanks)
-            onView(allOf(withText(noThanksSrc), isDisplayed())).perform(click())
-        }
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R)
+            onView(allOf(withText(R.string.no_thanks), isDisplayed())).perform(click())
     }
 
     private fun moveToWizard() {
@@ -336,13 +314,8 @@ class AccountCreation {
         }
 
         try {
-            val searchBarContentNavigationDescription = InstrumentationRegistry
-                .getInstrumentation().targetContext.getString(R.string.searchbar_navigation_account)
-            onView(withContentDescription(searchBarContentNavigationDescription)).perform(click())
-
-            val addAccountString = InstrumentationRegistry
-                .getInstrumentation().targetContext.getString(R.string.add_ring_account_title)
-            onView(withText(addAccountString)).perform(click())
+            onView(withContentDescription(R.string.searchbar_navigation_account)).perform(click())
+            onView(withText(R.string.add_ring_account_title)).perform(click())
         } catch (_: Exception) { // Already in the wizard ?
             // Todo: Should check before exception where we are.
         }
