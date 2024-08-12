@@ -269,7 +269,7 @@
   <string name="content_description_qr_generated">Codul tău QR</string>
   <string name="account_generate_export_invalid">PIN-ul nu mai este valabil.\n Introdu parola și generează alt PIN pentru asocierea noului aparat.</string>
   <string name="account_generate_export_invalid_two">PIN-ul nu mai este valabil.\n Generează alt PIN pentru asocierea noului aparat.</string>
-  <string name="help_pin_info">Se completează dacă acest cont are parolă.</string>
+  <string name="help_pin_info">Se completează dacă acest cont are parolă</string>
   <string name="connect_device_scanqr">Scanează QR-ul</string>
   <string name="connect_device_enterPIN">Sau introdu codul PIN</string>
   <string name="account_link_device_button">Conectează</string>

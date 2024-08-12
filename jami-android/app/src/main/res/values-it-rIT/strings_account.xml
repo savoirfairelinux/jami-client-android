@@ -269,7 +269,7 @@ Potrai modificare il tuo account successivamente</string>
   <string name="content_description_qr_generated">Il tuo codice QR</string>
   <string name="account_generate_export_invalid">Il PIN non è più valido.\n Inserire la password e generare un altro PIN per associare il nuovo dispositivo.</string>
   <string name="account_generate_export_invalid_two">Il PIN non è più valido.\n Generare un altro PIN per associare il nuovo dispositivo.</string>
-  <string name="help_pin_info">Compilare se l\'account ha una password.</string>
+  <string name="help_pin_info">Compilare se l\'account ha una password</string>
   <string name="connect_device_scanqr">Scansiona QR</string>
   <string name="connect_device_enterPIN">O inserire il PIN</string>
   <string name="account_link_device_button">Connetti</string>
