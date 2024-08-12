@@ -28,7 +28,6 @@ import cx.ring.R
 import cx.ring.client.HomeActivity
 import cx.ring.waitUntil
 import cx.ring.hasTextInputLayoutError
-import net.jami.utils.Log
 import org.hamcrest.Matchers.allOf
 import org.junit.Before
 import org.junit.FixMethodOrder
@@ -333,7 +332,5 @@ class AccountCreation {
         onView(allOf(withId(R.id.create_account_password), isDisplayed())).perform(click())
 
         onView(allOf(withId(R.id.skip_create_account), isDisplayed())).perform(click())
-
-        Log.d("devdebug", "Account created: $username")
     }
 }
