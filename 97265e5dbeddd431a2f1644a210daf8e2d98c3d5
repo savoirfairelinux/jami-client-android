@@ -1,4 +1,22 @@
 {
-  "comments": [],
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a3ef7e9_fdf54734",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-08-12T15:43:25Z",
+      "side": 1,
+      "message": "Lol, we worked on the same thing simultaneously. \nOur process is to work with assignees on GitLab. Do you have access to this feature?",
+      "revId": "97265e5dbeddd431a2f1644a210daf8e2d98c3d5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ],
   "submitRequirementResults": []
 }
