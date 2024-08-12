@@ -30,6 +30,7 @@ import cx.ring.client.HomeActivity
 import cx.ring.waitUntil
 import cx.ring.hasTextInputLayoutError
 import net.jami.utils.Log
+import cx.ring.waitForView
 import org.hamcrest.Matchers.allOf
 import org.junit.Before
 import org.junit.FixMethodOrder
@@ -301,10 +302,9 @@ class AccountCreation {
             .perform(replaceText("123456"), closeSoftKeyboard())
     }
 
-    private fun skipBiometrics() { // Skip biometrics popup
-        // only on P+
+    private fun skipBiometrics() { // Skip biometrics popup (only on P+)
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R)
-            onView(allOf(withText(R.string.no_thanks), isDisplayed())).perform(click())
+            waitForView(withText(R.string.no_thanks)).perform(waitUntil(isDisplayed()), click())
     }
 
     private fun moveToWizard() {
