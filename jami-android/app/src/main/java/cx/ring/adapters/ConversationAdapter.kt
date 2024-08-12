@@ -860,8 +860,7 @@ class ConversationAdapter(
     private fun openItemMenu(viewHolder: ConversationViewHolder, view: View, interaction: Interaction) {
         MenuConversationBinding.inflate(LayoutInflater.from(view.context)).apply {
             val history = interaction.historyObservable.blockingFirst()
-            val lastElement = history.last()
-            val isDeleted = lastElement is TextMessage && lastElement.body.isNullOrEmpty()
+            val isDeleted = interaction is TextMessage && interaction.body.isNullOrEmpty()
             val isFileMenu = interaction is DataTransfer && interaction.isComplete
 
             // Configure what should be displayed
@@ -976,7 +975,7 @@ class ConversationAdapter(
 
             // Manage copy
             convActionCopyText.setOnClickListener {
-                addToClipboard(lastElement.body)
+                addToClipboard(interaction.body)
                 popupWindow.dismiss()
             }
 
