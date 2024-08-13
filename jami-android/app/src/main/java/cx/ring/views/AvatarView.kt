@@ -23,6 +23,7 @@ import android.view.View
 import androidx.core.content.res.use
 import cx.ring.R
 import cx.ring.utils.BitmapUtils
+import net.jami.model.Uri
 import kotlin.math.min
 
 class AvatarView @JvmOverloads constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int = 0, defStyleRes: Int = 0) :
@@ -32,18 +33,20 @@ class AvatarView @JvmOverloads constructor(context: Context, attrs: AttributeSet
 
     init {
         context.obtainStyledAttributes(attrs, R.styleable.AvatarView).use { typedArray ->
-            val uri = typedArray.getString(R.styleable.AvatarView_uri)
-            if (uri != null || isInEditMode) {
+            val uri = typedArray.getString(R.styleable.AvatarView_uri) ?: return@use
+            if (isInEditMode) {
                 val username = typedArray.getString(R.styleable.AvatarView_username)
                 val displayName = typedArray.getString(R.styleable.AvatarView_displayName)
                 val avatar = typedArray.getDrawable(R.styleable.AvatarView_avatar)
                 val cropCircle = typedArray.getBoolean(R.styleable.AvatarView_cropCircle, true)
-                setAvatar(AvatarDrawable.Builder()
-                    .withId(uri)
-                    .withNameData(displayName, username)
-                    .withPhoto(avatar?.let { BitmapUtils.drawableToBitmap(it) })
-                    .withCircleCrop(cropCircle)
-                    .build(context))
+                setAvatar(
+                    AvatarDrawable.Builder()
+                        .withUri(Uri.fromString(uri))
+                        .withNameData(displayName, username)
+                        .withPhoto(avatar?.let { BitmapUtils.drawableToBitmap(it) })
+                        .withCircleCrop(cropCircle)
+                        .build(context)
+                )
             }
         }
     }
