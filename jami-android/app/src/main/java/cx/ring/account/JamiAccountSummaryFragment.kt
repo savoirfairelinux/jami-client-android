@@ -25,7 +25,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.net.Uri
+import net.jami.model.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -47,6 +47,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import cx.ring.R
 import cx.ring.account.AccountPasswordDialog.UnlockAccountListener
@@ -76,6 +77,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.account.JamiAccountSummaryPresenter
 import net.jami.account.JamiAccountSummaryView
 import net.jami.model.Account
+import net.jami.model.Contact
 import net.jami.model.Profile
 import net.jami.services.AccountService
 import java.io.File
@@ -106,8 +108,9 @@ class JamiAccountSummaryFragment :
     private var mAccount: Account? = null
     private var mCacheArchive: File? = null
     private var mProfilePhoto: ImageView? = null
+    private var mDialogDeletePhoto: FloatingActionButton? = null
     private var mSourcePhoto: Bitmap? = null
-    private var tmpProfilePhotoUri: Uri? = null
+    private var tmpProfilePhotoUri: android.net.Uri? = null
     private var mDeviceAdapter: DeviceAdapter? = null
     private val mDisposableBag = CompositeDisposable()
     private var mBinding: FragAccSummaryBinding? = null
@@ -135,7 +138,7 @@ class JamiAccountSummaryFragment :
     private val exportBackupLauncher: ActivityResultLauncher<Intent> =
         registerForActivityResult(StartActivityForResult()) { result ->
             if (result.resultCode != Activity.RESULT_OK) return@registerForActivityResult
-            result.data?.data?.let { uri: Uri ->
+            result.data?.data?.let { uri: android.net.Uri ->
                 mCacheArchive?.let { cacheArchive ->
                     AndroidFileUtils.moveToUri(requireContext().contentResolver, cacheArchive, uri)
                         .observeOn(DeviceUtils.uiScheduler)
@@ -306,8 +309,23 @@ class JamiAccountSummaryFragment :
         val view = DialogProfileBinding.inflate(inflater).apply {
             camera.setOnClickListener { presenter.cameraClicked() }
             gallery.setOnClickListener { presenter.galleryClicked() }
+            deletePhoto.setOnClickListener {
+                removePhoto(account.loadedProfile!!.blockingGet().displayName)
+            }
         }
         mProfilePhoto = view.profilePhoto
+
+        // Show `delete` option if the account has a profile photo.
+        mDialogDeletePhoto = view.deletePhoto
+        mDisposableBag.add(
+            mAccountService.getObservableAccountProfile(account.accountId)
+                .observeOn(DeviceUtils.uiScheduler)
+                .subscribe {
+                    view.deletePhoto.visibility =
+                        if (it.second.avatar != null) View.VISIBLE else View.GONE
+                }
+        )
+
         mDisposableBag.add(AvatarDrawable.load(inflater.context, account)
                 .observeOn(DeviceUtils.uiScheduler)
                 .subscribe { a -> view.profilePhoto.setImageDrawable(a) })
@@ -319,10 +337,12 @@ class JamiAccountSummaryFragment :
                 mSourcePhoto?.let { source ->
                     presenter.saveVCard(mBinding!!.username.text.toString(),
                         Single.just(source).map { obj -> BitmapUtils.bitmapToPhoto(obj) })
-                }
+                } ?: presenter.saveVCard(mBinding!!.username.text.toString(), null)
             }
             .setOnDismissListener {
+                // Todo: Should release dialog disposable here.
                 mProfilePhoto = null
+                mDialogDeletePhoto = null
                 mSourcePhoto = null
             }
             .show()
@@ -509,8 +529,26 @@ class JamiAccountSummaryFragment :
         pickProfilePicture.launch(PickVisualMediaRequest(PickVisualMedia.ImageOnly))
     }
 
-    private fun updatePhoto(uriImage: Uri) {
+    private fun updatePhoto(uriImage: android.net.Uri) {
         updatePhoto(AndroidFileUtils.loadBitmap(requireContext(), uriImage))
+    }
+
+    /**
+     * Remove the photo from the profile picture dialog.
+     * Replace it with the default avatar.
+     */
+    private fun removePhoto(profileName: String?) {
+        val account = presenter.account ?: return
+        mDialogDeletePhoto?.visibility = View.GONE
+        mProfilePhoto?.setImageDrawable(
+            AvatarDrawable.Builder()
+                .withNameData(profileName, account.registeredName)
+                .withId(Uri(Uri.JAMI_URI_SCHEME, account.username!!).rawUriString)
+                .withCircleCrop(true)
+                .withOnlineState(Contact.PresenceStatus.OFFLINE)
+                .build(requireContext())
+        )
+        mSourcePhoto = null
     }
 
     private fun updatePhoto(image: Single<Bitmap>) {
@@ -521,12 +559,14 @@ class JamiAccountSummaryFragment :
                 AvatarDrawable.Builder()
                     .withPhoto(img)
                     .withNameData(null, account.registeredName)
-                    .withId(account.uri)
+                    .withId(Uri(Uri.JAMI_URI_SCHEME, account.username!!).rawUriString)
                     .withCircleCrop(true)
                     .build(requireContext())
             }
             .observeOn(DeviceUtils.uiScheduler)
-            .subscribe({ avatar: AvatarDrawable -> mProfilePhoto?.setImageDrawable(avatar) }) { e: Throwable ->
+            .subscribe({ avatar: AvatarDrawable ->
+                mDialogDeletePhoto?.visibility = View.VISIBLE
+                mProfilePhoto?.setImageDrawable(avatar) }) { e: Throwable ->
                 Log.e(TAG, "Error loading image", e)
             })
     }
