@@ -150,10 +150,11 @@ class TVProfileCreationFragment : JamiGuidedStepFragment<ProfileCreationPresente
 
     override fun setProfile() {
         val m = model.model
+        val username =  m.newAccount?.username ?:return
         val avatar = AvatarDrawable.Builder()
             .withPhoto(m.photo as Bitmap?)
             .withNameData(m.fullName, m.username)
-            .withId(m.newAccount?.username)
+            .withUri(net.jami.model.Uri(net.jami.model.Uri.JAMI_URI_SCHEME, username))
             .withCircleCrop(true)
             .build(requireContext())
         avatar.setInSize(iconSize)
