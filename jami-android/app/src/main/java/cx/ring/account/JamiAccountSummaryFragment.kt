@@ -316,18 +316,23 @@ class JamiAccountSummaryFragment :
 
         // Show `delete` option if the account has a profile photo.
         mDialogDeletePhoto = view.deletePhoto
-        mDisposableBag.add(
-            mAccountService.getObservableAccountProfile(account.accountId)
-                .observeOn(DeviceUtils.uiScheduler)
-                .subscribe {
-                    view.deletePhoto.visibility =
-                        if (it.second.avatar != null) View.VISIBLE else View.GONE
-                }
-        )
+        val dialogDisposableBag = CompositeDisposable().apply {
+            add( // Show the delete button if the account has a profile photo.
+                mAccountService.getObservableAccountProfile(account.accountId)
+                    .observeOn(DeviceUtils.uiScheduler)
+                    .subscribe {
+                        view.deletePhoto.visibility =
+                            if (it.second.avatar != null) View.VISIBLE else View.GONE
+                    }
+            )
+            add( // Load the profile photo.
+                AvatarDrawable.load(inflater.context, account)
+                    .observeOn(DeviceUtils.uiScheduler)
+                    .subscribe { a -> view.profilePhoto.setImageDrawable(a) }
+            )
+            mDisposableBag.add(this)
+        }
 
-        mDisposableBag.add(AvatarDrawable.load(inflater.context, account)
-                .observeOn(DeviceUtils.uiScheduler)
-                .subscribe { a -> view.profilePhoto.setImageDrawable(a) })
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.profile)
             .setView(view.root)
@@ -339,7 +344,7 @@ class JamiAccountSummaryFragment :
                 } ?: presenter.saveVCard(mBinding!!.username.text.toString(), null)
             }
             .setOnDismissListener {
-                // Todo: Should release dialog disposable here.
+                dialogDisposableBag.dispose()
                 mProfilePhoto = null
                 mDialogDeletePhoto = null
                 mSourcePhoto = null
