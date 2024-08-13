@@ -113,6 +113,7 @@ class JamiAccountSummaryFragment :
     private var tmpProfilePhotoUri: android.net.Uri? = null
     private var mDeviceAdapter: DeviceAdapter? = null
     private val mDisposableBag = CompositeDisposable()
+    private val mDialogDisposableBag = CompositeDisposable()
     private var mBinding: FragAccSummaryBinding? = null
     private var biometricEnroll: BiometricHelper.BiometricEnroll? = null
     private val enrollBiometricLauncher = registerForActivityResult(StartActivityForResult()) {
@@ -318,7 +319,7 @@ class JamiAccountSummaryFragment :
 
         // Show `delete` option if the account has a profile photo.
         mDialogDeletePhoto = view.deletePhoto
-        mDisposableBag.add(
+        mDialogDisposableBag.add(
             mAccountService.getObservableAccountProfile(account.accountId)
                 .observeOn(DeviceUtils.uiScheduler)
                 .subscribe {
@@ -327,7 +328,7 @@ class JamiAccountSummaryFragment :
                 }
         )
 
-        mDisposableBag.add(AvatarDrawable.load(inflater.context, account)
+        mDialogDisposableBag.add(AvatarDrawable.load(inflater.context, account)
                 .observeOn(DeviceUtils.uiScheduler)
                 .subscribe { a -> view.profilePhoto.setImageDrawable(a) })
         MaterialAlertDialogBuilder(requireContext())
@@ -341,7 +342,7 @@ class JamiAccountSummaryFragment :
                 } ?: presenter.saveVCard(mBinding!!.username.text.toString(), null)
             }
             .setOnDismissListener {
-                // Todo: Should release dialog disposable here.
+                mDialogDisposableBag.dispose()
                 mProfilePhoto = null
                 mDialogDeletePhoto = null
                 mSourcePhoto = null
