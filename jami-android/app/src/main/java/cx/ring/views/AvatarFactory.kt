@@ -31,6 +31,7 @@ import net.jami.model.Account
 import net.jami.model.ContactViewModel
 import net.jami.model.Conversation
 import net.jami.model.Profile
+import net.jami.model.Uri
 import net.jami.smartlist.ConversationItemViewModel
 
 object AvatarFactory {
@@ -80,21 +81,38 @@ object AvatarFactory {
             .firstOrError()
             .map { it.toAdaptiveIcon(size) }
 
-    private fun getDrawable(context: Context, photo: Bitmap?, profileName: String?, username: String?, id: String): Drawable =
+    private fun getDrawable(
+        context: Context, photo: Bitmap?, profileName: String?, username: String?, uri: Uri,
+    ): Drawable =
         AvatarDrawable.Builder()
             .withPhoto(photo)
             .withName(if (TextUtils.isEmpty(profileName)) username else profileName)
-            .withId(id)
+            .withUri(uri)
             .withCircleCrop(true)
             .build(context)
 
     fun clearCache() {}
 
-    private fun <T> getGlideRequest(context: Context, request: RequestBuilder<T>, photo: Bitmap?, profileName: String?, username: String?, id: String): RequestBuilder<T> =
-        request.load(getDrawable(context, photo, profileName, username, id))
+    private fun <T> getGlideRequest(
+        context: Context,
+        request: RequestBuilder<T>,
+        photo: Bitmap?,
+        profileName: String?,
+        username: String?,
+        uri: Uri,
+    ): RequestBuilder<T> = request.load(getDrawable(context, photo, profileName, username, uri))
 
-    private fun getGlideAvatar(context: Context, manager: RequestManager, contact: ContactViewModel): RequestBuilder<Drawable> =
-        getGlideRequest(context, manager.asDrawable(), contact.profile.avatar as Bitmap?, contact.profile.displayName, contact.registeredName, contact.contact.primaryNumber)
+    private fun getGlideAvatar(
+        context: Context, manager: RequestManager, contact: ContactViewModel,
+    ): RequestBuilder<Drawable> =
+        getGlideRequest(
+            context,
+            manager.asDrawable(),
+            contact.profile.avatar as Bitmap?,
+            contact.profile.displayName,
+            contact.registeredName,
+            contact.contact.uri
+        )
 
     private fun getGlideAvatar(context: Context, contact: ContactViewModel): RequestBuilder<Drawable> =
         getGlideAvatar(context, Glide.with(context), contact)
