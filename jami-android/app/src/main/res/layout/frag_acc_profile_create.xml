@@ -54,56 +54,71 @@
                     android:padding="6dp"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <RelativeLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/profile_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:layout_gravity="center"
-                android:clipToPadding="false"
-                android:clipChildren="false">
+                android:clipChildren="false"
+                android:clipToPadding="false">
 
                 <ImageView
                     android:id="@+id/profile_photo"
                     android:layout_width="90dp"
                     android:layout_height="90dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
-                    android:scaleType="fitCenter"
+                    android:contentDescription="@null"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
                     tools:src="@drawable/ic_contact_picture_fallback" />
-
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/camera"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignTop="@+id/anchor"
-                    android:layout_toEndOf="@+id/anchor"
-                    app:backgroundTint="@color/light"
-                    app:fabCustomSize="40dp"
-                    app:srcCompat="@drawable/baseline_photo_camera_24"
-                    app:rippleColor="@android:color/white" />
-
-                <Space
-                    android:id="@+id/anchor"
-                    android:layout_width="15dp"
-                    android:layout_height="25dp"
-                    android:layout_alignBottom="@+id/profile_photo"
-                    android:layout_centerHorizontal="true" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/gallery"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignTop="@+id/anchor"
-                    android:layout_toStartOf="@+id/anchor"
+                    android:layout_marginTop="-20dp"
                     android:contentDescription="@string/open_the_gallery"
                     android:text="@string/open_the_gallery"
                     app:backgroundTint="@color/light"
                     app:fabCustomSize="40dp"
-                    app:srcCompat="@drawable/baseline_insert_photo_24"
-                    app:rippleColor="@android:color/white" />
+                    app:layout_constraintEnd_toStartOf="@+id/camera"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/profile_photo"
+                    app:rippleColor="@android:color/white"
+                    app:srcCompat="@drawable/baseline_insert_photo_24" />
 
-            </RelativeLayout>
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/camera"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="-20dp"
+                    android:contentDescription="@string/take_a_photo"
+                    app:backgroundTint="@color/light"
+                    app:fabCustomSize="40dp"
+                    app:layout_constraintEnd_toStartOf="@+id/remove_photo"
+                    app:layout_constraintStart_toEndOf="@+id/gallery"
+                    app:layout_constraintTop_toBottomOf="@id/profile_photo"
+                    app:rippleColor="@android:color/white"
+                    app:srcCompat="@drawable/baseline_photo_camera_24" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/remove_photo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="-20dp"
+                    android:contentDescription="@string/remove_photo"
+                    android:visibility="gone"
+                    app:backgroundTint="@color/light"
+                    app:fabCustomSize="40dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/camera"
+                    app:layout_constraintTop_toBottomOf="@id/profile_photo"
+                    app:rippleColor="@android:color/white"
+                    app:srcCompat="@drawable/baseline_cancel_24"
+                    tools:visibility="visible" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/username_box"
