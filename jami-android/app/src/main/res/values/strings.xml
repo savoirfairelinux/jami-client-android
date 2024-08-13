@@ -393,6 +393,7 @@ along with this program; if not, write to the Free Software
     <string name="profile_message_warning">Your profile is only shared with your contacts</string>
     <string name="open_the_gallery">Open the gallery</string>
     <string name="take_a_photo">Take a photo</string>
+    <string name="delete_a_photo">Delete photo</string>
     <string name="profile_name_hint">Enter your name</string>
     <string name="registered_name">Registered Name</string>
     <string name="no_registered_name">No name registered</string>
