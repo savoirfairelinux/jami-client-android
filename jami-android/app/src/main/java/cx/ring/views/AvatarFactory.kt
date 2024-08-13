@@ -31,6 +31,7 @@ import net.jami.model.Account
 import net.jami.model.ContactViewModel
 import net.jami.model.Conversation
 import net.jami.model.Profile
+import net.jami.model.Uri
 import net.jami.smartlist.ConversationItemViewModel
 
 object AvatarFactory {
@@ -84,7 +85,7 @@ object AvatarFactory {
         AvatarDrawable.Builder()
             .withPhoto(photo)
             .withName(if (TextUtils.isEmpty(profileName)) username else profileName)
-            .withId(id)
+            .withUri(Uri(Uri.JAMI_URI_SCHEME, id))
             .withCircleCrop(true)
             .build(context)
 
