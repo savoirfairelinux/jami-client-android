@@ -105,7 +105,10 @@ class AvatarDrawable : Drawable {
             Builder()
                 .withPhoto(profile.avatar as Bitmap?)
                 .withNameData(profile.displayName, account.registeredName)
-                .withId(if (account.isSip) account.uri else Uri(Uri.JAMI_URI_SCHEME, account.username!!).rawUriString)
+                .withUri(
+                    if (account.isSip) Uri(Uri.SIP_URI_SCHEME, account.uri!!)
+                    else Uri(Uri.JAMI_URI_SCHEME, account.username!!)
+                )
                 .withCircleCrop(crop)
                 .withOnlineState(presenceStatus)
                 .build(context)
@@ -177,8 +180,8 @@ class AvatarDrawable : Drawable {
         private var showPresence = true
         private var isChecked = false
         private var isGroup = false
-        fun withId(id: String?): Builder {
-            this.id = id
+        fun withUri(uri: Uri): Builder {
+            this.id = uri.rawUriString
             return this
         }
 
@@ -222,7 +225,7 @@ class AvatarDrawable : Drawable {
 
         fun withContact(contact: ContactViewModel?) = if (contact == null) this else
             withPhoto(contact.profile.avatar as? Bitmap?)
-                .withId(contact.contact.uri.toString())
+                .withUri(contact.contact.uri)
                 .withPresence(contact.presence != Contact.PresenceStatus.OFFLINE)
                 .withOnlineState(contact.presence)
                 .withNameData(contact.profile.displayName, contact.registeredName)
@@ -262,7 +265,7 @@ class AvatarDrawable : Drawable {
 
         fun withConversation(conversation: Conversation, profile: Profile, contacts: List<ContactViewModel>): Builder =
             if (conversation.isSwarm && conversation.mode.blockingFirst() != Conversation.Mode.OneToOne)
-                withId(conversation.uri.rawUriString)
+                withUri(conversation.uri)
                     .withContacts(profile, contacts)
                     .setGroup()
             else
@@ -275,7 +278,7 @@ class AvatarDrawable : Drawable {
 
         fun withViewModel(vm: ConversationItemViewModel): Builder =
             if (vm.isGroup())
-                withId(vm.uri.rawUriString)
+                withUri(vm.uri)
                     .withContacts(vm.conversationProfile, vm.contacts)
                     .setGroup()
             else withContact(ConversationItemViewModel.getContact(vm.contacts))
