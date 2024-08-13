@@ -59,6 +59,10 @@ class ProfileCreationPresenter @Inject constructor(
             { e: Throwable -> Log.e(TAG, "Can't load image", e) })
     }
 
+    fun photoRemoved() {
+        mAccountCreationModel?.photo = null
+    }
+
     fun galleryClick() {
         view?.goToGallery()
     }

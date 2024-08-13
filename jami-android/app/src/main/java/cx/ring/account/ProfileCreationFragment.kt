@@ -22,7 +22,6 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.text.Editable
@@ -45,12 +44,13 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.core.Single
 import net.jami.account.ProfileCreationPresenter
 import net.jami.account.ProfileCreationView
+import net.jami.model.Uri
 import java.io.IOException
 
 @AndroidEntryPoint
 class ProfileCreationFragment : BaseSupportFragment<ProfileCreationPresenter, ProfileCreationView>(), ProfileCreationView {
     private val model: AccountCreationViewModel by activityViewModels()
-    private var tmpProfilePhotoUri: Uri? = null
+    private var tmpProfilePhotoUri: android.net.Uri? = null
     private var binding: FragAccProfileCreateBinding? = null
 
     private val pickProfilePicture =
@@ -63,6 +63,7 @@ class ProfileCreationFragment : BaseSupportFragment<ProfileCreationPresenter, Pr
         FragAccProfileCreateBinding.inflate(inflater, container, false).apply {
             gallery.setOnClickListener { presenter.galleryClick() }
             camera.setOnClickListener { presenter.cameraClick() }
+            deletePhoto.setOnClickListener { presenter.photoRemoved() }
             nextCreateAccount.setOnClickListener { presenter.nextClick() }
             skipCreateAccount.setOnClickListener { presenter.skipClick() }
             username.addTextChangedListener(object : TextWatcher {
@@ -81,9 +82,11 @@ class ProfileCreationFragment : BaseSupportFragment<ProfileCreationPresenter, Pr
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val binding = binding ?: return
         super.onViewCreated(view, savedInstanceState)
-        if (binding!!.profilePhoto.drawable == null) {
-            binding!!.profilePhoto.setImageDrawable(AvatarDrawable.Builder()
+        if (binding.profilePhoto.drawable == null) {
+            binding.deletePhoto.visibility = View.GONE // Hide `delete` option if no photo.
+            binding.profilePhoto.setImageDrawable(AvatarDrawable.Builder()
                 .withNameData(model.model.fullName, model.model.username)
                 .withCircleCrop(true)
                 .build(view.context))
@@ -156,15 +159,18 @@ class ProfileCreationFragment : BaseSupportFragment<ProfileCreationPresenter, Pr
     }
 
     override fun setProfile() {
+        val binding = binding ?: return
         val m = model.model
-        binding!!.profilePhoto.setImageDrawable(
+        val username = m.newAccount?.username ?: return
+        binding.profilePhoto.setImageDrawable(
             AvatarDrawable.Builder()
                 .withPhoto(m.photo as Bitmap?)
                 .withNameData(m.fullName, m.username)
-                .withId(m.newAccount?.username)
+                .withId(Uri(Uri.JAMI_URI_SCHEME, username).rawRingId)
                 .withCircleCrop(true)
                 .build(requireContext())
         )
+        binding.deletePhoto.visibility = if (m.photo != null) View.VISIBLE else View.GONE
     }
 
     companion object {
