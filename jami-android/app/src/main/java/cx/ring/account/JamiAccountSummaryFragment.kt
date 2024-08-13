@@ -547,11 +547,12 @@ class JamiAccountSummaryFragment :
      */
     private fun removePhoto(profileName: String?) {
         val account = presenter.account ?: return
+        val username = account.username ?: return
         mDialogDeletePhoto?.visibility = View.GONE
         mProfilePhoto?.setImageDrawable(
             AvatarDrawable.Builder()
                 .withNameData(profileName, account.registeredName)
-                .withId(Uri(Uri.JAMI_URI_SCHEME, account.username!!).rawUriString)
+                .withUri(Uri(Uri.JAMI_URI_SCHEME, username))
                 .withCircleCrop(true)
                 .withOnlineState(Contact.PresenceStatus.OFFLINE)
                 .build(requireContext())
@@ -561,13 +562,14 @@ class JamiAccountSummaryFragment :
 
     private fun updatePhoto(image: Single<Bitmap>) {
         val account = presenter.account ?: return
+        val username = account.username ?: return
         mDisposableBag.add(image.subscribeOn(Schedulers.io())
             .map { img ->
                 mSourcePhoto = img
                 AvatarDrawable.Builder()
                     .withPhoto(img)
                     .withNameData(null, account.registeredName)
-                    .withId(Uri(Uri.JAMI_URI_SCHEME, account.username!!).rawUriString)
+                    .withUri(Uri(Uri.JAMI_URI_SCHEME, username))
                     .withCircleCrop(true)
                     .build(requireContext())
             }
