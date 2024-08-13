@@ -37,7 +37,6 @@ import cx.ring.databinding.FragAccProfileCreateBinding
 import cx.ring.mvp.BaseSupportFragment
 import cx.ring.utils.AndroidFileUtils.createImageFile
 import cx.ring.utils.AndroidFileUtils.loadBitmap
-import cx.ring.utils.ContentUri
 import cx.ring.utils.ContentUri.getUriForFile
 import cx.ring.views.AvatarDrawable
 import dagger.hilt.android.AndroidEntryPoint
@@ -166,7 +165,7 @@ class ProfileCreationFragment : BaseSupportFragment<ProfileCreationPresenter, Pr
             AvatarDrawable.Builder()
                 .withPhoto(m.photo as Bitmap?)
                 .withNameData(m.fullName, m.username)
-                .withId(Uri(Uri.JAMI_URI_SCHEME, username).rawRingId)
+                .withUri(Uri(Uri.JAMI_URI_SCHEME, username))
                 .withCircleCrop(true)
                 .build(requireContext())
         )
