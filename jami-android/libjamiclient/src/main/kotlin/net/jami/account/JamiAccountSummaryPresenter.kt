@@ -125,28 +125,57 @@ class JamiAccountSummaryPresenter @Inject constructor(
             .subscribe({}) { e: Throwable -> Log.e(TAG, "Error saving vCard " + e.message) })
     }
 
-    fun saveVCard(username: String?, photo: Single<Photo>) {
+    /**
+     * Save the vCard to the disk.
+     * @param username: the username to save, if null, the username will be removed from the vCard
+     * @param photo: the photo to save, if null, the photo will be removed from the vCard
+     */
+    fun saveVCard(username: String?, photo: Single<Photo>?) {
         val accountId = mAccountID ?: return
         val account = mAccountService.getAccount(accountId)!!
         val ringId = account.username
         val filesDir = mDeviceRuntimeService.provideFilesDir()
-        mCompositeDisposable.add(Single.zip(
-            VCardUtils.loadLocalProfileFromDiskWithDefault(filesDir, accountId).subscribeOn(Schedulers.io()),
-            photo
-        ) { vcard: VCard, pic: Photo ->
-            vcard.uid = Uid(ringId)
-            if (!username.isNullOrEmpty()) {
-                vcard.setFormattedName(username)
-            }
-            vcard.removeProperties(Photo::class.java)
-            vcard.addPhoto(pic)
-            vcard.removeProperties(RawProperty::class.java)
-            vcard
+
+        if (photo == null) {
+            mCompositeDisposable.add(
+                VCardUtils.loadLocalProfileFromDiskWithDefault(filesDir, accountId)
+                    .subscribeOn(Schedulers.io())
+                    .map { vcard: VCard ->
+                        vcard.uid = Uid(ringId)
+                        if (!username.isNullOrEmpty()) vcard.setFormattedName(username)
+                        vcard.removeProperties(Photo::class.java)
+                        vcard.removeProperties(RawProperty::class.java)
+                        vcard
+                    }
+                    .flatMap { vcard: VCard ->
+                        VCardUtils.saveLocalProfileToDisk(vcard, accountId, filesDir)
+                    }
+                    .subscribe({ vcard: VCard ->
+                        account.loadedProfile = mVcardService.loadVCardProfile(vcard).cache()
+                    }) { e: Throwable -> Log.e(TAG, "Error saving vCard !", e) }
+            )
+        } else {
+            mCompositeDisposable.add(
+                Single.zip(
+                    VCardUtils.loadLocalProfileFromDiskWithDefault(filesDir, accountId)
+                        .subscribeOn(Schedulers.io()),
+                    photo
+                ) { vcard: VCard, pic: Photo ->
+                    vcard.uid = Uid(ringId)
+                    if (!username.isNullOrEmpty()) vcard.setFormattedName(username)
+                    vcard.removeProperties(Photo::class.java)
+                    vcard.addPhoto(pic)
+                    vcard.removeProperties(RawProperty::class.java)
+                    vcard
+                }
+                    .flatMap { vcard: VCard ->
+                        VCardUtils.saveLocalProfileToDisk(vcard, accountId, filesDir)
+                    }
+                    .subscribeOn(Schedulers.io())
+                    .subscribe({ vcard: VCard ->
+                        account.loadedProfile = mVcardService.loadVCardProfile(vcard).cache()
+                    }) { e: Throwable -> Log.e(TAG, "Error saving vCard !", e) })
         }
-            .flatMap { vcard: VCard -> VCardUtils.saveLocalProfileToDisk(vcard, accountId, filesDir) }
-            .subscribeOn(Schedulers.io())
-            .subscribe({ vcard: VCard -> account.loadedProfile = mVcardService.loadVCardProfile(vcard).cache() })
-            { e: Throwable -> Log.e(TAG, "Error saving vCard !", e) })
     }
 
     fun cameraClicked() {
