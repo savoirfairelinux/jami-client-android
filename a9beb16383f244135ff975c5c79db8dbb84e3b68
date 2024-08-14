@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cdc6f7c5_7ea66320",
+        "filename": "jami-android/app/src/main/java/cx/ring/account/JamiAccountSummaryFragment.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-08-14T17:03:55Z",
+      "side": 1,
+      "message": "lateinit not needed, could be inline",
+      "range": {
+        "startLine": 122,
+        "startChar": 12,
+        "endLine": 122,
+        "endChar": 20
+      },
+      "revId": "a9beb16383f244135ff975c5c79db8dbb84e3b68",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4999d3b8_a3e1e746",
+        "filename": "jami-android/app/src/main/java/cx/ring/account/JamiAccountSummaryFragment.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-08-14T17:03:55Z",
+      "side": 1,
+      "message": "lateinit not needed, could be inline",
+      "range": {
+        "startLine": 123,
+        "startChar": 12,
+        "endLine": 123,
+        "endChar": 20
+      },
+      "revId": "a9beb16383f244135ff975c5c79db8dbb84e3b68",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4e5d0c86_33c3f03d",
+        "filename": "jami-android/app/src/main/java/cx/ring/account/JamiAccountSummaryFragment.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-08-14T17:03:55Z",
+      "side": 1,
+      "message": "could be inlined instead of in onCreateView",
+      "range": {
+        "startLine": 127,
+        "startChar": 8,
+        "endLine": 138,
+        "endChar": 9
+      },
+      "revId": "a9beb16383f244135ff975c5c79db8dbb84e3b68",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "85125a5d_a3ab5cb0",
+        "filename": "jami-android/app/src/main/java/cx/ring/account/JamiAccountSummaryFragment.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-08-14T17:03:55Z",
+      "side": 1,
+      "message": "could be inlined instead of in onCreateView",
+      "range": {
+        "startLine": 139,
+        "startChar": 8,
+        "endLine": 158,
+        "endChar": 9
+      },
+      "revId": "a9beb16383f244135ff975c5c79db8dbb84e3b68",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f9868989_b9a965da",
+        "filename": "jami-android/app/src/main/java/cx/ring/utils/svg/BundleUtils.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-08-14T17:03:55Z",
+      "side": 1,
+      "message": "move to existing ContentUri utils",
+      "range": {
+        "startLine": 7,
+        "startChar": 11,
+        "endLine": 7,
+        "endChar": 20
+      },
+      "revId": "a9beb16383f244135ff975c5c79db8dbb84e3b68",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
