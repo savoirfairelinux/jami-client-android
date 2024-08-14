@@ -22,6 +22,30 @@
       },
       "revId": "bc0bacf794d5b42dda8304986d01d8920860de4d",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "15de78cc_1a44087a",
+        "filename": "jami-android/app/src/main/java/cx/ring/account/JamiAccountSummaryFragment.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-08-14T19:42:39Z",
+      "side": 1,
+      "message": "Isn´t `onDismissListener` called in this case ?",
+      "parentUuid": "86244c88_f27f22e1",
+      "range": {
+        "startLine": 116,
+        "startChar": 16,
+        "endLine": 116,
+        "endChar": 36
+      },
+      "revId": "bc0bacf794d5b42dda8304986d01d8920860de4d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
