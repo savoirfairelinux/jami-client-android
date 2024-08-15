@@ -46,6 +46,7 @@ import cx.ring.isDialogWithTitle
 import cx.ring.waitForView
 import cx.ring.utils.ContentUri.getUri
 import cx.ring.withImageUri
+import net.jami.utils.Log
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.not
 import org.junit.Before
@@ -54,6 +55,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.MethodSorters
+import java.io.File
 
 @LargeTest
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -74,9 +76,18 @@ class AccountCreation {
 
     @Test
     fun a_setup() {
-        // Download image from URL.
-        mActivityScenarioRule.scenario.onActivity { activity ->
-            downloadedImagesUri = ImageProvider().downloadImagesToUri(activity, 2)
+        // Get assets if installed (should be in /data/local/tmp/jami_test_assets).
+        val image1 = File("/data/local/tmp/jami_test_assets/image/image1.jpg")
+        val image2 = File("/data/local/tmp/jami_test_assets/image/image1.jpg")
+        if(image1.exists() && image2.exists()) {
+            Log.d(TAG, "Images found in assets. Using them.")
+            downloadedImagesUri = listOf(Uri.fromFile(image1), Uri.fromFile(image2))
+        } else { // Download image from URL.
+            Log.d(TAG, "Downloading images ...")
+            mActivityScenarioRule.scenario.onActivity { activity ->
+                downloadedImagesUri = ImageProvider().downloadImagesToUri(activity, 2)
+            }
+            Log.d(TAG, "Images downloaded.")
         }
     }
 
@@ -529,5 +540,7 @@ class AccountCreation {
 
         @JvmStatic
         private var downloadedImagesUri = listOf<Uri>()
+
+        private val TAG = AccountCreation::class.java.simpleName
     }
 }
