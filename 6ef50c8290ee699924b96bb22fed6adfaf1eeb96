@@ -22,6 +22,30 @@
       },
       "revId": "6ef50c8290ee699924b96bb22fed6adfaf1eeb96",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a2356500_0e7c94a9",
+        "filename": "jami-android/app/src/androidTest/java/cx/ring/EspressoExtensions.kt",
+        "patchSetId": 16
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-08-15T19:51:31Z",
+      "side": 1,
+      "message": "\u003e Can we use toBitmap() kotlin extension function here ?\n\nHmm that\u0027s not exactly the same.\nHere I\u0027m extracting private (and custom) attributes of AvatarDrawable.\n\nThough, I understand what you want. I need to think about this.",
+      "parentUuid": "d2032189_92c09e3a",
+      "range": {
+        "startLine": 62,
+        "startChar": 12,
+        "endLine": 63,
+        "endChar": 54
+      },
+      "revId": "6ef50c8290ee699924b96bb22fed6adfaf1eeb96",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
