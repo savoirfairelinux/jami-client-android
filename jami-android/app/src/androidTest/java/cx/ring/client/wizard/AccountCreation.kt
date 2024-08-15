@@ -23,26 +23,23 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
+import androidx.test.filters.SmallTest
 import androidx.test.platform.app.InstrumentationRegistry
 import cx.ring.AccountUtils
 import cx.ring.R
 import cx.ring.assertOnView
 import cx.ring.client.HomeActivity
 import cx.ring.doOnView
-import io.reactivex.rxjava3.core.Single
-import net.jami.model.Account
-import net.jami.model.AccountConfig
-import net.jami.model.ConfigKey
-import net.jami.services.AccountService
+import cx.ring.utils.DeviceUtils.isTv
 import net.jami.utils.Log
 import org.hamcrest.Matchers.allOf
+import org.junit.Assume.assumeTrue
 import org.junit.Before
 import org.junit.FixMethodOrder
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.MethodSorters
-import java.util.HashMap
 
 @LargeTest
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -51,16 +48,23 @@ class AccountCreation {
 
     @Rule
     @JvmField
-    var mActivityScenarioRule = ActivityScenarioRule(HomeActivity::class.java)
+    var mActivityScenarioRule: ActivityScenarioRule<HomeActivity>? =
+        if (isTv(InstrumentationRegistry.getInstrumentation().context)) null
+        else ActivityScenarioRule(HomeActivity::class.java)
 
     @Before
-    fun moveToAccountCreation() = moveToWizard()
+    fun moveToAccountCreation() {
+        assumeTrue(mActivityScenarioRule != null)
+        moveToWizard()
+    }
 
     /**
      * Checks if an account can be created by skipping all the steps.
      */
     @Test
-    fun accountCreation_SkipAllSteps() = createDefaultAccount()
+    fun accountCreation_SkipAllSteps(){
+        Log.w("devdebug", "Salut2")
+        createDefaultAccount()}
 
     /**
      * Checks if an account can be created by specifying a username only.
@@ -312,7 +316,7 @@ class AccountCreation {
         // That is the same problem with Android Test Orchestrator which removes the application
         // between each test and not only at the end.
         // `@AfterClass` could be used (executed once), but it does not have access to the activity.
-        mActivityScenarioRule.scenario.onActivity { activity ->
+        mActivityScenarioRule!!.scenario.onActivity { activity ->
             AccountUtils.removeAllAccounts(accountService = activity.mAccountService)
         }
     }
@@ -346,7 +350,8 @@ class AccountCreation {
     }
 
     private fun moveToWizard() {
-        mActivityScenarioRule.scenario.onActivity { activity -> // Set custom name server
+        Log.w("devdebug", "Salut1")
+        mActivityScenarioRule!!.scenario.onActivity { activity -> // Set custom name server
             activity.mAccountService.customNameServer = "https://ns-test.jami.net/"
         }
 
@@ -376,5 +381,35 @@ class AccountCreation {
         onView(allOf(withId(R.id.skip_create_account), isDisplayed())).perform(click())
 
         Log.d("devdebug", "Account created: $username")
+    }
+}
+
+@RunWith(AndroidJUnit4::class)
+@SmallTest
+class AndroidTvTests {
+    @Rule
+    @JvmField
+    var mActivityScenarioRule: ActivityScenarioRule<cx.ring.tv.main.HomeActivity>? =
+        if (!isTv(InstrumentationRegistry.getInstrumentation().context)) null
+        else ActivityScenarioRule(cx.ring.tv.main.HomeActivity::class.java)
+
+    @Before
+    fun test0() {
+        assumeTrue(mActivityScenarioRule != null)
+    }
+
+    @Test
+    fun test1() {
+        onView(withText(R.string.account_creation_home)).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun test2() {
+        onView(withText(R.string.account_creation_home)).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun test3() {
+        onView(withText(R.string.account_creation_home)).check(matches(isDisplayed()))
     }
 }

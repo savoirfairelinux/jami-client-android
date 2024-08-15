@@ -40,12 +40,15 @@ import cx.ring.R
 import cx.ring.assertOnView
 import cx.ring.client.HomeActivity
 import cx.ring.doOnView
+import cx.ring.utils.DeviceUtils.isTv
 import net.jami.model.Account
 import net.jami.model.Conversation
 import net.jami.model.Uri
 import net.jami.utils.Log
 import org.hamcrest.Matchers
 import org.hamcrest.Matchers.not
+import org.junit.Assume.assumeTrue
+import org.junit.Before
 import org.junit.FixMethodOrder
 import org.junit.Rule
 import org.junit.Test
@@ -63,14 +66,15 @@ class AddContact {
 
     @Rule
     @JvmField
-    var mActivityScenarioRule = ActivityScenarioRule(HomeActivity::class.java)
+    var mActivityScenarioRule: ActivityScenarioRule<HomeActivity>? =
+        if (isTv(InstrumentationRegistry.getInstrumentation().context)) null
+        else ActivityScenarioRule(HomeActivity::class.java)
 
     @get:Rule
     val grantPermissionRule: GrantPermissionRule =
         GrantPermissionRule.grant(android.Manifest.permission.POST_NOTIFICATIONS)
 
     companion object {
-
         @JvmStatic // Account A will be the one sending the trust request.
         private var accountA: Account? = null
 
@@ -86,6 +90,9 @@ class AddContact {
         private val TAG = AddContact::class.java.simpleName
     }
 
+    @Before
+    fun checkDeviceIsNotTv() = assumeTrue(mActivityScenarioRule != null)
+
     /**
      * This test MUST be the first one because it creates the accounts.
      */
@@ -98,7 +105,7 @@ class AddContact {
         // `@BeforeClass` could be used, but it does not have access to the activity.
         Log.d(TAG, "Creating accounts ...")
 
-        mActivityScenarioRule.scenario.onActivity { activity ->
+        mActivityScenarioRule!!.scenario.onActivity { activity ->
             val accountList =
                 AccountUtils.createAccountAndRegister(activity.mAccountService, 4)
 
@@ -369,7 +376,7 @@ class AddContact {
         // That is the same problem with Android Test Orchestrator which removes the application
         // between each test and not only at the end.
         // `@AfterClass` could be used (executed once), but it does not have access to the activity.
-        mActivityScenarioRule.scenario.onActivity { activity ->
+        mActivityScenarioRule!!.scenario.onActivity { activity ->
             AccountUtils.removeAllAccounts(accountService = activity.mAccountService)
         }
     }
