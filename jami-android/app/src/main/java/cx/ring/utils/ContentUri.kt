@@ -138,4 +138,8 @@ object ContentUri {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
             getParcelable(key, Bitmap::class.java)
         else @Suppress("DEPRECATION") getParcelable(key) as? Bitmap?
+
+    fun Bundle.getUri(key: String): Uri? =
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) getParcelable(key, Uri::class.java)
+        else @Suppress("DEPRECATION") getParcelable(key) as? Uri?
 }

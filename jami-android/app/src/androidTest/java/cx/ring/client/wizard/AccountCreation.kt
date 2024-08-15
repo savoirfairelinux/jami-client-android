@@ -299,11 +299,6 @@ class AccountCreation {
             .perform(replaceText("123456"), closeSoftKeyboard())
     }
 
-    private fun skipBiometrics() { // Skip biometrics popup (only on P+)
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R)
-            waitForView(withText(R.string.no_thanks)).perform(waitUntil(isDisplayed()), click())
-    }
-
     private fun moveToWizard() {
         mActivityScenarioRule.scenario.onActivity { activity -> // Set custom name server
             activity.mAccountService.customNameServer = "https://ns-test.jami.net/"
@@ -330,5 +325,12 @@ class AccountCreation {
         onView(allOf(withId(R.id.create_account_password), isDisplayed())).perform(click())
 
         onView(allOf(withId(R.id.skip_create_account), isDisplayed())).perform(click())
+    }
+
+    companion object {
+        fun skipBiometrics() { // Skip biometrics popup (only on P+)
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R)
+                waitForView(withText(R.string.no_thanks)).perform(waitUntil(isDisplayed()), click())
+        }
     }
 }
