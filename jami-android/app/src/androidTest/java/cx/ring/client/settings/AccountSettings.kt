@@ -123,9 +123,19 @@ class AccountSettings {
             Log.d(TAG, "Account created.")
         }
 
-        // Download image from URL.
-        mActivityScenarioRule.scenario.onActivity { activity ->
-            downloadedImagesUri = ImageProvider().downloadImagesToUri(activity, 2)
+        // Get assets if installed (should be in /data/local/tmp/jami_test_assets).
+        val image1 = File("/data/local/tmp/jami_test_assets/image/image1.jpg")
+        val image2 = File("/data/local/tmp/jami_test_assets/image/image1.jpg")
+        if(image1.exists() && image2.exists()) {
+            Log.d(TAG, "Images found in assets. Using them.")
+            downloadedImagesUri = listOf(Uri.fromFile(image1), Uri.fromFile(image2))
+        }
+        else { // Download images from URL.
+            Log.d(TAG, "Downloading images ...")
+            mActivityScenarioRule.scenario.onActivity { activity ->
+                downloadedImagesUri = ImageProvider().downloadImagesToUri(activity, 2)
+            }
+            Log.d(TAG, "Images downloaded.")
         }
     }
 
