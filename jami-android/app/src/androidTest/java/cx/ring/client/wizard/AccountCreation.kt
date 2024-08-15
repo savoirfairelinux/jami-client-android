@@ -28,6 +28,7 @@ import cx.ring.R
 import cx.ring.client.HomeActivity
 import cx.ring.waitUntil
 import cx.ring.hasTextInputLayoutError
+import cx.ring.isDialogWithTitle
 import cx.ring.waitForView
 import org.hamcrest.Matchers.allOf
 import org.junit.Before
@@ -302,11 +303,6 @@ class AccountCreation {
             .perform(replaceText("123456"), closeSoftKeyboard())
     }
 
-    private fun skipBiometrics() { // Skip biometrics popup (only on P+)
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R)
-            waitForView(withText(R.string.no_thanks)).perform(waitUntil(isDisplayed()), click())
-    }
-
     private fun moveToWizard() {
         mActivityScenarioRule.scenario.onActivity { activity -> // Set custom name server
             activity.mAccountService.customNameServer = "https://ns-test.jami.net/"
@@ -332,5 +328,14 @@ class AccountCreation {
         onView(allOf(withId(R.id.create_account_password), isDisplayed())).perform(click())
 
         onView(allOf(withId(R.id.skip_create_account), isDisplayed())).perform(click())
+    }
+
+    companion object {
+        fun skipBiometrics() { // Skip biometrics popup (only on P+)
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R)
+                onView(withText(R.string.no_thanks))
+                    .inRoot(isDialogWithTitle(R.string.account_biometry_enroll_title))
+                    .perform(waitUntil(isDisplayed()), click())
+        }
     }
 }
