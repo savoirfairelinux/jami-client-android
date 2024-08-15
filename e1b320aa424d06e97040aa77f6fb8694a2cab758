@@ -16,6 +16,29 @@
       "message": "!build",
       "revId": "e1b320aa424d06e97040aa77f6fb8694a2cab758",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fb34a9c5_caa80950",
+        "filename": "jami-android/app/src/main/java/cx/ring/account/JamiAccountSummaryFragment.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-08-15T20:29:56Z",
+      "side": 1,
+      "message": "Simply create a new CompositeDisposable before this line and add it to mDisposableBag",
+      "range": {
+        "startLine": 322,
+        "startChar": 8,
+        "endLine": 322,
+        "endChar": 28
+      },
+      "revId": "e1b320aa424d06e97040aa77f6fb8694a2cab758",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
