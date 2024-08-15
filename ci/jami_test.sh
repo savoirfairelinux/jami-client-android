@@ -25,6 +25,7 @@ if [ -z "$ANDROID_SDK_ROOT" ]; then
 fi
 
 SCRIPT_DIRECTORY=$(dirname "$0")
+TEST_ASSETS_DIRECTORY_PATH=$SCRIPT_DIRECTORY/test_assets/
 APK_PATH=$SCRIPT_DIRECTORY/../jami-android/app/build/outputs/apk/noPush/debug/app-noPush-debug.apk
 TEST_APK_PATH=$SCRIPT_DIRECTORY/../jami-android/app/build/outputs/apk/androidTest/noPush/debug/app-noPush-debug-androidTest.apk
 
@@ -40,6 +41,10 @@ if [ ! -f "$TEST_APK_PATH" ]; then
     exit 1
 fi
 
+# Install test assets on emulator (images, videos, audios, files, ...)
+sh adb push $TEST_ASSETS_DIRECTORY_PATH "/data/local/tmp/jami_test_assets"
+
+# Launch test execution
 "$JAVA_HOME"/bin/java -jar "$SPOON_RUNNER_PATH" --apk "$APK_PATH" --test-apk "$TEST_APK_PATH" --sdk "$ANDROID_SDK_ROOT" --fail-on-failure
 
 # Capture the exit code
