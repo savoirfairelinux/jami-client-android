@@ -30,7 +30,7 @@ import cx.ring.client.HomeActivity
 import cx.ring.waitUntil
 import cx.ring.hasTextInputLayoutError
 import net.jami.utils.Log
-import cx.ring.waitForView
+import cx.ring.isDialogWithTitle
 import org.hamcrest.Matchers.allOf
 import org.junit.Before
 import org.junit.FixMethodOrder
@@ -302,11 +302,6 @@ class AccountCreation {
             .perform(replaceText("123456"), closeSoftKeyboard())
     }
 
-    private fun skipBiometrics() { // Skip biometrics popup (only on P+)
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R)
-            waitForView(withText(R.string.no_thanks)).perform(waitUntil(isDisplayed()), click())
-    }
-
     private fun moveToWizard() {
         JamiApplication.instance!!.mAccountService.customNameServer = "https://ns-test.jami.net/"
 
@@ -336,5 +331,12 @@ class AccountCreation {
 
     companion object {
         private const val TAG = "AccountCreation"
+
+        fun skipBiometrics() { // Skip biometrics popup (only on P+)
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R)
+                onView(withText(R.string.no_thanks))
+                    .inRoot(isDialogWithTitle(R.string.account_biometry_enroll_title))
+                    .perform(waitUntil(isDisplayed()), click())
+        }
     }
 }

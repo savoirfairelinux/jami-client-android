@@ -329,6 +329,9 @@ class AvatarDrawable : Drawable {
         isChecked = checked
     }
 
+    /** Should only be used in tests */
+    fun getBitmap(): MutableList<Bitmap>? = bitmaps
+
     private constructor(
         context: Context,
         photos: MutableList<Bitmap>?,
