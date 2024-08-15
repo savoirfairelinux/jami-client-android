@@ -1,12 +1,19 @@
 package cx.ring
 
+import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.view.View
+import android.widget.ImageView
 import androidx.annotation.StringRes
 import com.google.android.material.textfield.TextInputLayout
+import cx.ring.views.AvatarDrawable
+import net.jami.utils.Log
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.TypeSafeMatcher
-
+import java.io.InputStream
 
 /**
  * Check if a TextInputLayout has an error with the expected text
@@ -28,3 +35,51 @@ fun hasTextInputLayoutError(@StringRes resourceId: Int?): Matcher<View> =
             return expectedErrorText == item.error.toString()
         }
     }
+
+fun withImageUri(uri: Uri): Matcher<View> {
+    return object : TypeSafeMatcher<View>() {
+
+        private val TAG = "EspressoExtensions:withImageUri"
+
+        override fun describeTo(description: Description) {
+            description.appendText("with image from URI: `$uri`")
+        }
+
+        override fun matchesSafely(view: View): Boolean {
+            if (view !is ImageView) {
+                Log.e(TAG, "View is not an ImageView.")
+                return false
+            }
+            if (view.drawable == null) {
+                Log.e(TAG, "View has no drawable.")
+                return false
+            }
+            if (view.drawable !is AvatarDrawable) {
+                Log.e(TAG, "Drawable is not an AvatarDrawable.")
+                return false
+            }
+
+            val drawable = view.drawable as AvatarDrawable
+            val drawableBitmaps = drawable.getBitmap()
+
+            if (drawableBitmaps == null) {
+                Log.e(TAG, "Drawable has no bitmap.")
+                return false
+            }
+            if (drawableBitmaps.isEmpty()) {
+                Log.e(TAG, "Drawable has no photo.")
+                return false
+            }
+
+            val actualBitmap = drawableBitmaps[0]
+            val expectedBitmap = loadBitmapFromUri(view.context, uri)
+
+            return expectedBitmap.sameAs(actualBitmap)
+        }
+
+        private fun loadBitmapFromUri(context: Context, uri: Uri): Bitmap {
+            val inputStream: InputStream = context.contentResolver.openInputStream(uri)!!
+            return BitmapFactory.decodeStream(inputStream)
+        }
+    }
+}
