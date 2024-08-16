@@ -123,6 +123,7 @@ class TVJamiAccountCreationFragment : JamiGuidedStepFragment<JamiAccountCreation
     }
 
     private fun passwordChanged(action: GuidedAction) {
+        Log.w("devdebug", "passwordChanged = ${action.editDescription}")
         val password = action.editDescription.toString().apply { mPassword = this }
         action.description = if (password.isNotEmpty()) StringUtils.toPassword(password) else getString(R.string.account_enter_password)
         notifyActionChanged(findActionPositionById(PASSWORD))
@@ -130,6 +131,8 @@ class TVJamiAccountCreationFragment : JamiGuidedStepFragment<JamiAccountCreation
     }
 
     private fun confirmPasswordChanged(action: GuidedAction) {
+        Log.w("devdebug", "confirmPasswordChanged = ${action.editDescription}")
+
         val passwordConfirm = action.editDescription.toString().apply { mPasswordConfirm = this }
         action.description = if (passwordConfirm.isNotEmpty()) StringUtils.toPassword(passwordConfirm) else getText(R.string.account_enter_password)
         notifyActionChanged(findActionPositionById(PASSWORD_CONFIRMATION))

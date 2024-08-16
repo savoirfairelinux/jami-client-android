@@ -16,6 +16,9 @@
  */
 package cx.ring.client.wizard
 
+import android.view.KeyEvent
+import androidx.test.espresso.Espresso
+import androidx.test.espresso.Espresso.onData
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.*
@@ -25,12 +28,17 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.filters.SmallTest
 import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.rule.GrantPermissionRule
 import cx.ring.AccountUtils
+import cx.ring.AccountUtils.removeAllAccounts
+import cx.ring.FirstViewMatcher
 import cx.ring.R
+import cx.ring.SecondViewMatcher
 import cx.ring.assertOnView
 import cx.ring.client.HomeActivity
 import cx.ring.doOnView
 import cx.ring.utils.DeviceUtils.isTv
+import cx.ring.waitForView
 import net.jami.utils.Log
 import org.hamcrest.Matchers.allOf
 import org.junit.Assume.assumeTrue
@@ -40,6 +48,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.MethodSorters
+import java.security.Key
 
 @LargeTest
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -331,7 +340,6 @@ class AccountCreation {
         onView(allOf(withId(R.id.skip_create_account), isDisplayed())).perform(click())
     }
 
-
     private fun specifyPassword() {
         onView(allOf(withId(R.id.password), isDisplayed()))
             .perform(replaceText("123456"), closeSoftKeyboard())
@@ -386,30 +394,89 @@ class AccountCreation {
 
 @RunWith(AndroidJUnit4::class)
 @SmallTest
-class AndroidTvTests {
+class AccountCreationTv {
     @Rule
     @JvmField
     var mActivityScenarioRule: ActivityScenarioRule<cx.ring.tv.main.HomeActivity>? =
         if (!isTv(InstrumentationRegistry.getInstrumentation().context)) null
         else ActivityScenarioRule(cx.ring.tv.main.HomeActivity::class.java)
 
+    @get:Rule
+    val grantCameraPermissionRule: GrantPermissionRule =
+        GrantPermissionRule.grant(android.Manifest.permission.CAMERA)
+
     @Before
-    fun test0() {
+    fun before() {
         assumeTrue(mActivityScenarioRule != null)
+
+        mActivityScenarioRule!!.scenario.onActivity { activity -> // Set custom name server
+            activity.mAccountService.customNameServer = "https://ns-test.jami.net/"
+        }
+    }
+
+//    @Test
+    fun accountCreation_SkipAllSteps() {
+        onView(withText(R.string.account_creation_home)).check(matches(isDisplayed()))
+
+        onView(withText(R.string.account_create_title)).perform(click())
+
+        onView(withText(R.string.action_create)).perform(click())
+
+        onView(withText(R.string.wizard_next)).perform(click())
+
+        onView(withText(R.string.dialog_wait_create)).check(matches(isDisplayed()))
+
+        waitForView(withText(R.string.account_tv_add_contact)).check(matches(isDisplayed()))
+
+        mActivityScenarioRule!!.scenario.onActivity { activity ->
+            removeAllAccounts(accountService = activity.mAccountService)
+        }
+    }
+
+//    @Test
+    fun accountCreation_SpecifyUsernameOnly() {
+        onView(withText(R.string.account_creation_home)).check(matches(isDisplayed()))
+
+        onView(withText(R.string.account_create_title)).perform(click())
+
+        onView(withText(R.string.action_create)).perform(click())
+
+        onView(allOf(
+            withText(R.string.profile_name_hint),
+            withResourceName("guidedactions_item_title")))
+            .perform(typeText("Abcd"))
+
+        onView(withText("Abcd")).perform(pressImeActionButton())
+
+        // Need to wait for the keyboard to disappear
+        Thread.sleep(1000)
+
+        onView(withText(R.string.wizard_next)).perform(click())
+
+        waitForView(withText(R.string.dialog_wait_create)).check(matches(isDisplayed()))
+
+        waitForView(withText(R.string.account_tv_add_contact)).check(matches(isDisplayed()))
+
+        onView(withText("Abcd")).check(matches(isDisplayed()))
+
+        mActivityScenarioRule!!.scenario.onActivity { activity ->
+            removeAllAccounts(accountService = activity.mAccountService)
+        }
     }
 
     @Test
-    fun test1() {
+    fun accountCreation_SpecifyPasswordOnly() {
         onView(withText(R.string.account_creation_home)).check(matches(isDisplayed()))
-    }
 
-    @Test
-    fun test2() {
-        onView(withText(R.string.account_creation_home)).check(matches(isDisplayed()))
-    }
+        onView(withText(R.string.account_create_title)).perform(click())
 
-    @Test
-    fun test3() {
-        onView(withText(R.string.account_creation_home)).check(matches(isDisplayed()))
+        onView(allOf(
+            withText(R.string.prompt_new_password_optional),
+            withResourceName("guidedactions_item_title")))
+            .perform(typeText("Abcdef"))
+
+        onView(allOf( withText("Abcdef"), FirstViewMatcher.firstView())).perform(pressImeActionButton())
+
+        // Then impossible to get focus on Repeat new password ...
     }
 }

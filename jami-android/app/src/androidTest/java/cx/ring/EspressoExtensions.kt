@@ -9,6 +9,9 @@ import androidx.test.espresso.ViewAssertion
 import androidx.test.espresso.ViewInteraction
 import androidx.test.espresso.matcher.ViewMatchers.isRoot
 import androidx.test.espresso.util.TreeIterables
+import org.hamcrest.BaseMatcher
+import org.hamcrest.Description
+import org.hamcrest.Factory
 import org.hamcrest.Matcher
 
 
@@ -101,4 +104,68 @@ fun waitForView(
         }
 
     throw Exception("Error finding a view matching $viewMatcher")
+}
+
+/**
+ * Created by stost on 15.05.14.
+ * Matches any view. But only on first match()-call.
+ */
+class FirstViewMatcher : BaseMatcher<View?>() {
+    init {
+        matchedBefore = false
+    }
+
+    override fun matches(o: Any): Boolean {
+        if (matchedBefore) {
+            return false
+        } else {
+            matchedBefore = true
+            return true
+        }
+    }
+
+    override fun describeTo(description: Description?) {
+        description?.appendText(" is the first view that comes along ")
+    }
+
+    companion object {
+        var matchedBefore: Boolean = false
+
+        @Factory
+        fun firstView(): Matcher<View> {
+            return FirstViewMatcher() as Matcher<View>
+        }
+    }
+}
+
+/**
+ * Created by stost on 15.05.14.
+ * Matches any view. But only on first match()-call.
+ */
+class SecondViewMatcher : BaseMatcher<View?>() {
+    init {
+        matchedBefore = false
+    }
+
+    override fun matches(o: Any): Boolean {
+        if (matchedBefore) {
+            return true
+        } else {
+            matchedBefore = true
+            return false
+        }
+    }
+
+    override fun describeTo(description: Description?) {
+        description?.appendText(" is the first view that comes along ")
+    }
+
+    companion object {
+        var matchedBefore: Boolean = false
+
+        @Factory
+        fun secondView(): Matcher<View> {
+            return SecondViewMatcher() as Matcher<View>
+        }
+    }
 }
