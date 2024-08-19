@@ -16,6 +16,29 @@
       "message": "!build",
       "revId": "3cc78907d12978fd452071c4a3cdaa2f231b7fb8",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e726368d_1bbf33b8",
+        "filename": "jami-android/app/src/androidTest/java/cx/ring/client/settings/AccountSettings.kt",
+        "patchSetId": 18
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1058
+      },
+      "writtenOn": "2024-08-19T21:24:56Z",
+      "side": 1,
+      "message": "What if we replace this by: \n\nonView(withText(R.string.no_thanks))\n    .inRoot(isDialogWithTitle(R.string.account_biometry_enroll_title))\n     .perform(waitUntil(isDisplayed()), click())\n\n\n\nbased on: https://review.jami.net/c/jami-client-android/+/28758",
+      "range": {
+        "startLine": 452,
+        "startChar": 7,
+        "endLine": 457,
+        "endChar": 71
+      },
+      "revId": "3cc78907d12978fd452071c4a3cdaa2f231b7fb8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
