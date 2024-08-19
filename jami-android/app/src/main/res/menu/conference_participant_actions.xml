@@ -16,7 +16,7 @@
     <item
         android:id="@+id/conv_contact_details"
         android:icon="@drawable/baseline_person_24"
-        android:title="@string/conversation_details"
+        android:title="@string/contact_details"
         app:showAsAction="always"
         tools:ignore="AlwaysShowAction" />
     <item
