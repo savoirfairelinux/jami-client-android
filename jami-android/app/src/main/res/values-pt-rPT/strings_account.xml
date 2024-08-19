@@ -111,8 +111,10 @@
   <string name="enabled">Ativado</string>
   <string name="account_proxy_label">Proxy DHT</string>
   <string name="account_proxy_enable_label">Usar proxy DHT</string>
+  <string name="account_proxy_list_enable_label">Utilizar a lista de proxy DHT</string>
   <string name="account_proxy_server_label">Endereço do proxy DHT</string>
   <string name="account_proxy_server_list_label">URL de lista de proxy DHT</string>
+  <string name="account_proxy_server_used">Utilizando: %1$s</string>
   <string name="account_sip_proxy_label">Proxy</string>
   <string name="account_peer_discovery_label">Descoberta de pares locais</string>
   <string name="account_peer_discovery_enable_label">Ativar a descoberta de pares locais</string>
