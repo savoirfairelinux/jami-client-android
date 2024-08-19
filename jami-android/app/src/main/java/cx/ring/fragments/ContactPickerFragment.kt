@@ -40,7 +40,7 @@ import net.jami.smartlist.ConversationItemViewModel
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class ContactPickerFragment : BottomSheetDialogFragment() {
+class ContactPickerFragment(val contacts: List<Contact> = emptyList()) : BottomSheetDialogFragment() {
     private var binding: FragContactPickerBinding? = null
     private var adapter: ContactPickerAdapter? = null
     private val mDisposableBag = CompositeDisposable()
@@ -55,8 +55,22 @@ class ContactPickerFragment : BottomSheetDialogFragment() {
         mDisposableBag.add(mConversationFacade.getConversationViewModelList()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ conversations ->
-                val contacts = conversations.filter { it.mode == Conversation.Mode.Legacy || it.mode == Conversation.Mode.OneToOne }
-                adapter?.update(contacts)
+                // Returns a list of ConversationItemViewModels that actually corresponds to
+                // user contacts that are not in the group.
+                val contactsNotInGroup = conversations.filter {
+                    (it.mode == Conversation.Mode.Legacy
+                            || it.mode == Conversation.Mode.OneToOne)
+                            // Filter out contacts that are already in the group
+                            && it.getContact()?.contact !in this.contacts
+                }
+                if(contactsNotInGroup.isEmpty()) {
+                    binding?.noContactTitle?.visibility = View.VISIBLE
+                    binding?.noContactLogo?.visibility = View.VISIBLE
+                } else{
+                    binding?.noContactTitle?.visibility = View.GONE
+                    binding?.noContactLogo?.visibility = View.GONE
+                }
+                adapter?.update(contactsNotInGroup)
             }){ e -> Log.e(TAG, "No contact to create a group!", e) })
     }
 

@@ -225,7 +225,7 @@ class ContactDetailsActivity : AppCompatActivity(), TabLayout.OnTabSelectedListe
 
         binding.tabLayout.addOnTabSelectedListener(this)
         binding.back.setOnClickListener { onBackPressedDispatcher.onBackPressed() }
-        binding.addMember.setOnClickListener { ContactPickerFragment().show(supportFragmentManager, ContactPickerFragment.TAG) }
+        binding.addMember.setOnClickListener { ContactPickerFragment(conversation.contacts).show(supportFragmentManager, ContactPickerFragment.TAG) }
 
         mPagerAdapter = ScreenSlidePagerAdapter(this, conversation)
         binding.pager.adapter = mPagerAdapter
