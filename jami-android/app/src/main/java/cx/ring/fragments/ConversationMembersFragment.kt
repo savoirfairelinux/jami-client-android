@@ -19,6 +19,7 @@ package cx.ring.fragments
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.*
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import cx.ring.R
@@ -32,6 +33,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.model.Contact
 import net.jami.model.ContactViewModel
+import net.jami.model.MemberRole
 import net.jami.model.Uri
 import net.jami.services.ContactService
 import net.jami.services.ConversationFacade
@@ -62,23 +64,27 @@ class ConversationMembersFragment : Fragment() {
         val path = ConversationPath.fromBundle(arguments)!!
         mDisposableBag.add(mConversationFacade
             .startConversation(path.accountId, path.conversationUri)
-            .flatMapObservable { conversation -> conversation.contactUpdates }
-            .flatMap { contacts -> contactService.observeContact(path.accountId, contacts, false) }
+            .flatMapObservable { conversation -> // Keep reference on conversation for roles.
+                conversation.contactUpdates.map { contacts -> Pair(conversation, contacts) }
+            }
+            .flatMap { (conversation, contacts) ->
+                contactService.observeContact(path.accountId, contacts, false)
+                    .map { contactViewModels -> Pair(conversation, contactViewModels) }
+            }
             .observeOn(DeviceUtils.uiScheduler)
-            .subscribe {
+            .subscribe { (conversation, contactViewModels) ->
                 val adapter = binding!!.contactList.adapter
                 if (adapter == null) {
-                    binding!!.contactList.adapter = ContactViewAdapter(mDisposableBag, it)
-                    { contact ->
-                        val actionBottomSheet = MembersBottomSheetFragment.newInstance(
-                            path.accountId,
-                            contact.uri,
-                            path.conversationUri
-                        )
-                        actionBottomSheet.show(parentFragmentManager, MembersBottomSheetFragment.TAG)
-                    }
+                    binding!!.contactList.adapter =
+                        ContactViewAdapter(mDisposableBag, contactViewModels, conversation.roles)
+                        { contact ->
+                            val actionBottomSheet = MembersBottomSheetFragment
+                                .newInstance(path.accountId, contact.uri, path.conversationUri)
+                            actionBottomSheet
+                                .show(parentFragmentManager, MembersBottomSheetFragment.TAG)
+                        }
                 } else {
-                    (adapter as ContactViewAdapter).update(it)
+                    (adapter as ContactViewAdapter).update(contactViewModels)
                 }
             })
     }
@@ -92,6 +98,7 @@ class ConversationMembersFragment : Fragment() {
     private class ContactViewAdapter(
         private val disposable: CompositeDisposable,
         private var contacts: List<ContactViewModel>,
+        private val roles: Map<String, MemberRole>,
         private val callback: (Contact) -> Unit
     ) : RecyclerView.Adapter<ContactDetailsActivity.ContactView>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactDetailsActivity.ContactView {
@@ -108,6 +115,7 @@ class ConversationMembersFragment : Fragment() {
                 .subscribe { drawable: Drawable ->
                     holder.binding.photo.setImageDrawable(drawable)
                 })
+            holder.binding.moderator.isVisible = roles[contact.contact.uri.uri] == MemberRole.ADMIN
             holder.binding.displayName.text =
                 if (contact.contact.isUser) holder.itemView.context.getText(R.string.conversation_info_contact_you) else contact.displayName
             holder.itemView.setOnClickListener { callback.invoke(contact.contact) }
