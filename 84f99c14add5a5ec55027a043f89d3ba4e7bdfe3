@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "81b8f178_6cfc22e1",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ContactPickerFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-08-20T14:22:10Z",
+      "side": 1,
+      "message": "avoid confusing name override",
+      "range": {
+        "startLine": 58,
+        "startChar": 20,
+        "endLine": 58,
+        "endChar": 28
+      },
+      "revId": "84f99c14add5a5ec55027a043f89d3ba4e7bdfe3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
