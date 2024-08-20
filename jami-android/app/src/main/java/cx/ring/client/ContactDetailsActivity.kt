@@ -276,6 +276,25 @@ class ContactDetailsActivity : AppCompatActivity(), TabLayout.OnTabSelectedListe
             }
         }
         mProfilePhoto = view.profilePhoto
+
+        val dialogDisposableBag = CompositeDisposable().apply {
+            add(mConversationFacade
+                .startConversation(path!!.accountId, path!!.conversationUri)
+                .flatMapObservable { mConversationFacade.observeConversation(it) }
+                .firstOrError()
+                .observeOn(DeviceUtils.uiScheduler)
+                .subscribe { conversationViewModel ->
+                    mProfilePhoto?.setImageDrawable(
+                        AvatarDrawable.Builder()
+                            .withViewModel(conversationViewModel)
+                            .withCircleCrop(true)
+                            .build(this@ContactDetailsActivity)
+                    )
+                }
+            )
+            mDisposableBag.add(this) // Should not be needed, but just in case
+        }
+
         MaterialAlertDialogBuilder(this)
             .setTitle(R.string.profile)
             .setView(view.root)
@@ -291,6 +310,7 @@ class ContactDetailsActivity : AppCompatActivity(), TabLayout.OnTabSelectedListe
                 }
             }
             .setOnDismissListener {
+                dialogDisposableBag.dispose()
                 mProfilePhoto = null
                 mSourcePhoto = null
             }
