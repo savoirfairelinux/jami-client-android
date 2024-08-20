@@ -32,6 +32,7 @@ class Conversation : ConversationHistory {
     val accountId: String
     val uri: Uri
     val contacts: MutableList<Contact>
+    val roles: MutableMap<String, MemberRole> = HashMap()
     private val rawHistory: NavigableMap<Long, Interaction> = TreeMap()
     private val currentCalls = ArrayList<Conference>()
     val aggregateHistory = ArrayList<Interaction>(32)
@@ -130,6 +131,7 @@ class Conversation : ConversationHistory {
             }) { event, hasCurrentCall -> Pair(event, hasCurrentCall) }
 
     constructor(accountId: String, contact: Contact) {
+        // This should be a legacy conversation (contact view), no role importance.
         this.accountId = accountId
         contacts = mutableListOf(contact)
         uri = contact.uri
@@ -160,12 +162,14 @@ class Conversation : ConversationHistory {
     /*val displayName: String?
         get() = contacts[0].displayName*/
 
-    fun addContact(contact: Contact) {
+    fun addContact(contact: Contact, memberRole: MemberRole? = null) {
+        memberRole?.let { roles[contact.uri.uri] = it }
         contacts.add(contact)
         mContactSubject.onNext(contacts)
     }
 
     fun removeContact(contact: Contact) {
+        roles.remove(contact.uri.uri)
         contacts.remove(contact)
         mContactSubject.onNext(contacts)
     }
@@ -723,6 +727,18 @@ class Conversation : ConversationHistory {
     /** Tells if the conversation is a swarm:group. No matter how many participants. */
     fun isSwarmGroup() = isSwarm && mode.blockingFirst() != Mode.OneToOne
 
+    /** Return user. Maybe be null. */
+    fun getUser(): Contact? = contacts.firstOrNull { it.isUser }
+
+    /** Tells if the user is admin of the group. */
+    fun isUserGroupAdmin() =
+        if (!isSwarmGroup()) false
+        else {
+            getUser()?.let { // Get the user contact
+                roles[it.uri.uri] == MemberRole.ADMIN
+            } ?: false
+        }
+
     @Synchronized
     fun loadMessage(id: String, load: () -> Unit): Single<Interaction> {
         val msg = getMessage(id)
@@ -809,6 +825,21 @@ class Conversation : ConversationHistory {
             Interaction.InteractionType.CONTACT -> ContactEvent(interaction)
             Interaction.InteractionType.DATA_TRANSFER -> DataTransfer(interaction)
             else -> interaction
+        }
+    }
+}
+
+enum class MemberRole {
+    ADMIN, MEMBER, INVITED, BANNED, LEFT;
+
+    companion object{
+        fun fromString(value: String): MemberRole = when(value){
+            "admin" -> ADMIN
+            "member" -> MEMBER
+            "invited" -> INVITED
+            "banned" -> BANNED
+            "left" -> LEFT
+            else -> throw IllegalArgumentException("Unknown member role: $value")
         }
     }
 }

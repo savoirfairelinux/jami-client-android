@@ -187,6 +187,15 @@ class ContactDetailsActivity : AppCompatActivity(), TabLayout.OnTabSelectedListe
                     binding.description.setOnClickListener(null)
                     binding.contactImage.setOnClickListener(null)
                     binding.tabLayout.removeTabAt(TAB_MEMBER)
+                } else if(vm.isGroup() and !conversation.isUserGroupAdmin()) {
+                    // Block conversation edition for non-admin users.
+                    binding.addMember.isVisible = true
+                    binding.description.isVisible = true
+                    fun showNotAdminToast() =
+                        Toast.makeText(this, R.string.not_admin_toast, Toast.LENGTH_SHORT).show()
+                    binding.title.setOnClickListener { showNotAdminToast() }
+                    binding.description.setOnClickListener { showNotAdminToast() }
+                    binding.contactImage.setOnClickListener { showNotAdminToast() }
                 } else {
                     binding.addMember.isVisible = true
                     binding.description.isVisible = true
