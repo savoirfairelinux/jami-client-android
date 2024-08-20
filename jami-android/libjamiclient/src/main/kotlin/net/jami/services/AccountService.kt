@@ -302,12 +302,15 @@ class AccountService(
                         Log.w(TAG, "conversation member: " + i.getKey() + " " + i.getValue());
                     }*/
                     val uri = Uri.fromId(member["uri"]!!)
-                    //String role = member.get("role");
+                    val role = member["role"].let {
+                        if (it == null) throw RuntimeException("Role is null for uri=$uri conversationId=$conversationId")
+                        MemberRole.fromString(it)
+                    }
                     val lastDisplayed = member["lastDisplayed"]
                     var contact = conversation.findContact(uri)
                     if (contact == null) {
                         contact = account.getContactFromCache(uri)
-                        conversation.addContact(contact)
+                        conversation.addContact(contact, role)
                     }
                     if (!lastDisplayed.isNullOrEmpty()) {
                         if (contact.isUser) {
@@ -1218,7 +1221,7 @@ class AccountService(
                 var conversation = account.getByUri(conversationUri)
                 if (conversation == null) {
                     conversation = account.newSwarm(conversationUri.rawRingId, Conversation.Mode.Syncing)
-                    conversation.addContact(contact)
+                    conversation.addContact(contact, MemberRole.MEMBER)
                 }
             }
             //account.addContact(uri, confirmed);
@@ -1419,11 +1422,13 @@ class AccountService(
         Log.w(TAG, "ConversationCallback: conversationMemberEvent $accountId/$conversationId")
         getAccount(accountId)?.let { account -> account.getSwarm(conversationId)?.let { conversation ->
             val uri = Uri.fromId(peerUri)
-            when (ConversationMemberEvent.entries[event]) {
+            when (val memberEvent = ConversationMemberEvent.entries[event]) {
                 ConversationMemberEvent.Add, ConversationMemberEvent.Join -> {
                     val contact = conversation.findContact(uri)
                     if (contact == null) {
-                        conversation.addContact(account.getContactFromCache(uri))
+                        val role = if (memberEvent == ConversationMemberEvent.Add)
+                            MemberRole.INVITED else MemberRole.MEMBER
+                        conversation.addContact(account.getContactFromCache(uri), role)
                     }
                 }
                 ConversationMemberEvent.Remove, ConversationMemberEvent.Ban -> {
@@ -1464,10 +1469,14 @@ class AccountService(
             // Making sure to add contacts before changing the mode
             for (member in JamiService.getConversationMembers(accountId, conversationId)) {
                 val memberUri = Uri.fromId(member["uri"]!!)
+                val role = member["role"].let {
+                    if (it == null) throw RuntimeException("Role is null for uri=$uri conversationId=$conversationId")
+                    MemberRole.fromString(it)
+                }
                 var contact = conversation.findContact(memberUri)
                 if (contact == null) {
                     contact = account.getContactFromCache(memberUri)
-                    conversation.addContact(contact)
+                    conversation.addContact(contact, role)
                 }
             }
             if (!conversation.lastElementLoadedSubject.hasValue())
