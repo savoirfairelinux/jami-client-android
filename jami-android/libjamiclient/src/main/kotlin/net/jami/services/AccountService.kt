@@ -1412,7 +1412,7 @@ class AccountService(
     }
 
     private enum class ConversationMemberEvent {
-        Add, Join, Remove, Ban
+        Add, Join, Remove, Ban, Unban
     }
 
     fun conversationMemberEvent(accountId: String, conversationId: String, peerUri: String, event: Int) {
@@ -1420,7 +1420,9 @@ class AccountService(
         getAccount(accountId)?.let { account -> account.getSwarm(conversationId)?.let { conversation ->
             val uri = Uri.fromId(peerUri)
             when (val memberEvent = ConversationMemberEvent.entries[event]) {
-                ConversationMemberEvent.Add, ConversationMemberEvent.Join -> {
+                ConversationMemberEvent.Add,
+                ConversationMemberEvent.Join,
+                ConversationMemberEvent.Unban -> {
                     val contact = conversation.findContact(uri)
                     if (contact == null) {
                         val role = if (memberEvent == ConversationMemberEvent.Add)
