@@ -65,7 +65,9 @@ class ConversationMembersFragment : Fragment() {
         mDisposableBag.add(mConversationFacade
             .startConversation(path.accountId, path.conversationUri)
             .flatMapObservable { conversation -> // Keep reference on conversation for roles.
-                conversation.contactUpdates.map { contacts -> Pair(conversation, contacts) }
+                conversation.contactUpdates.map { contacts ->
+                    Pair(conversation, contacts.sortedBy { !it.isUser }) // Sort to show user first
+                }
             }
             .flatMap { (conversation, contacts) ->
                 contactService.observeContact(path.accountId, contacts, false)

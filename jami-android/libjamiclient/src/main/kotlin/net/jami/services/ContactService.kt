@@ -122,9 +122,8 @@ abstract class ContactService(
             observeContact(accountId, contacts.first(), withPresence).map(Collections::singletonList)
         }  else {
             val observables: MutableList<Observable<ContactViewModel>> = ArrayList(contacts.size)
-            for (contact in contacts) {
-                if (!contact.isUser) observables.add(observeContact(accountId, contact, withPresence))
-            }
+            for (contact in contacts)
+                observables.add(observeContact(accountId, contact, withPresence))
             if (observables.isEmpty()) Observable.just(emptyList()) else Observable.combineLatest(observables) { a: Array<Any> ->
                 a.map { it as ContactViewModel }
             }
