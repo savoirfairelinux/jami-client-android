@@ -346,6 +346,7 @@ along with this program; if not, write to the Free Software
     <string name="conversation_contact_added">%1$s joined</string>
     <string name="conversation_contact_left">%1$s left</string>
     <string name="conversation_contact_banned">%1$s was banned</string>
+    <string name="conversation_contact_unbanned">%1$s was unbanned</string>
     <string name="conversation_search_hint">Search conversation</string>
 
     <string name="audio_recorder_error">Audio recorder app was not found.</string>
@@ -385,6 +386,7 @@ along with this program; if not, write to the Free Software
     <string name="hist_contact_added">Contact added</string>
     <string name="hist_contact_left">Contact left</string>
     <string name="hist_contact_banned">Contact banned</string>
+    <string name="hist_contact_unbanned">Contact unbanned</string>
     <string name="hist_invitation_received">Invitation received</string>
 
     <!-- Account Summary -->
