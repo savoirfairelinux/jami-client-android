@@ -65,7 +65,7 @@ class ContactEvent : Interaction {
     }
 
     enum class Event {
-        UNKNOWN, INCOMING_REQUEST, INVITED, ADDED, REMOVED, BANNED;
+        UNKNOWN, INCOMING_REQUEST, INVITED, ADDED, REMOVED, BANNED, UNBANNED;
 
         companion object {
             fun fromConversationAction(action: String): Event = when (action) {
@@ -73,6 +73,7 @@ class ContactEvent : Interaction {
                 "join" -> ADDED
                 "remove" -> REMOVED
                 "ban" -> BANNED
+                "unban" -> UNBANNED
                 else -> UNKNOWN
             }
         }

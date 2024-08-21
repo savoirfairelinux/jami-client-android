@@ -1546,6 +1546,7 @@ class ConversationAdapter(
                         ContactEvent.Event.INVITED -> R.string.conversation_contact_invited
                         ContactEvent.Event.REMOVED -> R.string.conversation_contact_left
                         ContactEvent.Event.BANNED -> R.string.conversation_contact_banned
+                        ContactEvent.Event.UNBANNED -> R.string.conversation_contact_unbanned
                         else -> R.string.hist_contact_added
                     }, vm.displayName)
                     viewHolder.mMsgTxt?.text = "$eventString, $timestamp"
@@ -1556,6 +1557,7 @@ class ConversationAdapter(
                 ContactEvent.Event.INVITED -> R.string.hist_contact_invited
                 ContactEvent.Event.REMOVED -> R.string.hist_contact_left
                 ContactEvent.Event.BANNED -> R.string.hist_contact_banned
+                ContactEvent.Event.UNBANNED -> R.string.hist_contact_unbanned
                 ContactEvent.Event.INCOMING_REQUEST -> R.string.hist_invitation_received
                 else -> R.string.hist_contact_added
             }
