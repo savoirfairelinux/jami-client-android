@@ -46,6 +46,30 @@
       },
       "revId": "394d3c341d1f7a560de2209d8c7c4e8d866ef582",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d2f8c5a9_0d2eb1b7",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/ConversationFacade.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1058
+      },
+      "writtenOn": "2024-08-21T18:12:23Z",
+      "side": 1,
+      "message": "This should not be private, since handleTrustRequestAction in DringService class needs to have an access to this function:\n\n...\nACTION_TRUST_REQUEST_ACCEPT -\u003e mConversationFacade.acceptRequest(path.accountId, path.conversationUri)\n...\n\n(line 256 of DRingService class)",
+      "parentUuid": "002e137a_2d296fc6",
+      "range": {
+        "startLine": 564,
+        "startChar": 8,
+        "endLine": 564,
+        "endChar": 21
+      },
+      "revId": "394d3c341d1f7a560de2209d8c7c4e8d866ef582",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
