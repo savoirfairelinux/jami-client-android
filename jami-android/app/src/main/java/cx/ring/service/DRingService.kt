@@ -253,12 +253,17 @@ class DRingService : Service() {
         ConversationPath.fromUri(uri)?.let { path ->
             mNotificationService.cancelTrustRequestNotification(path.accountId)
             when (action) {
-                ACTION_TRUST_REQUEST_ACCEPT -> mConversationFacade.acceptRequest(path.accountId, path.conversationUri)
+                ACTION_TRUST_REQUEST_ACCEPT -> mConversationFacade.startConversation(path.accountId, path.conversationUri).subscribe({ request ->
+                    mConversationFacade.acceptRequest(request)
+                }) {
+                    mAccountService.acceptTrustRequest(path.accountId, path.conversationUri)
+                }
                 ACTION_TRUST_REQUEST_REFUSE -> mConversationFacade.discardRequest(path.accountId, path.conversationUri)
                 ACTION_TRUST_REQUEST_BLOCK -> {
                     mConversationFacade.banConversation(path.accountId, path.conversationUri)
                     mConversationFacade.discardRequest(path.accountId, path.conversationUri)
                 }
+                else -> {}
             }
         }
     }

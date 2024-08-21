@@ -552,7 +552,16 @@ class ConversationFacade(
         startConversation(accountId, uri).subscribe(mNotificationService::showTextNotification)
     }
 
-    fun acceptRequest(accountId: String, contactUri: Uri) {
+    fun acceptRequest(conversation: Conversation) {
+        if (conversation.mode.blockingFirst() == Conversation.Mode.Request) {
+            conversation.loaded = null
+            conversation.clearHistory(true)
+            conversation.setMode(Conversation.Mode.Syncing)
+        }
+        acceptRequest(conversation.accountId, conversation.uri)
+    }
+
+    private fun acceptRequest(accountId: String, contactUri: Uri) {
         mPreferencesService.removeRequestPreferences(accountId, contactUri.rawRingId)
         mAccountService.acceptTrustRequest(accountId, contactUri)
     }

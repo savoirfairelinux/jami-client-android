@@ -42,6 +42,8 @@ class TVContactPresenter @Inject constructor(
 ) : RootPresenter<TVContactView>() {
     private var mAccountId: String? = null
     private var mUri: Uri? = null
+    private var mAccount: Account? = null
+    private var mConversation: Conversation? = null
 
     fun setContact(path: ConversationPath) {
         mAccountId = path.accountId
@@ -52,6 +54,8 @@ class TVContactPresenter @Inject constructor(
             mConversationService.getAccountSubject(path.accountId)
                 .flatMapObservable { account: Account ->
                     val conversation = account.getByUri(path.conversationUri)!!
+                    mAccount = account
+                    mConversation = conversation
                     conversation.mode
                         .flatMap { conversationMode: Conversation.Mode ->
                             if (conversationMode === Conversation.Mode.Legacy)
@@ -71,47 +75,35 @@ class TVContactPresenter @Inject constructor(
     }
 
     fun contactClicked() {
-        mAccountService.getAccount(mAccountId)?.let { account ->
-            val conversation = account.getByUri(mUri)!!
-            val conf = conversation.currentCall
-            val call = conf?.firstCall
-            if (call != null && call.callStatus !== Call.CallStatus.INACTIVE && call.callStatus !== Call.CallStatus.FAILURE) {
-                view?.goToCallActivity(conf.id)
+        val conversation = mConversation ?: mAccountService.getAccount(mAccountId)?.getByUri(mUri) ?: return
+        val conf = conversation.currentCall
+        val call = conf?.firstCall
+        if (call != null && call.callStatus !== Call.CallStatus.INACTIVE && call.callStatus !== Call.CallStatus.FAILURE) {
+            view?.goToCallActivity(conf.id)
+        } else {
+            if (conversation.isSwarm) {
+                view?.callContact(conversation.accountId, conversation.uri, conversation.contact!!.uri)
             } else {
-                if (conversation.isSwarm) {
-                    view?.callContact(account.accountId, conversation.uri, conversation.contact!!.uri)
-                } else {
-                    view?.callContact(account.accountId, conversation.uri, conversation.uri)
-                }
+                view?.callContact(conversation.accountId, conversation.uri, conversation.uri)
             }
         }
     }
 
     fun onAddContact() {
-        mAccountId?.let { accountId -> mUri?.let { uri ->
-            sendTrustRequest(accountId, uri)
-        } }
+        mConversation?.let { sendTrustRequest(it) }
         view?.switchToConversationView()
     }
 
-    private fun sendTrustRequest(accountId: String, conversationUri: Uri) {
-        val conversation = mAccountService.getAccount(accountId)?.getByUri(conversationUri) ?: return
-        mVCardService.loadSmallVCardWithDefault(accountId, VCardService.MAX_SIZE_REQUEST)
+    private fun sendTrustRequest(conversation: Conversation) {
+        mVCardService.loadSmallVCardWithDefault(conversation.accountId, VCardService.MAX_SIZE_REQUEST)
             .subscribe({ vCard: VCard ->
-                mAccountService.sendTrustRequest(conversation, conversationUri, Blob.fromString(vcardToString(vCard))) })
-            { mAccountService.sendTrustRequest(conversation, conversationUri) }
+                mAccountService.sendTrustRequest(conversation, conversation.uri, Blob.fromString(vcardToString(vCard))) })
+            { mAccountService.sendTrustRequest(conversation, conversation.uri) }
     }
 
     fun acceptTrustRequest() {
-        mAccountService.getAccount(mAccountId)?.let { account ->
-            val conversation = account.getByUri(mUri)!!
-            if (conversation.mode.blockingFirst() == Conversation.Mode.Request) {
-                conversation.loaded = null
-                conversation.clearHistory(true)
-                conversation.setMode(Conversation.Mode.Syncing)
-            }
-        }
-        mConversationService.acceptRequest(mAccountId!!, mUri!!)
+        val conversation = mConversation ?: mAccountService.getAccount(mAccountId)?.getByUri(mUri) ?: return
+        mConversationService.acceptRequest(conversation)
         view?.switchToConversationView()
     }
 

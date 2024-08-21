@@ -409,12 +409,7 @@ class ConversationPresenter @Inject constructor(
 
     fun onAcceptIncomingContactRequest() {
         mConversation?.let { conversation ->
-            if (conversation.mode.blockingFirst() == Conversation.Mode.Request) {
-                conversation.loaded = null
-                conversation.clearHistory(true)
-                conversation.setMode(Conversation.Mode.Syncing)
-            }
-            conversationFacade.acceptRequest(conversation.accountId, conversation.uri)
+            conversationFacade.acceptRequest(conversation)
         }
         view?.switchToConversationView()
     }
