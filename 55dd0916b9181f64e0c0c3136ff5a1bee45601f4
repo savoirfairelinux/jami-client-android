@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cc536a52_99113f0a",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-08-21T20:52:30Z",
+      "side": 1,
+      "message": "Should `delete` be `remove`? Thank you",
+      "range": {
+        "startLine": 305,
+        "startChar": 18,
+        "endLine": 305,
+        "endChar": 24
+      },
+      "revId": "55dd0916b9181f64e0c0c3136ff5a1bee45601f4",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9a65e2bf_096024c2",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-08-21T20:52:30Z",
+      "side": 1,
+      "message": "Should `Remove conversation` be changed to `Leave conversation`? Thank you\nhttps://git.jami.net/savoirfairelinux/jami-client-qt/-/issues/1730#note_52015",
+      "range": {
+        "startLine": 305,
+        "startChar": 39,
+        "endLine": 305,
+        "endChar": 58
+      },
+      "revId": "55dd0916b9181f64e0c0c3136ff5a1bee45601f4",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b9bb5c30_eb10246f",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-08-21T20:52:30Z",
+      "side": 1,
+      "message": "Should `Leave Swarm` be `Leave swarm`? i.e. lowercase `s`? Thank you",
+      "range": {
+        "startLine": 306,
+        "startChar": 31,
+        "endLine": 306,
+        "endChar": 42
+      },
+      "revId": "55dd0916b9181f64e0c0c3136ff5a1bee45601f4",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
