@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4e1e495f_28b8e555",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-08-21T17:53:19Z",
+      "side": 1,
+      "message": "Looks fine for the android part. I want to test before merging this on android TV.",
+      "revId": "07a518a0b1b96a48277285722e162f10cf27b3d6",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
