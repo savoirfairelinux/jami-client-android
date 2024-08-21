@@ -310,7 +310,7 @@ class AccountService(
                     var contact = conversation.findContact(uri)
                     if (contact == null) {
                         contact = account.getContactFromCache(uri)
-                        conversation.addContact(contact, role)
+                        if (role != MemberRole.BANNED) conversation.addContact(contact, role)
                     }
                     if (!lastDisplayed.isNullOrEmpty()) {
                         if (contact.isUser) {
@@ -1478,7 +1478,7 @@ class AccountService(
                 var contact = conversation.findContact(memberUri)
                 if (contact == null) {
                     contact = account.getContactFromCache(memberUri)
-                    conversation.addContact(contact, role)
+                    if (role != MemberRole.BANNED) conversation.addContact(contact, role)
                 }
             }
             if (!conversation.lastElementLoadedSubject.hasValue())
