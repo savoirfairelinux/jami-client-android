@@ -14,7 +14,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-package cx.ring.contactrequests
+package cx.ring.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -22,7 +22,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import cx.ring.account.AccountEditionFragment
-import cx.ring.contactrequests.BlockListViewHolder.BlockListListeners
+import cx.ring.adapters.BlockListAdapter
+import cx.ring.viewholders.BlockListViewHolder.BlockListListeners
 import cx.ring.databinding.FragBlocklistBinding
 import cx.ring.interfaces.AppBarStateListener
 import cx.ring.mvp.BaseSupportFragment
