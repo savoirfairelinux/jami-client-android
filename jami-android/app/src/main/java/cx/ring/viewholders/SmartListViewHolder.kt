@@ -113,7 +113,9 @@ class SmartListViewHolder : RecyclerView.ViewHolder {
                     }
                 })
 
-            compositeDisposable.add(conversationFacade.observeConversation(conversation, true)
+            val showPresence = !conversation.isSwarmGroup() // Don't show presence for swarm groups.
+            compositeDisposable
+                .add(conversationFacade.observeConversation(conversation, showPresence)
                 .onErrorComplete()
                 .observeOn(DeviceUtils.uiScheduler)
                 .subscribe { conversationItemViewModel ->
