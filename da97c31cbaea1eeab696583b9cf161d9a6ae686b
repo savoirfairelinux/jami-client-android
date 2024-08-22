@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "12c6f61f_12476a44",
+        "filename": "jami-android/app/src/main/java/cx/ring/views/AvatarFactory.kt",
+        "patchSetId": 8
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-08-22T19:37:17Z",
+      "side": 1,
+      "message": "don\u0027t enforce Jami scheme here, maybe take Uri as argument",
+      "range": {
+        "startLine": 88,
+        "startChar": 21,
+        "endLine": 88,
+        "endChar": 49
+      },
+      "revId": "da97c31cbaea1eeab696583b9cf161d9a6ae686b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2e1c12d2_186e94d6",
+        "filename": "jami-android/app/src/main/java/cx/ring/views/AvatarView.kt",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-08-22T19:37:17Z",
+      "side": 1,
+      "message": "Jami URI should not be enforced here. Uri should be parsed from string",
+      "range": {
+        "startLine": 43,
+        "startChar": 29,
+        "endLine": 43,
+        "endChar": 58
+      },
+      "revId": "da97c31cbaea1eeab696583b9cf161d9a6ae686b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
