@@ -46,6 +46,30 @@
       },
       "revId": "42f01b112a35366bc906efdfbd6050b80def40fc",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cad87f0b_d77b06ba",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-08-22T14:12:07Z",
+      "side": 1,
+      "message": "Hi, actually I see this string is not used ^^\nBut from what I can see, it started to be implemented for received request.\n\nScenario C\n1. Peer send you a request\n2. You see the invite from pending request list\n3. You can long press on it\n4. You see the string `Delete request`.\n\nWhich do nothing at the moment but may refuse and delete the conversation request from the pending list.\n\nFor your scenario A and B, I don\u0027t think we currently have a mechanic in daemon side to `cancel request`. Please open a feature request on Gitlab if you see any use case.",
+      "parentUuid": "216cf6f2_71d3ffb6",
+      "range": {
+        "startLine": 420,
+        "startChar": 34,
+        "endLine": 420,
+        "endChar": 48
+      },
+      "revId": "42f01b112a35366bc906efdfbd6050b80def40fc",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
