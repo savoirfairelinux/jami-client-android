@@ -52,7 +52,7 @@ import cx.ring.account.DeviceAdapter.DeviceRevocationListener
 import cx.ring.account.RegisterNameDialog.RegisterNameDialogListener
 import cx.ring.account.RenameDeviceDialog.RenameDeviceListener
 import cx.ring.client.HomeActivity
-import cx.ring.contactrequests.BlockListFragment
+import cx.ring.fragments.BlockListFragment
 import cx.ring.databinding.DialogProfileBinding
 import cx.ring.databinding.FragAccSummaryBinding
 import cx.ring.databinding.ItemProgressDialogBinding
