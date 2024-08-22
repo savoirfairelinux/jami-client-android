@@ -158,7 +158,8 @@ class ConversationPresenter @Inject constructor(
         view.hideNumberSpinner()
         disposable.add(c.mode
             .switchMap { mode: Conversation.Mode ->
-                conversationFacade.observeConversation(account, c, true)
+                val showPresence = !c.isSwarmGroup() // Don't show presence for swarm groups.
+                conversationFacade.observeConversation(account, c, showPresence)
                     .observeOn(uiScheduler)
                     .doOnNext { convViewModel -> initContact(account, convViewModel, this.view!!) }
             }
