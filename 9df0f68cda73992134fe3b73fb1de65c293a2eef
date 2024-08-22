@@ -22,6 +22,30 @@
       },
       "revId": "9df0f68cda73992134fe3b73fb1de65c293a2eef",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "285e37a0_3be5e95a",
+        "filename": "jami-android/app/src/main/java/cx/ring/account/HomeAccountCreationFragment.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-08-22T15:21:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ca613b1_75ddd552",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 2
+      },
+      "revId": "9df0f68cda73992134fe3b73fb1de65c293a2eef",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
