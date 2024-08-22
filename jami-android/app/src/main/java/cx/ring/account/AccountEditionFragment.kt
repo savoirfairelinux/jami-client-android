@@ -18,15 +18,12 @@ package cx.ring.account
 
 import android.os.Bundle
 import android.view.*
-import android.widget.FrameLayout
-import android.widget.LinearLayout
 import androidx.annotation.StringRes
 import androidx.fragment.app.*
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import cx.ring.R
-import cx.ring.contactrequests.BlockListFragment
+import cx.ring.fragments.BlockListFragment
 import cx.ring.databinding.FragAccountSettingsBinding
 import cx.ring.fragments.AdvancedAccountFragment
 import cx.ring.fragments.GeneralAccountFragment
