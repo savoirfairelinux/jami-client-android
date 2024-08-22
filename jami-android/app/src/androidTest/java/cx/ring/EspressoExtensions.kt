@@ -1,11 +1,10 @@
 package cx.ring
 
-import android.graphics.Bitmap
+import android.content.Intent
 import android.view.View
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.StringRes
-import androidx.core.graphics.drawable.toBitmap
+import androidx.core.net.toFile
 import androidx.test.espresso.Root
 import com.google.android.material.textfield.TextInputLayout
 import org.hamcrest.Description
@@ -43,22 +42,25 @@ fun isDialogWithTitle(@StringRes dialogTitle: Int): Matcher<Root> = object : Typ
 
 }
 
-fun withImage(expectedBitmap: Bitmap): Matcher<View> = object : TypeSafeMatcher<View>() {
+fun imageFileHasMetadata(tag: String, metadata: String): Matcher<Intent> = object : TypeSafeMatcher<Intent>() {
 
     override fun describeTo(description: Description) {
-        description.appendText("imageview matcher")
+        description.appendText("Intent with URI: ")
     }
 
-    override fun matchesSafely(view: View): Boolean {
-        if (view !is ImageView || view.drawable == null) {
-            return false
-        }
+    override fun matchesSafely(intent: Intent): Boolean {
+        val uri = intent.data ?: return false
 
-        val btm = view.drawable.toBitmap()
-        android.util.Log.i("devdebug","actual size = ${btm.height} ${btm.width}")
-        android.util.Log.i("devdebug","epecetd size = ${expectedBitmap.height} ${expectedBitmap.width}")
+        // todo: get file by uri and check the exif metadata. if contains the specified string: return true
 
-        return view.drawable.toBitmap().sameAs(expectedBitmap)
+        //val metadata = AndroidFileUtils.getExifMetadata(intent, uri, tag)
+
+        //val file = uri.toFile()
+
+//        try {
+//            val outStream = file.inputStream()
+//        }
+        return false
     }
 
 }

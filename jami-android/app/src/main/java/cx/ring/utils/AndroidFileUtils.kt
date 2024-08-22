@@ -24,7 +24,7 @@ import android.content.res.AssetManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
-import android.media.ExifInterface
+import androidx.exifinterface.media.ExifInterface
 import android.net.Uri
 import android.os.Environment
 import android.os.StatFs
@@ -509,6 +509,22 @@ object AndroidFileUtils {
        } catch (e: Exception) {
            0
        }
+
+    fun getExifMetadata(resolver: ContentResolver, fileUri: Uri, tag: String): String? {
+        return try {
+            resolver.openInputStream(fileUri)!!.use { input -> ExifInterface(input).getAttribute(tag) }
+        } catch (e: Exception) {
+            null
+        }
+    }
+
+    fun setExifMetadata(resolver: ContentResolver, fileUri: Uri, tag: String, value: String) {
+        resolver.openInputStream(fileUri)!!.use { input ->
+            val exif = ExifInterface(input)
+            exif.setAttribute(tag, value)
+            exif.saveAttributes()
+        }
+    }
 
     fun isImage(s: String): Boolean = getMimeType(s).startsWith("image")
 
