@@ -14,13 +14,14 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-package cx.ring.contactrequests
+package cx.ring.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import cx.ring.R
-import cx.ring.contactrequests.BlockListViewHolder.BlockListListeners
+import cx.ring.viewholders.BlockListViewHolder
+import cx.ring.viewholders.BlockListViewHolder.BlockListListeners
 import net.jami.model.ContactViewModel
 
 class BlockListAdapter(viewModels: Collection<ContactViewModel>, listener: BlockListListeners) :
