@@ -74,9 +74,9 @@ class HardwareServiceImpl(
     private val shouldCapture = HashSet<String>()
     private var mShouldSpeakerphone = false
     private val mHasSpeakerPhone: Boolean by lazy { hasSpeakerphone() }
-    private var mIsChoosePlugin = false
+    private var mIsChooseExtension = false
     private var mMediaHandlerId: String? = null
-    private var mPluginCallId: String? = null
+    private var mExtensionCallId: String? = null
 
     override fun initVideo(): Completable = cameraService.init()
 
@@ -341,7 +341,7 @@ class HardwareServiceImpl(
                         )
                     }) {
                         // Fallback to the AudioManager API
-                        JamiService.setAudioPlugin(JamiService.getCurrentAudioOutputPlugin())
+                        JamiService.setAudioExtension(JamiService.getCurrentAudioOutputExtension())
                         mShouldSpeakerphone = checked
                         if (mHasSpeakerPhone && checked) {
                             routeToSpeaker()
@@ -452,7 +452,7 @@ class HardwareServiceImpl(
     }
 
     override fun startMediaHandler(mediaHandlerId: String?) {
-        mIsChoosePlugin = true
+        mIsChooseExtension = true
         mMediaHandlerId = mediaHandlerId
     }
 
@@ -461,13 +461,13 @@ class HardwareServiceImpl(
     }
 
     override fun stopMediaHandler() {
-        mIsChoosePlugin = false
+        mIsChooseExtension = false
         mMediaHandlerId = null
     }
 
     override fun startCapture(camId: String?) {
         val cam = camId ?: cameraService.switchInput(true) ?: return
-        Log.i(TAG, "startCapture > camId: $camId, cam: $cam, mIsChoosePlugin: $mIsChoosePlugin")
+        Log.i(TAG, "startCapture > camId: $camId, cam: $cam, mIsChooseExtension: $mIsChooseExtension")
         shouldCapture.add(cam)
         val videoParams = cameraService.getParams(cam) ?: return
         if (videoParams.isCapturing) return
@@ -481,7 +481,7 @@ class HardwareServiceImpl(
         }
         val conf = mCameraPreviewCall.get()
         val useHardwareCodec =
-            mPreferenceService.isHardwareAccelerationEnabled && (conf == null || !conf.isConference) && !mIsChoosePlugin
+            mPreferenceService.isHardwareAccelerationEnabled && (conf == null || !conf.isConference) && !mIsChooseExtension
         if (conf != null && useHardwareCodec) {
             val call = conf.call
             if (call != null) {
@@ -508,15 +508,15 @@ class HardwareServiceImpl(
                 object : CameraListener {
                     override fun onOpened() {
                         val currentCall = conf?.id ?: return
-                        if (mPluginCallId != null && mPluginCallId != currentCall) {
+                        if (mExtensionCallId != null && mExtensionCallId != currentCall) {
                             if (mMediaHandlerId != null) {
                                 JamiService.toggleCallMediaHandler(mMediaHandlerId, currentCall,false)
                             }
-                            mIsChoosePlugin = false
+                            mIsChooseExtension = false
                             mMediaHandlerId = null
-                            mPluginCallId = null
-                        } else if (mIsChoosePlugin && mMediaHandlerId != null) {
-                            mPluginCallId = currentCall
+                            mExtensionCallId = null
+                        } else if (mIsChooseExtension && mMediaHandlerId != null) {
+                            mExtensionCallId = currentCall
                             toggleMediaHandler(currentCall)
                         }
                     }
@@ -694,7 +694,7 @@ class HardwareServiceImpl(
 
         private val TAG = HardwareServiceImpl::class.simpleName!!
         private var mCameraPreviewSurface = WeakReference<TextureView>(null)
-        private var mCameraPluginPreviewSurface = WeakReference<SurfaceView>(null)
+        private var mCameraExtensionPreviewSurface = WeakReference<SurfaceView>(null)
         private var mCameraPreviewCall = WeakReference<Conference>(null)
         private val videoSurfaces = HashMap<String, WeakReference<SurfaceHolder>>()
     }

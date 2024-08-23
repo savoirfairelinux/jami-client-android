@@ -14,47 +14,47 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-package cx.ring.plugins
+package cx.ring.extensions
 
 import android.content.Context
 import android.util.Log
 import cx.ring.fragments.CallFragment
-import cx.ring.settings.pluginssettings.PluginDetails
+import cx.ring.settings.extensionssettings.ExtensionDetails
 import net.jami.daemon.JamiService
 import java.io.File
 import java.lang.StringBuilder
 import java.util.*
 
-object PluginUtils {
-    val TAG = PluginUtils::class.simpleName!!
+object ExtensionUtils {
+    val TAG = ExtensionUtils::class.simpleName!!
 
     /**
-     * Fetches the plugins folder in the internal storage for plugins subfolder
-     * Gathers the details of each plugin in a PluginDetails instance
+     * Fetches the extensions folder in the internal storage for extensions subfolder
+     * Gathers the details of each extension in a ExtensionDetails instance
      * @param mContext The current context
-     * @return List of PluginDetails
+     * @return List of ExtensionDetails
      */
-    fun getInstalledPlugins(mContext: Context): List<PluginDetails> {
-        //tree(mContext.filesDir.toString() + File.separator + "plugins", 0)
+    fun getInstalledExtensions(mContext: Context): List<ExtensionDetails> {
+        //tree(mContext.filesDir.toString() + File.separator + "extensions", 0)
         //tree(mContext.cacheDir.absolutePath, 0)
-        val pluginsPaths: List<String> = JamiService.getInstalledPlugins()
-        val loadedPluginsPaths: List<String> = JamiService.getLoadedPlugins()
-        val pluginsList: MutableList<PluginDetails> = ArrayList(pluginsPaths.size)
-        for (pluginPath in pluginsPaths) {
-            val pluginFolder = File(pluginPath)
-            if (pluginFolder.isDirectory) {
-                val pluginHandler = retrieveHandlerId(pluginFolder.name)
-                pluginsList.add(
-                    PluginDetails(
-                        pluginFolder.name,
-                        pluginFolder.absolutePath,
-                        loadedPluginsPaths.contains(pluginPath),
-                        pluginHandler
+        val extensionsPaths: List<String> = JamiService.getInstalledExtensions()
+        val loadedExtensionsPaths: List<String> = JamiService.getLoadedExtensions()
+        val extensionsList: MutableList<ExtensionDetails> = ArrayList(extensionsPaths.size)
+        for (extensionPath in extensionsPaths) {
+            val extensionFolder = File(extensionPath)
+            if (extensionFolder.isDirectory) {
+                val extensionHandler = retrieveHandlerId(extensionFolder.name)
+                extensionsList.add(
+                    ExtensionDetails(
+                        extensionFolder.name,
+                        extensionFolder.absolutePath,
+                        loadedExtensionsPaths.contains(extensionPath),
+                        extensionHandler
                     )
                 )
             }
         }
-        return pluginsList
+        return extensionsList
     }
 
     private fun retrieveHandlerId(name: String): String{
@@ -62,7 +62,7 @@ object PluginUtils {
         val mediaHandlers = JamiService.getCallMediaHandlers().toList()
         for (callMediaHandler in mediaHandlers) {
             val pDetail = JamiService.getCallMediaHandlerDetails(callMediaHandler)
-            if (pDetail["pluginId"]!!.lowercase(Locale.getDefault()).contains(name.lowercase(Locale.getDefault())))
+            if (pDetail["extensionId"]!!.lowercase(Locale.getDefault()).contains(name.lowercase(Locale.getDefault())))
             {
                 res = callMediaHandler!!
             }
@@ -71,49 +71,49 @@ object PluginUtils {
     }
 
     /**
-     * Fetches the plugins folder in the internal storage for plugins subfolder
-     * Gathers the details of each plugin in a PluginDetails instance
+     * Fetches the extensions folder in the internal storage for extensions subfolder
+     * Gathers the details of each extension in a ExtensionDetails instance
      * @param mContext The current context
      * @param accountId The current account id
      * @param peerId The current conversation peer id
-     * @return List of PluginDetails
+     * @return List of ExtensionDetails
      */
-    fun getChatHandlersDetails(mContext: Context, accountId: String, peerId: String): List<PluginDetails> {
-        //tree(mContext.filesDir.toString() + File.separator + "plugins", 0)
+    fun getChatHandlersDetails(mContext: Context, accountId: String, peerId: String): List<ExtensionDetails> {
+        //tree(mContext.filesDir.toString() + File.separator + "extensions", 0)
         //tree(mContext.cacheDir.absolutePath, 0)
         val chatHandlersId: List<String> = JamiService.getChatHandlers()
         val chatHandlerStatus: List<String> = JamiService.getChatHandlerStatus(accountId, peerId)
-        val handlersList: MutableList<PluginDetails> = ArrayList(chatHandlersId.size)
+        val handlersList: MutableList<ExtensionDetails> = ArrayList(chatHandlersId.size)
         for (handlerId in chatHandlersId) {
             val handlerDetails = JamiService.getChatHandlerDetails(handlerId)
-            var pluginPath = handlerDetails["pluginId"]
-            pluginPath = pluginPath!!.substring(0, pluginPath.lastIndexOf("/data"))
+            var extensionPath = handlerDetails["extensionId"]
+            extensionPath = extensionPath!!.substring(0, extensionPath.lastIndexOf("/data"))
             var enabled = false
             if (chatHandlerStatus.contains(handlerId)) {
                 enabled = true
             }
-            handlersList.add(PluginDetails(handlerDetails["name"]!!, pluginPath, enabled, handlerId))
+            handlersList.add(ExtensionDetails(handlerDetails["name"]!!, extensionPath, enabled, handlerId))
         }
         return handlersList
     }
 
     /**
-     * Loads the so file and instantiates the plugin init function (toggle on)
-     * @param path root path of the plugin
+     * Loads the so file and instantiates the extension init function (toggle on)
+     * @param path root path of the extension
      * @return true if loaded
      */
-    fun loadPlugin(path: String): Boolean {
-        return JamiService.loadPlugin(path)
+    fun loadExtension(path: String): Boolean {
+        return JamiService.loadExtension(path)
     }
 
     /**
-     * Toggles the plugin off (destroying any objects created by the plugin)
+     * Toggles the extension off (destroying any objects created by the extension)
      * then unloads the so file
-     * @param path root path of the plugin
+     * @param path root path of the extension
      * @return true if unloaded
      */
-    fun unloadPlugin(path: String): Boolean {
-        return JamiService.unloadPlugin(path)
+    fun unloadExtension(path: String): Boolean {
+        return JamiService.unloadExtension(path)
     }
 
     /**

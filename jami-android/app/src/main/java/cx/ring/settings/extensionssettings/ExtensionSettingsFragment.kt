@@ -14,7 +14,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-package cx.ring.settings.pluginssettings
+package cx.ring.settings.extensionssettings
 
 import android.content.DialogInterface
 import android.os.Bundle
@@ -24,15 +24,15 @@ import androidx.preference.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.R
 import cx.ring.client.HomeActivity
-import cx.ring.plugins.PluginPreferences
-import cx.ring.plugins.PluginUtils.stringListToListString
+import cx.ring.extensions.ExtensionPreferences
+import cx.ring.extensions.ExtensionUtils.stringListToListString
 import cx.ring.settings.SettingsFragment
 import net.jami.daemon.JamiService
 
-class PluginSettingsFragment : PreferenceFragmentCompat() {
+class ExtensionSettingsFragment : PreferenceFragmentCompat() {
     private var mPreferencesAttributes: List<Map<String, String>>? = null
-    private var pluginDetails: PluginDetails? = null
-    private var ppds: PluginPreferencesDataStore? = null
+    private var extensionDetails: ExtensionDetails? = null
+    private var ppds: ExtensionPreferencesDataStore? = null
     private var accountId: String? = ""
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {}
@@ -40,11 +40,11 @@ class PluginSettingsFragment : PreferenceFragmentCompat() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val arguments = requireArguments()
-        val details = PluginDetails(arguments.getString("name")!!, arguments.getString("rootPath")!!, arguments.getBoolean("enabled"), null, accountId)
-        mPreferencesAttributes = details.pluginPreferences
+        val details = ExtensionDetails(arguments.getString("name")!!, arguments.getString("rootPath")!!, arguments.getBoolean("enabled"), null, accountId)
+        mPreferencesAttributes = details.extensionPreferences
         val preferenceManager = preferenceManager
-        ppds = PluginPreferencesDataStore(details)
-        pluginDetails = details
+        ppds = ExtensionPreferencesDataStore(details)
+        extensionDetails = details
         preferenceManager.preferenceDataStore = ppds
     }
 
@@ -92,11 +92,11 @@ class PluginSettingsFragment : PreferenceFragmentCompat() {
     }
 
     private fun createHeadPreference(): Preference {
-        val preference = PluginPreferences(requireContext(), pluginDetails, accountId)
+        val preference = ExtensionPreferences(requireContext(), extensionDetails, accountId)
         val message = run {
-            var value = R.string.plugin_reset_preferences_ask
+            var value = R.string.extension_reset_preferences_ask
             if (accountId!!.isNotEmpty()) {
-                value = R.string.plugin_reset_account_preferences_ask
+                value = R.string.extension_reset_account_preferences_ask
             }
             value
         }
@@ -105,7 +105,7 @@ class PluginSettingsFragment : PreferenceFragmentCompat() {
                 .setTitle(preference.title)
                 .setMessage(message)
                 .setPositiveButton(android.R.string.ok) { dialog: DialogInterface?, id: Int ->
-                    JamiService.resetPluginPreferencesValues(pluginDetails!!.rootPath, pluginDetails!!.accountId)
+                    JamiService.resetExtensionPreferencesValues(extensionDetails!!.rootPath, extensionDetails!!.accountId)
                     parentFragmentManager.popBackStack()
                 }
                 .setNegativeButton(android.R.string.cancel) { dialog: DialogInterface?, whichButton: Int -> }
@@ -114,22 +114,22 @@ class PluginSettingsFragment : PreferenceFragmentCompat() {
         preference.setInstallClickListener {
             MaterialAlertDialogBuilder(requireContext())
                 .setMessage(R.string.account_delete_dialog_message)
-                .setTitle(R.string.plugin_uninstall_title)
+                .setTitle(R.string.extension_uninstall_title)
                 .setPositiveButton(android.R.string.ok) { dialog: DialogInterface?, whichButton: Int ->
-                    pluginDetails!!.isEnabled = false
-                    JamiService.uninstallPlugin(pluginDetails!!.rootPath)
+                    extensionDetails!!.isEnabled = false
+                    JamiService.uninstallExtension(extensionDetails!!.rootPath)
                     parentFragmentManager.popBackStack()
                 }
                 .setNegativeButton(android.R.string.cancel, null)
                 .show()
         }
-        preference.setPluginSettingsRedirect {
+        preference.setExtensionSettingsRedirect {
             if (accountId!!.isEmpty()) {
                 val act = requireActivity() as HomeActivity
                 val acc = act.mAccountService.currentAccount!!.accountId
-                (parentFragment as SettingsFragment).goToPluginSettings(PluginDetails(pluginDetails!!.name, pluginDetails!!.rootPath, pluginDetails!!.isEnabled, null, acc))
+                (parentFragment as SettingsFragment).goToExtensionSettings(ExtensionDetails(extensionDetails!!.name, extensionDetails!!.rootPath, extensionDetails!!.isEnabled, null, acc))
             } else {
-                (parentFragment as SettingsFragment).goToPluginSettings(PluginDetails(pluginDetails!!.name, pluginDetails!!.rootPath, pluginDetails!!.isEnabled))
+                (parentFragment as SettingsFragment).goToExtensionSettings(ExtensionDetails(extensionDetails!!.name, extensionDetails!!.rootPath, extensionDetails!!.isEnabled))
             }
         }
         return preference
@@ -171,7 +171,7 @@ class PluginSettingsFragment : PreferenceFragmentCompat() {
     private fun createPathPreference(preferenceModel: Map<String, String>): Preference {
         val preference = Preference(requireContext())
         preference.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-            (parentFragment as SettingsFragment).goToPluginPathPreference(pluginDetails!!, preferenceModel["key"]!!)
+            (parentFragment as SettingsFragment).goToExtensionPathPreference(extensionDetails!!, preferenceModel["key"]!!)
             false
         }
         setPreferenceAttributes(preference, preferenceModel)
@@ -326,14 +326,14 @@ class PluginSettingsFragment : PreferenceFragmentCompat() {
     }
 
     companion object {
-        val TAG = PluginSettingsFragment::class.simpleName!!
-        fun newInstance(pluginDetails: PluginDetails): PluginSettingsFragment {
-            val psf = PluginSettingsFragment()
+        val TAG = ExtensionSettingsFragment::class.simpleName!!
+        fun newInstance(extensionDetails: ExtensionDetails): ExtensionSettingsFragment {
+            val psf = ExtensionSettingsFragment()
             psf.arguments = Bundle().apply {
-                putString("name", pluginDetails.name)
-                putString("rootPath", pluginDetails.rootPath)
-                putBoolean("enabled", pluginDetails.isEnabled)
-                psf.accountId = pluginDetails.accountId
+                putString("name", extensionDetails.name)
+                putString("rootPath", extensionDetails.rootPath)
+                putBoolean("enabled", extensionDetails.isEnabled)
+                psf.accountId = extensionDetails.accountId
             }
             return psf
         }

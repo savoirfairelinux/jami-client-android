@@ -14,7 +14,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-package cx.ring.settings.pluginssettings
+package cx.ring.settings.extensionssettings
 
 import android.graphics.drawable.Drawable
 import android.util.Log
@@ -25,10 +25,10 @@ import java.io.File
 import java.util.*
 
 /**
- * Class that contains PluginDetails like name, rootPath
+ * Class that contains ExtensionDetails like name, rootPath
  */
-class PluginDetails(val name: String, val rootPath: String, var isEnabled: Boolean, var handlerId: String?= null, var accountId: String? = "") {
-    private val details: Map<String, String> = pluginDetails
+class ExtensionDetails(val name: String, val rootPath: String, var isEnabled: Boolean, var handlerId: String?= null, var accountId: String? = "") {
+    private val details: Map<String, String> = extensionDetails
     var icon: Drawable? = null
         private set
     var isRunning: Boolean = false
@@ -45,19 +45,19 @@ class PluginDetails(val name: String, val rootPath: String, var isEnabled: Boole
         }
     }
 
-    private val pluginDetails: Map<String, String>
-        get() = JamiService.getPluginDetails(rootPath).toNative()
-    val pluginPreferences: List<Map<String, String>>
-        get() = JamiService.getPluginPreferences(rootPath, accountId).toNative()
-    val pluginPreferencesValues: Map<String, String>
-        get() = JamiService.getPluginPreferencesValues(rootPath, accountId)
+    private val extensionDetails: Map<String, String>
+        get() = JamiService.getExtensionDetails(rootPath).toNative()
+    val extensionPreferences: List<Map<String, String>>
+        get() = JamiService.getExtensionPreferences(rootPath, accountId).toNative()
+    val extensionPreferencesValues: Map<String, String>
+        get() = JamiService.getExtensionPreferencesValues(rootPath, accountId)
 
-    fun setPluginPreference(key: String, value: String): Boolean {
-        return JamiService.setPluginPreference(rootPath, accountId, key, value)
+    fun setExtensionPreference(key: String, value: String): Boolean {
+        return JamiService.setExtensionPreference(rootPath, accountId, key, value)
     }
 
     companion object {
-        val TAG = PluginDetails::class.simpleName!!
+        val TAG = ExtensionDetails::class.simpleName!!
     }
 
     init {
