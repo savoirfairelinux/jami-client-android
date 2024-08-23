@@ -37,7 +37,7 @@ interface ConversationView {
     fun goToCallActivityWithResult(accountId: String, conversationUri: Uri, contactUri: Uri, withCamera: Boolean)
     fun goToContactActivity(accountId: String, uri: Uri)
     fun switchToUnknownView(name: String)
-    fun switchToIncomingTrustRequestView(name: String)
+    fun switchToIncomingTrustRequestView(name: String, requestMode: Conversation.Mode)
     fun switchToConversationView()
     fun switchToBannedView()
     fun switchToSyncingView()
