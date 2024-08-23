@@ -182,7 +182,15 @@ class ContactDetailsActivity : AppCompatActivity(), TabLayout.OnTabSelectedListe
                 else
                     binding.description.text = vm.conversationProfile.description
                 // Note: For a random account from search results, mode will be Legacy
-                if (vm.mode == Conversation.Mode.OneToOne || vm.mode == Conversation.Mode.Legacy) {
+                if (vm.request != null){
+                    binding.title.setOnClickListener(null)
+                    binding.description.setOnClickListener(null)
+                    binding.contactImage.setOnClickListener(null)
+                    binding.tabLayout.removeTabAt(TAB_FILES)
+                    binding.tabLayout.removeTabAt(TAB_MEMBERS)
+                } else if (vm.mode == Conversation.Mode.OneToOne
+                    || vm.mode == Conversation.Mode.Legacy
+                ) {
                     binding.title.setOnClickListener(null)
                     binding.description.setOnClickListener(null)
                     binding.contactImage.setOnClickListener(null)
