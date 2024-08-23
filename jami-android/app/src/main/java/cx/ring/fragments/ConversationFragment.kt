@@ -1015,11 +1015,12 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         }
     }
 
-    override fun switchToIncomingTrustRequestView(name: String) {
+    override fun switchToIncomingTrustRequestView(name: String, requestMode: Conversation.Mode) {
         binding?.apply {
             cvMessageInput.visibility = View.GONE
             unknownContactPrompt.visibility = View.GONE
             trustRequestPrompt.visibility = View.VISIBLE
+            btnBlock.isVisible = requestMode == Conversation.Mode.OneToOne
             tvTrustRequestMessage.text = getString(R.string.message_contact_not_trusted_yet, name)
             trustRequestMessageLayout.visibility = View.VISIBLE
             currentBottomView = trustRequestPrompt
