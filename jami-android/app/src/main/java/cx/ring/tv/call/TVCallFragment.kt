@@ -286,7 +286,7 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
         isMicrophoneMuted: Boolean,
         displayFlip: Boolean,
         canDial: Boolean,
-        showPluginBtn: Boolean,
+        showExtensionBtn: Boolean,
         onGoingCall: Boolean,
         hasActiveVideo: Boolean,
         hasActiveScreenShare: Boolean) {
@@ -431,7 +431,7 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
         startActivity(Intent(Intent.ACTION_VIEW, ConversationPath.toUri(accountId, contact.uri), requireContext(), ContactDetailsActivity::class.java))
     }
 
-    override fun displayPluginsButton(): Boolean {
+    override fun displayExtensionsButton(): Boolean {
         return false
     }
 

@@ -59,13 +59,13 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import cx.ring.R
 import cx.ring.adapters.ConfParticipantAdapter
 import cx.ring.adapters.ConfParticipantAdapter.ConfParticipantSelected
-import cx.ring.adapters.PluginsAdapter
+import cx.ring.adapters.ExtensionsAdapter
 import cx.ring.client.*
 import cx.ring.databinding.FragCallBinding
 import cx.ring.mvp.BaseSupportFragment
-import cx.ring.plugins.PluginUtils
+import cx.ring.extensions.ExtensionUtils
 import cx.ring.service.DRingService
-import cx.ring.settings.pluginssettings.PluginDetails
+import cx.ring.settings.extensionssettings.ExtensionDetails
 import cx.ring.utils.ActionHelper
 import cx.ring.utils.ContentUri
 import cx.ring.utils.ConversationPath
@@ -108,9 +108,9 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     private var mBackstackLost = false
     private var confAdapter: ConfParticipantAdapter? = null
     private var mConferenceMode = false
-    var isChoosePluginMode = false
+    var isChooseExtensionMode = false
         private set
-    private var callMediaHandlers: List<PluginDetails> ?= null
+    private var callMediaHandlers: List<ExtensionDetails> ?= null
     private val animation = ValueAnimator().apply { duration = 150 }
     private var previewDrag: PointF? = null
     private val previewSnapAnimation = ValueAnimator().apply {
@@ -128,7 +128,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     lateinit var mDeviceRuntimeService: DeviceRuntimeService
     private val mCompositeDisposable = CompositeDisposable()
     private var bottomSheetParams: BottomSheetBehavior<View>? = null
-    private var pluginsAdapter: PluginsAdapter? = null
+    private var extensionsAdapter: ExtensionsAdapter? = null
 
     private val cameraPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
         if (isGranted) {
@@ -181,7 +181,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                 b.addParticipantBtn.setOnClickListener { addParticipantClicked() }
                 b.callDialpadBtn.setOnClickListener { displayDialPadKeyboard() }
                 b.callRaiseHandBtn.setOnClickListener { raiseHandClicked() }
-                b.callPluginsBtn.setOnClickListener { pluginsButtonClicked() }
+                b.callExtensionsBtn.setOnClickListener { extensionsButtonClicked() }
                 b.callCameraFlipBtn.setOnClickListener { cameraFlip() }
                 bottomSheetParams = binding?.callOptionsBottomSheet?.let { BottomSheetBehavior.from(it) }
             }.root
@@ -253,16 +253,16 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                 disableTransitionType(LayoutTransition.CHANGE_APPEARING)
             }
 
-            binding.pluginPreviewSurface.holder.setFormat(PixelFormat.RGBX_8888)
-            binding.pluginPreviewSurface.holder.addCallback(object : SurfaceHolder.Callback {
+            binding.extensionPreviewSurface.holder.setFormat(PixelFormat.RGBX_8888)
+            binding.extensionPreviewSurface.holder.addCallback(object : SurfaceHolder.Callback {
                 override fun surfaceCreated(holder: SurfaceHolder) {
-                    presenter.pluginSurfaceCreated(holder)
+                    presenter.extensionSurfaceCreated(holder)
                 }
 
                 override fun surfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int) {}
 
                 override fun surfaceDestroyed(holder: SurfaceHolder) {
-                    presenter.pluginSurfaceDestroyed()
+                    presenter.extensionSurfaceDestroyed()
                 }
             })
 
@@ -286,10 +286,10 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             binding.callSpeakerBtn.isChecked = presenter.isSpeakerphoneOn()
             binding.callMicBtn.isChecked = presenter.isMicrophoneMuted
 
-            binding.pluginPreviewSurface.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
+            binding.extensionPreviewSurface.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
                 configureTransform(mPreviewSurfaceWidth, mPreviewSurfaceHeight)
             }
-            binding.pluginPreviewContainer.setOnTouchListener { v: View, event: MotionEvent ->
+            binding.extensionPreviewContainer.setOnTouchListener { v: View, event: MotionEvent ->
                 val action = event.actionMasked
                 val parent = v.parent as RelativeLayout
                 val params = v.layoutParams as RelativeLayout.LayoutParams
@@ -321,7 +321,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                                 -(currentYPosition + v.height - event.y.toInt())
                             )
                             v.layoutParams = params
-                            val outPosition = binding.pluginPreviewContainer.width * 0.85f
+                            val outPosition = binding.extensionPreviewContainer.width * 0.85f
                             var drapOut = 0f
                             if (currentXPosition < 0) {
                                 drapOut = min(1f, -currentXPosition / outPosition)
@@ -342,7 +342,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                             var mr = 0;
                             var mt = 0;
                             var mb = 0
-                            val hp = binding.pluginPreviewHandle.layoutParams as FrameLayout.LayoutParams
+                            val hp = binding.extensionPreviewHandle.layoutParams as FrameLayout.LayoutParams
                             if (params.leftMargin + v.width / 2 > parent.width / 2) {
                                 params.removeRule(RelativeLayout.ALIGN_PARENT_LEFT)
                                 params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT)
@@ -356,7 +356,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                                 previewPosition = PreviewPosition.LEFT
                                 hp.gravity = Gravity.CENTER_VERTICAL or Gravity.RIGHT
                             }
-                            binding.pluginPreviewHandle.layoutParams = hp
+                            binding.extensionPreviewHandle.layoutParams = hp
                             if (params.topMargin + v.height / 2 > parent.height / 2) {
                                 params.removeRule(RelativeLayout.ALIGN_PARENT_TOP)
                                 params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
@@ -372,7 +372,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                             previewMargins[3] = mb
                             params.setMargins(ml, mt, mr, mb)
                             v.layoutParams = params
-                            val outPosition = binding.pluginPreviewContainer.width * 0.85f
+                            val outPosition = binding.extensionPreviewContainer.width * 0.85f
                             previewHiddenState = when {
                                 currentXPosition < 0 -> min(1f, -currentXPosition / outPosition)
                                 currentXPosition + v.width > parent.width -> min(
@@ -530,9 +530,9 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     private fun setPreviewDragHiddenState(hiddenState: Float) {
         binding?.let { binding ->
             binding.previewSurface.alpha = 1f - 3 * hiddenState / 4
-            binding.pluginPreviewSurface.alpha = 1f - 3 * hiddenState / 4
+            binding.extensionPreviewSurface.alpha = 1f - 3 * hiddenState / 4
             binding.previewHandle.alpha = hiddenState
-            binding.pluginPreviewHandle.alpha = hiddenState
+            binding.extensionPreviewHandle.alpha = hiddenState
         }
     }
 
@@ -662,7 +662,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             (previewMargins[3] * r + f).toInt()
         )
         binding.previewContainer.layoutParams = params
-        binding.pluginPreviewContainer.layoutParams = params
+        binding.extensionPreviewContainer.layoutParams = params
     }
 
     /**
@@ -744,11 +744,11 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     override fun displayLocalVideo(display: Boolean) {
         Log.w(TAG, "displayLocalVideo -> $display")
         binding?.apply {
-            val pluginMode = isChoosePluginMode
-            previewContainer.isVisible = !pluginMode && display
-            pluginPreviewContainer.isVisible = pluginMode && display
-            pluginPreviewSurface.isVisible = pluginMode && display
-            if (pluginMode) pluginPreviewSurface.setZOrderMediaOverlay(true)
+            val extensionMode = isChooseExtensionMode
+            previewContainer.isVisible = !extensionMode && display
+            extensionPreviewContainer.isVisible = extensionMode && display
+            extensionPreviewSurface.isVisible = extensionMode && display
+            if (extensionMode) extensionPreviewSurface.setZOrderMediaOverlay(true)
         }
     }
 
@@ -756,7 +756,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         Log.w(TAG, "displayHangupButton $display")
         /* binding?.apply { confControlGroup.visibility = when {
             !mConferenceMode -> View.GONE
-            display && !isChoosePluginMode -> View.VISIBLE
+            display && !isChooseExtensionMode -> View.VISIBLE
             else -> View.INVISIBLE
         }} */
     }
@@ -876,28 +876,28 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         binding.root.post { setBottomSheet() }
 
         if(callMediaHandlers == null)
-            callMediaHandlers = PluginUtils.getInstalledPlugins(binding.pluginslistContainer.context)
+            callMediaHandlers = ExtensionUtils.getInstalledExtensions(binding.extensionslistContainer.context)
                     .filter { !it.handlerId.isNullOrEmpty() }
-        pluginsAdapter = PluginsAdapter(
+        extensionsAdapter = ExtensionsAdapter(
             mList = callMediaHandlers!!,
-            listener = object : PluginsAdapter.PluginListItemListener {
-                override fun onPluginItemClicked(pluginDetails: PluginDetails) {}
+            listener = object : ExtensionsAdapter.ExtensionListItemListener {
+                override fun onExtensionItemClicked(extensionDetails: ExtensionDetails) {}
 
-                override fun onPluginEnabled(pluginDetails: PluginDetails) {
-                    pluginDetails.isRunning = !pluginDetails.isRunning
-                    if (!isChoosePluginMode) {
-                        presenter.startPlugin(pluginDetails.handlerId!!)
-                        isChoosePluginMode = true
+                override fun onExtensionEnabled(extensionDetails: ExtensionDetails) {
+                    extensionDetails.isRunning = !extensionDetails.isRunning
+                    if (!isChooseExtensionMode) {
+                        presenter.startExtension(extensionDetails.handlerId!!)
+                        isChooseExtensionMode = true
                     } else {
-                        if (pluginDetails.isRunning) {
-                            presenter.toggleCallMediaHandler(pluginDetails.handlerId!!, true)
+                        if (extensionDetails.isRunning) {
+                            presenter.toggleCallMediaHandler(extensionDetails.handlerId!!, true)
                         } else {
-                            presenter.toggleCallMediaHandler(pluginDetails.handlerId!!, false)
+                            presenter.toggleCallMediaHandler(extensionDetails.handlerId!!, false)
                             for (handler in callMediaHandlers!!)
                                 if (handler.isRunning) break
                                 else {
-                                    presenter.stopPlugin()
-                                    isChoosePluginMode = false
+                                    presenter.stopExtension()
+                                    isChooseExtensionMode = false
                                 }
                         }
                     }
@@ -905,7 +905,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             },
             accountId = if (participantInfo.isNotEmpty()) participantInfo[0].call?.account else null
         )
-        binding.pluginslistContainer.adapter = pluginsAdapter
+        binding.extensionslistContainer.adapter = extensionsAdapter
     }
 
     private fun generateParticipantOverlay(participantsInfo: List<ParticipantInfo>) {
@@ -951,13 +951,13 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         isMicrophoneMuted: Boolean,
         hasMultipleCamera: Boolean,
         canDial: Boolean,
-        showPluginBtn: Boolean,
+        showExtensionBtn: Boolean,
         onGoingCall: Boolean,
         hasActiveCameraVideo: Boolean,
         hasActiveScreenShare: Boolean
     ) {
         binding?.apply {
-            pluginsBtnContainer.isVisible = showPluginBtn
+            extensionsBtnContainer.isVisible = showExtensionBtn
             raiseHandBtnContainer.isVisible = mConferenceMode
             callDialpadBtn.isClickable = canDial
             dialpadBtnContainer.isVisible = canDial
@@ -1126,8 +1126,8 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         if (previewWidth != null ) mPreviewWidth = previewWidth
         if (previewHeight != null ) mPreviewHeight = previewHeight
         val flip = rot % 180 != 0
-        if (isChoosePluginMode) {
-            binding?.pluginPreviewSurface?.setAspectRatio(
+        if (isChooseExtensionMode) {
+            binding?.extensionPreviewSurface?.setAspectRatio(
                 if (flip) mPreviewHeight else mPreviewWidth,
                 if (flip) mPreviewWidth else mPreviewHeight
             )
@@ -1159,7 +1159,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         } else if (Surface.ROTATION_180 == rotation) {
             matrix.postRotate(180f, centerX, centerY)
         }
-        if (!isChoosePluginMode) {
+        if (!isChooseExtensionMode) {
             binding.previewSurface.setTransform(matrix)
         }
     }
@@ -1267,8 +1267,8 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
 
     private fun startScreenShare(resultCode: Int, data: Intent) {
         if (presenter.startScreenShare(resultCode, data)) {
-            if (isChoosePluginMode) {
-                binding!!.pluginPreviewSurface.visibility = View.GONE
+            if (isChooseExtensionMode) {
+                binding!!.extensionPreviewSurface.visibility = View.GONE
                 displayLocalVideo(false)
             } else {
                 binding!!.previewContainer.visibility = View.GONE
@@ -1350,8 +1350,8 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         presenter.toggleButtonClicked()
     }
 
-    override fun displayPluginsButton(): Boolean {
-        return JamiService.getPluginsEnabled() && JamiService.getCallMediaHandlers().size > 0
+    override fun displayExtensionsButton(): Boolean {
+        return JamiService.getExtensionsEnabled() && JamiService.getCallMediaHandlers().size > 0
     }
 
     override fun getMediaProjection(resultCode: Int, data: Any): MediaProjection {
@@ -1359,10 +1359,10 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         return mProjectionManager.getMediaProjection(resultCode, dataIntent)
     }
 
-    public fun pluginsButtonClicked() {
+    public fun extensionsButtonClicked() {
         val binding = binding ?: return
-        if(binding.callPluginsBtn.isChecked){
-            binding.confControlGroup.adapter = pluginsAdapter
+        if(binding.callExtensionsBtn.isChecked){
+            binding.confControlGroup.adapter = extensionsAdapter
         } else {
             binding.confControlGroup.adapter = confAdapter
         }

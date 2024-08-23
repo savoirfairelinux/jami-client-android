@@ -217,7 +217,7 @@ class SharedPreferencesServiceImpl(private val context: Context, accountService:
         private const val PREF_ON_STARTUP = "on_startup"
         const val PREF_DARK_MODE = "darkMode"
         private const val PREF_ACCEPT_IN_MAX_SIZE = "acceptIncomingFilesMaxSize"
-        const val PREF_PLUGINS = "plugins"
+        const val PREF_EXTENSIONS = "extensions"
         private const val PREF_LOG_IS_ACTIVE = "log_is_active"
 
         fun getConversationPreferences(context: Context, accountId: String, conversationUri: Uri): SharedPreferences =

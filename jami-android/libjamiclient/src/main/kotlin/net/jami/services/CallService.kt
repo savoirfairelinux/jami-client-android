@@ -322,23 +322,23 @@ abstract class CallService(
     fun restartAudioLayer() {
         mExecutor.execute {
             Log.i(TAG, "restartAudioLayer() running…")
-            JamiService.setAudioPlugin(JamiService.getCurrentAudioOutputPlugin())
+            JamiService.setAudioExtension(JamiService.getCurrentAudioOutputExtension())
         }
     }
 
-    fun setAudioPlugin(audioPlugin: String) {
+    fun setAudioExtension(audioExtension: String) {
         mExecutor.execute {
-            Log.i(TAG, "setAudioPlugin() running…")
-            JamiService.setAudioPlugin(audioPlugin)
+            Log.i(TAG, "setAudioExtension() running…")
+            JamiService.setAudioExtension(audioExtension)
         }
     }
 
-    val currentAudioOutputPlugin: String?
+    val currentAudioOutputExtension: String?
         get() {
             try {
                 return mExecutor.submit<String> {
-                    Log.i(TAG, "getCurrentAudioOutputPlugin() running…")
-                    JamiService.getCurrentAudioOutputPlugin()
+                    Log.i(TAG, "getCurrentAudioOutputExtension() running…")
+                    JamiService.getCurrentAudioOutputExtension()
                 }.get()
             } catch (e: Exception) {
                 Log.e(TAG, "Error running getCallDetails()", e)
