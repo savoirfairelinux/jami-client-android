@@ -94,6 +94,30 @@
       },
       "revId": "42f01b112a35366bc906efdfbd6050b80def40fc",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e03531de_838caa25",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-08-23T20:45:15Z",
+      "side": 1,
+      "message": "Is `Decline invitation` a better option?\n\nhttps://answers.microsoft.com/en-us/msteams/forum/all/how-to-deletedecline-an-org-guest-invite-in-teams/01d69c94-2793-473a-98eb-566e6a10fc1e\n\nhttps://www.facebook.com/help/952440743224064/\n\nThank you\n\nP.S. Did not receive any email when you added this message. How can email notification be set in Gerrit Code Review so emails can be received when there are updates? Thank you once again",
+      "parentUuid": "0d7df0ec_df485101",
+      "range": {
+        "startLine": 420,
+        "startChar": 34,
+        "endLine": 420,
+        "endChar": 48
+      },
+      "revId": "42f01b112a35366bc906efdfbd6050b80def40fc",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
