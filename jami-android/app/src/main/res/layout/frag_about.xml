@@ -235,7 +235,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/email_report_container"
+                android:id="@+id/report_issue_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?attr/selectableItemBackground"
@@ -244,34 +244,34 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:padding="@dimen/padding_large">
 
                 <ImageView
-                    android:id="@+id/feedback_image"
+                    android:id="@+id/report_issue_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     android:layout_gravity="start"
                     android:layout_marginEnd="32dp"
-                    android:contentDescription="@string/copyright_section"
+                    android:contentDescription="@null"
                     app:srcCompat="@drawable/baseline_feedback_24" />
 
                 <TextView
-                    android:id="@+id/feedback_title"
+                    android:id="@+id/report_issue_title"
                     style="@style/ListPrimary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/feedback_image"
+                    android:layout_toEndOf="@id/report_issue_image"
                     android:clickable="false"
-                    android:text="@string/feedback_section"
+                    android:text="@string/submit_issue_title"
                     android:textColor="?attr/colorPrimary" />
 
                 <TextView
-                    android:id="@+id/email_report"
+                    android:id="@+id/report_issue_link"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/feedback_title"
-                    android:layout_toEndOf="@id/feedback_image"
+                    android:layout_below="@id/report_issue_title"
+                    android:layout_toEndOf="@id/report_issue_image"
                     android:clickable="false"
-                    android:text="@string/report" />
+                    android:text="@string/submit_issue_action_description" />
 
             </RelativeLayout>
 
