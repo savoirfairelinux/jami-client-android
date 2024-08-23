@@ -33,7 +33,7 @@ import cx.ring.fragments.GeneralAccountFragment
 import cx.ring.fragments.MediaPreferenceFragment
 import cx.ring.fragments.SecurityAccountFragment
 import cx.ring.mvp.BaseSupportFragment
-import cx.ring.settings.pluginssettings.PluginsListSettingsFragment
+import cx.ring.settings.extensionssettings.ExtensionsListSettingsFragment
 import cx.ring.utils.ActionHelper.openJamiDonateWebPage
 import dagger.hilt.android.AndroidEntryPoint
 import net.jami.account.AccountEditionPresenter
@@ -112,7 +112,7 @@ class AccountEditionFragment : BaseSupportFragment<AccountEditionPresenter, Acco
             1 -> MediaPreferenceFragment.newInstance(accountId)
             2 -> fragmentWithBundle(AdvancedAccountFragment())
             3 -> fragmentWithBundle(SecurityAccountFragment())
-            4 -> fragmentWithBundle(PluginsListSettingsFragment())
+            4 -> fragmentWithBundle(ExtensionsListSettingsFragment())
             else -> throw IllegalArgumentException()
         }
 
@@ -133,7 +133,7 @@ class AccountEditionFragment : BaseSupportFragment<AccountEditionPresenter, Acco
             1 -> R.string.account_preferences_media_tab
             2 -> R.string.account_preferences_advanced_tab
             3 -> R.string.account_preferences_security_tab
-            4 -> R.string.account_preference_plugin_tab
+            4 -> R.string.account_preference_extension_tab
             else -> -1
         }
     }

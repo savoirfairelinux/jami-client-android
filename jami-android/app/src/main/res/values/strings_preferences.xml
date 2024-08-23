@@ -41,7 +41,7 @@
     <string name="pref_startOnBoot_summary">Run Jami in the background when the system starts.</string>
 
     <string name="pref_clearHistory_title">Clear history</string>
-    <string name="pref_clearHistory_summary">Clear all the conversations history. This action can\'t be undone.</string>
+    <string name="pref_clearHistory_summary">Clear all the conversations history. This action cannot be undone.</string>
 
     <string name="pref_notification_title">Notification visibility</string>
     <string name="pref_notification_summary">Set application notifications visibility on lock screen.</string>
@@ -77,24 +77,24 @@
     <string name="notification_private">Private \n(show notifications but hide their content on lock screen)\n</string>
     <string name="notification_secret">Secret \n(do not show notifications on lock screen)</string>
 
-    <!-- Plugin -->
-    <string name="pref_plugins_title">Plugins</string>
-    <string name="pref_plugins_summary">Enable plugins and set their parameters</string>
-    <string name="fab_plugins_add">Add a new plugin</string>
-    <string name="plugin_uninstall_title">Uninstall Plugin ?</string>
-    <string name="plugin_reset_preferences">Reset plugin preferences</string>
-    <string name="plugin_reset_preferences_summary">Your plugin settings will be defaulted</string>
-    <string name="plugin_reset_preferences_ask">Do you want to reset the general plugin settings ?</string>
-    <string name="plugin_reset_account_preferences_ask">Do you want to reset the account plugin settings ?</string>
-    <string name="plugin_successfully_installed">Plugin <b>%1$s</b> successfully installed</string>
-    <string name="plugin_install_failure">Failed to install plugin: <b>%1$s</b></string>
-    <string name="plugin_recent_version_exception">You have a more recent version of: <b>%1$s</b></string>
-    <string name="plugin_same_version_exception">You have the same version of <b>%1$s</b> installed</string>
-    <string name="plugin_invalid_signature"><b>%1$s</b> has an invalid signature</string>
-    <string name="plugin_invalid_authority">Can\'t verify authority for: <b>%1$s</b></string>
-    <string name="plugin_invalid_format">Invalid plugin format: <b>%1$s</b></string>
-    <string name="plugin_force_install">force \n install</string>
-    <string name="plugin_path_image_add">Add a new image</string>
+    <!-- Extension -->
+    <string name="pref_extensions_title">Extensions</string>
+    <string name="pref_extensions_summary">Enable extensions and set their parameters</string>
+    <string name="fab_extensions_add">Add new extension</string>
+    <string name="extension_uninstall_title">Uninstall extension?</string>
+    <string name="extension_reset_preferences">Reset extension preferences</string>
+    <string name="extension_reset_preferences_summary">Extension restored to the default settings</string>
+    <string name="extension_reset_preferences_ask">Do you want to reset the general extension settings?</string>
+    <string name="extension_reset_account_preferences_ask">Do you want to reset the account extension settings?</string>
+    <string name="extension_successfully_installed">Extension <b>%1$s</b> successfully installed</string>
+    <string name="extension_install_failure">An error occurred while installing the following extension: <b>%1$s</b></string>
+    <string name="extension_recent_version_exception">A more recent version of <b>%1$s</b> is installed.</string>
+    <string name="extension_same_version_exception">The same version of <b>%1$s</b> is installed.</string>
+    <string name="extension_invalid_signature"><b>%1$s</b> has an invalid signature</string>
+    <string name="extension_invalid_authority">Cannot verify authority for: <b>%1$s</b></string>
+    <string name="extension_invalid_format">Invalid extension format: <b>%1$s</b></string>
+    <string name="extension_force_install">force \n install</string>
+    <string name="extension_path_image_add">Add new image</string>
 
     <string name="default_emoji_1" translatable="false">👍</string>
     <string name="default_emoji_2" translatable="false">❤️</string>

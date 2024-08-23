@@ -88,7 +88,7 @@ class Conference(val accountId: String, val id: String) {
             mParticipants[0]
         } else null
 
-    val pluginId: String
+    val extensionId: String
         get() = "local"
 
     val state: CallStatus?

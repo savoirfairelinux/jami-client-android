@@ -144,7 +144,7 @@ along with this program; if not, write to the Free Software
     <string name="menu_item_settings">Settings</string>
     <string name="menu_item_advanced_settings">Advanced Settings</string>
     <string name="menu_item_account_settings">Account Settings</string>
-    <string name="menu_item_plugin_list">Plugins Settings</string>
+    <string name="menu_item_extension_list">Extensions Settings</string>
     <string name="menu_item_share">Share my account</string>
     <string name="menu_item_about">About Jami</string>
 
@@ -222,17 +222,17 @@ along with this program; if not, write to the Free Software
     <string name="hist_in_call">Incoming call of %1$s</string>
     <string name="hist_out_call">Outgoing call of %1$s</string>
     <string name="call_duration">Lasted %s</string>
-    <string name="start_error_title">Can\'t start Jami !</string>
+    <string name="start_error_title">Cannot start Jami!</string>
     <string name="start_error_mic_required">Jami requires the microphone permission to work.</string>
-    <string name="action_call_accept">Take call</string>
-    <string name="action_call_accept_audio">Answer in audio</string>
-    <string name="action_call_accept_video">Answer in video</string>
-    <string name="action_call_hold_accept">Hold and take call audio</string>
-    <string name="action_call_hold_accept_video">Hold and take call video</string>
-    <string name="action_call_end_accept">End and take call</string>
+    <string name="action_call_accept">Accept call</string>
+    <string name="action_call_accept_audio">Accept incoming call with audio only</string>
+    <string name="action_call_accept_video">Accept incoming call with video</string>
+    <string name="action_call_hold_accept">Accept incoming call with audio only and hold current call</string>
+    <string name="action_call_hold_accept_video">Accept incoming call with video and hold current call</string>
+    <string name="action_call_end_accept">Accept incoming call and end current call</string>
     <string name="action_call_decline">Decline</string>
     <string name="action_call_mic_mute">Mute microphone</string>
-    <string name="action_load_plugin">Load Plugin</string>
+    <string name="action_load_extension">Load extension</string>
     <string name="ab_action_speakerphone">Enable speaker</string>
     <string name="ab_action_contact_add">Add to contacts</string>
     <string name="ab_action_contact_add_question">Add to contacts?</string>
@@ -303,8 +303,8 @@ along with this program; if not, write to the Free Software
     <string name="conversation_details">Conversation details</string>
     <string name="contact_details">Contact details</string>
     <string name="conversation_action_delete_this">Delete this conversation</string>
-    <string name="conversation_action_delete_this_title">Delete this conversation ?</string>
-    <string name="conversation_action_delete_this_message">This action can not be undone.</string>
+    <string name="conversation_action_delete_this_title">Delete this conversation?</string>
+    <string name="conversation_action_delete_this_message">This action cannot be undone.</string>
     <string name="conversation_action_history_clear">Clear history</string>
     <string name="conversation_action_history_clear_title">Clear the conversation history?</string>
     <string name="conversation_action_history_clear_message">This will definitely clear the conversation history.</string>
@@ -441,7 +441,7 @@ along with this program; if not, write to the Free Software
     <string name="gallery_error_title">No Gallery app found</string>
     <string name="gallery_error_message">No application found on device to open Gallery</string>
 
-    <string name="generic_error">An unknown error occurred</string>
+    <string name="generic_error">An unknown error occurred.</string>
 
     <!--File Transfer-->
     <string name="invalid_file">Invalid file</string>
@@ -507,8 +507,8 @@ along with this program; if not, write to the Free Software
     <string name="audio_permission_rationale_message">Jami requires the microphone permission to use speech-to-text and record audio features. It will be asked in the next step.</string>
     <string name="camera_permission_rationale_message">Jami requires the camera permission to record video and place video call. It will be asked in the next step.</string>
     <string name="unable_to_start_recorder">Unable to start recording audio.</string>
-    <string name="error_sharing_file">Error sharing file.</string>
-    <string name="error_opening_file">Error opening file.</string>
+    <string name="error_sharing_file">An error occurred while sharing the file.</string>
+    <string name="error_opening_file">An error occurred while opening the file.</string>
 
     <!-- Wizard -->
     <string name="wizard_status_recommended">Recommended</string>
@@ -527,27 +527,27 @@ along with this program; if not, write to the Free Software
     <string name="wizard_profile_button">Save Profile</string>
     <string name="wizard_profile_skip">Skip and do this later</string>
     <string name="fab_path_choose">Choose another file</string>
-    <string name="chat_plugins">Chat Plugins</string>
+    <string name="chat_extensions">Chat extensions</string>
 
     <!-- Bottom sheet -->
     <string name="bottomSheet_share_btn">Share</string>
     <string name="bottomSheet_dialpad_btn">Dialpad</string>
-    <string name="bottomSheet_plugins_btn">Plugins</string>
+    <string name="bottomSheet_extensions_btn">Extensions</string>
     <string name="bottomSheet_add_participants_btn">Add</string>
     <string name="bottomSheet_change_camera_btn">Change</string>
     <string name="bottomSheet_camera_onoff_switch_btn">Camera</string>
-    <string name="bottomSheet_hangup_btn">End Call</string>
+    <string name="bottomSheet_hangup_btn">End call</string>
     <string name="bottomSheet_mute_microphone_btn">Micro</string>
     <string name="bottomSheet_sound_output_btn">Sounds</string>
     <string name="bottomSheet_raiseHand_btn">Raise hand</string>
-    <string name="open_account_plugin_settings">Open Account Plugin Settings</string>
-    <string name="open_general_plugin_settings">Open General Plugin Settings</string>
+    <string name="open_account_extension_settings">Open Account Extension Settings</string>
+    <string name="open_general_extension_settings">Open General Extension Settings</string>
     <string name="uninstall">Uninstall</string>
     <string name="reset">Reset</string>
 
     <!-- Swarm Detail -->
     <string name="rename_btn">Confirm</string>
-    <string name="rename_error">can\'t be empty</string>
+    <string name="rename_error">cannot be empty.</string>
     <string name="swarm_description">Add a description</string>
     <string name="tab_about">About</string>
     <string name="tab_members">Members</string>
@@ -586,11 +586,11 @@ along with this program; if not, write to the Free Software
     <string name="donation_setting_description">Enable the donation reminder</string>
     <string name="donation_url" translatable="false">https://crowdfunding.lfx.linuxfoundation.org/projects/jami-a-gnu-package</string>
 
-    <!--  Plugin  -->
+    <!--  Extension  -->
     <string name="unable_to_load">Unable to load %1$s</string>
-    <string name="load_sucess">%1$s: enabled</string>
-    <string name="unload_sucess">%1$s: disabled</string>
-    <string name="install_sucess">Extension %1$s has been successfully installed.</string>
+    <string name="load_success">%1$s: enabled</string>
+    <string name="unload_success">%1$s: disabled</string>
+    <string name="install_success">Extension %1$s has been successfully installed.</string>
     <string name="install_error">An error occurred while importing the extension.</string>
 
 </resources>

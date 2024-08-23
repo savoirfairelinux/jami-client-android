@@ -14,7 +14,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-package cx.ring.settings.pluginssettings
+package cx.ring.settings.extensionssettings
 
 import android.app.Activity
 import android.content.Intent
@@ -33,14 +33,14 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import cx.ring.R
 import cx.ring.account.AccountEditionFragment
-import cx.ring.databinding.FragPluginsListSettingsBinding
+import cx.ring.databinding.FragExtensionsListSettingsBinding
 import cx.ring.databinding.ItemProgressDialogBinding
 import cx.ring.interfaces.AppBarStateListener
-import cx.ring.plugins.PluginUtils.getInstalledPlugins
-import cx.ring.plugins.PluginUtils.loadPlugin
-import cx.ring.plugins.PluginUtils.unloadPlugin
+import cx.ring.extensions.ExtensionUtils.getInstalledExtensions
+import cx.ring.extensions.ExtensionUtils.loadExtension
+import cx.ring.extensions.ExtensionUtils.unloadExtension
 import cx.ring.settings.SettingsFragment
-import cx.ring.settings.pluginssettings.PluginsListAdapter.PluginListItemListener
+import cx.ring.settings.extensionssettings.ExtensionsListAdapter.ExtensionListItemListener
 import cx.ring.utils.AndroidFileUtils.getCacheFile
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -48,31 +48,31 @@ import net.jami.daemon.JamiService
 import java.io.File
 import java.io.IOException
 
-class PluginsListSettingsFragment : Fragment(), PluginListItemListener {
-    private var binding: FragPluginsListSettingsBinding? = null
-    private var mAdapter: PluginsListAdapter? = null
+class ExtensionsListSettingsFragment : Fragment(), ExtensionListItemListener {
+    private var binding: FragExtensionsListSettingsBinding? = null
+    private var mAdapter: ExtensionsListAdapter? = null
     private val mCompositeDisposable = CompositeDisposable()
     private var mProgress: AlertDialog? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = FragPluginsListSettingsBinding.inflate(inflater, container, false)
+        binding = FragExtensionsListSettingsBinding.inflate(inflater, container, false)
         val accountId = requireArguments().getString(AccountEditionFragment.ACCOUNT_ID_KEY)!!
 
         val appBarStateListener = parentFragment as? AppBarStateListener
-        appBarStateListener?.onToolbarTitleChanged(getString(R.string.menu_item_plugin_list))
-        appBarStateListener?.onAppBarScrollTargetViewChanged(binding!!.pluginsList)
+        appBarStateListener?.onToolbarTitleChanged(getString(R.string.menu_item_extension_list))
+        appBarStateListener?.onAppBarScrollTargetViewChanged(binding!!.extensionsList)
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
-        binding!!.pluginsList.setHasFixedSize(true)
+        binding!!.extensionsList.setHasFixedSize(true)
 
-        mAdapter = PluginsListAdapter(getInstalledPlugins(binding!!.pluginsList.context), this, accountId)
-        binding!!.pluginsList.adapter = mAdapter
+        mAdapter = ExtensionsListAdapter(getInstalledExtensions(binding!!.extensionsList.context), this, accountId)
+        binding!!.extensionsList.adapter = mAdapter
 
         //Fab
         if (accountId.isEmpty()) {
-            binding!!.pluginsListSettingsFab.visibility = View.VISIBLE
-            binding!!.pluginsListSettingsFab.setOnClickListener {
+            binding!!.extensionsListSettingsFab.visibility = View.VISIBLE
+            binding!!.extensionsListSettingsFab.setOnClickListener {
                 val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
                 intent.addCategory(Intent.CATEGORY_OPENABLE)
                 intent.type = "*/*"
@@ -83,33 +83,33 @@ class PluginsListSettingsFragment : Fragment(), PluginListItemListener {
     }
 
     /**
-     * Implements PluginListItemListener.onPluginItemClicked which is called when we click on
-     * a plugin list item
-     * @param pluginDetails instance of a plugin details that is sent to PluginSettingsFragment
+     * Implements ExtensionListItemListener.onExtensionItemClicked which is called when an extension
+     * list item is clicked
+     * @param extensionDetails instance of an extension details that is sent to ExtensionSettingsFragment
      */
-    override fun onPluginItemClicked(pluginDetails: PluginDetails) {
-        (parentFragment as SettingsFragment).goToPluginSettings(pluginDetails)
+    override fun onExtensionItemClicked(extensionDetails: ExtensionDetails) {
+        (parentFragment as SettingsFragment).goToExtensionSettings(extensionDetails)
     }
 
     /**
-     * Implements PluginListItemListener.onPluginEnabled which is called when the checkbox
-     * associated with the plugin list item is called
-     * @param pluginDetails instance of a plugin details that is sent to PluginSettingsFragment
+     * Implements ExtensionListItemListener.onExtensionEnabled which is called when the checkbox
+     * associated with the extension list item is called
+     * @param extensionDetails instance of an extension details that is sent to ExtensionSettingsFragment
      */
-    override fun onPluginEnabled(pluginDetails: PluginDetails) {
+    override fun onExtensionEnabled(extensionDetails: ExtensionDetails) {
         var status: String?
 
-        if (pluginDetails.isEnabled) {
-            pluginDetails.isEnabled = loadPlugin(pluginDetails.rootPath)
+        if (extensionDetails.isEnabled) {
+            extensionDetails.isEnabled = loadExtension(extensionDetails.rootPath)
             status =
-                if (pluginDetails.isEnabled) getString(R.string.load_sucess, pluginDetails.name)
+                if (extensionDetails.isEnabled) getString(R.string.load_sucess, extensionDetails.name)
                 else {
-                    mAdapter?.notifyItemChanged(pluginDetails)
-                    getString(R.string.unable_to_load, pluginDetails.name)
+                    mAdapter?.notifyItemChanged(extensionDetails)
+                    getString(R.string.unable_to_load, extensionDetails.name)
                 }
         } else {
-            unloadPlugin(pluginDetails.rootPath)
-            status = getString(R.string.unload_sucess, pluginDetails.name)
+            unloadExtension(extensionDetails.rootPath)
+            status = getString(R.string.unload_sucess, extensionDetails.name)
         }
         Toast.makeText(requireContext(), status, Toast.LENGTH_SHORT).show()
     }
@@ -119,26 +119,26 @@ class PluginsListSettingsFragment : Fragment(), PluginListItemListener {
             if (data != null) {
                 val uri = data.data
                 if (uri != null) {
-                    installPluginFromUri(uri, false)
+                    installExtensionFromUri(uri, false)
                 }
             }
         }
     }
 
     @Throws(IOException::class)
-    private fun installPluginFile(pluginFile: File, force: Boolean): String {
-        val i = JamiService.installPlugin(pluginFile.absolutePath, force)
-        if (!pluginFile.delete()) {
-            Log.e(TAG, "Plugin Jpl file in the cache not freed")
+    private fun installExtensionFile(extensionFile: File, force: Boolean): String {
+        val i = JamiService.installExtension(extensionFile.absolutePath, force)
+        if (!extensionFile.delete()) {
+            Log.e(TAG, "Extension Jpl file in the cache not freed.")
         }
         return when (i) {
-            0 -> pluginFile.name
-            100 -> throw IOException(getString(R.string.plugin_same_version_exception, pluginFile.name))
-            200 -> throw IOException(getString(R.string.plugin_recent_version_exception, pluginFile.name))
-            300 -> throw IOException(getString(R.string.plugin_invalid_signature, pluginFile.name))
-            400 -> throw IOException(getString(R.string.plugin_invalid_authority, pluginFile.name))
-            500 -> throw IOException(getString(R.string.plugin_invalid_format, pluginFile.name))
-            else -> throw IOException(getString(R.string.plugin_install_failure, pluginFile.name))
+            0 -> extensionFile.name
+            100 -> throw IOException(getString(R.string.extension_same_version_exception, extensionFile.name))
+            200 -> throw IOException(getString(R.string.extension_recent_version_exception, extensionFile.name))
+            300 -> throw IOException(getString(R.string.extension_invalid_signature, extensionFile.name))
+            400 -> throw IOException(getString(R.string.extension_invalid_authority, extensionFile.name))
+            500 -> throw IOException(getString(R.string.extension_invalid_format, extensionFile.name))
+            else -> throw IOException(getString(R.string.extension_install_failure, extensionFile.name))
         }
     }
 
@@ -154,30 +154,30 @@ class PluginsListSettingsFragment : Fragment(), PluginListItemListener {
             progress.dismiss()
     }
 
-    private fun installPluginFromUri(uri: Uri, force: Boolean) {
+    private fun installExtensionFromUri(uri: Uri, force: Boolean) {
         showLoading(true)
         mCompositeDisposable.add(
             getCacheFile(requireContext(), uri)
                 .observeOn(AndroidSchedulers.mainThread())
-                .map { file: File -> installPluginFile(file, force) }
+                .map { file: File -> installExtensionFile(file, force) }
                 .subscribe({ filename: String ->
-                    val plugin = filename.split(".jpl".toRegex()).toTypedArray()
-                    val availablePlugins = getInstalledPlugins(requireContext())
-                    for (availablePlugin in availablePlugins) {
-                        if (availablePlugin.name == plugin[0]) {
-                            availablePlugin.isEnabled = true
-                            onPluginEnabled(availablePlugin)
+                    val extension = filename.split(".jpl".toRegex()).toTypedArray()
+                    val availableExtensions = getInstalledExtensions(requireContext())
+                    for (availableExtension in availableExtensions) {
+                        if (availableExtension.name == extension[0]) {
+                            availableExtension.isEnabled = true
+                            onExtensionEnabled(availableExtension)
                         }
                     }
-                    mAdapter!!.updatePluginsList(getInstalledPlugins(requireContext()))
+                    mAdapter!!.updateExtensionsList(getInstalledExtensions(requireContext()))
                     showLoading(false)
                     Toast.makeText(requireContext(), getString(R.string.install_sucess, filename), Toast.LENGTH_LONG)
                         .show()
                 }) { e: Throwable ->
                     if (binding != null) {
-                        Log.e(TAG, "Error importing plugin", e)
+                        Log.e(TAG, "An error occurred while importing the extension.", e)
                         val sb = Snackbar.make(binding!!.listLayout, getString(R.string.install_error), Snackbar.LENGTH_LONG)
-                        sb.setAction(R.string.plugin_force_install) { v: View? -> installPluginFromUri(uri, true) }
+                        sb.setAction(R.string.extension_force_install) { v: View? -> installExtensionFromUri(uri, true) }
                         sb.show()
                     }
                     showLoading(false)
@@ -195,11 +195,11 @@ class PluginsListSettingsFragment : Fragment(), PluginListItemListener {
     }
 
     companion object {
-        val TAG = PluginsListSettingsFragment::class.java.simpleName
+        val TAG = ExtensionsListSettingsFragment::class.java.simpleName
         private const val ARCHIVE_REQUEST_CODE = 42
 
-        fun newInstance(accountId: String?): PluginsListSettingsFragment {
-            val fragment = PluginsListSettingsFragment()
+        fun newInstance(accountId: String?): ExtensionsListSettingsFragment {
+            val fragment = ExtensionsListSettingsFragment()
             fragment.arguments = Bundle().apply { putString(AccountEditionFragment.ACCOUNT_ID_KEY, accountId) }
             return fragment
         }

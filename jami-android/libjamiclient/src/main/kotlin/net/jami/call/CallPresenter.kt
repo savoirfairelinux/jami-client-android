@@ -54,7 +54,7 @@ class CallPresenter @Inject constructor(
     private var incomingIsFullIntent = true
     private var callInitialized = false
     private var currentSurfaceId: String? = null
-    private var currentPluginSurfaceId: String? = null
+    private var currentExtensionSurfaceId: String? = null
     private var timeUpdateTask: Disposable? = null
     fun isSpeakerphoneOn(): Boolean = mHardwareService.isSpeakerphoneOn()
     var isMicrophoneMuted: Boolean = false
@@ -203,13 +203,13 @@ class CallPresenter @Inject constructor(
     fun prepareBottomSheetButtonsStatus() {
         val conference = mConference ?: return
         val canDial = mOnGoingCall
-        val displayPluginsButton = view?.displayPluginsButton() == true
-        val showPluginBtn = displayPluginsButton && mOnGoingCall
+        val displayExtensionsButton = view?.displayExtensionsButton() == true
+        val showExtensionBtn = displayExtensionsButton && mOnGoingCall
         val hasActiveCameraVideo = conference.hasActiveNonScreenShareVideo()
         val hasActiveScreenShare = conference.hasActiveScreenSharing()
         val hasMultipleCamera = mHardwareService.cameraCount() > 1 && mOnGoingCall && hasActiveCameraVideo
         val isConference = conference.isConference
-        view?.updateBottomSheetButtonStatus(isConference, isSpeakerphoneOn(), conference.isAudioMuted, hasMultipleCamera, canDial, showPluginBtn, mOnGoingCall, hasActiveCameraVideo, hasActiveScreenShare)
+        view?.updateBottomSheetButtonStatus(isConference, isSpeakerphoneOn(), conference.isAudioMuted, hasMultipleCamera, canDial, showExtensionBtn, mOnGoingCall, hasActiveCameraVideo, hasActiveScreenShare)
     }
 
     fun chatClick() {
@@ -321,18 +321,18 @@ class CallPresenter @Inject constructor(
         }
     }
 
-    fun pluginSurfaceCreated(holder: Any) {
+    fun extensionSurfaceCreated(holder: Any) {
         val conference = mConference ?: return
         var newId : String
         if (conference.hasActiveVideo()) {
             val mediaList = conference.getMediaList()
             for (m in mediaList) if (m.mediaType == Media.MediaType.MEDIA_TYPE_VIDEO) {
                 newId = m.source!!
-                if (newId != currentPluginSurfaceId) {
-                    currentPluginSurfaceId?.let { id ->
+                if (newId != currentExtensionSurfaceId) {
+                    currentExtensionSurfaceId?.let { id ->
                         mHardwareService.removeVideoSurface(id)
                     }
-                    currentPluginSurfaceId = newId
+                    currentExtensionSurfaceId = newId
                 }
                 mHardwareService.addVideoSurface(newId, holder)
                 //view?.displayContactBubble(false)
@@ -340,12 +340,12 @@ class CallPresenter @Inject constructor(
         }
     }
 
-    private fun pluginSurfaceUpdateId(newId: String) {
-        if (newId != currentPluginSurfaceId) {
-            currentPluginSurfaceId?.let { oldId ->
+    private fun extensionSurfaceUpdateId(newId: String) {
+        if (newId != currentExtensionSurfaceId) {
+            currentExtensionSurfaceId?.let { oldId ->
                 mHardwareService.updateVideoSurfaceId(oldId, newId)
             }
-            currentPluginSurfaceId = newId
+            currentExtensionSurfaceId = newId
         }
     }
 
@@ -361,10 +361,10 @@ class CallPresenter @Inject constructor(
         }
     }
 
-    fun pluginSurfaceDestroyed() {
-        currentPluginSurfaceId?.let { id ->
+    fun extensionSurfaceDestroyed() {
+        currentExtensionSurfaceId?.let { id ->
             mHardwareService.removeVideoSurface(id)
-            currentPluginSurfaceId = null
+            currentExtensionSurfaceId = null
         }
     }
 
@@ -410,7 +410,7 @@ class CallPresenter @Inject constructor(
                 mHardwareService.setPreviewSettings()
                 mHardwareService.updatePreviewVideoSurface(call)
                 videoSurfaceUpdateId(call.id)
-                pluginSurfaceUpdateId(call.pluginId)
+                extensionSurfaceUpdateId(call.extensionId)
                 view.displayLocalVideo(hasActiveCameraVideo && mDeviceRuntimeService.hasVideoPermission())
                 if (permissionChanged) {
                     val camId = mHardwareService.changeCamera(true)
@@ -666,7 +666,7 @@ class CallPresenter @Inject constructor(
         return mConference?.maximizedParticipant == info.contact.contact
     }
 
-    fun startPlugin(mediaHandlerId: String) {
+    fun startExtension(mediaHandlerId: String) {
         mHardwareService.startMediaHandler(mediaHandlerId)
         val conference = mConference ?: return
         val media = conference.getMediaList()
@@ -676,7 +676,7 @@ class CallPresenter @Inject constructor(
         mHardwareService.switchInput(conference.accountId, conference.id, source)
     }
 
-    fun stopPlugin() {
+    fun stopExtension() {
         mHardwareService.stopMediaHandler()
         val conference = mConference ?: return
         val media = conference.getMediaList() ?: return
