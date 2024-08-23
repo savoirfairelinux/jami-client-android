@@ -128,7 +128,7 @@ class ConversationPresenter @Inject constructor(
             if (c.mode === Conversation.Mode.Syncing) {
                 view.switchToSyncingView()
             } else if (c.mode == Conversation.Mode.Request) {
-                view.switchToIncomingTrustRequestView(c.uriTitle/*ConversationItemViewModel.getUriTitle(conversation.uri, contacts)*/)
+                view.switchToIncomingTrustRequestView(c.uriTitle, c.request!!.mode)
             } else if (c.isSwarm || account.isContact(c.uri)) {
                 if ((c.mode == Conversation.Mode.OneToOne) && c.getContact()?.contact?.isBanned == true) {
                     view.switchToBannedView()
@@ -139,7 +139,8 @@ class ConversationPresenter @Inject constructor(
                 if (req == null) {
                     view.switchToUnknownView(c.uriTitle)
                 } else {
-                    view.switchToIncomingTrustRequestView(req.profile?.blockingGet()?.displayName ?: c.uriTitle)
+                    val displayName = req.profile?.blockingGet()?.displayName ?: c.uriTitle
+                    view.switchToIncomingTrustRequestView(displayName, req.mode)
                 }
             }
         } else {
