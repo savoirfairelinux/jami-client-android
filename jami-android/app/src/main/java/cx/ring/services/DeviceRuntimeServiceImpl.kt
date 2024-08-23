@@ -48,10 +48,10 @@ class DeviceRuntimeServiceImpl(
     private val logService: LogService
 ) : DeviceRuntimeService() {
     private fun copyAssets() {
-        val pluginsPath = File(mContext.filesDir, "plugins")
-        Log.w(TAG, "Plugins: " + pluginsPath.absolutePath)
-        // Overwrite existing plugins folder in order to use newer plugins
-        AndroidFileUtils.copyAssetFolder(mContext.assets, "plugins", pluginsPath)
+        val extensionsPath = File(mContext.filesDir, "extensions")
+        Log.w(TAG, "Extensions: " + extensionsPath.absolutePath)
+        // Overwrite existing extensions folder in order to use newer extensions
+        AndroidFileUtils.copyAssetFolder(mContext.assets, "extensions", extensionsPath)
     }
 
     override fun loadNativeLibrary() {
