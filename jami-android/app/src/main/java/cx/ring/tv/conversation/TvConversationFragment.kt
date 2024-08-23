@@ -631,7 +631,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
         }
     }
 
-    override fun switchToIncomingTrustRequestView(name: String) {
+    override fun switchToIncomingTrustRequestView(name: String, requestMode: Conversation.Mode) {
         binding?.apply {
             conversationActionGroup.isVisible = false
             conversationActionMessage.text = name
