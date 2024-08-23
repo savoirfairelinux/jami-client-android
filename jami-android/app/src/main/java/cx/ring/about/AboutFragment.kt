@@ -40,17 +40,12 @@ class AboutFragment : Fragment() {
              sflLogo.setOnClickListener { visitWebpage(getString(R.string.savoirfairelinux_website)) }
              contributeContainer.setOnClickListener { visitWebpage(getString(R.string.ring_contribute_website)) }
              licenseContainer.setOnClickListener { visitWebpage(getString(R.string.gnu_license_website)) }
-             emailReportContainer.setOnClickListener { sendFeedbackEmail() }
+             submitIssueContainer
+                 .setOnClickListener { visitWebpage(getString(R.string.submit_issue_link)) }
              credits.setOnClickListener { creditsClicked() }
              toolbar.setNavigationOnClickListener { activity?.onBackPressedDispatcher?.onBackPressed() }
              binding = this
         }.root
-
-    private fun sendFeedbackEmail() {
-        val emailIntent = Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:" + "jami@gnu.org"))
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "[" + getText(R.string.app_name) + " Android - " + BuildConfig.VERSION_NAME + "]")
-        launchSystemIntent(emailIntent, R.string.no_email_app_installed)
-    }
 
     private fun creditsClicked() {
         val dialog: BottomSheetDialogFragment = AboutBottomSheetDialogFragment()
