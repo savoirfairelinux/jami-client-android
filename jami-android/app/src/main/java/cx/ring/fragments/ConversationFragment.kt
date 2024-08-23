@@ -1021,7 +1021,10 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             unknownContactPrompt.visibility = View.GONE
             trustRequestPrompt.visibility = View.VISIBLE
             btnBlock.isVisible = requestMode == Conversation.Mode.OneToOne
-            tvTrustRequestMessage.text = getString(R.string.message_contact_not_trusted_yet, name)
+            val stringResource = if (requestMode == Conversation.Mode.OneToOne)
+                R.string.message_contact_not_trusted_yet
+            else R.string.message_conversation_request
+            tvTrustRequestMessage.text = getString(stringResource, name)
             trustRequestMessageLayout.visibility = View.VISIBLE
             currentBottomView = trustRequestPrompt
         }

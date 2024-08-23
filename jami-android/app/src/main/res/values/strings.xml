@@ -427,6 +427,7 @@ along with this program; if not, write to the Free Software
     <string name="contact_request_account">For %1$s</string>
     <string name="no_requests">You have no contact requests</string>
     <string name="message_contact_not_trusted_yet">%s is not in your contacts yet.\nDo you accept or refuse this contact request?</string>
+    <string name="message_conversation_request">%s invites you to a new conversation.\nDo you accept or refuse this conversation request?</string>
     <string name="message_contact_not_trusted">%s is not in your contacts.\nAdd a new contact?</string>
 
     <!-- Send contact requests -->
