@@ -557,7 +557,7 @@ along with this program; if not, write to the Free Software
     <string name="swarm_description">Add a description</string>
     <string name="tab_about">About</string>
     <string name="tab_members">Members</string>
-    <string name="tab_documetn">Documents</string>
+    <string name="tab_documents">Documents</string>
     <string name="not_admin_toast">Only admins can edit the information of this group</string>
     <string name="dialogtitle_title">Edit Swarm title</string>
     <string name="dialogtitle_description">Edit Swarm description</string>
