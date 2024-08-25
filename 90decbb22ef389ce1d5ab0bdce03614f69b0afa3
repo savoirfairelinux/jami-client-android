@@ -26,6 +26,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2a29d1d8_c914ada2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-08-25T01:45:30Z",
+      "side": 1,
+      "message": "Can the Topic please be set to `unify-terminology`",
+      "revId": "90decbb22ef389ce1d5ab0bdce03614f69b0afa3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "71184c1d_8c8b7aa9",
         "filename": "jami-android/app/src/main/java/cx/ring/settings/pluginssettings/PluginsListSettingsFragment.kt",
         "patchSetId": 1
