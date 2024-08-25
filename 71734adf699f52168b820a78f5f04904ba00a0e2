@@ -118,6 +118,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4f6e296f_4bb10900",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-08-25T02:28:32Z",
+      "side": 1,
+      "message": "Should `view` be `visit`?\n\nThank you",
+      "range": {
+        "startLine": 39,
+        "startChar": 85,
+        "endLine": 39,
+        "endChar": 89
+      },
+      "revId": "71734adf699f52168b820a78f5f04904ba00a0e2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f68bd419_f26d106f",
         "filename": "jami-android/app/src/main/res/values/strings.xml",
         "patchSetId": 1
