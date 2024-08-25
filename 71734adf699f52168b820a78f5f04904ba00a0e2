@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "57b1c406_45146442",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-08-25T01:40:21Z",
+      "side": 1,
+      "message": "Should `\u0026#8211;` be changed to `–` (or if not possible `\u0026ndash;`)?\n\nThank you",
+      "range": {
+        "startLine": 29,
+        "startChar": 54,
+        "endLine": 29,
+        "endChar": 61
+      },
+      "revId": "71734adf699f52168b820a78f5f04904ba00a0e2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8273a91d_78c9cf3d",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-08-25T01:40:21Z",
+      "side": 1,
+      "message": "Should this be `Submit issue`?\n\nTL;DR\n1. Should this be sentence case, i.e. `Report issue`?\n2. Should `Report Issue` be `Submit issue`?\n(a) `Report` seems to work with bug but not suggestions. `Submit` seems to work better with both bugs and suggestions.\n(b) In Jami for Linux version 202408241534, with Qt client which has `Submit issue` button in Settings, General, Troubleshoot, Open logs.\n\nThank you",
+      "range": {
+        "startLine": 30,
+        "startChar": 38,
+        "endLine": 30,
+        "endChar": 50
+      },
+      "revId": "71734adf699f52168b820a78f5f04904ba00a0e2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "71a182fe_e1d3b726",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-08-25T01:40:21Z",
+      "side": 1,
+      "message": "Should this be `New issue`?\n\nTL;DR\nGitLab has a button in the top right that has the label `New issue` with white text and blue background.\n\nOr `Create new issue` if it is an action button\n\nThank you\n\nP.S. Not sure of the Jami for Android UI/UX as only have Jami for Linux.",
+      "range": {
+        "startLine": 31,
+        "startChar": 47,
+        "endLine": 31,
+        "endChar": 67
+      },
+      "revId": "71734adf699f52168b820a78f5f04904ba00a0e2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bf06821e_fc81e4c1",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-08-25T01:40:21Z",
+      "side": 1,
+      "message": "Should the link be:\nhttps://git.jami.net/savoirfairelinux/jami-client-android/issues/new\n\n\nThank you",
+      "range": {
+        "startLine": 32,
+        "startChar": 58,
+        "endLine": 32,
+        "endChar": 122
+      },
+      "revId": "71734adf699f52168b820a78f5f04904ba00a0e2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
