@@ -437,8 +437,8 @@ class ConversationPresenter @Inject constructor(
             .subscribe { conversation -> view?.startShareLocation(conversation.accountId, conversation.uri.uri) })
     }
 
-    fun showPluginListHandlers() {
-        view?.showPluginListHandlers(mConversation!!.accountId, mConversationUri!!.uri)
+    fun showExtensionListHandlers() {
+        view?.showExtensionListHandlers(mConversation!!.accountId, mConversationUri!!.uri)
     }
 
     val path: Pair<String, Uri>
