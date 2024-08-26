@@ -22,43 +22,39 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.materialswitch.MaterialSwitch
 import cx.ring.R
-import cx.ring.settings.pluginssettings.PluginDetails
-import cx.ring.settings.pluginssettings.PluginsListAdapter.PluginListItemListener
+import cx.ring.settings.extensionssettings.ExtensionDetails
+import cx.ring.adapters.ExtensionsAdapter.ExtensionListItemListener
 
-class PluginSettingViewHolder(itemView: View, listener: PluginListItemListener) : RecyclerView.ViewHolder(itemView) {
-    private val pluginIcon: ImageView = itemView.findViewById(R.id.plugin_item_icon)
-    private val pluginNameTextView: TextView = itemView.findViewById(R.id.plugin_item_name)
-    private val pluginItemEnableCheckbox: MaterialSwitch = itemView.findViewById(R.id.plugin_item_enable_checkbox)
-    private var details: PluginDetails? = null
+class ExtensionViewHolder(itemView: View, listener: ExtensionListItemListener) : RecyclerView.ViewHolder(itemView) {
+    private val extensionIcon: ImageView = itemView.findViewById(R.id.extension_item_icon)
+    private val extensionNameTextView: TextView = itemView.findViewById(R.id.extension_item_name)
+    private val extensionItemEnableCheckbox: MaterialSwitch = itemView.findViewById(R.id.extension_item_enable_checkbox)
+    private var details: ExtensionDetails? = null
 
-    fun setDetails(details: PluginDetails) {
+    fun setDetails(details: ExtensionDetails) {
         this.details = details
         update(details)
     }
 
     // update the viewHolder view
-    fun update(details: PluginDetails) {
-        pluginNameTextView.text = details.name
-        if (details.accountId!!.isEmpty())
-            pluginItemEnableCheckbox.isChecked = details.isEnabled
-        else
-            pluginItemEnableCheckbox.visibility = View.GONE
-
-        // Set the plugin icon
+    fun update(details: ExtensionDetails) {
+        extensionNameTextView.text = details.name
+        extensionItemEnableCheckbox.isChecked = details.isRunning
+        // Set the extension icon
         val icon = details.icon
         if (icon != null) {
-            pluginIcon.setImageDrawable(icon)
+            extensionIcon.setImageDrawable(icon)
         }
     }
 
     init {
         itemView.setOnClickListener {
-            details?.let { details -> listener.onPluginItemClicked(details) }
+            details?.let { details -> listener.onExtensionItemClicked(details) }
         }
-        pluginItemEnableCheckbox.setOnClickListener {
+
+        extensionItemEnableCheckbox.setOnClickListener {
             details?.let { details ->
-                details.isEnabled = !details.isEnabled
-                listener.onPluginEnabled(details)
+                listener.onExtensionEnabled(details)
             }
         }
     }
