@@ -30,7 +30,7 @@ interface CallView {
     fun updateAudioState(state: AudioState)
     fun updateTime(duration: Long)
     fun updateCallStatus(callState: CallStatus)
-    fun updateBottomSheetButtonStatus(isConference: Boolean, isSpeakerOn: Boolean, isMicrophoneMuted: Boolean, hasMultipleCamera: Boolean, canDial: Boolean, showPluginBtn: Boolean, onGoingCall: Boolean, hasActiveCameraVideo: Boolean, hasActiveScreenShare: Boolean)
+    fun updateBottomSheetButtonStatus(isConference: Boolean, isSpeakerOn: Boolean, isMicrophoneMuted: Boolean, hasMultipleCamera: Boolean, canDial: Boolean, showExtensionBtn: Boolean, onGoingCall: Boolean, hasActiveCameraVideo: Boolean, hasActiveScreenShare: Boolean)
     fun resetBottomSheetState()
     fun initNormalStateDisplay()
     fun initIncomingCallDisplay(hasVideo: Boolean)
@@ -46,7 +46,7 @@ interface CallView {
     fun prepareCall(acceptIncomingCall: Boolean)
     fun handleCallWakelock(isAudioOnly: Boolean)
     fun goToContact(accountId: String, contact: Contact)
-    fun displayPluginsButton(): Boolean
+    fun displayExtensionsButton(): Boolean
     fun updateConfInfo(info: List<ParticipantInfo>)
     fun updateParticipantRecording(contacts: List<ContactViewModel>)
     fun getMediaProjection(resultCode: Int, data: Any): Any

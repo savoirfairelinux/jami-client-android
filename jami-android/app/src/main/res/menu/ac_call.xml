@@ -10,10 +10,10 @@
         android:orderInCategory="2"/>
 
     <item
-        android:id="@+id/menuitem_video_plugins"
+        android:id="@+id/menuitem_video_extensions"
         app:showAsAction="ifRoom"
-        android:icon="@drawable/ic_plugin"
-        android:title="@string/video_plugins"
+        android:icon="@drawable/ic_extension"
+        android:title="@string/video_extensions"
         android:orderInCategory="3"/>
 
 </menu>
