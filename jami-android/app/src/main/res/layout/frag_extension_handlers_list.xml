@@ -5,23 +5,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
-    tools:context=".fragments.PluginHandlersListFragment">
+    tools:context=".fragments.ExtensionHandlersListFragment">
 
     <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/chat_plugins_toolbar"
+        android:id="@+id/chat_extensions_toolbar"
         style="@style/Widget.Material3.Toolbar.Surface"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:elevation="4dp"
         app:navigationIcon="@drawable/baseline_close_24"
-        app:title="@string/chat_plugins"/>
+        app:title="@string/chat_extensions"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/handler_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/chat_plugins_toolbar"
+        android:layout_below="@+id/chat_extensions_toolbar"
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/frag_plugins_list_item" />
+        tools:listitem="@layout/frag_extensions_list_item" />
 </RelativeLayout>
