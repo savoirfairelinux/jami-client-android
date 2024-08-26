@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f75ec453_e6411c6e",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/smartlist/ConversationItemViewModel.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 90
+      },
+      "writtenOn": "2024-08-26T21:53:00Z",
+      "side": 1,
+      "message": "I think there should be either a comment here, or in the commit description to describe why this change corrects the issue at hand.",
+      "range": {
+        "startLine": 38,
+        "startChar": 16,
+        "endLine": 38,
+        "endChar": 52
+      },
+      "revId": "cdecfbd34d9b4f002fa57cf5b0999e0da5369c7b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
