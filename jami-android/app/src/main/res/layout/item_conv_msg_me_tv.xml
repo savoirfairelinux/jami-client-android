@@ -65,7 +65,7 @@ along with this program; if not, write to the Free Software
             android:textIsSelectable="true"
             android:textSize="16sp"
             android:theme="@style/OutgoingTextMesssage"
-            tools:text="yo this is the test of a long long text can not be_found_message" />
+            tools:text="yo this is the test of a long long text which cannot be_found_message" />
 
     </RelativeLayout>
 
