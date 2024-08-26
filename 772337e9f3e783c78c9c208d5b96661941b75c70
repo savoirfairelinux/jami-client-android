@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "38fed691_d0e6a466",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-08-26T19:26:37Z",
+      "side": 1,
+      "message": "@ovari123@zoho.com\n\nThank you for the patch. I finally find time to look into this 😊\n\nFyi, that\u0027s not possible to rename:\n\n- external libraries (such as Markwon). That\u0027s not our code and that\u0027s not related to Jami plugins.\n- all calls to Jami daemon via `JamiService.xxx`. That rely to Jami daemon project and will directly impact all client projects (not only android but qt and ios), \"breaking\" backward compatibility.\n\nI did needed changes, please update you code on last patchset.\n\nI was able to make it build. I didn\u0027t test features.",
+      "revId": "772337e9f3e783c78c9c208d5b96661941b75c70",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
