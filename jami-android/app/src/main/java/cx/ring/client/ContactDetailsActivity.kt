@@ -186,7 +186,7 @@ class ContactDetailsActivity : AppCompatActivity(), TabLayout.OnTabSelectedListe
                     binding.title.setOnClickListener(null)
                     binding.description.setOnClickListener(null)
                     binding.contactImage.setOnClickListener(null)
-                    binding.tabLayout.removeTabAt(TAB_MEMBER)
+                    binding.tabLayout.removeTabAt(TAB_MEMBERS)
                 } else if(vm.isGroup() and !conversation.isUserGroupAdmin()) {
                     // Block conversation edition for non-admin users.
                     binding.addMember.isVisible = true
@@ -475,9 +475,9 @@ class ContactDetailsActivity : AppCompatActivity(), TabLayout.OnTabSelectedListe
 
     companion object {
         private val TAG = ContactDetailsActivity::class.simpleName!!
-        const val TAB_ABOUT = 0
-        const val TAB_MEMBER = 1
-        const val TAB_DOCUMENT = 2
+        const val TAB_MEMBERS = 0
+        const val TAB_FILES = 1
+        const val TAB_SETTINGS = 2
         const val REQUEST_CODE_CALL = 3
         const val REQUEST_PERMISSION_READ_STORAGE = 114
     }

@@ -45,7 +45,7 @@ along with this program; if not, write to the Free Software
     <string name="dialog_wait_update">Updating account</string>
     <string name="dialog_wait_update_details">Please wait while your new account is updated…</string>
 
-    <string name="dialog_warn_ip2ip_account_title">Create empty SIP account ?</string>
+    <string name="dialog_warn_ip2ip_account_title">Create empty SIP account?</string>
     <string name="dialog_warn_ip2ip_account_message">You are about to create a SIP account with no valid hostname.
         You will only be able to make and receive direct ip calls.
         You can edit your account later</string>
@@ -58,8 +58,8 @@ along with this program; if not, write to the Free Software
     <string name="create_sip_account">Add SIP account</string>
 
     <!-- Strings related to account deletion -->
-    <string name="account_delete_dialog_title">Delete account ?</string>
-    <string name="account_delete_dialog_message">This action can not be undone.</string>
+    <string name="account_delete_dialog_title">Delete account?</string>
+    <string name="account_delete_dialog_message">This action cannot be undone.</string>
 
     <!-- AccountManagementFragment -->
     <string name="empty_account_list">No account registered</string>
@@ -96,8 +96,8 @@ along with this program; if not, write to the Free Software
     <string name="account_upnp_label">Enable UPnP</string>
     <string name="account_proxy_field">Proxy</string>
 
-    <!-- Plugin Details -->
-    <string name="account_preference_plugin_tab">Plugins</string>
+    <!-- Extension Details -->
+    <string name="account_preferences_extension_tab">Extensions</string>
 
     <!-- Audio Details -->
     <string name="account_audio_label">Audio</string>
@@ -209,7 +209,7 @@ along with this program; if not, write to the Free Software
     <string name="sip_account">SIP account</string>
     <string name="ring_account_identity">Identity</string>
     <string name="account_migration_title_dialog">Account migration</string>
-    <string name="account_migration_message_dialog">Your accounts need to be updated. Do you want to go the Account management screen to perform this operation ?</string>
+    <string name="account_migration_message_dialog">Your accounts need to be updated. Do you want to go the Account management screen to perform this operation?</string>
     <string name="account_update_needed">Update needed</string>
     <string name="account_cannot_be_found_title">Can\'t find account</string>
     <string name="account_cannot_be_found_message">Account couldn\'t be found on the Jami network.\nMake sure it was exported on Jami from an existing device, and that provided credentials are correct.</string>
@@ -291,7 +291,7 @@ along with this program; if not, write to the Free Software
     <string name="account_revoke_device_hint">Enter password to confirm</string>
     <string name="enter_password">Enter password</string>
     <string name="revoke_device_title">Revoke device</string>
-    <string name="revoke_device_message">Are you sure you want to revoke %1$s ?</string>
+    <string name="revoke_device_message">Are you sure you want to revoke %1$s?</string>
     <string name="revoke_device_wait_title">Please wait…</string>
     <string name="revoke_device_wait_message">Revoking device</string>
     <string name="rename_device_title">Rename this device</string>
