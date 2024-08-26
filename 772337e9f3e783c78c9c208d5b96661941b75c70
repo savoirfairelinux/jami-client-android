@@ -70,6 +70,24 @@
       "parentUuid": "7674ed10_8f1372e2",
       "revId": "772337e9f3e783c78c9c208d5b96661941b75c70",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0848d69_a3880698",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-08-26T20:19:46Z",
+      "side": 1,
+      "message": "Can you please set the topic to \"unify-terminology\" in https://review.jami.net/c/jami-client-android/+/28428? It might make it easier to see have strings have been changed?\n\nThank you for importing the differences.\n\nCan you please merge?\n\n\u003e I did needed changes, please update you code on last patchset.\n\nUnable to use an IDE.\n\nCode changes have always been done in the using \"Gerrit Web Interface\" following the instructions at https://gerrit-review.googlesource.com/Documentation/user-inline-edit.html\n\nIf you have updated this code here, then is it correct to assume that there is no need to update code to last patchset?\n\nThank you",
+      "parentUuid": "c95dc7d5_93525110",
+      "revId": "772337e9f3e783c78c9c208d5b96661941b75c70",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
