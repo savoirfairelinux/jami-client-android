@@ -34,6 +34,24 @@
       "parentUuid": "38fed691_d0e6a466",
       "revId": "772337e9f3e783c78c9c208d5b96661941b75c70",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7674ed10_8f1372e2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-08-26T19:28:52Z",
+      "side": 1,
+      "message": "And do not hesitate to continue to improve this patch as needed.",
+      "parentUuid": "79ef4908_b91e5ac9",
+      "revId": "772337e9f3e783c78c9c208d5b96661941b75c70",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
