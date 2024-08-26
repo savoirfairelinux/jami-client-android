@@ -31,10 +31,15 @@ class ConversationItemViewModel(
     val mode: Conversation.Mode = conversation.mode.blockingFirst()
     val uuid: String = uri.rawUriString
     val title: String = getTitle(conversation, conversationProfile, contacts)
+    // Presence of conversation is:
+    // - CONNECTED if at least one contact is connected
+    // - AVAILABLE if no contact is connected but at least one contact is available
+    // - OFFLINE otherwise
     val presenceStatus: Contact.PresenceStatus = if (showPresence)
         contacts.let {
             var status = Contact.PresenceStatus.OFFLINE
             for (contact in it) {
+                if (contact.contact.isUser) continue // Do not show presence for self
                 if (contact.presence == Contact.PresenceStatus.CONNECTED)
                     return@let Contact.PresenceStatus.CONNECTED
                 else if (contact.presence == Contact.PresenceStatus.AVAILABLE)
