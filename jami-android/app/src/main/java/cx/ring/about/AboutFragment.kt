@@ -20,7 +20,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.StringRes
@@ -37,10 +36,10 @@ class AboutFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
          FragAboutBinding.inflate(inflater, container, false).apply {
              release.text = getString(R.string.app_release, BuildConfig.VERSION_NAME)
-             logo.setOnClickListener { openWebsite(getString(R.string.app_website)) }
-             sflLogo.setOnClickListener { openWebsite(getString(R.string.savoirfairelinux_website)) }
-             contributeContainer.setOnClickListener { openWebsite(getString(R.string.ring_contribute_website)) }
-             licenseContainer.setOnClickListener { openWebsite(getString(R.string.gnu_license_website)) }
+             logo.setOnClickListener { visitWebpage(getString(R.string.app_website)) }
+             sflLogo.setOnClickListener { visitWebpage(getString(R.string.savoirfairelinux_website)) }
+             contributeContainer.setOnClickListener { visitWebpage(getString(R.string.ring_contribute_website)) }
+             licenseContainer.setOnClickListener { visitWebpage(getString(R.string.gnu_license_website)) }
              emailReportContainer.setOnClickListener { sendFeedbackEmail() }
              credits.setOnClickListener { creditsClicked() }
              toolbar.setNavigationOnClickListener { activity?.onBackPressedDispatcher?.onBackPressed() }
@@ -58,7 +57,7 @@ class AboutFragment : Fragment() {
         dialog.show(childFragmentManager, dialog.tag)
     }
 
-    private fun openWebsite(url: String) {
+    private fun visitWebpage(url: String) {
         launchSystemIntent(Intent(Intent.ACTION_VIEW, Uri.parse(url)), R.string.no_browser_app_installed)
     }
 

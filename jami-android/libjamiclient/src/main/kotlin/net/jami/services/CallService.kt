@@ -326,18 +326,18 @@ abstract class CallService(
         }
     }
 
-    fun setAudioPlugin(audioPlugin: String) {
+    fun setAudioExtension(audioExtension: String) {
         mExecutor.execute {
-            Log.i(TAG, "setAudioPlugin() running…")
-            JamiService.setAudioPlugin(audioPlugin)
+            Log.i(TAG, "setAudioExtension() running…")
+            JamiService.setAudioPlugin(audioExtension)
         }
     }
 
-    val currentAudioOutputPlugin: String?
+    val currentAudioOutputExtension: String?
         get() {
             try {
                 return mExecutor.submit<String> {
-                    Log.i(TAG, "getCurrentAudioOutputPlugin() running…")
+                    Log.i(TAG, "getCurrentAudioOutputExtension() running…")
                     JamiService.getCurrentAudioOutputPlugin()
                 }.get()
             } catch (e: Exception) {
