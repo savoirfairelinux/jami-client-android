@@ -858,7 +858,7 @@ class TvConversationAdapter(
                 ContactEvent.Event.ADDED -> R.string.hist_contact_added
                 ContactEvent.Event.INVITED -> R.string.hist_contact_invited
                 ContactEvent.Event.REMOVED -> R.string.hist_contact_left
-                ContactEvent.Event.BANNED -> R.string.hist_contact_banned
+                ContactEvent.Event.BANNED -> R.string.hist_contact_blocked
                 ContactEvent.Event.INCOMING_REQUEST -> R.string.hist_invitation_received
                 else -> R.string.hist_contact_added
             }
