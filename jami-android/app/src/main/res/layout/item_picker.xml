@@ -4,5 +4,5 @@
     android:id="@+id/item_image_view"
     android:layout_width="64dp"
     android:layout_height="64dp"
-    tools:src="@drawable/ic_plugin"
+    tools:src="@drawable/ic_extension"
     android:layout_margin="24dp" />

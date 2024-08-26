@@ -45,31 +45,31 @@ along with this program; if not, write to the Free Software
     <string name="dialog_wait_update">Updating account</string>
     <string name="dialog_wait_update_details">Please wait while your new account is updated…</string>
 
-    <string name="dialog_warn_ip2ip_account_title">Create empty SIP account ?</string>
+    <string name="dialog_warn_ip2ip_account_title">Create empty SIP account?</string>
     <string name="dialog_warn_ip2ip_account_message">You are about to create a SIP account with no valid hostname.
-        You will only be able to make and receive direct ip calls.
+        You will only be able to make and receive direct IP calls.
         You can edit your account later</string>
 
     <string name="account_type_ip2ip">IP account</string>
     <string name="help_ring">A Jami account allows you to reach people securely in peer to peer through a fully distributed network.</string>
 
-    <string name="help_sip_title">Add your SIP account</string>
+    <string name="help_sip_title">Add SIP account</string>
     <string name="help_sip">Configure an existing SIP account.</string>
-    <string name="create_sip_account">Add SIP account</string>
+    <string name="create_sip_account">Configure SIP account</string>
 
     <!-- Strings related to account deletion -->
-    <string name="account_delete_dialog_title">Delete account ?</string>
-    <string name="account_delete_dialog_message">This action can not be undone.</string>
+    <string name="account_delete_dialog_title">Delete account?</string>
+    <string name="account_delete_dialog_message">This action cannot be undone.</string>
 
     <!-- AccountManagementFragment -->
     <string name="empty_account_list">No account registered</string>
     <string name="normal_accounts_titles">Accounts</string>
-    <string name="normal_devices_titles">Linked Devices</string>
+    <string name="normal_devices_titles">Linked devices</string>
     <string name="account_device_revoke">Revoke device</string>
     <string name="account_device_revocation_success_title">Success</string>
     <string name="account_device_revocation_success">Device is now revoked!</string>
-    <string name="account_device_revocation_error_title">Can\'t revoke device</string>
-    <string name="account_device_revocation_wrong_password">Wrong password.</string>
+    <string name="account_device_revocation_error_title">Revoke device error</string>
+    <string name="account_device_revocation_wrong_password">Incorrect password.</string>
     <string name="account_device_revocation_unknown_device">Unknown device.</string>
     <string name="account_device_revocation_error_unknown">Unknown error.</string>
     <string name="account_password_change">Change Password</string>
@@ -96,8 +96,8 @@ along with this program; if not, write to the Free Software
     <string name="account_upnp_label">Enable UPnP</string>
     <string name="account_proxy_field">Proxy</string>
 
-    <!-- Plugin Details -->
-    <string name="account_preference_plugin_tab">Plugins</string>
+    <!-- Extension Details -->
+    <string name="account_preferences_extension_tab">Extensions</string>
 
     <!-- Audio Details -->
     <string name="account_audio_label">Audio</string>
@@ -194,38 +194,38 @@ along with this program; if not, write to the Free Software
     <string name="export_account_wait_message">Exporting account information</string>
     <string name="account_export_file">Backup account</string>
     <string name="account_export_file_summary">Backup your account on your device to restore it later.</string>
-    <string name="account_export_end_decryption_message">Couldn\'t unlock your account using the provided password.</string>
+    <string name="account_export_end_decryption_message">Incorrect password. Please try again with the correct password.</string>
     <string name="account_export_end_network_title">Network error</string>
-    <string name="account_export_end_network_message">Couldn\'t export account on the network. Check your connectivity.</string>
+    <string name="account_export_end_network_message">A network error occurred while exporting the account. Check your connectivity.</string>
     <string name="account_export_end_error_title">Error</string>
-    <string name="account_export_end_error_message">Couldn\'t export account. An unknown error occurred.</string>
+    <string name="account_export_end_error_message">An unknown error occurred while exporting the account.</string>
     <string name="account_enter_password">Enter password</string>
-    <string name="account_share_body">Contact me using \'%1$s\' on the Jami distributed communication platform: %2$s</string>
-    <string name="account_share_body_with_username">Contact me using \'%1$s\' or my public username \'%2$s\' on the Jami distributed communication platform: %3$s</string>
-    <string name="account_contact_me">Contact me on Jami !</string>
+    <string name="account_share_body">Contact me using “%1$s” on the Jami distributed communication platform: %2$s</string>
+    <string name="account_share_body_with_username">Contact me using “%1$s” or my public username “%2$s” on the Jami distributed communication platform: %3$s</string>
+    <string name="account_contact_me">Contact me on Jami!</string>
     <string name="update_account">Update account</string>
     <string name="account_migration">Your Jami account can be updated.\nPlease enter your password.</string>
     <string name="ring_account">Jami account</string>
     <string name="sip_account">SIP account</string>
     <string name="ring_account_identity">Identity</string>
     <string name="account_migration_title_dialog">Account migration</string>
-    <string name="account_migration_message_dialog">Your accounts need to be updated. Do you want to go the Account management screen to perform this operation ?</string>
+    <string name="account_migration_message_dialog">Your accounts need to be updated. Do you want to go the Account management screen to perform this operation?</string>
     <string name="account_update_needed">Update needed</string>
-    <string name="account_cannot_be_found_title">Can\'t find account</string>
-    <string name="account_cannot_be_found_message">Account couldn\'t be found on the Jami network.\nMake sure it was exported on Jami from an existing device, and that provided credentials are correct.</string>
+    <string name="account_cannot_be_found_title">Account error</string>
+    <string name="account_cannot_be_found_message">Unable to find account on the Jami network. Make sure it was exported on Jami from an existing device, and that provided credentials are correct.</string>
     <string name="account_sip_cannot_be_registered_message">You can continue with the account creation process or edit your information here. Edition is still possible later in the account settings.</string>
-    <string name="account_no_network_title">Can\'t connect to the network</string>
-    <string name="account_no_network_message">Could not add account because Jami couldn\'t connect to the distributed network. Check your device connectivity.</string>
+    <string name="account_no_network_title">Network error</string>
+    <string name="account_no_network_message">A connectivity error occurred while adding Jami account to the distributed network. Check your device connectivity.</string>
     <string name="account_device_added_title">Account device added</string>
     <string name="account_device_added_message">You have successfully setup your Jami account on this device.</string>
     <string name="account_device_updated_title">Account device updated</string>
     <string name="account_device_updated_message">You have successfully updated your Jami account.</string>
-    <string name="account_cannot_be_updated_message">Account device couldn\'t be update. Please check your password.</string>
-    <string name="account_sip_success_title">Sip account registered</string>
-    <string name="account_sip_success_message">You have successfully registered your Sip account.</string>
+    <string name="account_cannot_be_updated_message">An error occurred while updating account. Please check your password.</string>
+    <string name="account_sip_success_title">SIP account registered</string>
+    <string name="account_sip_success_message">You have successfully registered your SIP account.</string>
     <string name="account_sip_register_anyway">Register anyway</string>
 
-    <!--  TV  -->
+    <!-- TV -->
     <string name="account_tv_settings_header">Account settings</string>
     <string name="account_tv_advance_settings_header">Advanced settings</string>
     <string name="account_tv_add_contact">Add contact</string>
@@ -244,11 +244,11 @@ along with this program; if not, write to the Free Software
     <string name="account_link_export_button">Link a new device</string>
     <string name="account_link_show_button">Show %d more linked device</string>
     <string name="account_link_hide_button">Hide linked device</string>
-    <string name="account_link_export_info">To use this account on other devices, you must first expose it on Jami. This will generate a PIN code that you must enter on the new device to set up the account. The PIN is valid for 10 minutes.</string>
+    <string name="account_link_export_info">To use this account on other devices, you must first expose it on Jami. This will generate a PIN code that you must enter on the new device to set up the account. The PIN will expire in 10 minutes.</string>
     <string name="account_start_export_button">Generate PIN</string>
     <string name="account_end_export_button">close</string>
-    <string name="account_end_export_infos">Your PIN is:\n\n%%\n\nTo complete the process, you need to open Jami on the new device. Create a new account with \"Link this device to an account\". Your PIN is valid for 10 minutes.</string>
-    <string name="account_link_export_info_light">To use this account on other devices, you must first expose it on Jami. This will generate a PIN code that you must enter on the new device to set up the account. The PIN is valid for 10 minutes.</string>
+    <string name="account_end_export_infos">Your PIN is:\n\n%%\n\nTo complete the process, you need to open Jami on the new device. Create a new account with “Link this device to an account”. The PIN will expire in 10 minutes.</string>
+    <string name="account_link_export_info_light">To use this account on other devices, you must first expose it on Jami. This will generate a PIN code that you must enter on the new device to set up the account. The PIN will expire in 10 minutes.</string>
     <string name="account_export_title">Link account to other devices</string>
     <string name="account_connect_server_button">Connect to management server</string>
     <string name="account_connect_button">Connect</string>
@@ -282,23 +282,23 @@ along with this program; if not, write to the Free Software
     <string name="account_creation_profile">Create your profile</string>
     <string name="account_creation_ring">Create your Jami account</string>
     <string name="account_link_title">Link this device</string>
-    <string name="account_sip_cannot_be_registered">Can\'t register account</string>
+    <string name="account_sip_cannot_be_registered">An error occurred while registering SIP account.</string>
 
     <!-- Edit profile-->
-    <string name="account_edit_profile">Edit my account</string>
+    <string name="account_edit_profile">Edit profile</string>
 
     <!-- Devices -->
     <string name="account_revoke_device_hint">Enter password to confirm</string>
     <string name="enter_password">Enter password</string>
     <string name="revoke_device_title">Revoke device</string>
-    <string name="revoke_device_message">Are you sure you want to revoke %1$s ?</string>
+    <string name="revoke_device_message">Are you sure you want to revoke %1$s?</string>
     <string name="revoke_device_wait_title">Please wait…</string>
     <string name="revoke_device_wait_message">Revoking device</string>
     <string name="rename_device_title">Rename this device</string>
     <string name="rename_device_message">Choose a new name to identify this device in your Jami account</string>
     <string name="rename_device_button">Rename device</string>
     <string name="account_rename_device_hint">Choose new device name</string>
-    <string name="account_device_name_empty">Device name can\'t be empty</string>
+    <string name="account_device_name_empty">Device name cannot be empty.</string>
     <string name="account_device_this_indicator">This device</string>
     <string name="account_disabled_indicator">disabled</string>
 
@@ -312,12 +312,12 @@ along with this program; if not, write to the Free Software
     <string name="account_link_password">This account is password-encrypted, enter the password to generate the PIN code.</string>
     <string name="account_link_generate_button">Generate</string>
     <string name="account_link_time_valid">The PIN code will be invalid: %1$s.</string>
-    <string name="account_link_device_info">Choose \"Link a new device\" from the other Jami app to show the QR code or PIN</string>
+    <string name="account_link_device_info">Choose “Link a new device” from the other Jami app to show the QR code or PIN</string>
     <string name="account_generate_export_device">On the other device</string>
-    <string name="account_generate_export_info">Install and launch Jami, select \"Import from an other device\" and scan the QR code.</string>
+    <string name="account_generate_export_info">Install and launch Jami, select “Import from an other device” and scan the QR code.</string>
     <string name="content_description_qr_generated">Your Qr Code</string>
-    <string name="account_generate_export_invalid">The PIN is no longer valid.\n Enter the password and generate another one to link the new device.</string>
-    <string name="account_generate_export_invalid_two">The PIN is no longer valid.\n Generate another one to link the new device.</string>
+    <string name="account_generate_export_invalid">The PIN is no longer valid.\nEnter the password and generate another one to link the new device.</string>
+    <string name="account_generate_export_invalid_two">The PIN is no longer valid.\nGenerate another one to link the new device.</string>
     <string name="help_pin_info">Fill if the account is password-encrypted</string>
     <string name="connect_device_scanqr">Scan QR</string>
     <string name="connect_device_enterPIN">Or enter PIN</string>
