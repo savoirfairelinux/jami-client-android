@@ -400,20 +400,20 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                 R.id.conv_send_file -> openFilePicker()
                 R.id.conv_select_media -> openGallery()
                 R.id.conv_share_location -> shareLocation()
-                R.id.chat_plugins -> presenter.showPluginListHandlers()
+                R.id.chat_extensions -> presenter.showExtensionListHandlers()
             }
             false
         }
-        popup.menu.findItem(R.id.chat_plugins).isVisible = JamiService.getPluginsEnabled() && !JamiService.getChatHandlers().isEmpty()
+        popup.menu.findItem(R.id.chat_extensions).isVisible = JamiService.getPluginsEnabled() && !JamiService.getChatHandlers().isEmpty()
         popup.setForceShowIcon(true)
         popup.show()
     }
 
-    override fun showPluginListHandlers(accountId: String, contactId: String) {
-        Log.w(TAG, "show Plugin Chat Handlers List")
-        val fragment = PluginHandlersListFragment.newInstance(accountId, contactId)
+    override fun showExtensionListHandlers(accountId: String, contactId: String) {
+        Log.w(TAG, "show Extension Chat Handlers List")
+        val fragment = ExtensionHandlersListFragment.newInstance(accountId, contactId)
         childFragmentManager.beginTransaction()
-            .add(R.id.pluginListHandlers, fragment, PluginHandlersListFragment.TAG)
+            .add(R.id.extensionListHandlers, fragment, ExtensionHandlersListFragment.TAG)
             .commit()
         binding?.let { binding ->
             val params = binding.mapCard.layoutParams as RelativeLayout.LayoutParams
@@ -426,11 +426,11 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         }
     }
 
-    fun hidePluginListHandlers() {
+    fun hideExtensionListHandlers() {
         if (binding!!.mapCard.visibility != View.GONE) {
             binding!!.mapCard.visibility = View.GONE
             val fragmentManager = childFragmentManager
-            val fragment = fragmentManager.findFragmentById(R.id.pluginListHandlers)
+            val fragment = fragmentManager.findFragmentById(R.id.extensionListHandlers)
             if (fragment != null) {
                 fragmentManager.beginTransaction()
                     .remove(fragment)

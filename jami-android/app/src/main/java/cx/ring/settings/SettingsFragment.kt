@@ -36,10 +36,10 @@ import cx.ring.client.LogsActivity
 import cx.ring.databinding.FragSettingsBinding
 import cx.ring.interfaces.AppBarStateListener
 import cx.ring.mvp.BaseSupportFragment
-import cx.ring.settings.pluginssettings.PluginDetails
-import cx.ring.settings.pluginssettings.PluginPathPreferenceFragment
-import cx.ring.settings.pluginssettings.PluginSettingsFragment
-import cx.ring.settings.pluginssettings.PluginsListSettingsFragment
+import cx.ring.settings.extensionssettings.ExtensionDetails
+import cx.ring.settings.extensionssettings.ExtensionPathPreferenceFragment
+import cx.ring.settings.extensionssettings.ExtensionSettingsFragment
+import cx.ring.settings.extensionssettings.ExtensionsListSettingsFragment
 import cx.ring.utils.ActionHelper.openJamiDonateWebPage
 import dagger.hilt.android.AndroidEntryPoint
 import net.jami.daemon.JamiService
@@ -86,15 +86,15 @@ class SettingsFragment :
                 }
             }
 
-            settingsPluginsLayout.setOnClickListener {
+            settingsExtensionsLayout.setOnClickListener {
                 if (JamiService.getPluginsEnabled()) {
-                    goToPluginsListSettings()
+                    goToExtensionsListSettings()
                 }
             }
             settingsDarkTheme.setOnCheckedChangeListener { _, isChecked: Boolean ->
                 presenter.darkMode = isChecked
             }
-            settingsPluginsSwitch.setOnCheckedChangeListener { _, isChecked: Boolean ->
+            settingsExtensionsSwitch.setOnCheckedChangeListener { _, isChecked: Boolean ->
                 JamiService.setPluginsEnabled(isChecked)
             }
             val save = CompoundButton.OnCheckedChangeListener { _, isChecked: Boolean ->
@@ -134,7 +134,7 @@ class SettingsFragment :
                 activity?.onBackPressedDispatcher?.onBackPressed()
             }
             settingsDarkTheme.isChecked = presenter.darkMode
-            settingsPluginsSwitch.isChecked = JamiService.getPluginsEnabled()
+            settingsExtensionsSwitch.isChecked = JamiService.getPluginsEnabled()
             if (TextUtils.isEmpty(JamiApplication.instance?.pushToken)) {
                 settingsPushNotificationsLayout.visibility = View.GONE
             }
@@ -154,43 +154,43 @@ class SettingsFragment :
         backPressedCallback.isEnabled = true
     }
 
-    private fun goToPluginsListSettings(accountId: String? = "") {
+    private fun goToExtensionsListSettings(accountId: String? = "") {
         val binding = binding ?: return
-        val content = PluginsListSettingsFragment.newInstance(accountId)
+        val content = ExtensionsListSettingsFragment.newInstance(accountId)
         childFragmentManager
             .beginTransaction()
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-            .replace(R.id.fragment_container, content, PLUGINS_LIST_SETTINGS_TAG)
-            .addToBackStack(PLUGINS_LIST_SETTINGS_TAG).commit()
+            .replace(R.id.fragment_container, content, EXTENSIONS_LIST_SETTINGS_TAG)
+            .addToBackStack(EXTENSIONS_LIST_SETTINGS_TAG).commit()
         binding.fragmentContainer.isVisible = true
         binding.donateButton.isVisible = false
         backPressedCallback.isEnabled = true
     }
 
-    fun goToPluginSettings(pluginDetails: PluginDetails) {
-        val content = PluginSettingsFragment.newInstance(pluginDetails)
+    fun goToExtensionSettings(extensionDetails: ExtensionDetails) {
+        val content = ExtensionSettingsFragment.newInstance(extensionDetails)
         val fragmentTransaction = childFragmentManager
             .beginTransaction()
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-            .replace(R.id.fragment_container, content, PLUGIN_SETTINGS_TAG)
+            .replace(R.id.fragment_container, content, EXTENSION_SETTINGS_TAG)
         val backStackEntryCount = childFragmentManager.backStackEntryCount
         if(backStackEntryCount > 0) {
             val topBackStackEntry = childFragmentManager.getBackStackEntryAt(backStackEntryCount-1)
-            if (topBackStackEntry.name != PLUGIN_SETTINGS_TAG)
-                fragmentTransaction.addToBackStack(PLUGIN_SETTINGS_TAG)
+            if (topBackStackEntry.name != EXTENSION_SETTINGS_TAG)
+                fragmentTransaction.addToBackStack(EXTENSION_SETTINGS_TAG)
         }
         fragmentTransaction.commit()
         binding!!.fragmentContainer.isVisible = true
         backPressedCallback.isEnabled = true
     }
 
-    fun goToPluginPathPreference(pluginDetails: PluginDetails, preferenceKey: String) {
-        val content = PluginPathPreferenceFragment.newInstance(pluginDetails, preferenceKey)
+    fun goToExtensionPathPreference(extensionDetails: ExtensionDetails, preferenceKey: String) {
+        val content = ExtensionPathPreferenceFragment.newInstance(extensionDetails, preferenceKey)
         childFragmentManager
             .beginTransaction()
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-            .replace(R.id.fragment_container, content, PLUGIN_PATH_PREFERENCE_TAG)
-            .addToBackStack(PLUGIN_PATH_PREFERENCE_TAG).commit()
+            .replace(R.id.fragment_container, content, EXTENSION_PATH_PREFERENCE_TAG)
+            .addToBackStack(EXTENSION_PATH_PREFERENCE_TAG).commit()
         binding!!.fragmentContainer.isVisible = true
         backPressedCallback.isEnabled = true
     }
@@ -304,8 +304,8 @@ class SettingsFragment :
         const val NOTIFICATION_PUBLIC = 1
         const val NOTIFICATION_SECRET = 2
         const val VIDEO_SETTINGS_TAG = "VideoPrefs"
-        const val PLUGINS_LIST_SETTINGS_TAG = "PluginsListSettings"
-        const val PLUGIN_SETTINGS_TAG = "PluginSettings"
-        const val PLUGIN_PATH_PREFERENCE_TAG = "PluginPathPreference"
+        const val EXTENSIONS_LIST_SETTINGS_TAG = "ExtensionsListSettings"
+        const val EXTENSION_SETTINGS_TAG = "ExtensionSettings"
+        const val EXTENSION_PATH_PREFERENCE_TAG = "ExtensionPathPreference"
     }
 }
