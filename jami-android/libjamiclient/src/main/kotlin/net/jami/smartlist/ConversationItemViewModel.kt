@@ -35,6 +35,7 @@ class ConversationItemViewModel(
         contacts.let {
             var status = Contact.PresenceStatus.OFFLINE
             for (contact in it) {
+                if (contact.contact.isUser) continue
                 if (contact.presence == Contact.PresenceStatus.CONNECTED)
                     return@let Contact.PresenceStatus.CONNECTED
                 else if (contact.presence == Contact.PresenceStatus.AVAILABLE)
