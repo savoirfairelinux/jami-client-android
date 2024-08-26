@@ -14,25 +14,25 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-package cx.ring.settings.pluginssettings
+package cx.ring.settings.extensionssettings
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import cx.ring.R
-import cx.ring.viewholders.PluginSettingViewHolder
+import cx.ring.viewholders.ExtensionSettingViewHolder
 
-class PluginsListAdapter(private var mList: List<PluginDetails>, private val listener: PluginListItemListener, private val accountId: String? = "") :
-    RecyclerView.Adapter<PluginSettingViewHolder>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PluginSettingViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.frag_plugins_list_item, parent, false)
-        return PluginSettingViewHolder(view, listener)
+class ExtensionsListAdapter(private var mList: List<ExtensionDetails>, private val listener: ExtensionListItemListener, private val accountId: String? = "") :
+    RecyclerView.Adapter<ExtensionSettingViewHolder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExtensionSettingViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.frag_extensions_list_item, parent, false)
+        return ExtensionSettingViewHolder(view, listener)
     }
 
-    fun notifyItemChanged(pluginDetails: PluginDetails) =
-        mList.indexOf(pluginDetails).let { if (it != -1) notifyItemChanged(it) }
+    fun notifyItemChanged(extensionDetails: ExtensionDetails) =
+        mList.indexOf(extensionDetails).let { if (it != -1) notifyItemChanged(it) }
 
-    override fun onBindViewHolder(holderSetting: PluginSettingViewHolder, position: Int) {
+    override fun onBindViewHolder(holderSetting: ExtensionSettingViewHolder, position: Int) {
         for (item in mList) {
             item.accountId = accountId
         }
@@ -41,10 +41,10 @@ class PluginsListAdapter(private var mList: List<PluginDetails>, private val lis
 
     override fun getItemCount(): Int {
         if (!accountId!!.isEmpty()) {
-            var copy: List<PluginDetails> = ArrayList()
+            var copy: List<ExtensionDetails> = ArrayList()
             for (item in mList) {
                 item.accountId = accountId
-                if (!item.pluginPreferences.isEmpty())
+                if (!item.extensionPreferences.isEmpty())
                     copy += item
             }
             mList = copy
@@ -52,20 +52,20 @@ class PluginsListAdapter(private var mList: List<PluginDetails>, private val lis
         return mList.size
     }
 
-    fun updatePluginsList(listPlugins: List<PluginDetails>) {
-        for (item in listPlugins) {
+    fun updateExtensionsList(listExtensions: List<ExtensionDetails>) {
+        for (item in listExtensions) {
             item.accountId = accountId
         }
-        mList = listPlugins
+        mList = listExtensions
         notifyDataSetChanged()
     }
 
-    interface PluginListItemListener {
-        fun onPluginItemClicked(pluginDetails: PluginDetails)
-        fun onPluginEnabled(pluginDetails: PluginDetails)
+    interface ExtensionListItemListener {
+        fun onExtensionItemClicked(extensionDetails: ExtensionDetails)
+        fun onExtensionEnabled(extensionDetails: ExtensionDetails)
     }
 
     companion object {
-        val TAG = PluginsListAdapter::class.simpleName!!
+        val TAG = ExtensionsListAdapter::class.simpleName!!
     }
 }
