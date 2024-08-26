@@ -14,7 +14,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-package cx.ring.plugins.RecyclerPicker;
+package cx.ring.extensions.RecyclerPicker;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;

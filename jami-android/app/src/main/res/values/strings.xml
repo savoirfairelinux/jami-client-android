@@ -26,7 +26,7 @@ along with this program; if not, write to the Free Software
     <string name="ring_contribute_website" translatable="false">https://jami.net/contribute</string>
     <string name="savoirfairelinux_website" translatable="false">https://savoirfairelinux.com</string>
 
-    <string name="copyright" translatable="false">2004&#8211;2024 Savoir-faire Linux Inc.</string>
+    <string name="copyright" translatable="false">2004–2024 Savoir-faire Linux Inc.</string>
     <string name="feedback_section">Feedback</string>
     <string name="report"><u>Send us an email</u></string>
     <string name="section_license">License</string>
@@ -35,10 +35,10 @@ along with this program; if not, write to the Free Software
     <string name="contribute_section">Contribute</string>
     <string name="version_section">Version</string>
     <string name="no_email_app_installed">No email app found, install one to send us a report</string>
-    <string name="no_browser_app_installed">No web browser app found, install one to view this page</string>
+    <string name="no_browser_app_installed">No web browser app found, install one to visit this page</string>
     <string name="email_chooser_title">Send mail using…</string>
     <string name="website_chooser_title">View website using…</string>
-    <string name="license">This software is provided \"as is\", without warranty of any kind. For details, see <u>GNU General Public License version 3 or later</u></string>
+    <string name="license">This software is provided “as is”, without warranty of any kind. For details, see <u>GNU General Public License version 3 or later</u></string>
     <string name="description">Jami is free software for universal communication which respects the freedoms and privacy of its users.</string>
     <string name="credits">Credits</string>
     <string name="pip_title">Jami Conference</string>
@@ -144,7 +144,7 @@ along with this program; if not, write to the Free Software
     <string name="menu_item_settings">Settings</string>
     <string name="menu_item_advanced_settings">Advanced Settings</string>
     <string name="menu_item_account_settings">Account Settings</string>
-    <string name="menu_item_plugin_list">Plugins Settings</string>
+    <string name="menu_item_extension_list">Extensions Settings</string>
     <string name="menu_item_share">Share my account</string>
     <string name="menu_item_about">About Jami</string>
 
@@ -164,7 +164,7 @@ along with this program; if not, write to the Free Software
     </plurals>
 
     <!-- ContactList Fragment -->
-    <string name="searchbar_hint">Search name or conversation&#8230;</string>
+    <string name="searchbar_hint">Search name or conversation…</string>
     <string name="choose_number">Choose a number</string>
 
     <!-- FileExplorerDFragement -->
@@ -222,17 +222,17 @@ along with this program; if not, write to the Free Software
     <string name="hist_in_call">Incoming call of %1$s</string>
     <string name="hist_out_call">Outgoing call of %1$s</string>
     <string name="call_duration">Lasted %s</string>
-    <string name="start_error_title">Can\'t start Jami !</string>
+    <string name="start_error_title">Cannot start Jami!</string>
     <string name="start_error_mic_required">Jami requires the microphone permission to work.</string>
-    <string name="action_call_accept">Take call</string>
-    <string name="action_call_accept_audio">Answer in audio</string>
-    <string name="action_call_accept_video">Answer in video</string>
-    <string name="action_call_hold_accept">Hold and take call audio</string>
-    <string name="action_call_hold_accept_video">Hold and take call video</string>
-    <string name="action_call_end_accept">End and take call</string>
+    <string name="action_call_accept">Accept call</string>
+    <string name="action_call_accept_audio">Accept incoming call with audio only</string>
+    <string name="action_call_accept_video">Accept incoming call with video</string>
+    <string name="action_call_hold_accept">Accept incoming call with audio only and hold current call</string>
+    <string name="action_call_hold_accept_video">Accept incoming call with video and hold current call</string>
+    <string name="action_call_end_accept">Accept incoming call and end current call</string>
     <string name="action_call_decline">Decline</string>
     <string name="action_call_mic_mute">Mute microphone</string>
-    <string name="action_load_plugin">Load Plugin</string>
+    <string name="action_load_extension">Load extension</string>
     <string name="ab_action_speakerphone">Enable speaker</string>
     <string name="ab_action_contact_add">Add to contacts</string>
     <string name="ab_action_contact_add_question">Add to contacts?</string>
@@ -276,15 +276,15 @@ along with this program; if not, write to the Free Software
     <string name="ringtone_error_size_too_big">This file is too big. The maximum size is %1$dkB.</string>
     <string name="ringtone_custom_prompt">Set a custom ringtone</string>
     <string name="ringtone_custom_label">Custom</string>
-    <string name="ringtone_jami_tones">Jami Tones</string>
+    <string name="ringtone_jami_tones">Jami ringtones</string>
     <string name="ringtone_default_name" translatable="false">1 AfroNigeria.opus</string>
     <string name="ca_root_file" translatable="false">cacert.pem</string>
 
     <!-- Read contacts permission -->
-    <string name="permission_dialog_read_contacts_message">Jami needs the "Read contacts" permission to enable this feature. Please grant it.</string>
+    <string name="permission_dialog_read_contacts_message">Jami needs the “Read contacts” permission to enable this feature. Please grant it.</string>
 
     <!-- Write call log permission -->
-    <string name="permission_dialog_write_call_log_message">Jami needs the "Write call log" permission to enable this feature. Please grant it.</string>
+    <string name="permission_dialog_write_call_log_message">Jami needs the “Write call log” permission to enable this feature. Please grant it.</string>
 
     <!-- QRCode Scan -->
     <string name="scan_qr_account_message">Scan the QR Code of the account you want to add.</string>
@@ -303,8 +303,8 @@ along with this program; if not, write to the Free Software
     <string name="conversation_details">Conversation details</string>
     <string name="contact_details">Contact details</string>
     <string name="conversation_action_delete_this">Delete this conversation</string>
-    <string name="conversation_action_delete_this_title">Delete this conversation ?</string>
-    <string name="conversation_action_delete_this_message">This action can not be undone.</string>
+    <string name="conversation_action_delete_this_title">Delete this conversation?</string>
+    <string name="conversation_action_delete_this_message">This action cannot be undone.</string>
     <string name="conversation_action_history_clear">Clear history</string>
     <string name="conversation_action_history_clear_title">Clear the conversation history?</string>
     <string name="conversation_action_history_clear_message">This will definitely clear the conversation history.</string>
@@ -345,7 +345,7 @@ along with this program; if not, write to the Free Software
     <string name="conversation_contact_invited">%1$s was invited</string>
     <string name="conversation_contact_added">%1$s joined</string>
     <string name="conversation_contact_left">%1$s left</string>
-    <string name="conversation_contact_banned">%1$s was banned</string>
+    <string name="conversation_contact_banned">%1$s was blocked</string>
     <string name="conversation_contact_unbanned">%1$s was unbanned</string>
     <string name="conversation_search_hint">Search conversation</string>
 
@@ -377,7 +377,7 @@ along with this program; if not, write to the Free Software
     <string name="help_password_choose">Choose a strong password you will remember to protect your Jami account.</string>
     <string name="help_password_enter">Enter your main Jami account password.</string>
     <string name="help_server_enter">Enter URL of management server.</string>
-    <string name="help_pin_enter">Enter the PIN from another configured Jami account. Use the \"export Jami account\" feature to obtain a PIN.</string>
+    <string name="help_pin_enter">Enter the PIN from another configured Jami account. Use the “Export Jami account” feature to obtain a PIN.</string>
     <string name="pin_copied">PIN code copied to clipboard.</string>
     <string name="wizard_next">Next</string>
     <string name="wizard_back">Back</string>
@@ -385,7 +385,7 @@ along with this program; if not, write to the Free Software
     <string name="hist_contact_invited">Contact invited</string>
     <string name="hist_contact_added">Contact added</string>
     <string name="hist_contact_left">Contact left</string>
-    <string name="hist_contact_banned">Contact banned</string>
+    <string name="hist_contact_banned">Contact blocked</string>
     <string name="hist_contact_unbanned">Contact unbanned</string>
     <string name="hist_invitation_received">Invitation received</string>
 
@@ -443,7 +443,7 @@ along with this program; if not, write to the Free Software
     <string name="gallery_error_title">No Gallery app found</string>
     <string name="gallery_error_message">No application found on device to open Gallery</string>
 
-    <string name="generic_error">An unknown error occurred</string>
+    <string name="generic_error">An unknown error occurred.</string>
 
     <!--File Transfer-->
     <string name="invalid_file">Invalid file</string>
@@ -464,7 +464,7 @@ along with this program; if not, write to the Free Software
     <string name="file_saved_in">File saved in %s</string>
     <string name="file_saved_successfully">File saved successfully</string>
     <string name="file_download">Download</string>
-    <string name="no_space_left_on_device">No space left on device</string>
+    <string name="no_space_left_on_device">No storage space available on the device</string>
     <string name="title_media_viewer">Media viewer</string>
     <string name="menu_file_open">Open file</string>
     <string name="menu_file_download">Download file</string>
@@ -509,8 +509,8 @@ along with this program; if not, write to the Free Software
     <string name="audio_permission_rationale_message">Jami requires the microphone permission to use speech-to-text and record audio features. It will be asked in the next step.</string>
     <string name="camera_permission_rationale_message">Jami requires the camera permission to record video and place video call. It will be asked in the next step.</string>
     <string name="unable_to_start_recorder">Unable to start recording audio.</string>
-    <string name="error_sharing_file">Error sharing file.</string>
-    <string name="error_opening_file">Error opening file.</string>
+    <string name="error_sharing_file">An error occurred while sharing the file.</string>
+    <string name="error_opening_file">An error occurred while opening the file.</string>
 
     <!-- Wizard -->
     <string name="wizard_status_recommended">Recommended</string>
@@ -529,31 +529,31 @@ along with this program; if not, write to the Free Software
     <string name="wizard_profile_button">Save Profile</string>
     <string name="wizard_profile_skip">Skip and do this later</string>
     <string name="fab_path_choose">Choose another file</string>
-    <string name="chat_plugins">Chat Plugins</string>
+    <string name="chat_extensions">Chat extensions</string>
 
     <!-- Bottom sheet -->
     <string name="bottomSheet_share_btn">Share</string>
     <string name="bottomSheet_dialpad_btn">Dialpad</string>
-    <string name="bottomSheet_plugins_btn">Plugins</string>
+    <string name="bottomSheet_extensions_btn">Extensions</string>
     <string name="bottomSheet_add_participants_btn">Add</string>
     <string name="bottomSheet_change_camera_btn">Change</string>
     <string name="bottomSheet_camera_onoff_switch_btn">Camera</string>
-    <string name="bottomSheet_hangup_btn">End Call</string>
+    <string name="bottomSheet_hangup_btn">End call</string>
     <string name="bottomSheet_mute_microphone_btn">Micro</string>
     <string name="bottomSheet_sound_output_btn">Sounds</string>
     <string name="bottomSheet_raiseHand_btn">Raise hand</string>
-    <string name="open_account_plugin_settings">Open Account Plugin Settings</string>
-    <string name="open_general_plugin_settings">Open General Plugin Settings</string>
+    <string name="open_account_extension_settings">Open Account Extension Settings</string>
+    <string name="open_general_extension_settings">Open General Extension Settings</string>
     <string name="uninstall">Uninstall</string>
     <string name="reset">Reset</string>
 
     <!-- Swarm Detail -->
     <string name="rename_btn">Confirm</string>
-    <string name="rename_error">can\'t be empty</string>
-    <string name="swarm_description">Add a description</string>
-    <string name="tab_about">About</string>
+    <string name="rename_error">cannot be empty.</string>
+    <string name="swarm_description">Add description</string>
     <string name="tab_members">Members</string>
-    <string name="tab_documetn">Documents</string>
+    <string name="tab_files">Files</string>
+    <string name="tab_settings">Settings</string>
     <string name="not_admin_toast">Only admins can edit the information of this group</string>
     <string name="dialogtitle_title">Edit Swarm title</string>
     <string name="dialogtitle_description">Edit Swarm description</string>
@@ -590,11 +590,11 @@ along with this program; if not, write to the Free Software
     <string name="donation_setting_description">Enable the donation reminder</string>
     <string name="donation_url" translatable="false">https://crowdfunding.lfx.linuxfoundation.org/projects/jami-a-gnu-package</string>
 
-    <!--  Plugin  -->
+    <!--  Extension  -->
     <string name="unable_to_load">Unable to load %1$s</string>
-    <string name="load_sucess">%1$s: enabled</string>
-    <string name="unload_sucess">%1$s: disabled</string>
-    <string name="install_sucess">Extension %1$s has been successfully installed.</string>
+    <string name="load_success">%1$s: enabled</string>
+    <string name="unload_success">%1$s: disabled</string>
+    <string name="install_success">Extension %1$s has been successfully installed.</string>
     <string name="install_error">An error occurred while importing the extension.</string>
 
 </resources>
