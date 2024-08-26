@@ -88,6 +88,24 @@
       "parentUuid": "c95dc7d5_93525110",
       "revId": "772337e9f3e783c78c9c208d5b96661941b75c70",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bbaec9f8_b488e9b0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-08-26T22:58:48Z",
+      "side": 1,
+      "message": "\u003e Fyi, that\u0027s not possible to rename:\n\u003e\n\u003e* external libraries (such as Markwon). That\u0027s not our code and that\u0027s not related to Jami plugins.\n\u003e* all calls to Jami daemon via JamiService.xxx. That rely to Jami daemon project and will directly impact all client projects (not only android but qt and ios), \"breaking\" backward compatibility.\n\nDo not completely understand what is required here. Does something else need to be reverted to enable this patch to be merged? Thank you",
+      "parentUuid": "f0848d69_a3880698",
+      "revId": "772337e9f3e783c78c9c208d5b96661941b75c70",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
