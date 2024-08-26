@@ -14,21 +14,21 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-package cx.ring.plugins
+package cx.ring.extensions
 
 import android.content.Context
 import android.view.View
 import androidx.preference.Preference
 import androidx.preference.PreferenceViewHolder
 import cx.ring.R
-import cx.ring.databinding.FragPluginSettingsBinding
-import cx.ring.settings.pluginssettings.PluginDetails
+import cx.ring.databinding.FragExtensionSettingsBinding
+import cx.ring.settings.extensionssettings.ExtensionDetails
 
-class PluginPreferences : Preference {
-    private var mPluginDetails: PluginDetails? = null
+class ExtensionPreferences : Preference {
+    private var mExtensionDetails: ExtensionDetails? = null
     private var resetClickListener: View.OnClickListener? = null
     private var installClickListener: View.OnClickListener? = null
-    private var openPluginSettingsListener: View.OnClickListener? = null
+    private var openExtensionSettingsListener: View.OnClickListener? = null
     private var mAccountId: String? = ""
     fun setResetClickListener(clickListener: View.OnClickListener?) {
         resetClickListener = clickListener
@@ -38,42 +38,42 @@ class PluginPreferences : Preference {
         installClickListener = clickListener
     }
 
-    fun setPluginSettingsRedirect(clickListener: View.OnClickListener?) {
-        openPluginSettingsListener = clickListener
+    fun setExtensionSettingsRedirect(clickListener: View.OnClickListener?) {
+        openExtensionSettingsListener = clickListener
     }
 
-    constructor(context: Context?, pluginDetails: PluginDetails?, accountId: String? = "") : super(
+    constructor(context: Context?, extensionDetails: ExtensionDetails?, accountId: String? = "") : super(
         context!!
     ) {
-        mPluginDetails = pluginDetails
+        mExtensionDetails = extensionDetails
         mAccountId = accountId
-        layoutResource = R.layout.frag_plugin_settings
+        layoutResource = R.layout.frag_extension_settings
     }
 
     override fun onBindViewHolder(holder: PreferenceViewHolder) {
         super.onBindViewHolder(holder)
-        val binding = FragPluginSettingsBinding.bind(holder.itemView)
-        if (mPluginDetails != null) {
-            binding.pluginSettingIcon.setImageDrawable(mPluginDetails!!.icon)
-            binding.pluginSettingTitle.text = mPluginDetails!!.name
+        val binding = FragExtensionSettingsBinding.bind(holder.itemView)
+        if (mExtensionDetails != null) {
+            binding.extensionSettingIcon.setImageDrawable(mExtensionDetails!!.icon)
+            binding.extensionSettingTitle.text = mExtensionDetails!!.name
         }
         if (resetClickListener != null) {
-            binding.pluginSettingReset.setOnClickListener(resetClickListener)
+            binding.extensionSettingReset.setOnClickListener(resetClickListener)
         }
         if (mAccountId!!.isEmpty()) {
             if (installClickListener != null) {
-                binding.pluginSettingInstall.setOnClickListener(installClickListener)
+                binding.extensionSettingInstall.setOnClickListener(installClickListener)
             }
         } else {
-            binding.pluginSettingButtons.weightSum = 1.0F
-            binding.pluginSettingInstall.visibility = View.GONE
+            binding.extensionSettingButtons.weightSum = 1.0F
+            binding.extensionSettingInstall.visibility = View.GONE
         }
         if (mAccountId!!.isEmpty()) {
-            binding.pluginAccountSettingRedirect.setText(R.string.open_account_plugin_settings)
+            binding.extensionAccountSettingRedirect.setText(R.string.open_account_extension_settings)
         } else {
-            binding.pluginAccountSettingRedirect.setText(R.string.open_general_plugin_settings)
+            binding.extensionAccountSettingRedirect.setText(R.string.open_general_extension_settings)
         }
-        if (openPluginSettingsListener != null)
-            binding.pluginAccountSettingRedirect.setOnClickListener(openPluginSettingsListener)
+        if (openExtensionSettingsListener != null)
+            binding.extensionAccountSettingRedirect.setOnClickListener(openExtensionSettingsListener)
     }
 }

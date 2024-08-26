@@ -14,16 +14,16 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-package cx.ring.settings.pluginssettings
+package cx.ring.settings.extensionssettings
 
 import androidx.preference.PreferenceDataStore
 import java.util.concurrent.locks.ReadWriteLock
 import java.util.concurrent.locks.ReentrantReadWriteLock
 
-class PluginPreferencesDataStore(private val mPluginDetails: PluginDetails) : PreferenceDataStore() {
+class ExtensionPreferencesDataStore(private val mExtensionDetails: ExtensionDetails) : PreferenceDataStore() {
     private val mPreferenceTypes: MutableMap<String, String> = HashMap()
 
-    private var preferencesValues: Map<String, String> = mPluginDetails.pluginPreferencesValues
+    private var preferencesValues: Map<String, String> = mExtensionDetails.extensionPreferencesValues
     private val lock: ReadWriteLock = ReentrantReadWriteLock()
 
     fun addToPreferenceTypes(preferenceModel: Map<String, String>) {
@@ -37,39 +37,39 @@ class PluginPreferencesDataStore(private val mPluginDetails: PluginDetails) : Pr
     }
 
     override fun putBoolean(key: String, value: Boolean) {
-        if (mPluginDetails.setPluginPreference(key, if (value) "1" else "0")) {
+        if (mExtensionDetails.setExtensionPreference(key, if (value) "1" else "0")) {
             notifyPreferencesValuesChange()
         }
     }
 
     override fun putString(key: String, value: String?) {
-        if (mPluginDetails.setPluginPreference(key, value ?: "")) {
+        if (mExtensionDetails.setExtensionPreference(key, value ?: "")) {
             notifyPreferencesValuesChange()
         }
     }
 
     override fun putStringSet(key: String, values: Set<String>?) {
         if (values != null) {
-            if (mPluginDetails.setPluginPreference(key, values.joinToString(","))) {
+            if (mExtensionDetails.setExtensionPreference(key, values.joinToString(","))) {
                 notifyPreferencesValuesChange()
             }
         }
     }
 
     override fun putInt(key: String, value: Int) {
-        if (mPluginDetails.setPluginPreference(key, value.toString())) {
+        if (mExtensionDetails.setExtensionPreference(key, value.toString())) {
             notifyPreferencesValuesChange()
         }
     }
 
     override fun putLong(key: String, value: Long) {
-        if (mPluginDetails.setPluginPreference(key, value.toString())) {
+        if (mExtensionDetails.setExtensionPreference(key, value.toString())) {
             notifyPreferencesValuesChange()
         }
     }
 
     override fun putFloat(key: String, value: Float) {
-        if (mPluginDetails.setPluginPreference(key, value.toString())) {
+        if (mExtensionDetails.setExtensionPreference(key, value.toString())) {
             notifyPreferencesValuesChange()
         }
     }
@@ -111,7 +111,7 @@ class PluginPreferencesDataStore(private val mPluginDetails: PluginDetails) : Pr
         val writeLock = lock.writeLock()
         preferencesValues = try {
             writeLock.lock()
-            mPluginDetails.pluginPreferencesValues
+            mExtensionDetails.extensionPreferencesValues
         } finally {
             writeLock.unlock()
         }
