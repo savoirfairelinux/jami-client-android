@@ -289,7 +289,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
                         startActivity(intent)
                     }
                 } catch (e: Exception) {
-                    Log.e(TAG, "Error starting activity", e)
+                    Log.e(TAG, "An error occurred starting the activity.", e)
                 }
             }
         }
@@ -597,7 +597,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
     override fun startShareLocation(accountId: String, conversationId: String) {}
     override fun showMap(accountId: String, contactId: String, open: Boolean) {}
     override fun hideMap() {}
-    override fun showPluginListHandlers(accountId: String, contactId: String) {}
+    override fun showExtensionListHandlers(accountId: String, contactId: String) {}
     override fun hideErrorPanel() {}
     override fun displayNetworkErrorPanel() {}
     override fun displayAccountOfflineErrorPanel() {}
