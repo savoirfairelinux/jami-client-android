@@ -14,7 +14,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-package cx.ring.settings.pluginssettings
+package cx.ring.settings.extensionssettings
 
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
@@ -45,7 +45,7 @@ class PathListAdapter internal constructor(
         return mList.size
     }
 
-    fun updatePluginsList(listPaths: List<String>) {
+    fun updateExtensionsList(listPaths: List<String>) {
         mList = listPaths
         notifyDataSetChanged()
     }
@@ -57,7 +57,7 @@ class PathListAdapter internal constructor(
 
         // update the viewHolder view
         fun update(s: String) {
-            // Set the plugin icon
+            // Set the extension icon
             val file = File(s)
             if (file.exists()) {
                 if (AndroidFileUtils.isImage(s)) {

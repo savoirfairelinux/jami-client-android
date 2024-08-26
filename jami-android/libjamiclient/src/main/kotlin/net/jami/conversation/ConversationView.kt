@@ -58,7 +58,7 @@ interface ConversationView {
     fun startShareLocation(accountId: String, conversationId: String)
     fun showMap(accountId: String, contactId: String, open: Boolean)
     fun hideMap()
-    fun showPluginListHandlers(accountId: String, contactId: String)
+    fun showExtensionListHandlers(accountId: String, contactId: String)
     fun hideErrorPanel()
     fun displayNetworkErrorPanel()
     fun displayAccountOfflineErrorPanel()

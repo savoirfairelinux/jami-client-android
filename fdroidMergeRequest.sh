@@ -69,6 +69,7 @@ echo "  - versionName: ${versionName}
       - client-uwp
       - client-qt
       - plugins
+      - extensions
       - docker
       - docs
       - lrc
