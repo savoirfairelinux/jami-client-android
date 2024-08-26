@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d8015502_2fae9d13",
+        "filename": "jami-android/app/src/main/java/cx/ring/views/AvatarDrawable.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 90
+      },
+      "writtenOn": "2024-08-26T21:50:36Z",
+      "side": 1,
+      "message": "I don\u0027t see the sense in starting a loop and then returning the first element. Is that a shortcut used to avoid explicitly checking the size of the vector?\nPerhaps just some comments can clear this up.",
+      "range": {
+        "startLine": 260,
+        "startChar": 12,
+        "endLine": 262,
+        "endChar": 43
+      },
+      "revId": "340b70b77270cca84a5d83d9da4b9798d02b210c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
