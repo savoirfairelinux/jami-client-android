@@ -14,7 +14,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-package cx.ring.settings.pluginssettings
+package cx.ring.settings.extensionssettings
 
 import android.app.Activity
 import android.content.Intent
@@ -25,32 +25,32 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import cx.ring.databinding.FragPluginsPathPreferenceBinding
+import cx.ring.databinding.FragExtensionsPathPreferenceBinding
 import cx.ring.interfaces.AppBarStateListener
-import cx.ring.settings.pluginssettings.PathListAdapter.PathListItemListener
+import cx.ring.settings.extensionssettings.PathListAdapter.PathListItemListener
 import cx.ring.utils.AndroidFileUtils
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import java.io.File
 
-class PluginPathPreferenceFragment : Fragment(), PathListItemListener {
+class ExtensionPathPreferenceFragment : Fragment(), PathListItemListener {
     private val pathList: MutableList<String> = ArrayList()
-    private lateinit var mPluginDetails: PluginDetails
+    private lateinit var mExtensionDetails: ExtensionDetails
     private lateinit var mCurrentKey: String
     private var mCurrentValue: String? = null
     private var subtitle: String = ""
     private var supportedMimeTypes = arrayOf("*/*")
-    private var binding: FragPluginsPathPreferenceBinding? = null
+    private var binding: FragExtensionsPathPreferenceBinding? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val arguments = requireArguments()
-        val details = PluginDetails(arguments.getString("name")!!, arguments.getString("rootPath")!!, arguments.getBoolean("enabled"))
-        mPluginDetails = details
+        val details = ExtensionDetails(arguments.getString("name")!!, arguments.getString("rootPath")!!, arguments.getBoolean("enabled"))
+        mExtensionDetails = details
         val key = arguments.getString("preferenceKey")!!
         mCurrentKey = key
-        val mPreferencesAttributes = details.pluginPreferences
+        val mPreferencesAttributes = details.extensionPreferences
         if (mPreferencesAttributes.isNotEmpty()) {
-            mCurrentValue = details.pluginPreferencesValues[key]
+            mCurrentValue = details.extensionPreferencesValues[key]
             setHasOptionsMenu(true)
             for (preferenceAttributes in mPreferencesAttributes) {
                 if (preferenceAttributes["key"] == key) {
@@ -79,12 +79,12 @@ class PluginPathPreferenceFragment : Fragment(), PathListItemListener {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
-        FragPluginsPathPreferenceBinding.inflate(inflater, container, false).apply {
+        FragExtensionsPathPreferenceBinding.inflate(inflater, container, false).apply {
             if (pathList.isNotEmpty())
-                pathPreferences.adapter = PathListAdapter(pathList, this@PluginPathPreferenceFragment)
+                pathPreferences.adapter = PathListAdapter(pathList, this@ExtensionPathPreferenceFragment)
             binding = this
-            pluginSettingSubtitle.text = subtitle
-            pluginsPathPreferenceFab.setOnClickListener {
+            extensionSettingSubtitle.text = subtitle
+            extensionsPathPreferenceFab.setOnClickListener {
                 val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
                     addCategory(Intent.CATEGORY_OPENABLE)
                     type = supportedMimeTypes[0]
@@ -115,7 +115,7 @@ class PluginPathPreferenceFragment : Fragment(), PathListItemListener {
         } else {
             binding.currentPathItemIcon.visibility = View.INVISIBLE
             binding.currentPathItemName.visibility = View.INVISIBLE
-            binding.pluginsPathPreferenceFab.performClick()
+            binding.extensionsPathPreferenceFab.performClick()
         }
 
         (parentFragment as? AppBarStateListener)?.onAppBarScrollTargetViewChanged(binding.pathPreferences)
@@ -133,7 +133,7 @@ class PluginPathPreferenceFragment : Fragment(), PathListItemListener {
     }
 
     override fun onResume() {
-//        (requireActivity() as HomeActivity).setToolbarTitle(R.string.menu_item_plugin_list)
+//        (requireActivity() as HomeActivity).setToolbarTitle(R.string.menu_item_extension_list)
         super.onResume()
     }
 
@@ -143,7 +143,7 @@ class PluginPathPreferenceFragment : Fragment(), PathListItemListener {
     }
 
     private fun setPreferencePath(path: String) {
-        if (mPluginDetails.setPluginPreference(mCurrentKey, path)) {
+        if (mExtensionDetails.setExtensionPreference(mCurrentKey, path)) {
             mCurrentValue = path
             val binding = binding ?: return
             if (path.isNotEmpty()) {
@@ -168,14 +168,14 @@ class PluginPathPreferenceFragment : Fragment(), PathListItemListener {
     }
 
     companion object {
-        val TAG = PluginPathPreferenceFragment::class.simpleName!!
+        val TAG = ExtensionPathPreferenceFragment::class.simpleName!!
         private const val PATH_REQUEST_CODE = 1
-        fun newInstance(pluginDetails: PluginDetails, preferenceKey: String?): PluginPathPreferenceFragment {
-            val ppf = PluginPathPreferenceFragment()
+        fun newInstance(extensionDetails: ExtensionDetails, preferenceKey: String?): ExtensionPathPreferenceFragment {
+            val ppf = ExtensionPathPreferenceFragment()
             ppf.arguments = Bundle().apply {
-                putString("name", pluginDetails.name)
-                putString("rootPath", pluginDetails.rootPath)
-                putBoolean("enabled", pluginDetails.isEnabled)
+                putString("name", extensionDetails.name)
+                putString("rootPath", extensionDetails.rootPath)
+                putBoolean("enabled", extensionDetails.isEnabled)
                 putString("preferenceKey", preferenceKey)
             }
             return ppf
