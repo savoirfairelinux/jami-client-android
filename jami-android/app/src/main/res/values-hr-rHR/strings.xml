@@ -44,6 +44,7 @@
   <string name="action_call_hold_accept_video">Čekaj i snimak poziva</string>
   <string name="action_call_end_accept">Završi i odbijedite poziv</string>
   <string name="action_load_plugin">Plugin za punjenje</string>
+  <string name="ab_action_video_call">Pokrenite video pozive</string>
   <string name="qr_code">QR kod</string>
   <string name="ab_action_hidepreview">Skrij preview</string>
   <string name="remote_recording">%s snimanje...</string>
@@ -65,6 +66,7 @@
   <string name="clear_history_dialog_message">Ova akcija se ne može poništiti.</string>
   <string name="clear_history">Jasno</string>
   <!--Conversation-->
+  <string name="contact_details">Pojedinosti kontakta</string>
   <string name="conversation_action_unblock_this">Otključaj kontakt</string>
   <string name="conversation_action_incoming_call">Dolazni poziv</string>
   <string name="conversation_action_latest">Pomicanje na kraj razgovora</string>

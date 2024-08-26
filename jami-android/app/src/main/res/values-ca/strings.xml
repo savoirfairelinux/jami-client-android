@@ -114,8 +114,6 @@
   <string name="ab_action_speakerphone">Activa l\'altaveu</string>
   <string name="ab_action_contact_add">Afegeix als contactes</string>
   <string name="ab_action_contact_add_question">Afegir als contactes?</string>
-  <string name="ab_action_audio_call">Trucada de veu</string>
-  <string name="ab_action_video_call">Videotrucada </string>
   <string name="ab_action_change_screen_orientation">Canvia l\'orientació de la pantalla</string>
   <string name="share_via">Comparteix via</string>
   <string name="write_a_message">Escriu un missatge</string>
@@ -166,7 +164,6 @@
   <string name="clear_history_completed">L\'historial s\'ha netejat.</string>
   <string name="clear_history">Neteja</string>
   <!--Conversation-->
-  <string name="conversation_details">Detalls de contacte</string>
   <string name="conversation_action_delete_this">Esborra aquesta conversa</string>
   <string name="conversation_action_delete_this_title">Voleu suprimir aquesta conversa ?</string>
   <string name="conversation_action_delete_this_message">Aquesta acció no es pot desfer.</string>

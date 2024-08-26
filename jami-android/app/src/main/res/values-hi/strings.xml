@@ -111,8 +111,7 @@
   <string name="ab_action_speakerphone">स्पीकर सक्षम करें</string>
   <string name="ab_action_contact_add">संपर्क के खाते में जोड़ें</string>
   <string name="ab_action_contact_add_question">संपर्क जोड़ें?</string>
-  <string name="ab_action_audio_call">ऑडियो कॉल</string>
-  <string name="ab_action_video_call">वीडियो कॉल</string>
+  <string name="ab_action_video_call">वीडियो कॉल शुरू करें</string>
   <string name="ab_action_change_screen_orientation">स्क्रीन अभिविन्यास बदलें</string>
   <string name="share_via">साझा करें</string>
   <string name="write_a_message">एक संदेश लिखें</string>
@@ -160,7 +159,7 @@
   <string name="clear_history_completed">इतिहास साफ हो गया है।</string>
   <string name="clear_history">स्पष्ट</string>
   <!--Conversation-->
-  <string name="conversation_details">संपर्क विवरण</string>
+  <string name="contact_details">संपर्क विवरण</string>
   <string name="conversation_action_delete_this">इस वार्तालाप को हटा दें</string>
   <string name="conversation_action_delete_this_title">इस बातचीत को हटाना?</string>
   <string name="conversation_action_delete_this_message">इस कार्य को निरस्त नहीं किया जा सकता।</string>

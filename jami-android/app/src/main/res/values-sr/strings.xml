@@ -117,8 +117,8 @@
   <string name="ab_action_speakerphone">Omogući zvučnik</string>
   <string name="ab_action_contact_add">Dodaj u kontakte</string>
   <string name="ab_action_contact_add_question">Dodaj u kontakte?</string>
-  <string name="ab_action_audio_call">Audio poziv</string>
-  <string name="ab_action_video_call">Video poziv</string>
+  <string name="ab_action_audio_call">Почне аудио позив</string>
+  <string name="ab_action_video_call">Почне видео позив</string>
   <string name="ab_action_change_screen_orientation">Promeni orijentaciju ekrana</string>
   <string name="share_via">Deli preko</string>
   <string name="write_a_message">Napiši poruku</string>
@@ -169,7 +169,8 @@
   <string name="clear_history_completed">Istorija je očišćena.</string>
   <string name="clear_history">Očisti</string>
   <!--Conversation-->
-  <string name="conversation_details">Detalji o kontaktu</string>
+  <string name="conversation_details">Детаљи разговора</string>
+  <string name="contact_details">Detalji o kontaktu</string>
   <string name="conversation_action_delete_this">Izbrišite ovu konverzaciju</string>
   <string name="conversation_action_delete_this_title">Izbrisati ovu konverzaciju ?</string>
   <string name="conversation_action_delete_this_message">Ova radnja se ne može opozvati.</string>

@@ -108,8 +108,8 @@
   <string name="ab_action_speakerphone">Zapnúť reproduktor</string>
   <string name="ab_action_contact_add">Pridať kontakt</string>
   <string name="ab_action_contact_add_question">Pridať do kontaktov?</string>
-  <string name="ab_action_audio_call">Audio hovor</string>
-  <string name="ab_action_video_call">Video hovor</string>
+  <string name="ab_action_audio_call">Začať audio hovor</string>
+  <string name="ab_action_video_call">Začať video hovor</string>
   <string name="ab_action_change_screen_orientation">Zmeniť orientáciu obrazovky</string>
   <string name="share_via">Zdieľať pomocou</string>
   <string name="write_a_message">Napísať správu</string>
@@ -157,7 +157,8 @@
   <string name="clear_history_completed">História bola vymazaná.</string>
   <string name="clear_history">Vyčistiť</string>
   <!--Conversation-->
-  <string name="conversation_details">Informácie o kontakte</string>
+  <string name="conversation_details">Podrobnosti rozhovoru</string>
+  <string name="contact_details">Informácie o kontakte</string>
   <string name="conversation_action_delete_this">Vymazať túto konverzáciu</string>
   <string name="conversation_action_delete_this_title">Vymazať túto konverzáciu?</string>
   <string name="conversation_action_delete_this_message">Túto operáciu nie je možné vrátiť.</string>

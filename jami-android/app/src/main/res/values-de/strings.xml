@@ -116,8 +116,6 @@
   <string name="ab_action_speakerphone">Lautsprecher einschalten</string>
   <string name="ab_action_contact_add">Zu Kontakten hinzufügen</string>
   <string name="ab_action_contact_add_question">Zu Kontakten hinzufügen?</string>
-  <string name="ab_action_audio_call">Audioanruf</string>
-  <string name="ab_action_video_call">Videoanruf</string>
   <string name="ab_action_change_screen_orientation">Bildschirmausrichtung ändern</string>
   <string name="share_via">Teilen mit</string>
   <string name="write_a_message">Sende eine Nachricht</string>
@@ -170,7 +168,6 @@
   <string name="clear_history_completed">Der Verlauf wurde gelöscht.</string>
   <string name="clear_history">Löschen</string>
   <!--Conversation-->
-  <string name="conversation_details">Details</string>
   <string name="conversation_action_delete_this">Diese Unterhaltung löschen</string>
   <string name="conversation_action_delete_this_title">Diese Unterhaltung löschen?</string>
   <string name="conversation_action_delete_this_message">Diese Aktion kann nicht rückgängig gemacht werden.</string>

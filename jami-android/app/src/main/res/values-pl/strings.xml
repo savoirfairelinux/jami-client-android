@@ -118,8 +118,8 @@
   <string name="ab_action_speakerphone">Włącz głośnik</string>
   <string name="ab_action_contact_add">Dodaj do kontaków</string>
   <string name="ab_action_contact_add_question">Dodać do kontaktów?</string>
-  <string name="ab_action_audio_call">Połączenie głosowe</string>
-  <string name="ab_action_video_call">Połączenie wideo</string>
+  <string name="ab_action_audio_call">Rozpocznij połączenie głosowe</string>
+  <string name="ab_action_video_call">Rozpocznij rozmowę wideo</string>
   <string name="ab_action_change_screen_orientation">Obróć ekran</string>
   <string name="share_via">Wyślij przez</string>
   <string name="write_a_message">Napisz wiadomość</string>
@@ -172,7 +172,8 @@
   <string name="clear_history_completed">Historia została wyczyszczona.</string>
   <string name="clear_history">Wyczyść</string>
   <!--Conversation-->
-  <string name="conversation_details">Detale kontaktu</string>
+  <string name="conversation_details">Szczegóły rozmowy</string>
+  <string name="contact_details">Detale kontaktu</string>
   <string name="conversation_action_delete_this">Usuń tę rozmowę</string>
   <string name="conversation_action_delete_this_title">Czy usunąć tę rozmowę?</string>
   <string name="conversation_action_delete_this_message">Tego działania nie można cofnąć.</string>

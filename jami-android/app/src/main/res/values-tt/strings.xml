@@ -67,6 +67,8 @@
   <string name="action_call_decline">Кирешү</string>
   <string name="action_call_mic_mute">Тыныч микрофон</string>
   <string name="ab_action_contact_add">Контактларга өстәү</string>
+  <string name="ab_action_audio_call">Аудиокызылышны башлау</string>
+  <string name="ab_action_video_call">Видеокүршетүне башлау</string>
   <!--Text messages-->
   <string name="message_failed">Җиңелгән</string>
   <string name="send_file">Файлларны җибәрү</string>
@@ -82,7 +84,8 @@
   <!--Settings-->
   <string name="clear_history">Ачык</string>
   <!--Conversation-->
-  <string name="conversation_details">Контакт мәгълүматлары</string>
+  <string name="conversation_details">Сөйләшүнең җентеклелекләре</string>
+  <string name="contact_details">Контакт мәгълүматлары</string>
   <string name="conversation_action_delete_this_message">Бу эштән баш тартырга ярамый.</string>
   <string name="conversation_action_history_clear">Тарих ачык</string>
   <string name="conversation_action_block_this">Блок белән элемтә</string>

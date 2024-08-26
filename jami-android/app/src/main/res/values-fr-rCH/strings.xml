@@ -117,8 +117,7 @@
   <string name="ab_action_speakerphone">Activer le haut-parleur</string>
   <string name="ab_action_contact_add">Ajouter aux contacts</string>
   <string name="ab_action_contact_add_question">Ajouter au contacts ?</string>
-  <string name="ab_action_audio_call">Appel audio</string>
-  <string name="ab_action_video_call">Appel vidéo</string>
+  <string name="ab_action_video_call">Démarrer appel video</string>
   <string name="ab_action_change_screen_orientation">Changer l\'orientation de l\'écran </string>
   <string name="share_via">Partager par</string>
   <string name="write_a_message">Ecrire un message</string>
@@ -171,7 +170,7 @@
   <string name="clear_history_completed">L\'historique a été effacé.</string>
   <string name="clear_history">Effacer</string>
   <!--Conversation-->
-  <string name="conversation_details">Détails du contact</string>
+  <string name="contact_details">Détails du contact</string>
   <string name="conversation_action_delete_this">Supprimer cette conversation</string>
   <string name="conversation_action_delete_this_title">Voulez-vous supprimer cette conversation ?</string>
   <string name="conversation_action_delete_this_message">Cette action ne peut pas être annulée.</string>

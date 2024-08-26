@@ -118,8 +118,8 @@
   <string name="ab_action_speakerphone">Включить динамик</string>
   <string name="ab_action_contact_add">Добавить в контакты</string>
   <string name="ab_action_contact_add_question">Добавить в контакты?</string>
-  <string name="ab_action_audio_call">Голосовой вызов</string>
-  <string name="ab_action_video_call">Видео звонок</string>
+  <string name="ab_action_audio_call">Начать голосовой вызов</string>
+  <string name="ab_action_video_call">Начать видеовызов</string>
   <string name="ab_action_change_screen_orientation">Изменить поворот экрана</string>
   <string name="share_via">Отправить с помощью</string>
   <string name="write_a_message">Написать сообщение</string>
@@ -170,7 +170,8 @@
   <string name="clear_history_completed">История была очищена.</string>
   <string name="clear_history">Очистить</string>
   <!--Conversation-->
-  <string name="conversation_details">Информация о контакте</string>
+  <string name="conversation_details">Подробности беседы</string>
+  <string name="contact_details">Информация о контакте</string>
   <string name="conversation_action_delete_this">Удалить этот разговор</string>
   <string name="conversation_action_delete_this_title">Удалить этот разговор?</string>
   <string name="conversation_action_delete_this_message">Это действие нельзя отменить.</string>

@@ -111,8 +111,6 @@
   <string name="ab_action_speakerphone">Aktiver højtaler</string>
   <string name="ab_action_contact_add">Tilføj til kontakter</string>
   <string name="ab_action_contact_add_question">Tilføj til kontakter?</string>
-  <string name="ab_action_audio_call">Lydopkald</string>
-  <string name="ab_action_video_call">Videoopkald</string>
   <string name="ab_action_change_screen_orientation">Ændr skærm-orientering</string>
   <string name="share_via">Del via</string>
   <string name="write_a_message">Skriv en besked</string>
@@ -160,7 +158,6 @@
   <string name="clear_history_completed">Historikken er blevet ryddet.</string>
   <string name="clear_history">Ryd</string>
   <!--Conversation-->
-  <string name="conversation_details">Kontakt-detajler</string>
   <string name="conversation_action_delete_this">Slet denne samtale</string>
   <string name="conversation_action_delete_this_title">Slet denne samtale?</string>
   <string name="conversation_action_delete_this_message">Denne handling kan ikke fortrydes.</string>

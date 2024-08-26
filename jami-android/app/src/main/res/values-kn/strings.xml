@@ -111,8 +111,8 @@
   <string name="ab_action_speakerphone">ಸ್ಪೀಕರ್ ಅನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿ</string>
   <string name="ab_action_contact_add">ಸಂಪರ್ಕಗಳನ್ನು ಸೇರಿಸಿ</string>
   <string name="ab_action_contact_add_question">ಸಂಪರ್ಕಗಳಿಗೆ ಸೇರಿಸುವುದೇ?</string>
-  <string name="ab_action_audio_call">ಆಡಿಯೋ ಕರೆ</string>
-  <string name="ab_action_video_call">ವಿಡಿಯೋ ಕರೆ</string>
+  <string name="ab_action_audio_call">ಆಡಿಯೋ ಕರೆ ಆರಂಭಿಸಿ</string>
+  <string name="ab_action_video_call">ವೀಡಿಯೊ ಕರೆ ಆರಂಭಿಸಿ</string>
   <string name="ab_action_change_screen_orientation">ಪರದೆಯ ದೃಷ್ಟಿಕೋನವನ್ನು ಬದಲಾಯಿಸಿ</string>
   <string name="share_via">ಮೂಲಕ ಹಂಚಿಕೆ</string>
   <string name="write_a_message">ಸಂದೇಶವನ್ನು ಬರೆಯಿರಿ</string>
@@ -160,7 +160,8 @@
   <string name="clear_history_completed">ಇತಿಹಾಸವನ್ನು ತೆರವುಗೊಳಿಸಲಾಗಿದೆ.</string>
   <string name="clear_history">ಸ್ಪಷ್ಟ</string>
   <!--Conversation-->
-  <string name="conversation_details">ಸಂಪರ್ಕ ವಿವರಗಳು</string>
+  <string name="conversation_details">ಸಂಭಾಷಣೆಯ ವಿವರಗಳು</string>
+  <string name="contact_details">ಸಂಪರ್ಕ ವಿವರಗಳು</string>
   <string name="conversation_action_delete_this">ಈ ಸಂಭಾಷಣೆಯನ್ನು ಅಳಿಸಿ</string>
   <string name="conversation_action_delete_this_title">ಈ ಸಂಭಾಷಣೆಯನ್ನು ಅಳಿಸುವುದೇ?</string>
   <string name="conversation_action_delete_this_message">ಈ ಕ್ರಮವನ್ನು ಹಿಂತೆಗೆದುಕೊಳ್ಳಲು ಸಾಧ್ಯವಿಲ್ಲ.</string>

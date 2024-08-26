@@ -111,8 +111,6 @@
   <string name="ab_action_speakerphone">Ŝalti laŭtparolilon</string>
   <string name="ab_action_contact_add">Aldoni al kontaktoj</string>
   <string name="ab_action_contact_add_question">Ĉu aldoni al kontaktoj?</string>
-  <string name="ab_action_audio_call">Sona voko</string>
-  <string name="ab_action_video_call">Videa voko</string>
   <string name="ab_action_change_screen_orientation">Ŝanĝu ekranorientadon</string>
   <string name="share_via">Kunhavi per</string>
   <string name="write_a_message">Skribi mesaĝon</string>
@@ -160,7 +158,6 @@
   <string name="clear_history_completed">Historio vakigita.</string>
   <string name="clear_history">Malpezo</string>
   <!--Conversation-->
-  <string name="conversation_details">Kontakto</string>
   <string name="conversation_action_delete_this">Forigi tiu ĉi konversacion</string>
   <string name="conversation_action_delete_this_title">Ĉu forigi tiu ĉi konversacion ?</string>
   <string name="conversation_action_delete_this_message">Tiu ĉi ago ne povos malfariĝi.</string>

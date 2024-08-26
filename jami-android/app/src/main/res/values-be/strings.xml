@@ -82,7 +82,6 @@
   <!--Settings-->
   <string name="clear_history">Ясна</string>
   <!--Conversation-->
-  <string name="conversation_details">Кантактныя дадзеныя</string>
   <string name="conversation_action_delete_this_message">Гэтая дзейнасць не можа быць адменена.</string>
   <string name="conversation_action_history_clear">Ясная гісторыя</string>
   <string name="conversation_action_block_this">Блокальны кантакт</string>

@@ -117,8 +117,8 @@
   <string name="ab_action_speakerphone">Attiva l\'audio</string>
   <string name="ab_action_contact_add">Aggiungi alla rubrica</string>
   <string name="ab_action_contact_add_question">Aggiungere ai contatti?</string>
-  <string name="ab_action_audio_call">Chiamata vocale</string>
-  <string name="ab_action_video_call">Videochiamata</string>
+  <string name="ab_action_audio_call">Avvia chiamata vocale</string>
+  <string name="ab_action_video_call">Avvia videochiamata</string>
   <string name="ab_action_change_screen_orientation">Ruota schermo</string>
   <string name="share_via">Condividi con</string>
   <string name="write_a_message">Scrivi un messaggio</string>
@@ -171,7 +171,7 @@
   <string name="clear_history_completed">Conversazioni eliminate.</string>
   <string name="clear_history">Cancella</string>
   <!--Conversation-->
-  <string name="conversation_details">Dettagli contatto</string>
+  <string name="contact_details">Dettagli contatto</string>
   <string name="conversation_action_delete_this">Cancella questa conversazione</string>
   <string name="conversation_action_delete_this_title">Cancellare questa conversazione?</string>
   <string name="conversation_action_delete_this_message">Questa azione è irreversibile.</string>

@@ -111,8 +111,8 @@
   <string name="ab_action_speakerphone">Legg høyttaleren til</string>
   <string name="ab_action_contact_add">Legg til kontakt</string>
   <string name="ab_action_contact_add_question">Legg til kontakt?</string>
-  <string name="ab_action_audio_call">Lydsamtale</string>
-  <string name="ab_action_video_call">Video samtal</string>
+  <string name="ab_action_audio_call">Start lydsamtale</string>
+  <string name="ab_action_video_call">Start video samtal</string>
   <string name="ab_action_change_screen_orientation">Endra skjermorienteringa</string>
   <string name="share_via">Del via</string>
   <string name="write_a_message">Skriv ein melding</string>
@@ -160,7 +160,8 @@
   <string name="clear_history_completed">Historien er ryddid.</string>
   <string name="clear_history">Åre klar</string>
   <!--Conversation-->
-  <string name="conversation_details">Kontaktinformasjon</string>
+  <string name="conversation_details">Detaljer om samtalen</string>
+  <string name="contact_details">Kontaktinformasjon</string>
   <string name="conversation_action_delete_this">Ta av denne samtalen</string>
   <string name="conversation_action_delete_this_title">Vil du sletta samtalet?</string>
   <string name="conversation_action_delete_this_message">Denne handlingen kan ikkje bli gjort til nytt.</string>

@@ -107,8 +107,6 @@
   <string name="ab_action_speakerphone">تفعيل مكبر الصوت</string>
   <string name="ab_action_contact_add">إضافة إلى جهات الاتصال</string>
   <string name="ab_action_contact_add_question">إضافة إلى جهات الإتصال؟</string>
-  <string name="ab_action_audio_call">مكالمة صوتية</string>
-  <string name="ab_action_video_call">مكالمة فيديو</string>
   <string name="ab_action_change_screen_orientation">تغيير إتجاه الشاشة</string>
   <string name="share_via">مشاركة عبر</string>
   <string name="write_a_message">كتابة رسالة</string>
@@ -156,7 +154,6 @@
   <string name="clear_history_completed">تم حذف المحفوظات.</string>
   <string name="clear_history">واضح</string>
   <!--Conversation-->
-  <string name="conversation_details">تفاصيل جهة الأتصال</string>
   <string name="conversation_action_delete_this">حذف هذه المحادثة</string>
   <string name="conversation_action_delete_this_title">حذف هذه المحادثة؟</string>
   <string name="conversation_action_delete_this_message">لا يمكن التراجع عن هذا الإجراء.</string>

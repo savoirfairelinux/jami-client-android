@@ -111,8 +111,8 @@
   <string name="ab_action_speakerphone">Дуучинг идэвхжүүлнэ</string>
   <string name="ab_action_contact_add">Байрлуудад нэмнэ</string>
   <string name="ab_action_contact_add_question">Та нар ч гэсэн холбоотондоо нэмж байна уу?</string>
-  <string name="ab_action_audio_call">Зөгнөлийн дуудлага</string>
-  <string name="ab_action_video_call">Видео дуудлага</string>
+  <string name="ab_action_audio_call">Зэвсэгт дуу дуулах</string>
+  <string name="ab_action_video_call">Видео утас эхлүүлэх</string>
   <string name="ab_action_change_screen_orientation">Скрингэрийн чиглэлийг өөрчлөх</string>
   <string name="share_via">Асуулгах</string>
   <string name="write_a_message">Мэдээлэл бич</string>
@@ -160,7 +160,8 @@
   <string name="clear_history_completed">Түүхийн талаарх мэдээлэл цэвэрлэгээгдсэн.</string>
   <string name="clear_history">Ухаалаг</string>
   <!--Conversation-->
-  <string name="conversation_details">Байлцаах мэдээлэл</string>
+  <string name="conversation_details">Хэлэлцүүлгийн дэлгэрэнгүй мэдээ</string>
+  <string name="contact_details">Байлцаах мэдээлэл</string>
   <string name="conversation_action_delete_this">Энэ яриаг устгах</string>
   <string name="conversation_action_delete_this_title">Энэ яриаг устгах уу?</string>
   <string name="conversation_action_delete_this_message">Энэ үйлдлийг сэргийлэх боломжгүй.</string>

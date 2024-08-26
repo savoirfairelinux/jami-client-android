@@ -113,8 +113,8 @@
   <string name="ab_action_speakerphone">Įjungti garsiakalbį</string>
   <string name="ab_action_contact_add">Pridėti prie adresatų</string>
   <string name="ab_action_contact_add_question">Pridėti prie adresatų?</string>
-  <string name="ab_action_audio_call">Garso skambutis</string>
-  <string name="ab_action_video_call">Vaizdo skambutis</string>
+  <string name="ab_action_audio_call">Pradėti garso skambutį</string>
+  <string name="ab_action_video_call">Pradėti vaizdo skambutį</string>
   <string name="ab_action_change_screen_orientation">Keisti ekrano orientaciją</string>
   <string name="share_via">Bendrinti per</string>
   <string name="write_a_message">Rašykite žinutę</string>
@@ -162,7 +162,8 @@
   <string name="clear_history_completed">Istorija išvalyta.</string>
   <string name="clear_history">Išvalyti</string>
   <!--Conversation-->
-  <string name="conversation_details">Išsamiau apie adresatą</string>
+  <string name="conversation_details">Išsamiau apie pokalbį</string>
+  <string name="contact_details">Išsamiau apie adresatą</string>
   <string name="conversation_action_delete_this">Ištrinti šį pokalbį</string>
   <string name="conversation_action_delete_this_title">Ištrinti šį pokalbį ?</string>
   <string name="conversation_action_delete_this_message">Šio veiksmo negalima bus atšaukti.</string>

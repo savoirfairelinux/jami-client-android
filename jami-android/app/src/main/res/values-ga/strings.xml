@@ -67,6 +67,7 @@
   <string name="action_call_decline">Tarraing</string>
   <string name="action_call_mic_mute">Micrófón muinte</string>
   <string name="ab_action_contact_add">Cuir le teagmhálacha</string>
+  <string name="ab_action_video_call">Tosaigh glao físe</string>
   <!--Text messages-->
   <string name="message_failed">Fágadh</string>
   <string name="send_file">Comhad a sheoladh</string>
@@ -82,7 +83,7 @@
   <!--Settings-->
   <string name="clear_history">Clúdach</string>
   <!--Conversation-->
-  <string name="conversation_details">sonraí teagmhála</string>
+  <string name="contact_details">sonraí teagmhála</string>
   <string name="conversation_action_delete_this_message">Ní féidir an gníomh seo a dhéanamh ar ais.</string>
   <string name="conversation_action_history_clear">Tuairiscí soiléir</string>
   <string name="conversation_action_block_this">Contae Bloc</string>

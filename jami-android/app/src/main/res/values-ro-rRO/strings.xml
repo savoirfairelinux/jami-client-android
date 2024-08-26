@@ -117,8 +117,8 @@
   <string name="ab_action_speakerphone">Activează difuzorul</string>
   <string name="ab_action_contact_add">Adaugă la contacte</string>
   <string name="ab_action_contact_add_question">Adaugi la contacte?</string>
-  <string name="ab_action_audio_call">Apel vocal</string>
-  <string name="ab_action_video_call">Apel video</string>
+  <string name="ab_action_audio_call">Începe un apel vocal</string>
+  <string name="ab_action_video_call">Începe un apel video</string>
   <string name="ab_action_change_screen_orientation">Rotește ecranul</string>
   <string name="share_via">Distribuie prin</string>
   <string name="write_a_message">Scrie un mesaj</string>
@@ -171,7 +171,8 @@
   <string name="clear_history_completed">Conversațiile au fost șterse.</string>
   <string name="clear_history">Șterge</string>
   <!--Conversation-->
-  <string name="conversation_details">Detaliile contactului</string>
+  <string name="conversation_details">Detaliile conversației</string>
+  <string name="contact_details">Detaliile contactului</string>
   <string name="conversation_action_delete_this">Șterge această conversație</string>
   <string name="conversation_action_delete_this_title">Ștergi această conversație?</string>
   <string name="conversation_action_delete_this_message">Această acțiune este ireversibilă.</string>

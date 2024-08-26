@@ -111,8 +111,6 @@
   <string name="ab_action_speakerphone">স্পিকার সক্ষম করুন</string>
   <string name="ab_action_contact_add">পরিচিতি যোগ করুন</string>
   <string name="ab_action_contact_add_question">পরিচিতি যোগ করা?</string>
-  <string name="ab_action_audio_call">অডিও কল</string>
-  <string name="ab_action_video_call">ভিডিও কল</string>
   <string name="ab_action_change_screen_orientation">স্ক্রিনের দিক পরিবর্তন করুন</string>
   <string name="share_via">মাধ্যমে শেয়ার করুন</string>
   <string name="write_a_message">একটা বার্তা লিখুন</string>
@@ -160,7 +158,6 @@
   <string name="clear_history_completed">ইতিহাস পরিষ্কার হয়ে গেছে।</string>
   <string name="clear_history">পরিষ্কার</string>
   <!--Conversation-->
-  <string name="conversation_details">যোগাযোগের তথ্য</string>
   <string name="conversation_action_delete_this">এই কথোপকথন মুছে ফেলুন</string>
   <string name="conversation_action_delete_this_title">এই কথোপকথন মুছে ফেলা?</string>
   <string name="conversation_action_delete_this_message">এই পদক্ষেপটি বাতিল করা যাবে না।</string>

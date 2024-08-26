@@ -74,8 +74,7 @@
   <string name="action_call_decline">ירידה</string>
   <string name="action_call_mic_mute">מיקרופון שקט</string>
   <string name="ab_action_contact_add">הוסף לקשרים</string>
-  <string name="ab_action_audio_call">שיחת שמע</string>
-  <string name="ab_action_video_call">שיחת וידאו</string>
+  <string name="ab_action_video_call">תתחילו שיחת וידאו</string>
   <!--Text messages-->
   <string name="send_message">שליחת הודעה</string>
   <string name="message_failed">כשל</string>
@@ -94,7 +93,7 @@
   <!--Settings-->
   <string name="clear_history">ניקוי</string>
   <!--Conversation-->
-  <string name="conversation_details">פרטי קשר</string>
+  <string name="contact_details">פרטי קשר</string>
   <string name="conversation_action_delete_this_message">פעולה זו לא יכולה להיבטל.</string>
   <string name="conversation_action_history_clear">היסטוריה ברורה</string>
   <string name="conversation_action_copy_peer_number">העתקת מספר</string>

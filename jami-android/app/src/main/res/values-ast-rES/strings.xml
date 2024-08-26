@@ -111,8 +111,6 @@
   <string name="ab_action_speakerphone">Activu de altavoz</string>
   <string name="ab_action_contact_add">Aponer a los contactos</string>
   <string name="ab_action_contact_add_question">¿A añadir a los contactos?</string>
-  <string name="ab_action_audio_call">L\' llamada d\' audio</string>
-  <string name="ab_action_video_call">La llamada por video</string>
   <string name="ab_action_change_screen_orientation">Cambiar la orientación de la pantalla</string>
   <string name="share_via">Compartir a través</string>
   <string name="write_a_message">Escribir un mensaxe</string>
@@ -160,7 +158,6 @@
   <string name="clear_history_completed">La hestoria foi despejada.</string>
   <string name="clear_history">El so nome ye \"Clarity\".</string>
   <!--Conversation-->
-  <string name="conversation_details">Detalles de contacto</string>
   <string name="conversation_action_delete_this">La conversación ye borrada.</string>
   <string name="conversation_action_delete_this_title">¿ Borrar esta conversación?</string>
   <string name="conversation_action_delete_this_message">Esta acción nun puede ser revocada.</string>

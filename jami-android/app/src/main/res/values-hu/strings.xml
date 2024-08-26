@@ -116,8 +116,8 @@
   <string name="ab_action_speakerphone">Hangszóró engedélyezése</string>
   <string name="ab_action_contact_add">Hozzáadás a kapcsolatokhoz</string>
   <string name="ab_action_contact_add_question">Hozzáadja a kapcsolatokhoz?</string>
-  <string name="ab_action_audio_call">Hanghívás</string>
-  <string name="ab_action_video_call">Videohívás</string>
+  <string name="ab_action_audio_call">Hanghívás indítása</string>
+  <string name="ab_action_video_call">Videohívás indítása</string>
   <string name="ab_action_change_screen_orientation">Képernyő tájolásának megváltoztatása</string>
   <string name="share_via">Megosztás a következőn keresztül:</string>
   <string name="write_a_message">Üzenet írása következőknek:</string>
@@ -170,7 +170,7 @@
   <string name="clear_history_completed">Az előzmények törölve.</string>
   <string name="clear_history">Törlés</string>
   <!--Conversation-->
-  <string name="conversation_details">Elérhetőségei</string>
+  <string name="contact_details">Elérhetőségei</string>
   <string name="conversation_action_delete_this">Beszélgetés törlése</string>
   <string name="conversation_action_delete_this_title">Törli ezt a beszélgetést?</string>
   <string name="conversation_action_delete_this_message">Ez a művelet nem vonható vissza.</string>

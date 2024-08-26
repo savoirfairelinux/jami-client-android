@@ -116,8 +116,8 @@
   <string name="ab_action_speakerphone">Aktivizoni altoparlantin</string>
   <string name="ab_action_contact_add">Shtoje te kontaktet</string>
   <string name="ab_action_contact_add_question">Të shtohet te kontaktet?</string>
-  <string name="ab_action_audio_call">Thirrje audio</string>
-  <string name="ab_action_video_call">Thirrje video</string>
+  <string name="ab_action_audio_call">Filloni thirrje audio</string>
+  <string name="ab_action_video_call">Filloni thirrje video</string>
   <string name="ab_action_change_screen_orientation">Ndryshoni drejtim ekrani</string>
   <string name="share_via">Ndajeni përmes</string>
   <string name="write_a_message">Shkruani një mesazh</string>
@@ -170,7 +170,8 @@
   <string name="clear_history_completed">Historiku u pastrua.</string>
   <string name="clear_history">Spastroje</string>
   <!--Conversation-->
-  <string name="conversation_details">Hollësi kontakti</string>
+  <string name="conversation_details">Hollësi bisede</string>
+  <string name="contact_details">Hollësi kontakti</string>
   <string name="conversation_action_delete_this">Fshije këtë bisedë</string>
   <string name="conversation_action_delete_this_title">Të fshihet kjo bisedë?</string>
   <string name="conversation_action_delete_this_message">Ky veprim s\’mund të zhbëhet.</string>
