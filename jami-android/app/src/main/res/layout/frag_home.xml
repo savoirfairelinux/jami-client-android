@@ -29,6 +29,7 @@ along with this program; if not, write to the Free Software
         android:name="cx.ring.fragments.SmartListFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
         tools:layout="@layout/frag_smartlist"
         app:layout_behavior="@string/searchbar_scrolling_view_behavior" />
 
@@ -36,6 +37,8 @@ along with this program; if not, write to the Free Software
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingBottom="16dp"
+
         android:fitsSystemWindows="true">
 
         <LinearLayout

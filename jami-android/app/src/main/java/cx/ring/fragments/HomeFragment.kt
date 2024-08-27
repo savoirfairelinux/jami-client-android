@@ -329,7 +329,7 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
         // Adapt the margins of the invitation card.
         requireContext().resources.getDimensionPixelSize(R.dimen.bottom_sheet_radius).let {
             (binding.invitationCard.invitationGroup.layoutParams as ViewGroup.MarginLayoutParams)
-                .setMargins(it, it, it, 2*it)
+                .setMargins(it, it, it, it)
         }
 
         // Enable invitation pending list scroll (remove side effect with appbar behavior).
@@ -348,9 +348,8 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
         // Enable back press.
         conversationBackPressedCallback.isEnabled = true
 
-        val insetsCompat = ViewCompat.getRootWindowInsets(binding.invitationCard.invitationGroup) ?: return
-        val insets = insetsCompat.getInsets(WindowInsetsCompat.Type.systemBars())
-        binding.appBar.updatePadding(bottom = insets.bottom)
+        // Remove padding (will be set again while collapsing).
+        binding.appBar.updatePadding(bottom = 0)
     }
 
     fun collapsePendingView() {
@@ -373,7 +372,10 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
             Fade()
         )
 
-        binding.appBar.updatePadding(bottom = 0)
+        // Put padding back (removed while expanding).
+        binding.appBar.updatePadding(
+            bottom = requireContext().resources.getDimensionPixelSize(R.dimen.padding_large)
+        )
 
         // Make the invitation card wrap content (not take all space available anymore).
         binding.appBar.updateLayoutParams {
