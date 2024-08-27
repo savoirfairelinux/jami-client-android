@@ -31,13 +31,15 @@ along with this program; if not, write to the Free Software
             android:id="@+id/home_fragment"
             android:name="cx.ring.fragments.HomeFragment"
             android:layout_width="380dp"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            tools:layout="@layout/frag_home" />
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/conversation"
             android:layout_width="300dp"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            tools:layout="@layout/frag_conversation" />
 
     </cx.ring.views.twopane.TwoPaneLayout>
 

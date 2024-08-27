@@ -29,6 +29,7 @@ along with this program; if not, write to the Free Software
         android:name="cx.ring.fragments.SmartListFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        tools:layout="@layout/frag_smartlist"
         app:layout_behavior="@string/searchbar_scrolling_view_behavior" />
 
     <com.google.android.material.appbar.AppBarLayout

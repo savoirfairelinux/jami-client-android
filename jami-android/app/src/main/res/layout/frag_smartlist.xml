@@ -34,7 +34,7 @@ along with this program; if not, write to the Free Software
         android:orientation="vertical"
         android:visibility="gone"
         tools:ignore="UseCompoundDrawables"
-        tools:visibility="visible">
+        tools:visibility="gone">
 
         <ImageView
             android:layout_width="128dp"
