@@ -22,6 +22,30 @@
       },
       "revId": "340b70b77270cca84a5d83d9da4b9798d02b210c",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "96f678b6_56ff17f1",
+        "filename": "jami-android/app/src/main/java/cx/ring/views/AvatarDrawable.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-08-27T16:16:26Z",
+      "side": 1,
+      "message": "Lol, that\u0027s true. I simplified.",
+      "parentUuid": "d8015502_2fae9d13",
+      "range": {
+        "startLine": 260,
+        "startChar": 12,
+        "endLine": 262,
+        "endChar": 43
+      },
+      "revId": "340b70b77270cca84a5d83d9da4b9798d02b210c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
