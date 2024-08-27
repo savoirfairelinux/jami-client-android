@@ -106,6 +106,24 @@
       "parentUuid": "f0848d69_a3880698",
       "revId": "772337e9f3e783c78c9c208d5b96661941b75c70",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9afb8122_a2beff8c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-08-27T13:07:48Z",
+      "side": 1,
+      "message": "\u003e Can you please set the topic to \"unify-terminology\" ...\n\nDone\n\n\u003e Can you please merge?\n\n@adrien.beraud@savoirfairelinux.com responsibility.\n\n\u003e Code changes have always been done in the using \"Gerrit Web Interface\" \n\nThat\u0027s correct then, don\u0027t worry.\n\n\u003e Do not completely understand what is required here.\n\nNothing required, it was for your information on why I removed some of your changes. You can tell gerrit to show you differences between patchset 5 and 7. It will highlight modifications I did.",
+      "parentUuid": "bbaec9f8_b488e9b0",
+      "revId": "772337e9f3e783c78c9c208d5b96661941b75c70",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
