@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e06aa28e_c4681ebb",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-08-28T20:48:43Z",
+      "side": 1,
+      "message": "`new_invitation`",
+      "range": {
+        "startLine": 425,
+        "startChar": 18,
+        "endLine": 425,
+        "endChar": 33
+      },
+      "revId": "beb371baae797f85c2e534a12f3be075016e49a0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "56e610cb_125d91b8",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-08-28T20:48:43Z",
+      "side": 1,
+      "message": "`invitation`",
+      "range": {
+        "startLine": 426,
+        "startChar": 18,
+        "endLine": 426,
+        "endChar": 33
+      },
+      "revId": "beb371baae797f85c2e534a12f3be075016e49a0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3a74b90a_e1591b98",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-08-28T20:48:43Z",
+      "side": 1,
+      "message": "`message`",
+      "range": {
+        "startLine": 426,
+        "startChar": 34,
+        "endLine": 426,
+        "endChar": 37
+      },
+      "revId": "beb371baae797f85c2e534a12f3be075016e49a0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d044a366_c6746e58",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-08-28T20:48:43Z",
+      "side": 1,
+      "message": "Can these two strings be merge? i.e.\n\n`%1$d chat invitations for %2$s account.`\n\nThank you",
+      "range": {
+        "startLine": 426,
+        "startChar": 4,
+        "endLine": 427,
+        "endChar": 60
+      },
+      "revId": "beb371baae797f85c2e534a12f3be075016e49a0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d90b3283_37b51693",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-08-28T20:48:43Z",
+      "side": 1,
+      "message": "Should `contact_request` be `invitation`? Not sure about `account`. Thank you",
+      "range": {
+        "startLine": 427,
+        "startChar": 18,
+        "endLine": 427,
+        "endChar": 41
+      },
+      "revId": "beb371baae797f85c2e534a12f3be075016e49a0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "16076581_614af955",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-08-28T20:48:43Z",
+      "side": 1,
+      "message": "`invitations`",
+      "range": {
+        "startLine": 428,
+        "startChar": 21,
+        "endLine": 428,
+        "endChar": 29
+      },
+      "revId": "beb371baae797f85c2e534a12f3be075016e49a0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5b034c70_13d4f5b9",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-08-28T20:48:43Z",
+      "side": 1,
+      "message": "`invitiation_received_message`",
+      "range": {
+        "startLine": 429,
+        "startChar": 18,
+        "endLine": 429,
+        "endChar": 45
+      },
+      "revId": "beb371baae797f85c2e534a12f3be075016e49a0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6982704e_a6ef61aa",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-08-28T20:48:43Z",
+      "side": 1,
+      "message": "`invitation`",
+      "range": {
+        "startLine": 431,
+        "startChar": 14,
+        "endLine": 431,
+        "endChar": 30
+      },
+      "revId": "beb371baae797f85c2e534a12f3be075016e49a0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "16458c27_09fd0f38",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-08-28T20:48:43Z",
+      "side": 1,
+      "message": "`invitation`",
+      "range": {
+        "startLine": 433,
+        "startChar": 23,
+        "endLine": 433,
+        "endChar": 30
+      },
+      "revId": "beb371baae797f85c2e534a12f3be075016e49a0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1e9b1d69_c6561905",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-08-28T20:48:43Z",
+      "side": 1,
+      "message": "`message`",
+      "range": {
+        "startLine": 434,
+        "startChar": 31,
+        "endLine": 434,
+        "endChar": 34
+      },
+      "revId": "beb371baae797f85c2e534a12f3be075016e49a0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c53dfad_ef3bf659",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-08-28T20:48:43Z",
+      "side": 1,
+      "message": "`invitation`",
+      "range": {
+        "startLine": 434,
+        "startChar": 23,
+        "endLine": 434,
+        "endChar": 30
+      },
+      "revId": "beb371baae797f85c2e534a12f3be075016e49a0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7651422a_6101a447",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-08-28T20:48:43Z",
+      "side": 1,
+      "message": "1. Should `contact request` be `invitation`?\n2. Does `communicate` refer to `audio` and `video` calls?\n\nShould the string be changed to something like:\n\n`To call this contact an invitation must be sent and accepted. Chat messages can be sent, however replies can only be sent once the invitation has been accepted.`\n\nPlease change suggestion as required.\n\nThank you",
+      "range": {
+        "startLine": 434,
+        "startChar": 36,
+        "endLine": 434,
+        "endChar": 207
+      },
+      "revId": "beb371baae797f85c2e534a12f3be075016e49a0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
