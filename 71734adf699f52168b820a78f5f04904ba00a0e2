@@ -24,6 +24,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ffd827f_7949f532",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-08-28T13:42:38Z",
+      "side": 1,
+      "message": "Done in https://review.jami.net/c/jami-client-android/+/28869.",
+      "parentUuid": "57b1c406_45146442",
+      "range": {
+        "startLine": 29,
+        "startChar": 54,
+        "endLine": 29,
+        "endChar": 61
+      },
+      "revId": "71734adf699f52168b820a78f5f04904ba00a0e2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8273a91d_78c9cf3d",
@@ -47,6 +71,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a9a423f0_d574c8d4",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-08-28T13:42:38Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "8273a91d_78c9cf3d",
+      "range": {
+        "startLine": 30,
+        "startChar": 38,
+        "endLine": 30,
+        "endChar": 50
+      },
+      "revId": "71734adf699f52168b820a78f5f04904ba00a0e2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "71a182fe_e1d3b726",
@@ -60,6 +108,30 @@
       "writtenOn": "2024-08-25T01:40:21Z",
       "side": 1,
       "message": "Should this be `New issue`?\n\nTL;DR\nGitLab has a button in the top right that has the label `New issue` with white text and blue background.\n\nOr `Create new issue` if it is an action button\n\nThank you\n\nP.S. Not sure of the Jami for Android UI/UX as only have Jami for Linux.",
+      "range": {
+        "startLine": 31,
+        "startChar": 47,
+        "endLine": 31,
+        "endChar": 67
+      },
+      "revId": "71734adf699f52168b820a78f5f04904ba00a0e2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c88fc575_ec429bad",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-08-28T13:42:38Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "71a182fe_e1d3b726",
       "range": {
         "startLine": 31,
         "startChar": 47,
@@ -95,6 +167,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9741c39e_c28a9d4e",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-08-28T13:42:38Z",
+      "side": 1,
+      "message": "I think it may be useful to see others ticket before creating a new one. To see the structure, and see if it\u0027s not already reported.",
+      "parentUuid": "bf06821e_fc81e4c1",
+      "range": {
+        "startLine": 32,
+        "startChar": 58,
+        "endLine": 32,
+        "endChar": 122
+      },
+      "revId": "71734adf699f52168b820a78f5f04904ba00a0e2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a4d9eeda_cabbb1ea",
         "filename": "jami-android/app/src/main/res/values/strings.xml",
         "patchSetId": 1
@@ -106,6 +202,30 @@
       "writtenOn": "2024-08-25T02:26:24Z",
       "side": 1,
       "message": "Should this string be deleted if the GitLab website is now visited, replacing email?\n\nThank you",
+      "range": {
+        "startLine": 38,
+        "startChar": 4,
+        "endLine": 38,
+        "endChar": 102
+      },
+      "revId": "71734adf699f52168b820a78f5f04904ba00a0e2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c583b50b_31b32f83",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-08-28T13:42:38Z",
+      "side": 1,
+      "message": "Deleted.",
+      "parentUuid": "a4d9eeda_cabbb1ea",
       "range": {
         "startLine": 38,
         "startChar": 4,
@@ -139,6 +259,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "15e859eb_02b7ac41",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-08-28T13:42:38Z",
+      "side": 1,
+      "message": "Done in https://review.jami.net/c/jami-client-android/+/28869.",
+      "parentUuid": "4f6e296f_4bb10900",
+      "range": {
+        "startLine": 39,
+        "startChar": 85,
+        "endLine": 39,
+        "endChar": 89
+      },
+      "revId": "71734adf699f52168b820a78f5f04904ba00a0e2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f68bd419_f26d106f",
@@ -162,6 +306,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fb02ad9f_95ad87c9",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-08-28T13:42:38Z",
+      "side": 1,
+      "message": "Deleted.",
+      "parentUuid": "f68bd419_f26d106f",
+      "range": {
+        "startLine": 40,
+        "startChar": 1,
+        "endLine": 40,
+        "endChar": 64
+      },
+      "revId": "71734adf699f52168b820a78f5f04904ba00a0e2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a7d67999_dfebaf91",
@@ -175,6 +343,30 @@
       "writtenOn": "2024-08-25T02:26:24Z",
       "side": 1,
       "message": "Should `View website using…` \n\nTL;DR\n1. Should `View` be `Visit`?\n2. Should `website` be `webpage`? Does this open a page on a website?\n\nThank you",
+      "range": {
+        "startLine": 41,
+        "startChar": 41,
+        "endLine": 41,
+        "endChar": 60
+      },
+      "revId": "71734adf699f52168b820a78f5f04904ba00a0e2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0ab1e102_a585602d",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-08-28T13:42:38Z",
+      "side": 1,
+      "message": "Deleted in https://review.jami.net/c/jami-client-android/+/28869.",
+      "parentUuid": "a7d67999_dfebaf91",
       "range": {
         "startLine": 41,
         "startChar": 41,
