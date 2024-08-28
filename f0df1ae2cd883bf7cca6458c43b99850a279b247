@@ -494,6 +494,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d18f081_79419c72",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-08-28T14:27:10Z",
+      "side": 1,
+      "message": "Done in https://review.jami.net/c/jami-client-android/+/28920.",
+      "parentUuid": "319b9043_3b09db66",
+      "range": {
+        "startLine": 429,
+        "startChar": 51,
+        "endLine": 429,
+        "endChar": 82
+      },
+      "revId": "f0df1ae2cd883bf7cca6458c43b99850a279b247",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "330602c5_197e7808",
