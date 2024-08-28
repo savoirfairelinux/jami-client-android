@@ -46,6 +46,30 @@
       },
       "revId": "7cfa3fdaf9e39e05c095b853889ea7deea48c680",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0ad3e46e_8f4a99c6",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-08-28T20:52:39Z",
+      "side": 1,
+      "message": "Pierre Nicolas is now a member of the Collaborative editor swarm. Thank you",
+      "parentUuid": "d08bbe2d_fa75a7e0",
+      "range": {
+        "startLine": 313,
+        "startChar": 52,
+        "endLine": 313,
+        "endChar": 114
+      },
+      "revId": "7cfa3fdaf9e39e05c095b853889ea7deea48c680",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
