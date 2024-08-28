@@ -142,6 +142,30 @@
       },
       "revId": "42f01b112a35366bc906efdfbd6050b80def40fc",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "26f6be33_546d6b6a",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-08-28T20:54:20Z",
+      "side": 1,
+      "message": "\u003e I sent you a screen in private swarm.\n\nUnfortunately, have not received any messages from you in 1:1 Jami swarm.",
+      "parentUuid": "8daadbe0_9d7c7a2f",
+      "range": {
+        "startLine": 420,
+        "startChar": 34,
+        "endLine": 420,
+        "endChar": 48
+      },
+      "revId": "42f01b112a35366bc906efdfbd6050b80def40fc",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
