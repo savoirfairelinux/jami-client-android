@@ -189,6 +189,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "35e6aa7f_a1b9e5f2",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-08-28T20:17:11Z",
+      "side": 1,
+      "message": "When creating an issue is list of similar issue shows in the drop-down; however, marking as resolved as agreeing with your implementation. Thank you",
+      "parentUuid": "9741c39e_c28a9d4e",
+      "range": {
+        "startLine": 32,
+        "startChar": 58,
+        "endLine": 32,
+        "endChar": 122
+      },
+      "revId": "71734adf699f52168b820a78f5f04904ba00a0e2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a4d9eeda_cabbb1ea",
