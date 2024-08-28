@@ -39,6 +39,30 @@
       },
       "revId": "3cc78907d12978fd452071c4a3cdaa2f231b7fb8",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7e5ae8e0_2205a0e8",
+        "filename": "jami-android/app/src/androidTest/java/cx/ring/client/settings/AccountSettings.kt",
+        "patchSetId": 18
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-08-28T14:48:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e726368d_1bbf33b8",
+      "range": {
+        "startLine": 452,
+        "startChar": 7,
+        "endLine": 457,
+        "endChar": 71
+      },
+      "revId": "3cc78907d12978fd452071c4a3cdaa2f231b7fb8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
