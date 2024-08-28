@@ -1020,7 +1020,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             cvMessageInput.visibility = View.GONE
             unknownContactPrompt.visibility = View.GONE
             trustRequestPrompt.visibility = View.VISIBLE
-            tvTrustRequestMessage.text = getString(R.string.message_contact_not_trusted_yet, name)
+            tvTrustRequestMessage.text = getString(R.string.message_contact_not_trusted, name)
             trustRequestMessageLayout.visibility = View.VISIBLE
             currentBottomView = trustRequestPrompt
         }

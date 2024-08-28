@@ -32,13 +32,13 @@ along with this program; if not, write to the Free Software
         <item>@string/swarm_group_action_leave</item>
     </string-array>
     <string-array name="swarm_request_one_to_one_actions">
-        <item>@string/accept_request</item>
-        <item>@string/refuse_request</item>
+        <item>@string/accept_invitation</item>
+        <item>@string/decline_invitation</item>
         <item>@string/conversation_action_block_this</item>
     </string-array>
     <string-array name="swarm_request_group_actions">
-        <item>@string/accept_request</item>
-        <item>@string/refuse_request</item>
+        <item>@string/accept_invitation</item>
+        <item>@string/decline_invitation</item>
     </string-array>
 
     <string-array name="video_bitrates">
