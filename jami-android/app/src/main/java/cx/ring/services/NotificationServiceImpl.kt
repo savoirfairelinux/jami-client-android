@@ -675,7 +675,7 @@ class NotificationServiceImpl(
             .setAutoCancel(true)
             .setSmallIcon(R.drawable.ic_ring_logo_white)
             .setCategory(NotificationCompat.CATEGORY_SOCIAL)
-            .setContentTitle(mContext.getString(R.string.contact_request_title))
+            .setContentTitle(mContext.getString(R.string.new_invitation_request_title))
             .setColor(ResourcesCompat.getColor(mContext.resources, R.color.color_primary_dark, null))
     }
 
@@ -708,7 +708,7 @@ class NotificationServiceImpl(
                         mContext, random.nextInt(),
                         Intent(DRingService.ACTION_TRUST_REQUEST_ACCEPT, info, mContext, DRingService::class.java),
                         ContentUri.immutable(PendingIntent.FLAG_ONE_SHOT)))
-                    .addAction(R.drawable.baseline_delete_24, mContext.getText(R.string.refuse), PendingIntent.getService(
+                    .addAction(R.drawable.baseline_delete_24, mContext.getText(R.string.decline), PendingIntent.getService(
                         mContext, random.nextInt(),
                         Intent(DRingService.ACTION_TRUST_REQUEST_REFUSE, info, mContext, DRingService::class.java),
                         ContentUri.immutable(PendingIntent.FLAG_ONE_SHOT)))
@@ -741,7 +741,7 @@ class NotificationServiceImpl(
                     ContentUri.immutable(PendingIntent.FLAG_ONE_SHOT))
             )
 
-            builder.setContentText(String.format(mContext.getString(R.string.contact_request_msg), requests.size))
+            builder.setContentText(String.format(mContext.getString(R.string.invitation_message), requests.size))
             builder.setLargeIcon(null as Icon?)
             notificationManager.notify(notificationId, builder.build())
         }
@@ -835,7 +835,7 @@ class NotificationServiceImpl(
                     PendingIntent.getService(mContext, random.nextInt(),
                         Intent(DRingService.ACTION_FILE_ACCEPT, path, mContext, DRingService::class.java)
                             .putExtra(DRingService.KEY_TRANSFER_ID, dataTransferId), ContentUri.immutable(PendingIntent.FLAG_ONE_SHOT)))
-                .addAction(R.drawable.baseline_cancel_24, mContext.getText(R.string.refuse),
+                .addAction(R.drawable.baseline_cancel_24, mContext.getText(R.string.decline),
                     PendingIntent.getService(mContext, random.nextInt(),
                         Intent(DRingService.ACTION_FILE_CANCEL, path, mContext, DRingService::class.java)
                             .putExtra(DRingService.KEY_TRANSFER_ID, dataTransferId), ContentUri.immutable(PendingIntent.FLAG_ONE_SHOT)))
