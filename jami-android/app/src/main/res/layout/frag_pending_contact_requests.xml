@@ -32,13 +32,13 @@
             android:layout_height="128dp"
             app:tint="@color/darker_gray"
             android:src="@drawable/baseline_group_add_24"
-            android:contentDescription="@string/no_requests" />
+            android:contentDescription="@string/no_invitations" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/text_margin"
-            android:text="@string/no_requests"/>
+            android:text="@string/no_invitations"/>
 
     </LinearLayout>
 

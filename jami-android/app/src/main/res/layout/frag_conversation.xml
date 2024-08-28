@@ -300,7 +300,7 @@
                         android:layout_weight="1"
                         android:background="?attr/selectableItemBackground"
                         android:gravity="center"
-                        android:text="@string/refuse"
+                        android:text="@string/decline"
                         android:textColor="@color/colorPrimary" />
 
                     <Button

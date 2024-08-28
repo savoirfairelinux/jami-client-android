@@ -112,7 +112,7 @@ class TVContactFragment : BaseDetailFragment<TVContactPresenter>(), TVContactVie
         val adapter = ArrayObjectAdapter()
         if (model.mode == Conversation.Mode.Request) {
             adapter.add(Action(ACTION_ACCEPT, resources.getString(R.string.accept)))
-            adapter.add(Action(ACTION_REFUSE, resources.getString(R.string.refuse)))
+            adapter.add(Action(ACTION_REFUSE, resources.getString(R.string.decline)))
             adapter.add(Action(ACTION_BLOCK, resources.getString(R.string.block)))
         } else if (model.isSwarm || account.isContact(model.uri)) {
             adapter.add(Action(ACTION_CALL, resources.getString(R.string.ab_action_video_call), null, context.getDrawable(R.drawable.baseline_videocam_24)))
@@ -122,7 +122,7 @@ class TVContactFragment : BaseDetailFragment<TVContactPresenter>(), TVContactVie
                 adapter.add(Action(ACTION_ADD_CONTACT, resources.getString(R.string.ab_action_contact_add)))
             } else {
                 adapter.add(Action(ACTION_ACCEPT, resources.getString(R.string.accept)))
-                adapter.add(Action(ACTION_REFUSE, resources.getString(R.string.refuse)))
+                adapter.add(Action(ACTION_REFUSE, resources.getString(R.string.decline)))
                 adapter.add(Action(ACTION_BLOCK, resources.getString(R.string.block)))
             }
         }

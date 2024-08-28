@@ -416,23 +416,16 @@ along with this program; if not, write to the Free Software
     <string name="generic_error_migration_message">An error occurred during migration</string>
     <string name="title_share_with">Share with…</string>
 
-    <!-- Pending contact requests -->
+    <!-- Pending invitations -->
     <string name="accept">Accept</string>
-    <string name="refuse">Refuse</string>
+    <string name="decline">Decline</string>
     <string name="block">Block</string>
-    <string name="refuse_request">Refuse request</string>
-    <string name="accept_request">Accept request</string>
-    <string name="contact_request_title">New contact request</string>
-    <string name="contact_request_msg">You have %1$d contact requests</string>
-    <string name="contact_request_account">For %1$s</string>
-    <string name="no_requests">You have no contact requests</string>
-    <string name="message_contact_not_trusted_yet">%s is not in your contacts yet.\nDo you accept or refuse this contact request?</string>
-    <string name="message_contact_not_trusted">%s is not in your contacts.\nAdd a new contact?</string>
-
-    <!-- Send contact requests -->
-    <string name="send_request_button">Send</string>
-    <string name="send_request_title">Send a contact request</string>
-    <string name="send_request_msg">You must send a contact request to communicate with this user. As long as your contact has not accepted the request, you can send messages but he won\'t be able to answer.</string>
+    <string name="decline_invitation">Decline invitation</string>
+    <string name="accept_invitation">Accept invitation</string>
+    <string name="new_invitation_request_title">New invitation</string>
+    <string name="invitation_message">You have %1$d contact requests</string>
+    <string name="no_invitations">There are no chat invitations to display.</string>
+    <string name="invitation_received_message">Chat invitation received from %s.\nAccept or decline the chat invitation?</string>
 
     <!-- Blacklist -->
     <string name="no_blocked_contact">No blocked contacts</string>

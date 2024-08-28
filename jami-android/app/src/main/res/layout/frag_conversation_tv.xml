@@ -65,7 +65,7 @@
 
                 <TextView
                     android:id="@+id/conversation_action_message"
-                    tools:text="@string/contact_request_msg"
+                    tools:text="@string/invitation_message"
                     tools:visibility="visible"
                     android:visibility="gone"
                     android:layout_width="match_parent"

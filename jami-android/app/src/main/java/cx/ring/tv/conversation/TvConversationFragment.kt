@@ -626,7 +626,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
     override fun switchToUnknownView(name: String) {
         binding?.apply {
             conversationActionGroup.isVisible = false
-            conversationActionMessage.text = getString(R.string.message_contact_not_trusted, name)
+            conversationActionMessage.text = getString(R.string.invitation_received_message, name)
             conversationActionMessage.isVisible = true
         }
     }
