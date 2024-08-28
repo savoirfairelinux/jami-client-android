@@ -49,6 +49,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e820a831_5304f6f4",
+        "filename": "jami-android/app/src/main/java/cx/ring/about/AboutFragment.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-08-28T20:17:43Z",
+      "side": 1,
+      "message": "`Webpage`",
+      "range": {
+        "startLine": 44,
+        "startChar": 43,
+        "endLine": 44,
+        "endChar": 50
+      },
+      "revId": "ffd631cf6850aee3fcde69596526be834f003170",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c544b7f8_765cf7a7",
         "filename": "jami-android/app/src/main/res/layout/frag_about.xml",
         "patchSetId": 3
