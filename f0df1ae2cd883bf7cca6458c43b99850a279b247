@@ -24,6 +24,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "73953baa_c228d3ef",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-08-28T14:16:24Z",
+      "side": 1,
+      "message": "Done in https://review.jami.net/c/jami-client-android/+/28920.",
+      "parentUuid": "6d772407_50f43942",
+      "range": {
+        "startLine": 419,
+        "startChar": 9,
+        "endLine": 419,
+        "endChar": 33
+      },
+      "revId": "f0df1ae2cd883bf7cca6458c43b99850a279b247",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a8393067_8251ac89",
@@ -60,6 +84,54 @@
       "writtenOn": "2024-08-23T21:16:24Z",
       "side": 1,
       "message": "`Decline`",
+      "range": {
+        "startLine": 421,
+        "startChar": 26,
+        "endLine": 421,
+        "endChar": 32
+      },
+      "revId": "f0df1ae2cd883bf7cca6458c43b99850a279b247",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b9cf394_0da59601",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-08-28T14:16:24Z",
+      "side": 1,
+      "message": "Done in https://review.jami.net/c/jami-client-android/+/28920.",
+      "parentUuid": "a8393067_8251ac89",
+      "range": {
+        "startLine": 421,
+        "startChar": 18,
+        "endLine": 421,
+        "endChar": 24
+      },
+      "revId": "f0df1ae2cd883bf7cca6458c43b99850a279b247",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d758d84a_f8177a05",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-08-28T14:16:24Z",
+      "side": 1,
+      "message": "Done in https://review.jami.net/c/jami-client-android/+/28920.",
+      "parentUuid": "6e0c18c9_ac288272",
       "range": {
         "startLine": 421,
         "startChar": 26,
@@ -116,6 +188,54 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2a527501_28dc5c75",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-08-28T14:16:24Z",
+      "side": 1,
+      "message": "Done in https://review.jami.net/c/jami-client-android/+/28920.",
+      "parentUuid": "dd56322b_721cc0a2",
+      "range": {
+        "startLine": 423,
+        "startChar": 34,
+        "endLine": 423,
+        "endChar": 48
+      },
+      "revId": "f0df1ae2cd883bf7cca6458c43b99850a279b247",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1be34540_20a19387",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-08-28T14:16:24Z",
+      "side": 1,
+      "message": "Done in https://review.jami.net/c/jami-client-android/+/28920.",
+      "parentUuid": "0729c068_88df3b45",
+      "range": {
+        "startLine": 423,
+        "startChar": 18,
+        "endLine": 423,
+        "endChar": 32
+      },
+      "revId": "f0df1ae2cd883bf7cca6458c43b99850a279b247",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f0752e34_98e0924b",
@@ -162,6 +282,54 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e04d7855_0d429bfe",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-08-28T14:16:24Z",
+      "side": 1,
+      "message": "Done in https://review.jami.net/c/jami-client-android/+/28920.",
+      "parentUuid": "688e66bf_be43d413",
+      "range": {
+        "startLine": 424,
+        "startChar": 34,
+        "endLine": 424,
+        "endChar": 48
+      },
+      "revId": "f0df1ae2cd883bf7cca6458c43b99850a279b247",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d738f617_f71f3a3f",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-08-28T14:16:24Z",
+      "side": 1,
+      "message": "Done in https://review.jami.net/c/jami-client-android/+/28920.",
+      "parentUuid": "f0752e34_98e0924b",
+      "range": {
+        "startLine": 424,
+        "startChar": 18,
+        "endLine": 424,
+        "endChar": 32
+      },
+      "revId": "f0df1ae2cd883bf7cca6458c43b99850a279b247",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "81b2462f_58658401",
@@ -185,6 +353,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d11aec7d_474e40bb",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-08-28T14:16:24Z",
+      "side": 1,
+      "message": "Done in https://review.jami.net/c/jami-client-android/+/28920.",
+      "parentUuid": "81b2462f_58658401",
+      "range": {
+        "startLine": 425,
+        "startChar": 41,
+        "endLine": 425,
+        "endChar": 60
+      },
+      "revId": "f0df1ae2cd883bf7cca6458c43b99850a279b247",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b70c1592_f50cb4b3",
@@ -198,6 +390,30 @@
       "writtenOn": "2024-08-23T21:16:24Z",
       "side": 1,
       "message": "`There are no chat invitations to display.`",
+      "range": {
+        "startLine": 428,
+        "startChar": 31,
+        "endLine": 428,
+        "endChar": 59
+      },
+      "revId": "f0df1ae2cd883bf7cca6458c43b99850a279b247",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a911f23_fad0c045",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-08-28T14:16:24Z",
+      "side": 1,
+      "message": "Done in https://review.jami.net/c/jami-client-android/+/28920.",
+      "parentUuid": "b70c1592_f50cb4b3",
       "range": {
         "startLine": 428,
         "startChar": 31,
@@ -254,6 +470,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "000358d7_8f7a87f6",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-08-28T14:16:24Z",
+      "side": 1,
+      "message": "Done in https://review.jami.net/c/jami-client-android/+/28920.",
+      "parentUuid": "6d006ca8_bee07bd1",
+      "range": {
+        "startLine": 429,
+        "startChar": 84,
+        "endLine": 429,
+        "endChar": 129
+      },
+      "revId": "f0df1ae2cd883bf7cca6458c43b99850a279b247",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "330602c5_197e7808",
@@ -277,6 +517,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6713e606_f7b08707",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-08-28T14:16:24Z",
+      "side": 1,
+      "message": "Deleted `message_contact_not_trusted_yet` in favor of `message_contact_not_trusted`.",
+      "parentUuid": "330602c5_197e7808",
+      "range": {
+        "startLine": 430,
+        "startChar": 47,
+        "endLine": 430,
+        "endChar": 94
+      },
+      "revId": "f0df1ae2cd883bf7cca6458c43b99850a279b247",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7f4a3e52_5a87748e",
@@ -290,6 +554,30 @@
       "writtenOn": "2024-08-23T21:16:24Z",
       "side": 1,
       "message": "`Send invitation`",
+      "range": {
+        "startLine": 434,
+        "startChar": 38,
+        "endLine": 434,
+        "endChar": 60
+      },
+      "revId": "f0df1ae2cd883bf7cca6458c43b99850a279b247",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "918f5f5f_9f1403d2",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-08-28T14:16:24Z",
+      "side": 1,
+      "message": "Done in https://review.jami.net/c/jami-client-android/+/28920.",
+      "parentUuid": "7f4a3e52_5a87748e",
       "range": {
         "startLine": 434,
         "startChar": 38,
