@@ -30,7 +30,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import cx.ring.R
 
 class EmojiChooserBottomSheet(val onEmojiSelected: ((String?) -> Unit)? = null) : BottomSheetDialogFragment() {
-    private inner class EmojiView(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class EmojiView(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val view: TextView = itemView as TextView
         var emoji: String? = null
 
@@ -42,7 +42,7 @@ class EmojiChooserBottomSheet(val onEmojiSelected: ((String?) -> Unit)? = null) 
         }
     }
 
-    private inner class ColorAdapter(@ArrayRes arrayResId: Int) : RecyclerView.Adapter<EmojiView>() {
+    private inner class EmojiAdapter(@ArrayRes arrayResId: Int) : RecyclerView.Adapter<EmojiView>() {
         private val emojis: Array<String> = resources.getStringArray(arrayResId)
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
             EmojiView(LayoutInflater.from(parent.context).inflate(R.layout.item_emoji, parent, false))
@@ -57,7 +57,10 @@ class EmojiChooserBottomSheet(val onEmojiSelected: ((String?) -> Unit)? = null) 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         (inflater.inflate(R.layout.frag_color_chooser, container) as RecyclerView)
-            .apply { adapter = ColorAdapter(R.array.conversation_emojis) }
+            .apply {
+                id = R.id.emoji_chooser // Used in tests.
+                adapter = EmojiAdapter(R.array.conversation_emojis)
+            }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = super.onCreateDialog(savedInstanceState)
