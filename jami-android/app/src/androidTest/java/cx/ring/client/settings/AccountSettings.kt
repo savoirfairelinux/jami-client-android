@@ -118,7 +118,7 @@ class AccountSettings {
         // `@BeforeClass` could be used, but it does not have access to the activity.
         Log.d(TAG, "Creating accounts ...")
 
-        accountA = AccountUtils.createAccount(JamiApplication.instance!!.mAccountService, 1)[0]
+        accountA = AccountUtils.createAccount(1)[0]
         accountCreated = true
         Log.d(TAG, "Account created.")
 
@@ -623,7 +623,7 @@ class AccountSettings {
         waitForView(withId(R.id.search_bar)).perform(waitUntil(isDisplayed()))
 
         // Remove account
-        AccountUtils.removeAllAccounts(JamiApplication.instance!!.mAccountService)
+        AccountUtils.removeAllAccounts()
     }
 
     @Test
@@ -656,6 +656,6 @@ class AccountSettings {
         onView(withId(R.id.search_bar)).check(matches(isDisplayed()))
 
         // Remove account.
-        AccountUtils.removeAllAccounts(JamiApplication.instance!!.mAccountService)
+        AccountUtils.removeAllAccounts()
     }
 }

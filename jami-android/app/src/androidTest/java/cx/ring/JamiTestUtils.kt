@@ -2,6 +2,7 @@ package cx.ring
 
 import android.content.Context
 import android.net.Uri
+import cx.ring.application.JamiApplication
 import io.reactivex.rxjava3.core.Single
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineScope
@@ -27,7 +28,8 @@ object AccountUtils {
 
     private const val NAME_SERVER_ADDRESS = "https://ns-test.jami.net"
 
-    fun createAccount(accountService: AccountService, count: Int): List<Account> {
+    fun createAccount(count: Int): List<Account> {
+        val accountService = JamiApplication.instance!!.mAccountService
         val accountObservableList = (0..<count).map { accountCount ->
             accountService.getAccountTemplate(AccountConfig.ACCOUNT_TYPE_JAMI)
                 .map { accountDetails: HashMap<String, String> ->
@@ -48,7 +50,8 @@ object AccountUtils {
         return Single.zip(accountObservableList) { it.filterIsInstance<Account>() }.blockingGet()
     }
 
-    fun registerAccount(accountService: AccountService, accountList: List<Account>) {
+    fun registerAccount(accountList: List<Account>) {
+        val accountService = JamiApplication.instance!!.mAccountService
         for ((index, account) in accountList.withIndex()) {
             val baseUsername = "jamitest"
             val time = System.currentTimeMillis()
@@ -75,23 +78,18 @@ object AccountUtils {
      * Create n accounts and register them.
      * This function is blocking.
      *
-     * @param accountService The account service to use.
      * @param count The number of accounts to create.
      * @return The list of registered account names.
      */
-    fun createAccountAndRegister(accountService: AccountService, count: Int): List<Account> =
-        createAccount(accountService, count).apply { registerAccount(accountService, this) }
+    fun createAccountAndRegister(count: Int): List<Account> =
+        createAccount(count).apply { registerAccount(this) }
 
     /**
      * Remove all accounts.
-     *
-     * @param accountService The account service to use.
      */
-    fun removeAllAccounts(accountService: AccountService) {
-        accountService.observableAccountList.blockingFirst().forEach {
-            accountService.removeAccount(it.accountId)
-        }
-    }
+    fun removeAllAccounts() =
+        JamiApplication.instance!!.mAccountService.observableAccountList.blockingFirst()
+            .forEach { JamiApplication.instance!!.mAccountService.removeAccount(it.accountId) }
 }
 
 class ImageProvider {

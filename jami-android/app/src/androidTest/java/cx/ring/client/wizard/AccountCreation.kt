@@ -468,7 +468,7 @@ class AccountCreation {
 
     @After
     fun removeAccount() =
-        AccountUtils.removeAllAccounts(accountService = JamiApplication.instance!!.mAccountService)
+        AccountUtils.removeAllAccounts()
 
     private fun createDefaultAccount() {
         onView(withId(R.id.ring_create_btn)).perform(scrollTo(), click())
