@@ -67,6 +67,7 @@ import cx.ring.utils.ContentUri.getUriForFile
 import cx.ring.utils.TextUtils.copyAndShow
 import cx.ring.viewholders.ConversationViewHolder
 import cx.ring.views.AvatarDrawable
+import cx.ring.views.MessageBubble
 import cx.ring.views.MessageStatusView
 import io.noties.markwon.AbstractMarkwonPlugin
 import io.noties.markwon.Markwon
@@ -1273,7 +1274,7 @@ class ConversationAdapter(
      * ResIndex indicates how is considered the message (first, single, last, etc.).
      */
     private fun updateMessageBackground(
-        context: Context, messageBubble: View,
+        context: Context, messageBubble: MessageBubble,
         messageSequenceType: SequenceType,
         isOnlyEmoji: Boolean, isReplying: Boolean, isDeleted: Boolean, isIncoming: Boolean,
     ) {
@@ -1300,7 +1301,7 @@ class ConversationAdapter(
                     (findDrawableByLayerId(R.id.main_bubble) as GradientDrawable)
                         .setColor(convColor)
                 }
-            } else if (convColor != 0 && !isIncoming) messageBubble.background?.setTint(convColor)
+            } else if (convColor != 0 && !isIncoming) messageBubble.setBubbleColor(convColor)
         }
     }
 
@@ -1357,7 +1358,7 @@ class ConversationAdapter(
                 .getDimensionPixelSize(R.dimen.conversation_message_separation)
         }
 
-        messageBubble.background?.setTintList(null)
+        messageBubble.setBubbleColor(null)
         // Manage the update of the timestamp
         if (isDateShown) {
             viewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
@@ -1386,11 +1387,9 @@ class ConversationAdapter(
         // Manage long press.
         messageBubble.setOnLongClickListener { v: View ->
             openItemMenu(viewHolder, v, interaction)
-            if (interaction.isIncoming) {
-                messageBubble.background?.setTint(context.getColor(R.color.grey_500))
-            } else {
-                messageBubble.background?.setTint(convColorTint)
-            }
+            if (interaction.isIncoming)
+                messageBubble.setBubbleColor(context.getColor(R.color.grey_500))
+            else messageBubble.setBubbleColor(convColor)
             true
         }
 

@@ -110,6 +110,19 @@ class MessageBubble(context: Context, attrs: AttributeSet?) : ViewGroup(context,
     fun getText(): CharSequence = messageText.text
 
     /**
+     * Updates the tint color of the bubble.
+     */
+    fun setBubbleColor(@ColorInt color: Int?) {
+        if (color == null) {
+            background?.setTintList(null)
+            backgroundTintList = null
+            return
+        }
+        background?.setTintList(ColorStateList.valueOf(color))
+        backgroundTintList = ColorStateList.valueOf(color)
+    }
+
+    /**
      * Updates the view to display a standard message.
      */
     fun updateStandard(message: Spanned, time: String, messageIsEdited: Boolean) {
