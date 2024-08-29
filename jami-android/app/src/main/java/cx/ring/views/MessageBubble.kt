@@ -61,6 +61,7 @@ class MessageBubble(context: Context, attrs: AttributeSet?) : ViewGroup(context,
     private var contrastedDefaultTextColor = context.getColor(R.color.colorOnSurface)
 
     private val messageText = WrapWidthTextView(context).apply {
+        id = R.id.bubble_message_text
         autoLinkMask = Linkify.WEB_URLS
         movementMethod = LinkMovementMethod.getInstance()
         setTextIsSelectable(true)
