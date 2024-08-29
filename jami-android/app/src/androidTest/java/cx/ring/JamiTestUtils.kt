@@ -2,6 +2,7 @@ package cx.ring
 
 import android.content.Context
 import android.net.Uri
+import cx.ring.application.JamiApplication
 import io.reactivex.rxjava3.core.Single
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineScope
@@ -31,14 +32,14 @@ object AccountUtils {
      * Create n accounts and register them.
      * This function is blocking.
      *
-     * @param accountService The account service to use.
      * @param count The number of accounts to create.
      * @return The list of registered account names.
      */
-    fun createAccountAndRegister(accountService: AccountService, count: Int): List<Account> {
+    fun createAccountAndRegister(count: Int): List<Account> {
 
         val baseUsername = "jamitest"
         val time = System.currentTimeMillis()
+        val accountService = JamiApplication.instance!!.mAccountService
 
         val accountObservableList = (0..<count).map { accountCount ->
             val username = "${baseUsername}_${time}_${accountCount}"
@@ -84,14 +85,10 @@ object AccountUtils {
 
     /**
      * Remove all accounts.
-     *
-     * @param accountService The account service to use.
      */
-    fun removeAllAccounts(accountService: AccountService) {
-        accountService.observableAccountList.blockingFirst().forEach {
-            accountService.removeAccount(it.accountId)
-        }
-    }
+    fun removeAllAccounts() =
+        JamiApplication.instance!!.mAccountService.observableAccountList.blockingFirst()
+            .forEach { JamiApplication.instance!!.mAccountService.removeAccount(it.accountId) }
 }
 
 class ImageProvider {
