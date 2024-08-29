@@ -2,6 +2,7 @@ package cx.ring
 
 import android.content.Context
 import android.net.Uri
+import cx.ring.application.JamiApplication
 import io.reactivex.rxjava3.core.Single
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineScope
@@ -84,14 +85,10 @@ object AccountUtils {
 
     /**
      * Remove all accounts.
-     *
-     * @param accountService The account service to use.
      */
-    fun removeAllAccounts(accountService: AccountService) {
-        accountService.observableAccountList.blockingFirst().forEach {
-            accountService.removeAccount(it.accountId)
-        }
-    }
+    fun removeAllAccounts() =
+        JamiApplication.instance!!.mAccountService.observableAccountList.blockingFirst()
+            .forEach { JamiApplication.instance!!.mAccountService.removeAccount(it.accountId) }
 }
 
 class ImageProvider {

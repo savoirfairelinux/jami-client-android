@@ -623,7 +623,7 @@ class AccountSettings {
         waitForView(withId(R.id.search_bar)).perform(waitUntil(isDisplayed()))
 
         // Remove account
-        AccountUtils.removeAllAccounts(JamiApplication.instance!!.mAccountService)
+        AccountUtils.removeAllAccounts()
     }
 
     @Test
@@ -656,6 +656,6 @@ class AccountSettings {
         onView(withId(R.id.search_bar)).check(matches(isDisplayed()))
 
         // Remove account.
-        AccountUtils.removeAllAccounts(JamiApplication.instance!!.mAccountService)
+        AccountUtils.removeAllAccounts()
     }
 }
