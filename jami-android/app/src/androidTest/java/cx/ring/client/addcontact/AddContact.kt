@@ -101,8 +101,7 @@ class AddContact {
 
         val accountService = JamiApplication.instance!!.mAccountService
 
-        val accountList =
-            AccountUtils.createAccountAndRegister(accountService, 4)
+        val accountList = AccountUtils.createAccountAndRegister(4)
 
         accountA = accountList[0]
         accountB = accountList[1]
@@ -120,18 +119,12 @@ class AddContact {
         val accountCUri = Uri.fromString(accountC!!.uri!!)
         val fakeCConversation =
             Conversation(accountA!!.accountId, accountCUri, Conversation.Mode.Request)
-        accountService.sendTrustRequest(
-            fakeCConversation,
-            accountCUri
-        )
+        accountService.sendTrustRequest(fakeCConversation, accountCUri)
 
         val accountDUri = Uri.fromString(accountD!!.uri!!)
         val fakeDConversation =
             Conversation(accountA!!.accountId, accountDUri, Conversation.Mode.Request)
-        accountService.sendTrustRequest(
-            fakeDConversation,
-            accountDUri
-        )
+        accountService.sendTrustRequest(fakeDConversation, accountDUri)
     }
 
     @Test
@@ -403,7 +396,7 @@ class AddContact {
         // That is the same problem with Android Test Orchestrator which removes the application
         // between each test and not only at the end.
         // `@AfterClass` could be used (executed once), but it does not have access to the activity.
-        AccountUtils.removeAllAccounts(accountService = JamiApplication.instance!!.mAccountService)
+        AccountUtils.removeAllAccounts()
     }
 }
 
