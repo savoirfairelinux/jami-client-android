@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item type="id" name="drag_handle" />
+    <item name="bubble_message_text" type="id" />
+    <item name="color_chooser" type="id" />
+    <item name="emoji_chooser" type="id" />
 </resources>
