@@ -280,7 +280,7 @@ class AccountCreation {
         // That is the same problem with Android Test Orchestrator which removes the application
         // between each test and not only at the end.
         // `@AfterClass` could be used (executed once), but it does not have access to the activity.
-        AccountUtils.removeAllAccounts(accountService = JamiApplication.instance!!.mAccountService)
+        AccountUtils.removeAllAccounts()
     }
 
     private fun createDefaultAccount() {
