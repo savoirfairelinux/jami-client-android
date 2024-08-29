@@ -31,7 +31,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import cx.ring.R
 
 class ColorChooserBottomSheet(val onColorSelected: ((Int) -> Unit)? = null) : BottomSheetDialogFragment() {
-    private inner class ColorView(itemView: View) : RecyclerView.ViewHolder(itemView)
+    inner class ColorView(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     private inner class ColorAdapter : RecyclerView.Adapter<ColorView>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
@@ -51,7 +51,10 @@ class ColorChooserBottomSheet(val onColorSelected: ((Int) -> Unit)? = null) : Bo
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         (inflater.inflate(R.layout.frag_color_chooser, container) as RecyclerView)
-            .apply { adapter = ColorAdapter() }
+            .apply {
+                id = R.id.color_chooser // Used in tests.
+                adapter = ColorAdapter()
+            }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = super.onCreateDialog(savedInstanceState)
