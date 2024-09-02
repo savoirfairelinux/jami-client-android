@@ -108,8 +108,6 @@
   <string name="ab_action_speakerphone">ਸਪੀਕਰ ਚਾਲੂ ਕਰੋ</string>
   <string name="ab_action_contact_add">ਸੰਪਰਕਾਂ ਵਿੱਚ ਜੋੜੋ</string>
   <string name="ab_action_contact_add_question">ਸੰਪਰਕਾਂ ਵਿੱਚ ਜੋੜੀਏ?</string>
-  <string name="ab_action_audio_call">ਅਵਾਜ਼ੀ ਕਾਲ</string>
-  <string name="ab_action_video_call">ਵੀਡੀਓ ਕਾਲ</string>
   <string name="ab_action_change_screen_orientation">ਸਕ੍ਰੀਨ ਦੀ ਦਿਸ਼ਾ ਬਦਲੋ</string>
   <string name="share_via">ਇਸ ਰਾਹੀਂ ਸਾਂਝਾ ਕਰੋ</string>
   <string name="write_a_message">ਕੋਈ ਸੁਨੇਹਾ ਲਿਖੋ</string>
@@ -153,7 +151,7 @@
   <string name="clear_history_dialog_message">ਇਹ ਕਾਰਵਾਈ ਹੋਣ ਤੋਂ ਬਾਅਦ ਬਦਲੀ ਨਹੀਂ ਜਾ ਸਕਦੀ।</string>
   <string name="clear_history_completed">ਇਤਿਹਾਸ ਮਿਟ ਗਿਆ ਹੈ।</string>
   <!--Conversation-->
-  <string name="conversation_details">ਸੰਪਰਕ ਵੇਰਵੇ</string>
+  <string name="contact_details">ਸੰਪਰਕ ਵੇਰਵੇ</string>
   <string name="conversation_action_delete_this">ਇਹ ਗੱਲਬਾਤ ਮਿਟਾਓ</string>
   <string name="conversation_action_delete_this_title">ਇਹ ਗੱਲਬਾਤ ਮਿਟਾਈਏ?</string>
   <string name="conversation_action_delete_this_message">ਇਹ ਕਾਰਵਾਈ ਹੋਣ ਤੋਂ ਬਾਅਦ ਬਦਲੀ ਨਹੀਂ ਜਾ ਸਕਦੀ।</string>

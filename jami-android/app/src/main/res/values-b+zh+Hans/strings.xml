@@ -18,6 +18,8 @@
   <string name="notif_inprogress_group_call">通话中</string>
   <!--Call Fragment-->
   <string name="call_duration">最后的%s</string>
+  <string name="ab_action_audio_call">发起语音通话</string>
+  <string name="ab_action_video_call">開始視訊通話</string>
   <string name="qr_code_not_contact">不是Jami的二维码</string>
   <string name="new_swarm">启动群组</string>
   <!--Text messages-->
@@ -30,6 +32,8 @@
   <!--QRCode Scan-->
   <!--Settings-->
   <!--Conversation-->
+  <string name="conversation_details">对话详情</string>
+  <string name="contact_details">联系人详情</string>
   <string name="conversation_action_go_to_call">返回通话</string>
   <string name="conversation_message_deleted">%s删除了一条消息</string>
   <string name="conversation_reply_you">您</string>

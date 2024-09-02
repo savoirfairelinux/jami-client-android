@@ -111,8 +111,8 @@
   <string name="ab_action_speakerphone">Abilitar lo parlant</string>
   <string name="ab_action_contact_add">Ajustar als contactes</string>
   <string name="ab_action_contact_add_question">Ajustar a los contactes?</string>
-  <string name="ab_action_audio_call">Apèl audio</string>
-  <string name="ab_action_video_call">Apèl video</string>
+  <string name="ab_action_audio_call">Començar l\'audio-call</string>
+  <string name="ab_action_video_call">Començar l\' apèl video</string>
   <string name="ab_action_change_screen_orientation">Cambiar l\'orientament de l\'ecran</string>
   <string name="share_via">Partejar via</string>
   <string name="write_a_message">Escriu un messatge</string>
@@ -160,7 +160,8 @@
   <string name="clear_history_completed">L\'istòria es estada desliurada.</string>
   <string name="clear_history">Escafar</string>
   <!--Conversation-->
-  <string name="conversation_details">Detalhs de contacte</string>
+  <string name="conversation_details">Detalhs de la conversacion</string>
+  <string name="contact_details">Detalhs de contacte</string>
   <string name="conversation_action_delete_this">Eliminar aquesta conversacion</string>
   <string name="conversation_action_delete_this_title">Eliminar aquela conversacion?</string>
   <string name="conversation_action_delete_this_message">Aquesta accion se pòt pas desvolopar.</string>

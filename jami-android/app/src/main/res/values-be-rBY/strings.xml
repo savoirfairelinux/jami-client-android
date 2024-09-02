@@ -67,6 +67,8 @@
   <string name="action_call_decline">Падзенне</string>
   <string name="action_call_mic_mute">Непаўны мікрафон</string>
   <string name="ab_action_contact_add">Дадаць да кантактаў</string>
+  <string name="ab_action_audio_call">Пачатак аўдыё-запаведзі</string>
+  <string name="ab_action_video_call">Пачатак відэазванку</string>
   <!--Text messages-->
   <string name="message_failed">Недасягнуты</string>
   <string name="send_file">Адправіць файл</string>
@@ -82,7 +84,8 @@
   <!--Settings-->
   <string name="clear_history">Ясна</string>
   <!--Conversation-->
-  <string name="conversation_details">Кантактныя дадзеныя</string>
+  <string name="conversation_details">Падрабязнасць размовы</string>
+  <string name="contact_details">Кантактныя дадзеныя</string>
   <string name="conversation_action_delete_this_message">Гэтая дзейнасць не можа быць адменена.</string>
   <string name="conversation_action_history_clear">Ясная гісторыя</string>
   <string name="conversation_action_block_this">Блокальны кантакт</string>

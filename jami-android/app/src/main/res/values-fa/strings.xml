@@ -115,8 +115,8 @@
   <string name="ab_action_speakerphone">فعال‌سازی بلندگو</string>
   <string name="ab_action_contact_add">افزودن به مخاطبان</string>
   <string name="ab_action_contact_add_question">افزودن به مخاطبان؟</string>
-  <string name="ab_action_audio_call">تماس صوتی</string>
-  <string name="ab_action_video_call">تماس تصویری</string>
+  <string name="ab_action_audio_call">شروع تماس صوتی</string>
+  <string name="ab_action_video_call">شروع تماس ویدیویی</string>
   <string name="ab_action_change_screen_orientation">تغییر جهت صفحه</string>
   <string name="share_via">اشتراک از طریق</string>
   <string name="write_a_message">پیامی بنویسید</string>
@@ -165,7 +165,8 @@
   <string name="clear_history_completed">تاریخچه پاک‌سازی شد.</string>
   <string name="clear_history">پاک‌سازی</string>
   <!--Conversation-->
-  <string name="conversation_details">جزئیات مخاطب</string>
+  <string name="conversation_details">جزئیات مکالمه</string>
+  <string name="contact_details">جزئیات مخاطب</string>
   <string name="conversation_action_delete_this">حذف این گفتگو</string>
   <string name="conversation_action_delete_this_title">حذف این گفتگو؟</string>
   <string name="conversation_action_delete_this_message">این کار قابل بازگشت نیست.</string>

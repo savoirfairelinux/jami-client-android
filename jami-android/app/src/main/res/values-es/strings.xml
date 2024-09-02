@@ -117,8 +117,8 @@
   <string name="ab_action_speakerphone">Activar el altavoz</string>
   <string name="ab_action_contact_add">Añadir a contactos</string>
   <string name="ab_action_contact_add_question">¿Añadir a contactos?</string>
-  <string name="ab_action_audio_call">Llamada de voz</string>
-  <string name="ab_action_video_call">Videollamada</string>
+  <string name="ab_action_audio_call">Empezar llamada de audio</string>
+  <string name="ab_action_video_call">Iniciar videollamada</string>
   <string name="ab_action_change_screen_orientation">Cambiar la orientación de la pantalla</string>
   <string name="share_via">Compatir via</string>
   <string name="write_a_message">Escribir un mensaje</string>
@@ -169,7 +169,8 @@
   <string name="clear_history_completed">El historial se ha limpiado.</string>
   <string name="clear_history">Vaciar</string>
   <!--Conversation-->
-  <string name="conversation_details">Detalles del contacto</string>
+  <string name="conversation_details">Detalles de conversación</string>
+  <string name="contact_details">Detalles del contacto</string>
   <string name="conversation_action_delete_this">Borrar esta conversación</string>
   <string name="conversation_action_delete_this_title">¿Borrar esta conversación?</string>
   <string name="conversation_action_delete_this_message">Esta acción no puede deshacerse.</string>

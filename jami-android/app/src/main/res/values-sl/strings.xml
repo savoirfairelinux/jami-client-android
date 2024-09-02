@@ -118,8 +118,8 @@
   <string name="ab_action_speakerphone">Vklopi zvočnik</string>
   <string name="ab_action_contact_add">Dodaj med stike</string>
   <string name="ab_action_contact_add_question">Dodam med stike?</string>
-  <string name="ab_action_audio_call">Zvočni klic</string>
-  <string name="ab_action_video_call">Video klic</string>
+  <string name="ab_action_audio_call">Začni zvočni klic</string>
+  <string name="ab_action_video_call">Začni video klic</string>
   <string name="ab_action_change_screen_orientation">Zammenjaj orientacijo zaslona</string>
   <string name="share_via">Deli preko</string>
   <string name="write_a_message">Napiši sporočilo</string>
@@ -170,7 +170,8 @@
   <string name="clear_history_completed">Zgodovina je bila počiščena.</string>
   <string name="clear_history">Počisiti</string>
   <!--Conversation-->
-  <string name="conversation_details">Podrobnosti stika</string>
+  <string name="conversation_details">Podrobnosti pogovora</string>
+  <string name="contact_details">Podrobnosti stika</string>
   <string name="conversation_action_delete_this">Izbriši ta pogovor</string>
   <string name="conversation_action_delete_this_title">Ali želite izbrisati ta pogovor?</string>
   <string name="conversation_action_delete_this_message">Tega dejanja ni mogoče razveljaviti.</string>

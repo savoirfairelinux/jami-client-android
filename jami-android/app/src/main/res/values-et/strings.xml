@@ -116,8 +116,8 @@
   <string name="ab_action_speakerphone">Aktiveeri valjuhääldi</string>
   <string name="ab_action_contact_add">Lisa kontaktitele</string>
   <string name="ab_action_contact_add_question">Kas lisame kontaktina?</string>
-  <string name="ab_action_audio_call">Häälkõne</string>
-  <string name="ab_action_video_call">Videokõne</string>
+  <string name="ab_action_audio_call">Alustada häälkõnet</string>
+  <string name="ab_action_video_call">Alusta videokõnet</string>
   <string name="ab_action_change_screen_orientation">Muuda ekraani paigutust</string>
   <string name="share_via">Jaga järgnevalt</string>
   <string name="write_a_message">Kirjuta sõnum</string>
@@ -168,7 +168,8 @@
   <string name="clear_history_completed">Ajalugu on kustutatud.</string>
   <string name="clear_history">Jah, kustuta</string>
   <!--Conversation-->
-  <string name="conversation_details">Kontaktandmed</string>
+  <string name="conversation_details">Vestluse üksikasjad</string>
+  <string name="contact_details">Kontaktandmed</string>
   <string name="conversation_action_delete_this">Kustuta see vestlus</string>
   <string name="conversation_action_delete_this_title">Kas kustutame selle vestluse?</string>
   <string name="conversation_action_delete_this_message">Seda tegevust ei saa tagasi pöörata.</string>

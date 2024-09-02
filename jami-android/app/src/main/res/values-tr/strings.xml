@@ -114,8 +114,8 @@
   <string name="ab_action_speakerphone">Hoparlörü etkinleştir</string>
   <string name="ab_action_contact_add">Kişilere ekle</string>
   <string name="ab_action_contact_add_question">Kişilere eklensin mi?</string>
-  <string name="ab_action_audio_call">Sesli çağrı</string>
-  <string name="ab_action_video_call">Görüntülü çağrı</string>
+  <string name="ab_action_audio_call">Sesli arama başlat</string>
+  <string name="ab_action_video_call">Görüntülü arama başlat</string>
   <string name="ab_action_change_screen_orientation">Ekran Yönünü değiştir</string>
   <string name="share_via">Şununla paylaş</string>
   <string name="write_a_message">İleti yaz</string>
@@ -165,7 +165,8 @@
   <string name="clear_history_completed">Geçmiş temizlenmiş.</string>
   <string name="clear_history">Temizle</string>
   <!--Conversation-->
-  <string name="conversation_details">Kişi ayrıntıları</string>
+  <string name="conversation_details">Görüşme detayları</string>
+  <string name="contact_details">Kişi ayrıntıları</string>
   <string name="conversation_action_delete_this">Bu görüşmeyi sil</string>
   <string name="conversation_action_delete_this_title">Bu görüşme silinsin mi?</string>
   <string name="conversation_action_delete_this_message">Bu eylem geri alınamaz.</string>

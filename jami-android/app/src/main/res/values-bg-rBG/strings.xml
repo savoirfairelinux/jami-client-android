@@ -111,8 +111,8 @@
   <string name="ab_action_speakerphone">Активиране на високоговорител</string>
   <string name="ab_action_contact_add">Добавяне към контактите</string>
   <string name="ab_action_contact_add_question">Добавяне към контактите?</string>
-  <string name="ab_action_audio_call">Гласово обаждане</string>
-  <string name="ab_action_video_call">Обаждане с видео</string>
+  <string name="ab_action_audio_call">Започване на гласов разговор</string>
+  <string name="ab_action_video_call">Започване на видео разговор</string>
   <string name="ab_action_change_screen_orientation">Промяна на ориентацията на екрана</string>
   <string name="share_via">Споделяне чрез</string>
   <string name="write_a_message">Напишете съобщение</string>
@@ -160,7 +160,8 @@
   <string name="clear_history_completed">Историята беше изчистена.</string>
   <string name="clear_history">Чисто</string>
   <!--Conversation-->
-  <string name="conversation_details">Подробности за контакта</string>
+  <string name="conversation_details">Подробности за разговора</string>
+  <string name="contact_details">Подробности за контакта</string>
   <string name="conversation_action_delete_this">Изтриване на този разговор</string>
   <string name="conversation_action_delete_this_title">Изтриване на този разговор?</string>
   <string name="conversation_action_delete_this_message">Това действие е необратимо.</string>

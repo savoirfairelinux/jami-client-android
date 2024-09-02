@@ -111,8 +111,8 @@
   <string name="ab_action_speakerphone">Kaiutin päälle</string>
   <string name="ab_action_contact_add">Lisää yhteystietoihin</string>
   <string name="ab_action_contact_add_question">Lisää yhteystietoihin?</string>
-  <string name="ab_action_audio_call">Äänipuhelu</string>
-  <string name="ab_action_video_call">Videopuhelu</string>
+  <string name="ab_action_audio_call">Aloita äänipuhelu</string>
+  <string name="ab_action_video_call">Aloita videopuhelu</string>
   <string name="ab_action_change_screen_orientation">Muuta näytön suuntaa</string>
   <string name="share_via">Jaa</string>
   <string name="write_a_message">Kirjoita viesti</string>
@@ -160,7 +160,8 @@
   <string name="clear_history_completed">Historia on tyhjennetty.</string>
   <string name="clear_history">Tyhjennä</string>
   <!--Conversation-->
-  <string name="conversation_details">Henkilön tiedot</string>
+  <string name="conversation_details">Keskustelun yksityiskohdat</string>
+  <string name="contact_details">Henkilön tiedot</string>
   <string name="conversation_action_delete_this">Poista tämä keskustelu</string>
   <string name="conversation_action_delete_this_title">Poistetaanko tämä keskustelu?</string>
   <string name="conversation_action_delete_this_message">Tätä toimintoa ei voi perua.</string>

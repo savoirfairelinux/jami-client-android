@@ -116,8 +116,8 @@
   <string name="ab_action_speakerphone">Aktivizoni altoparlantin</string>
   <string name="ab_action_contact_add">Shtoje te kontaktet</string>
   <string name="ab_action_contact_add_question">Të shtohet te kontaktet?</string>
-  <string name="ab_action_audio_call">Thirrje audio</string>
-  <string name="ab_action_video_call">Thirrje video</string>
+  <string name="ab_action_audio_call">Filloni thirrje audio</string>
+  <string name="ab_action_video_call">Filloni thirrje video</string>
   <string name="ab_action_change_screen_orientation">Ndryshoni drejtim ekrani</string>
   <string name="share_via">Ndajeni përmes</string>
   <string name="write_a_message">Shkruani një mesazh</string>
@@ -170,7 +170,8 @@
   <string name="clear_history_completed">Historiku u pastrua.</string>
   <string name="clear_history">Spastroje</string>
   <!--Conversation-->
-  <string name="conversation_details">Hollësi kontakti</string>
+  <string name="conversation_details">Hollësi bisede</string>
+  <string name="contact_details">Hollësi kontakti</string>
   <string name="conversation_action_delete_this">Fshije këtë bisedë</string>
   <string name="conversation_action_delete_this_title">Të fshihet kjo bisedë?</string>
   <string name="conversation_action_delete_this_message">Ky veprim s\’mund të zhbëhet.</string>
@@ -213,6 +214,7 @@
   <string name="conversation_contact_added">%1$s erdhi</string>
   <string name="conversation_contact_left">%1$s iku</string>
   <string name="conversation_contact_banned">%1$s u dëbua</string>
+  <string name="conversation_contact_unbanned">U hoq dëbimi për %1$s</string>
   <string name="conversation_search_hint">Kërkoni bisedë</string>
   <string name="audio_recorder_error">S’u gjet aplikacion incizimi audio.</string>
   <string name="video_recorder_error">S’u gjet aplikacion regjistrimi video.</string>
@@ -248,6 +250,7 @@
   <string name="hist_contact_added">Kontakti u shtua</string>
   <string name="hist_contact_left">Kontakti iku</string>
   <string name="hist_contact_banned">Kontakt i dëbuar</string>
+  <string name="hist_contact_unbanned">U hoq dëbim për kontaktin </string>
   <string name="hist_invitation_received">Ftesa u mor</string>
   <!--Account Summary-->
   <string name="profile">Profil</string>
@@ -400,16 +403,19 @@
   <string name="tab_about">Mbi</string>
   <string name="tab_members">Anëtarë</string>
   <string name="tab_documetn">Dokumente</string>
+  <string name="not_admin_toast">Hollësitë e këtij grupi mund t’i përpunojnë vetëm përgjegjësit</string>
   <string name="dialogtitle_title">Përpunoni titull Zgjoi</string>
   <string name="dialogtitle_description">Përpunoni përshkrim Zgjoi</string>
   <string name="dialog_hint_title">Titull</string>
   <string name="dialog_hint_description">Përshkrim</string>
   <string name="picker_title">Përzgjidhni Kontakte</string>
   <string name="picker_btn">Përzgjidhni kontake</string>
+  <string name="no_contact_to_add">S’keni kontakt për shtim</string>
   <string name="bottomsheet_contact">Lidhuni me Jami-n\n%1$s</string>
   <string name="bottomsheet_remove">Hiqe prej zgjoi</string>
   <string name="error_open_no_app_found">S’u gjet aplikacion për trajtim të kësaj kartele: %1$s</string>
   <string name="swarm_detail_no_document">Ende s’keni dokumente.</string>
+  <string name="group_admin">Përgjegjës</string>
   <!--JamiId-->
   <string name="jami_id_copy">Kopjo JamiId</string>
   <string name="jami_id_share">Ndajeni JamiId-në me të tjerë</string>

@@ -116,8 +116,8 @@
   <string name="ab_action_speakerphone">Luidspreker inschakelen</string>
   <string name="ab_action_contact_add">Aan contacten toevoegen</string>
   <string name="ab_action_contact_add_question">Toevoegen aan contacten?</string>
-  <string name="ab_action_audio_call">Audio-oproep</string>
-  <string name="ab_action_video_call">Video-oproep</string>
+  <string name="ab_action_audio_call">Audio-oproep starten</string>
+  <string name="ab_action_video_call">Video-oproep starten</string>
   <string name="ab_action_change_screen_orientation">Schermoriëntatie aanpassen</string>
   <string name="share_via">Delen via</string>
   <string name="write_a_message">Schrijf een bericht</string>
@@ -168,7 +168,8 @@
   <string name="clear_history_completed">Geschiedenis is gewist.</string>
   <string name="clear_history">Wissen</string>
   <!--Conversation-->
-  <string name="conversation_details">Contactdetails</string>
+  <string name="conversation_details">Besprekingsgegevens</string>
+  <string name="contact_details">Contactdetails</string>
   <string name="conversation_action_delete_this">Dit gesprek verwijderen</string>
   <string name="conversation_action_delete_this_title">Dit gesprek verwijderen?</string>
   <string name="conversation_action_delete_this_message">Deze handeling kan niet ongedaan gemaakt worden.</string>

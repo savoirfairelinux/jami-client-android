@@ -111,8 +111,8 @@
   <string name="ab_action_speakerphone">Aktivera högtalare</string>
   <string name="ab_action_contact_add">Lägg till i kontakter</string>
   <string name="ab_action_contact_add_question">Lägga till i kontakter?</string>
-  <string name="ab_action_audio_call">Ljudsamtal</string>
-  <string name="ab_action_video_call">Videosamtal</string>
+  <string name="ab_action_audio_call">Starta ljudsamtal</string>
+  <string name="ab_action_video_call">Starta videosamtal</string>
   <string name="ab_action_change_screen_orientation">Ändra skärmorientering</string>
   <string name="share_via">Dela via</string>
   <string name="write_a_message">Skriv ett meddelande</string>
@@ -160,7 +160,8 @@
   <string name="clear_history_completed">Historiken har rensats bort.</string>
   <string name="clear_history">Ta bort</string>
   <!--Conversation-->
-  <string name="conversation_details">Kontaktdetaljer</string>
+  <string name="conversation_details">Samtalens detaljer</string>
+  <string name="contact_details">Kontaktdetaljer</string>
   <string name="conversation_action_delete_this">Ta bort den här konversationen</string>
   <string name="conversation_action_delete_this_title">Vill du ta bort den här konversationen?</string>
   <string name="conversation_action_delete_this_message">Denna åtgärd kan inte ångras.</string>

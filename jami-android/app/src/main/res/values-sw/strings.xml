@@ -111,8 +111,8 @@
   <string name="ab_action_speakerphone">Kuwezesha msemaji</string>
   <string name="ab_action_contact_add">Ongeza kwa mawasiliano</string>
   <string name="ab_action_contact_add_question">Kuongeza mawasiliano?</string>
-  <string name="ab_action_audio_call">Mawasiliano ya sauti</string>
-  <string name="ab_action_video_call">Video ya simu</string>
+  <string name="ab_action_audio_call">Kuanza wito wa sauti</string>
+  <string name="ab_action_video_call">Anza simu ya video</string>
   <string name="ab_action_change_screen_orientation">Kubadilisha mwelekeo wa skrini</string>
   <string name="share_via">Kushiriki kupitia</string>
   <string name="write_a_message">Andika ujumbe</string>
@@ -160,7 +160,8 @@
   <string name="clear_history_completed">Historia imeondolewa.</string>
   <string name="clear_history">Safi</string>
   <!--Conversation-->
-  <string name="conversation_details">Maelezo ya mawasiliano</string>
+  <string name="conversation_details">Mazungumzo ya kina</string>
+  <string name="contact_details">Maelezo ya mawasiliano</string>
   <string name="conversation_action_delete_this">Futa mazungumzo haya</string>
   <string name="conversation_action_delete_this_title">Kufuta mazungumzo haya?</string>
   <string name="conversation_action_delete_this_message">Hatua hii haiwezi kuondolewa.</string>

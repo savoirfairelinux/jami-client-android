@@ -115,8 +115,8 @@
   <string name="ab_action_speakerphone">啟用喇叭</string>
   <string name="ab_action_contact_add">加到聯絡人</string>
   <string name="ab_action_contact_add_question">新增到聯絡人？</string>
-  <string name="ab_action_audio_call">音訊通話</string>
-  <string name="ab_action_video_call">視訊通話</string>
+  <string name="ab_action_audio_call">開始音訊通話</string>
+  <string name="ab_action_video_call">開始視訊通話</string>
   <string name="ab_action_change_screen_orientation">變更螢幕方向</string>
   <string name="share_via">分享經由</string>
   <string name="write_a_message">寫訊息</string>
@@ -169,7 +169,8 @@
   <string name="clear_history_completed">記錄已經被清除。</string>
   <string name="clear_history">清除</string>
   <!--Conversation-->
-  <string name="conversation_details">聯絡人詳細資訊</string>
+  <string name="conversation_details">对话详情</string>
+  <string name="contact_details">聯絡人詳細資訊</string>
   <string name="conversation_action_delete_this">刪除此對話</string>
   <string name="conversation_action_delete_this_title">刪除此對話嗎？</string>
   <string name="conversation_action_delete_this_message">這個動作無法被復原。</string>
