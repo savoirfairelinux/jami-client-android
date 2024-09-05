@@ -14,9 +14,10 @@ object LinkPreview {
         val matcher = PatternsCompat.AUTOLINK_WEB_URL.matcher(input)
         while (matcher.find()) {
             val word = matcher.group()
+            val start = matcher.start()
             if (!word.startsWith("http://", ignoreCase = true) && !word.startsWith("https://", ignoreCase = true)) {
-                if (PatternsCompat.EMAIL_ADDRESS.matcher(word).matches()) {
-                    continue
+                if (start > 0 && input[start - 1] == '@') {
+                    continue // Skip email addresses
                 }
                 result.add("https://$word")
             } else {
