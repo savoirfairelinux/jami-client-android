@@ -5,13 +5,19 @@ import androidx.core.util.PatternsCompat
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
+import java.util.regex.Pattern
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 
 object LinkPreview {
+    private val LINK_EXTRACTOR_PATTERN: Pattern = Pattern.compile(
+        "${PatternsCompat.WEB_URL.pattern()}|${PatternsCompat.EMAIL_ADDRESS.pattern()}",
+        Pattern.CASE_INSENSITIVE
+    )
+
     private fun extractUrls(input: String): List<String> {
         val result: MutableList<String> = ArrayList()
-        val matcher = PatternsCompat.AUTOLINK_WEB_URL.matcher(input)
+        val matcher = LINK_EXTRACTOR_PATTERN.matcher(input)
         while (matcher.find()) {
             val word = matcher.group()
             if (!word.startsWith("http://", ignoreCase = true) && !word.startsWith("https://", ignoreCase = true)) {
