@@ -24,6 +24,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8e4d3c2d_0eafb090",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2024-09-05T20:07:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f5a3046_89c1778a",
+      "range": {
+        "startLine": 7,
+        "startChar": 13,
+        "endLine": 7,
+        "endChar": 24
+      },
+      "revId": "79632e5f8aec50db3cdc67af6491638067d7ac1a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7849e804_d67a8f66",
@@ -37,6 +61,30 @@
       "writtenOn": "2024-09-05T14:22:13Z",
       "side": 1,
       "message": "GitLab: #1383",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 72
+      },
+      "revId": "79632e5f8aec50db3cdc67af6491638067d7ac1a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "457d15a5_f54d2703",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2024-09-05T20:07:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7849e804_d67a8f66",
       "range": {
         "startLine": 12,
         "startChar": 0,
