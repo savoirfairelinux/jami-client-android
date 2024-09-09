@@ -111,8 +111,8 @@
   <string name="ab_action_speakerphone">Gaitu bozgorailua</string>
   <string name="ab_action_contact_add">Gehitu kontaktuetara</string>
   <string name="ab_action_contact_add_question">Gehitu kontaktuetara?</string>
-  <string name="ab_action_audio_call">Audio-deia</string>
-  <string name="ab_action_video_call">Bideo-deia</string>
+  <string name="ab_action_audio_call">Hasi audio-deia</string>
+  <string name="ab_action_video_call">Hasi bideo-deia</string>
   <string name="ab_action_change_screen_orientation">Aldatu pantailaren orientzaioa</string>
   <string name="share_via">Partekatu honen bidez</string>
   <string name="write_a_message">Idatzi mezu bat</string>
@@ -160,7 +160,8 @@
   <string name="clear_history_completed">Historiala garbitu da.</string>
   <string name="clear_history">Garbi dago.</string>
   <!--Conversation-->
-  <string name="conversation_details">Kontaktuaren xehetasunak</string>
+  <string name="conversation_details">Elkarrizketa-detailak</string>
+  <string name="contact_details">Kontaktuaren xehetasunak</string>
   <string name="conversation_action_delete_this">Ezabatu elkarrizketa hau</string>
   <string name="conversation_action_delete_this_title">Ezabatu elkarrizketa hau ?</string>
   <string name="conversation_action_delete_this_message">Ekintza hau ezin da desegin.</string>

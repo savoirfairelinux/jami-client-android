@@ -88,6 +88,8 @@
   <string name="action_call_decline">Sự suy giảm</string>
   <string name="action_call_mic_mute">Tắt tiếng micrô</string>
   <string name="ab_action_contact_add">Thêm vào các liên hệ</string>
+  <string name="ab_action_audio_call">Bắt đầu cuộc gọi âm thanh</string>
+  <string name="ab_action_video_call">Bắt đầu cuộc gọi hình ảnh</string>
   <string name="scan_qr">Quét mã QR</string>
   <string name="qr_code">Mã QR</string>
   <!--Text messages-->
@@ -107,7 +109,8 @@
   <!--Settings-->
   <string name="clear_history">Rõ ràng</string>
   <!--Conversation-->
-  <string name="conversation_details">Thông tin liên lạc</string>
+  <string name="conversation_details">Chi tiết cuộc trò chuyện</string>
+  <string name="contact_details">Thông tin liên lạc</string>
   <string name="conversation_action_delete_this_message">Hành động này không thể không được thực hiện.</string>
   <string name="conversation_action_history_clear">Lịch sử rõ ràng</string>
   <string name="conversation_action_block_this">Chặn liên hệ</string>

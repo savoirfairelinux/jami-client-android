@@ -67,6 +67,8 @@
   <string name="action_call_decline">ڤڠڬيلن</string>
   <string name="action_call_mic_mute">ميكروفون خاموش</string>
   <string name="ab_action_contact_add">مڠهادڤکن ڤڠݢونا</string>
+  <string name="ab_action_audio_call">ڤرودوک ڤرودوک</string>
+  <string name="ab_action_video_call">ڤرلو ممبنتو ڤيليهن</string>
   <!--Text messages-->
   <string name="message_failed">ڤڠاجرن</string>
   <string name="send_file">ڤرسکوتوان</string>
@@ -82,7 +84,8 @@
   <!--Settings-->
   <string name="clear_history">واضح</string>
   <!--Conversation-->
-  <string name="conversation_details">ڤڠاجرن</string>
+  <string name="conversation_details">ڤڠاجرن ڤڠاجرن</string>
+  <string name="contact_details">ڤڠاجرن</string>
   <string name="conversation_action_delete_this_message">ڤرودوک اين تيدق دڤرچايا?? ي.</string>
   <string name="conversation_action_history_clear">تاريخ يڠ برڤنتيڠ</string>
   <string name="conversation_action_block_this">ڤڠاجرن ڤڠاجرن</string>

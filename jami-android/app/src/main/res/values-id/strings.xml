@@ -110,8 +110,8 @@
   <string name="ab_action_speakerphone">Aktifkan pengeras suara</string>
   <string name="ab_action_contact_add">Tambah sebagai kontak</string>
   <string name="ab_action_contact_add_question">Tambah ke kontak?</string>
-  <string name="ab_action_audio_call">Panggilan suara</string>
-  <string name="ab_action_video_call">Panggilan video</string>
+  <string name="ab_action_audio_call">Mulai panggilan suara</string>
+  <string name="ab_action_video_call">Mulai panggilan video</string>
   <string name="ab_action_change_screen_orientation">Ganti orientasi layar</string>
   <string name="share_via">Bagikan melalui</string>
   <string name="write_a_message">Tulis pesan</string>
@@ -159,7 +159,7 @@
   <string name="clear_history_completed">Riwayat telah dihapus.</string>
   <string name="clear_history">Bersihkan</string>
   <!--Conversation-->
-  <string name="conversation_details">Rincian kontak</string>
+  <string name="contact_details">Rincian kontak</string>
   <string name="conversation_action_delete_this">Hapus percakapan ini</string>
   <string name="conversation_action_delete_this_title">Hapus percakapan ini ?</string>
   <string name="conversation_action_delete_this_message">Aksi ini tidak dapat dibatalkan.</string>

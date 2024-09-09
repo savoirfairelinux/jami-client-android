@@ -110,8 +110,8 @@
   <string name="ab_action_speakerphone">เปิดใช้งานลำโพง</string>
   <string name="ab_action_contact_add">เพิ่มในรายชื่อติดต่อ</string>
   <string name="ab_action_contact_add_question">เพิ่มในรายชื่อติดต่อไหม</string>
-  <string name="ab_action_audio_call">การโทรด้วยเสียง</string>
-  <string name="ab_action_video_call">การสนทนาทางวิดีโอ</string>
+  <string name="ab_action_audio_call">เริ่มการโทรเสียง</string>
+  <string name="ab_action_video_call">เริ่มการโทรวีดีโอ</string>
   <string name="ab_action_change_screen_orientation">เปลี่ยนการวางแนวหน้าจอ</string>
   <string name="share_via">แบ่งปันผ่าน</string>
   <string name="write_a_message">เขียนข้อความ</string>
@@ -159,7 +159,8 @@
   <string name="clear_history_completed">ประวัติถูกล้าง</string>
   <string name="clear_history">ชัดเจน</string>
   <!--Conversation-->
-  <string name="conversation_details">รายละเอียดการติดต่อ</string>
+  <string name="conversation_details">รายละเอียดการพูดคุย</string>
+  <string name="contact_details">รายละเอียดการติดต่อ</string>
   <string name="conversation_action_delete_this">ลบบทสนทนานี้</string>
   <string name="conversation_action_delete_this_title">ลบการสนทนานี้ไหม</string>
   <string name="conversation_action_delete_this_message">การดำเนินการนี้ไม่สามารถยกเลิกได้</string>

@@ -111,8 +111,8 @@
   <string name="ab_action_speakerphone">സ്പീക്കർ പ്രവർത്തനക്ഷമമാക്കുക</string>
   <string name="ab_action_contact_add">കോൺടാക്റ്റുകളിലേക്ക് ചേർക്കുക</string>
   <string name="ab_action_contact_add_question">ബന്ധുക്കളെ കൂട്ടിച്ചേർക്കണോ?</string>
-  <string name="ab_action_audio_call">ഓഡിയോ കോൾ</string>
-  <string name="ab_action_video_call">വീഡിയോ കോൾ</string>
+  <string name="ab_action_audio_call">ഓഡിയോ കോൾ ആരംഭിക്കുക</string>
+  <string name="ab_action_video_call">വീഡിയോ കോൾ ആരംഭിക്കുക</string>
   <string name="ab_action_change_screen_orientation">സ്ക്രീനിന്റെ ഓറിയന്റേഷൻ മാറ്റുക</string>
   <string name="share_via">∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ </string>
   <string name="write_a_message">ഒരു സന്ദേശം എഴുതുക</string>
@@ -160,7 +160,8 @@
   <string name="clear_history_completed">ചരിത്രം ശുദ്ധീകരിച്ചിരിക്കുന്നു.</string>
   <string name="clear_history">വ്യക്തമായ</string>
   <!--Conversation-->
-  <string name="conversation_details">ബന്ധപ്പെടാനുള്ള വിവരങ്ങൾ</string>
+  <string name="conversation_details">സംഭാഷണ വിശദാംശങ്ങള്</string>
+  <string name="contact_details">ബന്ധപ്പെടാനുള്ള വിവരങ്ങൾ</string>
   <string name="conversation_action_delete_this">ഈ സംഭാഷണം ഇല്ലാതാക്കുക</string>
   <string name="conversation_action_delete_this_title">ഈ സംഭാഷണം ഇല്ലാതാക്കണോ?</string>
   <string name="conversation_action_delete_this_message">ഈ നടപടി മാറ്റാനാവില്ല.</string>

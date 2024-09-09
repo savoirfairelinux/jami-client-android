@@ -158,8 +158,8 @@
   <string name="account_export_end_error_title">Hiba</string>
   <string name="account_export_end_error_message">A fiók nem exportálása nem sikerült. Ismeretlen hiba történt.</string>
   <string name="account_enter_password">Jelszó megadása</string>
-  <string name="account_share_body">Lépjen velem kapcsolatba a(z) „%1$s” használatával, a Jami elosztott kommunikációs platformon: %2$s</string>
-  <string name="account_share_body_with_username">Lépjen velem kapcsolatba a(z) „%1$s” vagy a nyilvános felhasználónevem („%2$s”) használatával, a Jami elosztott kommunikációs platformon: %3$s</string>
+  <string name="account_share_body">Lépjen kapcsolatba velem a(z) „%1$s” használatával a Jami elosztott kommunikációs platformon: %2$s</string>
+  <string name="account_share_body_with_username">Lépjen kapcsolatba velem a(z) „%1$s” vagy a(z) „%2$s” nyilvános felhasználónevem használatával a Jami elosztott kommunikációs platformon: %3$s</string>
   <string name="account_contact_me">Lépjen velem kapcsolatba a Jamin!</string>
   <string name="update_account">Fiók frissítése</string>
   <string name="account_migration">Jami-fiókja frissíthető.\nAdja meg a jelszavát.</string>
@@ -173,7 +173,7 @@
   <string name="account_cannot_be_found_message">Nem található a fiók a Jami hálózatában.\nGyőződjön meg róla, hogy a meglévő eszközön a Jamit exportálták-e, és hogy a hitelesítő adatok helyesek voltak-e.</string>
   <string name="account_sip_cannot_be_registered_message">Folytathatja a fiók létrehozásának folyamatát vagy itt szerkesztheti adatait. A fiókbeállítások később is szerkeszthetők.</string>
   <string name="account_no_network_title">Nem lehet csatlakozni a hálózathoz</string>
-  <string name="account_no_network_message">Nem sikerült hozzáadni a fiókot, mert a Jami nem tudott csatlakozni az elosztott hálózathoz. Ellenőrizze az eszköz kapcsolatát.</string>
+  <string name="account_no_network_message">Csatlakozási hiba történt a Jami-fióknak az elosztott hálózathoz való hozzáadása közben. Ellenőrizze az eszköz csatlakoztatását.</string>
   <string name="account_device_added_title">Fiókeszköz hozzáadva</string>
   <string name="account_device_added_message">Sikeresen beállította a Jami-fiókját ezen az eszközön.</string>
   <string name="account_device_updated_title">A fiókeszköz frissítve</string>

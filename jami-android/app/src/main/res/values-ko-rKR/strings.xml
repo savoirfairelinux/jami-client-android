@@ -113,8 +113,8 @@
   <string name="ab_action_speakerphone">스피커를 활성화</string>
   <string name="ab_action_contact_add">연락처에 추가</string>
   <string name="ab_action_contact_add_question">연락처를 추가할 수 있을까요?</string>
-  <string name="ab_action_audio_call">오디오 통화</string>
-  <string name="ab_action_video_call">비디오 통화</string>
+  <string name="ab_action_audio_call">오디오 호출을 시작</string>
+  <string name="ab_action_video_call">비디오 통화 시작</string>
   <string name="ab_action_change_screen_orientation">화면 방향 변경</string>
   <string name="share_via">공유</string>
   <string name="write_a_message">메시지를 적어주세요</string>
@@ -163,7 +163,8 @@
   <string name="clear_history_completed">역사가 정해졌습니다.</string>
   <string name="clear_history">명확한 것</string>
   <!--Conversation-->
-  <string name="conversation_details">연락처</string>
+  <string name="conversation_details">대화 세부 사항</string>
+  <string name="contact_details">연락처</string>
   <string name="conversation_action_delete_this">이 대화를 삭제</string>
   <string name="conversation_action_delete_this_title">이 대화를 삭제할 수 있어?</string>
   <string name="conversation_action_delete_this_message">이 행동은 되돌릴 수 없습니다.</string>

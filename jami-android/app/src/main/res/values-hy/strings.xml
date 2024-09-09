@@ -111,8 +111,7 @@
   <string name="ab_action_speakerphone">Հեռախոսազանգի ակտիվացում</string>
   <string name="ab_action_contact_add">Բարձրացնել շփումները</string>
   <string name="ab_action_contact_add_question">Բարձրացնել կոնտակտներին:</string>
-  <string name="ab_action_audio_call">Ձայնային զանգ</string>
-  <string name="ab_action_video_call">Տեսագրական զանգ</string>
+  <string name="ab_action_video_call">Սկսեք տեսահաղորդումը</string>
   <string name="ab_action_change_screen_orientation">Փոխել էկրանի կողմնորոշումը</string>
   <string name="share_via">Գործակցել</string>
   <string name="write_a_message">Գրեք մի հաղորդագրություն</string>
@@ -160,7 +159,7 @@
   <string name="clear_history_completed">Պատմությունը մաքուր է:</string>
   <string name="clear_history">Հստակ</string>
   <!--Conversation-->
-  <string name="conversation_details">Կապ տեղեկություններ</string>
+  <string name="contact_details">Կապ տեղեկություններ</string>
   <string name="conversation_action_delete_this">Սեղմեք այս զրույցը</string>
   <string name="conversation_action_delete_this_title">Սեղմել այս զրույցը:</string>
   <string name="conversation_action_delete_this_message">Այս գործողությունը չի կարող չեղարկվել:</string>
