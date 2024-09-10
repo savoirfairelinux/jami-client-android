@@ -236,6 +236,7 @@ class JamiAccountSummaryFragment :
             binding.userPhoto.setOnClickListener { profileContainerClicked(account) }
             binding.linkedDevices.text = account.deviceName
             setLinkedDevicesAdapter(account)
+            binding.linkNewDevice.visibility = if (account.hasManager()) View.GONE else View.VISIBLE
             mAccountHasPassword = account.hasPassword()
             mBinding!!.accountSwitch.setCheckedSilent(account.isEnabled)
             binding.accountAliasTxt.text = getString(R.string.profile)
