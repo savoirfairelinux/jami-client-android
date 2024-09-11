@@ -303,7 +303,7 @@ class LogAdapter :
 
     private val logList = mutableListOf<LogMessage>()
 
-    fun getLogs(): String = logList.joinToString { it.message }
+    fun getLogs(): String = logList.joinToString(separator = "\n") { it.message }
 
     class LogViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val messageTextView: TextView = itemView.findViewById(R.id.log_item_text)
