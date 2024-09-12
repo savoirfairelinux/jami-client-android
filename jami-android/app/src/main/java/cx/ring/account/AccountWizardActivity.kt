@@ -23,6 +23,7 @@ import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
@@ -59,6 +60,24 @@ class AccountWizardActivity : BaseActivity<AccountWizardPresenter>(), AccountWiz
         super.onCreate(savedInstanceState)
         JamiApplication.instance?.startDaemon(this)
         setContentView(R.layout.activity_wizard)
+
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                isEnabled = false
+                val fragment = supportFragmentManager.findFragmentById(R.id.wizard_container)
+                when (fragment) {
+
+                    is HomeAccountCreationFragment -> moveTaskToBack(true)
+
+                    is ProfileCreationFragment -> finish()
+
+                    else -> {
+                        onBackPressedDispatcher.onBackPressed()
+                        isEnabled = true
+                    }
+                }
+            }
+        })
 
         // ======= check if migration is needed =======
         val path = intent?.data?.lastPathSegment
@@ -155,12 +174,6 @@ class AccountWizardActivity : BaseActivity<AccountWizardPresenter>(), AccountWiz
                 profileCreated(false)
             }
         }
-    }
-
-    override fun onBackPressed() {
-        val fragment = supportFragmentManager.findFragmentById(R.id.wizard_container)
-        if (fragment is ProfileCreationFragment) finish()
-        else super.onBackPressed()
     }
 
     override fun displayProgress(display: Boolean) {
