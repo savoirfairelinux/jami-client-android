@@ -23,6 +23,7 @@ import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
@@ -36,29 +37,70 @@ import cx.ring.fragments.SIPAccountCreationFragment
 import cx.ring.mvp.BaseActivity
 import cx.ring.services.VCardServiceImpl
 import cx.ring.utils.BiometricHelper
+import cx.ring.utils.DeviceUtils
 import dagger.hilt.android.AndroidEntryPoint
 import ezvcard.VCard
 import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.account.AccountWizardPresenter
 import net.jami.account.AccountWizardView
 import net.jami.model.Account
 import net.jami.model.AccountConfig
+import net.jami.services.AccountService
 import net.jami.utils.VCardUtils
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class AccountWizardActivity : BaseActivity<AccountWizardPresenter>(), AccountWizardView {
     private var mProgress: AlertDialog? = null
     private var mAlertDialog: AlertDialog? = null
+    private var mIsAccountListEmpty = true
     private var biometricEnroll: BiometricHelper.BiometricEnroll? = null
     private val enrollBiometricLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         biometricEnroll?.onActivityResult(it.resultCode, it.data)
     }
+    private val mDisposable = CompositeDisposable()
+    @Inject lateinit
+    var mAccountService: AccountService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         JamiApplication.instance?.startDaemon(this)
         setContentView(R.layout.activity_wizard)
+
+        mDisposable.add(
+            mAccountService.observableAccountList
+                .observeOn(DeviceUtils.uiScheduler)
+                .subscribe { accounts ->
+                    if (accounts.isNotEmpty()) mIsAccountListEmpty = false
+                })
+
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                isEnabled = false
+                val fragment = supportFragmentManager.findFragmentById(R.id.wizard_container)
+                when (fragment) {
+
+                    is HomeAccountCreationFragment -> {
+                        if (mIsAccountListEmpty) {
+                            moveTaskToBack(true)
+                        } else {
+                            onBackPressedDispatcher.onBackPressed()
+                        }
+                    }
+
+                    is ProfileCreationFragment -> {
+                        finish()
+                    }
+
+                    else -> {
+                        onBackPressedDispatcher.onBackPressed()
+                    }
+                }
+                isEnabled = true
+            }
+        })
 
         // ======= check if migration is needed =======
         val path = intent?.data?.lastPathSegment
@@ -88,6 +130,7 @@ class AccountWizardActivity : BaseActivity<AccountWizardPresenter>(), AccountWiz
             it.dispose()
             biometricEnroll = null
         }
+        mDisposable.dispose()
         super.onDestroy()
     }
 
@@ -155,12 +198,6 @@ class AccountWizardActivity : BaseActivity<AccountWizardPresenter>(), AccountWiz
                 profileCreated(false)
             }
         }
-    }
-
-    override fun onBackPressed() {
-        val fragment = supportFragmentManager.findFragmentById(R.id.wizard_container)
-        if (fragment is ProfileCreationFragment) finish()
-        else super.onBackPressed()
     }
 
     override fun displayProgress(display: Boolean) {
