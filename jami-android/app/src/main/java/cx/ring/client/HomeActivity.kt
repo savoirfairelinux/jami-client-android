@@ -296,7 +296,9 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
                 .observeOn(DeviceUtils.uiScheduler)
                 .subscribe { accounts: List<Account> ->
                     if (accounts.isEmpty()) {
-                        startActivity(Intent(this, AccountWizardActivity::class.java))
+                        val intent = Intent(this, AccountWizardActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        startActivity(intent)
                     }
                     for (account in accounts) {
                         if (account.needsMigration()) {
