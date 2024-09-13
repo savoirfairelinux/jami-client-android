@@ -49,11 +49,15 @@ along with this program; if not, write to the Free Software
 
 
     <!-- About dialog -->
-    <string name="developed_by">Developed by</string>
+    <string name="thank_note">We would like to thank our contributors, whose efforts over many years have made this software what it is.</string>
+    <string name="developed_by">Developers</string>
     <string name="designed_by">Designed by</string>
-    <string name="ringtones_by">Ringtones by</string>
+    <string name="media">Media</string>
+    <string name="community_management">Community Management</string>
+    <string name="special_thanks">Special thanks to</string>
     <string name="credits_developer" translatable="false">
-        Adrien Béraud
+        Abhishek Ojha
+        \nAdrien Béraud
         \nAlbert Babí
         \nAlexander Lussier-Cullen
         \nAlexandr Sergheev
@@ -71,9 +75,7 @@ along with this program; if not, write to the Free Software
         \nCapucine Berthet
         \nCharles-Francis Damedey
         \nChristophe Villemer
-        \nCharlotte Hoffmann
         \nCyrille Béraud
-        \nDorina Mosku
         \nEden Abitbol
         \nEdric Milaret
         \nÉloi Bail
@@ -93,7 +95,6 @@ along with this program; if not, write to the Free Software
         \nLéo Banno-Cloutier
         \nLiam Courdoson
         \nLoïc Siret
-        \nMarianne Forget
         \nMathéo Joseph
         \nMichel Schmit
         \nMingrui Zhang
@@ -126,8 +127,19 @@ along with this program; if not, write to the Free Software
         \nVsevolod Ivanov
         \nXavier Jouslin de Noray
         \nYang Wang</string>
-    <string name="credits_volunteers">And the volunteers who contribute to this project!</string>
-    <string name="credits_ringtones" translatable="false">Loïc Bogino</string>
+    <string name="credits_media" translatable="false">
+        Charlotte Hoffmann
+        \nMarianne Forget</string>
+    <string name="credits_communitymanagement" translatable="false">
+        Dorina Mosku
+        \nLoïc Bogino</string>
+    <string name="credits_specialthanks" translatable="false">
+        Anna
+        \nElys
+        \nOvari
+        \nVeroJeanLuc</string>
+    <string name="end_note">This is a list of people who have made a significant investment of time, with useful results, into Jami. Any such contributors who
+        wish to be added to the list should contact us</string>
 
     <!-- RingActivity -->
     <string name="error_no_network">No network connectivity</string>

@@ -12,6 +12,15 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/thank_note"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_marginHorizontal="@dimen/padding_small"
+            android:layout_marginBottom="@dimen/padding_small"
+            android:textColor="@color/colorOnSurface" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="@string/developed_by"
             android:textColor="?attr/colorOnBackground"
             android:textSize="18sp"
@@ -29,16 +38,24 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/credits_volunteers"
+            android:text="@string/media"
+            android:textColor="?attr/colorOnBackground"
+            android:textSize="18sp"
+            android:layout_margin="@dimen/padding_small"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/credits_media"
             android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_marginTop="@dimen/padding_small"
             android:layout_marginHorizontal="@dimen/padding_small"
-            android:layout_marginBottom="@dimen/padding_small"
             android:textColor="@color/colorOnSurface" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/ringtones_by"
+            android:text="@string/community_management"
             android:textColor="?attr/colorOnBackground"
             android:textSize="18sp"
             android:layout_margin="@dimen/padding_small" />
@@ -46,9 +63,37 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/credits_ringtones"
+            android:text="@string/credits_communitymanagement"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:layout_margin="@dimen/padding_small"
+            android:layout_marginTop="@dimen/padding_small"
+            android:layout_marginHorizontal="@dimen/padding_small"
+            android:textColor="@color/colorOnSurface" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/special_thanks"
+            android:textColor="?attr/colorOnBackground"
+            android:textSize="18sp"
+            android:layout_margin="@dimen/padding_small" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/credits_specialthanks"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_marginTop="@dimen/padding_small"
+            android:layout_marginHorizontal="@dimen/padding_small"
+            android:layout_marginBottom="@dimen/padding_small"
+            android:textColor="@color/colorOnSurface" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/end_note"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_marginHorizontal="@dimen/padding_small"
+            android:layout_marginBottom="@dimen/padding_small"
             android:textColor="@color/colorOnSurface" />
 
 
