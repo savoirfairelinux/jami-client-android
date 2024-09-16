@@ -117,8 +117,8 @@
   <string name="ab_action_speakerphone">Activer le haut-parleur</string>
   <string name="ab_action_contact_add">Ajouter aux contacts</string>
   <string name="ab_action_contact_add_question">Ajouter au contacts ?</string>
-  <string name="ab_action_audio_call">Appel audio</string>
-  <string name="ab_action_video_call">Appel vidéo</string>
+  <string name="ab_action_audio_call">Démarrer appel audio</string>
+  <string name="ab_action_video_call">Démarrer appel video</string>
   <string name="ab_action_change_screen_orientation">Changer l\'orientation de l\'écran </string>
   <string name="share_via">Partager par</string>
   <string name="write_a_message">Ecrire un message</string>
@@ -171,7 +171,8 @@
   <string name="clear_history_completed">L\'historique a été effacé.</string>
   <string name="clear_history">Effacer</string>
   <!--Conversation-->
-  <string name="conversation_details">Détails du contact</string>
+  <string name="conversation_details">Détails de la conversation</string>
+  <string name="contact_details">Détails du contact</string>
   <string name="conversation_action_delete_this">Supprimer cette conversation</string>
   <string name="conversation_action_delete_this_title">Voulez-vous supprimer cette conversation ?</string>
   <string name="conversation_action_delete_this_message">Cette action ne peut pas être annulée.</string>
@@ -214,6 +215,7 @@
   <string name="conversation_contact_added">%1$s a rejoint la discussion</string>
   <string name="conversation_contact_left">%1$s restant</string>
   <string name="conversation_contact_banned">%1$sa été banni</string>
+  <string name="conversation_contact_unbanned">%1$s a été réintégré</string>
   <string name="conversation_search_hint">Rechercher des conversations</string>
   <string name="audio_recorder_error">L\'application d\'enregistrement audio n\'est pas trouvée.</string>
   <string name="video_recorder_error">L\'application d\'enregistrement vidéo n\'est pas trouvée.</string>
@@ -250,6 +252,7 @@
   <string name="hist_contact_added">Contact ajouté</string>
   <string name="hist_contact_left">Le contact a quitté</string>
   <string name="hist_contact_banned">Contact bloqué</string>
+  <string name="hist_contact_unbanned">Contact réintégré</string>
   <string name="hist_invitation_received">Invitation reçue</string>
   <!--Account Summary-->
   <string name="profile">Profil</string>
@@ -403,16 +406,19 @@
   <string name="tab_about">A propos </string>
   <string name="tab_members">Membres</string>
   <string name="tab_documetn">Documents</string>
+  <string name="not_admin_toast">Seuls les administrateurs peuvent modifier les information de ce groupe</string>
   <string name="dialogtitle_title">Modifier le titre du Swarm</string>
   <string name="dialogtitle_description">Modifier la description du Swarm</string>
   <string name="dialog_hint_title">Titre</string>
   <string name="dialog_hint_description">Description</string>
   <string name="picker_title">Choisissez vos contacts</string>
   <string name="picker_btn">Choisissez vos contacts</string>
+  <string name="no_contact_to_add">Vous n\'avez pas de contact à ajouter</string>
   <string name="bottomsheet_contact">Contact Jami\n%1$s</string>
   <string name="bottomsheet_remove">Retirer du Swarm</string>
   <string name="error_open_no_app_found">Aucune application trouvée pour gérer le fichier %1$s</string>
   <string name="swarm_detail_no_document">Vous n\'avez pas encore de documents.</string>
+  <string name="group_admin">Administrateur</string>
   <!--JamiId-->
   <string name="jami_id_copy">Copier le JamiId</string>
   <string name="jami_id_share">Partager votre JamiId</string>

@@ -5,9 +5,11 @@
   <string name="ic_advanced_menu">Napredne nastavitve</string>
   <string name="ic_blacklist_menu">Blokirani stiki</string>
   <!--Strings related to account creation-->
+  <string name="account_selection">Izberite račun</string>
   <string name="add_ring_account_title">Dodajanje računa</string>
   <string name="add_sip_account_title">Dodaj račun SIP</string>
   <string name="ring_account_default_name">Račun Jami %1$s</string>
+  <string name="account_creation_error">Pri ustvarjanju računa je prišlo do napake.</string>
   <string name="prompt_alias">Vzdevek</string>
   <string name="prompt_hostname">Ime strežnika gostitelja</string>
   <string name="prompt_username">Uporabniško ime</string>
@@ -50,6 +52,7 @@
   <string name="account_password_change_wait_message">Spreminjanje gesla računa</string>
   <string name="account_biometric_disable">Onemogoči biometrično overjanje</string>
   <string name="account_biometric_set">Omogoči biometrično overjanje</string>
+  <string name="account_biometric_summary">Upravljajte biometrično overjanje za svoj račun.</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Splošno</string>
   <string name="account_basic_category">Osnovne nastavitve</string>
@@ -108,8 +111,10 @@
   <string name="enabled">Omogočeno</string>
   <string name="account_proxy_label">Posredniški strežnik DHT</string>
   <string name="account_proxy_enable_label">Uporabi posredniški strežnik DHT</string>
+  <string name="account_proxy_list_enable_label">Uporabi seznam posredniških strežnikov DHT</string>
   <string name="account_proxy_server_label">Naslov posredniškega strežnika DHT</string>
   <string name="account_proxy_server_list_label">Naslov URL posredniškega strežnika DHT</string>
+  <string name="account_proxy_server_used">Uporablja: %1$s</string>
   <string name="account_sip_proxy_label">Posredniški strežnik</string>
   <string name="account_peer_discovery_label">Najdi lokalnega soležnika</string>
   <string name="account_peer_discovery_enable_label">Vklopi lokalno odkrivanje soležnikov</string>
@@ -270,9 +275,14 @@
   <string name="account_link_device_button">Poveži</string>
   <!--Biometry-->
   <string name="account_biometry_auth_title">Odkleni račun Jami</string>
+  <string name="account_biometry_auth_message">Uporabi biometrične podatke za odklep računa</string>
+  <string name="account_biometry_enroll_title">Ali želite uporabiti biometrično overjanje?</string>
+  <string name="account_biometry_enroll_message">Vaša naprava podpira varno biometrično overjanje.
+Biometrično overjanje ali overjanje lastno napravi dodaja priročen način za krajevno odklenjen dostop do svojega računa Jami. Še vedno boste lahko uporabljali svoje geslo.</string>
   <string name="account_biometry_enroll_accept">Uporabi biometriko</string>
   <string name="no_thanks">Ne, hvala</string>
   <string name="account_biometry_enroll_auth_title">Dodaj overjanje za račun Jami</string>
+  <string name="account_biometry_enroll_auth_message">Dodajte varno biometrično overjanje ali napravi lastno overjanje kot alternativo za svoje geslo</string>
   <string name="account_auth_error">Napaka overjanja: %1$s</string>
   <string name="account_auth_success">Overjanje je uspelo</string>
   <string name="account_auth_key_error">Ključa računa ni bilo možno dešifrirati</string>

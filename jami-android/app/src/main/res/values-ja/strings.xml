@@ -112,8 +112,8 @@
   <string name="ab_action_speakerphone">スピーカーを有効にする</string>
   <string name="ab_action_contact_add">連絡先に追加</string>
   <string name="ab_action_contact_add_question">連絡先を追加しますか？</string>
-  <string name="ab_action_audio_call">音声通話</string>
-  <string name="ab_action_video_call">ビデオ通話</string>
+  <string name="ab_action_audio_call">音声通話を開始</string>
+  <string name="ab_action_video_call">ビデオ通話を開始</string>
   <string name="ab_action_change_screen_orientation">画面の向きを変更</string>
   <string name="share_via">共有...</string>
   <string name="write_a_message">メッセージを入力</string>
@@ -163,7 +163,8 @@
   <string name="clear_history_completed">履歴を消去しました。</string>
   <string name="clear_history">クリア</string>
   <!--Conversation-->
-  <string name="conversation_details">連絡先の詳細</string>
+  <string name="conversation_details">話し合いの詳細</string>
+  <string name="contact_details">連絡先の詳細</string>
   <string name="conversation_action_delete_this">この会話を削除</string>
   <string name="conversation_action_delete_this_title">この会話を削除しますか ?</string>
   <string name="conversation_action_delete_this_message">この操作は元に戻せません。</string>

@@ -111,8 +111,8 @@
   <string name="ab_action_speakerphone">اسپکر فعال ائدئ</string>
   <string name="ab_action_contact_add">تماسلارا قوش</string>
   <string name="ab_action_contact_add_question">تماس لری آرتیرماق؟</string>
-  <string name="ab_action_audio_call">صداي زنگ</string>
-  <string name="ab_action_video_call">ویدئو تماس</string>
+  <string name="ab_action_audio_call">صداي زنگي باشلا</string>
+  <string name="ab_action_video_call">ویدئوی تماس باشلا</string>
   <string name="ab_action_change_screen_orientation">صفحه نین یوللاندیریلماسینی دَییشدیر</string>
   <string name="share_via">اشتراک</string>
   <string name="write_a_message">بیر خبر یاز</string>
@@ -160,7 +160,8 @@
   <string name="clear_history_completed">تاریخ پاک اولوب.</string>
   <string name="clear_history">واضح</string>
   <!--Conversation-->
-  <string name="conversation_details">تماس کیمیا</string>
+  <string name="conversation_details">دانیشیق کیمی</string>
+  <string name="contact_details">تماس کیمیا</string>
   <string name="conversation_action_delete_this">بو مکالمه نی سئل</string>
   <string name="conversation_action_delete_this_title">بو مکالمه نی سئلک؟</string>
   <string name="conversation_action_delete_this_message">بو عملین ردّ اولونماسی اولماز.</string>

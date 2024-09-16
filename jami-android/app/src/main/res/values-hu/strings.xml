@@ -116,8 +116,8 @@
   <string name="ab_action_speakerphone">Hangszóró engedélyezése</string>
   <string name="ab_action_contact_add">Hozzáadás a kapcsolatokhoz</string>
   <string name="ab_action_contact_add_question">Hozzáadja a kapcsolatokhoz?</string>
-  <string name="ab_action_audio_call">Hanghívás</string>
-  <string name="ab_action_video_call">Videohívás</string>
+  <string name="ab_action_audio_call">Hanghívás indítása</string>
+  <string name="ab_action_video_call">Videohívás indítása</string>
   <string name="ab_action_change_screen_orientation">Képernyő tájolásának megváltoztatása</string>
   <string name="share_via">Megosztás a következőn keresztül:</string>
   <string name="write_a_message">Üzenet írása következőknek:</string>
@@ -170,7 +170,8 @@
   <string name="clear_history_completed">Az előzmények törölve.</string>
   <string name="clear_history">Törlés</string>
   <!--Conversation-->
-  <string name="conversation_details">Elérhetőségei</string>
+  <string name="conversation_details">Beszélgetés részletei</string>
+  <string name="contact_details">Elérhetőségei</string>
   <string name="conversation_action_delete_this">Beszélgetés törlése</string>
   <string name="conversation_action_delete_this_title">Törli ezt a beszélgetést?</string>
   <string name="conversation_action_delete_this_message">Ez a művelet nem vonható vissza.</string>
@@ -213,6 +214,7 @@
   <string name="conversation_contact_added">%1$s csatlakozott</string>
   <string name="conversation_contact_left">%1$s kilépett</string>
   <string name="conversation_contact_banned">%1$s letiltva lett</string>
+  <string name="conversation_contact_unbanned">%1$s letiltása feloldva.</string>
   <string name="conversation_search_hint">Beszélgetés keresése</string>
   <string name="audio_recorder_error">A hangfelvevő alkalmazás nem található.</string>
   <string name="video_recorder_error">A videófelvevő alkalmazás nem található.</string>
@@ -249,6 +251,7 @@
   <string name="hist_contact_added">Kapcsolat hozzáadva</string>
   <string name="hist_contact_left">Kapcsolat kilépett</string>
   <string name="hist_contact_banned">Kapcsolat letiltva</string>
+  <string name="hist_contact_unbanned">Kapcsolat letiltása feloldva.</string>
   <string name="hist_invitation_received">Meghívás megérkezett</string>
   <!--Account Summary-->
   <string name="profile">Névjegy</string>
@@ -402,16 +405,19 @@
   <string name="tab_about">Névjegy</string>
   <string name="tab_members">Tagok</string>
   <string name="tab_documetn">Dokumentumok</string>
+  <string name="not_admin_toast">Csak a rendszergazdák szerkeszthetik a csoport adatait.</string>
   <string name="dialogtitle_title">Rajcsoport címének szerkesztése</string>
   <string name="dialogtitle_description">Rajcsoport leírásának szerkesztése</string>
   <string name="dialog_hint_title">Cím</string>
   <string name="dialog_hint_description">Leírás</string>
   <string name="picker_title">Kapcsolatok kijelölése</string>
   <string name="picker_btn">Kapcsolatok kijelölése</string>
+  <string name="no_contact_to_add">Nincsenek hozzáadható kapcsolatok.</string>
   <string name="bottomsheet_contact">Forduljon a Jamihez\n%1$s</string>
   <string name="bottomsheet_remove">Eltávolítás a rajcsoportból</string>
   <string name="error_open_no_app_found">Nem található alkalmazás a fájl kezelésére: %1$s</string>
   <string name="swarm_detail_no_document">Még nincsenek dokumentumai.</string>
+  <string name="group_admin">Rendszergazda</string>
   <!--JamiId-->
   <string name="jami_id_copy">Jami-azonosító másolása</string>
   <string name="jami_id_share">Jami-azonosító megosztása</string>

@@ -67,6 +67,8 @@
   <string name="action_call_decline">Ọdịda</string>
   <string name="action_call_mic_mute">Igwe okwu na-adịghị arụ ọrụ</string>
   <string name="ab_action_contact_add">Tinye na kọntaktị</string>
+  <string name="ab_action_audio_call">Malite oku ọdịyo</string>
+  <string name="ab_action_video_call">Malite ịkpọ oku vidiyo</string>
   <!--Text messages-->
   <string name="send_message">Zie ozi</string>
   <string name="message_failed">Ihe na-agaghị ekwe omume</string>
@@ -83,7 +85,8 @@
   <!--Settings-->
   <string name="clear_history">Ọ dị ọcha</string>
   <!--Conversation-->
-  <string name="conversation_details">Ihe ndị a ga-eji kparịta ụka</string>
+  <string name="conversation_details">Ihe ndị e kwuru n\'okwu ahụ</string>
+  <string name="contact_details">Ihe ndị a ga-eji kparịta ụka</string>
   <string name="conversation_action_delete_this_message">A pụghị ime ka ihe a ghara ime.</string>
   <string name="conversation_action_history_clear">Akụkọ ihe mere eme doro anya</string>
   <string name="conversation_action_block_this">Njikọ na-ekpuchi</string>

@@ -111,8 +111,8 @@
   <string name="ab_action_speakerphone">Дисплейтерді қосу</string>
   <string name="ab_action_contact_add">Байланыстарға қосу</string>
   <string name="ab_action_contact_add_question">Байланыстарға қосыл?</string>
-  <string name="ab_action_audio_call">Аудио шақыру</string>
-  <string name="ab_action_video_call">Видео шақыру</string>
+  <string name="ab_action_audio_call">Аудио шақыруды бастау</string>
+  <string name="ab_action_video_call">Видео шақыруды бастаңыз</string>
   <string name="ab_action_change_screen_orientation">Экранның бағдарын өзгерту</string>
   <string name="share_via">арқылы бөлісу</string>
   <string name="write_a_message">Хат жазыңыз</string>
@@ -160,7 +160,8 @@
   <string name="clear_history_completed">Тарих та өшірілді.</string>
   <string name="clear_history">Ашық</string>
   <!--Conversation-->
-  <string name="conversation_details">Байланыс деректері</string>
+  <string name="conversation_details">Әңгімелік мәліметтері</string>
+  <string name="contact_details">Байланыс деректері</string>
   <string name="conversation_action_delete_this">Бұл әңгімеді өшіру</string>
   <string name="conversation_action_delete_this_title">Бұл әңгімеді өшіру?</string>
   <string name="conversation_action_delete_this_message">Бұл әрекет қайталанбайды.</string>

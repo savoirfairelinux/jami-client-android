@@ -111,8 +111,8 @@
   <string name="ab_action_speakerphone">Μεγάφωνο</string>
   <string name="ab_action_contact_add">Προσθήκη στις επαφές</string>
   <string name="ab_action_contact_add_question">Προσθήκη στις επαφές;</string>
-  <string name="ab_action_audio_call">Κλήση φωνής</string>
-  <string name="ab_action_video_call">Κλήση βίντεο</string>
+  <string name="ab_action_audio_call">Ξεκινάτε την οχητική κλήση</string>
+  <string name="ab_action_video_call">Ξεκινήστε την κλήση βίντεο</string>
   <string name="ab_action_change_screen_orientation">Στρίψτε την οθόνη</string>
   <string name="share_via">Μοίρασμα μέσω</string>
   <string name="write_a_message">Γράψε μήνυμα</string>
@@ -161,7 +161,8 @@
   <string name="clear_history_completed">Το ιστορικό έχει διαγραφεί.</string>
   <string name="clear_history">Εκκαθάριση</string>
   <!--Conversation-->
-  <string name="conversation_details">Λεπτομέρειες επαφών</string>
+  <string name="conversation_details">Πληροφορίες συνομιλίας</string>
+  <string name="contact_details">Λεπτομέρειες επαφών</string>
   <string name="conversation_action_delete_this">Διαγραφή αυτής της συνομιλίας</string>
   <string name="conversation_action_delete_this_title">Διαγραφή αυτής της συνομιλίας;</string>
   <string name="conversation_action_delete_this_message">Η ενέργεια αυτή δεν μπορεί να ανακληθεί.</string>

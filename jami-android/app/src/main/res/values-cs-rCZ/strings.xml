@@ -113,8 +113,8 @@
   <string name="ab_action_speakerphone">Zapnout reproduktor</string>
   <string name="ab_action_contact_add">Přidat do kontaktů</string>
   <string name="ab_action_contact_add_question">Přidat do kontaktů?</string>
-  <string name="ab_action_audio_call">Audio hovor</string>
-  <string name="ab_action_video_call">Video hovor</string>
+  <string name="ab_action_audio_call">Začít audio hovor</string>
+  <string name="ab_action_video_call">Začít video hovor</string>
   <string name="ab_action_change_screen_orientation">Změnit natočení obrazovky</string>
   <string name="share_via">Sdílet přes</string>
   <string name="write_a_message">Napsat zprávu</string>
@@ -162,7 +162,8 @@
   <string name="clear_history_completed">Historie byla vymazána.</string>
   <string name="clear_history">Vyprázdnit</string>
   <!--Conversation-->
-  <string name="conversation_details">Podrobnosti spojení</string>
+  <string name="conversation_details">Detaily konverzace</string>
+  <string name="contact_details">Podrobnosti spojení</string>
   <string name="conversation_action_delete_this">Odstranit tuto konverzaci</string>
   <string name="conversation_action_delete_this_title">Odstranit tuto konverzaci?</string>
   <string name="conversation_action_delete_this_message">Tento krok nelze vrátit zpět.</string>

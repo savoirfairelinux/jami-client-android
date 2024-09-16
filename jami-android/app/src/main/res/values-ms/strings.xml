@@ -110,8 +110,8 @@
   <string name="ab_action_speakerphone">Aktifkan pembesar suara</string>
   <string name="ab_action_contact_add">Tambahkan sebagai kenalan</string>
   <string name="ab_action_contact_add_question">ബന്ധുക്കളെ കൂട്ടിച്ചേർക്കണോ?</string>
-  <string name="ab_action_audio_call">Panggilan suara</string>
-  <string name="ab_action_video_call">Panggilan video</string>
+  <string name="ab_action_audio_call">ഓഡിയോ കോൾ ആരംഭിക്കുക</string>
+  <string name="ab_action_video_call">വീഡിയോ കോൾ ആരംഭിക്കുക</string>
   <string name="ab_action_change_screen_orientation">സ്ക്രീനിന്റെ ഓറിയന്റേഷൻ മാറ്റുക</string>
   <string name="share_via">Kongsikan melalui</string>
   <string name="write_a_message">Tulis pesan</string>
@@ -159,7 +159,8 @@
   <string name="clear_history_completed">Sejarah telah dipadam.</string>
   <string name="clear_history">വ്യക്തമായ</string>
   <!--Conversation-->
-  <string name="conversation_details">ബന്ധപ്പെടാനുള്ള വിവരങ്ങൾ</string>
+  <string name="conversation_details">സംഭാഷണ വിശദാംശങ്ങള്</string>
+  <string name="contact_details">ബന്ധപ്പെടാനുള്ള വിവരങ്ങൾ</string>
   <string name="conversation_action_delete_this">Padamkan perbualan ini</string>
   <string name="conversation_action_delete_this_title">Padamkan perbualan ini ?</string>
   <string name="conversation_action_delete_this_message">Aksi ini tidak akan dapat dibuat ulang.</string>

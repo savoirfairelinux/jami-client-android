@@ -111,8 +111,8 @@
   <string name="ab_action_speakerphone">स्पीकर सक्षम करा</string>
   <string name="ab_action_contact_add">संपर्क जोडणे</string>
   <string name="ab_action_contact_add_question">संपर्क जोडण्यासाठी?</string>
-  <string name="ab_action_audio_call">ऑडिओ कॉल</string>
-  <string name="ab_action_video_call">व्हिडिओ कॉल</string>
+  <string name="ab_action_audio_call">ऑडिओ कॉल सुरू करा</string>
+  <string name="ab_action_video_call">व्हिडिओ कॉल सुरू करा</string>
   <string name="ab_action_change_screen_orientation">स्क्रीनचे अभिमुखता बदलणे</string>
   <string name="share_via">द्वारे सामायिक करा</string>
   <string name="write_a_message">संदेश लिहा</string>
@@ -160,7 +160,8 @@
   <string name="clear_history_completed">इतिहास साफ झाला आहे.</string>
   <string name="clear_history">स्पष्ट</string>
   <!--Conversation-->
-  <string name="conversation_details">संपर्क तपशील</string>
+  <string name="conversation_details">चर्चा तपशील</string>
+  <string name="contact_details">संपर्क तपशील</string>
   <string name="conversation_action_delete_this">हा संभाषण हटवा</string>
   <string name="conversation_action_delete_this_title">हा संभाषण हटवायचं?</string>
   <string name="conversation_action_delete_this_message">या कारवाईला मागे टाकता येणार नाही.</string>

@@ -8,5 +8,7 @@
   <string name="video_plugins">Video vtičniki</string>
   <string name="file_download_button">Prenesi</string>
   <string name="control_play">Predvajaj</string>
+  <string name="control_replay">Ponovno predvajaj</string>
   <string name="control_pause">Pavza</string>
+  <string name="searchbar_navigation_account">Izberite račun</string>
 </resources>

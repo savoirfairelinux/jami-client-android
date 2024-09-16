@@ -20,6 +20,8 @@ along with this program; if not, write to the Free Software
     <string name="call_error">Zgodila se je napaka med otvarjanjem klica.</string>
     <string name="call_error_no_microphone">Klic je bil prekinjen, ker ni bilo mogoče najti mikrofona.</string>
     <string name="call_error_no_camera_no_microphone">Klic je bil prekinjen, ker ni bilo mogoče najti mikrofona ali kamere.</string>
+    <string name="screen_sharing_error">Pri zagonu deljenja zaslona je prišlo do napake.</string>
+
     <!-- SipCalls -->
     <string name="call_human_state_searching">Iskanje</string>
     <string name="call_human_state_incoming">Dohodni</string>

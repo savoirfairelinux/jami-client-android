@@ -111,8 +111,8 @@
   <string name="ab_action_speakerphone">స్పీకర్ను ప్రారంభించండి</string>
   <string name="ab_action_contact_add">పరిచయాలకు జోడించండి</string>
   <string name="ab_action_contact_add_question">పరిచయాలకు జోడించండి?</string>
-  <string name="ab_action_audio_call">ఆడియో కాల్</string>
-  <string name="ab_action_video_call">వీడియో కాల్</string>
+  <string name="ab_action_audio_call">ఆడియో కాల్ ప్రారంభించండి</string>
+  <string name="ab_action_video_call">వీడియో కాల్ ప్రారంభించండి</string>
   <string name="ab_action_change_screen_orientation">స్క్రీన్ దిశను మార్చు</string>
   <string name="share_via">ద్వారా భాగస్వామ్యం</string>
   <string name="write_a_message">ఒక సందేశాన్ని వ్రాయండి</string>
@@ -160,7 +160,8 @@
   <string name="clear_history_completed">చరిత్ర శుభ్రం చేయబడింది.</string>
   <string name="clear_history">స్పష్టమైన</string>
   <!--Conversation-->
-  <string name="conversation_details">సంప్రదింపు వివరాలు</string>
+  <string name="conversation_details">సంభాషణ వివరాలు</string>
+  <string name="contact_details">సంప్రదింపు వివరాలు</string>
   <string name="conversation_action_delete_this">ఈ సంభాషణను తొలగించు</string>
   <string name="conversation_action_delete_this_title">ఈ సంభాషణ తొలగించడానికి?</string>
   <string name="conversation_action_delete_this_message">ఈ చర్యను తిరస్కరించలేము.</string>

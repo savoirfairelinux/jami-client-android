@@ -112,8 +112,8 @@
   <string name="ab_action_speakerphone">Aktiver høytaler</string>
   <string name="ab_action_contact_add">Legg til kontakter</string>
   <string name="ab_action_contact_add_question">Legg til kontakter?</string>
-  <string name="ab_action_audio_call">Talesamtale</string>
-  <string name="ab_action_video_call">Videosamtale</string>
+  <string name="ab_action_audio_call">Start lydsamtale</string>
+  <string name="ab_action_video_call">Start videosamtale</string>
   <string name="ab_action_change_screen_orientation">Endre skjermretning</string>
   <string name="share_via">Del via</string>
   <string name="write_a_message">Skriv en melding</string>
@@ -161,7 +161,8 @@
   <string name="clear_history_completed">Historikken har blitt slettet.</string>
   <string name="clear_history">Slett</string>
   <!--Conversation-->
-  <string name="conversation_details">Kontaktdetaljer</string>
+  <string name="conversation_details">Samtale detaljer</string>
+  <string name="contact_details">Kontaktdetaljer</string>
   <string name="conversation_action_delete_this">Slett denne samtalen</string>
   <string name="conversation_action_delete_this_title">Slett denne samtalen?</string>
   <string name="conversation_action_delete_this_message">Denne handlingen kan ikke gjøres om.</string>
