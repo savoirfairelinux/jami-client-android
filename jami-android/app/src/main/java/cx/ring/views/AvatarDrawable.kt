@@ -220,12 +220,6 @@ class AvatarDrawable : Drawable {
         fun withNameData(profileName: String?, username: String?) =
             withName(if (profileName.isNullOrEmpty()) username else profileName)
 
-        fun withUser(user: ContactViewModel?) = if (user == null) this else
-            withPhoto(user.profile.avatar as? Bitmap?)
-                .withId(user.contact.uri.toString())
-                .withPresence(false)
-                .withNameData(user.profile.displayName, user.registeredName)
-
         fun withContact(contact: ContactViewModel?) = if (contact == null) this else
             withPhoto(contact.profile.avatar as? Bitmap?)
                 .withId(contact.contact.uri.toString())
@@ -243,12 +237,8 @@ class AvatarDrawable : Drawable {
             }
             val bitmaps: MutableList<Bitmap> = ArrayList(contacts.size)
             var notTheUser = 0
-            var user: ContactViewModel? = null
             for (contact in contacts) {
-                if (contact.contact.isUser) {
-                    user = contact
-                    continue
-                }
+                if (contact.contact.isUser) continue
                 notTheUser++
                 val bitmap = contact.profile.avatar as? Bitmap?
                 if (bitmap != null) {
@@ -261,8 +251,13 @@ class AvatarDrawable : Drawable {
                     if (!contact.contact.isUser) return withContact(contact)
                 }
             }
-            // If alone in group, fallback to the user avatar.
-            return if (bitmaps.isEmpty()) withUser(user) else withPhotos(bitmaps)
+            if (bitmaps.isEmpty()) {
+                // Fallback to the user avatar
+                for (contact in contacts) return withContact(contact)
+            } else {
+                return withPhotos(bitmaps)
+            }
+            return this
         }
 
         fun withConversation(conversation: Conversation, profile: Profile, contacts: List<ContactViewModel>): Builder =
