@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7181a6b5_c3fb4d90",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-09-16T20:01:40Z",
+      "side": 1,
+      "message": "Fyi, it’s best to be consistent with lowercase titles\n\nAlso, in Jami we refer to `wizard` when speaking about the `login page`.",
+      "revId": "cb35b604a63ec518de7c0540ee16697bf4325a0a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4769e94f_c54aba86",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-09-16T20:01:40Z",
+      "side": 1,
+      "message": "Here is a scenario where it doesnt work as expected:\n- Get an account (home activity)\n- Click on `Add account`\n- press back\n\nActual result: it closes the app\nExpected result: go back on home activity ?",
+      "revId": "cb35b604a63ec518de7c0540ee16697bf4325a0a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
