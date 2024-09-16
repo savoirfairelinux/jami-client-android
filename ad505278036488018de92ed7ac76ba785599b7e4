@@ -16,6 +16,23 @@
       "message": "!build",
       "revId": "ad505278036488018de92ed7ac76ba785599b7e4",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "312e68f8_6ade4870",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 20
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-09-16T18:20:42Z",
+      "side": 1,
+      "message": "doesn\u0027t build:\n\ne: file:///jami-client-android/jami-android/app/src/main/java/cx/ring/tv/conversation/TvConversationAdapter.kt:861:55 Unresolved reference: hist_contact_banned\n\n\u003e Task :app:compileWithUnifiedPushDebugKotlin FAILED\ne: file:///jami-client-android/jami-android/app/src/main/java/cx/ring/tv/conversation/TvConversationAdapter.kt:861:55 Unresolved reference: hist_contact_banned\n\n\u003e Task :app:compileNoPushDebugKotlin FAILED\ne: file:///jami-client-android/jami-android/app/src/main/java/cx/ring/tv/conversation/TvConversationAdapter.kt:861:55 Unresolved reference: hist_contact_banned\n\nFAILURE: Build completed with 3 failures.",
+      "revId": "ad505278036488018de92ed7ac76ba785599b7e4",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
