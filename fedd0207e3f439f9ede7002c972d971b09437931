@@ -26,6 +26,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d57a95a4_4a46cc0f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-09-16T19:30:01Z",
+      "side": 1,
+      "message": "Feel like it also relates to this ticket, please include:\n\nhttps://git.jami.net/savoirfairelinux/jami-client-android/-/issues/1608",
+      "revId": "fedd0207e3f439f9ede7002c972d971b09437931",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "91138ba7_0fb1560d",
         "filename": "jami-android/app/src/main/res/values/strings.xml",
         "patchSetId": 4
