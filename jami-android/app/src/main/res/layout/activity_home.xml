@@ -22,7 +22,7 @@ along with this program; if not, write to the Free Software
     android:fitsSystemWindows="false"
     tools:context=".client.HomeActivity">
 
-    <cx.ring.views.twopane.TwoPaneLayout
+    <androidx.slidingpanelayout.widget.SlidingPaneLayout
         android:id="@+id/panel"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -41,7 +41,7 @@ along with this program; if not, write to the Free Software
             android:layout_weight="1"
             tools:layout="@layout/frag_conversation" />
 
-    </cx.ring.views.twopane.TwoPaneLayout>
+    </androidx.slidingpanelayout.widget.SlidingPaneLayout>
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/frame"

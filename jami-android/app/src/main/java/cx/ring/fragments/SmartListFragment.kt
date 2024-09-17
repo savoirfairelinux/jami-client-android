@@ -21,6 +21,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -132,6 +134,25 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
                 mSmartListAdapter?.update(conversations)
             }
             confsList.visibility = View.VISIBLE
+        }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding!!.listCoordinator) { v, insets ->
+            // Get the insets related to the system bars (navigation bar, status bar, etc.)
+            val systemWindowInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+
+            // Manually set padding on the right pane to avoid applying left insets
+            v.setPadding(
+                systemWindowInsets.left, // No left padding
+                0, // Apply top inset (status bar)
+                0, // Apply right inset (if any)
+                0 // Apply bottom inset (navigation bar, etc.)
+            )
+            insets
+
         }
     }
 

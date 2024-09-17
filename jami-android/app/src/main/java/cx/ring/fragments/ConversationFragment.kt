@@ -60,6 +60,7 @@ import cx.ring.services.SharedPreferencesServiceImpl.Companion.getConversationCo
 import cx.ring.services.SharedPreferencesServiceImpl.Companion.getConversationPreferences
 import cx.ring.services.SharedPreferencesServiceImpl.Companion.getConversationSymbol
 import cx.ring.utils.*
+import cx.ring.utils.ActionHelper.setPadding
 import cx.ring.utils.ContentUri.getShareItems
 import cx.ring.views.AvatarDrawable
 import cx.ring.views.AvatarFactory
@@ -184,36 +185,36 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                 histList.updatePadding(bottom = valueAnimator.animatedValue as Int)
             }
 
-            ViewCompat.setWindowInsetsAnimationCallback(
-                mainContainer,
-                object : WindowInsetsAnimationCompat.Callback(DISPATCH_MODE_STOP) {
-                    override fun onPrepare(animation: WindowInsetsAnimationCompat) {
-                        animating++
-                    }
+//            ViewCompat.setWindowInsetsAnimationCallback(
+//                mainContainer,
+//                object : WindowInsetsAnimationCompat.Callback(DISPATCH_MODE_STOP) {
+//                    override fun onPrepare(animation: WindowInsetsAnimationCompat) {
+//                        animating++
+//                    }
+//
+//                    override fun onProgress(
+//                        insets: WindowInsetsCompat,
+//                        runningAnimations: List<WindowInsetsAnimationCompat>
+//                    ): WindowInsetsCompat {
+//                        val windowInsets = insets.getInsets(
+//                            WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.ime()
+//                        )
+//                        mainContainer.updatePadding(bottom = windowInsets.bottom)
+//                        return insets
+//                    }
+//
+//                    override fun onEnd(animation: WindowInsetsAnimationCompat) {
+//                        animating--
+//                    }
+//                })
 
-                    override fun onProgress(
-                        insets: WindowInsetsCompat,
-                        runningAnimations: List<WindowInsetsAnimationCompat>
-                    ): WindowInsetsCompat {
-                        val windowInsets = insets.getInsets(
-                            WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.ime()
-                        )
-                        mainContainer.updatePadding(bottom = windowInsets.bottom)
-                        return insets
-                    }
-
-                    override fun onEnd(animation: WindowInsetsAnimationCompat) {
-                        animating--
-                    }
-                })
-
-            ViewCompat.setOnApplyWindowInsetsListener(root) { _, windowInsets ->
-                lastInsets = windowInsets
-                if (animating == 0) {
-                    updatePaddings(windowInsets)
-                }
-                WindowInsetsCompat.CONSUMED
-            }
+//            ViewCompat.setOnApplyWindowInsetsListener(root) { _, windowInsets ->
+//                lastInsets = windowInsets
+//                if (animating == 0) {
+//                    updatePaddings(windowInsets)
+//                }
+//                WindowInsetsCompat.CONSUMED
+//            }
 
             // Content may be both text and non-text (HTML, images, videos, audio files, etc).
             ViewCompat.setOnReceiveContentListener(msgInputTxt, SUPPORTED_MIME_TYPES) { _, payload ->
@@ -302,7 +303,48 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
+
         binding?.apply {
+            this.mainContainer.setPadding(0,0,0,0)
+
+            ViewCompat.setOnApplyWindowInsetsListener(this.conversationFragment) { v, insets ->
+                // Get the insets related to the system bars (navigation bar, status bar, etc.)
+                val systemWindowInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+
+                // Manually set padding on the right pane to avoid applying left insets
+                this.appbar.setPadding(
+                    0, // No left padding
+                    systemWindowInsets.top, // Apply top inset (status bar)
+                    systemWindowInsets.right, // Apply right inset (if any)
+                    0 // Apply bottom inset (navigation bar, etc.)
+                )
+
+//                this.mainContainer.setPadding(0,0,0,0)
+
+                // Return the insets to continue to be dispatched
+                insets
+            }
+
+            ViewCompat.setOnApplyWindowInsetsListener(this.mainContainer) { v, insets ->
+                // Get the insets related to the system bars (navigation bar, status bar, etc.)
+                val systemWindowInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+
+                // Manually set padding on the right pane to avoid applying left insets
+                v.setPadding(
+                    0, // No left padding
+                    0, // Apply top inset (status bar)
+                    systemWindowInsets.right, // Apply right inset (if any)
+                    0 // Apply bottom inset (navigation bar, etc.)
+                )
+
+//                this.mainContainer.setPadding(0,0,0,0)
+
+                // Return the insets to continue to be dispatched
+                insets
+            }
+
             mPreferences?.let { preferences ->
                 val pendingMessage = preferences.getString(KEY_PREFERENCE_PENDING_MESSAGE, null)
                 if (!pendingMessage.isNullOrEmpty()) {
@@ -1144,7 +1186,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             errorMsgPane.setOnClickListener(null)
             errorMsgPane.setText(R.string.error_no_network)
         }
-        lastInsets?.let { updatePaddings(it) }
+//        lastInsets?.let { updatePaddings(it) }
     }
 
     override fun displayAccountOfflineErrorPanel() {
@@ -1156,7 +1198,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                 btnContainer.getChildAt(idx).isEnabled = false
             }
         }
-        lastInsets?.let { updatePaddings(it) }
+//        lastInsets?.let { updatePaddings(it) }
     }
 
     override fun setSettings(linkPreviews: Boolean) {
@@ -1166,7 +1208,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 
     override fun hideErrorPanel() {
         binding?.errorMsgPane?.visibility = View.GONE
-        lastInsets?.let { updatePaddings(it) }
+//        lastInsets?.let { updatePaddings(it) }
     }
 
     override fun goToSearchMessage(messageId: String) {

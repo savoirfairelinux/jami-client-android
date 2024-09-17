@@ -419,6 +419,41 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
         super.onViewCreated(view, savedInstanceState)
         mSmartListFragment = mBinding!!.fragmentContainer.getFragment()
 
+        ViewCompat.setOnApplyWindowInsetsListener(mBinding!!.appBar) { v, insets ->
+            // Get the insets related to the system bars (navigation bar, status bar, etc.)
+            val systemWindowInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+
+            // Manually set padding on the right pane to avoid applying left insets
+            v.setPadding(
+                systemWindowInsets.left, // No left padding
+                systemWindowInsets.top, // Apply top inset (status bar)
+                0, // Apply right inset (if any)
+                0 // Apply bottom inset (navigation bar, etc.)
+            )
+            insets
+
+        }
+
+        ViewCompat.setOnApplyWindowInsetsListener(mBinding!!.newSwarmFab) { v, insets ->
+            // Get the insets related to the system bars (navigation bar, status bar, etc.)
+            val systemWindowInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+
+            // Manually set padding on the right pane to avoid applying left insets
+            // update right margin:
+            val params = v.layoutParams as ViewGroup.MarginLayoutParams
+
+            params.rightMargin = requireContext().resources.getDimensionPixelSize(R.dimen.padding_small)
+//            v.setPadding(
+//                0, // No left padding
+//                0, // Apply top inset (status bar)
+//                0, // Apply right inset (if any)
+//                0 // Apply bottom inset (navigation bar, etc.)
+//            )
+
+            insets
+
+        }
+
         disableAppBarScroll()
 
         // Subscribe on fragmentContainer to add scroll listener on the recycler view.
