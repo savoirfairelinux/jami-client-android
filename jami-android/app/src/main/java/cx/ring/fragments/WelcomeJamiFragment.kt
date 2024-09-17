@@ -21,6 +21,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -72,6 +74,22 @@ class WelcomeJamiFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.test) { v, insets ->
+            // Get the insets related to the system bars (navigation bar, status bar, etc.)
+            val systemWindowInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+
+            // Manually set padding on the right pane to avoid applying left insets
+            v.setPadding(
+                0, // No left padding
+                0, // Apply top inset (status bar)
+                systemWindowInsets.right, // Apply right inset (if any)
+                0 // Apply bottom inset (navigation bar, etc.)
+            )
+
+            // Return the insets to continue to be dispatched
+            insets
+        }
 
         // Observe the uiState and update the UI
         viewLifecycleOwner.lifecycleScope.launch {

@@ -21,8 +21,7 @@ along with this program; if not, write to the Free Software
     android:id="@+id/list_coordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    android:fitsSystemWindows="true">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <!-- Will be displayed when no accounts are available -->
     <LinearLayout

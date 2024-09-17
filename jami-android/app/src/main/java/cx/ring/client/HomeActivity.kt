@@ -24,6 +24,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.Person
@@ -36,6 +37,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
+import androidx.slidingpanelayout.widget.SlidingPaneLayout
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.R
 import cx.ring.about.AboutFragment
@@ -126,6 +128,7 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
         }
 
     public override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 
         JamiApplication.instance?.startDaemon(this)
@@ -143,7 +146,7 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
         mBinding = ActivityHomeBinding.inflate(layoutInflater).also { binding ->
             setContentView(binding.root)
             //supportActionBar?.title = ""
-            binding.panel.addPanelListener(object : TwoPaneLayout.PanelListener {
+            binding.panel.addPanelSlideListener(object : SlidingPaneLayout.SimplePanelSlideListener() {
                 override fun onPanelOpened(panel: View) {
                     conversationBackPressedCallback.isEnabled = true
                 }
@@ -205,7 +208,7 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
         super.onConfigurationChanged(newConfig)
 
         mBinding!!.panel.doOnNextLayout {
-            it as TwoPaneLayout
+            it as SlidingPaneLayout
 
             if (it.isSlideable) {
                 if (fConversation == null) {
@@ -370,7 +373,7 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
                         ConversationPath.fromBundle(fConversation?.arguments)?.accountId
                     if (account.accountId != currentConversationAccountId) {
                         mBinding!!.panel.doOnNextLayout {
-                            it as TwoPaneLayout
+                            it as SlidingPaneLayout
                             if (!it.isSlideable) showWelcomeFragment()
                         }
                     }

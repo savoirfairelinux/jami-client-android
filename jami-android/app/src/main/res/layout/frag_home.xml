@@ -30,6 +30,7 @@ along with this program; if not, write to the Free Software
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:layout="@layout/frag_smartlist"
+        android:fitsSystemWindows="true"
         app:layout_behavior="@string/searchbar_scrolling_view_behavior" />
 
     <com.google.android.material.appbar.AppBarLayout
@@ -176,6 +177,8 @@ along with this program; if not, write to the Free Software
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="8dp"
+        android:fitsSystemWindows="true"
+
         android:backgroundTint="@color/fab_background_color"
         android:outlineProvider="none"
         android:text="@string/start_conversation"
