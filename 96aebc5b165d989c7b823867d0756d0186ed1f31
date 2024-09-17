@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c228255_b75226c5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-09-17T19:53:58Z",
+      "side": 1,
+      "message": "Submitted https://review.jami.net/c/jami-client-android/+/28869 patch. Does that patch need to be `Revert`ed (i.e. unsubmitted) as this patch now has a `Merge Conflict`? Or does this patch need to be rebased? Or something else? Thank you",
+      "revId": "96aebc5b165d989c7b823867d0756d0186ed1f31",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
