@@ -24,6 +24,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "30d3b224_017670b0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-09-17T11:18:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe7f26aa_f6b9c96a",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 5
+      },
+      "revId": "fedd0207e3f439f9ede7002c972d971b09437931",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d57a95a4_4a46cc0f",
@@ -41,6 +65,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "68ffde46_d4604f96",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-09-17T11:18:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d57a95a4_4a46cc0f",
+      "revId": "fedd0207e3f439f9ede7002c972d971b09437931",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "91138ba7_0fb1560d",
@@ -54,6 +96,30 @@
       "writtenOn": "2024-09-16T19:10:46Z",
       "side": 1,
       "message": "pls add Alexandre Eberhardt",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 2
+      },
+      "revId": "fedd0207e3f439f9ede7002c972d971b09437931",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4da966f5_61a401d6",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-09-17T11:18:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91138ba7_0fb1560d",
       "range": {
         "startLine": 64,
         "startChar": 0,
@@ -87,6 +153,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8bf2248d_980d12bc",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-09-17T11:18:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "167366ef_22cef271",
+      "range": {
+        "startLine": 92,
+        "startChar": 0,
+        "endLine": 92,
+        "endChar": 2
+      },
+      "revId": "fedd0207e3f439f9ede7002c972d971b09437931",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5cda33b2_8bd24374",
@@ -100,6 +190,30 @@
       "writtenOn": "2024-09-16T19:10:46Z",
       "side": 1,
       "message": "pls add Léopold Chappuis",
+      "range": {
+        "startLine": 95,
+        "startChar": 0,
+        "endLine": 95,
+        "endChar": 2
+      },
+      "revId": "fedd0207e3f439f9ede7002c972d971b09437931",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a56b6ef6_0fd2cc3c",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-09-17T11:18:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5cda33b2_8bd24374",
       "range": {
         "startLine": 95,
         "startChar": 0,
@@ -133,6 +247,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "186b6239_3c192427",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-09-17T11:18:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d870a8b_5aa852a2",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 2
+      },
+      "revId": "fedd0207e3f439f9ede7002c972d971b09437931",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a90c4d7d_632b1359",
@@ -156,6 +294,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9841cec3_a6f7f8c7",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-09-17T11:18:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a90c4d7d_632b1359",
+      "range": {
+        "startLine": 126,
+        "startChar": 8,
+        "endLine": 127,
+        "endChar": 25
+      },
+      "revId": "fedd0207e3f439f9ede7002c972d971b09437931",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3a8f395b_b0053dbf",
@@ -169,6 +331,30 @@
       "writtenOn": "2024-09-16T19:10:46Z",
       "side": 1,
       "message": "Pls add Cabrel Tambue",
+      "range": {
+        "startLine": 134,
+        "startChar": 0,
+        "endLine": 134,
+        "endChar": 2
+      },
+      "revId": "fedd0207e3f439f9ede7002c972d971b09437931",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "140fdb4e_168f2dd8",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-09-17T11:18:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a8f395b_b0053dbf",
       "range": {
         "startLine": 134,
         "startChar": 0,
