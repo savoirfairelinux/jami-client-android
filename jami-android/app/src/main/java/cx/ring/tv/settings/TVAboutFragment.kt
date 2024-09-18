@@ -36,10 +36,10 @@ class TVAboutFragment : LeanbackPreferenceFragmentCompat() {
 
     private val credits: CharSequence
         get() {
-            val developedby = SpannableString(getText(R.string.developed_by))
-            developedby.setSpan(UnderlineSpan(), 0, developedby.length, 0)
+            val developers = SpannableString(getText(R.string.developers))
+            developers.setSpan(UnderlineSpan(), 0, developers.length, 0)
             val developed = getString(R.string.credits_developer).replace("\n", "<br/>")
-            return Html.fromHtml("<b><u>$developedby</u></b><br/>$developed")
+            return Html.fromHtml("<b><u>$developers</u></b><br/>$developed")
         }
 
     companion object {
