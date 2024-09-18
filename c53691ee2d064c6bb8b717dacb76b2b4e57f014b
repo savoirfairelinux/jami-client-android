@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fb5c5de1_fb75ffc0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-09-18T21:04:12Z",
+      "side": 1,
+      "message": "Sorry for the noise, it is to be done in a different commit. https://git.jami.net/savoirfairelinux/jami-client-android/-/issues/1752#note_53066",
+      "revId": "c53691ee2d064c6bb8b717dacb76b2b4e57f014b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6896e9aa_db8fab62",
@@ -37,6 +54,54 @@
       "writtenOn": "2024-09-18T21:03:12Z",
       "side": 1,
       "message": "Should this be changed to `Settings`? Similar to Qt client. Thank you",
+      "range": {
+        "startLine": 552,
+        "startChar": 29,
+        "endLine": 552,
+        "endChar": 34
+      },
+      "revId": "c53691ee2d064c6bb8b717dacb76b2b4e57f014b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a2210e2f_28d88768",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-09-18T21:04:12Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "6896e9aa_db8fab62",
+      "range": {
+        "startLine": 552,
+        "startChar": 18,
+        "endLine": 552,
+        "endChar": 27
+      },
+      "revId": "c53691ee2d064c6bb8b717dacb76b2b4e57f014b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e2fc56ab_44896f44",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-09-18T21:04:12Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "497ce6d3_e8920a31",
       "range": {
         "startLine": 552,
         "startChar": 29,
@@ -88,6 +153,54 @@
         "startChar": 18,
         "endLine": 554,
         "endChar": 31
+      },
+      "revId": "c53691ee2d064c6bb8b717dacb76b2b4e57f014b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4dc09420_a6e3cf55",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-09-18T21:04:12Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "bb725b8d_153433a8",
+      "range": {
+        "startLine": 554,
+        "startChar": 18,
+        "endLine": 554,
+        "endChar": 31
+      },
+      "revId": "c53691ee2d064c6bb8b717dacb76b2b4e57f014b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b26b6c9d_873c78d0",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-09-18T21:04:12Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "045e372c_119eb3af",
+      "range": {
+        "startLine": 554,
+        "startChar": 33,
+        "endLine": 554,
+        "endChar": 42
       },
       "revId": "c53691ee2d064c6bb8b717dacb76b2b4e57f014b",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
