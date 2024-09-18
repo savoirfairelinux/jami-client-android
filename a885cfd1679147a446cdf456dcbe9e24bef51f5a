@@ -24,6 +24,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b22f9aea_f36a5648",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2024-09-18T15:39:19Z",
+      "side": 1,
+      "message": "removing the string since it\u0027s not used anywhere.",
+      "parentUuid": "8785e8d9_b635c72f",
+      "range": {
+        "startLine": 54,
+        "startChar": 31,
+        "endLine": 54,
+        "endChar": 42
+      },
+      "revId": "a885cfd1679147a446cdf456dcbe9e24bef51f5a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7b80f25e_f0d8c372",
@@ -60,6 +84,54 @@
       "writtenOn": "2024-09-17T19:40:15Z",
       "side": 1,
       "message": "Should this string end with a full stop `.`?\n\n`This is a list of people who have made a significant investment of time, with useful results, into Jami. Any such contributors who wish to be added to the list should contact us.`\n\nThank you",
+      "range": {
+        "startLine": 146,
+        "startChar": 28,
+        "endLine": 146,
+        "endChar": 205
+      },
+      "revId": "a885cfd1679147a446cdf456dcbe9e24bef51f5a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a1de967f_c20d10e4",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2024-09-18T15:39:19Z",
+      "side": 1,
+      "message": "Done. Updated patch: https://review.jami.net/c/jami-client-android/+/29066",
+      "parentUuid": "7b80f25e_f0d8c372",
+      "range": {
+        "startLine": 146,
+        "startChar": 195,
+        "endLine": 146,
+        "endChar": 205
+      },
+      "revId": "a885cfd1679147a446cdf456dcbe9e24bef51f5a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dc43a3c6_9cc0ad7d",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2024-09-18T15:39:19Z",
+      "side": 1,
+      "message": "Done. Updated patch: https://review.jami.net/c/jami-client-android/+/29066",
+      "parentUuid": "8de72940_4c47602e",
       "range": {
         "startLine": 146,
         "startChar": 28,
