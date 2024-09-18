@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6896e9aa_db8fab62",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-09-18T21:03:12Z",
+      "side": 1,
+      "message": "Should this be changed to `tab_settings`? Thank you",
+      "range": {
+        "startLine": 552,
+        "startChar": 18,
+        "endLine": 552,
+        "endChar": 27
+      },
+      "revId": "c53691ee2d064c6bb8b717dacb76b2b4e57f014b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "497ce6d3_e8920a31",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-09-18T21:03:12Z",
+      "side": 1,
+      "message": "Should this be changed to `Settings`? Similar to Qt client. Thank you",
+      "range": {
+        "startLine": 552,
+        "startChar": 29,
+        "endLine": 552,
+        "endChar": 34
+      },
+      "revId": "c53691ee2d064c6bb8b717dacb76b2b4e57f014b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "045e372c_119eb3af",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-09-18T21:03:12Z",
+      "side": 1,
+      "message": "Should this be changed to `Files`? Similar to Qt client. Thank you",
+      "range": {
+        "startLine": 554,
+        "startChar": 33,
+        "endLine": 554,
+        "endChar": 42
+      },
+      "revId": "c53691ee2d064c6bb8b717dacb76b2b4e57f014b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb725b8d_153433a8",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-09-18T21:03:12Z",
+      "side": 1,
+      "message": "Should this be change to `tab_files`? Thank you",
+      "range": {
+        "startLine": 554,
+        "startChar": 18,
+        "endLine": 554,
+        "endChar": 31
+      },
+      "revId": "c53691ee2d064c6bb8b717dacb76b2b4e57f014b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
