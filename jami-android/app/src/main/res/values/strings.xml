@@ -50,7 +50,6 @@ along with this program; if not, write to the Free Software
     <!-- About dialog -->
     <string name="thank_note">We would like to thank our contributors, whose efforts over many years have made this software what it is.</string>
     <string name="developed_by">Developers</string>
-    <string name="designed_by">Designed by</string>
     <string name="media">Media</string>
     <string name="community_management">Community Management</string>
     <string name="special_thanks">Special thanks to</string>
@@ -142,7 +141,7 @@ along with this program; if not, write to the Free Software
         Anna
         \nElys
         \nVeroJeanLuc</string>
-    <string name="end_note">This is a list of people who have made a significant investment of time, with useful results, into Jami. Any such contributors who wish to be added to the list should contact us</string>
+    <string name="end_note">This is a list of people who have made a significant investment of time, with useful results, into Jami. Any such contributors who wish to be added to the list should contact the Jami team at contact@jami.net.</string>
 
     <!-- RingActivity -->
     <string name="error_no_network">No network connectivity</string>
