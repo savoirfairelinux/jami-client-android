@@ -21,7 +21,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/developed_by"
+            android:text="@string/developers"
             android:textColor="?attr/colorOnBackground"
             android:textSize="18sp"
             android:layout_margin="@dimen/padding_small"/>
