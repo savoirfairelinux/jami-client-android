@@ -16,6 +16,29 @@
       "message": "!build",
       "revId": "03b884e62c715c9757bf58d2c264872b1cce80a7",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c2c21a2c_4aecaa01",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-09-18T21:11:27Z",
+      "side": 1,
+      "message": "Should this string name be `developers`? Thank you",
+      "range": {
+        "startLine": 52,
+        "startChar": 18,
+        "endLine": 52,
+        "endChar": 30
+      },
+      "revId": "03b884e62c715c9757bf58d2c264872b1cce80a7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
