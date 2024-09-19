@@ -90,7 +90,9 @@ class DRingService : Service() {
 
     private val mHandler = Handler(Looper.myLooper()!!)
     private val mDisposableBag = CompositeDisposable()
-    private val mConnectivityChecker = Runnable { updateConnectivityState() }
+    private val mConnectivityChecker = Runnable {
+        Log.w("devdebug", "from B")
+        updateConnectivityState() }
 
     private val monitor = object : NetworkCallback() {
         private val networkRequest: NetworkRequest = NetworkRequest.Builder()
@@ -112,12 +114,17 @@ class DRingService : Service() {
         }
 
         override fun onAvailable(network: Network) {
-            Log.w(TAG, "onAvailable ${network}")
+            Log.w("devdebug", "onAvailable ${network} from D")
             updateConnectivityState(true)
         }
 
+        override fun onLost(network: Network) {
+            Log.w("devdebug", "onLost ${network}")
+            super.onLost(network)
+        }
+
         override fun onUnavailable() {
-            Log.w(TAG, "onUnavailable")
+            Log.w("devdebug", "onUnavailable from E")
             updateConnectivityState(false)
         }
     }
@@ -131,9 +138,11 @@ class DRingService : Service() {
             }
             Log.d(TAG, "receiver.onReceive: $action")
             when (action) {
-                ConnectivityManager.CONNECTIVITY_ACTION -> {
-                    updateConnectivityState()
-                }
+                // Todo: Pretty sure it can be deleted
+//                ConnectivityManager.CONNECTIVITY_ACTION -> {
+//                    Log.d("devdebug", "from A")
+//                    updateConnectivityState()
+//                }
                 PowerManager.ACTION_DEVICE_IDLE_MODE_CHANGED -> {
                     mConnectivityChecker.run()
                     mHandler.postDelayed(mConnectivityChecker, 100)
@@ -150,10 +159,11 @@ class DRingService : Service() {
             contentResolver.registerContentObserver(ContactsContract.Contacts.CONTENT_URI, true, contactContentObserver)
         }
         val intentFilter = IntentFilter().apply {
-            addAction(ConnectivityManager.CONNECTIVITY_ACTION)
+//            addAction(ConnectivityManager.CONNECTIVITY_ACTION)
             addAction(PowerManager.ACTION_DEVICE_IDLE_MODE_CHANGED)
         }
         registerReceiver(receiver, intentFilter)
+        Log.w("devdebug", "from C")
         updateConnectivityState()
         mDisposableBag.add(mPreferencesService.settingsSubject.subscribe { settings: Settings ->
             showSystemNotification(settings)
@@ -209,14 +219,23 @@ class DRingService : Service() {
      * *********************************
      */
     private fun updateConnectivityState() {
+        Log.w("devdebug", "A updateConnectivityState")
         updateConnectivityState(mPreferencesService.hasNetworkConnected())
     }
 
+//    private val debounceHandler = Handler(Looper.getMainLooper())
+//    private var debounceRunnable: Runnable? = null
+
     private fun updateConnectivityState(isConnected: Boolean) {
-        if (mDaemonService.isStarted) {
-            mAccountService.setAccountsActive(isConnected)
-            mHardwareService.connectivityChanged(isConnected)
-        }
+//        debounceRunnable?.let { debounceHandler.removeCallbacks(it) }
+//        debounceRunnable = Runnable {
+            Log.w("devdebug", "B updateConnectivityState $isConnected")
+            if (mDaemonService.isStarted) {
+                mAccountService.setAccountsActive(isConnected)
+                mHardwareService.connectivityChanged(isConnected)
+            }
+//        }
+//        debounceHandler.postDelayed(debounceRunnable!!, 1000) // 300ms debounce delay
     }
 
     private fun parseIntent(intent: Intent) {
