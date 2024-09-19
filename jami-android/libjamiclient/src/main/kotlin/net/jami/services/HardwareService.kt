@@ -110,9 +110,12 @@ abstract class HardwareService(
     abstract fun stopMediaHandler()
     abstract fun setPendingScreenShareProjection(screenCaptureSession: Any?)
     fun connectivityChanged(isConnected: Boolean) {
-        Log.i(TAG, "connectivityChange() $isConnected")
+        Log.i("devdebug", "connectivityChange() $isConnected")
         connectivityEvents.onNext(isConnected)
-        mExecutor.execute { JamiService.connectivityChanged() }
+        mExecutor.execute {
+            Log.w("devdebug", "JamiService connectivityChanged")
+            JamiService.connectivityChanged()
+        }
     }
 
     fun switchInput(accountId:String, callId: String, uri: String) {

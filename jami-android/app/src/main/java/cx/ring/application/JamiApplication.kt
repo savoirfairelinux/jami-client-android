@@ -201,6 +201,7 @@ abstract class JamiApplication : Application() {
     }
 
     override fun onCreate() {
+        Os.setenv("SIPLOGLEVEL", "6", true)
         super.onCreate()
         instance = this
 
