@@ -227,14 +227,6 @@ class ContactDetailsActivity : AppCompatActivity(), ContactPickerFragment.OnCont
 
         binding.back.setOnClickListener { onBackPressedDispatcher.onBackPressed() }
         binding.addMember.setOnClickListener { ContactPickerFragment(conversation.contacts).show(supportFragmentManager, ContactPickerFragment.TAG) }
-
-        // Update color on RX color signal.
-        mDisposableBag.add(conversation.getColor()
-            .observeOn(DeviceUtils.uiScheduler)
-            .subscribe {
-                binding.appBar.backgroundTintList = ColorStateList.valueOf(getConversationColor(this, it))
-            }
-        )
     }
 
     private fun profileImageClicked() {
