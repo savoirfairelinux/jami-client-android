@@ -21,17 +21,11 @@
   <string name="dialog_wait_create_details">Моля, изчакайте докато новият Ви профил бъде добавен…</string>
   <string name="dialog_wait_update">Обновяване на профила</string>
   <string name="dialog_wait_update_details">Моля, изчакайте докато новият Ви профил бъде обновен…</string>
-  <string name="dialog_warn_ip2ip_account_title">Създаване на празен профил за SIP</string>
-  <string name="dialog_warn_ip2ip_account_message">На път сте да създадете SIP профил без валидно име на хост.
-Ще можете само да правите и получавате директни IP повиквания.
-Можете да редактирате профила си по-късно</string>
   <string name="account_type_ip2ip">IP профил</string>
   <string name="help_ring">Jami ви позволява да се свържете с хора безопасно чрез изцяло разпределена мрежова структура.</string>
   <string name="help_sip_title">Добавяне на профил за SIP</string>
   <string name="help_sip">Настройка на съществуващ профил за SIP</string>
-  <string name="create_sip_account">Добавяне на профил за SIP</string>
   <!--Strings related to account deletion-->
-  <string name="account_delete_dialog_title">Изтриване на профила?</string>
   <string name="account_delete_dialog_message">Това действие е необратимо.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Няма регистриран профил</string>
@@ -40,8 +34,6 @@
   <string name="account_device_revoke">Премахване на устройство</string>
   <string name="account_device_revocation_success_title">Успешно</string>
   <string name="account_device_revocation_success">Устройството е премахнато!</string>
-  <string name="account_device_revocation_error_title">Устройството не може да бъде премахнато</string>
-  <string name="account_device_revocation_wrong_password">Грешна парола.</string>
   <string name="account_device_revocation_unknown_device">Неизвестно устройство.</string>
   <string name="account_device_revocation_error_unknown">Неизвестна грешка.</string>
   <string name="account_password_change">Промяна на паролата</string>
@@ -63,8 +55,7 @@
   <string name="account_rendezvous_summary">В режим \"Рендежобъд\" входящите обаждания ще бъдат добавени в конферентна зала.</string>
   <string name="account_upnp_label">Активиране на UPnP</string>
   <string name="account_proxy_field">Посредник</string>
-  <!--Plugin Details-->
-  <string name="account_preference_plugin_tab">Включватели</string>
+  <!--Extension Details-->
   <!--Audio Details-->
   <string name="account_audio_label">Звук</string>
   <string name="account_preferences_media_tab">Звук и видео</string>
@@ -144,14 +135,9 @@
   <string name="export_account_wait_message">Информация за износната сметка</string>
   <string name="account_export_file">Резервен профил</string>
   <string name="account_export_file_summary">Запишете профила си на устройството си, за да го възстановите по-късно.</string>
-  <string name="account_export_end_decryption_message">Отключването на профила Ви с предоставената парола не беше успешно.</string>
   <string name="account_export_end_network_title">Мрежова грешка</string>
-  <string name="account_export_end_network_message">Профилът не може да бъде изнесен през мрежата. Проверете връзката си.</string>
   <string name="account_export_end_error_title">Грешка</string>
-  <string name="account_export_end_error_message">Профилът не може да бъде изнесен. Възникна непозната грешка.</string>
   <string name="account_enter_password">Въведете парола</string>
-  <string name="account_share_body">Свържете се с мен с помощта на \'%1$s\' на разпространените комуникационни платформи на Jami: %2$s</string>
-  <string name="account_share_body_with_username">Свържете се с мен с помощта на \'%1$s\' или публичното ми потребителско име \'%2$s\' на разпространените комуникационни платформи на Jami: %3$s</string>
   <string name="account_contact_me">Свържете се с мен по Джами!</string>
   <string name="update_account">Обновяване на профила</string>
   <string name="account_migration">Сметката ви в Jami може да бъде актуализирана. Моля въведете паролата си.</string>
@@ -159,20 +145,13 @@
   <string name="sip_account">Сметка за СИП</string>
   <string name="ring_account_identity">Идентичност</string>
   <string name="account_migration_title_dialog">Пренасяне на профил</string>
-  <string name="account_migration_message_dialog">Профилът Ви трябва да бъдат обновени. Искате ли да преминете към екрана за управление на профили, за да направите това?</string>
   <string name="account_update_needed">Нужно е обновяване</string>
-  <string name="account_cannot_be_found_title">Профилът не бе открит</string>
-  <string name="account_cannot_be_found_message">Не може да се намери акаунт в мрежата на Jami. Уверете се, че е изнасяно на Jami от съществуващо устройство и че документите са правилни.</string>
   <string name="account_sip_cannot_be_registered_message">Можете да продължите с процеса по създаване на профил, или да редактирате информацията си тук. Можете да редактирате информацията и по-късно, в настройките на профила.</string>
-  <string name="account_no_network_title">Неуспешна връзка с мрежата</string>
-  <string name="account_no_network_message">Не можех да добавя сметка, защото Джами не може да се свърже с разпространените мрежи.</string>
+  <string name="account_no_network_title">Мрежова грешка</string>
   <string name="account_device_added_title">Профилът е добавен на устройството</string>
   <string name="account_device_added_message">Успешно си създал акаунта си на Джами.</string>
   <string name="account_device_updated_title">Профилът на устройството е обновен</string>
   <string name="account_device_updated_message">Успешно сте актуализирали акаунта си в Jami.</string>
-  <string name="account_cannot_be_updated_message">Устройството на акаунта не може да бъде актуализирано.</string>
-  <string name="account_sip_success_title">Регистриран СИП сметка</string>
-  <string name="account_sip_success_message">Успешно сте регистрирали си СИП акаунта.</string>
   <string name="account_sip_register_anyway">Регистриране въпреки това</string>
   <!--TV-->
   <string name="account_tv_settings_header">Настройки на сметката</string>
@@ -192,11 +171,8 @@
   <string name="account_link_export_button">Свържете ново устройство</string>
   <string name="account_link_show_button">Покажете повече свързано устройство</string>
   <string name="account_link_hide_button">Скрийте свързано устройство</string>
-  <string name="account_link_export_info">За да използвате тази сметка на други устройства, първо трябва да я разкриете на Jami. Това ще генерира PIN код, който трябва да въведете на новото устройство, за да създадете профила. PIN-ът е валиден за 10 минути.</string>
   <string name="account_start_export_button">Генериране на PIN код</string>
   <string name="account_end_export_button">затваряне</string>
-  <string name="account_end_export_infos">PIN-ът ви е:\n\n%%\n\nЗа да завършите процеса, трябва да отворите Jami на ново устройство. Създайте нова сметка с \"Свържете това устройство с сметка\". PIN-ът ви е валиден 10 минути.</string>
-  <string name="account_link_export_info_light">За да използвате тази сметка на други устройства, първо трябва да я разкриете на Jami. Това ще генерира PIN код, който трябва да въведете на новото устройство, за да създадете профила. PIN-ът е валиден за 10 минути.</string>
   <string name="account_export_title">Свързване на акаунт с други устройства</string>
   <string name="account_connect_server_button">Свързване с сървър за управление</string>
   <string name="account_connect_button">Свържете се</string>
@@ -228,21 +204,17 @@
   <string name="account_creation_profile">Създаване на профил</string>
   <string name="account_creation_ring">Създаване на профил в Jami</string>
   <string name="account_link_title">Свързване на това устройство</string>
-  <string name="account_sip_cannot_be_registered">Профил не може да бъде регистриран</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">Редактирайте профила ми</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Въведете парола, за да продължите</string>
   <string name="enter_password">Въведете парола</string>
   <string name="revoke_device_title">Премахване на устройство</string>
-  <string name="revoke_device_message">Наистина ли искате да премахнете %1$s?</string>
   <string name="revoke_device_wait_title">Моля, изчакайте…</string>
   <string name="revoke_device_wait_message">Премахване на устройството</string>
   <string name="rename_device_title">Преименуване на това устройство</string>
   <string name="rename_device_message">Изберете ново име, за да идентифицирате това устройство в акаунта си в Jami</string>
   <string name="rename_device_button">Преименуване на устройството</string>
   <string name="account_rename_device_hint">Изберете ново име за устройството</string>
-  <string name="account_device_name_empty">Името на устройството не може да бъде празно</string>
   <string name="account_device_this_indicator">Това устройство</string>
   <string name="account_disabled_indicator">изключено</string>
   <!--Link a new device-->

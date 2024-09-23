@@ -27,7 +27,6 @@
   <string name="pref_startOnBoot_title">Spustit Jami po zapnutí</string>
   <string name="pref_startOnBoot_summary">Spustit Jami na pozadí po spuštění systému.</string>
   <string name="pref_clearHistory_title">Vymazat historii</string>
-  <string name="pref_clearHistory_summary">Vymaže celou historii konverzací. Tento úkon nelze vrátit zpět.</string>
   <string name="pref_notification_title">Viditelnost notifikací</string>
   <string name="pref_notification_summary">Nastavení viditelnosti oznámení aplikací na zamčené obrazovce.</string>
   <string name="pref_blackList_title">Seznak blokovaných kontaktů</string>
@@ -52,19 +51,6 @@
   <string name="notification_public">Veřejné \n (zobrazení oznámení a jejich obsahu na uzamčené obrazovce) \n</string>
   <string name="notification_private">Soukromé \n (zobrazení oznámení, ale skrytí jejich obsahu na uzamčené obrazovce) \n</string>
   <string name="notification_secret">Tajné \n (nezobrazují se oznámení na uzamčené obrazovce)</string>
-  <!--Plugin-->
-  <string name="pref_plugins_title">Zásuvné moduly</string>
-  <string name="pref_plugins_summary">Povolit zásuvné moduly a nastavit jejich parametry</string>
-  <string name="fab_plugins_add">Přidat nový zásuvný modul</string>
-  <string name="plugin_uninstall_title">Odinstalovat zásuvný modul?</string>
-  <string name="plugin_reset_preferences">Resetovat předvolby zásuvných modulů</string>
-  <string name="plugin_reset_preferences_summary">Vaše nastavení zásuvných modulů budou obnovena na výchozí hodnoty</string>
-  <string name="plugin_reset_preferences_ask">Chcete obnovit obecné nastavení pluginu ?</string>
-  <string name="plugin_reset_account_preferences_ask">Chcete obnovit nastavení pluginu účtu ?</string>
-  <string name="plugin_successfully_installed">Zásuvný modul <b>%1$s</b> byl úspěšně nainstalován</string>
-  <string name="plugin_install_failure">Instalace zásuvného modulu <b>%1$s</b> selhala</string>
-  <string name="plugin_recent_version_exception">Máte novější verzi <b>%1$s</b></string>
-  <string name="plugin_same_version_exception">Máte nainstalovanou stejnou verzi <b>%1$s</b></string>
-  <string name="plugin_force_install">vynutit instalaci</string>
-  <string name="plugin_path_image_add">Přidat nový obrázek</string>
+  <!--Extension-->
+  <string name="extension_force_install">vynutit instalaci</string>
 </resources>

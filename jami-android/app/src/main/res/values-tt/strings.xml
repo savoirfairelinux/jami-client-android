@@ -9,19 +9,13 @@
   <string name="contribute_section">Өлешен кертү</string>
   <string name="version_section">Версия</string>
   <string name="no_email_app_installed">Электрон почта кушымтасы табылмады, безгә хәбәр җибәрер өчен берсен урнаштырыгыз</string>
-  <string name="no_browser_app_installed">Веб-браузерда бернинди дә кушымта табылмады, бу битне карарга берсен урнаштыру</string>
   <string name="email_chooser_title">Почтаны...</string>
-  <string name="website_chooser_title">Сайтны...</string>
-  <string name="license">Бу программа бернинди гарантиясез \"кайчан булса\" бирелә.</string>
   <string name="description">Jami - үз кулланучыларының ирекләрен һәм шәхси тормышын хөрмәт итүче универсаль коммуникация өчен ирекле программа.</string>
   <string name="credits">Кредитлар</string>
   <string name="pip_title">Җәми конференциясе</string>
   <string name="call_service_description">Бу хезмәт сезнең шалтыратуларны беренче планда тоту өчен кирәк. Ул бары тик шалтыратулар вакытында гына эшли.</string>
   <string name="data_transfer_service_description">Бу хезмәт файлларны күчергәндә даими хәбәр итүләрне күрсәтү өчен кирәк.</string>
   <!--About dialog-->
-  <string name="developed_by">Әзерлек</string>
-  <string name="designed_by">Бу проектны</string>
-  <string name="ringtones_by">Чулкып йөрү</string>
   <!--RingActivity-->
   <string name="error_no_network">Авылыбыз юк</string>
   <string name="error_account_offline">Хисапны кулга алу тыела</string>
@@ -35,7 +29,6 @@
   <string name="menu_item_settings">Калыплар</string>
   <string name="menu_item_advanced_settings">Алга таба урнаштырулар</string>
   <string name="menu_item_account_settings">Хисапны урнаштыру</string>
-  <string name="menu_item_plugin_list">Плюгиннар өчен җайланмалар</string>
   <string name="menu_item_share">Минем хисабымны уртаклашыгыз</string>
   <string name="menu_item_about">Җәми турында</string>
   <string name="video_setting_title">Видеолар көйләү</string>
@@ -86,7 +79,6 @@
   <!--Conversation-->
   <string name="conversation_details">Сөйләшүнең җентеклелекләре</string>
   <string name="contact_details">Контакт мәгълүматлары</string>
-  <string name="conversation_action_delete_this_message">Бу эштән баш тартырга ярамый.</string>
   <string name="conversation_action_history_clear">Тарих ачык</string>
   <string name="conversation_action_block_this">Блок белән элемтә</string>
   <string name="conversation_action_incoming_call">Килүче чакыру</string>
@@ -150,19 +142,14 @@
   <string name="wizard_profile_info">Профиль контактлар белән генә уртаклашалар</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Бүләкләү</string>
-  <string name="bottomSheet_plugins_btn">Плюгины</string>
   <string name="bottomSheet_add_participants_btn">Өстәргә</string>
   <string name="bottomSheet_change_camera_btn">Үзгәрешләр</string>
-  <string name="bottomSheet_hangup_btn">Шалтыратуны тәмамлау</string>
   <string name="bottomSheet_raiseHand_btn">Кулыңны күтәр!</string>
   <string name="uninstall">Кушымтаны урнаштыру</string>
   <string name="reset">Кайта кую</string>
   <!--Swarm Detail-->
   <string name="rename_btn">Ышанычлылык</string>
-  <string name="swarm_description">Тәрҗемәсе</string>
-  <string name="tab_about">Бу хакта</string>
   <string name="tab_members">Депутатлар</string>
-  <string name="tab_documetn">Документлар</string>
   <string name="dialog_hint_title">Исем</string>
   <string name="dialog_hint_description">Тәрҗемәсе</string>
   <!--JamiId-->
@@ -172,5 +159,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Җәмигә рәхим итегез.</string>
   <!--Donation-->
-  <!--Plugin-->
+  <!--Extension-->
 </resources>

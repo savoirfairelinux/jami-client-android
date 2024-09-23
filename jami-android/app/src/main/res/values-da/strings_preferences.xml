@@ -27,7 +27,6 @@
   <string name="pref_startOnBoot_title">Kør Jami ved opstart</string>
   <string name="pref_startOnBoot_summary">Kør Jami i baggrunden, når systemet starter.</string>
   <string name="pref_clearHistory_title">Ryd historiken</string>
-  <string name="pref_clearHistory_summary">Ryd al samtale-historik. Denne handling kan ikke fortrydes.</string>
   <string name="pref_notification_title">Beskeders synlighed</string>
   <string name="pref_notification_summary">Indstil visiteten af applikationsmeddelelser på låseskærmen.</string>
   <string name="pref_blackList_title">Blockliste</string>
@@ -52,19 +51,6 @@
   <string name="notification_public">Offentlig \n(vis meddelelser og deres indhold på låseskærm) \n</string>
   <string name="notification_private">Private \n(vis meddelelser men skjule deres indhold på låseskærm) \n</string>
   <string name="notification_secret">Hemmelig \n(vis ikke meddelelser på låseskærmen)</string>
-  <!--Plugin-->
-  <string name="pref_plugins_title">Plugins</string>
-  <string name="pref_plugins_summary">Aktiver plugins og indstille deres parametre</string>
-  <string name="fab_plugins_add">Tilføj et nyt plugin</string>
-  <string name="plugin_uninstall_title">Afinstallere plugin?</string>
-  <string name="plugin_reset_preferences">Omstilling af plugin- præferencer</string>
-  <string name="plugin_reset_preferences_summary">Din plugin indstillinger vil være standard</string>
-  <string name="plugin_reset_preferences_ask">Vil du genindsætte de generelle plugin indstillinger?</string>
-  <string name="plugin_reset_account_preferences_ask">Vil du genindsætte konto plugin indstillingerne?</string>
-  <string name="plugin_successfully_installed">Plugin <b>%1$s</b> installeret med succes</string>
-  <string name="plugin_install_failure">Uden at installere plugin: <b>%1$s</b></string>
-  <string name="plugin_recent_version_exception">Du har en nyere version af: <b>%1$s</b></string>
-  <string name="plugin_same_version_exception">Du har samme version af <b>%1$s</b> installeret</string>
-  <string name="plugin_force_install">tvang \ n installere</string>
-  <string name="plugin_path_image_add">Tilføj et nyt billede</string>
+  <!--Extension-->
+  <string name="extension_force_install">tvang \ n installere</string>
 </resources>

@@ -21,25 +21,18 @@
   <string name="dialog_wait_create_details">تكايه منتظره كتيک حساب نويكا دتاهن...</string>
   <string name="dialog_wait_update">ڤڠاجرن حساب</string>
   <string name="dialog_wait_update_details">تكايه منتظره اونتوق حساب نويس اتو...</string>
-  <string name="dialog_warn_ip2ip_account_title">ممبنتو ايكون SIP يڠ بربيذا ؟</string>
-  <string name="dialog_warn_ip2ip_account_message">توهڤا ممبنتو ايكون SIP دڠن تيدق اد نام هاسيت يڠ ڤرلو. توهڤا ممبنتو دان ممبنتو ڤيليهن IP يڠ دڠن ڤرلو. توهڤا ممبنتو ايكون توهڤا ديري</string>
   <string name="account_type_ip2ip">حساب IP</string>
   <string name="help_ring">اکاونت Jami ممبريکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکنکن</string>
-  <string name="help_sip_title">منوليسكن سيكڤ SIP</string>
+  <string name="help_sip_title">مڠهادڤکن کات SIP</string>
   <string name="help_sip">ممبنتو اکاونت SIP يڠ موجود.</string>
-  <string name="create_sip_account">مڠهادڤکن کات SIP</string>
   <!--Strings related to account deletion-->
-  <string name="account_delete_dialog_title">مڠحذف حساب ؟</string>
-  <string name="account_delete_dialog_message">ڤرودوک اين تيدق دڤرچايا?? ي.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">تيدق اد حساب يڠ دڤرچايا?? ي</string>
   <string name="normal_accounts_titles">حسابن</string>
-  <string name="normal_devices_titles">ڤرودوک يڠ دڤرچايا?? ي</string>
+  <string name="normal_devices_titles">ڤڠڬيلن يڠ دڤرچايا?? ي</string>
   <string name="account_device_revoke">ڤڠڬيلن ڤڠڬيلن</string>
   <string name="account_device_revocation_success_title">ڤرنياڬا?? ن</string>
   <string name="account_device_revocation_success">ڤڠڬوناڽ كيني دڤرچايا?? ي!</string>
-  <string name="account_device_revocation_error_title">نيه تيدق ممڤوپا?? ي ڤڠاجرن</string>
-  <string name="account_device_revocation_wrong_password">كاسورڠ يڠ تيدق.</string>
   <string name="account_device_revocation_unknown_device">جهاز مجهول</string>
   <string name="account_device_revocation_error_unknown">خطأ مجهول</string>
   <string name="account_password_change">مڠهادڤي ڤرسود</string>
@@ -61,8 +54,7 @@
   <string name="account_rendezvous_summary">دالم مود رينديوز، ڤڠاجرن يڠ دڤرچايا?? ي دڤرچايا?? ي دالم رومه كونفرنس.</string>
   <string name="account_upnp_label">فعالكن UPnP</string>
   <string name="account_proxy_field">ڤروكسي</string>
-  <!--Plugin Details-->
-  <string name="account_preference_plugin_tab">ڤلاڬين</string>
+  <!--Extension Details-->
   <!--Audio Details-->
   <string name="account_audio_label">اودي</string>
   <string name="account_preferences_media_tab">ميديا</string>
@@ -142,35 +134,23 @@
   <string name="export_account_wait_message">معلوماتي حساب صادراتي</string>
   <string name="account_export_file">حساب ڤڠاجرن</string>
   <string name="account_export_file_summary">كاوڤونكن ايكونت دالم ڤرودوک اونتوق مڠمبيلكنڽ لاين.</string>
-  <string name="account_export_end_decryption_message">تيدق بوليه مڠهادڤكن ايكونت دڠن ڤرودوق يڠ دبريكن.</string>
   <string name="account_export_end_network_title">خطأ شبكه</string>
-  <string name="account_export_end_network_message">نتكن ممڤوپا?? ي حساب دري نيتۏرك.</string>
   <string name="account_export_end_error_title">خطأ</string>
-  <string name="account_export_end_error_message">اكوڠت تيدق بوليه دڤرچايا?? ي. اكوڠت يڠ تيدق دڤرچايا?? ي.</string>
   <string name="account_enter_password">ڤرلو مڠهادڤي كاسوس</string>
-  <string name="account_share_body">منچاريکن ساي دڠن \'%1$s\' دالم ڤرتوبوهن ڤمبلاجرن Jami: %2$s</string>
-  <string name="account_share_body_with_username">منچاريکن ساي دڠن \'%1$s\' اتاو نام ڤڠݢونا عموم ساي \'%2$s\' دالم ڤرتوبوهن ڤمبلاجرن Jami: %3$s</string>
-  <string name="account_contact_me">تماس با من در مورد جامي!</string>
+  <string name="account_contact_me">با من دري جامي تماس بگير!</string>
   <string name="update_account">ڤڠاجرن حساب</string>
   <string name="account_migration">حساب جامي تو ميتوان دتموكن.\\nتوسوق ممبريكن ڤرسود.</string>
   <string name="ring_account">حساب جامي</string>
   <string name="sip_account">حساب SIP</string>
   <string name="ring_account_identity">ادينتيتي</string>
   <string name="account_migration_title_dialog">ڤمباچ ڤرچاي</string>
-  <string name="account_migration_message_dialog">اكوڠت اكوڠ ڤرلو دأدوڤت. اكو بوكن مڠهادڤي سكرين مڠڬوناكن اكوڠت اونتوق ممبنتو ڤرڬي اين؟</string>
   <string name="account_update_needed">ڤرلو دڤرلوكن</string>
-  <string name="account_cannot_be_found_title">نميتونم حساب پيدا کنم</string>
-  <string name="account_cannot_be_found_message">حساب تيدق بوليه دڤرچايا?? ي دالم نيتۏرك Jami.\nمڠهادڤيڽ دڤرچايا?? ي دجمي دري ساتو ڤرچايا?? ن موجود، دان اڤابيلا كريديتينالڽ سموا.</string>
   <string name="account_sip_cannot_be_registered_message">توڠڬوڤكن ڤروسيس ڤڠڬوناكن ايكون اتاو مڠمبيل معلومت اتاو ڤڠڬوناكن اين. ڤڠڬوناكن لاڬي ممبنتو دالم ڤڠڬوناكن ايكون.</string>
-  <string name="account_no_network_title">تيدق بوليه منچاريكن نيتۏرك</string>
-  <string name="account_no_network_message">نميتو ممبيناكن حساب كران جامي تيدق بوليه منچاريكن ڤڠاجرن اونتوق نيترۏيك دڤرتوبوهكن.</string>
+  <string name="account_no_network_title">خطأ شبكه</string>
   <string name="account_device_added_title">ڤڠڬوناكن ڤڠڬوناكن</string>
   <string name="account_device_added_message">تو اونتوق ممبنتو ايكونت جامي دالم اين ڤرودوک.</string>
   <string name="account_device_updated_title">ڤڠڬوناكن ڤڠڬوناكن</string>
   <string name="account_device_updated_message">توڠڬوڠكن كاوسن جامي.</string>
-  <string name="account_cannot_be_updated_message">ايكوتا ايكوتا تيدق بوليه دأوبيت.</string>
-  <string name="account_sip_success_title">سيب کات ڤرچاي</string>
-  <string name="account_sip_success_message">توڠڬوڠ ڤرچايكن سيكڤ سيكڤ</string>
   <string name="account_sip_register_anyway">هرچيچيچي اونتوق مڠمبيل</string>
   <!--TV-->
   <string name="account_tv_settings_header">ڤڠاجرن حساب</string>
@@ -190,11 +170,8 @@
   <string name="account_link_export_button">منچيلكن ڤڠڬونا?? ن بارو</string>
   <string name="account_link_show_button">مڠمبيل %d ڤرودوک يڠ دتڠݢوڠ</string>
   <string name="account_link_hide_button">ڤڠڬيلن يڠ دڤرچايا?? ي</string>
-  <string name="account_link_export_info">اونتوق مڠڬوناكن ايكون اين دالم ڤراڠڬين لاين، اكو ڤرلو مڠمبيلڽ د Jami. اين مڠهادڤي كود PIN يڠ ڤرلو دڤرلو دڤرلو دڤرلو دڤراڠڬين بارو اونتوق ممبنتو ايكون اين. PIN اين برمولا اونتوق 10 مينيت.</string>
   <string name="account_start_export_button">ڤڠاجرن PIN</string>
   <string name="account_end_export_button">ڤڠڬيلن</string>
-  <string name="account_end_export_infos">ڤين ايكو:\n\n%%\n\\nباڬايماناڤون ممڤوپا?? ي ڤروسيس ايت، ايكو ڤرلو ممبلي Jami دالم ڤرودوک بارو. مڠمبيل ايكون بارو دڠن \"مربوط ڤرودوک بارو اين دڠن ڤرودوک بارو\". ڤين ايكو ڤرلو 10 مينيت.</string>
-  <string name="account_link_export_info_light">اونتوق مڠڬوناكن ايكون اين دالم ڤراڠڬين لاين، اكو ڤرلو مڠمبيلڽ د Jami. اين مڠهادڤي كود PIN يڠ ڤرلو دڤرلو دڤرلو دڤرلو دڤراڠڬين بارو اونتوق ممبنتو ايكون اين. PIN اين برمولا اونتوق 10 مينيت.</string>
   <string name="account_export_title">حساب لينک اونتوق ڤڠڬونا يڠ لاين</string>
   <string name="account_connect_server_button">منچاريکن کڤد ڤمبلاجرن</string>
   <string name="account_connect_button">وصلكن</string>
@@ -226,21 +203,17 @@
   <string name="account_creation_profile">ڤرچاي ڤرڤايل</string>
   <string name="account_creation_ring">منوليسكن حساب Jami</string>
   <string name="account_link_title">وصلكن ڤرودوک اين</string>
-  <string name="account_sip_cannot_be_registered">نميتونم حساب ثبت کنم</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">مڠمبيل ڤڠاجرن</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">ڤرلو مڠهادڤي كاسد اونتوق مڠهادڤي</string>
   <string name="enter_password">ڤرلو مڠهادڤي كاسوس</string>
   <string name="revoke_device_title">ڤڠڬيلن ڤڠڬيلن</string>
-  <string name="revoke_device_message">اكو يقين اكو بررلو ممڤوپا?? ي %1$s ؟</string>
   <string name="revoke_device_wait_title">تكايه صبر كني...</string>
   <string name="revoke_device_wait_message">ڤڠڬيلن ڤڠڬيلن</string>
   <string name="rename_device_title">نامن ڤڠڬونا اين</string>
   <string name="rename_device_message">ڤيليه نام بارو اونتوق ممڤوپا?? ي ڤرودوک اين دالم کات Jami</string>
   <string name="rename_device_button">ڤڠڬونا ڤڠڬونا</string>
   <string name="account_rename_device_hint">نام ڤڠڬيلن بارو</string>
-  <string name="account_device_name_empty">اسم ڤڠڬوناڽ تيدق بوليه برتاهن</string>
   <string name="account_device_this_indicator">اين دستگاه</string>
   <string name="account_disabled_indicator">ڤڠاجين</string>
   <!--Link a new device-->

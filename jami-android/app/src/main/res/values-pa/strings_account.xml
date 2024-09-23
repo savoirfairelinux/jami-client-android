@@ -21,27 +21,18 @@
   <string name="dialog_wait_create_details">ਕਿਰਪਾ ਕਰਕੇ ਤੁਹਾਡਾ ਨਵਾਂ ਖਾਤਾ ਜੋੜੇ ਜਾਣ ਤੱਕ ਉਡੀਕ ਕਰੋ…</string>
   <string name="dialog_wait_update">ਖਾਤਾ ਅੱਪਡੇਟ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ</string>
   <string name="dialog_wait_update_details">ਕਿਰਪਾ ਕਰਕੇ ਤੁਹਾਡਾ ਨਵਾਂ ਖਾਤਾ ਅੱਪਡੇਟ ਕੀਤੇ ਜਾਣ ਤੱਕ ਉਡੀਕ ਕਰੋ…</string>
-  <string name="dialog_warn_ip2ip_account_title">ਖਾਲੀ SIP ਖਾਤਾ ਬਣਾਈਏ ?</string>
-  <string name="dialog_warn_ip2ip_account_message">ਤੁਸੀਂ ਮੇਜ਼ਬਾਨ ਦੇ ਅਢੁਕਵੇਂ ਨਾਂ ਨਾਲ SIP ਖਾਤਾ ਬਣਾਉਣ ਲੱਗੇ ਹੋ।
-        ਤੁਸੀਂ ਸਿਰਫ਼ ਸਿੱਧੀਆਂ ਆਈ.ਪੀ. ਕਾਲਾਂ ਕਰ ਸਕੋਗੇ ਅਤੇ ਲੈ ਸਕੋਗੇ।
-        ਤੁਸੀਂ ਬਾਅਦ ਵਿੱਚ ਆਪਣੇ ਖਾਤੇ ਦਾ ਸੰਪਾਦਨ ਕਰ ਸਕਦੇ ਹੋ</string>
   <string name="account_type_ip2ip">ਆਈ.ਪੀ. ਖਾਤਾ</string>
   <string name="help_ring">Jami ਖਾਤੇ ਨਾਲ ਤੁਸੀਂ ਸਾਥੀ ਤੋਂ ਸਾਥੀ ਵਾਲੇ ਸੰਪੂਰਨ ਵੰਡਮਈ ਨੈੱਟਵਰਕ ਰਾਹੀਂ ਲੋਕਾਂ ਨੂੰ ਸੁਰੱਖਿਅਤ ਢੰਗ ਨਾਲ ਸੰਪਰਕ ਕਰ ਸਕਦੇ ਹੋ।</string>
-  <string name="help_sip_title">ਆਪਣਾ SIP ਖਾਤਾ ਜੋੜੋ</string>
+  <string name="help_sip_title">SIP ਖਾਤਾ ਜੋੜੋ</string>
   <string name="help_sip">ਕਿਸੇ ਮੌਜੂਦਾ SIP ਖਾਤੇ ਵਿੱਚ ਫ਼ੇਰਬਦਲ ਕਰੋ।</string>
-  <string name="create_sip_account">SIP ਖਾਤਾ ਜੋੜੋ</string>
   <!--Strings related to account deletion-->
-  <string name="account_delete_dialog_title">ਖਾਤਾ ਮਿਟਾਈਏ ?</string>
   <string name="account_delete_dialog_message">ਇਹ ਕਾਰਵਾਈ ਹੋਣ ਤੋਂ ਬਾਅਦ ਬਦਲੀ ਨਹੀਂ ਜਾ ਸਕਦੀ।</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">ਕੋਈ ਖਾਤਾ ਦਰਜ ਨਹੀਂ ਕੀਤਾ ਗਿਆ</string>
   <string name="normal_accounts_titles">ਖਾਤੇ</string>
-  <string name="normal_devices_titles">ਜੁੜੇ ਹੋਏ ਡੀਵਾਈਸ</string>
   <string name="account_device_revoke">ਡੀਵਾਈਸ ਹਟਾਓ</string>
   <string name="account_device_revocation_success_title">ਸਫਲਤਾ</string>
   <string name="account_device_revocation_success">ਡੀਵਾਈਸ ਹੁਣ ਹਟ ਗਿਆ ਹੈ!</string>
-  <string name="account_device_revocation_error_title">ਡੀਵਾਈਸ ਹਟਾਇਆ ਨਹੀਂ ਜਾ ਸਕਦਾ</string>
-  <string name="account_device_revocation_wrong_password">ਗਲਤ ਪਾਸਵਰਡ।</string>
   <string name="account_device_revocation_unknown_device">ਅਣਪਛਾਤਾ ਡੀਵਾਈਸ।</string>
   <string name="account_device_revocation_error_unknown">ਅਣਪਛਾਤੀ ਗੜਬੜ।</string>
   <string name="account_password_change">ਪਾਸਵਰਡ ਬਦਲੋ</string>
@@ -63,7 +54,7 @@
   <string name="account_rendezvous_summary">ਤੈਅ ਸਮੇਂ \'ਤੇ ਇਕੱਠ ਵਾਲੇ ਮੋਡ ਵਿੱਚ, ਆਉਂਦੀਆਂ ਕਾਲਾਂ ਨੂੰ ਸਭਾ ਵਾਲੇ ਕਮਰੇ ਵਿੱਚ ਜੋੜਿਆ ਜਾਵੇਗਾ।</string>
   <string name="account_upnp_label">UPnP ਚਾਲੂ ਕਰੋ</string>
   <string name="account_proxy_field">ਪ੍ਰੌਕਸੀ</string>
-  <!--Plugin Details-->
+  <!--Extension Details-->
   <!--Audio Details-->
   <string name="account_audio_label">ਅਵਾਜ਼</string>
   <string name="account_preferences_media_tab">ਮੀਡੀਆ</string>
@@ -141,34 +132,21 @@
   <string name="export_account_wait_message">ਖਾਤਾ ਜਾਣਕਾਰੀ ਨਿਰਯਾਤ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ</string>
   <string name="account_export_file">ਬੈਕਅੱਪ ਖਾਤਾ</string>
   <string name="account_export_file_summary">ਆਪਣੇ ਡੀਵਾਈਸ \'ਤੇ ਖਾਤੇ ਦਾ ਬੈਕਅੱਪ ਲਓ ਤਾਂ ਕਿ ਬਾਅਦ ਵਿੱਚ ਮੁੜ-ਬਹਾਲ ਕਰ ਸਕੋ।</string>
-  <string name="account_export_end_decryption_message">ਦਿੱਤੇ ਪਾਸਵਰਡ ਨਾਲ ਤੁਹਾਡਾ ਖਾਤਾ ਅਣਲਾਕ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਿਆ।</string>
   <string name="account_export_end_network_title">ਨੈੱਟਵਰਕ ਗੜਬੜ</string>
-  <string name="account_export_end_network_message">ਨੈੱਟਵਰਕ \'ਤੇ ਖਾਤੇ ਦਾ ਨਿਰਯਾਤ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਿਆ। ਕਨੈਕਸ਼ਨ ਦੀ ਜਾਂਚ ਕਰੋ।</string>
   <string name="account_export_end_error_title">ਗੜਬੜ</string>
-  <string name="account_export_end_error_message">ਖਾਤਾ ਨਿਰਯਾਤ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਿਆ। ਅਣਪਛਾਤੀ ਗੜਬੜ ਹੋਈ।</string>
   <string name="account_enter_password">ਪਾਸਵਰਡ ਦਾਖਲ ਕਰੋ</string>
-  <string name="account_share_body"> Jami ਦੇ ਵੰਡਮਈ ਸੰਚਾਰ ਪਲੇਟਫਾਰਮ \'ਤੇ \'%1$s\' ਵਰਤ ਕੇ ਮੈਨੂੰ ਸੰਪਰਕ ਕਰੋ: %2$s </string>
-  <string name="account_share_body_with_username"> Jami ਦੇ ਵੰਡਮਈ ਸੰਚਾਰ ਪਲੇਟਫਾਰਮ \'ਤੇ \'%1$s\' ਜਾਂ ਮੇਰਾ ਜਨਤਕ ਵਰਤੋਂਕਾਰ ਨਾਂ \'%2$s\' ਵਰਤ ਕੇ ਮੈਨੂੰ ਸੰਪਰਕ ਕਰੋ: %3$s</string>
-  <string name="account_contact_me">Jami \'ਤੇ ਮੈਨੂੰ ਸੰਪਰਕ ਕਰੋ !</string>
   <string name="update_account">ਖਾਤਾ ਅੱਪਡੇਟ ਕਰੋ</string>
   <string name="account_migration">ਤੁਹਾਡਾ Jami ਖਾਤਾ ਅੱਪਡੇਟ ਕੀਤਾ ਜਾ ਸਕਦਾ ਹੈ।\nਕਿਰਪਾ ਕਰਕੇ ਆਪਣਾ ਪਾਸਵਰਡ ਦਾਖਲ ਕਰੋ।</string>
   <string name="ring_account">Jami ਖਾਤਾ</string>
   <string name="ring_account_identity">ਪਛਾਣ</string>
   <string name="account_migration_title_dialog">ਖਾਤਾ ਤਬਾਦਲਾ</string>
-  <string name="account_migration_message_dialog">ਤੁਹਾਡੇ ਖਾਤਿਆਂ ਨੂੰ ਅੱਪਡੇਟ ਕੀਤੇ ਜਾਣ ਦੀ ਲੋੜ ਹੈ। ਕੀ ਤੁਸੀਂ ਇਹ ਕਾਰਵਾਈ ਕਰਨ ਲਈ ਖਾਤਾ ਪ੍ਰਬੰਧਨ ਸਕ੍ਰੀਨ \'ਤੇ ਜਾਣਾ ਹੈ?</string>
   <string name="account_update_needed">ਅੱਪਡੇਟ ਕਰਨ ਦੀ ਲੋੜ ਹੈ</string>
-  <string name="account_cannot_be_found_title">ਖਾਤਾ ਲੱਭਿਆ ਨਹੀਂ ਜਾ ਸਕਦਾ</string>
-  <string name="account_cannot_be_found_message">ਖਾਤੇ ਨੂੰ Jami ਨੈੱਟਵਰਕ \'ਤੇ ਲੱਭਿਆ ਨਹੀਂ ਜਾ ਸਕਿਆ।\nਯਕੀਨੀ ਬਣਾਓ ਕਿ ਕਿਸੇ ਮੌਜੂਦਾ ਡੀਵਾਈਸ ਤੋਂ Jami \'ਤੇ ਨਿਰਯਾਤ ਕੀਤਾ ਗਿਆ ਹੋਵੇ ਅਤੇ ਦਿੱਤਾ ਵਰਤੋਂਕਾਰ ਨਾਂ/ਪਾਸਵਰਡ ਸਹੀ ਹੈ।</string>
   <string name="account_sip_cannot_be_registered_message">ਤੁਸੀਂ ਖਾਤਾ ਬਣਾਉਣਾ ਜਾਰੀ ਰੱਖ ਸਕਦੇ ਹੋ ਜਾਂ ਇੱਥੇ ਆਪਣੀ ਜਾਣਕਾਰੀ ਦਾ ਸੰਪਾਦਨ ਕਰ ਸਕਦੇ ਹੋ। ਬਾਅਦ ਵਿੱਚ ਖਾਤਾ ਸੈਟਿੰਗਾਂ ਵਿੱਚ ਵੀ ਸੰਪਾਦਨ ਕੀਤਾ ਜਾ ਸਕਦਾ ਹੈ।</string>
-  <string name="account_no_network_title">ਨੈੱਟਵਰਕ ਨਾਲ ਕਨੈਕਟ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ</string>
-  <string name="account_no_network_message">ਖਾਤਾ ਸ਼ਾਮਲ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਿਆ ਕਿਉਂਕਿ Jami ਵੰਡਮਈ ਨੈੱਟਵਰਕ ਨਾਲ ਕਨੈਕਟ ਨਹੀਂ ਹੋ ਸਕੀ। ਆਪਣੇ ਡੀਵਾਈਸ ਨੈੱਟਵਰਕ ਕਨੈਕਸ਼ਨ ਦੀ ਜਾਂਚ ਕਰੋ।</string>
+  <string name="account_no_network_title">ਨੈੱਟਵਰਕ ਗੜਬੜ</string>
   <string name="account_device_added_title">ਖਾਤਾ ਡੀਵਾਈਸ ਸ਼ਾਮਲ ਕੀਤਾ ਗਿਆ</string>
   <string name="account_device_added_message">ਤੁਸੀਂ ਇਸ ਡੀਵਾਈਸ \'ਤੇ ਆਪਣੇ Jami ਖਾਤੇ ਨੂੰ ਸਫਲਤਾਪੂਰਵਕ ਸੈੱਟਅੱਪ ਕੀਤਾ।</string>
   <string name="account_device_updated_title">ਖਾਤਾ ਡੀਵਾਈਸ ਅੱਪਡੇਟ ਕੀਤਾ ਗਿਆ</string>
   <string name="account_device_updated_message">ਤੁਸੀਂ ਆਪਣਾ Jami ਖਾਤਾ ਸਫਲਤਾਪੂਰਵਕ ਅੱਪਡੇਟ ਕੀਤਾ।</string>
-  <string name="account_cannot_be_updated_message">ਖਾਤਾ ਡੀਵਾਈਸ ਅੱਪਡੇਟ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਿਆ। ਕਿਰਪਾ ਕਰਕੇ ਆਪਣੇ ਪਾਸਵਰਡ ਦੀ ਜਾਂਚ ਕਰੋ।</string>
-  <string name="account_sip_success_title">Sip ਖਾਤੇ ਦਾ ਪੰਜੀਕਰਨ ਹੋਇਆ</string>
-  <string name="account_sip_success_message">ਤੁਸੀਂ ਆਪਣੇ Sip ਖਾਤੇ ਦਾ ਸਫਲਤਾਪੂਰਵਕ ਪੰਜੀਕਰਨ ਕੀਤਾ।</string>
   <string name="account_sip_register_anyway">ਫਿਰ ਵੀ ਪੰਜੀਕਰਨ ਕਰੋ</string>
   <!--TV-->
   <string name="account_tv_settings_header">ਖਾਤਾ ਸੈਟਿੰਗਾਂ</string>
@@ -185,11 +163,8 @@
   <string name="account_link_prompt_pin">ਪਿੰਨ ਦਾਖਲ ਕਰੋ</string>
   <string name="account_new_button">Jami ਖਾਤਾ ਬਣਾਓ</string>
   <string name="account_link_export_button">ਨਵਾਂ ਡੀਵਾਈਸ ਜੋੜੋ</string>
-  <string name="account_link_export_info">ਹੋਰਾਂ ਡੀਵਾਈਸਾਂ \'ਤੇ ਇਹ ਖਾਤਾ ਵਰਤਣ ਲਈ, ਤੁਹਾਨੂੰ ਪਹਿਲਾਂ Jami \'ਤੇ ਇਸਨੂੰ ਨਿਰਯਾਤ ਕਰਨਾ ਪਵੇਗਾ। ਇੰਝ ਕਰਨ ਨਾਲ ਪਿੰਨ ਕੋਡ ਸਿਰਜਿਆ ਜਾਵੇਗਾ ਜਿਸਨੂੰ ਤੁਹਾਨੂੰ ਖਾਤੇ ਦੇ ਸੈੱਟਅੱਪ ਵੇਲੇ ਨਵੇਂ ਡੀਵਾਈਸ \'ਤੇ ਦਾਖਲ ਕਰਨਾ ਪਵੇਗਾ। ਪਿੰਨ 10 ਮਿੰਟਾਂ ਲਈ ਵੈਧ ਰਹਿੰਦਾ ਹੈ।</string>
   <string name="account_start_export_button">ਪਿੰਨ ਸਿਰਜੋ</string>
   <string name="account_end_export_button">ਬੰਦ ਕਰੋ</string>
-  <string name="account_end_export_infos">ਤੁਹਾਡਾ ਪਿੰਨ:\n\n%%\n\nਸੈੱਟਅੱਪ ਪੂਰਾ ਕਰਨ ਲਈ, ਤੁਹਾਨੂੰ ਨਵੇਂ ਡੀਵਾਈਸ \'ਤੇ Jami ਖੋਲ੍ਹਣ ਦੀ ਲੋੜ ਹੈ। \"ਇਸ ਡੀਵਾਈਸ ਨੂੰ ਕਿਸੇ ਖਾਤੇ ਨਾਲ ਲਿੰਕ ਕਰੋ\" ਨਾਲ ਨਵਾਂ ਖਾਤਾ ਬਣਾਓ। ਤੁਹਾਡਾ ਪਿੰਨ 10 ਮਿੰਟਾਂ ਲਈ ਵੈਧ ਰਹਿੰਦਾ ਹੈ।</string>
-  <string name="account_link_export_info_light">ਹੋਰਾਂ ਡੀਵਾਈਸਾਂ \'ਤੇ ਇਹ ਖਾਤਾ ਵਰਤਣ ਲਈ, ਤੁਹਾਨੂੰ ਪਹਿਲਾਂ Jami \'ਤੇ ਇਸਨੂੰ ਨਿਰਯਾਤ ਕਰਨਾ ਪਵੇਗਾ। ਇੰਝ ਕਰਨ ਨਾਲ ਪਿੰਨ ਕੋਡ ਸਿਰਜਿਆ ਜਾਵੇਗਾ ਜਿਸਨੂੰ ਤੁਹਾਨੂੰ ਖਾਤੇ ਦੇ ਸੈੱਟਅੱਪ ਵੇਲੇ ਨਵੇਂ ਡੀਵਾਈਸ \'ਤੇ ਦਾਖਲ ਕਰਨਾ ਪਵੇਗਾ। ਪਿੰਨ 10 ਮਿੰਟਾਂ ਲਈ ਵੈਧ ਰਹਿੰਦਾ ਹੈ।</string>
   <string name="account_connect_server_button">ਪ੍ਰਬੰਧ ਸਰਵਰ ਨਾਲ ਜੋੜੋ</string>
   <string name="account_connect_button">ਜੋੜੋ</string>
   <string name="prompt_server">Jami ਪ੍ਰਬੰਧ ਸਰਵਰ ਦਾ URL</string>
@@ -219,20 +194,17 @@
   <string name="account_creation_profile">ਆਪਣਾ ਪ੍ਰੋਫਾਈਲ ਬਣਾਓ</string>
   <string name="account_creation_ring">ਆਪਣਾ Jami ਖਾਤਾ ਬਣਾਓ</string>
   <string name="account_link_title">ਇਹ ਡੀਵਾਈਸ ਲਿੰਕ ਕਰੋ</string>
-  <string name="account_sip_cannot_be_registered">ਖਾਤੇ ਦਾ ਪੰਜੀਕਰਨ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">ਪੁਸ਼ਟੀ ਕਰਨ ਲਈ ਪਾਸਵਰਡ ਦਾਖਲ ਕਰੋ</string>
   <string name="enter_password">ਪਾਸਵਰਡ ਦਾਖਲ ਕਰੋ</string>
   <string name="revoke_device_title">ਡੀਵਾਈਸ ਹਟਾਓ</string>
-  <string name="revoke_device_message">ਕੀ ਤੁਸੀਂ ਪੱਕਾ %1$s ਨੂੰ ਹਟਾਉਣਾ ਹੈ?</string>
   <string name="revoke_device_wait_title">ਕਿਰਪਾ ਕਰਕੇ ਉਡੀਕ ਕਰੋ…</string>
   <string name="revoke_device_wait_message">ਡੀਵਾਈਸ ਹਟਾਇਆ ਜਾ ਰਿਹਾ ਹੈ</string>
   <string name="rename_device_title">ਇਸ ਡੀਵਾਈਸ ਦਾ ਨਾਂ ਬਦਲੋ</string>
   <string name="rename_device_message">ਆਪਣੇ Jami ਖਾਤੇ ਵਿੱਚ ਇਸ ਡੀਵਾਈਸ ਨੂੰ ਪਛਾਣਨ ਲਈ ਨਵਾਂ ਨਾਂ ਚੁਣੋ</string>
   <string name="rename_device_button">ਡੀਵਾਈਸ ਦਾ ਨਾਂ ਬਦਲੋ</string>
   <string name="account_rename_device_hint">ਨਵਾਂ ਡੀਵਾਈਸ ਨਾਂ ਚੁਣੋ</string>
-  <string name="account_device_name_empty">ਡੀਵਾਈਸ ਦਾ ਨਾਂ ਲਿਖਣਾ ਲਾਜ਼ਮੀ ਹੈ</string>
   <string name="account_disabled_indicator">ਬੰਦ ਕੀਤਾ ਗਿਆ</string>
   <!--Link a new device-->
   <string name="error_format_not_supported">ਇਸ ਵੰਨਗੀ ਵਿੱਚ ਨਹੀਂ ਵਰਤ ਸਕਦੇ।</string>

@@ -9,19 +9,13 @@
   <string name="contribute_section">Уклад</string>
   <string name="version_section">Версія</string>
   <string name="no_email_app_installed">Ніякіх электроннай пошты прыкладання не знайшлі, усталяваць адзін, каб адправіць нам справаздачу</string>
-  <string name="no_browser_app_installed">Ніякіх прыкладанняў вэб-браўзэра не знайшлі, усталяваць адзін, каб праглядзець гэтую старонку</string>
   <string name="email_chooser_title">Пашляць паштовую паштовую паштовую паштовую паштовую паштовую паштовую паштовую паштовую паштовую паштовую паштовую паштовую паштовую паштовую паштовую паштовую паштовую паштовую паштовую паштовую паштовую паштовую паштовую паштовую паштовую паштовую паштовую паштовую паштовую паштовую паштовую паштовую паштовую паштовую паштовую паштовую паштовую паштовую паштовую паштовую паштовую паштовую паштовую паштовую паштовую паштовую паштовую паштовую паштовую паштовую паштовую паштовую паштовую паштовую паштовую паштовую паштовую паштовую паштовую паштовую паштовую паштовую паштовую паштовую паштою.</string>
-  <string name="website_chooser_title">Праглядзіце сайт з дапамогай...</string>
-  <string name="license">Гэты праграмны праграмны прадукт прадастаўляецца "як ёсць", без гарантыі якога-небудзь роду. Для падрабязнасці, глядзіце GNU General Public License версія 3 або пазней&lt;/u&gt;</string>
   <string name="description">Jami з\'яўляецца свабодным праграмным забеспячэннем для універсальнай камунікацыі, якое паважае свабоды і прыватнасць сваіх карыстальнікаў.</string>
   <string name="credits">Крэдыты</string>
   <string name="pip_title">Канферэнцыя Джані</string>
   <string name="call_service_description">Гэты сэрвіс неабходны для таго, каб выклікі працавалі ў першую чаргу. Ён працуе толькі падчас званкоў.</string>
   <string name="data_transfer_service_description">Гэтая служба неабходная для прагляду пастаянных апавяданняў падчас перадачы файлаў.</string>
   <!--About dialog-->
-  <string name="developed_by">Развіваецца</string>
-  <string name="designed_by">Праектаваны</string>
-  <string name="ringtones_by">Звонкі з</string>
   <!--RingActivity-->
   <string name="error_no_network">Ніякай сеткавай сувязі</string>
   <string name="error_account_offline">Рахунак не працуе</string>
@@ -35,7 +29,6 @@
   <string name="menu_item_settings">Налады</string>
   <string name="menu_item_advanced_settings">Дасканалыя налады</string>
   <string name="menu_item_account_settings">Налады ўліковых запісаў</string>
-  <string name="menu_item_plugin_list">Налады ўключальнікаў</string>
   <string name="menu_item_share">Падзяліцца маім рахункам</string>
   <string name="menu_item_about">Пра Джані</string>
   <string name="video_setting_title">Налады відэа</string>
@@ -86,7 +79,6 @@
   <!--Conversation-->
   <string name="conversation_details">Падрабязнасць размовы</string>
   <string name="contact_details">Кантактныя дадзеныя</string>
-  <string name="conversation_action_delete_this_message">Гэтая дзейнасць не можа быць адменена.</string>
   <string name="conversation_action_history_clear">Ясная гісторыя</string>
   <string name="conversation_action_block_this">Блокальны кантакт</string>
   <string name="conversation_action_incoming_call">Паступны званок</string>
@@ -151,19 +143,14 @@
   <string name="wizard_profile_info">Профіль падзяляецца толькі з кантактамі</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Падзяліцца</string>
-  <string name="bottomSheet_plugins_btn">Уключальнікі</string>
   <string name="bottomSheet_add_participants_btn">Дадаць</string>
   <string name="bottomSheet_change_camera_btn">Змена</string>
-  <string name="bottomSheet_hangup_btn">Скончыць выклік</string>
   <string name="bottomSheet_raiseHand_btn">Падыміце руку</string>
   <string name="uninstall">Адмяніць ўстаноўку</string>
   <string name="reset">Падстаўка</string>
   <!--Swarm Detail-->
   <string name="rename_btn">Пацвердзіць</string>
-  <string name="swarm_description">Дадаць апісанне</string>
-  <string name="tab_about">Пра</string>
   <string name="tab_members">Члены</string>
-  <string name="tab_documetn">Дакументы</string>
   <string name="dialog_hint_title">Назва</string>
   <string name="dialog_hint_description">Апісанне</string>
   <!--JamiId-->
@@ -173,5 +160,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Сардэчна запрашаем у Джамі</string>
   <!--Donation-->
-  <!--Plugin-->
+  <!--Extension-->
 </resources>

@@ -9,19 +9,13 @@
   <string name="contribute_section">Doprinesite</string>
   <string name="version_section">Verzija</string>
   <string name="no_email_app_installed">Nijedna email aplikacija nije pronađena, instalairajte jednu da biste nam poslali izvješće</string>
-  <string name="no_browser_app_installed">NIje pronađen nijedan web preglednik, instalirajte jadan da biste visjeli stranicu</string>
   <string name="email_chooser_title">Pošalji mail koristeći...</string>
-  <string name="website_chooser_title">Pogledaj web stranicu koristeći...</string>
-  <string name="license">Ovaj softver je dostavljen \"kao što je\", bez ikakve jamstva.</string>
   <string name="description">Jami je slobodni software za univerzalnu komunikaciju koji poštuje slobode i privatnost svojih korisnika.</string>
   <string name="credits">Zasluge</string>
   <string name="pip_title">Konferencija Jamija</string>
   <string name="call_service_description">Ova usluga je potrebna da bi se pozivi bili u prvom planu.</string>
   <string name="data_transfer_service_description">Ova usluga je potrebna za prikaz stalnih obavijesti tijekom prijenosa datoteka.</string>
   <!--About dialog-->
-  <string name="developed_by">Razvijen od strane</string>
-  <string name="designed_by">Dizajniran od strane</string>
-  <string name="ringtones_by">Zvuči:</string>
   <!--RingActivity-->
   <string name="error_no_network">Veza nedostupna</string>
   <string name="error_account_offline">Račun je isključen.</string>
@@ -35,7 +29,6 @@
   <string name="menu_item_settings">Postavke</string>
   <string name="menu_item_advanced_settings">Napredne postavke</string>
   <string name="menu_item_account_settings">Nastavke računa</string>
-  <string name="menu_item_plugin_list">Nastavke dodataka</string>
   <string name="menu_item_share">Dijeli moj račun</string>
   <string name="menu_item_about">O Jami-u</string>
   <string name="video_setting_title">Nastavke video</string>
@@ -98,17 +91,9 @@
   <string name="ongoing_call">Poziv koji je u tijeku</string>
   <string name="hist_in_call">Dolazni poziv od %1$s</string>
   <string name="hist_out_call">Odlazni poziv prema %1$s</string>
-  <string name="start_error_title">Ne mogu pokrenuti Jami !</string>
   <string name="start_error_mic_required">Jami zahtijeva dozvolu za rad.</string>
-  <string name="action_call_accept">Preuzmi poziv</string>
-  <string name="action_call_accept_audio">Odgovor audio</string>
-  <string name="action_call_accept_video">Odgovor na video</string>
-  <string name="action_call_hold_accept">Čekajte i uzmite audio pozive</string>
-  <string name="action_call_hold_accept_video">Čekaj i snimak poziva</string>
-  <string name="action_call_end_accept">Završi i odbijedite poziv</string>
   <string name="action_call_decline">Odbij</string>
   <string name="action_call_mic_mute">Utišaj mikrofon</string>
-  <string name="action_load_plugin">Plugin za punjenje</string>
   <string name="ab_action_speakerphone">Omogući zvučnik</string>
   <string name="ab_action_contact_add">Dodaj u kontakte</string>
   <string name="ab_action_contact_add_question">Dodati u kontakte?</string>
@@ -144,11 +129,8 @@
   <string name="ringtone_error_size_too_big">Datoteka je prevelika. Maksimalna veličina je %1$dkB.</string>
   <string name="ringtone_custom_prompt">Postavi prilagođeni zvuk zvona</string>
   <string name="ringtone_custom_label">Prilagođeno</string>
-  <string name="ringtone_jami_tones">Jami Tones</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Jami treba dozvolu \"Pročitaj kontakte\" da bi omogućila ovu funkciju.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Jami treba dozvolu \"Pisaj dnevnik poziva\" da omogući ovu funkciju.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Skenirajte QR kod korisnika kojeg želite dodati.</string>
   <string name="title_activity_qrcode">Dijeli moj račun</string>
@@ -164,8 +146,6 @@
   <string name="conversation_details">Podrobnosti razgovora</string>
   <string name="contact_details">Pojedinosti kontakta</string>
   <string name="conversation_action_delete_this">Izbrišite ovaj razgovor</string>
-  <string name="conversation_action_delete_this_title">Izbrisati ovaj razgovor?</string>
-  <string name="conversation_action_delete_this_message"> Ova se radnja ne može poništiti.</string>
   <string name="conversation_action_history_clear">Očisti povijest</string>
   <string name="conversation_action_history_clear_title">Očistiti povijest razgovora?</string>
   <string name="conversation_action_history_clear_message">Ovo će definitivno obrisati povijest razgovora.</string>
@@ -202,7 +182,6 @@
   <string name="conversation_contact_invited">%1$s je pozvan</string>
   <string name="conversation_contact_added">%1$s se pridružio</string>
   <string name="conversation_contact_left">%1$ je lijevo</string>
-  <string name="conversation_contact_banned">%1$s je zabranjen</string>
   <string name="conversation_search_hint">Razgovor za pretragu</string>
   <string name="today">Danas</string>
   <string name="yesterday">Jučer</string>
@@ -217,14 +196,12 @@
   <string name="help_password_choose">Odaberite jaku lozinku koje ćete se sjećati da biste zaštitili vaš Jami račun.</string>
   <string name="help_password_enter">Ubaci lozinku za glavni račun Jamija.</string>
   <string name="help_server_enter">Ubaci URL-a za upravljački server.</string>
-  <string name="help_pin_enter">Ubaci PIN sa drugog konfiguratiranog računa Jami.</string>
   <string name="wizard_next">Slijedeće</string>
   <string name="wizard_back">Natrag</string>
   <string name="wizard_skip">Preskoči</string>
   <string name="hist_contact_invited">Kontakt pozvani</string>
   <string name="hist_contact_added">Kontakt dodan</string>
   <string name="hist_contact_left">Kontakt lijevo</string>
-  <string name="hist_contact_banned">Zabranjeno kontaktiranje</string>
   <string name="hist_invitation_received">Poziv primljen</string>
   <!--Account Summary-->
   <string name="profile">Profil</string>
@@ -273,7 +250,6 @@
   <string name="tv_contact_row_header">Kontakti</string>
   <string name="gallery_error_title">Ne pronađeno aplikacija Galerija</string>
   <string name="gallery_error_message">Nije pronađena aplikacija na uređaju za otvaranje Galerije</string>
-  <string name="generic_error">Došlo je do nepoznate greške</string>
   <!--File Transfer-->
   <string name="invalid_file">Neispravna datoteka</string>
   <string name="not_able_to_write_file">Ne mogu pisati datoteku</string>
@@ -293,7 +269,6 @@
   <string name="file_saved_in">Datoteka je spremljena u %s</string>
   <string name="file_saved_successfully">Dosje uspješno spisano</string>
   <string name="file_download">Snimka</string>
-  <string name="no_space_left_on_device">Nije preostalo prostora na uređaju</string>
   <string name="title_media_viewer">Sredni gledatelj</string>
   <string name="menu_file_open">Otvori datoteku</string>
   <string name="menu_file_download">Preuzmi datoteku</string>
@@ -344,29 +319,20 @@
   <string name="wizard_profile_button">Sačuvanje profila</string>
   <string name="wizard_profile_skip">Preskoči i uradi to kasnije.</string>
   <string name="fab_path_choose">Izaberite drugu datoteku</string>
-  <string name="chat_plugins">Čat Plugini</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Podijeli</string>
   <string name="bottomSheet_dialpad_btn">Ugrađivanje</string>
-  <string name="bottomSheet_plugins_btn">Dodaci</string>
   <string name="bottomSheet_add_participants_btn">Dodavanje</string>
   <string name="bottomSheet_change_camera_btn">Promjena</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>
-  <string name="bottomSheet_hangup_btn">Završi poziv</string>
   <string name="bottomSheet_mute_microphone_btn">Mikro</string>
   <string name="bottomSheet_sound_output_btn">Zvukovi</string>
   <string name="bottomSheet_raiseHand_btn">Podignite ruku</string>
-  <string name="open_account_plugin_settings">Otvorite postavke plugin računa</string>
-  <string name="open_general_plugin_settings">Otvori opće postavke plugin-a</string>
   <string name="uninstall">Neinstalacija</string>
   <string name="reset">Nastavljanje</string>
   <!--Swarm Detail-->
   <string name="rename_btn">Potvrdi</string>
-  <string name="rename_error">Ne može biti prazan.</string>
-  <string name="swarm_description">Dodajte opis</string>
-  <string name="tab_about">O programu</string>
   <string name="tab_members">Članovi</string>
-  <string name="tab_documetn">Dokumenti</string>
   <string name="dialogtitle_title">Izmijenite naslov Swarm</string>
   <string name="dialogtitle_description">Predavanje opisa skupa</string>
   <string name="dialog_hint_title">Naslov</string>
@@ -382,5 +348,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Dobrodošli u Jami</string>
   <!--Donation-->
-  <!--Plugin-->
+  <!--Extension-->
 </resources>

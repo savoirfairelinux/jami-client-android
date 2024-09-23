@@ -72,8 +72,6 @@
   <string name="audio_permission_rationale_message">Jami需要获得麦克风许可才能使用语音转文本和录制音频功能。下一步将对此进行询问</string>
   <string name="camera_permission_rationale_message">Jami需要摄像头许可才能录制视频和进行视频通话。下一步将对此进行询问</string>
   <string name="unable_to_start_recorder">无法开始录制音频</string>
-  <string name="error_sharing_file">共享文件时出错</string>
-  <string name="error_opening_file">打开文件时出错</string>
   <!--Wizard-->
   <!--Bottom sheet-->
   <!--Swarm Detail-->
@@ -87,10 +85,7 @@
   <!--WelcomeJami-->
   <!--Donation-->
   <string name="donation_card_not_now">现在不要</string>
-  <!--Plugin-->
+  <!--Extension-->
   <string name="unable_to_load">无法加载 %1$s</string>
-  <string name="load_sucess">%1$s: 已启用</string>
-  <string name="unload_sucess">%1$s: 已禁用</string>
-  <string name="install_sucess">扩展%1$s已成功安装</string>
   <string name="install_error">导入扩展时出错</string>
 </resources>

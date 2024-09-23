@@ -27,7 +27,6 @@
   <string name="pref_startOnBoot_title">Inicializar o Jami ao iniciar</string>
   <string name="pref_startOnBoot_summary">Executar o Jami em segundo plano ao iniciar o sistema.</string>
   <string name="pref_clearHistory_title">Limpar histórico</string>
-  <string name="pref_clearHistory_summary">Limpa todo o histórico de conversas. Esta ação não pode ser anulada.</string>
   <string name="pref_notification_title">Visibilidade da notificação</string>
   <string name="pref_notification_summary">Definir a visibilidade das notificações de aplicações no ecrã de bloqueio.</string>
   <string name="pref_blackList_title">Lista de bloqueios</string>
@@ -52,22 +51,8 @@
   <string name="notification_public">Público \n(mostra notificações e respetivo conteúdo no ecrã de bloqueio)\n</string>
   <string name="notification_private">Privado \n(mostra notificações mas ocultar o seu conteúdo no ecrã de bloqueio)\n</string>
   <string name="notification_secret">Segredo \n(não mostra notificações no ecrã de bloqueio)</string>
-  <!--Plugin-->
-  <string name="pref_plugins_title">Módulos</string>
-  <string name="pref_plugins_summary">Ativar os módulos e definir os seus parâmetros</string>
-  <string name="fab_plugins_add">Adicionar um novo módulo</string>
-  <string name="plugin_uninstall_title">Desinstalar o módulo?</string>
-  <string name="plugin_reset_preferences">Repor as preferências do módulo</string>
-  <string name="plugin_reset_preferences_summary">As configurações do módulo serão restauradas para as de origem</string>
-  <string name="plugin_reset_preferences_ask">Quer restaurar as configurações gerais do módulo?</string>
-  <string name="plugin_reset_account_preferences_ask">Quer restaurar as configurações do módulo da conta?</string>
-  <string name="plugin_successfully_installed">Módulo <b>%1$s</b> instalado com êxito</string>
-  <string name="plugin_install_failure">Falha ao instalar o módulo: <b>%1$s</b></string>
-  <string name="plugin_recent_version_exception">Tem uma versão mais recente de: <b>%1$s</b></string>
-  <string name="plugin_same_version_exception">Tem a mesma versão de <b>%1$s</b> instalada</string>
-  <string name="plugin_invalid_signature"><b>%1$s</b> tem uma assinatura inválida</string>
-  <string name="plugin_invalid_authority">Não é possível verificar a autoridade de: <b>%1$s</b></string>
-  <string name="plugin_invalid_format">Formato de módulo inválido: <b>%1$s</b></string>
-  <string name="plugin_force_install">forçar \n instalação</string>
-  <string name="plugin_path_image_add">Adicionar uma nova imagem</string>
+  <!--Extension-->
+  <string name="pref_extensions_title">Extensões</string>
+  <string name="extension_invalid_signature"><b>%1$s</b> tem uma assinatura inválida</string>
+  <string name="extension_force_install">forçar \n instalação</string>
 </resources>

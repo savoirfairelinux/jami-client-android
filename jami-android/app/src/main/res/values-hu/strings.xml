@@ -9,20 +9,13 @@
   <string name="contribute_section">Közreműködés</string>
   <string name="version_section">Verzió</string>
   <string name="no_email_app_installed">Nem található e-mail app. Telepítsen egyet, hogy jelentést tudjon küldeni nekünk</string>
-  <string name="no_browser_app_installed">Nem található webböngésző app. Telepítsen egyet az oldal megtekintéséhez!</string>
   <string name="email_chooser_title">Levél küldése a következővel…</string>
-  <string name="website_chooser_title">Honlap megtekintése a következővel…</string>
-  <string name="license">Ez a szoftver a „jelen állapotában” kerül kiadásra, mindenféle garanciavállalás nélkül. A részletekért lásd a <u>GNU általános nyilvános engedély 3-as vagy újabb verzióját</u></string>
   <string name="description">A Jami egy ingyenes szoftver általános kommunikációs célokra, mely tiszteletben tartja a felhasználói szabadságát és magánéletét.</string>
   <string name="credits">Készítők</string>
   <string name="pip_title">Jami-konferencia</string>
   <string name="call_service_description">Ez a szolgáltatás szükséges a hívások előtérben történő futtatásához. Csak hívások alatt fut.</string>
   <string name="data_transfer_service_description">Ez a szolgáltatás szükséges az állandó értesítések megjelenítéséhez fájlküldések közben. Csak fájlküldések alatt fut.</string>
   <!--About dialog-->
-  <string name="developed_by">Fejlesztők</string>
-  <string name="designed_by">Tervezők</string>
-  <string name="ringtones_by">Csengőhangok:</string>
-  <string name="credits_volunteers">És az önkéntesek, akik hozzájárulnak ehhez a projekthez!</string>
   <!--RingActivity-->
   <string name="error_no_network">Nincs hálózati kapcsolat</string>
   <string name="error_account_offline">A fiók kapcsolat nélküli állapotban van</string>
@@ -36,7 +29,6 @@
   <string name="menu_item_settings">Beállítások</string>
   <string name="menu_item_advanced_settings">Haladó beállítások</string>
   <string name="menu_item_account_settings">Fiókbeállítások</string>
-  <string name="menu_item_plugin_list">Beépülő modulok beállításai</string>
   <string name="menu_item_share">Fiók megosztása</string>
   <string name="menu_item_about">A Jami névjegye</string>
   <string name="video_setting_title">Videóbeállítások</string>
@@ -102,17 +94,9 @@
   <string name="hist_in_call">Bejövő hívás (%1$s)</string>
   <string name="hist_out_call">Kimenő hívás (%1$s)</string>
   <string name="call_duration">%s tartott</string>
-  <string name="start_error_title">Nem lehet elindítani Jami-t!</string>
   <string name="start_error_mic_required">A Jami működéséhez szükséges a mikrofont elérés engedélyezése.</string>
-  <string name="action_call_accept">Hívás fogadása</string>
-  <string name="action_call_accept_audio">Elfogadás hanggal</string>
-  <string name="action_call_accept_video">Elfogadás videóval</string>
-  <string name="action_call_hold_accept">Tartás és elfogadás hanggal</string>
-  <string name="action_call_hold_accept_video">Tartás és elfogadás videóval</string>
-  <string name="action_call_end_accept">Hívás befejezése és bejövő hívás fogadása</string>
   <string name="action_call_decline">Elutasítás</string>
   <string name="action_call_mic_mute">Mikrofon elnémítása</string>
-  <string name="action_load_plugin">Beépülő modul betöltése</string>
   <string name="ab_action_speakerphone">Hangszóró engedélyezése</string>
   <string name="ab_action_contact_add">Hozzáadás a kapcsolatokhoz</string>
   <string name="ab_action_contact_add_question">Hozzáadja a kapcsolatokhoz?</string>
@@ -153,11 +137,8 @@
   <string name="ringtone_error_size_too_big">Ez a fájl túl nagy. A legnagyobb méret %1$d kB.</string>
   <string name="ringtone_custom_prompt">Egyéni csengőhang beállítása</string>
   <string name="ringtone_custom_label">Szokás</string>
-  <string name="ringtone_jami_tones">Jami hangok</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">A Jaminak szüksége van a „Kapcsolatok olvasása” engedélyre. Kérjük, engedélyezze.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">A Jaminak szüksége van a „Hívásnapló írása” engedélyre. Kérjük, engedélyezze.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Olvassa be a hozzáadandó fiók QR-kódját.</string>
   <string name="title_activity_qrcode">Fiók megosztása</string>
@@ -173,8 +154,6 @@
   <string name="conversation_details">Beszélgetés részletei</string>
   <string name="contact_details">Elérhetőségei</string>
   <string name="conversation_action_delete_this">Beszélgetés törlése</string>
-  <string name="conversation_action_delete_this_title">Törli ezt a beszélgetést?</string>
-  <string name="conversation_action_delete_this_message">Ez a művelet nem vonható vissza.</string>
   <string name="conversation_action_history_clear">Előzmények törlése</string>
   <string name="conversation_action_history_clear_title">Törli a beszélgetés előzményeit?</string>
   <string name="conversation_action_history_clear_message">Ez törölni fogja a beszélgetések előzményeit.</string>
@@ -213,8 +192,6 @@
   <string name="conversation_contact_invited">%1$s meghívva lett</string>
   <string name="conversation_contact_added">%1$s csatlakozott</string>
   <string name="conversation_contact_left">%1$s kilépett</string>
-  <string name="conversation_contact_banned">%1$s letiltva lett</string>
-  <string name="conversation_contact_unbanned">%1$s letiltása feloldva.</string>
   <string name="conversation_search_hint">Beszélgetés keresése</string>
   <string name="audio_recorder_error">A hangfelvevő alkalmazás nem található.</string>
   <string name="video_recorder_error">A videófelvevő alkalmazás nem található.</string>
@@ -242,7 +219,6 @@
   <string name="help_password_choose">Válasszon erős jelszót, amelyre emlékezni fog, hogy megvédje a Jami-fiókját.</string>
   <string name="help_password_enter">Fő Jami-fiók jelszavának megadása.</string>
   <string name="help_server_enter">Adja meg a felügyeleti kiszolgáló URL-jét.</string>
-  <string name="help_pin_enter">Adja meg egy másik beállított Jami fiók PIN-kodját. Használja a „Fiók exportálása a Jami-n” működést a PIN-kod eléréséhez.</string>
   <string name="pin_copied">PIN-kód kimásolva a vágólapra.</string>
   <string name="wizard_next">Tovább</string>
   <string name="wizard_back">Vissza</string>
@@ -250,8 +226,6 @@
   <string name="hist_contact_invited">Kapcsolat meghívva</string>
   <string name="hist_contact_added">Kapcsolat hozzáadva</string>
   <string name="hist_contact_left">Kapcsolat kilépett</string>
-  <string name="hist_contact_banned">Kapcsolat letiltva</string>
-  <string name="hist_contact_unbanned">Kapcsolat letiltása feloldva.</string>
   <string name="hist_invitation_received">Meghívás megérkezett</string>
   <!--Account Summary-->
   <string name="profile">Névjegy</string>
@@ -300,7 +274,6 @@
   <string name="tv_contact_row_header">Kapcsolatok</string>
   <string name="gallery_error_title">Nem található Gyűjtemény alkalmazás</string>
   <string name="gallery_error_message">Nem található alkalmazás a készüléken a Gyűjtemény megnyitásához</string>
-  <string name="generic_error">Ismeretlen hiba történt.</string>
   <!--File Transfer-->
   <string name="invalid_file">Érvénytelen fájl</string>
   <string name="not_able_to_write_file">Nem lehet írni a fájlt</string>
@@ -320,7 +293,6 @@
   <string name="file_saved_in">Fájl mentve ide: %s</string>
   <string name="file_saved_successfully">Fájl sikeresen mentve</string>
   <string name="file_download">Letöltés</string>
-  <string name="no_space_left_on_device">Nincs hely az eszközön</string>
   <string name="title_media_viewer">Média lejátszó</string>
   <string name="menu_file_open">Fájl megnyitása</string>
   <string name="menu_file_download">Fájl letöltése</string>
@@ -363,8 +335,6 @@
   <string name="audio_permission_rationale_message">A Jaminak mikrofonengedélyre van szüksége a beszéd-szövegké alakításhoz és a hangrögzítéshez. A következő lépésben rákérdez.</string>
   <string name="camera_permission_rationale_message">Jaminak szüksége van a fényképezőgép engedélyére a videó rögzítéséhez és a videohívás kezdeményezéséhez. A következő lépésben rákérdez.</string>
   <string name="unable_to_start_recorder">Nem sikerült elindítani a hangfelvételt.</string>
-  <string name="error_sharing_file">Hiba történt a fájl megosztásában.</string>
-  <string name="error_opening_file">Hiba történt a fájl megnyitásakor.</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Ajánlott</string>
   <string name="wizard_status_optional">Választható</string>
@@ -382,29 +352,20 @@
   <string name="wizard_profile_button">Névjegy mentése</string>
   <string name="wizard_profile_skip">Későbbre halasztás</string>
   <string name="fab_path_choose">Más fájl kiválasztása</string>
-  <string name="chat_plugins">Csevegési beépülő modulok</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Megosztás </string>
   <string name="bottomSheet_dialpad_btn">Tárcsázó</string>
-  <string name="bottomSheet_plugins_btn">Beépülő modulok</string>
   <string name="bottomSheet_add_participants_btn">Hozzáadás</string>
   <string name="bottomSheet_change_camera_btn">Változás</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Fényképezőgép</string>
-  <string name="bottomSheet_hangup_btn">Hívás befejezése</string>
   <string name="bottomSheet_mute_microphone_btn">Mikrofon</string>
   <string name="bottomSheet_sound_output_btn">Hangok</string>
   <string name="bottomSheet_raiseHand_btn">Kéz felemelése</string>
-  <string name="open_account_plugin_settings">Fiók beépülő modul beállításai megnyitása</string>
-  <string name="open_general_plugin_settings">Általános beépülő modul beállításai megnyitása</string>
   <string name="uninstall">Eltávolítás</string>
   <string name="reset">Visszaállítás</string>
   <!--Swarm Detail-->
   <string name="rename_btn">Megerősítés</string>
-  <string name="rename_error">nem lehet üres</string>
-  <string name="swarm_description">Leírás hozzáadása</string>
-  <string name="tab_about">Névjegy</string>
   <string name="tab_members">Tagok</string>
-  <string name="tab_documetn">Dokumentumok</string>
   <string name="not_admin_toast">Csak a rendszergazdák szerkeszthetik a csoport adatait.</string>
   <string name="dialogtitle_title">Rajcsoport címének szerkesztése</string>
   <string name="dialogtitle_description">Rajcsoport leírásának szerkesztése</string>
@@ -436,10 +397,7 @@
   <string name="donation_donate">Adományozás</string>
   <string name="donation_setting_title">Adományozási emlékeztető</string>
   <string name="donation_setting_description">Adományozási emlékeztető engedélyezése</string>
-  <!--Plugin-->
+  <!--Extension-->
   <string name="unable_to_load">Nem sikerült betölteni: %1$s</string>
-  <string name="load_sucess">%1$s: engedélyezve</string>
-  <string name="unload_sucess">%1$s: letiltva</string>
-  <string name="install_sucess">A(z) %1$s bővítmény telepítése sikeresen megtörtént.</string>
   <string name="install_error">Hiba történt a bővítmény importálása közben.</string>
 </resources>

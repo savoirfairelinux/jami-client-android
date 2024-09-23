@@ -9,19 +9,13 @@
   <string name="contribute_section">Tuo panoksesi</string>
   <string name="version_section">Versio</string>
   <string name="no_email_app_installed">Sähköpostiohjelmaa ei löydetty, asenna sellainen lähettääksesi meille raportin</string>
-  <string name="no_browser_app_installed">Selainsovellusta ei löytynyt, asenna sellainen tämän sivun näyttämiseksi</string>
   <string name="email_chooser_title">Lähetä sähköpostia käyttäen...</string>
-  <string name="website_chooser_title">Näytä verkkosivu käyttäen...</string>
-  <string name="license">Tämä ohjelmisto on jaettu sellaisenaan, ilman minkäänlaista takuuta. Saadaksesi lisätietoja, katso <u>GNU General Public License versio 3 tai myöhempi</u></string>
   <string name="description">Jami on vapaa ja universaali viestintäalusta, joka kunnioittaa käyttäjiensä vapauksia ja yksityisyyttä.</string>
   <string name="credits">Tekijät</string>
   <string name="pip_title">Jami-konferenssi</string>
   <string name="call_service_description">Tämä palvelu on välttämätön puhelusi pitämiseksi etualalla. Se toimii vain puheluiden aikana.</string>
   <string name="data_transfer_service_description">Tämä palvelu on välttämätön pysyvien ilmoitusten näyttämiseksi tiedostojen siirron aikana. Se toimii vain tiedostojen siirron aikana.</string>
   <!--About dialog-->
-  <string name="developed_by">Kehittänyt</string>
-  <string name="designed_by">Suunnitellut</string>
-  <string name="ringtones_by">Soittoääniä</string>
   <!--RingActivity-->
   <string name="error_no_network">Ei verkkoyhteyttä</string>
   <string name="error_account_offline">Tunnus on tilassa poistunut</string>
@@ -35,7 +29,6 @@
   <string name="menu_item_settings">Asetukset</string>
   <string name="menu_item_advanced_settings">Lisäasetukset</string>
   <string name="menu_item_account_settings">Tunnuksen asetukset</string>
-  <string name="menu_item_plugin_list">Lisäosien asetukset</string>
   <string name="menu_item_share">Jaa tunnukseni</string>
   <string name="menu_item_about">Tietoa Jamista</string>
   <string name="video_setting_title">Videon asetukset</string>
@@ -97,17 +90,9 @@
   <string name="ongoing_call">Tämänhetkinen puhelu</string>
   <string name="hist_in_call">Saapuva puhelu %1$s</string>
   <string name="hist_out_call">Lähtevä puhelu %1$s</string>
-  <string name="start_error_title">Jamia ei voitu käynnistää!</string>
   <string name="start_error_mic_required">Jami vaatii mikrofonin käyttöoikeuden toimiakseen.</string>
-  <string name="action_call_accept">Vastaanota puhelu</string>
-  <string name="action_call_accept_audio">Vastaa äänellä</string>
-  <string name="action_call_accept_video">Vastaa videolla</string>
-  <string name="action_call_hold_accept">Pidä ja tee äänipuhelu</string>
-  <string name="action_call_hold_accept_video">Pidä ja tee videopuhelu</string>
-  <string name="action_call_end_accept">Lopeta ja tee puhelu</string>
   <string name="action_call_decline">Kieltäydy</string>
   <string name="action_call_mic_mute">Mykistä mikrofoni</string>
-  <string name="action_load_plugin">Lataa lisäosa</string>
   <string name="ab_action_speakerphone">Kaiutin päälle</string>
   <string name="ab_action_contact_add">Lisää yhteystietoihin</string>
   <string name="ab_action_contact_add_question">Lisää yhteystietoihin?</string>
@@ -143,11 +128,8 @@
   <string name="ringtone_error_size_too_big">Tämä tiedosto on liian suuri. Maksimikoko on %1$dkt.</string>
   <string name="ringtone_custom_prompt">Aseta oma soittoääni</string>
   <string name="ringtone_custom_label">Oma</string>
-  <string name="ringtone_jami_tones">Jami äänet</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Jami tarvitsee yhteystietojen lukuoikeudet tätä toimintoa varten.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Jami tarvitsee kirjoitusoikeudet soittolokiin tätä toimintoa varten.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Skannaa lisättävän tunnuksen QR-koodi.</string>
   <string name="title_activity_qrcode">Jaa tunnukseni</string>
@@ -163,8 +145,6 @@
   <string name="conversation_details">Keskustelun yksityiskohdat</string>
   <string name="contact_details">Henkilön tiedot</string>
   <string name="conversation_action_delete_this">Poista tämä keskustelu</string>
-  <string name="conversation_action_delete_this_title">Poistetaanko tämä keskustelu?</string>
-  <string name="conversation_action_delete_this_message">Tätä toimintoa ei voi perua.</string>
   <string name="conversation_action_history_clear">Tyhjennä historia</string>
   <string name="conversation_action_history_clear_title">Tyhjennä keskusteluhistoria?</string>
   <string name="conversation_action_history_clear_message">Tämä selvästikin tyhjentää keskusteluhistorian.</string>
@@ -201,7 +181,6 @@
   <string name="conversation_contact_invited">%1$s kutsuttiin</string>
   <string name="conversation_contact_added">%1$s liittyi</string>
   <string name="conversation_contact_left">%1$ on vasemmisto</string>
-  <string name="conversation_contact_banned">%1$s kiellettiin</string>
   <string name="conversation_search_hint">Etsintä keskustelu</string>
   <string name="today">Tänään</string>
   <string name="yesterday">Eilen</string>
@@ -216,14 +195,12 @@
   <string name="help_password_choose">Valitse muistettava, vahva salasana jota käytät Jami tunnuksen suojaamiseen.</string>
   <string name="help_password_enter">Syötä Jami tunnuksen salasana.</string>
   <string name="help_server_enter">Kirjoita hallintapalvelimen verkko-osoite.</string>
-  <string name="help_pin_enter">Anna PIN-koodi toiselta määritetyltä Jami tunnukselta. Käytä \"vie Jami tunnus\" ominaisuutta saadaksesi PIN-koodi.</string>
   <string name="wizard_next">Seuraava</string>
   <string name="wizard_back">Takaisin</string>
   <string name="wizard_skip">Ohita</string>
   <string name="hist_contact_invited">Henkilö kutsuttu</string>
   <string name="hist_contact_added">Henkilö lisätty</string>
   <string name="hist_contact_left">Henkilö poistui</string>
-  <string name="hist_contact_banned">Henkilö estetty</string>
   <string name="hist_invitation_received">Kutsu vastaanotettu</string>
   <!--Account Summary-->
   <string name="profile">Profiili</string>
@@ -272,7 +249,6 @@
   <string name="tv_contact_row_header">Yhteystiedot</string>
   <string name="gallery_error_title">Valokuvat sovellusta ei löytynyt</string>
   <string name="gallery_error_message">Laitteesta ei löydy sovellusta valokuvien avaamiseen</string>
-  <string name="generic_error">Tuntematon virhe tapahtui</string>
   <!--File Transfer-->
   <string name="invalid_file">Virheellinen tiedosto</string>
   <string name="not_able_to_write_file">Tiedostoa ei voi kirjoittaa</string>
@@ -292,7 +268,6 @@
   <string name="file_saved_in">Tiedosto tallennettu %s</string>
   <string name="file_saved_successfully">Tiedosto tallennettu onnistuneesti</string>
   <string name="file_download">Lataa</string>
-  <string name="no_space_left_on_device">laitteessa ei ole tilaa jäljellä</string>
   <string name="title_media_viewer">Median katseluohjelma</string>
   <string name="menu_file_open">Avaa tiedosto</string>
   <string name="menu_file_download">Lataa tiedosto</string>
@@ -343,29 +318,20 @@
   <string name="wizard_profile_button">Tallenna profiili</string>
   <string name="wizard_profile_skip">Ohita ja tee tämä myöhemmin</string>
   <string name="fab_path_choose">Valitse toinen tiedosto</string>
-  <string name="chat_plugins">Keskustelun lisäosat</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Jako</string>
   <string name="bottomSheet_dialpad_btn">Näppäimistö</string>
-  <string name="bottomSheet_plugins_btn">Lisäosat</string>
   <string name="bottomSheet_add_participants_btn">Lisää</string>
   <string name="bottomSheet_change_camera_btn">Vaihda</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>
-  <string name="bottomSheet_hangup_btn">Lopeta puhelu</string>
   <string name="bottomSheet_mute_microphone_btn">Pieni</string>
   <string name="bottomSheet_sound_output_btn">Äänet</string>
   <string name="bottomSheet_raiseHand_btn">Käsi ylös</string>
-  <string name="open_account_plugin_settings">Avaa tili- plugin- asetukset</string>
-  <string name="open_general_plugin_settings">Avaa yleiset lisäosaston asetukset</string>
   <string name="uninstall">Poista asennus</string>
   <string name="reset">Nollaa</string>
   <!--Swarm Detail-->
   <string name="rename_btn">Vahvista</string>
-  <string name="rename_error">- Ei voi olla tyhjä.</string>
-  <string name="swarm_description">Lisää kuvaus</string>
-  <string name="tab_about">Tietoa</string>
   <string name="tab_members">Jäsenet</string>
-  <string name="tab_documetn">Asiakirjat</string>
   <string name="dialogtitle_title">Muokkaa Swarm- otsikko</string>
   <string name="dialogtitle_description">Muokkaa Swarm- kuvaus</string>
   <string name="dialog_hint_title">Otsikko</string>
@@ -381,5 +347,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Tervetuloa Jamiin</string>
   <!--Donation-->
-  <!--Plugin-->
+  <!--Extension-->
 </resources>

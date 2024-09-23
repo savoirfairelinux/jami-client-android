@@ -27,7 +27,6 @@
   <string name="pref_startOnBoot_title">启动时运行 Jami</string>
   <string name="pref_startOnBoot_summary">系统启动时，在后台启动 Jami。</string>
   <string name="pref_clearHistory_title">清除历史记录</string>
-  <string name="pref_clearHistory_summary">清除所有会话历史记录。该操作无法撤销。</string>
   <string name="pref_notification_title">通知可见性</string>
   <string name="pref_notification_summary">设置锁定屏幕上的应用通知可见性。</string>
   <string name="pref_blackList_title">屏蔽列表</string>
@@ -52,22 +51,8 @@
   <string name="notification_public">公开\n（在锁定屏幕上显示通知与内容）\n</string>
   <string name="notification_private">隐私\n（在锁定屏幕上显示通知，但隐藏内容）\n</string>
   <string name="notification_secret">秘密\n（不在锁定屏幕上显示通知） </string>
-  <!--Plugin-->
-  <string name="pref_plugins_title">插件</string>
-  <string name="pref_plugins_summary">启用插件并设置它们的参数</string>
-  <string name="fab_plugins_add">添加一个新插件</string>
-  <string name="plugin_uninstall_title">卸载插件？</string>
-  <string name="plugin_reset_preferences">重置插件设置</string>
-  <string name="plugin_reset_preferences_summary">您的插件设置将被重置为默认状态</string>
-  <string name="plugin_reset_preferences_ask">你想重置一般的插件设置吗？</string>
-  <string name="plugin_reset_account_preferences_ask">你想重置账户插件设置吗？</string>
-  <string name="plugin_successfully_installed">成功安装插件<b>%1$s</b></string>
-  <string name="plugin_install_failure">安装插件<b>%1$s</b>失败</string>
-  <string name="plugin_recent_version_exception">您的<b>%1$s</b>版本更新</string>
-  <string name="plugin_same_version_exception">已安装<b>%1$s</b>版本和在线相同</string>
-  <string name="plugin_invalid_signature"><b>%1$s</b>具有无效的签名</string>
-  <string name="plugin_invalid_authority">无法验证的权限：<b>%1$s</b></string>
-  <string name="plugin_invalid_format">插件格式无效：<b>%1$s</b></string>
-  <string name="plugin_force_install">强制 \n 安装</string>
-  <string name="plugin_path_image_add">添加一个新图片</string>
+  <!--Extension-->
+  <string name="pref_extensions_title">扩展</string>
+  <string name="extension_invalid_signature"><b>%1$s</b>具有无效的签名</string>
+  <string name="extension_force_install">强制 \n 安装</string>
 </resources>

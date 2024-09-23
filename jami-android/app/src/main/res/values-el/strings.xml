@@ -9,19 +9,13 @@
   <string name="contribute_section">Συνεισφέρετε</string>
   <string name="version_section">Έκδοση</string>
   <string name="no_email_app_installed">Δεν βρέθηκε εφαρμογή email, εγκαταστήστε μια για να στείλετε αναφορά</string>
-  <string name="no_browser_app_installed">Δεν βρέθηκε πρόγραμμα περιήγησης, εγκαταστήστε ένα για να δείτε την σελίδα</string>
   <string name="email_chooser_title">Αποστολή email με...</string>
-  <string name="website_chooser_title">Προβολή σελίδας με...</string>
-  <string name="license">Το παρόν λογισμικό παρέχεται \"ως έχει\", άνευ οποιασδήποτε εγγύησης. Για περισσότερα βλ.<u> Γενική Άδεια Δημόσιας Χρήσης GNU έκδοση 3 ή νεώτερη</u></string>
   <string name="description">To Jami είναι ένα ελεύθερο λογισμικό για επικοινωνία με όλο τον κόσμο. Σέβεται την ελευθερία και την ιδιωτικότητα των χρηστών/στριών του.</string>
   <string name="credits">Συντελεστές</string>
   <string name="pip_title">Συνδιάσκεψη Jami</string>
   <string name="call_service_description">Αυτή η υπηρεσία είναι απαραίτητη για να μπορείτε να δέχεστε κλήσεις. Εκτελείται μόνο κατά τη διάρκεια των κλήσεων.</string>
   <string name="data_transfer_service_description">Αυτή η υπηρεσία είναι απαραίτητη για την προβολή διαρκών ειδοποιήσεων κατά τη μεταφορά αρχείων.</string>
   <!--About dialog-->
-  <string name="developed_by">Ανάπτυξη από</string>
-  <string name="designed_by">Σχεδιασμός από</string>
-  <string name="ringtones_by">Ήχοι Κλήσης από</string>
   <!--RingActivity-->
   <string name="error_no_network">Χωρίς σύνδεση στο δίκτυο</string>
   <string name="error_account_offline">Ο λογαριασμός είναι εκτός σύνδεσης</string>
@@ -35,7 +29,6 @@
   <string name="menu_item_settings">Ρυθμίσεις</string>
   <string name="menu_item_advanced_settings">Προχωρημένες ρυθμίσεις</string>
   <string name="menu_item_account_settings">Ρυθμίσεις λογαριασμού</string>
-  <string name="menu_item_plugin_list">Ρυθμίσεις Προσθέτων</string>
   <string name="menu_item_share">Κοινοποίηση λογαριασμού</string>
   <string name="menu_item_about">Σχετικά με το Jami</string>
   <string name="video_setting_title">Εποθέματα Βίντεο</string>
@@ -97,17 +90,9 @@
   <string name="ongoing_call">Εξερχόμενη κλήση</string>
   <string name="hist_in_call">Εισερχόμενη κλήση από %1$s</string>
   <string name="hist_out_call">Εξερχόμενη κλήση από %1$s</string>
-  <string name="start_error_title">Δεν μπορώ να ξεκινήσω Jami!</string>
   <string name="start_error_mic_required">Η Τζάμι χρειάζεται άδεια για να λειτουργήσει το μικρόφωνο.</string>
-  <string name="action_call_accept">Κάνε μια κλήση</string>
-  <string name="action_call_accept_audio">Απάντησε με φωνή</string>
-  <string name="action_call_accept_video">Απάντησε με βίντεο</string>
-  <string name="action_call_hold_accept">Αναμονή και λήψη κλήσης φωνής</string>
-  <string name="action_call_hold_accept_video">Αναμονή και λήψη κλήσης βίντεο</string>
-  <string name="action_call_end_accept">Τερματισμός και λήψη κλήσης</string>
   <string name="action_call_decline">Απόρριψη κλήσης</string>
   <string name="action_call_mic_mute">Σίγαση μικροφώνου</string>
-  <string name="action_load_plugin">Εμπληρωματικό φόρτωσης</string>
   <string name="ab_action_speakerphone">Μεγάφωνο</string>
   <string name="ab_action_contact_add">Προσθήκη στις επαφές</string>
   <string name="ab_action_contact_add_question">Προσθήκη στις επαφές;</string>
@@ -144,11 +129,8 @@
   <string name="ringtone_error_size_too_big">Το αρχείο είναι πολύ μεγάλο. Το μέγιστο μέγεθος αρχείου είναι %1$d kb.</string>
   <string name="ringtone_custom_prompt">Εγκαταστήστε έναν εξατομικευμένο χτυπήμα</string>
   <string name="ringtone_custom_label">Προμηθευτές</string>
-  <string name="ringtone_jami_tones">Τζάμι Τόνους</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Η Τζάμι χρειάζεται την άδεια \"Διαβάστε επαφές\" για να ενεργοποιήσει αυτή τη δυνατότητα.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Η Τζάμι χρειάζεται την άδεια \"Γράψτε ημερολόγιο κλήσεων\" για να ενεργοποιήσει αυτή τη δυνατότητα.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Σαρώστε τον κώδικα QR του λογαριασμού που θέλετε να προσθέσετε.</string>
   <string name="title_activity_qrcode">Κοινοποίηση λογαριασμού</string>
@@ -164,8 +146,6 @@
   <string name="conversation_details">Πληροφορίες συνομιλίας</string>
   <string name="contact_details">Λεπτομέρειες επαφών</string>
   <string name="conversation_action_delete_this">Διαγραφή αυτής της συνομιλίας</string>
-  <string name="conversation_action_delete_this_title">Διαγραφή αυτής της συνομιλίας;</string>
-  <string name="conversation_action_delete_this_message">Η ενέργεια αυτή δεν μπορεί να ανακληθεί.</string>
   <string name="conversation_action_history_clear">Διαγραφή ιστορικού</string>
   <string name="conversation_action_history_clear_title">Διαγραφή ιστορικού συνομιλιών;</string>
   <string name="conversation_action_history_clear_message">Αυτό σίγουρα θα διαγράψει το ιστορικό συνομιλίας.</string>
@@ -202,7 +182,6 @@
   <string name="conversation_contact_invited">%1$s προσκλήθηκε</string>
   <string name="conversation_contact_added">%1$s μπήκε</string>
   <string name="conversation_contact_left">%1$s έφυγε</string>
-  <string name="conversation_contact_banned">Το %1$s απαγορεύτηκε</string>
   <string name="conversation_search_hint">Ψάξτε για συζήτηση</string>
   <string name="today">Σήμερα</string>
   <string name="yesterday">Χθες</string>
@@ -217,14 +196,12 @@
   <string name="help_password_choose">Επιλέξτε έναν κωδικό που θα θυμάστε για την προστασία του λογαριασμού σας στο Jami.</string>
   <string name="help_password_enter">Καταχώρησε το κωδικό του κύριου λογαριασμού σου Jami.</string>
   <string name="help_server_enter">Εισάγετε το URL του διακομιστή διαχείρισης.</string>
-  <string name="help_pin_enter">Εισάγετε το PIN από άλλο λογαριασμό Jami που έχει ρυθμιστεί. Χρησιμοποιήστε τη λειτουργία \"εξαγωγή λογαριασμού Jami\" για να αποκτήσετε ένα PIN.</string>
   <string name="wizard_next">Επόμενο</string>
   <string name="wizard_back">Πίσω</string>
   <string name="wizard_skip">Παράληψη</string>
   <string name="hist_contact_invited">Η επαφή προσκλήθηκε</string>
   <string name="hist_contact_added">Η επαφή προστέθηκε</string>
   <string name="hist_contact_left">Η επαφή αποχώρησε</string>
-  <string name="hist_contact_banned">Η επαφή αποκλείστηκε</string>
   <string name="hist_invitation_received">Η πρόσκληση παραλήφθηκε</string>
   <!--Account Summary-->
   <string name="profile">Προφίλ</string>
@@ -273,7 +250,6 @@
   <string name="tv_contact_row_header">Επαφές</string>
   <string name="gallery_error_title">Δεν βρέθηκε εφαρμογή συλλογής</string>
   <string name="gallery_error_message">Δεν βρέθηκε εφαρμογή σε αυτή τη συσκευή για άνοιγμα της Συλλογής</string>
-  <string name="generic_error">Προέκυψε ένα άγνωστο σφάλμα</string>
   <!--File Transfer-->
   <string name="invalid_file">Μη έγκυρο αρχείο</string>
   <string name="not_able_to_write_file">Μη δυνατή η εγγραφή αρχείου</string>
@@ -293,7 +269,6 @@
   <string name="file_saved_in">Το αρχείο αποθηκεύτηκε σε %s</string>
   <string name="file_saved_successfully">Το αρχείο αποθηκεύτηκε επιτυχώς</string>
   <string name="file_download">Λήψη</string>
-  <string name="no_space_left_on_device">Δεν υπάρχει χώρος στη συσκευή</string>
   <string name="title_media_viewer">Προβολέας πολυμέσων</string>
   <string name="menu_file_open">Άνοιγμα αρχείου</string>
   <string name="menu_file_download">Λήψη αρχείου</string>
@@ -344,29 +319,20 @@
   <string name="wizard_profile_button">Αποθήκευση προφίλ</string>
   <string name="wizard_profile_skip">Παράλειψε και εκτέλεσε το αργότερα</string>
   <string name="fab_path_choose">Επιλογή άλλου αρχείου</string>
-  <string name="chat_plugins">Προσωπικά προστίγματα</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Κοινοποίηση</string>
   <string name="bottomSheet_dialpad_btn">Πληκτρολόγιο κλήσης</string>
-  <string name="bottomSheet_plugins_btn">Επενδύσεις</string>
   <string name="bottomSheet_add_participants_btn">Προσθήκη</string>
   <string name="bottomSheet_change_camera_btn">Αλλαγή</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Κάμερα</string>
-  <string name="bottomSheet_hangup_btn">Τερματισμός κλήσης</string>
   <string name="bottomSheet_mute_microphone_btn">Μικρο</string>
   <string name="bottomSheet_sound_output_btn">Ήχοι</string>
   <string name="bottomSheet_raiseHand_btn">Σηκώστε το χέρι σας</string>
-  <string name="open_account_plugin_settings">Άνοιξε ρυθμίσεις του Plugin λογαριασμού</string>
-  <string name="open_general_plugin_settings">Ανοίξτε τις γενικές ρυθμίσεις του Plugin</string>
   <string name="uninstall">Απεγκατάσταση</string>
   <string name="reset">Ανακατάσταση</string>
   <!--Swarm Detail-->
   <string name="rename_btn">Επιβεβαίωση</string>
-  <string name="rename_error">Δεν μπορεί να είναι άδειο.</string>
-  <string name="swarm_description">Προσθήκη περιγραφής</string>
-  <string name="tab_about">Περί</string>
   <string name="tab_members">Μέλη</string>
-  <string name="tab_documetn">Έγγραφα</string>
   <string name="dialogtitle_title">Επεξεργασία τίτλου σμήνους</string>
   <string name="dialogtitle_description">Επεξεργασία περιγραφής σμήνους</string>
   <string name="dialog_hint_title">Τίτλος</string>
@@ -382,5 +348,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Καλώς ήλθατε στο  Jami</string>
   <!--Donation-->
-  <!--Plugin-->
+  <!--Extension-->
 </resources>

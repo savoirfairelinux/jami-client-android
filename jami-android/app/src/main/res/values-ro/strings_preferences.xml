@@ -27,7 +27,6 @@
   <string name="pref_startOnBoot_title">Deschide Jami la pornirea aparatului</string>
   <string name="pref_startOnBoot_summary">Deschide Jami în ascuns la pornirea aparatului.</string>
   <string name="pref_clearHistory_title">Șterge conversația</string>
-  <string name="pref_clearHistory_summary">Șterge cronologia tuturor conversațiilor. Această acțiune este ireversibilă.</string>
   <string name="pref_notification_title">Vizibilitatea notificărilor</string>
   <string name="pref_notification_summary">Decide vizibilitatea notificărilor aplicației pe ecranul blocat.</string>
   <string name="pref_blackList_title">Contacte blocate</string>
@@ -52,22 +51,8 @@
   <string name="notification_public">Public \n(arată notificările și conținutul lor pe ecranul blocat)\n</string>
   <string name="notification_private">Privat \n(arată notificările, dar ascunde conținutul lor pe ecranul blocat)\n</string>
   <string name="notification_secret">Secret \n(nu arăta notificările pe ecranul blocat)</string>
-  <!--Plugin-->
-  <string name="pref_plugins_title">Extensii</string>
-  <string name="pref_plugins_summary">Activează extensiile și reglează-le parametrii</string>
-  <string name="fab_plugins_add">Adaugă o extensie nouă</string>
-  <string name="plugin_uninstall_title">Dezinstalezi extensia?</string>
-  <string name="plugin_reset_preferences">Restabilește reglările inițiale ale extensiei</string>
-  <string name="plugin_reset_preferences_summary">Reglările extensiei vor reveni ca la început</string>
-  <string name="plugin_reset_preferences_ask">Vrei să restabilești opțiunile generale ale extensiei?</string>
-  <string name="plugin_reset_account_preferences_ask">Vrei să restabilești opțiunile pentru cont ale extensiei?</string>
-  <string name="plugin_successfully_installed">Extensia <b>%1$s</b> instalată cu succes</string>
-  <string name="plugin_install_failure">Nu s-a reușit instalarea extensiei: <b>%1$s</b></string>
-  <string name="plugin_recent_version_exception">Ai o versiune mai recentă de: <b>%1$s</b></string>
-  <string name="plugin_same_version_exception">Ai aceeași versiune de <b>%1$s</b> instalată</string>
-  <string name="plugin_invalid_signature"><b>%1$s</b> are o semnătură incorectă</string>
-  <string name="plugin_invalid_authority">Nu se poate verifica autoritatea pentru: <b>%1$s</b></string>
-  <string name="plugin_invalid_format">Format de extensie neacceptat: <b>%1$s</b></string>
-  <string name="plugin_force_install">forțează \n instalarea</string>
-  <string name="plugin_path_image_add">Adaugă o imagine nouă</string>
+  <!--Extension-->
+  <string name="pref_extensions_title">Extensii</string>
+  <string name="extension_invalid_signature"><b>%1$s</b> are o semnătură incorectă</string>
+  <string name="extension_force_install">forțează \n instalarea</string>
 </resources>

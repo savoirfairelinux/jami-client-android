@@ -21,16 +21,12 @@
   <string name="dialog_wait_create_details">தயவுசெய்து உங்கள் புதிய கணக்கு சேர்க்கப்படும் வரை காத்திருங்கள்.</string>
   <string name="dialog_wait_update">கணக்கை புதுப்பித்தல்</string>
   <string name="dialog_wait_update_details">தயவு செய்து உங்கள் புதிய கணக்கு புதுப்பிக்கப்படும் வரை காத்திருங்கள்.</string>
-  <string name="dialog_warn_ip2ip_account_title">ஒரு வெற்று SIP கணக்கை உருவாக்க?</string>
-  <string name="dialog_warn_ip2ip_account_message">நீங்கள் செல்லுபடியாகும் ஹோஸ்ட்பெயர் இல்லாத SIP கணக்கை உருவாக்கப் போகிறீர்கள். நீங்கள் நேரடி ஐபி அழைப்புகளை மட்டுமே செய்யலாம் மற்றும் பெறலாம். உங்கள் கணக்கை பின்னர் திருத்தலாம்</string>
   <string name="account_type_ip2ip">ஐபி கணக்கு</string>
   <string name="help_ring">ஜாமி கணக்குகள், முழுமையாக பரவலாகப் பரவலாக உள்ள நெட்வொர்க்குகள் மூலம் பாதுகாப்பாக, ஒருவருக்கொருவர் தொடர்பு கொள்ள உங்களை அனுமதிக்கின்றன.</string>
-  <string name="help_sip_title">உங்கள் SIP கணக்கை சேர்க்கவும்</string>
+  <string name="help_sip_title">SIP கணக்கை சேர்க்கவும்</string>
   <string name="help_sip">ஏற்கனவே உள்ள SIP கணக்கை அமைக்கவும்.</string>
-  <string name="create_sip_account">SIP கணக்கை சேர்க்கவும்</string>
   <!--Strings related to account deletion-->
-  <string name="account_delete_dialog_title">கணக்கை நீக்க?</string>
-  <string name="account_delete_dialog_message">இந்த நடவடிக்கைகளைத் திரும்பப் பெற முடியாது.</string>
+  <string name="account_delete_dialog_message">இந்த நடவடிக்கை திரும்பப் பெற முடியாது.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">பதிவு செய்யப்படாத கணக்கு</string>
   <string name="normal_accounts_titles">கணக்குகள்</string>
@@ -38,8 +34,6 @@
   <string name="account_device_revoke">மீளுருவாக்கம் சாதனம்</string>
   <string name="account_device_revocation_success_title">வெற்றி</string>
   <string name="account_device_revocation_success">சாதனம் இப்போது திரும்பப் பெறப்பட்டது!</string>
-  <string name="account_device_revocation_error_title">சாதனத்தை திரும்பப் பெற முடியாது</string>
-  <string name="account_device_revocation_wrong_password">தவறான கடவுச்சொல்.</string>
   <string name="account_device_revocation_unknown_device">அறியப்படாத சாதனம்.</string>
   <string name="account_device_revocation_error_unknown">அறியப்படாத தவறு.</string>
   <string name="account_password_change">கடவுச்சொல்லை மாற்றுதல்</string>
@@ -61,8 +55,7 @@
   <string name="account_rendezvous_summary">சந்திப்பு முறையில், வருகிற அழைப்புகள் ஒரு மாநாட்டு அறைக்கு சேர்க்கப்படும்.</string>
   <string name="account_upnp_label">UPnP ஐ இயக்கு</string>
   <string name="account_proxy_field">பிரதிநிதி</string>
-  <!--Plugin Details-->
-  <string name="account_preference_plugin_tab">செருகுநிரல்கள்</string>
+  <!--Extension Details-->
   <!--Audio Details-->
   <string name="account_audio_label">கேள்விமாற்றி</string>
   <string name="account_preferences_media_tab">ஊடகங்கள்</string>
@@ -142,14 +135,9 @@
   <string name="export_account_wait_message">ஏற்றுமதி கணக்கு தகவல்</string>
   <string name="account_export_file">காப்பு கணக்கு</string>
   <string name="account_export_file_summary">பின்னர் மீட்டெடுக்க உங்கள் சாதனத்தில் உங்கள் கணக்கை காப்புப் பிரதி எடுக்கவும்.</string>
-  <string name="account_export_end_decryption_message">கொடுக்கப்பட்ட கடவுச்சொல்லை பயன்படுத்தி உங்கள் கணக்கை திறக்க முடியவில்லை.</string>
   <string name="account_export_end_network_title">நெட்வொர்க் தவறு</string>
-  <string name="account_export_end_network_message">நெட்வொர்க்கில் கணக்கை ஏற்றுமதி செய்ய முடியவில்லை. உங்கள் இணைப்பு சரிபார்க்கவும்.</string>
   <string name="account_export_end_error_title">தவறு</string>
-  <string name="account_export_end_error_message">கணக்கை ஏற்றுமதி செய்ய முடியவில்லை. அறியப்படாத பிழை ஏற்பட்டது.</string>
   <string name="account_enter_password">கடவுச்சொல்லை உள்ளிடவும்</string>
-  <string name="account_share_body">ஜாமி விநியோகிக்கப்பட்ட தகவல் தொடர்பு தளத்தில் \'%1$s\' ஐப் பயன்படுத்தி என்னை தொடர்பு கொள்ளவும்ஃ %2$s</string>
-  <string name="account_share_body_with_username">ஜாமி விநியோகிக்கப்பட்ட தகவல் தொடர்பு தளத்தில் \'%1$s\' அல்லது எனது பொது பயனர்பெயர் \'%2$s\' ஐப் பயன்படுத்தி என்னை தொடர்பு கொள்ளவும்ஃ %3$s</string>
   <string name="account_contact_me">ஜாமி மீது என்னை தொடர்பு!</string>
   <string name="update_account">கணக்கை புதுப்பிக்கவும்</string>
   <string name="account_migration">உங்கள் ஜாமி கணக்கை புதுப்பிக்க முடியும். தயவுசெய்து உங்கள் கடவுச்சொல்லை உள்ளிடவும்.</string>
@@ -157,20 +145,13 @@
   <string name="sip_account">SIP கணக்கு</string>
   <string name="ring_account_identity">அடையாளம்</string>
   <string name="account_migration_title_dialog">கணக்கு இடம்பெயர்வு</string>
-  <string name="account_migration_message_dialog">உங்கள் கணக்குகள் புதுப்பிக்கப்பட வேண்டும். இந்த செயல்பாட்டைச் செய்ய கணக்கு நிர்வாகம் திரைக்குச் செல்ல விரும்புகிறீர்களா?</string>
   <string name="account_update_needed">புதுப்பிப்பு தேவை</string>
-  <string name="account_cannot_be_found_title">கணக்கு கண்டுபிடிக்க முடியவில்லை</string>
-  <string name="account_cannot_be_found_message">ஜாமி நெட்வொர்க்கில் கணக்கைக் கண்டுபிடிக்க முடியவில்லை. ஜாமிக்கு ஏற்கனவே உள்ள சாதனத்திலிருந்து ஏற்றுமதி செய்யப்பட்டது என்பதை உறுதிப்படுத்திக் கொள்ளுங்கள், மேலும் சான்றுகள் சரியானவை என்பதை உறுதிப்படுத்திக் கொள்ளுங்கள்.</string>
   <string name="account_sip_cannot_be_registered_message">கணக்கு உருவாக்கும் செயல்முறையை நீங்கள் தொடரலாம் அல்லது உங்கள் தகவலை இங்கே திருத்தலாம். கணக்கு அமைப்புகளில் பின்னர் பதிப்பு இன்னும் சாத்தியமாகும்.</string>
-  <string name="account_no_network_title">நெட்வொர்க்கு இணைக்க முடியாது</string>
-  <string name="account_no_network_message">ஜாமிக்கு விநியோகிக்கப்பட்ட நெட்வொர்க்குடன் இணைக்க முடியவில்லை என்பதால் கணக்கை சேர்க்க முடியவில்லை.</string>
+  <string name="account_no_network_title">நெட்வொர்க் தவறு</string>
   <string name="account_device_added_title">கணக்கு சாதனம் சேர்க்கப்பட்டது</string>
   <string name="account_device_added_message">இந்த சாதனத்தில் உங்கள் ஜாமி கணக்கை வெற்றிகரமாக அமைத்துள்ளீர்கள்.</string>
   <string name="account_device_updated_title">கணக்கு சாதனம் புதுப்பிக்கப்பட்டது</string>
   <string name="account_device_updated_message">நீங்கள் உங்கள் ஜாமி கணக்கை வெற்றிகரமாக புதுப்பித்துள்ளீர்கள்.</string>
-  <string name="account_cannot_be_updated_message">கணக்கு சாதனம் புதுப்பிக்கப்படவில்லை. தயவுசெய்து உங்கள் கடவுச்சொல்லை சரிபார்க்கவும்.</string>
-  <string name="account_sip_success_title">பதிவு செய்யப்பட்ட SIP கணக்கு</string>
-  <string name="account_sip_success_message">நீங்கள் உங்கள் சிப் கணக்கை வெற்றிகரமாக பதிவு செய்துள்ளீர்கள்.</string>
   <string name="account_sip_register_anyway">எப்படியும் பதிவு செய்யுங்கள்</string>
   <!--TV-->
   <string name="account_tv_settings_header">கணக்கு அமைப்புகள்</string>
@@ -190,11 +171,8 @@
   <string name="account_link_export_button">புதிய சாதனத்தை இணைக்கவும்</string>
   <string name="account_link_show_button">%d இணைக்கப்பட்ட சாதனத்தை காட்டவும்</string>
   <string name="account_link_hide_button">இணைக்கப்பட்ட சாதனத்தை மறைக்கவும்</string>
-  <string name="account_link_export_info">இந்த கணக்கை மற்ற சாதனங்களில் பயன்படுத்த, நீங்கள் முதலில் அதை Jami இல் வெளிப்படுத்த வேண்டும். இது ஒரு PIN குறியீட்டை உருவாக்கும். கணக்கை அமைக்க புதிய சாதனத்தில் நீங்கள் உள்ளிட வேண்டும். PIN 10 நிமிடங்கள் செல்லுபடியாகும்.</string>
   <string name="account_start_export_button">PIN ஐ உருவாக்கவும்</string>
   <string name="account_end_export_button">நெருக்கமான</string>
-  <string name="account_end_export_infos">உங்கள் PIN:\n\n%%\n\nசெயல்முறையை முடிக்க, நீங்கள் புதிய சாதனத்தில் ஜாமி திறக்க வேண்டும். \"இந்த சாதனத்தை ஒரு கணக்கிற்கு இணைக்கவும்\" என்ற புதிய கணக்கை உருவாக்கவும். உங்கள் PIN 10 நிமிடங்கள் செல்லுபடியாகும்.</string>
-  <string name="account_link_export_info_light">இந்த கணக்கை மற்ற சாதனங்களில் பயன்படுத்த, நீங்கள் முதலில் அதை Jami இல் வெளிப்படுத்த வேண்டும். இது ஒரு PIN குறியீட்டை உருவாக்கும். கணக்கை அமைக்க புதிய சாதனத்தில் நீங்கள் உள்ளிட வேண்டும். PIN 10 நிமிடங்கள் செல்லுபடியாகும்.</string>
   <string name="account_export_title">மற்ற சாதனங்களுடன் இணைப்பு கணக்கு</string>
   <string name="account_connect_server_button">நிர்வாக சேவையகத்துடன் இணைக்கவும்</string>
   <string name="account_connect_button">இணைக்கவும்</string>
@@ -226,21 +204,17 @@
   <string name="account_creation_profile">உங்கள் சுயவிவரத்தை உருவாக்கவும்</string>
   <string name="account_creation_ring">உங்கள் ஜாமி கணக்கை உருவாக்கவும்</string>
   <string name="account_link_title">இந்த சாதனத்தை இணைக்கவும்</string>
-  <string name="account_sip_cannot_be_registered">கணக்கு பதிவு செய்ய முடியாது</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">எனது கணக்கைத் திருத்தவும்</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">உறுதிப்படுத்த கடவுச்சொல்லை உள்ளிடவும்</string>
   <string name="enter_password">கடவுச்சொல்லை உள்ளிடவும்</string>
   <string name="revoke_device_title">மீளுருவாக்கம் சாதனம்</string>
-  <string name="revoke_device_message">%1$s ஐ திரும்பப் பெற விரும்புகிறீர்களா?</string>
   <string name="revoke_device_wait_title">தயவு செய்து காத்திருங்கள்.</string>
   <string name="revoke_device_wait_message">மீளுருவாக்கம் செய்யும் சாதனம்</string>
   <string name="rename_device_title">இந்த சாதனத்தின் பெயரை மாற்றவும்</string>
   <string name="rename_device_message">இந்த சாதனத்தை அடையாளம் காண உங்கள் ஜாமி கணக்கில் ஒரு புதிய பெயரைத் தேர்ந்தெடுக்கவும்</string>
   <string name="rename_device_button">பெயர் மாற்றம் செய்யும் சாதனம்</string>
   <string name="account_rename_device_hint">புதிய சாதன பெயரைத் தேர்ந்தெடுக்கவும்</string>
-  <string name="account_device_name_empty">சாதனத்தின் பெயர் காலியாக இருக்க முடியாது</string>
   <string name="account_device_this_indicator">இந்த சாதனம்</string>
   <string name="account_disabled_indicator">இயலாமை</string>
   <!--Link a new device-->

@@ -27,7 +27,6 @@
   <string name="pref_startOnBoot_title">Bắt đầu Jami khi khởi động</string>
   <string name="pref_startOnBoot_summary">Đưa Jami vào hậu trường khi hệ thống khởi động.</string>
   <string name="pref_clearHistory_title">Lịch sử rõ ràng</string>
-  <string name="pref_clearHistory_summary">Xóa tất cả lịch sử cuộc trò chuyện.</string>
   <string name="pref_notification_title">Khả năng hiển thị thông báo</string>
   <string name="pref_notification_summary">Đặt hiển thị thông báo ứng dụng trên màn hình khóa.</string>
   <string name="pref_blackList_title">Danh sách khối</string>
@@ -52,19 +51,6 @@
   <string name="notification_public">Công cộng \n(mở các thông báo và nội dung của chúng trên màn hình khóa) \n</string>
   <string name="notification_private">Cảnh báo riêng tư nhưng ẩn nội dung của chúng trên màn hình khóa)</string>
   <string name="notification_secret">Bí mật \n(không hiển thị thông báo trên màn hình khóa)</string>
-  <!--Plugin-->
-  <string name="pref_plugins_title">Plugins</string>
-  <string name="pref_plugins_summary">Khả năng plugin và đặt các tham số của chúng</string>
-  <string name="fab_plugins_add">Thêm thêm plugin mới</string>
-  <string name="plugin_uninstall_title">Tháo cài đặt Plugin?</string>
-  <string name="plugin_reset_preferences">Tái thiết lập plugin</string>
-  <string name="plugin_reset_preferences_summary">Các cài đặt plugin của bạn sẽ được mặc định</string>
-  <string name="plugin_reset_preferences_ask">Bạn muốn đặt lại cài đặt plugin chung?</string>
-  <string name="plugin_reset_account_preferences_ask">Bạn muốn đặt lại cài đặt plugin tài khoản?</string>
-  <string name="plugin_successfully_installed">Plugin <b>%1$s</b> được cài đặt thành công</string>
-  <string name="plugin_install_failure">Không cài đặt plugin: <b>%1$s</b></string>
-  <string name="plugin_recent_version_exception">Bạn có phiên bản gần đây hơn của: <b>%1$s</b></string>
-  <string name="plugin_same_version_exception">Bạn có cùng phiên bản của <b>%1$s</b> được cài đặt</string>
-  <string name="plugin_force_install">buộc \n cài đặt</string>
-  <string name="plugin_path_image_add">Thêm hình ảnh mới</string>
+  <!--Extension-->
+  <string name="extension_force_install">buộc \n cài đặt</string>
 </resources>

@@ -3,8 +3,8 @@
   <string name="pref_category_contacts">Contactos</string>
   <string name="pref_unifiedPush_summary">Utilice un servicio UnifiedPush para permitir la recepción de llamadas/mensajes en segundo plano</string>
   <!--Notifications Visibility-->
-  <!--Plugin-->
-  <string name="plugin_invalid_signature"><b>%1$s</b> tiene una firma inválida.</string>
-  <string name="plugin_invalid_authority">No se puede verificar la autoridad de: <b>%1$s</b></string>
-  <string name="plugin_invalid_format">Formato de complemento no válido: <b>%1$s</b></string>
+  <!--Extension-->
+  <string name="pref_extensions_title">Extensions</string>
+  <string name="extension_invalid_signature"><b>%1$s</b> tiene una firma inválida.</string>
+  <string name="extension_force_install">forzar \n instalación</string>
 </resources>

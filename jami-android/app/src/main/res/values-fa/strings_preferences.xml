@@ -27,7 +27,6 @@
   <string name="pref_startOnBoot_title">اجرای جمی هنگام راه‌اندازی</string>
   <string name="pref_startOnBoot_summary">اجرای جمی در پس‌زمینه هنگام آغاز به کار سیستم.</string>
   <string name="pref_clearHistory_title">پاک‌سازی تاریخچه</string>
-  <string name="pref_clearHistory_summary">پاک‌سازی تمام سابقه گفت‌وگوها. این کار قابل بازگشت نیست.</string>
   <string name="pref_notification_title">قابلیت مشاهده اعلان</string>
   <string name="pref_notification_summary">قابلیت مشاهده اعلان‌های برنامه را در صفحه قفل تنظیم کنید</string>
   <string name="pref_blackList_title">لیست مسدودی</string>
@@ -52,19 +51,6 @@
   <string name="notification_public">عمومی \n(نمایش اعلان‌ها و محتوای آنها در صفحه قفل)\n</string>
   <string name="notification_private">خضوصی \n(نمایش اعلان‌ها و مخفی‌کردن محتوای آنها در صفحه قفل)\n</string>
   <string name="notification_secret">محرمانه \n(عدم نمایش اعلان‌ها و محتوای آنها در صفحه قفل)</string>
-  <!--Plugin-->
-  <string name="pref_plugins_title">افزونه‌ها</string>
-  <string name="pref_plugins_summary">فعال‌سازی افزونه‌ها و تنظیم پارامترهای آنها</string>
-  <string name="fab_plugins_add">اضافه‌کردن یک افزونه جدید</string>
-  <string name="plugin_uninstall_title">افزونه را حذف نصب می‌کنید؟</string>
-  <string name="plugin_reset_preferences">تنظیم مجدد تنظیمات افزونه</string>
-  <string name="plugin_reset_preferences_summary">تنظیمات افزونه شما به پیش‌فرض تغییر خواهد کرد</string>
-  <string name="plugin_reset_preferences_ask">آیا می‌خواهید تنظیمات افزونه عمومی را بازنشانی کنید؟</string>
-  <string name="plugin_reset_account_preferences_ask">آیا می‌خواهید تنظیمات افزونه حساب را بازنشانی کنید؟</string>
-  <string name="plugin_successfully_installed">افزونه <b>%1$s</b> با موفقیت نصب شد</string>
-  <string name="plugin_install_failure">نصب افزونه انجام نشد:<b>%1$s</b></string>
-  <string name="plugin_recent_version_exception">شما نسخه جدید‌تری دارید از: <b>%1$s</b></string>
-  <string name="plugin_same_version_exception">شما همان نسخه از <b>%1$s</b> را نصب دارید</string>
-  <string name="plugin_force_install">نصب به اجبار</string>
-  <string name="plugin_path_image_add">اضافه‌کردن یک تصویر جدید</string>
+  <!--Extension-->
+  <string name="extension_force_install">نصب به اجبار</string>
 </resources>

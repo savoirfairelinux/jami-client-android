@@ -27,7 +27,6 @@
   <string name="pref_startOnBoot_title">जमी स्टार्टअपमा सुरु गर्नुहोस्</string>
   <string name="pref_startOnBoot_summary">प्रणाली सुरु हुँदा जामीलाई पृष्ठभूमिमा राख्नुहोस्।</string>
   <string name="pref_clearHistory_title">स्पष्ट इतिहास</string>
-  <string name="pref_clearHistory_summary">सबै कुराकानी इतिहास खाली गर्नुहोस् यो कार्यलाई उल्टाउन सकिँदैन।</string>
   <string name="pref_notification_title">सूचनाको दृश्यता</string>
   <string name="pref_notification_summary">लक स्क्रिनमा अनुप्रयोग सूचनाहरू दृश्यता सेट गर्नुहोस्।</string>
   <string name="pref_blackList_title">ब्लक सूची</string>
@@ -52,19 +51,6 @@
   <string name="notification_public">सार्वजनिक सूचनाहरू र तिनीहरूको सामग्री लक स्क्रिनमा देखाउनुहोस्)</string>
   <string name="notification_private">निजी \n(सन्देशहरू देखाउनुहोस् तर तिनीहरूको सामग्री लक स्क्रिनमा लुकाउनुहोस्) \n</string>
   <string name="notification_secret">गुप्त \n(लक स्क्रीनमा सूचनाहरू देखाउँदैन)</string>
-  <!--Plugin-->
-  <string name="pref_plugins_title">प्लगइनहरू</string>
-  <string name="pref_plugins_summary">प्लगइन सक्षम गर्नुहोस् र तिनीहरूको प्यारामिटरहरू सेट गर्नुहोस्</string>
-  <string name="fab_plugins_add">नयाँ प्लगइन थप्नुहोस्</string>
-  <string name="plugin_uninstall_title">प्लगइन हटाउन?</string>
-  <string name="plugin_reset_preferences">प्लगइन प्राथमिकताहरू पुनःसेट गर्नुहोस्</string>
-  <string name="plugin_reset_preferences_summary">तपाईंको प्लगइन सेटिंग्स पूर्वनिर्धारित हुनेछ</string>
-  <string name="plugin_reset_preferences_ask">के तपाईँ सामान्य प्लगइन सेटिंग्स रिसेट गर्न चाहनुहुन्छ?</string>
-  <string name="plugin_reset_account_preferences_ask">के तपाईँ खाता प्लगइन सेटिंग्स रिसेट गर्न चाहनुहुन्छ?</string>
-  <string name="plugin_successfully_installed">प्लगइन <b>%1$s</b> सफलतापूर्वक स्थापना गरियो</string>
-  <string name="plugin_install_failure">प्लगइन स्थापना गर्न असफलः <b>%1$s</b></string>
-  <string name="plugin_recent_version_exception">तपाईंसँग हालको संस्करण छः <b>%1$s</b></string>
-  <string name="plugin_same_version_exception">तपाईँको <b>%1$s</b> को संस्करण समान छ</string>
-  <string name="plugin_force_install">बलियो स्थापना</string>
-  <string name="plugin_path_image_add">नयाँ छवि थप्नुहोस्</string>
+  <!--Extension-->
+  <string name="extension_force_install">बलियो स्थापना</string>
 </resources>

@@ -9,19 +9,13 @@
   <string name="contribute_section">بؤلوملر</string>
   <string name="version_section">نسخه</string>
   <string name="no_email_app_installed">ای میل ایپ تاپیلدی، بیرینی یاتماق اوچون یئتیشدیریر</string>
-  <string name="no_browser_app_installed">هیچ web browser app تاپیلدی، بو صفحه نی گؤرمک اوچون بیری سی نصب ائت</string>
   <string name="email_chooser_title">پستي بفرستيد با استفاده از...</string>
-  <string name="website_chooser_title">سايتين سايتيني...</string>
-  <string name="license">بو نرم افزار هر نوع گارانتیسیز \"هماناً\" وئریلیر.</string>
   <string name="description">جامی، آلیشمیش آلیشما اوچون آزاد بیر نرم افزار دیر کی، اؤز ایستیفاده چیلرینین آزادلیقلارینا و خصوصی لیکلرینه حؤرمت ائدیر.</string>
   <string name="credits">اعتبارلار</string>
   <string name="pip_title">جامي کنفرانس</string>
   <string name="call_service_description">بو سرویس، تماسلارینیزی قاباقجا ساخلاماق اوچون لازیمدیر.</string>
   <string name="data_transfer_service_description">بو سرویس فایللار یئرلشدیریلیش واختلارین داواملی خبرلرینی گؤسترمک اوچون لازیمدیر.</string>
   <!--About dialog-->
-  <string name="developed_by">بؤلوم:</string>
-  <string name="designed_by">طراحي</string>
-  <string name="ringtones_by">گوشي هاي صداي</string>
   <!--RingActivity-->
   <string name="error_no_network">شبکه باغلیغی یوخدور</string>
   <string name="error_account_offline">حساب آپلاين اولوب</string>
@@ -35,7 +29,6 @@
   <string name="menu_item_settings">تنظیمات</string>
   <string name="menu_item_advanced_settings">آلنین آلنین آلنین آلنین آلنین آلنین آلنین آلنین آلنین آلنین آلنین آلنین آلنین آلنین آلنین آلنین آلنین آلنین آلنین آلنین آلنین آلنین آلنین آلنین آلنین</string>
   <string name="menu_item_account_settings">حسابلارین تنظیماتلاری</string>
-  <string name="menu_item_plugin_list">پلگین سیتیجلار</string>
   <string name="menu_item_share">حسابيمي بؤلوشدور</string>
   <string name="menu_item_about">جامی حاقّيندا</string>
   <string name="video_setting_title">ویدئو تنظیمات</string>
@@ -97,17 +90,9 @@
   <string name="ongoing_call">داوام ائد ن چاغیرما</string>
   <string name="hist_in_call">%1$s-ین گلیش زنگینی</string>
   <string name="hist_out_call">%1$s-ین چیخان چاغیرماسی</string>
-  <string name="start_error_title">جمیو، گئتمه یه بیلمیرم!</string>
   <string name="start_error_mic_required">جامی میکروفونون ائشلشدیرمه یه اجازه سی لازیمدیر.</string>
-  <string name="action_call_accept">تماس بگیرید</string>
-  <string name="action_call_accept_audio">آودیو جاواب</string>
-  <string name="action_call_accept_video">پاسخ در ویدیو</string>
-  <string name="action_call_hold_accept">تماس تلفنی توقیف و آل</string>
-  <string name="action_call_hold_accept_video">تماس تلفنی و ویدئو آلین</string>
-  <string name="action_call_end_accept">Zəngi bitir və cavab ver</string>
   <string name="action_call_decline">آشاغی صفحه</string>
   <string name="action_call_mic_mute">Mikrofonu səssiz et</string>
-  <string name="action_load_plugin">لوډ پلگ ان</string>
   <string name="ab_action_speakerphone">اسپکر فعال ائدئ</string>
   <string name="ab_action_contact_add">تماسلارا قوش</string>
   <string name="ab_action_contact_add_question">تماس لری آرتیرماق؟</string>
@@ -143,11 +128,8 @@
   <string name="ringtone_error_size_too_big">بو فایل چوخ بؤیوکدور. اعظمي اؤلچوسو %1$dkB دیر.</string>
   <string name="ringtone_custom_prompt">اؤزل زنگ سوونو قور</string>
   <string name="ringtone_custom_label">آدامی</string>
-  <string name="ringtone_jami_tones">جامی تونز</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">جامي بو خصوصيتي فعال اتمک اوچون \"رابطلاري اوخوي\" ائذنيني لازيمدير.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">جامي بو خصوصيتي فعال اتمک اوچون \"دغيسين يازما\" ائجازه سينا لازيمدير.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">قوشماق ایسته ییبسن حسابین QR کدینی سکن ائدیرسن.</string>
   <string name="title_activity_qrcode">حسابيمي بؤلوشدور</string>
@@ -163,8 +145,6 @@
   <string name="conversation_details">دانیشیق کیمی</string>
   <string name="contact_details">تماس کیمیا</string>
   <string name="conversation_action_delete_this">بو مکالمه نی سئل</string>
-  <string name="conversation_action_delete_this_title">بو مکالمه نی سئلک؟</string>
-  <string name="conversation_action_delete_this_message">بو عملین ردّ اولونماسی اولماز.</string>
   <string name="conversation_action_history_clear">واضح تاریخ</string>
   <string name="conversation_action_history_clear_title">دانیشما تاریخینی پاک ائدیرسن؟</string>
   <string name="conversation_action_history_clear_message">بو قطعن موباحئثه تاریخینی پاک ائد جک.</string>
@@ -201,7 +181,6 @@
   <string name="conversation_contact_invited">%1$s دعوت ائدیلدی</string>
   <string name="conversation_contact_added">%1$s قوشولدو</string>
   <string name="conversation_contact_left">%1$ سولدو</string>
-  <string name="conversation_contact_banned">%1$s قاییتدی</string>
   <string name="conversation_search_hint">بحث آختارماق</string>
   <string name="today">بو گون</string>
   <string name="yesterday">دونن</string>
@@ -216,14 +195,12 @@
   <string name="help_password_choose">جامی حسابینی قوروماق اوچون خاطیرلاداجاقینیز گوجلو رمز سئچیب.</string>
   <string name="help_password_enter">اصلی جمی حسابین رمزونو دن دن.</string>
   <string name="help_server_enter">مدیریت سرورین URL-ی دن یئریشدیر</string>
-  <string name="help_pin_enter">PIN-ي باشقا تشکیل اولونموش Jami حسابيندان دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن PIN آلماق اوچون \"Export Jami account\" فیچرینی دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن</string>
   <string name="wizard_next">سونراسي</string>
   <string name="wizard_back">گئری دؤن</string>
   <string name="wizard_skip">سکیپ</string>
   <string name="hist_contact_invited">تماس دعوت اولونور</string>
   <string name="hist_contact_added">تماس قوشولدو</string>
   <string name="hist_contact_left">تماس چپ</string>
-  <string name="hist_contact_banned">تماس ممنوع</string>
   <string name="hist_invitation_received">دعوت آلدی</string>
   <!--Account Summary-->
   <string name="profile">پروفایل</string>
@@ -272,7 +249,6 @@
   <string name="tv_contact_row_header">تماس</string>
   <string name="gallery_error_title">گالری ایستیفاده سی تاپیلدی</string>
   <string name="gallery_error_message">گالری آچیقلاماق اوچون آلینادا ایستیفاده تاپیلدی</string>
-  <string name="generic_error">نامعلوم خاتمه باش وئریر</string>
   <!--File Transfer-->
   <string name="invalid_file">ساري ساري</string>
   <string name="not_able_to_write_file">فایل یازماغا قادیر</string>
@@ -292,7 +268,6 @@
   <string name="file_saved_in">%s-ده ساقلانان فایل</string>
   <string name="file_saved_successfully">فایل اوغورلا ساخلانیلیب</string>
   <string name="file_download">دانلود</string>
-  <string name="no_space_left_on_device">آلینادا بوشلوق قالمامیش</string>
   <string name="title_media_viewer">میدیالی باخار</string>
   <string name="menu_file_open">آچیق فایل</string>
   <string name="menu_file_download">فایل دانلود</string>
@@ -343,29 +318,20 @@
   <string name="wizard_profile_button">پروفایل ساقلام</string>
   <string name="wizard_profile_skip">رد و بعدش این کارو کن</string>
   <string name="fab_path_choose">باشقا فایل سئچیب</string>
-  <string name="chat_plugins">چیت پلگینلر</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">بؤلوم</string>
   <string name="bottomSheet_dialpad_btn">Yığım klaviaturası</string>
-  <string name="bottomSheet_plugins_btn">پلگین</string>
   <string name="bottomSheet_add_participants_btn">آرتیرماق</string>
   <string name="bottomSheet_change_camera_btn">دَییشدیر</string>
   <string name="bottomSheet_camera_onoff_switch_btn">دوربین</string>
-  <string name="bottomSheet_hangup_btn">Zəngi bitir</string>
   <string name="bottomSheet_mute_microphone_btn">Mikrofon</string>
   <string name="bottomSheet_sound_output_btn">Səslər</string>
   <string name="bottomSheet_raiseHand_btn">ال قالديريب</string>
-  <string name="open_account_plugin_settings">حساب پلگین سیتیشمالاری آچیق</string>
-  <string name="open_general_plugin_settings">عمومی پلگین تنظیماتینی آچیب</string>
   <string name="uninstall">نصب ائتمک</string>
   <string name="reset">قاییتماق</string>
   <!--Swarm Detail-->
   <string name="rename_btn">تأکید ائدیر</string>
-  <string name="rename_error">بوش اولا بئلمز</string>
-  <string name="swarm_description">شرح قوش</string>
-  <string name="tab_about">حاقّيندا</string>
   <string name="tab_members">عضولری</string>
-  <string name="tab_documetn">سندلر</string>
   <string name="dialogtitle_title">ساواد آدینی یئنیله</string>
   <string name="dialogtitle_description">Swarm description-ی دَییشدیر</string>
   <string name="dialog_hint_title">آد</string>
@@ -381,5 +347,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">\" جامي \" نين خوش آمديد</string>
   <!--Donation-->
-  <!--Plugin-->
+  <!--Extension-->
 </resources>

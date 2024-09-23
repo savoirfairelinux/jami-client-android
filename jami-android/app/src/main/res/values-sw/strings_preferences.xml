@@ -27,7 +27,6 @@
   <string name="pref_startOnBoot_title">Kuanza Jami katika kuanza</string>
   <string name="pref_startOnBoot_summary">Kuendesha Jami katika background wakati mfumo kuanza.</string>
   <string name="pref_clearHistory_title">Historia ya wazi</string>
-  <string name="pref_clearHistory_summary">Futa historia yote ya mazungumzo.</string>
   <string name="pref_notification_title">Kuonekana kwa taarifa</string>
   <string name="pref_notification_summary">Weka maonyesho ya maombi ya maonyesho kwenye screen lock.</string>
   <string name="pref_blackList_title">Orodha ya vikwazo</string>
@@ -52,19 +51,6 @@
   <string name="notification_public">Public \n(show notices na maudhui yao kwenye screen lock) \n</string>
   <string name="notification_private">Private \n(onyesha matangazo lakini kuficha maudhui yao kwenye screen kufuli) \n</string>
   <string name="notification_secret">Siri \n(si kuonyesha taarifa kwenye screen kufuli)</string>
-  <!--Plugin-->
-  <string name="pref_plugins_title">Plugins</string>
-  <string name="pref_plugins_summary">Kuwezesha Plugins na kuweka vigezo yao</string>
-  <string name="fab_plugins_add">Ongeza Plugin mpya</string>
-  <string name="plugin_uninstall_title">Uninstall Plugin?</string>
-  <string name="plugin_reset_preferences">Reset Plugin mapendekezo</string>
-  <string name="plugin_reset_preferences_summary">Mipangilio yako ya programu-jalizi itakuwa default</string>
-  <string name="plugin_reset_preferences_ask">Je, unataka kuweka upya mipangilio ya jumla ya programu-jalizi?</string>
-  <string name="plugin_reset_account_preferences_ask">Je, unataka kuweka upya mipangilio ya Plugin akaunti?</string>
-  <string name="plugin_successfully_installed">Plugin <b>%1$s</b> imewekwa kwa mafanikio</string>
-  <string name="plugin_install_failure">Kushindwa kufunga programu-jalizi: <b>%1$s</b></string>
-  <string name="plugin_recent_version_exception">Una toleo la hivi karibuni la: <b>%1$s</b></string>
-  <string name="plugin_same_version_exception">Una toleo sawa la <b>%1$s</b> imewekwa</string>
-  <string name="plugin_force_install">nguvu \ n kufunga</string>
-  <string name="plugin_path_image_add">Ongeza picha mpya</string>
+  <!--Extension-->
+  <string name="extension_force_install">nguvu \ n kufunga</string>
 </resources>

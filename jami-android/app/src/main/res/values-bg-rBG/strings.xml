@@ -9,19 +9,13 @@
   <string name="contribute_section">Принос</string>
   <string name="version_section">Версия</string>
   <string name="no_email_app_installed">Не е открито приложение за е-поща. Инсталирайте такова и ни изпратете доклад.</string>
-  <string name="no_browser_app_installed">Не е открито приложение-браузър. Инсталирайте такова, за да видите тази страница.</string>
   <string name="email_chooser_title">Изпращане на е-писмо чрез…</string>
-  <string name="website_chooser_title">Преглед на уеб сайта чрез…</string>
-  <string name="license">Този софтуер се предоставя във вида, в който е, без никакви гаранции. За повече подробности, вижте <u>Общия публичен лиценз на GNU, версия 3 или по-нов</u></string>
   <string name="description">Ring е безплатен софтуер за универсална комуникация, който уважава свободата и личните данни на потребителите си.</string>
   <string name="credits">Заслуги</string>
   <string name="pip_title">Конференция на Джами</string>
   <string name="call_service_description">Тази услуга е необходима, за да се поддържат обажданията ви в предната линия.</string>
   <string name="data_transfer_service_description">Тази услуга е необходима за показване на постоянни уведомления по време на прехвърляне на файлове.</string>
   <!--About dialog-->
-  <string name="developed_by">Разработен от</string>
-  <string name="designed_by">Проектиран от</string>
-  <string name="ringtones_by">Звучи на рингтон</string>
   <!--RingActivity-->
   <string name="error_no_network">Няма връзка с мрежата</string>
   <string name="error_account_offline">Счетоводното е изключено.</string>
@@ -35,7 +29,6 @@
   <string name="menu_item_settings">Настройки</string>
   <string name="menu_item_advanced_settings">Разширени настройки</string>
   <string name="menu_item_account_settings">Настройки на сметката</string>
-  <string name="menu_item_plugin_list">Настройки на встройките</string>
   <string name="menu_item_share">Споделете ми профила.</string>
   <string name="menu_item_about">Относно Jami</string>
   <string name="video_setting_title">Настройки на видео</string>
@@ -97,17 +90,9 @@
   <string name="ongoing_call">Текущо обаждане</string>
   <string name="hist_in_call">Входящо обаждане от %1$s</string>
   <string name="hist_out_call">Изходящо обаждане до %1$s</string>
-  <string name="start_error_title">Jami не успя да стартира!</string>
   <string name="start_error_mic_required">Ring се нуждае от правото за ползване на микрофона, за да работи.</string>
-  <string name="action_call_accept">Приемане</string>
-  <string name="action_call_accept_audio">Отговорът е аудио.</string>
-  <string name="action_call_accept_video">Отговор в видео</string>
-  <string name="action_call_hold_accept">Задръж и приеми аудио обаждането</string>
-  <string name="action_call_hold_accept_video">Задръжте и запишете обажданията.</string>
-  <string name="action_call_end_accept">Завърши и вземи обаждането.</string>
   <string name="action_call_decline">Отказ</string>
   <string name="action_call_mic_mute">Заглушаване на микрофона</string>
-  <string name="action_load_plugin">Зареждане на плагин</string>
   <string name="ab_action_speakerphone">Активиране на високоговорител</string>
   <string name="ab_action_contact_add">Добавяне към контактите</string>
   <string name="ab_action_contact_add_question">Добавяне към контактите?</string>
@@ -143,11 +128,8 @@
   <string name="ringtone_error_size_too_big">Този файл е твърде голям. Максималният размер е %1$dkB.</string>
   <string name="ringtone_custom_prompt">Настройка на персонализиран рингтон</string>
   <string name="ringtone_custom_label">Персонализиран</string>
-  <string name="ringtone_jami_tones">Джами Тоунс</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Jami се нуждае от разрешението \"Четене на контакти\", за да активира тази функция. Моля, предоставете го.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Jami се нуждае от разрешението \"Запис на повиквания\", за да активира тази функция. Моля, предоставете го.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Сканирайте QR-кода на профила, който искате да добавите.</string>
   <string name="title_activity_qrcode">Споделете ми профила.</string>
@@ -163,8 +145,6 @@
   <string name="conversation_details">Подробности за разговора</string>
   <string name="contact_details">Подробности за контакта</string>
   <string name="conversation_action_delete_this">Изтриване на този разговор</string>
-  <string name="conversation_action_delete_this_title">Изтриване на този разговор?</string>
-  <string name="conversation_action_delete_this_message">Това действие е необратимо.</string>
   <string name="conversation_action_history_clear">Изчистване на историята</string>
   <string name="conversation_action_history_clear_title">Изчистване на историята на повикванията?</string>
   <string name="conversation_action_history_clear_message">Това определено ще изчисти историята на повикванията.</string>
@@ -201,7 +181,6 @@
   <string name="conversation_contact_invited">%1$s е поканен</string>
   <string name="conversation_contact_added">%1$s е включен</string>
   <string name="conversation_contact_left">%1$ е останал</string>
-  <string name="conversation_contact_banned">%1$s е забранен</string>
   <string name="conversation_search_hint">Търсене на разговор</string>
   <string name="today">Днес</string>
   <string name="yesterday">Вчера</string>
@@ -216,14 +195,12 @@
   <string name="help_password_choose">Изберете сигурна парола, която ще запомните, за да е защитен профилът ви.</string>
   <string name="help_password_enter">Введете паролата за основната сметка на Джами.</string>
   <string name="help_server_enter">Введете URL на сървъра за управление.</string>
-  <string name="help_pin_enter">Въведете ПИН-кода на друг настроен профил за Jami. Използвайте функцията „Изнасяне на профила от Jami“, за да получите ПИН.</string>
   <string name="wizard_next">Напред</string>
   <string name="wizard_back">Назад</string>
   <string name="wizard_skip">Пропускане</string>
   <string name="hist_contact_invited">Контактът е показан</string>
   <string name="hist_contact_added">Контактът е добавен</string>
   <string name="hist_contact_left">Контакт наляво</string>
-  <string name="hist_contact_banned">Забранено е контакт</string>
   <string name="hist_invitation_received">Поканата е приета</string>
   <!--Account Summary-->
   <string name="profile">Профил</string>
@@ -272,7 +249,6 @@
   <string name="tv_contact_row_header">Контакти</string>
   <string name="gallery_error_title">Не е намерено приложение на Галерия</string>
   <string name="gallery_error_message">Не е намерено приложение на устройството, което да отвори Галерия</string>
-  <string name="generic_error">Възникна неизвестна грешка</string>
   <!--File Transfer-->
   <string name="invalid_file">Невалиден файл</string>
   <string name="not_able_to_write_file">Не може да пише файл</string>
@@ -292,7 +268,6 @@
   <string name="file_saved_in">Файлът е запазен в %s</string>
   <string name="file_saved_successfully">Спят файл</string>
   <string name="file_download">Скачане</string>
-  <string name="no_space_left_on_device">Няма повече свободно място на устройството</string>
   <string name="title_media_viewer">Прегледник на медиите</string>
   <string name="menu_file_open">Отваряне на файл</string>
   <string name="menu_file_download">Теглене на файл</string>
@@ -343,29 +318,20 @@
   <string name="wizard_profile_button">Запази профила</string>
   <string name="wizard_profile_skip">Прескочи и направи това по-късно.</string>
   <string name="fab_path_choose">Изберете друг файл</string>
-  <string name="chat_plugins">Чат плагини</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Споделяне</string>
   <string name="bottomSheet_dialpad_btn">Диапад</string>
-  <string name="bottomSheet_plugins_btn">Включватели</string>
   <string name="bottomSheet_add_participants_btn">Добавяне</string>
   <string name="bottomSheet_change_camera_btn">Промяна</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Камера</string>
-  <string name="bottomSheet_hangup_btn">Край на разговора</string>
   <string name="bottomSheet_mute_microphone_btn">Микро</string>
   <string name="bottomSheet_sound_output_btn">Звучи.</string>
   <string name="bottomSheet_raiseHand_btn">Вдигнете ръка</string>
-  <string name="open_account_plugin_settings">Отворете настройките на плагината за акаунт</string>
-  <string name="open_general_plugin_settings">Отворете общите настройки на плагината</string>
   <string name="uninstall">Отключване на инсталирането</string>
   <string name="reset">Презареждане</string>
   <!--Swarm Detail-->
   <string name="rename_btn">Потвърди</string>
-  <string name="rename_error">Не може да е празно.</string>
-  <string name="swarm_description">Добавете описание</string>
-  <string name="tab_about">Относно</string>
   <string name="tab_members">Членове</string>
-  <string name="tab_documetn">Документи</string>
   <string name="dialogtitle_title">Изменение на заглавието на \"Свара\"</string>
   <string name="dialogtitle_description">Редактиране Описание на скоп</string>
   <string name="dialog_hint_title">Заглавие</string>
@@ -381,5 +347,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Добре дошли в Jami</string>
   <!--Donation-->
-  <!--Plugin-->
+  <!--Extension-->
 </resources>

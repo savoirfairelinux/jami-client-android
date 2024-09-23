@@ -9,20 +9,13 @@
   <string name="contribute_section">Osale kaastöös</string>
   <string name="version_section">Versioon</string>
   <string name="no_email_app_installed">E-posti rakendust ei leitud, paigalda üks, et meile teadet saata</string>
-  <string name="no_browser_app_installed">Veebibrauserit ei leitud, paigalda see lehe avamiseks</string>
   <string name="email_chooser_title">Saada e-kiri kasutades...</string>
-  <string name="website_chooser_title">Vaata veebisaiti kasutades...</string>
-  <string name="license">See tarkvara on pakutav „nii nagu on“, ilma mingisuguse garantiideta. Lisateave: <u>GNU Üldise Avaliku Litsentsi versioon 3 või hilisem</u></string>
   <string name="description">Jami on universaalse suhtlemise vaba tarkvara, mis austab kasutajate vabadusi ja privaatsust.</string>
   <string name="credits">Tänuavaldused</string>
   <string name="pip_title">Jami konverents</string>
   <string name="call_service_description">See teenus on vajalik, et teie kõned käivad eelses taustas.</string>
   <string name="data_transfer_service_description">See teenus on vajalik failide edastamise ajal pidevate teated näitamiseks.</string>
   <!--About dialog-->
-  <string name="developed_by">Arendaja:</string>
-  <string name="designed_by">Kujunduse autor:</string>
-  <string name="ringtones_by">Helinate autor:</string>
-  <string name="credits_volunteers">ja kõik vabatahtlikud, kes projektis osalesid!</string>
   <!--RingActivity-->
   <string name="error_no_network">Võrguühendus puudub</string>
   <string name="error_account_offline">Kasutajakonto pole võrgus</string>
@@ -36,7 +29,6 @@
   <string name="menu_item_settings">Seadistused</string>
   <string name="menu_item_advanced_settings">Seaded edasijõudnutele</string>
   <string name="menu_item_account_settings">Kontode seaded</string>
-  <string name="menu_item_plugin_list">Pluginate seaded</string>
   <string name="menu_item_share">Jaga minu kontot</string>
   <string name="menu_item_about">Teave Jami kohta</string>
   <string name="video_setting_title">Videoseadistused</string>
@@ -102,17 +94,9 @@
   <string name="hist_in_call">Sissetulnud kõne kestusega %1$s</string>
   <string name="hist_out_call">Väljunud kõne kestusega %1$s</string>
   <string name="call_duration">Ketus: %s</string>
-  <string name="start_error_title">Ma ei saa Jami rakendust käivitada!</string>
   <string name="start_error_mic_required">Jami vajab luba mikrofoni kasutamiseks</string>
-  <string name="action_call_accept">Vasta kõnele</string>
-  <string name="action_call_accept_audio">Vasta häälkõnena</string>
-  <string name="action_call_accept_video">Vasta videokõnena</string>
-  <string name="action_call_hold_accept">Pane ootele ja vasta häälkõnena</string>
-  <string name="action_call_hold_accept_video">Pane ootele ja vasta videokõnena</string>
-  <string name="action_call_end_accept">Lõpeta kõne ja vasta</string>
   <string name="action_call_decline">Keeldu</string>
   <string name="action_call_mic_mute">Summuta mikrofon</string>
-  <string name="action_load_plugin">Laadi plugin</string>
   <string name="ab_action_speakerphone">Aktiveeri valjuhääldi</string>
   <string name="ab_action_contact_add">Lisa kontaktitele</string>
   <string name="ab_action_contact_add_question">Kas lisame kontaktina?</string>
@@ -151,11 +135,8 @@
   <string name="ringtone_error_size_too_big">See fail on liiga suur. Maksimaalne lubatud suurus on %1$dkB.</string>
   <string name="ringtone_custom_prompt">Seadista kohandatud helin</string>
   <string name="ringtone_custom_label">Kohandatud</string>
-  <string name="ringtone_jami_tones">Jami helinad</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Jami vajab selle funktsionaalsuse kasutamiseks „Loe kontakte“ luba. Palun jaga vastavad õigused.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Jami vajab selle funktsionaalsuse kasutamiseks „Salvesta kõnelogi“ luba. Palun jaga vastavad õigused.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Skaneeri lisatava konto QR-kood.</string>
   <string name="title_activity_qrcode">Jaga minu konto</string>
@@ -171,8 +152,6 @@
   <string name="conversation_details">Vestluse üksikasjad</string>
   <string name="contact_details">Kontaktandmed</string>
   <string name="conversation_action_delete_this">Kustuta see vestlus</string>
-  <string name="conversation_action_delete_this_title">Kas kustutame selle vestluse?</string>
-  <string name="conversation_action_delete_this_message">Seda tegevust ei saa tagasi pöörata.</string>
   <string name="conversation_action_history_clear">Kustuta ajalugu</string>
   <string name="conversation_action_history_clear_title">Kas kustutame vestluse ajaloo?</string>
   <string name="conversation_action_history_clear_message">Järgnevaga üheselt kustutatakse vestluse ajalugu.</string>
@@ -210,7 +189,6 @@
   <string name="conversation_contact_invited">%1$s sai kutse</string>
   <string name="conversation_contact_added">%1$s liitus</string>
   <string name="conversation_contact_left">%1$s lahkus</string>
-  <string name="conversation_contact_banned">%1$s sai suhtluskeelu</string>
   <string name="conversation_search_hint">Otsi vestlust</string>
   <string name="today">Täna</string>
   <string name="yesterday">Eile.</string>
@@ -225,14 +203,12 @@
   <string name="help_password_choose">Vali tugev ja korralik salasõna, mida sa hästi mäletad, et kaitsta oma Jami kontot.</string>
   <string name="help_password_enter">Sisesta oma peamine Jami konto salasõna.</string>
   <string name="help_server_enter">Sisesta haldusserveri URL.</string>
-  <string name="help_pin_enter">Sisestateise seadistatud Jami konto PIN-kood. Selle leiad, kui kasutad „Ekspordi Jami konto“ valikut.</string>
   <string name="wizard_next">Järgmine</string>
   <string name="wizard_back">Tagasi</string>
   <string name="wizard_skip">Jäta vahele</string>
   <string name="hist_contact_invited">Kontakt sai kutse</string>
   <string name="hist_contact_added">Kontakt on lisatud</string>
   <string name="hist_contact_left">Kontakt lahkus</string>
-  <string name="hist_contact_banned">Kontakt on keelatud</string>
   <string name="hist_invitation_received">Said kutse</string>
   <!--Account Summary-->
   <string name="profile">Profiil</string>
@@ -281,7 +257,6 @@
   <string name="tv_contact_row_header">Kontaktid</string>
   <string name="gallery_error_title">Galeriirakendust ei leidu</string>
   <string name="gallery_error_message">Selles nutiseadmes ei leidu galerii avamiseks vajalikku rakendust</string>
-  <string name="generic_error">Tekkis tundmatu viga</string>
   <!--File Transfer-->
   <string name="invalid_file">Vigane fail</string>
   <string name="not_able_to_write_file">Faili salvestamine pole võimalik</string>
@@ -301,7 +276,6 @@
   <string name="file_saved_in">Fail on salvestatud kausta %s</string>
   <string name="file_saved_successfully">Faili salvestamine õnnestus</string>
   <string name="file_download">Laadi alla</string>
-  <string name="no_space_left_on_device">Nutiseadmes pole ruumi</string>
   <string name="title_media_viewer">Meediavaataja</string>
   <string name="menu_file_open">Ava fail</string>
   <string name="menu_file_download">Laadi faili alla</string>
@@ -343,8 +317,6 @@
   <string name="audio_permission_rationale_message">Selleks et kõnetuvastus ja heli salvestamine toimiks, vajab Jami õigusi kasutada mikrofoni. Me küsime sult seda järgmises sammus.</string>
   <string name="camera_permission_rationale_message">Selleks et video salvestamine ja videokõned toimiksid, vajab Jami õigusi kasutada kaamerat. Me küsime sult seda järgmises sammus.</string>
   <string name="unable_to_start_recorder">Ei õnnestu alustada heli salvestamist.</string>
-  <string name="error_sharing_file">Viga faili jagamisel.</string>
-  <string name="error_opening_file">Viga faili avamisel.</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Soovitatav</string>
   <string name="wizard_status_optional">Valikuline</string>
@@ -362,29 +334,20 @@
   <string name="wizard_profile_button">Salvesta profiil</string>
   <string name="wizard_profile_skip">Jäta vahele ja tee seda hiljem.</string>
   <string name="fab_path_choose">Vali muu fail</string>
-  <string name="chat_plugins">Vestluse pluginad</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Jaga</string>
   <string name="bottomSheet_dialpad_btn">Klahvistik</string>
-  <string name="bottomSheet_plugins_btn">Pluginad</string>
   <string name="bottomSheet_add_participants_btn">Lisa</string>
   <string name="bottomSheet_change_camera_btn">Muuda</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Kaamera</string>
-  <string name="bottomSheet_hangup_btn">Lõpeta kõne</string>
   <string name="bottomSheet_mute_microphone_btn">Mikrofon</string>
   <string name="bottomSheet_sound_output_btn">Helid</string>
   <string name="bottomSheet_raiseHand_btn">Anna käega märku</string>
-  <string name="open_account_plugin_settings">Ava kasutajakonto pluginate seadistused</string>
-  <string name="open_general_plugin_settings">Ava üldised pluginate seadistused</string>
   <string name="uninstall">Eemalda</string>
   <string name="reset">Lähtesta</string>
   <!--Swarm Detail-->
   <string name="rename_btn">Kinnita</string>
-  <string name="rename_error">ei saa olla tühi.</string>
-  <string name="swarm_description">Lisa kirjeldus</string>
-  <string name="tab_about">Rakenduse teave</string>
   <string name="tab_members">Liikmed</string>
-  <string name="tab_documetn">Dokumendid</string>
   <string name="dialogtitle_title">Muuda rühma pealkirja</string>
   <string name="dialogtitle_description">Muuda rühma kirjeldust</string>
   <string name="dialog_hint_title">Pealkiri</string>
@@ -412,8 +375,6 @@
   <string name="donation_donate">Toeta meid</string>
   <string name="donation_setting_title">Annetuse meeldetuletus</string>
   <string name="donation_setting_description">Luba kuvada rahalise toetuse meeldetuletust</string>
-  <!--Plugin-->
+  <!--Extension-->
   <string name="unable_to_load">Laadimine ei õnnestu: %1$s</string>
-  <string name="load_sucess">%1$s: kasutusel</string>
-  <string name="unload_sucess">%1$s: pole kasutusel</string>
 </resources>

@@ -9,19 +9,13 @@
   <string name="contribute_section">Přispět</string>
   <string name="version_section">Verze</string>
   <string name="no_email_app_installed">Nenalezena mailová aplikace, nějakou si nainstalujte, abyste nám poslali hlášení</string>
-  <string name="no_browser_app_installed">Nenalezen žádný program na  prohlížení internetových stránek. Nainstalujte jej pro zobrazení této stránky.</string>
   <string name="email_chooser_title">Poslat zprávu pomocí…</string>
-  <string name="website_chooser_title">Zobrazit stránku pomocí...</string>
-  <string name="license">Tento program je poskytován tak, jak je, bez jakýchkoli záruk. Na podrobnosti se podívejte na znění licence <u>GNU General Public License ve verzi 3 nebo pozdější</u></string>
   <string name="description">Jami je svobodný software určený k univerzální komunikaci, který respektuje svobody a práva uživatelů.</string>
   <string name="credits">Zásluhy</string>
   <string name="pip_title">Konference Jami</string>
   <string name="call_service_description">Tato služba je potřebná k tomu, aby vaše hovory mohly běžet na popředí. Je spuštěná jen během hovorů.</string>
   <string name="data_transfer_service_description">Tato služba je potřebná k zobrazení neustálých oznámení během přenosů souborů. Je spuštěná jen během přenosů souborů.</string>
   <!--About dialog-->
-  <string name="developed_by">Vyvíjeno</string>
-  <string name="designed_by">Navrženo</string>
-  <string name="ringtones_by">Vyzváněcí tóny od</string>
   <!--RingActivity-->
   <string name="error_no_network">Chybí připojení</string>
   <string name="error_account_offline">Účet je offline</string>
@@ -35,7 +29,6 @@
   <string name="menu_item_settings">Nastavení</string>
   <string name="menu_item_advanced_settings">Pokročilá nastavení</string>
   <string name="menu_item_account_settings">Nastavení účtu</string>
-  <string name="menu_item_plugin_list">Nastavení zásuvných modulů</string>
   <string name="menu_item_share">Sdílet můj účet</string>
   <string name="menu_item_about">O Jami</string>
   <string name="video_setting_title">Nastavení videa</string>
@@ -99,17 +92,9 @@
   <string name="ongoing_call">Probíhající hovor</string>
   <string name="hist_in_call">Příchozí hovor %1$s</string>
   <string name="hist_out_call">Odchozí hovor %1$s</string>
-  <string name="start_error_title">Nelze spustit Jami!</string>
   <string name="start_error_mic_required">Aby Jami správně pracoval, vyžaduje přístup k mikrofonu.</string>
-  <string name="action_call_accept">Přijmout</string>
-  <string name="action_call_accept_audio">Odpovědět hlasovou zprávou</string>
-  <string name="action_call_accept_video">Odpovědět videem</string>
-  <string name="action_call_hold_accept">Podržení a přijetí hovoru</string>
-  <string name="action_call_hold_accept_video">Podržení a přijetí hovoru</string>
-  <string name="action_call_end_accept">Ukončit a přijmout hovor</string>
   <string name="action_call_decline">Odmítnout</string>
   <string name="action_call_mic_mute">Ztlumit mikrofon</string>
-  <string name="action_load_plugin">Načíst zásuvný modul</string>
   <string name="ab_action_speakerphone">Zapnout reproduktor</string>
   <string name="ab_action_contact_add">Přidat do kontaktů</string>
   <string name="ab_action_contact_add_question">Přidat do kontaktů?</string>
@@ -145,11 +130,8 @@
   <string name="ringtone_error_size_too_big">Tento soubor je příliš velký. Největší velikost je %1$dkB.</string>
   <string name="ringtone_custom_prompt">Nastavit vlastní vyzváněcí tón</string>
   <string name="ringtone_custom_label">Vlastní</string>
-  <string name="ringtone_jami_tones">Tóny Jami</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Pro tuto funkci Jami vyžaduje povolení „Číst kontakty“. Povolte jej prosím.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Pro tuto funkci Jami vyžaduje povolení „Zapisovat záznam hovorů“. Povolte jej prosím.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Oskenujte QR kód účtu, který chcete přidat.</string>
   <string name="title_activity_qrcode">Sdílet můj účet</string>
@@ -165,8 +147,6 @@
   <string name="conversation_details">Detaily konverzace</string>
   <string name="contact_details">Podrobnosti spojení</string>
   <string name="conversation_action_delete_this">Odstranit tuto konverzaci</string>
-  <string name="conversation_action_delete_this_title">Odstranit tuto konverzaci?</string>
-  <string name="conversation_action_delete_this_message">Tento krok nelze vrátit zpět.</string>
   <string name="conversation_action_history_clear">Vymazat historii</string>
   <string name="conversation_action_history_clear_title">Vymazat konverzační historii?</string>
   <string name="conversation_action_history_clear_message">Toto s konečnou platností vymaže konverzační historii.</string>
@@ -203,7 +183,6 @@
   <string name="conversation_contact_invited">%1$sbyl pozván</string>
   <string name="conversation_contact_added">%1$sse připojil</string>
   <string name="conversation_contact_left">%1$sodešel</string>
-  <string name="conversation_contact_banned">%1$sbyl zakázán</string>
   <string name="conversation_search_hint">Najít konverzaci</string>
   <string name="today">Dnes</string>
   <string name="yesterday">Včera</string>
@@ -218,14 +197,12 @@
   <string name="help_password_choose">K ochraně účtu Jami si zvolte silné heslo, které si dovedete zapamatovat.</string>
   <string name="help_password_enter">Zadejte hlavní heslo ke svému účtu Jami.</string>
   <string name="help_server_enter">Zadejte adresu URL správcovského serveru.</string>
-  <string name="help_pin_enter">Zadejte PIN z jiného nastaveného účtu Jami. Abyste PIN získali, použijte volbu „exportovat účet Jami“.</string>
   <string name="wizard_next">Další</string>
   <string name="wizard_back">Zpět</string>
   <string name="wizard_skip">Přeskočit</string>
   <string name="hist_contact_invited">Kontakt pozván</string>
   <string name="hist_contact_added">Kontakt přidán</string>
   <string name="hist_contact_left">Kontakt odešel</string>
-  <string name="hist_contact_banned">Spojení zakázáno</string>
   <string name="hist_invitation_received">Pozvání přijato</string>
   <!--Account Summary-->
   <string name="profile">Profil</string>
@@ -274,7 +251,6 @@
   <string name="tv_contact_row_header">Kontakty</string>
   <string name="gallery_error_title">Nenalezena žádná aplikace pro galerii</string>
   <string name="gallery_error_message">Na zařízení nebyla nalezena žádná aplikace na otevření galerie</string>
-  <string name="generic_error">Vyskytla se neznámá chyba</string>
   <!--File Transfer-->
   <string name="invalid_file">Neplatný soubor</string>
   <string name="not_able_to_write_file">Nelze zapsat soubor</string>
@@ -294,7 +270,6 @@
   <string name="file_saved_in">Soubor uložen do %s</string>
   <string name="file_saved_successfully">Soubor byl úspěšně uložen</string>
   <string name="file_download">Stáhnout</string>
-  <string name="no_space_left_on_device">Na zařízení nezbylo žádné místo</string>
   <string name="title_media_viewer">Prohlížeč záznamů</string>
   <string name="menu_file_open">Otevřít soubor</string>
   <string name="menu_file_download">Stáhnout soubor</string>
@@ -345,29 +320,20 @@
   <string name="wizard_profile_button">Uložit profil</string>
   <string name="wizard_profile_skip">Odložit na později</string>
   <string name="fab_path_choose">Vybrat jiný soubor</string>
-  <string name="chat_plugins">Chatovací pluginy</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Sdílet</string>
   <string name="bottomSheet_dialpad_btn">Číselník</string>
-  <string name="bottomSheet_plugins_btn">Zásuvné moduly</string>
   <string name="bottomSheet_add_participants_btn">Přidat</string>
   <string name="bottomSheet_change_camera_btn">Změnit</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>
-  <string name="bottomSheet_hangup_btn">Ukončit hovor</string>
   <string name="bottomSheet_mute_microphone_btn">Mikro</string>
   <string name="bottomSheet_sound_output_btn">Zvuky</string>
   <string name="bottomSheet_raiseHand_btn">Zvednout ruku</string>
-  <string name="open_account_plugin_settings">Otevřít nastavení pluginu účtu</string>
-  <string name="open_general_plugin_settings">Otevřít základní nastavení pluginu</string>
   <string name="uninstall">Odinstalovat</string>
   <string name="reset">Resetovat</string>
   <!--Swarm Detail-->
   <string name="rename_btn">Potvrdit</string>
-  <string name="rename_error">nemůže být prázdné</string>
-  <string name="swarm_description">Přidejte popis</string>
-  <string name="tab_about">O aplikaci</string>
   <string name="tab_members">Členové</string>
-  <string name="tab_documetn">Dokumenty</string>
   <string name="dialogtitle_title">Upravit název swarmu</string>
   <string name="dialogtitle_description">Upravit popis swarm</string>
   <string name="dialog_hint_title">Název</string>
@@ -383,5 +349,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Vítejte v Jami</string>
   <!--Donation-->
-  <!--Plugin-->
+  <!--Extension-->
 </resources>

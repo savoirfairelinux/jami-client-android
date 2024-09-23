@@ -27,7 +27,6 @@
   <string name="pref_startOnBoot_title">Käivita Jami nutiseadme käivitamisel</string>
   <string name="pref_startOnBoot_summary">Sinu nutiseadme käivitamisel pane Jami taustal tööle.</string>
   <string name="pref_clearHistory_title">Kustuta ajalugu</string>
-  <string name="pref_clearHistory_summary">Kustuta kogu vestluste ajalugu. Seda tegevust ei saa tagasi pöörata.</string>
   <string name="pref_notification_title">Teavituste nähtavus</string>
   <string name="pref_notification_summary">Seada rakenduse teavituste nähtavust nutiseadme lukustusvaates.</string>
   <string name="pref_blackList_title">Blokeeritud osapoolte nimekiri</string>
@@ -52,22 +51,8 @@
   <string name="notification_public">Avalik\n(näita teavitusi ja nende sisu nutiseadme lukustusvaates)\n</string>
   <string name="notification_private">Privaatne \n(näita teavitusi, aga peida nende sisu nutiseadme lukustusvaates) \n</string>
   <string name="notification_secret">Salajane\n(ära näita nutiseadme lukustusvaates ei teavitusi ega nende sisu)</string>
-  <!--Plugin-->
-  <string name="pref_plugins_title">Pluginad</string>
-  <string name="pref_plugins_summary">Võimalda pluginad ja seadistada neid</string>
-  <string name="fab_plugins_add">Lisa uus plugin</string>
-  <string name="plugin_uninstall_title">Kas eemaldame plugina?</string>
-  <string name="plugin_reset_preferences">Lähtesta pluginate eelistused</string>
-  <string name="plugin_reset_preferences_summary">Lähtestame sinu pluginate seadistused</string>
-  <string name="plugin_reset_preferences_ask">Kas sa soovid lähtestada pluginate üldised seadistused?</string>
-  <string name="plugin_reset_account_preferences_ask">Kas sa soovid lähtestada pluginate kasutajakontokohased seadistused?</string>
-  <string name="plugin_successfully_installed">Plugin <b>%1$s</b> on edukalt paigaldatud</string>
-  <string name="plugin_install_failure">Plugin ei ole paigaldatud: <b>%1$s</b></string>
-  <string name="plugin_recent_version_exception">Sul on hilisem versioon: <b>%1$s</b></string>
-  <string name="plugin_same_version_exception">Sul on paigaldatud sama versioon <b>%1$s</b></string>
-  <string name="plugin_invalid_signature">Plugina <b>%1$s</b> allkiri on vigane</string>
-  <string name="plugin_invalid_authority">Ei õnnestu tuvastada plugina valmistajat: <b>%1$s</b></string>
-  <string name="plugin_invalid_format">Vigane plugina vorming: <b>%1$s</b></string>
-  <string name="plugin_force_install">sunnni\npaigaldamine</string>
-  <string name="plugin_path_image_add">Lisa uus pilt</string>
+  <!--Extension-->
+  <string name="pref_extensions_title">Lisamoodulid</string>
+  <string name="extension_invalid_signature">Plugina <b>%1$s</b> allkiri on vigane</string>
+  <string name="extension_force_install">sunnni\npaigaldamine</string>
 </resources>

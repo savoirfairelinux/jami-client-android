@@ -9,19 +9,13 @@
   <string name="contribute_section">பங்களிப்பு</string>
   <string name="version_section">பதிப்பு</string>
   <string name="no_email_app_installed">மின்னஞ்சல் பயன்பாடு காணப்படவில்லை, எங்களுக்கு ஒரு அறிக்கை அனுப்ப ஒரு நிறுவ</string>
-  <string name="no_browser_app_installed">எந்த வலை உலாவி பயன்பாடு காணப்படவில்லை, இந்த பக்கத்தை பார்க்க ஒரு நிறுவவும்</string>
   <string name="email_chooser_title">மின்னஞ்சல் அனுப்புங்கள்...</string>
-  <string name="website_chooser_title">இணையதளத்தைப் பயன்படுத்தி பார்க்கவும்.</string>
-  <string name="license">இந்த மென்பொருள் எந்தவொரு உத்தரவாதமும் இல்லாமல் \"அதுபோல்\" வழங்கப்படுகிறது. விவரங்களுக்கு, <u>GNU பொது பொது உரிமம் பதிப்பு 3 அல்லது அதற்குப் பிறகு</u> ஐப் பார்க்கவும்</string>
   <string name="description">ஜாமி என்பது பொதுவான தகவல்தொடர்புக்கான இலவச மென்பொருள் ஆகும், இது அதன் பயனர்களின் சுதந்திரங்களையும் தனியுரிமையையும் மதிக்கிறது.</string>
   <string name="credits">கடன்கள்</string>
   <string name="pip_title">ஜாமி மாநாடு</string>
   <string name="call_service_description">இந்த சேவை உங்கள் அழைப்புகளை முன்னணியில் வைத்திருக்க அவசியம். அது அழைப்புகளின் போது மட்டுமே இயங்குகிறது.</string>
   <string name="data_transfer_service_description">கோப்பு பரிமாற்றங்களின் போது நிலையான அறிவிப்புகளை காண்பிக்க இந்த சேவை அவசியம். இது கோப்பு பரிமாற்றங்களின் போது மட்டுமே இயங்குகிறது.</string>
   <!--About dialog-->
-  <string name="developed_by">உருவாக்கியவர்</string>
-  <string name="designed_by">வடிவமைக்கப்பட்டது</string>
-  <string name="ringtones_by">ரிங்க்ன்கள்</string>
   <!--RingActivity-->
   <string name="error_no_network">நெட்வொர்க் இணைப்பு இல்லை</string>
   <string name="error_account_offline">கணக்கு ஆஃப்லைன்</string>
@@ -35,7 +29,6 @@
   <string name="menu_item_settings">அமைப்புகள்</string>
   <string name="menu_item_advanced_settings">மேம்பட்ட அமைப்புகள்</string>
   <string name="menu_item_account_settings">கணக்கு அமைப்புகள்</string>
-  <string name="menu_item_plugin_list">செருகுநிரல்கள் அமைப்புகள்</string>
   <string name="menu_item_share">எனது கணக்கை பகிர்ந்து கொள்ளுங்கள்</string>
   <string name="menu_item_about">ஜாமி பற்றி</string>
   <string name="video_setting_title">வீடியோ அமைப்புகள்</string>
@@ -97,17 +90,9 @@
   <string name="ongoing_call">தொடர்ச்சியான அழைப்பு</string>
   <string name="hist_in_call">%1$s இன் வருகின்ற அழைப்பு</string>
   <string name="hist_out_call">%1$s இன் வெளிவரும் அழைப்பு</string>
-  <string name="start_error_title">ஜாமி தொடங்க முடியாது!</string>
   <string name="start_error_mic_required">ஜாமி வேலை செய்ய மைக்ரோஃபோன் அனுமதி தேவை.</string>
-  <string name="action_call_accept">அழைப்பு எடுக்க</string>
-  <string name="action_call_accept_audio">ஆடியோவில் பதில்</string>
-  <string name="action_call_accept_video">வீடியோவில் பதில்</string>
-  <string name="action_call_hold_accept">அழைப்பு ஆடியோவை நிறுத்திப் படியுங்கள்</string>
-  <string name="action_call_hold_accept_video">காத்திருங்கள் மற்றும் அழைப்பு வீடியோ எடுக்க</string>
-  <string name="action_call_end_accept">முடித்து அழைப்பு எடுக்க</string>
   <string name="action_call_decline">குறைவு</string>
   <string name="action_call_mic_mute">மைக்ரோஃபோன் முடக்கப்பட்டது</string>
-  <string name="action_load_plugin">சுமை செருகுநிரல்</string>
   <string name="ab_action_speakerphone">பேச்சாளர் இயக்கு</string>
   <string name="ab_action_contact_add">தொடர்புகளை சேர்க்கவும்</string>
   <string name="ab_action_contact_add_question">தொடர்புகளை சேர்க்க?</string>
@@ -143,11 +128,8 @@
   <string name="ringtone_error_size_too_big">இந்த கோப்பு மிகப்பெரியது. அதிகபட்ச அளவு %1$dkB ஆகும்.</string>
   <string name="ringtone_custom_prompt">தனிப்பயன் ரிங்டோன் அமைக்கவும்</string>
   <string name="ringtone_custom_label">தனிப்பயன்</string>
-  <string name="ringtone_jami_tones">ஜாமி டோன்ஸ்</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">ஜாமிக்கு இந்த அம்சத்தை இயக்குவதற்கு \"தொடர்புகளைப் படிக்கவும்\" அனுமதி தேவை. தயவுசெய்து அதை வழங்கவும்.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">ஜாமிக்கு இந்த அம்சத்தை இயக்குவதற்கு \"எழுதும் பதிவு\" அனுமதி தேவை. தயவுசெய்து அதை வழங்கவும்.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">நீங்கள் சேர்க்க விரும்பும் கணக்கின் QR குறியீட்டை ஸ்கேன் செய்யவும்.</string>
   <string name="title_activity_qrcode">எனது கணக்கை பகிர்ந்து கொள்ளுங்கள்</string>
@@ -163,8 +145,6 @@
   <string name="conversation_details">உரையாடலின் விவரங்கள்</string>
   <string name="contact_details">தொடர்பு விவரங்கள்</string>
   <string name="conversation_action_delete_this">இந்த உரையாடலை நீக்கவும்</string>
-  <string name="conversation_action_delete_this_title">இந்த உரையாடலை நீக்க?</string>
-  <string name="conversation_action_delete_this_message">இந்த நடவடிக்கைகளைத் திரும்பப் பெற முடியாது.</string>
   <string name="conversation_action_history_clear">தெளிவான வரலாறு</string>
   <string name="conversation_action_history_clear_title">உரையாடல் வரலாற்றை அழிக்க?</string>
   <string name="conversation_action_history_clear_message">இது நிச்சயமாக உரையாடல் வரலாற்றை அழிக்கும்.</string>
@@ -201,7 +181,6 @@
   <string name="conversation_contact_invited">%1$s அழைக்கப்பட்டார்</string>
   <string name="conversation_contact_added">%1$s சேர்க்கப்பட்டது</string>
   <string name="conversation_contact_left">%1$ இடது</string>
-  <string name="conversation_contact_banned">%1$s தடை செய்யப்பட்டது</string>
   <string name="conversation_search_hint">தேடல் உரையாடல்</string>
   <string name="today">இன்று</string>
   <string name="yesterday">நேற்று</string>
@@ -216,14 +195,12 @@
   <string name="help_password_choose">ஜாமி கணக்கை பாதுகாக்க நீங்கள் நினைவில் வைத்திருக்கும் வலுவான கடவுச்சொல்லைத் தேர்ந்தெடுக்கவும்.</string>
   <string name="help_password_enter">உங்கள் முக்கிய ஜாமி கணக்கு கடவுச்சொல்லை உள்ளிடவும்.</string>
   <string name="help_server_enter">நிர்வாக சேவையகத்தின் URL ஐ உள்ளிடவும்.</string>
-  <string name="help_pin_enter">மற்றொரு கட்டமைக்கப்பட்ட ஜாமி கணக்கிலிருந்து PIN ஐ உள்ளிடவும். PIN ஐப் பெற \"ஜாமி கணக்கை ஏற்றுமதி\" அம்சத்தைப் பயன்படுத்தவும்.</string>
   <string name="wizard_next">அடுத்தது</string>
   <string name="wizard_back">திரும்பி</string>
   <string name="wizard_skip">தப்பி</string>
   <string name="hist_contact_invited">தொடர்பு அழைப்பு</string>
   <string name="hist_contact_added">தொடர்பு சேர்க்கப்பட்டது</string>
   <string name="hist_contact_left">தொடர்பு இடது</string>
-  <string name="hist_contact_banned">தொடர்பு தடை செய்யப்பட்டது</string>
   <string name="hist_invitation_received">அழைப்பு</string>
   <!--Account Summary-->
   <string name="profile">சுயவிவரம்</string>
@@ -272,7 +249,6 @@
   <string name="tv_contact_row_header">தொடர்புகள்</string>
   <string name="gallery_error_title">எந்த கேலரி பயன்பாடு காணப்படவில்லை</string>
   <string name="gallery_error_message">கேலரியை திறக்க சாதனத்தில் எந்த பயன்பாடும் காணப்படவில்லை</string>
-  <string name="generic_error">அறியப்படாத தவறு ஏற்பட்டது</string>
   <!--File Transfer-->
   <string name="invalid_file">செல்லாத கோப்பு</string>
   <string name="not_able_to_write_file">கோப்பு எழுத முடியவில்லை</string>
@@ -292,7 +268,6 @@
   <string name="file_saved_in">%s இல் சேமிக்கப்பட்ட கோப்பு</string>
   <string name="file_saved_successfully">சேமிக்கப்பட்ட கோப்பு வெற்றிகரமாக</string>
   <string name="file_download">பதிவிறக்கம்</string>
-  <string name="no_space_left_on_device">சாதனத்தில் இடமில்லை</string>
   <string name="title_media_viewer">ஊடக பார்வையாளர்</string>
   <string name="menu_file_open">திறந்த கோப்பு</string>
   <string name="menu_file_download">கோப்பு பதிவிறக்கம்</string>
@@ -343,29 +318,20 @@
   <string name="wizard_profile_button">சுயவிவரத்தை சேமிக்கவும்</string>
   <string name="wizard_profile_skip">தள்ளிவிட்டு இதை பின்னர் செய்யவும்</string>
   <string name="fab_path_choose">வேறு கோப்பைத் தேர்ந்தெடுக்கவும்</string>
-  <string name="chat_plugins">அரட்டை செருகுநிரல்கள்</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">பகிர்வு</string>
   <string name="bottomSheet_dialpad_btn">அலைபேசி</string>
-  <string name="bottomSheet_plugins_btn">செருகுநிரல்கள்</string>
   <string name="bottomSheet_add_participants_btn">சேர்க்கவும்</string>
   <string name="bottomSheet_change_camera_btn">மாற்றம்</string>
   <string name="bottomSheet_camera_onoff_switch_btn">கேமரா</string>
-  <string name="bottomSheet_hangup_btn">அழைப்பை முடித்திடுக</string>
   <string name="bottomSheet_mute_microphone_btn">மைக்ரோ</string>
   <string name="bottomSheet_sound_output_btn">ஒலிகள்</string>
   <string name="bottomSheet_raiseHand_btn">கை உயர்த்தி</string>
-  <string name="open_account_plugin_settings">கணக்கு சொருகி அமைப்புகள் திறக்கவும்</string>
-  <string name="open_general_plugin_settings">பொது சொருகி அமைப்புகள் திறக்கவும்</string>
   <string name="uninstall">நிறுவல் நீக்கு</string>
   <string name="reset">மீட்டமை</string>
   <!--Swarm Detail-->
   <string name="rename_btn">உறுதிப்படுத்தவும்</string>
-  <string name="rename_error">அது வெறுமையாக இருக்க முடியாது</string>
-  <string name="swarm_description">ஒரு விவரத்தை சேர்க்கவும்</string>
-  <string name="tab_about">பற்றி</string>
   <string name="tab_members">உறுப்பினர்</string>
-  <string name="tab_documetn">ஆவணங்கள்</string>
   <string name="dialogtitle_title">திருத்தங்கள் Swarm தலைப்பு</string>
   <string name="dialogtitle_description">தொகுப்பு விவரம்</string>
   <string name="dialog_hint_title">தலைப்பு</string>
@@ -381,5 +347,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">ஜாமிக்கு வரவேற்கிறோம்</string>
   <!--Donation-->
-  <!--Plugin-->
+  <!--Extension-->
 </resources>

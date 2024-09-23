@@ -9,20 +9,13 @@
   <string name="contribute_section">Contribuisci</string>
   <string name="version_section">Versione</string>
   <string name="no_email_app_installed">Nessuna applicazione email trovata, installane una per inviarci la tua opinione</string>
-  <string name="no_browser_app_installed">Nessuna applicazione browser trovata, installane una per visualizzare questa pagina</string>
   <string name="email_chooser_title">Invia e-mail con...</string>
-  <string name="website_chooser_title">Visualizza sito web con...</string>
-  <string name="license">Questo software è fornito \"così com\'è\", senza garanzie di alcun tipo. Per dettagli, vedi <u>GNU General Public License versione 3 o successiva</u></string>
   <string name="description">Jami è un software gratuito per la comunicazione universale che rispetta le libertà e la privacy dei suoi utenti.</string>
   <string name="credits">Crediti</string>
   <string name="pip_title">Conferenza Jami</string>
   <string name="call_service_description">Questo servizio è necessario per mantenere le chiamate in esecuzione in primo piano. Funziona solo durante le chiamate.</string>
   <string name="data_transfer_service_description">Questo servizio è necessario per visualizzare notifiche persistenti durante i trasferimenti di file. Funziona solo durante i trasferimenti di file.</string>
   <!--About dialog-->
-  <string name="developed_by">Sviluppato da</string>
-  <string name="designed_by">Progettato da</string>
-  <string name="ringtones_by">Suoneria di</string>
-  <string name="credits_volunteers">E i volontari che contribuiscono a questo progetto!</string>
   <!--RingActivity-->
   <string name="error_no_network">Nessuna connessione di rete</string>
   <string name="error_account_offline">Account disconnesso</string>
@@ -36,7 +29,6 @@
   <string name="menu_item_settings">Impostazioni</string>
   <string name="menu_item_advanced_settings">Impostazioni avanzate</string>
   <string name="menu_item_account_settings">Impostazioni dell\'account</string>
-  <string name="menu_item_plugin_list">Impostazioni plugin</string>
   <string name="menu_item_share">Condividi il mio account</string>
   <string name="menu_item_about">Informazioni su Jami</string>
   <string name="video_setting_title">Impostazioni video</string>
@@ -103,17 +95,9 @@
   <string name="hist_in_call">Chiamata in arrivo di %1$s</string>
   <string name="hist_out_call">Chiamata in uscita %1$s</string>
   <string name="call_duration">Durata %s</string>
-  <string name="start_error_title">Jami non si avvia!</string>
   <string name="start_error_mic_required">Jami deve usare il microfono per funzionare.</string>
-  <string name="action_call_accept">Rispondi</string>
-  <string name="action_call_accept_audio">Audio</string>
-  <string name="action_call_accept_video">Video</string>
-  <string name="action_call_hold_accept">Attesa e rispondi solo con l\'audio</string>
-  <string name="action_call_hold_accept_video">Attesa e rispondi con video</string>
-  <string name="action_call_end_accept">Termina e rispondi alla chiamata</string>
   <string name="action_call_decline">Rifiuta</string>
   <string name="action_call_mic_mute">Disattiva microfono</string>
-  <string name="action_load_plugin">Carica plugin</string>
   <string name="ab_action_speakerphone">Attiva l\'audio</string>
   <string name="ab_action_contact_add">Aggiungi alla rubrica</string>
   <string name="ab_action_contact_add_question">Aggiungere ai contatti?</string>
@@ -154,11 +138,8 @@
   <string name="ringtone_error_size_too_big">Il file è troppo grande. La dimensione massima consentita è di %1$dkB</string>
   <string name="ringtone_custom_prompt">Imposta una suoneria personalizzata</string>
   <string name="ringtone_custom_label">Personalizzata</string>
-  <string name="ringtone_jami_tones">Suonerie Jami</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Jami necessita dell\'autorizzazione a \"Accedere ai Contatti\" per abilitare questa funzione. Concedere Autorizzazione</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Jami necessita dell\'autorizzazione \"Accedere al registro chiamate\" per abilitare questa funzione. Concedere l\'autorizzazione.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Scansiona il codice QR dell\'account che vuoi aggiungere.</string>
   <string name="title_activity_qrcode">Condividi il mio account</string>
@@ -174,8 +155,6 @@
   <string name="conversation_details">Dettagli conversazione</string>
   <string name="contact_details">Dettagli contatto</string>
   <string name="conversation_action_delete_this">Cancella questa conversazione</string>
-  <string name="conversation_action_delete_this_title">Cancellare questa conversazione?</string>
-  <string name="conversation_action_delete_this_message">Questa azione è irreversibile.</string>
   <string name="conversation_action_history_clear">Cancella cronologia</string>
   <string name="conversation_action_history_clear_title">Cancellare la cronologia della conversazione?</string>
   <string name="conversation_action_history_clear_message">Questo cancellerà definitivamente la cronologia della conversazione.</string>
@@ -214,8 +193,6 @@
   <string name="conversation_contact_invited">%1$s è stato invitato</string>
   <string name="conversation_contact_added">%1$s si è unito</string>
   <string name="conversation_contact_left">%1$s è uscito</string>
-  <string name="conversation_contact_banned">%1$s è stato bloccato</string>
-  <string name="conversation_contact_unbanned">%1$s è stato sbloccato</string>
   <string name="conversation_search_hint">Cerca conversazione</string>
   <string name="audio_recorder_error">Impossibile trovare l\'app per la registrazione audio.</string>
   <string name="video_recorder_error">Impossibile trovare l\'app per la registrazione video.</string>
@@ -243,7 +220,6 @@
   <string name="help_password_choose">Scegliere una password facile da ricordare per proteggere il tuo account Jami.</string>
   <string name="help_password_enter">Inserisci la password del tuo account principale Jami.</string>
   <string name="help_server_enter">Inserire l\'URL del server di gestione.</string>
-  <string name="help_pin_enter">Jami configurato per inserire il PIN da un altro account. Utilizzare la funzione di \"Esporta account Jami\" per ottenere un PIN.</string>
   <string name="pin_copied">Codice PIN copiato negli appunti.</string>
   <string name="wizard_next">Prossimo</string>
   <string name="wizard_back">Indietro</string>
@@ -251,8 +227,6 @@
   <string name="hist_contact_invited">Contatto invitato</string>
   <string name="hist_contact_added">Contatto aggiunto</string>
   <string name="hist_contact_left">Contatto lasciato</string>
-  <string name="hist_contact_banned">Contatto bloccato</string>
-  <string name="hist_contact_unbanned">Contatto sbloccato</string>
   <string name="hist_invitation_received">Invito ricevuto</string>
   <!--Account Summary-->
   <string name="profile">Profilo</string>
@@ -301,7 +275,6 @@
   <string name="tv_contact_row_header">Contatti</string>
   <string name="gallery_error_title">Nessuna app Galleria trovata</string>
   <string name="gallery_error_message">Nessuna applicazione trovata sul dispositivo per aprire la galleria</string>
-  <string name="generic_error">Si è verificato un errore sconosciuto</string>
   <!--File Transfer-->
   <string name="invalid_file">File non valido</string>
   <string name="not_able_to_write_file">Impossibile scrivere il file</string>
@@ -321,7 +294,6 @@
   <string name="file_saved_in">File salvato in %s</string>
   <string name="file_saved_successfully">File salvato con successo</string>
   <string name="file_download">Scarica</string>
-  <string name="no_space_left_on_device">Spazio esaurito sul dispositivo</string>
   <string name="title_media_viewer">Visualizzatore media</string>
   <string name="menu_file_open">Apri file</string>
   <string name="menu_file_download">Scarica file</string>
@@ -364,8 +336,6 @@
   <string name="audio_permission_rationale_message">Jami ha bisogno di accedere al microfono per trasformare il parlato in testo e registrare l\'audio. Questo verrà richiesto nella fase successiva.</string>
   <string name="camera_permission_rationale_message">Jami ha bisogno di accedere alla fotocamera per registrare video ed effettuare videochiamate. Questo verrà richiesto nella fase successiva.</string>
   <string name="unable_to_start_recorder">Impossibile avviare la registrazione audio.</string>
-  <string name="error_sharing_file">Errore condivisione file.</string>
-  <string name="error_opening_file">Errore nell\'apertura del file.</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Consigliato</string>
   <string name="wizard_status_optional">Facoltativo</string>
@@ -383,29 +353,20 @@
   <string name="wizard_profile_button">Salva profilo</string>
   <string name="wizard_profile_skip">Salta e fallo più tardi</string>
   <string name="fab_path_choose">Scegli un altro file</string>
-  <string name="chat_plugins">Plugin per chat</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Condividi</string>
   <string name="bottomSheet_dialpad_btn">Tastiera</string>
-  <string name="bottomSheet_plugins_btn">Plugin</string>
   <string name="bottomSheet_add_participants_btn">Aggiungi</string>
   <string name="bottomSheet_change_camera_btn">Cambia</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Fotocamera</string>
-  <string name="bottomSheet_hangup_btn">Termina chiamata</string>
   <string name="bottomSheet_mute_microphone_btn">Micro</string>
   <string name="bottomSheet_sound_output_btn">Suono</string>
   <string name="bottomSheet_raiseHand_btn">Alza mano</string>
-  <string name="open_account_plugin_settings">Mostra le opzioni per account</string>
-  <string name="open_general_plugin_settings">Mostra le opzioni generali</string>
   <string name="uninstall">Disinstalla</string>
   <string name="reset">Ripristina</string>
   <!--Swarm Detail-->
   <string name="rename_btn">Conferma</string>
-  <string name="rename_error">non può essere vuoto</string>
-  <string name="swarm_description">Aggiungi una descrizione</string>
-  <string name="tab_about">Info</string>
   <string name="tab_members">Membri</string>
-  <string name="tab_documetn">Documenti</string>
   <string name="not_admin_toast">Solo gli amministratori possono modificare le informazioni di questo gruppo</string>
   <string name="dialogtitle_title">Modifica il titolo del gruppo</string>
   <string name="dialogtitle_description">Modifica la descrizione del gruppo</string>
@@ -437,10 +398,7 @@
   <string name="donation_donate">Donare</string>
   <string name="donation_setting_title">Promemoria donazioni</string>
   <string name="donation_setting_description">Attiva il promemoria per le donazioni</string>
-  <!--Plugin-->
+  <!--Extension-->
   <string name="unable_to_load">Impossibile caricare %1$s</string>
-  <string name="load_sucess">%1$s: attivato</string>
-  <string name="unload_sucess">%1$s: disattivato</string>
-  <string name="install_sucess">L\'estensione %1$s è stata installata con successo.</string>
   <string name="install_error">Si è verificato un errore durante l\'importazione dell\'estensione.</string>
 </resources>

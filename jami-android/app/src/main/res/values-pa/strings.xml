@@ -9,19 +9,13 @@
   <string name="contribute_section">ਯੋਗਦਾਨ ਪਾਓ</string>
   <string name="version_section">ਵਰਜਨ</string>
   <string name="no_email_app_installed">ਕੋਈ ਈਮੇਲ ਐਪ ਨਹੀਂ ਮਿਲੀ, ਸਾਨੂੰ ਰਿਪੋਰਟ ਭੇਜਣ ਲਈ ਐਪ ਸਥਾਪਤ ਕਰੋ</string>
-  <string name="no_browser_app_installed">ਕੋਈ ਵੈੱਬ ਬ੍ਰਾਊਜ਼ਰ ਨਹੀਂ ਮਿਲਿਆ, ਇਹ ਪੰਨਾ ਵੇਖਣ ਲਈ ਬ੍ਰਾਊਜ਼ਰ ਸਥਾਪਤ ਕਰੋ</string>
   <string name="email_chooser_title">ਇਹ ਵਰਤ ਕੇ ਮੇਲ ਭੇਜੋ…</string>
-  <string name="website_chooser_title">ਇਹ ਵਰਤ ਕੇ ਵੈੱਬਸਾਈਟ ਵੇਖੋ…</string>
-  <string name="license">ਇਹ ਸਾਫ਼ਟਵੇਅਰ \"ਜਿਵੇਂ ਵੀ ਐ\", ਕਿਸੇ ਵੀ ਵਰੰਟੀ ਦੇ ਬਿਨਾਂ ਦਿੱਤਾ ਜਾਂਦਾ ਹੈ। ਵੇਰਵਿਆਂ ਲਈ, <u>GNU General Public License version 3 ਜਾਂ ਬਾਅਦ ਵਾਲੇ ਲਾਇਸੰਸ</u> ਵੇਖੋ</string>
   <string name="description">Jami ਦੁਨੀਆ ਭਰ ਵਿੱਚ ਸੰਚਾਰ ਕਰਨ ਲਈ ਮੁਫ਼ਤ ਸਾਫ਼ਟਵੇਅਰ ਹੈ ਜੋ ਆਪਣੇ ਵਰਤੋਂਕਾਰਾਂ ਦੀ ਅਜ਼ਾਦੀ ਅਤੇ ਪਰਦੇਦਾਰੀ ਦਾ ਖਿਆਲ ਰੱਖਦਾ ਹੈ।</string>
   <string name="credits">ਸ਼ਲਾਘਾਯੋਗ ਵਿਅਕਤੀ</string>
   <string name="pip_title">Jami ਸੰਮੇਲਨ</string>
   <string name="call_service_description">ਇਹ ਸੇਵਾ ਤੁਹਾਡੀਆਂ ਕਾਲਾਂ ਮੂਹਰੇ ਜਾਰੀ ਰੱਖਣ ਲਈ ਜ਼ਰੂਰੀ ਹੈ। ਇਹ ਸਿਰਫ਼ ਕਾਲਾਂ ਵੇਲੇ ਚੱਲਦੀ ਹੈ।</string>
   <string name="data_transfer_service_description">ਇਹ ਸੇਵਾ ਫ਼ਾਈਲਾਂ ਦੇ ਤਬਾਦਲੇ ਵੇਲੇ ਸਥਾਈ ਸੂਚਨਾਵਾਂ ਵਿਖਾਉਣ ਲਈ ਜ਼ਰੂਰੀ ਹੈ। ਇਹ ਸਿਰਫ਼ ਫ਼ਾਈਲਾਂ ਦੇ ਤਬਾਦਲੇ ਵੇਲੇ ਚੱਲਦੀ ਹੈ।</string>
   <!--About dialog-->
-  <string name="developed_by">ਵਿਕਾਸਕਾਰ</string>
-  <string name="designed_by">ਨਮੂਨਾਕਾਰ</string>
-  <string name="ringtones_by">ਘੰਟੀ ਇਹਨਾਂ ਨੇ ਬਣਾਈ</string>
   <!--RingActivity-->
   <string name="error_no_network">ਕੋਈ ਨੈੱਟਵਰਕ ਕਨੈਕਸ਼ਨ ਨਹੀਂ ਹੈ</string>
   <string name="error_account_offline">ਖਾਤਾ ਆਫ਼ਲਾਈਨ ਹੈ</string>
@@ -35,7 +29,6 @@
   <string name="menu_item_settings">ਸੈਟਿੰਗਾਂ</string>
   <string name="menu_item_advanced_settings">ਉੱਨਤ ਸੈਟਿੰਗਾਂ</string>
   <string name="menu_item_account_settings">ਖਾਤਾ ਸੈਟਿੰਗਾਂ</string>
-  <string name="menu_item_plugin_list">ਪਲੱਗਇਨ ਸੈਟਿੰਗਾਂ</string>
   <string name="menu_item_share">ਮੇਰਾ ਖਾਤਾ ਸਾਂਝਾ ਕਰੋ</string>
   <string name="menu_item_about">Jami ਬਾਰੇ</string>
   <!--Dialing Fragment-->
@@ -96,15 +89,9 @@
   <string name="ongoing_call">ਜਾਂਦੀ ਕਾਲ</string>
   <string name="hist_in_call">%1$s ਤੋਂ ਆਉਂਦੀ ਕਾਲ</string>
   <string name="hist_out_call">%1$s ਨੂੰ ਜਾਂਦੀ ਕਾਲ</string>
-  <string name="start_error_title">Jami ਨੂੰ ਸ਼ੁਰੂ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ !</string>
   <string name="start_error_mic_required">Jami ਨੂੰ ਚੱਲਣ ਲਈ ਮਾਈਕ੍ਰੋਫ਼ੋਨ ਇਜਾਜ਼ਤ ਦੀ ਲੋੜ ਹੈ।</string>
-  <string name="action_call_accept">ਕਾਲ ਲਓ</string>
-  <string name="action_call_accept_audio">ਆਵਾਜ਼ੀ ਕਾਲ ਦਾ ਜਵਾਬ ਦਿਓ</string>
-  <string name="action_call_accept_video">ਵੀਡੀਓ ਕਾਲ ਦਾ ਜਵਾਬ ਦਿਓ</string>
-  <string name="action_call_end_accept">ਕਾਲ ਕੱਟ ਕੇ ਦੂਜੀ ਕਾਲ ਲਓ</string>
   <string name="action_call_decline">ਕਾਲ ਕੱਟੋ</string>
   <string name="action_call_mic_mute">ਮਾਈਕ੍ਰੋਫ਼ੋਨ ਬੰਦ ਕਰੋ</string>
-  <string name="action_load_plugin">ਪਲੱਗਇਨ ਲੋਡ ਕਰੋ</string>
   <string name="ab_action_speakerphone">ਸਪੀਕਰ ਚਾਲੂ ਕਰੋ</string>
   <string name="ab_action_contact_add">ਸੰਪਰਕਾਂ ਵਿੱਚ ਜੋੜੋ</string>
   <string name="ab_action_contact_add_question">ਸੰਪਰਕਾਂ ਵਿੱਚ ਜੋੜੀਏ?</string>
@@ -135,11 +122,8 @@
   <string name="ringtone_error_size_too_big">ਇਹ ਫ਼ਾਈਲ ਬਹੁਤ ਵੱਡੀ ਹੈ। ਵੱਧ ਤੋਂ ਵੱਧ ਆਕਾਰ %1$dkB ਹੋਵੇ।</string>
   <string name="ringtone_custom_prompt">ਮਨਮਰਜ਼ੀ ਦੀ ਘੰਟੀ ਲਗਾਓ</string>
   <string name="ringtone_custom_label">ਮਨਮਰਜ਼ੀ</string>
-  <string name="ringtone_jami_tones">Jami ਟੱਲੀਆਂ</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Jami ਨੂੰ ਇਹ ਵਿਸ਼ੇਸ਼ਤਾ ਚਾਲੂ ਕਰਨ ਲਈ \"ਸੰਪਰਕ ਪੜ੍ਨ\" ਦੀ ਇਜਾਜ਼ਤ ਦੀ ਲੋੜ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਇਜਾਜ਼ਤ ਦਿਓ।</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Jami ਨੂੰ ਇਹ ਵਿਸ਼ੇਸ਼ਤਾ ਚਾਲੂ ਕਰਨ ਲਈ \"ਕਾਲ ਲੌਗ ਲਿਖਣ\" ਦੀ ਇਜਾਜ਼ਤ ਦੀ ਲੋੜ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਇਜਾਜ਼ਤ ਦਿਓ।</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">ਉਸ ਖਾਤੇ ਦਾ QR ਕੋਡ ਸਕੈਨ ਕਰੋ, ਜਿਸਨੂੰ ਤੁਸੀਂ ਜੋੜਨਾ ਚਾਹੁੰਦੇ ਹੋ।</string>
   <string name="title_activity_qrcode">ਮੇਰਾ ਖਾਤਾ ਸਾਂਝਾ ਕਰੋ</string>
@@ -153,8 +137,6 @@
   <!--Conversation-->
   <string name="contact_details">ਸੰਪਰਕ ਵੇਰਵੇ</string>
   <string name="conversation_action_delete_this">ਇਹ ਗੱਲਬਾਤ ਮਿਟਾਓ</string>
-  <string name="conversation_action_delete_this_title">ਇਹ ਗੱਲਬਾਤ ਮਿਟਾਈਏ?</string>
-  <string name="conversation_action_delete_this_message">ਇਹ ਕਾਰਵਾਈ ਹੋਣ ਤੋਂ ਬਾਅਦ ਬਦਲੀ ਨਹੀਂ ਜਾ ਸਕਦੀ।</string>
   <string name="conversation_action_history_clear">ਇਤਿਹਾਸ ਮਿਟਾਓ</string>
   <string name="conversation_action_history_clear_title">ਗੱਲਬਾਤ ਦਾ ਇਤਿਹਾਸ ਮਿਟਾਈਏ?</string>
   <string name="conversation_action_history_clear_message">ਇੰਝ ਕਰਨ ਨਾਲ ਗੱਲਬਾਤ ਇਤਿਹਾਸ ਮਿਟ ਜਾਵੇਗਾ।</string>
@@ -189,7 +171,6 @@
   <string name="help_password_choose">ਆਪਣੇ Jami ਖਾਤੇ ਨੂੰ ਸੁਰੱਖਿਅਤ ਰੱਖਣ ਲਈ ਅਜਿਹਾ ਮਜ਼ਬੂਤ ਪਾਸਵਰਡ ਚੁਣੋ ਜੋ ਤੁਹਾਨੂੰ ਯਾਦ ਰਹੇ।</string>
   <string name="help_password_enter">ਆਪਣਾ ਮੁੱਖ Jami ਖਾਤਾ ਪਾਸਵਰਡ ਦਾਖਲ ਕਰੋ।</string>
   <string name="help_server_enter">ਪ੍ਰਬੰਧ ਸਰਵਰ ਦਾ URLਦਾਖਲ ਕਰੋ।</string>
-  <string name="help_pin_enter">ਕਿਸੇ ਹੋਰ ਥਾਂ ਮੌਜੂਦ Jami ਖਾਤੇ ਤੋਂ ਪਿੰਨ ਦਾਖਲ ਕਰੋ। ਪਿੰਨ ਹਾਸਲ ਕਰਨ ਲਈ \"Jami ਖਾਤਾ ਨਿਰਯਾਤ ਕਰੋ\" ਵਿਸ਼ੇਸ਼ਤਾ ਵਰਤੋ।</string>
   <string name="wizard_next">ਅੱਗੇ</string>
   <string name="wizard_back">ਪਿੱਛੇ</string>
   <string name="wizard_skip">ਛੱਡੋ</string>
@@ -238,7 +219,6 @@
   <string name="tv_contact_row_header">ਸੰਪਰਕ</string>
   <string name="gallery_error_title">ਕੋਈ ਗੈਲਰੀ ਐਪ ਨਹੀਂ ਮਿਲੀ</string>
   <string name="gallery_error_message">ਗੈਲਰੀ ਖੋਲ੍ਹਣ ਲਈ ਇਸ ਡੀਵਾਈਸ \'ਤੇ ਕੋਈ ਐਪਲੀਕੇਸ਼ਨ ਨਹੀਂ ਮਿਲੀ</string>
-  <string name="generic_error">ਕੋਈ ਅਣਜਾਣ ਗੜਬੜ ਹੋਈ</string>
   <!--File Transfer-->
   <string name="invalid_file">ਅਢੁਕਵੀਂ ਫ਼ਾਈਲ</string>
   <string name="not_able_to_write_file">ਫ਼ਾਈਲ ਲਿਖੀ ਨਹੀਂ ਜਾ ਸਕੀ</string>
@@ -257,7 +237,6 @@
   <string name="file_transfer_status_timed_out">ਸਮਾਂ ਖਤਮ ਹੋਇਆ</string>
   <string name="file_saved_in">ਫ਼ਾਈਲ %s ਵਿੱਚ ਸਾਂਭੀ ਗਈ</string>
   <string name="file_saved_successfully">ਫ਼ਾਈਲ ਸਾਂਭੀ ਗਈ</string>
-  <string name="no_space_left_on_device">ਡੀਵਾਈਸ ਵਿੱਚ ਜਗ੍ਹਾ ਖਾਲੀ ਨਹੀਂ ਹੈ</string>
   <string name="title_media_viewer">ਮੀਡੀਆ ਵਿਊਅਰ</string>
   <string name="menu_file_open">ਫ਼ਾਈਲ ਖੋਲ੍ਹੋ</string>
   <string name="menu_file_download">ਫ਼ਾਈਲ ਡਾਊਨਲੋਡ ਕਰੋ</string>
@@ -309,7 +288,6 @@
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">ਸਾਂਝਾ ਕਰੋ</string>
   <string name="bottomSheet_change_camera_btn">ਬਦਲੋ</string>
-  <string name="bottomSheet_hangup_btn">ਕਾਲ ਸਮਾਪਤ ਕਰੋ</string>
   <string name="bottomSheet_sound_output_btn">ਸਪੀਕਰ</string>
   <!--Swarm Detail-->
   <string name="tab_members">ਸਾਥੀ</string>
@@ -319,5 +297,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Jami ਵਿੱਚ ਜੀ ਆਇਆਂ ਨੂੰ</string>
   <!--Donation-->
-  <!--Plugin-->
+  <!--Extension-->
 </resources>

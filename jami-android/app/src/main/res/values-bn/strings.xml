@@ -9,19 +9,13 @@
   <string name="contribute_section">অবদান</string>
   <string name="version_section">সংস্করণ</string>
   <string name="no_email_app_installed">কোন ইমেইল অ্যাপ পাওয়া যায়নি, আমাদের রিপোর্ট পাঠানোর জন্য একটি ইনস্টল করুন</string>
-  <string name="no_browser_app_installed">কোন ওয়েব ব্রাউজার অ্যাপ পাওয়া যায় নি, এই পৃষ্ঠাটি দেখতে একটি ইনস্টল করুন</string>
   <string name="email_chooser_title">মেইল পাঠান...</string>
-  <string name="website_chooser_title">ওয়েবসাইট দেখুন...</string>
-  <string name="license">এই সফ্টওয়্যারটি \"যেমনটি\", কোনও ধরণের গ্যারান্টি ছাড়াই সরবরাহ করা হয়। বিস্তারিত জানার জন্য, দেখুন <u>GNU সাধারণ পাবলিক লাইসেন্স সংস্করণ 3 বা তার পরে</u></string>
   <string name="description">জামি হল সার্বজনীন যোগাযোগের জন্য একটি মুক্ত সফটওয়্যার যা ব্যবহারকারীদের স্বাধীনতা ও গোপনীয়তাকে সম্মান করে।</string>
   <string name="credits">ক্রেডিট</string>
   <string name="pip_title">জামি সম্মেলন</string>
   <string name="call_service_description">এই পরিষেবাটি আপনার কলগুলিকে প্রথম স্থানে রাখতে প্রয়োজনীয়। এটি শুধুমাত্র কলের সময় চালিত হয়।</string>
   <string name="data_transfer_service_description">ফাইল স্থানান্তর সময় এই পরিষেবাটি স্থায়ী বিজ্ঞপ্তি প্রদর্শন করতে প্রয়োজনীয়। এটি শুধুমাত্র ফাইল স্থানান্তর সময় চালিত হয়।</string>
   <!--About dialog-->
-  <string name="developed_by">দ্বারা বিকাশিত</string>
-  <string name="designed_by">ডিজাইন করেছেন</string>
-  <string name="ringtones_by">রিংটনেস</string>
   <!--RingActivity-->
   <string name="error_no_network">নেটওয়ার্ক সংযোগ নেই</string>
   <string name="error_account_offline">অ্যাকাউন্টটি অফলাইনে</string>
@@ -35,7 +29,6 @@
   <string name="menu_item_settings">সেটিং</string>
   <string name="menu_item_advanced_settings">উন্নত সেটিংস</string>
   <string name="menu_item_account_settings">অ্যাকাউন্ট সেটিংস</string>
-  <string name="menu_item_plugin_list">প্লাগইন সেটিংস</string>
   <string name="menu_item_share">আমার অ্যাকাউন্ট শেয়ার করুন</string>
   <string name="menu_item_about">জামি সম্পর্কে</string>
   <string name="video_setting_title">ভিডিও সেটিং</string>
@@ -97,17 +90,9 @@
   <string name="ongoing_call">চলমান কল</string>
   <string name="hist_in_call">%1$s এর ইনকামিং কল</string>
   <string name="hist_out_call">%1$s এর বহিরাগত কল</string>
-  <string name="start_error_title">জামি শুরু করতে পারিনা!</string>
   <string name="start_error_mic_required">জামি কাজ করার জন্য মাইক্রোফোনের অনুমতি চায়।</string>
-  <string name="action_call_accept">ফোন ধরো</string>
-  <string name="action_call_accept_audio">অডিওতে উত্তর</string>
-  <string name="action_call_accept_video">ভিডিওতে উত্তর দিন</string>
-  <string name="action_call_hold_accept">কল অডিও ধরে রাখুন এবং গ্রহণ করুন</string>
-  <string name="action_call_hold_accept_video">ভিডিও কল ধরে রাখুন</string>
-  <string name="action_call_end_accept">শেষ করুন এবং কল গ্রহণ করুন</string>
   <string name="action_call_decline">হ্রাস</string>
   <string name="action_call_mic_mute">নিঃশব্দ মাইক্রোফোন</string>
-  <string name="action_load_plugin">লোড প্লাগইন</string>
   <string name="ab_action_speakerphone">স্পিকার সক্ষম করুন</string>
   <string name="ab_action_contact_add">পরিচিতি যোগ করুন</string>
   <string name="ab_action_contact_add_question">পরিচিতি যোগ করা?</string>
@@ -143,11 +128,8 @@
   <string name="ringtone_error_size_too_big">এই ফাইলটি খুব বড়। সর্বোচ্চ আকার %1$dkB।</string>
   <string name="ringtone_custom_prompt">একটি কাস্টম রিংটোন সেট করুন</string>
   <string name="ringtone_custom_label">কাস্টম</string>
-  <string name="ringtone_jami_tones">জামি টোনস</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">জামিকে এই বৈশিষ্ট্যটি সক্ষম করতে \"পরিচিতি পড়ুন\" অনুমতি দরকার। দয়া করে এটি প্রদান করুন।</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">জামিকে এই বৈশিষ্ট্যটি সক্ষম করতে \"ক্যাল লগ লিখুন\" অনুমতি দরকার। দয়া করে এটি প্রদান করুন।</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">আপনি যে অ্যাকাউন্টটি যুক্ত করতে চান তার QR কোড স্ক্যান করুন।</string>
   <string name="title_activity_qrcode">আমার অ্যাকাউন্ট শেয়ার করুন</string>
@@ -163,8 +145,6 @@
   <string name="conversation_details">কথোপকথনের বিস্তারিত</string>
   <string name="contact_details">যোগাযোগের তথ্য</string>
   <string name="conversation_action_delete_this">এই কথোপকথন মুছে ফেলুন</string>
-  <string name="conversation_action_delete_this_title">এই কথোপকথন মুছে ফেলা?</string>
-  <string name="conversation_action_delete_this_message">এই পদক্ষেপটি বাতিল করা যাবে না।</string>
   <string name="conversation_action_history_clear">পরিষ্কার ইতিহাস</string>
   <string name="conversation_action_history_clear_title">কথোপকথনের ইতিহাস পরিষ্কার করা?</string>
   <string name="conversation_action_history_clear_message">এটা অবশ্যই কথোপকথনের ইতিহাস পরিষ্কার করবে।</string>
@@ -201,7 +181,6 @@
   <string name="conversation_contact_invited">%1$s আমন্ত্রিত হয়েছে</string>
   <string name="conversation_contact_added">%1$s যোগ করা হয়েছে</string>
   <string name="conversation_contact_left">%1$s বাম</string>
-  <string name="conversation_contact_banned">%1$s নিষিদ্ধ করা হয়েছে</string>
   <string name="conversation_search_hint">অনুসন্ধান কথোপকথন</string>
   <string name="today">আজ</string>
   <string name="yesterday">গতকাল</string>
@@ -216,14 +195,12 @@
   <string name="help_password_choose">আপনার জামি অ্যাকাউন্টের সুরক্ষার জন্য একটি শক্তিশালী পাসওয়ার্ড নির্বাচন করুন।</string>
   <string name="help_password_enter">আপনার মূল জামি অ্যাকাউন্টের পাসওয়ার্ড লিখুন।</string>
   <string name="help_server_enter">ম্যানেজমেন্ট সার্ভারের URL লিখুন।</string>
-  <string name="help_pin_enter">অন্য একটি কনফিগার করা জামি অ্যাকাউন্ট থেকে পিন প্রবেশ করান। একটি পিন পেতে \"জামি অ্যাকাউন্ট এক্সপোর্ট\" বৈশিষ্ট্যটি ব্যবহার করুন।</string>
   <string name="wizard_next">পরবর্তী</string>
   <string name="wizard_back">ফিরে</string>
   <string name="wizard_skip">স্কিপ</string>
   <string name="hist_contact_invited">যোগাযোগের আহ্বান</string>
   <string name="hist_contact_added">যোগ করা হয়েছে যোগাযোগ</string>
   <string name="hist_contact_left">বাম দিকে যোগাযোগ</string>
-  <string name="hist_contact_banned">যোগাযোগ নিষিদ্ধ</string>
   <string name="hist_invitation_received">আমন্ত্রণ প্রাপ্তি</string>
   <!--Account Summary-->
   <string name="profile">প্রোফাইল</string>
@@ -272,7 +249,6 @@
   <string name="tv_contact_row_header">পরিচিতি</string>
   <string name="gallery_error_title">কোন গ্যালারি অ্যাপ পাওয়া যায় নি</string>
   <string name="gallery_error_message">গ্যালারি খুলতে ডিভাইসে কোন অ্যাপ্লিকেশন পাওয়া যায়নি</string>
-  <string name="generic_error">একটি অজানা ত্রুটি ঘটেছে</string>
   <!--File Transfer-->
   <string name="invalid_file">অবৈধ ফাইল</string>
   <string name="not_able_to_write_file">ফাইল লিখতে পারছে না</string>
@@ -292,7 +268,6 @@
   <string name="file_saved_in">%s- এ সংরক্ষিত ফাইল</string>
   <string name="file_saved_successfully">সফলভাবে সংরক্ষিত ফাইল</string>
   <string name="file_download">ডাউনলোড</string>
-  <string name="no_space_left_on_device">ডিভাইসে কোন স্থান নেই</string>
   <string name="title_media_viewer">মিডিয়া ভিউয়ার</string>
   <string name="menu_file_open">খোলা ফাইল</string>
   <string name="menu_file_download">ফাইল ডাউনলোড করুন</string>
@@ -343,29 +318,20 @@
   <string name="wizard_profile_button">প্রোফাইল সংরক্ষণ করুন</string>
   <string name="wizard_profile_skip">স্লিপ করে পরে এটা করো</string>
   <string name="fab_path_choose">অন্য ফাইল নির্বাচন করুন</string>
-  <string name="chat_plugins">চ্যাট প্লাগইন</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">ভাগ করে নেওয়ার</string>
   <string name="bottomSheet_dialpad_btn">ডায়ালপ্যাড</string>
-  <string name="bottomSheet_plugins_btn">প্লাগইন</string>
   <string name="bottomSheet_add_participants_btn">যোগ করুন</string>
   <string name="bottomSheet_change_camera_btn">পরিবর্তন</string>
   <string name="bottomSheet_camera_onoff_switch_btn">ক্যামেরা</string>
-  <string name="bottomSheet_hangup_btn">কল শেষ</string>
   <string name="bottomSheet_mute_microphone_btn">মাইক্রো</string>
   <string name="bottomSheet_sound_output_btn">শব্দ</string>
   <string name="bottomSheet_raiseHand_btn">হাত বাড়াও</string>
-  <string name="open_account_plugin_settings">অ্যাকাউন্ট প্লাগইন সেটিংস খুলুন</string>
-  <string name="open_general_plugin_settings">সাধারণ প্লাগইন সেটিংস খুলুন</string>
   <string name="uninstall">আনইনস্টল করুন</string>
   <string name="reset">রিসেট</string>
   <!--Swarm Detail-->
   <string name="rename_btn">নিশ্চিত করুন</string>
-  <string name="rename_error">এটা খালি থাকতে পারে না</string>
-  <string name="swarm_description">বর্ণনা যোগ করুন</string>
-  <string name="tab_about">সম্পর্কে</string>
   <string name="tab_members">সদস্য</string>
-  <string name="tab_documetn">নথিপত্র</string>
   <string name="dialogtitle_title">সম্পাদনা করুন Swarm শিরোনাম</string>
   <string name="dialogtitle_description">Swarm বর্ণনা সম্পাদনা করুন</string>
   <string name="dialog_hint_title">শিরোনাম</string>
@@ -382,5 +348,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">জামিতে স্বাগতম</string>
   <!--Donation-->
-  <!--Plugin-->
+  <!--Extension-->
 </resources>

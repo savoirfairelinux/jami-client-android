@@ -21,18 +21,12 @@
   <string name="dialog_wait_create_details">Palun oota, kuni sinu uus konto on lisatud...</string>
   <string name="dialog_wait_update">Uuenda kasutajakontot</string>
   <string name="dialog_wait_update_details">Palun oota, kuni sinu uue konto andmed on värskendatud...</string>
-  <string name="dialog_warn_ip2ip_account_title">Kas loome tühja SIP-konto?</string>
-  <string name="dialog_warn_ip2ip_account_message">Sa oled nüüd loomas SIP-kontot ilma teenindava serverita.
-Seega saad saad teha ja saada ainult otseseid IP-kõnesid.
-Saad oma kontot hiljem muuta</string>
   <string name="account_type_ip2ip">IP-konto</string>
   <string name="help_ring">Jami konto kasutaja võimaldab sul suhelda inimestega turvaliselt läbi täielikult jaotatud võrgu.</string>
-  <string name="help_sip_title">Lisa oma SIP-konto</string>
+  <string name="help_sip_title">Lisa SIP-konto</string>
   <string name="help_sip">Seadista olemasolevat SIP-kontot.</string>
-  <string name="create_sip_account">Lisa SIP-konto</string>
   <!--Strings related to account deletion-->
-  <string name="account_delete_dialog_title">Kas kustutame kasutajakonto?</string>
-  <string name="account_delete_dialog_message">Seda toimingut ei saa tagasi pöörata.</string>
+  <string name="account_delete_dialog_message">Seda tegevust ei saa tagasi pöörata.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Kasutajakonto ei ole registreeritud</string>
   <string name="normal_accounts_titles">Kasutajakontod</string>
@@ -40,8 +34,6 @@ Saad oma kontot hiljem muuta</string>
   <string name="account_device_revoke">Eemalda seade</string>
   <string name="account_device_revocation_success_title">Õnnestus</string>
   <string name="account_device_revocation_success">Seade on nüüd eemaldatud seotud seadmete loendist!</string>
-  <string name="account_device_revocation_error_title">Seotud seadme eemaldamist ei saa tagasi pöörata</string>
-  <string name="account_device_revocation_wrong_password">Vigane salasõna.</string>
   <string name="account_device_revocation_unknown_device">Tundmatu seade.</string>
   <string name="account_device_revocation_error_unknown">Teadmata viga.</string>
   <string name="account_password_change">Muuda salasõna</string>
@@ -66,8 +58,7 @@ Saad oma kontot hiljem muuta</string>
   <string name="account_rendezvous_summary">Kohtumispaiga režiimiis lisatakse uued sisenevad kõned konverentsikõnele.</string>
   <string name="account_upnp_label">Võta UPnP kasutusele</string>
   <string name="account_proxy_field">Proksiserver</string>
-  <!--Plugin Details-->
-  <string name="account_preference_plugin_tab">Pluginad</string>
+  <!--Extension Details-->
   <!--Audio Details-->
   <string name="account_audio_label">Audio</string>
   <string name="account_preferences_media_tab">Meedia</string>
@@ -148,14 +139,9 @@ Saad oma kontot hiljem muuta</string>
   <string name="export_account_wait_message">Ekspordime kasutajakonto andmed</string>
   <string name="account_export_file">Varunda kasutajakonto</string>
   <string name="account_export_file_summary">Hilisemaks taastamiseks varunda kasutajakonto oma seadmesse.</string>
-  <string name="account_export_end_decryption_message">Kasutades antud salasõna ei õnnestud sinu kasutajakontot avada.</string>
   <string name="account_export_end_network_title">Võrgu viga</string>
-  <string name="account_export_end_network_message">Kasutajakonto eksportimine võrku ei õnnestunud. Palun kontrolli võrguühenduse toimivust.</string>
   <string name="account_export_end_error_title">Viga</string>
-  <string name="account_export_end_error_message">Kasutajakonto eksportimine ei õnnestunud. Tekkis tundmatu viga.</string>
   <string name="account_enter_password">Sisesta salasõna</string>
-  <string name="account_share_body">Kasutades „%1$s“ suhtle minuga hajutatud suhtlusvõrgus Jami: %2$s</string>
-  <string name="account_share_body_with_username">Kasutades „%1$s“ või minu avalikku kasutajanime „%2$s“ suhtle minuga hajutatud suhtlusvõrgus Jami: %3$s</string>
   <string name="account_contact_me">Suhtle minuga Jami võrgus!</string>
   <string name="update_account">Uuenda kasutajakontot</string>
   <string name="account_migration">Sinu Jami kasutajakontot saab ajakohastada.\nPalun sisesta oma salasõna.</string>
@@ -163,20 +149,13 @@ Saad oma kontot hiljem muuta</string>
   <string name="sip_account">SIP-konto</string>
   <string name="ring_account_identity">Identiteet</string>
   <string name="account_migration_title_dialog">Kasutajakonto uuendus</string>
-  <string name="account_migration_message_dialog">Sinu kasutajakonto vajab ajakohastamist. Kas soovid selle tegevuse jaoks avada Kasutajakonto haldusvaate?</string>
   <string name="account_update_needed">Ajakohastamine on vajalik</string>
-  <string name="account_cannot_be_found_title">Ma ei leia kasutajakontot</string>
-  <string name="account_cannot_be_found_message">Kasutajakontot ei leidu Jami võrgustikust.\nVeendu, et sa eksportisid ta Jami võrku olemasolevast seadmest ning et konto nimi ja salasõna on õiged.</string>
   <string name="account_sip_cannot_be_registered_message">Sa saad jätkata kasutajakonto loomisega või muuta siinolevat teavet. Lisaks saad hiljem muuta andmeid kasutajakonto seadistustest.</string>
-  <string name="account_no_network_title">Ei õnnestu luua võrguühendust</string>
-  <string name="account_no_network_message">Kasutajakonto lisamine ei õnnestunud, sest Jami ei saanud ühendust hajutatud võrguga. Palun kontrolli oma seadme võrguühenduse toimivust.</string>
+  <string name="account_no_network_title">Võrgu viga</string>
   <string name="account_device_added_title">Kasutajakonto seade on lisatud</string>
   <string name="account_device_added_message">Sa oled oma Jami kasutajakonto selles seadmes edukalt seadistanud.</string>
   <string name="account_device_updated_title">Kasutajakonto seade on uuendatud</string>
   <string name="account_device_updated_message">Sa oled oma Jami kasutajakontot edukalt uuendanud.</string>
-  <string name="account_cannot_be_updated_message">Kasutajakonto seadet ei saa uuendada. Palun kontrolli, et salasõna on õige.</string>
-  <string name="account_sip_success_title">SIP-konto on registreeritud</string>
-  <string name="account_sip_success_message">Sa oled oma SIP-konto edukalt registreerinud.</string>
   <string name="account_sip_register_anyway">Registreeru ikkagi</string>
   <!--TV-->
   <string name="account_tv_settings_header">Kasutajakonto seadistused</string>
@@ -196,11 +175,8 @@ Saad oma kontot hiljem muuta</string>
   <string name="account_link_export_button">Seo uus seade</string>
   <string name="account_link_show_button">Näita %d rohkem sidestatud seadmeid</string>
   <string name="account_link_hide_button">Peida ühendatud seade</string>
-  <string name="account_link_export_info">Kui soovid kasutada seda kontot teistes seadmetes, pead selle esmalt Jami võrgus avaldama. Selle käigus luuakse PIN-kood, mille pead uues seadmes kasutajakonto lisamisel sisestama. PIN-kood on kehtiv 10 minutit.</string>
   <string name="account_start_export_button">Loo PIN-kood</string>
   <string name="account_end_export_button">sulge</string>
-  <string name="account_end_export_infos">Sinu PIN-kood on:\n\n%%\n\nTegevuse lõpetamiseks pead avama Jami uues seadmes. Uue konto lisamiseks kasuta valikut „Ühenda see seade olemasoleva kasutajakontoga“. Sinu PIN-kood on kehtiv 10 minutit.</string>
-  <string name="account_link_export_info_light">Kui soovid kasutada seda kontot teistes seadmetes, pead selle esmalt Jami võrgus avaldama. Selle käigus luuakse PIN-kood, mille pead uues seadmes kasutajakonto lisamisel sisestama. PIN-kood on kehtiv 10 minutit.</string>
   <string name="account_export_title">Ühenda kasutajakonto muude seadmetega</string>
   <string name="account_connect_server_button">Ühenda kasutajakonto haldusserveriga</string>
   <string name="account_connect_button">Ühenda</string>
@@ -232,21 +208,17 @@ Saad oma kontot hiljem muuta</string>
   <string name="account_creation_profile">Loo oma profiil</string>
   <string name="account_creation_ring">Loo oma Jami kasutajakonto</string>
   <string name="account_link_title">Seosta see nutiseade</string>
-  <string name="account_sip_cannot_be_registered">Kasutajakonto registreerimine ei õnnestu</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">Muma minu kasutajakontot</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Kinnitamiseks sisesta salasõna</string>
   <string name="enter_password">Sisesta salasõna</string>
   <string name="revoke_device_title">Eemalda seade</string>
-  <string name="revoke_device_message">Kas oled kindel, et tahad %1$s seadme eemaldada?</string>
   <string name="revoke_device_wait_title">Palun oota...</string>
   <string name="revoke_device_wait_message">Eemaldame seadet</string>
   <string name="rename_device_title">Muuda selle seadme nime</string>
   <string name="rename_device_message">Vali uus nimi selle seadme seostamiseks sinu Jami kasutajakontoga</string>
   <string name="rename_device_button">Muuda seadme nime</string>
   <string name="account_rename_device_hint">Vali uus seadme nimi</string>
-  <string name="account_device_name_empty">Seadme nimi ei saa olla tühi</string>
   <string name="account_device_this_indicator">See seade</string>
   <string name="account_disabled_indicator">väljalülitatud</string>
   <!--Link a new device-->
@@ -261,10 +233,7 @@ Saad oma kontot hiljem muuta</string>
   <string name="account_link_time_valid">See PIN-kood saab olema vigane: %1$s.</string>
   <string name="account_link_device_info">Oma teisest Jami rakendusest vali „Seo uus seade“ ning kuva QR-koodi või sisesta PIN-kood</string>
   <string name="account_generate_export_device">Teises seadmes</string>
-  <string name="account_generate_export_info">Paigalda ja käivita Jami ning vali „Impordi teisest seadmest“ ning skaneeri QR-koodi.</string>
   <string name="content_description_qr_generated">Sinu QR-kood</string>
-  <string name="account_generate_export_invalid">See PIN-kood enam ei kehti. Uue seadme sidumiseks sisesta salasõna ja loo uus PIN-kood.</string>
-  <string name="account_generate_export_invalid_two">See PIN-kood enam ei kehti. Uue seadme sidumiseks loo uus PIN-kood.</string>
   <string name="help_pin_info">Täida, kui konto on salasõnaga krüptitud</string>
   <string name="connect_device_scanqr">Skaneeri QR-koodi</string>
   <string name="connect_device_enterPIN">või sisesta PIN-kood</string>

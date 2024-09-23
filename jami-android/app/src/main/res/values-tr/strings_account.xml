@@ -21,17 +21,11 @@
   <string name="dialog_wait_create_details">Yeni hesabınız eklenirken lütfen bekleyin...</string>
   <string name="dialog_wait_update">Hesap güncelleniyor</string>
   <string name="dialog_wait_update_details">Yeni hesabınız güncellenirken lütfen bekleyin...</string>
-  <string name="dialog_warn_ip2ip_account_title">Boş SIP hesabı oluşturulsun mu?</string>
-  <string name="dialog_warn_ip2ip_account_message">Geçerli ana makine adı olmadan SIP hesabı oluşturuyorsun.
-        Yalnızca doğrudan ip çağrıları yapabilir ve alabilirsin.
-        Hesabını daha sonra düzenleyebilirsin.</string>
   <string name="account_type_ip2ip">IP hesabı</string>
   <string name="help_ring">Jami hesabı, tümüyle dağıtık ağdan insanlara uçtan uca güvenle ulaşmanızı sağlar.</string>
-  <string name="help_sip_title">SIP hesabınızı ekleyin</string>
+  <string name="help_sip_title">SIP hesabı ekle</string>
   <string name="help_sip">Var olan SIP hesabını yapılandır</string>
-  <string name="create_sip_account">SIP hesabı ekle</string>
   <!--Strings related to account deletion-->
-  <string name="account_delete_dialog_title">Hesap silinsin mi ?</string>
   <string name="account_delete_dialog_message">Bu eylem geri alınamaz.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Kayıtlı hesap yok</string>
@@ -40,8 +34,6 @@
   <string name="account_device_revoke">Aygıtı kaldır</string>
   <string name="account_device_revocation_success_title">Başarılı</string>
   <string name="account_device_revocation_success">Aygıt şimdi kaldırıldı!</string>
-  <string name="account_device_revocation_error_title">Aygıt kaldırılamıyor</string>
-  <string name="account_device_revocation_wrong_password">Yanlış parola</string>
   <string name="account_device_revocation_unknown_device">Bilinmeyen aygıt.</string>
   <string name="account_device_revocation_error_unknown">Bilinmeyen hata.</string>
   <string name="account_password_change">Parolayı Değiştir</string>
@@ -63,8 +55,8 @@
   <string name="account_rendezvous_summary">Randevu kipinde, gelen çağrılar bir konferans odasına eklenecektir.</string>
   <string name="account_upnp_label">UPnP\'yi etkinleştir</string>
   <string name="account_proxy_field">Vekil</string>
-  <!--Plugin Details-->
-  <string name="account_preference_plugin_tab">Uzantılar</string>
+  <!--Extension Details-->
+  <string name="account_preferences_extension_tab">Uzantılar</string>
   <!--Audio Details-->
   <string name="account_audio_label">Ses</string>
   <string name="account_preferences_media_tab">Ortam</string>
@@ -145,35 +137,23 @@
   <string name="export_account_wait_message">Hesap bilgilerini dışa aktar</string>
   <string name="account_export_file">Hesabı yedekle</string>
   <string name="account_export_file_summary">Daha sonra geri yüklemek için aygıtınızdaki hesabı yedekleyin.</string>
-  <string name="account_export_end_decryption_message">Sağlanan parola kullanılarak hesabınızın kilidi açılamıyor.</string>
   <string name="account_export_end_network_title">Ağ hatası</string>
-  <string name="account_export_end_network_message">Hesap ağda dışa aktarılamadı. Bağlanabilirliğinizi denetleyin.</string>
   <string name="account_export_end_error_title">Hata</string>
-  <string name="account_export_end_error_message">Hesap dışa aktarılamadı. Bilinmeyen hata oluştu.</string>
   <string name="account_enter_password">Parolayı gir</string>
-  <string name="account_share_body">Jami dağıtık iletişim platformunda \'%1$s\' kullanarak benimle iletişime geç: %2$s</string>
-  <string name="account_share_body_with_username">Jami dağıtık iletişim platformunda \'%1$s\' veya herkese açık kullanıcı adımı \'%2$s\' kullanarak benimle iletişime geç: %3$s</string>
-  <string name="account_contact_me">Jami üzerinden bana ulaşın !</string>
+  <string name="account_contact_me">Benimle Jami\'de iletişime geç!</string>
   <string name="update_account">Hesabı güncelle</string>
   <string name="account_migration">Jami hesabınız güncellenebilir.\nParolanızı girin.</string>
   <string name="ring_account">Jami hesabı </string>
   <string name="sip_account">SIP hesabı</string>
   <string name="ring_account_identity">Kimlik</string>
   <string name="account_migration_title_dialog">Hesap taşıma</string>
-  <string name="account_migration_message_dialog">Hesaplarının güncellenmesi gerekli. Bu işlemi gerçekleştirmek için Hesap yönetimi ekranına gitmek ister misin?</string>
   <string name="account_update_needed">Güncelleme gerekli</string>
-  <string name="account_cannot_be_found_title">Hesap bulunamadı</string>
-  <string name="account_cannot_be_found_message">Hesap, Jami ağında bulunamadı.\nVar olan aygıttan Jami üzerinde dışa aktarıldığından ve sağladığı bilgilerin doğru olduğundan emin olun.</string>
   <string name="account_sip_cannot_be_registered_message">Hesap oluşturma süreciyle devam edebilir ya da bilgilerini burada düzenleyebilirsin. Düzenleme daha sonra hesap ayarlarında yapılabilir.</string>
-  <string name="account_no_network_title">Ağa bağlanılamıyor</string>
-  <string name="account_no_network_message">Hesap eklenemiyor çünkü Jami dağıtık ağa bağlanamıyor. Bağlanabilirliğinizi denetleyin.</string>
+  <string name="account_no_network_title">Ağ hatası</string>
   <string name="account_device_added_title">Hesap aygıtı eklendi</string>
   <string name="account_device_added_message">Jami hesabınızı bu aygıta başarıyla kurdunuz.</string>
   <string name="account_device_updated_title">Hesap aygıtı güncellendi</string>
   <string name="account_device_updated_message">Jami hesabınızı başarıyla güncellediniz.</string>
-  <string name="account_cannot_be_updated_message">Hesap aygıtı güncellenemedi. Lütfen parolanızı denetleyin.</string>
-  <string name="account_sip_success_title">Sip hesabı kayıtlı</string>
-  <string name="account_sip_success_message">Sip hesabınızı başarıyla kaydettiniz.</string>
   <string name="account_sip_register_anyway">Her koşulda kaydol</string>
   <!--TV-->
   <string name="account_tv_settings_header">Hesap ayarları</string>
@@ -193,11 +173,8 @@
   <string name="account_link_export_button">Yeni aygıt bağla</string>
   <string name="account_link_show_button">Diğer %d bağlı aygıtı göster</string>
   <string name="account_link_hide_button">Bağlı aygıtı gizle</string>
-  <string name="account_link_export_info">Bu hesabı diğer aygıtlarda kullanmak için öncelikle onu Jami de göstermelisin. Bu, hesabı ayarlamak için yeni aygıta girmen gereken bir PIN kodu oluşturacaktır. PIN 10 dakika süreyle geçerlidir.</string>
   <string name="account_start_export_button">PIN oluştur</string>
   <string name="account_end_export_button">kapat</string>
-  <string name="account_end_export_infos">PIN: \n\n%%\n\nSüreci tamamlamak için yeni aygıtta Ring açman gerekiyor. \"Bu aygıtı hesaba bağla\" ile yeni hesap oluştur. PIN 10 dakikalığına geçerlidir.</string>
-  <string name="account_link_export_info_light">Bu hesabı diğer aygıtlarda kullanmak için öncelikle onu Jami de göstermelisin. Bu, hesabı ayarlamak için yeni aygıta girmen gereken bir PIN kodu oluşturacaktır. PIN 10 dakika süreyle geçerlidir.</string>
   <string name="account_export_title">Hesabı diğer aygıtlara bağla</string>
   <string name="account_connect_server_button">Yönetim sunucusuna bağlan</string>
   <string name="account_connect_button">Bağlan</string>
@@ -229,21 +206,17 @@
   <string name="account_creation_profile">Profilinizi oluşturun</string>
   <string name="account_creation_ring">Jami hesabınızı oluşturun</string>
   <string name="account_link_title">Bu aygıtı bağla</string>
-  <string name="account_sip_cannot_be_registered">Hesap kaydedilemiyor</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">Hesabımı düzenle</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Onaylamak için parolayı girin</string>
   <string name="enter_password">Parolayı gir</string>
   <string name="revoke_device_title">Aygıtı kaldır</string>
-  <string name="revoke_device_message">%1$s kaldırılacak, emin misin?</string>
   <string name="revoke_device_wait_title">Lütfen bekleyin...</string>
   <string name="revoke_device_wait_message">Aygıt iptal ediliyor</string>
   <string name="rename_device_title">Bu aygıtı yeniden adlandır</string>
   <string name="rename_device_message">Jami hesabınızı bu aygıtta tanımlamak için yeni ad seçin</string>
   <string name="rename_device_button">Aygıtı yeniden adlandır</string>
   <string name="account_rename_device_hint">Yeni aygıt adı seç</string>
-  <string name="account_device_name_empty">Aygıt adı boş bırakılamaz</string>
   <string name="account_device_this_indicator">Bu aygıt</string>
   <string name="account_disabled_indicator">devre dışı</string>
   <!--Link a new device-->
@@ -256,12 +229,9 @@
   <string name="account_link_password">Bu hesap parola ile şifrelenmiştir; PIN kodunu oluşturmak için parolayı girin.</string>
   <string name="account_link_generate_button">Oluştur</string>
   <string name="account_link_time_valid">%1$s sonra bu PIN geçerliliğini yitirecek.</string>
-  <string name="account_link_device_info">QR kodunu veya PIN\'i görmek için diğer Jami uygulamasından \"Yeni bir aygıt bağla\"yı seç</string>
+  <string name="account_link_device_info">QR kodunu veya PIN\'i göstermek için diğer Jami uygulamasından \"Yeni bir aygıt bağla\"yı seç</string>
   <string name="account_generate_export_device">Diğer aygıtta</string>
-  <string name="account_generate_export_info">Jami\'yi kur ve başlat, \"Başka bir aygıttan içe aktar\"ı seç ve QR kodunu tara.</string>
   <string name="content_description_qr_generated">QR kodunuz</string>
-  <string name="account_generate_export_invalid">PIN artık geçerli değil.\n Parolayı gir ve yeni aygıtı bağlamak için başka bir tane oluştur.</string>
-  <string name="account_generate_export_invalid_two">PIN artık geçerli değil.\n Yeni aygıtı bağlamak için başka bir PIN oluştur.</string>
   <string name="help_pin_info">Hesap parola ile şifrelenmişse doldurun</string>
   <string name="connect_device_scanqr">QR kodu tara</string>
   <string name="connect_device_enterPIN">veya PIN\'i gir</string>

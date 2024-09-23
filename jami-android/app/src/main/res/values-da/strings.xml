@@ -9,19 +9,13 @@
   <string name="contribute_section">Bidrag</string>
   <string name="version_section">Version</string>
   <string name="no_email_app_installed">Ingen email-app fundet, installér en for at sende os en rapport</string>
-  <string name="no_browser_app_installed">Ingen webbrowser applikation fundet, installér en for at se denne side</string>
   <string name="email_chooser_title">Send mail ved brug af...</string>
-  <string name="website_chooser_title">Vis websted med...</string>
-  <string name="license">Denne software udbydes, \"som den er\", uden nogen form for garanti. For flere detaljer se <u>GNU General Public License version 3 or later</u></string>
   <string name="description">Jami er fri software til generel kommunikation, som respekterer brugerens ret til frihed og privatliv.</string>
   <string name="credits">Krediteringer</string>
   <string name="pip_title">Jami-konferencen</string>
   <string name="call_service_description">Denne service er nødvendig for at holde opkald kørende i baggrunden. Den kører kun under opkald.</string>
   <string name="data_transfer_service_description">Denne service er nødvendig for at vise persistente notifikationer under fil overførelser. Den kører kunder under fil overførelser.</string>
   <!--About dialog-->
-  <string name="developed_by">Udviklet af</string>
-  <string name="designed_by">Designet af</string>
-  <string name="ringtones_by">Ringetoner af</string>
   <!--RingActivity-->
   <string name="error_no_network">Ingen netværksforbindelse</string>
   <string name="error_account_offline">Kontoen er offline.</string>
@@ -35,7 +29,6 @@
   <string name="menu_item_settings">Indstillinger</string>
   <string name="menu_item_advanced_settings">Avancerede indstillinger</string>
   <string name="menu_item_account_settings">Kontoindstillinger</string>
-  <string name="menu_item_plugin_list">Plugin Indstillinger</string>
   <string name="menu_item_share">Del min konto</string>
   <string name="menu_item_about">Om Jami</string>
   <string name="video_setting_title">Videoindstillinger</string>
@@ -97,17 +90,9 @@
   <string name="ongoing_call">Igangværende opkald</string>
   <string name="hist_in_call">Indgående opkald af %1$s</string>
   <string name="hist_out_call">Udgående opkald af %1$s</string>
-  <string name="start_error_title">Kan ikke starte Jami!</string>
   <string name="start_error_mic_required">Jami kræver adgang til mikrofonen for at virke.</string>
-  <string name="action_call_accept">Besvar opkald</string>
-  <string name="action_call_accept_audio">Svar i lyd</string>
-  <string name="action_call_accept_video">Svar i video</string>
-  <string name="action_call_hold_accept">Hold og tage opkald lyd</string>
-  <string name="action_call_hold_accept_video">Hold og tag video opkald</string>
-  <string name="action_call_end_accept">Afslut og besvar opkald</string>
   <string name="action_call_decline">Afvis</string>
   <string name="action_call_mic_mute">Sluk mikrofon</string>
-  <string name="action_load_plugin">Indlæs plugin</string>
   <string name="ab_action_speakerphone">Aktiver højtaler</string>
   <string name="ab_action_contact_add">Tilføj til kontakter</string>
   <string name="ab_action_contact_add_question">Tilføj til kontakter?</string>
@@ -143,11 +128,8 @@
   <string name="ringtone_error_size_too_big">Filen er for stor. Maksimumstørrelsen er %1$dkB.</string>
   <string name="ringtone_custom_prompt">Anvend en brugerdefineret ringetone</string>
   <string name="ringtone_custom_label">Brugerdefineret</string>
-  <string name="ringtone_jami_tones">Jami Ringetoner</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Jami kræver \"Se kontakter\" tilladelsen for at du kan bruge denne funktion. Overvej at give tilladelsen.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Jami kræver \"Skriv til opkaldsloggen\" tilladelsen for at du kan bruge denne funktion. Overvej at give tilladelsen.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Skan QR-koden for kontoen du vil tilføje.</string>
   <string name="title_activity_qrcode">Del min konto</string>
@@ -163,8 +145,6 @@
   <string name="conversation_details">Samtale detaljer</string>
   <string name="contact_details">Kontakt-detajler</string>
   <string name="conversation_action_delete_this">Slet denne samtale</string>
-  <string name="conversation_action_delete_this_title">Slet denne samtale?</string>
-  <string name="conversation_action_delete_this_message">Denne handling kan ikke fortrydes.</string>
   <string name="conversation_action_history_clear">Ryd historiken</string>
   <string name="conversation_action_history_clear_title">Ryd samtalehistorikken?</string>
   <string name="conversation_action_history_clear_message">Det vil helt sikkert rydde samtalehistorikken.</string>
@@ -201,7 +181,6 @@
   <string name="conversation_contact_invited">%1$s blev inviteret</string>
   <string name="conversation_contact_added">%1$s er blevet tilsluttet</string>
   <string name="conversation_contact_left">%1$ er venstre</string>
-  <string name="conversation_contact_banned">%1$s blev forbudt</string>
   <string name="conversation_search_hint">Søg samtale</string>
   <string name="today">I dag</string>
   <string name="yesterday">I går</string>
@@ -216,14 +195,12 @@
   <string name="help_password_choose">Vælg et stærkt kodeord som du kan huske, til at beskytte din Jami-konto.</string>
   <string name="help_password_enter">Indtast kodeordet til din overordnede Jami-konto</string>
   <string name="help_server_enter">Skriv URL\'en af management serveren.</string>
-  <string name="help_pin_enter">Indtast PIN-koden fra en anden konfigureret Jami-konto. Brug \"eksporter Jami-konto\"-funktionen for at få en PIN-kode.</string>
   <string name="wizard_next">Næste</string>
   <string name="wizard_back">Tilbage</string>
   <string name="wizard_skip">Spring over</string>
   <string name="hist_contact_invited">Kontakt inviteret</string>
   <string name="hist_contact_added">Kontakt tilføjet</string>
   <string name="hist_contact_left">Kontakt til venstre</string>
-  <string name="hist_contact_banned">Kontakt forbudt</string>
   <string name="hist_invitation_received">Invitation modtaget</string>
   <!--Account Summary-->
   <string name="profile">Profil</string>
@@ -272,7 +249,6 @@
   <string name="tv_contact_row_header">Kontakter</string>
   <string name="gallery_error_title">Ingen Galleri-applikation fundet</string>
   <string name="gallery_error_message">Der blev ikke funden nogen applikation på enheden der kan vise Galleriet</string>
-  <string name="generic_error">En ukendt fejl opstod</string>
   <!--File Transfer-->
   <string name="invalid_file">Ugyldig fil</string>
   <string name="not_able_to_write_file">Kan ikke skrive fil</string>
@@ -292,7 +268,6 @@
   <string name="file_saved_in">Fil gemt i %s</string>
   <string name="file_saved_successfully">Filen blev gemt</string>
   <string name="file_download">Download</string>
-  <string name="no_space_left_on_device">Ikke mere plads på enheden</string>
   <string name="title_media_viewer">Mediefremviser</string>
   <string name="menu_file_open">Åbn fil</string>
   <string name="menu_file_download">Hent fil</string>
@@ -343,29 +318,20 @@
   <string name="wizard_profile_button">Gem profil</string>
   <string name="wizard_profile_skip">Springer over og gør det senere</string>
   <string name="fab_path_choose">Vælg en anden fil</string>
-  <string name="chat_plugins">Chat-plugins</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Del</string>
   <string name="bottomSheet_dialpad_btn">Væsen</string>
-  <string name="bottomSheet_plugins_btn">Plugins</string>
   <string name="bottomSheet_add_participants_btn">Tilføj</string>
   <string name="bottomSheet_change_camera_btn">Ændring</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>
-  <string name="bottomSheet_hangup_btn">Afslut opkald</string>
   <string name="bottomSheet_mute_microphone_btn">Mikro</string>
   <string name="bottomSheet_sound_output_btn">Lyder</string>
   <string name="bottomSheet_raiseHand_btn">Løft hånden.</string>
-  <string name="open_account_plugin_settings">Åben konto- pluginindstillinger</string>
-  <string name="open_general_plugin_settings">Åben Generelle Pluginindstillinger</string>
   <string name="uninstall">Afinstallere</string>
   <string name="reset">Omstilling</string>
   <!--Swarm Detail-->
   <string name="rename_btn">- Det bekræfter jeg.</string>
-  <string name="rename_error">Kan ikke være tomt</string>
-  <string name="swarm_description">Tilføj en beskrivelse</string>
-  <string name="tab_about">Om</string>
   <string name="tab_members">Medlemmer</string>
-  <string name="tab_documetn">Dokumenter</string>
   <string name="dialogtitle_title">Redigere Swarm titel</string>
   <string name="dialogtitle_description">Redigere beskrivelse af Swarm</string>
   <string name="dialog_hint_title">Titel</string>
@@ -381,5 +347,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Velkommen til Jami</string>
   <!--Donation-->
-  <!--Plugin-->
+  <!--Extension-->
 </resources>

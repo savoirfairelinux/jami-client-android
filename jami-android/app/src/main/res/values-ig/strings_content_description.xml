@@ -1,9 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--Strings for xml content description of images-->
-  <string name="contact_quick_call_description">Kpọọ Ngwa Ngwa</string>
-  <string name="contact_picture_description">Foto Kpọtụrụ</string>
   <string name="dial_numeric_pad">Nọmba dialpad</string>
   <string name="contact_unblock">Ịgbanwee</string>
-  <string name="video_plugins">Ihe Ntinye vidiyo</string>
 </resources>

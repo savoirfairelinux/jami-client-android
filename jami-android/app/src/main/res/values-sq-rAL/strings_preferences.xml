@@ -27,7 +27,6 @@
   <string name="pref_startOnBoot_title">Nise Jami-n kur niset sistemi</string>
   <string name="pref_startOnBoot_summary">Xhirojeni Jami-n në prapaskenë, kur niset sistemi.</string>
   <string name="pref_clearHistory_title">Spastroje historikun</string>
-  <string name="pref_clearHistory_summary">Spastroni krejt historikun e bisedave, Ky veprim nuk mund të zhbëhet.</string>
   <string name="pref_notification_title">Dukshmëri njoftimesh</string>
   <string name="pref_notification_summary">Caktoni dukshmëri njoftimesh nën ekran të kyçur.</string>
   <string name="pref_blackList_title">Listë bllokimesh</string>
@@ -52,22 +51,8 @@
   <string name="notification_public">Publike \n(shfaq njoftime dhe lëndën e tyre nën ekran të kyçur)\n</string>
   <string name="notification_private">Private \n(shfaq njoftime, por fshihe lëndën e tyre, kur ekrani është i kyçur)\n</string>
   <string name="notification_secret">Të fshehta \n(mos shfaq njoftime nën ekran të kyçur)</string>
-  <!--Plugin-->
-  <string name="pref_plugins_title">Shtojca</string>
-  <string name="pref_plugins_summary">Aktivizoni shtojcat dhe caktoni parametrat e tyre </string>
-  <string name="fab_plugins_add">Shtoni shtojcë të re</string>
-  <string name="plugin_uninstall_title">Të çinstalohet Shtojca?</string>
-  <string name="plugin_reset_preferences">Rikthe te parazgjedhjet parapëlqimet për shtojca</string>
-  <string name="plugin_reset_preferences_summary">Rregullimet e shtojcës tuaj do të kthehen te parazgjedhjet</string>
-  <string name="plugin_reset_preferences_ask">Doni të kthehen te parazgjedhjet rregullimet e përgjithshme të shtojcës?</string>
-  <string name="plugin_reset_account_preferences_ask">Doni të rikthehen te parazgjedhjet rregullimet e shtojcës së llogarisë?</string>
-  <string name="plugin_successfully_installed">Shtojca <b>%1$s</b> u instalua me sukses</string>
-  <string name="plugin_install_failure">S’u arrit të instalohej shtojcë: <b>%1$s</b></string>
-  <string name="plugin_recent_version_exception">Keni një version më të freskët të: <b>%1$s</b></string>
-  <string name="plugin_same_version_exception">Keni të instaluar të njëjtin version të <b>%1$s</b></string>
-  <string name="plugin_invalid_signature"><b>%1$s</b> ka nënshkrim të pavlefshëm</string>
-  <string name="plugin_invalid_authority">S’verifikohet dot autoritteti për: <b>%1$s</b></string>
-  <string name="plugin_invalid_format">Format i pavlefshëm shtojcash: <b>%1$s</b></string>
-  <string name="plugin_force_install">detyro \n instalim</string>
-  <string name="plugin_path_image_add">Shtoni një figurë të re</string>
+  <!--Extension-->
+  <string name="pref_extensions_title">Zgjerime</string>
+  <string name="extension_invalid_signature"><b>%1$s</b> ka nënshkrim të pavlefshëm</string>
+  <string name="extension_force_install">detyro \n instalim</string>
 </resources>

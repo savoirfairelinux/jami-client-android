@@ -9,19 +9,13 @@
   <string name="contribute_section">Talkinti</string>
   <string name="version_section">Versija</string>
   <string name="no_email_app_installed">Nerasta jokios el. pašto programėlės, įdiekite el. pašto programą, kad išsiųsti mums pranešimą</string>
-  <string name="no_browser_app_installed">Nerasta jokios interneto naršyklės programėlės, įdiekite interneto naršyklę, kad peržiūrėti šį puslapį</string>
   <string name="email_chooser_title">Siųsti paštą, naudojant...</string>
-  <string name="website_chooser_title">Rodyti svetainę, naudojant...</string>
-  <string name="license">Ši programinė įranga yra pateikiama \"tokia, kokia yra\", be jokios garantijos. Išsamesnei informacijai, žiūrėkite <u>GNU Bendrąją Viešąją Licenciją, versiją 3 arba vėlesnę</u></string>
   <string name="description">Jami yra visuotiniam bendravimui skirta laisva programinė įranga, kuri gerbia savo naudotojų laisves ir privatumą.</string>
   <string name="credits">Padėkos</string>
   <string name="pip_title">Jami konferencija</string>
   <string name="call_service_description">Ši paslauga reikalinga, kad jūsų skambučiai būtų nuolat veikiami.</string>
   <string name="data_transfer_service_description">Ši paslauga reikalinga, kad būtų rodomi nuolatiniai pranešimai per failų pervedimus.</string>
   <!--About dialog-->
-  <string name="developed_by">Sukūrė</string>
-  <string name="designed_by">Apipavidalino</string>
-  <string name="ringtones_by">Ringtones iš</string>
   <!--RingActivity-->
   <string name="error_no_network">Nėra tinklo ryšio</string>
   <string name="error_account_offline">Sąskaita yra išjungti</string>
@@ -35,7 +29,6 @@
   <string name="menu_item_settings">Nustatymai</string>
   <string name="menu_item_advanced_settings">Išplėstiniai nustatymai</string>
   <string name="menu_item_account_settings">Paskyros nustatymai</string>
-  <string name="menu_item_plugin_list">Plugins nustatymas</string>
   <string name="menu_item_share">Bendrinti mano paskyrą</string>
   <string name="menu_item_about">Apie Jami</string>
   <string name="video_setting_title">Vaizdo nustatymai</string>
@@ -99,17 +92,9 @@
   <string name="ongoing_call">Esamas skambutis</string>
   <string name="hist_in_call">%1$s gaunamasis skambutis</string>
   <string name="hist_out_call">%1$s išsiunčiamasis skambutis</string>
-  <string name="start_error_title">Nepavyksta paleisti Jami!</string>
   <string name="start_error_mic_required">Jami darbui, reikalingas leidimas naudoti mikrofoną.</string>
-  <string name="action_call_accept">Atsiliepti</string>
-  <string name="action_call_accept_audio">Atsiliepti su garsu</string>
-  <string name="action_call_accept_video">Atsiliepti su vaizdu</string>
-  <string name="action_call_hold_accept">Laikyk ir atsiųsk skambučio garso</string>
-  <string name="action_call_hold_accept_video">Laikykitės ir užimkite skambučių vaizdo įrašą</string>
-  <string name="action_call_end_accept">Baigiu ir atsisiūnuoju</string>
   <string name="action_call_decline">Atmesti</string>
   <string name="action_call_mic_mute">Išjungti mikrofoną</string>
-  <string name="action_load_plugin">Įkrovimo įtaisas</string>
   <string name="ab_action_speakerphone">Įjungti garsiakalbį</string>
   <string name="ab_action_contact_add">Pridėti prie adresatų</string>
   <string name="ab_action_contact_add_question">Pridėti prie adresatų?</string>
@@ -145,11 +130,8 @@
   <string name="ringtone_error_size_too_big">Šis failas yra per didelis. Didžiausias dydis yra %1$dkB.</string>
   <string name="ringtone_custom_prompt">Pasirinkite pasirinktą skambenų garsą</string>
   <string name="ringtone_custom_label">Įprastoji</string>
-  <string name="ringtone_jami_tones">Džami Tones</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Jamui reikia leidimo \"Skaitykite kontaktus\", kad įgalintų šią funkciją.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Jamui reikia leidimo \"Sirašyti skambučių žurnalis\" kad įgalintų šią funkciją.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Nuskenuokite paskyros, kurią norite pridėti, QR kodą.</string>
   <string name="title_activity_qrcode">Bendrinti mano paskyrą</string>
@@ -165,8 +147,6 @@
   <string name="conversation_details">Išsamiau apie pokalbį</string>
   <string name="contact_details">Išsamiau apie adresatą</string>
   <string name="conversation_action_delete_this">Ištrinti šį pokalbį</string>
-  <string name="conversation_action_delete_this_title">Ištrinti šį pokalbį ?</string>
-  <string name="conversation_action_delete_this_message">Šio veiksmo negalima bus atšaukti.</string>
   <string name="conversation_action_history_clear">Išvalyti istoriją</string>
   <string name="conversation_action_history_clear_title">Išvalyti pokalbio istoriją?</string>
   <string name="conversation_action_history_clear_message">Tai išvalys pokalbio istoriją.</string>
@@ -203,7 +183,6 @@
   <string name="conversation_contact_invited">%1$s buvo pakviestas</string>
   <string name="conversation_contact_added">%1$s prisijungė</string>
   <string name="conversation_contact_left">%1$s išėjo</string>
-  <string name="conversation_contact_banned">%1$s uždraustas</string>
   <string name="conversation_search_hint">Paieška pokalbis</string>
   <string name="today">Šiandien</string>
   <string name="yesterday">Vakar</string>
@@ -218,14 +197,12 @@
   <string name="help_password_choose">Pasirinkite stiprų slaptažodį, kurį prisiminsite, kad apsaugotumėte savo Jami paskyrą.</string>
   <string name="help_password_enter">Įveskite pagrindinį \"Jami\" paskyros slaptažodį.</string>
   <string name="help_server_enter">Įveskite valdymo serverių URL adresą.</string>
-  <string name="help_pin_enter">Įveskite PIN iš kitos sukonfigūruotos Jami paskyros. Norėdami gauti PIN, naudokite ypatybę \"eksportuoti Jami paskyrą\".</string>
   <string name="wizard_next">Kitas</string>
   <string name="wizard_back">Atgal</string>
   <string name="wizard_skip">Praleisti</string>
   <string name="hist_contact_invited">Kontaktas kviečiamas</string>
   <string name="hist_contact_added">Adresatas pridėtas</string>
   <string name="hist_contact_left">Kontaktas kairėje</string>
-  <string name="hist_contact_banned">Uždraustas kontaktas</string>
   <string name="hist_invitation_received">Gautas pakvietimas</string>
   <!--Account Summary-->
   <string name="profile">Profilis</string>
@@ -274,7 +251,6 @@
   <string name="tv_contact_row_header">Adresatai</string>
   <string name="gallery_error_title">Nerasta jokios Galerijos programėlės</string>
   <string name="gallery_error_message">Įrenginyje nerasta jokios programėlės atverti Galeriją</string>
-  <string name="generic_error">Įvyko nežinoma klaida</string>
   <!--File Transfer-->
   <string name="invalid_file">Neteisingas failas</string>
   <string name="not_able_to_write_file">Nepavyko rašyti failo</string>
@@ -294,7 +270,6 @@
   <string name="file_saved_in">Failas įrašytas į %s</string>
   <string name="file_saved_successfully">Failas sėkmingai įrašytas</string>
   <string name="file_download">Atsisiųsti</string>
-  <string name="no_space_left_on_device">Įrenginyje nebeliko vietos</string>
   <string name="title_media_viewer">Medijos žiūryklė</string>
   <string name="menu_file_open">Atverti failą</string>
   <string name="menu_file_download">Atsisiųsti failą</string>
@@ -345,29 +320,20 @@
   <string name="wizard_profile_button">Įrašyti profilį</string>
   <string name="wizard_profile_skip">Praleisti ir atlikti tai vėliau</string>
   <string name="fab_path_choose">Pasirink kitą failą</string>
-  <string name="chat_plugins">Čatų įrankai</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Bendrinti</string>
   <string name="bottomSheet_dialpad_btn">Ženklinis</string>
-  <string name="bottomSheet_plugins_btn">Įskiepiai</string>
   <string name="bottomSheet_add_participants_btn">Pridėti</string>
   <string name="bottomSheet_change_camera_btn">Keisti</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>
-  <string name="bottomSheet_hangup_btn">Baigti skambutį</string>
   <string name="bottomSheet_mute_microphone_btn">Mikro</string>
   <string name="bottomSheet_sound_output_btn">Skambės</string>
   <string name="bottomSheet_raiseHand_btn">Pakelti ranką</string>
-  <string name="open_account_plugin_settings">Atverti paskyros įtaisų priedą</string>
-  <string name="open_general_plugin_settings">Atskirkite bendrų papildinio įrankius</string>
   <string name="uninstall">Išinstaluokite</string>
   <string name="reset">Atstatyti</string>
   <!--Swarm Detail-->
   <string name="rename_btn">Patvirtinti</string>
-  <string name="rename_error">Negali būti tuščias.</string>
-  <string name="swarm_description">Pridėti aprašą</string>
-  <string name="tab_about">Apie</string>
   <string name="tab_members">Parlamento nariai</string>
-  <string name="tab_documetn">Dokumentai</string>
   <string name="dialogtitle_title">Paskilausite Swarm pavadinimą</string>
   <string name="dialogtitle_description">Paskilausite \"Swarm\" aprašymą</string>
   <string name="dialog_hint_title">Antraštė</string>
@@ -383,5 +349,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Sveiki atvykę į Jami</string>
   <!--Donation-->
-  <!--Plugin-->
+  <!--Extension-->
 </resources>

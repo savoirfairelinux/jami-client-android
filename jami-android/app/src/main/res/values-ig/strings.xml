@@ -9,19 +9,13 @@
   <string name="contribute_section">Nye aka</string>
   <string name="version_section">Version</string>
   <string name="no_email_app_installed">Enweghị ngwa email achọtara, wụnye otu iji zitere anyị akụkọ</string>
-  <string name="no_browser_app_installed">Enweghi ngwa nchọgharị weebụ achọtara, wụnye otu iji lee ibe a</string>
   <string name="email_chooser_title">Ziga ozi site na iji...</string>
-  <string name="website_chooser_title">Lee ebe nrụọrụ weebụ site na iji...</string>
-  <string name="license">A na-enye ngwanrọ a \"dị ka ọ dị\", na-enweghị akwụkwọ ikike ọ bụla. Maka nkọwa, lee <u>GNU General Public License version 3 ma ọ bụ mgbe e mesịrị</u></string>
   <string name="description">Jami bụ ngwanrọ na-enweghị ihe ọ bụla maka nkwukọrịta zuru ụwa ọnụ nke na-akwanyere nnwere onwe na nzuzo nke ndị ọrụ ya ùgwù.</string>
   <string name="credits">Ihe ndị e ji akwụ ụgwọ</string>
   <string name="pip_title">Nzukọ Jami</string>
   <string name="call_service_description">Ọrụ a dị mkpa iji mee ka oku gị na-agba ọsọ na mbara ala. Ọ na-agba ọsọ naanị n\'oge oku.</string>
   <string name="data_transfer_service_description">Ọrụ a dị mkpa iji gosipụta ọkwa na-adịgide adịgide n\'oge nnyefe faịlụ. Ọ na-agba naanị n\'oge nnyefe faịlụ.</string>
   <!--About dialog-->
-  <string name="developed_by">Nke e mepụtara site</string>
-  <string name="designed_by">E mere ya</string>
-  <string name="ringtones_by">Ndị na- akpọ ya</string>
   <!--RingActivity-->
   <string name="error_no_network">Enweghị njikọ netwọk</string>
   <string name="error_account_offline">Akaụntụ ahụ adịghị</string>
@@ -35,7 +29,6 @@
   <string name="menu_item_settings">Ntọala</string>
   <string name="menu_item_advanced_settings">Ntọala Dị Elu</string>
   <string name="menu_item_account_settings">Ntọala akaụntụ</string>
-  <string name="menu_item_plugin_list">Ntọala nke Plugins</string>
   <string name="menu_item_share">Kesaa akaụntụ m</string>
   <string name="menu_item_about">Banyere Jami</string>
   <string name="video_setting_title">Ntọala nke Ihe Nlereanya</string>
@@ -87,7 +80,6 @@
   <!--Conversation-->
   <string name="conversation_details">Ihe ndị e kwuru n\'okwu ahụ</string>
   <string name="contact_details">Ihe ndị a ga-eji kparịta ụka</string>
-  <string name="conversation_action_delete_this_message">A pụghị ime ka ihe a ghara ime.</string>
   <string name="conversation_action_history_clear">Akụkọ ihe mere eme doro anya</string>
   <string name="conversation_action_block_this">Njikọ na-ekpuchi</string>
   <string name="conversation_action_incoming_call">N\'ọhịa</string>
@@ -152,19 +144,14 @@
   <string name="wizard_profile_info">Profaịlụ na-akọrọ naanị na kọntaktị</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Ịkekọrịta</string>
-  <string name="bottomSheet_plugins_btn">Ihe mgbakwunye</string>
   <string name="bottomSheet_add_participants_btn">Tinye</string>
   <string name="bottomSheet_change_camera_btn">Mgbanwe</string>
-  <string name="bottomSheet_hangup_btn">Kwụsị oku</string>
   <string name="bottomSheet_raiseHand_btn">Welie aka gị</string>
   <string name="uninstall">Wepụ ihe nrụnye</string>
   <string name="reset">Tọgharia</string>
   <!--Swarm Detail-->
   <string name="rename_btn">Kwado</string>
-  <string name="swarm_description">Tinye nkọwa</string>
-  <string name="tab_about">Banyere</string>
   <string name="tab_members">Ndị otu</string>
-  <string name="tab_documetn">Ihe odide</string>
   <string name="dialog_hint_title">Isiokwu</string>
   <string name="dialog_hint_description">Nkọwa</string>
   <!--JamiId-->
@@ -174,5 +161,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Mmadụ Bịa na Jami</string>
   <!--Donation-->
-  <!--Plugin-->
+  <!--Extension-->
 </resources>

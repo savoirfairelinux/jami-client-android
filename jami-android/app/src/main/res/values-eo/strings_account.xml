@@ -21,18 +21,12 @@
   <string name="dialog_wait_create_details">Bonvole atendu dum via konto aldonatas…</string>
   <string name="dialog_wait_update">Aktualigo de konto</string>
   <string name="dialog_wait_update_details">Bonvolu atendi ĝis via nova konto estos ĝisdatigita...</string>
-  <string name="dialog_warn_ip2ip_account_title">Ĉu krei malplenan SIP konton ?</string>
-  <string name="dialog_warn_ip2ip_account_message">Vi kreontas novan SIP konton sen valida nomo de gastiga komputilo.
-        Vi nur eblos fari kaj ricevi senperajn ip vokojn.
-        Vi povas redakti vian konton poste</string>
   <string name="account_type_ip2ip">IP-konto</string>
   <string name="help_ring">Konto Jami permesas al vi atingi homojn sekure en peer-to-peer tra plene distribuita reto.</string>
-  <string name="help_sip_title">Aldoni vian SIP konton</string>
+  <string name="help_sip_title">Aldonu SIP-konto</string>
   <string name="help_sip">Agordi ekzistantan SIP konton.</string>
-  <string name="create_sip_account">Aldonu SIP-konto</string>
   <!--Strings related to account deletion-->
-  <string name="account_delete_dialog_title">Ĉu forigi konton ?</string>
-  <string name="account_delete_dialog_message">Tiu ĉi ago ne povos malfariĝi.</string>
+  <string name="account_delete_dialog_message">Tiu ago ne povas esti inversigita.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Sen registrita konto</string>
   <string name="normal_accounts_titles">Kontoj</string>
@@ -40,8 +34,6 @@
   <string name="account_device_revoke">Revoga aparato</string>
   <string name="account_device_revocation_success_title">Sukceso</string>
   <string name="account_device_revocation_success">La aparato nun estas nuligita!</string>
-  <string name="account_device_revocation_error_title">Ne eblas revoki la aparaton</string>
-  <string name="account_device_revocation_wrong_password">Malĝusta pasvorto.</string>
   <string name="account_device_revocation_unknown_device">Nekonata aparato.</string>
   <string name="account_device_revocation_error_unknown">Nekonata eraro.</string>
   <string name="account_password_change">Ŝanĝu la pasvorton</string>
@@ -63,8 +55,7 @@
   <string name="account_rendezvous_summary">En la reĝimo Rendezvous, alvenantaj alvokoj estos aldonitaj al konferenca ĉambro.</string>
   <string name="account_upnp_label">Aktivigu UPnP</string>
   <string name="account_proxy_field">Prokura Servilo</string>
-  <!--Plugin Details-->
-  <string name="account_preference_plugin_tab">Plugins</string>
+  <!--Extension Details-->
   <!--Audio Details-->
   <string name="account_audio_label">Aŭdio</string>
   <string name="account_preferences_media_tab">Aŭdvidaĵoj</string>
@@ -144,14 +135,9 @@
   <string name="export_account_wait_message">Informaĵoj pri eksportkontoj</string>
   <string name="account_export_file">Konto de rezervo</string>
   <string name="account_export_file_summary">Rezervu vian konton en via aparato por reestigi ĝin poste.</string>
-  <string name="account_export_end_decryption_message">Ne povis malŝlosi vian konton uzante la donitan pasvorton.</string>
   <string name="account_export_end_network_title">Reta eraro</string>
-  <string name="account_export_end_network_message">Ne eblas eksportadi konton en la reto. Kontrolu vian konekton.</string>
   <string name="account_export_end_error_title">Eraro</string>
-  <string name="account_export_end_error_message">Ne eblas eksportadi konton. Okazas nekonata eraro.</string>
   <string name="account_enter_password">Enigu pasvorton</string>
-  <string name="account_share_body">Kontaktu min uzante \'%1$s\' sur la distribuita komunikada platformo de Jami: %2$s</string>
-  <string name="account_share_body_with_username">Kontaktu min uzante \"%1$s\" aŭ mian publikan uzantnomon \"%2$s\" sur la distribuita komunika platformo Jami: %3$s</string>
   <string name="account_contact_me">Kontaktu min pri Jami!</string>
   <string name="update_account">Aktualigo de konto</string>
   <string name="account_migration">Via konto de Jami povas esti ĝisdatigita. Bonvolu enmeti vian pasvorton.</string>
@@ -159,20 +145,13 @@
   <string name="sip_account">SIP-konto</string>
   <string name="ring_account_identity">Identigo</string>
   <string name="account_migration_title_dialog">Migrado de konto</string>
-  <string name="account_migration_message_dialog">Viaj kontoj devas esti ĝisdatigitaj. Ĉu vi volas iri al la ekrano de administrado de konto por fari tiun operacion?</string>
   <string name="account_update_needed">Necesanta ĝisdatigo</string>
-  <string name="account_cannot_be_found_title">Ne trovantas konton</string>
-  <string name="account_cannot_be_found_message">Konto ne estis trovita en la reto de Jami. Certiĝu, ke ĝi estis eksportita al Jami de ekzistanta aparato, kaj ke la kreditaĵoj estas ĝustaj.</string>
   <string name="account_sip_cannot_be_registered_message">Vi povas daŭrigi la procezon de kreado de konto aŭ redakti viajn informojn ĉi tie. Edito ankoraŭ eblas poste en la konto-instalo.</string>
-  <string name="account_no_network_title">Ne povas konekti al la reto</string>
-  <string name="account_no_network_message">Ne eblas aldoni konton, ĉar Jami ne povas konektiĝi al la distribuita reto.</string>
+  <string name="account_no_network_title">Reta eraro</string>
   <string name="account_device_added_title">Aldoniĝis konto-aparato</string>
   <string name="account_device_added_message">Vi sukcese instalis vian kontoon sur tiu aparato.</string>
   <string name="account_device_updated_title">Konto aparato ĝisdatigita</string>
   <string name="account_device_updated_message">Vi sukcese ĝisdatigis vian Jamja konton.</string>
-  <string name="account_cannot_be_updated_message">La konto ne povas esti ĝisdatigita. Bonvolu kontroli vian pasvorton.</string>
-  <string name="account_sip_success_title">Registrigita konto</string>
-  <string name="account_sip_success_message">Vi sukcesis registri vian SIP-konton.</string>
   <string name="account_sip_register_anyway">Registru min ĉiuokaze.</string>
   <!--TV-->
   <string name="account_tv_settings_header">Konto-sekcioj</string>
@@ -192,11 +171,8 @@
   <string name="account_link_export_button">Ligigu novan aparaton</string>
   <string name="account_link_show_button">Montru %d pli ligitan aparaton</string>
   <string name="account_link_hide_button">Kaŝu ligitan aparaton</string>
-  <string name="account_link_export_info">Por uzi tiun konton en aliaj aparatoj, vi devas unue malkovri ĝin en Jami. Tio generos PIN-kodo, kiun vi devas enmeti en la novan aparaton por instali la konton. La PIN-kodo validas dum 10 minutoj.</string>
   <string name="account_start_export_button">Generas PIN-n</string>
   <string name="account_end_export_button">proksima</string>
-  <string name="account_end_export_infos">Via PIN estas:\n\n%%\n\nPor kompletigi la procezon, vi devas malfermi Jami sur la nova aparato. Kreu novan konton kun \"Liĉu ĉi tiun aparaton al konto\". Via PIN validas dum 10 minutoj.</string>
-  <string name="account_link_export_info_light">Por uzi tiun konton en aliaj aparatoj, vi devas unue malkovri ĝin en Jami. Tio generos PIN-kodo, kiun vi devas enmeti en la novan aparaton por instali la konton. La PIN-kodo validas dum 10 minutoj.</string>
   <string name="account_export_title">Rilata konto al aliaj aparatoj</string>
   <string name="account_connect_server_button">Konekti al administradservilo</string>
   <string name="account_connect_button">Konekti</string>
@@ -228,21 +204,17 @@
   <string name="account_creation_profile">Kreu vian profilon</string>
   <string name="account_creation_ring">Krei vian konto Jami</string>
   <string name="account_link_title">Ligigu ĉi tiun aparaton</string>
-  <string name="account_sip_cannot_be_registered">Mi ne povas registri konton.</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">Redakti mian konton</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Enigu pasvorton por konfirmi</string>
   <string name="enter_password">Enigu pasvorton</string>
   <string name="revoke_device_title">Revoga aparato</string>
-  <string name="revoke_device_message">Ĉu vi certas ke vi volas revoki %1$s?</string>
   <string name="revoke_device_wait_title">Bonvole atendu…</string>
   <string name="revoke_device_wait_message">Revokadaparato</string>
   <string name="rename_device_title">Renomi ĉi tiun aparaton</string>
   <string name="rename_device_message">Elektu novan nomon por identigi ĉi tiun aparaton en via konto Jami</string>
   <string name="rename_device_button">Re-nomigilo</string>
   <string name="account_rename_device_hint">Elektu novan aparaton</string>
-  <string name="account_device_name_empty">La nomo de la aparato ne povas esti malplena</string>
   <string name="account_device_this_indicator">Tiu aparato</string>
   <string name="account_disabled_indicator">malfunkcia</string>
   <!--Link a new device-->

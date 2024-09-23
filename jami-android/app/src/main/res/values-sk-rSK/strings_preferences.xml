@@ -27,7 +27,6 @@
   <string name="pref_startOnBoot_title">Spustiť Jami pri zapnutí zariadenia</string>
   <string name="pref_startOnBoot_summary">Spustiť Jami na pozadí pri štarte systému.</string>
   <string name="pref_clearHistory_title">Vymazať históriu</string>
-  <string name="pref_clearHistory_summary">Vymazať históriu konverzácie. Táto operácia nemôže byť vrátená. </string>
   <string name="pref_notification_title">Viditeľnosť oznámení</string>
   <string name="pref_notification_summary">Nastavte viditeľnosť oznámení o aplikácii na zámknutočnej obrazovke.</string>
   <string name="pref_blackList_title">Zoznam blokov</string>
@@ -52,19 +51,6 @@
   <string name="notification_public">Verejné \n( zobraziť oznámenia a ich obsah na zámknutoch) \n</string>
   <string name="notification_private">Privátne \n( zobraziť oznámenia, ale skryť ich obsah na zámknutý obrazovka)\n</string>
   <string name="notification_secret">Tajnosť \n(nevykazujú oznámenia na zámknutých obrazovkách)</string>
-  <!--Plugin-->
-  <string name="pref_plugins_title">Vložky</string>
-  <string name="pref_plugins_summary">Aktivujte pluginy a nastaviť ich parametre</string>
-  <string name="fab_plugins_add">Pridať nový plugin</string>
-  <string name="plugin_uninstall_title">Odinstalujte plugin?</string>
-  <string name="plugin_reset_preferences">Nastavenie preferencií pluginov</string>
-  <string name="plugin_reset_preferences_summary">Nastavenia plugin sú predvolené</string>
-  <string name="plugin_reset_preferences_ask">Chcete resetovať všeobecné nastavenia plugin?</string>
-  <string name="plugin_reset_account_preferences_ask">Chcete resetovať nastavenia plugin účtu?</string>
-  <string name="plugin_successfully_installed">Plugin <b>%1$s</b> úspešne nainštalovaný</string>
-  <string name="plugin_install_failure">Neúplný plugin: <b>%1$s</b></string>
-  <string name="plugin_recent_version_exception">Máte najnovšiu verziu: <b>%1$s</b></string>
-  <string name="plugin_same_version_exception">Máte nainštalovanú rovnakú verziu <b>%1$s</b></string>
-  <string name="plugin_force_install">nútená inštalácia</string>
-  <string name="plugin_path_image_add">Pridať nový obrázok</string>
+  <!--Extension-->
+  <string name="extension_force_install">nútená inštalácia</string>
 </resources>

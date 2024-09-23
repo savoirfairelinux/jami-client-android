@@ -9,19 +9,13 @@
   <string name="contribute_section">ಕೊಡುಗೆ</string>
   <string name="version_section">ಆವೃತ್ತಿ</string>
   <string name="no_email_app_installed">ಯಾವುದೇ ಇಮೇಲ್ ಅಪ್ಲಿಕೇಶನ್ ಕಂಡುಬಂದಿಲ್ಲ, ನಮಗೆ ವರದಿ ಕಳುಹಿಸಲು ಒಂದು ಸ್ಥಾಪಿಸಿ</string>
-  <string name="no_browser_app_installed">ವೆಬ್ ಬ್ರೌಸರ್ ಅಪ್ಲಿಕೇಶನ್ ಕಂಡುಬಂದಿಲ್ಲ, ಈ ಪುಟವನ್ನು ವೀಕ್ಷಿಸಲು ಒಂದನ್ನು ಸ್ಥಾಪಿಸಿ</string>
   <string name="email_chooser_title">ಮೇಲ್ ಕಳುಹಿಸಿ--</string>
-  <string name="website_chooser_title">ವೆಬ್ಸೈಟ್ ಅನ್ನು ಬಳಸಿ ವೀಕ್ಷಿಸಿ.</string>
-  <string name="license">ಈ ಸಾಫ್ಟ್ವೇರ್ ಯಾವುದೇ ರೀತಿಯ ಖಾತರಿ ಇಲ್ಲದೆ \"ಅದು\" ಎಂದು ಒದಗಿಸಲಾಗಿದೆ. ವಿವರಗಳಿಗಾಗಿ, ನೋಡಿ <u>GNU ಜನರಲ್ ಪಬ್ಲಿಕ್ ಲೈಸೆನ್ಸ್ ಆವೃತ್ತಿ 3 ಅಥವಾ ನಂತರದ</u></string>
   <string name="description">ಜಾಮಿ ಸಾರ್ವತ್ರಿಕ ಸಂವಹನಕ್ಕಾಗಿ ಉಚಿತ ಸಾಫ್ಟ್ವೇರ್ ಆಗಿದ್ದು, ಅದು ಬಳಕೆದಾರರ ಸ್ವಾತಂತ್ರ್ಯ ಮತ್ತು ಗೌಪ್ಯತೆಯನ್ನು ಗೌರವಿಸುತ್ತದೆ.</string>
   <string name="credits">ಸಾಲಗಳು</string>
   <string name="pip_title">ಜಾಮಿ ಸಮಾವೇಶ</string>
   <string name="call_service_description">ಈ ಸೇವೆ ನಿಮ್ಮ ಕರೆಗಳನ್ನು ಮುಂಚೂಣಿಯಲ್ಲಿಡಲು ಅಗತ್ಯವಾಗಿದೆ. ಇದು ಕರೆಗಳ ಸಮಯದಲ್ಲಿ ಮಾತ್ರ ಕಾರ್ಯನಿರ್ವಹಿಸುತ್ತದೆ.</string>
   <string name="data_transfer_service_description">ಫೈಲ್ ವರ್ಗಾವಣೆ ಸಮಯದಲ್ಲಿ ನಿರಂತರ ಅಧಿಸೂಚನೆಗಳನ್ನು ಪ್ರದರ್ಶಿಸಲು ಈ ಸೇವೆ ಅಗತ್ಯವಾಗಿದೆ. ಇದು ಫೈಲ್ ವರ್ಗಾವಣೆ ಸಮಯದಲ್ಲಿ ಮಾತ್ರ ಕಾರ್ಯನಿರ್ವಹಿಸುತ್ತದೆ.</string>
   <!--About dialog-->
-  <string name="developed_by">ಅಭಿವೃದ್ಧಿಪಡಿಸಿದ</string>
-  <string name="designed_by">ವಿನ್ಯಾಸ</string>
-  <string name="ringtones_by">ರಿಂಗೋನ್ಸ್</string>
   <!--RingActivity-->
   <string name="error_no_network">ನೆಟ್ವರ್ಕ್ ಸಂಪರ್ಕವಿಲ್ಲ</string>
   <string name="error_account_offline">ಖಾತೆ ಆಫ್ ಆಗಿದೆ</string>
@@ -35,7 +29,6 @@
   <string name="menu_item_settings">ಸೆಟ್ಟಿಂಗ್ಗಳು</string>
   <string name="menu_item_advanced_settings">ಸುಧಾರಿತ ಸೆಟ್ಟಿಂಗ್ಗಳು</string>
   <string name="menu_item_account_settings">ಖಾತೆ ಸೆಟ್ಟಿಂಗ್ಗಳು</string>
-  <string name="menu_item_plugin_list">ಪ್ಲಗಿನ್ ಸೆಟ್ಟಿಂಗ್ಗಳು</string>
   <string name="menu_item_share">ನನ್ನ ಖಾತೆಯನ್ನು ಹಂಚಿಕೊಳ್ಳಿ</string>
   <string name="menu_item_about">ಜಾಮಿ ಬಗ್ಗೆ</string>
   <string name="video_setting_title">ವೀಡಿಯೊ ಸೆಟ್ಟಿಂಗ್ಗಳು</string>
@@ -97,17 +90,9 @@
   <string name="ongoing_call">ನಡೆಯುತ್ತಿರುವ ಕರೆ</string>
   <string name="hist_in_call">%1$s ನ ಒಳಬರುವ ಕರೆ</string>
   <string name="hist_out_call">%1$s ನ ಹೊರಹೋಗುವ ಕರೆ</string>
-  <string name="start_error_title">ಜಾಮಿ ಆರಂಭಿಸಲು ಸಾಧ್ಯವಿಲ್ಲ!</string>
   <string name="start_error_mic_required">ಜಾಮಿಗೆ ಮೈಕ್ರೊಫೋನ್ ಕೆಲಸ ಮಾಡಲು ಅನುಮತಿ ಬೇಕು.</string>
-  <string name="action_call_accept">ಕರೆ ಮಾಡಿ</string>
-  <string name="action_call_accept_audio">ಆಡಿಯೋದಲ್ಲಿ ಉತ್ತರ</string>
-  <string name="action_call_accept_video">ವಿಡಿಯೋದಲ್ಲಿ ಉತ್ತರ</string>
-  <string name="action_call_hold_accept">ಕರೆ ಆಡಿಯೋವನ್ನು ಹಿಡಿದುಕೊಳ್ಳಿ</string>
-  <string name="action_call_hold_accept_video">ವಿಡಿಯೋ ಕರೆಗಳನ್ನು ಹಿಡಿದುಕೊಳ್ಳಿ</string>
-  <string name="action_call_end_accept">ಕೊನೆಗೊಳ್ಳಿ ಮತ್ತು ಕರೆ ತೆಗೆದುಕೊಳ್ಳಿ</string>
   <string name="action_call_decline">ಕುಸಿತ</string>
   <string name="action_call_mic_mute">ಮೂಕ ಮೈಕ್ರೊಫೋನ್</string>
-  <string name="action_load_plugin">ಲೋಡ್ ಪ್ಲಗಿನ್</string>
   <string name="ab_action_speakerphone">ಸ್ಪೀಕರ್ ಅನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿ</string>
   <string name="ab_action_contact_add">ಸಂಪರ್ಕಗಳನ್ನು ಸೇರಿಸಿ</string>
   <string name="ab_action_contact_add_question">ಸಂಪರ್ಕಗಳಿಗೆ ಸೇರಿಸುವುದೇ?</string>
@@ -143,11 +128,8 @@
   <string name="ringtone_error_size_too_big">ಈ ಫೈಲ್ ತುಂಬಾ ದೊಡ್ಡದಾಗಿದೆ. ಗರಿಷ್ಠ ಗಾತ್ರವು %1$dkB.</string>
   <string name="ringtone_custom_prompt">ಕಸ್ಟಮ್ ರಿಂಗ್ಟೋನ್ ಅನ್ನು ಹೊಂದಿಸಿ</string>
   <string name="ringtone_custom_label">ಕಸ್ಟಮ್</string>
-  <string name="ringtone_jami_tones">ಜಾಮಿ ಟೋನ್ಸ್</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">ಜಾಮಿಗೆ ಈ ವೈಶಿಷ್ಟ್ಯವನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಲು \"ಸಂಪರ್ಕಗಳನ್ನು ಓದಿ\" ಅನುಮತಿ ಬೇಕು. ದಯವಿಟ್ಟು ಅದನ್ನು ನೀಡಿ.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">ಜಾಮಿಗೆ ಈ ವೈಶಿಷ್ಟ್ಯವನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಲು \"ಕರೆ ಕರೆ ದಾಖಲೆ\" ಅನುಮತಿ ಬೇಕು. ದಯವಿಟ್ಟು ಅದನ್ನು ನೀಡಿ.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">ನೀವು ಸೇರಿಸಲು ಬಯಸುವ ಖಾತೆಯ QR ಕೋಡ್ ಅನ್ನು ಸ್ಕ್ಯಾನ್ ಮಾಡಿ.</string>
   <string name="title_activity_qrcode">ನನ್ನ ಖಾತೆಯನ್ನು ಹಂಚಿಕೊಳ್ಳಿ</string>
@@ -163,8 +145,6 @@
   <string name="conversation_details">ಸಂಭಾಷಣೆಯ ವಿವರಗಳು</string>
   <string name="contact_details">ಸಂಪರ್ಕ ವಿವರಗಳು</string>
   <string name="conversation_action_delete_this">ಈ ಸಂಭಾಷಣೆಯನ್ನು ಅಳಿಸಿ</string>
-  <string name="conversation_action_delete_this_title">ಈ ಸಂಭಾಷಣೆಯನ್ನು ಅಳಿಸುವುದೇ?</string>
-  <string name="conversation_action_delete_this_message">ಈ ಕ್ರಮವನ್ನು ಹಿಂತೆಗೆದುಕೊಳ್ಳಲು ಸಾಧ್ಯವಿಲ್ಲ.</string>
   <string name="conversation_action_history_clear">ಸ್ಪಷ್ಟ ಇತಿಹಾಸ</string>
   <string name="conversation_action_history_clear_title">ಸಂಭಾಷಣೆ ಇತಿಹಾಸವನ್ನು ತೆರವುಗೊಳಿಸಿ?</string>
   <string name="conversation_action_history_clear_message">ಇದು ಖಂಡಿತವಾಗಿಯೂ ಸಂಭಾಷಣೆಯ ಇತಿಹಾಸವನ್ನು ತೆರವುಗೊಳಿಸುತ್ತದೆ.</string>
@@ -201,7 +181,6 @@
   <string name="conversation_contact_invited">%1$s ಅನ್ನು ಆಹ್ವಾನಿಸಲಾಗಿದೆ</string>
   <string name="conversation_contact_added">%1$s ಸೇರಿಕೊಂಡಿದೆ</string>
   <string name="conversation_contact_left">%1$ ಎಡಕ್ಕೆ</string>
-  <string name="conversation_contact_banned">%1$s ನಿಷೇಧಿಸಲಾಗಿದೆ</string>
   <string name="conversation_search_hint">ಹುಡುಕಾಟ ಸಂಭಾಷಣೆ</string>
   <string name="today">ಇಂದು</string>
   <string name="yesterday">ನಿನ್ನೆ</string>
@@ -216,14 +195,12 @@
   <string name="help_password_choose">ನಿಮ್ಮ ಜಾಮಿ ಖಾತೆಯನ್ನು ರಕ್ಷಿಸಲು ನೀವು ನೆನಪಿಟ್ಟುಕೊಳ್ಳುವ ಬಲವಾದ ಪಾಸ್ವರ್ಡ್ ಅನ್ನು ಆರಿಸಿ.</string>
   <string name="help_password_enter">ನಿಮ್ಮ ಮುಖ್ಯ ಜಾಮಿ ಖಾತೆ ಪಾಸ್ವರ್ಡ್ ನಮೂದಿಸಿ.</string>
   <string name="help_server_enter">ನಿರ್ವಹಣಾ ಸರ್ವರ್ನ URL ಅನ್ನು ನಮೂದಿಸಿ.</string>
-  <string name="help_pin_enter">ಮತ್ತೊಂದು ಕಾನ್ಫಿಗರ್ ಮಾಡಿದ ಜಾಮಿ ಖಾತೆಯಿಂದ ಪಿನ್ ನಮೂದಿಸಿ. ಪಿನ್ ಪಡೆಯಲು \"ಜಾಮಿ ಖಾತೆಯನ್ನು ರಫ್ತು ಮಾಡಿ\" ವೈಶಿಷ್ಟ್ಯವನ್ನು ಬಳಸಿ.</string>
   <string name="wizard_next">ಮುಂದಿನದು</string>
   <string name="wizard_back">ಹಿಂದಕ್ಕೆ</string>
   <string name="wizard_skip">ಸ್ಕಿಪ್</string>
   <string name="hist_contact_invited">ಸಂಪರ್ಕಕ್ಕೆ ಆಹ್ವಾನ</string>
   <string name="hist_contact_added">ಸಂಪರ್ಕ ಸೇರಿಸಲಾಗಿದೆ</string>
   <string name="hist_contact_left">ಸಂಪರ್ಕ ಎಡ</string>
-  <string name="hist_contact_banned">ಸಂಪರ್ಕ ನಿಷೇಧ</string>
   <string name="hist_invitation_received">ಸ್ವೀಕರಿಸಿದ ಆಹ್ವಾನ</string>
   <!--Account Summary-->
   <string name="profile">ಪ್ರೊಫೈಲ್</string>
@@ -272,7 +249,6 @@
   <string name="tv_contact_row_header">ಸಂಪರ್ಕಗಳು</string>
   <string name="gallery_error_title">ಗ್ಯಾಲರಿ ಅಪ್ಲಿಕೇಶನ್ ಕಂಡುಬಂದಿಲ್ಲ</string>
   <string name="gallery_error_message">ಗ್ಯಾಲರಿ ತೆರೆಯಲು ಸಾಧನದಲ್ಲಿ ಯಾವುದೇ ಅಪ್ಲಿಕೇಶನ್ ಕಂಡುಬಂದಿಲ್ಲ</string>
-  <string name="generic_error">ಅಪರಿಚಿತ ದೋಷ ಸಂಭವಿಸಿದೆ</string>
   <!--File Transfer-->
   <string name="invalid_file">ಅಮಾನ್ಯ ಕಡತ</string>
   <string name="not_able_to_write_file">ಫೈಲ್ ಬರೆಯಲು ಸಾಧ್ಯವಾಗುತ್ತಿಲ್ಲ</string>
@@ -292,7 +268,6 @@
   <string name="file_saved_in">%s ನಲ್ಲಿ ಉಳಿಸಲಾದ ಫೈಲ್</string>
   <string name="file_saved_successfully">ಯಶಸ್ವಿಯಾಗಿ ಉಳಿಸಿದ ಫೈಲ್</string>
   <string name="file_download">ಡೌನ್ಲೋಡ್ ಮಾಡಿ</string>
-  <string name="no_space_left_on_device">ಸಾಧನದಲ್ಲಿ ಯಾವುದೇ ಸ್ಥಳಾವಕಾಶವಿಲ್ಲ</string>
   <string name="title_media_viewer">ಮಾಧ್ಯಮ ವೀಕ್ಷಕ</string>
   <string name="menu_file_open">ತೆರೆದ ಕಡತ</string>
   <string name="menu_file_download">ಫೈಲ್ ಡೌನ್ಲೋಡ್</string>
@@ -343,29 +318,20 @@
   <string name="wizard_profile_button">ಪ್ರೊಫೈಲ್ ಉಳಿಸಿ</string>
   <string name="wizard_profile_skip">ಸ್ಕಿಪ್ ಮಾಡಿ ಮತ್ತು ನಂತರ ಇದನ್ನು ಮಾಡಿ</string>
   <string name="fab_path_choose">ಮತ್ತೊಂದು ಫೈಲ್ ಆಯ್ಕೆಮಾಡಿ</string>
-  <string name="chat_plugins">ಚಾಟ್ ಪ್ಲಗಿನ್ಗಳು</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">ಹಂಚಿಕೆ</string>
   <string name="bottomSheet_dialpad_btn">ಡಯಲ್ಪ್ಯಾಡ್</string>
-  <string name="bottomSheet_plugins_btn">ಪ್ಲಗ್ಇನ್ಗಳು</string>
   <string name="bottomSheet_add_participants_btn">ಸೇರಿಸಿ</string>
   <string name="bottomSheet_change_camera_btn">ಬದಲಾವಣೆ</string>
   <string name="bottomSheet_camera_onoff_switch_btn">ಕ್ಯಾಮೆರಾ</string>
-  <string name="bottomSheet_hangup_btn">ಕರೆ ಅಂತ್ಯಗೊಳಿಸು</string>
   <string name="bottomSheet_mute_microphone_btn">ಮೈಕ್ರೋ</string>
   <string name="bottomSheet_sound_output_btn">ಧ್ವನಿಸುತ್ತದೆ</string>
   <string name="bottomSheet_raiseHand_btn">ಕೈ ಎತ್ತಿ</string>
-  <string name="open_account_plugin_settings">ಖಾತೆ ಪ್ಲಗಿನ್ ಸೆಟ್ಟಿಂಗ್ಗಳನ್ನು ತೆರೆಯಿರಿ</string>
-  <string name="open_general_plugin_settings">ಸಾಮಾನ್ಯ ಪ್ಲಗಿನ್ ಸೆಟ್ಟಿಂಗ್ಗಳನ್ನು ತೆರೆಯಿರಿ</string>
   <string name="uninstall">ಅಳವಡಿಕೆ ತೆಗೆದುಹಾಕಿ</string>
   <string name="reset">ಮರುಹೊಂದಿಸಿ</string>
   <!--Swarm Detail-->
   <string name="rename_btn">ದೃಢೀಕರಿಸಿ</string>
-  <string name="rename_error">ಅದು ಖಾಲಿ ಇರಲು ಸಾಧ್ಯವಿಲ್ಲ</string>
-  <string name="swarm_description">ವಿವರಣೆಯನ್ನು ಸೇರಿಸಿ</string>
-  <string name="tab_about">ಬಗ್ಗೆ</string>
   <string name="tab_members">ಸದಸ್ಯರು</string>
-  <string name="tab_documetn">ದಾಖಲೆಗಳು</string>
   <string name="dialogtitle_title">Swarm ಶೀರ್ಷಿಕೆ ಸಂಪಾದಿಸಿ</string>
   <string name="dialogtitle_description">Swarm ವಿವರಣೆ ಸಂಪಾದಿಸಿ</string>
   <string name="dialog_hint_title">ಶೀರ್ಷಿಕೆ</string>
@@ -381,5 +347,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">ಜಾಮಿಗೆ ಸ್ವಾಗತ</string>
   <!--Donation-->
-  <!--Plugin-->
+  <!--Extension-->
 </resources>

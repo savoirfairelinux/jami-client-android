@@ -5,9 +5,11 @@
   <string name="ic_advanced_menu">Дополнительные настройки</string>
   <string name="ic_blacklist_menu">Заблокированные контакты</string>
   <!--Strings related to account creation-->
+  <string name="account_selection">Выберите аккаунт</string>
   <string name="add_ring_account_title">Добавить аккаунт</string>
   <string name="add_sip_account_title">Добавить аккаунт SIP </string>
   <string name="ring_account_default_name">Аккаунт Jami %1$s</string>
+  <string name="account_creation_error">При создании аккаунта возникла ошибка.</string>
   <string name="prompt_alias">Псевдоним</string>
   <string name="prompt_hostname">Имя узла</string>
   <string name="prompt_username">Имя пользователя</string>
@@ -21,18 +23,12 @@
   <string name="dialog_wait_create_details">Пожалуйста, подождите, пока ваш новый аккаунт добавляется…</string>
   <string name="dialog_wait_update">Обновление аккаунта</string>
   <string name="dialog_wait_update_details">Пожалуйста, подождите, пока ваш новый аккаунт обновляется…</string>
-  <string name="dialog_warn_ip2ip_account_title">Создать пустой аккаунт SIP?</string>
-  <string name="dialog_warn_ip2ip_account_message">Вы собираетесь создать аккаунт SIP без допустимого имени сервера.
-Вы сможете совершать и принимать звонки только напрямую по IP.
-Можно будет изменить аккаунт позднее.</string>
   <string name="account_type_ip2ip">IP-аккаунт</string>
   <string name="help_ring">Аккаунт Jami позволяет безопасно связываться с людьми напрямую через полностью распределенную сеть.</string>
-  <string name="help_sip_title">Добавить ваш SIP-аккаунт</string>
+  <string name="help_sip_title">Добавить аккаунт SIP </string>
   <string name="help_sip">Настроить существующий SIP-аккаунт</string>
-  <string name="create_sip_account">Добавить аккаунт SIP </string>
   <!--Strings related to account deletion-->
-  <string name="account_delete_dialog_title">Удалить аккаунт?</string>
-  <string name="account_delete_dialog_message">Это действие нельзя отменить.</string>
+  <string name="account_delete_dialog_message">Это действие невозможно отменить.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Нет зарегистрированных аккаунтов</string>
   <string name="normal_accounts_titles">Аккаунты</string>
@@ -40,14 +36,15 @@
   <string name="account_device_revoke">Отозвать доступ устройства</string>
   <string name="account_device_revocation_success_title">Успешно</string>
   <string name="account_device_revocation_success">Доступ устройства отозван!</string>
-  <string name="account_device_revocation_error_title">Не удалось отозвать доступ устройства</string>
-  <string name="account_device_revocation_wrong_password">Неверный пароль.</string>
   <string name="account_device_revocation_unknown_device">Неизвестное устройство.</string>
   <string name="account_device_revocation_error_unknown">Неизвестная ошибка.</string>
   <string name="account_password_change">Изменить пароль</string>
   <string name="account_password_set">Установить пароль</string>
   <string name="account_password_summary">Управление паролем вашего аккаунта.</string>
   <string name="account_password_change_wait_message">Смена пароля аккаунта</string>
+  <string name="account_biometric_disable">Отключить биометрическую аутентификацию</string>
+  <string name="account_biometric_set">Включить биометрическую аутентификацию</string>
+  <string name="account_biometric_summary">Управление биометрической аутентификацией вашего аккаунта.</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Общее</string>
   <string name="account_basic_category">Основные настройки</string>
@@ -63,8 +60,8 @@
   <string name="account_rendezvous_summary">В режиме Rendezvous входящие звонки будут добавляться в конференц-зал.</string>
   <string name="account_upnp_label">Включить UPnP</string>
   <string name="account_proxy_field">Прокси</string>
-  <!--Plugin Details-->
-  <string name="account_preference_plugin_tab">Плагины</string>
+  <!--Extension Details-->
+  <string name="account_preferences_extension_tab">Расширения</string>
   <!--Audio Details-->
   <string name="account_audio_label">Звук</string>
   <string name="account_preferences_media_tab">Медиа</string>
@@ -106,8 +103,10 @@
   <string name="enabled">Включен</string>
   <string name="account_proxy_label">DHT-прокси</string>
   <string name="account_proxy_enable_label">Использовать DHT-прокси</string>
+  <string name="account_proxy_list_enable_label">Использовать список прокси-серверов DHT</string>
   <string name="account_proxy_server_label">Адрес DHT-прокси</string>
   <string name="account_proxy_server_list_label">Список URL DHT-прокси</string>
+  <string name="account_proxy_server_used">Используется: %1$s</string>
   <string name="account_sip_proxy_label">Прокси</string>
   <string name="account_peer_discovery_label">Обнаружение локальных пиров</string>
   <string name="account_peer_discovery_enable_label">Включить обнаружение локальных пиров</string>
@@ -145,14 +144,9 @@
   <string name="export_account_wait_message">Экспортирование аккаунта…</string>
   <string name="account_export_file">Создать резервную копию аккаунта</string>
   <string name="account_export_file_summary">Сделайте резервную копию своего аккаунта на устройстве, чтобы восстановить его позже.</string>
-  <string name="account_export_end_decryption_message">Не удалось разблокировать аккаунт указанным паролем.</string>
   <string name="account_export_end_network_title">Ошибка сети</string>
-  <string name="account_export_end_network_message">Не удалось экспортировать аккаунт по сети. Проверьте ваше сетевое соединение.</string>
   <string name="account_export_end_error_title">Ошибка</string>
-  <string name="account_export_end_error_message">Не удалось экспортировать аккаунт. Произошла неизвестная ошибка.</string>
   <string name="account_enter_password">Введите пароль</string>
-  <string name="account_share_body">Свяжитесь со мной, используя имя пользователя \'%1$s\' в распределенной платформе для общения Jami: %2$s</string>
-  <string name="account_share_body_with_username">Свяжитесь со мной, используя \'%1$s\' или мое публичное имя пользователя \'%2$s\' в распределенной платформе для общения Jami: %3$s</string>
   <string name="account_contact_me">Свяжитесь со мной в Jami!</string>
   <string name="update_account">Обновить аккаунт</string>
   <string name="account_migration">Ваш аккаунт Jami может быть обновлён.\nПожалуйста, введите ваш пароль.</string>
@@ -160,20 +154,13 @@
   <string name="sip_account">SIP-аккаунт</string>
   <string name="ring_account_identity">Идентификатор</string>
   <string name="account_migration_title_dialog">Перенос аккаунта</string>
-  <string name="account_migration_message_dialog">Ваш аккаунт требуется обновить. Хотите перейти на экран управления аккаунтом для выполнения этой операции?</string>
   <string name="account_update_needed">Необходимо обновление</string>
-  <string name="account_cannot_be_found_title">Не удалось найти аккаунт</string>
-  <string name="account_cannot_be_found_message">Не удалось найти аккаунт в сети Jami.\nУдостоверьтесь, что он был экспортирован в сеть Jami с существующего устройства, и что предоставленные идентификационные данные верны.</string>
   <string name="account_sip_cannot_be_registered_message">Можно продолжить создание аккаунта или изменить информацию здесь. Редактирование будет возможно и позже в настройках аккаунта.</string>
-  <string name="account_no_network_title">Не удается подключиться к сети</string>
-  <string name="account_no_network_message">Невозможно добавить аккаунт, так как Jami не смог подключиться к распределённой сети. Проверьте ваше соединение.</string>
+  <string name="account_no_network_title">Ошибка сети</string>
   <string name="account_device_added_title">Аккаунт создан</string>
   <string name="account_device_added_message">Вы успешно настроили аккаунт Jami на этом устройстве.</string>
   <string name="account_device_updated_title">Устройство аккаунта обновлено</string>
   <string name="account_device_updated_message">Вы успешно обновили ваш аккаунт Jami.</string>
-  <string name="account_cannot_be_updated_message">Устройство аккаунта не удалось обновить. Проверьте свой пароль.</string>
-  <string name="account_sip_success_title">SIP-аккаунт зарегистрирован</string>
-  <string name="account_sip_success_message">Вы успешно зарегистрировали свой SIP-аккаунт.</string>
   <string name="account_sip_register_anyway">Все равно зарегистрироваться</string>
   <!--TV-->
   <string name="account_tv_settings_header">Настройки аккаунта</string>
@@ -193,11 +180,8 @@
   <string name="account_link_export_button">Привязать новое устройство</string>
   <string name="account_link_show_button">Показать еще %d присоединенных устройств</string>
   <string name="account_link_hide_button">Скрыть присоединенное устройство</string>
-  <string name="account_link_export_info">Чтобы использовать этот аккаунт на других устройствах, вам необходимо сначала скопировать его в сеть Jami. При этом будет сгенерирован PIN-код, который вы должны будете ввести на новом устройстве для установки аккаунта. PIN-код действителен в течение 10 минут.</string>
   <string name="account_start_export_button">Сгенерировать PIN</string>
   <string name="account_end_export_button">закрыть</string>
-  <string name="account_end_export_infos">Ваш PIN:\n\n%%\n\nДля завершения процесса откройте Jami на новом устройстве и выберите «Привязать это устройство к аккаунту». Ваш PIN действителен в течение 10 минут.</string>
-  <string name="account_link_export_info_light">Чтобы использовать этот аккаунт на других устройствах, вам необходимо сначала скопировать его в сеть Jami. При этом будет сгенерирован PIN-код, который вы должны будете ввести на новом устройстве для установки аккаунта. PIN-код действителен в течение 10 минут.</string>
   <string name="account_export_title">Подключить аккаунт к другому устройству</string>
   <string name="account_connect_server_button">Подключиться к управляющему серверу</string>
   <string name="account_connect_button">Соединение</string>
@@ -229,21 +213,17 @@
   <string name="account_creation_profile">Создайте свой профиль</string>
   <string name="account_creation_ring">Создать свой аккаунт Jami</string>
   <string name="account_link_title">Привязать это устройство</string>
-  <string name="account_sip_cannot_be_registered">Не удалось зарегистрировать аккаунт</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">Редактировать мой аккаунт</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Введите пароль для подтверждения</string>
   <string name="enter_password">Введите пароль</string>
   <string name="revoke_device_title">Отозвать доступ устройства</string>
-  <string name="revoke_device_message">Вы уверены, что хотите отозвать доступ %1$s?</string>
   <string name="revoke_device_wait_title">Пожалуйста, подождите…</string>
   <string name="revoke_device_wait_message">Отзываем доступ устройства</string>
   <string name="rename_device_title">Переименовать это устройство</string>
   <string name="rename_device_message">Выберите новое название для идентификации этого устройства в вашем аккаунте Jami</string>
   <string name="rename_device_button">Переименовать устройство</string>
   <string name="account_rename_device_hint">Выберите новое название для устройства</string>
-  <string name="account_device_name_empty">Название устройства не может быть пустым</string>
   <string name="account_device_this_indicator">Это устройство</string>
   <string name="account_disabled_indicator">отключен</string>
   <!--Link a new device-->
@@ -256,15 +236,25 @@
   <string name="account_link_password">Этот аккаунт зашифрован паролем, введите пароль для генерации ПИН-кода.</string>
   <string name="account_link_generate_button">Сгенерировать</string>
   <string name="account_link_time_valid">ПИН-код будет недействителен: %1$s.</string>
-  <string name="account_link_device_info">Выберите \"Привязать новое устройство\" в другом приложении Jami, чтобы отобразить QR-код или PIN-код</string>
+  <string name="account_link_device_info">Выберите «Привязать новое устройство» в другом приложении Джами, чтобы показать QR-код или PIN-код</string>
   <string name="account_generate_export_device">На другом устройстве</string>
-  <string name="account_generate_export_info">Установите и запустите Jami, выберите \"Импортировать из другого устройства\" и сканируйте QR-код.</string>
   <string name="content_description_qr_generated">Ваш QR-код</string>
-  <string name="account_generate_export_invalid">ПИН-код более недействителен.\n Введите пароль и сгенерируйте другой, чтобы связать новое устройство.</string>
-  <string name="account_generate_export_invalid_two">ПИН-код более недействителен.\n Сгенерируйте другой, чтобы связать новое устройство.</string>
   <string name="help_pin_info">Заполните, если аккаунт зашифрован паролем</string>
   <string name="connect_device_scanqr">Сканировать QR-код</string>
   <string name="connect_device_enterPIN">Или ввести ПИН-код</string>
   <string name="account_link_device_button">Соединение</string>
   <!--Biometry-->
+  <string name="account_biometry_auth_title">Разблокировать аккаунт Jami</string>
+  <string name="account_biometry_auth_message">Использовать биометрию для разблокировки вашего аккаунта</string>
+  <string name="account_biometry_enroll_title">Использовать биометрическую аутентификацию?</string>
+  <string name="account_biometry_enroll_message">Ваше устройство поддерживает защищенную биометрическую аутентификацию.
+Биометрическая или аутентификация устройства добавляет удобный способ локально разблокировать доступ к вашей учетной записи Jami. Возможность использования пароля сохранится.</string>
+  <string name="account_biometry_enroll_accept">Использовать биометрию</string>
+  <string name="no_thanks">Нет, спасибо</string>
+  <string name="account_biometry_enroll_auth_title">Добавить аутентификацию для вашего аккаунта Jami</string>
+  <string name="account_biometry_enroll_auth_message">Добавить защищенную биометрию или аутентификацию устройства как альтернативу паролю</string>
+  <string name="account_auth_error">Ошибка аутентификации: %1$s</string>
+  <string name="account_auth_success">Аутентификация прошла успешно</string>
+  <string name="account_auth_key_error">Не удалось расшифровать ключ аккаунта</string>
+  <string name="account_auth_password">Использовать пароль аккаунта</string>
 </resources>

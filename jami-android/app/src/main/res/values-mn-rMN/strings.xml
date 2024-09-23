@@ -9,19 +9,13 @@
   <string name="contribute_section">Үргэлж</string>
   <string name="version_section">Хөгжлийн хувилбар</string>
   <string name="no_email_app_installed">Э-мэйл хэрэгсэл олсонгүй, нэг орноо наслан намжлах</string>
-  <string name="no_browser_app_installed">Энэ хуудсыг үзэхэд вэб хөтөчүүдийн хэрэгсэл байхгүй, нэг орно</string>
   <string name="email_chooser_title">...хэвлэлээр захиалгыг илгээе</string>
-  <string name="website_chooser_title">Сайтыг ашиглаж үзнэ үү...</string>
-  <string name="license">Энэхүү програм хангамжийг ямар ч баталгаагүйгээр "хүнтэй" хүргэж байна. Тодруулбал GNU General Public License 3 болон дараагийн хувилбарыг үзнэ үү&lt;/u&gt;</string>
   <string name="description">Jami нь бүх нийтийн харилцааны чөлөөт програм бөгөөд хэрэглэгчийн эрх чөлөө, хувийн хэвшлийг хүндэтгэдэг.</string>
   <string name="credits">Ашигт малтмалын</string>
   <string name="pip_title">Жэми-ийн чуулган</string>
   <string name="call_service_description">Энэ үйлчилгээ нь танай дуудлагаг эхэнд үлдээхэд шаардлагатай. Энэ нь зөвхөн дуудлага хийх үед ажилладаг.</string>
   <string name="data_transfer_service_description">Энэхүү үйлчилгээ нь файлын шилжүүлэн суулгалын үеэр тогтмол мэдэгдлийг харуулж байх шаардлагатай.</string>
   <!--About dialog-->
-  <string name="developed_by">Хөгжлийн</string>
-  <string name="designed_by">Энэ нь</string>
-  <string name="ringtones_by">Хөгжил</string>
   <!--RingActivity-->
   <string name="error_no_network">Сүлжээний холболтгүй</string>
   <string name="error_account_offline">Хэтгэлээ хаасан</string>
@@ -35,7 +29,6 @@
   <string name="menu_item_settings">Байгууллага</string>
   <string name="menu_item_advanced_settings">Алга зэргийн тохируулалт</string>
   <string name="menu_item_account_settings">Нягтлан бодох бүртгэлийн тохируулалт</string>
-  <string name="menu_item_plugin_list">Плюгинүүдийн тохируулалт</string>
   <string name="menu_item_share">Миний хуудас хуваалцаарай</string>
   <string name="menu_item_about">Жэмигийн тухай</string>
   <string name="video_setting_title">Видеогийн тохируулалт</string>
@@ -97,17 +90,9 @@
   <string name="ongoing_call">Цаашид явагдаж буй</string>
   <string name="hist_in_call">%1$s-ийн орж ирж буй дуудлага</string>
   <string name="hist_out_call">%1$s-ийн гадаад дуудлага</string>
-  <string name="start_error_title">Жэмиг эхлүүлж чадахгүй!</string>
   <string name="start_error_mic_required">Жэми нь ажиллахын тулд микрофон зөвшөөрөл шаарддаг.</string>
-  <string name="action_call_accept">Та бүхэн дуулаа аваарай.</string>
-  <string name="action_call_accept_audio">Хэлэлцүүлэг</string>
-  <string name="action_call_accept_video">Видео бичлэгээр хариулъя</string>
-  <string name="action_call_hold_accept">Зудлага аваад зогсоо</string>
-  <string name="action_call_hold_accept_video">Зураг бичлэг аваад зогсоо</string>
-  <string name="action_call_end_accept">Сүүлийн үед дуусч, дуудлага хүлээн ав</string>
   <string name="action_call_decline">Хөгжиж байна</string>
   <string name="action_call_mic_mute">Улаан чимээгүй микрофон</string>
-  <string name="action_load_plugin">Хөгжилтийн хувилбар</string>
   <string name="ab_action_speakerphone">Дуучинг идэвхжүүлнэ</string>
   <string name="ab_action_contact_add">Байрлуудад нэмнэ</string>
   <string name="ab_action_contact_add_question">Та нар ч гэсэн холбоотондоо нэмж байна уу?</string>
@@ -143,11 +128,8 @@
   <string name="ringtone_error_size_too_big">Энэ файл хэт том. Хамгийн их хэмжээ нь %1$dkB.</string>
   <string name="ringtone_custom_prompt">Хувьсгал хувилбар дууны дууг тохируулна</string>
   <string name="ringtone_custom_label">Хувьцааны</string>
-  <string name="ringtone_jami_tones">Жэми Тоны</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Жэми энэ функцыг ашиглахын тулд \"Хүнслэлээ унших\" зөвшөөрөл хэрэгтэй.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Жэми энэ функцыг ашиглахын тулд \"Зувчлах хуудсыг бич\" зөвшөөрөл хэрэгтэй.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Та нэмж байгаа дансны QR кодыг сканируарай.</string>
   <string name="title_activity_qrcode">Миний хуудас хуваалцаарай</string>
@@ -163,8 +145,6 @@
   <string name="conversation_details">Хэлэлцүүлгийн дэлгэрэнгүй мэдээ</string>
   <string name="contact_details">Байлцаах мэдээлэл</string>
   <string name="conversation_action_delete_this">Энэ яриаг устгах</string>
-  <string name="conversation_action_delete_this_title">Энэ яриаг устгах уу?</string>
-  <string name="conversation_action_delete_this_message">Энэ үйлдлийг сэргийлэх боломжгүй.</string>
   <string name="conversation_action_history_clear">Тарих нь тодорхой</string>
   <string name="conversation_action_history_clear_title">Хэлэлцээрийн түүхийг цэвэрлэх үү?</string>
   <string name="conversation_action_history_clear_message">Энэ нь ярианы түүхийг цэвэрлэнэ.</string>
@@ -201,7 +181,6 @@
   <string name="conversation_contact_invited">%1$s-ийг урьсан</string>
   <string name="conversation_contact_added">%1$s-ийг холбосон</string>
   <string name="conversation_contact_left">%1$ нь үлдлээ</string>
-  <string name="conversation_contact_banned">%1$s-ийг хориглосон</string>
   <string name="conversation_search_hint">Танд ярилцлага хайх</string>
   <string name="today">Өнөөдөр</string>
   <string name="yesterday">Өчигдөр</string>
@@ -216,14 +195,12 @@
   <string name="help_password_choose">Jami-ийн дансыг хамгаалахын тулд санаж болох хүчтэй нууц үг сонгох.</string>
   <string name="help_password_enter">Таны \"Jami\" дансны нууц үгсийг оруул.</string>
   <string name="help_server_enter">Захиргааны серверний URL-ийг оруул.</string>
-  <string name="help_pin_enter">Өөр нэг тохируулсан Jami-ийн дансны PIN-ийг оруул. PIN-ийг авахын тулд \"Export Jami-ийн дансыг экспортлоход\" функц ашиглах.</string>
   <string name="wizard_next">Дараа нь</string>
   <string name="wizard_back">Хурд</string>
   <string name="wizard_skip">Улаанбаатар</string>
   <string name="hist_contact_invited">Байлцаагч урьж байна</string>
   <string name="hist_contact_added">Байлцаагч нэмэгдсэн</string>
   <string name="hist_contact_left">Зүүн талд холбогдох</string>
-  <string name="hist_contact_banned">Байлцаах хориг</string>
   <string name="hist_invitation_received">Нээлтийг хүлээн авсан</string>
   <!--Account Summary-->
   <string name="profile">Профиль</string>
@@ -272,7 +249,6 @@
   <string name="tv_contact_row_header">Байлцаагч</string>
   <string name="gallery_error_title">Галерийн хэрэгсэл олдохгүй</string>
   <string name="gallery_error_message">Галерея нээлтэд хэрэгсэл байхгүй</string>
-  <string name="generic_error">Мэдээгүй алдаа гарсан</string>
   <!--File Transfer-->
   <string name="invalid_file">Үндсэн хуулийн бус файл</string>
   <string name="not_able_to_write_file">Файлыг бичиж чадахгүй</string>
@@ -292,7 +268,6 @@
   <string name="file_saved_in">%s-д хадгагдсан файл</string>
   <string name="file_saved_successfully">Үргэлжүүлэн хадгагдсан файл</string>
   <string name="file_download">Хөгжүүлнэ</string>
-  <string name="no_space_left_on_device">Утасны дотор орон зай байхгүй</string>
   <string name="title_media_viewer">Мэдээлэл үзэгч</string>
   <string name="menu_file_open">Ашигласан файл</string>
   <string name="menu_file_download">Татаж авах файл</string>
@@ -343,29 +318,20 @@
   <string name="wizard_profile_button">Профиль хадгалах</string>
   <string name="wizard_profile_skip">Энэ ажлыг дараа нь хий</string>
   <string name="fab_path_choose">Өөр файл сонго</string>
-  <string name="chat_plugins">Чат хувилбар</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Хөдөлмөр</string>
   <string name="bottomSheet_dialpad_btn">Диалпад</string>
-  <string name="bottomSheet_plugins_btn">Плюгины</string>
   <string name="bottomSheet_add_participants_btn">Нэвтрүүлэг</string>
   <string name="bottomSheet_change_camera_btn">Өөрчлөлт</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Камера</string>
-  <string name="bottomSheet_hangup_btn">Дуудлагыг дуусгах</string>
   <string name="bottomSheet_mute_microphone_btn">Микро</string>
   <string name="bottomSheet_sound_output_btn">- Үнэндээ</string>
   <string name="bottomSheet_raiseHand_btn">Та гар нь дээшлүүлж</string>
-  <string name="open_account_plugin_settings">Эвлэлийн хувилбарны тохируулалтыг нээх</string>
-  <string name="open_general_plugin_settings">Ерөнхий плагин тохируулалтыг нээх</string>
   <string name="uninstall">Уулгаж өгөөч</string>
   <string name="reset">Урьдчилгааг сэргээх</string>
   <!--Swarm Detail-->
   <string name="rename_btn">Дашрамд</string>
-  <string name="rename_error">Энэ нь хол байж болохгүй.</string>
-  <string name="swarm_description">Тодруул</string>
-  <string name="tab_about">Үүнээс</string>
   <string name="tab_members">Улсчдын гишүүд</string>
-  <string name="tab_documetn">Документ</string>
   <string name="dialogtitle_title">Сварм нэрсийг зохицуу</string>
   <string name="dialogtitle_description">Свартын тодорхойлолт</string>
   <string name="dialog_hint_title">Үргэлт</string>
@@ -381,5 +347,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Жэми-д тавтай морилно уу</string>
   <!--Donation-->
-  <!--Plugin-->
+  <!--Extension-->
 </resources>

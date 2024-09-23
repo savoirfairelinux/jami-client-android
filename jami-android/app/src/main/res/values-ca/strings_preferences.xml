@@ -27,7 +27,6 @@
   <string name="pref_startOnBoot_title">Arrenca Jami a l\'inici</string>
   <string name="pref_startOnBoot_summary">Executa Jami en segon pla quan el sistema s\'inicia.</string>
   <string name="pref_clearHistory_title">Neteja historial</string>
-  <string name="pref_clearHistory_summary">Neteja totes les converses de l\'historial. Aquesta acció no pot es desfer.</string>
   <string name="pref_notification_title">Notificació de visibilitat</string>
   <string name="pref_notification_summary">Estableix la visibilitat de les notificacions de l\'aplicació a la pantalla de bloqueig.</string>
   <string name="pref_blackList_title">Llista de bloqueig</string>
@@ -52,21 +51,7 @@
   <string name="notification_public">Públic \n(mostra notificacions i el contingut del missatge en la pantalla de bloqueig)\n</string>
   <string name="notification_private">Privat \n(mostra notificacions però amaga el contingut del missatge en la pantalla de bloqueig)\n</string>
   <string name="notification_secret">Secret \n(no mostra notificacions en la pantalla de bloqueig)</string>
-  <!--Plugin-->
-  <string name="pref_plugins_title">Complements</string>
-  <string name="pref_plugins_summary">Habilita els complements i configura paràmetres</string>
-  <string name="fab_plugins_add">Afegeix un nou complement</string>
-  <string name="plugin_uninstall_title">Desinstal·lar complement?</string>
-  <string name="plugin_reset_preferences">Reconfigura les preferències dels complements</string>
-  <string name="plugin_reset_preferences_summary">La configuració del complement es posarà per defecte</string>
-  <string name="plugin_reset_preferences_ask">¿Estàs segur que vols reiniciar la configuració general del complement? </string>
-  <string name="plugin_reset_account_preferences_ask">¿Estàs segur que vols reiniciar la configuració de compte del complement?</string>
-  <string name="plugin_successfully_installed">El complement <b>%1$s</b> s\'ha instal·lat correctament</string>
-  <string name="plugin_install_failure">Ha fallat la instal·lació del complement <b>%1$s</b></string>
-  <string name="plugin_recent_version_exception">Tens una versió més recent de <b>%1$s</b> instal·lada</string>
-  <string name="plugin_same_version_exception">Tens la mateixa versió de <b>%1$s </b>instal·lada</string>
-  <string name="plugin_invalid_signature"><b>%1$s</b> té una firma invàlida</string>
-  <string name="plugin_invalid_authority">No es pot verificar l\'autoritat per a: <b>%1$s</b></string>
-  <string name="plugin_force_install">Força \n instalar</string>
-  <string name="plugin_path_image_add">Afegeix una nova imatge</string>
+  <!--Extension-->
+  <string name="extension_invalid_signature"><b>%1$s</b> té una firma invàlida</string>
+  <string name="extension_force_install">Força \n instalar</string>
 </resources>

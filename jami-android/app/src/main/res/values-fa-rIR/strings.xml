@@ -9,19 +9,13 @@
   <string name="contribute_section">مشارکت</string>
   <string name="version_section">نسخه</string>
   <string name="no_email_app_installed">هیچ برنامه‌ای برای پست الکترونیک پیدا نشد. برای فرستادن یک گزارش به ما، یکی را نصب کنید</string>
-  <string name="no_browser_app_installed">هیچ برنامه مرورگری پیدا نشد، برای مشاهده این صفحه، یکی را نصب کنید</string>
   <string name="email_chooser_title">ارسال پست الکترونیک با…</string>
-  <string name="website_chooser_title">مشاهده سایت اینترنتی از طریق…</string>
-  <string name="license">این نرم‌افزار همان گونه که هست، بدون هیچ ضمانتی ارائه شده است. برای جزئیات بیش‌تر، <u>نگارش 3 یا جدیدتر پروانه عمومی همگانی GNU</u>را ببینید</string>
   <string name="description">جمی نرم‌افزاری آزاد برای ارتباط جهانی است؛ که به آزادی‌ها و حریم خصوصی کاربرانش احترام می‌گذارد.</string>
   <string name="credits">دست‌اندرکاران</string>
   <string name="pip_title">کنفرانس جامی</string>
   <string name="call_service_description">این سرویس برای ادامه تماس‌های شما در پیش‌زمینه ضروری است. فقط در طول تماس اجرا می‌شود.</string>
   <string name="data_transfer_service_description">این سرویس برای نمایش اعلان‌های مداوم در هنگام انتقال فایل ضروری است. فقط در زمان‌های انتقال فایل اجرا می‌شود.</string>
   <!--About dialog-->
-  <string name="developed_by">توسعه‌یافته توسط</string>
-  <string name="designed_by">طراحی‌شده توسط</string>
-  <string name="ringtones_by">صدا‌های زنگ توسط</string>
   <!--RingActivity-->
   <string name="error_no_network">بدون اتصال شبکه</string>
   <string name="error_account_offline">حساب آنلاین نیست</string>
@@ -35,7 +29,6 @@
   <string name="menu_item_settings">تنظیمات</string>
   <string name="menu_item_advanced_settings">تنظیمات پیشرفته</string>
   <string name="menu_item_account_settings">تنظیمات حساب</string>
-  <string name="menu_item_plugin_list">تنظیمات افزونه</string>
   <string name="menu_item_share">به اشتراک گذاری حساب من</string>
   <string name="menu_item_about">درباره جمی</string>
   <string name="video_setting_title">تنظیمات ویدیو</string>
@@ -99,17 +92,9 @@
   <string name="ongoing_call">تماس جاری</string>
   <string name="hist_in_call">تماس ورودی به مدت  %1$s</string>
   <string name="hist_out_call">تماس خروجی به مدت %1$s</string>
-  <string name="start_error_title">نمی‌توان جمی را راه‌اندازی کرد!</string>
   <string name="start_error_mic_required">جمی برای کار به مجوز میکروفون نیاز دارد.</string>
-  <string name="action_call_accept">پذیرش تماس</string>
-  <string name="action_call_accept_audio">پاسخ به صورت صوتی</string>
-  <string name="action_call_accept_video">پاسخ به صورت ویدیویی</string>
-  <string name="action_call_hold_accept">در حالت انتظار نگه داشتن تماس فعلی و ‍ پذیرفتن تماس بعدی</string>
-  <string name="action_call_hold_accept_video">در حالت انتظار نگه داشتن تماس فعلی و پذیرفتن تماس ویدیویی</string>
-  <string name="action_call_end_accept">این را قطع کن و تماس بعدی را بپذیر</string>
   <string name="action_call_decline">ردکردن</string>
   <string name="action_call_mic_mute">قطع میکروفون</string>
-  <string name="action_load_plugin">بارگذاری افزونه</string>
   <string name="ab_action_speakerphone">فعال‌سازی بلندگو</string>
   <string name="ab_action_contact_add">افزودن به مخاطبان</string>
   <string name="ab_action_contact_add_question">افزودن به مخاطبان؟</string>
@@ -146,11 +131,8 @@
   <string name="ringtone_error_size_too_big">این فایل خیلی بزرگ است. حداکثر اندازه %1$d کیلو‌بایت است.</string>
   <string name="ringtone_custom_prompt">تعیین صدای زنگ سفارشی</string>
   <string name="ringtone_custom_label">سفارشی</string>
-  <string name="ringtone_jami_tones">زنگ‌های جمی</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">جمی برای فعال‌سازی این ویژگی به مجوز \"خواندن مخاطبان\" نیاز دارد. لطفا آن را اعطا کنید.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">جمی برای فعال‌سازی این ویژگی به مجوز \"نوشتن گزارش تماس\" نیاز دارد. لطفا آن را اعطا کنید.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">کد QR حسابی را که می‌خواهید بیفزایید، اسکن کنید.</string>
   <string name="title_activity_qrcode">هم‌رسانی حساب من</string>
@@ -166,8 +148,6 @@
   <string name="conversation_details">جزئیات مکالمه</string>
   <string name="contact_details">جزئیات مخاطب</string>
   <string name="conversation_action_delete_this">حذف این گفتگو</string>
-  <string name="conversation_action_delete_this_title">حذف این گفتگو؟</string>
-  <string name="conversation_action_delete_this_message">این کار قابل بازگشت نیست.</string>
   <string name="conversation_action_history_clear">پاک‌سازی تاریخچه</string>
   <string name="conversation_action_history_clear_title">پاک‌سازی تاریخچه گفتگو؟</string>
   <string name="conversation_action_history_clear_message">این کار قطعا باعث پاک شدن تاریخچه گفتگو خواهد شد.</string>
@@ -204,7 +184,6 @@
   <string name="conversation_contact_invited">%1$s دعوت شده است.</string>
   <string name="conversation_contact_added">%1$sپیوست</string>
   <string name="conversation_contact_left">%1$s ترک کرد</string>
-  <string name="conversation_contact_banned">%1$sمنع شده است</string>
   <string name="conversation_search_hint">جستجو گفتگو‌ها</string>
   <string name="today">امروز</string>
   <string name="yesterday">دیروز</string>
@@ -219,7 +198,6 @@
   <string name="help_password_choose">برای حفاظت از حساب جمی خود، گذرواژه‌ای قوی را که به خاطر خواهید سپرد، برگزینید.</string>
   <string name="help_password_enter">گذرواژه حساب جمی خود را وارد کنید.</string>
   <string name="help_server_enter">آدرس URL سرور مدیریت را وارد کن.</string>
-  <string name="help_pin_enter">پین را از حساب پیکربندی‌شده جمی دیگر وارد کنید. برای به دست آوردن یک پین، از ویژگی «برون‌برد حساب جمی» استفاده کنید.</string>
   <string name="wizard_next">بعدی</string>
   <string name="wizard_back">بازگشت</string>
   <string name="wizard_skip">پرش</string>
@@ -227,7 +205,6 @@
  </string>
   <string name="hist_contact_added">مخاطب افزوده شد</string>
   <string name="hist_contact_left">مخاطب از تماس خارج شد</string>
-  <string name="hist_contact_banned">مخاطب مسدود شد</string>
   <string name="hist_invitation_received">دعوت‌نامه دریافت شد</string>
   <!--Account Summary-->
   <string name="profile">نمایه</string>
@@ -276,7 +253,6 @@
   <string name="tv_contact_row_header">مخاطبان</string>
   <string name="gallery_error_title">هیچ برنامه گالری یافت نشد.</string>
   <string name="gallery_error_message">هیچ برنامه کاربردی برای باز کردن گالری، در دستگاه یافت نشد.</string>
-  <string name="generic_error">یک خطای ناشناخته رخ داد.</string>
   <!--File Transfer-->
   <string name="invalid_file">فایل نامعتبر</string>
   <string name="not_able_to_write_file">ناتوان در نوشتن فایل</string>
@@ -296,7 +272,6 @@
   <string name="file_saved_in">فایل در %s ذخیره شد</string>
   <string name="file_saved_successfully">فایل با موفقیت ذخیره شد</string>
   <string name="file_download">دانلود</string>
-  <string name="no_space_left_on_device">هیچ فضایی در دستگاه وجود ندارد</string>
   <string name="title_media_viewer">نمایش‌دهنده رسانه</string>
   <string name="menu_file_open">باز کردن فایل</string>
   <string name="menu_file_download">دانلود فایل</string>
@@ -347,29 +322,20 @@
   <string name="wizard_profile_button">ذخیره نمایه</string>
   <string name="wizard_profile_skip">رد شوید و این کار را بعدا انجام دهید</string>
   <string name="fab_path_choose">انتخاب یک فایل دیگر</string>
-  <string name="chat_plugins">افزونه‌های گفتگو</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">اشتراک گذاری</string>
   <string name="bottomSheet_dialpad_btn">صفحه ی شماره گیری</string>
-  <string name="bottomSheet_plugins_btn">افزونه‌ها</string>
   <string name="bottomSheet_add_participants_btn">افزودن</string>
   <string name="bottomSheet_change_camera_btn">تغییر</string>
   <string name="bottomSheet_camera_onoff_switch_btn">دوربین</string>
-  <string name="bottomSheet_hangup_btn">پایان دادن به تماس</string>
   <string name="bottomSheet_mute_microphone_btn">میکروفون</string>
   <string name="bottomSheet_sound_output_btn">صداها</string>
   <string name="bottomSheet_raiseHand_btn">بالا بردن دست </string>
-  <string name="open_account_plugin_settings">تنظیمات پلاگین حساب را باز کن</string>
-  <string name="open_general_plugin_settings">تنظیمات پلاگین عمومی را باز کن</string>
   <string name="uninstall">حذف نصب</string>
   <string name="reset">بازنشانی</string>
   <!--Swarm Detail-->
   <string name="rename_btn">تایید</string>
-  <string name="rename_error">نباید خالی باشد</string>
-  <string name="swarm_description">توضیحی اضافه کنید</string>
-  <string name="tab_about">درباره</string>
   <string name="tab_members">اعضا</string>
-  <string name="tab_documetn">اسناد</string>
   <string name="dialogtitle_title">ویرایش نام گروه</string>
   <string name="dialogtitle_description">ویرایش توضیحات گروه</string>
   <string name="dialog_hint_title">عنوان</string>
@@ -390,5 +356,5 @@
   <string name="donation_donate">اهدا کنید</string>
   <string name="donation_setting_title">یادآوری اهدا کردن</string>
   <string name="donation_setting_description">فعال کردن یادآوری اهدا کردن</string>
-  <!--Plugin-->
+  <!--Extension-->
 </resources>

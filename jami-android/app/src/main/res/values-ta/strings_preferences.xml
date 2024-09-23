@@ -27,7 +27,6 @@
   <string name="pref_startOnBoot_title">ஜாமி தொடக்கத்தில் தொடங்கவும்</string>
   <string name="pref_startOnBoot_summary">கணினி தொடங்கும் போது ஜாமி பின்னணியில் இயக்கவும்.</string>
   <string name="pref_clearHistory_title">தெளிவான வரலாறு</string>
-  <string name="pref_clearHistory_summary">எல்லா உரையாடல்களையும் அழித்து விடுங்கள்.</string>
   <string name="pref_notification_title">அறிவிப்புகளின் தெரிவுநிலை</string>
   <string name="pref_notification_summary">பயன்பாட்டு அறிவிப்புகளை பூட்டுதல் திரையில் காண்பிக்கவும்.</string>
   <string name="pref_blackList_title">தொகுப்பு பட்டியல்</string>
@@ -52,19 +51,6 @@
   <string name="notification_public">பொதுமக்கள் அறிவிப்புகளையும் அவற்றின் உள்ளடக்கத்தையும் பூட்டுத் திரையில் காண்பித்தல்)</string>
   <string name="notification_private">தனியார் \n(அறிவிப்புகளை காண்பித்து அவற்றின் உள்ளடக்கத்தை பூட்டு திரை மீது மறைக்கவும்) \n</string>
   <string name="notification_secret">இரகசியம் \n(இணைப்பு திரையில் அறிவிப்புகளை காட்ட வேண்டாம்)</string>
-  <!--Plugin-->
-  <string name="pref_plugins_title">செருகுநிரல்கள்</string>
-  <string name="pref_plugins_summary">செருகுநிரல்களை இயக்கு மற்றும் அவற்றின் அளவுருக்களை அமைக்கவும்</string>
-  <string name="fab_plugins_add">புதிய செருகுநிரலைச் சேர்க்கவும்</string>
-  <string name="plugin_uninstall_title">செருகுநிரலை அகற்ற?</string>
-  <string name="plugin_reset_preferences">செருகுநிரல் விருப்பங்களை மீட்டமை</string>
-  <string name="plugin_reset_preferences_summary">உங்கள் செருகுநிரல் அமைப்புகள் இயல்புநிலை இருக்கும்</string>
-  <string name="plugin_reset_preferences_ask">நீங்கள் பொது சொருகி அமைப்புகள் மீட்டமைக்க வேண்டும்?</string>
-  <string name="plugin_reset_account_preferences_ask">கணக்கு செருகுநிரல் அமைப்புகள் மீட்டமைக்க விரும்புகிறீர்களா?</string>
-  <string name="plugin_successfully_installed">செருகுநிரல் <b>%1$s</b> வெற்றிகரமாக நிறுவப்பட்டது</string>
-  <string name="plugin_install_failure">செருகுநிரலை நிறுவ முடியவில்லைஃ <b>%1$s</b></string>
-  <string name="plugin_recent_version_exception">உங்களிடம் சமீபத்திய பதிப்பு உள்ளதுஃ <b>%1$s</b></string>
-  <string name="plugin_same_version_exception"><b>%1$s</b> இன் அதே பதிப்பு நிறுவப்பட்டுள்ளது</string>
-  <string name="plugin_force_install">கட்டாய நிறுவல்</string>
-  <string name="plugin_path_image_add">புதிய படத்தை சேர்க்கவும்</string>
+  <!--Extension-->
+  <string name="extension_force_install">கட்டாய நிறுவல்</string>
 </resources>

@@ -2,7 +2,6 @@
 <resources>
   <!--About-->
   <!--About dialog-->
-  <string name="credits_volunteers">¡Y los voluntarios que contribuyen a este proyecto!</string>
   <!--RingActivity-->
   <!--AB menus-->
   <!--Sections-->
@@ -78,17 +77,11 @@
   <string name="audio_permission_rationale_message">Jami requiere el permiso del micrófono para utilizar la función de texto a voz y grabar audio. Se solicitará en el siguiente paso.</string>
   <string name="camera_permission_rationale_message">Jami requiere el permiso de la cámara para grabar vídeo y realizar vídeollamadas. Se solicitará en el siguiente paso.</string>
   <string name="unable_to_start_recorder">No se puede iniciar la grabación de audio.</string>
-  <string name="error_sharing_file">Error al compartir el archivo.</string>
-  <string name="error_opening_file">Error al abrir el archivo.</string>
   <!--Wizard-->
   <!--Bottom sheet-->
   <!--Swarm Detail-->
   <string name="rename_btn">Confirmar</string>
-  <string name="rename_error">no puede estar vacío</string>
-  <string name="swarm_description">Añadir descripción</string>
-  <string name="tab_about">Acerca de</string>
   <string name="tab_members">Miembros</string>
-  <string name="tab_documetn">Documentos</string>
   <string name="dialogtitle_title">Editar el título de la colección</string>
   <string name="dialogtitle_description">Editar Descripción de la colección</string>
   <string name="dialog_hint_title">Título</string>
@@ -116,8 +109,6 @@
   <string name="donation_donate">Donar</string>
   <string name="donation_setting_title">Recordatorio de donación</string>
   <string name="donation_setting_description">Habilitar el recordatorio de donación</string>
-  <!--Plugin-->
+  <!--Extension-->
   <string name="unable_to_load">No se puede cargar %1$s</string>
-  <string name="load_sucess">%1$s: habilitado</string>
-  <string name="unload_sucess">%1$s: desactivado</string>
 </resources>

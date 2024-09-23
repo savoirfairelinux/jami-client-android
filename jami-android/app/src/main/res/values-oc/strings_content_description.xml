@@ -1,11 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--Strings for xml content description of images-->
-  <string name="contact_quick_call_description">Apèl rapid</string>
-  <string name="contact_picture_description">Fotografia de contacte</string>
   <string name="dial_numeric_pad">Dispausicion numerica</string>
   <string name="contact_unblock">Desbloquejar</string>
-  <string name="video_plugins">Plugins de vidèo</string>
   <string name="file_download_button">Descargar</string>
   <string name="control_play">Joguèri</string>
   <string name="control_pause">Pausa</string>

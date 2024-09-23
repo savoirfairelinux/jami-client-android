@@ -25,9 +25,7 @@
   <!--Conversation-->
   <string name="conversation_details">Unterhaltungsdetails</string>
   <string name="contact_details">Kontaktdetails</string>
-  <string name="conversation_contact_unbanned">%1$s wurde entbannt</string>
   <!--Contacts-->
-  <string name="hist_contact_unbanned">Kontakt entbannt</string>
   <!--Account Summary-->
   <!--Share fragment-->
   <!--Pending contact requests-->
@@ -46,5 +44,5 @@
   <!--JamiId-->
   <!--WelcomeJami-->
   <!--Donation-->
-  <!--Plugin-->
+  <!--Extension-->
 </resources>

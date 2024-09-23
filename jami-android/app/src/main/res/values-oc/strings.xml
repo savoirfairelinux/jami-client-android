@@ -9,19 +9,13 @@
   <string name="contribute_section">Contribucion</string>
   <string name="version_section">Version</string>
   <string name="no_email_app_installed">Pas cap d\'aplicacion de messatge trobat, installar una per nos mandar un rapòrt</string>
-  <string name="no_browser_app_installed">Pas cap d\'aplicacion de navigador web trobada, installa una per veire aquesta pagina</string>
   <string name="email_chooser_title">Mandadís del messatge…</string>
-  <string name="website_chooser_title">Vejatz lo site utilizant...</string>
-  <string name="license">Lo logicial es provesit "tal coma es", sens garantia de cap mena. Per detalhs, véder la version 3 o mai tard de la Licéncia publica generala GNU&lt;/u&gt;</string>
   <string name="description">Jami es un logicial liure per comunicacions universalas que respèctan la libertat e la vida privada de sos utilizaires.</string>
   <string name="credits">Crèdit</string>
   <string name="pip_title">Conferéncia de Jami</string>
   <string name="call_service_description">Aqueste servici es necessari per gardar las vosas telefonadas en foncion.</string>
   <string name="data_transfer_service_description">Aquel servici es necessari per mostrar las notificacions persistentas pendent los transferiments de fichièrs.</string>
   <!--About dialog-->
-  <string name="developed_by">Desvolopat per</string>
-  <string name="designed_by">Concepcion de</string>
-  <string name="ringtones_by">Sonor de</string>
   <!--RingActivity-->
   <string name="error_no_network">Cap de connectivitat ret</string>
   <string name="error_account_offline">Lo compte es desconectat</string>
@@ -35,7 +29,6 @@
   <string name="menu_item_settings">Paramètres</string>
   <string name="menu_item_advanced_settings">Ajustaments avançats</string>
   <string name="menu_item_account_settings">Configuracion de compte</string>
-  <string name="menu_item_plugin_list">Ajustaments dels plugins</string>
   <string name="menu_item_share">Comparta mon compte</string>
   <string name="menu_item_about">A prepaus de Jami</string>
   <string name="video_setting_title">Ajustaments de vidèo</string>
@@ -97,17 +90,9 @@
   <string name="ongoing_call">L\'invòca en cors</string>
   <string name="hist_in_call">Apèl entrant de %1$s</string>
   <string name="hist_out_call">Apèl sortent de %1$s</string>
-  <string name="start_error_title">Pòdi pas començar Jami!</string>
   <string name="start_error_mic_required">Jami demanda lo micròfon per trabalhar.</string>
-  <string name="action_call_accept">Prenètz la telefoneta</string>
-  <string name="action_call_accept_audio">Responda en audio</string>
-  <string name="action_call_accept_video">Responda en video</string>
-  <string name="action_call_hold_accept">Tener e prene l\'audio de l\' apèl</string>
-  <string name="action_call_hold_accept_video">Tenga e pren la video-call</string>
-  <string name="action_call_end_accept">Fin e prenon la crida</string>
   <string name="action_call_decline">Regetar</string>
   <string name="action_call_mic_mute">Micròfon silenciós</string>
-  <string name="action_load_plugin">Plugin de carga</string>
   <string name="ab_action_speakerphone">Abilitar lo parlant</string>
   <string name="ab_action_contact_add">Ajustar als contactes</string>
   <string name="ab_action_contact_add_question">Ajustar a los contactes?</string>
@@ -143,11 +128,8 @@
   <string name="ringtone_error_size_too_big">Aqueste fichièr es tròp grand. La talha màxima es %1$dkB.</string>
   <string name="ringtone_custom_prompt">Set un sonor de sonatge personalizat</string>
   <string name="ringtone_custom_label">Personalitat</string>
-  <string name="ringtone_jami_tones">Jami Tones</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Jami a besonh de la permission \"Ler contactes\" per activar aquesta foncion.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Jami a besonh de l\'autorizacion \"Escriure lo registre d\'apèl\" per activar aquesta foncion.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Scanar lo còde QR del compte que volètz ajustar.</string>
   <string name="title_activity_qrcode">Comparta mon compte</string>
@@ -163,8 +145,6 @@
   <string name="conversation_details">Detalhs de la conversacion</string>
   <string name="contact_details">Detalhs de contacte</string>
   <string name="conversation_action_delete_this">Eliminar aquesta conversacion</string>
-  <string name="conversation_action_delete_this_title">Eliminar aquela conversacion?</string>
-  <string name="conversation_action_delete_this_message">Aquesta accion se pòt pas desvolopar.</string>
   <string name="conversation_action_history_clear">Escafar l’istoric</string>
   <string name="conversation_action_history_clear_title">Desliurar l\'istòria de la conversacion?</string>
   <string name="conversation_action_history_clear_message">Aquò netarà definitivament l\'istòria de la conversacion.</string>
@@ -201,7 +181,6 @@
   <string name="conversation_contact_invited">%1$s foguèt convidat</string>
   <string name="conversation_contact_added">%1$s unit</string>
   <string name="conversation_contact_left">%1$s a esquèrra</string>
-  <string name="conversation_contact_banned">%1$s foguèt interdit</string>
   <string name="conversation_search_hint">Conversacion de cercaire</string>
   <string name="today">Uèi</string>
   <string name="yesterday">Ièr</string>
@@ -216,14 +195,12 @@
   <string name="help_password_choose">Escòli una contraròtle fòrta que te remembraràs per protegir ton compte Jami.</string>
   <string name="help_password_enter">Introducètz lo vòstre mot de passe de compte Jami principal.</string>
   <string name="help_server_enter">Introducir l\'URL del servidor de gestion.</string>
-  <string name="help_pin_enter">Introducir lo PIN d\'un autre compte Jami configurat. Utilizatz la foncion \"exportar compte Jami\" per obtenir un PIN.</string>
   <string name="wizard_next">Seguent</string>
   <string name="wizard_back">Tornar</string>
   <string name="wizard_skip">Saultar</string>
   <string name="hist_contact_invited">Contacte convidat</string>
   <string name="hist_contact_added">Contacte ajustat</string>
   <string name="hist_contact_left">Contacte a esquèrra</string>
-  <string name="hist_contact_banned">Contacte prohibit</string>
   <string name="hist_invitation_received">Invitacion recebuda</string>
   <!--Account Summary-->
   <string name="profile">Perfil</string>
@@ -272,7 +249,6 @@
   <string name="tv_contact_row_header">Contactes</string>
   <string name="gallery_error_title">Pas cap d\' aplicacion Galeria trobada</string>
   <string name="gallery_error_message">Pas cap d\' aplicacion trobada sul dispositiu per dobrir Galeria</string>
-  <string name="generic_error">Un error desconegut se produch</string>
   <!--File Transfer-->
   <string name="invalid_file">Dossièr invalide</string>
   <string name="not_able_to_write_file">Impossible d\'escriure fichièr</string>
@@ -292,7 +268,6 @@
   <string name="file_saved_in">Fichièr salvat en %s</string>
   <string name="file_saved_successfully">Fichièr salvat amb succès</string>
   <string name="file_download">Descargar</string>
-  <string name="no_space_left_on_device">Pas de plaça demorèt sul dispositiu</string>
   <string name="title_media_viewer">Vector de medias</string>
   <string name="menu_file_open">Dossièr obèrt</string>
   <string name="menu_file_download">Descargar fichièr</string>
@@ -343,29 +318,20 @@
   <string name="wizard_profile_button">Salvar Profil</string>
   <string name="wizard_profile_skip">S\'escapar e far aquò mai tard</string>
   <string name="fab_path_choose">Escotar un autre fichièr</string>
-  <string name="chat_plugins">Plugins de chat</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Compartilhar</string>
   <string name="bottomSheet_dialpad_btn">Dialpad</string>
-  <string name="bottomSheet_plugins_btn">Extensions</string>
   <string name="bottomSheet_add_participants_btn">Ajustar</string>
   <string name="bottomSheet_change_camera_btn">Cambiament</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Camèra</string>
-  <string name="bottomSheet_hangup_btn">Finala de l\' Invòca</string>
   <string name="bottomSheet_mute_microphone_btn">Micro</string>
   <string name="bottomSheet_sound_output_btn">Sonèt</string>
   <string name="bottomSheet_raiseHand_btn">Levant la man</string>
-  <string name="open_account_plugin_settings">Configuracion de plug-in de compte</string>
-  <string name="open_general_plugin_settings">Obertz las configuracions generalas del plug-in</string>
   <string name="uninstall">Desinstalar</string>
   <string name="reset">Restar sus</string>
   <!--Swarm Detail-->
   <string name="rename_btn">Confirmacion</string>
-  <string name="rename_error">Pòdi pas èsser vacat</string>
-  <string name="swarm_description">Ajustar una descripcion</string>
-  <string name="tab_about">A prepaus</string>
   <string name="tab_members">Membres</string>
-  <string name="tab_documetn">Documents</string>
   <string name="dialogtitle_title">Modificar lo títol de l\'enregistrament</string>
   <string name="dialogtitle_description">Modificar Descripcion de l\'escarpa</string>
   <string name="dialog_hint_title">Titulacion</string>
@@ -381,5 +347,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Benvenguts a Jami</string>
   <!--Donation-->
-  <!--Plugin-->
+  <!--Extension-->
 </resources>

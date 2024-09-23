@@ -27,7 +27,6 @@
   <string name="pref_startOnBoot_title">Inicializar o Jami automaticamente com o sistema</string>
   <string name="pref_startOnBoot_summary">Executar o Jami em segundo plano ao inicializar o sistema.</string>
   <string name="pref_clearHistory_title">Limpar histórico</string>
-  <string name="pref_clearHistory_summary">Limpar todo o histórico de conversas. Esta ação não pode ser desfeita.</string>
   <string name="pref_notification_title">Visibilidade de notificação</string>
   <string name="pref_notification_summary">Defina a visibilidade das notificações de aplicativos na tela de bloqueio.</string>
   <string name="pref_blackList_title">Lista de bloqueio</string>
@@ -52,22 +51,8 @@
   <string name="notification_public">Público \n(mostra notificações e seu conteúdo na tela de bloqueio)\n</string>
   <string name="notification_private">Privado \n(mostrar notificações, mas ocultar o conteúdo na tela de bloqueio)\n</string>
   <string name="notification_secret">Segredo \n(não mostrar notificações na tela de bloqueio)</string>
-  <!--Plugin-->
-  <string name="pref_plugins_title">Complementos</string>
-  <string name="pref_plugins_summary">Ativar os complementos e definir seus parâmetros</string>
-  <string name="fab_plugins_add">Adicionar um novo complemento</string>
-  <string name="plugin_uninstall_title">Desinstalar o complemento?</string>
-  <string name="plugin_reset_preferences">Redefinir as preferências do complemento</string>
-  <string name="plugin_reset_preferences_summary">Suas configurações de complemento serão padronizadas</string>
-  <string name="plugin_reset_preferences_ask">Quer restaurar as configurações gerais do complemento?</string>
-  <string name="plugin_reset_account_preferences_ask">Quer restaurar as configurações do complemento da conta?</string>
-  <string name="plugin_successfully_installed">Complemento <b>%1$s</b> instalado com êxito</string>
-  <string name="plugin_install_failure">Falha na instalação do complemento: <b>%1$s</b></string>
-  <string name="plugin_recent_version_exception">Você tem uma versão mais recente de: <b>%1$s</b></string>
-  <string name="plugin_same_version_exception">Você tem a mesma versão de <b>%1$s</b> instalada</string>
-  <string name="plugin_invalid_signature"><b>%1$s</b> tem uma assinatura inválida</string>
-  <string name="plugin_invalid_authority">Não é possível verificar a autoridade para: <b>%1$s</b></string>
-  <string name="plugin_invalid_format">Formato de complemento inválido: <b>%1$s</b></string>
-  <string name="plugin_force_install">forçar \n a instalação</string>
-  <string name="plugin_path_image_add">Adicionar uma nova imagem</string>
+  <!--Extension-->
+  <string name="pref_extensions_title">Extensões</string>
+  <string name="extension_invalid_signature"><b>%1$s</b> tem uma assinatura inválida</string>
+  <string name="extension_force_install">forçar \n a instalação</string>
 </resources>

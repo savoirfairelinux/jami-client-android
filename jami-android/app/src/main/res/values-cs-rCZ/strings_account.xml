@@ -21,18 +21,12 @@
   <string name="dialog_wait_create_details">Prosím vyčkejte, než bude váš účet přidán…</string>
   <string name="dialog_wait_update">Aktualizuje se účet</string>
   <string name="dialog_wait_update_details">Počkejte prosím, než bude váš účet aktualizován…</string>
-  <string name="dialog_warn_ip2ip_account_title">Vytvořit prázdný účet SIP?</string>
-  <string name="dialog_warn_ip2ip_account_message">Vytváříte prázdný účet SIP bez platného hostitelského jména.
-Budete moci pouze vytvářet a přijímat přímé ip hovory.
-Svůj účet můžete upravit později</string>
   <string name="account_type_ip2ip">Účet IP</string>
   <string name="help_ring">Účet Jami vám umožňuje spojit se s lidmi bezpečně, uživatel s uživatelem, skrze plně rozptýlenou síť.</string>
-  <string name="help_sip_title">Přidat váš účet SIP</string>
+  <string name="help_sip_title">Přidat účet SIP</string>
   <string name="help_sip">Nastavit existující účet SIP.</string>
-  <string name="create_sip_account">Přidat účet SIP</string>
   <!--Strings related to account deletion-->
-  <string name="account_delete_dialog_title">Odstranit účet?</string>
-  <string name="account_delete_dialog_message">Tuto činnost nelze vrátit zpět.</string>
+  <string name="account_delete_dialog_message">Tento krok nelze vrátit zpět.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Žádný registrovaný účet</string>
   <string name="normal_accounts_titles">Účty</string>
@@ -40,8 +34,6 @@ Svůj účet můžete upravit později</string>
   <string name="account_device_revoke">Odebrat zařízení</string>
   <string name="account_device_revocation_success_title">Úspěch</string>
   <string name="account_device_revocation_success">Zařízení je nyní odebráno!</string>
-  <string name="account_device_revocation_error_title">Nelze odebrat zařízení</string>
-  <string name="account_device_revocation_wrong_password">Špatné heslo</string>
   <string name="account_device_revocation_unknown_device">Neznámé zařízení.</string>
   <string name="account_device_revocation_error_unknown">Neznámá chyba.</string>
   <string name="account_password_change">Změnit heslo</string>
@@ -63,8 +55,7 @@ Svůj účet můžete upravit později</string>
   <string name="account_rendezvous_summary">V režimu Místa setkání budou příchozí hovory přidány do konferenční místnosti.</string>
   <string name="account_upnp_label">Povolit UPnP</string>
   <string name="account_proxy_field">Proxy</string>
-  <!--Plugin Details-->
-  <string name="account_preference_plugin_tab">Zásuvné moduly</string>
+  <!--Extension Details-->
   <!--Audio Details-->
   <string name="account_audio_label">Zvuk</string>
   <string name="account_preferences_media_tab">Média</string>
@@ -144,14 +135,9 @@ Svůj účet můžete upravit později</string>
   <string name="export_account_wait_message">Exportují se údaje o účtu</string>
   <string name="account_export_file">Zálohovat účet</string>
   <string name="account_export_file_summary">Zálohujte svůj účet v zařízení, abyste jej mohli později obnovit.</string>
-  <string name="account_export_end_decryption_message">Zadaným heslem nebylo možné váš účet odemknout.</string>
   <string name="account_export_end_network_title">Chyba sítě</string>
-  <string name="account_export_end_network_message">Nebylo možné exportovat účet do sítě. Zkontrolujte si připojení.</string>
   <string name="account_export_end_error_title">Chyba</string>
-  <string name="account_export_end_error_message">Nebylo možné účet exportovat. Nastala neznámá chyba.</string>
   <string name="account_enter_password">Zadejte heslo</string>
-  <string name="account_share_body">Spojte se se mnou pomocí \'%1$s\' na rozptýleném komunikačním systému Jami: %2$s</string>
-  <string name="account_share_body_with_username">Spojte se se mnou pomocí \'%1$s\' nebo mého veřejného uživatelského jména \'%2$s\' na rozptýleném komunikačním systému Jami: %3$s</string>
   <string name="account_contact_me">Spojte se se mnou přes Jami!</string>
   <string name="update_account">Aktualizovat účet</string>
   <string name="account_migration">Váš účet Jami lze aktualizovat.
@@ -160,21 +146,13 @@ Zadejte, prosím, své heslo.</string>
   <string name="sip_account">Účet SIP</string>
   <string name="ring_account_identity">Totožnost</string>
   <string name="account_migration_title_dialog">Převod účtu</string>
-  <string name="account_migration_message_dialog">Vaše účty je potřeba aktualizovat. Chcete jít na obrazovku se správou účtů pro provedení této činnosti?</string>
   <string name="account_update_needed">Nutná aktualizace</string>
-  <string name="account_cannot_be_found_title">Nelze nalézt účet</string>
-  <string name="account_cannot_be_found_message">Na síti Jami nebyl účet nalezen.\nUjistěte se, že byl exportován na Jami z existujícího zařízení a že jsou přihlašovací údaje správné.</string>
   <string name="account_sip_cannot_be_registered_message">Můžete pokračovat v postupu vytvoření účtu nebo údaje upravit zde. Úpravy jsou možné i později v nastavení účtu.</string>
-  <string name="account_no_network_title">Nelze se připojit k síti</string>
-  <string name="account_no_network_message">Nebylo možno přidat účet, protože se Jami nedokázal připojit k rozptýlené síti. Prověřte své síťové připojení.</string>
+  <string name="account_no_network_title">Chyba sítě</string>
   <string name="account_device_added_title">Přístroj přidán k účtu</string>
   <string name="account_device_added_message">Úspěšně jste si na tomto zařízení nastavil svůj účet Jami.</string>
   <string name="account_device_updated_title">Aktualizován přístroj v účtu</string>
   <string name="account_device_updated_message">Úspěšně jste si aktualizoval účet Jami.</string>
-  <string name="account_cannot_be_updated_message">Zařízení účtu se nepodařilo aktualizovat.
-Prověřte, prosím, své heslo.</string>
-  <string name="account_sip_success_title">Účet SIP zaregistrován</string>
-  <string name="account_sip_success_message">Úspěšně jste zaregistroval účet SIP.</string>
   <string name="account_sip_register_anyway">Přesto zaregistrovat</string>
   <!--TV-->
   <string name="account_tv_settings_header">Nastavení účtu</string>
@@ -194,11 +172,8 @@ Prověřte, prosím, své heslo.</string>
   <string name="account_link_export_button">Připojit nové zařízení</string>
   <string name="account_link_show_button">Zobrazit %d další propojené zařízení</string>
   <string name="account_link_hide_button">Skrýt propojené zařízení</string>
-  <string name="account_link_export_info">Pro použití tohoto účtu na dalších zařízeních jej musíte nejdříve vystavit na Jami. Tím se vytvoří kód PIN, který musíte zadat na novém zařízení, kde nastavujete účet. PIN zůstává platný 10 minut.</string>
   <string name="account_start_export_button">Vytvořit PIN</string>
   <string name="account_end_export_button">zavřít</string>
-  <string name="account_end_export_infos">Váš PIN je:\n\n%%\n\nK dokončení tohoto procesu otevřete Jami na novém zařízení. Přihlaste se k účtu pomocí „Připojit toto zařízení k účtu“. Váš PIN zůstává platný 10 minut.</string>
-  <string name="account_link_export_info_light">Pro použití tohoto účtu na dalších zařízeních jej musíte nejdříve vystavit na Jami. Tím se vytvoří kód PIN, který musíte pro nastavení účtu zadat na novém zařízení. PIN zůstává platný po 0 minut.</string>
   <string name="account_export_title">Propojení účtu s dalšími zařízeními</string>
   <string name="account_connect_server_button">Připojit se ke správcovskému serveru</string>
   <string name="account_connect_button">Připojit</string>
@@ -230,21 +205,17 @@ Prověřte, prosím, své heslo.</string>
   <string name="account_creation_profile">Vytvořit vlastní profil</string>
   <string name="account_creation_ring">Vytvořit váš účet Jami</string>
   <string name="account_link_title">Připojit toto zařízení</string>
-  <string name="account_sip_cannot_be_registered">Nelze zaregistrovat účet</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">Upravit můj účet</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Pro potvrzení zadejte heslo</string>
   <string name="enter_password">Zadejte heslo</string>
   <string name="revoke_device_title">Odebrat zařízení</string>
-  <string name="revoke_device_message">Jste si jistý, že chcete odebrat účet %1$s ?</string>
   <string name="revoke_device_wait_title">Počkejte prosím…</string>
   <string name="revoke_device_wait_message">Odebírá se účet</string>
   <string name="rename_device_title">Přejmenovat toto zařízení</string>
   <string name="rename_device_message">Zvolte si nový název pro rozeznání tohoto zařízení ve vašem účtu Jami</string>
   <string name="rename_device_button">Přejmenovat zařízení</string>
   <string name="account_rename_device_hint">Zvolit si název nového zařízení</string>
-  <string name="account_device_name_empty">Název zařízení nemůže být prázdný</string>
   <string name="account_device_this_indicator">Toto zařízení</string>
   <string name="account_disabled_indicator">zakázáno</string>
   <!--Link a new device-->

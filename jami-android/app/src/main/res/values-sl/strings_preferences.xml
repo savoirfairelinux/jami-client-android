@@ -27,7 +27,6 @@
   <string name="pref_startOnBoot_title">Zaženi Jami ob zagonu</string>
   <string name="pref_startOnBoot_summary">Ob zagonu sistema zaženi Jami v ozadju.</string>
   <string name="pref_clearHistory_title">Počisti zgodovino</string>
-  <string name="pref_clearHistory_summary">Izbriše vso zgodovino pogovorov. Tega dejanja ni mogoče razveljaviti.</string>
   <string name="pref_notification_title">Vidnost obvestil</string>
   <string name="pref_notification_summary">Določite vidnost sporočil programa na zaklenjenem zaslonu.</string>
   <string name="pref_blackList_title">Seznam blokiranih</string>
@@ -52,22 +51,8 @@
   <string name="notification_public">Javno \n(pokaži obvestila in njihovo vsebino na zaklenjenem zaslonu)\n</string>
   <string name="notification_private">Zasebno \n(pokaži obvestila, vendar skrij njihovo vsebino na zaklenjenem zaslonu)\n</string>
   <string name="notification_secret">Skrivno \n(ne pokaži obvestil na zaklenjenem zaslonu)</string>
-  <!--Plugin-->
-  <string name="pref_plugins_title">Vtičniki</string>
-  <string name="pref_plugins_summary">Vklopite vtičnike in določite njihove parametre</string>
-  <string name="fab_plugins_add">Dodaj nov vtičnik</string>
-  <string name="plugin_uninstall_title">Ali želite odstraniti vtičnik?</string>
-  <string name="plugin_reset_preferences">Ponastavi nastavitve vtičnika</string>
-  <string name="plugin_reset_preferences_summary">Nastavitve vašega vtičnika bodo ponastavljene</string>
-  <string name="plugin_reset_preferences_ask">Ali želite ponastaviti splošne nastavitve vstavkov?</string>
-  <string name="plugin_reset_account_preferences_ask">Ali želite ponastaviti nastavitve vstavkov računa?</string>
-  <string name="plugin_successfully_installed">Vtičnik <b>%1$s</b> je bil uspešno nameščen</string>
-  <string name="plugin_install_failure">Namestiev vtičnika ni uspela: <b>%1$s</b></string>
-  <string name="plugin_recent_version_exception">Nameščeno imate novejšo različico <b>%1$s</b></string>
-  <string name="plugin_same_version_exception">Nameščeno imate isto različico <b>%1$s</b></string>
-  <string name="plugin_invalid_signature"><b>%1$s</b> ima neveljaven podpis</string>
-  <string name="plugin_invalid_authority">Ni možno preveriti avtoritete: <b>%1$s</b></string>
-  <string name="plugin_invalid_format">Neveljavna oblika vstavka: <b>%1$s</b></string>
-  <string name="plugin_force_install">prisili \n namestitev</string>
-  <string name="plugin_path_image_add">Dodaj novo sliko</string>
+  <!--Extension-->
+  <string name="pref_extensions_title">Razširitve</string>
+  <string name="extension_invalid_signature"><b>%1$s</b> ima neveljaven podpis</string>
+  <string name="extension_force_install">prisili \n namestitev</string>
 </resources>

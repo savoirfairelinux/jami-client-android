@@ -4,13 +4,16 @@
   <!--Strings related to account creation-->
   <string name="account_selection">选择帐户</string>
   <string name="account_creation_error">创建帐户时出错</string>
+  <string name="help_sip_title">添加 SIP 账户</string>
   <!--Strings related to account deletion-->
+  <string name="account_delete_dialog_message">此操作不可撤销。</string>
   <!--AccountManagementFragment-->
+  <string name="normal_devices_titles">关联设备</string>
   <string name="account_biometric_disable">禁用生物特征身份验证</string>
   <string name="account_biometric_set">启用生物特征身份验证</string>
   <string name="account_biometric_summary">管理帐户的生物特征身份验证</string>
   <!--Basic Details-->
-  <!--Plugin Details-->
+  <!--Extension Details-->
   <!--Audio Details-->
   <!--Video Details-->
   <!--Advanced Details-->
@@ -23,7 +26,9 @@
   <!--TLS Details-->
   <!--restore/backup-->
   <string name="account_export_file">备份账户</string>
+  <string name="account_contact_me">在 Jami 上联系我！</string>
   <string name="sip_account">SIP 账户</string>
+  <string name="account_no_network_title">网络错误</string>
   <!--TV-->
   <!--Name registration-->
   <!--Create account-->
@@ -40,12 +45,8 @@
   <string name="account_link_password">此帐户是密码加密的，请输入密码以生成PIN码</string>
   <string name="account_link_generate_button">生成</string>
   <string name="account_link_time_valid">PIN码将失效：%1$s</string>
-  <string name="account_link_device_info">从其他Jami应用程序中选择“链接新设备”以显示QR码或PIN</string>
   <string name="account_generate_export_device">在其他设备上</string>
-  <string name="account_generate_export_info">安装并启动Jami，选择“从其他设备导入”并扫描QR码</string>
   <string name="content_description_qr_generated">你的二维码</string>
-  <string name="account_generate_export_invalid">PIN不再有效。输入密码并生成新的密码以链接新设备。</string>
-  <string name="account_generate_export_invalid_two">PIN不再有效。\n 生成新PIN以链接新设备。</string>
   <string name="help_pin_info">如果帐户是密码加密的，请输入</string>
   <string name="connect_device_scanqr">扫描二维码</string>
   <string name="connect_device_enterPIN">或输入PIN</string>

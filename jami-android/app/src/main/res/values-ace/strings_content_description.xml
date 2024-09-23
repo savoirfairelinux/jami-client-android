@@ -1,9 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--Strings for xml content description of images-->
-  <string name="contact_quick_call_description">ڤڠاجين ڤرلو</string>
-  <string name="contact_picture_description">ڤڠاجرن ڤڠاجرن</string>
   <string name="dial_numeric_pad">ديالڤاد عددي</string>
   <string name="contact_unblock">ڤڠاجرن</string>
-  <string name="video_plugins">ڤلاڬين ڤيديو</string>
 </resources>

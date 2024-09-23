@@ -9,19 +9,13 @@
   <string name="contribute_section">Shiriki</string>
   <string name="version_section">Toleo</string>
   <string name="no_email_app_installed">Hakuna programu ya barua pepe kupatikana, kufunga moja kututumia ripoti</string>
-  <string name="no_browser_app_installed">Hakuna programu ya kivinjari cha wavuti iliyopatikana, weka moja ili kutazama ukurasa huu</string>
   <string name="email_chooser_title">Tuma barua kwa kutumia...</string>
-  <string name="website_chooser_title">Tazama tovuti kwa kutumia...</string>
-  <string name="license">Programu hii hutolewa "kama ilivyo", bila dhamana ya aina yoyote. Kwa maelezo, tazama GNU General Public License toleo 3 au baadaye&lt;/u&gt;</string>
   <string name="description">Jami ni programu huru ya mawasiliano ya kimataifa ambayo inaheshimu uhuru na faragha ya watumiaji wake.</string>
   <string name="credits">Mikopo</string>
   <string name="pip_title">Mkutano wa Jami</string>
   <string name="call_service_description">Huduma hii ni muhimu ili kuweka simu yako mbio katika eneo la mbele. Ni mbio tu wakati wa simu.</string>
   <string name="data_transfer_service_description">Huduma hii ni muhimu kwa kuonyesha taarifa kudumu wakati wa uhamisho wa faili.</string>
   <!--About dialog-->
-  <string name="developed_by">Imetengenezwa na</string>
-  <string name="designed_by">Iliyoundwa na</string>
-  <string name="ringtones_by">Ringtones kwa</string>
   <!--RingActivity-->
   <string name="error_no_network">Hakuna uhusiano wa mtandao</string>
   <string name="error_account_offline">Akaunti ni nje ya mtandao</string>
@@ -35,7 +29,6 @@
   <string name="menu_item_settings">Mipangilio</string>
   <string name="menu_item_advanced_settings">Mipangilio ya Juu</string>
   <string name="menu_item_account_settings">Mipangilio ya Akaunti</string>
-  <string name="menu_item_plugin_list">Mipangilio ya Plugins</string>
   <string name="menu_item_share">Shiriki akaunti yangu</string>
   <string name="menu_item_about">Kuhusu Jami</string>
   <string name="video_setting_title">Mipangilio ya Video</string>
@@ -97,17 +90,9 @@
   <string name="ongoing_call">Mawasiliano ya sasa</string>
   <string name="hist_in_call">Kuingia wito wa %1$s</string>
   <string name="hist_out_call">Kuondoka wito wa %1$s</string>
-  <string name="start_error_title">Siwezi kuanza Jami!</string>
   <string name="start_error_mic_required">Jami anahitaji kipaumbele cha kipaumbele cha kipaumbele ili kufanya kazi.</string>
-  <string name="action_call_accept">Jiulize</string>
-  <string name="action_call_accept_audio">Jibu kwa sauti</string>
-  <string name="action_call_accept_video">Jibu katika video</string>
-  <string name="action_call_hold_accept">Weka na kuchukua wito sauti</string>
-  <string name="action_call_hold_accept_video">Weka na kuchukua video wito</string>
-  <string name="action_call_end_accept">Mwisho na kuchukua simu</string>
   <string name="action_call_decline">Kupungua</string>
   <string name="action_call_mic_mute">Kipaza sauti</string>
-  <string name="action_load_plugin">Plugin ya Kuweka</string>
   <string name="ab_action_speakerphone">Kuwezesha msemaji</string>
   <string name="ab_action_contact_add">Ongeza kwa mawasiliano</string>
   <string name="ab_action_contact_add_question">Kuongeza mawasiliano?</string>
@@ -143,11 +128,8 @@
   <string name="ringtone_error_size_too_big">Faili hii ni kubwa sana. ukubwa wa juu ni %1$dkB.</string>
   <string name="ringtone_custom_prompt">Weka ringtone custom</string>
   <string name="ringtone_custom_label">Desturi</string>
-  <string name="ringtone_jami_tones">Tones Jami</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Jami anahitaji ruhusa ya “Soma mawasiliano“ kuamsha kipengele hiki. Tafadhali toa.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Jami anahitaji ruhusa ya “Kandika rekodi ya simu“ kuamsha kipengele hiki. Tafadhali kutoa.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Scan QR Code ya akaunti unataka kuongeza.</string>
   <string name="title_activity_qrcode">Shiriki akaunti yangu</string>
@@ -163,8 +145,6 @@
   <string name="conversation_details">Mazungumzo ya kina</string>
   <string name="contact_details">Maelezo ya mawasiliano</string>
   <string name="conversation_action_delete_this">Futa mazungumzo haya</string>
-  <string name="conversation_action_delete_this_title">Kufuta mazungumzo haya?</string>
-  <string name="conversation_action_delete_this_message">Hatua hii haiwezi kuondolewa.</string>
   <string name="conversation_action_history_clear">Historia ya wazi</string>
   <string name="conversation_action_history_clear_title">Kuondoa historia ya mazungumzo?</string>
   <string name="conversation_action_history_clear_message">Hilo hakika litafanya historia ya mazungumzo iwe wazi.</string>
@@ -201,7 +181,6 @@
   <string name="conversation_contact_invited">%1$s aliitwa</string>
   <string name="conversation_contact_added">%1$s imeunganishwa</string>
   <string name="conversation_contact_left">%1$s%1$ ni kushoto</string>
-  <string name="conversation_contact_banned">%1$s ilipigwa marufuku</string>
   <string name="conversation_search_hint">Tafuta mazungumzo</string>
   <string name="today">Leo</string>
   <string name="yesterday">Jana</string>
@@ -216,14 +195,12 @@
   <string name="help_password_choose">Chagua nenosiri lenye nguvu ambalo utakumbuka kulinda akaunti yako ya Jami.</string>
   <string name="help_password_enter">Ingiza nenosiri lako kuu la akaunti ya Jami.</string>
   <string name="help_server_enter">Ingiza URL ya usimamizi wa seva.</string>
-  <string name="help_pin_enter">Ingiza PIN kutoka akaunti nyingine ya Jami iliyowekwa. Tumia kipengele cha “uuzaji akaunti ya Jami“ kupata PIN.</string>
   <string name="wizard_next">Yafuatayo</string>
   <string name="wizard_back">Kurudi</string>
   <string name="wizard_skip">Kwenda</string>
   <string name="hist_contact_invited">Wasiliana na walioalikwa</string>
   <string name="hist_contact_added">Kuongezewa mawasiliano</string>
   <string name="hist_contact_left">Wasiliana na kushoto</string>
-  <string name="hist_contact_banned">Wasiliana na marufuku</string>
   <string name="hist_invitation_received">Mwaliko uliopokelewa</string>
   <!--Account Summary-->
   <string name="profile">Profaili</string>
@@ -272,7 +249,6 @@
   <string name="tv_contact_row_header">Mawasiliano</string>
   <string name="gallery_error_title">Hakuna programu ya Galeria iliyopatikana</string>
   <string name="gallery_error_message">Hakuna programu iliyopatikana kwenye kifaa cha kufungua Galeria</string>
-  <string name="generic_error">Kosa lisilojulikana lilitokea</string>
   <!--File Transfer-->
   <string name="invalid_file">Faili isiyofaa</string>
   <string name="not_able_to_write_file">Haiwezi kuandika faili</string>
@@ -292,7 +268,6 @@
   <string name="file_saved_in">Faili iliyohifadhiwa katika %s</string>
   <string name="file_saved_successfully">Faili iliyohifadhiwa kwa mafanikio</string>
   <string name="file_download">Pakua</string>
-  <string name="no_space_left_on_device">Hakuna nafasi iliyobaki kwenye kifaa</string>
   <string name="title_media_viewer">Kiangaliaji cha media</string>
   <string name="menu_file_open">Open faili</string>
   <string name="menu_file_download">Pakua faili</string>
@@ -343,29 +318,20 @@
   <string name="wizard_profile_button">Hifadhi Profile</string>
   <string name="wizard_profile_skip">Skip na kufanya hivyo baadaye</string>
   <string name="fab_path_choose">Chagua faili nyingine</string>
-  <string name="chat_plugins">Plugins Chat</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Kushiriki</string>
   <string name="bottomSheet_dialpad_btn">Kiwango cha kugeuza</string>
-  <string name="bottomSheet_plugins_btn">Plugins</string>
   <string name="bottomSheet_add_participants_btn">Ongeza</string>
   <string name="bottomSheet_change_camera_btn">Mabadiliko</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>
-  <string name="bottomSheet_hangup_btn">Maliza simu hii</string>
   <string name="bottomSheet_mute_microphone_btn">Mikro</string>
   <string name="bottomSheet_sound_output_btn">Sauti</string>
   <string name="bottomSheet_raiseHand_btn">Kuinua mkono</string>
-  <string name="open_account_plugin_settings">Fungua Mipangilio ya Plugin Akaunti</string>
-  <string name="open_general_plugin_settings">Fungua Mipangilio ya Plugin ya jumla</string>
   <string name="uninstall">Kuondoa kufunga</string>
   <string name="reset">Kuanzisha upya</string>
   <!--Swarm Detail-->
   <string name="rename_btn">Tumia</string>
-  <string name="rename_error">Haiwezi kuwa tupu</string>
-  <string name="swarm_description">Ongeza maelezo</string>
-  <string name="tab_about">Kuhusu</string>
   <string name="tab_members">Wajumbe</string>
-  <string name="tab_documetn">Hati</string>
   <string name="dialogtitle_title">Hariri kichwa cha Swarm</string>
   <string name="dialogtitle_description">Hariri maelezo ya kundi</string>
   <string name="dialog_hint_title">Kichwa</string>
@@ -381,5 +347,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Karibu Jami</string>
   <!--Donation-->
-  <!--Plugin-->
+  <!--Extension-->
 </resources>

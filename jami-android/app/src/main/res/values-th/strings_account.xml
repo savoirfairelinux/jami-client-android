@@ -21,17 +21,11 @@
   <string name="dialog_wait_create_details">โปรดรอขณะที่เพิ่มบัญชีใหม่ของคุณ...</string>
   <string name="dialog_wait_update">กำลังอัปเดตบัญชี</string>
   <string name="dialog_wait_update_details">โปรดรอสักครู่ในขณะที่บัญชีใหม่ของคุณได้รับการอัปเดต...</string>
-  <string name="dialog_warn_ip2ip_account_title">สร้างบัญชี SIP เปล่า</string>
-  <string name="dialog_warn_ip2ip_account_message">คุณกำลังจะสร้างบัญชี SIP โดยไม่มีชื่อโฮสต์ที่ถูกต้อง
-คุณจะสามารถโทรออกและรับสาย IP โดยตรงเท่านั้น
-คุณสามารถแก้ไขบัญชีของคุณได้ในภายหลัง</string>
   <string name="account_type_ip2ip">บัญชีไอพี</string>
   <string name="help_ring">บัญชี Jami ช่วยให้คุณเข้าถึงผู้คนได้อย่างปลอดภัยแบบ peer-to-peer ผ่านเครือข่ายแบบกระจายอย่างสมบูรณ์</string>
-  <string name="help_sip_title">เพิ่มบัญชี SIP ของคุณ</string>
+  <string name="help_sip_title">เพิ่มบัญชี SIP</string>
   <string name="help_sip">กำหนดค่าบัญชี SIP ที่มีอยู่</string>
-  <string name="create_sip_account">เพิ่มบัญชี SIP</string>
   <!--Strings related to account deletion-->
-  <string name="account_delete_dialog_title">ลบบัญชีไหม</string>
   <string name="account_delete_dialog_message">การดำเนินการนี้ไม่สามารถยกเลิกได้</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">ไม่มีบัญชีที่ลงทะเบียน</string>
@@ -40,8 +34,6 @@
   <string name="account_device_revoke">เพิกถอนอุปกรณ์</string>
   <string name="account_device_revocation_success_title">ความสำเร็จ</string>
   <string name="account_device_revocation_success">อุปกรณ์ถูกเพิกถอนแล้ว!</string>
-  <string name="account_device_revocation_error_title">ไม่สามารถยกเลิกอุปกรณ์</string>
-  <string name="account_device_revocation_wrong_password">รหัสผ่านผิด</string>
   <string name="account_device_revocation_unknown_device">อุปกรณ์ที่ไม่รู้จัก</string>
   <string name="account_device_revocation_error_unknown">ข้อผิดพลาดที่ไม่รู้จัก</string>
   <string name="account_password_change">เปลี่ยนรหัสผ่าน</string>
@@ -63,8 +55,7 @@
   <string name="account_rendezvous_summary">ในโหมด Rendezvous การโทรเข้าจะเพิ่มขึ้นในห้องประชุม</string>
   <string name="account_upnp_label">เปิด UPnP</string>
   <string name="account_proxy_field">พอร์กส</string>
-  <!--Plugin Details-->
-  <string name="account_preference_plugin_tab">ปลั๊กอิน</string>
+  <!--Extension Details-->
   <!--Audio Details-->
   <string name="account_audio_label">เครื่องเสียง</string>
   <string name="account_preferences_media_tab">สื่อ</string>
@@ -144,35 +135,23 @@
   <string name="export_account_wait_message">การส่งออกข้อมูลบัญชี</string>
   <string name="account_export_file">บาคเกปบัญชี</string>
   <string name="account_export_file_summary">ทําสํารองบัญชีของคุณในเครื่องของคุณ เพื่อนํากลับมาในภายหลัง</string>
-  <string name="account_export_end_decryption_message">ไม่สามารถเปิดบัญชีของคุณได้ โดยใช้คําว่าที่ให้</string>
   <string name="account_export_end_network_title">ความผิดพลาดในเครือข่าย</string>
-  <string name="account_export_end_network_message">ไม่สามารถส่งบัญชีออกในเครือข่ายได้ เช็คการเชื่อมต่อของคุณ</string>
   <string name="account_export_end_error_title">ข้อผิดพลาด</string>
-  <string name="account_export_end_error_message">ไม่สามารถส่งออกบัญชี เกิดข้อผิดพลาดที่ไม่รู้จัก</string>
   <string name="account_enter_password">ใส่รหัสผ่าน</string>
-  <string name="account_share_body">ติดต่อฉันโดยใช้ \'%1$s\' บนระบบสื่อสารกระจายของ Jami: %2$s</string>
-  <string name="account_share_body_with_username">ติดต่อฉันด้วย \'%1$s\' หรือชื่อผู้ใช้ส่วนกลางของฉัน \'%2$s\' บนเว็บสื่อสารกระจายของ Jami: %3$s</string>
-  <string name="account_contact_me">ติดต่อฉันในจามิ</string>
+  <string name="account_contact_me">ติดต่อฉันใน Jami!</string>
   <string name="update_account">การอัพเดทบัญชี</string>
   <string name="account_migration">บัญชีของจามิของคุณสามารถปรับปรุงได้ครับ กรุณาใส่รหัสผ่านของคุณ</string>
   <string name="ring_account">รายการของจามิ</string>
   <string name="sip_account">บัญชี SIP</string>
   <string name="ring_account_identity">ตัวตน</string>
   <string name="account_migration_title_dialog">การย้ายบัญชี</string>
-  <string name="account_migration_message_dialog">การทําบัญชีของคุณต้องมีการปรับปรุง คุณต้องการที่จะไปหน้าจอการจัดการบัญชีเพื่อทําการนี้หรือไม่</string>
   <string name="account_update_needed">ปรับปรุงที่จําเป็น</string>
-  <string name="account_cannot_be_found_title">ไม่พบบัญชี</string>
-  <string name="account_cannot_be_found_message">ไม่สามารถหาบัญชีได้ในเครือข่ายของจามิ</string>
   <string name="account_sip_cannot_be_registered_message">คุณสามารถต่อเนื่องกับกระบวนการสร้างบัญชี หรือแก้ไขข้อมูลของคุณได้ที่นี่ การแก้ไขยังสามารถเกิดขึ้นได้ในช่วงหลังในการตั้งค่าบัญชี</string>
-  <string name="account_no_network_title">เชื่อมต่อเครือข่ายไม่ได้</string>
-  <string name="account_no_network_message">ไม่สามารถเพิ่มบัญชีได้ เพราะจามิไม่สามารถเชื่อมต่อเครือข่ายที่จําหน่ายได้ เช็คความเชื่อมต่อของอุปกรณ์ของคุณ</string>
+  <string name="account_no_network_title">ความผิดพลาดในเครือข่าย</string>
   <string name="account_device_added_title">รายการอุปกรณ์เพิ่ม</string>
   <string name="account_device_added_message">คุณได้ตั้งบัญชีจามิของคุณไว้บนเครื่องนี้</string>
   <string name="account_device_updated_title">อุปโภคบัญชี</string>
   <string name="account_device_updated_message">คุณได้ปรับปรุงบัญชีจามิของคุณได้สําเร็จ</string>
-  <string name="account_cannot_be_updated_message">อุปกรณ์บัญชีไม่ได้รับการอัพเดท ขอเช็คปัสริดของคุณ</string>
-  <string name="account_sip_success_title">บัญชี SIP ที่ลงทะเบียน</string>
-  <string name="account_sip_success_message">คุณได้ลงทะเบียนบัญชี Sip ได้สําเร็จ</string>
   <string name="account_sip_register_anyway">ไม่ว่ายังไงก็ลงทะเบียน</string>
   <!--TV-->
   <string name="account_tv_settings_header">การตั้งค่าบัญชี</string>
@@ -192,11 +171,8 @@
   <string name="account_link_export_button">เชื่อมโยงอุปกรณ์ใหม่</string>
   <string name="account_link_show_button">แสดง %d หน่วยที่เชื่อมต่อมากกว่า</string>
   <string name="account_link_hide_button">ปิดอุปกรณ์เชื่อมโยง</string>
-  <string name="account_link_export_info">เพื่อใช้บัญชีนี้ในอุปกรณ์อื่นๆ คุณจะต้องเปิดมันให้บริการใน Jami ก่อนหน้านี้จะสร้างรหัส PIN ที่คุณจะต้องใส่ในอุปกรณ์ใหม่เพื่อตั้งบัญชี PIN นั้นมีสิทธิใช้ได้ 10 นาที</string>
   <string name="account_start_export_button">สร้าง PIN</string>
   <string name="account_end_export_button">ใกล้</string>
-  <string name="account_end_export_infos">PIN ของคุณคือ:\n\n%%\n\n เพื่อทําการสําเร็จ คุณต้องเปิด Jami บนอุปกรณ์ใหม่ สร้างบัญชีใหม่ด้วย \"เชื่อมต่ออุปกรณ์นี้กับบัญชี\" PIN ของคุณมีสิทธิภาพ 10 นาที</string>
-  <string name="account_link_export_info_light">เพื่อใช้บัญชีนี้ในอุปกรณ์อื่นๆ คุณจะต้องเปิดมันให้บริการใน Jami ก่อนหน้านี้จะสร้างรหัส PIN ที่คุณจะต้องใส่ในอุปกรณ์ใหม่เพื่อตั้งบัญชี PIN นั้นมีสิทธิใช้ได้ 10 นาที</string>
   <string name="account_export_title">บัญชีเชื่อมต่อกับอุปกรณ์อื่นๆ</string>
   <string name="account_connect_server_button">เชื่อมต่อเซอร์เวอร์บริหาร</string>
   <string name="account_connect_button">เชื่อมต่อ</string>
@@ -228,21 +204,17 @@
   <string name="account_creation_profile">สร้างโปรไฟล์ของคุณ</string>
   <string name="account_creation_ring">สร้างบัญชี Jami</string>
   <string name="account_link_title">เชื่อมต่ออุปกรณ์นี้</string>
-  <string name="account_sip_cannot_be_registered">ไม่สามารถทําบัญชี</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">ปรับเปลี่ยนบัญชีของฉัน</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">กรอกปัสผ่านเพื่อยืนยัน</string>
   <string name="enter_password">ใส่รหัสผ่าน</string>
   <string name="revoke_device_title">เพิกถอนอุปกรณ์</string>
-  <string name="revoke_device_message">คุณแน่ใจนะว่าอยากยกเลิก %1$s?</string>
   <string name="revoke_device_wait_title">โปรดรอ…</string>
   <string name="revoke_device_wait_message">เครื่องเรียกคืน</string>
   <string name="rename_device_title">เรียกชื่อใหม่ของอุปกรณ์นี้</string>
   <string name="rename_device_message">เลือกชื่อใหม่เพื่อจําหน่ายอุปกรณ์นี้ในบัญชี Jami</string>
   <string name="rename_device_button">เครื่องเปลี่ยนชื่อ</string>
   <string name="account_rename_device_hint">เลือกชื่ออุปกรณ์ใหม่</string>
-  <string name="account_device_name_empty">ชื่ออุปกรณ์ไม่สามารถว่าง</string>
   <string name="account_device_this_indicator">เครื่องนี้</string>
   <string name="account_disabled_indicator">คนพิการ</string>
   <!--Link a new device-->

@@ -2,13 +2,16 @@
 <resources>
   <!--Strings related to account edition screen-->
   <!--Strings related to account creation-->
+  <string name="help_sip_title">Añadir cuenta SIP</string>
   <!--Strings related to account deletion-->
+  <string name="account_delete_dialog_message">Esta acción no puede deshacerse.</string>
   <!--AccountManagementFragment-->
+  <string name="normal_devices_titles">Dispositivos vinculados</string>
   <string name="account_biometric_disable">Desactivar autenticación biométrica</string>
   <string name="account_biometric_set">Desactivar autenticación biométrica</string>
   <string name="account_biometric_summary">Administre la autenticación biométrica para su cuenta.</string>
   <!--Basic Details-->
-  <!--Plugin Details-->
+  <!--Extension Details-->
   <!--Audio Details-->
   <!--Video Details-->
   <!--Advanced Details-->
@@ -21,7 +24,9 @@
   <!--TLS Details-->
   <!--restore/backup-->
   <string name="account_export_file">Crear copia de seguridad de la cuenta</string>
+  <string name="account_contact_me">Contactame en Jami</string>
   <string name="sip_account">Cuenta SIP</string>
+  <string name="account_no_network_title">Error de red</string>
   <!--TV-->
   <!--Name registration-->
   <!--Create account-->
@@ -37,12 +42,9 @@
   <string name="account_link_password">Esta cuenta está cifrada con contraseña, introducir la contraseña para generar el código PIN.</string>
   <string name="account_link_generate_button">Generar</string>
   <string name="account_link_time_valid">El código PIN será inválido: %1$s.</string>
-  <string name="account_link_device_info">Elegir \"Enlazar un nuevo dispositivo\" desde la otra aplicación de Jami para mostrar el código QR o el PIN</string>
+  <string name="account_link_device_info">Elija \"Enlazar un nuevo dispositivo\" desde otra aplicación Jami para mostrar el código QR o el PIN</string>
   <string name="account_generate_export_device">En el otro dispositivo</string>
-  <string name="account_generate_export_info">Instalar y abrir Jami, seleccionar \"Importar desde otro dispositivo\" y escanear el código QR.</string>
   <string name="content_description_qr_generated">Su código Qr</string>
-  <string name="account_generate_export_invalid">El PIN ya no es válido.\n Introduzca la contraseña y genere otro para enlazar el nuevo dispositivo.</string>
-  <string name="account_generate_export_invalid_two">El PIN ya no es válido.\n Generar otro para enlazar el nuevo dispositivo.</string>
   <string name="help_pin_info">Rellene si la cuenta está cifrada con contraseña</string>
   <string name="connect_device_scanqr">Escanear QR</string>
   <string name="connect_device_enterPIN">O introducir PIN</string>

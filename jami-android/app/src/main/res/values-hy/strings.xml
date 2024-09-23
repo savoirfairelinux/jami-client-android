@@ -9,19 +9,13 @@
   <string name="contribute_section">Մասնակցեք</string>
   <string name="version_section">Վարկած</string>
   <string name="no_email_app_installed">Ոչ մի էլ.փոստային հավելված չի հայտնաբերվել, տեղադրեք մեկը, որպեսզի մեզ զեկույց ուղարկեք</string>
-  <string name="no_browser_app_installed">Ոչ մի վեբ զննարկիչի հավելված չի գտնվել, տեղադրեք այս էջը դիտելու համար</string>
   <string name="email_chooser_title">Փոստ ուղարկեք օգտագործելով...</string>
-  <string name="website_chooser_title">Տեսնել կայքը օգտագործելով...</string>
-  <string name="license">Այս ծրագրային ապահովումը տրամադրվում է \"ինչպես կա\", առանց որեւէ երաշխիքի: Մասնավորապես, տես GNU General Public License տարբերակը 3 կամ ավելի ուշ</string>
   <string name="description">Jami- ն ազատ ծրագրային ապահովում է համընդհանուր հաղորդակցության համար, որը հարգում է օգտատերերի ազատությունները եւ գաղտնիությունը:</string>
   <string name="credits">Վարկեր</string>
   <string name="pip_title">Ջամիի համաժողով</string>
   <string name="call_service_description">Այս ծառայությունը անհրաժեշտ է ձեր զանգերի առաջատարում պահելու համար: Այն գործում է միայն զանգերի ժամանակ:</string>
   <string name="data_transfer_service_description">Այս ծառայությունը անհրաժեշտ է ֆայլերի փոխանցումների ժամանակ մշտական ծանուցումներ ցուցադրելու համար: Այն գործում է միայն ֆայլերի փոխանցումների ժամանակ:</string>
   <!--About dialog-->
-  <string name="developed_by">Կարգավորվել է</string>
-  <string name="designed_by">Նախագծված</string>
-  <string name="ringtones_by">Հնչյուններ</string>
   <!--RingActivity-->
   <string name="error_no_network">Ոչ մի ցանցային կապ</string>
   <string name="error_account_offline">Հաշիվը անջատված է</string>
@@ -35,7 +29,6 @@
   <string name="menu_item_settings">Կարգավորումներ</string>
   <string name="menu_item_advanced_settings">Հրագաթնակետային կարգավորումներ</string>
   <string name="menu_item_account_settings">Հաշվեի կարգավորումները</string>
-  <string name="menu_item_plugin_list">Plugins Կարգավորումները</string>
   <string name="menu_item_share">Կիսվեք իմ հաշիվով</string>
   <string name="menu_item_about">Ջամիի մասին</string>
   <string name="video_setting_title">Տեսանյութերի կարգավորումները</string>
@@ -97,17 +90,9 @@
   <string name="ongoing_call">Շարունակվող զանգ</string>
   <string name="hist_in_call">%1$s-ի մուտքագրվող զանգը</string>
   <string name="hist_out_call">%1$s հեռախոսազանգ</string>
-  <string name="start_error_title">Չեմ կարող սկսել Ջամի!</string>
   <string name="start_error_mic_required">Ջամին աշխատում է միկրոֆոնի թույլտվությամբ:</string>
-  <string name="action_call_accept">Հեռախոսազանգը վերցրեք</string>
-  <string name="action_call_accept_audio">Պատասխանը ձայնային</string>
-  <string name="action_call_accept_video">Պատասխանը տեսանյութում</string>
-  <string name="action_call_hold_accept">Հեռացրեք եւ ստացեք զանգի ձայնային ձայնը</string>
-  <string name="action_call_hold_accept_video">Հեռացրեք եւ տեսանյութեր</string>
-  <string name="action_call_end_accept">Վերջ եւ պատասխանել զանգի</string>
   <string name="action_call_decline">Հասնում է</string>
   <string name="action_call_mic_mute">Միկրոֆոն անջատ</string>
-  <string name="action_load_plugin">Լիցքավորման հավելված</string>
   <string name="ab_action_speakerphone">Հեռախոսազանգի ակտիվացում</string>
   <string name="ab_action_contact_add">Բարձրացնել շփումները</string>
   <string name="ab_action_contact_add_question">Բարձրացնել կոնտակտներին:</string>
@@ -143,11 +128,8 @@
   <string name="ringtone_error_size_too_big">Այս ֆայլը չափազանց մեծ է: Մաքսմատիվ չափը %1$dkB է:</string>
   <string name="ringtone_custom_prompt">Սահմանեք հարմարվողական զանգահարման ձայն</string>
   <string name="ringtone_custom_label">Պարբերական</string>
-  <string name="ringtone_jami_tones">Ջամի Թոններ</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Ջամիին անհրաժեշտ է \"Կարդալ կոնտակտները\" թույլտվությունը, որպեսզի կարողանա այս հատկությունը: Խնդրում ենք այն տրամադրել:</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Ջամիին անհրաժեշտ է \"Գրեք զանգի օրագիր\" թույլտվությունը, որպեսզի կարողանա այս հատկությունը: Խնդրում ենք այն տրամադրել:</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Սկանիր հաշիվի QR կոդը, որը ցանկանում ես ավելացնել:</string>
   <string name="title_activity_qrcode">Կիսվեք իմ հաշիվով</string>
@@ -163,8 +145,6 @@
   <string name="conversation_details">Զրույցի մանրամասները</string>
   <string name="contact_details">Կապ տեղեկություններ</string>
   <string name="conversation_action_delete_this">Սեղմեք այս զրույցը</string>
-  <string name="conversation_action_delete_this_title">Սեղմել այս զրույցը:</string>
-  <string name="conversation_action_delete_this_message">Այս գործողությունը չի կարող չեղարկվել:</string>
   <string name="conversation_action_history_clear">Հստակ պատմություն</string>
   <string name="conversation_action_history_clear_title">Բաց թողեք զրույցի պատմությունը:</string>
   <string name="conversation_action_history_clear_message">Սա հաստատ կլուծի զրույցի պատմությունը:</string>
@@ -201,7 +181,6 @@
   <string name="conversation_contact_invited">%1$s-ը հրավիրվել է</string>
   <string name="conversation_contact_added">%1$s-ը միացել է</string>
   <string name="conversation_contact_left">%1$-ը ձախ է</string>
-  <string name="conversation_contact_banned">%1$s-ը արգելվել է</string>
   <string name="conversation_search_hint">Հետազոտական զրույց</string>
   <string name="today">Այսօր</string>
   <string name="yesterday">Երեկ</string>
@@ -216,14 +195,12 @@
   <string name="help_password_choose">Ընտրեք ուժեղ գաղտնաբառ, որը կհիշեք ձեր Ջամի հաշիվը պաշտպանելու համար:</string>
   <string name="help_password_enter">Տեղադրել ձեր հիմնական Ջամի հաշիվի գաղտնաբառը:</string>
   <string name="help_server_enter">Գտեք կառավարման սերվերի URL- ը:</string>
-  <string name="help_pin_enter">Գտեք PIN-ը մեկ այլ կոմֆիգուրացված Jami հաշիվից: Օգտագործեք \"Export Jami հաշիվ\" հատկությունը PIN-ը ստանալու համար:</string>
   <string name="wizard_next">Հաջորդը</string>
   <string name="wizard_back">Վերադարձ</string>
   <string name="wizard_skip">Հեռանալ</string>
   <string name="hist_contact_invited">Հաղորդվում է կապ հաստատել</string>
   <string name="hist_contact_added">Կապակցություն ավելացվել</string>
   <string name="hist_contact_left">Կապը ձախ</string>
-  <string name="hist_contact_banned">Հաղորդակցություն արգելված</string>
   <string name="hist_invitation_received">Հրավիրություն</string>
   <!--Account Summary-->
   <string name="profile">Պրոֆիլ</string>
@@ -272,7 +249,6 @@
   <string name="tv_contact_row_header">Կոնտակտներ</string>
   <string name="gallery_error_title">Գալերիային հավելված չի գտնվել</string>
   <string name="gallery_error_message">Գալերիա բացելու սարքում չի գտնվել ծրագիր</string>
-  <string name="generic_error">Անհայտ սխալ է տեղի ունեցել</string>
   <!--File Transfer-->
   <string name="invalid_file">Անավերժ ֆայլ</string>
   <string name="not_able_to_write_file">Չի կարողանում ֆայլ գրել</string>
@@ -292,7 +268,6 @@
   <string name="file_saved_in">%s- ում պահպանված ֆայլ</string>
   <string name="file_saved_successfully">Փրկված ֆայլը հաջողությամբ</string>
   <string name="file_download">Ներբեռնել</string>
-  <string name="no_space_left_on_device">սարքի վրա տեղ չկա</string>
   <string name="title_media_viewer">ԶԼՄ-ների դիտող</string>
   <string name="menu_file_open">Բաց ֆայլ</string>
   <string name="menu_file_download">Հեռացնել ֆայլը</string>
@@ -343,29 +318,20 @@
   <string name="wizard_profile_button">Պահպանել պրոֆիլ</string>
   <string name="wizard_profile_skip">Հեռացրեք եւ արեք դա ավելի ուշ</string>
   <string name="fab_path_choose">Ընտրեք այլ ֆայլ</string>
-  <string name="chat_plugins">Չատի հավելվածներ</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Մասնակից</string>
   <string name="bottomSheet_dialpad_btn">Դիալպադ</string>
-  <string name="bottomSheet_plugins_btn">Պլագիններ</string>
   <string name="bottomSheet_add_participants_btn">Բարձրացնել</string>
   <string name="bottomSheet_change_camera_btn">Փոփոխություն</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Կամերան</string>
-  <string name="bottomSheet_hangup_btn">Վերջին զանգը</string>
   <string name="bottomSheet_mute_microphone_btn">Միկրո</string>
   <string name="bottomSheet_sound_output_btn">Անչում է</string>
   <string name="bottomSheet_raiseHand_btn">Բարձրացրեք ձեռքը</string>
-  <string name="open_account_plugin_settings">Բաց հաշիվի հավելվածի կարգավորումները</string>
-  <string name="open_general_plugin_settings">Բացեցրեք ընդհանուր հավելվածի կարգավորումները</string>
   <string name="uninstall">Անբեռահասել</string>
   <string name="reset">Վերադարձ</string>
   <!--Swarm Detail-->
   <string name="rename_btn">Համոզվեք</string>
-  <string name="rename_error">չի կարող դատարկ լինել</string>
-  <string name="swarm_description">Բացատրություն ավելացնել</string>
-  <string name="tab_about">Մոտ</string>
   <string name="tab_members">Անդամներ</string>
-  <string name="tab_documetn">Փաստաթղթեր</string>
   <string name="dialogtitle_title">Դրսում Swarm անվանումը</string>
   <string name="dialogtitle_description">Դրսում Սավիրի նկարագրությունը</string>
   <string name="dialog_hint_title">Գլուխ</string>
@@ -381,5 +347,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Բարի գալուստ Ջամի:</string>
   <!--Donation-->
-  <!--Plugin-->
+  <!--Extension-->
 </resources>

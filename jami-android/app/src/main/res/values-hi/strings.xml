@@ -9,20 +9,13 @@
   <string name="contribute_section">सहयोग करें</string>
   <string name="version_section">संस्करण</string>
   <string name="no_email_app_installed">कोई ईमेल ऐप नहीं मिला</string>
-  <string name="no_browser_app_installed">कोई वेब ब्राउज़र ऐप नहीं मिला, इस पृष्ठ को देखने के लिए एक ब्राउज़र इंस्टॉल  करें</string>
   <string name="email_chooser_title">...  का उपयोग कर मेल भेजें </string>
-  <string name="website_chooser_title">...  का उपयोग कर वेबसाइट देखे </string>
-  <string name="license">यह सॉफ़्टवेयर किसी भी प्रकार की वारंटी के बिना प्रदान किया जाता है। विवरण के लिए, <u>जीएनयू जनरल पब्लिक लाइसेंस संस्करण 3 या बाद के संस्करण देखे</u></string>
   <string name="description">जामी सर्व-जन संचार के लिए मुफ्त सॉफ्टवेयर है जो अपने उपयोगकर्ताओं की स्वतंत्रता और गोपनीयता का सम्मान करता है।</string>
   <string name="credits">श्रेय</string>
   <string name="pip_title">जामी सम्मेलन</string>
   <string name="call_service_description">यह सेवा आपके कॉल को अग्रभूमि में चलाने के लिए आवश्यक है। यह केवल कॉल के दौरान चलता है।</string>
   <string name="data_transfer_service_description">फ़ाइल स्थानान्तरण के दौरान लगातार अधिसूचनाओं को प्रदर्शित करने के लिए यह सेवा आवश्यक है। यह केवल फ़ाइल स्थानान्तरण के दौरान चलता है।</string>
   <!--About dialog-->
-  <string name="developed_by">के द्वारा विकसित</string>
-  <string name="designed_by">के द्वारा डिज़ाइन किया गया </string>
-  <string name="ringtones_by">के द्वारा रिंगटोन</string>
-  <string name="credits_volunteers">और स्वयंसेवक जो इस परियोजना में योगदान देते हैं!</string>
   <!--RingActivity-->
   <string name="error_no_network">कोई नेटवर्क कनेक्टिविटी नहीं</string>
   <string name="error_account_offline">खाता ऑफ़लाइन है</string>
@@ -36,7 +29,6 @@
   <string name="menu_item_settings">सेटिंग्स</string>
   <string name="menu_item_advanced_settings">उन्नत सेटिंग</string>
   <string name="menu_item_account_settings">खाता सेटिंग</string>
-  <string name="menu_item_plugin_list">प्लग-इन सेटिंग्स</string>
   <string name="menu_item_share">मेरा खाता साझा करें</string>
   <string name="menu_item_about">जामी के बारे में</string>
   <string name="video_setting_title">वीडियो सेटिंग्स</string>
@@ -102,17 +94,9 @@
   <string name="hist_in_call">%1$s का आने वाला कॉल</string>
   <string name="hist_out_call">%1$s का आउटगोइंग कॉल</string>
   <string name="call_duration">%sचला</string>
-  <string name="start_error_title">मैं शुरू नहीं कर सकते Jami!</string>
   <string name="start_error_mic_required">जामी को काम करने के लिए माइक्रोफोन की अनुमति की आवश्यकता है।</string>
-  <string name="action_call_accept">कॉल ले लो</string>
-  <string name="action_call_accept_audio">ऑडियो में उत्तर दें</string>
-  <string name="action_call_accept_video">वीडियो में उत्तर दें</string>
-  <string name="action_call_hold_accept">कॉल ऑडियो को पकड़ें और लें</string>
-  <string name="action_call_hold_accept_video">वीडियो कॉल को पकड़ें और लें</string>
-  <string name="action_call_end_accept">समाप्त और कॉल लेने</string>
   <string name="action_call_decline">गिरावट</string>
   <string name="action_call_mic_mute">मूक माइक्रोफोन</string>
-  <string name="action_load_plugin">लोड प्लगइन</string>
   <string name="ab_action_speakerphone">स्पीकर सक्षम करें</string>
   <string name="ab_action_contact_add">संपर्क के खाते में जोड़ें</string>
   <string name="ab_action_contact_add_question">संपर्क जोड़ें?</string>
@@ -153,11 +137,8 @@
   <string name="ringtone_error_size_too_big">यह फ़ाइल बहुत बड़ी है. अधिकतम आकार %1$dkB है.</string>
   <string name="ringtone_custom_prompt">कस्टम रिंगटोन सेट करें</string>
   <string name="ringtone_custom_label">कस्टम</string>
-  <string name="ringtone_jami_tones">जेमी टोन</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">इस सुविधा को सक्षम करने के लिए Jami को \"संपर्क पढ़ें\" अनुमति की आवश्यकता है. कृपया इसे प्रदान करें।</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Jami को इस सुविधा को सक्षम करने के लिए \"लिखा कॉल लॉग\" अनुमति की आवश्यकता है. कृपया इसे प्रदान करें।</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">आपके द्वारा जोड़ा जाने वाले खाते का QR कोड स्कैन करें।</string>
   <string name="title_activity_qrcode">मेरा खाता साझा करें</string>
@@ -173,8 +154,6 @@
   <string name="conversation_details">वार्तालाप विवरण</string>
   <string name="contact_details">संपर्क विवरण</string>
   <string name="conversation_action_delete_this">इस वार्तालाप को हटा दें</string>
-  <string name="conversation_action_delete_this_title">इस बातचीत को हटाना?</string>
-  <string name="conversation_action_delete_this_message">इस कार्य को निरस्त नहीं किया जा सकता।</string>
   <string name="conversation_action_history_clear">स्पष्ट इतिहास</string>
   <string name="conversation_action_history_clear_title">बातचीत इतिहास को साफ करें?</string>
   <string name="conversation_action_history_clear_message">यह निश्चित रूप से बातचीत इतिहास को साफ करेगा।</string>
@@ -213,8 +192,6 @@
   <string name="conversation_contact_invited">%1$s को आमंत्रित किया गया था</string>
   <string name="conversation_contact_added">%1$s जोड़ा गया</string>
   <string name="conversation_contact_left">%1$s बाएं</string>
-  <string name="conversation_contact_banned">%1$s पर प्रतिबंध लगा दिया गया था</string>
-  <string name="conversation_contact_unbanned">%1$s पर प्रतिबन्ध हटा दिया गया</string>
   <string name="conversation_search_hint">खोज वार्तालाप</string>
   <string name="audio_recorder_error">ऑडियो रिकॉर्डर ऐप नहीं मिला.</string>
   <string name="video_recorder_error">वीडियो रिकॉर्डर ऐप नहीं मिला.</string>
@@ -242,7 +219,6 @@
   <string name="help_password_choose">अपने जेमी खाते की सुरक्षा के लिए एक मजबूत पासवर्ड चुनें जिसे आप याद रखेंगे।</string>
   <string name="help_password_enter">अपने मुख्य जेमी खाते का पासवर्ड दर्ज करें।</string>
   <string name="help_server_enter">प्रबंधन सर्वर का URL दर्ज करें।</string>
-  <string name="help_pin_enter">एक अन्य कॉन्फ़िगर किए गए जेमी खाते से पिन दर्ज करें। एक पिन प्राप्त करने के लिए \"जेमी खाता निर्यात\" सुविधा का उपयोग करें।</string>
   <string name="pin_copied">पिन कोड क्लिपबोर्ड पर कॉपी किया गया</string>
   <string name="wizard_next">अगला</string>
   <string name="wizard_back">वापस</string>
@@ -250,8 +226,6 @@
   <string name="hist_contact_invited">संपर्क आमंत्रित</string>
   <string name="hist_contact_added">संपर्क जोड़ा गया</string>
   <string name="hist_contact_left">संपर्क बाएं</string>
-  <string name="hist_contact_banned">संपर्क निषिद्ध</string>
-  <string name="hist_contact_unbanned">संपर्क अप्रतिबंधित किया गया</string>
   <string name="hist_invitation_received">प्राप्त निमंत्रण</string>
   <!--Account Summary-->
   <string name="profile">प्रोफ़ाइल</string>
@@ -300,7 +274,6 @@
   <string name="tv_contact_row_header">संपर्क</string>
   <string name="gallery_error_title">कोई गैलरी ऐप नहीं मिला</string>
   <string name="gallery_error_message">गैलरी खोलने के लिए डिवाइस पर कोई एप्लिकेशन नहीं मिला</string>
-  <string name="generic_error">एक अज्ञात त्रुटि हुई</string>
   <!--File Transfer-->
   <string name="invalid_file">अमान्य फ़ाइल</string>
   <string name="not_able_to_write_file">फ़ाइल लिखने में असमर्थ</string>
@@ -320,7 +293,6 @@
   <string name="file_saved_in">%s में सहेजी गई फ़ाइल</string>
   <string name="file_saved_successfully">फ़ाइल सफलतापूर्वक सहेजी गई</string>
   <string name="file_download">डाउनलोड करें</string>
-  <string name="no_space_left_on_device">डिवाइस पर कोई स्थान नहीं बचा</string>
   <string name="title_media_viewer">मीडिया दर्शक</string>
   <string name="menu_file_open">फ़ाइल खोलें</string>
   <string name="menu_file_download">फ़ाइल डाउनलोड करें</string>
@@ -363,8 +335,6 @@
   <string name="audio_permission_rationale_message">जैमी को स्पीच-टू-टेक्स्ट और ऑडियो रिकॉर्ड करने की सुविधाओं का उपयोग करने के लिए माइक्रोफ़ोन की अनुमति की आवश्यकता होती है। यह अगले चरण में पूछा जाएगा</string>
   <string name="camera_permission_rationale_message">जैमी को वीडियो रिकॉर्ड करने और वीडियो कॉल करने के लिए कैमरे की अनुमति की आवश्यकता है। यह अगले चरण में पूछा जाएगा</string>
   <string name="unable_to_start_recorder">ऑडियो रिकॉर्डिंग शुरू करने में असमर्थ</string>
-  <string name="error_sharing_file">फ़ाइल साझा करने में त्रुटि</string>
-  <string name="error_opening_file">फ़ाइल खोलने में त्रुटि</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">अनुशंसित</string>
   <string name="wizard_status_optional">वैकल्पिक</string>
@@ -382,29 +352,20 @@
   <string name="wizard_profile_button">प्रोफ़ाइल सहेजें</string>
   <string name="wizard_profile_skip">छोड़ और बाद में यह करें</string>
   <string name="fab_path_choose">एक और फ़ाइल चुनें</string>
-  <string name="chat_plugins">चैट प्लगइन्स</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">बाटें </string>
   <string name="bottomSheet_dialpad_btn">डायलपैड</string>
-  <string name="bottomSheet_plugins_btn">प्लगइन्स</string>
   <string name="bottomSheet_add_participants_btn">जोड़ें</string>
   <string name="bottomSheet_change_camera_btn">परिवर्तन</string>
   <string name="bottomSheet_camera_onoff_switch_btn">कैमरा</string>
-  <string name="bottomSheet_hangup_btn">कॉल समाप्त करें</string>
   <string name="bottomSheet_mute_microphone_btn">माइक्रो</string>
   <string name="bottomSheet_sound_output_btn">ध्वनि</string>
   <string name="bottomSheet_raiseHand_btn">हाथ उठाओ</string>
-  <string name="open_account_plugin_settings">खाता प्लगइन सेटिंग्स खोलें</string>
-  <string name="open_general_plugin_settings">सामान्य प्लगइन सेटिंग्स खोलें</string>
   <string name="uninstall">अनइंस्टॉल करें</string>
   <string name="reset">रीसेट करें</string>
   <!--Swarm Detail-->
   <string name="rename_btn">पुष्टि करें</string>
-  <string name="rename_error">खाली नहीं हो सकता</string>
-  <string name="swarm_description">विवरण जोड़ें</string>
-  <string name="tab_about">बारे में</string>
   <string name="tab_members">सदस्य</string>
-  <string name="tab_documetn">दस्तावेज</string>
   <string name="not_admin_toast">केवल व्यवस्थापक ही इस समूह की जानकारी संपादित कर सकते हैं</string>
   <string name="dialogtitle_title">संपादित करें Swarm शीर्षक</string>
   <string name="dialogtitle_description">संपादित करें समूह विवरण</string>
@@ -436,10 +397,7 @@
   <string name="donation_donate">दान करें</string>
   <string name="donation_setting_title">दान अनुस्मारक</string>
   <string name="donation_setting_description">दान अनुस्मारक सक्षम करें</string>
-  <!--Plugin-->
+  <!--Extension-->
   <string name="unable_to_load">%1$sभरने में असमर्थ</string>
-  <string name="load_sucess">%1$s: सक्षम</string>
-  <string name="unload_sucess">%1$s: अक्षम</string>
-  <string name="install_sucess">%1$s एक्सटेंशन सफलतापूर्वक स्थापित हो गया है</string>
   <string name="install_error">एक्सटेंशन आयात करते समय एक त्रुटि हुई</string>
 </resources>

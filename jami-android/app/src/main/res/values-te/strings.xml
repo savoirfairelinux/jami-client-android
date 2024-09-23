@@ -9,19 +9,13 @@
   <string name="contribute_section">సహకారం</string>
   <string name="version_section">వెర్షన్</string>
   <string name="no_email_app_installed">ఏ ఇమెయిల్ అనువర్తనం కనుగొనబడలేదు, మాకు నివేదిక పంపడానికి ఒక ఇన్స్టాల్</string>
-  <string name="no_browser_app_installed">వెబ్ బ్రౌజర్ అనువర్తనం కనుగొనబడలేదు, ఈ పేజీని వీక్షించడానికి ఒకదాన్ని ఇన్స్టాల్ చేయండి</string>
   <string name="email_chooser_title">మెయిల్ పంపండి ఉపయోగించి...</string>
-  <string name="website_chooser_title">వెబ్సైట్ను ఉపయోగించి వీక్షించండి.</string>
-  <string name="license">ఈ సాఫ్ట్వేర్ ఏ రకమైన హామీ లేకుండా "అలాగే" అందించబడుతుంది. వివరాల కోసం, చూడండి GNU జనరల్ పబ్లిక్ లైసెన్స్ వెర్షన్ 3 లేదా తరువాత&lt;/u&gt;</string>
   <string name="description">జామి అనేది సార్వత్రిక కమ్యూనికేషన్ కోసం ఉచిత సాఫ్ట్వేర్, ఇది దాని వినియోగదారుల స్వేచ్ఛ మరియు గోప్యతను గౌరవిస్తుంది.</string>
   <string name="credits">క్రెడిట్స్</string>
   <string name="pip_title">జామి సమావేశం</string>
   <string name="call_service_description">ఈ సేవ మీ కాల్స్ ముందుగానే నడుస్తున్నట్లు ఉంచడానికి అవసరం. ఇది కాల్స్ సమయంలో మాత్రమే నడుస్తుంది.</string>
   <string name="data_transfer_service_description">ఫైలు బదిలీల సమయంలో నిరంతర నోటిఫికేషన్లను ప్రదర్శించడానికి ఈ సేవ అవసరం. ఇది ఫైలు బదిలీల సమయంలో మాత్రమే నడుస్తుంది.</string>
   <!--About dialog-->
-  <string name="developed_by">అభివృద్ధి చేసిన</string>
-  <string name="designed_by">రూపొందించినవారు</string>
-  <string name="ringtones_by">రింగ్స్ ద్వారా</string>
   <!--RingActivity-->
   <string name="error_no_network">నెట్వర్క్ కనెక్టివిటీ లేదు</string>
   <string name="error_account_offline">ఖాతా ఆఫ్లైన్</string>
@@ -35,7 +29,6 @@
   <string name="menu_item_settings">సెట్టింగులు</string>
   <string name="menu_item_advanced_settings">అధునాతన సెట్టింగులు</string>
   <string name="menu_item_account_settings">ఖాతా సెట్టింగులు</string>
-  <string name="menu_item_plugin_list">ప్లగిన్ సెట్టింగులు</string>
   <string name="menu_item_share">నా ఖాతాను పంచుకోండి</string>
   <string name="menu_item_about">జామి గురించి</string>
   <string name="video_setting_title">వీడియో సెట్టింగులు</string>
@@ -97,17 +90,9 @@
   <string name="ongoing_call">కొనసాగుతున్న కాల్</string>
   <string name="hist_in_call">%1$s లో ఇన్కమింగ్ కాల్</string>
   <string name="hist_out_call">%1$s యొక్క అవుట్గోయింగ్ కాల్</string>
-  <string name="start_error_title">నేను ప్రారంభించలేను Jami!</string>
   <string name="start_error_mic_required">జామి పని చేయడానికి మైక్రోఫోన్ అనుమతి అవసరం.</string>
-  <string name="action_call_accept">కాల్ తీసుకోండి</string>
-  <string name="action_call_accept_audio">ఆడియోలో సమాధానం ఇవ్వండి</string>
-  <string name="action_call_accept_video">వీడియోలో సమాధానం ఇవ్వండి</string>
-  <string name="action_call_hold_accept">కాల్ ఆడియో పట్టుకోండి మరియు తీసుకోండి</string>
-  <string name="action_call_hold_accept_video">కాల్ వీడియోను పట్టుకోండి మరియు తీయండి</string>
-  <string name="action_call_end_accept">ముగింపు మరియు కాల్ తీసుకోవాలని</string>
   <string name="action_call_decline">తగ్గుదల</string>
   <string name="action_call_mic_mute">మ్యూట్ మైక్రోఫోన్</string>
-  <string name="action_load_plugin">లోడ్ ప్లగిన్</string>
   <string name="ab_action_speakerphone">స్పీకర్ను ప్రారంభించండి</string>
   <string name="ab_action_contact_add">పరిచయాలకు జోడించండి</string>
   <string name="ab_action_contact_add_question">పరిచయాలకు జోడించండి?</string>
@@ -143,11 +128,8 @@
   <string name="ringtone_error_size_too_big">ఈ ఫైల్ చాలా పెద్దది. గరిష్ట పరిమాణం %1$dkB.</string>
   <string name="ringtone_custom_prompt">కస్టమ్ రింగ్టోన్ సెట్</string>
   <string name="ringtone_custom_label">కస్టమ్</string>
-  <string name="ringtone_jami_tones">జామి టోన్స్</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">ఈ ఫీచర్ను ప్రారంభించడానికి జామికి \"పరిచయాలను చదవండి\" అనుమతి అవసరం. దయచేసి దానిని ఇవ్వండి.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">ఈ ఫీచర్ను ప్రారంభించడానికి జామికి \"కాల్ లాగ్ రాయండి\" అనుమతి అవసరం. దయచేసి దానిని ఇవ్వండి.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">మీరు జోడించాలనుకుంటున్న ఖాతా యొక్క QR కోడ్ను స్కాన్ చేయండి.</string>
   <string name="title_activity_qrcode">నా ఖాతాను పంచుకోండి</string>
@@ -163,8 +145,6 @@
   <string name="conversation_details">సంభాషణ వివరాలు</string>
   <string name="contact_details">సంప్రదింపు వివరాలు</string>
   <string name="conversation_action_delete_this">ఈ సంభాషణను తొలగించు</string>
-  <string name="conversation_action_delete_this_title">ఈ సంభాషణ తొలగించడానికి?</string>
-  <string name="conversation_action_delete_this_message">ఈ చర్యను తిరస్కరించలేము.</string>
   <string name="conversation_action_history_clear">స్పష్టమైన చరిత్ర</string>
   <string name="conversation_action_history_clear_title">సంభాషణ చరిత్ర క్లియర్?</string>
   <string name="conversation_action_history_clear_message">ఇది ఖచ్చితంగా సంభాషణ చరిత్ర క్లియర్ చేస్తుంది.</string>
@@ -201,7 +181,6 @@
   <string name="conversation_contact_invited">%1$s ఆహ్వానించబడింది</string>
   <string name="conversation_contact_added">%1$s చేరింది</string>
   <string name="conversation_contact_left">%1$s ఎడమవైపు</string>
-  <string name="conversation_contact_banned">%1$s నిషేధించబడింది</string>
   <string name="conversation_search_hint">శోధన సంభాషణ</string>
   <string name="today">నేడు</string>
   <string name="yesterday">నిన్న</string>
@@ -216,14 +195,12 @@
   <string name="help_password_choose">మీ జమీ ఖాతాను రక్షించడానికి మీరు గుర్తుంచుకోగల బలమైన పాస్వర్డ్ను ఎంచుకోండి.</string>
   <string name="help_password_enter">మీ ప్రధాన జమీ ఖాతా పాస్వర్డ్ను నమోదు చేయండి.</string>
   <string name="help_server_enter">నిర్వహణ సర్వర్ యొక్క URL ను నమోదు చేయండి.</string>
-  <string name="help_pin_enter">మరొక కాన్ఫిగర్ చేసిన జమీ ఖాతా నుండి పిన్ నమోదు చేయండి. పిన్ పొందడానికి \"ఎగుమతి జమీ ఖాతా\" ఫీచర్ ఉపయోగించండి.</string>
   <string name="wizard_next">తదుపరి</string>
   <string name="wizard_back">తిరిగి</string>
   <string name="wizard_skip">స్కిప్</string>
   <string name="hist_contact_invited">సంప్రదింపులు ఆహ్వానించబడ్డాయి</string>
   <string name="hist_contact_added">పరిచయం జోడించబడింది</string>
   <string name="hist_contact_left">ఎడమవైపున పరిచయం</string>
-  <string name="hist_contact_banned">సంప్రదింపులు నిషేధించబడ్డాయి</string>
   <string name="hist_invitation_received">అందుకున్న ఆహ్వానం</string>
   <!--Account Summary-->
   <string name="profile">ప్రొఫైల్</string>
@@ -272,7 +249,6 @@
   <string name="tv_contact_row_header">పరిచయాలు</string>
   <string name="gallery_error_title">గ్యాలరీ యాప్ దొరకలేదు</string>
   <string name="gallery_error_message">గ్యాలరీని తెరవడానికి పరికరంలో ఏ అప్లికేషన్ కనుగొనబడలేదు</string>
-  <string name="generic_error">తెలియని లోపం సంభవించింది</string>
   <!--File Transfer-->
   <string name="invalid_file">చెల్లుబాటు అయ్యే ఫైల్</string>
   <string name="not_able_to_write_file">ఫైల్ రాయలేకపోయింది</string>
@@ -292,7 +268,6 @@
   <string name="file_saved_in">%s లో సేవ్ చేయబడిన ఫైల్</string>
   <string name="file_saved_successfully">విజయవంతంగా సేవ్ చేయబడిన ఫైల్</string>
   <string name="file_download">డౌన్లోడ్</string>
-  <string name="no_space_left_on_device">పరికరంలో స్థలం లేదు</string>
   <string name="title_media_viewer">మీడియా వీక్షకుడు</string>
   <string name="menu_file_open">ఫైల్ తెరిచి</string>
   <string name="menu_file_download">ఫైలు డౌన్లోడ్</string>
@@ -343,29 +318,20 @@
   <string name="wizard_profile_button">ప్రొఫైల్ ని సేవ్ చేయండి</string>
   <string name="wizard_profile_skip">స్కిప్ మరియు తరువాత దీన్ని</string>
   <string name="fab_path_choose">మరొక ఫైల్ను ఎంచుకోండి</string>
-  <string name="chat_plugins">చాట్ ప్లగిన్లు</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">భాగస్వామ్యం</string>
   <string name="bottomSheet_dialpad_btn">డయల్ప్యాడ్</string>
-  <string name="bottomSheet_plugins_btn">ప్లగిన్లు</string>
   <string name="bottomSheet_add_participants_btn">జోడించండి</string>
   <string name="bottomSheet_change_camera_btn">మార్పు</string>
   <string name="bottomSheet_camera_onoff_switch_btn">కెమెరా</string>
-  <string name="bottomSheet_hangup_btn">కాల్‌ను ముగించు</string>
   <string name="bottomSheet_mute_microphone_btn">మైక్రో</string>
   <string name="bottomSheet_sound_output_btn">శబ్దాలు</string>
   <string name="bottomSheet_raiseHand_btn">చేతి పైకి</string>
-  <string name="open_account_plugin_settings">ఖాతా ప్లగిన్ సెట్టింగులను తెరవండి</string>
-  <string name="open_general_plugin_settings">సాధారణ ప్లగిన్ సెట్టింగులను తెరవండి</string>
   <string name="uninstall">అన్ఇన్స్టాల్ చేయండి</string>
   <string name="reset">రీసెట్</string>
   <!--Swarm Detail-->
   <string name="rename_btn">ధృవీకరించు</string>
-  <string name="rename_error">ఖాళీగా ఉండలేము</string>
-  <string name="swarm_description">వివరణను జోడించండి</string>
-  <string name="tab_about">గురించి</string>
   <string name="tab_members">సభ్యులు</string>
-  <string name="tab_documetn">పత్రాలు</string>
   <string name="dialogtitle_title">సవరణ Swarm శీర్షిక</string>
   <string name="dialogtitle_description">సవరణ స్కార్మ్ వివరణ</string>
   <string name="dialog_hint_title">పేరు</string>
@@ -381,5 +347,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">జామికి స్వాగతం</string>
   <!--Donation-->
-  <!--Plugin-->
+  <!--Extension-->
 </resources>

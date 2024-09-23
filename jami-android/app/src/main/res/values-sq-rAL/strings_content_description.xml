@@ -1,11 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--Strings for xml content description of images-->
-  <string name="contact_quick_call_description">Thirrje e Shpejtë</string>
-  <string name="contact_picture_description">Foto Kontakti</string>
   <string name="dial_numeric_pad">Numërator me shifra</string>
   <string name="contact_unblock">Zhbllokoje</string>
-  <string name="video_plugins">Shtojca Videosh</string>
   <string name="file_download_button">Shkarkoje</string>
   <string name="control_play">Luaje</string>
   <string name="control_replay">Riluaje</string>

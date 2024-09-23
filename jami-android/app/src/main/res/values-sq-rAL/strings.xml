@@ -9,20 +9,13 @@
   <string name="contribute_section">Kontribuoni</string>
   <string name="version_section">Version</string>
   <string name="no_email_app_installed">S\’u gjet aplikacion email-esh, instaloni një të tillë që të na dërgoni një raport</string>
-  <string name="no_browser_app_installed">S\’u gjet aplikacion shfletuesi, që të shihni këtë faqe, instaloni një të tillë </string>
   <string name="email_chooser_title">Dërgojeni mesazhi duke përdorur…</string>
-  <string name="website_chooser_title">Shiheni sajtin duke përdorur…</string>
-  <string name="license">Ky software jepet \"siç është\", pa asnjë garanci të çfarëdo lloji. Për hollësi, shihni <u>GNU General Public License, version 3 ose më të re</u></string>
   <string name="description">Jami është software i lirë për komunikim universal që respekton privatësinë e përdoruesve të tij.</string>
   <string name="credits">Kredite</string>
   <string name="pip_title">Konferencë Jami</string>
   <string name="call_service_description">Ky shërbim është i nevojshëm për t\’i mbajtur thirrjet tuaja në funksionim në pjesën e përparme. Ai xhiron vetëm gjatë thirrjesh.</string>
   <string name="data_transfer_service_description">Ky shërbim është i domosdoshëm për të shfaqur mesazhe gjatë shpërnguljesh kartelash. Xhiron vetëm gjatë shpërnguljesh kartelash.</string>
   <!--About dialog-->
-  <string name="developed_by">Programuar nga</string>
-  <string name="designed_by">Skicuar nga</string>
-  <string name="ringtones_by">Zile nga</string>
-  <string name="credits_volunteers">Dhe vullnetarët që kontribuojnë në këtë projekt!</string>
   <!--RingActivity-->
   <string name="error_no_network">Pa lidhje në rrjet</string>
   <string name="error_account_offline">Llogaria s’është në linjë</string>
@@ -36,7 +29,6 @@
   <string name="menu_item_settings">Rregullime</string>
   <string name="menu_item_advanced_settings">Rregullime të Mëtejshme</string>
   <string name="menu_item_account_settings">Rregullime Llogarie</string>
-  <string name="menu_item_plugin_list">Rregullime Shtojcash</string>
   <string name="menu_item_share">Ndaje llogarinë time</string>
   <string name="menu_item_about">Mbi Jami-n</string>
   <string name="video_setting_title">Rregullime Videoje</string>
@@ -102,17 +94,9 @@
   <string name="hist_in_call">Thirrje nga %1$s</string>
   <string name="hist_out_call">Thirrje për %1$s</string>
   <string name="call_duration">Zgjati %s</string>
-  <string name="start_error_title">S\’niset dot Jami!</string>
   <string name="start_error_mic_required">Që të funksionojë, Jami lyp leje për mikrofonin.</string>
-  <string name="action_call_accept">Pranoje thirrjen</string>
-  <string name="action_call_accept_audio">Përgjigjuni me zë</string>
-  <string name="action_call_accept_video">Përgjigjuni me video</string>
-  <string name="action_call_hold_accept">Mbaje dhe merr thirrje audio</string>
-  <string name="action_call_hold_accept_video">Mbaje dhe merr thirrje video</string>
-  <string name="action_call_end_accept">Përfundoje dhe bëje thirrje</string>
   <string name="action_call_decline">Hidhe tej</string>
   <string name="action_call_mic_mute">Heshtoje mikrofonin</string>
-  <string name="action_load_plugin">Ngarkoje Shtojcën</string>
   <string name="ab_action_speakerphone">Aktivizoni altoparlantin</string>
   <string name="ab_action_contact_add">Shtoje te kontaktet</string>
   <string name="ab_action_contact_add_question">Të shtohet te kontaktet?</string>
@@ -153,11 +137,8 @@
   <string name="ringtone_error_size_too_big">Kjo kartelë është shumë e madhe. Madhësia maksimum është %1$dkB.</string>
   <string name="ringtone_custom_prompt">Caktoni një zile vetjake</string>
   <string name="ringtone_custom_label">Vetjake</string>
-  <string name="ringtone_jami_tones">Tone Jami</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Jami-t i duhet leja \"Lexo në kontakte\" që të aktivizojë këtë veçori. Ju lutemi, akordojani.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Jami-t i duhet leja \"Shkruaj në regjistër thirrjesh\" që të aktivizojë këtë veçori. Ju lutemi, akordojani.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Skanoni kodin QR të llogarisë që doni të shtoni.</string>
   <string name="title_activity_qrcode">Ndaje llogarinë time</string>
@@ -173,8 +154,6 @@
   <string name="conversation_details">Hollësi bisede</string>
   <string name="contact_details">Hollësi kontakti</string>
   <string name="conversation_action_delete_this">Fshije këtë bisedë</string>
-  <string name="conversation_action_delete_this_title">Të fshihet kjo bisedë?</string>
-  <string name="conversation_action_delete_this_message">Ky veprim s\’mund të zhbëhet.</string>
   <string name="conversation_action_history_clear">Spastroje historikun</string>
   <string name="conversation_action_history_clear_title">Të spastrohet historiku i bisedave?</string>
   <string name="conversation_action_history_clear_message">Kjo do të shkaktojë përfundimisht pastrimin e historikut të bisedës.</string>
@@ -213,8 +192,6 @@
   <string name="conversation_contact_invited">U ftua %1$s</string>
   <string name="conversation_contact_added">%1$s erdhi</string>
   <string name="conversation_contact_left">%1$s iku</string>
-  <string name="conversation_contact_banned">%1$s u dëbua</string>
-  <string name="conversation_contact_unbanned">U hoq dëbimi për %1$s</string>
   <string name="conversation_search_hint">Kërkoni bisedë</string>
   <string name="audio_recorder_error">S’u gjet aplikacion incizimi audio.</string>
   <string name="video_recorder_error">S’u gjet aplikacion regjistrimi video.</string>
@@ -241,7 +218,6 @@
   <string name="help_password_choose">Për të mbrojtur llogarinë tuaj Jami, zgjidhni fjalëkalim të fuqishëm që do ta mbani mend.</string>
   <string name="help_password_enter">Jepni fjalëkalimin e llogarisë tuaj kryesore Jami.</string>
   <string name="help_server_enter">Jepni URL-në e shërbyesit të administrimeve.</string>
-  <string name="help_pin_enter">Jepni PIN-in prej një llogarie tjetër Jami të formësuar. Përdorni veçorinë \"eksportoje llogarinë në Jami\" që të merrni një PIN.</string>
   <string name="pin_copied">Kodi PIN u kopjua në të papastër.</string>
   <string name="wizard_next">Pasuesi</string>
   <string name="wizard_back">Mbrapsht</string>
@@ -249,8 +225,6 @@
   <string name="hist_contact_invited">Kontakti u ftua</string>
   <string name="hist_contact_added">Kontakti u shtua</string>
   <string name="hist_contact_left">Kontakti iku</string>
-  <string name="hist_contact_banned">Kontakt i dëbuar</string>
-  <string name="hist_contact_unbanned">U hoq dëbim për kontaktin </string>
   <string name="hist_invitation_received">Ftesa u mor</string>
   <!--Account Summary-->
   <string name="profile">Profil</string>
@@ -299,7 +273,6 @@
   <string name="tv_contact_row_header">Kontakte</string>
   <string name="gallery_error_title">S\’u gjet aplikacion galerie</string>
   <string name="gallery_error_message">Në këtë pajisje s\’u gjet aplikacion për të hapur Galerinë</string>
-  <string name="generic_error">Ndodhi një gabim i panjohur</string>
   <!--File Transfer-->
   <string name="invalid_file">Kartelë e pavlefshme</string>
   <string name="not_able_to_write_file">S\’arrihet të shkruhet kartelë</string>
@@ -319,7 +292,6 @@
   <string name="file_saved_in">Kartela u ruajt te %s</string>
   <string name="file_saved_successfully">Kartela u ruajt me sukses</string>
   <string name="file_download">Shkarkoje</string>
-  <string name="no_space_left_on_device">S\’ka më hapësirë në pajisje</string>
   <string name="title_media_viewer">Parës mediash</string>
   <string name="menu_file_open">Hap kartelë</string>
   <string name="menu_file_download">Shkarkoje kartelën</string>
@@ -362,8 +334,6 @@
   <string name="audio_permission_rationale_message">Që të përdorë veçori shndërrimi të folure në tekst dhe incizimi audio, Jami lyp leje mbi mikrofonin. Do të kërkohet në hapin pasues.</string>
   <string name="camera_permission_rationale_message">Që të përdorë veçori regjistrimi videoje dhe për të bërë një thirrje me video, Jami lyp leje mbi kamerën. Do të kërkohet në hapin pasues.</string>
   <string name="unable_to_start_recorder">S’arrihet të niset incizim audio.</string>
-  <string name="error_sharing_file">Gabim në ndarje kartele me të tjerë.</string>
-  <string name="error_opening_file">Gabim në hapje kartele.</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">E rekomanduar</string>
   <string name="wizard_status_optional">Opsionale</string>
@@ -381,28 +351,19 @@
   <string name="wizard_profile_button">Ruaje Profilin</string>
   <string name="wizard_profile_skip">Anashakalojeni dhe bëjeni këtë më vonë</string>
   <string name="fab_path_choose">Zgjidhni kartelë tjetër</string>
-  <string name="chat_plugins">Shtojca Fjalosjeje</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Ndajeni me të tjerë</string>
-  <string name="bottomSheet_plugins_btn">Shtojca</string>
   <string name="bottomSheet_add_participants_btn">Shtoje</string>
   <string name="bottomSheet_change_camera_btn">Ndryshoje</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Kamerë</string>
-  <string name="bottomSheet_hangup_btn">Përfundoje Thirrjen</string>
   <string name="bottomSheet_mute_microphone_btn">Mikrofon</string>
   <string name="bottomSheet_sound_output_btn">Tinguj</string>
   <string name="bottomSheet_raiseHand_btn">Ngrini dorën</string>
-  <string name="open_account_plugin_settings">Hap Rregullime Shtojce Llogarie</string>
-  <string name="open_general_plugin_settings">Hap Rregullime Shtojce Të përgjithshme</string>
   <string name="uninstall">Çinstaloje</string>
   <string name="reset">Riktheji te parazgjedhjet</string>
   <!--Swarm Detail-->
   <string name="rename_btn">Ripohoje</string>
-  <string name="rename_error">S’mund të jetë e zbrazët</string>
-  <string name="swarm_description">Shtoni një përshkrim</string>
-  <string name="tab_about">Mbi</string>
   <string name="tab_members">Anëtarë</string>
-  <string name="tab_documetn">Dokumente</string>
   <string name="not_admin_toast">Hollësitë e këtij grupi mund t’i përpunojnë vetëm përgjegjësit</string>
   <string name="dialogtitle_title">Përpunoni titull Zgjoi</string>
   <string name="dialogtitle_description">Përpunoni përshkrim Zgjoi</string>
@@ -434,10 +395,7 @@
   <string name="donation_donate">Dhuroni</string>
   <string name="donation_setting_title">Kujtues dhurimi</string>
   <string name="donation_setting_description">Aktivizo kujtues dhurimesh</string>
-  <!--Plugin-->
+  <!--Extension-->
   <string name="unable_to_load">S’arrihet të ngarkohet %1$s</string>
-  <string name="load_sucess">%1$s: e aktivizuar</string>
-  <string name="unload_sucess">%1$s: e çaktivizuar</string>
-  <string name="install_sucess">Zgjerimi %1$s u instalua me sukses.</string>
   <string name="install_error">Ndodhi një gabim teksa importohej zgjerimi.</string>
 </resources>

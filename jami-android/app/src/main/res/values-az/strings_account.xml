@@ -21,25 +21,19 @@
   <string name="dialog_wait_create_details">لطفاً، حسابينين آرتيريلديغي واخت، گؤزله يئن...</string>
   <string name="dialog_wait_update">حساب یئنیله دیل</string>
   <string name="dialog_wait_update_details">لطفاً تا حساب جدیدتون تازه میشه صبر کنین</string>
-  <string name="dialog_warn_ip2ip_account_title">بوش SIP حسابي يارادين ؟</string>
-  <string name="dialog_warn_ip2ip_account_message">SIP حسابي يارادماقداسان.مؤثرهلي آدی اولمادان.تولداجاقسان و فقط مستقیم IP تماسلار آلاجاقسان.حسابيني داها سونرا ترمیم اده بئلرسن</string>
   <string name="account_type_ip2ip">IP حساب</string>
   <string name="help_ring">جامی حسابی، تامامن یاییلمیش شبکه له برابر شخصلره آرخایینجا چاتماغا imkan وئریر.</string>
-  <string name="help_sip_title">SIP حسابینیز یئتیریر</string>
+  <string name="help_sip_title">SIP حسابي قوش</string>
   <string name="help_sip">SIP حسابینی قورولوشونا قوی.</string>
-  <string name="create_sip_account">SIP حسابي قوش</string>
   <!--Strings related to account deletion-->
-  <string name="account_delete_dialog_title">حسابي حذف ائتمک ؟</string>
   <string name="account_delete_dialog_message">بو عملین ردّ اولونماسی اولماز.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">حساب ثبت اولمادي</string>
   <string name="normal_accounts_titles">حسابلار</string>
-  <string name="normal_devices_titles">باغلانان آلاتلار</string>
+  <string name="normal_devices_titles">باغلانان سئلاحلار</string>
   <string name="account_device_revoke">آلنادا چکمه</string>
   <string name="account_device_revocation_success_title">اوغورلو</string>
   <string name="account_device_revocation_success">آلتی ایندی لغو اولونوب!</string>
-  <string name="account_device_revocation_error_title">آلنيني ردّ اده بيلمئرم</string>
-  <string name="account_device_revocation_wrong_password">غلط رمز.</string>
   <string name="account_device_revocation_unknown_device">مجهول آلتی.</string>
   <string name="account_device_revocation_error_unknown">معلوم اولمايان خاطير.</string>
   <string name="account_password_change">رمز لرینده یئنی دن</string>
@@ -61,8 +55,7 @@
   <string name="account_rendezvous_summary">رندوزو موودینده، گلین چاغیرمالار کنفرانس اوتاقینا قوشولاجاق.</string>
   <string name="account_upnp_label">UPnP فعال ائدئ</string>
   <string name="account_proxy_field">پراکسی</string>
-  <!--Plugin Details-->
-  <string name="account_preference_plugin_tab">پلگین</string>
+  <!--Extension Details-->
   <!--Audio Details-->
   <string name="account_audio_label">آدیو</string>
   <string name="account_preferences_media_tab">میدیادا</string>
@@ -142,35 +135,23 @@
   <string name="export_account_wait_message">صادرات حسابلاری</string>
   <string name="account_export_file">پشتیبان حساب</string>
   <string name="account_export_file_summary">حسابينينين آرخايينلاشماسي اوچون آلېنماغېندا، اونو سونرا قاییتماق اوچون.</string>
-  <string name="account_export_end_decryption_message">پارولين وئريلن رمزله حسابين آچيلمادي.</string>
   <string name="account_export_end_network_title">شبکه خطای</string>
-  <string name="account_export_end_network_message">شبکه ده حساب صادر ائتمه دیم.</string>
   <string name="account_export_end_error_title">خطای</string>
-  <string name="account_export_end_error_message">حساب صادرات اولمادی، نامعلوم خاتمه باش وئریب.</string>
   <string name="account_enter_password">رمز یازینی دن</string>
-  <string name="account_share_body">Jami یایینلانان مخابراتی پلتفرمونده \'%1$s\' ایستیفاده سی ایله منی تماس آل: %2$s</string>
-  <string name="account_share_body_with_username">Jami یایینلانان مخابراتی پلتفرمونده \'%1$s\' یا عمومی ایستیفاده چی آدیمی \'%2$s\' ایستیفاده ائدرک منی تماس آلین: %3$s</string>
-  <string name="account_contact_me">جامی ایله باغلا!</string>
+  <string name="account_contact_me">جمي ايله باغلي اول!</string>
   <string name="update_account">حساب یئنیلشدیر</string>
   <string name="account_migration">جمی حسابینیزی یئنیله ییرم.\\nلطفا رمزونو دن یات.</string>
   <string name="ring_account">حساب جامی</string>
   <string name="sip_account">SIP حساب</string>
   <string name="ring_account_identity">هویت</string>
   <string name="account_migration_title_dialog">حساب کؤچمه سی</string>
-  <string name="account_migration_message_dialog">حسابلارینیز یئنیلندیریلیر. بو عملیات اوچون حسابلار ایداره سی صفحه سینه گئده بیلرسئنئز؟</string>
   <string name="account_update_needed">احداث لازيمدير</string>
-  <string name="account_cannot_be_found_title">حساب تاپميرام</string>
-  <string name="account_cannot_be_found_message">حساب جمي شبکه سينده تاپيلمادي.جمي يه موجود بير قورولتايدان صادر اولونموشو تأمئن ات و اعتيادياتلارين دوغرو اولماسيني تأمئن ات.</string>
   <string name="account_sip_cannot_be_registered_message">حساب یاراتما پروسئسینه داوام ائدیرسن و یا معلوماتینی بورادا یئنیله ییرسن.</string>
-  <string name="account_no_network_title">شبکه یه باغلی اولمامیش</string>
-  <string name="account_no_network_message">حسابي آرتيرماق اولمادي، چونکي جامي بؤلونموش شبکه يه باغلي اولمادي.</string>
+  <string name="account_no_network_title">شبکه خطای</string>
   <string name="account_device_added_title">حساب آلتی آرتیر</string>
   <string name="account_device_added_message">بو آلینادا جمی حسابینی اوغورلا قوروبسونوز.</string>
   <string name="account_device_updated_title">حساب آلتی یئنی دن</string>
   <string name="account_device_updated_message">جامی حسابینی اوغورلو یئنیله دی.</string>
-  <string name="account_cannot_be_updated_message">حساب آلتی یئنی دن یئنیله نیلمز.</string>
-  <string name="account_sip_success_title">سيب حسابي ثبت</string>
-  <string name="account_sip_success_message">سيب حسابيني اوغورلو ثبت ائتدي.</string>
   <string name="account_sip_register_anyway">هر حالدا ثبت اولون</string>
   <!--TV-->
   <string name="account_tv_settings_header">حساب لارین قورولوشو</string>
@@ -190,11 +171,8 @@
   <string name="account_link_export_button">یئنی آلتی باغلا</string>
   <string name="account_link_show_button">%d داها باغلي اولان آلتی گؤرسهدیر</string>
   <string name="account_link_hide_button">باغلي اولان آلتی اؤرت</string>
-  <string name="account_link_export_info">بو حسابین باشقا آلاتلاردا ایستیفاده ائتمه سی اوچون، اوّلجه اونو Jami-ده یاشاییشدیرمالی یئرینده بیر PIN کد یاراتاجاق و حسابین قورولماسی اوچون اوّلجه آلاتدا یئریلمه لی یئرینده یئریلمه لی یئری اولاجاق.</string>
   <string name="account_start_export_button">PIN یوللاندیر</string>
   <string name="account_end_export_button">یاخینلاشماق</string>
-  <string name="account_end_export_infos">PIN:\n\n%%\n\nعملییتی تاماملاماق اوچون جامی نی یئنی آلتیندا آچمالی یئریر. \"بو آلتی حسابا باغلاییب\" ایله یئنی حساب یاراتمالی یئریر. PIN- سی 10 دقیقه دیر.</string>
-  <string name="account_link_export_info_light">بو حسابین باشقا آلاتلاردا ایستیفاده ائتمه سی اوچون، اوّلجه اونو Jami-ده یاشاییشدیرمالی یئرینده بیر PIN کد یاراتاجاق و حسابین قورولماسی اوچون اوّلجه آلاتدا یئریلمه لی یئرینده یئریلمه لی یئری اولاجاق.</string>
   <string name="account_export_title">باشقا آلاتلارا باغلانان حساب</string>
   <string name="account_connect_server_button">مدیریت سرورینا باغلانیب</string>
   <string name="account_connect_button">باغلا</string>
@@ -226,21 +204,17 @@
   <string name="account_creation_profile">پروفایل یارانماق</string>
   <string name="account_creation_ring">Jami حسابینی یارات</string>
   <string name="account_link_title">بو آلینانی باغلا</string>
-  <string name="account_sip_cannot_be_registered">حساب ثبت نمیشه</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">حسابيمي يئيرتم</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">تصدیق اوچون رمز یاز</string>
   <string name="enter_password">رمز یازینی دن</string>
   <string name="revoke_device_title">آلنادا چکمه</string>
-  <string name="revoke_device_message">%1$s-ی لغو اتمک ایسته سیز؟</string>
   <string name="revoke_device_wait_title">لطفاً صبر کنین...</string>
   <string name="revoke_device_wait_message">ردّ ادن آلات</string>
   <string name="rename_device_title">بو آلینین آدینی دَییشدیر</string>
   <string name="rename_device_message">بو آلینانی Jami حسابین دن تانینماق اوچون تزه بیر آد سچ</string>
   <string name="rename_device_button">آد آلتی</string>
   <string name="account_rename_device_hint">آلنادا آدینی سئچیب</string>
-  <string name="account_device_name_empty">آدی بوش اولماز</string>
   <string name="account_device_this_indicator">بو آلین</string>
   <string name="account_disabled_indicator">معلول</string>
   <!--Link a new device-->

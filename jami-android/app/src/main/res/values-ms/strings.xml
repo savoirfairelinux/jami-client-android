@@ -9,19 +9,13 @@
   <string name="contribute_section">Sumbangkan</string>
   <string name="version_section">Versi</string>
   <string name="no_email_app_installed">Tiada aplikasi emel ditemui, pasangkan satu untuk menghantar laporan kepada kami</string>
-  <string name="no_browser_app_installed">വെബ് ബ്രൌസർ ആപ്ലിക്കേഷൻ കണ്ടെത്തിയില്ല, ഈ പേജ് കാണുന്നതിന് ഒന്ന് ഇൻസ്റ്റാൾ ചെയ്യുക</string>
   <string name="email_chooser_title">Hantar email menggunakan…</string>
-  <string name="website_chooser_title">വെബ്സൈറ്റ് കാണുക.</string>
-  <string name="license">ഈ സോഫ്റ്റ്വെയർ \"അത് പോലെ തന്നെ\" നൽകുന്നു, യാതൊരു തരത്തിലുള്ള ഗ്യാരണ്ടിയും ഇല്ലാതെ. വിശദാംശങ്ങൾക്കായി, കാണുക <u>GNU ജനറൽ പബ്ലിക് ലൈസൻസ് പതിപ്പ് 3 അല്ലെങ്കിൽ അതിനുശേഷമുള്ളത്</u></string>
   <string name="description">ജാമി എന്നത് സാർവത്രിക ആശയവിനിമയത്തിനുള്ള ഒരു സ്വതന്ത്ര സോഫ്റ്റ്വെയറാണ്. അത് ഉപയോക്താക്കളുടെ സ്വതന്ത്രതയും സ്വകാര്യതയും ബഹുമാനിക്കുന്നു.</string>
   <string name="credits">Kredit</string>
   <string name="pip_title">ജാമി സമ്മേളനം</string>
   <string name="call_service_description">നിങ്ങളുടെ കോളുകള് മുൻപന്തിയില് വയ്ക്കുന്നതിന് ഈ സേവനം ആവശ്യമാണ്. ഇത് കോളുകള് സമയത്ത് മാത്രം പ്രവർത്തിക്കുന്നു.</string>
   <string name="data_transfer_service_description">ഫയൽ കൈമാറ്റങ്ങൾ സമയത്ത് സ്ഥിരമായ അറിയിപ്പുകൾ പ്രദർശിപ്പിക്കുന്നതിന് ഈ സേവനം ആവശ്യമാണ്. ഫയൽ കൈമാറ്റങ്ങൾ സമയത്ത് മാത്രമേ ഇത് പ്രവർത്തിക്കൂ.</string>
   <!--About dialog-->
-  <string name="developed_by">വികസിപ്പിച്ചെടുത്തത്</string>
-  <string name="designed_by">ഡിസൈൻ ചെയ്തത്</string>
-  <string name="ringtones_by">റിംഗിംഗുകൾ</string>
   <!--RingActivity-->
   <string name="error_no_network">Tiada sambungan rangkaian</string>
   <string name="error_account_offline">അക്കൌണ്ട് ഓഫ് ചെയ്തിരിക്കുന്നു</string>
@@ -35,7 +29,6 @@
   <string name="menu_item_settings">Tetapan</string>
   <string name="menu_item_advanced_settings">വിപുലമായ ക്രമീകരണങ്ങൾ</string>
   <string name="menu_item_account_settings">അക്കൌണ്ട് ക്രമീകരണങ്ങൾ</string>
-  <string name="menu_item_plugin_list">പ്ലഗിൻ ക്രമീകരണങ്ങൾ</string>
   <string name="menu_item_share">എന്റെ അക്കൌണ്ട് പങ്കുവെക്കുക</string>
   <string name="menu_item_about">ജാമിയെ കുറിച്ച്</string>
   <string name="video_setting_title">വീഡിയോ ക്രമീകരണങ്ങൾ</string>
@@ -96,17 +89,9 @@
   <string name="ongoing_call">Panggilan sedang berlangsung</string>
   <string name="hist_in_call">Panggilan masuk sebanyak %1$s</string>
   <string name="hist_out_call">Panggilan keluar sebanyak %1$s</string>
-  <string name="start_error_title">ജാമിക്ക് തുടങ്ങാൻ പറ്റില്ല!</string>
   <string name="start_error_mic_required">ജാമിക്ക് മൈക്രോഫോണിന് അനുമതി വേണം.</string>
-  <string name="action_call_accept">Terima panggilan</string>
-  <string name="action_call_accept_audio">ഓഡിയോയിലൂടെ മറുപടി</string>
-  <string name="action_call_accept_video">വീഡിയോയിൽ മറുപടി</string>
-  <string name="action_call_hold_accept">വിളി ഓഡിയോ പിടിച്ചു വയ്ക്കുക</string>
-  <string name="action_call_hold_accept_video">വീഡിയോ കോൾ എടുക്കുക</string>
-  <string name="action_call_end_accept">അവസാനിപ്പിച്ച് വിളിക്ക് മറുപടി പറയൂ</string>
   <string name="action_call_decline">Bantah panggilan</string>
   <string name="action_call_mic_mute">മിണ്ടാത്ത മൈക്രോഫോൺ</string>
-  <string name="action_load_plugin">ലോഡ് പ്ലഗിൻ</string>
   <string name="ab_action_speakerphone">Aktifkan pembesar suara</string>
   <string name="ab_action_contact_add">Tambahkan sebagai kenalan</string>
   <string name="ab_action_contact_add_question">ബന്ധുക്കളെ കൂട്ടിച്ചേർക്കണോ?</string>
@@ -142,11 +127,8 @@
   <string name="ringtone_error_size_too_big">ഈ ഫയൽ വളരെ വലുതാണ്. പരമാവധി വലുപ്പം %1$dkB ആണ്.</string>
   <string name="ringtone_custom_prompt">ഇഷ്ടാനുസൃത റിംഗ്ടോൺ സജ്ജമാക്കുക</string>
   <string name="ringtone_custom_label">Tidak lalai</string>
-  <string name="ringtone_jami_tones">ജാമി ടോൺസ്</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">ജാമിക്ക് ഈ ഫീച്ചര് പ്രവർത്തനക്ഷമമാക്കുന്നതിന് \"കോണ്ടാക്ടുകള് വായിക്കുക\" അനുമതി വേണം. ദയവായി അത് നല് കുക.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">ജാമിക്ക് ഈ ഫീച്ചര് പ്രവർത്തനക്ഷമമാക്കുന്നതിന് \"കോൾ ലോഗ് എഴുതുക\" അനുമതി വേണം. ദയവായി അത് നല് കുക.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Imbas kod QR akaun yang ingin anda tambah.</string>
   <string name="title_activity_qrcode">എന്റെ അക്കൌണ്ട് പങ്കുവെക്കുക</string>
@@ -162,8 +144,6 @@
   <string name="conversation_details">സംഭാഷണ വിശദാംശങ്ങള്</string>
   <string name="contact_details">ബന്ധപ്പെടാനുള്ള വിവരങ്ങൾ</string>
   <string name="conversation_action_delete_this">Padamkan perbualan ini</string>
-  <string name="conversation_action_delete_this_title">Padamkan perbualan ini ?</string>
-  <string name="conversation_action_delete_this_message">Aksi ini tidak akan dapat dibuat ulang.</string>
   <string name="conversation_action_history_clear">Padamkan sejarah</string>
   <string name="conversation_action_history_clear_title">സംഭാഷണ ചരിത്രം മായ്ക്കുക?</string>
   <string name="conversation_action_history_clear_message">ഇത് സംഭാഷണ ചരിത്രം മായ്ക്കും.</string>
@@ -200,7 +180,6 @@
   <string name="conversation_contact_invited">%1$s ക്ഷണിച്ചു</string>
   <string name="conversation_contact_added">%1$s ചേർന്നു</string>
   <string name="conversation_contact_left">%1$ ഇടതുവശത്ത്</string>
-  <string name="conversation_contact_banned">%1$s നിരോധിച്ചു</string>
   <string name="conversation_search_hint">തിരയൽ സംഭാഷണം</string>
   <string name="today">Hari ini</string>
   <string name="yesterday">Semalam</string>
@@ -215,14 +194,12 @@
   <string name="help_password_choose">ജാമി അക്കൌണ്ട് പരിരക്ഷിക്കുന്നതിന് നിങ്ങള് ക്ക് ഓർമ്മയുണ്ടാകുന്ന ശക്തമായ പാസ്വേഡ് തിരഞ്ഞെടുക്കുക.</string>
   <string name="help_password_enter">നിങ്ങളുടെ പ്രധാന ജാമി അക്കൌണ്ട് പാസ്വേഡ് നൽകുക.</string>
   <string name="help_server_enter">മാനേജ്മെന്റ് സെർവറിന്റെ URL നൽകുക.</string>
-  <string name="help_pin_enter">മറ്റൊരു ജാമി അക്കൌണ്ടിൽ നിന്നും പി. ഐ. എൻ. നൽകുക. ഒരു പി. എൻ. ലഭിക്കുന്നതിന് \"ജാമി അക്കൌണ്ട് എക്സ്പോർട്ട് ചെയ്യുക\" എന്ന സവിശേഷത ഉപയോഗിക്കുക.</string>
   <string name="wizard_next">അടുത്തത്</string>
   <string name="wizard_back">തിരിച്ചുപോവുക</string>
   <string name="wizard_skip">സ്കിപ്പ് ചെയ്യുക</string>
   <string name="hist_contact_invited">ബന്ധപ്പെടാൻ ക്ഷണിച്ചു</string>
   <string name="hist_contact_added">ബന്ധം കൂട്ടിച്ചേർത്തു</string>
   <string name="hist_contact_left">ഇടതുവശത്തുള്ള കോൺടാക്ട്</string>
-  <string name="hist_contact_banned">ബന്ധപ്പെടാൻ പാടില്ല</string>
   <string name="hist_invitation_received">ക്ഷണം ലഭിച്ചത്</string>
   <!--Account Summary-->
   <string name="profile">പ്രൊഫൈല്</string>
@@ -271,7 +248,6 @@
   <string name="tv_contact_row_header">Kenalan</string>
   <string name="gallery_error_title">ഗാലറി ആപ്ലിക്കേഷൻ കണ്ടെത്തിയില്ല</string>
   <string name="gallery_error_message">ഗാലറി തുറക്കുന്നതിനുള്ള ഉപകരണത്തിൽ ഒരു ആപ്ലിക്കേഷനും കണ്ടെത്തിയില്ല</string>
-  <string name="generic_error">അജ്ഞാതമായ ഒരു പിശക് സംഭവിച്ചു</string>
   <!--File Transfer-->
   <string name="invalid_file">അസാധുവായ ഫയൽ</string>
   <string name="not_able_to_write_file">ഫയൽ എഴുതാൻ കഴിയുന്നില്ല</string>
@@ -291,7 +267,6 @@
   <string name="file_saved_in">%s ൽ സംരക്ഷിച്ച ഫയൽ</string>
   <string name="file_saved_successfully">വിജയകരമായി സംരക്ഷിച്ച ഫയൽ</string>
   <string name="file_download">ഡൌൺലോഡ് ചെയ്യുക</string>
-  <string name="no_space_left_on_device">ഉപകരണത്തില് ഇടമില്ല</string>
   <string name="title_media_viewer">മാധ്യമ കാഴ്ചക്കാരൻ</string>
   <string name="menu_file_open">തുറന്ന ഫയൽ</string>
   <string name="menu_file_download">ഫയൽ ഡൌൺലോഡ് ചെയ്യുക</string>
@@ -342,29 +317,20 @@
   <string name="wizard_profile_button">പ്രൊഫൈൽ സംരക്ഷിക്കുക</string>
   <string name="wizard_profile_skip">ഇത് പിന്നീട് ചെയ്യൂ</string>
   <string name="fab_path_choose">മറ്റൊരു ഫയൽ തിരഞ്ഞെടുക്കുക</string>
-  <string name="chat_plugins">ചാറ്റ് പ്ലഗിന്നുകൾ</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">പങ്കിടുക</string>
   <string name="bottomSheet_dialpad_btn">ഡയല് പഡ്</string>
-  <string name="bottomSheet_plugins_btn">പ്ലഗിൻ</string>
   <string name="bottomSheet_add_participants_btn">ചേർക്കുക</string>
   <string name="bottomSheet_change_camera_btn">മാറ്റം</string>
   <string name="bottomSheet_camera_onoff_switch_btn">ക്യാമറ</string>
-  <string name="bottomSheet_hangup_btn">Tamatkan panggilan</string>
   <string name="bottomSheet_mute_microphone_btn">മൈക്രോ</string>
   <string name="bottomSheet_sound_output_btn">ശബ്ദങ്ങൾ</string>
   <string name="bottomSheet_raiseHand_btn">കൈ ഉയര് ത്തുക</string>
-  <string name="open_account_plugin_settings">അക്കൌണ്ട് പ്ലഗിൻ ക്രമീകരണങ്ങൾ തുറക്കുക</string>
-  <string name="open_general_plugin_settings">പൊതു പ്ലഗിൻ ക്രമീകരണങ്ങൾ തുറക്കുക</string>
   <string name="uninstall">അൺഇൻസ്റ്റാൾ ചെയ്യുക</string>
   <string name="reset">പുനഃ സജ്ജീകരണം</string>
   <!--Swarm Detail-->
   <string name="rename_btn">സ്ഥിരീകരണം</string>
-  <string name="rename_error">ശൂന്യമായിരിക്കാന് പാടില്ല</string>
-  <string name="swarm_description">വിവരണം ചേർക്കുക</string>
-  <string name="tab_about">Tentang</string>
   <string name="tab_members">അംഗങ്ങള്</string>
-  <string name="tab_documetn">രേഖകൾ</string>
   <string name="dialogtitle_title">Swarm തലക്കെട്ട് തിരുത്തുക</string>
   <string name="dialogtitle_description">സ്കാർം വിവരണം തിരുത്തുക</string>
   <string name="dialog_hint_title">തലക്കെട്ട്</string>
@@ -380,5 +346,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">ജാമിയിൽ സ്വാഗതം</string>
   <!--Donation-->
-  <!--Plugin-->
+  <!--Extension-->
 </resources>
