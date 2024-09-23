@@ -26,14 +26,10 @@ import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry
 import cx.ring.AccountUtils
 import cx.ring.R
+import cx.ring.application.JamiApplication
 import cx.ring.assertOnView
 import cx.ring.client.HomeActivity
 import cx.ring.doOnView
-import io.reactivex.rxjava3.core.Single
-import net.jami.model.Account
-import net.jami.model.AccountConfig
-import net.jami.model.ConfigKey
-import net.jami.services.AccountService
 import net.jami.utils.Log
 import org.hamcrest.Matchers.allOf
 import org.junit.Before
@@ -42,7 +38,6 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.MethodSorters
-import java.util.HashMap
 
 @LargeTest
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -312,9 +307,7 @@ class AccountCreation {
         // That is the same problem with Android Test Orchestrator which removes the application
         // between each test and not only at the end.
         // `@AfterClass` could be used (executed once), but it does not have access to the activity.
-        mActivityScenarioRule.scenario.onActivity { activity ->
-            AccountUtils.removeAllAccounts(accountService = activity.mAccountService)
-        }
+        AccountUtils.removeAllAccounts(accountService = JamiApplication.instance!!.mAccountService)
     }
 
     private fun createDefaultAccount() {
@@ -346,9 +339,7 @@ class AccountCreation {
     }
 
     private fun moveToWizard() {
-        mActivityScenarioRule.scenario.onActivity { activity -> // Set custom name server
-            activity.mAccountService.customNameServer = "https://ns-test.jami.net/"
-        }
+        JamiApplication.instance!!.mAccountService.customNameServer = "https://ns-test.jami.net/"
 
         try {
             val searchBarContentNavigationDescription = InstrumentationRegistry
@@ -375,6 +366,10 @@ class AccountCreation {
 
         onView(allOf(withId(R.id.skip_create_account), isDisplayed())).perform(click())
 
-        Log.d("devdebug", "Account created: $username")
+        Log.d(TAG, "Account created: $username")
+    }
+
+    companion object {
+        private const val TAG = "AccountCreation"
     }
 }
