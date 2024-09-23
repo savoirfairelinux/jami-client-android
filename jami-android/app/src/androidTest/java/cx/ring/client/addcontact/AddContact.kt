@@ -37,6 +37,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.GrantPermissionRule
 import cx.ring.AccountUtils
 import cx.ring.R
+import cx.ring.application.JamiApplication
 import cx.ring.assertOnView
 import cx.ring.client.HomeActivity
 import cx.ring.doOnView
@@ -98,39 +99,39 @@ class AddContact {
         // `@BeforeClass` could be used, but it does not have access to the activity.
         Log.d(TAG, "Creating accounts ...")
 
-        mActivityScenarioRule.scenario.onActivity { activity ->
-            val accountList =
-                AccountUtils.createAccountAndRegister(activity.mAccountService, 4)
+        val accountService = JamiApplication.instance!!.mAccountService
 
-            accountA = accountList[0]
-            accountB = accountList[1]
-            accountC = accountList[2]
-            accountD = accountList[3]
+        val accountList =
+            AccountUtils.createAccountAndRegister(accountService, 4)
 
-            // Need delay to give time to accounts to register on DHT before sending trust request.
-            // Inferior delay will occasionally cause the trust request to fail.
-            Thread.sleep(10000)
+        accountA = accountList[0]
+        accountB = accountList[1]
+        accountC = accountList[2]
+        accountD = accountList[3]
 
-            Log.d(TAG, "Accounts created.")
+        // Need delay to give time to accounts to register on DHT before sending trust request.
+        // Inferior delay will occasionally cause the trust request to fail.
+        Thread.sleep(10000)
 
-            // AccountB will be manually added.
-            // But let's skip UI for AccountC and AccountD.
-            val accountCUri = Uri.fromString(accountC!!.uri!!)
-            val fakeCConversation =
-                Conversation(accountA!!.accountId, accountCUri, Conversation.Mode.Request)
-            activity.mAccountService.sendTrustRequest(
-                fakeCConversation,
-                accountCUri
-            )
+        Log.d(TAG, "Accounts created.")
 
-            val accountDUri = Uri.fromString(accountD!!.uri!!)
-            val fakeDConversation =
-                Conversation(accountA!!.accountId, accountDUri, Conversation.Mode.Request)
-            activity.mAccountService.sendTrustRequest(
-                fakeDConversation,
-                accountDUri
-            )
-        }
+        // AccountB will be manually added.
+        // But let's skip UI for AccountC and AccountD.
+        val accountCUri = Uri.fromString(accountC!!.uri!!)
+        val fakeCConversation =
+            Conversation(accountA!!.accountId, accountCUri, Conversation.Mode.Request)
+        accountService.sendTrustRequest(
+            fakeCConversation,
+            accountCUri
+        )
+
+        val accountDUri = Uri.fromString(accountD!!.uri!!)
+        val fakeDConversation =
+            Conversation(accountA!!.accountId, accountDUri, Conversation.Mode.Request)
+        accountService.sendTrustRequest(
+            fakeDConversation,
+            accountDUri
+        )
     }
 
     @Test
@@ -369,9 +370,7 @@ class AddContact {
         // That is the same problem with Android Test Orchestrator which removes the application
         // between each test and not only at the end.
         // `@AfterClass` could be used (executed once), but it does not have access to the activity.
-        mActivityScenarioRule.scenario.onActivity { activity ->
-            AccountUtils.removeAllAccounts(accountService = activity.mAccountService)
-        }
+        AccountUtils.removeAllAccounts(accountService = JamiApplication.instance!!.mAccountService)
     }
 }
 
