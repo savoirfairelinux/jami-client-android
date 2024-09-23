@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2a17edc3_efbe3b32",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-09-23T13:43:41Z",
+      "side": 1,
+      "message": "Code is fine !",
+      "revId": "c30e75af3c6048de2919b6ad40dde5d0b173da24",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a9711de_d49dfeef",
+        "filename": "jami-android/app/src/main/java/cx/ring/account/AccountWizardActivity.kt",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-09-23T13:43:41Z",
+      "side": 1,
+      "message": "Do you need `mIsAccountListEmpty` as a parameter since you don\u0027t use it ?",
+      "revId": "c30e75af3c6048de2919b6ad40dde5d0b173da24",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
