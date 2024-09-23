@@ -24,6 +24,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "63984db5_657e9551",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 17
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-09-23T20:25:19Z",
+      "side": 1,
+      "message": "See here:\nhttps://docs.jami.net/en_US/developer/jami-concepts/jami-identifiers.html\n\nI dont know what is preferred but I guess identifier is easier to understand for most of the people.",
+      "parentUuid": "50a0daa9_62eb0a45",
+      "range": {
+        "startLine": 317,
+        "startChar": 69,
+        "endLine": 317,
+        "endChar": 79
+      },
+      "revId": "20b62b879295de7de4b02e29e1fd68002a62932c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7c035b82_3568c565",
@@ -37,6 +61,30 @@
       "writtenOn": "2024-08-30T20:20:22Z",
       "side": 1,
       "message": "`Decline`",
+      "range": {
+        "startLine": 421,
+        "startChar": 26,
+        "endLine": 421,
+        "endChar": 32
+      },
+      "revId": "20b62b879295de7de4b02e29e1fd68002a62932c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3621d138_a87cbc11",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 17
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-09-23T20:25:19Z",
+      "side": 1,
+      "message": "Done in https://review.jami.net/c/jami-client-android/+/28920/3/jami-android/app/src/main/res/values/strings.xml",
+      "parentUuid": "7c035b82_3568c565",
       "range": {
         "startLine": 421,
         "startChar": 26,
@@ -70,6 +118,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2e5950b6_24cae2b0",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 17
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-09-23T20:25:19Z",
+      "side": 1,
+      "message": "Done in https://review.jami.net/c/jami-client-android/+/28920/3/jami-android/app/src/main/res/values/strings.xml",
+      "parentUuid": "ab8610dd_b0704354",
+      "range": {
+        "startLine": 423,
+        "startChar": 34,
+        "endLine": 423,
+        "endChar": 48
+      },
+      "revId": "20b62b879295de7de4b02e29e1fd68002a62932c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fd425851_5a64620c",
@@ -83,6 +155,30 @@
       "writtenOn": "2024-08-30T20:20:22Z",
       "side": 1,
       "message": "`Accept invitation`?",
+      "range": {
+        "startLine": 424,
+        "startChar": 34,
+        "endLine": 424,
+        "endChar": 48
+      },
+      "revId": "20b62b879295de7de4b02e29e1fd68002a62932c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e5c9ba46_6b9f297d",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 17
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-09-23T20:25:19Z",
+      "side": 1,
+      "message": "Done in https://review.jami.net/c/jami-client-android/+/28920/3/jami-android/app/src/main/res/values/strings.xml",
+      "parentUuid": "fd425851_5a64620c",
       "range": {
         "startLine": 424,
         "startChar": 34,
