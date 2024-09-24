@@ -263,7 +263,7 @@ class ConversationPresenter @Inject constructor(
     }
 
     fun openContact() {
-        mConversation?.let { conversation -> view?.goToContactActivity(conversation.accountId, conversation.uri) }
+        mConversation?.let { conversation -> view?.goToDetailsActivity(conversation.accountId, conversation.uri) }
     }
 
     fun sendTextMessage(message: String?, replyTo: Interaction? = null) {

@@ -49,7 +49,7 @@ import androidx.recyclerview.widget.RecyclerView
 import cx.ring.R
 import cx.ring.adapters.ConversationAdapter
 import cx.ring.client.CallActivity
-import cx.ring.client.ContactDetailsActivity
+import cx.ring.client.DetailsActivity
 import cx.ring.client.ConversationActivity
 import cx.ring.databinding.FragConversationBinding
 import cx.ring.mvp.BaseSupportFragment
@@ -924,10 +924,10 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         }
     }
 
-    override fun goToContactActivity(accountId: String, uri: net.jami.model.Uri) {
-        val logo = binding!!.contactImage
+    override fun goToDetailsActivity(accountId: String, uri: net.jami.model.Uri) {
+        val logo = binding!!.conversationAvatar
         val intent = Intent(Intent.ACTION_VIEW, ConversationPath.toUri(accountId, uri))
-            .setClass(requireContext().applicationContext, ContactDetailsActivity::class.java)
+            .setClass(requireContext().applicationContext, DetailsActivity::class.java)
         startActivity(intent,
             ActivityOptions.makeSceneTransitionAnimation(activity, logo, "conversationIcon").toBundle())
     }
@@ -974,13 +974,13 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                 .putExtras(ConversationPath.toBundle(conversation))
                 .putExtra(Intent.EXTRA_PHONE_NUMBER, contactUri.uri)
                 .putExtra(CallFragment.KEY_HAS_VIDEO, hasVideo)
-            startActivityForResult(intent, ContactDetailsActivity.REQUEST_CODE_CALL)
+            startActivityForResult(intent, DetailsActivity.REQUEST_CODE_CALL)
         }
     }
 
     private fun setupActionbar(conversation: ConversationItemViewModel, img: AvatarDrawable) {
         binding?.apply {
-            contactImage.setImageDrawable(img)
+            conversationAvatar.setImageDrawable(img)
             contactTitle.text = conversation.title
             if (conversation.uriTitle != conversation.title) {
                 contactSubtitle.text = conversation.uriTitle
