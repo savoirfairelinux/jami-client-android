@@ -70,6 +70,30 @@
       },
       "revId": "5f86cfd10a11145274b6258e6079b8284074569e",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8afbc047_73d257ee",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-09-24T11:16:23Z",
+      "side": 1,
+      "message": "You should be able to `decline` an invitation to a group swarm.\n\nHowever, you don\u0027t want the `block` option to be available in a group swarm as it is unable to be determined which member you are blocking.",
+      "parentUuid": "f1c00514_2db6907c",
+      "range": {
+        "startLine": 7,
+        "startChar": 21,
+        "endLine": 7,
+        "endChar": 27
+      },
+      "revId": "5f86cfd10a11145274b6258e6079b8284074569e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
