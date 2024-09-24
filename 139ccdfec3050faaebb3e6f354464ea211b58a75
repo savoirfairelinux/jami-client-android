@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e1eb817c_ffe27116",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ConversationFragment.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 1024,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-09-24T14:26:15Z",
+      "side": 1,
+      "message": "never enabled back. If the conversation mode changes the search will remain disabled",
+      "range": {
+        "startLine": 1024,
+        "startChar": 0,
+        "endLine": 1024,
+        "endChar": 2
+      },
+      "revId": "139ccdfec3050faaebb3e6f354464ea211b58a75",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
