@@ -147,12 +147,15 @@ class ConversationActionsFragment : Fragment() {
         if (conversationMode == Conversation.Mode.OneToOne) {
             conversationDelete.text = resources.getString(R.string.delete_conversation)
             conversationDelete.setOnClickListener {  }
+            qrCode.setOnClickListener {  }
+            shareButton.setOnClickListener {  }
 
-            descriptionPanel.isVisible = false  // disable description edit for 1-to-1 conversation
-            //descriptionPanel.setOnClickListener(null)
+            descriptionPanel.isVisible = false  // Disable description edit for 1-to-1 conversation
+            // Description being hidden, we put the rounded background on the secureP2pConnection.
+            secureP2pConnection.setBackgroundResource(R.drawable.background_rounded_16_top)
 
             blockSwitch.isChecked = conversation.contact!!.isBanned
-            blockSwitchPanel.setOnClickListener {
+            blockSwitch.setOnClickListener {
                 val ctx = requireContext()
                 val builder = MaterialAlertDialogBuilder(ctx)
                 if (blockSwitch.isChecked) {    // the contact is already blocked
@@ -184,7 +187,7 @@ class ConversationActionsFragment : Fragment() {
             }
         } else {    // If conversation mode is not one to one
             conversationDelete.text = resources.getString(R.string.leave_swarm)
-            blockSwitchPanel.isVisible = false
+            blockSwitch.isVisible = false
         }
 
         @StringRes val infoString =

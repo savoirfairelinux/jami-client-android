@@ -599,9 +599,12 @@ along with this program; if not, write to the Free Software
     <!--  Conversation details  -->
     <string name="details">Details</string>
     <string name="secure_p2p_connection">Secure peer-to-peer connection</string>
-    <string name="swarm_type">Type of swarm</string>
+    <string name="swarm_type">Type of conversation</string>
     <string name="Private">Private</string>
     <string name="swarm_id">Swarm ID</string>
+    <string name="show_qr_code">Show QR code</string>
+    <string name="show_certificate">Show certificate</string>
+    <string name="mute_conversation">Mute Conversation</string>
 
     <!-- Donation -->
     <string name="donation_card_description">If you enjoy using Jami and believe in our mission, would you make a donation?</string>
