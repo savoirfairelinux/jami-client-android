@@ -561,7 +561,7 @@ along with this program; if not, write to the Free Software
     <string name="uninstall">Uninstall</string>
     <string name="reset">Reset</string>
 
-    <!-- Swarm Detail -->
+    <!-- Swarm Details -->
     <string name="rename_btn">Confirm</string>
     <string name="rename_error">cannot be empty.</string>
     <string name="swarm_description">Add description</string>
