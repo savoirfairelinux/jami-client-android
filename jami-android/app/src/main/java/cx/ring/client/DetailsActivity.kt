@@ -99,6 +99,7 @@ class DetailsActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPi
     private var mProfilePhoto: ImageView? = null
     private var mSourcePhoto: Bitmap? = null
     private var tmpProfilePhotoUri: android.net.Uri? = null
+    private var name = ""
 
     private val cameraResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
@@ -142,6 +143,23 @@ class DetailsActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPi
             setContentView(root)
         }
 
+        var isShow = true
+        var scrollRange = -1
+        binding.appBar.addOnOffsetChangedListener { barLayout, verticalOffset ->
+            if (scrollRange == -1) {
+                scrollRange = barLayout?.totalScrollRange!!
+            }
+            if (scrollRange + verticalOffset == 0) {
+                // Todo: will not be dynamically updated if name changes
+                binding.collapsingToolbar.title = name
+                isShow = true
+            } else if (isShow) {
+                binding.collapsingToolbar.title =
+                    " " //careful there should a space between double quote otherwise it wont work
+                isShow = false
+            }
+        }
+
         mDisposableBag.add(mConversationFacade.observeConversation(conversation)
             .observeOn(DeviceUtils.uiScheduler)
             .doOnComplete { finish() }
@@ -150,19 +168,20 @@ class DetailsActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPi
                     .withViewModel(vm)
                     .withCircleCrop(true)
                     .build(this))
-                binding.title.text = vm.title
+                name = vm.title
+                binding.conversationTitle.text = vm.title
 
                 // Note: For a random account from search results, mode will be Legacy
                 if (vm.request != null){
-                    binding.title.setOnClickListener(null)
+                    binding.conversationTitle.setOnClickListener(null)
 //                    binding.description.setOnClickListener(null)
-                    binding.contactImage.setOnClickListener(null)
+                    binding.conversationAvatar.setOnClickListener(null)
 //                    binding.tabLayout.removeTabAt(TAB_FILES)
 //                    binding.tabLayout.removeTabAt(TAB_MEMBERS)
                 } else if (vm.mode == Conversation.Mode.OneToOne
                     || vm.mode == Conversation.Mode.Legacy
                 ) {
-                    binding.title.setOnClickListener(null)
+                    binding.conversationTitle.setOnClickListener(null)
                     binding.conversationAvatar.setOnClickListener(null)
 //                    binding.tabLayout.removeTabAt(TAB_MEMBERS)
                     binding.addMember.isVisible = false
@@ -185,7 +204,7 @@ class DetailsActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPi
                     binding.videoCall.setOnClickListener { goToCallActivity(conversation, conversation.uri, true) }
 
                     binding.conversationAvatar.setOnClickListener { profileImageClicked() }
-                    binding.title.setOnClickListener {
+                    binding.conversationTitle.setOnClickListener {
                         val dialogBinding = DialogSwarmTitleBinding.inflate(LayoutInflater.from(this)).apply {
                             titleTxt.setText(vm.conversationProfile.displayName)
                             titleTxtBox.hint = getString(R.string.dialog_hint_title)
@@ -231,7 +250,7 @@ class DetailsActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPi
             tab.text = tabAdapter.getTabTitle(position)
         }.attach()
 
-        binding.back.setOnClickListener { onBackPressedDispatcher.onBackPressed() }
+        binding.toolbar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
         binding.addMember.setOnClickListener { ContactPickerFragment(conversation.contacts).show(supportFragmentManager, ContactPickerFragment.TAG) }
     }
 
