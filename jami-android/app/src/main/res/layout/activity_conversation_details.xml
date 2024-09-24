@@ -26,6 +26,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
                 android:orientation="vertical">
 
                 <ImageView
@@ -34,6 +35,7 @@
                     android:layout_height="92dp"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
+                    android:layout_marginTop="24dp"
                     android:contentDescription="@null"
                     android:transitionName="conversationIcon"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -47,7 +49,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/conversation_avatar"
                     android:layout_centerHorizontal="true"
-                    android:layout_margin="15dp"
+                    android:layout_marginTop="@dimen/padding_large"
                     android:ellipsize="end"
                     android:fontFamily="@font/jami"
                     android:maxLines="1"
@@ -61,20 +63,19 @@
 
                 <LinearLayout
                     android:id="@+id/btn_panel"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginVertical="30dp"
                     android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/conversation_title">
-
-                    <Space
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_weight="2" />
 
                     <ImageView
                         android:id="@+id/audio_call"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
+                        android:layout_marginHorizontal="20dp"
                         android:background="@drawable/background_rounded_16"
                         android:backgroundTint="@color/background_secondary"
                         android:contentDescription="@string/ab_action_audio_call"
@@ -82,15 +83,11 @@
                         android:src="@drawable/outline_call_24"
                         app:tint="@color/icon_tint" />
 
-                    <Space
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_weight="1" />
-
                     <ImageView
                         android:id="@+id/video_call"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
+                        android:layout_marginHorizontal="20dp"
                         android:background="@drawable/background_rounded_16"
                         android:backgroundTint="@color/background_secondary"
                         android:contentDescription="@string/ab_action_video_call"
@@ -98,19 +95,14 @@
                         android:src="@drawable/outline_videocam_24"
                         app:tint="@color/icon_tint" />
 
-                    <Space
-                        android:id="@+id/add_member_space"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_weight="1" />
-
                     <ImageView
                         android:id="@+id/add_member"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        android:contentDescription="@string/add_conversation_member"
+                        android:layout_marginHorizontal="20dp"
                         android:background="@drawable/background_rounded_16"
                         android:backgroundTint="@color/background_secondary"
+                        android:contentDescription="@string/add_conversation_member"
                         android:padding="8dp"
                         android:src="@drawable/outline_person_add_24"
                         app:tint="@color/icon_tint" />
@@ -145,7 +137,6 @@
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:background="@null"
             app:layout_constraintBaseline_toBottomOf="parent"
             app:tabRippleColor="@null">
