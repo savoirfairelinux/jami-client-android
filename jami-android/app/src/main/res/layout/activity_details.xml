@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".client.ContactDetailsActivity">
+    tools:context=".client.DetailsActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
@@ -34,7 +34,7 @@
                 app:tint="@color/colorOnSurface" />
 
             <ImageView
-                android:id="@+id/contact_image"
+                android:id="@+id/conversation_avatar"
                 android:layout_width="92dp"
                 android:layout_height="92dp"
                 android:layout_alignParentTop="true"
@@ -47,7 +47,7 @@
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/contact_image"
+                android:layout_below="@id/conversation_avatar"
                 android:layout_centerHorizontal="true"
                 android:layout_margin="15dp"
                 android:ellipsize="end"
