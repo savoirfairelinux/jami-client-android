@@ -51,7 +51,6 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="@dimen/padding_large"
                     android:ellipsize="end"
-                    android:fontFamily="@font/jami"
                     android:maxLines="1"
                     android:padding="5dp"
                     android:textColor="@color/colorOnSurface"
