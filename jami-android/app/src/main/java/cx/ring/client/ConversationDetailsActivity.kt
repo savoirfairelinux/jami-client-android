@@ -185,7 +185,6 @@ class ConversationDetailsActivity : AppCompatActivity(), ContactPickerFragment.O
                     binding.conversationAvatar.setOnClickListener(null)
 //                    binding.tabLayout.removeTabAt(TAB_MEMBERS)
                     binding.addMember.isVisible = false
-                    binding.addMemberSpace.isVisible = false
 
                     val callUri = conversation.contact!!.uri
                     binding.audioCall.setOnClickListener { goToCallActivity(conversation, callUri, false) }
