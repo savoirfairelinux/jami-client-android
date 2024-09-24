@@ -41,7 +41,7 @@ import android.view.animation.LinearInterpolator
 import androidx.core.view.isVisible
 import cx.ring.R
 import cx.ring.adapters.ConfParticipantAdapter
-import cx.ring.client.ContactDetailsActivity
+import cx.ring.client.DetailsActivity
 import cx.ring.client.ConversationSelectionActivity
 import cx.ring.databinding.TvFragCallBinding
 import cx.ring.fragments.CallFragment
@@ -55,7 +55,6 @@ import cx.ring.views.AvatarDrawable
 import dagger.hilt.android.AndroidEntryPoint
 import net.jami.call.CallPresenter
 import net.jami.call.CallView
-import net.jami.daemon.JamiService
 import net.jami.model.Call.CallStatus
 import net.jami.model.Conference.ParticipantInfo
 import net.jami.model.Contact
@@ -428,7 +427,7 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
     }
 
     override fun goToContact(accountId: String, contact: Contact) {
-        startActivity(Intent(Intent.ACTION_VIEW, ConversationPath.toUri(accountId, contact.uri), requireContext(), ContactDetailsActivity::class.java))
+        startActivity(Intent(Intent.ACTION_VIEW, ConversationPath.toUri(accountId, contact.uri), requireContext(), DetailsActivity::class.java))
     }
 
     override fun displayExtensionsButton(): Boolean {
