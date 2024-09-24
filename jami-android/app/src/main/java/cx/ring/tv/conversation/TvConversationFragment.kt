@@ -52,7 +52,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.transition.TransitionManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.R
-import cx.ring.client.ContactDetailsActivity
+import cx.ring.client.ConversationDetailsActivity
 import cx.ring.client.MediaViewerActivity
 import cx.ring.databinding.FragConversationTvBinding
 import cx.ring.fragments.CallFragment
@@ -622,7 +622,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
     ) {
     }
 
-    override fun goToContactActivity(accountId: String, uri: net.jami.model.Uri) {}
+    override fun goToDetailsActivity(accountId: String, uri: net.jami.model.Uri) {}
     override fun switchToUnknownView(name: String) {
         binding?.apply {
             conversationActionGroup.isVisible = false
@@ -710,7 +710,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
                 .putExtras(ConversationPath.toBundle(conversation))
                 .putExtra(Intent.EXTRA_PHONE_NUMBER, contactUri.uri)
                 .putExtra(CallFragment.KEY_HAS_VIDEO, hasVideo)
-            startActivityForResult(intent, ContactDetailsActivity.REQUEST_CODE_CALL)
+            startActivityForResult(intent, ConversationDetailsActivity.REQUEST_CODE_CALL)
         }
     }
 

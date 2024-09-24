@@ -28,7 +28,7 @@ along with this program; if not, write to the Free Software
     android:paddingTop="8dp"
     android:paddingRight="16dp"
     android:paddingBottom="8dp"
-    tools:context=".client.ContactDetailsActivity">
+    tools:context=".client.ConversationDetailsActivity">
 
     <ImageView
         android:id="@+id/photo"

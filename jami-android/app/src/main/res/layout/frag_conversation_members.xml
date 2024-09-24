@@ -22,7 +22,7 @@ along with this program; if not, write to the Free Software
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".client.ContactDetailsActivity">
+    tools:context=".client.ConversationDetailsActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:clipToPadding="false"

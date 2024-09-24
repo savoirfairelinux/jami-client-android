@@ -31,7 +31,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
 import cx.ring.R
-import cx.ring.client.ContactDetailsActivity
+import cx.ring.client.ConversationDetailsActivity
 import cx.ring.databinding.FragMembersBottomsheetBinding
 import cx.ring.databinding.ItemMembersBottomsheetBinding
 import cx.ring.utils.ConversationPath
@@ -79,15 +79,15 @@ class MembersBottomSheetFragment : BottomSheetDialogFragment() {
         })
 
         adapter.actions.add(ContactAction(null, getText(R.string.ab_action_audio_call)) {
-            (activity as? ContactDetailsActivity)?.goToCallActivity(conversation, contactUri, false)
+            (activity as? ConversationDetailsActivity)?.goToCallActivity(conversation, contactUri, false)
         })
 
         adapter.actions.add(ContactAction(null, getText(R.string.ab_action_video_call)) {
-            (activity as? ContactDetailsActivity)?.goToCallActivity(conversation, contactUri, true)
+            (activity as? ConversationDetailsActivity)?.goToCallActivity(conversation, contactUri, true)
         })
 
         adapter.actions.add(ContactAction(null, getString(R.string.send_message)) {
-            (activity as? ContactDetailsActivity)?.goToConversationActivity(path.accountId, contactUri)
+            (activity as? ConversationDetailsActivity)?.goToConversationActivity(path.accountId, contactUri)
         })
 
         adapter.actions.add(ContactAction(null, getString(R.string.bottomsheet_remove)) {

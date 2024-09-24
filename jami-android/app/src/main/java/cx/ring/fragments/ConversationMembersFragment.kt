@@ -23,7 +23,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import cx.ring.R
-import cx.ring.client.ContactDetailsActivity
+import cx.ring.client.ConversationDetailsActivity
 import cx.ring.databinding.FragConversationMembersBinding
 import cx.ring.databinding.ItemContactHorizontalBinding
 import cx.ring.utils.ConversationPath
@@ -110,7 +110,7 @@ class ConversationMembersFragment : Fragment() {
                 try {
                     callback?.invoke()
                 } catch (e: Exception) {
-                    android.util.Log.w(ContactDetailsActivity.TAG, "Error performing action", e)
+                    android.util.Log.w(ConversationDetailsActivity.TAG, "Error performing action", e)
                 }
             }
         }

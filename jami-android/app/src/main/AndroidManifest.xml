@@ -451,7 +451,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <activity
-            android:name=".client.ContactDetailsActivity"
+            android:name=".client.ConversationDetailsActivity"
             android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
             android:exported="false"
             android:label="@string/conversation_details"
