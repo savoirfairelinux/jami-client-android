@@ -1,4 +1,28 @@
 {
-  "comments": [],
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0e5a366_f2092ebb",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 18
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-09-24T03:01:31Z",
+      "side": 1,
+      "message": "Should `peer_number` be updated too? Thank you",
+      "range": {
+        "startLine": 331,
+        "startChar": 43,
+        "endLine": 331,
+        "endChar": 54
+      },
+      "revId": "3392c41da35218f6def2a815ecd95b425f231b39",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ],
   "submitRequirementResults": []
 }
