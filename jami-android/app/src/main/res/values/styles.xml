@@ -102,6 +102,8 @@
         <item name="android:statusBarColor">@color/transparent</item>
     </style>
 
+
+
     <!-- Dark toolbar base theme -->
     <style name="AppThemeBase.DarkToolbar" parent="AppThemeBase">
         <item name="android:windowTranslucentStatus">true</item>
@@ -490,6 +492,12 @@
 
     <style name="LightThemeSelector" parent="android:Theme.Light">
         <item name="selectableItemBackground">?android:attr/selectableItemBackground</item>
+    </style>
+
+    <style name="CustomToolbarTitle">
+        <item name="android:ellipsize">@color/colorOnSurface</item>
+        <item name="android:textColor">@color/colorOnSurface</item>
+        <item name="android:textSize">16sp</item>
     </style>
 
 </resources>
