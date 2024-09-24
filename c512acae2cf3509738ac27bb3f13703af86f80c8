@@ -26,6 +26,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "61c0fa4d_4f4ebc5d",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-09-24T20:25:32Z",
+      "side": 1,
+      "message": "Should this be sentence case, i.e. `Account summary`? Thank you",
+      "range": {
+        "startLine": 410,
+        "startChar": 9,
+        "endLine": 410,
+        "endChar": 24
+      },
+      "revId": "c512acae2cf3509738ac27bb3f13703af86f80c8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "bfdf4dd9_298d558e",
         "filename": "jami-android/app/src/main/res/values/strings.xml",
         "patchSetId": 2
