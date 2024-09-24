@@ -1189,7 +1189,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         startActivity(Intent(Intent.ACTION_VIEW,
             ConversationPath.toUri(accountId, contact.uri),
             requireContext(),
-            ContactDetailsActivity::class.java))
+            DetailsActivity::class.java))
     }
 
     /**
