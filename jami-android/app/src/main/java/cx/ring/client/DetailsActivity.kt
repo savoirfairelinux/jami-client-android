@@ -22,7 +22,6 @@ import android.content.ActivityNotFoundException
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.content.res.ColorStateList
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
@@ -45,7 +44,7 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import cx.ring.R
 import cx.ring.application.JamiApplication
-import cx.ring.databinding.ActivityContactDetailsBinding
+import cx.ring.databinding.ActivityDetailsBinding
 import cx.ring.databinding.DialogProfileBinding
 import cx.ring.databinding.DialogSwarmTitleBinding
 import cx.ring.fragments.CallFragment
@@ -53,7 +52,6 @@ import cx.ring.fragments.ContactPickerFragment
 import cx.ring.fragments.ConversationActionsFragment
 import cx.ring.fragments.ConversationGalleryFragment
 import cx.ring.fragments.ConversationMembersFragment
-import cx.ring.services.SharedPreferencesServiceImpl.Companion.getConversationColor
 import cx.ring.utils.*
 import cx.ring.views.AvatarDrawable
 import dagger.hilt.android.AndroidEntryPoint
@@ -76,7 +74,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @AndroidEntryPoint
-class ContactDetailsActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicked {
+class DetailsActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicked {
 
     @Inject
     @Singleton lateinit
@@ -96,7 +94,7 @@ class ContactDetailsActivity : AppCompatActivity(), ContactPickerFragment.OnCont
     @Inject
     lateinit var hardwareService: HardwareService
 
-    private var binding: ActivityContactDetailsBinding? = null
+    private var binding: ActivityDetailsBinding? = null
     private var path: ConversationPath? = null
     private var mProfilePhoto: ImageView? = null
     private var mSourcePhoto: Bitmap? = null
@@ -139,7 +137,7 @@ class ContactDetailsActivity : AppCompatActivity(), ContactPickerFragment.OnCont
             return
         }
 
-        val binding = ActivityContactDetailsBinding.inflate(layoutInflater).apply {
+        val binding = ActivityDetailsBinding.inflate(layoutInflater).apply {
             binding = this
             setContentView(root)
         }
@@ -148,7 +146,7 @@ class ContactDetailsActivity : AppCompatActivity(), ContactPickerFragment.OnCont
             .observeOn(DeviceUtils.uiScheduler)
             .doOnComplete { finish() }
             .subscribe({ vm ->
-                binding.contactImage.setImageDrawable(AvatarDrawable.Builder()
+                binding.conversationAvatar.setImageDrawable(AvatarDrawable.Builder()
                     .withViewModel(vm)
                     .withCircleCrop(true)
                     .build(this))
@@ -165,7 +163,7 @@ class ContactDetailsActivity : AppCompatActivity(), ContactPickerFragment.OnCont
                     || vm.mode == Conversation.Mode.Legacy
                 ) {
                     binding.title.setOnClickListener(null)
-                    binding.contactImage.setOnClickListener(null)
+                    binding.conversationAvatar.setOnClickListener(null)
 //                    binding.tabLayout.removeTabAt(TAB_MEMBERS)
                     binding.addMember.isVisible = false
                     binding.addMemberSpace.isVisible = false
@@ -181,12 +179,12 @@ class ContactDetailsActivity : AppCompatActivity(), ContactPickerFragment.OnCont
 //                        Toast.makeText(this, R.string.not_admin_toast, Toast.LENGTH_SHORT).show()
 //                    binding.title.setOnClickListener { showNotAdminToast() }
 //                    binding.description.setOnClickListener { showNotAdminToast() }
-//                    binding.contactImage.setOnClickListener { showNotAdminToast() }
+//                    binding.conversationAvatar.setOnClickListener { showNotAdminToast() }
                 } else {
                     binding.audioCall.setOnClickListener { goToCallActivity(conversation, conversation.uri, false) }
                     binding.videoCall.setOnClickListener { goToCallActivity(conversation, conversation.uri, true) }
 
-                    binding.contactImage.setOnClickListener { profileImageClicked() }
+                    binding.conversationAvatar.setOnClickListener { profileImageClicked() }
                     binding.title.setOnClickListener {
                         val dialogBinding = DialogSwarmTitleBinding.inflate(LayoutInflater.from(this)).apply {
                             titleTxt.setText(vm.conversationProfile.displayName)
@@ -262,7 +260,7 @@ class ContactDetailsActivity : AppCompatActivity(), ContactPickerFragment.OnCont
                         AvatarDrawable.Builder()
                             .withViewModel(conversationViewModel)
                             .withCircleCrop(true)
-                            .build(this@ContactDetailsActivity)
+                            .build(this@DetailsActivity)
                     )
                 }
             )
@@ -445,7 +443,7 @@ class ContactDetailsActivity : AppCompatActivity(), ContactPickerFragment.OnCont
     }
 
     companion object {
-        val TAG = ContactDetailsActivity::class.simpleName!!
+        val TAG = DetailsActivity::class.simpleName!!
         const val REQUEST_CODE_CALL = 3
     }
 }
