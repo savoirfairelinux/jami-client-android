@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cf7c26ab_adc3fc5a",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-09-24T20:24:02Z",
+      "side": 1,
+      "message": "Should this be sentence case, i.e. `Leave swarm`?\n\nThank you",
+      "range": {
+        "startLine": 321,
+        "startChar": 31,
+        "endLine": 321,
+        "endChar": 42
+      },
+      "revId": "c512acae2cf3509738ac27bb3f13703af86f80c8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bfdf4dd9_298d558e",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-09-24T20:24:02Z",
+      "side": 1,
+      "message": "Qt client\nJamiStrings.qml\n`property string typeOfSwarm: qsTr(\"Type\")`\n\nTo unify terminology across clients, should string name and value be:\n`\u003cstring name\u003d\"type_of_swarm\"\u003eType\u003c/string\u003e`\n\nThank you",
+      "range": {
+        "startLine": 602,
+        "startChar": 0,
+        "endLine": 602,
+        "endChar": 52
+      },
+      "revId": "c512acae2cf3509738ac27bb3f13703af86f80c8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
