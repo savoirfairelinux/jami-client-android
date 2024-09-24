@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f5e1554_c52531ce",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-09-24T01:36:00Z",
+      "side": 1,
+      "message": "Should this be plural and sentence case, i.e. `details`? Thank you",
+      "range": {
+        "startLine": 566,
+        "startChar": 15,
+        "endLine": 566,
+        "endChar": 21
+      },
+      "revId": "f6aac97ba6dbbff0eee281541c4797603dccc7cb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ab308010_9fe1ebe5",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-09-24T01:36:00Z",
+      "side": 1,
+      "message": "typo? `documents`? Should the be renamed to `files`? Have a sensation of déjà vu?!\n\nJust saw that the `tab_files` is shown below. Should this entity be removed?\n\nThank you",
+      "range": {
+        "startLine": 571,
+        "startChar": 22,
+        "endLine": 571,
+        "endChar": 30
+      },
+      "revId": "f6aac97ba6dbbff0eee281541c4797603dccc7cb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "91c9f2ed_d3a8c9f2",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-09-24T01:36:00Z",
+      "side": 1,
+      "message": "`Files`",
+      "range": {
+        "startLine": 571,
+        "startChar": 32,
+        "endLine": 571,
+        "endChar": 41
+      },
+      "revId": "f6aac97ba6dbbff0eee281541c4797603dccc7cb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
