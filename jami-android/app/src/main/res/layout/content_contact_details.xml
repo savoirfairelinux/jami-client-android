@@ -9,5 +9,5 @@
     android:nestedScrollingEnabled="true"
     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".client.ContactDetailsActivity"
-    tools:showIn="@layout/activity_contact_details" />
+    tools:context=".client.DetailsActivity"
+    tools:showIn="@layout/activity_details" />
