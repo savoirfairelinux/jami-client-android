@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -15,118 +16,137 @@
         android:fitsSystemWindows="true"
         app:liftOnScroll="false">
 
-        <RelativeLayout
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/collapsing_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            app:collapsedTitleTextAppearance="@style/CustomToolbarTitle"
+            app:layout_scrollFlags="scroll|enterAlways|snap|exitUntilCollapsed">
 
-            <ImageButton
-                android:id="@+id/back"
-                android:layout_width="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="12dp"
-                android:background="@null"
-                android:padding="8dp"
-                android:src="@drawable/abc_ic_ab_back_material"
-                app:tint="@color/colorOnSurface" />
+                android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/conversation_avatar"
-                android:layout_width="92dp"
-                android:layout_height="92dp"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="24dp"
-                android:transitionName="conversationIcon"
-                tools:src="@tools:sample/avatars" />
+                <ImageView
+                    android:id="@+id/conversation_avatar"
+                    android:layout_width="92dp"
+                    android:layout_height="92dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:contentDescription="@null"
+                    android:transitionName="conversationIcon"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@tools:sample/avatars" />
 
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/conversation_avatar"
-                android:layout_centerHorizontal="true"
-                android:layout_margin="15dp"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:padding="5dp"
-                android:textColor="@color/colorOnSurface"
-                android:textSize="15sp"
-                tools:text="12345, @User" />
+                <TextView
+                    android:id="@+id/conversation_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/conversation_avatar"
+                    android:layout_centerHorizontal="true"
+                    android:layout_margin="15dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:padding="5dp"
+                    android:textColor="@color/colorOnSurface"
+                    android:textSize="15sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/conversation_avatar"
+                    tools:text="12345, @User" />
 
-        </RelativeLayout>
+                <LinearLayout
+                    android:id="@+id/btn_panel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toBottomOf="@id/conversation_title">
 
-        <LinearLayout
-            android:id="@+id/btn_panel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="2" />
 
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="2" />
+                    <ImageView
+                        android:id="@+id/audio_call"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@drawable/background_rounded_16"
+                        android:backgroundTint="@color/background_secondary"
+                        android:contentDescription="@string/ab_action_audio_call"
+                        android:padding="8dp"
+                        android:src="@drawable/outline_call_24"
+                        app:tint="@color/icon_tint" />
 
-            <ImageView
-                android:id="@+id/audio_call"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:background="@drawable/background_rounded_16"
-                android:backgroundTint="@color/background_secondary"
-                android:padding="8dp"
-                android:src="@drawable/outline_call_24"
-                app:tint="@color/icon_tint" />
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
 
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
+                    <ImageView
+                        android:id="@+id/video_call"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@drawable/background_rounded_16"
+                        android:backgroundTint="@color/background_secondary"
+                        android:contentDescription="@string/ab_action_video_call"
+                        android:padding="8dp"
+                        android:src="@drawable/outline_videocam_24"
+                        app:tint="@color/icon_tint" />
 
-            <ImageView
-                android:id="@+id/video_call"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:background="@drawable/background_rounded_16"
-                android:backgroundTint="@color/background_secondary"
-                android:padding="8dp"
-                android:src="@drawable/outline_videocam_24"
-                app:tint="@color/icon_tint" />
+                    <Space
+                        android:id="@+id/add_member_space"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
 
-            <Space
-                android:id="@+id/add_member_space"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
+                    <ImageView
+                        android:id="@+id/add_member"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:contentDescription="@string/add_conversation_member"
+                        android:background="@drawable/background_rounded_16"
+                        android:backgroundTint="@color/background_secondary"
+                        android:padding="8dp"
+                        android:src="@drawable/outline_person_add_24"
+                        app:tint="@color/icon_tint" />
 
-            <ImageView
-                android:id="@+id/add_member"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:background="@drawable/background_rounded_16"
-                android:backgroundTint="@color/background_secondary"
-                android:padding="8dp"
-                android:src="@drawable/outline_person_add_24"
-                app:tint="@color/icon_tint" />
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="2" />
 
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="2" />
+                </LinearLayout>
 
-        </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <!--
-        app:tabIndicatorColor="@color/white"
-        app:tabTextColor="#80FFFFFF" -->
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                app:navigationIcon="@drawable/abc_ic_ab_back_material" />
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:background="@null"
+            app:layout_constraintBaseline_toBottomOf="parent"
             app:tabRippleColor="@null">
 
             <com.google.android.material.tabs.TabItem
@@ -141,14 +161,13 @@
 
         </com.google.android.material.tabs.TabLayout>
 
-    </com.google.android.material.appbar.AppBarLayout>
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="5dp" />
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/pager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingHorizontal="10dp"
-        android:paddingVertical="5dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+    </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
