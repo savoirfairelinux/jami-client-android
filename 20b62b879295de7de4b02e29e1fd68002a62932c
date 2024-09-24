@@ -48,6 +48,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b881e713_e497c303",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 17
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-09-24T01:16:36Z",
+      "side": 1,
+      "message": "Thank you for your link. Your link has been added to https://git.jami.net/savoirfairelinux/jami-client-qt/-/issues/1835\n\nIt seems that the set of immutable `identifiers` are {[Username/User ID], Infohash/Fingerprint, QR code, URI}. Having a the correct, i.e. explicit, name could help reduce miscommunication.\n\nTrying to unify the terminology across all clients as the Qt client shows the username (if set) and fingerprint.\n\nThank you",
+      "parentUuid": "63984db5_657e9551",
+      "range": {
+        "startLine": 317,
+        "startChar": 69,
+        "endLine": 317,
+        "endChar": 79
+      },
+      "revId": "20b62b879295de7de4b02e29e1fd68002a62932c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7c035b82_3568c565",
