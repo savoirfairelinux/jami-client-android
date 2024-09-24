@@ -23,383 +23,428 @@ along with this program; if not, write to the Free Software
     android:layout_height="match_parent"
     tools:context=".client.ConversationDetailsActivity">
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
-
     <LinearLayout
-        android:id="@+id/group1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/background_rounded_16"
-        android:clickable="false"
-        android:clipToOutline="true"
         android:orientation="vertical">
 
-        <RelativeLayout
-            android:id="@+id/user_name_panel"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginVertical="1dp"
-            android:background="@drawable/background_clickable"
-            android:backgroundTint="@color/background_secondary"
-            android:gravity="center_vertical"
-            android:paddingHorizontal="12dp">
-
-            <TextView
-                android:id="@+id/user_name_header"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:text="@string/jami_id_validate"
-                android:textColor="@color/colorOnSurface"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/user_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_marginStart="50dp"
-                android:layout_toEndOf="@id/user_name_header"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:textAlignment="textEnd"
-                android:textColor="@color/textColorSecondary"
-                android:textSize="14sp"
-                tools:text="Add" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginVertical="1dp"
-            android:background="@drawable/background_clickable"
-            android:backgroundTint="@color/background_secondary"
-            android:gravity="center_vertical"
-            android:paddingHorizontal="12dp">
-
-            <TextView
-                android:id="@+id/identifier_header"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:text="@string/identifier"
-                android:textColor="@color/colorOnSurface"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/identifier"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_toEndOf="@id/identifier_header"
-                android:layout_marginStart="90dp"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:textAlignment="textEnd"
-                android:textColor="@color/textColorSecondary"
-                android:textSize="14sp"
-                tools:text="© dddd" />
-        </RelativeLayout>
-
         <LinearLayout
+            android:id="@+id/group1"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginVertical="1dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/background_rounded_16_top"
+            android:clickable="false"
+            android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/qr_code"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/user_name_panel"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginVertical="1dp"
+                android:background="@drawable/background_rounded_16_top"
+                android:backgroundTint="@color/background_secondary"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="12dp">
+
+                <TextView
+                    android:id="@+id/user_name_header"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:text="@string/registered_username"
+                    android:textColor="@color/colorOnSurface"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/user_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="@dimen/padding_large"
+                    android:layout_toEndOf="@id/user_name_header"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/textColorSecondary"
+                    android:textSize="14sp"
+                    app:layout_constrainedWidth="true"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1"
+                    app:layout_constraintStart_toEndOf="@id/user_name_header"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="ThisIsARegisteredName" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginVertical="1dp"
                 android:background="@drawable/background_clickable"
                 android:backgroundTint="@color/background_secondary"
-                android:padding="12dp"
-                android:src="@drawable/baseline_qr_code_2_black_24dp" />
+                android:gravity="center_vertical"
+                android:paddingHorizontal="12dp">
 
-            <ImageView
-                android:id="@+id/share_button"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginHorizontal="2dp"
-                android:layout_weight="1"
-                android:background="@drawable/background_clickable"
-                android:backgroundTint="@color/background_secondary"
-                android:padding="12dp"
-                android:src="@drawable/outline_share_24" />
+                <TextView
+                    android:id="@+id/identifier_header"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:text="@string/identifier"
+                    android:textColor="@color/colorOnSurface"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/copy_button"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/background_clickable"
-                android:backgroundTint="@color/background_secondary"
-                android:padding="12dp"
-                android:src="@drawable/outline_copy_24" />
+                <TextView
+                    android:id="@+id/identifier"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="@dimen/padding_large"
+                    android:layout_toEndOf="@id/identifier_header"
+                    android:ellipsize="middle"
+                    android:maxLines="1"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/textColorSecondary"
+                    android:textSize="14sp"
+                    app:layout_constrainedWidth="true"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1"
+                    app:layout_constraintStart_toEndOf="@id/identifier_header"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="1ae0ff8100fc4df204ca878b51e1f770507ab2ff" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginVertical="1dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/qr_code"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/background_rounded_16_bottom_left"
+                    android:backgroundTint="@color/background_secondary"
+                    android:contentDescription="@string/show_qr_code"
+                    android:padding="12dp"
+                    android:src="@drawable/baseline_qr_code_2_black_24dp" />
+
+                <ImageView
+                    android:id="@+id/share_button"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="2dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/background_rounded_16_bottom_right"
+                    android:backgroundTint="@color/background_secondary"
+                    android:contentDescription="@string/jami_id_share"
+                    android:padding="12dp"
+                    android:src="@drawable/outline_share_24" />
+
+                <ImageView
+                    android:id="@+id/certificate_button"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="2dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/background_clickable"
+                    android:backgroundTint="@color/background_secondary"
+                    android:contentDescription="@string/jami_id_share"
+                    android:padding="12dp"
+                    android:src="@drawable/baseline_license_24"
+                    android:visibility="gone" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/background_rounded_16"
-        android:layout_marginVertical="8dp"
-        android:clickable="false"
-        android:clipToOutline="true"
-        android:orientation="vertical">
-
-        <RelativeLayout
-            android:id="@+id/description_panel"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginVertical="1dp"
-            android:background="@drawable/background_clickable"
-            android:backgroundTint="@color/background_secondary"
-            android:gravity="center_vertical"
-            android:paddingHorizontal="12dp">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/background_rounded_16_top"
+            android:clickable="false"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/description_panel"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginVertical="1dp"
+                android:background="@drawable/background_rounded_16_top"
+                android:backgroundTint="@color/background_secondary"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="12dp">
+
+                <TextView
+                    android:id="@+id/description_header"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:text="@string/dialog_hint_description"
+                    android:textColor="@color/colorOnSurface"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="@dimen/padding_large"
+                    android:layout_toEndOf="@id/description_header"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/textColorSecondary"
+                    android:textSize="14sp"
+                    app:layout_constrainedWidth="true"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1"
+                    app:layout_constraintStart_toEndOf="@id/description_header"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="This is a short description of a group" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
-                android:id="@+id/description_header"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:text="@string/dialog_hint_description"
+                android:id="@+id/secure_p2p_connection"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginVertical="1dp"
+                android:background="@color/background_secondary"
+                android:backgroundTint="@color/background_secondary"
+                android:drawablePadding="12dp"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="12dp"
+                android:text="@string/secure_p2p_connection"
                 android:textColor="@color/colorOnSurface"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/description"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_toEndOf="@id/description_header"
-                android:layout_marginStart="50dp"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:textAlignment="textEnd"
-                android:textColor="@color/textColorSecondary"
                 android:textSize="14sp"
-                tools:text="Add" />
-        </RelativeLayout>
+                app:drawableEndCompat="@drawable/outline_lock_24"
+                app:drawableTint="@color/textColorSecondary" />
 
-        <TextView
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginVertical="1dp"
+                android:background="@color/background_secondary"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="12dp">
+
+                <TextView
+                    android:id="@+id/conversation_type_header"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/swarm_type"
+                    android:textColor="@color/colorOnSurface"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/conversation_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="@dimen/padding_large"
+                    android:layout_toEndOf="@+id/conversation_type_header"
+                    android:ellipsize="middle"
+                    android:maxLines="1"
+                    android:text="@string/Private"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/textColorSecondary"
+                    app:layout_constrainedWidth="true"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1"
+                    app:layout_constraintStart_toEndOf="@id/conversation_type_header"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/conversation_id_panel"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginVertical="1dp"
+                android:background="@drawable/background_rounded_16_bottom"
+                android:backgroundTint="@color/background_secondary"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="12dp">
+
+                <TextView
+                    android:id="@+id/conversation_id_header"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:text="@string/swarm_id"
+                    android:textColor="@color/colorOnSurface"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/conversation_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="@dimen/padding_large"
+                    android:layout_toEndOf="@+id/conversation_id_header"
+                    android:ellipsize="middle"
+                    android:maxLines="1"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/textColorSecondary"
+                    android:textSize="14sp"
+                    app:layout_constrainedWidth="true"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1"
+                    app:layout_constraintStart_toEndOf="@id/conversation_id_header"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="swarm:4f449a38a3e0bf5ca43f849334f2ec1fb826b393" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginVertical="1dp"
-            android:background="@color/background_secondary"
-            android:drawablePadding="12dp"
-            android:gravity="center_vertical"
-            android:paddingHorizontal="12dp"
-            android:text="@string/secure_p2p_connection"
-            android:textColor="@color/colorOnSurface"
-            android:textSize="14sp"
-            app:drawableEndCompat="@drawable/outline_lock_24"
-            app:drawableTint="@color/textColorSecondary" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/background_rounded_16_top"
+            android:clickable="false"
+            android:orientation="vertical">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginVertical="1dp"
-            android:background="@color/background_secondary"
-            android:gravity="center_vertical"
-            android:paddingHorizontal="12dp">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/color_pick_panel"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginVertical="1dp"
+                android:background="@drawable/background_rounded_16_top"
+                android:backgroundTint="@color/background_secondary"
+                android:paddingHorizontal="12dp">
 
-            <TextView
-                android:id="@+id/conversation_type_header"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/swarm_type"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="100dp"
+                    android:layout_toStartOf="@id/color_pick"
+                    android:text="@string/conversation_preference_color"
+                    android:textColor="@color/colorOnSurface"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/color_pick"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:contentDescription="@string/conversation_preference_color"
+                    android:src="@drawable/item_color_background"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:tint="@color/green_700" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/emoji_pick_panel"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginVertical="1dp"
+                android:background="@drawable/background_clickable"
+                android:backgroundTint="@color/background_secondary"
+                android:paddingHorizontal="12dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@id/emoji_pick"
+                    android:text="@string/conversation_preference_emoji"
+                    android:textColor="@color/colorOnSurface"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/emoji_pick"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:textAlignment="textEnd"
+                    android:textSize="24sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="@string/default_emoji_1" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/mute_switch"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginVertical="1dp"
+                android:background="@color/background_secondary"
+                android:paddingHorizontal="12dp"
+                android:text="@string/mute_conversation"
+                android:textAlignment="textStart"
                 android:textColor="@color/colorOnSurface"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/conversation_type"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_marginStart="50dp"
-                android:layout_toEndOf="@+id/conversation_type_header"
-                android:ellipsize="middle"
-                android:maxLines="1"
-                android:text="@string/Private"
-                android:textAlignment="textEnd"
-                android:textColor="@color/textColorSecondary" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/conversation_id_panel"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginVertical="1dp"
-            android:background="@color/background_secondary"
-            android:gravity="center_vertical"
-            android:paddingHorizontal="12dp">
-
-            <TextView
-                android:id="@+id/conversation_id_header"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:text="@string/swarm_id"
-                android:textColor="@color/colorOnSurface"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/conversation_id"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_marginStart="60dp"
-                android:layout_toEndOf="@+id/conversation_id_header"
-                android:ellipsize="middle"
-                android:maxLines="1"
-                android:textAlignment="textEnd"
-                android:textColor="@color/textColorSecondary"
-                android:textSize="14sp"
-                tools:text="eeeeeeeeeeeeeeeeewwwwwwwwwwwwwwwww" />
-
-        </RelativeLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/background_rounded_16"
-        android:clickable="false"
-        android:clipToOutline="true"
-        android:orientation="vertical">
-
-        <RelativeLayout
-            android:id="@+id/color_pick_panel"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginVertical="1dp"
-            android:background="@drawable/background_clickable"
-            android:backgroundTint="@color/background_secondary"
-            android:paddingHorizontal="12dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="100dp"
-                android:layout_toStartOf="@id/color_pick"
-                android:text="@string/conversation_preference_color"
-                android:textColor="@color/colorOnSurface"
-                android:textSize="14sp" />
-
-            <ImageView
-                android:id="@+id/color_pick"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:contentDescription="@string/conversation_preference_color"
-                android:src="@drawable/item_color_background"
-                tools:tint="@color/green_700" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/emoji_pick_panel"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginVertical="1dp"
-            android:background="@drawable/background_clickable"
-            android:backgroundTint="@color/background_secondary"
-            android:paddingHorizontal="12dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:layout_toStartOf="@id/emoji_pick"
-                android:text="@string/conversation_preference_emoji"
-                android:textColor="@color/colorOnSurface"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/emoji_pick"
-                android:layout_width="wrap_content"
-                android:layout_height="36dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:textAlignment="textEnd"
-                android:textSize="24sp"
-                tools:text="@string/default_emoji_1" />
-
-        </RelativeLayout>
-
-        <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/mute_switch"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginVertical="1dp"
-            android:background="@color/background_secondary"
-            android:paddingHorizontal="12dp"
-            android:text="Mute Conversation"
-            android:textAlignment="textStart"
-            android:textColor="@color/colorOnSurface"
-            tools:checked="true" />
-
-        <RelativeLayout
-            android:id="@+id/block_switch_panel"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginVertical="1dp"
-            android:background="@drawable/background_clickable"
-            android:backgroundTint="@color/background_secondary"
-            android:paddingHorizontal="12dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="100dp"
-                android:layout_toStartOf="@id/block_switch"
-                android:text="@string/conversation_action_block_this"
-                android:textColor="@color/colorOnSurface"
-                android:textSize="14sp" />
+                tools:checked="true" />
 
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/block_switch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:clickable="false" />
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginVertical="1dp"
+                android:background="@drawable/background_rounded_16_bottom"
+                android:backgroundTint="@color/background_secondary"
+                android:paddingHorizontal="12dp"
+                android:text="@string/conversation_action_block_this"
+                android:textAlignment="textStart"
+                android:textColor="@color/colorOnSurface"
+                tools:checked="true" />
 
-        </RelativeLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/conversation_delete"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/background_rounded_16"
+            android:backgroundTint="@color/background_secondary"
+            android:drawablePadding="12dp"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="14dp"
+            android:textColor="@color/red_600"
+            android:textSize="14sp"
+            tools:text="Delete Conversation / Leave Swarm" />
 
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/conversation_delete"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginVertical="4dp"
-        android:background="@drawable/background_rounded_16"
-        android:backgroundTint="@color/background_secondary"
-        android:drawablePadding="12dp"
-        android:gravity="center_vertical"
-        android:paddingHorizontal="12dp"
-        android:paddingVertical="14dp"
-        android:textColor="@color/red_600"
-        android:textSize="14sp"
-        tools:text="Delete Conversation / Leave Swarm" />
-
-</LinearLayout>
 
 </androidx.core.widget.NestedScrollView>
