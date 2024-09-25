@@ -35,10 +35,15 @@ import cx.ring.R
 import cx.ring.databinding.FragQrcodeBinding
 import cx.ring.share.ScanFragment
 import cx.ring.share.ShareFragment
+import net.jami.model.Uri
+import net.jami.qrcode.QRCodePresenter
+import net.jami.qrcode.QRCodePresenter.Companion.QRCodeMode
+import net.jami.qrcode.QRCodePresenter.Companion.MODE_SCAN
+import net.jami.qrcode.QRCodePresenter.Companion.MODE_SHARE
 
 class QRCodeFragment : BottomSheetDialogFragment() {
     private var mBinding: FragQrcodeBinding? = null
-    private var mStartPageIndex = arguments?.getInt(ARG_START_PAGE_INDEX, 0) ?: 0
+    private lateinit var presenter: QRCodePresenter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,16 +51,44 @@ class QRCodeFragment : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?,
     ): View {
         super.onCreateView(inflater, container, savedInstanceState)
+
+        val mode = arguments?.getInt(ARG_MODE) ?: 0
+        val startMode = arguments?.getInt(ARG_START_MODE) ?: 0
+        val contactUri = Uri.fromString(arguments?.getString(ARG_CONTACT_URI) ?: "")
+        presenter = QRCodePresenter()
+
         return FragQrcodeBinding.inflate(inflater, container, false).apply {
+            when (mode) { // Check on mode
+                MODE_SCAN, MODE_SHARE -> {}
+                MODE_SCAN or MODE_SHARE ->
+                    if (startMode == 0) throw IllegalArgumentException("Start mode not set")
+
+                0 -> throw IllegalArgumentException("Mode not set")
+                else -> throw IllegalArgumentException("Unknown mode: $mode")
+            }
+
             SectionsPagerAdapter(requireActivity()).apply {
-                addFragment(ShareFragment(), getTabTitle(INDEX_CODE))
-                addFragment(ScanFragment(), getTabTitle(INDEX_SCAN))
+                // Add fragments based on mode
+                if (mode and MODE_SHARE != 0) {
+                    ShareFragment.newInstance(contactUri).apply {
+                        addFragment(this, getTabTitle(INDEX_SHARE))
+                    }
+                }
+                if (mode and MODE_SCAN != 0) addFragment(ScanFragment(), getTabTitle(INDEX_SCAN))
                 viewPager.adapter = this
-                viewPager.currentItem = mStartPageIndex
-                val tabs: TabLayout = tabs
-                TabLayoutMediator(tabs, viewPager) { tab, position ->
-                    tab.text = getTabTitle(position)
-                }.attach()
+
+                // If multi-mode, setup the tabs. If not, hide them.
+                if (mode and MODE_SHARE != 0 && mode and MODE_SCAN != 0) {
+                    viewPager.currentItem = when (startMode) {
+                        MODE_SHARE -> INDEX_SHARE
+                        MODE_SCAN -> INDEX_SCAN
+                        else -> INDEX_SCAN
+                    }
+                    val tabs: TabLayout = tabs
+                    TabLayoutMediator(tabs, viewPager) { tab, position ->
+                        tab.text = getTabTitle(position)
+                    }.attach()
+                } else tabs.visibility = View.GONE
             }
             mBinding = this
         }.root
@@ -83,15 +116,8 @@ class QRCodeFragment : BottomSheetDialogFragment() {
     private fun addGlobalLayoutListener(view: View) {
         view.addOnLayoutChangeListener(object : View.OnLayoutChangeListener {
             override fun onLayoutChange(
-                v: View,
-                left: Int,
-                top: Int,
-                right: Int,
-                bottom: Int,
-                oldLeft: Int,
-                oldTop: Int,
-                oldRight: Int,
-                oldBottom: Int,
+                v: View, left: Int, top: Int, right: Int, bottom: Int,
+                oldLeft: Int, oldTop: Int, oldRight: Int, oldBottom: Int,
             ) {
                 setPeekHeight(v.measuredHeight)
                 v.removeOnLayoutChangeListener(this)
@@ -137,15 +163,30 @@ class QRCodeFragment : BottomSheetDialogFragment() {
     }
 
     companion object {
+
         val TAG = QRCodeFragment::class.simpleName!!
-        const val ARG_START_PAGE_INDEX = "start_page"
-        const val INDEX_CODE = 0
+        const val ARG_MODE = "mode"
+        const val ARG_START_MODE = "start_mode"
+        const val ARG_CONTACT_URI = "contact_uri"
+        const val INDEX_SHARE = 0
         const val INDEX_SCAN = 1
 
-        fun newInstance(startPage: Int): QRCodeFragment {
+        /**
+         * Create a new instance of QRCodeFragment.
+         * @param mode The mode of the fragment.
+         * @param startPage The start page of the fragment. Can be null if mode is not multi-mode.
+         * @param contactUri The contact URI to share. Can be null if mode is not share.
+         */
+        fun newInstance(
+            @QRCodeMode mode: Int,
+            @QRCodeMode startPage: Int? = null,
+            contactUri: Uri? = null,
+        ): QRCodeFragment {
             val fragment = QRCodeFragment()
             val args = Bundle()
-            args.putInt(ARG_START_PAGE_INDEX, startPage)
+            args.putInt(ARG_MODE, mode)
+            if (startPage != null) args.putInt(ARG_START_MODE, startPage)
+            if (contactUri != null) args.putString(ARG_CONTACT_URI, contactUri.uri)
             fragment.arguments = args
             return fragment
         }
