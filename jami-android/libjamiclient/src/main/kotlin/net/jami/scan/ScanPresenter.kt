@@ -14,18 +14,29 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-package net.jami.share
+package net.jami.scan
 
-import net.jami.model.Account
-import net.jami.utils.QRCodeUtils.QRCodeData
-import net.jami.utils.QRCodeUtils
+import net.jami.mvp.RootPresenter
+import net.jami.services.HardwareService
+import javax.inject.Inject
 
-class ShareViewModel(val account: Account) {
-    private val accountShareUri: String? = account.uri
-    val accountDisplayUri: String? = account.displayUri
+interface ScanView {
+    fun moveToConversation(conversation: String)
+}
 
-    fun getAccountQRCodeData(foregroundColor: Int, backgroundColor: Int): QRCodeData? {
-        return QRCodeUtils.encodeStringAsQRCodeData(accountShareUri, foregroundColor, backgroundColor)
+class ScanPresenter @Inject constructor(
+    private val mHardwareService: HardwareService,
+) : RootPresenter<ScanView>() {
+
+    fun onBarcodeScanned(barcodeResult: String) {
+        view?.moveToConversation(barcodeResult)
     }
 
+    fun cameraPermissionChanged(isGranted: Boolean) {
+        if (isGranted && mHardwareService.isVideoAvailable) {
+            mHardwareService.initVideo()
+                .onErrorComplete()
+                .blockingAwait()
+        }
+    }
 }
