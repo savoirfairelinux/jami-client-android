@@ -8,6 +8,7 @@
 
     <ImageView
         android:id="@+id/qr_image"
+        android:contentDescription="@string/qrcode_to_scan"
         android:layout_width="@dimen/qr_code_size"
         android:layout_height="@dimen/qr_code_size"
         android:layout_marginTop="16dp"
@@ -21,7 +22,7 @@
         android:id="@+id/share_instruction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginVertical="8dp"
         android:text="@string/share_message"
         android:textColor="@color/colorOnSurface"
         android:textSize="16sp" />

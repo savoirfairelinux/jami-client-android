@@ -17,8 +17,6 @@
 package cx.ring.share
 
 import android.Manifest
-import com.journeyapps.barcodescanner.DecoratedBarcodeView
-import android.widget.TextView
 import androidx.core.content.ContextCompat
 import android.content.pm.PackageManager
 import android.view.LayoutInflater
@@ -26,7 +24,6 @@ import android.view.ViewGroup
 import android.os.Bundle
 import android.util.Log
 import cx.ring.R
-import androidx.annotation.StringRes
 import com.journeyapps.barcodescanner.DefaultDecoderFactory
 import com.google.zxing.BarcodeFormat
 import com.journeyapps.barcodescanner.BarcodeCallback
@@ -36,108 +33,91 @@ import com.google.zxing.ResultPoint
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import cx.ring.client.HomeActivity
+import cx.ring.databinding.FragScanBinding
+import cx.ring.mvp.BaseSupportFragment
 import dagger.hilt.android.AndroidEntryPoint
+import net.jami.model.Uri
+import net.jami.scan.ScanPresenter
+import net.jami.scan.ScanView
 
 @AndroidEntryPoint
-class ScanFragment : Fragment() {
-    private val viewModel: ScanViewModel by lazy {
-        ViewModelProvider(this)[ScanViewModel::class.java]
-    }
-    private var barcodeView: DecoratedBarcodeView? = null
-    private var mErrorMessageTextView: TextView? = null
+class ScanFragment : BaseSupportFragment<ScanPresenter, ScanView>(), ScanView {
+
+    private var mBinding: FragScanBinding? = null
 
     private var cameraPermissionIsRefusedFlag = false // to not ask for permission again if refused
+
     private val requestCameraPermission =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
             if (granted) {
-                viewModel.cameraPermissionChanged(true)
+                presenter.cameraPermissionChanged(true)
                 hideErrorPanel()
                 initializeBarcode()
             } else {
                 cameraPermissionIsRefusedFlag = true
-                displayNoPermissionsError()
+                showErrorPanel()
             }
         }
-
-    private fun hasCameraPermission(): Boolean =
-        ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) ==
-                PackageManager.PERMISSION_GRANTED
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val rootView = inflater.inflate(R.layout.frag_scan, container, false)
-        barcodeView = rootView.findViewById(R.id.barcode_scanner)
-        mErrorMessageTextView = rootView.findViewById(R.id.error_msg_txt)
-        if (hasCameraPermission()) {
-            hideErrorPanel()
-            initializeBarcode()
-        }
-        return rootView
-    }
-
-    override fun onResume() {
-        super.onResume()
-        if (checkPermission()) {
-            barcodeView?.resume()
-        }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        barcodeView?.pause()
-    }
-
-    private fun showErrorPanel(@StringRes textResId: Int) {
-        mErrorMessageTextView?.apply {
-            setText(textResId)
-            visibility = View.VISIBLE
-        }
-        barcodeView?.visibility = View.GONE
-    }
-
-    private fun hideErrorPanel() {
-        mErrorMessageTextView?.visibility = View.GONE
-        barcodeView?.visibility = View.VISIBLE
-    }
-
-    private fun displayNoPermissionsError() {
-        showErrorPanel(R.string.error_scan_no_camera_permissions)
-    }
-
-    private fun initializeBarcode() {
-        barcodeView?.apply {
-            barcodeView.decoderFactory = DefaultDecoderFactory(listOf(BarcodeFormat.QR_CODE))
-            //barcodeView.initializeFromIntent(getActivity().getIntent());
-            decodeContinuous(callback)
-        }
-    }
 
     private val callback: BarcodeCallback = object : BarcodeCallback {
         private var lastFailTime: Long = 0
         override fun barcodeResult(result: BarcodeResult) {
-            val uri = net.jami.model.Uri.fromString(result.text)
+            val uri = Uri.fromString(result.text)
             if (uri.isEmpty || !uri.isJami) {
                 val now = System.currentTimeMillis()
                 if (now - lastFailTime > INVALID_SCAN_MIN_TIME) {
-                    Toast.makeText(context, getString(R.string.qr_code_not_contact), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        context,
+                        getString(R.string.qr_code_not_contact),
+                        Toast.LENGTH_SHORT
+                    ).show()
                     lastFailTime = now
                 }
                 return
             }
-            barcodeView?.pause()
-            barcodeView?.barcodeView?.stopDecoding()
+            mBinding?.barcodeScanner?.pause()
+            mBinding?.barcodeScanner?.barcodeView?.stopDecoding()
             (parentFragment as? QRCodeFragment)?.dismiss()
-            goToConversation(result.text)
+            presenter.onBarcodeScanned(result.text)
         }
 
         override fun possibleResultPoints(resultPoints: List<ResultPoint>) {}
     }
 
-    private fun goToConversation(conversationUri: String) {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        super.onCreateView(inflater, container, savedInstanceState)
+
+        if (hasCameraPermission()) {
+            hideErrorPanel()
+            initializeBarcode()
+        }
+
+        return FragScanBinding.inflate(inflater, container, false).apply {
+
+            mBinding = this
+        }.root
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mBinding?.barcodeScanner?.pause()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (checkPermission()) {
+            mBinding?.barcodeScanner?.resume()
+        }
+    }
+
+    override fun moveToConversation(conversation: String) {
         try {
-            (requireActivity() as HomeActivity).startConversation(conversationUri)
+            (requireActivity() as HomeActivity).startConversation(conversation)
         } catch (e: Exception) {
             Log.w(TAG, "Error while starting conversation", e)
         }
@@ -150,6 +130,30 @@ class ScanFragment : Fragment() {
             return false
         }
         return true
+    }
+
+    private fun hasCameraPermission(): Boolean =
+        ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) ==
+                PackageManager.PERMISSION_GRANTED
+
+    private fun hideErrorPanel() {
+        mBinding?.errorMsgTxt?.visibility = View.GONE
+        mBinding?.barcodeScanner?.visibility = View.VISIBLE
+    }
+
+    private fun initializeBarcode() {
+        mBinding?.barcodeScanner?.apply {
+            barcodeView.decoderFactory = DefaultDecoderFactory(listOf(BarcodeFormat.QR_CODE))
+            decodeContinuous(callback)
+        }
+    }
+
+    private fun showErrorPanel() {
+        mBinding?.errorMsgTxt?.apply {
+            setText(R.string.error_scan_no_camera_permissions)
+            visibility = View.VISIBLE
+        }
+        mBinding?.barcodeScanner?.visibility = View.GONE
     }
 
     companion object {

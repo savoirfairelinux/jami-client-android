@@ -20,12 +20,27 @@ import dagger.hilt.android.AndroidEntryPoint
 import androidx.fragment.app.FragmentActivity
 import android.os.Bundle
 import cx.ring.R
+import net.jami.model.Uri
+import net.jami.services.AccountService
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class TVShareActivity : FragmentActivity() {
+
+    @Inject
+    lateinit
+    var mAccountService: AccountService
+
     public override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.tv_activity_share)
+
+        val f = TVShareFragment.newInstance(Uri.fromString(mAccountService.currentAccount?.uri!!))
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.share_frag, f)
+            .commit()
     }
 
     companion object {
