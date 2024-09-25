@@ -113,6 +113,7 @@ dependencies {
     implementation ("androidx.media:media:1.7.0")
     implementation ("androidx.sharetarget:sharetarget:1.2.0")
     implementation ("androidx.emoji2:emoji2:1.5.0")
+    implementation ("androidx.viewpager2:viewpager2:1.1.0")
     implementation ("androidx.emoji2:emoji2-emojipicker:1.5.0")
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.5")
     implementation ("androidx.window:window:1.3.0")
