@@ -18,12 +18,14 @@ package cx.ring.fragments
 
 import android.content.ClipData
 import android.content.ClipboardManager
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import cx.ring.R
@@ -33,6 +35,7 @@ import cx.ring.databinding.DialogSwarmTitleBinding
 import cx.ring.databinding.FragConversationActionsBinding
 import cx.ring.services.SharedPreferencesServiceImpl.Companion.getConversationColor
 import cx.ring.services.SharedPreferencesServiceImpl.Companion.getConversationSymbol
+import cx.ring.share.ShareFragment
 import cx.ring.utils.ConversationPath
 import cx.ring.utils.DeviceUtils
 import dagger.hilt.android.AndroidEntryPoint
@@ -152,23 +155,23 @@ class ConversationActionsFragment : Fragment() {
                     // Filter out the user.
                     .map { contacts -> contacts.filterNot { it.isUser }[0] }
                     .flatMapSingle { contact ->
-                        contact.username?.map { username -> Pair(username, contact.uri) }
-                            ?: Single.just(Pair("", contact.uri))
+                        contact.username?.map { username -> Pair(username, contact.uri.uri) }
+                            ?: Single.just(Pair("", contact.uri.uri))
                     }
-                    .subscribe { (registeredName, identifier) ->
-                        userNamePanel.isVisible = registeredName.isNotEmpty()
-                        userName.text = registeredName
-                        this.identifier.text = identifier.uri
+                    .subscribe { (displayUri, identifier) ->
+                        userNamePanel.isVisible = displayUri.isNotEmpty()
+                        userName.text = displayUri
+                        this.identifier.text = identifier
                         identifierPanel.setBackgroundResource(
-                            if (registeredName.isEmpty()) R.drawable.background_rounded_16_top
+                            if (displayUri.isEmpty()) R.drawable.background_rounded_16_top
                             else R.drawable.background_clickable
                         )
+                        shareButton.setOnClickListener { shareContact(displayUri) }
+                        qrCode.setOnClickListener { showContactQRCode(identifier) }
                     }
             )
             conversationDelete.text = resources.getString(R.string.delete_conversation)
             conversationDelete.setOnClickListener {  }
-            qrCode.setOnClickListener {  }
-            shareButton.setOnClickListener {  }
 
             descriptionPanel.isVisible = false  // Disable description edit for 1-to-1 conversation
             // Description being hidden, we put the rounded background on the secureP2pConnection.
@@ -266,6 +269,26 @@ class ConversationActionsFragment : Fragment() {
         val clipboard = requireActivity().getSystemService(AppCompatActivity.CLIPBOARD_SERVICE) as ClipboardManager
         clipboard.setPrimaryClip(ClipData.newPlainText(getText(R.string.clip_contact_uri), toCopy))
         Snackbar.make(binding!!.root, getString(R.string.conversation_action_copied_peer_number_clipboard, toCopy), Snackbar.LENGTH_LONG).show()
+    }
+
+    private fun shareContact(displayName: String) {
+        val sharingIntent = Intent(Intent.ACTION_SEND)
+        sharingIntent.type = "text/plain"
+        sharingIntent.putExtra(Intent.EXTRA_SUBJECT, getText(R.string.share_contact_intent_title))
+        sharingIntent.putExtra(
+            Intent.EXTRA_TEXT,
+            getString(
+                R.string.share_contact_intent_body,
+                displayName,
+                getText(R.string.app_website)
+            )
+        )
+        startActivity(Intent.createChooser(sharingIntent, getText(R.string.share_via)))
+    }
+
+    private fun showContactQRCode(identifier: String) {
+        // Show bottom sheet with ShareFragment.
+        QRCodeFragment().show(parentFragmentManager, ShareFragment::class.java.simpleName)
     }
 
     companion object {

@@ -250,7 +250,6 @@ class JamiAccountSummaryFragment :
             binding.registeredName.setText(if (hasRegisteredName) username else resources.getString(R.string.no_registered_name_for_account))
             binding.btnQr.setOnClickListener {
                 QRCodeFragment.newInstance(QRCodeFragment.INDEX_CODE)
-                    .show(parentFragmentManager, QRCodeFragment.TAG)
             }
             binding.username.setOnEditorActionListener { _, actionId, _ ->
                 if (actionId == EditorInfo.IME_ACTION_DONE) {

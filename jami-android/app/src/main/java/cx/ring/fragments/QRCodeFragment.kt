@@ -25,6 +25,7 @@ import androidx.annotation.StringRes
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.viewModels
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -35,8 +36,13 @@ import cx.ring.R
 import cx.ring.databinding.FragQrcodeBinding
 import cx.ring.share.ScanFragment
 import cx.ring.share.ShareFragment
+import cx.ring.viewmodel.MODE_SCAN
+import cx.ring.viewmodel.MODE_SHARE
+import cx.ring.viewmodel.QRCodeViewModel
+import net.jami.utils.Log
 
 class QRCodeFragment : BottomSheetDialogFragment() {
+    private val QRCodeViewModel: QRCodeViewModel by viewModels({ requireActivity() })
     private var mBinding: FragQrcodeBinding? = null
     private var mStartPageIndex = arguments?.getInt(ARG_START_PAGE_INDEX, 0) ?: 0
 
@@ -47,6 +53,8 @@ class QRCodeFragment : BottomSheetDialogFragment() {
     ): View {
         super.onCreateView(inflater, container, savedInstanceState)
         return FragQrcodeBinding.inflate(inflater, container, false).apply {
+            val mode = QRCodeViewModel.getMode()
+            Log.e("devdebug", "mode_scan=${mode and MODE_SCAN} mode_share=${mode and MODE_SHARE}")
             SectionsPagerAdapter(requireActivity()).apply {
                 addFragment(ShareFragment(), getTabTitle(INDEX_CODE))
                 addFragment(ScanFragment(), getTabTitle(INDEX_SCAN))

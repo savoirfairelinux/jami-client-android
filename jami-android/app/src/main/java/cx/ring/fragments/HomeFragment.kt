@@ -38,6 +38,7 @@ import androidx.core.view.updatePadding
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.AutoTransition
 import androidx.transition.ChangeBounds
@@ -74,6 +75,9 @@ import com.google.android.material.shape.MaterialShapeDrawable
 import cx.ring.databinding.FragHomeBinding
 import cx.ring.utils.TextUtils
 import cx.ring.utils.ActionHelper.openJamiDonateWebPage
+import cx.ring.viewmodel.MODE_SCAN
+import cx.ring.viewmodel.QRCodeViewModel
+import cx.ring.viewmodel.WelcomeJamiViewModel
 import io.reactivex.rxjava3.disposables.Disposable
 import net.jami.services.NotificationService
 
@@ -105,6 +109,9 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
             collapseSearchActionView()
         }
     }
+
+    private val qrCodeViewModel by lazy { ViewModelProvider(this)[QRCodeViewModel::class.java] }
+
 
     private val conversationBackPressedCallback = object : OnBackPressedCallback(false) {
         override fun handleOnBackPressed() {
@@ -583,6 +590,8 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
         // Hide keyboard to prevent any glitch.
         (requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
             .hideSoftInputFromWindow(requireView().windowToken, 0)
+
+        qrCodeViewModel.init(MODE_SCAN)
         val qrCodeFragment = QRCodeFragment.newInstance(QRCodeFragment.INDEX_SCAN)
         qrCodeFragment.show(parentFragmentManager, QRCodeFragment.TAG)
         collapseSearchActionView()
