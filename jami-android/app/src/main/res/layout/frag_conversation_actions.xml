@@ -81,6 +81,7 @@ along with this program; if not, write to the Free Software
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/identifier_panel"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginVertical="1dp"
