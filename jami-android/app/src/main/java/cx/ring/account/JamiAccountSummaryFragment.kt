@@ -77,6 +77,7 @@ import net.jami.account.JamiAccountSummaryPresenter
 import net.jami.account.JamiAccountSummaryView
 import net.jami.model.Account
 import net.jami.model.Profile
+import net.jami.qrcode.QRCodePresenter
 import net.jami.services.AccountService
 import java.io.File
 import javax.inject.Inject
@@ -248,8 +249,11 @@ class JamiAccountSummaryFragment :
             binding.registerName.visibility = if (hasRegisteredName) View.GONE else View.VISIBLE
             binding.registeredName.setText(if (hasRegisteredName) username else resources.getString(R.string.no_registered_name_for_account))
             binding.btnQr.setOnClickListener {
-                QRCodeFragment.newInstance(QRCodeFragment.INDEX_CODE)
-                    .show(parentFragmentManager, QRCodeFragment.TAG)
+                QRCodeFragment.newInstance(
+                    QRCodePresenter.MODE_SCAN or QRCodePresenter.MODE_SHARE,
+                    QRCodePresenter.MODE_SHARE,
+                    net.jami.model.Uri.fromString(account.uri!!)
+                ).show(parentFragmentManager, QRCodeFragment.TAG)
             }
             binding.username.setOnEditorActionListener { _, actionId, _ ->
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
