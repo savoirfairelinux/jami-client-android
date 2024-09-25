@@ -36,6 +36,7 @@ import cx.ring.services.SharedPreferencesServiceImpl.Companion.getConversationSy
 import cx.ring.utils.ConversationPath
 import cx.ring.utils.DeviceUtils
 import dagger.hilt.android.AndroidEntryPoint
+import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.model.Conversation
 import net.jami.model.Uri
@@ -145,6 +146,25 @@ class ConversationActionsFragment : Fragment() {
             else conversation.mode.blockingFirst()
 
         if (conversationMode == Conversation.Mode.OneToOne) {
+            mDisposableBag.add(
+                conversation.contactUpdates
+                    .observeOn(DeviceUtils.uiScheduler)
+                    // Filter out the user.
+                    .map { contacts -> contacts.filterNot { it.isUser }[0] }
+                    .flatMapSingle { contact ->
+                        contact.username?.map { username -> Pair(username, contact.uri) }
+                            ?: Single.just(Pair("", contact.uri))
+                    }
+                    .subscribe { (registeredName, identifier) ->
+                        userNamePanel.isVisible = registeredName.isNotEmpty()
+                        userName.text = registeredName
+                        this.identifier.text = identifier.uri
+                        identifierPanel.setBackgroundResource(
+                            if (registeredName.isEmpty()) R.drawable.background_rounded_16_top
+                            else R.drawable.background_clickable
+                        )
+                    }
+            )
             conversationDelete.text = resources.getString(R.string.delete_conversation)
             conversationDelete.setOnClickListener {  }
             qrCode.setOnClickListener {  }
