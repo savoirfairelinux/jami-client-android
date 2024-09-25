@@ -26,6 +26,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
+import android.view.inputmethod.InputMethodManager
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.SearchView
 import androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -579,6 +580,9 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
     }
 
     private fun goToQRFragment() {
+        // Hide keyboard to prevent any glitch.
+        (requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
+            .hideSoftInputFromWindow(requireView().windowToken, 0)
         val qrCodeFragment = QRCodeFragment.newInstance(QRCodeFragment.INDEX_SCAN)
         qrCodeFragment.show(parentFragmentManager, QRCodeFragment.TAG)
         collapseSearchActionView()
