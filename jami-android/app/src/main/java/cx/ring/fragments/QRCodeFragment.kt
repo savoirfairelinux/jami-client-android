@@ -17,7 +17,6 @@
 package cx.ring.fragments
 
 import android.app.Dialog
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -25,11 +24,13 @@ import android.view.ViewGroup
 import androidx.annotation.StringRes
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
+import androidx.fragment.app.FragmentActivity
+import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import cx.ring.R
 import cx.ring.databinding.FragQrcodeBinding
 import cx.ring.share.ScanFragment
@@ -37,24 +38,27 @@ import cx.ring.share.ShareFragment
 
 class QRCodeFragment : BottomSheetDialogFragment() {
     private var mBinding: FragQrcodeBinding? = null
-    private var mStartPageIndex = 0
+    private var mStartPageIndex = arguments?.getInt(ARG_START_PAGE_INDEX, 0) ?: 0
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
         super.onCreateView(inflater, container, savedInstanceState)
-        val args = requireArguments()
-        mStartPageIndex = args.getInt(ARG_START_PAGE_INDEX, 0)
         return FragQrcodeBinding.inflate(inflater, container, false).apply {
-            viewPager.adapter = SectionsPagerAdapter(root.context, childFragmentManager)
-            tabs.setupWithViewPager(viewPager)
+            SectionsPagerAdapter(requireActivity()).apply {
+                addFragment(ShareFragment(), getTabTitle(INDEX_CODE))
+                addFragment(ScanFragment(), getTabTitle(INDEX_SCAN))
+                viewPager.adapter = this
+                viewPager.currentItem = mStartPageIndex
+                val tabs: TabLayout = tabs
+                TabLayoutMediator(tabs, viewPager) { tab, position ->
+                    tab.text = getTabTitle(position)
+                }.attach()
+            }
             mBinding = this
         }.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        if (mStartPageIndex != 0) {
-            mBinding?.tabs?.getTabAt(mStartPageIndex)?.select()
-        }
     }
 
     override fun onDestroyView() {
@@ -71,28 +75,6 @@ class QRCodeFragment : BottomSheetDialogFragment() {
         return dialog
     }
 
-    internal class SectionsPagerAdapter(private val mContext: Context, fm: FragmentManager) :
-        FragmentPagerAdapter(fm) {
-        @StringRes
-        private val TAB_TITLES = intArrayOf(R.string.tab_code, R.string.tab_scan)
-
-        override fun getItem(position: Int): Fragment {
-            return when (position) {
-                0 -> ShareFragment()
-                1 -> ScanFragment()
-                else -> throw IllegalArgumentException()
-            }
-        }
-
-        override fun getPageTitle(position: Int): CharSequence {
-            return mContext.resources.getString(TAB_TITLES[position])
-        }
-
-        override fun getCount(): Int {
-            return TAB_TITLES.size
-        }
-    }
-
     override fun onResume() {
         super.onResume()
         addGlobalLayoutListener(requireView())
@@ -100,25 +82,59 @@ class QRCodeFragment : BottomSheetDialogFragment() {
 
     private fun addGlobalLayoutListener(view: View) {
         view.addOnLayoutChangeListener(object : View.OnLayoutChangeListener {
-            override fun onLayoutChange(v: View, left: Int, top: Int, right: Int, bottom: Int, oldLeft: Int, oldTop: Int, oldRight: Int, oldBottom: Int) {
+            override fun onLayoutChange(
+                v: View,
+                left: Int,
+                top: Int,
+                right: Int,
+                bottom: Int,
+                oldLeft: Int,
+                oldTop: Int,
+                oldRight: Int,
+                oldBottom: Int,
+            ) {
                 setPeekHeight(v.measuredHeight)
                 v.removeOnLayoutChangeListener(this)
             }
         })
     }
 
-    fun setPeekHeight(peekHeight: Int) {
+    private fun setPeekHeight(peekHeight: Int) {
         bottomSheetBehaviour?.peekHeight = peekHeight
     }
 
     private val bottomSheetBehaviour: BottomSheetBehavior<*>?
         get() {
-            val layoutParams = (requireView().parent as View).layoutParams as CoordinatorLayout.LayoutParams
+            val layoutParams =
+                (requireView().parent as View).layoutParams as CoordinatorLayout.LayoutParams
             val behavior = layoutParams.behavior
             return if (behavior is BottomSheetBehavior<*>) {
                 behavior
             } else null
         }
+
+    internal class SectionsPagerAdapter(val activity: FragmentActivity) :
+        FragmentStateAdapter(activity) {
+        private val mFragmentList: MutableList<Fragment> = ArrayList()
+        private val mFragmentTitleList: MutableList<String> = ArrayList()
+
+        fun getTabTitle(position: Int): String =
+            activity.resources.getString(TAB_TITLES[position])
+
+        fun addFragment(fragment: Fragment, title: String) {
+            mFragmentList.add(fragment)
+            mFragmentTitleList.add(title)
+        }
+
+        override fun getItemCount() = mFragmentList.size
+
+        override fun createFragment(position: Int) = mFragmentList[position]
+
+        companion object {
+            @StringRes
+            private val TAB_TITLES = intArrayOf(R.string.tab_code, R.string.tab_scan)
+        }
+    }
 
     companion object {
         val TAG = QRCodeFragment::class.simpleName!!
