@@ -72,9 +72,10 @@ import javax.inject.Inject
 import com.google.android.material.search.SearchView.TransitionState
 import com.google.android.material.shape.MaterialShapeDrawable
 import cx.ring.databinding.FragHomeBinding
-import cx.ring.utils.TextUtils
 import cx.ring.utils.ActionHelper.openJamiDonateWebPage
 import io.reactivex.rxjava3.disposables.Disposable
+import net.jami.model.Uri
+import net.jami.qrcode.QRCodePresenter
 import net.jami.services.NotificationService
 
 @AndroidEntryPoint
@@ -583,8 +584,13 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
         // Hide keyboard to prevent any glitch.
         (requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
             .hideSoftInputFromWindow(requireView().windowToken, 0)
-        val qrCodeFragment = QRCodeFragment.newInstance(QRCodeFragment.INDEX_SCAN)
-        qrCodeFragment.show(parentFragmentManager, QRCodeFragment.TAG)
+
+        QRCodeFragment.newInstance(
+            QRCodePresenter.MODE_SHARE or QRCodePresenter.MODE_SCAN,
+            QRCodePresenter.MODE_SCAN,
+            Uri.fromString(mAccountService.currentAccount?.uri!!)
+        ).show(parentFragmentManager, QRCodeFragment.TAG)
+
         collapseSearchActionView()
     }
 
