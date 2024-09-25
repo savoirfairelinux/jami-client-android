@@ -23,6 +23,7 @@ dependencies {
     implementation( "javax.inject:javax.inject:1")
     // ORM
     implementation ("com.j256.ormlite:ormlite-core:5.7")
+    implementation("androidx.annotation:annotation-jvm:1.8.2")
 
     // Required -- JUnit 4 framework
     testImplementation ("junit:junit:4.13.2")
