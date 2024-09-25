@@ -19,7 +19,7 @@ along with this program; if not, write to the Free Software
 <fragment xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/share_frag"
-    android:name="cx.ring.tv.account.TVShareFragment"
+    tools:layout="@layout/frag_share"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="cx.ring.tv.account.TVShareActivity"
