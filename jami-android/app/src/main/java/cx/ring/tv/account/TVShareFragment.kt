@@ -18,29 +18,82 @@ package cx.ring.tv.account
 
 import android.graphics.Bitmap
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import cx.ring.R
 import cx.ring.databinding.TvFragShareBinding
 import cx.ring.mvp.BaseSupportFragment
-import cx.ring.services.VCardServiceImpl
-import cx.ring.views.AvatarDrawable
+import cx.ring.utils.DeviceUtils
+import cx.ring.views.AvatarFactory
 import dagger.hilt.android.AndroidEntryPoint
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import net.jami.model.Account
-import net.jami.mvp.GenericView
+import net.jami.model.Uri
+import net.jami.services.AccountService
+import net.jami.services.ContactService
 import net.jami.share.SharePresenter
-import net.jami.share.ShareViewModel
+import net.jami.share.ShareView
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class TVShareFragment : BaseSupportFragment<SharePresenter, GenericView<ShareViewModel>>(), GenericView<ShareViewModel> {
+class TVShareFragment : BaseSupportFragment<SharePresenter, ShareView>() {
     private var binding: TvFragShareBinding? = null
     private val disposable = CompositeDisposable()
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = TvFragShareBinding.inflate(inflater, container, false)
+
+    @Inject
+    lateinit var mAccountService: AccountService
+
+    @Inject
+    lateinit var mContactService: ContactService
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        val contactUri = Uri.fromString(arguments?.getString(ARG_CONTACT_URI) ?: "")
+
+        binding = TvFragShareBinding.inflate(inflater, container, false).apply {
+            if (contactUri.uri.isEmpty()) return@apply
+
+            presenter.loadQRCodeData(
+                contactUri,
+                foregroundColor = 0x00000000,
+                backgroundColor = -0x1
+            ) { qrCodeData ->
+                val pad = 56
+                val bitmap = Bitmap.createBitmap(
+                    qrCodeData.width + 2 * pad, // width
+                    qrCodeData.height + 2 * pad, // height
+                    Bitmap.Config.ARGB_8888
+                )
+                bitmap.setPixels(
+                    qrCodeData.data, 0, qrCodeData.width,
+                    pad, pad, qrCodeData.width, qrCodeData.height
+                )
+                qrImage.setImageBitmap(bitmap)
+                shareQrInstruction.setText(R.string.share_message)
+                qrImage.visibility = View.VISIBLE
+            }
+
+            presenter.loadContact(contactUri) { contact ->
+                disposable.add(
+                    mContactService
+                        .getLoadedContact(mAccountService.currentAccount!!.accountId, contact)
+                        .flatMap { contactViewModel ->
+                            AvatarFactory.getAvatar(requireContext(), contactViewModel).map {
+                                Pair(it, contactViewModel.profile)
+                            }
+                        }.observeOn(DeviceUtils.uiScheduler)
+                        .subscribe { (avatar, profile) ->
+                            qrUserPhoto?.visibility = View.VISIBLE
+                            qrUserPhoto?.setImageDrawable(avatar)
+                            shareUri?.visibility = View.VISIBLE
+                            shareUri?.text = profile.displayName ?: contactUri.uri
+                        }
+                )
+            }
+        }
         return binding!!.root
     }
 
@@ -55,38 +108,15 @@ class TVShareFragment : BaseSupportFragment<SharePresenter, GenericView<ShareVie
         disposable.dispose()
     }
 
-    override fun showViewModel(viewModel: ShareViewModel) {
-        binding?.let { binding ->
-            val qrCodeData = viewModel.getAccountQRCodeData(0x00000000, -0x1)
-            getUserAvatar(viewModel.account)
-            if (qrCodeData == null) {
-                binding.qrImage.visibility = View.INVISIBLE
-            } else {
-                val pad = 56
-                val bitmap = Bitmap.createBitmap(qrCodeData.width + 2 * pad, qrCodeData.height + 2 * pad, Bitmap.Config.ARGB_8888)
-                bitmap.setPixels(qrCodeData.data, 0, qrCodeData.width, pad, pad, qrCodeData.width, qrCodeData.height)
-                binding.qrImage.setImageBitmap(bitmap)
-                binding.shareQrInstruction.setText(R.string.share_message)
-                binding.qrImage.visibility = View.VISIBLE
-            }
-        }
-    }
+    companion object {
+        private const val ARG_CONTACT_URI = "contact_uri"
 
-    private fun getUserAvatar(account: Account) {
-        disposable.add(VCardServiceImpl.loadProfile(requireContext(), account)
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnNext {
-                binding?.apply {
-                    shareUri?.visibility = View.VISIBLE
-                    shareUri?.text = account.displayUsername
-                }
-            }
-            .map { p -> AvatarDrawable.build(requireContext(), account, p, true) }
-            .subscribe({ a: AvatarDrawable ->
-                binding?.apply {
-                    qrUserPhoto?.visibility = View.VISIBLE
-                    qrUserPhoto?.setImageDrawable(a)
-                }
-            }) { e -> Log.e(TVShareFragment::class.simpleName!!, e.message!!) })
+        fun newInstance(contactUri: Uri): TVShareFragment {
+            val fragment = TVShareFragment()
+            val args = Bundle()
+            args.putString(ARG_CONTACT_URI, contactUri.uri)
+            fragment.arguments = args
+            return fragment
+        }
     }
 }
