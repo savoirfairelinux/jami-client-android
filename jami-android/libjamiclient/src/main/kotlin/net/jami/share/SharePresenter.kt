@@ -16,30 +16,59 @@
  */
 package net.jami.share
 
+import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Scheduler
-import io.reactivex.rxjava3.schedulers.Schedulers
-import net.jami.model.Account
-import net.jami.mvp.GenericView
+import net.jami.model.Contact
+import net.jami.model.Uri
 import net.jami.mvp.RootPresenter
 import net.jami.services.AccountService
+import net.jami.services.ContactService
+import net.jami.utils.QRCodeUtils
 import javax.inject.Inject
 import javax.inject.Named
 
+interface ShareView
+
 class SharePresenter @Inject constructor(
     private val mAccountService: AccountService,
+    private val mContactService: ContactService,
     @param:Named("UiScheduler") private val mUiScheduler: Scheduler
-) : RootPresenter<GenericView<ShareViewModel>>() {
-    override fun bindView(view: GenericView<ShareViewModel>) {
-        super.bindView(view)
-        mCompositeDisposable.add(mAccountService
-            .currentAccountSubject
-            .map { account: Account -> ShareViewModel(account) }
-            .subscribeOn(Schedulers.computation())
-            .observeOn(mUiScheduler)
-            .subscribe { model: ShareViewModel -> loadContactInformation(model) })
+) : RootPresenter<ShareView>() {
+
+    fun loadContact(
+        contact: Uri,
+        onContactLoaded: (Contact) -> Unit
+    ) {
+        mCompositeDisposable.add(
+            mContactService
+                .getLoadedContact(mAccountService.currentAccount!!.accountId, contact.uri)
+                .map { it.contact }
+                .observeOn(mUiScheduler)
+                .subscribe(
+                    { loadedContact -> onContactLoaded(loadedContact) },
+                    { error -> error.printStackTrace() }
+                )
+        )
     }
 
-    private fun loadContactInformation(model: ShareViewModel) {
-        view?.showViewModel(model)
+    fun loadQRCodeData(
+        contact: Uri,
+        foregroundColor: Int,
+        backgroundColor: Int,
+        onQRCodeDataLoaded: (QRCodeUtils.QRCodeData) -> Unit
+    ) {
+        mCompositeDisposable.add(
+            Maybe.fromCallable {
+                QRCodeUtils.encodeStringAsQRCodeData(
+                    contact.uri,
+                    foregroundColor,
+                    backgroundColor
+                )
+            }.observeOn(mUiScheduler)
+                .subscribe(
+                    { qrCodeData -> onQRCodeDataLoaded(qrCodeData) },
+                    { error -> error.printStackTrace() }
+                )
+        )
     }
 }
