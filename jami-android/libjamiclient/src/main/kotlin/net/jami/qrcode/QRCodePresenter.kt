@@ -14,22 +14,23 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-package cx.ring.share
+package net.jami.qrcode
 
-import androidx.lifecycle.ViewModel
-import dagger.hilt.android.lifecycle.HiltViewModel
-import net.jami.services.HardwareService
-import javax.inject.Inject
+import androidx.annotation.IntDef
+import net.jami.mvp.RootPresenter
 
-@HiltViewModel
-class ScanViewModel @Inject constructor(
-    private val mHardwareService: HardwareService
-): ViewModel() {
-    fun cameraPermissionChanged(isGranted: Boolean) {
-        if (isGranted && mHardwareService.isVideoAvailable) {
-            mHardwareService.initVideo()
-                .onErrorComplete()
-                .blockingAwait()
-        }
+interface QRCodeView
+
+class QRCodePresenter : RootPresenter<QRCodeView>() {
+
+    companion object {
+        private val TAG = this::class.java.simpleName
+
+        const val MODE_SCAN = 1
+        const val MODE_SHARE = 2
+
+        @IntDef(flag = true, value = [MODE_SCAN, MODE_SHARE])
+        @Retention(AnnotationRetention.SOURCE)
+        annotation class QRCodeMode
     }
 }

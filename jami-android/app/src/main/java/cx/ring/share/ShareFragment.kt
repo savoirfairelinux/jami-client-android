@@ -19,7 +19,6 @@ package cx.ring.share
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,58 +26,93 @@ import cx.ring.R
 import cx.ring.databinding.FragShareBinding
 import cx.ring.mvp.BaseSupportFragment
 import dagger.hilt.android.AndroidEntryPoint
-import net.jami.mvp.GenericView
+import net.jami.model.Contact
+import net.jami.model.Uri
 import net.jami.share.SharePresenter
-import net.jami.share.ShareViewModel
+import net.jami.share.ShareView
 
 @AndroidEntryPoint
-class ShareFragment : BaseSupportFragment<SharePresenter, GenericView<ShareViewModel>>(), GenericView<ShareViewModel> {
-    private var mUriToShow: String? = null
-    private var isShareLocked = false
-    private var binding: FragShareBinding? = null
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = FragShareBinding.inflate(inflater, container, false)
-        return binding!!.root
+class ShareFragment : BaseSupportFragment<SharePresenter, ShareView>() {
+
+    private var mBinding: FragShareBinding? = null
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
+        super.onCreateView(inflater, container, savedInstanceState)
+
+        val contactUri = Uri.fromString(arguments?.getString(ARG_CONTACT_URI) ?: "")
+
+        return FragShareBinding.inflate(inflater, container, false).apply {
+            presenter.loadQRCodeData(
+                contactUri,
+                requireContext().getColor(R.color.color_primary_dark),
+                requireContext().getColor(R.color.transparent)
+            ) { qrCodeData ->
+                qrImage.setImageBitmap(
+                    Bitmap.createBitmap(
+                        qrCodeData.width, qrCodeData.height, Bitmap.Config.ARGB_8888
+                    ).apply {
+                        setPixels(
+                            qrCodeData.data, 0, qrCodeData.width,
+                            0, 0, qrCodeData.width, qrCodeData.height
+                        )
+                    }
+                )
+            }
+
+            shareButton.isEnabled = false
+            presenter.loadContact(contactUri) { contact ->
+                if (!contact.isUser)
+                    shareButton.text = getText(R.string.share_contact_information)
+                shareButton.setOnClickListener { shareContact(contact) }
+                shareButton.isEnabled = true
+            }
+
+            mBinding = this
+        }.root
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding = null
+        mBinding = null
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setHasOptionsMenu(true)
-        binding!!.shareButton.setOnClickListener { if (!isShareLocked) shareAccount() }
-    }
-
-    private fun shareAccount() {
-        if (!TextUtils.isEmpty(mUriToShow)) {
-            val sharingIntent = Intent(Intent.ACTION_SEND)
-            sharingIntent.type = "text/plain"
-            sharingIntent.putExtra(Intent.EXTRA_SUBJECT, getText(R.string.account_contact_me))
-            sharingIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.account_share_body, mUriToShow, getText(R.string.app_website)))
-            startActivity(Intent.createChooser(sharingIntent, getText(R.string.share_via)))
-        }
-    }
-
-    override fun showViewModel(viewModel: ShareViewModel) {
-        if (binding == null) return
-        val qrCodeData = viewModel.getAccountQRCodeData(
-            requireContext().getColor(R.color.color_primary_dark),
-            requireContext().getColor(R.color.transparent)
+    private fun shareContact(contact: Contact) {
+        val sharingIntent = Intent(Intent.ACTION_SEND)
+        sharingIntent.type = "text/plain"
+        sharingIntent.putExtra(
+            Intent.EXTRA_SUBJECT,
+            getText(
+                if (contact.isUser) R.string.account_contact_me
+                else R.string.share_contact_intent_title
+            )
         )
-        if (qrCodeData == null) {
-            binding!!.qrImage.visibility = View.INVISIBLE
-            binding!!.shareInstruction.setText(R.string.share_message_no_account)
-        } else {
-            val bitmap = Bitmap.createBitmap(qrCodeData.width, qrCodeData.height, Bitmap.Config.ARGB_8888)
-            bitmap.setPixels(qrCodeData.data, 0, qrCodeData.width, 0, 0, qrCodeData.width, qrCodeData.height)
-            binding!!.qrImage.setImageBitmap(bitmap)
-            binding!!.shareInstruction.setText(R.string.share_message)
-            binding!!.qrImage.visibility = View.VISIBLE
+        val displayName = contact.username?.blockingGet()
+            .let { if (it.isNullOrEmpty()) contact.uri.uri else it }
+        sharingIntent.putExtra(
+            Intent.EXTRA_TEXT,
+            getString(
+                if (contact.isUser) R.string.account_share_body
+                else R.string.share_contact_intent_body,
+                displayName, getText(R.string.app_website)
+            )
+        )
+
+        startActivity(Intent.createChooser(sharingIntent, getText(R.string.share_via)))
+    }
+
+    companion object {
+        private const val ARG_CONTACT_URI = "contact_uri"
+
+        fun newInstance(contactUri: Uri): ShareFragment {
+            val fragment = ShareFragment()
+            val args = Bundle()
+            args.putString(ARG_CONTACT_URI, contactUri.uri)
+            fragment.arguments = args
+            return fragment
         }
-        mUriToShow = viewModel.accountDisplayUri
-        isShareLocked = TextUtils.isEmpty(mUriToShow)
     }
 }
