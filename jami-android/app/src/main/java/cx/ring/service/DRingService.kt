@@ -116,6 +116,11 @@ class DRingService : Service() {
             updateConnectivityState(true)
         }
 
+        override fun onLost(network: Network) {
+            updateConnectivityState()
+        }
+
+
         override fun onUnavailable() {
             Log.w(TAG, "onUnavailable")
             updateConnectivityState(false)
@@ -131,9 +136,6 @@ class DRingService : Service() {
             }
             Log.d(TAG, "receiver.onReceive: $action")
             when (action) {
-                ConnectivityManager.CONNECTIVITY_ACTION -> {
-                    updateConnectivityState()
-                }
                 PowerManager.ACTION_DEVICE_IDLE_MODE_CHANGED -> {
                     mConnectivityChecker.run()
                     mHandler.postDelayed(mConnectivityChecker, 100)
@@ -150,7 +152,6 @@ class DRingService : Service() {
             contentResolver.registerContentObserver(ContactsContract.Contacts.CONTENT_URI, true, contactContentObserver)
         }
         val intentFilter = IntentFilter().apply {
-            addAction(ConnectivityManager.CONNECTIVITY_ACTION)
             addAction(PowerManager.ACTION_DEVICE_IDLE_MODE_CHANGED)
         }
         registerReceiver(receiver, intentFilter)
