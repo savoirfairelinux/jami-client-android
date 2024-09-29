@@ -1,6 +1,6 @@
 • Allow to set conversation color
 • Added contact details view
-• Allow to keep Ring running in background
+• Allow to keep Ring running in the background
 • Call: fix controlling ringtone volume
 • SIP: fix profile display
 • SIP: fix sending DTMF
