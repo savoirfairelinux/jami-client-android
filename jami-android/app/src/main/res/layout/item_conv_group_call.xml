@@ -80,7 +80,7 @@ along with this program; if not, write to the Free Software
             android:marqueeRepeatLimit="marquee_forever"
             android:scrollHorizontally="true"
             android:singleLine="false"
-            android:text="@string/started_call"
+            android:text="@string/call_started"
             android:textColor="@color/colorOnSurface"
             android:textSize="16sp" />
 
