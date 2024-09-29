@@ -407,7 +407,7 @@
                             android:layout_width="34dp"
                             android:layout_height="match_parent"
                             android:background="?selectableItemBackgroundBorderless"
-                            android:contentDescription="@string/take_a_photo"
+                            android:contentDescription="@string/take_photo"
                             android:padding="8dp"
                             app:srcCompat="@drawable/baseline_photo_camera_24"/>
 
@@ -431,7 +431,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@null"
-                            android:hint="@string/write_a_message"
+                            android:hint="@string/write_message"
                             android:imeOptions="actionSend|flagNoExtractUi"
                             android:importantForAutofill="no"
                             android:inputType="textShortMessage|textImeMultiLine|text|textMultiLine|textCapSentences"
