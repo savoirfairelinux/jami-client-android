@@ -221,7 +221,7 @@ along with this program; if not, write to the Free Software
     <string name="account_device_added_message">Jami account set up successfully on this device.</string>
     <string name="account_device_updated_title">Account device updated</string>
     <string name="account_device_updated_message">Jami account updated successfully.</string>
-    <string name="account_cannot_be_updated_message">An error occurred while updating account. Please check your password.</string>
+    <string name="account_cannot_be_updated_message">An error occurred while updating account. Please check account password.</string>
     <string name="account_sip_success_title">SIP account registered</string>
     <string name="account_sip_success_message">SIP account registered successfully.</string>
     <string name="account_sip_register_anyway">Register anyway</string>
@@ -295,7 +295,7 @@ along with this program; if not, write to the Free Software
     <string name="account_revoke_device_hint">Enter password to confirm</string>
     <string name="enter_password">Enter password</string>
     <string name="revoke_device_title">Revoke device</string>
-    <string name="revoke_device_message">Are you sure you want to revoke %1$s?</string>
+    <string name="revoke_device_message">Do you really want to revoke %1$s?</string>
     <string name="revoke_device_wait_title">Please wait…</string>
     <string name="revoke_device_wait_message">Revoking device</string>
     <string name="rename_device_title">Rename this device</string>
