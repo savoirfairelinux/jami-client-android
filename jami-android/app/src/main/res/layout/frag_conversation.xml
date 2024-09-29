@@ -407,7 +407,7 @@
                             android:layout_width="34dp"
                             android:layout_height="match_parent"
                             android:background="?selectableItemBackgroundBorderless"
-                            android:contentDescription="@string/take_a_photo"
+                            android:contentDescription="@string/take_photo"
                             android:padding="8dp"
                             app:srcCompat="@drawable/baseline_photo_camera_24"/>
 
