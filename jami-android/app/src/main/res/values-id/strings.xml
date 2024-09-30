@@ -1,16 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
-  <string name="feedback_section">Umpan balik</string>
-  <string name="report">Kirimkan kami email</string>
   <string name="section_license">Lisensi</string>
   <string name="sponsor_section">Jami adalah perangkat lunak gratis dan didukung oleh</string>
   <string name="copyright_section">Hak cipta</string>
   <string name="contribute_section">Berkontribusi</string>
   <string name="version_section">Versi</string>
-  <string name="no_email_app_installed">Aplikasi email tidak ditemukan, silakan pasang salah satu untuk mengirimkan laporan kepada kami</string>
   <string name="no_browser_app_installed">Aplikasi peramban tidak ditemukan, silakan pasang salah satu untuk melihat halaman ini</string>
-  <string name="email_chooser_title">Kirim email menggunakan...</string>
   <string name="website_chooser_title">Lihat halaman menggunakan...</string>
   <string name="license">Perangkat lunak ini disediakan \"apa adanya\", tanpa jaminan apapun. Untuk detalinya, <u>GNU General Public License versi 3 atau yang lebih baru</u></string>
   <string name="description">Jami adalah perangkat lunak gratis untuk komunikasi universal yang menghormati kebebasan dan privasi penggunanya</string>
@@ -19,9 +15,7 @@
   <string name="call_service_description">Layanan ini diperlukan untuk membuat panggilan anda tetap berjalan di latar depan. Ini hanya berjalan selama panggilan</string>
   <string name="data_transfer_service_description">Layanan ini diperlukan untuk menampilkan pemberitahuan terus menerus selama mengirim file. Ini hanya berjalan ketika mengirim file</string>
   <!--About dialog-->
-  <string name="developed_by">Dikembangkan oleh</string>
-  <string name="designed_by">Didesain oleh</string>
-  <string name="ringtones_by">Nada dering oleh</string>
+  <string name="media">Media</string>
   <!--RingActivity-->
   <string name="error_no_network">Tidak ada jaringan internet</string>
   <string name="error_account_offline">Akun sedang offline</string>
@@ -35,7 +29,6 @@
   <string name="menu_item_settings">Setelan</string>
   <string name="menu_item_advanced_settings">Pengaturan Lanjutan</string>
   <string name="menu_item_account_settings">Pengaturan Akun</string>
-  <string name="menu_item_plugin_list">Pengaturan Plugin</string>
   <string name="menu_item_share">Bagikan akun saya</string>
   <string name="menu_item_about">Tentang Jami</string>
   <string name="video_setting_title">Pengaturan Video</string>
@@ -96,17 +89,10 @@
   <string name="ongoing_call">Panggilan berlangsung</string>
   <string name="hist_in_call">Panggilan masuk dari %1$s</string>
   <string name="hist_out_call">Panggilan keluar dari %1$s</string>
-  <string name="start_error_title">Tidak dapat memulai Jami !</string>
   <string name="start_error_mic_required">Jami butuh izin akses mikrofon untuk bekerja.</string>
   <string name="action_call_accept">Terima panggilan</string>
-  <string name="action_call_accept_audio">Jawab lewat audio</string>
-  <string name="action_call_accept_video">Jawab lewat video</string>
-  <string name="action_call_hold_accept">Tahan dan ke panggilan audio</string>
-  <string name="action_call_hold_accept_video">Tahan dan ke panggilan video</string>
-  <string name="action_call_end_accept">Akhiri dan angkat panggilan</string>
   <string name="action_call_decline">Tolak</string>
   <string name="action_call_mic_mute">Senyapkan mikrofon</string>
-  <string name="action_load_plugin">Muat plugin</string>
   <string name="ab_action_speakerphone">Aktifkan pengeras suara</string>
   <string name="ab_action_contact_add">Tambah sebagai kontak</string>
   <string name="ab_action_contact_add_question">Tambah ke kontak?</string>
@@ -142,11 +128,8 @@
   <string name="ringtone_error_size_too_big">Berkas terlalu besar. Maksimal ukuran yang diterima adalah %1$d kB.</string>
   <string name="ringtone_custom_prompt">Atur nada dering kustom</string>
   <string name="ringtone_custom_label">Kustom</string>
-  <string name="ringtone_jami_tones">Nada dering Jami</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Jami membutuhkan izin \"Membaca kontak\" untuk mengaktifkan fitur ini. </string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Jami membutuhkan izin \"Menulis riwayat panggilan\" untuk mengaktifkan fitur ini. </string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Pindai QR Code dari akun yang ingin Anda tambahkan.</string>
   <string name="title_activity_qrcode">Bagikan akun saya</string>
@@ -162,15 +145,13 @@
   <string name="conversation_details">Rincian percapakan</string>
   <string name="contact_details">Rincian kontak</string>
   <string name="conversation_action_delete_this">Hapus percakapan ini</string>
-  <string name="conversation_action_delete_this_title">Hapus percakapan ini ?</string>
-  <string name="conversation_action_delete_this_message">Aksi ini tidak dapat dibatalkan.</string>
+  <string name="conversation_action_delete_this_message">Aksi ini tak bisa dibatalkan</string>
   <string name="conversation_action_history_clear">Bersihkan riwayat</string>
   <string name="conversation_action_history_clear_title">Hapus riwayat percakapan?</string>
   <string name="conversation_action_history_clear_message">Ini akan membersihkan riwayat obrolan</string>
   <string name="conversation_action_remove_this">Hapus kontak</string>
   <string name="conversation_action_remove_this_title">Hapus kontak ini?</string>
   <string name="conversation_action_remove_this_message">Ini akan menghapus kontak dan membersihkan riwayat percakapan.</string>
-  <string name="conversation_action_copy_peer_number">Salin nomor</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s telah disalin</string>
   <string name="conversation_action_select_peer_number">Pilih nomor</string>
   <string name="conversation_action_block_this">Blokir kontak</string>
@@ -200,7 +181,6 @@
   <string name="conversation_contact_invited"> %1$sdiundang</string>
   <string name="conversation_contact_added">%1$s bergabung</string>
   <string name="conversation_contact_left">%1$s keluar</string>
-  <string name="conversation_contact_banned">%1$s dibanned</string>
   <string name="conversation_search_hint">Cari percakapan</string>
   <string name="today">Hari ini</string>
   <string name="yesterday">Kemarin</string>
@@ -215,14 +195,12 @@
   <string name="help_password_choose">Gunakan kata sandi kuat dan mudah diingat untuk menjaga akun Jami anda.</string>
   <string name="help_password_enter">Masukkan kata sandi utama akun Jami anda</string>
   <string name="help_server_enter">Masukkan URL manajemen peladen.</string>
-  <string name="help_pin_enter">Masukkan PIN dari akun Jami lainnya. Gunakan fitur \"ekspor akun Jami\" untuk mendapatkan PIN.</string>
   <string name="wizard_next">Selanjutnya</string>
   <string name="wizard_back">Kembali</string>
   <string name="wizard_skip">Lewat</string>
   <string name="hist_contact_invited">Kontak diundang</string>
   <string name="hist_contact_added">Kontak ditambahkan</string>
   <string name="hist_contact_left">Kontak keluar</string>
-  <string name="hist_contact_banned">Kontak dibanned</string>
   <string name="hist_invitation_received">Undangan diterima</string>
   <!--Account Summary-->
   <string name="profile">Profil</string>
@@ -246,20 +224,11 @@
   <string name="generic_error_migration">Galat</string>
   <string name="generic_error_migration_message">Galat terjadi selama proses migrasi</string>
   <string name="title_share_with">Bagikan dengan...</string>
-  <!--Pending contact requests-->
+  <!--Pending invitations-->
   <string name="accept">Terima</string>
-  <string name="refuse">Tolak</string>
+  <string name="decline">Tolak</string>
   <string name="block">Blokir</string>
-  <string name="contact_request_title">Permintaan kontak baru</string>
-  <string name="contact_request_msg">Anda memiliki %1$d permintaan kontak</string>
-  <string name="contact_request_account">Untuk %1$s</string>
-  <string name="no_requests">Anda tidak memiliki permintaan kontak</string>
-  <string name="message_contact_not_trusted_yet">%s belum ada di kontak anda, apakah anda setuju atau menolak permintaan kontak ini?</string>
-  <string name="message_contact_not_trusted">%s tidak ada di kontak anda, tambahkan kontak baru?</string>
-  <!--Send contact requests-->
-  <string name="send_request_button">Kirim</string>
-  <string name="send_request_title">Kirim permintaan kontak</string>
-  <string name="send_request_msg">Anda perlu mengirim permintaan kontak agar bisa berkomunikasi. Tunggu sampai mereka menerima permintaan, anda bisa mengirim pesan tapi mereka tidak dapat menjawabnya.</string>
+  <string name="invitation_message">Anda memiliki %1$d permintaan kontak</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Tidak ada kontak yang diblokir</string>
   <!--Smartlist-->
@@ -271,7 +240,6 @@
   <string name="tv_contact_row_header">Kontak</string>
   <string name="gallery_error_title">Aplikasi galeri tidak ditemukan</string>
   <string name="gallery_error_message">Tidak ada aplikasi yang ditemukan untuk membuka galeri</string>
-  <string name="generic_error">Ada kesalahan</string>
   <!--File Transfer-->
   <string name="invalid_file">Berkas tidak valid</string>
   <string name="not_able_to_write_file">Tidak dapat menulis berkas</string>
@@ -291,7 +259,6 @@
   <string name="file_saved_in">Berkas disimpan di %s</string>
   <string name="file_saved_successfully">Berkas berhasil disimpan</string>
   <string name="file_download">Unduh</string>
-  <string name="no_space_left_on_device">Tak ada ruang tersisa di perangkat</string>
   <string name="title_media_viewer">Penglihat media</string>
   <string name="menu_file_open">Buka berkas</string>
   <string name="menu_file_download">Unduh berkas</string>
@@ -342,11 +309,9 @@
   <string name="wizard_profile_button">Simpan Profil</string>
   <string name="wizard_profile_skip">Nanti saja</string>
   <string name="fab_path_choose">Pilih berkas lain</string>
-  <string name="chat_plugins">Pengaya Obrolan</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Bagikan</string>
   <string name="bottomSheet_dialpad_btn">Dialpad</string>
-  <string name="bottomSheet_plugins_btn">Plugin</string>
   <string name="bottomSheet_add_participants_btn">Tambah</string>
   <string name="bottomSheet_change_camera_btn">Ubah</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>
@@ -354,17 +319,13 @@
   <string name="bottomSheet_mute_microphone_btn">Mikro</string>
   <string name="bottomSheet_sound_output_btn">Suara</string>
   <string name="bottomSheet_raiseHand_btn">Angkat</string>
-  <string name="open_account_plugin_settings">Buka Pengaturan Plugin Akun</string>
-  <string name="open_general_plugin_settings">Buka Pengaturan Plugin Umum</string>
   <string name="uninstall">Copot pemasangan</string>
   <string name="reset">Reset</string>
   <!--Swarm Detail-->
   <string name="rename_btn">Konfirmasi</string>
-  <string name="rename_error">tidak boleh kosong</string>
-  <string name="swarm_description">Tambah deskripsi</string>
-  <string name="tab_about">Tentang</string>
   <string name="tab_members">Anggota</string>
-  <string name="tab_documetn">Dokumen</string>
+  <string name="tab_files">Berkas</string>
+  <string name="tab_settings">Setelan</string>
   <string name="dialogtitle_title">Ubah judul Swarm</string>
   <string name="dialogtitle_description">Ubah deskripsi Swarm</string>
   <string name="dialog_hint_title">Judul</string>
@@ -380,5 +341,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Selamat datang di Jami</string>
   <!--Donation-->
-  <!--Plugin-->
+  <!--Extension-->
 </resources>

@@ -21,25 +21,19 @@
   <string name="dialog_wait_create_details">Tafadhali subiri wakati akaunti yako mpya ni aliongeza...</string>
   <string name="dialog_wait_update">Uhariri wa akaunti</string>
   <string name="dialog_wait_update_details">Tafadhali subiri wakati akaunti yako mpya ni updated...</string>
-  <string name="dialog_warn_ip2ip_account_title">Kujenga akaunti tupu SIP?</string>
-  <string name="dialog_warn_ip2ip_account_message">Wewe ni juu ya kujenga akaunti ya SIP bila jina halali mwenyeji. Unaweza tu kufanya na kupokea wito wa moja kwa moja IP. Unaweza kuhariri akaunti yako baadaye</string>
   <string name="account_type_ip2ip">Akaunti ya IP</string>
   <string name="help_ring">Akaunti ya Jami hukuruhusu kuwasiliana na watu kwa usalama kwa peer-to-peer kupitia mtandao ulioshirikiwa kabisa.</string>
-  <string name="help_sip_title">Ongeza akaunti yako ya SIP</string>
+  <string name="help_sip_title">Ongeza akaunti ya SIP</string>
   <string name="help_sip">Kuanzisha akaunti iliyopo ya SIP.</string>
-  <string name="create_sip_account">Ongeza akaunti ya SIP</string>
   <!--Strings related to account deletion-->
-  <string name="account_delete_dialog_title">Kufuta akaunti?</string>
   <string name="account_delete_dialog_message">Hatua hii haiwezi kuondolewa.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Hakuna akaunti iliyosajiliwa</string>
   <string name="normal_accounts_titles">Malipo</string>
-  <string name="normal_devices_titles">Vifaa Vilivyounganishwa</string>
+  <string name="normal_devices_titles">Vifaa vilivyounganishwa</string>
   <string name="account_device_revoke">Kifaa cha kuondoa</string>
   <string name="account_device_revocation_success_title">Mafanikio</string>
   <string name="account_device_revocation_success">Kifaa sasa ni kuondolewa!</string>
-  <string name="account_device_revocation_error_title">Haiwezi kufuta kifaa</string>
-  <string name="account_device_revocation_wrong_password">Nambari mbaya.</string>
   <string name="account_device_revocation_unknown_device">Kifaa kisichojulikana.</string>
   <string name="account_device_revocation_error_unknown">Kosa lisilojulikana.</string>
   <string name="account_password_change">Kubadilisha Password</string>
@@ -61,8 +55,7 @@
   <string name="account_rendezvous_summary">Katika hali ya Rendezvous, simu zinazoingia zitaongezwa kwenye chumba cha mkutano.</string>
   <string name="account_upnp_label">Kuwezesha UPnP</string>
   <string name="account_proxy_field">Wakala wa kuwakilisha</string>
-  <!--Plugin Details-->
-  <string name="account_preference_plugin_tab">Plugins</string>
+  <!--Extension Details-->
   <!--Audio Details-->
   <string name="account_audio_label">Sauti</string>
   <string name="account_preferences_media_tab">Vyombo vya habari</string>
@@ -142,14 +135,9 @@
   <string name="export_account_wait_message">Habari za akaunti ya kuuza nje</string>
   <string name="account_export_file">Akaunti ya chelezo</string>
   <string name="account_export_file_summary">Fungua akaunti yako kwenye kifaa chako ili kuiweka upya baadaye.</string>
-  <string name="account_export_end_decryption_message">Haikuweza kufungua akaunti yako kwa kutumia password iliyotolewa.</string>
   <string name="account_export_end_network_title">Kosa la mtandao</string>
-  <string name="account_export_end_network_message">Haikuweza kuuza nje akaunti kwenye mtandao.</string>
   <string name="account_export_end_error_title">Kosa</string>
-  <string name="account_export_end_error_message">Haikuweza kuuza nje akaunti, kosa lisilojulikana lilitokea.</string>
   <string name="account_enter_password">Ingiza nywila</string>
-  <string name="account_share_body">Wasiliana nami kwa kutumia \'%1$s\' kwenye jukwaa la mawasiliano la Jami: %2$s</string>
-  <string name="account_share_body_with_username">Wasiliana nami kwa kutumia \'%1$s\' au jina langu la mtumiaji la umma \'%2$s\' kwenye jukwaa la mawasiliano la Jama: %3$s</string>
   <string name="account_contact_me">Wasiliana nami juu ya Jami!</string>
   <string name="update_account">Rekodi ya sasisho</string>
   <string name="account_migration">Akaunti yako ya Jami inaweza kusasishwa. Tafadhali ingiza nenosiri lako.</string>
@@ -157,20 +145,13 @@
   <string name="sip_account">Akaunti ya SIP</string>
   <string name="ring_account_identity">Utambulisho</string>
   <string name="account_migration_title_dialog">Uhamiaji wa akaunti</string>
-  <string name="account_migration_message_dialog">Je, unataka kwenda kwenye skrini ya usimamizi wa Akaunti kufanya operesheni hii?</string>
   <string name="account_update_needed">Uhakikisho unahitajika</string>
-  <string name="account_cannot_be_found_title">Siwezi kupata akaunti</string>
-  <string name="account_cannot_be_found_message">Akaunti haikuweza kupatikana kwenye mtandao wa Jami.\nAngalia ilikuwa nje ya Jami kutoka kifaa zilizopo, na kwamba taarifa za kuaminika ni sahihi.</string>
   <string name="account_sip_cannot_be_registered_message">Unaweza kuendelea na mchakato wa kuunda akaunti au kuhariri taarifa yako hapa.</string>
-  <string name="account_no_network_title">Siwezi kuungana na mtandao</string>
-  <string name="account_no_network_message">Haikuweza kuongeza akaunti kwa sababu Jami hakuweza kuungana na mtandao ulioshirikiwa.</string>
+  <string name="account_no_network_title">Kosa la mtandao</string>
   <string name="account_device_added_title">Kifaa cha akaunti imeongezwa</string>
   <string name="account_device_added_message">Umefanikiwa kuanzisha akaunti yako ya Jami kwenye kifaa hiki.</string>
   <string name="account_device_updated_title">Kifaa cha akaunti updated</string>
   <string name="account_device_updated_message">Umefanikiwa kusasisha akaunti yako ya Jami.</string>
-  <string name="account_cannot_be_updated_message">Kifaa akaunti haikuweza kuwa updated. Tafadhali kuangalia password yako.</string>
-  <string name="account_sip_success_title">Akaunti ya Sip iliyosajiliwa</string>
-  <string name="account_sip_success_message">Umefanikiwa kusajili akaunti yako ya Sip.</string>
   <string name="account_sip_register_anyway">Kujiandikisha anyway</string>
   <!--TV-->
   <string name="account_tv_settings_header">Mipangilio ya akaunti</string>
@@ -190,11 +171,8 @@
   <string name="account_link_export_button">Unganisha kifaa kipya</string>
   <string name="account_link_show_button">Onyesha %d zaidi kifaa kilichounganishwa</string>
   <string name="account_link_hide_button">Funga kifaa kilichounganishwa</string>
-  <string name="account_link_export_info">Ili kutumia akaunti hii kwenye vifaa vingine, lazima kwanza kuionyesha kwenye Jami. Hii itazalisha nambari ya PIN ambayo lazima uingize kwenye kifaa kipya kuanzisha akaunti. PIN ni halali kwa dakika 10.</string>
   <string name="account_start_export_button">Kuzalisha PIN</string>
   <string name="account_end_export_button">karibu</string>
-  <string name="account_end_export_infos">PIN yako ni:\n\n%%\n\nKama mchakato kukamilika, unahitaji kufungua Jami kwenye kifaa kipya. Unda akaunti mpya na \"Uunganishe kifaa hiki kwa akaunti\". PIN yako ni halali kwa dakika 10.</string>
-  <string name="account_link_export_info_light">Ili kutumia akaunti hii kwenye vifaa vingine, lazima kwanza kuionyesha kwenye Jami. Hii itazalisha nambari ya PIN ambayo lazima uingize kwenye kifaa kipya kuanzisha akaunti. PIN ni halali kwa dakika 10.</string>
   <string name="account_export_title">Kuunganisha akaunti kwa vifaa vingine</string>
   <string name="account_connect_server_button">Kuunganisha na usimamizi wa seva</string>
   <string name="account_connect_button">Unganisha</string>
@@ -226,21 +204,17 @@
   <string name="account_creation_profile">Unda wasifu wako</string>
   <string name="account_creation_ring">Unda akaunti yako ya Jami</string>
   <string name="account_link_title">Unganisha kifaa hiki</string>
-  <string name="account_sip_cannot_be_registered">Siwezi kujiandikisha akaunti</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">Hariri akaunti yangu</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Ingiza password ili kuthibitisha</string>
   <string name="enter_password">Ingiza nywila</string>
   <string name="revoke_device_title">Kifaa cha kuondoa</string>
-  <string name="revoke_device_message">Je, una uhakika unataka kufuta %1$s?</string>
   <string name="revoke_device_wait_title">Tafadhali subiri...</string>
   <string name="revoke_device_wait_message">Kifaa cha kuondoa</string>
   <string name="rename_device_title">Jina upya kifaa hiki</string>
   <string name="rename_device_message">Chagua jina jipya ili kutambua kifaa hiki katika akaunti yako ya Jami</string>
   <string name="rename_device_button">Kifaa cha kubadilisha jina</string>
   <string name="account_rename_device_hint">Chagua jina jipya la kifaa</string>
-  <string name="account_device_name_empty">Jina la kifaa haiwezi kuwa tupu</string>
   <string name="account_device_this_indicator">Kifaa hiki</string>
   <string name="account_disabled_indicator">wenye ulemavu</string>
   <!--Link a new device-->

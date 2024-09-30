@@ -27,7 +27,6 @@
   <string name="pref_startOnBoot_title">시작 시 Jami를 시작</string>
   <string name="pref_startOnBoot_summary">시스템 시작될 때 자미를 배경으로 </string>
   <string name="pref_clearHistory_title">명확한 역사</string>
-  <string name="pref_clearHistory_summary">대화 기록을 삭제해줘요</string>
   <string name="pref_notification_title">알림의 가시성</string>
   <string name="pref_notification_summary">잠금 화면에 애플리케이션 알림의 가시성을 설정하십시오.</string>
   <string name="pref_blackList_title">블록 목록</string>
@@ -52,19 +51,6 @@
   <string name="notification_public">공개                                                                                                                                                                                                                                                         </string>
   <string name="notification_private">개인 \n(보지사항을 표시하지만 잠금 화면에 내용을 숨기기) \n</string>
   <string name="notification_secret">비밀                         </string>
-  <!--Plugin-->
-  <string name="pref_plugins_title">플러그인</string>
-  <string name="pref_plugins_summary">플러그인을 활성화하고 그 매개 변수를 설정</string>
-  <string name="fab_plugins_add">새로운 플러그인을 추가</string>
-  <string name="plugin_uninstall_title">플러그인을 제거하세요?</string>
-  <string name="plugin_reset_preferences">플러그인 선호도를 재설정</string>
-  <string name="plugin_reset_preferences_summary">플러그인 설정은 기본 설정됩니다</string>
-  <string name="plugin_reset_preferences_ask">플러그인 설정을 다시 설정하고 싶으세요?</string>
-  <string name="plugin_reset_account_preferences_ask">계정 플러그인 설정을 재설정하고 싶으세요?</string>
-  <string name="plugin_successfully_installed">플러그인 <b>%1$s</b> 성공적으로 설치</string>
-  <string name="plugin_install_failure">플러그인을 설치하지 못함: <b>%1$s</b></string>
-  <string name="plugin_recent_version_exception">당신은 더 최근의 버전의: <b>%1$s</b></string>
-  <string name="plugin_same_version_exception"><b>%1$s</b>의 동일한 버전이 설치되어 있습니다</string>
-  <string name="plugin_force_install">강제 설치</string>
-  <string name="plugin_path_image_add">새 이미지를 추가</string>
+  <!--Extension-->
+  <string name="extension_force_install">강제 설치</string>
 </resources>

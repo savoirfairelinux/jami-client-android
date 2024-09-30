@@ -1,11 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--Strings for xml content description of images-->
-  <string name="contact_quick_call_description">Greitasis skambutis</string>
-  <string name="contact_picture_description">Adresato paveikslas</string>
   <string name="dial_numeric_pad">Skaitmeninė klaviatūra</string>
   <string name="contact_unblock">Atblokuoti</string>
-  <string name="video_plugins">Video įrankai</string>
   <string name="file_download_button">Atsisiųsti</string>
   <string name="control_play">Groti</string>
   <string name="control_pause">Pristabdyti</string>

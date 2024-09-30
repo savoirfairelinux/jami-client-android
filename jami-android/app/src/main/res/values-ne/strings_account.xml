@@ -21,25 +21,19 @@
   <string name="dialog_wait_create_details">कृपया तपाईंको नयाँ खाता थपिएसम्म पर्खनुहोस्...</string>
   <string name="dialog_wait_update">खाता अपडेट गर्ने</string>
   <string name="dialog_wait_update_details">कृपया तपाईंको नयाँ खाता अपडेट हुँदा प्रतीक्षा गर्नुहोस्...</string>
-  <string name="dialog_warn_ip2ip_account_title">खाली SIP खाता सिर्जना गर्ने?</string>
-  <string name="dialog_warn_ip2ip_account_message">तपाईं कुनै मान्य होस्टनाम बिना SIP खाता सिर्जना गर्न को लागी हुनुहुन्छ। तपाईं मात्र प्रत्यक्ष आईपी कलहरू गर्न र प्राप्त गर्न सक्षम हुनुहुनेछ। तपाईं पछि आफ्नो खाता सम्पादन गर्न सक्नुहुनेछ</string>
   <string name="account_type_ip2ip">आईपी खाता</string>
   <string name="help_ring">एक Jami खाता तपाईं एक पूर्ण रूपमा वितरित नेटवर्क मार्फत सुरक्षित रूपमा पीयर-टु-पीयर व्यक्तिहरू पुग्न अनुमति दिन्छ।</string>
-  <string name="help_sip_title">आफ्नो SIP खाता थप्नुहोस्</string>
+  <string name="help_sip_title">SIP खाता थप्नुहोस्</string>
   <string name="help_sip">एक विद्यमान SIP खाता कन्फिगर गर्नुहोस्।</string>
-  <string name="create_sip_account">SIP खाता थप्नुहोस्</string>
   <!--Strings related to account deletion-->
-  <string name="account_delete_dialog_title">खाता मेटाउने?</string>
-  <string name="account_delete_dialog_message">यो कार्यलाई उल्टाउन सकिँदैन ।</string>
+  <string name="account_delete_dialog_message">यो कार्यलाई उल्टाउन सकिँदैन।</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">कुनै खाता दर्ता गरिएको छैन</string>
   <string name="normal_accounts_titles">लेखा</string>
-  <string name="normal_devices_titles">जोडिएका उपकरणहरू</string>
+  <string name="normal_devices_titles">जोडिएका यन्त्रहरू</string>
   <string name="account_device_revoke">रिभ्यु उपकरण</string>
   <string name="account_device_revocation_success_title">सफलता</string>
   <string name="account_device_revocation_success">उपकरण अब फिर्ता लिइएको छ!</string>
-  <string name="account_device_revocation_error_title">उपकरण फिर्ता लिन सक्दैन</string>
-  <string name="account_device_revocation_wrong_password">गलत पासवर्ड।</string>
   <string name="account_device_revocation_unknown_device">अज्ञात उपकरण।</string>
   <string name="account_device_revocation_error_unknown">अज्ञात त्रुटि।</string>
   <string name="account_password_change">पासवर्ड परिवर्तन गर्नुहोस्</string>
@@ -61,8 +55,7 @@
   <string name="account_rendezvous_summary">रिन्डेभ्युस मोडमा, आगमन कलहरू सम्मेलन कोठामा थप गरिनेछ।</string>
   <string name="account_upnp_label">UPnP सक्षम गर्नुहोस्</string>
   <string name="account_proxy_field">प्रोक्सी</string>
-  <!--Plugin Details-->
-  <string name="account_preference_plugin_tab">प्लगइनहरू</string>
+  <!--Extension Details-->
   <!--Audio Details-->
   <string name="account_audio_label">अडियो</string>
   <string name="account_preferences_media_tab">मिडिया</string>
@@ -142,35 +135,23 @@
   <string name="export_account_wait_message">निर्यात खाताको जानकारी</string>
   <string name="account_export_file">ब्याकअप खाता</string>
   <string name="account_export_file_summary">तपाईँको खातालाई तपाईँको यन्त्रमा ब्याकअप गर्नुहोस् र यसलाई पछि पुनःस्थापित गर्नुहोस्।</string>
-  <string name="account_export_end_decryption_message">प्रदान गरिएको पासवर्ड प्रयोग गरेर तपाईको खाता अनलक गर्न सकिएन।</string>
   <string name="account_export_end_network_title">नेटवर्क त्रुटि</string>
-  <string name="account_export_end_network_message">नेटवर्कमा खाता निर्यात गर्न सकिएन।</string>
   <string name="account_export_end_error_title">त्रुटि</string>
-  <string name="account_export_end_error_message">खाता निर्यात गर्न सकिएन, अज्ञात त्रुटि भयो।</string>
   <string name="account_enter_password">पासवर्ड प्रविष्ट गर्नुहोस्</string>
-  <string name="account_share_body">मलाई जामी वितरण संचार प्लेटफर्ममा \'%1$s\' प्रयोग गरेर सम्पर्क गर्नुहोस्: %2$s</string>
-  <string name="account_share_body_with_username">मलाई \'%1$s\' वा मेरो सार्वजनिक प्रयोगकर्ता नाम \'%2$s\' प्रयोग गरेर सम्पर्क गर्नुहोस् Jami वितरण संचार प्लेटफर्ममाः %3$s</string>
-  <string name="account_contact_me">मलाई जामीमा सम्पर्क गर्नुहोस्!</string>
+  <string name="account_contact_me">मलाई Jami मा सम्पर्क!</string>
   <string name="update_account">खाता अपडेट गर्ने</string>
   <string name="account_migration">तपाईंको जेमी खाता अपडेट गर्न सकिन्छ। कृपया आफ्नो पासवर्ड प्रविष्ट गर्नुहोस्।</string>
   <string name="ring_account">जमी खाता</string>
   <string name="sip_account">एसआईपी खाता</string>
   <string name="ring_account_identity">पहिचान</string>
   <string name="account_migration_title_dialog">खाता माइग्रेसन</string>
-  <string name="account_migration_message_dialog">तपाईँको खाताहरू अद्यावधिक गर्न आवश्यक छ. के तपाईँ खाता व्यवस्थापन स्क्रिनमा जानुहुन्छ यो कार्य गर्नका लागि?</string>
   <string name="account_update_needed">अपडेट आवश्यक छ</string>
-  <string name="account_cannot_be_found_title">खाता पाउन सकिनँ</string>
-  <string name="account_cannot_be_found_message">खाता Jami नेटवर्क मा फेला पार्न सकेन. यो Jami मा निर्यात गरिएको थियो कि एक अवस्थित उपकरण देखि सुनिश्चित, र कि प्रमाणीकरण सही छन्।</string>
   <string name="account_sip_cannot_be_registered_message">तपाईं खाता सिर्जना प्रक्रिया जारी राख्न सक्नुहुन्छ वा यहाँ आफ्नो जानकारी सम्पादन गर्न सक्नुहुन्छ. संस्करण अझै पनि खाता सेटिंग्स मा पछि सम्भव छ.</string>
-  <string name="account_no_network_title">नेटवर्कमा जडान गर्न सकिनँ</string>
-  <string name="account_no_network_message">जमीले वितरण नेटवर्कमा जडान गर्न सकेनन्।</string>
+  <string name="account_no_network_title">नेटवर्क त्रुटि</string>
   <string name="account_device_added_title">खाता उपकरण थपियो</string>
   <string name="account_device_added_message">तपाईंले यस उपकरणमा आफ्नो जेमी खाता सफलतापूर्वक सेट अप गर्नुभयो।</string>
   <string name="account_device_updated_title">खाता उपकरण अपडेट</string>
   <string name="account_device_updated_message">तपाईंले आफ्नो जेमी खाता सफलतापूर्वक अपडेट गर्नुभयो।</string>
-  <string name="account_cannot_be_updated_message">खाता उपकरण अपडेट हुन सकेन कृपया आफ्नो पासवर्ड जाँच गर्नुहोस्।</string>
-  <string name="account_sip_success_title">सिप खाता दर्ता</string>
-  <string name="account_sip_success_message">तपाईंले आफ्नो सिप खाता सफलतापूर्वक दर्ता गर्नुभएको छ।</string>
   <string name="account_sip_register_anyway">जे भए पनि दर्ता गर्नुहोस्</string>
   <!--TV-->
   <string name="account_tv_settings_header">खाता सेटिंग्स</string>
@@ -190,11 +171,8 @@
   <string name="account_link_export_button">नयाँ उपकरण जडान गर्नुहोस्</string>
   <string name="account_link_show_button">%d थप जोडिएको उपकरण देखाउनुहोस्</string>
   <string name="account_link_hide_button">छुपाएर जडान गरिएको उपकरण</string>
-  <string name="account_link_export_info">यो खाता अन्य उपकरणहरूमा प्रयोग गर्नका लागि तपाईंले पहिले यसलाई Jami मा उजागर गर्नुपर्नेछ। यसले एक पिन कोड उत्पन्न गर्दछ जुन तपाईंले खाता सेट अप गर्न नयाँ उपकरणमा प्रविष्ट गर्नुपर्नेछ। पिन १० मिनेटको लागि मान्य छ।</string>
   <string name="account_start_export_button">पिन उत्पन्न गर्नुहोस्</string>
   <string name="account_end_export_button">नजिक</string>
-  <string name="account_end_export_infos">तपाईंको पिन होः\n\n%%\n\nप्रक्रिया पूरा गर्नका लागि, तपाईंले नयाँ उपकरणमा Jami खोल्नु पर्छ। \"यो उपकरणलाई खातामा लिंक गर्नुहोस्\" को साथ नयाँ खाता सिर्जना गर्नुहोस्। तपाईंको पिन १० मिनेटको लागि मान्य छ।</string>
-  <string name="account_link_export_info_light">यो खाता अन्य उपकरणहरूमा प्रयोग गर्नका लागि तपाईंले पहिले यसलाई Jami मा उजागर गर्नुपर्नेछ। यसले एक पिन कोड उत्पन्न गर्दछ जुन तपाईंले खाता सेट अप गर्न नयाँ उपकरणमा प्रविष्ट गर्नुपर्नेछ। पिन १० मिनेटको लागि मान्य छ।</string>
   <string name="account_export_title">अन्य उपकरणहरूमा लिंक खाता</string>
   <string name="account_connect_server_button">व्यवस्थापन सर्भरमा जडान</string>
   <string name="account_connect_button">जोड्नुहोस्</string>
@@ -226,21 +204,17 @@
   <string name="account_creation_profile">आफ्नो प्रोफाइल सिर्जना गर्नुहोस्</string>
   <string name="account_creation_ring">आफ्नो Jami खाता सिर्जना गर्नुहोस्</string>
   <string name="account_link_title">यो यन्त्रलाई लिंक गर्नुहोस्</string>
-  <string name="account_sip_cannot_be_registered">खाता दर्ता गर्न सकिनँ</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">मेरो खाता सम्पादन गर्नुहोस्</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">पुष्टि गर्न पासवर्ड प्रविष्ट गर्नुहोस्</string>
   <string name="enter_password">पासवर्ड प्रविष्ट गर्नुहोस्</string>
   <string name="revoke_device_title">रिभ्यु उपकरण</string>
-  <string name="revoke_device_message">के तपाईँ %1$s रद्द गर्न चाहनुहुन्छ?</string>
   <string name="revoke_device_wait_title">कृपया प्रतीक्षा गर्नुहोस्...</string>
   <string name="revoke_device_wait_message">रिभोकेसन उपकरण</string>
   <string name="rename_device_title">यो यन्त्रको नाम परिवर्तन गर्नुहोस्</string>
   <string name="rename_device_message">तपाईंको Jami खातामा यो उपकरण पहिचान गर्न नयाँ नाम चयन गर्नुहोस्</string>
   <string name="rename_device_button">नाम परिवर्तन गर्ने यन्त्र</string>
   <string name="account_rename_device_hint">नयाँ यन्त्रको नाम चयन गर्नुहोस्</string>
-  <string name="account_device_name_empty">यन्त्रको नाम खाली हुन सक्दैन</string>
   <string name="account_device_this_indicator">यो यन्त्र</string>
   <string name="account_disabled_indicator">अपाङ्ग</string>
   <!--Link a new device-->

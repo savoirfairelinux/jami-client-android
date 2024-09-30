@@ -21,25 +21,18 @@
   <string name="dialog_wait_create_details">Bíodh súil agat le do chuntas nua a chur leis...</string>
   <string name="dialog_wait_update">Cunntas nuashonrú</string>
   <string name="dialog_wait_update_details">Bíodh súil agat le do chuntas nua a nuashonrú...</string>
-  <string name="dialog_warn_ip2ip_account_title">Creidigh cuntas SIP folamh?</string>
-  <string name="dialog_warn_ip2ip_account_message">Tá tú ag dul chun cuntas SIP a chruthú gan ainm óstála bailí. Ní bheidh tú in ann glaochanna IP díreach a dhéanamh agus a fháil ach. Is féidir leat do chuntas a eagarthú níos déanaí</string>
   <string name="account_type_ip2ip">Conta IP</string>
   <string name="help_ring">Ligeann cuntas Jami duit daoine a bhaint amach go sábháilte in peer to peer trí líonra atá scaipthe go hiomlán.</string>
-  <string name="help_sip_title">Cuir do chuntas SIP</string>
+  <string name="help_sip_title">Cuid SIP a chur leis</string>
   <string name="help_sip">Cinntíonn cuntas SIP atá ann cheana féin.</string>
-  <string name="create_sip_account">Cuid SIP a chur leis</string>
   <!--Strings related to account deletion-->
-  <string name="account_delete_dialog_title">A scriosadh cuntas?</string>
-  <string name="account_delete_dialog_message">Ní féidir an gníomh seo a dhéanamh ar ais.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Níl aon chuntas cláraithe</string>
   <string name="normal_accounts_titles">Contae</string>
-  <string name="normal_devices_titles">Feistí a Chonaonactar</string>
+  <string name="normal_devices_titles">Feistí ceangailte</string>
   <string name="account_device_revoke">Iarráid athchóirithe</string>
   <string name="account_device_revocation_success_title">Is rath é</string>
   <string name="account_device_revocation_success">Tá an gléas curtha ar ais anois!</string>
-  <string name="account_device_revocation_error_title">Ní féidir an gléas a tharraingt siar</string>
-  <string name="account_device_revocation_wrong_password">Pasfhocal mícheart.</string>
   <string name="account_device_revocation_unknown_device">Feiste neamhaithne.</string>
   <string name="account_device_revocation_error_unknown">Mearachta neamhiomlán.</string>
   <string name="account_password_change">Pasfhocal a athrú</string>
@@ -61,8 +54,7 @@
   <string name="account_rendezvous_summary">I modh Rendezvous, cuirfear glaonna iontrála isteach i seomra comhdhála.</string>
   <string name="account_upnp_label">Céadú UPnP</string>
   <string name="account_proxy_field">Cláir</string>
-  <!--Plugin Details-->
-  <string name="account_preference_plugin_tab">Plugins</string>
+  <!--Extension Details-->
   <!--Audio Details-->
   <string name="account_audio_label">Audio</string>
   <string name="account_preferences_media_tab">Meáin</string>
@@ -142,14 +134,9 @@
   <string name="export_account_wait_message">faisnéis cuntas onnmhairithe</string>
   <string name="account_export_file">Cunntas cúltaca</string>
   <string name="account_export_file_summary">Cúltaca do chuntas ar do ghléas chun é a athshlánú níos déanaí.</string>
-  <string name="account_export_end_decryption_message">Ní raibh sé in ann do chuntas a oscailt ag baint úsáide as an pasfhocal a thugtar.</string>
   <string name="account_export_end_network_title">Measáin</string>
-  <string name="account_export_end_network_message">Ní raibh aon chuntas ar an líonra a onnmhairiú.</string>
   <string name="account_export_end_error_title">Meas</string>
-  <string name="account_export_end_error_message">Ní raibh an cuntas a onnmhairiú.</string>
   <string name="account_enter_password">Cluiche Pasfhocal</string>
-  <string name="account_share_body">Déan teagmháil liom ag baint úsáide as \'%1$s\' ar an ardán cumarsáide dáileadh Jami: %2$s</string>
-  <string name="account_share_body_with_username">Déan teagmháil liom ag baint úsáide as \'%1$s\' nó mo ainm úsáideora poiblí \'%2$s\' ar an ardán cumarsáide dáileadh Jami: %3$s</string>
   <string name="account_contact_me">Déan teagmháil liom ar Jami!</string>
   <string name="update_account">Cunntas nuashonrú</string>
   <string name="account_migration">Is féidir do chuntas Jami a nuashonrú.\nLe do thoil cuir isteach do phasfhocal.</string>
@@ -157,20 +144,13 @@
   <string name="sip_account">Cuntas SIP</string>
   <string name="ring_account_identity">Úinéir</string>
   <string name="account_migration_title_dialog">Imirce cuntas</string>
-  <string name="account_migration_message_dialog">Ba chóir do chuntais a nuashonrú. An bhfuil tú ag iarraidh dul chuig an scáileán bainistiú Cuntais chun an oibríocht seo a dhéanamh?</string>
   <string name="account_update_needed">Ag cur chun cinn a dhéanamh</string>
-  <string name="account_cannot_be_found_title">Ní féidir a fháil cuntas</string>
-  <string name="account_cannot_be_found_message">Ní raibh aon chuntas le fáil ar an líonra Jami.\nFuarthas cinnte go raibh sé ar onnmhairí ar Jami ó ghléas atá ann cheana féin, agus go bhfuil na credentials a sholáthar ceart.</string>
   <string name="account_sip_cannot_be_registered_message">Is féidir leat leanúint leis an bpróiseas cruthaitheachta cuntas nó do chuid faisnéise a eisiúint anseo. Is féidir é a eisiúint níos déanaí sa shuíomh.</string>
-  <string name="account_no_network_title">Ní féidir a nascadh leis an líonra</string>
-  <string name="account_no_network_message">Ní raibh mé in ann cuntas a chur leis toisc nach raibh Jami in ann nasc a dhéanamh leis an líonra dáileadh.</string>
+  <string name="account_no_network_title">Measáin</string>
   <string name="account_device_added_title">Úinéireacht cuntas breise</string>
   <string name="account_device_added_message">Tá tú a chur ar bun go rathúil do chuntas Jami ar an gléas seo.</string>
   <string name="account_device_updated_title">Úrsáid nua-aimseartha ar an gcuntas</string>
   <string name="account_device_updated_message">Tá tú ag nuashonrú go rathúil do chuntas Jami.</string>
-  <string name="account_cannot_be_updated_message">Ní raibh an t-inneall cuntas ag dul i láthair. Léigh do phasfhocal.</string>
-  <string name="account_sip_success_title">Cunntas Sip cláraithe</string>
-  <string name="account_sip_success_message">Tá tú tar éis do chuntas Sip a chlárú go rathúil.</string>
   <string name="account_sip_register_anyway">Déan clárú mar sin féin</string>
   <!--TV-->
   <string name="account_tv_settings_header">Cinntí cuntas</string>
@@ -190,11 +170,8 @@
   <string name="account_link_export_button">Déan nasc a dhéanamh ar ghléas nua</string>
   <string name="account_link_show_button">Taispeánadh %d níos mó feiste ceangailte</string>
   <string name="account_link_hide_button">Iarrann an t-ionad ceangailte le críocha an Rialacháin seo</string>
-  <string name="account_link_export_info">Chun an cuntas seo a úsáid ar ghléasanna eile, ní mór duit é a nochtadh ar Jami ar dtús.</string>
   <string name="account_start_export_button">Pin a ghiniúint</string>
   <string name="account_end_export_button">go dlúth</string>
-  <string name="account_end_export_infos">Is é do PIN:\n\n%%\n\nDhéan an próiseas a chríochnú, ní mór duit Jami a oscailt ar an gléas nua. Cruthaigh cuntas nua le \"Connect this device to an account\". Tá do PIN bailí ar feadh 10 nóiméad.</string>
-  <string name="account_link_export_info_light">Chun an cuntas seo a úsáid ar ghléasanna eile, ní mór duit é a nochtadh ar Jami ar dtús.</string>
   <string name="account_export_title">Contae nasc chuig feistí eile</string>
   <string name="account_connect_server_button">Déan nasc chuig an tseirbhís bainistíochta</string>
   <string name="account_connect_button">Déan nasc</string>
@@ -226,21 +203,17 @@
   <string name="account_creation_profile">Cruthaigh do phróifíl</string>
   <string name="account_creation_ring">Cruthaigh do chuntas Jami</string>
   <string name="account_link_title">Déan nasc leis an gléas seo</string>
-  <string name="account_sip_cannot_be_registered">Ní féidir le cuntas a chlárú</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">Déan mo chuntas a eisiamh</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Cuir pasfhocal isteach chun a dhearbhú</string>
   <string name="enter_password">Cluiche Pasfhocal</string>
   <string name="revoke_device_title">Iarráid athchóirithe</string>
-  <string name="revoke_device_message">An bhfuil tú cinnte gur mhaith leat %1$s a tharraingt siar?</string>
   <string name="revoke_device_wait_title">Fan ar fad, le do thoil...</string>
   <string name="revoke_device_wait_message">Seánán a tharraingt siar</string>
   <string name="rename_device_title">Ath-ainmniú an fheiste seo</string>
   <string name="rename_device_message">Roghnaigh ainm nua chun an gléas seo a aithint i do chuntas Jami</string>
   <string name="rename_device_button">Ionstraimí athchóirithe</string>
   <string name="account_rename_device_hint">Roghnaigh ainm an t-inneal nua</string>
-  <string name="account_device_name_empty">Ní féidir ainm an gléas a bheith folamh</string>
   <string name="account_device_this_indicator">An t-ordú seo</string>
   <string name="account_disabled_indicator">mí-úsáidte</string>
   <!--Link a new device-->

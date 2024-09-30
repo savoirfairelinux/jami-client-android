@@ -21,25 +21,19 @@
   <string name="dialog_wait_create_details">దయచేసి మీ కొత్త ఖాతా జోడించే వరకు వేచి ఉండండి.</string>
   <string name="dialog_wait_update">ఖాతా నవీకరణ</string>
   <string name="dialog_wait_update_details">దయచేసి మీ కొత్త ఖాతా నవీకరించబడినప్పుడు వేచి ఉండండి.</string>
-  <string name="dialog_warn_ip2ip_account_title">ఖాళీ SIP ఖాతా సృష్టించడానికి?</string>
-  <string name="dialog_warn_ip2ip_account_message">మీరు చెల్లుబాటు అయ్యే హోస్ట్ పేరు లేకుండా SIP ఖాతాను సృష్టించబోతున్నారు. మీరు ప్రత్యక్ష IP కాల్స్ మాత్రమే చేయవచ్చు మరియు స్వీకరించవచ్చు. మీరు మీ ఖాతాను తరువాత సవరించవచ్చు</string>
   <string name="account_type_ip2ip">ఐపి ఖాతా</string>
   <string name="help_ring">జామి ఖాతా మీకు పూర్తిగా పంపిణీ చేయబడిన నెట్వర్క్ ద్వారా సురక్షితంగా పీర్-టు-పీర్ వ్యక్తులతో సంప్రదించడానికి అనుమతిస్తుంది.</string>
-  <string name="help_sip_title">మీ SIP ఖాతాను జోడించండి</string>
+  <string name="help_sip_title">SIP ఖాతాను జోడించండి</string>
   <string name="help_sip">ఇప్పటికే ఉన్న SIP ఖాతాను కాన్ఫిగర్ చేయండి.</string>
-  <string name="create_sip_account">SIP ఖాతాను జోడించండి</string>
   <!--Strings related to account deletion-->
-  <string name="account_delete_dialog_title">ఖాతాను తొలగించు?</string>
   <string name="account_delete_dialog_message">ఈ చర్యను తిరస్కరించలేము.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">ఖాతా నమోదు చేయలేదు</string>
   <string name="normal_accounts_titles">ఖాతాలు</string>
-  <string name="normal_devices_titles">అనుసంధాన పరికరాలు</string>
+  <string name="normal_devices_titles">లింక్ చేయబడిన పరికరాలు</string>
   <string name="account_device_revoke">ఉపకరణాన్ని రద్దు చేయడం</string>
   <string name="account_device_revocation_success_title">విజయం</string>
   <string name="account_device_revocation_success">పరికరం ఇప్పుడు రద్దు!</string>
-  <string name="account_device_revocation_error_title">పరికరం రద్దు చేయలేరు</string>
-  <string name="account_device_revocation_wrong_password">తప్పు పాస్వర్డ్.</string>
   <string name="account_device_revocation_unknown_device">తెలియని పరికరం.</string>
   <string name="account_device_revocation_error_unknown">తెలియని లోపం.</string>
   <string name="account_password_change">పాస్వర్డ్ మార్చు</string>
@@ -61,8 +55,7 @@
   <string name="account_rendezvous_summary">రిసెప్షన్ మోడ్ లో, ఇన్కమింగ్ కాల్స్ సమావేశ గదికి జోడించబడతాయి.</string>
   <string name="account_upnp_label">UPnP ని సక్రియం చేయండి</string>
   <string name="account_proxy_field">ప్రాక్సీ</string>
-  <!--Plugin Details-->
-  <string name="account_preference_plugin_tab">ప్లగిన్లు</string>
+  <!--Extension Details-->
   <!--Audio Details-->
   <string name="account_audio_label">ఆడియో</string>
   <string name="account_preferences_media_tab">మీడియా</string>
@@ -142,14 +135,9 @@
   <string name="export_account_wait_message">ఎగుమతి ఖాతా సమాచారం</string>
   <string name="account_export_file">బ్యాకప్ ఖాతా</string>
   <string name="account_export_file_summary">మీ ఖాతాను మీ పరికరంలో బ్యాకప్ చేసి, తరువాత దాన్ని పునరుద్ధరించండి.</string>
-  <string name="account_export_end_decryption_message">ఇచ్చిన పాస్వర్డ్ను ఉపయోగించి మీ ఖాతాను అన్లాక్ చేయలేకపోయాను.</string>
   <string name="account_export_end_network_title">నెట్వర్క్ లోపం</string>
-  <string name="account_export_end_network_message">నెట్వర్క్ లో ఖాతా ఎగుమతి చేయలేకపోయాను. మీ కనెక్టివిటీ తనిఖీ.</string>
   <string name="account_export_end_error_title">తప్పు</string>
-  <string name="account_export_end_error_message">ఖాతాను ఎగుమతి చేయలేకపోయాను. తెలియని లోపం సంభవించింది.</string>
   <string name="account_enter_password">పాస్వర్డ్ను నమోదు చేయండి</string>
-  <string name="account_share_body">జామి పంపిణీ కమ్యూనికేషన్ ప్లాట్ఫామ్లో \'%1$s\' ఉపయోగించి నన్ను సంప్రదించండిః %2$s</string>
-  <string name="account_share_body_with_username">జామి పంపిణీ కమ్యూనికేషన్ ప్లాట్ఫామ్లో \'%1$s\' లేదా నా పబ్లిక్ యూజర్పేరు \'%2$s\' ఉపయోగించి నన్ను సంప్రదించండిః %3$s</string>
   <string name="account_contact_me">Jami వద్ద నాకు సంప్రదించండి!</string>
   <string name="update_account">ఖాతా నవీకరణ</string>
   <string name="account_migration">మీ జమీ ఖాతా నవీకరించబడుతుంది. దయచేసి మీ పాస్వర్డ్ను నమోదు చేయండి.</string>
@@ -157,20 +145,13 @@
   <string name="sip_account">SIP ఖాతా</string>
   <string name="ring_account_identity">గుర్తింపు</string>
   <string name="account_migration_title_dialog">ఖాతా వలస</string>
-  <string name="account_migration_message_dialog">మీ ఖాతాలను నవీకరించాలి. ఈ ఆపరేషన్ను నిర్వహించడానికి మీరు ఖాతా నిర్వహణ స్క్రీన్కు వెళ్లాలనుకుంటున్నారా?</string>
   <string name="account_update_needed">నవీకరణ అవసరం</string>
-  <string name="account_cannot_be_found_title">ఖాతా కనుగొనలేము</string>
-  <string name="account_cannot_be_found_message">ఖాతా Jami నెట్వర్క్ లో కనుగొనబడలేదు. అది ఇప్పటికే ఉన్న పరికరం నుండి Jami ఎగుమతి చేయబడింది నిర్ధారించుకోండి, మరియు ఆధారాలు సరైనవి అందించిన.</string>
   <string name="account_sip_cannot_be_registered_message">మీరు ఖాతా సృష్టి ప్రక్రియను కొనసాగించవచ్చు లేదా మీ సమాచారాన్ని ఇక్కడ సవరించవచ్చు. ఖాతా సెట్టింగులలో తరువాత ఎడిషన్ ఇప్పటికీ సాధ్యమే.</string>
-  <string name="account_no_network_title">నెట్వర్క్ కనెక్ట్ కాలేదు</string>
-  <string name="account_no_network_message">జమీ పంపిణీ నెట్వర్క్కు కనెక్ట్ కాలేదు కాబట్టి ఖాతాను జోడించలేకపోయాను. మీ పరికర కనెక్షన్ తనిఖీ చేయండి.</string>
+  <string name="account_no_network_title">నెట్వర్క్ లోపం</string>
   <string name="account_device_added_title">ఖాతా పరికరం జోడించబడింది</string>
   <string name="account_device_added_message">మీరు ఈ పరికరంలో మీ జామి ఖాతాను విజయవంతంగా సెటప్ చేశారు.</string>
   <string name="account_device_updated_title">ఖాతా పరికరం నవీకరించబడింది</string>
   <string name="account_device_updated_message">మీరు మీ జమీ ఖాతాను విజయవంతంగా నవీకరించారు.</string>
-  <string name="account_cannot_be_updated_message">ఖాతా పరికరం నవీకరించబడలేదు. దయచేసి మీ పాస్వర్డ్ను తనిఖీ చేయండి.</string>
-  <string name="account_sip_success_title">సిప్ ఖాతా నమోదు</string>
-  <string name="account_sip_success_message">మీరు మీ సిప్ ఖాతాను విజయవంతంగా నమోదు చేశారు.</string>
   <string name="account_sip_register_anyway">ఏమైనప్పటికీ నమోదు</string>
   <!--TV-->
   <string name="account_tv_settings_header">ఖాతా సెట్టింగులు</string>
@@ -190,11 +171,8 @@
   <string name="account_link_export_button">కొత్త పరికరాన్ని లింక్ చేయండి</string>
   <string name="account_link_show_button">%d మరింత లింక్ చేయబడిన పరికరాన్ని చూపించు</string>
   <string name="account_link_hide_button">లింక్ చేయబడిన పరికరాన్ని దాచండి</string>
-  <string name="account_link_export_info">ఈ ఖాతాను ఇతర పరికరాల్లో ఉపయోగించడానికి, మీరు మొదట దానిని Jami లో బహిర్గతం చేయాలి. ఇది ఒక PIN కోడ్ను ఉత్పత్తి చేస్తుంది. ఖాతాను సెటప్ చేయడానికి మీరు కొత్త పరికరంలో నమోదు చేయాలి. PIN 10 నిమిషాలు చెల్లుతుంది.</string>
   <string name="account_start_export_button">PIN ను రూపొందించండి</string>
   <string name="account_end_export_button">దగ్గరగా</string>
-  <string name="account_end_export_infos">మీ PIN:\n\n%%\n\nప్రక్రియను పూర్తి చేయడానికి, మీరు కొత్త పరికరంలో Jami ని తెరవాలి. \"ఈ పరికరాన్ని ఖాతాకు లింక్ చేయండి\" అనే కొత్త ఖాతాను సృష్టించండి. మీ PIN 10 నిమిషాలు చెల్లుతుంది.</string>
-  <string name="account_link_export_info_light">ఈ ఖాతాను ఇతర పరికరాల్లో ఉపయోగించడానికి, మీరు మొదట దానిని Jami లో బహిర్గతం చేయాలి. ఇది ఒక PIN కోడ్ను ఉత్పత్తి చేస్తుంది. ఖాతాను సెటప్ చేయడానికి మీరు కొత్త పరికరంలో నమోదు చేయాలి. PIN 10 నిమిషాలు చెల్లుతుంది.</string>
   <string name="account_export_title">ఇతర పరికరాలకు లింక్ ఖాతా</string>
   <string name="account_connect_server_button">నిర్వహణ సర్వర్కు కనెక్ట్</string>
   <string name="account_connect_button">కనెక్ట్</string>
@@ -226,21 +204,17 @@
   <string name="account_creation_profile">మీ ప్రొఫైల్ను సృష్టించండి</string>
   <string name="account_creation_ring">మీ జామి ఖాతాను సృష్టించండి</string>
   <string name="account_link_title">ఈ పరికరాన్ని లింక్ చేయండి</string>
-  <string name="account_sip_cannot_be_registered">ఖాతా నమోదు చేయలేను</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">నా ఖాతాను సవరించు</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">నిర్ధారించడానికి పాస్వర్డ్ను నమోదు చేయండి</string>
   <string name="enter_password">పాస్వర్డ్ను నమోదు చేయండి</string>
   <string name="revoke_device_title">ఉపకరణాన్ని రద్దు చేయడం</string>
-  <string name="revoke_device_message">%1$s ను రద్దు చేయాలనుకుంటున్నారా అని మీకు ఖచ్చితంగా తెలుసా?</string>
   <string name="revoke_device_wait_title">దయచేసి వేచి ఉండండి.</string>
   <string name="revoke_device_wait_message">ఉపసంహరించుకునే పరికరం</string>
   <string name="rename_device_title">ఈ పరికరాన్ని పేరు మార్చు</string>
   <string name="rename_device_message">మీ Jami ఖాతాలో ఈ పరికరాన్ని గుర్తించడానికి కొత్త పేరును ఎంచుకోండి</string>
   <string name="rename_device_button">పేరు మార్చు పరికరం</string>
   <string name="account_rename_device_hint">కొత్త పరికర పేరును ఎంచుకోండి</string>
-  <string name="account_device_name_empty">పరికరం పేరు ఖాళీగా ఉండకూడదు</string>
   <string name="account_device_this_indicator">ఈ పరికరం</string>
   <string name="account_disabled_indicator">వికలాంగులు</string>
   <!--Link a new device-->

@@ -21,16 +21,12 @@
   <string name="dialog_wait_create_details">Жаңа тіркелгіңіз қосылғанша күтіңіз...</string>
   <string name="dialog_wait_update">Жаңалық тіркелгі</string>
   <string name="dialog_wait_update_details">Жаңа тіркелгіңіз жаңартылып жатқанша күтіңіздерші...</string>
-  <string name="dialog_warn_ip2ip_account_title">СИП-тегі бос тіркелгі құру?</string>
-  <string name="dialog_warn_ip2ip_account_message">Сіз жарамды хост атауы жоқ SIP тіркелгісін құруға жақындасыз. Сіз тек тікелей IP шақыруларды жасай аласыз және ала аласыз. Сіз тіркелгіңізді кейін өңдеуге болады</string>
   <string name="account_type_ip2ip">IP шоты</string>
   <string name="help_ring">Jami тіркелгісі сізге толық таралған желі арқылы адамдармен қауіпсіз түрде достармен байланысуға мүмкіндік береді.</string>
-  <string name="help_sip_title">SIP тіркелгіңізді қосу</string>
+  <string name="help_sip_title">SIP тіркелгісін қосу</string>
   <string name="help_sip">Қолданыстағы SIP тіркелгісін баптау.</string>
-  <string name="create_sip_account">SIP тіркелгісін қосу</string>
   <!--Strings related to account deletion-->
-  <string name="account_delete_dialog_title">Тіркелгісін өшіру?</string>
-  <string name="account_delete_dialog_message">Бұл әрекет қайталанбайды.</string>
+  <string name="account_delete_dialog_message">Бұл іс-әрекет кері қайтарылмайды.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Тіркелген шот жоқ</string>
   <string name="normal_accounts_titles">Есеп айырысу</string>
@@ -38,8 +34,6 @@
   <string name="account_device_revoke">Қайта шығару құрылғысы</string>
   <string name="account_device_revocation_success_title">Жеңіс</string>
   <string name="account_device_revocation_success">Құрылғы қазір кері қайтарып алынды!</string>
-  <string name="account_device_revocation_error_title">Құрылғыны қайтарып ала алмаймын</string>
-  <string name="account_device_revocation_wrong_password">Қате пароль.</string>
   <string name="account_device_revocation_unknown_device">Белгісіз құрылғы.</string>
   <string name="account_device_revocation_error_unknown">Белгісіз қате.</string>
   <string name="account_password_change">Парольді өзгерту</string>
@@ -61,8 +55,7 @@
   <string name="account_rendezvous_summary">Кездесу режимімен кіріс қоңыраулар конференц-залға қосылады.</string>
   <string name="account_upnp_label">UPnP- ды қосу</string>
   <string name="account_proxy_field">Прокси</string>
-  <!--Plugin Details-->
-  <string name="account_preference_plugin_tab">Қосылмалар</string>
+  <!--Extension Details-->
   <!--Audio Details-->
   <string name="account_audio_label">Аудио</string>
   <string name="account_preferences_media_tab">БАҚ</string>
@@ -142,14 +135,9 @@
   <string name="export_account_wait_message">Экспорттық шоттар туралы ақпарат</string>
   <string name="account_export_file">Жасақтау шоты</string>
   <string name="account_export_file_summary">Тіркелгіңізді құрылғыңызда көшіріп алып, кейін қалпына келтіріңіз.</string>
-  <string name="account_export_end_decryption_message">Келтірілген парольді пайдалана отырып, тіркелгіңізді ашу мүмкін емес.</string>
   <string name="account_export_end_network_title">Желі қатесі</string>
-  <string name="account_export_end_network_message">Желідегі тіркелгіңізді экспорттай алмадым.</string>
   <string name="account_export_end_error_title">Қате</string>
-  <string name="account_export_end_error_message">Есепті экспорттай алмадым, белгісіз қате пайда болды.</string>
   <string name="account_enter_password">Парольді келтіріңіз</string>
-  <string name="account_share_body">Jami таратушы байланыс платформасында \'%1$s\' арқылы маған хабарласыңыз: %2$s</string>
-  <string name="account_share_body_with_username">Jami таратушы байланыс платформасында \'%1$s\' немесе менің қоғамдық пайдаланушы атым \'%2$s\' арқылы маған хабарласыңыз: %3$s</string>
   <string name="account_contact_me">Jami-де менімен байланысыңыз!</string>
   <string name="update_account">Тіркелгілерді жаңарту</string>
   <string name="account_migration">Сіздің Jami тіркелгіңіз жаңартылуы мүмкін.</string>
@@ -157,20 +145,13 @@
   <string name="sip_account">СИП шоты</string>
   <string name="ring_account_identity">Жеке басын анықтау</string>
   <string name="account_migration_title_dialog">Есепшот көшіру</string>
-  <string name="account_migration_message_dialog">Бұл операцияны орындау үшін Сіз \"Актуттарды басқару\" терезесіне өтуіңіз керек пе?</string>
   <string name="account_update_needed">Жаңарту қажет</string>
-  <string name="account_cannot_be_found_title">Есеп таба алмаймын</string>
-  <string name="account_cannot_be_found_message">Тіркелгі Джами желісінде табылмады. Жамиге бар құрылғыдан экспортталғандығын тексеріңіз.</string>
   <string name="account_sip_cannot_be_registered_message">Сіз тіркелгі құру процесіне жалғаса аласыз немесе ақпаратты осы жерден өңдеуіңіз мүмкін.</string>
-  <string name="account_no_network_title">Желіге қосыла алмаймын</string>
-  <string name="account_no_network_message">Жами таратушы желіге қосылмады, сондықтан тіркелгіңізді қосуға болмайды.</string>
+  <string name="account_no_network_title">Желі қатесі</string>
   <string name="account_device_added_title">Есептік жазба құрылғысы қосылды</string>
   <string name="account_device_added_message">Сіз осы құрылғыда Jami тіркелгіңізді сәтті орнаттыңыз.</string>
   <string name="account_device_updated_title">Есептік жазба құрылғысы жаңартылды</string>
   <string name="account_device_updated_message">Сіз Жами тіркелгіңізді сәтті жаңарттыңыз.</string>
-  <string name="account_cannot_be_updated_message">Тіркелгі құрылғысы жаңартылмады.</string>
-  <string name="account_sip_success_title">Тіркелген SIP шоты</string>
-  <string name="account_sip_success_message">Сіз \"Sip\" тіркелгіңізді сәтті тіркедіңіз.</string>
   <string name="account_sip_register_anyway">Қалай болса да тіркелсеңіз</string>
   <!--TV-->
   <string name="account_tv_settings_header">Есепшоттың параметрлері</string>
@@ -190,11 +171,8 @@
   <string name="account_link_export_button">Жаңа құрылғыны қосу</string>
   <string name="account_link_show_button">%d қосылған құрылғыны көрсету</string>
   <string name="account_link_hide_button">Қосылған құрылғыны жасыру</string>
-  <string name="account_link_export_info">Бұл тіркелгі басқа құрылғыларда пайдалану үшін сіз оны Jami-де жариялауыңыз керек. Бұл жаңа құрылғыда тіркелгі орнату үшін кіруіңіз керек PIN кодын шығарады. PIN 10 минутқа жарамды.</string>
   <string name="account_start_export_button">PIN кодын шығару</string>
   <string name="account_end_export_button">жақындау</string>
-  <string name="account_end_export_infos">Сіздің PIN-сіңіз:\n\n%%\n\nПроцессті аяқтау үшін сіз жаңа құрылғыда Jami-ді ашуыңыз керек. \"Бұл құрылғыны тіркелгіге қосыңыз\" деген жаңа тіркелгі құру. Сіздің PIN-сіңіз 10 минутқа жарамды.</string>
-  <string name="account_link_export_info_light">Бұл тіркелгі басқа құрылғыларда пайдалану үшін сіз оны Jami-де жариялауыңыз керек. Бұл жаңа құрылғыда тіркелгі орнату үшін кіруіңіз керек PIN кодын шығарады. PIN 10 минутқа жарамды.</string>
   <string name="account_export_title">Басқа құрылғыларға сілтеме беру</string>
   <string name="account_connect_server_button">Басқару серверіне қосылу</string>
   <string name="account_connect_button">Қосылыңыз</string>
@@ -226,21 +204,17 @@
   <string name="account_creation_profile">Профиліңізді құру</string>
   <string name="account_creation_ring">Jami тіркелгіңізді құру</string>
   <string name="account_link_title">Құрылғыны қосыңыз</string>
-  <string name="account_sip_cannot_be_registered">Тіркелгі тіркелмеді</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">Тіркелімді өңдеу</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Құжатты растау үшін парольді келтіріңіз</string>
   <string name="enter_password">Парольді келтіріңіз</string>
   <string name="revoke_device_title">Қайта шығару құрылғысы</string>
-  <string name="revoke_device_message">%1$s-ды қайтарып алуыңыздың рас па?</string>
   <string name="revoke_device_wait_title">Күте көріңіз...</string>
   <string name="revoke_device_wait_message">Қайтарып алу құрылғысы</string>
   <string name="rename_device_title">Құрылғының атын өзгерту</string>
   <string name="rename_device_message">Jami тіркелгіңізде осы құрылғыны анықтау үшін жаңа атауды таңдаңыз</string>
   <string name="rename_device_button">Атауын өзгерту құрылғысы</string>
   <string name="account_rename_device_hint">Жаңа құрылғыны таңдау</string>
-  <string name="account_device_name_empty">Құрылғының атауы бос бола алмайды</string>
   <string name="account_device_this_indicator">Бұл құрылғы</string>
   <string name="account_disabled_indicator">мүгедек</string>
   <!--Link a new device-->

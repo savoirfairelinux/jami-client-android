@@ -27,7 +27,6 @@
   <string name="pref_startOnBoot_title">起動時にJamiを開始</string>
   <string name="pref_startOnBoot_summary">端末の起動時にバックグラウンドで Jami を実行します</string>
   <string name="pref_clearHistory_title">履歴を消去</string>
-  <string name="pref_clearHistory_summary">すべての会話履歴を消去します。この操作は元に戻せません。</string>
   <string name="pref_notification_title">ロック画面上での通知</string>
   <string name="pref_notification_summary">ロック画面上でもアプリからの通知が見えるようにします。</string>
   <string name="pref_blackList_title">着信拒否一覧</string>
@@ -52,19 +51,6 @@
   <string name="notification_public">公開\n（ロック画面に通知とその内容を表示する）\n</string>
   <string name="notification_private">秘密\n（ロック画面で通知する際は内容を隠す）\n</string>
   <string name="notification_secret">秘匿\n（ロック画面では通知を表示しない）</string>
-  <!--Plugin-->
-  <string name="pref_plugins_title">拡張機能</string>
-  <string name="pref_plugins_summary">拡張機能を有効にして動作を設定する</string>
-  <string name="fab_plugins_add">新しい追加機能を追加</string>
-  <string name="plugin_uninstall_title">追加機能を削除しますか？</string>
-  <string name="plugin_reset_preferences">追加機能の設定を初期化する</string>
-  <string name="plugin_reset_preferences_summary">追加機能の設定を初期化します</string>
-  <string name="plugin_reset_preferences_ask">プラグインの設定をリセットしたいですか?</string>
-  <string name="plugin_reset_account_preferences_ask">アカウントプラグインの設定をリセットしたいですか?</string>
-  <string name="plugin_successfully_installed">追加機能 <b>%1$s</b> が正しく導入されました</string>
-  <string name="plugin_install_failure">次の追加機能を導入できませんでした: <b>%1$s</b></string>
-  <string name="plugin_recent_version_exception">新しい版次が導入済みです: <b>%1$s</b></string>
-  <string name="plugin_same_version_exception">同じ版次の <b>%1$s</b> が導入済みです</string>
-  <string name="plugin_force_install">強制的に\n導入する</string>
-  <string name="plugin_path_image_add">新しい画像を追加</string>
+  <!--Extension-->
+  <string name="extension_force_install">強制的に\n導入する</string>
 </resources>

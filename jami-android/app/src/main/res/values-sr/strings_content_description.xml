@@ -1,11 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--Strings for xml content description of images-->
-  <string name="contact_quick_call_description">Brzi poziv</string>
-  <string name="contact_picture_description">Slika kontakta</string>
   <string name="dial_numeric_pad">Numerička tastatura</string>
   <string name="contact_unblock">Deblokiraj</string>
-  <string name="video_plugins">Video dodaci</string>
   <string name="file_download_button">Preuzimanje</string>
   <string name="control_play">Pusti</string>
   <string name="control_replay">Ponovi</string>

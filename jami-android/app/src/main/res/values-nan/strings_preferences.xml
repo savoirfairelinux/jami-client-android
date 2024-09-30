@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--Notifications Visibility-->
-  <!--Plugin-->
-  <string name="plugin_invalid_signature"><b>%1$s</b>具有无效的签名</string>
-  <string name="plugin_invalid_authority">无法验证的权限：<b>%1$s</b></string>
-  <string name="plugin_invalid_format">插件格式无效：<b>%1$s</b></string>
+  <!--Extension-->
+  <string name="pref_extensions_title">扩展</string>
+  <string name="extension_invalid_signature"><b>%1$s</b>具有无效的签名</string>
+  <string name="extension_force_install">强制 \n 安装</string>
 </resources>

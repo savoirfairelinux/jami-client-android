@@ -27,7 +27,6 @@
   <string name="pref_startOnBoot_title">स्टार्टअप पर Jami शुरू करें</string>
   <string name="pref_startOnBoot_summary">जब सिस्टम शुरू होता है तो जेमी को पृष्ठभूमि में चलाएं।</string>
   <string name="pref_clearHistory_title">स्पष्ट इतिहास</string>
-  <string name="pref_clearHistory_summary">सभी वार्तालापों के इतिहास को साफ़ करें।</string>
   <string name="pref_notification_title">सूचनाओं की दृश्यता</string>
   <string name="pref_notification_summary">लॉक स्क्रीन पर एप्लिकेशन सूचनाओं की दृश्यता सेट करें।</string>
   <string name="pref_blackList_title">ब्लॉक सूची</string>
@@ -52,19 +51,6 @@
   <string name="notification_public">सार्वजनिक \n(लॉक स्क्रीन पर सूचनाएँ और उनकी सामग्री दिखाएं) \n</string>
   <string name="notification_private">निजी \n(सूचनाएँ दिखाएँ लेकिन लॉक स्क्रीन पर उनकी सामग्री छिपाएँ) \n</string>
   <string name="notification_secret">गुप्त \n(लॉक स्क्रीन पर सूचनाओं को नहीं दिखाएं)</string>
-  <!--Plugin-->
-  <string name="pref_plugins_title">प्लगइन्स</string>
-  <string name="pref_plugins_summary">प्लगइन्स सक्षम करें और उनके पैरामीटर सेट करें</string>
-  <string name="fab_plugins_add">एक नया प्लगइन जोड़ें</string>
-  <string name="plugin_uninstall_title">प्लगइन अनइंस्टॉल करें?</string>
-  <string name="plugin_reset_preferences">प्लगइन वरीयताओं को रीसेट करें</string>
-  <string name="plugin_reset_preferences_summary">आपकी प्लगइन सेटिंग्स डिफ़ॉल्ट रूप से निष्क्रिय हो जाएगी</string>
-  <string name="plugin_reset_preferences_ask">क्या आप सामान्य प्लगइन सेटिंग्स को रीसेट करना चाहते हैं?</string>
-  <string name="plugin_reset_account_preferences_ask">क्या आप खाता प्लगइन सेटिंग्स को रीसेट करना चाहते हैं?</string>
-  <string name="plugin_successfully_installed">प्लगइन <b>%1$s</b> सफलतापूर्वक स्थापित</string>
-  <string name="plugin_install_failure">प्लगइन स्थापित करने में विफलः <b>%1$s</b></string>
-  <string name="plugin_recent_version_exception">आपके पास <b>%1$s</b> का एक अधिक हालिया संस्करण है</string>
-  <string name="plugin_same_version_exception">आपके पास <b>%1$s</b> का वही संस्करण स्थापित है</string>
-  <string name="plugin_force_install">बल \ n स्थापित</string>
-  <string name="plugin_path_image_add">एक नई छवि जोड़ें</string>
+  <!--Extension-->
+  <string name="extension_force_install">बल \ n स्थापित</string>
 </resources>

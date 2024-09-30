@@ -27,7 +27,6 @@
   <string name="pref_startOnBoot_title">Jami automatisch starten</string>
   <string name="pref_startOnBoot_summary">Voer Jami in de achtergrond uit wanneer het systeem gestart wordt.</string>
   <string name="pref_clearHistory_title">Geschiedenis wissen</string>
-  <string name="pref_clearHistory_summary">Wis de geschiedenis van alle gesprekken. Deze handeling kan niet ongedaan gemaakt worden.</string>
   <string name="pref_notification_title">Notificatie zichtbaarheid</string>
   <string name="pref_notification_summary">Zichtbaarheid van applicatie-notificaties op het lock scherm</string>
   <string name="pref_blackList_title">Blockslijst</string>
@@ -52,19 +51,6 @@
   <string name="notification_public">Publiek \n(toon notificaties inclusief inhoud op het lock-scherm)\n</string>
   <string name="notification_private">Prive \n(toon notificaties op het lock-scherm, maar verberg de inhoud)\n</string>
   <string name="notification_secret">Geheim \n(laat geen notificaties op het lock-scherm zien)</string>
-  <!--Plugin-->
-  <string name="pref_plugins_title">Plugins</string>
-  <string name="pref_plugins_summary">Plugins inschakelen en de parameters instellen</string>
-  <string name="fab_plugins_add">Voeg een nieuwe plugin toe</string>
-  <string name="plugin_uninstall_title">Plugin deïnstalleren ?</string>
-  <string name="plugin_reset_preferences">Plugin voorkeuren terugzetten</string>
-  <string name="plugin_reset_preferences_summary">Uw plugin instellingen zullen worden teruggezet naar de standaard waarden</string>
-  <string name="plugin_reset_preferences_ask">Wil je de algemene plugin-instellingen opnieuw instellen?</string>
-  <string name="plugin_reset_account_preferences_ask">Wil je de account-plugin-instellingen opnieuw instellen?</string>
-  <string name="plugin_successfully_installed">Plugin <b>%1$s</b> succesvol geïnstalleerd</string>
-  <string name="plugin_install_failure">Plugin installatie heeft gefaald: <b>%1$s</b></string>
-  <string name="plugin_recent_version_exception">U heeft een recentere versie van: <b>%1$s</b></string>
-  <string name="plugin_same_version_exception">U heeft dezelfde versie van <b>%1$s</b> geïnstalleerd</string>
-  <string name="plugin_force_install">forceer \n installatie</string>
-  <string name="plugin_path_image_add">Voeg een nieuwe afbeelding toe</string>
+  <!--Extension-->
+  <string name="extension_force_install">forceer \n installatie</string>
 </resources>

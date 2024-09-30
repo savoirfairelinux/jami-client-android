@@ -21,15 +21,11 @@
   <string name="dialog_wait_create_details">Vennligst vent til den nye kontona vert lagt til...</string>
   <string name="dialog_wait_update">Aktualisering av kontoen</string>
   <string name="dialog_wait_update_details">Vennligst vent medan den nye kontona dykkar blir oppdatert...</string>
-  <string name="dialog_warn_ip2ip_account_title">Skapa eit tomt SIP-konto?</string>
-  <string name="dialog_warn_ip2ip_account_message">Du er på veg for å oppretta ein SIP-konto utan gyldig heiter. Du kan berre gjera og motta direkte ip-samtal. Du kan redigera kontoen din seinare</string>
   <string name="account_type_ip2ip">IP-konto</string>
   <string name="help_ring">Ein Jami-konto lar deg nå folk trygt i peer to peer gjennom eit fullt distribuert nettverk.</string>
-  <string name="help_sip_title">Legg til kontoen din</string>
+  <string name="help_sip_title">Legg til SIP konto</string>
   <string name="help_sip">Konfigurera ein eksisterende SIP-konto.</string>
-  <string name="create_sip_account">Legg til SIP konto</string>
   <!--Strings related to account deletion-->
-  <string name="account_delete_dialog_title">Å sletta kontoen?</string>
   <string name="account_delete_dialog_message">Denne handlingen kan ikkje bli gjort til nytt.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Ingen konto registrert</string>
@@ -38,8 +34,6 @@
   <string name="account_device_revoke">Einheit for å avbryta</string>
   <string name="account_device_revocation_success_title">Framgang</string>
   <string name="account_device_revocation_success">Einheten er no avkalt!</string>
-  <string name="account_device_revocation_error_title">Kan ikkje tilbakekalle utstyret</string>
-  <string name="account_device_revocation_wrong_password">Feil passord.</string>
   <string name="account_device_revocation_unknown_device">Unkjent apparat.</string>
   <string name="account_device_revocation_error_unknown">Unkjent feil.</string>
   <string name="account_password_change">Endra passord</string>
@@ -61,8 +55,7 @@
   <string name="account_rendezvous_summary">I Rendezvous-tilgang blir innkommende samtal tilsatt konferensrommet.</string>
   <string name="account_upnp_label">Legg UPnP til</string>
   <string name="account_proxy_field">Styrkemann</string>
-  <!--Plugin Details-->
-  <string name="account_preference_plugin_tab">Plugins</string>
+  <!--Extension Details-->
   <!--Audio Details-->
   <string name="account_audio_label">Audio</string>
   <string name="account_preferences_media_tab">Medeldamedia</string>
@@ -142,14 +135,9 @@
   <string name="export_account_wait_message">Informasjon om eksportkontoen</string>
   <string name="account_export_file">Baksekonto</string>
   <string name="account_export_file_summary">Du kan lagra kontoen din opp på einheten din for å gjenoppretta den seinare.</string>
-  <string name="account_export_end_decryption_message">Eg kunne ikkje låsa opp kontoen din med det oppgavne passordet.</string>
   <string name="account_export_end_network_title">Netverksfeil</string>
-  <string name="account_export_end_network_message">Kan ikkje eksportera kontoen på nettverket.</string>
   <string name="account_export_end_error_title">Feil</string>
-  <string name="account_export_end_error_message">Eg fekk ikkje eksportkontoen. Det kom ein ukjent feil.</string>
   <string name="account_enter_password">Skriv inn passord</string>
-  <string name="account_share_body">Ta kontakt med meg ved å bruke \'%1$s\' på den distribuerte kommunikasjonsplattformen til Jami: %2$s</string>
-  <string name="account_share_body_with_username">Ta kontakt med meg ved å bruke \'%1$s\' eller mitt offentlege brukernavnet \'%2$s\' på den distribuerte kommunikasjonsplattformen til Jami: %3$s</string>
   <string name="account_contact_me">Kontakt meg på Jami!</string>
   <string name="update_account">Aktualisering av kontoen</string>
   <string name="account_migration">Konta på Jami kan oppdaterast. Vennligst skriv inn passordet ditt.</string>
@@ -157,20 +145,13 @@
   <string name="sip_account">SIP-konto</string>
   <string name="ring_account_identity">Identitet</string>
   <string name="account_migration_title_dialog">Migrasjon til konto</string>
-  <string name="account_migration_message_dialog">Du må oppdatera kontoane dine. Vil du gå til kontoforvaltarskjermen for å gjera denne operasjonen?</string>
   <string name="account_update_needed">No trengs oppdatering</string>
-  <string name="account_cannot_be_found_title">Kan ikkje finna rekning</string>
-  <string name="account_cannot_be_found_message">Konta kunne ikkje finnast på nettverket til Jami. Sørg for at det vart eksportert til Jami frå ein eksisterende enhet, og at legitimasjonane er korte.</string>
   <string name="account_sip_cannot_be_registered_message">Du kan fortsette med kontooppbygginga eller redigera informasjonen din her. Utgåva er òg mogleg seinare i kontoinnstillingane.</string>
-  <string name="account_no_network_title">Kan ikkje knyta til nettverket</string>
-  <string name="account_no_network_message">Eg kunne ikkje legge til konto fordi Jami ikkje kunne knytte til det distribuerte nettverket.</string>
+  <string name="account_no_network_title">Netverksfeil</string>
   <string name="account_device_added_title">Tilsett kontoapparat</string>
   <string name="account_device_added_message">Du har sett opp kontoen din på denne telefonen.</string>
   <string name="account_device_updated_title">Rekontoapparat oppdatert</string>
   <string name="account_device_updated_message">Du har oppdatert kontoen din til Jami med suksess.</string>
-  <string name="account_cannot_be_updated_message">Kontoapparatet kunne ikkje oppdaterast. Vennligst sjekk passordet ditt.</string>
-  <string name="account_sip_success_title">Registrert konto</string>
-  <string name="account_sip_success_message">Du har registrert kontoen din med suksess.</string>
   <string name="account_sip_register_anyway">Registrer deg likevel.</string>
   <!--TV-->
   <string name="account_tv_settings_header">Innstillingar på konto</string>
@@ -190,11 +171,8 @@
   <string name="account_link_export_button">Legg ein ny enhet til</string>
   <string name="account_link_show_button">Visa %d meir knytt til einheten</string>
   <string name="account_link_hide_button">Skjulde tilkobla tilleg</string>
-  <string name="account_link_export_info">For å bruke denne kontoen på andre enheter, må du først eksponera den på Jami. Dette vil generere ein PIN-kode som du må skrive inn på den nye enna til å sette opp kontoen. PIN-koden er gyldig i 10 minuttar.</string>
   <string name="account_start_export_button">Generera PIN</string>
   <string name="account_end_export_button">nær</string>
-  <string name="account_end_export_infos">PIN-numret ditt er:\n\n%%\n\nFor å fullføra prosessen, må du opna Jami på den nye enna. Skapa ein ny konto med \"Link denne enna til ein konto\". PIN-numret ditt er gyldig i 10 minuttar.</string>
-  <string name="account_link_export_info_light">For å bruke denne kontoen på andre enheter, må du først eksponera den på Jami. Dette vil generere ein PIN-kode som du må skrive inn på den nye enna til å sette opp kontoen. PIN-koden er gyldig i 10 minuttar.</string>
   <string name="account_export_title">Link konto til andre enheter</string>
   <string name="account_connect_server_button">Knytte til styringsservern</string>
   <string name="account_connect_button">Knytta</string>
@@ -226,21 +204,17 @@
   <string name="account_creation_profile">Skapa profil</string>
   <string name="account_creation_ring">Skapa kontoen til Jami</string>
   <string name="account_link_title">Legg denne einheten til</string>
-  <string name="account_sip_cannot_be_registered">Kan ikkje registrera konto</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">Redigera kontoen min</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Skriv inn passord for å bekrefta</string>
   <string name="enter_password">Skriv inn passord</string>
   <string name="revoke_device_title">Einheit for å avbryta</string>
-  <string name="revoke_device_message">Er du sikker på du vil avbryte %1$s?</string>
   <string name="revoke_device_wait_title">Vennligst vent...</string>
   <string name="revoke_device_wait_message">Avkallingsapparat</string>
   <string name="rename_device_title">Namn på denne einheten</string>
   <string name="rename_device_message">Velg eit nytt namn for å identifisera denne enheten i kontoen din Jami</string>
   <string name="rename_device_button">Namneapparat</string>
   <string name="account_rename_device_hint">Velg nytt enhetnamn</string>
-  <string name="account_device_name_empty">Namnet på einheten kan ikkje vera tom.</string>
   <string name="account_device_this_indicator">Denne einheten</string>
   <string name="account_disabled_indicator">funksjonshemma</string>
   <!--Link a new device-->

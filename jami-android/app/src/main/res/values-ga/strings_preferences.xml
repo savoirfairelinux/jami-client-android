@@ -27,7 +27,6 @@
   <string name="pref_startOnBoot_title">Tosaíocht Jami ar an tús</string>
   <string name="pref_startOnBoot_summary">Cuir Jami i gcúl nuair a tosóidh an córas.</string>
   <string name="pref_clearHistory_title">Tuairiscí soiléir</string>
-  <string name="pref_clearHistory_summary">Déan an stair comhráite go léir a scriosadh.</string>
   <string name="pref_notification_title">An t-aistriúchán</string>
   <string name="pref_notification_summary">Cuir in iúl do na fógraí iarratais ar taispeáint ar scáileán blocadh.</string>
   <string name="pref_blackList_title">Liosta bloca</string>
@@ -52,19 +51,6 @@
   <string name="notification_public">Taispeántas poiblí \n(scéal fógraí agus a ábhar ar scáileán blocadh) \n</string>
   <string name="notification_private">Priobháideacha \n(show notices ach a gcuid ábhar a mhaoiniú ar scáileán cloch) \n</string>
   <string name="notification_secret">Secret \n(ní thaispeánann fógraí ar scáileán cloch)</string>
-  <!--Plugin-->
-  <string name="pref_plugins_title">Plugins</string>
-  <string name="pref_plugins_summary">Cumas a chur ar plugins agus a pharaméadair a shuiteáil</string>
-  <string name="fab_plugins_add">Cuir breiseán nua</string>
-  <string name="plugin_uninstall_title">De-instála Plugin?</string>
-  <string name="plugin_reset_preferences">Roghnaíochtaí Plugin athshuiteáil</string>
-  <string name="plugin_reset_preferences_summary">Beidh do shuiteáin breiseán réamhshocraithe</string>
-  <string name="plugin_reset_preferences_ask">An bhfuil tú ag iarraidh athshuiteáil na socruithe ginearálta plugin?</string>
-  <string name="plugin_reset_account_preferences_ask">An bhfuil tú ag iarraidh a athshuiteáil na socruithe plugin cuntas?</string>
-  <string name="plugin_successfully_installed">Plugin <b>%1$s</b> suiteáilte go rathúil</string>
-  <string name="plugin_install_failure">Níor chuir an plugan ar bun: <b>%1$s</b></string>
-  <string name="plugin_recent_version_exception">Tá leagan níos déanaí agat de: <b>%1$s</b></string>
-  <string name="plugin_same_version_exception">Tá an leagan céanna de <b>%1$s</b> suiteáilte agat</string>
-  <string name="plugin_force_install">Forc \n suiteáil</string>
-  <string name="plugin_path_image_add">Cuir íomhá nua</string>
+  <!--Extension-->
+  <string name="extension_force_install">Forc \n suiteáil</string>
 </resources>

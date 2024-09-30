@@ -21,25 +21,19 @@
   <string name="dialog_wait_create_details">Та шинэ дансыг нэмэх хүртэл хүлээе...</string>
   <string name="dialog_wait_update">Хэтгэлэгт хангах</string>
   <string name="dialog_wait_update_details">Шинэ дансныхаа шинэчлэл дуустал хүлээх үү...</string>
-  <string name="dialog_warn_ip2ip_account_title">SIP-ийн бохирдлыг бий болгох уу?</string>
-  <string name="dialog_warn_ip2ip_account_message">SIP-ийн хуудсыг хүчинтэй хостинг нэргүйгээр бий болгох гэж байгаа. Та зөвхөн шууд IP дуудлага хийх, хүлээн авах боломжтой болно. Та хуудсыг дараа нь өөрчилж болно</string>
   <string name="account_type_ip2ip">IP-ийн данс</string>
   <string name="help_ring">Jami-ийн данс нь танд бүрэн хуваагдсан сүлжээгээр хүмүүсээ аюулгүй, ижил хүйстэй хангаж чадна.</string>
   <string name="help_sip_title">SIP-ийн дансыг нэмнэ</string>
   <string name="help_sip">SIP-ийн одоогийн дансыг тохируулна.</string>
-  <string name="create_sip_account">SIP-ийн дансыг нэмнэ</string>
   <!--Strings related to account deletion-->
-  <string name="account_delete_dialog_title">Хэтгэлээ устгах уу?</string>
   <string name="account_delete_dialog_message">Энэ үйлдлийг сэргийлэх боломжгүй.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Хэтгэлэг бүртгэгдээгүй</string>
   <string name="normal_accounts_titles">Санхүүжилт</string>
-  <string name="normal_devices_titles">Нэвтрүүлэг</string>
+  <string name="normal_devices_titles">Хөгжлийн багаж хэрэгсэл</string>
   <string name="account_device_revoke">Халдааны сэргээлт</string>
   <string name="account_device_revocation_success_title">Амжилт</string>
   <string name="account_device_revocation_success">Энэ хэрэгсэл одоо цуцлагдлаа!</string>
-  <string name="account_device_revocation_error_title">Утасны хэрэгсэлээ цуцаж чадахгүй</string>
-  <string name="account_device_revocation_wrong_password">Хатуу нууц үг.</string>
   <string name="account_device_revocation_unknown_device">Мэдээгүй төхөөрөмж.</string>
   <string name="account_device_revocation_error_unknown">Мэдээгүй алдаа.</string>
   <string name="account_password_change">Хууль нууц товг өөрчлөх</string>
@@ -61,8 +55,7 @@
   <string name="account_rendezvous_summary">Уулзалтын өрөөнд хүлээн авах дуудлага нэмнэ.</string>
   <string name="account_upnp_label">UPnP-ийг идэвхжүүлнэ</string>
   <string name="account_proxy_field">Төлөөлөгч</string>
-  <!--Plugin Details-->
-  <string name="account_preference_plugin_tab">Плюгины</string>
+  <!--Extension Details-->
   <!--Audio Details-->
   <string name="account_audio_label">Зөгнөлийн дуу</string>
   <string name="account_preferences_media_tab">Мэдээлэл мэдээллийн хэрэгсэл</string>
@@ -142,35 +135,23 @@
   <string name="export_account_wait_message">Экспортын дансны мэдээлэл</string>
   <string name="account_export_file">Давуу сан</string>
   <string name="account_export_file_summary">Танай хэрэгслийн хуудаснаар дансыг сэргээхэд архив аваарай.</string>
-  <string name="account_export_end_decryption_message">Танай дансыг нууц үгээр нээлгэж чадахгүй байна.</string>
   <string name="account_export_end_network_title">Хүлжээний алдаа</string>
-  <string name="account_export_end_network_message">Хүлжээний дансыг экспортлоод чадахгүй.</string>
   <string name="account_export_end_error_title">Хатаг</string>
-  <string name="account_export_end_error_message">Экспорт хийж чадаагүй, тодорхойгүй алдаа гарсан.</string>
   <string name="account_enter_password">Хууль нууц товчийг оруул</string>
-  <string name="account_share_body">Jami-ийн хуваарилалттай харилцааны платформын \"%1$s\" хэрэгслээр намайг хангаарай: %2$s</string>
-  <string name="account_share_body_with_username">Jami-ийн хуваарилалттай харилцааны платформын \"%1$s\" эсвэл миний олон нийтийн хэрэглэгчдийн нэр \"%2$s\" -ийг ашиглан намайг хандаж: %3$s</string>
-  <string name="account_contact_me">Jami-ийн талаар биэнтэй холбоо бариарай!</string>
+  <string name="account_contact_me">Жэми дээр намайг холбогдох!</string>
   <string name="update_account">Хэтгэлэгт хангах</string>
   <string name="account_migration">Таны Jami-ийн дансыг шинэчлэх боломжтой.</string>
   <string name="ring_account">Жэмигийн данс</string>
   <string name="sip_account">СИП-ийн данс</string>
   <string name="ring_account_identity">Хууль зүйн</string>
   <string name="account_migration_title_dialog">Хэтгэлийн шилжилт</string>
-  <string name="account_migration_message_dialog">Танай дансны бүртгэл шинэчлэх хэрэгтэй. Та энэ үйлдлийг хийхэд дансны удирдлагын дэлгэц рүү явмаар байна уу?</string>
   <string name="account_update_needed">Шинэчлэл шаардлагатай</string>
-  <string name="account_cannot_be_found_title">Хэтгэлэг олж чадахгүй</string>
-  <string name="account_cannot_be_found_message">Жэми-ийн сүлжээний хуудас олж чадаагүй. Жэми-д байгаа төхөөрөмжээс экспортлосон эсэхийг шалгаж, итгэлийг нь зөв болго.</string>
   <string name="account_sip_cannot_be_registered_message">Та дансыг үүсгэх үйл явцыг үргэлжлүүлэн хийж болно эсвэл энэ газарт мэдээлэлээ өөрчилж болно.</string>
-  <string name="account_no_network_title">Түлжээний холболтгүй</string>
-  <string name="account_no_network_message">Жэми нь хуваарилсан сүлжээний холболтгүй учраас бүртгэл нэмж чадахгүй.</string>
+  <string name="account_no_network_title">Хүлжээний алдаа</string>
   <string name="account_device_added_title">Хэтгэлийн төхөөрөмж нэмсэн</string>
   <string name="account_device_added_message">Та энэ төхөөрөмж дээр Jami-ийн дансыг амжилттай байгуулсан.</string>
   <string name="account_device_updated_title">Хэтгэлийн төхөөрөмж шинэчлэн найруулсан</string>
   <string name="account_device_updated_message">Та Jami-ийн дансыг амжилттай шинэчлэн баталсан.</string>
-  <string name="account_cannot_be_updated_message">Эдгээрийг шинэчлэх боломжгүй.</string>
-  <string name="account_sip_success_title">СИП данс бүртгэгдсэн</string>
-  <string name="account_sip_success_message">Та СИП-ийн дансыг амжилттай бүртгэсэн.</string>
   <string name="account_sip_register_anyway">Ямар ч байсан бүртгүүлээрэй.</string>
   <!--TV-->
   <string name="account_tv_settings_header">Нягтлан бодох бүртгэлийн тохируулалт</string>
@@ -190,11 +171,8 @@
   <string name="account_link_export_button">Шинэ төхөөрөмжийг холбох</string>
   <string name="account_link_show_button">%d-ийг холбогдсон төхөөрөмжээр нь харуулна</string>
   <string name="account_link_hide_button">Хаалсан холбогдсон төхөөрөмж</string>
-  <string name="account_link_export_info">Энэ хуудсыг бусад төхөөрөмжүүдэд ашиглахын тулд та хамгийн түрүүнд Jami дээр илрүүлэхийг шаарддаг. Энэ нь шинэ төхөөрөмж дээр PIN код оруулж өгөх ёстой. Хуудсыг байлгахын тулд PIN нь 10 минут хүчинтэй байдаг.</string>
   <string name="account_start_export_button">PIN-ийг үүсгэх</string>
   <string name="account_end_export_button">ойрхон</string>
-  <string name="account_end_export_infos">Таны PIN нь:\n\n%%\n\nЭнийг дуусгахын тулд та Jami-ийг шинэ төхөөрөмж дээр нээх хэрэгтэй. \"Энэ төхөөрөмжийг бүртгэлтэй холбох\" гэсэн шинэ дансыг бий болгоомжтой. Таны PIN нь 10 минут үргэлжилнэ.</string>
-  <string name="account_link_export_info_light">Энэ хуудсыг бусад төхөөрөмжүүдэд ашиглахын тулд та хамгийн түрүүнд Jami дээр илрүүлэхийг шаарддаг. Энэ нь шинэ төхөөрөмж дээр PIN код оруулж өгөх ёстой. Хуудсыг байлгахын тулд PIN нь 10 минут хүчинтэй байдаг.</string>
   <string name="account_export_title">Бусад төхөөрөмжүүдтэй холбогдсон данс</string>
   <string name="account_connect_server_button">Захиргааны сервертэй холбох</string>
   <string name="account_connect_button">Харилцаа холбоо</string>
@@ -226,21 +204,17 @@
   <string name="account_creation_profile">Таны профилийг бий болго</string>
   <string name="account_creation_ring">Jami-ийн дансыг бүтээх</string>
   <string name="account_link_title">Энэ төхөөрөмжийг холбох</string>
-  <string name="account_sip_cannot_be_registered">Хэтгэлээ бүртгэж чадахгүй</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">Миний хуудасны жагсаалтыг зохицуу</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Тагварын нууц үг</string>
   <string name="enter_password">Хууль нууц товчийг оруул</string>
   <string name="revoke_device_title">Халдааны сэргээлт</string>
-  <string name="revoke_device_message">Та %1$-ийг цуцлахыг хүсч байна уу?</string>
   <string name="revoke_device_wait_title">Та нар хүлээгээд...</string>
   <string name="revoke_device_wait_message">Хуцалтгүй болгох төхөөрөмж</string>
   <string name="rename_device_title">Энэ төхөөрөмжийг өөрчлөх</string>
   <string name="rename_device_message">Jami-ийн дансанд энэ төхөөрөмжийг тодорхойлох шинэ нэрийг сонгох</string>
   <string name="rename_device_button">Уул уурхайн тоног төхөөрөмж</string>
   <string name="account_rename_device_hint">Шинэ төхөөрөмжийн нэрийг сонгох</string>
-  <string name="account_device_name_empty">Тухайн төхөөрөмжийн нэр нь хол байж болохгүй</string>
   <string name="account_device_this_indicator">Энэ төхөөрөмж</string>
   <string name="account_disabled_indicator">хөгжлийн бэрхшээлтэй</string>
   <!--Link a new device-->

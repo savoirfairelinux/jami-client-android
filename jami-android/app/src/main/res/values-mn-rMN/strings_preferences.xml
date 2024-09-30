@@ -27,7 +27,6 @@
   <string name="pref_startOnBoot_title">Jami-ийг эхлүүлэхэд эхлүүлэх</string>
   <string name="pref_startOnBoot_summary">Системийн эхлэх үед Джамиг дэргэд нь явуул.</string>
   <string name="pref_clearHistory_title">Тарих нь тодорхой</string>
-  <string name="pref_clearHistory_summary">Энэ үйлдлийг сэргээж болохгүй.</string>
   <string name="pref_notification_title">Хэвлэл мэдээллийн илрүүлэл</string>
   <string name="pref_notification_summary">Хэрэглэлийн мэдэгдэлний илрэлтийг замбарааны дэлгэц дээр тохируулна.</string>
   <string name="pref_blackList_title">Блок жагсаалт</string>
@@ -52,19 +51,6 @@
   <string name="notification_public">Олон нийтийн \n(сүрх мэдүүлэг болон тэдгээрийн агуулга нь гулгалтын дэлгэц дээр) \n</string>
   <string name="notification_private">Хувийн \n(шинэлгээг үзээрэй, гэхдээ тэдгээрийн агуулгыг газартай дэлгэц дээр нууарай) \n</string>
   <string name="notification_secret">нууц \n(Залтын дэлгэц дээр мэдэгдлийг үзэхгүй)</string>
-  <!--Plugin-->
-  <string name="pref_plugins_title">Плюгины</string>
-  <string name="pref_plugins_summary">Пулгинүүдийг идэвхжүүлэн, тэдгээрийн параметрүүдийг тохируулна</string>
-  <string name="fab_plugins_add">Шинэ плагин нэмнэ</string>
-  <string name="plugin_uninstall_title">Плюгинг татаж аваад байна уу?</string>
-  <string name="plugin_reset_preferences">Пулгин-ийн сонголт</string>
-  <string name="plugin_reset_preferences_summary">Таны плагин тохируулалтыг үл тохируулж болно</string>
-  <string name="plugin_reset_preferences_ask">Та бүхэлдээ плагин тохируулалтыг сэргээж байна уу?</string>
-  <string name="plugin_reset_account_preferences_ask">Та дансны плагин тохируулалтыг сэргээж байна уу?</string>
-  <string name="plugin_successfully_installed">Плугин <b>%1$s</b> амжилттай байрлуулсан</string>
-  <string name="plugin_install_failure">Пулгин орноогүй: <b>%1$s</b></string>
-  <string name="plugin_recent_version_exception">Та хамгийн сүүлийн хувилбартай: <b>%1$s</b></string>
-  <string name="plugin_same_version_exception">Та <b>%1$s</b>-ийн ижил хувилбарыг байлгасан</string>
-  <string name="plugin_force_install">хүчирхэг \n тавих</string>
-  <string name="plugin_path_image_add">Шинэ зургийг нэмнэ</string>
+  <!--Extension-->
+  <string name="extension_force_install">хүчирхэг \n тавих</string>
 </resources>

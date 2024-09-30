@@ -27,7 +27,6 @@
   <string name="pref_startOnBoot_title">Җәмине старттан башлап җибәр</string>
   <string name="pref_startOnBoot_summary">Система эшли башлагач, Джамины фонында куегыз.</string>
   <string name="pref_clearHistory_title">Тарих ачык</string>
-  <string name="pref_clearHistory_summary">Барлык сөйләшүләр тарихын бетерү.</string>
   <string name="pref_notification_title">Хабарламаның күренеп торулыгы</string>
   <string name="pref_notification_summary">Кунакны кулланма экранда кушымта хәбәр итүләрен күрү мөмкинлеге куегыз.</string>
   <string name="pref_blackList_title">Блоклар исемлеге</string>
@@ -52,19 +51,6 @@
   <string name="notification_public">Халык \n(язу белдерүләрен һәм аларның эчтәлеген кулга алу экранында күрсәтү) \n</string>
   <string name="notification_private">Шәхси \n(укытуларны күрсәт, ләкин аларның эчтәлеген бикләү экранында яшер) \n</string>
   <string name="notification_secret">Саклык \n(блокада экранда хәбәрләр күрсәтелми)</string>
-  <!--Plugin-->
-  <string name="pref_plugins_title">Плюгины</string>
-  <string name="pref_plugins_summary">Плагиннарны кую һәм аларның параметрларын билгеләү</string>
-  <string name="fab_plugins_add">Яңа плагин өстәргә</string>
-  <string name="plugin_uninstall_title">Плагинны урнаштырудан туктагызмы?</string>
-  <string name="plugin_reset_preferences">Плагиннар өстенлекләрен яңадан кую</string>
-  <string name="plugin_reset_preferences_summary">Плагиннар көйләүләре алдан билгеләнгән булачак</string>
-  <string name="plugin_reset_preferences_ask">Генераль плагиннар көйләүләрен яңадан урнаштырырга телисезме?</string>
-  <string name="plugin_reset_account_preferences_ask">Аккаунт плагины көйләүләрен яңадан урнаштырырга телисезме?</string>
-  <string name="plugin_successfully_installed">Плагин <b>%1$s</b> уңышлы урнаштырылган</string>
-  <string name="plugin_install_failure">Плагинны урнаштыруда җитешмәгән: <b>%1$s</b></string>
-  <string name="plugin_recent_version_exception">Сезнең яңа версиягез бар: <b>%1$s</b></string>
-  <string name="plugin_same_version_exception">Сездә <b>%1$s</b>ның бер үк версиясе урнаштырылган</string>
-  <string name="plugin_force_install">көчләп урнаштыру</string>
-  <string name="plugin_path_image_add">Яңа рәсем кую</string>
+  <!--Extension-->
+  <string name="extension_force_install">көчләп урнаштыру</string>
 </resources>

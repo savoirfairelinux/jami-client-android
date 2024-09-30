@@ -27,8 +27,7 @@
   <!--Contacts-->
   <!--Account Summary-->
   <!--Share fragment-->
-  <!--Pending contact requests-->
-  <!--Send contact requests-->
+  <!--Pending invitations-->
   <!--Blacklist-->
   <!--Smartlist-->
   <!--File Transfer-->
@@ -39,8 +38,9 @@
   <!--Bottom sheet-->
   <string name="bottomSheet_hangup_btn">ඇමතුම අවසන් කරන්න</string>
   <!--Swarm Detail-->
+  <string name="tab_settings">සැකසුම්</string>
   <!--JamiId-->
   <!--WelcomeJami-->
   <!--Donation-->
-  <!--Plugin-->
+  <!--Extension-->
 </resources>

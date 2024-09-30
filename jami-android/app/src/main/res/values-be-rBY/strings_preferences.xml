@@ -27,7 +27,6 @@
   <string name="pref_startOnBoot_title">Пачніце Jami на запуску</string>
   <string name="pref_startOnBoot_summary">Запускай Джані ў фоне, калі сістэма пачне.</string>
   <string name="pref_clearHistory_title">Ясная гісторыя</string>
-  <string name="pref_clearHistory_summary">Выправіць усе гісторыі размоў.</string>
   <string name="pref_notification_title">Відавочнасць паведамленняў</string>
   <string name="pref_notification_summary">Усталюйце бачнасць паведамленняў аб прыкладанні на замак экрана.</string>
   <string name="pref_blackList_title">Спіс блокаў</string>
@@ -52,19 +51,6 @@
   <string name="notification_public">Грамадскае \n(паведамленні паказваюць і іх змест на замак экрана) \n</string>
   <string name="notification_private">Прыватныя \n(пакажыце паведамленні, але схаваць іх змест на замак экрана) \n</string>
   <string name="notification_secret">Сакраты \n(не паказваюць паведамленні на замак экрана)</string>
-  <!--Plugin-->
-  <string name="pref_plugins_title">Уключальнікі</string>
-  <string name="pref_plugins_summary">Абноўце ўбудовы і ўсталяваць іх параметры</string>
-  <string name="fab_plugins_add">Дадаць новы ўклад</string>
-  <string name="plugin_uninstall_title">Адмяніць ўбудовы?</string>
-  <string name="plugin_reset_preferences">Пераўстаноўка пераваг плагіна</string>
-  <string name="plugin_reset_preferences_summary">Пастаноўкі ўключэння будуць па-заўсёды</string>
-  <string name="plugin_reset_preferences_ask">Хочаце пераасэнсаваць агульныя налады ўбудовы?</string>
-  <string name="plugin_reset_account_preferences_ask">Хочаце адсочваць налады ўбудовы ўліковага запісу?</string>
-  <string name="plugin_successfully_installed">Плашч <b>%1$s</b> паспяхова ўсталяваны</string>
-  <string name="plugin_install_failure">Не ўсталявалі ўбудова: <b>%1$s</b></string>
-  <string name="plugin_recent_version_exception">У вас ёсць больш апошні версія: <b>%1$s</b></string>
-  <string name="plugin_same_version_exception">У вас ёсць адна і тая ж версія <b>%1$s</b> ўстаноўлены</string>
-  <string name="plugin_force_install">прымусіць \n ўсталяваць</string>
-  <string name="plugin_path_image_add">Дадаць новае малюнка</string>
+  <!--Extension-->
+  <string name="extension_force_install">прымусіць \n ўсталяваць</string>
 </resources>

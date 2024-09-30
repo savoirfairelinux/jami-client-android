@@ -27,7 +27,6 @@
   <string name="pref_startOnBoot_title">Malite Jami na mmalite</string>
   <string name="pref_startOnBoot_summary">Mee ka Jami nọrọ n\'azụ mgbe usoro ahụ malitere.</string>
   <string name="pref_clearHistory_title">Akụkọ ihe mere eme doro anya</string>
-  <string name="pref_clearHistory_summary">Hichapụ akụkọ ihe mere eme nke mkparịta ụka niile.</string>
   <string name="pref_notification_title">Nkwupụta nke ọkwa</string>
   <string name="pref_notification_summary">Tinye ngwa ngosi ngosi na mkpọchi ihuenyo.</string>
   <string name="pref_blackList_title">Ndepụta nke ndị na-emechi</string>
@@ -52,19 +51,6 @@
   <string name="notification_public">Ọha \n(na-egosi ọkwa na ọdịnaya ha na ihuenyo mkpọchi) \n</string>
   <string name="notification_private">Private \n(na-egosi ọkwa ma zoo ọdịnaya ha na mkpọchi ihuenyo) \n</string>
   <string name="notification_secret">Nzuzo \n(adịghị egosi ọkwa na mkpọchi ihuenyo)</string>
-  <!--Plugin-->
-  <string name="pref_plugins_title">Ihe mgbakwunye</string>
-  <string name="pref_plugins_summary">Gbaa plugins na setịpụrụ ha parameters</string>
-  <string name="fab_plugins_add">Tinye ihe mgbakwunye ọhụrụ</string>
-  <string name="plugin_uninstall_title">Wepụ Plugin?</string>
-  <string name="plugin_reset_preferences">Tọgharịa ntọala plugins</string>
-  <string name="plugin_reset_preferences_summary">Ntọala mgbakwunye gị ga-abụ ndabara</string>
-  <string name="plugin_reset_preferences_ask">Ị̀ chọrọ ịtọgharịa ntọala mgbakwunye ahụ?</string>
-  <string name="plugin_reset_account_preferences_ask">Ị̀ chọrọ ịtọgharịa ntọala nke akaụntụ plugins?</string>
-  <string name="plugin_successfully_installed">Plugin <b>%1$s</b> arụnyere nke ọma</string>
-  <string name="plugin_install_failure">Enweghi ike ịwụnye ngwa mgbakwunye: <b>%1$s</b></string>
-  <string name="plugin_recent_version_exception">Ị nwere nsụgharị ọhụrụ nke: <b>%1$s</b></string>
-  <string name="plugin_same_version_exception">Ị nwere otu version nke <b>%1$s</b> arụnyere</string>
-  <string name="plugin_force_install">ike \ n wụnye</string>
-  <string name="plugin_path_image_add">Tinye ihe oyiyi ọhụrụ</string>
+  <!--Extension-->
+  <string name="extension_force_install">ike \ n wụnye</string>
 </resources>

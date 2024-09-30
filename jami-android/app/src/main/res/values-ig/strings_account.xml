@@ -21,25 +21,18 @@
   <string name="dialog_wait_create_details">Biko chere ruo mgbe a ga-agbakwunye akaụntụ ọhụrụ gị...</string>
   <string name="dialog_wait_update">Akụkọ nke akụkọ</string>
   <string name="dialog_wait_update_details">Biko chere ruo mgbe akaụntụ ọhụrụ gị emelitere...</string>
-  <string name="dialog_warn_ip2ip_account_title">Mepụta akaụntụ SIP na - adịghị arụ ọrụ?</string>
-  <string name="dialog_warn_ip2ip_account_message">Ị na-achọ ịmepụta akaụntụ SIP na-enweghị aha nnabata dị irè. Ị ga-enwe ike ịme ma nata oku IP ozugbo. Ị nwere ike dezie akaụntụ gị mgbe e mesịrị</string>
   <string name="account_type_ip2ip">Akụkọ IP</string>
   <string name="help_ring">Ihe ndekọ Jami na-enye gị ohere iru ndị mmadụ n\'enweghị nsogbu site na ibe site na netwọk zuru oke.</string>
-  <string name="help_sip_title">Tinye akaụntụ SIP gị</string>
+  <string name="help_sip_title">Tinye akaụntụ SIP</string>
   <string name="help_sip">Hazie akaụntụ SIP dị adị.</string>
-  <string name="create_sip_account">Tinye akaụntụ SIP</string>
   <!--Strings related to account deletion-->
-  <string name="account_delete_dialog_title">Ihichapụ akaụntụ?</string>
-  <string name="account_delete_dialog_message">A pụghị ime ka ihe a ghara ime.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Enweghị akaụntụ edebanyere aha</string>
   <string name="normal_accounts_titles">Ihe ndekọ</string>
-  <string name="normal_devices_titles">Ngwaọrụ Ndị E Jikọtara</string>
+  <string name="normal_devices_titles">Ngwaọrụ jikọtara</string>
   <string name="account_device_revoke">Ngwaọrụ iwepụ</string>
   <string name="account_device_revocation_success_title">Ihe Ịga nke Ọma</string>
   <string name="account_device_revocation_success">A kagbuola ngwaọrụ ahụ ugbu a!</string>
-  <string name="account_device_revocation_error_title">Enweghị ike iwepụ ngwaọrụ ahụ</string>
-  <string name="account_device_revocation_wrong_password">Ihe a bụ paswọọdụ na-ezighi ezi.</string>
   <string name="account_device_revocation_unknown_device">Ihe a na-amaghị.</string>
   <string name="account_device_revocation_error_unknown">Njehie a na-amaghị.</string>
   <string name="account_password_change">Gbanwee Paswọdu</string>
@@ -61,8 +54,7 @@
   <string name="account_rendezvous_summary">N\'ọnọdụ Rendezvous, a ga-agbakwunye oku na-abata na ụlọ nzukọ.</string>
   <string name="account_upnp_label">Gbaa UPnP</string>
   <string name="account_proxy_field">Onye nnọchianya</string>
-  <!--Plugin Details-->
-  <string name="account_preference_plugin_tab">Ihe mgbakwunye</string>
+  <!--Extension Details-->
   <!--Audio Details-->
   <string name="account_audio_label">Ihe a na-anụ</string>
   <string name="account_preferences_media_tab">Ndị mgbasa ozi</string>
@@ -142,14 +134,9 @@
   <string name="export_account_wait_message">Ozi gbasara akaụntụ mbupụ</string>
   <string name="account_export_file">Akaụntụ ndabere</string>
   <string name="account_export_file_summary">Mee nkwado ndabere na mpaghara akaụntụ gị na ngwaọrụ gị iji weghachite ya mgbe e mesịrị.</string>
-  <string name="account_export_end_decryption_message">Enweghị m ike imeghe akaụntụ gị site na iji paswọọdụ ahụ enyere.</string>
   <string name="account_export_end_network_title">Njehie netwọk</string>
-  <string name="account_export_end_network_message">Enweghị ike mbupụ akaụntụ na netwọk.</string>
   <string name="account_export_end_error_title">Njehie</string>
-  <string name="account_export_end_error_message">Enweghi ike mbupụ akaụntụ ahụ. Njehie a na-amaghị ama mere.</string>
   <string name="account_enter_password">Tinye paswọọdụ</string>
-  <string name="account_share_body">Kpọtụrụ m site na iji \'%1$s\' na usoro nkwukọrịta nke Jami: %2$s</string>
-  <string name="account_share_body_with_username">Kpọtụrụ m site na iji \'%1$s\' ma ọ bụ aha njirimara m \'%2$s\' na usoro nkwukọrịta nke Jami: %3$s</string>
   <string name="account_contact_me">Kpọtụrụ m na Jami!</string>
   <string name="update_account">Akụkọ mmelite</string>
   <string name="account_migration">Enwere ike imelite akaụntụ Jami gị. Biko tinye paswọọdụ gị.</string>
@@ -157,20 +144,13 @@
   <string name="sip_account">Akụ̀ SIP</string>
   <string name="ring_account_identity">Ihe Ndị A Kpọrọ Mmadụ</string>
   <string name="account_migration_title_dialog">Mbugharị akaụntụ</string>
-  <string name="account_migration_message_dialog">Ị chọrọ ịga na ihuenyo njikwa akaụntụ iji rụọ ọrụ a?</string>
   <string name="account_update_needed">Achọrọ mmelite</string>
-  <string name="account_cannot_be_found_title">Enweghị m ike ịchọta akaụntụ</string>
-  <string name="account_cannot_be_found_message">Enweghi ike ịchọta akaụntụ ahụ na netwọk Jami.\nJide n\'aka na e si na ngwaọrụ dị na Jami wepụ ya, ma na-enye nzere ziri ezi.</string>
   <string name="account_sip_cannot_be_registered_message">Ị nwere ike ịga n\'ihu na usoro nke ịmepụta akaụntụ ma ọ bụ dezie ozi gị ebe a. Edition ka nwere ike mgbe e mesịrị na akaụntụ ntọala.</string>
-  <string name="account_no_network_title">Enweghị ike ijikọ na netwọk</string>
-  <string name="account_no_network_message">Enweghị m ike itinye akaụntụ n\'ihi na Jami enweghị ike ijikọ na netwọk ekesa.</string>
+  <string name="account_no_network_title">Njehie netwọk</string>
   <string name="account_device_added_title">E gbakwunyere ngwaọrụ akaụntụ</string>
   <string name="account_device_added_message">I meela nke ọma n\'ịtọlite akaụntụ Jami gị na ngwaọrụ a.</string>
   <string name="account_device_updated_title">Akụkọ nke akụrụngwa akaụntụ</string>
   <string name="account_device_updated_message">I meela nke ọma n\'ime ka akaụntụ Jami gị dị ọhụrụ.</string>
-  <string name="account_cannot_be_updated_message">Ihe eji eme ihe na akaụntụ ahụ apụghị imelite. Biko chọpụta paswọọdụ gị.</string>
-  <string name="account_sip_success_title">Akaụntụ e debara aha ya</string>
-  <string name="account_sip_success_message">I debanyere aha gị na akaụntụ Sip gị nke ọma.</string>
   <string name="account_sip_register_anyway">Debanye aha gị n\' agbanyeghị</string>
   <!--TV-->
   <string name="account_tv_settings_header">Ntọala akaụntụ</string>
@@ -190,11 +170,8 @@
   <string name="account_link_export_button">Jikọọ ngwaọrụ ọhụrụ</string>
   <string name="account_link_show_button">Gosi %d ọzọ jikọrọ ngwaọrụ</string>
   <string name="account_link_hide_button">Ochechi njikọ ngwaọrụ</string>
-  <string name="account_link_export_info">Iji jiri akaụntụ a na ngwaọrụ ndị ọzọ, ị ga-ebu ụzọ kpughee ya na Jami. Nke a ga-emepụta koodu PIN nke ị ga-abanye na ngwaọrụ ọhụrụ iji melite akaụntụ ahụ. PIN ahụ dị irè maka nkeji 10.</string>
   <string name="account_start_export_button">Mepụta PIN</string>
   <string name="account_end_export_button">nso</string>
-  <string name="account_end_export_infos">PIN gị bụ:\n\n%%\n\nIji mezue usoro ahụ, ịkwesịrị imeghe Jami na ngwaọrụ ọhụrụ. Mepụta akaụntụ ọhụrụ na \"Jikọọ ngwaọrụ a na akaụntụ\". PIN gị dị irè maka nkeji 10.</string>
-  <string name="account_link_export_info_light">Iji jiri akaụntụ a na ngwaọrụ ndị ọzọ, ị ga-ebu ụzọ kpughee ya na Jami. Nke a ga-emepụta koodu PIN nke ị ga-abanye na ngwaọrụ ọhụrụ iji melite akaụntụ ahụ. PIN ahụ dị irè maka nkeji 10.</string>
   <string name="account_export_title">Njikọ akaụntụ na ngwaọrụ ndị ọzọ</string>
   <string name="account_connect_server_button">Jikọọ na njikwa ihe nkesa</string>
   <string name="account_connect_button">Jikọọ</string>
@@ -226,21 +203,17 @@
   <string name="account_creation_profile">Mepụta profaịlụ gị</string>
   <string name="account_creation_ring">Mepụta akaụntụ Jami gị</string>
   <string name="account_link_title">Jikọọ ngwaọrụ a</string>
-  <string name="account_sip_cannot_be_registered">Enweghị m ike ịdebanye aha akaụntụ</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">Dezie akaụntụ m</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Tinye paswọọdụ iji kwado</string>
   <string name="enter_password">Tinye paswọọdụ</string>
   <string name="revoke_device_title">Ngwaọrụ iwepụ</string>
-  <string name="revoke_device_message">Ị̀ kwenyesiri ike na ị chọrọ ka % 1 $ s kwụsị?</string>
   <string name="revoke_device_wait_title">Biko chere...</string>
   <string name="revoke_device_wait_message">Ngwaọrụ na-agbagha</string>
   <string name="rename_device_title">Gbanwee aha ngwaọrụ a</string>
   <string name="rename_device_message">Họrọ aha ọhụrụ iji mata ngwaọrụ a na akaụntụ Jami gị</string>
   <string name="rename_device_button">Ngwá ọrụ aha ọhụrụ</string>
   <string name="account_rename_device_hint">Họrọ aha ngwaọrụ ọhụrụ</string>
-  <string name="account_device_name_empty">Aha ngwaọrụ apụghị ịbụ efu</string>
   <string name="account_device_this_indicator">Ngwaọrụ a</string>
   <string name="account_disabled_indicator">ndị nwere nkwarụ</string>
   <!--Link a new device-->

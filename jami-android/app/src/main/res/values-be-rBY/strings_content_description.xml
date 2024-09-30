@@ -1,9 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--Strings for xml content description of images-->
-  <string name="contact_quick_call_description">Хуткае званка</string>
-  <string name="contact_picture_description">Кантактная карціна</string>
   <string name="dial_numeric_pad">Лічбавы дыялог</string>
   <string name="contact_unblock">Адключыць блок</string>
-  <string name="video_plugins">Уключальнікі відэа</string>
 </resources>

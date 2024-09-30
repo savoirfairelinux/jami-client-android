@@ -21,17 +21,11 @@
   <string name="dialog_wait_create_details">新しいアカウントを追加しています。しばらくお待ちください...</string>
   <string name="dialog_wait_update">アカウントの更新</string>
   <string name="dialog_wait_update_details">アカウントを更新しています。しばらくお待ちください...</string>
-  <string name="dialog_warn_ip2ip_account_title">空のSIPアカウントを作成しますか？</string>
-  <string name="dialog_warn_ip2ip_account_message">有効なホスト名なしのSIPアカウントを作成しようとしています。
-この設定では直接のIP呼び出しによる発着信しかできません。
-アカウントを後で編集してください。</string>
   <string name="account_type_ip2ip">IPアカウント</string>
   <string name="help_ring">Jamiアカウントを使って、完全に分散したネットワークを通じ、ピアツーピアで安全に連絡を取ることができます。</string>
   <string name="help_sip_title">SIPアカウントを追加</string>
   <string name="help_sip">既存のSIPアカウントを設定</string>
-  <string name="create_sip_account">SIPアカウントを追加</string>
   <!--Strings related to account deletion-->
-  <string name="account_delete_dialog_title">アカウントを削除しますか？</string>
   <string name="account_delete_dialog_message">この操作は元に戻せません。</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">アカウントが登録されていません</string>
@@ -40,8 +34,6 @@
   <string name="account_device_revoke">デバイスを取り消し</string>
   <string name="account_device_revocation_success_title">成功</string>
   <string name="account_device_revocation_success">デバイスを取り消しました</string>
-  <string name="account_device_revocation_error_title">デバイスを取り消しできません</string>
-  <string name="account_device_revocation_wrong_password">パスワードが正しくありません</string>
   <string name="account_device_revocation_unknown_device">未知のデバイスです。</string>
   <string name="account_device_revocation_error_unknown">未知のエラー。</string>
   <string name="account_password_change">パスワードの変更</string>
@@ -63,8 +55,7 @@
   <string name="account_rendezvous_summary">「会議モード」では、新たにかかってきた通話は会議室に追加されます。</string>
   <string name="account_upnp_label">UPnPを有効化</string>
   <string name="account_proxy_field">プロキシ</string>
-  <!--Plugin Details-->
-  <string name="account_preference_plugin_tab">拡張機能</string>
+  <!--Extension Details-->
   <!--Audio Details-->
   <string name="account_audio_label">音声</string>
   <string name="account_preferences_media_tab">メディア</string>
@@ -144,35 +135,23 @@
   <string name="export_account_wait_message">アカウント情報をエクスポートしています</string>
   <string name="account_export_file">アカウントをバックアップ</string>
   <string name="account_export_file_summary">後から復旧できるようにアカウントをデバイスにバックアップします</string>
-  <string name="account_export_end_decryption_message">提供されたパスワードを使用してアカウントをロック解除できませんでした。</string>
   <string name="account_export_end_network_title">ネットワークエラー</string>
-  <string name="account_export_end_network_message">ネットワーク上でアカウントをエクスポートできませんでした。 接続を確認してください。</string>
   <string name="account_export_end_error_title">エラー</string>
-  <string name="account_export_end_error_message">アカウントをエクスポートできませんでした。 不明なエラーが発生しました。</string>
   <string name="account_enter_password">パスワードを入力してください</string>
-  <string name="account_share_body">Jami分散コミュニケーションプラットフォームで \'%1$s\' を使用してご連絡ください: %2$s</string>
-  <string name="account_share_body_with_username">Jami分散コミュニケーションプラットフォームで \'%1$s\' または公開ユーザー名 \'%2$s\' を使用してご連絡ください: %3$s</string>
-  <string name="account_contact_me">Jamiでご連絡ください。</string>
+  <string name="account_contact_me">ジャミに連絡する!</string>
   <string name="update_account">アカウントを更新</string>
   <string name="account_migration">Jamiアカウントが更新可能です。\nあなたのパスワードを入力してください。</string>
   <string name="ring_account">Jamiアカウント</string>
   <string name="sip_account">SIPアカウント</string>
   <string name="ring_account_identity">ID</string>
   <string name="account_migration_title_dialog">アカウントの移行</string>
-  <string name="account_migration_message_dialog">アカウントを更新する必要があります。 アカウント管理画面に移動して、この操作を実行しますか？</string>
   <string name="account_update_needed">更新が必要です</string>
-  <string name="account_cannot_be_found_title">アカウントが見つかりません</string>
-  <string name="account_cannot_be_found_message">Jamiネットワーク上にアカウントを見つけられませんでした。\nJamiでアカウントが既存のデバイスからエクスポートされており、提供されたログイン情報が正しいか確認してください。</string>
   <string name="account_sip_cannot_be_registered_message">アカウント作成プロセスを続行するか、ここで情報を編集することができます。 アカウント設定で、後で編集することも可能です。</string>
-  <string name="account_no_network_title">ネットワークに接続できません</string>
-  <string name="account_no_network_message">Jamiが分散ネットワークに接続できなかったためアカウントを追加できませんでした。デバイスのネットワーク接続を確認してください。</string>
+  <string name="account_no_network_title">ネットワークエラー</string>
   <string name="account_device_added_title">アカウントデバイスが追加されました</string>
   <string name="account_device_added_message">このデバイスでJamiアカウントのセットアップが完了しました。</string>
   <string name="account_device_updated_title">アカウントデバイスを更新しました</string>
   <string name="account_device_updated_message">Jamiアカウントの更新が完了しました。</string>
-  <string name="account_cannot_be_updated_message">アカウントのデバイスを更新できませんでした。パスワードを確認してください。</string>
-  <string name="account_sip_success_title">SIPアカウントを登録しました</string>
-  <string name="account_sip_success_message">SIPアカウントを正常に登録しました。</string>
   <string name="account_sip_register_anyway">とにかく登録する</string>
   <!--TV-->
   <string name="account_tv_settings_header">アカウント設定</string>
@@ -192,11 +171,8 @@
   <string name="account_link_export_button">新しいデバイスをリンク</string>
   <string name="account_link_show_button">さらに%d個のデバイスを表示</string>
   <string name="account_link_hide_button">リンクされたデバイスを隠す</string>
-  <string name="account_link_export_info">別のデバイスでこのアカウントを使用するには、まずJamiでこのアカウントを公開する必要があります。これにより新しいデバイスに入力するためのPINコードが生成されます。PINコードの有効期限は10分間です。</string>
   <string name="account_start_export_button">PINを生成</string>
   <string name="account_end_export_button">閉じる</string>
-  <string name="account_end_export_infos">あなたのPINは:\n\n%%\n\n処理を完了するには、新しいデバイスでJamiを開く必要があります。「このデバイスをアカウントとリンク」 して新しいアカウントを作成してください。PINの有効期間は10分です。</string>
-  <string name="account_link_export_info_light">別のデバイスでこのアカウントを使用するには、最初にJamiでそれを公開する必要があります。これにより、アカウントを設定するために新しいデバイスに入力するためのPINコードが生成されます。PINコードの有効期限は10分間です。</string>
   <string name="account_export_title">アカウントを他のデバイスとリンク</string>
   <string name="account_connect_server_button">管理サーバーに接続</string>
   <string name="account_connect_button">接続</string>
@@ -228,21 +204,17 @@
   <string name="account_creation_profile">プロフィールを作成する</string>
   <string name="account_creation_ring">Jamiアカウントを作成</string>
   <string name="account_link_title">このデバイスをリンクする</string>
-  <string name="account_sip_cannot_be_registered">アカウントを登録できません</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">アカウントを編集</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">確認の暗証語を入力</string>
   <string name="enter_password">暗証語を入力してください</string>
   <string name="revoke_device_title">デバイスを取り消し</string>
-  <string name="revoke_device_message">%1$s を取り消してもよろしいですか？</string>
   <string name="revoke_device_wait_title">しばらくお待ちください…</string>
   <string name="revoke_device_wait_message">機器を破棄しています</string>
   <string name="rename_device_title">この機器の名前を変更</string>
   <string name="rename_device_message">Jamiアカウントでこのデバイスだとわかる名前を設定しましょう</string>
   <string name="rename_device_button">機器の名前を変更</string>
   <string name="account_rename_device_hint">新しい機器名</string>
-  <string name="account_device_name_empty">機器名は空にできません</string>
   <string name="account_device_this_indicator">この機器</string>
   <string name="account_disabled_indicator">無効</string>
   <!--Link a new device-->

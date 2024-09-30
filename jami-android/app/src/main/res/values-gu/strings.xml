@@ -1,16 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
-  <string name="feedback_section">પ્રતિસાદ</string>
-  <string name="report"><u>અમને એક ઇમેઇલ મોકલો</u></string>
   <string name="section_license">લાઇસન્સ</string>
   <string name="sponsor_section">જેમી એક મફત સોફ્ટવેર છે જે વિકાસ અને દ્વારા સમર્થિત છે</string>
   <string name="copyright_section">કૉપિરાઇટ</string>
   <string name="contribute_section">યોગદાન આપો</string>
   <string name="version_section">આવૃત્તિ</string>
-  <string name="no_email_app_installed">કોઈ ઇમેઇલ એપ્લિકેશન મળી નથી, અમને રિપોર્ટ મોકલવા માટે એક ઇન્સ્ટોલ કરો</string>
   <string name="no_browser_app_installed">કોઈ વેબ બ્રાઉઝર એપ્લિકેશન મળી નથી, આ પૃષ્ઠ જોવા માટે એક ઇન્સ્ટોલ કરો</string>
-  <string name="email_chooser_title">મેઇલ મોકલો.</string>
   <string name="website_chooser_title">વેબસાઇટનો ઉપયોગ કરીને જુઓ.</string>
   <string name="license">આ સોફ્ટવેર \"જેમ છે તેમ\" આપવામાં આવે છે, કોઈ પણ પ્રકારની ગેરંટી વિના. વિગતો માટે, જુઓ <u>GNU જનરલ પબ્લિક લાઇસન્સ આવૃત્તિ 3 અથવા પછીની</u></string>
   <string name="description">જમી સાર્વત્રિક સંદેશાવ્યવહાર માટે મફત સોફ્ટવેર છે જે તેના વપરાશકર્તાઓની સ્વતંત્રતા અને ગોપનીયતાનું સન્માન કરે છે.</string>
@@ -19,9 +15,7 @@
   <string name="call_service_description">આ સેવા તમારા કૉલ્સને અગ્રધૂનમાં રાખવા માટે જરૂરી છે. તે ફક્ત કૉલ્સ દરમિયાન જ ચાલે છે.</string>
   <string name="data_transfer_service_description">આ સેવા ફાઇલ ટ્રાન્સફર દરમિયાન સતત સૂચનાઓ પ્રદર્શિત કરવા માટે જરૂરી છે. તે ફક્ત ફાઇલ ટ્રાન્સફર દરમિયાન ચાલે છે.</string>
   <!--About dialog-->
-  <string name="developed_by">દ્વારા વિકસિત</string>
-  <string name="designed_by">દ્વારા ડિઝાઇન</string>
-  <string name="ringtones_by">રિંગ્સ દ્વારા</string>
+  <string name="media">મીડિયા</string>
   <!--RingActivity-->
   <string name="error_no_network">નેટવર્ક કનેક્ટિવિટી નથી</string>
   <string name="error_account_offline">એકાઉન્ટ ઑફલાઇન છે</string>
@@ -35,7 +29,6 @@
   <string name="menu_item_settings">સેટિંગ્સ</string>
   <string name="menu_item_advanced_settings">અદ્યતન સેટિંગ્સ</string>
   <string name="menu_item_account_settings">એકાઉન્ટ સેટિંગ્સ</string>
-  <string name="menu_item_plugin_list">પ્લગઇન સેટિંગ્સ</string>
   <string name="menu_item_share">મારા એકાઉન્ટ શેર કરો</string>
   <string name="menu_item_about">જમી વિશે</string>
   <string name="video_setting_title">વિડિઓ સેટિંગ્સ</string>
@@ -97,17 +90,9 @@
   <string name="ongoing_call">ચાલુ કૉલ</string>
   <string name="hist_in_call">%1$s માં આવનારી કૉલ</string>
   <string name="hist_out_call">%1$s ની બહાર નીકળો કૉલ</string>
-  <string name="start_error_title">હું શરૂ કરી શકતો નથી Jami!</string>
   <string name="start_error_mic_required">જેમીને કામ કરવા માટે માઇક્રોફોન પરવાનગીની જરૂર છે.</string>
-  <string name="action_call_accept">ફોન લો</string>
-  <string name="action_call_accept_audio">ઑડિઓ જવાબ</string>
-  <string name="action_call_accept_video">વિડીયોમાં જવાબ આપો</string>
-  <string name="action_call_hold_accept">hold અને કૉલ ઑડિઓ લેવા</string>
-  <string name="action_call_hold_accept_video">વિડિઓ કૉલ રાખો અને લો</string>
-  <string name="action_call_end_accept">અંત અને કૉલ લેવા</string>
   <string name="action_call_decline">ઘટાડો</string>
   <string name="action_call_mic_mute">મ્યૂટ માઇક્રોફોન</string>
-  <string name="action_load_plugin">લોડ પ્લગઇન</string>
   <string name="ab_action_speakerphone">સ્પીકર સક્ષમ કરો</string>
   <string name="ab_action_contact_add">સંપર્કો ઉમેરવા</string>
   <string name="ab_action_contact_add_question">સંપર્કમાં ઉમેરો?</string>
@@ -143,11 +128,8 @@
   <string name="ringtone_error_size_too_big">આ ફાઇલ ખૂબ મોટી છે. મહત્તમ કદ %1$dkB છે.</string>
   <string name="ringtone_custom_prompt">કસ્ટમ રિંગટોન સેટ કરો</string>
   <string name="ringtone_custom_label">કસ્ટમ</string>
-  <string name="ringtone_jami_tones">જમી ટોન્સ</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">જમીને આ સુવિધાને સક્ષમ કરવા માટે \"સંપર્ક વાંચો\" પરવાનગીની જરૂર છે. કૃપા કરીને તેને આપો.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">જમીને આ સુવિધાને સક્ષમ કરવા માટે \"લૉગ લખો\" પરવાનગીની જરૂર છે. કૃપા કરીને તેને આપો.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">તમે ઉમેરવા માંગો છો તે એકાઉન્ટનો QR કોડ સ્કેન કરો.</string>
   <string name="title_activity_qrcode">મારા એકાઉન્ટ શેર કરો</string>
@@ -163,7 +145,6 @@
   <string name="conversation_details">વાતચીતની વિગતો</string>
   <string name="contact_details">સંપર્ક વિગતો</string>
   <string name="conversation_action_delete_this">આ વાતચીત કાઢી નાખો</string>
-  <string name="conversation_action_delete_this_title">આ વાતચીત કાઢી નાખો?</string>
   <string name="conversation_action_delete_this_message">આ કાર્યવાહીને રદ કરી શકાતી નથી.</string>
   <string name="conversation_action_history_clear">સ્પષ્ટ ઇતિહાસ</string>
   <string name="conversation_action_history_clear_title">વાતચીત ઇતિહાસ સાફ કરો?</string>
@@ -171,7 +152,6 @@
   <string name="conversation_action_remove_this">સંપર્કને કાઢી નાખો</string>
   <string name="conversation_action_remove_this_title">આ સંપર્કને કાઢી નાખો?</string>
   <string name="conversation_action_remove_this_message">આ સંપર્કને કાઢી નાખશે અને વાતચીત ઇતિહાસને ચોક્કસપણે સાફ કરશે.</string>
-  <string name="conversation_action_copy_peer_number">નકલ નંબર</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s ક્લિપબોર્ડ પર કૉપિ</string>
   <string name="conversation_action_select_peer_number">એક નંબર પસંદ કરો</string>
   <string name="conversation_action_block_this">બ્લોક સંપર્ક</string>
@@ -201,7 +181,6 @@
   <string name="conversation_contact_invited">%1$s આમંત્રિત કરવામાં આવી હતી</string>
   <string name="conversation_contact_added">%1$s જોડાયા</string>
   <string name="conversation_contact_left">%1$ ડાબી</string>
-  <string name="conversation_contact_banned">%1$s પર પ્રતિબંધ મૂકવામાં આવ્યો હતો</string>
   <string name="conversation_search_hint">શોધ વાતચીત</string>
   <string name="today">આજે</string>
   <string name="yesterday">ગઈકાલે</string>
@@ -216,14 +195,12 @@
   <string name="help_password_choose">તમારા જેમી એકાઉન્ટને સુરક્ષિત કરવા માટે તમે યાદ રાખશો તે મજબૂત પાસવર્ડ પસંદ કરો.</string>
   <string name="help_password_enter">તમારું મુખ્ય જમી એકાઉન્ટ પાસવર્ડ દાખલ કરો.</string>
   <string name="help_server_enter">મેનેજમેન્ટ સર્વરનું URL દાખલ કરો.</string>
-  <string name="help_pin_enter">અન્ય ગોઠવાયેલા જમી એકાઉન્ટમાંથી પિન દાખલ કરો. PIN મેળવવા માટે \"જમી એકાઉન્ટ નિકાસ\" સુવિધાનો ઉપયોગ કરો.</string>
   <string name="wizard_next">આગળ</string>
   <string name="wizard_back">પાછા</string>
   <string name="wizard_skip">સ્કીપ</string>
   <string name="hist_contact_invited">સંપર્ક આમંત્રિત</string>
   <string name="hist_contact_added">સંપર્ક ઉમેરવામાં આવ્યો</string>
   <string name="hist_contact_left">સંપર્ક ડાબી</string>
-  <string name="hist_contact_banned">સંપર્ક પ્રતિબંધિત</string>
   <string name="hist_invitation_received">પ્રાપ્ત આમંત્રણ</string>
   <!--Account Summary-->
   <string name="profile">પ્રોફાઇલ</string>
@@ -247,20 +224,10 @@
   <string name="generic_error_migration">ભૂલ</string>
   <string name="generic_error_migration_message">સ્થળાંતર દરમિયાન ભૂલ આવી</string>
   <string name="title_share_with">.. સાથે શેર કરો.</string>
-  <!--Pending contact requests-->
+  <!--Pending invitations-->
   <string name="accept">સ્વીકારો</string>
-  <string name="refuse">ઇનકાર</string>
   <string name="block">બ્લોક</string>
-  <string name="contact_request_title">નવી સંપર્ક વિનંતી</string>
-  <string name="contact_request_msg">તમારી પાસે %1$d સંપર્ક વિનંતીઓ છે</string>
-  <string name="contact_request_account">%1$s માટે</string>
-  <string name="no_requests">તમારી પાસે કોઈ સંપર્ક વિનંતીઓ નથી</string>
-  <string name="message_contact_not_trusted_yet">%s તમારા સંપર્કોમાં હજુ સુધી નથી.\nશું તમે આ સંપર્ક વિનંતીને સ્વીકારો છો અથવા નકારી કાઢશો?</string>
-  <string name="message_contact_not_trusted">%s તમારા સંપર્કોમાં નથી. \nનવો સંપર્ક ઉમેરો?</string>
-  <!--Send contact requests-->
-  <string name="send_request_button">મોકલો</string>
-  <string name="send_request_title">સંપર્ક વિનંતી મોકલો</string>
-  <string name="send_request_msg">આ વપરાશકર્તા સાથે વાતચીત કરવા માટે તમારે સંપર્ક વિનંતી મોકલવી આવશ્યક છે. જ્યાં સુધી તમારો સંપર્ક વિનંતીને સ્વીકારતો નથી, તમે સંદેશા મોકલી શકો છો પરંતુ તે જવાબ આપી શકશે નહીં.</string>
+  <string name="invitation_message">તમારી પાસે %1$d સંપર્ક વિનંતીઓ છે</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">કોઈ અવરોધિત સંપર્કો નહીં</string>
   <!--Smartlist-->
@@ -272,7 +239,6 @@
   <string name="tv_contact_row_header">સંપર્કો</string>
   <string name="gallery_error_title">ગેલેરી એપ્લિકેશન મળી નથી</string>
   <string name="gallery_error_message">ગેલેરી ખોલવા માટે ઉપકરણ પર કોઈ એપ્લિકેશન મળી નથી</string>
-  <string name="generic_error">અજ્ઞાત ભૂલ થઇ</string>
   <!--File Transfer-->
   <string name="invalid_file">અમાન્ય ફાઇલ</string>
   <string name="not_able_to_write_file">ફાઇલ લખી શકતો નથી</string>
@@ -292,7 +258,6 @@
   <string name="file_saved_in">%s માં સાચવેલ ફાઇલ</string>
   <string name="file_saved_successfully">ફાઇલ સફળતાપૂર્વક સાચવવામાં</string>
   <string name="file_download">ડાઉનલોડ કરો</string>
-  <string name="no_space_left_on_device">ઉપકરણ પર કોઈ જગ્યા બાકી નથી</string>
   <string name="title_media_viewer">મીડિયા દર્શક</string>
   <string name="menu_file_open">ખુલ્લી ફાઇલ</string>
   <string name="menu_file_download">ફાઇલ ડાઉનલોડ કરો</string>
@@ -343,11 +308,9 @@
   <string name="wizard_profile_button">પ્રોફાઇલ સાચવો</string>
   <string name="wizard_profile_skip">સ્કીપ અને આ પછીથી કરો</string>
   <string name="fab_path_choose">અન્ય ફાઇલ પસંદ કરો</string>
-  <string name="chat_plugins">ચેટ પ્લગઇન્સ</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">શેર કરો</string>
   <string name="bottomSheet_dialpad_btn">ડાયલપેડ</string>
-  <string name="bottomSheet_plugins_btn">પ્લગિન્સ</string>
   <string name="bottomSheet_add_participants_btn">ઉમેરો</string>
   <string name="bottomSheet_change_camera_btn">પરિવર્તન</string>
   <string name="bottomSheet_camera_onoff_switch_btn">કેમેરા</string>
@@ -355,17 +318,13 @@
   <string name="bottomSheet_mute_microphone_btn">માઇક્રો</string>
   <string name="bottomSheet_sound_output_btn">ધ્વનિ</string>
   <string name="bottomSheet_raiseHand_btn">હાથ ઉઠાવો</string>
-  <string name="open_account_plugin_settings">એકાઉન્ટ પ્લગઇન સેટિંગ્સ ખોલો</string>
-  <string name="open_general_plugin_settings">જનરલ પ્લગઇન સેટિંગ્સ ખોલો</string>
   <string name="uninstall">અનઇન્સ્ટોલ કરો</string>
   <string name="reset">રીસેટ</string>
   <!--Swarm Detail-->
   <string name="rename_btn">પુષ્ટિ</string>
-  <string name="rename_error">ખાલી ન હોઈ શકે</string>
-  <string name="swarm_description">વર્ણન ઉમેરો</string>
-  <string name="tab_about">વિશે</string>
   <string name="tab_members">સભ્યો</string>
-  <string name="tab_documetn">દસ્તાવેજો</string>
+  <string name="tab_files">ફાઇલો</string>
+  <string name="tab_settings">સેટિંગ્સ</string>
   <string name="dialogtitle_title">સ્વેર્મ શીર્ષક સંપાદિત કરો</string>
   <string name="dialogtitle_description">સ્કેમ વર્ણન સંપાદિત કરો</string>
   <string name="dialog_hint_title">શીર્ષક</string>
@@ -381,5 +340,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">જમીમાં આપનું સ્વાગત છે</string>
   <!--Donation-->
-  <!--Plugin-->
+  <!--Extension-->
 </resources>

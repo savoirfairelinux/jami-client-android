@@ -27,7 +27,6 @@
   <string name="pref_startOnBoot_title">Запускати Jami після включення пристрою</string>
   <string name="pref_startOnBoot_summary">Дозволити Jami працювати у фоновому режимі після завантаження пристрою.</string>
   <string name="pref_clearHistory_title">Очистити історію</string>
-  <string name="pref_clearHistory_summary">Видалити всю історію розмов. Цю дію не можна скасувати.</string>
   <string name="pref_notification_title">Видимість сповіщень</string>
   <string name="pref_notification_summary">Налаштувати видимість сповіщень програми на екрані блокування.</string>
   <string name="pref_blackList_title">Список заблокованих</string>
@@ -52,22 +51,8 @@
   <string name="notification_public">Загальнодоступні \n(показувати сповіщення та їх вміст на екрані блокування)\n</string>
   <string name="notification_private">Приватні \n(показувати сповіщення, але приховувати їх вміст на екрані блокування)\n</string>
   <string name="notification_secret">Секретні \n(не показувати сповіщення на екрані блокування)</string>
-  <!--Plugin-->
-  <string name="pref_plugins_title">Плагіни</string>
-  <string name="pref_plugins_summary">Включити плагіни і встановити їх параметри</string>
-  <string name="fab_plugins_add">Додати новий плагін</string>
-  <string name="plugin_uninstall_title">Видалити плагін?</string>
-  <string name="plugin_reset_preferences">Скинути налаштування плагіна</string>
-  <string name="plugin_reset_preferences_summary">Ваші налаштування плагіна будуть встановлені у значення за замовченням</string>
-  <string name="plugin_reset_preferences_ask">Бажаєте скинути загальні налаштування плагіна?</string>
-  <string name="plugin_reset_account_preferences_ask">Бажаєте скинути налаштування плагіна облікового запису?</string>
-  <string name="plugin_successfully_installed">Плагін <b>%1$s</b> успішно встановлений</string>
-  <string name="plugin_install_failure">Не вдалося встановити плагін: <b>%1$s</b></string>
-  <string name="plugin_recent_version_exception">Ви маєте встановлену новішу версію: <b>%1$s</b></string>
-  <string name="plugin_same_version_exception">Ви маєте встановлену ту саму версію <b>%1$s</b></string>
-  <string name="plugin_invalid_signature"><b>%1$s</b> має недійсний підпис</string>
-  <string name="plugin_invalid_authority">Не вдається перевірити авторитет для: <b>%1$s</b></string>
-  <string name="plugin_invalid_format">Неправильний формат плагіна: <b>%1$s</b></string>
-  <string name="plugin_force_install">примусово \n встановити</string>
-  <string name="plugin_path_image_add">Додати нове зображення</string>
+  <!--Extension-->
+  <string name="pref_extensions_title">Розширення</string>
+  <string name="extension_invalid_signature"><b>%1$s</b> має недійсний підпис</string>
+  <string name="extension_force_install">примусово \n встановити</string>
 </resources>

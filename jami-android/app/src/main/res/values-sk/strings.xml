@@ -1,16 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
-  <string name="feedback_section">Spätná väzba</string>
-  <string name="report"><u>Napíšte nám email</u></string>
   <string name="section_license">Licencia</string>
   <string name="sponsor_section">Jami je slobodný softvér vyvíjaný a podporovaný</string>
   <string name="copyright_section">Autorské právo</string>
   <string name="contribute_section">Prispejte</string>
   <string name="version_section">Verzia</string>
-  <string name="no_email_app_installed">Nebol nájdená emailová aplikácia, na poslanie správy si nejakú nainštalujte</string>
   <string name="no_browser_app_installed">Nebol nájdený žiaden webový prehliadač, na zobrazenie tejto stránky si nejaký nainštalujte</string>
-  <string name="email_chooser_title">Poslať mail pomocou...</string>
   <string name="website_chooser_title">Zobraziť stránku pomocou...</string>
   <string name="license">Tento softvér je distribuovaný \"tak, ako je\", bez záruky akéhokoľvek druhu. Pre viac informácií pozrite <u>GNU General Public Licence verzie 3 alebo neskoršej</u></string>
   <string name="description">Jami je slobodný softvér na univerzálnu komunikáciu, ktorý rešpektuje slobodu a súkromie používateľov.</string>
@@ -19,9 +15,7 @@
   <string name="call_service_description">Táto služba je potrebná na to, aby boli vaše hovory v popredí. Beží iba počas hovorov.</string>
   <string name="data_transfer_service_description">Táto služba je potrebná na zobrazenie upozornení počas prenosu súborov. Beží iba počas prenosu súborov. </string>
   <!--About dialog-->
-  <string name="developed_by">Vývoj</string>
-  <string name="designed_by">Dizajn</string>
-  <string name="ringtones_by">Vyzváňacie tóny podľa</string>
+  <string name="media">Médiá</string>
   <!--RingActivity-->
   <string name="error_no_network">Žiadne sieťové pripojenie</string>
   <string name="error_account_offline">Účet je offline</string>
@@ -35,7 +29,6 @@
   <string name="menu_item_settings">Nastavenia</string>
   <string name="menu_item_advanced_settings">Pokročilé nastavenia</string>
   <string name="menu_item_account_settings">Nastavenia účtu</string>
-  <string name="menu_item_plugin_list">Nastavenia doplnkov</string>
   <string name="menu_item_share">Zdieľať môj účet</string>
   <string name="menu_item_about">O programe Jami</string>
   <string name="video_setting_title">Nastavenia videa</string>
@@ -94,17 +87,10 @@
   <string name="ongoing_call">Prebiehajúci hovor</string>
   <string name="hist_in_call">Prichádzajúci hovor dĺžky %1$s</string>
   <string name="hist_out_call">Odchádzajúci hovor dĺžky %1$s</string>
-  <string name="start_error_title">Nepodarilo sa spustiť Jami!</string>
   <string name="start_error_mic_required">Jami potrebuje povolenie používať mikrofón.</string>
-  <string name="action_call_accept">Zdvihnúť hovor</string>
-  <string name="action_call_accept_audio">Odpoveď v audio</string>
-  <string name="action_call_accept_video">Odpoveď v videu</string>
-  <string name="action_call_hold_accept">Zdržte a vezmite zvuk hovoru</string>
-  <string name="action_call_hold_accept_video">Zdržte a beriete video hovor</string>
-  <string name="action_call_end_accept">Končiť a prijať volanie</string>
+  <string name="action_call_accept">Prijať hovor</string>
   <string name="action_call_decline">Odmietnuť</string>
   <string name="action_call_mic_mute">Stlmiť mikrofón</string>
-  <string name="action_load_plugin">Vloženie</string>
   <string name="ab_action_speakerphone">Zapnúť reproduktor</string>
   <string name="ab_action_contact_add">Pridať kontakt</string>
   <string name="ab_action_contact_add_question">Pridať do kontaktov?</string>
@@ -140,11 +126,8 @@
   <string name="ringtone_error_size_too_big">Tento súbor je priveľký. Maximálna veľkosť je %1$dkB.</string>
   <string name="ringtone_custom_prompt">Nastaviť vlastný vyzváňací tón</string>
   <string name="ringtone_custom_label">Vlastný</string>
-  <string name="ringtone_jami_tones">Jami Zvuky</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Jami potrebuje povolenie čítať kontakty na zapnutie tejto funkcie. Zvážte jeho udelenie.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Jami potrebuje povolenie zapisovať záznam o hovoroch na zapnutie tejto funkcie. Zvážte jeho udelenie.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Nasnímajte QR kód účtu, ktorý chcete pridať.</string>
   <string name="title_activity_qrcode">Zdieľať môj účet</string>
@@ -160,7 +143,6 @@
   <string name="conversation_details">Podrobnosti rozhovoru</string>
   <string name="contact_details">Informácie o kontakte</string>
   <string name="conversation_action_delete_this">Vymazať túto konverzáciu</string>
-  <string name="conversation_action_delete_this_title">Vymazať túto konverzáciu?</string>
   <string name="conversation_action_delete_this_message">Túto operáciu nie je možné vrátiť.</string>
   <string name="conversation_action_history_clear">Vymazať históriu</string>
   <string name="conversation_action_history_clear_title">Vymazať históriu konverzácie?</string>
@@ -168,7 +150,6 @@
   <string name="conversation_action_remove_this">Odstrániť kontakt</string>
   <string name="conversation_action_remove_this_title">Odstrániť tento kontakt?</string>
   <string name="conversation_action_remove_this_message">Kontakt i história konverzácie bude natrvalo vymazaná. </string>
-  <string name="conversation_action_copy_peer_number">Skopírovať číslo</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s skopírované do schránky</string>
   <string name="conversation_action_select_peer_number">Zvoliť číslo</string>
   <string name="conversation_action_block_this">Zablokovať kontakt</string>
@@ -198,7 +179,6 @@
   <string name="conversation_contact_invited">%1$s bol pozvaný</string>
   <string name="conversation_contact_added">Pridaný %1$s</string>
   <string name="conversation_contact_left">%1$ je ľavý</string>
-  <string name="conversation_contact_banned">%1$s bol zakázaný</string>
   <string name="conversation_search_hint">Vyhľadávacie rozhovor</string>
   <string name="today">Dnes</string>
   <string name="yesterday">Včera</string>
@@ -213,14 +193,12 @@
   <string name="help_password_choose">Zvoľte si silné heslo, ktoré si zapamätáte, na ochranu vášho účtu.</string>
   <string name="help_password_enter">Vložte si heslo na účet Jami.</string>
   <string name="help_server_enter">Vložte URL správneho servera.</string>
-  <string name="help_pin_enter">Zadajte PIN kód z druhého nakonfigurovaného Jami účtu. Použite funkciu \"export Jami účtu\" na získanie PIN kódu.</string>
   <string name="wizard_next">Ďalej</string>
   <string name="wizard_back">Späť</string>
   <string name="wizard_skip">Preskočiť</string>
   <string name="hist_contact_invited">Kontaktný pozvaný</string>
   <string name="hist_contact_added">Kontakt pridaný</string>
   <string name="hist_contact_left">Kontakt doľava</string>
-  <string name="hist_contact_banned">Kontakt zakázaný</string>
   <string name="hist_invitation_received">Bola prijatá pozvánka</string>
   <!--Account Summary-->
   <string name="profile">Profil</string>
@@ -244,20 +222,11 @@
   <string name="generic_error_migration">Chyba</string>
   <string name="generic_error_migration_message">Počas migrácie sa vyskytla chyba</string>
   <string name="title_share_with">Zdieľať s...</string>
-  <!--Pending contact requests-->
+  <!--Pending invitations-->
   <string name="accept">Prijať</string>
-  <string name="refuse">Odmietnuť</string>
+  <string name="decline">Odmietnuť</string>
   <string name="block">Blokovať</string>
-  <string name="contact_request_title">Nová žiadosť o kontakt</string>
-  <string name="contact_request_msg">Máte %1$d kontaktné požiadavky</string>
-  <string name="contact_request_account">Pre %1$s</string>
-  <string name="no_requests">Nemáte žiadnu žiadosť o kontakt.</string>
-  <string name="message_contact_not_trusted_yet">%s zatiaľ nie je vo vašich kontaktoch.\nChcete prijať alebo odmietnuť jeho žiadosť o kontakt?</string>
-  <string name="message_contact_not_trusted">%s zatiaľ nie je vo vašich kontaktoch.\nPridať nový kontakt?</string>
-  <!--Send contact requests-->
-  <string name="send_request_button">Poslať</string>
-  <string name="send_request_title">Poslať žiadosť o kontakt</string>
-  <string name="send_request_msg">Musíte poslať žiadosť o kontakt, aby ste mohli komunikovať s týmto používateľom. Budete mu môcť posielať správy, pokým táto žiadosť nebude akceptovaná, ale on nebude môcť odpovedať.</string>
+  <string name="invitation_message">Máte %1$d kontaktné požiadavky</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Žiadne blokované kontakty</string>
   <!--Smartlist-->
@@ -269,7 +238,6 @@
   <string name="tv_contact_row_header">Kontakty</string>
   <string name="gallery_error_title">Aplikácia Galéria nebola nájdená</string>
   <string name="gallery_error_message">Nebola nájdená žiadna aplikácia na otvorenie Galérie</string>
-  <string name="generic_error">Objavila sa neznáma chyba</string>
   <!--File Transfer-->
   <string name="invalid_file">Neplatný súbor</string>
   <string name="not_able_to_write_file">Nie je možné zapisovať do súboru</string>
@@ -289,7 +257,6 @@
   <string name="file_saved_in">Súbor uložený v %s</string>
   <string name="file_saved_successfully">Súbor úspešne uložený</string>
   <string name="file_download">Stiahnite</string>
-  <string name="no_space_left_on_device">Žiadne dostupné miesto na disku</string>
   <string name="title_media_viewer">Zobrazovač médií</string>
   <string name="menu_file_open">Otvoriť súbor</string>
   <string name="menu_file_download">Stiahnuť súbor</string>
@@ -340,11 +307,9 @@
   <string name="wizard_profile_button">Uloženie profilu</string>
   <string name="wizard_profile_skip">Preskoč a urob to neskôr.</string>
   <string name="fab_path_choose">Vyberte iný súbor</string>
-  <string name="chat_plugins">Vložky na chat</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Zdieľať</string>
   <string name="bottomSheet_dialpad_btn">Vypínacie displeje</string>
-  <string name="bottomSheet_plugins_btn">Vložky</string>
   <string name="bottomSheet_add_participants_btn">Pridať</string>
   <string name="bottomSheet_change_camera_btn">Zmena</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>
@@ -352,17 +317,13 @@
   <string name="bottomSheet_mute_microphone_btn">Mikro</string>
   <string name="bottomSheet_sound_output_btn">Znie to</string>
   <string name="bottomSheet_raiseHand_btn">Zdvihnite ruku</string>
-  <string name="open_account_plugin_settings">Nastavenia plugin otvorený účet</string>
-  <string name="open_general_plugin_settings">Otvorte nastavenia všeobecného doplnku</string>
   <string name="uninstall">Odinstalacia</string>
   <string name="reset">Nastavenie</string>
   <!--Swarm Detail-->
   <string name="rename_btn">Potvrdiť</string>
-  <string name="rename_error">Nemôže byť prázdna.</string>
-  <string name="swarm_description">Pridať opis</string>
-  <string name="tab_about">O programe</string>
   <string name="tab_members">Členovia</string>
-  <string name="tab_documetn">Dokumenty</string>
+  <string name="tab_files">Súbory</string>
+  <string name="tab_settings">Nastavenia</string>
   <string name="dialogtitle_title">Upravovať názov Swarm</string>
   <string name="dialogtitle_description">Upravovať popis hromady</string>
   <string name="dialog_hint_title">Nadpis</string>
@@ -381,5 +342,5 @@
   <string name="donation_card_description">Ak radi používate Jami a veríte v naše poslanie, prispeli by ste nám?</string>
   <string name="donation_card_not_now">Teraz nie</string>
   <string name="donation_donate">Prispejte</string>
-  <!--Plugin-->
+  <!--Extension-->
 </resources>

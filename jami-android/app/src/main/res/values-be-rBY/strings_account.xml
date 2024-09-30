@@ -21,16 +21,11 @@
   <string name="dialog_wait_create_details">Калі ласка, пачакайце, пакуль ваш новы рахунак будзе дададзены...</string>
   <string name="dialog_wait_update">Абноўленне рахунку</string>
   <string name="dialog_wait_update_details">Калі ласка, пачакайце, пакуль ваш новы рахунак будзе абнаўляны...</string>
-  <string name="dialog_warn_ip2ip_account_title">Стварэнне пусты SIP рахунку?</string>
-  <string name="dialog_warn_ip2ip_account_message">Вы збіраецеся стварыць SIP-акаунт без сапраўднага імя хостынга. Вы зможаце толькі рабіць і атрымліваць прамыя IP-запаведы. Вы можаце рэдагаваць свой рахунак пазней</string>
   <string name="account_type_ip2ip">IP-уліковы запіс</string>
   <string name="help_ring">Уліковы запіс Jami дазваляе вам бяспечна далучацца да людзей з аднаму па аднаму праз цалкам размеркаваную сетку.</string>
-  <string name="help_sip_title">Дадаць свой SIP-акаўнт</string>
+  <string name="help_sip_title">Дадаць SIP-улік</string>
   <string name="help_sip">Канфігуруйце існуючы SIP-акаўнт.</string>
-  <string name="create_sip_account">Дадаць SIP-улік</string>
   <!--Strings related to account deletion-->
-  <string name="account_delete_dialog_title">Знішчыць рахунак?</string>
-  <string name="account_delete_dialog_message">Гэтая дзейнасць не можа быць адменена.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Ніякіх рахункаў не зарэгістравана</string>
   <string name="normal_accounts_titles">Рэкамендацыі</string>
@@ -38,8 +33,6 @@
   <string name="account_device_revoke">Прылада адмены</string>
   <string name="account_device_revocation_success_title">Поспех</string>
   <string name="account_device_revocation_success">Прылада цяпер адклікана!</string>
-  <string name="account_device_revocation_error_title">Не можа адклікаць прылада</string>
-  <string name="account_device_revocation_wrong_password">Памылковае пароль.</string>
   <string name="account_device_revocation_unknown_device">Невядомы прыбор.</string>
   <string name="account_device_revocation_error_unknown">Невядомая памылка.</string>
   <string name="account_password_change">Змяніць пароль</string>
@@ -61,8 +54,7 @@
   <string name="account_rendezvous_summary">У рэжыме \"Рэзідэнт\" прыступаюць да канферэнцыйнай пакоі.</string>
   <string name="account_upnp_label">Уключыць UPnP</string>
   <string name="account_proxy_field">Практыкаванне</string>
-  <!--Plugin Details-->
-  <string name="account_preference_plugin_tab">Уключальнікі</string>
+  <!--Extension Details-->
   <!--Audio Details-->
   <string name="account_audio_label">Аўдыё</string>
   <string name="account_preferences_media_tab">СМІ</string>
@@ -142,14 +134,9 @@
   <string name="export_account_wait_message">Інфармацыя аб экспорты</string>
   <string name="account_export_file">Запіс запісу</string>
   <string name="account_export_file_summary">Запісваць свой рахунак на прыладзе, каб аднавіць яго пазней.</string>
-  <string name="account_export_end_decryption_message">Не змагла адключыць ваш рахунак з дапамогай прадстаўленага пароля.</string>
   <string name="account_export_end_network_title">Памылка сеткі</string>
-  <string name="account_export_end_network_message">Не змагла экспартаваць рахунак у сетцы.</string>
   <string name="account_export_end_error_title">Памылка</string>
-  <string name="account_export_end_error_message">Не змагла экспартаваць рахунак.</string>
   <string name="account_enter_password">Увядзіце пароль</string>
-  <string name="account_share_body">Звяжыцеся са мной з дапамогай \'%1$s\' на распределеннай платформе сувязі Jami: %2$s</string>
-  <string name="account_share_body_with_username">Звяжыцеся са мной з дапамогай \"%1$s\" або майго публічнага карыстальніка \"%2$s\" на раскіданыя платформай сувязі Jami: %3$s</string>
   <string name="account_contact_me">Звяжыцеся са мной на Jami!</string>
   <string name="update_account">Абноўленне рахунку</string>
   <string name="account_migration">Ваш рахунак Jami можа быць абнаўлена.\nДайце пароль.</string>
@@ -157,20 +144,13 @@
   <string name="sip_account">Спі-акаўнт</string>
   <string name="ring_account_identity">Пазначэнне</string>
   <string name="account_migration_title_dialog">Міграцыя рахунку</string>
-  <string name="account_migration_message_dialog">Твае рахункі павінны быць абнаўляюцца. Вы хочаце пайсці на экран кіравання рахункам для выканання гэтай аперацыі?</string>
   <string name="account_update_needed">Патрэбная абнаўленне</string>
-  <string name="account_cannot_be_found_title">Не магу знайсці рахунак</string>
-  <string name="account_cannot_be_found_message">У сетцы Jami не знайшлі рахунак. Пераканайцеся, што ён быў экспартаваны на Jami з існуючага прылады, і што крэдыентычныя дадзеныя правільныя.</string>
   <string name="account_sip_cannot_be_registered_message">Вы можаце працягнуць працэс стварэння ўліковага запісу або рэдагаваць інфармацыю тут.</string>
-  <string name="account_no_network_title">Не магу падключыць да сеткі</string>
-  <string name="account_no_network_message">Не змагла дадаць рахунак, бо Джамі не змог падключыцца да размеркаванай сеткі.</string>
+  <string name="account_no_network_title">Памылка сеткі</string>
   <string name="account_device_added_title">Дададзены прыбор рахунку</string>
   <string name="account_device_added_message">Вы паспяхова ўсталявалі свой рахунак Jami на гэтым прыладзе.</string>
   <string name="account_device_updated_title">Абнаўленне прылады рахунку</string>
   <string name="account_device_updated_message">Вы паспяхова абнавілі свой рахунак Jami.</string>
-  <string name="account_cannot_be_updated_message">Прылада рахунку не можа быць абнаўлена.</string>
-  <string name="account_sip_success_title">Зарэгістраваны спіс</string>
-  <string name="account_sip_success_message">Вы паспяхова зарэгістравалі свой рахунак Sip.</string>
   <string name="account_sip_register_anyway">Падпішыцеся ў любым выпадку</string>
   <!--TV-->
   <string name="account_tv_settings_header">Налады ўліковых запісаў</string>
@@ -190,11 +170,8 @@
   <string name="account_link_export_button">Злучыць новае прылада</string>
   <string name="account_link_show_button">Паказаць %d больш звязаных прылад</string>
   <string name="account_link_hide_button">Схаваць злучанае прылада</string>
-  <string name="account_link_export_info">Каб выкарыстоўваць гэты рахунак на іншых прыладах, вы павінны спачатку выявіць яго на Jami. Гэта будзе ствараць PIN-код, які вы павінны ўвесці на новым прыладзе для ўстаноўкі рахунку.</string>
   <string name="account_start_export_button">Падключыць PIN</string>
   <string name="account_end_export_button">блізка</string>
-  <string name="account_end_export_infos">Ваш PIN з\'яўляецца:\n\n%%\n\n Каб скончыць працэс, вам трэба адкрыць Jami на новым прыладзе. Стварыць новы рахунак з \"Звязаць гэта прыладу з рахункам\". Ваш PIN дзейнічае на працягу 10 хвілін.</string>
-  <string name="account_link_export_info_light">Каб выкарыстоўваць гэты рахунак на іншых прыладах, вы павінны спачатку выявіць яго на Jami. Гэта будзе ствараць PIN-код, які вы павінны ўвесці на новым прыладзе для ўстаноўкі рахунку.</string>
   <string name="account_export_title">Уліковы запіс да іншых прылад</string>
   <string name="account_connect_server_button">Падключэнне да сервера кіравання</string>
   <string name="account_connect_button">Злучэнне</string>
@@ -226,21 +203,17 @@
   <string name="account_creation_profile">Стварэнне вашага профілю</string>
   <string name="account_creation_ring">Стварыце свой рахунак Jami</string>
   <string name="account_link_title">Звязаць гэта прылада</string>
-  <string name="account_sip_cannot_be_registered">Не магу зарэгістраваць рахунак</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">Выдавіце мой рахунак</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Увядзіце пароль для пацверджання</string>
   <string name="enter_password">Увядзіце пароль</string>
   <string name="revoke_device_title">Прылада адмены</string>
-  <string name="revoke_device_message">Ці ўпэўненыя, што хочаце адмяніць %1$s?</string>
   <string name="revoke_device_wait_title">Калі ласка, пачакайце...</string>
   <string name="revoke_device_wait_message">Прылада адклікання</string>
   <string name="rename_device_title">Перайменне гэтага прылады</string>
   <string name="rename_device_message">Выберыце новае імя для ідэнтыфікацыі гэтага прылады ў вашым рахунку Jami</string>
   <string name="rename_device_button">Пераназванае прылада</string>
   <string name="account_rename_device_hint">Выберыце імя прылады</string>
-  <string name="account_device_name_empty">Назва прылады не можа быць пустым</string>
   <string name="account_device_this_indicator">Гэта прылада</string>
   <string name="account_disabled_indicator">інвалід</string>
   <!--Link a new device-->

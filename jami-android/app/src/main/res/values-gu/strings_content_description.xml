@@ -1,11 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--Strings for xml content description of images-->
-  <string name="contact_quick_call_description">ઝડપી કૉલ</string>
-  <string name="contact_picture_description">સંપર્ક ચિત્ર</string>
   <string name="dial_numeric_pad">સંખ્યાત્મક ડાયલપેડ</string>
   <string name="contact_unblock">અવરોધિત કરો</string>
-  <string name="video_plugins">વિડિઓ પ્લગઇન્સ</string>
   <string name="file_download_button">ડાઉનલોડ કરો</string>
   <string name="control_play">રમો</string>
   <string name="control_pause">વિરામ</string>

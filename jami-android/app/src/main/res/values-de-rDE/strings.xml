@@ -2,9 +2,16 @@
 <resources>
   <!--About-->
   <!--About dialog-->
+  <string name="thank_note">Wir möchten uns bei unseren Mitwirkenden bedanken, deren langjähriger Einsatz diese Software zu dem gemacht hat, was sie ist.</string>
+  <string name="developers">Entwickler</string>
+  <string name="media">Media</string>
+  <string name="community_management">Community-Management</string>
+  <string name="special_thanks">Besonderer Dank geht an</string>
+  <string name="end_note">Dies ist eine Liste von Personen, die viel Zeit und nützliche Ergebnisse in Jami investiert haben. Alle Mitwirkenden, die zur Liste hinzugefügt werden möchten, sollten sich unter contact@jami.net an das Jami-Team wenden.</string>
   <!--RingActivity-->
   <!--AB menus-->
   <!--Sections-->
+  <string name="menu_item_extension_list">Erweiterungseinstellungen</string>
   <!--Dialing Fragment-->
   <!--History Fragment-->
   <!--Home Fragment-->
@@ -13,38 +20,69 @@
   <!--TransferDFragment-->
   <!--Notifications-->
   <!--Call Fragment-->
+  <string name="start_error_title">Jami kann nicht gestartet werden!</string>
+  <string name="action_call_accept">Anruf annehmen</string>
+  <string name="action_call_accept_audio">Eingehende Anrufe nur mit Audio annehmen</string>
+  <string name="action_call_accept_video">Eingehende Anrufe mit Video annehmen</string>
+  <string name="action_call_hold_accept">Eingehende Anrufe nur mit Audio annehmen und aktuellen Anruf halten</string>
+  <string name="action_call_hold_accept_video">Eingehenden Anrufen mit Video annehmen und aktuellen Anruf halten</string>
+  <string name="action_call_end_accept">Eingehenden Anruf annehmen und aktuellen Anruf beenden</string>
+  <string name="action_load_extension">Erweiterung laden</string>
   <string name="ab_action_audio_call">Einen Audioanruf beginnen</string>
   <string name="ab_action_video_call">Video-Anruf beginnen</string>
   <!--Text messages-->
   <!--MediaPreferenceFragment-->
   <!--Ringtone activity-->
+  <string name="ringtone_jami_tones">Jami-Klingeltöne</string>
   <!--Read contacts permission-->
+  <string name="permission_dialog_read_contacts_message">Jami benötigt die Berechtigung „Kontakte lesen“, um diese Funktion zu aktivieren. Bitte gewähren Sie diese.</string>
   <!--Write call log permission-->
+  <string name="permission_dialog_write_call_log_message">Jami benötigt die Berechtigung „Anrufliste schreiben“, um diese Funktion zu aktivieren. Bitte gewähren Sie diese.</string>
   <!--QRCode Scan-->
   <!--Settings-->
   <!--Conversation-->
   <string name="conversation_details">Unterhaltungsdetails</string>
   <string name="contact_details">Kontaktdetails</string>
-  <string name="conversation_contact_unbanned">%1$s wurde entbannt</string>
+  <string name="conversation_action_delete_this_title">Diese Unterhaltung löschen?</string>
+  <string name="conversation_action_delete_this_message">Diese Aktion kann nicht rückgängig gemacht werden.</string>
+  <string name="conversation_contact_blocked">%1$s wurde blockiert</string>
+  <string name="conversation_contact_unblocked">Blockierung von %1$swurde aufgehoben</string>
   <!--Contacts-->
-  <string name="hist_contact_unbanned">Kontakt entbannt</string>
+  <string name="help_pin_enter">Geben Sie die PIN eines anderen konfigurierten Jami-Kontos ein. Nutzen Sie die Funktion „Jami-Konto exportieren“, um eine PIN zu erhalten.</string>
+  <string name="hist_contact_blocked">Kontakt blockiert</string>
+  <string name="hist_contact_unblocked">Blockierung des Kontaktes aufgehoben</string>
   <!--Account Summary-->
   <!--Share fragment-->
-  <!--Pending contact requests-->
-  <!--Send contact requests-->
+  <!--Pending invitations-->
   <!--Blacklist-->
   <!--Smartlist-->
+  <string name="generic_error">Ein unbekannter Fehler ist aufgetreten.</string>
   <!--File Transfer-->
+  <string name="no_space_left_on_device">Auf dem Gerät ist kein Speicherplatz verfügbar</string>
   <!--Bottom Navigation-->
   <!--TV-->
+  <string name="error_sharing_file">Beim Teilen der Datei ist ein Fehler aufgetreten.</string>
+  <string name="error_opening_file">Beim Öffnen der Datei ist ein Fehler aufgetreten.</string>
   <!--Wizard-->
+  <string name="chat_extensions">Chat-Erweiterungen</string>
   <!--Bottom sheet-->
+  <string name="bottomSheet_extensions_btn">Erweiterungen</string>
+  <string name="bottomSheet_hangup_btn">Anruf beenden</string>
+  <string name="open_account_extension_settings">Kontoerweiterungseinstellungen öffnen</string>
+  <string name="open_general_extension_settings">Allgemeine Erweiterungseinstellungen öffnen</string>
   <!--Swarm Detail-->
+  <string name="rename_error">darf nicht leer sein.</string>
+  <string name="swarm_description">Beschreibung hinzufügen</string>
+  <string name="tab_files">Dateien</string>
+  <string name="tab_settings">Einstellungen</string>
   <string name="not_admin_toast">Nur Administratoren können die Informationen dieser Gruppe bearbeiten</string>
   <string name="no_contact_to_add">Sie haben keinen Kontakt zum Hinzufügen</string>
   <string name="group_admin">Administrator</string>
   <!--JamiId-->
   <!--WelcomeJami-->
   <!--Donation-->
-  <!--Plugin-->
+  <!--Extension-->
+  <string name="load_success">%1$s: aktiviert</string>
+  <string name="unload_success">%1$s: deaktiviert</string>
+  <string name="install_success">Die Erweiterung %1$s wurde erfolgreich installiert.</string>
 </resources>
