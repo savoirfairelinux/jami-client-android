@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 val kotlin_version: String by rootProject.extra
 val hilt_version: String by rootProject.extra
 val dokka_version: String by rootProject.extra
@@ -28,7 +30,7 @@ android {
                 arguments += listOf(
                     "-DANDROID_STL=c++_shared",
                     "-DBUILD_CONTRIB=ON",
-                    "-DBUILD_EXTRA_TOOLS=ON",
+                    "-DBUILD_EXTRA_TOOLS=OFF",
                     "-DJAMI_TESTS=OFF",
                     "-DBUILD_TESTING=OFF",
                     "-DJAMI_JNI=ON",
@@ -184,3 +186,8 @@ if (buildFirebase) {
     println ("apply plugin $buildFirebase")
     apply(plugin = "com.google.gms.google-services")
 }
+
+// Make sure the native build runs before the Kotlin/Java build
+val cmakeTask = tasks.findByPath("buildCMakeRelease") ?: tasks.findByPath("buildCMakeDebug")
+tasks.withType<KotlinCompile>().configureEach { dependsOn(cmakeTask) }
+tasks.withType<JavaCompile>().configureEach { dependsOn(cmakeTask) }
