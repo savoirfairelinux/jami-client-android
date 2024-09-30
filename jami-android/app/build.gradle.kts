@@ -28,6 +28,8 @@ android {
             cmake {
                 version = "3.22.1"
                 arguments += listOf(
+                    "-G", "Unix Makefiles",
+                    "-DCMAKE_MAKE_PROGRAM=/usr/bin/make",
                     "-DANDROID_STL=c++_shared",
                     "-DBUILD_CONTRIB=ON",
                     "-DBUILD_EXTRA_TOOLS=OFF",
