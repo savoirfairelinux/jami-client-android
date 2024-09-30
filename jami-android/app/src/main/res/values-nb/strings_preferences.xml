@@ -27,7 +27,6 @@
   <string name="pref_startOnBoot_title">Start Jami ved oppstart</string>
   <string name="pref_startOnBoot_summary">Kjør Jami i bakgrunnen når systemet starter.</string>
   <string name="pref_clearHistory_title">Slett historikk</string>
-  <string name="pref_clearHistory_summary">Tøm samtalehistorikken. Denne handlingen kan ikke angres.</string>
   <string name="pref_notification_title">Synlige varsler</string>
   <string name="pref_notification_summary">Vis varsler på låsekjermen</string>
   <string name="pref_blackList_title">Blokkeringsliste</string>
@@ -52,19 +51,6 @@
   <string name="notification_public">Offentlig \n(vis varsler og innholdet på låseskjermen)</string>
   <string name="notification_private">Privat \n(vis varsler, men ikke innholdet på låseskjermen)</string>
   <string name="notification_secret">Hemmelig \n(vis ikke varsler på låseskjermen)</string>
-  <!--Plugin-->
-  <string name="pref_plugins_title">Utvidelser</string>
-  <string name="pref_plugins_summary">Aktiver utvidelser og angi innstillinger</string>
-  <string name="fab_plugins_add">Legg til ny utvidelse</string>
-  <string name="plugin_uninstall_title">Avinstaller utvidelse ?</string>
-  <string name="plugin_reset_preferences">Nullstill innstillinger for utvidelse</string>
-  <string name="plugin_reset_preferences_summary">Innstillinger for utvidelse vil bli nullstilt</string>
-  <string name="plugin_reset_preferences_ask">Vil du tilbakestille de generelle plugin innstillingene?</string>
-  <string name="plugin_reset_account_preferences_ask">Vil du tilbakestille konto plugin innstillinger?</string>
-  <string name="plugin_successfully_installed">Utvidelsen <b>%1$s</b> installert</string>
-  <string name="plugin_install_failure">Installasjon av utvidelsen feilet: <b>%1$s</b></string>
-  <string name="plugin_recent_version_exception">Du har en nyere versjon av: <b>%1$s</b></string>
-  <string name="plugin_same_version_exception">Du har samme versjon av <b>%1$s</b> installert</string>
-  <string name="plugin_force_install">tving \n installasjon</string>
-  <string name="plugin_path_image_add">Legg til et nytt bilde</string>
+  <!--Extension-->
+  <string name="extension_force_install">tving \n installasjon</string>
 </resources>

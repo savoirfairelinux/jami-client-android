@@ -23,15 +23,15 @@
   <string name="dialog_wait_create_details">Várjon, amíg az új fiókja hozzáadásra kerül…</string>
   <string name="dialog_wait_update">Fiók frissítése</string>
   <string name="dialog_wait_update_details">Várjon, amíg a fiókja frissül…</string>
-  <string name="dialog_warn_ip2ip_account_title">Létrehoz egy üres SIP-fiókot?</string>
+  <string name="dialog_warn_ip2ip_account_title">Üres SIP-fiók létrehozása?</string>
   <string name="dialog_warn_ip2ip_account_message">Egy üres SIP-fiók készítésére készül, érvényes állomásnév nélkül.
         Csak közvetlen IP-hívásokat tud majd indítani és fogadni.
-        A fiókját később is módosíthatja</string>
+        A fiókját később is módosíthatja.</string>
   <string name="account_type_ip2ip">IP-fiók</string>
   <string name="help_ring">A Jami-fiók lehetővé teszi az emberek biztonságos elérését egy egyenrangú, teljesen elosztott hálózaton keresztül.</string>
   <string name="help_sip_title">SIP-fiók hozzáadása</string>
   <string name="help_sip">Meglévő SIP-fiók beállítása.</string>
-  <string name="create_sip_account">SIP-fiók hozzáadása</string>
+  <string name="create_sip_account">SIP-fiók beállítása</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_title">Fiók törlése?</string>
   <string name="account_delete_dialog_message">Ez a művelet nem vonható vissza.</string>
@@ -42,7 +42,7 @@
   <string name="account_device_revoke">Eszköz visszavonása</string>
   <string name="account_device_revocation_success_title">Sikeres</string>
   <string name="account_device_revocation_success">Az eszköz most visszavonásra került.</string>
-  <string name="account_device_revocation_error_title">Az eszköz nem vonható vissza</string>
+  <string name="account_device_revocation_error_title">Eszköz visszavonásának hiba</string>
   <string name="account_device_revocation_wrong_password">Hibás jelszó.</string>
   <string name="account_device_revocation_unknown_device">Ismeretlen eszköz.</string>
   <string name="account_device_revocation_error_unknown">Ismeretlen hiba.</string>
@@ -68,8 +68,8 @@
   <string name="account_rendezvous_summary">A találkozási pont módban a bejövő hívások hozzáadódnak egy konferenciaterembe.</string>
   <string name="account_upnp_label">UPnP engedélyezése</string>
   <string name="account_proxy_field">Meghatalmazás</string>
-  <!--Plugin Details-->
-  <string name="account_preference_plugin_tab">Beépülő modulok</string>
+  <!--Extension Details-->
+  <string name="account_preferences_extension_tab">Bővítmények</string>
   <!--Audio Details-->
   <string name="account_audio_label">Hang</string>
   <string name="account_preferences_media_tab">Média</string>
@@ -152,15 +152,15 @@
   <string name="export_account_wait_message">Fiókadatok exportálása</string>
   <string name="account_export_file">Fiók biztonsági mentése</string>
   <string name="account_export_file_summary">Készítsen biztonsági másolatot a fiókjáról eszközén, hogy később visszaállítsa.</string>
-  <string name="account_export_end_decryption_message">Nem sikerült feloldani fiókját a megadott jelszó használatával.</string>
+  <string name="account_export_end_decryption_message">Hibás jelszó. Próbálja meg újra a helyes jelszó megadásával.</string>
   <string name="account_export_end_network_title">Hálózati hiba</string>
-  <string name="account_export_end_network_message">Nem sikerült exportálni a fiókot a hálózaton. Ellenőrizze a kapcsolatot.</string>
+  <string name="account_export_end_network_message">Hálózati hiba történt a fiók exportálása közben. Ellenőrizze a kapcsolatot.</string>
   <string name="account_export_end_error_title">Hiba</string>
-  <string name="account_export_end_error_message">A fiók nem exportálása nem sikerült. Ismeretlen hiba történt.</string>
+  <string name="account_export_end_error_message">Ismeretlen hiba történt a fiók exportálása közben.</string>
   <string name="account_enter_password">Jelszó megadása</string>
   <string name="account_share_body">Lépjen kapcsolatba velem a(z) „%1$s” használatával a Jami elosztott kommunikációs platformon: %2$s</string>
   <string name="account_share_body_with_username">Lépjen kapcsolatba velem a(z) „%1$s” vagy a(z) „%2$s” nyilvános felhasználónevem használatával a Jami elosztott kommunikációs platformon: %3$s</string>
-  <string name="account_contact_me">Lépjen velem kapcsolatba a Jamin!</string>
+  <string name="account_contact_me">Lépjen kapcsolatba velem a Jami-n!</string>
   <string name="update_account">Fiók frissítése</string>
   <string name="account_migration">Jami-fiókja frissíthető.\nAdja meg a jelszavát.</string>
   <string name="ring_account">Jami-fiók</string>
@@ -169,18 +169,18 @@
   <string name="account_migration_title_dialog">Fiók áttelepítése</string>
   <string name="account_migration_message_dialog">A fiókjait frissíteni kell. Szeretne a fiókkezelési lapra ugrani a művelet elvégzéséhez?</string>
   <string name="account_update_needed">Frissítés szükséges</string>
-  <string name="account_cannot_be_found_title">A fiók nem található</string>
-  <string name="account_cannot_be_found_message">Nem található a fiók a Jami hálózatában.\nGyőződjön meg róla, hogy a meglévő eszközön a Jamit exportálták-e, és hogy a hitelesítő adatok helyesek voltak-e.</string>
+  <string name="account_cannot_be_found_title">Fiókhiba</string>
+  <string name="account_cannot_be_found_message">Nem található fiók a Jami hálózaton. Győződjön meg arról, hogy a Jami-re exportálták egy meglévő eszközről, és hogy a megadott hitelesítő adatok helyesek.</string>
   <string name="account_sip_cannot_be_registered_message">Folytathatja a fiók létrehozásának folyamatát vagy itt szerkesztheti adatait. A fiókbeállítások később is szerkeszthetők.</string>
-  <string name="account_no_network_title">Nem lehet csatlakozni a hálózathoz</string>
-  <string name="account_no_network_message">Csatlakozási hiba történt a Jami-fióknak az elosztott hálózathoz való hozzáadása közben. Ellenőrizze az eszköz csatlakoztatását.</string>
+  <string name="account_no_network_title">Hálózati hiba</string>
+  <string name="account_no_network_message">Kapcsolódási hiba történt a Jami-fióknak az elosztott hálózathoz való hozzáadása közben. Ellenőrizze az eszköz csatlakoztatását.</string>
   <string name="account_device_added_title">Fiókeszköz hozzáadva</string>
-  <string name="account_device_added_message">Sikeresen beállította a Jami-fiókját ezen az eszközön.</string>
+  <string name="account_device_added_message">Jami-fiók sikeresen beállítva.</string>
   <string name="account_device_updated_title">A fiókeszköz frissítve</string>
-  <string name="account_device_updated_message">Sikeresen frissítette a Jami-fiókját.</string>
-  <string name="account_cannot_be_updated_message">A fiókeszköz nem frissíthető. Ellenőrizze a jelszavát.</string>
+  <string name="account_device_updated_message">Jami-fiók sikeresen frissítve.</string>
+  <string name="account_cannot_be_updated_message">Hiba történt a fiók frissítése közben. Ellenőrizze a fiók jelszavát.</string>
   <string name="account_sip_success_title">SIP-fiók regisztrálva</string>
-  <string name="account_sip_success_message">Sikeresen regisztrálta a SIP-fiókját.</string>
+  <string name="account_sip_success_message">SIP-fiók sikeresen regisztrálva.</string>
   <string name="account_sip_register_anyway">Regisztráció mindenképp</string>
   <!--TV-->
   <string name="account_tv_settings_header">Fiókbeállítások</string>
@@ -200,11 +200,11 @@
   <string name="account_link_export_button">Új eszköz összekapcsolása</string>
   <string name="account_link_show_button">További %d összekapcsolt eszköz megjelenítése</string>
   <string name="account_link_hide_button">Összekapcsolt eszköz elrejtése</string>
-  <string name="account_link_export_info">Ha ezt a fiókot más eszközökön szeretné használni, először meg kell jeleníteni a Jamin. Ez létrehoz egy PIN-kódot, amelyet meg kell adnia az új eszközön a fiók beállításához. A PIN-kód 10 percig érvényes.</string>
+  <string name="account_link_export_info">Ha ezt a fiókot más eszközökön szeretné használni, először meg kell jeleníteni a Jamin. Ez létrehoz egy PIN-kódot, amelyet meg kell adnia az új eszközön a fiók beállításához. A PIN-kód 10 perc múlva lejár.</string>
   <string name="account_start_export_button">PIN-kód létrehozása</string>
   <string name="account_end_export_button">bezárás</string>
-  <string name="account_end_export_infos">A PIN-kódja:\n\n%%\n\nA folyamat befejezéséhez meg kell nyitnia a Jamit az új eszközön. Hozzon létre egy új fiókot az „Új eszköz összekapcsolása” lehetőséggel. A PIN-kódja 10 percig érvényes.</string>
-  <string name="account_link_export_info_light">Ha ezt a fiókot más eszközökön szeretné használni, először meg kell jeleníteni a Jamin. Ez létrehoz egy PIN-kódot, amelyet meg kell adnia az új eszközön a fiók beállításához. A PIN-kód 10 percig érvényes.</string>
+  <string name="account_end_export_infos">A PIN-kódja:\n\n%%\n\nA folyamat befejezéséhez meg kell nyitnia a Jamit az új eszközön. Hozzon létre egy új fiókot az „Új eszköz összekapcsolása” lehetőséggel. A PIN-kód 10 perc múlva lejár.</string>
+  <string name="account_link_export_info_light">Ha ezt a fiókot más eszközökön szeretné használni, először meg kell jeleníteni a Jamin. Ez létrehoz egy PIN-kódot, amelyet meg kell adnia az új eszközön a fiók beállításához. A PIN-kód 10 perc múlva lejár.</string>
   <string name="account_export_title">Fiók összekapcsolása más eszközökkel</string>
   <string name="account_connect_server_button">Csatlakozás a felügyeleti kiszolgálóhoz</string>
   <string name="account_connect_button">Kapcsolódás</string>
@@ -236,21 +236,21 @@
   <string name="account_creation_profile">Saját névjegy létrehozása</string>
   <string name="account_creation_ring">Jami-fiók létrehozása</string>
   <string name="account_link_title">Eszköz hozzákapcsolása</string>
-  <string name="account_sip_cannot_be_registered">A fiók nem regisztrálható</string>
+  <string name="account_sip_cannot_be_registered">Hiba történt a SIP-fiók regisztrálásakor.</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">Fiók szerkesztése</string>
+  <string name="account_edit_profile">Névjegy szerkesztése</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Jelszó megadása megerősítéshez</string>
   <string name="enter_password">Jelszó megadása</string>
   <string name="revoke_device_title">Eszköz visszavonása</string>
-  <string name="revoke_device_message">Biztosan szeretné leválasztani a(z) %1$s eszközt?</string>
+  <string name="revoke_device_message">Biztosan szeretné visszavonni a(z) %1$s-eszközt?</string>
   <string name="revoke_device_wait_title">Kérem várjon…</string>
   <string name="revoke_device_wait_message">Eszköz visszavonása</string>
   <string name="rename_device_title">Eszköz átnevezése</string>
   <string name="rename_device_message">Válasszon egy új nevet, amely azonosítja ezt az eszközt a Jami-fiókjában</string>
   <string name="rename_device_button">Eszköz átnevezése</string>
   <string name="account_rename_device_hint">Új eszköznév kiválasztása</string>
-  <string name="account_device_name_empty">Az eszköz neve nem lehet üres</string>
+  <string name="account_device_name_empty">Az eszköznév nem lehet üres.</string>
   <string name="account_device_this_indicator">Ez az eszköz</string>
   <string name="account_disabled_indicator">letiltva</string>
   <!--Link a new device-->
@@ -265,7 +265,7 @@
   <string name="account_link_time_valid">PIN-kód lejárata: %1$s.</string>
   <string name="account_link_device_info">Válassza az „Új eszköz összekapcsolása” lehetőséget a másik Jami alkalmazásban a QR- vagy PIN-kód megjelenítéséhez</string>
   <string name="account_generate_export_device">A másik eszközön</string>
-  <string name="account_generate_export_info">Telepítse és indítsa el a Jamit, válassza az \"Importálás másik eszközről\" lehetőséget, és olvassa be a QR-kódot.</string>
+  <string name="account_generate_export_info">Telepítse és indítsa el a Jami alkalmazást, válassza az „Importálás másik eszközről” lehetőséget, és olvassa be a QR-kódot.</string>
   <string name="content_description_qr_generated">QR-kód</string>
   <string name="account_generate_export_invalid">A PIN-kód már nem érvényes.\nAdja meg a jelszót, és hozzon létre egy másikat az új eszköz összekapcsolásához.</string>
   <string name="account_generate_export_invalid_two">A PIN-kód már nem érvényes.\nAz új eszköz összekapcsolásához hozzon létre egy másikat.</string>

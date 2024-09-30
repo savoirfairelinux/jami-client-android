@@ -1,16 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
-  <string name="feedback_section">Geri bildirim</string>
-  <string name="report"><u>Bize e-posta gönder</u></string>
   <string name="section_license">Lisans</string>
   <string name="sponsor_section">Jami, özgür yazılımdır ve şunlarca geliştirilir ve desteklenir:</string>
   <string name="copyright_section">Telif Hakkı</string>
   <string name="contribute_section">Katkı Yap</string>
   <string name="version_section">Sürüm</string>
-  <string name="no_email_app_installed">E-posta uygulaması bulunamadı, bize rapor gönderebilmek için kurun</string>
   <string name="no_browser_app_installed">Web tarayıcı uygulaması bulunmadı, bu sayfayı görmek için bir tane yükleyin</string>
-  <string name="email_chooser_title">Şunu kullanarak posta gönder…</string>
   <string name="website_chooser_title">Şunu kullanarak web sitesini gör…</string>
   <string name="license">Bu yazılım, herhangi bir garanti olmaksızın \"olduğu gibi\" sağlanmaktadır. Ayrıntılar için <u>GNU Genel Kamu Lisansı sürüm 3 veya sonrasına bakın.</u></string>
   <string name="description">Jami, kullanıcılarının özgürlüğüne ve mahremiyetine saygı duyan ücretsiz bir evrensel iletişim yazılımıdır.</string>
@@ -19,9 +15,7 @@
   <string name="call_service_description">Bu hizmet, çağrıların ön planda devam etmesini sağlamak için gereklidir. Yalnızca çağrı esnasında çalışır.</string>
   <string name="data_transfer_service_description">Bu hizmet, dosya aktarımları sırasında kalıcı bildirimleri görüntülemek için gereklidir. Yalnızca dosya aktarımları sırasında çalışır.</string>
   <!--About dialog-->
-  <string name="developed_by">Geliştiren</string>
-  <string name="designed_by">Tasarlayan</string>
-  <string name="ringtones_by">Zil seslerini hazırlayan</string>
+  <string name="media">Ortam</string>
   <!--RingActivity-->
   <string name="error_no_network">Ağ bağlantısı yok</string>
   <string name="error_account_offline">Hesap çevrim dışı</string>
@@ -35,7 +29,6 @@
   <string name="menu_item_settings">Ayarlar</string>
   <string name="menu_item_advanced_settings">Gelişmiş Ayarlar</string>
   <string name="menu_item_account_settings">Hesap Ayarları</string>
-  <string name="menu_item_plugin_list">Uzantı Ayarları</string>
   <string name="menu_item_share">Jami Hesabı </string>
   <string name="menu_item_about">Jami Hakkında</string>
   <string name="video_setting_title">Görüntü Ayarları</string>
@@ -100,17 +93,10 @@
   <string name="hist_in_call">Gelen çağrı %1$s</string>
   <string name="hist_out_call">Giden çağrı %1$s</string>
   <string name="call_duration">%s sürdü</string>
-  <string name="start_error_title">Jami başlatılamıyor !</string>
   <string name="start_error_mic_required">Jami\'nin çalışması için mikrofon izni gerekli.</string>
-  <string name="action_call_accept">Çağrıyı yanıtla</string>
-  <string name="action_call_accept_audio">Sesli yanıtla</string>
-  <string name="action_call_accept_video">Görüntülü yanıtla</string>
-  <string name="action_call_hold_accept">Beklet ve sesli çağrıyı al</string>
-  <string name="action_call_hold_accept_video">Beklet ve görüntülü çağrıyı al</string>
-  <string name="action_call_end_accept">Bitir ve çağrıyı al</string>
+  <string name="action_call_accept">Aramayı kabul et </string>
   <string name="action_call_decline">Reddet</string>
   <string name="action_call_mic_mute">Mikrofon sessiz</string>
-  <string name="action_load_plugin">Uzantı Yükleme</string>
   <string name="ab_action_speakerphone">Hoparlörü etkinleştir</string>
   <string name="ab_action_contact_add">Kişilere ekle</string>
   <string name="ab_action_contact_add_question">Kişilere eklensin mi?</string>
@@ -148,11 +134,8 @@
   <string name="ringtone_error_size_too_big">Bu dosya çok büyük. En büyük boyut %1$dkB.</string>
   <string name="ringtone_custom_prompt">Özel zil sesi ayarla </string>
   <string name="ringtone_custom_label">Özel</string>
-  <string name="ringtone_jami_tones">Jami Tonları</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Jami bu özelliği kullanmak için \"Rehberi okuma\" iznine ihtiyaç duyar. Lütfen izini ver.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Jami\'nin bu özelliği kullanabilmesi için \"Çağrı kaydını yaz\" iznine ihtiyacı var. Lütfen onaylayın.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Eklemek istediğin hesabın QR kodunu tara.</string>
   <string name="title_activity_qrcode">Hesabımı paylaş</string>
@@ -168,7 +151,6 @@
   <string name="conversation_details">Görüşme detayları</string>
   <string name="contact_details">Kişi ayrıntıları</string>
   <string name="conversation_action_delete_this">Bu görüşmeyi sil</string>
-  <string name="conversation_action_delete_this_title">Bu görüşme silinsin mi?</string>
   <string name="conversation_action_delete_this_message">Bu eylem geri alınamaz.</string>
   <string name="conversation_action_history_clear">Geçmişi temizle</string>
   <string name="conversation_action_history_clear_title">Görüşme geçmişi silinsin mi?</string>
@@ -176,7 +158,6 @@
   <string name="conversation_action_remove_this">Kişiyi sil</string>
   <string name="conversation_action_remove_this_title">Bu kişi silinsin mi?</string>
   <string name="conversation_action_remove_this_message">Bu, kişiyi silecek ve görüşme geçmişini tümüyle temizleyecek.</string>
-  <string name="conversation_action_copy_peer_number">Numarayı kopyala</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s panoya kopyalandı</string>
   <string name="conversation_action_select_peer_number">Numara seç</string>
   <string name="conversation_action_block_this">Kişiyi engelle</string>
@@ -206,7 +187,6 @@
   <string name="conversation_contact_invited">%1$s davet edildi</string>
   <string name="conversation_contact_added">%1$s katıldı</string>
   <string name="conversation_contact_left">%1$s ayrıldı</string>
-  <string name="conversation_contact_banned">%1$s yasaklandı</string>
   <string name="conversation_search_hint">Görüşmede ara</string>
   <string name="today">Bugün</string>
   <string name="yesterday">Dün</string>
@@ -221,14 +201,12 @@
   <string name="help_password_choose">Jami hesabını korumak için anımsayacağın güçlü parola seç.</string>
   <string name="help_password_enter">Ana Jami hesabının parolasını gir.</string>
   <string name="help_server_enter">Yönetim sunucusunun URL\'sini gir.</string>
-  <string name="help_pin_enter">Başka yapılandırılmış Jami hesabından PIN\'i girin. PIN edinmek için \"Jami\'de hesabı dışa aktarma\" özelliğini kullanın.</string>
   <string name="wizard_next">İleri</string>
   <string name="wizard_back">Geri</string>
   <string name="wizard_skip">Atla</string>
   <string name="hist_contact_invited">Kişi davet edildi</string>
   <string name="hist_contact_added">Kişi eklendi</string>
   <string name="hist_contact_left">Kişi ayrıldı</string>
-  <string name="hist_contact_banned">Kişi yasaklandı</string>
   <string name="hist_invitation_received">Davetiye alındı</string>
   <!--Account Summary-->
   <string name="profile">Profil</string>
@@ -252,20 +230,11 @@
   <string name="generic_error_migration">Hata</string>
   <string name="generic_error_migration_message">Göç sırasında bir hata oluştu</string>
   <string name="title_share_with">Paylaş</string>
-  <!--Pending contact requests-->
+  <!--Pending invitations-->
   <string name="accept">Kabul et</string>
-  <string name="refuse">Geri Çevir</string>
+  <string name="decline">Reddet</string>
   <string name="block">Engelleme</string>
-  <string name="contact_request_title">Yeni iletişim isteği</string>
-  <string name="contact_request_msg">%1$d iletişim isteği var</string>
-  <string name="contact_request_account">%1$s için</string>
-  <string name="no_requests">İletişim isteği yok</string>
-  <string name="message_contact_not_trusted_yet">%s henüz kişilerin arasında değil.\nBu iletişim isteğini kabul mü yoksa ret mi ediyorsun?</string>
-  <string name="message_contact_not_trusted">%s, kişilerin arasında değil.\nYeni bir kişi olarak eklensin mi?</string>
-  <!--Send contact requests-->
-  <string name="send_request_button">Gönder</string>
-  <string name="send_request_title">Bir iletişim isteği gönder</string>
-  <string name="send_request_msg">Bu kullanıcıyla iletişime geçmek için iletişim isteği göndermelisin. Kişi bu isteği kabul etmediği sürece, sen ona ileti gönderebilirsin fakat o bunları yanıtlayamaz.</string>
+  <string name="invitation_message">%1$d iletişim isteği var</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Engellenmiş kişi yok</string>
   <!--Smartlist-->
@@ -277,7 +246,6 @@
   <string name="tv_contact_row_header">Kişiler</string>
   <string name="gallery_error_title">Galeri uygulaması bulunamadı</string>
   <string name="gallery_error_message">Galeriyi açmak için aygıtta herhangi bir uygulama bulunamadı</string>
-  <string name="generic_error">Bilinmeyen bir hata oluştu</string>
   <!--File Transfer-->
   <string name="invalid_file">Geçersiz dosya</string>
   <string name="not_able_to_write_file">Dosya yazılamıyor</string>
@@ -297,7 +265,6 @@
   <string name="file_saved_in">Dosya %s içine kaydedildi</string>
   <string name="file_saved_successfully">Dosya başarıyla kaydedildi</string>
   <string name="file_download">İndir</string>
-  <string name="no_space_left_on_device">Aygıtda boş alan kalmadı</string>
   <string name="title_media_viewer">Ortam Galerisi</string>
   <string name="menu_file_open">Dosyayı Aç</string>
   <string name="menu_file_download">Dosyayı indir</string>
@@ -348,29 +315,24 @@
   <string name="wizard_profile_button">Profili kaydet</string>
   <string name="wizard_profile_skip">Atla ve daha sonra yap</string>
   <string name="fab_path_choose">Başka bir dosya seç</string>
-  <string name="chat_plugins">Sohbet Uzantıları</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Paylaş</string>
   <string name="bottomSheet_dialpad_btn">Tuş takımı</string>
-  <string name="bottomSheet_plugins_btn">Uzantılar</string>
+  <string name="bottomSheet_extensions_btn">Uzantılar</string>
   <string name="bottomSheet_add_participants_btn">Ekle</string>
   <string name="bottomSheet_change_camera_btn">Değiştir</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>
-  <string name="bottomSheet_hangup_btn">Çağrıyı Bitir</string>
+  <string name="bottomSheet_hangup_btn">Çağrıyı sonlandır</string>
   <string name="bottomSheet_mute_microphone_btn">Mikrofon</string>
   <string name="bottomSheet_sound_output_btn">Sesler</string>
   <string name="bottomSheet_raiseHand_btn">El kaldır</string>
-  <string name="open_account_plugin_settings">Hesap Uzantı Ayarlarını Aç</string>
-  <string name="open_general_plugin_settings">Genel Uzantı Ayarlarını Aç</string>
   <string name="uninstall">Kaldır</string>
   <string name="reset">Sıfırlama</string>
   <!--Swarm Detail-->
   <string name="rename_btn">Onayla</string>
-  <string name="rename_error">boş olamaz</string>
-  <string name="swarm_description">Açıklama ekle</string>
-  <string name="tab_about">Hakkında</string>
   <string name="tab_members">Üyeler</string>
-  <string name="tab_documetn">Belgeler</string>
+  <string name="tab_files">Dosyalar</string>
+  <string name="tab_settings">Ayarlar</string>
   <string name="dialogtitle_title">Swarm başlığını düzenle</string>
   <string name="dialogtitle_description">Swarm açıklamasını düzenle</string>
   <string name="dialog_hint_title">Başlık</string>
@@ -398,8 +360,8 @@
   <string name="donation_donate">Bağış</string>
   <string name="donation_setting_title">Bağış anımsatıcı</string>
   <string name="donation_setting_description">Bağış anımsatıcısını etkinleştir.</string>
-  <!--Plugin-->
+  <!--Extension-->
   <string name="unable_to_load">%1$s yüklenemedi.</string>
-  <string name="load_sucess">%1$s: etkinleştirildi</string>
-  <string name="unload_sucess">%1$s: devre dışı</string>
+  <string name="load_success">%1$s: etkinleştirildi</string>
+  <string name="unload_success">%1$s: devre dışı</string>
 </resources>

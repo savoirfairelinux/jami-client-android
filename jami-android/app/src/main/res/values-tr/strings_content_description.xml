@@ -1,11 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--Strings for xml content description of images-->
-  <string name="contact_quick_call_description">Hızlı Çağrı</string>
-  <string name="contact_picture_description">Kişi Görseli</string>
   <string name="dial_numeric_pad">Sayısal tuşlar</string>
   <string name="contact_unblock">Engeli kaldır</string>
-  <string name="video_plugins">Görüntü Uzantıları</string>
   <string name="file_download_button">İndir</string>
   <string name="control_play">Oynat</string>
   <string name="control_replay">Yeniden oynat</string>

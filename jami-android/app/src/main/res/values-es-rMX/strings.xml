@@ -1,28 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
-  <string name="feedback_section">Retroalimentación</string>
-  <string name="report">Envíanos un correo electrónico</string>
   <string name="section_license">Licencia</string>
   <string name="sponsor_section">Soportado por</string>
   <string name="copyright_section">Derechos Reservados</string>
   <string name="contribute_section">Contribuir</string>
   <string name="version_section">Versión</string>
-  <string name="no_email_app_installed">No se encontró una app de correo electrónico, instale una y envíenos un reporte</string>
-  <string name="no_browser_app_installed">No se encontró algún navegador web, instale uno para ver esta página</string>
-  <string name="email_chooser_title">Envíe un correo usando...</string>
-  <string name="website_chooser_title">Ver sitio web usando...</string>
-  <string name="license">Este software se proporciona \"tal cual\" sin garantía de ningún tipo. Para mas información, vea 1 GNU General Public License versión 3 o superior</string>
   <string name="description">Jami es un software libre para la comunicación universal que respeta las libertades y la privacidad de sus usuarios.</string>
   <string name="credits">Creditos</string>
   <string name="pip_title">Conferencia Jami</string>
   <string name="call_service_description">Este servicio es necesario para mantener sus llamadas funcionando en primer plano. Solo funciona durante las llamadas.</string>
   <string name="data_transfer_service_description">Este servicio es necesario para mostrar notificaciones persistentes durante las transferencias de archivos. Solo se ejecuta durante las transferencias de archivos.</string>
   <!--About dialog-->
-  <string name="developed_by">Desarrollado por</string>
-  <string name="designed_by">Diseñado por</string>
-  <string name="ringtones_by">Timbres de llamada por</string>
-  <string name="credits_volunteers">¡Y los voluntarios que contribuyen a este proyecto!</string>
+  <string name="media">Medios</string>
   <!--RingActivity-->
   <string name="error_no_network">Sin conexión de red</string>
   <string name="error_account_offline">La cuenta se encuentra desconectada</string>
@@ -36,7 +26,6 @@
   <string name="menu_item_settings">Configuraciones</string>
   <string name="menu_item_advanced_settings">Ajustes Avanzados</string>
   <string name="menu_item_account_settings">Configuración de la cuenta</string>
-  <string name="menu_item_plugin_list">Configuración de complementos</string>
   <string name="menu_item_share">Compartir mi cuenta</string>
   <string name="menu_item_about">Acerca de Jami</string>
   <string name="video_setting_title">Ajustes de vídeo</string>
@@ -98,17 +87,10 @@
   <string name="hist_in_call">Llamada entrante de %1$s</string>
   <string name="hist_out_call">Llamada saliente de %1$s</string>
   <string name="call_duration">Último %s</string>
-  <string name="start_error_title">¡No se ha podido iniciar Jami!</string>
   <string name="start_error_mic_required">Jami requiere permisos para acceder al micrófono para funcionar.</string>
-  <string name="action_call_accept">Atender</string>
-  <string name="action_call_accept_audio">Responder mediante audio</string>
-  <string name="action_call_accept_video">Responder mediante vídeo</string>
-  <string name="action_call_hold_accept">Mantener en espera y responder llamada de audio</string>
-  <string name="action_call_hold_accept_video">Mantener en espera y responder videollamada</string>
-  <string name="action_call_end_accept">Finalizar y responder llamada</string>
+  <string name="action_call_accept">Aceptar llamada</string>
   <string name="action_call_decline">Rechazar</string>
   <string name="action_call_mic_mute">Enmudecer micrófono</string>
-  <string name="action_load_plugin">Cargar complemento</string>
   <string name="ab_action_speakerphone">Activar altavoz</string>
   <string name="ab_action_contact_add">Añadir a contactos</string>
   <string name="ab_action_contact_add_question">¿Agregar a contactos?</string>
@@ -147,11 +129,8 @@
   <string name="ringtone_error_size_too_big">Este archivo es demasiado grande. El tamaño máximo soportado es %1$d kB.</string>
   <string name="ringtone_custom_prompt">Establecé un ringtone personalizado</string>
   <string name="ringtone_custom_label">Personalizado</string>
-  <string name="ringtone_jami_tones">Tonos de Jami</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Jami necesita permisos para \"leer contactos\" para activar esta característica. Por favor, concédeselos.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Jami necesita permisos para \"escribir registro de llamadas\" para activar esta característica. Por favor, concédeselos.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Escaneá el código QR de la cuenta que querés agregar.</string>
   <string name="title_activity_qrcode">Compartir mi cuenta</string>
@@ -167,7 +146,6 @@
   <string name="conversation_details">Detalles de conversación</string>
   <string name="contact_details">Detalles de contacto</string>
   <string name="conversation_action_delete_this">Borrar conversación</string>
-  <string name="conversation_action_delete_this_title">¿Borrar conversación?</string>
   <string name="conversation_action_delete_this_message">Esta acción no puede deshacerse.</string>
   <string name="conversation_action_history_clear">Limpiar historial</string>
   <string name="conversation_action_history_clear_title">¿Borrar el historial de conversaciones?</string>
@@ -175,7 +153,6 @@
   <string name="conversation_action_remove_this">Eliminar contacto</string>
   <string name="conversation_action_remove_this_title">¿Eliminar este contacto?</string>
   <string name="conversation_action_remove_this_message">Esta acción eliminará el contacto y borrará definitivamente el historial de conversaciones.</string>
-  <string name="conversation_action_copy_peer_number">Copiar número</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s copiado al portapapeles</string>
   <string name="conversation_action_select_peer_number">Seleccioná un número</string>
   <string name="conversation_action_block_this">Bloquear contacto</string>
@@ -206,7 +183,6 @@
   <string name="conversation_contact_invited">%1$s fue invitado</string>
   <string name="conversation_contact_added">%1$s se unió</string>
   <string name="conversation_contact_left">%1$sse salió</string>
-  <string name="conversation_contact_banned">%1$s fue prohibido</string>
   <string name="conversation_search_hint">Buscar conversación</string>
   <string name="today">Hoy</string>
   <string name="yesterday">Ayer</string>
@@ -221,14 +197,12 @@
   <string name="help_password_choose">Elige una contraseña robusta que recuerdes para proteger tu cuenta de Jami.</string>
   <string name="help_password_enter">Ingresa la contraseña maestra de tu cuenta de Jami</string>
   <string name="help_server_enter">Ingresá la URL del servidor de administración.</string>
-  <string name="help_pin_enter">Ingresá el PIN de la cuenta de Jami configurada en el otro dispositivo. Para obtener el PIN seleccioná la opción \"Exportar cuenta de Jami\".</string>
   <string name="wizard_next">Siguiente</string>
   <string name="wizard_back">Atrás</string>
   <string name="wizard_skip">Omitir</string>
   <string name="hist_contact_invited">Contacto invitado</string>
   <string name="hist_contact_added">Contacto añadido</string>
   <string name="hist_contact_left">El contacto se ha ido</string>
-  <string name="hist_contact_banned">Contacto bloqueado</string>
   <string name="hist_invitation_received">Invitación recibida</string>
   <!--Account Summary-->
   <string name="profile">Perfil</string>
@@ -252,20 +226,10 @@
   <string name="generic_error_migration">Error</string>
   <string name="generic_error_migration_message">Ocurrió un error durante la migración</string>
   <string name="title_share_with">Compartir con...</string>
-  <!--Pending contact requests-->
+  <!--Pending invitations-->
   <string name="accept">Aceptar</string>
-  <string name="refuse">Rechazar</string>
   <string name="block">Bloquear</string>
-  <string name="contact_request_title">Nueva solicitud de contacto</string>
-  <string name="contact_request_msg">Tenés %1$d solicitudes de contacto</string>
-  <string name="contact_request_account">Para %1$s</string>
-  <string name="no_requests">No tienes solicitudes de contacto</string>
-  <string name="message_contact_not_trusted_yet">%s no está en sus contactos aún.\n¿Acepta o rechaza esta solicitud de contacto?</string>
-  <string name="message_contact_not_trusted">%s no está entre tus contactos.\n¿Agregar nuevo contacto?</string>
-  <!--Send contact requests-->
-  <string name="send_request_button">Envíar</string>
-  <string name="send_request_title">Enviar solicitud de contacto</string>
-  <string name="send_request_msg">Debe enviar una solicitud de contacto para comunicarse con este usuario. Hasta que su contacto no haya aceptado la solicitud, puede enviar mensajes pero no podrá contestarle.</string>
+  <string name="invitation_message">Tenés %1$d solicitudes de contacto</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">No hay contactos bloqueados</string>
   <!--Smartlist-->
@@ -277,7 +241,6 @@
   <string name="tv_contact_row_header">Contactos</string>
   <string name="gallery_error_title">No se encontró una aplicación de galería</string>
   <string name="gallery_error_message">No se encontró ninguna aplicación para abrir la Galería</string>
-  <string name="generic_error">Ocurrió un error desconocido</string>
   <!--File Transfer-->
   <string name="invalid_file">Archivo no válido</string>
   <string name="not_able_to_write_file">No se puede escribir el archivo</string>
@@ -297,7 +260,6 @@
   <string name="file_saved_in">Archivo guardado en %s</string>
   <string name="file_saved_successfully">Archivo guardado correctamente</string>
   <string name="file_download">Descargar</string>
-  <string name="no_space_left_on_device">No queda espacio libre en el dispositivo</string>
   <string name="title_media_viewer">Visor de medios</string>
   <string name="menu_file_open">Abrir archivo</string>
   <string name="menu_file_download">Descargar el archivo</string>
@@ -339,8 +301,6 @@
   <string name="audio_permission_rationale_message">Jami requiere el permiso del micrófono para utilizar la función de texto a voz y grabar audio. Se solicitará en el siguiente paso.</string>
   <string name="camera_permission_rationale_message">Jami requiere el permiso de la cámara para grabar vídeo y realizar vídeollamadas. Se solicitará en el siguiente paso.</string>
   <string name="unable_to_start_recorder">No se puede iniciar la grabación de audio.</string>
-  <string name="error_sharing_file">Error al compartir el archivo.</string>
-  <string name="error_opening_file">Error al abrir el archivo.</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Recomendado</string>
   <string name="wizard_status_optional">Opcional</string>
@@ -358,29 +318,24 @@
   <string name="wizard_profile_button">Guardar perfil</string>
   <string name="wizard_profile_skip">Ignore esto y ejecútelo más tarde</string>
   <string name="fab_path_choose">Escoja otro archivo</string>
-  <string name="chat_plugins">Complementos de charla</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Compartir</string>
   <string name="bottomSheet_dialpad_btn">Teclado de marcación</string>
-  <string name="bottomSheet_plugins_btn">Complementos</string>
+  <string name="bottomSheet_extensions_btn">Extensions</string>
   <string name="bottomSheet_add_participants_btn">Agregar</string>
   <string name="bottomSheet_change_camera_btn">Cambio</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Cámara</string>
-  <string name="bottomSheet_hangup_btn">Finalizar llamada</string>
+  <string name="bottomSheet_hangup_btn">Terminar llamada</string>
   <string name="bottomSheet_mute_microphone_btn">Micrófono</string>
   <string name="bottomSheet_sound_output_btn">Sonidos</string>
   <string name="bottomSheet_raiseHand_btn">Levanta tu mano</string>
-  <string name="open_account_plugin_settings">Configuración del Complemento de Cuenta Libre</string>
-  <string name="open_general_plugin_settings">Abrir la configuración general del plugin</string>
   <string name="uninstall">Desinstalar</string>
   <string name="reset">Reiniciar</string>
   <!--Swarm Detail-->
   <string name="rename_btn">Confirmar</string>
-  <string name="rename_error">no puede estar vacío</string>
-  <string name="swarm_description">Añadir descripción</string>
-  <string name="tab_about">Acerca de</string>
   <string name="tab_members">Miembros</string>
-  <string name="tab_documetn">Documentos</string>
+  <string name="tab_files">Archivos</string>
+  <string name="tab_settings">Configuraciones</string>
   <string name="dialogtitle_title">Editar el título de la colección</string>
   <string name="dialogtitle_description">Editar Descripción de la colección</string>
   <string name="dialog_hint_title">Título</string>
@@ -408,8 +363,8 @@
   <string name="donation_donate">Donar</string>
   <string name="donation_setting_title">Recordatorio de donación</string>
   <string name="donation_setting_description">Habilitar el recordatorio de donación</string>
-  <!--Plugin-->
+  <!--Extension-->
   <string name="unable_to_load">No se puede cargar %1$s</string>
-  <string name="load_sucess">%1$s: habilitado</string>
-  <string name="unload_sucess">%1$s: desactivado</string>
+  <string name="load_success">%1$s: habilitado</string>
+  <string name="unload_success">%1$s: desactivado</string>
 </resources>

@@ -1,16 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
-  <string name="feedback_section">अभिप्राय</string>
-  <string name="report"><u>आम्हाला ईमेल पाठवा</u></string>
   <string name="section_license">परवाना</string>
   <string name="sponsor_section">जामी हे एक विनामूल्य सॉफ्टवेअर आहे जे याद्वारे विकसित आणि समर्थित आहे</string>
   <string name="copyright_section">कॉपीराइट</string>
   <string name="contribute_section">योगदान</string>
   <string name="version_section">आवृत्ती</string>
-  <string name="no_email_app_installed">कोणताही ईमेल अॅप सापडला नाही, आम्हाला अहवाल पाठवण्यासाठी एक स्थापित करा</string>
   <string name="no_browser_app_installed">वेब ब्राउझर अॅप सापडले नाही, हे पृष्ठ पाहण्यासाठी एक स्थापित करा</string>
-  <string name="email_chooser_title">मेल पाठवा.</string>
   <string name="website_chooser_title">वेबसाइट वापरून पहा.</string>
   <string name="license">या सॉफ्टवेअरची कोणतीही हमी न घेता "जसे आहे" प्रदान केली जाते. तपशीलांसाठी, GNU जनरल पब्लिक लायसन्स आवृत्ती 3 किंवा नंतर पहा&lt;/u&gt;</string>
   <string name="description">जेमी हे सार्वत्रिक संप्रेषणासाठी एक मुक्त सॉफ्टवेअर आहे जे वापरकर्त्यांच्या स्वातंत्र्याचा आणि गोपनीयतेचा आदर करते.</string>
@@ -19,9 +15,7 @@
   <string name="call_service_description">या सेवेमुळे तुमच्या कॉलचा प्रवाह सुरु राहतो. तो केवळ कॉल दरम्यानच चालतो.</string>
   <string name="data_transfer_service_description">फाइल ट्रान्सफर दरम्यान सतत सूचना प्रदर्शित करण्यासाठी ही सेवा आवश्यक आहे. ती केवळ फाइल ट्रान्सफर दरम्यान चालते.</string>
   <!--About dialog-->
-  <string name="developed_by">विकसित केलेले</string>
-  <string name="designed_by">डिझाइन केलेले</string>
-  <string name="ringtones_by">रिंगण</string>
+  <string name="media">माध्यमे</string>
   <!--RingActivity-->
   <string name="error_no_network">नेटवर्क कनेक्टिव्हिटी नाही</string>
   <string name="error_account_offline">खाते बंद आहे</string>
@@ -35,7 +29,6 @@
   <string name="menu_item_settings">सेटिंग्ज</string>
   <string name="menu_item_advanced_settings">प्रगत सेटिंग्ज</string>
   <string name="menu_item_account_settings">खाते सेटिंग्ज</string>
-  <string name="menu_item_plugin_list">प्लगइन सेटिंग्ज</string>
   <string name="menu_item_share">माझे खाते सामायिक करा</string>
   <string name="menu_item_about">जेमी बद्दल</string>
   <string name="video_setting_title">व्हिडिओ सेटिंग्ज</string>
@@ -97,17 +90,9 @@
   <string name="ongoing_call">चालू कॉल</string>
   <string name="hist_in_call">%1$s चे इनकमिंग कॉल</string>
   <string name="hist_out_call">%1$s च्या आउटगोइंग कॉल</string>
-  <string name="start_error_title">जामीला सुरुवात करता येत नाही!</string>
   <string name="start_error_mic_required">जॉमीला काम करण्यासाठी मायक्रोफोनची परवानगी हवी आहे.</string>
-  <string name="action_call_accept">फोन करा</string>
-  <string name="action_call_accept_audio">ऑडिओमध्ये उत्तर</string>
-  <string name="action_call_accept_video">उत्तर व्हिडिओमध्ये</string>
-  <string name="action_call_hold_accept">कॉल ऑडिओ उचलून घ्या</string>
-  <string name="action_call_hold_accept_video">फोन व्हिडिओ घ्या</string>
-  <string name="action_call_end_accept">समाप्त आणि कॉल घ्या</string>
   <string name="action_call_decline">घट</string>
   <string name="action_call_mic_mute">गप्प मायक्रोफोन</string>
-  <string name="action_load_plugin">लोड प्लगइन</string>
   <string name="ab_action_speakerphone">स्पीकर सक्षम करा</string>
   <string name="ab_action_contact_add">संपर्क जोडणे</string>
   <string name="ab_action_contact_add_question">संपर्क जोडण्यासाठी?</string>
@@ -143,11 +128,8 @@
   <string name="ringtone_error_size_too_big">ही फाईल खूप मोठी आहे. जास्तीत जास्त आकार %1$dkB आहे.</string>
   <string name="ringtone_custom_prompt">सानुकूल रिंगटोन सेट करा</string>
   <string name="ringtone_custom_label">कस्टम</string>
-  <string name="ringtone_jami_tones">जेमी टोन</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">या वैशिष्ट्यासाठी जामीला \"संपर्क वाचा\" परवानगी हवी आहे. कृपया ती द्या.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">या वैशिष्ट्यासाठी जामीला \"लिखा कॉल लॉग\" परवानगी हवी आहे. कृपया ती द्या.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">आपण जोडाल त्या खात्याचा QR कोड स्कॅन करा.</string>
   <string name="title_activity_qrcode">माझे खाते सामायिक करा</string>
@@ -163,7 +145,6 @@
   <string name="conversation_details">चर्चा तपशील</string>
   <string name="contact_details">संपर्क तपशील</string>
   <string name="conversation_action_delete_this">हा संभाषण हटवा</string>
-  <string name="conversation_action_delete_this_title">हा संभाषण हटवायचं?</string>
   <string name="conversation_action_delete_this_message">या कारवाईला मागे टाकता येणार नाही.</string>
   <string name="conversation_action_history_clear">स्पष्ट इतिहास</string>
   <string name="conversation_action_history_clear_title">संभाषण इतिहास साफ करा?</string>
@@ -171,7 +152,6 @@
   <string name="conversation_action_remove_this">संपर्क हटवा</string>
   <string name="conversation_action_remove_this_title">हा संपर्क हटवा?</string>
   <string name="conversation_action_remove_this_message">यामुळे संपर्क हटवला जाईल आणि संभाषणाचा इतिहास निश्चितपणे साफ केला जाईल.</string>
-  <string name="conversation_action_copy_peer_number">कॉपी क्रमांक</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s क्लिपबोर्डवर कॉपी</string>
   <string name="conversation_action_select_peer_number">एक नंबर निवडा</string>
   <string name="conversation_action_block_this">ब्लॉक संपर्क</string>
@@ -201,7 +181,6 @@
   <string name="conversation_contact_invited">%1$s ला आमंत्रित केले</string>
   <string name="conversation_contact_added">%1$s जोडले</string>
   <string name="conversation_contact_left">%1$ बाकी आहे</string>
-  <string name="conversation_contact_banned">%1$s बंदी</string>
   <string name="conversation_search_hint">शोध संभाषण</string>
   <string name="today">आज</string>
   <string name="yesterday">काल</string>
@@ -216,14 +195,12 @@
   <string name="help_password_choose">आपल्या जामी खात्याचे संरक्षण करण्यासाठी तुम्हाला लक्षात राहणार्या मजबूत संकेतशब्द निवडा.</string>
   <string name="help_password_enter">तुमचा मुख्य जामी अकाऊंट पासवर्ड प्रविष्ट करा.</string>
   <string name="help_server_enter">मॅनेजमेंट सर्व्हरची URL प्रविष्ट करा.</string>
-  <string name="help_pin_enter">दुसर्या कॉन्फिगर केलेल्या जामी खात्याचा पिन प्रविष्ट करा. पिन मिळविण्यासाठी \"जामी खाते निर्यात करा\" वैशिष्ट्य वापरा.</string>
   <string name="wizard_next">पुढील</string>
   <string name="wizard_back">परत</string>
   <string name="wizard_skip">उडी मारणे</string>
   <string name="hist_contact_invited">संपर्क आमंत्रित</string>
   <string name="hist_contact_added">संपर्क जोडला</string>
   <string name="hist_contact_left">डावीकडे संपर्क</string>
-  <string name="hist_contact_banned">संपर्क प्रतिबंधित</string>
   <string name="hist_invitation_received">प्राप्त आमंत्रण</string>
   <!--Account Summary-->
   <string name="profile">प्रोफाइल</string>
@@ -247,20 +224,11 @@
   <string name="generic_error_migration">त्रुटी</string>
   <string name="generic_error_migration_message">स्थलांतर करताना त्रुटी आली</string>
   <string name="title_share_with">..................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................</string>
-  <!--Pending contact requests-->
+  <!--Pending invitations-->
   <string name="accept">स्वीकारा</string>
-  <string name="refuse">नकार</string>
+  <string name="decline">घट</string>
   <string name="block">ब्लॉक</string>
-  <string name="contact_request_title">नवीन संपर्क विनंती</string>
-  <string name="contact_request_msg">तुमच्याकडे %1$d संपर्क विनंत्या आहेत</string>
-  <string name="contact_request_account">%1$s साठी</string>
-  <string name="no_requests">तुमच्याकडे संपर्क विनंती नाही</string>
-  <string name="message_contact_not_trusted_yet">%s अद्याप आपल्या संपर्कात नाही.\nआपण या संपर्क विनंतीला स्वीकारत आहात किंवा नकार देत आहात?</string>
-  <string name="message_contact_not_trusted">%s तुमच्या संपर्कात नाही.\nनवीन संपर्क जोडा?</string>
-  <!--Send contact requests-->
-  <string name="send_request_button">पाठवा</string>
-  <string name="send_request_title">संपर्क विनंती पाठवा</string>
-  <string name="send_request_msg">या वापरकर्त्याशी संवाद साधण्यासाठी आपण संपर्क विनंती पाठवावी लागेल. जोपर्यंत आपल्या संपर्काने विनंती स्वीकारली नाही तोपर्यंत आपण संदेश पाठवू शकता परंतु तो प्रतिसाद देऊ शकणार नाही.</string>
+  <string name="invitation_message">तुमच्याकडे %1$d संपर्क विनंत्या आहेत</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">कोणतेही संपर्क अवरोधित केलेले नाहीत</string>
   <!--Smartlist-->
@@ -272,7 +240,6 @@
   <string name="tv_contact_row_header">संपर्क</string>
   <string name="gallery_error_title">गॅलरी अॅप सापडले नाही</string>
   <string name="gallery_error_message">गॅलरी उघडण्यासाठी डिव्हाइसवर कोणताही अनुप्रयोग आढळला नाही</string>
-  <string name="generic_error">अज्ञात त्रुटी आली</string>
   <!--File Transfer-->
   <string name="invalid_file">अमान्य फाइल</string>
   <string name="not_able_to_write_file">फाईल लिहू शकत नाही</string>
@@ -292,7 +259,6 @@
   <string name="file_saved_in">%s मध्ये जतन केलेली फाईल</string>
   <string name="file_saved_successfully">जतन केलेली फाइल यशस्वी</string>
   <string name="file_download">डाऊनलोड करा</string>
-  <string name="no_space_left_on_device">उपकरणावर जागा नाही</string>
   <string name="title_media_viewer">मीडिया दर्शक</string>
   <string name="menu_file_open">फाईल उघडा</string>
   <string name="menu_file_download">फाइल डाउनलोड करा</string>
@@ -343,11 +309,9 @@
   <string name="wizard_profile_button">प्रोफाइल जतन करा</string>
   <string name="wizard_profile_skip">पुढे जाऊन हे करा</string>
   <string name="fab_path_choose">दुसरी फाईल निवडा</string>
-  <string name="chat_plugins">चॅट प्लगइन</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">शेअर करा</string>
   <string name="bottomSheet_dialpad_btn">डायलपॅड</string>
-  <string name="bottomSheet_plugins_btn">प्लगइन</string>
   <string name="bottomSheet_add_participants_btn">जोडणे</string>
   <string name="bottomSheet_change_camera_btn">बदल</string>
   <string name="bottomSheet_camera_onoff_switch_btn">कॅमेरा</string>
@@ -355,17 +319,13 @@
   <string name="bottomSheet_mute_microphone_btn">मायक्रो</string>
   <string name="bottomSheet_sound_output_btn">ध्वनी</string>
   <string name="bottomSheet_raiseHand_btn">हात उंचावा</string>
-  <string name="open_account_plugin_settings">खाते प्लगइन सेटिंग्ज उघडा</string>
-  <string name="open_general_plugin_settings">प्लगइनची सामान्य सेटिंग्ज उघडा</string>
   <string name="uninstall">अनइंस्टॉल करा</string>
   <string name="reset">रीसेट</string>
   <!--Swarm Detail-->
   <string name="rename_btn">पुष्टी करा</string>
-  <string name="rename_error">खाली असू शकत नाही</string>
-  <string name="swarm_description">वर्णन जोडा</string>
-  <string name="tab_about">बद्दल</string>
   <string name="tab_members">सदस्य</string>
-  <string name="tab_documetn">कागदपत्रे</string>
+  <string name="tab_files">फाईल</string>
+  <string name="tab_settings">सेटिंग्ज</string>
   <string name="dialogtitle_title">Swarm शीर्षक संपादित करा</string>
   <string name="dialogtitle_description">Swarm वर्णन संपादित करा</string>
   <string name="dialog_hint_title">शीर्षक</string>
@@ -381,5 +341,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">जामी येथे आपले स्वागत आहे</string>
   <!--Donation-->
-  <!--Plugin-->
+  <!--Extension-->
 </resources>

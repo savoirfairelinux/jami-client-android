@@ -27,7 +27,6 @@
   <string name="pref_startOnBoot_title">Жамиді бастау кезінде бастаңыз</string>
   <string name="pref_startOnBoot_summary">Жүйе басталған кезде Джамиге назар аударыңыз.</string>
   <string name="pref_clearHistory_title">Тарихты анық</string>
-  <string name="pref_clearHistory_summary">Барлық әңгімелерді жою. Бұл әрекет қайталанбайды.</string>
   <string name="pref_notification_title">Хабарламаның көрінісі</string>
   <string name="pref_notification_summary">Қолданба хабарламаларын қалқандару экранында көріністі орнату.</string>
   <string name="pref_blackList_title">Блоктар тізімі</string>
@@ -52,19 +51,6 @@
   <string name="notification_public">Қоғамдық \n(орындалған хабарламаларды және олардың мазмұнын құлыптау экранында көрсету) \n</string>
   <string name="notification_private">Жеке \n(орындауларды көрсету, бірақ олардың мазмұнын құлыптау экранында жасыру) \n</string>
   <string name="notification_secret">Құпия \n(бұлақтандыруларды құлыптау экранында көрсетпеу)</string>
-  <!--Plugin-->
-  <string name="pref_plugins_title">Қосылмалар</string>
-  <string name="pref_plugins_summary">Қосылмаларды қосу және олардың параметрлерін орнату</string>
-  <string name="fab_plugins_add">Жаңа плагинді қосу</string>
-  <string name="plugin_uninstall_title">Плагинді орнатпақсыз ба?</string>
-  <string name="plugin_reset_preferences">Плагинді қайта орнату</string>
-  <string name="plugin_reset_preferences_summary">Плагиннің параметрлері әдетті түрде орнатылады</string>
-  <string name="plugin_reset_preferences_ask">Жалпы плагин параметрлерін қайта орнатуды қалайсыз ба?</string>
-  <string name="plugin_reset_account_preferences_ask">Тіркелгі плагинінің параметрлерін қайта орнатуды қалайсыз ба?</string>
-  <string name="plugin_successfully_installed">%1$s&lt;/b&gt; плагины сәтті орнатылды</string>
-  <string name="plugin_install_failure">Плагин орнату жаңылысы: <b>%1$s</b></string>
-  <string name="plugin_recent_version_exception">Сізде: <b>%1$s</b> жаңа нұсқасы бар</string>
-  <string name="plugin_same_version_exception">Сізде <b>%1$s</b> нұсқасы орнатылған</string>
-  <string name="plugin_force_install">күшті орнату</string>
-  <string name="plugin_path_image_add">Жаңа суретті қосу</string>
+  <!--Extension-->
+  <string name="extension_force_install">күшті орнату</string>
 </resources>

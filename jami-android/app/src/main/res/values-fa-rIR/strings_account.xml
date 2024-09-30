@@ -21,27 +21,19 @@
   <string name="dialog_wait_create_details">لطفا صبر کنید تا حساب جدیدتان افزوده شود…</string>
   <string name="dialog_wait_update">در حال به‌روزرسانی حساب</string>
   <string name="dialog_wait_update_details">لطفا صبر کنید تا حساب جدیدتان به‌روز شود…</string>
-  <string name="dialog_warn_ip2ip_account_title">ایجاد حساب SIP خالی؟</string>
-  <string name="dialog_warn_ip2ip_account_message">در حال ایجاد یک حساب SIP بدون هیچ نام میزبان معتبر هستید.
-     تنها قادر به برقراری و دریافت تماس‌های مستقیم مبتنی بر IP هستید.
-     می‌توانید در آینده حسابتان را ویرایش کنید</string>
   <string name="account_type_ip2ip">حساب IP</string>
   <string name="help_ring">حساب جمی به شما اجازه می‌دهد از درون یک شبکه کاملا توزیع‌شده، به صورت امن با افراد در تماس باشید.</string>
-  <string name="help_sip_title">افزودن حساب SIP خود</string>
+  <string name="help_sip_title">افزودن حساب SIP</string>
   <string name="help_sip">پیکربندی یک حساب SIP موجود.</string>
-  <string name="create_sip_account">افزودن حساب SIP</string>
   <!--Strings related to account deletion-->
-  <string name="account_delete_dialog_title">حذف حساب؟</string>
   <string name="account_delete_dialog_message">این کار قابل بازگشت نیست.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">هیچ حسابی ثبت نشده است</string>
   <string name="normal_accounts_titles">حساب‌ها</string>
-  <string name="normal_devices_titles">دستگاه‌های پیوند‌داده‌شده</string>
+  <string name="normal_devices_titles">دستگاه‌های پیوند‌‌داده‌شده</string>
   <string name="account_device_revoke">باطل کردن دستگاه</string>
   <string name="account_device_revocation_success_title">موفق</string>
   <string name="account_device_revocation_success">دستگاه باطل شد!</string>
-  <string name="account_device_revocation_error_title">نمی‌توان دستگاه را باطل کرد!</string>
-  <string name="account_device_revocation_wrong_password">گذر‌واژه نادرست.</string>
   <string name="account_device_revocation_unknown_device">دستگاه ناشناس.</string>
   <string name="account_device_revocation_error_unknown">خطای ناشناخته.</string>
   <string name="account_password_change">تغییر گذرواژه</string>
@@ -63,8 +55,7 @@
   <string name="account_rendezvous_summary">در حالت قرار ملاقات، تماس‌های دریافتی به یک اتاق کنفرانس اضافه می‌شوند.</string>
   <string name="account_upnp_label">فعال‌کردن UPnP</string>
   <string name="account_proxy_field">پراکسی</string>
-  <!--Plugin Details-->
-  <string name="account_preference_plugin_tab">افزونه‌ها</string>
+  <!--Extension Details-->
   <!--Audio Details-->
   <string name="account_audio_label">صدا</string>
   <string name="account_preferences_media_tab">رسانه</string>
@@ -144,14 +135,9 @@
   <string name="export_account_wait_message">برون‌برد اطلاعات حساب</string>
   <string name="account_export_file">پشتیبان‌گیری حساب</string>
   <string name="account_export_file_summary">از حساب‌تان در دستگاه خود پشتیبان تهیه کنید تا بعدا آن را بازیابی کنید.</string>
-  <string name="account_export_end_decryption_message">نمی‌توان قفل حسابتان را با گذرواژه  ارائه‌شده گشود.</string>
   <string name="account_export_end_network_title">خطای شبکه</string>
-  <string name="account_export_end_network_message">برون‌برد حساب روی شبکه مقدور نبود. اتصال خود را بررسی کنید.</string>
   <string name="account_export_end_error_title">خطا</string>
-  <string name="account_export_end_error_message">برون‌برد حساب روی شبکه مقدور نبود. خطایی ناشناخته رخ داد.</string>
   <string name="account_enter_password">ورود گذرواژه</string>
-  <string name="account_share_body">با استفاده از \'%1$s\' روی بستر ارتباطی توزیع‌شده جمی با من تماس بگیرید: %2$s</string>
-  <string name="account_share_body_with_username">با استفاده از \'%1$s\' یا نام کاربری عمومی \'%2$s\' روی بستر ارتباطی توزیع‌شده جمی با من تماس بگیرید: %3$s</string>
   <string name="account_contact_me">با من روی جمی در تماس باشید!</string>
   <string name="update_account">به‌روز‌رسانی حساب</string>
   <string name="account_migration">حساب جمیتان می‌تواند به‌روز شود.\nلطفاً گذرواژه خود را وارد کنید.</string>
@@ -159,20 +145,13 @@
   <string name="sip_account">حساب SIP</string>
   <string name="ring_account_identity">هویت</string>
   <string name="account_migration_title_dialog">انتقال حساب</string>
-  <string name="account_migration_message_dialog">حساب‌های شما باید به‌روز شوند. می‌خواهید برای انجام این عمل، به صفحه مدیریت حساب بروید؟</string>
   <string name="account_update_needed">نیاز به به‌روز‌رسانی است</string>
-  <string name="account_cannot_be_found_title">نمی‌توان حساب را پیدا کرد</string>
-  <string name="account_cannot_be_found_message">حساب روی شبکه جمی یافت نشد.\n مطمئن شوید از یک دستگاه پیشین، روی جمی برون‌برد شده است و اعتبار‌نامه‌های وارد‌شده صحیح‌اند.</string>
   <string name="account_sip_cannot_be_registered_message">می‌توانید فرایند ایجاد حساب را ادامه داده یا در اینجا اطلاعات خود را ویرایش کنید. ویرایش هم‌چنان پس از آن در تنظیمات حساب ممکن است.</string>
-  <string name="account_no_network_title">نمی‌توان به شبکه وصل شد</string>
-  <string name="account_no_network_message">نمی‌توان حساب را افزود، زیرا جمی نمی‌تواند به شبکه توزیع‌شده وصل شود. اتصال دستگاه خود را بررسی کنید.</string>
+  <string name="account_no_network_title">خطای شبکه</string>
   <string name="account_device_added_title">حساب دستگاه افزوده شد.</string>
   <string name="account_device_added_message">شما با موفقیت حساب کاربری خود را روی این دستگاه تنظیم کردید.</string>
   <string name="account_device_updated_title">حساب دستگاه به‌روز شد.</string>
   <string name="account_device_updated_message">شما با موفقیت حساب جمی خود را به‌روز کردید.</string>
-  <string name="account_cannot_be_updated_message">دحساب دستگاه نمی‌تواند به‌روز‌رسانی شود. لطفا گذرواژه خود را بررسی کنید.</string>
-  <string name="account_sip_success_title">حساب SIP ثبت شد</string>
-  <string name="account_sip_success_message">شما حساب SIP خود را با موفقیت ثبت کردید.</string>
   <string name="account_sip_register_anyway">به هر حال ثبت کنید</string>
   <!--TV-->
   <string name="account_tv_settings_header">تنظیمات حساب کاربری</string>
@@ -192,11 +171,8 @@
   <string name="account_link_export_button">پیوند یک دستگاه جدید</string>
   <string name="account_link_show_button">نمایش %d دستگاه‌های پیوندیافته بیشتر</string>
   <string name="account_link_hide_button">مخفی‌کردن دستگاه پیوند‌داده‌شده</string>
-  <string name="account_link_export_info">برای استفاده از این حساب روی دستگاه‌های دیگر، باید ابتدا آن را روی جمی آشکار کنید. این کار یک کد پین تولید خواهد کرد که باید برای برپایی حساب، روی دستگاه جدید وارد کنید. این پین تا 10 دقیقه معتبر است.</string>
   <string name="account_start_export_button">تولید پین</string>
   <string name="account_end_export_button">بستن</string>
-  <string name="account_end_export_infos">پین شما:\n\n%%\n\nبرای کامل کردن فرایند، باید جمی را روی دستگاه جدید گشوده و حساب جدیدی را با انتخاب «پیوند این دستگاه به یک حساب» ایجاد کنید. پین شما برای 10 دقیقه معتبر است.</string>
-  <string name="account_link_export_info_light">برای استفاده از این حساب روی دستگاه‌های دیگر، باید ابتدا آن را روی جمی آشکار کنید. این کار یک کد پین تولید خواهد کرد که باید برای برپایی حساب، روی دستگاه جدید وارد کنید. این پین تا 10 دقیقه معتبر است.</string>
   <string name="account_export_title">پیوند حساب کاربری با دستگاه دیگر</string>
   <string name="account_connect_server_button">اتصال یه سرور مدیریت</string>
   <string name="account_connect_button">اتصال</string>
@@ -228,21 +204,17 @@
   <string name="account_creation_profile">نمایه خود را بسازید</string>
   <string name="account_creation_ring">حساب جمی خود را بسازید</string>
   <string name="account_link_title">پیوند این دستگاه</string>
-  <string name="account_sip_cannot_be_registered">نمی‌توان حساب را ثبت کرد</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">ویرایش حساب‌کاربری</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">گذرواژه خود را دوباره وارد کنید</string>
   <string name="enter_password">گذرواژه را وارد کنید</string>
   <string name="revoke_device_title">باطل کردن دستگاه</string>
-  <string name="revoke_device_message"> آیا اطمینان دارید که می‌خواهید%1$s را باطل کنید؟</string>
   <string name="revoke_device_wait_title">لطفا صبر کنید…</string>
   <string name="revoke_device_wait_message">در حال باطل کردن دستگاه</string>
   <string name="rename_device_title">تغییر نام این دستگاه</string>
   <string name="rename_device_message">نام جدیدی را برای شناسایی این دستگاه در حساب جمی خود انتخاب کنید</string>
   <string name="rename_device_button">تغییر نام دستگاه</string>
   <string name="account_rename_device_hint">انتخاب نام دستگاه جدید</string>
-  <string name="account_device_name_empty">نام دستگاه نمی‌تواند خالی باشد</string>
   <string name="account_device_this_indicator">این دستگاه</string>
   <string name="account_disabled_indicator">غیرفعال</string>
   <!--Link a new device-->

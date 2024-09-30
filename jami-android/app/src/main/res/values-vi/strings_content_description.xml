@@ -1,10 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--Strings for xml content description of images-->
-  <string name="contact_quick_call_description">Đáp lại nhanh chóng</string>
-  <string name="contact_picture_description">Hình ảnh liên lạc</string>
   <string name="dial_numeric_pad">Bàn phím số</string>
   <string name="contact_unblock">Tháo khóa</string>
-  <string name="video_plugins">Video Plugins</string>
   <string name="control_play">Phát</string>
 </resources>

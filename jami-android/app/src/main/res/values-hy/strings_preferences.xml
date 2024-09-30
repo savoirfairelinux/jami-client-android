@@ -27,7 +27,6 @@
   <string name="pref_startOnBoot_title">Սկսեք Jami- ն սկսելու համար</string>
   <string name="pref_startOnBoot_summary">Ջամիին հուշում է համակարգի սկսման ժամանակ:</string>
   <string name="pref_clearHistory_title">Հստակ պատմություն</string>
-  <string name="pref_clearHistory_summary">Բացրեք բոլոր զրույցների պատմությունը: Այս գործողությունը չի կարող չեղարկվել:</string>
   <string name="pref_notification_title">Հրավերագրության տեսանելիություն</string>
   <string name="pref_notification_summary">Սահմանեք հավելվածի ծանուցումների տեսանելիությունը փակման էկրանում:</string>
   <string name="pref_blackList_title">Բլոկային ցուցակ</string>
@@ -52,19 +51,6 @@
   <string name="notification_public">Հանրային \n(ցուցադրեք ծանուցումները եւ դրանց բովանդակությունը փակման էկրանում) \n</string>
   <string name="notification_private">Անձնական \n(ցուցադրեք ծանուցումներ, բայց թաքցրեք դրանց բովանդակությունը փակման էկրանում) \n</string>
   <string name="notification_secret">Գաղտնի \n(չցուցադրեք ծանուցումներ փակման էկրանում)</string>
-  <!--Plugin-->
-  <string name="pref_plugins_title">Պլագիններ</string>
-  <string name="pref_plugins_summary">Սեղմեք հավելվածները եւ սահմանեք դրանց պարամետրերը</string>
-  <string name="fab_plugins_add">Ավելացնել նոր հավելված</string>
-  <string name="plugin_uninstall_title">Անբեռնել Plugin- ը:</string>
-  <string name="plugin_reset_preferences">Վերաոճադրեք հավելվածի նախասիրությունները</string>
-  <string name="plugin_reset_preferences_summary">Ձեր հավելվածի կարգավորումները կկառուցվեն</string>
-  <string name="plugin_reset_preferences_ask">Ցանկանում եք վերափոխել ընդհանուր հավելվածի կարգավորումները:</string>
-  <string name="plugin_reset_account_preferences_ask">Ցանկանում եք վերափոխել հաշիվի հավելվածի կարգավորումները:</string>
-  <string name="plugin_successfully_installed">Plugin <b>%1$s</b> հաջողությամբ տեղադրված</string>
-  <string name="plugin_install_failure">Չկարողացա տեղադրել հավելվածը. <b>%1$s</b></string>
-  <string name="plugin_recent_version_exception">Դուք ունեք ավելի նոր տարբերակ. <b>%1$s</b></string>
-  <string name="plugin_same_version_exception">Դուք տեղադրված եք <b>%1$s</b> նույն տարբերակը</string>
-  <string name="plugin_force_install">ուժ \n տեղադրել</string>
-  <string name="plugin_path_image_add">Լրացուցիչ նոր պատկեր</string>
+  <!--Extension-->
+  <string name="extension_force_install">ուժ \n տեղադրել</string>
 </resources>

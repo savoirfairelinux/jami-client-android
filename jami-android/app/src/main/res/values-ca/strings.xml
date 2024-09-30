@@ -1,27 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
-  <string name="feedback_section">Comentaris</string>
-  <string name="report"><u>Envia\'ns un correu.</u></string>
   <string name="section_license">Llicència</string>
   <string name="sponsor_section">Jami és programari lliure desenvolupat per</string>
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Contribueix</string>
   <string name="version_section">Versió</string>
-  <string name="no_email_app_installed">No s\'ha trobat cap aplicació de correu, instal·leu una per enviar-nos un informe </string>
-  <string name="no_browser_app_installed">No s\'ha trobat cap navegador web, instal·leu-ne un per a visualitzar aquesta pàgina</string>
-  <string name="email_chooser_title">Envia correu mitjançant...</string>
-  <string name="website_chooser_title">Visualitza el lloc web amb...</string>
-  <string name="license">Aquest programari es proporciona \"tal i com es\" sense garantia de cap tipus. Per més detalls, veure la<u> Llicència Pública General GNU versió 3 o posterior</u> </string>
   <string name="description">Jami és un programari lliure de comunicació universal, que respecta les llibertats i la privacitat dels seus usuaris.</string>
   <string name="credits">Crèdits</string>
   <string name="pip_title">Conferència Jami</string>
   <string name="call_service_description">Aquest servei és necessari per mantenir les trucades en curs en primer pla. Només s\'executa durant les trucades.</string>
   <string name="data_transfer_service_description">Aquest servei és necessari per mostrar notificacions persistents durant la transferència d\'arxius. Només s\'executa durant la transferència d\'arxius.</string>
   <!--About dialog-->
-  <string name="developed_by">Desenvolupat per</string>
-  <string name="designed_by">Dissenyat per</string>
-  <string name="ringtones_by">Tons de trucada per</string>
+  <string name="media">Mitjans</string>
   <!--RingActivity-->
   <string name="error_no_network">No hi ha connexió a la xarxa</string>
   <string name="error_account_offline">El compte és fora de línia</string>
@@ -35,7 +26,6 @@
   <string name="menu_item_settings">Opcions</string>
   <string name="menu_item_advanced_settings">Configuracions avançades</string>
   <string name="menu_item_account_settings">Configuracions de comptes</string>
-  <string name="menu_item_plugin_list">Opcions de complements</string>
   <string name="menu_item_share">Comparteix el meu compte</string>
   <string name="menu_item_about">Sobre Jami...</string>
   <string name="video_setting_title">Configuracions de vídeo</string>
@@ -100,17 +90,10 @@
   <string name="ongoing_call">Trucada en curs</string>
   <string name="hist_in_call">Trucada entrant de %1$s</string>
   <string name="hist_out_call">Trucada sortint a %1$s</string>
-  <string name="start_error_title">Jami no arrenca!</string>
   <string name="start_error_mic_required">Jami requereix de permís d\'accés al micròfon per funcionar.</string>
-  <string name="action_call_accept">Despenja</string>
-  <string name="action_call_accept_audio">Respon en àudio</string>
-  <string name="action_call_accept_video">Respon en vídeo</string>
-  <string name="action_call_hold_accept">Espera i fes una trucada de veu</string>
-  <string name="action_call_hold_accept_video">Posa en espera i fes una trucada de vídeo</string>
-  <string name="action_call_end_accept">Finalitza i truca</string>
+  <string name="action_call_accept">Accepta trucada</string>
   <string name="action_call_decline">Rebutja</string>
   <string name="action_call_mic_mute">Silencia el micròfon</string>
-  <string name="action_load_plugin">Carrega el Complement</string>
   <string name="ab_action_speakerphone">Activa l\'altaveu</string>
   <string name="ab_action_contact_add">Afegeix als contactes</string>
   <string name="ab_action_contact_add_question">Afegir als contactes?</string>
@@ -149,11 +132,8 @@
   <string name="ringtone_error_size_too_big">Aquest arxiu és massa gran. La mida màxima és %1$dkB.</string>
   <string name="ringtone_custom_prompt">Posa un to de trucada personalitzat</string>
   <string name="ringtone_custom_label">Personalitzat</string>
-  <string name="ringtone_jami_tones">Tons de Jami</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Habilita el permís «consultar els contactes» per a que aquesta característica funcioni.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Habilita el permís «escriptura del registre de trucades» per a que aquesta característica funcioni.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Escanegeu el codi QR del compte que vulgueu afegir.</string>
   <string name="title_activity_qrcode">Comparteix el meu compte</string>
@@ -169,7 +149,6 @@
   <string name="conversation_details">Detalls de la conversa</string>
   <string name="contact_details">Detalls de contacte</string>
   <string name="conversation_action_delete_this">Esborra aquesta conversa</string>
-  <string name="conversation_action_delete_this_title">Voleu suprimir aquesta conversa ?</string>
   <string name="conversation_action_delete_this_message">Aquesta acció no es pot desfer.</string>
   <string name="conversation_action_history_clear">Neteja historial</string>
   <string name="conversation_action_history_clear_title">Netejar l\'historial de converses?</string>
@@ -177,7 +156,6 @@
   <string name="conversation_action_remove_this">Esborrar contacte</string>
   <string name="conversation_action_remove_this_title">Esborrar aquest contacte?</string>
   <string name="conversation_action_remove_this_message">Això esborrarà el contacte i netejarà definitivament l\'historial de converses.</string>
-  <string name="conversation_action_copy_peer_number">Copia el número</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s copiat al porta-retalls</string>
   <string name="conversation_action_select_peer_number">Seleccioneu un número</string>
   <string name="conversation_action_block_this">Bloqueja el contacte</string>
@@ -208,7 +186,6 @@
   <string name="conversation_contact_invited">%1$s ha estat convidat</string>
   <string name="conversation_contact_added">%1$s s\'ha unit</string>
   <string name="conversation_contact_left">%1$s ha sortit</string>
-  <string name="conversation_contact_banned">%1$s ha estat bloquejat</string>
   <string name="conversation_search_hint">Conversació de cerca</string>
   <string name="starting_camera_error">Ha succeït un error iniciant la càmera</string>
   <string name="today">Avui</string>
@@ -224,14 +201,12 @@
   <string name="help_password_choose">Escull una contrasenya forta que puguis recordar per protegir el teu compte Jami.</string>
   <string name="help_password_enter">Introdueix la contrassenya principal de Jami</string>
   <string name="help_server_enter">Introdueix la URL del servidor de manegament</string>
-  <string name="help_pin_enter">Inseriu el PIN d\'un altre compte Jami configurat. Utilitza l\'opció «exportar compte Jami» per obtenir un PIN.</string>
   <string name="wizard_next">Endavant</string>
   <string name="wizard_back">Enrere</string>
   <string name="wizard_skip">Salta</string>
   <string name="hist_contact_invited">Contacte convidat</string>
   <string name="hist_contact_added">Contacte afegit</string>
   <string name="hist_contact_left">El contacte ha marxat</string>
-  <string name="hist_contact_banned">Contacte bloquejat</string>
   <string name="hist_invitation_received">S\'ha rebut una invitació</string>
   <!--Account Summary-->
   <string name="profile">Perfil</string>
@@ -255,20 +230,9 @@
   <string name="generic_error_migration">Error</string>
   <string name="generic_error_migration_message">S\'ha produït un error durant la migració</string>
   <string name="title_share_with">Comparteix amb…</string>
-  <!--Pending contact requests-->
+  <!--Pending invitations-->
   <string name="accept">Accepta</string>
-  <string name="refuse">Rebutja</string>
   <string name="block">Bloca</string>
-  <string name="contact_request_title">Petició nova de contacte</string>
-  <string name="contact_request_msg">Tu tens %1$dpeticions de contacte</string>
-  <string name="contact_request_account">Per %1$s</string>
-  <string name="no_requests">No tens peticions de contacte</string>
-  <string name="message_contact_not_trusted_yet">%s no està als seus contactes encara.\nVoleu acceptar o rebutjar aquesta petició de contacte?</string>
-  <string name="message_contact_not_trusted">%s no està als seus contactes.\n Afegir un nou contacte?</string>
-  <!--Send contact requests-->
-  <string name="send_request_button">Envia</string>
-  <string name="send_request_title">Envia una petició de contacte</string>
-  <string name="send_request_msg">Ha d\'enviar una petició de contacte per comunicar-se amb aquest usuari. Mentre el seu contacte no accepti la petició, pot enviar missatges però ell no podrà respondre\'ls.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Sense contactes blocats</string>
   <!--Smartlist-->
@@ -280,7 +244,6 @@
   <string name="tv_contact_row_header">Contactes</string>
   <string name="gallery_error_title">No s\'ha trobat cap applicació de Galeria</string>
   <string name="gallery_error_message">No s\'ha trobat cap aplicació al dispositiu per obrir Galeria</string>
-  <string name="generic_error">Ha passat un error desconegut</string>
   <!--File Transfer-->
   <string name="invalid_file">Fitxer invalid</string>
   <string name="not_able_to_write_file">No es pot escriure l\'arxiu</string>
@@ -300,7 +263,6 @@
   <string name="file_saved_in">Fitxer desat a %s</string>
   <string name="file_saved_successfully">Fitxer desat amb èxit</string>
   <string name="file_download">Descarrega</string>
-  <string name="no_space_left_on_device">No queda espai al dispositiu</string>
   <string name="title_media_viewer">Visor de medis</string>
   <string name="menu_file_open">Obre fitxer</string>
   <string name="menu_file_download">Descarrega fitxer</string>
@@ -353,11 +315,9 @@
   <string name="wizard_profile_button">Desa el Perfil</string>
   <string name="wizard_profile_skip">Salta i fes-ho després</string>
   <string name="fab_path_choose">Selecciona un altre fitxer</string>
-  <string name="chat_plugins">Complements de Xat</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Comparteix</string>
   <string name="bottomSheet_dialpad_btn">Teclat de marcatge</string>
-  <string name="bottomSheet_plugins_btn">Complements</string>
   <string name="bottomSheet_add_participants_btn">Afegir</string>
   <string name="bottomSheet_change_camera_btn">Canvia</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Càmera</string>
@@ -365,17 +325,13 @@
   <string name="bottomSheet_mute_microphone_btn">Micròfon</string>
   <string name="bottomSheet_sound_output_btn">Sons</string>
   <string name="bottomSheet_raiseHand_btn">Aixeca la mà</string>
-  <string name="open_account_plugin_settings">Obre les Opcions de Comptes dels Complements</string>
-  <string name="open_general_plugin_settings">Obre les Opcions Generals dels Complements</string>
   <string name="uninstall">Desinstala</string>
   <string name="reset">Reconfigura</string>
   <!--Swarm Detail-->
   <string name="rename_btn">Confirma</string>
-  <string name="rename_error">No pot estar buit.</string>
-  <string name="swarm_description">Ajuda una descripció</string>
-  <string name="tab_about">Quant a</string>
   <string name="tab_members">Membres</string>
-  <string name="tab_documetn">Documents</string>
+  <string name="tab_files">Arxius</string>
+  <string name="tab_settings">Opcions</string>
   <string name="dialogtitle_title">Modificar títol de col·loqui</string>
   <string name="dialogtitle_description">Modificar Descripció de col·loc</string>
   <string name="dialog_hint_title">Titulat</string>
@@ -402,5 +358,5 @@
   <string name="donation_donate">Donar</string>
   <string name="donation_setting_title">Recordatori de donació</string>
   <string name="donation_setting_description">Activa el recordatori de donació</string>
-  <!--Plugin-->
+  <!--Extension-->
 </resources>

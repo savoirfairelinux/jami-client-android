@@ -2,7 +2,7 @@
 <resources>
   <!--About-->
   <!--About dialog-->
-  <string name="credits_volunteers">¡Y los voluntarios que contribuyen a este proyecto!</string>
+  <string name="media">Medios</string>
   <!--RingActivity-->
   <!--AB menus-->
   <!--Sections-->
@@ -25,6 +25,7 @@
   <!--Call Fragment-->
   <string name="hist_out_call">Llamada saliente de %1$s</string>
   <string name="call_duration">Último %s</string>
+  <string name="action_call_accept">Aceptar llamada</string>
   <string name="ab_action_audio_call">Iniciar una llamada con audio</string>
   <string name="ab_action_video_call">Realizar una videollamada</string>
   <string name="new_swarm">Iniciar swarm</string>
@@ -41,6 +42,7 @@
   <!--Conversation-->
   <string name="conversation_details">Detalles de conversación</string>
   <string name="contact_details">Detalles de contacto</string>
+  <string name="conversation_action_delete_this_message">Esta acción no puede deshacerse.</string>
   <string name="conversation_action_unblock_this">Desbloquear contacto</string>
   <string name="conversation_action_incoming_call">Llamada entrante</string>
   <string name="conversation_action_latest">Desplazar hasta el final de la conversación</string>
@@ -59,8 +61,8 @@
   <!--Contacts-->
   <!--Account Summary-->
   <!--Share fragment-->
-  <!--Pending contact requests-->
-  <!--Send contact requests-->
+  <!--Pending invitations-->
+  <string name="invitation_message">Tenés %1$d solicitudes de contacto</string>
   <!--Blacklist-->
   <!--Smartlist-->
   <string name="start_conversation">Comenzar una conversación</string>
@@ -78,17 +80,15 @@
   <string name="audio_permission_rationale_message">Jami requiere el permiso del micrófono para utilizar la función de texto a voz y grabar audio. Se solicitará en el siguiente paso.</string>
   <string name="camera_permission_rationale_message">Jami requiere el permiso de la cámara para grabar vídeo y realizar vídeollamadas. Se solicitará en el siguiente paso.</string>
   <string name="unable_to_start_recorder">No se puede iniciar la grabación de audio.</string>
-  <string name="error_sharing_file">Error al compartir el archivo.</string>
-  <string name="error_opening_file">Error al abrir el archivo.</string>
   <!--Wizard-->
   <!--Bottom sheet-->
+  <string name="bottomSheet_extensions_btn">Extensions</string>
+  <string name="bottomSheet_hangup_btn">Terminar llamada</string>
   <!--Swarm Detail-->
   <string name="rename_btn">Confirmar</string>
-  <string name="rename_error">no puede estar vacío</string>
-  <string name="swarm_description">Añadir descripción</string>
-  <string name="tab_about">Acerca de</string>
   <string name="tab_members">Miembros</string>
-  <string name="tab_documetn">Documentos</string>
+  <string name="tab_files">Archivos</string>
+  <string name="tab_settings">Configuraciones</string>
   <string name="dialogtitle_title">Editar el título de la colección</string>
   <string name="dialogtitle_description">Editar Descripción de la colección</string>
   <string name="dialog_hint_title">Título</string>
@@ -116,8 +116,8 @@
   <string name="donation_donate">Donar</string>
   <string name="donation_setting_title">Recordatorio de donación</string>
   <string name="donation_setting_description">Habilitar el recordatorio de donación</string>
-  <!--Plugin-->
+  <!--Extension-->
   <string name="unable_to_load">No se puede cargar %1$s</string>
-  <string name="load_sucess">%1$s: habilitado</string>
-  <string name="unload_sucess">%1$s: desactivado</string>
+  <string name="load_success">%1$s: habilitado</string>
+  <string name="unload_success">%1$s: desactivado</string>
 </resources>

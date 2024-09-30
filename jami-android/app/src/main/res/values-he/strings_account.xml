@@ -21,16 +21,11 @@
   <string name="dialog_wait_create_details">אנא המתן בעוד שחשבונך החדש מתווסף...</string>
   <string name="dialog_wait_update">עדכון חשבון</string>
   <string name="dialog_wait_update_details">אנא חכו עד שהחשבון החדש שלכם יחדש...</string>
-  <string name="dialog_warn_ip2ip_account_title">ליצור חשבון SIP ריק?</string>
-  <string name="dialog_warn_ip2ip_account_message">אתה עומד ליצור חשבון SIP ללא שם מארח תקף. אתה תוכל לבצע ולקבל שיחות IP ישירות בלבד. אתה יכול לערוך את החשבון שלך מאוחר יותר</string>
   <string name="account_type_ip2ip">חשבון IP</string>
   <string name="help_ring">חשבון ג\'מי מאפשר לך להגיע לאנשים בצורה בטוחה בזוג לשוג דרך רשת מופצת לחלוטין.</string>
-  <string name="help_sip_title">הוסף את חשבון SIP שלך</string>
+  <string name="help_sip_title">הוסף חשבון SIP</string>
   <string name="help_sip">הגדר חשבון SIP קיים.</string>
-  <string name="create_sip_account">הוסף חשבון SIP</string>
   <!--Strings related to account deletion-->
-  <string name="account_delete_dialog_title">למחוק חשבון?</string>
-  <string name="account_delete_dialog_message">פעולה זו לא יכולה להיבטל.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">אין חשבון רשום</string>
   <string name="normal_accounts_titles">חשבונות</string>
@@ -38,8 +33,6 @@
   <string name="account_device_revoke">מכשיר ביטול</string>
   <string name="account_device_revocation_success_title">הצלחה</string>
   <string name="account_device_revocation_success">המכשיר נלקח עכשיו!</string>
-  <string name="account_device_revocation_error_title">לא יכול לבטל את המכשיר</string>
-  <string name="account_device_revocation_wrong_password">סיסמה לא נכונה.</string>
   <string name="account_device_revocation_unknown_device">מכשיר לא ידוע.</string>
   <string name="account_device_revocation_error_unknown">טעות לא ידועה.</string>
   <string name="account_password_change">לשנות סיסמה</string>
@@ -61,8 +54,7 @@
   <string name="account_rendezvous_summary">במצב Rendezvous, שיחות נכנסות יוסופרו לחדר מפגשים.</string>
   <string name="account_upnp_label">תפעיל UPnP</string>
   <string name="account_proxy_field">פרוקסי</string>
-  <!--Plugin Details-->
-  <string name="account_preference_plugin_tab">תוספים</string>
+  <!--Extension Details-->
   <!--Audio Details-->
   <string name="account_audio_label">אודיו</string>
   <string name="account_preferences_media_tab">מדיה</string>
@@ -142,35 +134,23 @@
   <string name="export_account_wait_message">מידע על חשבונות יצוא</string>
   <string name="account_export_file">חשבון גיבוי</string>
   <string name="account_export_file_summary">גיבוי חשבון במכשיר שלך כדי לשחזר אותו מאוחר יותר.</string>
-  <string name="account_export_end_decryption_message">לא הצלחתי לפתוח את החשבון שלך באמצעות הסיסמה המוצג.</string>
   <string name="account_export_end_network_title">טעות רשת</string>
-  <string name="account_export_end_network_message">לא יכולתי לייצא חשבון ברשת, בדוק את החיבור שלך.</string>
   <string name="account_export_end_error_title">שגיאה</string>
-  <string name="account_export_end_error_message">לא יכולתי לייצא חשבון, התרחשה טעות לא ידועה.</string>
   <string name="account_enter_password">הכניסו סיסמה</string>
-  <string name="account_share_body">צור איתי קשר באמצעות \'%1$s\' על פלטפורמת התקשורת המوزعة של ג\'מי: %2$s</string>
-  <string name="account_share_body_with_username">צור איתי קשר באמצעות \'%1$s\' או שם המשתמש הציבורי שלי \'%2$s\' על פלטפורמת התקשורת המوزعة של ג\'מי: %3$s</string>
-  <string name="account_contact_me">התקשר אליי על ג\'אמי!</string>
+  <string name="account_contact_me">התקשר אליי על ג\'מי!</string>
   <string name="update_account">עדכון חשבון</string>
   <string name="account_migration">חשבון ג\'מי שלך יכול להיות מעודכן. אנא הכניסי את הסיסמה שלך.</string>
   <string name="ring_account">חשבון ג\'מי</string>
   <string name="sip_account">חשבון SIP</string>
   <string name="ring_account_identity">זהות</string>
   <string name="account_migration_title_dialog">מיגרת חשבונות</string>
-  <string name="account_migration_message_dialog">החשבונות שלך צריכים להיות מעודכנים. האם אתה רוצה ללכת אל מסך ניהול החשבונות לבצע את המבצע הזה?</string>
   <string name="account_update_needed">צורך בהעדכון</string>
-  <string name="account_cannot_be_found_title">לא מצליח למצוא חשבון</string>
-  <string name="account_cannot_be_found_message">לא ניתן למצוא חשבון ברשת ג\'מי. תוודא שהוא הוצא לג\'מי ממכשיר קיים, ושאלו שהסמכות נכונות.</string>
   <string name="account_sip_cannot_be_registered_message">אתה יכול להמשיך בתהליך יצירת חשבון או לערוך את המידע שלך כאן. עיתון עדיין אפשרי מאוחר יותר בהגדרות החשבון.</string>
-  <string name="account_no_network_title">לא יכול להתחבר לרשת</string>
-  <string name="account_no_network_message">לא יכולתי להוסיף חשבון כי ג\'מי לא יכול להתחבר לרשת המפצה.</string>
+  <string name="account_no_network_title">טעות רשת</string>
   <string name="account_device_added_title">מכשיר חשבון הוסף</string>
   <string name="account_device_added_message">הצלחת להגדיר את חשבון ג\'מי שלך על המכשיר הזה.</string>
   <string name="account_device_updated_title">התקנת החשבון מעודכנת</string>
   <string name="account_device_updated_message">שיחדת בהצלחה את חשבון ג\'מי שלך.</string>
-  <string name="account_cannot_be_updated_message">מכשיר החשבון לא יכול להיות מעודכן, אנא בדוק את הסיסמה שלך.</string>
-  <string name="account_sip_success_title">חשבון סיפ רשום</string>
-  <string name="account_sip_success_message">רשמת בהצלחה את חשבון הסיפ שלך.</string>
   <string name="account_sip_register_anyway">-תתתיר בכל מקרה.</string>
   <!--TV-->
   <string name="account_tv_settings_header">הגדרות החשבון</string>
@@ -190,11 +170,8 @@
   <string name="account_link_export_button">קישור מכשיר חדש</string>
   <string name="account_link_show_button">הראה %d יותר מכשיר מקושר</string>
   <string name="account_link_hide_button">חבוי מכשיר מחובר</string>
-  <string name="account_link_export_info">כדי להשתמש בחשבון הזה במכשירים אחרים, אתה חייב קודם לחשוף אותו על ג\'מי. זה יגרום לקוד PIN שאתה חייב להזין על המכשיר החדש כדי להגדיר את החשבון.</string>
   <string name="account_start_export_button">ליצור PIN</string>
   <string name="account_end_export_button">קרוב</string>
-  <string name="account_end_export_infos">PIN שלך הוא:\n\n%%\n\nכדי להשלים את התהליך, אתה צריך לפתוח Jami על המכשיר החדש. ליצור חשבון חדש עם \"חבר את המכשיר הזה לחשבון\". PIN שלך הוא תקף במשך 10 דקות.</string>
-  <string name="account_link_export_info_light">כדי להשתמש בחשבון הזה במכשירים אחרים, אתה חייב קודם לחשוף אותו על ג\'מי. זה יגרום לקוד PIN שאתה חייב להזין על המכשיר החדש כדי להגדיר את החשבון.</string>
   <string name="account_export_title">חשבון חיבור למכשירים אחרים</string>
   <string name="account_connect_server_button">חיבור למשרת ניהול</string>
   <string name="account_connect_button">חיבור</string>
@@ -226,21 +203,17 @@
   <string name="account_creation_profile">יצירת הפרופיל שלך</string>
   <string name="account_creation_ring">ליצור חשבון ג\'מי שלך</string>
   <string name="account_link_title">תקושי את המכשיר הזה.</string>
-  <string name="account_sip_cannot_be_registered">לא יכול להירשם חשבון</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">עורך את החשבון שלי</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">הכניסו סיסמה כדי לאשר</string>
   <string name="enter_password">הכניסו סיסמה</string>
   <string name="revoke_device_title">מכשיר ביטול</string>
-  <string name="revoke_device_message">אתה בטוח שאתה רוצה לבטל %1$s?</string>
   <string name="revoke_device_wait_title">בבקשה חכה...</string>
   <string name="revoke_device_wait_message">מכשיר ביטול</string>
   <string name="rename_device_title">שמה מחדש של המכשיר</string>
   <string name="rename_device_message">בחר שם חדש כדי לזהות את המכשיר הזה בחשבון ג\'מי שלך.</string>
   <string name="rename_device_button">מכשיר שינוי</string>
   <string name="account_rename_device_hint">בחר שם מכשיר חדש</string>
-  <string name="account_device_name_empty">שם המכשיר לא יכול להיות ריק</string>
   <string name="account_device_this_indicator">המכשיר הזה</string>
   <string name="account_disabled_indicator">פצועים</string>
   <!--Link a new device-->

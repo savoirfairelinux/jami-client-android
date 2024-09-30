@@ -1,11 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--Strings for xml content description of images-->
-  <string name="contact_quick_call_description">விரைவான அழைப்பு</string>
-  <string name="contact_picture_description">தொடர்பு படம்</string>
   <string name="dial_numeric_pad">எண் மாற்றி</string>
   <string name="contact_unblock">தடுக்கலை திறக்கவும்</string>
-  <string name="video_plugins">வீடியோ செருகுநிரல்கள்</string>
   <string name="file_download_button">பதிவிறக்கம்</string>
   <string name="control_play">விளையாடு</string>
   <string name="control_pause">இடைநிறுத்தம்</string>

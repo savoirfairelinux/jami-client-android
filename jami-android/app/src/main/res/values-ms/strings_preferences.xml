@@ -27,7 +27,6 @@
   <string name="pref_startOnBoot_title">ജാമി സ്റ്റാർട്ട് ചെയ്യുമ്പോൾ ആരംഭിക്കുക</string>
   <string name="pref_startOnBoot_summary">സിസ്റ്റം തുടങ്ങുമ്പോള് ജാമിയെ പശ്ചാത്തലത്തില് വച്ച് ഓടിക്കുക.</string>
   <string name="pref_clearHistory_title">Padamkan sejarah</string>
-  <string name="pref_clearHistory_summary">എല്ലാ സംഭാഷണ ചരിത്രവും മായ്ക്കുക.</string>
   <string name="pref_notification_title">അറിയിപ്പുകളുടെ ദൃശ്യപരത</string>
   <string name="pref_notification_summary">അപ്ലിക്കേഷൻ അറിയിപ്പുകളുടെ ദൃശ്യപരത ലോക്ക് സ്ക്രീനിൽ ക്രമീകരിക്കുക.</string>
   <string name="pref_blackList_title">ബ്ലോക്ക് ലിസ്റ്റ്</string>
@@ -52,19 +51,6 @@
   <string name="notification_public">പൊതുവായ അറിയിപ്പുകളും അവയുടെ ഉള്ളടക്കവും ലോക്ക് സ്ക്രീനിൽ കാണിക്കുക</string>
   <string name="notification_private">സ്വകാര്യമായ അറിയിപ്പുകൾ കാണിക്കുക, പക്ഷേ അവയുടെ ഉള്ളടക്കം ലോക്ക് സ്ക്രീനിൽ മറയ്ക്കുക)</string>
   <string name="notification_secret">രഹസ്യമായത് (ലോക്ക് സ്ക്രീനിൽ അറിയിപ്പുകൾ കാണിക്കരുത്)</string>
-  <!--Plugin-->
-  <string name="pref_plugins_title">പ്ലഗിൻ</string>
-  <string name="pref_plugins_summary">പ്ലഗിന്നുകൾ പ്രവർത്തനക്ഷമമാക്കുകയും അവയുടെ പാരാമീറ്ററുകൾ സജ്ജമാക്കുകയും ചെയ്യുക</string>
-  <string name="fab_plugins_add">പുതിയ പ്ലഗിൻ ചേർക്കുക</string>
-  <string name="plugin_uninstall_title">പ്ലഗിൻ അൺഇൻസ്റ്റാൾ ചെയ്യണോ?</string>
-  <string name="plugin_reset_preferences">പ്ലഗിൻ മുൻഗണനകൾ പുനഃക്രമീകരിക്കുക</string>
-  <string name="plugin_reset_preferences_summary">നിങ്ങളുടെ പ്ലഗിൻ ക്രമീകരണങ്ങൾ സ്ഥിരസ്ഥിതിയായി</string>
-  <string name="plugin_reset_preferences_ask">പൊതു പ്ലഗിൻ ക്രമീകരണങ്ങൾ പുനഃസജ്ജീകരിക്കണോ?</string>
-  <string name="plugin_reset_account_preferences_ask">അക്കൌണ്ട് പ്ലഗിൻ ക്രമീകരണം പുനഃ സജ്ജീകരിക്കണോ?</string>
-  <string name="plugin_successfully_installed">പ്ലഗിൻ <b>%1$s</b> വിജയകരമായി ഇൻസ്റ്റാൾ ചെയ്തു</string>
-  <string name="plugin_install_failure">പ്ലഗിൻ ഇൻസ്റ്റാൾ ചെയ്യാനായില്ലഃ <b>%1$s</b></string>
-  <string name="plugin_recent_version_exception">നിങ്ങൾക്ക് ഏറ്റവും പുതിയ പതിപ്പ് ഉണ്ട്ഃ <b>%1$s</b></string>
-  <string name="plugin_same_version_exception"><b>%1$s</b> യുടെ ഒരേ പതിപ്പ് ഇൻസ്റ്റാൾ ചെയ്തിരിക്കുന്നു</string>
-  <string name="plugin_force_install">നിർബന്ധിതമായി ഇൻസ്റ്റാൾ ചെയ്യുക</string>
-  <string name="plugin_path_image_add">പുതിയ ചിത്രം ചേർക്കുക</string>
+  <!--Extension-->
+  <string name="extension_force_install">നിർബന്ധിതമായി ഇൻസ്റ്റാൾ ചെയ്യുക</string>
 </resources>

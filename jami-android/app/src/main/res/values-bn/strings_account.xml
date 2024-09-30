@@ -21,15 +21,11 @@
   <string name="dialog_wait_create_details">দয়া করে আপনার নতুন অ্যাকাউন্ট যোগ করার সময় অপেক্ষা করুন...</string>
   <string name="dialog_wait_update">অ্যাকাউন্ট আপডেট</string>
   <string name="dialog_wait_update_details">দয়া করে আপনার নতুন অ্যাকাউন্ট আপডেট হওয়ার জন্য অপেক্ষা করুন...</string>
-  <string name="dialog_warn_ip2ip_account_title">একটি ফাঁকা SIP অ্যাকাউন্ট তৈরি করা?</string>
-  <string name="dialog_warn_ip2ip_account_message">আপনি কোনও বৈধ হোস্টনাম ছাড়াই একটি SIP অ্যাকাউন্ট তৈরি করতে চলেছেন। আপনি কেবল সরাসরি আইপি কল করতে এবং গ্রহণ করতে সক্ষম হবেন। আপনি পরে আপনার অ্যাকাউন্টটি সম্পাদনা করতে পারেন</string>
   <string name="account_type_ip2ip">আইপি অ্যাকাউন্ট</string>
   <string name="help_ring">জামি অ্যাকাউন্ট আপনাকে সম্পূর্ণ বিতরণকৃত নেটওয়ার্কের মাধ্যমে নিরাপদে ব্যক্তিদের সাথে যোগাযোগ করতে দেয়।</string>
-  <string name="help_sip_title">আপনার SIP অ্যাকাউন্ট যোগ করুন</string>
+  <string name="help_sip_title">SIP অ্যাকাউন্ট যোগ করুন</string>
   <string name="help_sip">একটি বিদ্যমান SIP অ্যাকাউন্ট কনফিগার করুন।</string>
-  <string name="create_sip_account">SIP অ্যাকাউন্ট যোগ করুন</string>
   <!--Strings related to account deletion-->
-  <string name="account_delete_dialog_title">অ্যাকাউন্ট মুছে ফেলা?</string>
   <string name="account_delete_dialog_message">এই পদক্ষেপটি বাতিল করা যাবে না।</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">কোন অ্যাকাউন্ট নিবন্ধিত নেই</string>
@@ -38,8 +34,6 @@
   <string name="account_device_revoke">বাতিলকরণ ডিভাইস</string>
   <string name="account_device_revocation_success_title">সাফল্য</string>
   <string name="account_device_revocation_success">ডিভাইস এখন প্রত্যাহার করা হয়েছে!</string>
-  <string name="account_device_revocation_error_title">ডিভাইসটি বাতিল করতে পারছি না</string>
-  <string name="account_device_revocation_wrong_password">ভুল পাসওয়ার্ড।</string>
   <string name="account_device_revocation_unknown_device">অজানা ডিভাইস।</string>
   <string name="account_device_revocation_error_unknown">অজানা ত্রুটি।</string>
   <string name="account_password_change">পাসওয়ার্ড পরিবর্তন করুন</string>
@@ -61,8 +55,7 @@
   <string name="account_rendezvous_summary">রেন্ডেভো মোডে, ইনকামিং কলগুলি একটি কনফারেন্স রুমে যুক্ত করা হবে।</string>
   <string name="account_upnp_label">UPnP সক্ষম করুন</string>
   <string name="account_proxy_field">প্রক্সি</string>
-  <!--Plugin Details-->
-  <string name="account_preference_plugin_tab">প্লাগইন</string>
+  <!--Extension Details-->
   <!--Audio Details-->
   <string name="account_audio_label">অডিও</string>
   <string name="account_preferences_media_tab">মিডিয়া</string>
@@ -142,14 +135,9 @@
   <string name="export_account_wait_message">রপ্তানি অ্যাকাউন্টের তথ্য</string>
   <string name="account_export_file">ব্যাকআপ অ্যাকাউন্ট</string>
   <string name="account_export_file_summary">আপনার অ্যাকাউন্টটি আপনার ডিভাইসে ব্যাকআপ করুন পরে এটি পুনরুদ্ধার করতে।</string>
-  <string name="account_export_end_decryption_message">দেওয়া পাসওয়ার্ড ব্যবহার করে আপনার অ্যাকাউন্ট আনলক করতে পারিনি।</string>
   <string name="account_export_end_network_title">নেটওয়ার্ক ত্রুটি</string>
-  <string name="account_export_end_network_message">নেটওয়ার্কে একাউন্ট এক্সপোর্ট করতে পারিনি, আপনার সংযোগ পরীক্ষা করে দেখুন।</string>
   <string name="account_export_end_error_title">ত্রুটি</string>
-  <string name="account_export_end_error_message">অ্যাকাউন্ট এক্সপোর্ট করতে পারিনি, একটা অজানা ত্রুটি ঘটেছে।</string>
   <string name="account_enter_password">পাসওয়ার্ড লিখুন</string>
-  <string name="account_share_body">জ্যামি বিতরণ করা যোগাযোগ প্ল্যাটফর্মে \'%1$s\' ব্যবহার করে আমার সাথে যোগাযোগ করুনঃ %2$s</string>
-  <string name="account_share_body_with_username">জ্যামি বিতরণ করা যোগাযোগ প্ল্যাটফর্মে \'%1$s\' বা আমার পাবলিক ইউজার নাম \'%2$s\' ব্যবহার করে আমার সাথে যোগাযোগ করুনঃ %3$s</string>
   <string name="account_contact_me">জামিতে আমার সাথে যোগাযোগ করুন!</string>
   <string name="update_account">অ্যাকাউন্ট আপডেট</string>
   <string name="account_migration">আপনার জামি অ্যাকাউন্ট আপডেট করা যাবে। অনুগ্রহ করে আপনার পাসওয়ার্ড লিখুন।</string>
@@ -157,20 +145,13 @@
   <string name="sip_account">এসআইপি অ্যাকাউন্ট</string>
   <string name="ring_account_identity">পরিচয়</string>
   <string name="account_migration_title_dialog">অ্যাকাউন্ট মাইগ্রেশন</string>
-  <string name="account_migration_message_dialog">আপনার অ্যাকাউন্ট আপডেট করা দরকার। আপনি কি এই অপারেশনটি সম্পাদন করতে অ্যাকাউন্ট ম্যানেজমেন্ট স্ক্রিনে যেতে চান?</string>
   <string name="account_update_needed">আপডেট প্রয়োজন</string>
-  <string name="account_cannot_be_found_title">অ্যাকাউন্ট খুঁজে পাচ্ছি না</string>
-  <string name="account_cannot_be_found_message">জামি নেটওয়ার্কে অ্যাকাউন্ট পাওয়া যায়নি. এটা জামিতে একটি বিদ্যমান ডিভাইস থেকে এক্সপোর্ট করা হয়েছে তা নিশ্চিত করুন, এবং যে প্রদত্ত শংসাপত্র সঠিক।</string>
   <string name="account_sip_cannot_be_registered_message">আপনি অ্যাকাউন্ট তৈরির প্রক্রিয়াটি চালিয়ে যেতে পারেন অথবা আপনার তথ্য এখানে সম্পাদনা করতে পারেন। অ্যাকাউন্ট সেটিংস পরে সংস্করণ এখনও সম্ভব।</string>
-  <string name="account_no_network_title">নেটওয়ার্কে সংযোগ করতে পারছি না</string>
-  <string name="account_no_network_message">অ্যাকাউন্ট যোগ করতে পারিনি কারণ জামি বিতরণকৃত নেটওয়ার্কে সংযোগ করতে পারেনি।</string>
+  <string name="account_no_network_title">নেটওয়ার্ক ত্রুটি</string>
   <string name="account_device_added_title">অ্যাকাউন্ট ডিভাইস যোগ করা হয়েছে</string>
   <string name="account_device_added_message">আপনি সফলভাবে এই ডিভাইসে আপনার জামি অ্যাকাউন্ট সেটআপ করেছেন।</string>
   <string name="account_device_updated_title">অ্যাকাউন্ট ডিভাইস আপডেট</string>
   <string name="account_device_updated_message">আপনি সফলভাবে আপনার জামি অ্যাকাউন্ট আপডেট করেছেন।</string>
-  <string name="account_cannot_be_updated_message">অ্যাকাউন্ট ডিভাইস আপডেট করা যায়নি. দয়া করে আপনার পাসওয়ার্ড চেক করুন.</string>
-  <string name="account_sip_success_title">সিপ অ্যাকাউন্ট নিবন্ধিত</string>
-  <string name="account_sip_success_message">আপনি আপনার সিপ অ্যাকাউন্ট সফলভাবে নিবন্ধন করেছেন।</string>
   <string name="account_sip_register_anyway">যাই হোক রেজিস্টার করুন</string>
   <!--TV-->
   <string name="account_tv_settings_header">অ্যাকাউন্ট সেটিংস</string>
@@ -190,11 +171,8 @@
   <string name="account_link_export_button">একটি নতুন ডিভাইস লিঙ্ক</string>
   <string name="account_link_show_button">%d আরো সংযুক্ত ডিভাইস দেখান</string>
   <string name="account_link_hide_button">সংযুক্ত ডিভাইস লুকান</string>
-  <string name="account_link_export_info">অন্য ডিভাইসে এই অ্যাকাউন্টটি ব্যবহার করতে হলে আপনাকে প্রথমে এটি জ্যামিতে প্রকাশ করতে হবে। এটি একটি পিন কোড তৈরি করবে যা অ্যাকাউন্টটি সেট আপ করতে আপনাকে নতুন ডিভাইসে প্রবেশ করতে হবে। পিনটি 10 মিনিটের জন্য বৈধ।</string>
   <string name="account_start_export_button">পিন তৈরি করুন</string>
   <string name="account_end_export_button">ঘনিষ্ঠ</string>
-  <string name="account_end_export_infos">আপনার পিন হলঃ\n\n%%\n\nপ্রক্রিয়ার সমাপ্তি জন্য, আপনাকে নতুন ডিভাইসে জামি খুলতে হবে। \"এই ডিভাইসটিকে একটি অ্যাকাউন্টে লিঙ্ক করুন\" দিয়ে একটি নতুন অ্যাকাউন্ট তৈরি করুন। আপনার পিন 10 মিনিটের জন্য বৈধ।</string>
-  <string name="account_link_export_info_light">অন্য ডিভাইসে এই অ্যাকাউন্টটি ব্যবহার করতে হলে আপনাকে প্রথমে এটি জ্যামিতে প্রকাশ করতে হবে। এটি একটি পিন কোড তৈরি করবে যা অ্যাকাউন্টটি সেট আপ করতে আপনাকে নতুন ডিভাইসে প্রবেশ করতে হবে। পিনটি 10 মিনিটের জন্য বৈধ।</string>
   <string name="account_export_title">অন্যান্য ডিভাইসের সাথে লিঙ্ক অ্যাকাউন্ট</string>
   <string name="account_connect_server_button">ম্যানেজমেন্ট সার্ভারের সাথে সংযোগ স্থাপন</string>
   <string name="account_connect_button">সংযুক্ত করুন</string>
@@ -226,21 +204,17 @@
   <string name="account_creation_profile">আপনার প্রোফাইল তৈরি করুন</string>
   <string name="account_creation_ring">আপনার জামি অ্যাকাউন্ট তৈরি করুন</string>
   <string name="account_link_title">এই ডিভাইসটি সংযুক্ত করুন</string>
-  <string name="account_sip_cannot_be_registered">অ্যাকাউন্ট নিবন্ধন করতে পারছি না</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">আমার অ্যাকাউন্ট সম্পাদনা করুন</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">নিশ্চিত করার জন্য পাসওয়ার্ড লিখুন</string>
   <string name="enter_password">পাসওয়ার্ড লিখুন</string>
   <string name="revoke_device_title">বাতিলকরণ ডিভাইস</string>
-  <string name="revoke_device_message">আপনি কি নিশ্চিত যে আপনি %1$s বাতিল করতে চান?</string>
   <string name="revoke_device_wait_title">দয়া করে অপেক্ষা করুন...</string>
   <string name="revoke_device_wait_message">প্রত্যাহারকারী ডিভাইস</string>
   <string name="rename_device_title">এই ডিভাইসের নাম পরিবর্তন করুন</string>
   <string name="rename_device_message">আপনার জামি অ্যাকাউন্টে এই ডিভাইসটি সনাক্ত করতে একটি নতুন নাম নির্বাচন করুন</string>
   <string name="rename_device_button">ডিভাইস নাম পরিবর্তন</string>
   <string name="account_rename_device_hint">নতুন ডিভাইসের নাম নির্বাচন করুন</string>
-  <string name="account_device_name_empty">ডিভাইসের নামটি খালি থাকতে পারে না</string>
   <string name="account_device_this_indicator">এই ডিভাইস</string>
   <string name="account_disabled_indicator">অক্ষম</string>
   <!--Link a new device-->

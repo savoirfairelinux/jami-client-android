@@ -21,15 +21,11 @@
   <string name="dialog_wait_create_details">ದಯವಿಟ್ಟು ನಿಮ್ಮ ಹೊಸ ಖಾತೆಯನ್ನು ಸೇರಿಸುವವರೆಗೆ ಕಾಯಿರಿ.</string>
   <string name="dialog_wait_update">ಖಾತೆಯನ್ನು ನವೀಕರಿಸುವುದು</string>
   <string name="dialog_wait_update_details">ದಯವಿಟ್ಟು ನಿಮ್ಮ ಹೊಸ ಖಾತೆಯನ್ನು ನವೀಕರಿಸುವವರೆಗೆ ಕಾಯಿರಿ.</string>
-  <string name="dialog_warn_ip2ip_account_title">ಖಾಲಿ SIP ಖಾತೆಯನ್ನು ರಚಿಸಲು?</string>
-  <string name="dialog_warn_ip2ip_account_message">ನೀವು ಮಾನ್ಯವಾದ ಹೋಸ್ಟ್ನಮ್ ಇಲ್ಲದೆ SIP ಖಾತೆಯನ್ನು ರಚಿಸಲು ಹೊರಟಿದ್ದೀರಿ. ನೀವು ನೇರ IP ಕರೆಗಳನ್ನು ಮಾತ್ರ ಮಾಡಲು ಮತ್ತು ಸ್ವೀಕರಿಸಲು ಸಾಧ್ಯವಾಗುತ್ತದೆ. ನೀವು ನಂತರ ನಿಮ್ಮ ಖಾತೆಯನ್ನು ಸಂಪಾದಿಸಬಹುದು</string>
   <string name="account_type_ip2ip">ಐಪಿ ಖಾತೆ</string>
   <string name="help_ring">ಜಾಮಿ ಖಾತೆಯು ಸಂಪೂರ್ಣ ವಿತರಿಸಿದ ನೆಟ್ವರ್ಕ್ ಮೂಲಕ ಸುರಕ್ಷಿತವಾಗಿ ಪೀರ್-ಟು-ಪೀರ್ ಜನರೊಂದಿಗೆ ಸಂಪರ್ಕ ಸಾಧಿಸಲು ನಿಮಗೆ ಅನುಮತಿಸುತ್ತದೆ.</string>
-  <string name="help_sip_title">ನಿಮ್ಮ SIP ಖಾತೆಯನ್ನು ಸೇರಿಸಿ</string>
+  <string name="help_sip_title">SIP ಖಾತೆಯನ್ನು ಸೇರಿಸಿ</string>
   <string name="help_sip">ಅಸ್ತಿತ್ವದಲ್ಲಿರುವ SIP ಖಾತೆಯನ್ನು ಕಾನ್ಫಿಗರ್ ಮಾಡಿ.</string>
-  <string name="create_sip_account">SIP ಖಾತೆಯನ್ನು ಸೇರಿಸಿ</string>
   <!--Strings related to account deletion-->
-  <string name="account_delete_dialog_title">ಖಾತೆಯನ್ನು ಅಳಿಸುವುದೇ?</string>
   <string name="account_delete_dialog_message">ಈ ಕ್ರಮವನ್ನು ಹಿಂತೆಗೆದುಕೊಳ್ಳಲು ಸಾಧ್ಯವಿಲ್ಲ.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">ನೋಂದಾಯಿತ ಖಾತೆ ಇಲ್ಲ</string>
@@ -38,8 +34,6 @@
   <string name="account_device_revoke">ರದ್ದುಗೊಳಿಸುವ ಸಾಧನ</string>
   <string name="account_device_revocation_success_title">ಯಶಸ್ಸು</string>
   <string name="account_device_revocation_success">ಸಾಧನ ಈಗ ರದ್ದುಗೊಳಿಸಲಾಗಿದೆ!</string>
-  <string name="account_device_revocation_error_title">ಸಾಧನ ಹಿಂತೆಗೆದುಕೊಳ್ಳಲು ಸಾಧ್ಯವಿಲ್ಲ</string>
-  <string name="account_device_revocation_wrong_password">ತಪ್ಪು ಪಾಸ್ವರ್ಡ್.</string>
   <string name="account_device_revocation_unknown_device">ಅಪರಿಚಿತ ಸಾಧನ.</string>
   <string name="account_device_revocation_error_unknown">ಅಪರಿಚಿತ ದೋಷ.</string>
   <string name="account_password_change">ಪಾಸ್ವರ್ಡ್ ಬದಲಾಯಿಸಿ</string>
@@ -61,8 +55,7 @@
   <string name="account_rendezvous_summary">ರೆಂಡೆಜೌಸ್ ಮೋಡ್ನಲ್ಲಿ, ಒಳಬರುವ ಕರೆಗಳನ್ನು ಕಾನ್ಫರೆನ್ಸ್ ರೂಮ್ಗೆ ಸೇರಿಸಲಾಗುತ್ತದೆ.</string>
   <string name="account_upnp_label">UPnP ಅನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿ</string>
   <string name="account_proxy_field">ಪ್ರಾಕ್ಸಿ</string>
-  <!--Plugin Details-->
-  <string name="account_preference_plugin_tab">ಪ್ಲಗ್ಇನ್ಗಳು</string>
+  <!--Extension Details-->
   <!--Audio Details-->
   <string name="account_audio_label">ಆಡಿಯೋ</string>
   <string name="account_preferences_media_tab">ಮಾಧ್ಯಮಗಳು</string>
@@ -142,14 +135,9 @@
   <string name="export_account_wait_message">ರಫ್ತು ಖಾತೆ ಮಾಹಿತಿ</string>
   <string name="account_export_file">ಬ್ಯಾಕಪ್ ಖಾತೆ</string>
   <string name="account_export_file_summary">ನಿಮ್ಮ ಖಾತೆಯನ್ನು ನಿಮ್ಮ ಸಾಧನದಲ್ಲಿ ಬ್ಯಾಕಪ್ ಮಾಡಿ ನಂತರ ಅದನ್ನು ಮರುಸ್ಥಾಪಿಸಿ.</string>
-  <string name="account_export_end_decryption_message">ಒದಗಿಸಿದ ಪಾಸ್ವರ್ಡ್ ಬಳಸಿ ನಿಮ್ಮ ಖಾತೆಯನ್ನು ಅನ್ಲಾಕ್ ಮಾಡಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ.</string>
   <string name="account_export_end_network_title">ನೆಟ್ವರ್ಕ್ ದೋಷ</string>
-  <string name="account_export_end_network_message">ನೆಟ್ವರ್ಕ್ನಲ್ಲಿ ಖಾತೆಯನ್ನು ರಫ್ತು ಮಾಡಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ. ನಿಮ್ಮ ಸಂಪರ್ಕವನ್ನು ಪರಿಶೀಲಿಸಿ.</string>
   <string name="account_export_end_error_title">ದೋಷ</string>
-  <string name="account_export_end_error_message">ಖಾತೆಯನ್ನು ರಫ್ತು ಮಾಡಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ. ಅಪರಿಚಿತ ದೋಷ ಸಂಭವಿಸಿದೆ.</string>
   <string name="account_enter_password">ಪಾಸ್ವರ್ಡ್ ನಮೂದಿಸಿ</string>
-  <string name="account_share_body">ಜಾಮಿ ವಿತರಿಸಿದ ಸಂವಹನ ವೇದಿಕೆಯಲ್ಲಿ \'%1$s\' ಬಳಸಿ ನನ್ನನ್ನು ಸಂಪರ್ಕಿಸಿಃ %2$s</string>
-  <string name="account_share_body_with_username">ಜಾಮಿ ವಿತರಿಸಿದ ಸಂವಹನ ವೇದಿಕೆಯಲ್ಲಿ \'%1$s\' ಅಥವಾ ನನ್ನ ಸಾರ್ವಜನಿಕ ಬಳಕೆದಾರ ಹೆಸರು \'%2$s\' ಬಳಸಿ ನನ್ನನ್ನು ಸಂಪರ್ಕಿಸಿಃ %3$s</string>
   <string name="account_contact_me">ಜಾಮಿ ಬಗ್ಗೆ ನನ್ನನ್ನು ಸಂಪರ್ಕಿಸಿ!</string>
   <string name="update_account">ಖಾತೆಯನ್ನು ನವೀಕರಿಸಿ</string>
   <string name="account_migration">ನಿಮ್ಮ ಜಾಮಿ ಖಾತೆಯನ್ನು ನವೀಕರಿಸಬಹುದು. ದಯವಿಟ್ಟು ನಿಮ್ಮ ಪಾಸ್ವರ್ಡ್ ನಮೂದಿಸಿ.</string>
@@ -157,20 +145,13 @@
   <string name="sip_account">ಎಸ್ಐಪಿ ಖಾತೆ</string>
   <string name="ring_account_identity">ಗುರುತಿನ</string>
   <string name="account_migration_title_dialog">ಖಾತೆ ವಲಸೆ</string>
-  <string name="account_migration_message_dialog">ನಿಮ್ಮ ಖಾತೆಗಳನ್ನು ನವೀಕರಿಸಬೇಕಾಗಿದೆ. ಈ ಕಾರ್ಯಾಚರಣೆಯನ್ನು ನಿರ್ವಹಿಸಲು ನೀವು ಖಾತೆ ನಿರ್ವಹಣೆ ಸ್ಕ್ರೀನ್ಗೆ ಹೋಗಲು ಬಯಸುವಿರಾ?</string>
   <string name="account_update_needed">ನವೀಕರಣದ ಅಗತ್ಯವಿದೆ</string>
-  <string name="account_cannot_be_found_title">ಲೆಕ್ಕಾಚಾರವನ್ನು ಕಂಡುಹಿಡಿಯಲಾಗುವುದಿಲ್ಲ</string>
-  <string name="account_cannot_be_found_message">ಜಾಮಿ ನೆಟ್ವರ್ಕ್ನಲ್ಲಿ ಖಾತೆಯನ್ನು ಕಂಡುಹಿಡಿಯಲಾಗಲಿಲ್ಲ. ಜಾಮಿ ಮೇಲೆ ಅಸ್ತಿತ್ವದಲ್ಲಿರುವ ಸಾಧನದಿಂದ ಅದನ್ನು ರಫ್ತು ಮಾಡಲಾಗಿದೆ ಎಂದು ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಿ, ಮತ್ತು ರುಜುವಾತುಗಳು ಸರಿಯಾಗಿವೆ ಎಂದು ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಿ.</string>
   <string name="account_sip_cannot_be_registered_message">ನೀವು ಖಾತೆ ರಚನೆ ಪ್ರಕ್ರಿಯೆಯನ್ನು ಮುಂದುವರಿಸಬಹುದು ಅಥವಾ ನಿಮ್ಮ ಮಾಹಿತಿಯನ್ನು ಇಲ್ಲಿ ಸಂಪಾದಿಸಬಹುದು. ಖಾತೆ ಸೆಟ್ಟಿಂಗ್ಗಳಲ್ಲಿ ನಂತರದ ಆವೃತ್ತಿ ಇನ್ನೂ ಸಾಧ್ಯವಿದೆ.</string>
-  <string name="account_no_network_title">ನೆಟ್ವರ್ಕ್ಗೆ ಸಂಪರ್ಕಿಸಲು ಸಾಧ್ಯವಿಲ್ಲ</string>
-  <string name="account_no_network_message">ಜಾಮಿಗೆ ವಿತರಿಸಿದ ನೆಟ್ವರ್ಕ್ಗೆ ಸಂಪರ್ಕಿಸಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ. ನಿಮ್ಮ ಸಾಧನದ ಸಂಪರ್ಕವನ್ನು ಪರಿಶೀಲಿಸಿ.</string>
+  <string name="account_no_network_title">ನೆಟ್ವರ್ಕ್ ದೋಷ</string>
   <string name="account_device_added_title">ಖಾತೆ ಸಾಧನ ಸೇರಿಸಲಾಗಿದೆ</string>
   <string name="account_device_added_message">ಈ ಸಾಧನದಲ್ಲಿ ನಿಮ್ಮ ಜಾಮಿ ಖಾತೆಯನ್ನು ನೀವು ಯಶಸ್ವಿಯಾಗಿ ಸ್ಥಾಪಿಸಿದ್ದೀರಿ.</string>
   <string name="account_device_updated_title">ಖಾತೆ ಸಾಧನ ನವೀಕರಿಸಲಾಗಿದೆ</string>
   <string name="account_device_updated_message">ನಿಮ್ಮ ಜಾಮಿ ಖಾತೆಯನ್ನು ನೀವು ಯಶಸ್ವಿಯಾಗಿ ನವೀಕರಿಸಿದ್ದೀರಿ.</string>
-  <string name="account_cannot_be_updated_message">ಖಾತೆ ಸಾಧನ ನವೀಕರಿಸಲಾಗಲಿಲ್ಲ. ದಯವಿಟ್ಟು ನಿಮ್ಮ ಪಾಸ್ವರ್ಡ್ ಅನ್ನು ಪರಿಶೀಲಿಸಿ.</string>
-  <string name="account_sip_success_title">ನೋಂದಾಯಿತ ಸಿಪ್ ಖಾತೆ</string>
-  <string name="account_sip_success_message">ನಿಮ್ಮ ಸಿಪ್ ಖಾತೆಯನ್ನು ನೀವು ಯಶಸ್ವಿಯಾಗಿ ನೋಂದಾಯಿಸಿದ್ದೀರಿ.</string>
   <string name="account_sip_register_anyway">ಹೇಗಾದರೂ ನೋಂದಣಿ</string>
   <!--TV-->
   <string name="account_tv_settings_header">ಖಾತೆ ಸೆಟ್ಟಿಂಗ್ಗಳು</string>
@@ -190,11 +171,8 @@
   <string name="account_link_export_button">ಹೊಸ ಸಾಧನವನ್ನು ಸಂಪರ್ಕಿಸಿ</string>
   <string name="account_link_show_button">%d ಹೆಚ್ಚು ಸಂಪರ್ಕಿತ ಸಾಧನವನ್ನು ತೋರಿಸಿ</string>
   <string name="account_link_hide_button">ಸಂಪರ್ಕಿತ ಸಾಧನವನ್ನು ಮರೆಮಾಡಿ</string>
-  <string name="account_link_export_info">ಈ ಖಾತೆಯನ್ನು ಇತರ ಸಾಧನಗಳಲ್ಲಿ ಬಳಸಲು, ನೀವು ಮೊದಲು ಅದನ್ನು ಜಾಮಿಯಲ್ಲಿ ಬಹಿರಂಗಪಡಿಸಬೇಕು. ಇದು ಹೊಸ ಸಾಧನದಲ್ಲಿ ನೀವು ಪ್ರವೇಶಿಸಬೇಕಾದ ಪಿನ್ ಕೋಡ್ ಅನ್ನು ಉತ್ಪಾದಿಸುತ್ತದೆ. ಖಾತೆಯನ್ನು ಹೊಂದಿಸಲು ಪಿನ್ 10 ನಿಮಿಷಗಳವರೆಗೆ ಮಾನ್ಯವಾಗಿರುತ್ತದೆ.</string>
   <string name="account_start_export_button">ಪಿನ್ ರಚಿಸಿ</string>
   <string name="account_end_export_button">ಮುಚ್ಚುವಿಕೆ</string>
-  <string name="account_end_export_infos">ನಿಮ್ಮ ಪಿನ್ ಆಗಿದೆಃ\n\n%%\n\nಪ್ರಕ್ರಿಯೆಯನ್ನು ಪೂರ್ಣಗೊಳಿಸಲು, ನೀವು ಹೊಸ ಸಾಧನದಲ್ಲಿ ಜಾಮಿಯನ್ನು ತೆರೆಯಬೇಕು. \"ಈ ಸಾಧನವನ್ನು ಖಾತೆಗೆ ಲಿಂಕ್ ಮಾಡಿ\" ಎಂಬ ಹೊಸ ಖಾತೆಯನ್ನು ರಚಿಸಿ. ನಿಮ್ಮ ಪಿನ್ 10 ನಿಮಿಷಗಳ ಕಾಲ ಮಾನ್ಯವಾಗಿರುತ್ತದೆ.</string>
-  <string name="account_link_export_info_light">ಈ ಖಾತೆಯನ್ನು ಇತರ ಸಾಧನಗಳಲ್ಲಿ ಬಳಸಲು, ನೀವು ಮೊದಲು ಅದನ್ನು ಜಾಮಿಯಲ್ಲಿ ಬಹಿರಂಗಪಡಿಸಬೇಕು. ಇದು ಹೊಸ ಸಾಧನದಲ್ಲಿ ನೀವು ಪ್ರವೇಶಿಸಬೇಕಾದ ಪಿನ್ ಕೋಡ್ ಅನ್ನು ಉತ್ಪಾದಿಸುತ್ತದೆ. ಖಾತೆಯನ್ನು ಹೊಂದಿಸಲು ಪಿನ್ 10 ನಿಮಿಷಗಳವರೆಗೆ ಮಾನ್ಯವಾಗಿರುತ್ತದೆ.</string>
   <string name="account_export_title">ಇತರ ಸಾಧನಗಳಿಗೆ ಲಿಂಕ್ ಖಾತೆ</string>
   <string name="account_connect_server_button">ನಿರ್ವಹಣಾ ಸರ್ವರ್ಗೆ ಸಂಪರ್ಕ</string>
   <string name="account_connect_button">ಸಂಪರ್ಕ</string>
@@ -226,21 +204,17 @@
   <string name="account_creation_profile">ನಿಮ್ಮ ಪ್ರೊಫೈಲ್ ಅನ್ನು ರಚಿಸಿ</string>
   <string name="account_creation_ring">ನಿಮ್ಮ ಜಾಮಿ ಖಾತೆಯನ್ನು ರಚಿಸಿ</string>
   <string name="account_link_title">ಈ ಸಾಧನವನ್ನು ಸಂಪರ್ಕಿಸಿ</string>
-  <string name="account_sip_cannot_be_registered">ಖಾತೆಯನ್ನು ನೋಂದಾಯಿಸಲು ಸಾಧ್ಯವಿಲ್ಲ</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">ನನ್ನ ಖಾತೆಯನ್ನು ಸಂಪಾದಿಸಿ</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">ಖಚಿತಪಡಿಸಲು ಪಾಸ್ವರ್ಡ್ ನಮೂದಿಸಿ</string>
   <string name="enter_password">ಪಾಸ್ವರ್ಡ್ ನಮೂದಿಸಿ</string>
   <string name="revoke_device_title">ರದ್ದುಗೊಳಿಸುವ ಸಾಧನ</string>
-  <string name="revoke_device_message">% 1$ ಗಳನ್ನು ರದ್ದುಗೊಳಿಸಬೇಕೆಂಬುದು ನಿಮಗೆ ಖಚಿತವಾಗಿದೆಯೇ?</string>
   <string name="revoke_device_wait_title">ದಯವಿಟ್ಟು ಕಾಯಿರಿ.</string>
   <string name="revoke_device_wait_message">ಮರುಕಳಿಸುವ ಸಾಧನ</string>
   <string name="rename_device_title">ಈ ಸಾಧನವನ್ನು ಮರುನಾಮಕರಣ ಮಾಡಿ</string>
   <string name="rename_device_message">ನಿಮ್ಮ ಜಾಮಿ ಖಾತೆಯಲ್ಲಿ ಈ ಸಾಧನವನ್ನು ಗುರುತಿಸಲು ಹೊಸ ಹೆಸರನ್ನು ಆರಿಸಿ</string>
   <string name="rename_device_button">ಮರುನಾಮಕರಣ ಸಾಧನ</string>
   <string name="account_rename_device_hint">ಹೊಸ ಸಾಧನದ ಹೆಸರನ್ನು ಆರಿಸಿ</string>
-  <string name="account_device_name_empty">ಸಾಧನ ಹೆಸರು ಖಾಲಿ ಇರಲು ಸಾಧ್ಯವಿಲ್ಲ</string>
   <string name="account_device_this_indicator">ಈ ಸಾಧನ</string>
   <string name="account_disabled_indicator">ಅಂಗವಿಕಲ</string>
   <!--Link a new device-->

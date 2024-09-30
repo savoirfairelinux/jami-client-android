@@ -23,17 +23,11 @@
   <string name="dialog_wait_create_details">Por favor aguarde enquanto a sua nova conta é adicionada…</string>
   <string name="dialog_wait_update">A atualizar a conta</string>
   <string name="dialog_wait_update_details">Por favor aguarde enquanto a sua nova conta é atualizada…</string>
-  <string name="dialog_warn_ip2ip_account_title">Criar uma conta SIP vazia?</string>
-  <string name="dialog_warn_ip2ip_account_message">Está prestes a criar uma conta SIP com nenhum nome de servidor hospedeiro válido.
-        Só poderá fazer e receber chamadas diretas de IP.
-        Pode editar a sua conta mais tarde</string>
   <string name="account_type_ip2ip">IP da conta</string>
   <string name="help_ring">Uma conta Jami permite-lhe que entre em contacto com pessoas de forma segura numa rede ponto a ponto totalmente distribuída.</string>
-  <string name="help_sip_title">Adicionar a sua conta SIP</string>
+  <string name="help_sip_title">Adicionar conta SIP</string>
   <string name="help_sip">Configurar uma conta SIP existente.</string>
-  <string name="create_sip_account">Adicionar conta SIP</string>
   <!--Strings related to account deletion-->
-  <string name="account_delete_dialog_title">Eliminar conta?</string>
   <string name="account_delete_dialog_message">Esta ação não pode ser desfeita.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Nenhuma conta registada</string>
@@ -42,8 +36,6 @@
   <string name="account_device_revoke">Revogar dispositivo</string>
   <string name="account_device_revocation_success_title">Sucesso</string>
   <string name="account_device_revocation_success">O dispositivo foi revogado!</string>
-  <string name="account_device_revocation_error_title">Não é possível revogar o dispositivo</string>
-  <string name="account_device_revocation_wrong_password">Palavra-passe errada.</string>
   <string name="account_device_revocation_unknown_device">Dispositivo desconhecido.</string>
   <string name="account_device_revocation_error_unknown">Erro desconhecido.</string>
   <string name="account_password_change">Alterar palavra-passe</string>
@@ -68,8 +60,8 @@
   <string name="account_rendezvous_summary">No modo de encontro, as chamadas recebidas serão adicionadas a uma sala de conferência.</string>
   <string name="account_upnp_label">Ativar UPnP</string>
   <string name="account_proxy_field">Proxy</string>
-  <!--Plugin Details-->
-  <string name="account_preference_plugin_tab">Módulos</string>
+  <!--Extension Details-->
+  <string name="account_preferences_extension_tab">Extensões</string>
   <!--Audio Details-->
   <string name="account_audio_label">Áudio</string>
   <string name="account_preferences_media_tab">Média</string>
@@ -152,14 +144,10 @@
   <string name="export_account_wait_message">Exportar a informação da conta</string>
   <string name="account_export_file">Fazer uma cópia de segurança da conta</string>
   <string name="account_export_file_summary">Faça uma cópia de segurança da sua conta no seu dispositivo para a restaurar mais tarde.</string>
-  <string name="account_export_end_decryption_message">Não foi possível desbloquear a sua conta utilizando a palavra-passe fornecida.</string>
+  <string name="account_export_end_decryption_message">Palavra-passe incorreta. Tente novamente com a palavra-passe correta.</string>
   <string name="account_export_end_network_title">Erro de rede</string>
-  <string name="account_export_end_network_message">Não foi possível exportar a conta na rede. Verifique a sua conetividade.</string>
   <string name="account_export_end_error_title">Erro</string>
-  <string name="account_export_end_error_message">Não foi possível exportar a conta. Ocorreu um erro desconhecido.</string>
   <string name="account_enter_password">Introduza a palavra-passe</string>
-  <string name="account_share_body">Contacte-me utilizando \'%1$s\' na plataforma de comunicação distribuída Jami Jami: %2$s</string>
-  <string name="account_share_body_with_username">Contacte-me utilizando \'%1$s\' ou o meu nome público de utilizador \'%2$s\' na plataforma de comunicação distribuída Jami: %3$s</string>
   <string name="account_contact_me">Contacte-me no Jami!</string>
   <string name="update_account">Atualizar conta</string>
   <string name="account_migration">A sua conta Jami pode ser atualizada.\nPor favor introduza a sua palavra-passe.</string>
@@ -167,20 +155,15 @@
   <string name="sip_account">Conta SIP</string>
   <string name="ring_account_identity">Identificação</string>
   <string name="account_migration_title_dialog">Migração de conta</string>
-  <string name="account_migration_message_dialog">A sua conta necessita de ser atualizada. Quer ir ao ecrã de gestão de conta para fazer esta operação?</string>
   <string name="account_update_needed">Atualização necessária</string>
-  <string name="account_cannot_be_found_title">Não foi possível encontrar a conta</string>
-  <string name="account_cannot_be_found_message">A conta não foi encontrada na rede Jami.\nCertifique-se que exportou no Jami de um dispositivo existente e que as credenciais fornecidas estão corretas.</string>
+  <string name="account_cannot_be_found_title">Erro de conta</string>
+  <string name="account_cannot_be_found_message">Não é possível encontrar a conta na rede Jami. Certifique-se que foi exportada para o Jami a partir de um dispositivo existente e que as credenciais fornecidas estão corretas.</string>
   <string name="account_sip_cannot_be_registered_message">Pode continuar com o processo de criar conta ou editar a sua informação aqui. Ainda será possível editar mais tarde nas configurações da conta.</string>
-  <string name="account_no_network_title">Não foi possível conectar-se à rede</string>
-  <string name="account_no_network_message">Não foi possível adicionar a conta porque o Jami não conseguiu ligar-se à rede distribuída. Verifique a conetividade do seu dispositivo.</string>
+  <string name="account_no_network_title">Erro de rede</string>
   <string name="account_device_added_title">Dispositivo adicionado à conta</string>
   <string name="account_device_added_message">Configurou a sua conta Jami neste dispositivo com sucesso.</string>
   <string name="account_device_updated_title">O dispositivo da conta foi atualizado</string>
   <string name="account_device_updated_message">Atualizou a sua conta Jami com sucesso.</string>
-  <string name="account_cannot_be_updated_message">Não foi possível atualizar a conta do dispositivo. Por favor verifique a sua palavra-passe.</string>
-  <string name="account_sip_success_title">Conta SIP registada</string>
-  <string name="account_sip_success_message">Registou a sua conta SIP com sucesso.</string>
   <string name="account_sip_register_anyway">Registar mesmo assim</string>
   <!--TV-->
   <string name="account_tv_settings_header">Configurações da conta</string>
@@ -200,11 +183,8 @@
   <string name="account_link_export_button">Vincular um novo dispositivo</string>
   <string name="account_link_show_button">Mostrar mais %d dispositivo(s) vinculado(s)</string>
   <string name="account_link_hide_button">Ocultar dispositivo vinculado</string>
-  <string name="account_link_export_info">Para usar esta conta noutros dispositivos, necessita primeiro de expo-lo ao Jami. Isto irá gerar um código PIN que necessita de introduzir no novo dispositivo para configurar a sua conta. O PIN é válido por apenas 10 minutos.</string>
   <string name="account_start_export_button">Gerar código PIN</string>
   <string name="account_end_export_button">fechar</string>
-  <string name="account_end_export_infos">O seu código PIN é:\n\n%%\n\nPara completar o processo, tem de abrir o Jami no novo dispositivo. Crie uma nova conta com \"Vincular este dispositivo a uma conta\". O seu código PIN é válido por 10 minutos.</string>
-  <string name="account_link_export_info_light">Para usar esta conta noutros dispositivos, necessita primeiro de expo-lo ao Jami. Isto irá gerar um código PIN que necessita de introduzir no novo dispositivo para configurar a sua conta. O PIN é válido por apenas 10 minutos.</string>
   <string name="account_export_title">Vincular a conta a outros dispositivos</string>
   <string name="account_connect_server_button">Conectar ao servidor de gestão</string>
   <string name="account_connect_button">Conectar</string>
@@ -236,21 +216,17 @@
   <string name="account_creation_profile">Crie o seu perfil</string>
   <string name="account_creation_ring">Crie a sua conta Jami</string>
   <string name="account_link_title">Vincular este dispositivo</string>
-  <string name="account_sip_cannot_be_registered">Não foi possível registar a conta</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">Editar a minha conta</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Introduza a palavra-passe para confirmar</string>
   <string name="enter_password">Introduza a palavra-passe</string>
   <string name="revoke_device_title">Revogar dispositivo</string>
-  <string name="revoke_device_message">Tem certeza que deseja revogar %1$s?</string>
   <string name="revoke_device_wait_title">Por favor aguarde…</string>
   <string name="revoke_device_wait_message">A revogar o dispositivo</string>
   <string name="rename_device_title">Alterar o nome deste dispositivo</string>
   <string name="rename_device_message">Escolha um novo nome para identificar este dispositivo na sua conta Jami</string>
   <string name="rename_device_button">Alterar nome do dispositivo</string>
   <string name="account_rename_device_hint">Escolha um novo nome do dispositivo</string>
-  <string name="account_device_name_empty">O nome do dispositivo não pode estar vazio</string>
   <string name="account_device_this_indicator">Este dispositivo</string>
   <string name="account_disabled_indicator">desativado</string>
   <!--Link a new device-->
@@ -263,12 +239,9 @@
   <string name="account_link_password">Esta conta é encriptada por palavra-passe, introduza a palavra-passe para gerar o código PIN.</string>
   <string name="account_link_generate_button">Gerar</string>
   <string name="account_link_time_valid">O código PIN será válido: %1$s.</string>
-  <string name="account_link_device_info">Escolha \"Vincular um novo dispositivo\" na outra aplicação Jami para mostrar o código QR ou o PIN</string>
+  <string name="account_link_device_info">Escolha “Vincular um novo dispositivo” na outra aplicação Jami para mostrar o código QR ou o PIN</string>
   <string name="account_generate_export_device">No outro dispositivo</string>
-  <string name="account_generate_export_info">Instale e inicie o Jami, selecione \"Importar de outro dispositivo\" e leia o código QR.</string>
   <string name="content_description_qr_generated">O seu código QR</string>
-  <string name="account_generate_export_invalid">O PIN já não é válido.\n Introduza a palavra-passe e crie outro para vincular o novo dispositivo.</string>
-  <string name="account_generate_export_invalid_two">O PIN já não é válido.\nGerar outro para vincular o novo dispositivo.</string>
   <string name="help_pin_info">Preencher se a conta estiver encriptada por palavra-passe</string>
   <string name="connect_device_scanqr">Digitalizar QR</string>
   <string name="connect_device_enterPIN">Ou introduzir PIN</string>

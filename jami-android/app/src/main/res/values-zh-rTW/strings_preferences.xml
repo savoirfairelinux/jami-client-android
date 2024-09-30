@@ -27,7 +27,6 @@
   <string name="pref_startOnBoot_title">開機時啟動 Jami</string>
   <string name="pref_startOnBoot_summary">開機時在背景啟動 Jami</string>
   <string name="pref_clearHistory_title">清除記錄</string>
-  <string name="pref_clearHistory_summary">清除所有對話歷史。此動作無法復原。</string>
   <string name="pref_notification_title">通知可見性</string>
   <string name="pref_notification_summary">設定鎖定畫面上的應用程式通知可見性。</string>
   <string name="pref_blackList_title">封鎖清單</string>
@@ -52,22 +51,8 @@
   <string name="notification_public">公開 \n（在鎖定畫面上顯示通知及其內容）\n</string>
   <string name="notification_private">私人 \n（在鎖定畫面上顯示通知但隱藏其內容）\n</string>
   <string name="notification_secret">祕密 \n（不要在鎖定畫面上顯示通知）\n</string>
-  <!--Plugin-->
-  <string name="pref_plugins_title">外掛程式</string>
-  <string name="pref_plugins_summary">啟用外掛程式並設定其參數</string>
-  <string name="fab_plugins_add">加入新的外掛程式</string>
-  <string name="plugin_uninstall_title">解除安裝外掛程式？</string>
-  <string name="plugin_reset_preferences">重設外掛程式偏好設定</string>
-  <string name="plugin_reset_preferences_summary">您的外掛程式設定將會變成預設值</string>
-  <string name="plugin_reset_preferences_ask">您想要重設一般外掛程式設定嗎？</string>
-  <string name="plugin_reset_account_preferences_ask">您想要重設帳號外掛程式設定嗎？</string>
-  <string name="plugin_successfully_installed">外掛程式 <b>%1$s</b> 已成功安裝</string>
-  <string name="plugin_install_failure">安裝外掛程式失敗： <b>%1$s</b></string>
-  <string name="plugin_recent_version_exception">您有更新的版本可供安裝： <b>%1$s</b></string>
-  <string name="plugin_same_version_exception">您已安裝了相同的版本 <b>%1$s</b></string>
-  <string name="plugin_invalid_signature"><b>%1$s</b>具有无效的签名</string>
-  <string name="plugin_invalid_authority">无法验证的权限：<b>%1$s</b></string>
-  <string name="plugin_invalid_format">插件格式无效：<b>%1$s</b></string>
-  <string name="plugin_force_install">強制 \n 安裝</string>
-  <string name="plugin_path_image_add">新增新圖片</string>
+  <!--Extension-->
+  <string name="pref_extensions_title">扩展</string>
+  <string name="extension_invalid_signature"><b>%1$s</b>具有无效的签名</string>
+  <string name="extension_force_install">強制 \n 安裝</string>
 </resources>

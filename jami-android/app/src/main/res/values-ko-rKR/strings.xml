@@ -1,16 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
-  <string name="feedback_section">피드백</string>
-  <string name="report"><u>우리에게 이메일을 보내</u></string>
   <string name="section_license">라이센스</string>
   <string name="sponsor_section">자미는 자미에서 개발하고 지원하는 자유 소프트웨어입니다.</string>
   <string name="copyright_section">저작권</string>
   <string name="contribute_section">기여</string>
   <string name="version_section">버전</string>
-  <string name="no_email_app_installed">이메일 앱을 찾지 못했습니다. 보고서를 제출하려면 설치하세요.</string>
   <string name="no_browser_app_installed">웹 브라우저를 찾지 못했습니다. 이 페이지를 보려면 설치하세요.</string>
-  <string name="email_chooser_title">앱을 사용해 메일 보내기</string>
   <string name="website_chooser_title">웹 사이트 열기</string>
   <string name="license">이 소프트웨어는 어떠한 보증 없이 \"있는 그대로\" 제공됩니다. 자세한 내용은 GNU 일반 공중 라이선스 버전 3 혹은 그 이후 버전를 참조하십시오.</string>
   <string name="description">자미는 이용자의 자유와 사생활을 존중하는 보편적 통신을 위한 자유 소프트웨어입니다.</string>
@@ -19,10 +15,7 @@
   <string name="call_service_description">이 서비스는 전화가 앞면에 계속 실행되도록 필요합니다. 전화 중에만 실행됩니다.</string>
   <string name="data_transfer_service_description">이 서비스는 파일 전송 중에 지속적인 알림을 표시하는 데 필요합니다. 이 서비스는 파일 전송 중에만 실행됩니다.</string>
   <!--About dialog-->
-  <string name="developed_by">개발자:</string>
-  <string name="designed_by">디자인:</string>
-  <string name="ringtones_by">핑거스</string>
-  <string name="credits_volunteers">그리고 이 프로젝트에 기여해주신 자원봉사자 여러분!</string>
+  <string name="media">미디어</string>
   <!--RingActivity-->
   <string name="error_no_network">네트워크 연결이 없습니다</string>
   <string name="error_account_offline">계정은 오프라인입니다</string>
@@ -36,7 +29,6 @@
   <string name="menu_item_settings">설정</string>
   <string name="menu_item_advanced_settings">고급 설정</string>
   <string name="menu_item_account_settings">계정 설정</string>
-  <string name="menu_item_plugin_list">플러그인 설정</string>
   <string name="menu_item_share">내 계정을 공유</string>
   <string name="menu_item_about">자미 에 관한 것</string>
   <string name="video_setting_title">비디오 설정</string>
@@ -99,17 +91,9 @@
   <string name="ongoing_call">계속되는 전화</string>
   <string name="hist_in_call">%1$s의 수신 호출</string>
   <string name="hist_out_call">%1$s의 출력 호출</string>
-  <string name="start_error_title">자미 시작 못해요!</string>
   <string name="start_error_mic_required">자미는 마이크를 사용하려면 허락을 받아야 합니다.</string>
-  <string name="action_call_accept">전화 좀 해</string>
-  <string name="action_call_accept_audio">음향으로 대답</string>
-  <string name="action_call_accept_video">비디오 로 대답</string>
-  <string name="action_call_hold_accept">전화 음향을 받아</string>
-  <string name="action_call_hold_accept_video">전화 영상을 받아</string>
-  <string name="action_call_end_accept">끝내고 전화를 받으세요</string>
   <string name="action_call_decline">감소</string>
   <string name="action_call_mic_mute">무음 마이크</string>
-  <string name="action_load_plugin">로드 플러그인</string>
   <string name="ab_action_speakerphone">스피커를 활성화</string>
   <string name="ab_action_contact_add">연락처에 추가</string>
   <string name="ab_action_contact_add_question">연락처를 추가할 수 있을까요?</string>
@@ -146,11 +130,8 @@
   <string name="ringtone_error_size_too_big">이 파일은 너무 크다. 최대 크기는 %1$dkB입니다.</string>
   <string name="ringtone_custom_prompt">사용자 지정 윙톤을 설정</string>
   <string name="ringtone_custom_label">관습</string>
-  <string name="ringtone_jami_tones">자미 토네스</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">자미는 이 기능을 활성화하기 위해 \"연접자를 읽어라\" 권한이 필요합니다.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">자미는 이 기능을 활성화하기 위해 \"작업 통화 로그\" 권한을 필요로 합니다.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">추가하려는 계정의 QR 코드를 스캔하십시오.</string>
   <string name="title_activity_qrcode">내 계정을 공유</string>
@@ -166,7 +147,6 @@
   <string name="conversation_details">대화 세부 사항</string>
   <string name="contact_details">연락처</string>
   <string name="conversation_action_delete_this">이 대화를 삭제</string>
-  <string name="conversation_action_delete_this_title">이 대화를 삭제할 수 있어?</string>
   <string name="conversation_action_delete_this_message">이 행동은 되돌릴 수 없습니다.</string>
   <string name="conversation_action_history_clear">명확한 역사</string>
   <string name="conversation_action_history_clear_title">대화 역사를 정리해?</string>
@@ -174,7 +154,6 @@
   <string name="conversation_action_remove_this">연락처 삭제</string>
   <string name="conversation_action_remove_this_title">이 연락처를 삭제하세요?</string>
   <string name="conversation_action_remove_this_message">이것은 연락처를 삭제하고 대화 역사를 확실히 삭제합니다.</string>
-  <string name="conversation_action_copy_peer_number">복사 번호</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s는 클립보드에 복사</string>
   <string name="conversation_action_select_peer_number">번호를 선택</string>
   <string name="conversation_action_block_this">차단 접촉</string>
@@ -205,7 +184,6 @@
   <string name="conversation_contact_invited">%1$s가 초청되었습니다</string>
   <string name="conversation_contact_added">%1$s가 합류</string>
   <string name="conversation_contact_left">%1$는 왼쪽</string>
-  <string name="conversation_contact_banned">%1$s가 금지되었습니다</string>
   <string name="conversation_search_hint">검색 대화</string>
   <string name="audio_recorder_error">녹음 앱을 찾을 수 없음</string>
   <string name="video_recorder_error">녹화 앱을 찾을 수 없음</string>
@@ -224,7 +202,6 @@
   <string name="help_password_choose">자미 계정을 보호하기 위해 기억할 강력한 비밀번호를 선택하세요.</string>
   <string name="help_password_enter">주 주 자미 계정 비밀번호를 입력하세요.</string>
   <string name="help_server_enter">관리 서버의 URL를 입력하십시오.</string>
-  <string name="help_pin_enter">다른 구성된 Jami 계정에서 PIN를 입력하고 \"Export Jami Account\" 기능을 사용하여 PIN을 얻으십시오.</string>
   <string name="pin_copied">PIN 코드를 클립보드에 복사했습니다.</string>
   <string name="wizard_next">다음</string>
   <string name="wizard_back">돌아와</string>
@@ -232,7 +209,6 @@
   <string name="hist_contact_invited">연락처 초대</string>
   <string name="hist_contact_added">연락처 추가</string>
   <string name="hist_contact_left">좌측 연락처</string>
-  <string name="hist_contact_banned">연락이 금지되어 있습니다.</string>
   <string name="hist_invitation_received">초대 받은 것</string>
   <!--Account Summary-->
   <string name="profile">프로필</string>
@@ -256,20 +232,11 @@
   <string name="generic_error_migration">오류</string>
   <string name="generic_error_migration_message">마이그레이션 중에 오류가 발생</string>
   <string name="title_share_with">나눔을...</string>
-  <!--Pending contact requests-->
+  <!--Pending invitations-->
   <string name="accept">수락</string>
-  <string name="refuse">거절</string>
+  <string name="decline">감소</string>
   <string name="block">블록</string>
-  <string name="contact_request_title">새로운 연락 요청</string>
-  <string name="contact_request_msg">%1$d 연락처 요청이 있습니다</string>
-  <string name="contact_request_account">%1$s에 대한</string>
-  <string name="no_requests">연락 요청은 없습니다</string>
-  <string name="message_contact_not_trusted_yet">%s는 아직 연락처에 포함되어 있지 않습니다.\n이 연락처 요청을 받아 들일 수 있습니까?</string>
-  <string name="message_contact_not_trusted">%s는 연락처에 포함되어 있지 않습니다.</string>
-  <!--Send contact requests-->
-  <string name="send_request_button">보내</string>
-  <string name="send_request_title">연락 요청을 보내</string>
-  <string name="send_request_msg">이 사용자와 통신하기 위해 연락처 요청을 보내야 합니다. 연락처가 요청을 받아들이지 않는 한, 당신은 메시지를 보낼 수 있지만, 그는 응답 할 수 없습니다.</string>
+  <string name="invitation_message">%1$d 연락처 요청이 있습니다</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">차단된 연락처가 없습니다</string>
   <!--Smartlist-->
@@ -281,7 +248,6 @@
   <string name="tv_contact_row_header">연락처</string>
   <string name="gallery_error_title">갤러리 앱은 발견되지 않았습니다</string>
   <string name="gallery_error_message">갤러리를 열 수 있는 장치에서 응용 프로그램이 발견되지 않았습니다</string>
-  <string name="generic_error">알려지지 않은 오류가 발생</string>
   <!--File Transfer-->
   <string name="invalid_file">유효하지 않은 파일</string>
   <string name="not_able_to_write_file">파일 작성 불가능</string>
@@ -301,7 +267,6 @@
   <string name="file_saved_in">%s에서 저장된 파일</string>
   <string name="file_saved_successfully">성공적으로 저장된 파일</string>
   <string name="file_download">다운로드</string>
-  <string name="no_space_left_on_device">장치에 공간이 없어</string>
   <string name="title_media_viewer">미디어 시청자</string>
   <string name="menu_file_open">열 파일</string>
   <string name="menu_file_download">파일 다운로드</string>
@@ -354,11 +319,9 @@
   <string name="wizard_profile_button">프로필을 저장</string>
   <string name="wizard_profile_skip">아서 나중에 해</string>
   <string name="fab_path_choose">다른 파일을 선택</string>
-  <string name="chat_plugins">채팅 플러그인</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">공유</string>
   <string name="bottomSheet_dialpad_btn">다이얼패드</string>
-  <string name="bottomSheet_plugins_btn">플러그인</string>
   <string name="bottomSheet_add_participants_btn">추가</string>
   <string name="bottomSheet_change_camera_btn">변화</string>
   <string name="bottomSheet_camera_onoff_switch_btn">카메라</string>
@@ -366,17 +329,13 @@
   <string name="bottomSheet_mute_microphone_btn">미세</string>
   <string name="bottomSheet_sound_output_btn">음향이</string>
   <string name="bottomSheet_raiseHand_btn">손 들기</string>
-  <string name="open_account_plugin_settings">계정 플러그인 설정 개설</string>
-  <string name="open_general_plugin_settings">일반 플러그인 설정을 열</string>
   <string name="uninstall">설치 해제</string>
   <string name="reset">다시 설정</string>
   <!--Swarm Detail-->
   <string name="rename_btn">확인</string>
-  <string name="rename_error">비어있지 않을 수 없어</string>
-  <string name="swarm_description">설명을 추가</string>
-  <string name="tab_about">에 관한 것</string>
   <string name="tab_members">의원</string>
-  <string name="tab_documetn">문서</string>
+  <string name="tab_files">파일</string>
+  <string name="tab_settings">설정</string>
   <string name="dialogtitle_title">Swarm 제목을 편집</string>
   <string name="dialogtitle_description">스 swarm 설명 편집</string>
   <string name="dialog_hint_title">제목</string>
@@ -392,5 +351,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">자미에 오신 것을 환영합니다</string>
   <!--Donation-->
-  <!--Plugin-->
+  <!--Extension-->
 </resources>

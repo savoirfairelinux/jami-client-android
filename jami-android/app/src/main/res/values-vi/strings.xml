@@ -1,16 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
-  <string name="feedback_section">Nhận phản hồi</string>
-  <string name="report"><u>Send us an email</u></string>
   <string name="section_license">Giấy phép</string>
   <string name="sponsor_section">Jami là một phần mềm miễn phí được phát triển và hỗ trợ bởi</string>
   <string name="copyright_section">Bản quyền</string>
   <string name="contribute_section">Tham gia</string>
   <string name="version_section">Phiên bản</string>
-  <string name="no_email_app_installed">Không tìm thấy ứng dụng email, cài đặt một để gửi cho chúng tôi báo cáo</string>
   <string name="no_browser_app_installed">Không tìm thấy ứng dụng trình duyệt web, cài đặt một để xem trang này</string>
-  <string name="email_chooser_title">Gửi thư bằng...</string>
   <string name="website_chooser_title">Xem trang web bằng cách sử dụng...</string>
   <string name="license">Phần mềm này được cung cấp "như hiện tại", không có bảo hành của bất kỳ loại nào. Để biết chi tiết, xem GNU General Public License phiên bản 3 hoặc sau đó&lt;/u&gt;</string>
   <string name="description">Jami là phần mềm miễn phí cho truyền thông phổ quát tôn trọng quyền tự do và quyền riêng tư của người dùng.</string>
@@ -19,10 +15,7 @@
   <string name="call_service_description">Dịch vụ này là cần thiết để giữ cho cuộc gọi của bạn chạy trong tiền bối. Nó chỉ chạy trong các cuộc gọi.</string>
   <string name="data_transfer_service_description">Dịch vụ này là cần thiết để hiển thị các thông báo liên tục trong quá trình chuyển giao tệp. Nó chỉ chạy trong quá trình chuyển giao tệp.</string>
   <!--About dialog-->
-  <string name="developed_by">Được phát triển bởi</string>
-  <string name="designed_by">Được thiết kế bởi</string>
-  <string name="ringtones_by">Nhạc tiếng</string>
-  <string name="credits_volunteers">Và các tình nguyện viên đóng góp vào dự án này!</string>
+  <string name="media">Truyền thông</string>
   <!--RingActivity-->
   <string name="error_no_network">Không có kết nối mạng</string>
   <string name="error_account_offline">Tài khoản đã bị tắt</string>
@@ -36,7 +29,6 @@
   <string name="menu_item_settings">Cài đặt</string>
   <string name="menu_item_advanced_settings">Thiết lập nâng cao</string>
   <string name="menu_item_account_settings">Cài đặt tài khoản</string>
-  <string name="menu_item_plugin_list">Plugins Settings</string>
   <string name="menu_item_share">Chia sẻ tài khoản của tôi</string>
   <string name="menu_item_about">Về Jami</string>
   <string name="video_setting_title">Định hướng video</string>
@@ -84,7 +76,6 @@
   <string name="action_call_unmute">Không nói gì</string>
   <string name="ongoing_call">Cuộc gọi đang diễn ra</string>
   <string name="call_duration">Đã kéo dài %s</string>
-  <string name="action_call_end_accept">Kết thúc cuộc gọi và trả lời</string>
   <string name="action_call_decline">Sự suy giảm</string>
   <string name="action_call_mic_mute">Tắt tiếng micrô</string>
   <string name="ab_action_contact_add">Thêm vào các liên hệ</string>
@@ -111,7 +102,6 @@
   <!--Conversation-->
   <string name="conversation_details">Chi tiết cuộc trò chuyện</string>
   <string name="contact_details">Thông tin liên lạc</string>
-  <string name="conversation_action_delete_this_message">Hành động này không thể không được thực hiện.</string>
   <string name="conversation_action_history_clear">Lịch sử rõ ràng</string>
   <string name="conversation_action_block_this">Chặn liên hệ</string>
   <string name="conversation_action_unblock_this">Bỏ chặn liên hệ</string>
@@ -145,12 +135,10 @@
   <!--Share fragment-->
   <string name="share_label">Chia sẻ</string>
   <string name="generic_error_migration">Trận lỗi</string>
-  <!--Pending contact requests-->
+  <!--Pending invitations-->
   <string name="accept">Chấp nhận</string>
-  <string name="refuse">Nhận không</string>
+  <string name="decline">Sự suy giảm</string>
   <string name="block">Chặn</string>
-  <!--Send contact requests-->
-  <string name="send_request_button">Gửi đi</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Không có liên lạc bị chặn</string>
   <!--Smartlist-->
@@ -185,7 +173,6 @@
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Chia sẻ</string>
   <string name="bottomSheet_dialpad_btn">Bàn phím số</string>
-  <string name="bottomSheet_plugins_btn">Plugins</string>
   <string name="bottomSheet_add_participants_btn">Thêm thêm</string>
   <string name="bottomSheet_change_camera_btn">Thay đổi</string>
   <string name="bottomSheet_hangup_btn">Kết thúc cuộc gọi</string>
@@ -195,10 +182,9 @@
   <string name="reset">Tái thiết</string>
   <!--Swarm Detail-->
   <string name="rename_btn">Đảm nhận</string>
-  <string name="swarm_description">Thêm mô tả</string>
-  <string name="tab_about">Thông tin phần mềm</string>
   <string name="tab_members">Các thành viên</string>
-  <string name="tab_documetn">Tài liệu</string>
+  <string name="tab_files">Các tập tin</string>
+  <string name="tab_settings">Cài đặt</string>
   <string name="dialog_hint_title">Tiêu đề</string>
   <string name="dialog_hint_description">Mô tả</string>
   <!--JamiId-->
@@ -208,5 +194,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Chào mừng đến với Jami.</string>
   <!--Donation-->
-  <!--Plugin-->
+  <!--Extension-->
 </resources>

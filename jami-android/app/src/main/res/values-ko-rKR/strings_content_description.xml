@@ -1,11 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--Strings for xml content description of images-->
-  <string name="contact_quick_call_description">빠른 호출</string>
-  <string name="contact_picture_description">연락처 사진</string>
   <string name="dial_numeric_pad">숫자 다이얼패드</string>
   <string name="contact_unblock">차단 해제</string>
-  <string name="video_plugins">비디오 플러그인</string>
   <string name="file_download_button">다운로드</string>
   <string name="control_play">재생</string>
   <string name="control_pause">멈춤</string>

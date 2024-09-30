@@ -27,7 +27,6 @@
   <string name="pref_startOnBoot_title">Jami uygulamasını başlangıçta başlat</string>
   <string name="pref_startOnBoot_summary">Sistem başladığında Jami uygulamasını arka planda çalıştır.</string>
   <string name="pref_clearHistory_title">Geçmişi temizle</string>
-  <string name="pref_clearHistory_summary">Tüm görüşme geçmişini temizle. Bu işlem geri alınamaz.</string>
   <string name="pref_notification_title">Bildirim görünürlüğü</string>
   <string name="pref_notification_summary">Kilit ekranında uygulama bildirimlerinin görünürlüğünü ayarla.</string>
   <string name="pref_blackList_title">Engellenenler listesi</string>
@@ -52,22 +51,8 @@
   <string name="notification_public">Herkese açık \n(bildirimleri ve içeriğini kilit ekranında göster)\n</string>
   <string name="notification_private">Özel \n(bildirimleri göster ancak içeriğini kilit ekranında gizle)\n</string>
   <string name="notification_secret">Gizli \n(bildirimleri kilit ekranında gösterme)</string>
-  <!--Plugin-->
-  <string name="pref_plugins_title">Uzantılar</string>
-  <string name="pref_plugins_summary">Uzantıları etkinleştir ve değişkenlerini ayarla</string>
-  <string name="fab_plugins_add">Yeni uzantı ekle</string>
-  <string name="plugin_uninstall_title">Uzantı kaldırılsın mı?</string>
-  <string name="plugin_reset_preferences">Uzantı tercihlerini sıfırla</string>
-  <string name="plugin_reset_preferences_summary">Uzantı ayarların ön tanımlı olacak</string>
-  <string name="plugin_reset_preferences_ask">Genel uzantı ayarlarını sıfırlamak istiyor musun?</string>
-  <string name="plugin_reset_account_preferences_ask">Hesap uzantı ayarlarını sıfırlamak istiyor musun?</string>
-  <string name="plugin_successfully_installed"><b>%1$s</b> uzantısı başarıyla kuruldu</string>
-  <string name="plugin_install_failure">Uzantı kurulamadı: <b>%1$s</b></string>
-  <string name="plugin_recent_version_exception">Daha yeni bir sürümü var: <b>%1$s</b></string>
-  <string name="plugin_same_version_exception">Aynı <b>%1$s</b> sürüme sahipsin</string>
-  <string name="plugin_invalid_signature"><b>%1$s</b> geçersiz bir imza içeriyor.</string>
-  <string name="plugin_invalid_authority">%1$s için yetkilendirme doğrulanamıyor.</string>
-  <string name="plugin_invalid_format">Geçersiz eklenti biçimi: <b>%1$s</b></string>
-  <string name="plugin_force_install">zorla \n yükle</string>
-  <string name="plugin_path_image_add">Yeni görsel ekle</string>
+  <!--Extension-->
+  <string name="pref_extensions_title">Uzantılar</string>
+  <string name="extension_invalid_signature"><b>%1$s</b> geçersiz bir imza içeriyor.</string>
+  <string name="extension_force_install">zorla \n yükle</string>
 </resources>

@@ -21,15 +21,11 @@
   <string name="dialog_wait_create_details">Odota kunnes tunnuksesi on lisätty...</string>
   <string name="dialog_wait_update">Päivitetään tiliä</string>
   <string name="dialog_wait_update_details">Odota, kunnes uusi tilisi päivitetään...</string>
-  <string name="dialog_warn_ip2ip_account_title">Luo tyhjä SIP-tunnus?</string>
-  <string name="dialog_warn_ip2ip_account_message">Olet luomassa SIP-tunnusta epäkelvolla yhteysosoitteella, pystyt tekemään ja vastaanottamaan vain IP-puheluita. Voit muokata tunnustasi myöhemmin.</string>
   <string name="account_type_ip2ip">IP-tunnus</string>
   <string name="help_ring">Jamin tunnuksella tavoitat ihmiset turvallisesti vertaisverkossa täysin hajautetun verkoston kautta.</string>
-  <string name="help_sip_title">Lisää SIP-tunnuksesi</string>
+  <string name="help_sip_title">Lisää SIP-tilin</string>
   <string name="help_sip">Määritä olemassa oleva SIP-tunnus.</string>
-  <string name="create_sip_account">Lisää SIP-tunnus</string>
   <!--Strings related to account deletion-->
-  <string name="account_delete_dialog_title">Poistetaanko tunnus?</string>
   <string name="account_delete_dialog_message">Tätä toimintoa ei voi perua.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Ei rekistöröityjä tunnuksia</string>
@@ -38,8 +34,6 @@
   <string name="account_device_revoke">Peruuta laite</string>
   <string name="account_device_revocation_success_title">Onnistui</string>
   <string name="account_device_revocation_success">Laite on nyt peruttu!</string>
-  <string name="account_device_revocation_error_title">Laitetta ei voi peruuttaa</string>
-  <string name="account_device_revocation_wrong_password">Väärä salasana.</string>
   <string name="account_device_revocation_unknown_device">Tuntematon laite.</string>
   <string name="account_device_revocation_error_unknown">Tuntematon virhe.</string>
   <string name="account_password_change">Vaihda salasana</string>
@@ -61,8 +55,7 @@
   <string name="account_rendezvous_summary">Kohtaamistilassa saapuvat puhelut lisätään kokoushuoneeseen.</string>
   <string name="account_upnp_label">UPnP päälle</string>
   <string name="account_proxy_field">Välityspalvelin</string>
-  <!--Plugin Details-->
-  <string name="account_preference_plugin_tab">Lisäosat</string>
+  <!--Extension Details-->
   <!--Audio Details-->
   <string name="account_audio_label">Ääni</string>
   <string name="account_preferences_media_tab">Media</string>
@@ -142,35 +135,23 @@
   <string name="export_account_wait_message">Tilitietojen vieminen</string>
   <string name="account_export_file">Varakäyttäjätunnus</string>
   <string name="account_export_file_summary">Varmuuskopioi tili laitteellesi niin voit palauttaa sen myöhemmin.</string>
-  <string name="account_export_end_decryption_message">Tiliäsi ei voitu avata toimitetulla salasanalla.</string>
   <string name="account_export_end_network_title">Verkkovirhe</string>
-  <string name="account_export_end_network_message">Tunnusta ei voitu viedä verkkoon. Tarkista yhteys.</string>
   <string name="account_export_end_error_title">Virhe</string>
-  <string name="account_export_end_error_message">Tunnusta ei voitu viedä. Tapahtui tuntematon virhe.</string>
   <string name="account_enter_password">Syötä salasana</string>
-  <string name="account_share_body">Ota minuun yhteyttä \'%1$s\' Jamin hajautetun viestintäalustan avulla: %2$s</string>
-  <string name="account_share_body_with_username">Ota minuun yhteyttä \'%1$s\' tai minun julkisella käyttäjänimellä \'%2$s\' Jamin hajautetulla viestintäalustalla: %3$s</string>
-  <string name="account_contact_me">Ota minuun yhteyttä Jamilla !</string>
+  <string name="account_contact_me">Ota minuun yhteyttä Jamilla!</string>
   <string name="update_account">Päivitä tili</string>
   <string name="account_migration">Jami-tilisi voidaan päivittää.\nAnna salasanasi.</string>
   <string name="ring_account">Jami-tili</string>
   <string name="sip_account">SIP-tilin</string>
   <string name="ring_account_identity">Tunnistetiedot</string>
   <string name="account_migration_title_dialog">Tilin siirto</string>
-  <string name="account_migration_message_dialog">Tilisi on päivitettävä. Haluatko siirtyä käyttäjäasetuksiin tämän toiminnon suorittamiseksi?</string>
   <string name="account_update_needed">Päivitys tarvitaan</string>
-  <string name="account_cannot_be_found_title">Tiliä ei löydy</string>
-  <string name="account_cannot_be_found_message">Tiliä ei löytynyt Jami-verkosta.\nVarmista, että se on viety Ringissä aiemmin luodusta laitteesta ja että annetut tunnistetiedot ovat oikein.</string>
   <string name="account_sip_cannot_be_registered_message">Voit jatkaa tilin luontia tai muokata tietojasi täällä. Tämä on edelleen mahdollista Tilin asetuksissa myöhemmin.</string>
-  <string name="account_no_network_title">Verkkoon ei saada yhteyttä</string>
-  <string name="account_no_network_message">Tiliä ei voitu lisätä, koska Jami ei voinut muodostaa yhteyttä hajautettuun verkkoon. Tarkista laitteen yhteydet.</string>
+  <string name="account_no_network_title">Verkkovirhe</string>
   <string name="account_device_added_title">Tili lisätty laitteelle</string>
   <string name="account_device_added_message">Olet määrittänyt Jami-tilisi onnistuneesti tällä laitteella.</string>
   <string name="account_device_updated_title">Tili päivitetty laitteelle</string>
   <string name="account_device_updated_message">Olet päivittänyt Jami-tilisi onnistuneesti tällä laitteella.</string>
-  <string name="account_cannot_be_updated_message">Tiliä laiteellesi ei voitu päivittää. Tarkista salasanasi.</string>
-  <string name="account_sip_success_title">Sip-tili rekisteröity</string>
-  <string name="account_sip_success_message">Olet rekisteröinyt Sip-tilisi onnistuneesti.</string>
   <string name="account_sip_register_anyway">Rekisteröidy kuitenkin</string>
   <!--TV-->
   <string name="account_tv_settings_header">Tunnuksen asetukset</string>
@@ -190,11 +171,8 @@
   <string name="account_link_export_button">Linkitä uusi laite</string>
   <string name="account_link_show_button">Näytä %d lisää linkitettyä laitetta</string>
   <string name="account_link_hide_button">Piilota linkitetty laite</string>
-  <string name="account_link_export_info">Jos haluat käyttää tätä tiliä muissa laitteissa, sinun on ensin siirrettävä se Jamiin. Tämä luo PIN-koodin, joka on syötetään uuteen laitteeseen tilin määrittämiseksi. PIN-koodi on voimassa 10 minuuttia.</string>
   <string name="account_start_export_button">Luo PIN-koodi</string>
   <string name="account_end_export_button">sulje</string>
-  <string name="account_end_export_infos">PIN-koodisi on:\n\n%%\n\nProsessin viimeistelemiseksi sinun on avattava Jami uudessa laitteessa. Luo uusi tili \"linkitä tämä laite tiliin\". PIN-koodi on voimassa 10 minuuttia.</string>
-  <string name="account_link_export_info_light">Jos haluat käyttää tätä tunnusta muissa laitteissa, sinun on ensin siirrettävä se Jamiin. Tämä luo PIN-koodin, joka on syötetään uuteen laitteeseen tunnuksen määrittämiseksi. PIN-koodi on voimassa 10 minuuttia.</string>
   <string name="account_export_title">Linkitä tunnus toisesta laitteesta</string>
   <string name="account_connect_server_button">Yhteyden muodostaminen hallintapalvelimeen</string>
   <string name="account_connect_button">Yhdistä</string>
@@ -226,21 +204,17 @@
   <string name="account_creation_profile">Luo profiilisi</string>
   <string name="account_creation_ring">Luo Jami-tilisi</string>
   <string name="account_link_title">Linkitä tämä laite</string>
-  <string name="account_sip_cannot_be_registered">Tiliä ei voi rekisteröidä</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">Tunnukseni muokkaus</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Vahvista antamalla salasana</string>
   <string name="enter_password">Syötä salasana</string>
   <string name="revoke_device_title">Peruuta laite</string>
-  <string name="revoke_device_message">Oletko varma että haluat poistaa %1$s?</string>
   <string name="revoke_device_wait_title">Odota hetki...</string>
   <string name="revoke_device_wait_message">Laitteen peruuttaminen</string>
   <string name="rename_device_title">Nimeä tämä laite uudelleen</string>
   <string name="rename_device_message">Valitse uusi nimi, josta tunnistaa tämän laitteen Jami-tililläsi</string>
   <string name="rename_device_button">Nimeä laite uudelleen</string>
   <string name="account_rename_device_hint">Valitse laitteen uusi nimi</string>
-  <string name="account_device_name_empty">Laitteen nimi ei voi olla tyhjä</string>
   <string name="account_device_this_indicator">Tämä laite</string>
   <string name="account_disabled_indicator">poistettu</string>
   <!--Link a new device-->

@@ -5,7 +5,7 @@
   <!--Strings related to account deletion-->
   <!--AccountManagementFragment-->
   <!--Basic Details-->
-  <!--Plugin Details-->
+  <!--Extension Details-->
   <!--Audio Details-->
   <string name="account_audio_label">Аудио</string>
   <string name="account_ringtone_label">Рингтон</string>
