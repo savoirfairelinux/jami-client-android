@@ -81,11 +81,15 @@ pipeline {
             steps {
                 script {
                     def daemonDir = pwd() + '/daemon'
+                    def contribDir = daemonDir + '/contrib/tarballs'
                     if (fileExists(RING_EXTRATOOLS_TARBALLS)) {
                         sh "cp ${RING_EXTRATOOLS_TARBALLS}/* ${daemonDir}/extras/tools/ || echo 'No extras-tools tarballs cache'"
                     }
                     if (fileExists(RING_CONTRIB_TARBALLS)) {
-                        sh "cp ${RING_CONTRIB_TARBALLS}/* ${daemonDir}/contrib/tarballs/ || echo 'No contribs tarballs cache'"
+                        dir(contribDir) {
+                            sh 'pwd -P'
+                            sh "cp ${RING_CONTRIB_TARBALLS}/* ${daemonDir}/contrib/tarballs/ || echo 'No contribs tarballs cache'"
+                        }
                     }
                 }
             }
