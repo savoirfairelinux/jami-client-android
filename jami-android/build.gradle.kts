@@ -1,5 +1,5 @@
 plugins {
-    id("com.google.devtools.ksp") version "2.0.20-1.0.25" apply false
+    id("com.google.devtools.ksp") version "1.9.23-1.0.19" apply false
 }
 
 buildscript {
@@ -9,11 +9,11 @@ buildscript {
         mavenCentral()
     }
 
-    val kotlin_version by extra { "2.0.20" }
+    val kotlin_version by extra { "1.9.23" }
     val hilt_version by extra { "2.51.1" }
 
     dependencies {
-        classpath ("com.android.tools.build:gradle:8.6.1")
+        classpath ("com.android.tools.build:gradle:8.5.2")
         classpath ("com.google.gms:google-services:4.4.2")
         classpath ("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
         classpath ("com.google.dagger:hilt-android-gradle-plugin:$hilt_version")
