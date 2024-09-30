@@ -1,16 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
-  <string name="feedback_section">Terugkoppeling</string>
-  <string name="report"><u>Stuur ons een e-mail</u></string>
   <string name="section_license">Licentie</string>
   <string name="sponsor_section">Jami is vrije software ontwikkeld en ondersteund door</string>
   <string name="copyright_section">Auteursrecht</string>
   <string name="contribute_section">Bijdragen</string>
   <string name="version_section">Versie</string>
-  <string name="no_email_app_installed">Geen e-mailapplicatie gevonden, installeer er een om ons een rapport te kunnen sturen</string>
   <string name="no_browser_app_installed">Geen webbrowserapp gevonden, installeer er een om deze pagina te bekijken</string>
-  <string name="email_chooser_title">E-mail versturen met…</string>
   <string name="website_chooser_title">Website bekijken met…</string>
   <string name="license">Deze software wordt ‘als zodanig’ aangeboden zonder enige garantie. Bekijk voor meer informatie de <u>GNU General Public License versie 3 of later</u></string>
   <string name="description">Jami is vrije software voor universele communicatie, die de vrijheden en privacy van haar gebruikers eerbiedigt.</string>
@@ -19,10 +15,7 @@
   <string name="call_service_description">Deze dienst is vereist om uw oproepen op de voorgrond te blijven uitvoeren. Ze draait enkel tijdens oproepen.</string>
   <string name="data_transfer_service_description">Deze dienst is vereist om blijvende meldingen te kunnen tonen tijdens bestandsoverdrachten. Ze draait enkel tijdens bestandsoverdrachten.</string>
   <!--About dialog-->
-  <string name="developed_by">Ontwikkeld door</string>
-  <string name="designed_by">Ontworpen door</string>
-  <string name="ringtones_by">Beltonen door</string>
-  <string name="credits_volunteers">En de vrijwilligers die bijdragen aan dit project!</string>
+  <string name="media">Media</string>
   <!--RingActivity-->
   <string name="error_no_network">Geen netwerkverbinding</string>
   <string name="error_account_offline">Het account is offline</string>
@@ -36,7 +29,6 @@
   <string name="menu_item_settings">Instellingen</string>
   <string name="menu_item_advanced_settings">Geavanceerde instellingen</string>
   <string name="menu_item_account_settings">Accountinstellingen</string>
-  <string name="menu_item_plugin_list">Plugins instellingen</string>
   <string name="menu_item_share">Mijn account delen</string>
   <string name="menu_item_about">Over Jami</string>
   <string name="video_setting_title">Video-instellingen</string>
@@ -102,17 +94,10 @@
   <string name="hist_in_call">Inkomende oproep van %1$s</string>
   <string name="hist_out_call">Uitgaande oproep van %1$s</string>
   <string name="call_duration">Duurde %s</string>
-  <string name="start_error_title">Jami kan niet opgestart worden!</string>
   <string name="start_error_mic_required">Jami vereist toestemming om de microfoon te kunnen gebruiken.</string>
-  <string name="action_call_accept">Oproep aannemen</string>
-  <string name="action_call_accept_audio">Antwoord in audio</string>
-  <string name="action_call_accept_video">Antwoord in video</string>
-  <string name="action_call_hold_accept">Hou op en neem audio oproep</string>
-  <string name="action_call_hold_accept_video">Hou en neem video oproep</string>
-  <string name="action_call_end_accept">Ophangen en oproep opnemen</string>
+  <string name="action_call_accept">Oproep accepteren</string>
   <string name="action_call_decline">Weigeren</string>
   <string name="action_call_mic_mute">Microfoon dempen</string>
-  <string name="action_load_plugin">Plugin laden</string>
   <string name="ab_action_speakerphone">Luidspreker inschakelen</string>
   <string name="ab_action_contact_add">Aan contacten toevoegen</string>
   <string name="ab_action_contact_add_question">Toevoegen aan contacten?</string>
@@ -151,11 +136,8 @@
   <string name="ringtone_error_size_too_big">Dit bestand is te groot. De maximale grootte is %1$dkB.</string>
   <string name="ringtone_custom_prompt">Stel een aangepaste beltoon in</string>
   <string name="ringtone_custom_label">Aangepast</string>
-  <string name="ringtone_jami_tones">Jami-beltonen</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Jami vereist de ‘Contacten lezen’-machtiging voor deze functie. Gelieve deze machtiging toe te kennen.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Jami vereist de ‘Oproepgeschiedenis’-machtiging voor deze functie. Gelieve deze machtiging toe te kennen.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Scan de QR-code van het toe te voegen account.</string>
   <string name="title_activity_qrcode">Mijn account delen</string>
@@ -171,7 +153,6 @@
   <string name="conversation_details">Besprekingsgegevens</string>
   <string name="contact_details">Contactdetails</string>
   <string name="conversation_action_delete_this">Dit gesprek verwijderen</string>
-  <string name="conversation_action_delete_this_title">Dit gesprek verwijderen?</string>
   <string name="conversation_action_delete_this_message">Deze handeling kan niet ongedaan gemaakt worden.</string>
   <string name="conversation_action_history_clear">Geschiedenis wissen</string>
   <string name="conversation_action_history_clear_title">De gespreksgeschiedenis wissen?</string>
@@ -179,7 +160,6 @@
   <string name="conversation_action_remove_this">Contact verwijderen</string>
   <string name="conversation_action_remove_this_title">Dit contact verwijderen?</string>
   <string name="conversation_action_remove_this_message">Dit zal het contact verwijderen en de gespreksgeschiedenis voorgoed wissen.</string>
-  <string name="conversation_action_copy_peer_number">Nummer kopiëren</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s gekopieerd naar klembord</string>
   <string name="conversation_action_select_peer_number">Kies een nummer</string>
   <string name="conversation_action_block_this">Contact blokkeren</string>
@@ -210,7 +190,6 @@
   <string name="conversation_contact_invited">%1$s is uitgenodigd</string>
   <string name="conversation_contact_added">%1$s is aangesloten</string>
   <string name="conversation_contact_left">%1$ is links</string>
-  <string name="conversation_contact_banned">%1$s is verboden</string>
   <string name="conversation_search_hint">Zoek gesprek</string>
   <string name="today">Vandaag</string>
   <string name="yesterday">Gisteren</string>
@@ -225,14 +204,12 @@
   <string name="help_password_choose">Kies een sterk wachtwoord om uw Jami-account te beschermen.</string>
   <string name="help_password_enter">Voer het wachtwoord van uw Jami-account in.</string>
   <string name="help_server_enter">Voer URL van beheerserver in.</string>
-  <string name="help_pin_enter">Voer de pincode in vanuit uw Jami-account dat al is geconfigureerd op een ander apparaat. Gebruik de functie ‘Een nieuw apparaat koppelen’ om een pincode te verkrijgen.</string>
   <string name="wizard_next">Volgende</string>
   <string name="wizard_back">Terug</string>
   <string name="wizard_skip">Overslaan</string>
   <string name="hist_contact_invited">Contact wordt uitgenodigd</string>
   <string name="hist_contact_added">Contact toegevoegd</string>
   <string name="hist_contact_left">Links contact</string>
-  <string name="hist_contact_banned">Contact verboden</string>
   <string name="hist_invitation_received">Uitnodiging ontvangen</string>
   <!--Account Summary-->
   <string name="profile">Profiel</string>
@@ -256,20 +233,11 @@
   <string name="generic_error_migration">Fout</string>
   <string name="generic_error_migration_message">Er trad een fout op tijdens het migratieproces</string>
   <string name="title_share_with">Delen met…</string>
-  <!--Pending contact requests-->
+  <!--Pending invitations-->
   <string name="accept">Accepteren</string>
-  <string name="refuse">Afwijzen</string>
+  <string name="decline">Weigeren</string>
   <string name="block">Blokkeren</string>
-  <string name="contact_request_title">Nieuw contactverzoek</string>
-  <string name="contact_request_msg">U heeft %1$d contactverzoeken</string>
-  <string name="contact_request_account">Voor %1$s</string>
-  <string name="no_requests">U heeft geen contactverzoeken</string>
-  <string name="message_contact_not_trusted_yet">%s staat nog niet in uw contacten.\nWilt u dit contactverzoek accepteren of weigeren?</string>
-  <string name="message_contact_not_trusted">%s staat niet in uw contacten.\nNieuw contact toevoegen?</string>
-  <!--Send contact requests-->
-  <string name="send_request_button">Versturen</string>
-  <string name="send_request_title">Contactverzoek versturen</string>
-  <string name="send_request_msg">U dient een contactverzoek te versturen om met deze gebruiker te communiceren. U kunt berichten versturen, maar zolang de ander het verzoek niet accepteert zal hij/zij deze niet kunnen beantwoorden.</string>
+  <string name="invitation_message">U heeft %1$d contactverzoeken</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Geen geblokkeerde contacten</string>
   <!--Smartlist-->
@@ -281,7 +249,6 @@
   <string name="tv_contact_row_header">Contacten</string>
   <string name="gallery_error_title">Geen Galerij-app gevonden</string>
   <string name="gallery_error_message">Geen app om Galerij te openen gevonden op dit apparaat</string>
-  <string name="generic_error">Er trad een onbekende fout op</string>
   <!--File Transfer-->
   <string name="invalid_file">Ongeldig bestand</string>
   <string name="not_able_to_write_file">Kan bestand niet schrijven</string>
@@ -301,7 +268,6 @@
   <string name="file_saved_in">Bestand opgeslagen in %s</string>
   <string name="file_saved_successfully">Bestand opgeslagen</string>
   <string name="file_download">Download</string>
-  <string name="no_space_left_on_device">Geen vrije ruimte resterend op apparaat</string>
   <string name="title_media_viewer">Mediaweergave</string>
   <string name="menu_file_open">Bestand openen</string>
   <string name="menu_file_download">Bestand downloaden</string>
@@ -343,8 +309,6 @@
   <string name="audio_permission_rationale_message">Jami heeft microfoon-toegang nodig voor spraak-naar-text en audio-opname functies. Het zal in de volgende step gevraagd worden</string>
   <string name="camera_permission_rationale_message">Jami heeft camera-toegang nodig voor het opnemen van video en video-bellen. Het zal in de volgende step gevraagd worden</string>
   <string name="unable_to_start_recorder">Niet in staat om de audio opname te starten</string>
-  <string name="error_sharing_file">Fout bij bestandsdeling.</string>
-  <string name="error_opening_file">Fout bij openen bestand.</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Aanbevolen</string>
   <string name="wizard_status_optional">Optioneel</string>
@@ -362,11 +326,9 @@
   <string name="wizard_profile_button">Profiel opslaan</string>
   <string name="wizard_profile_skip">Overslaan en dit later doen</string>
   <string name="fab_path_choose">Kies een ander bestand</string>
-  <string name="chat_plugins">Chat-plugins</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Delen</string>
   <string name="bottomSheet_dialpad_btn">Dialpad</string>
-  <string name="bottomSheet_plugins_btn">Plugins</string>
   <string name="bottomSheet_add_participants_btn">Voeg toe</string>
   <string name="bottomSheet_change_camera_btn">Verandering</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Camera</string>
@@ -374,17 +336,13 @@
   <string name="bottomSheet_mute_microphone_btn">Micro</string>
   <string name="bottomSheet_sound_output_btn">Klinkt goed.</string>
   <string name="bottomSheet_raiseHand_btn">Hand opsteken</string>
-  <string name="open_account_plugin_settings">Open account-plugininstellingen</string>
-  <string name="open_general_plugin_settings">Open de algemene pluginsinstellingen</string>
   <string name="uninstall">Oninstalleren</string>
   <string name="reset">Herstellen</string>
   <!--Swarm Detail-->
   <string name="rename_btn">Bevestigen</string>
-  <string name="rename_error">Kan niet leeg zijn.</string>
-  <string name="swarm_description">Voeg een beschrijving toe</string>
-  <string name="tab_about">Over</string>
   <string name="tab_members">Lid-Staten</string>
-  <string name="tab_documetn">Documenten</string>
+  <string name="tab_files">Dossiers</string>
+  <string name="tab_settings">Instellingen</string>
   <string name="dialogtitle_title">Bewerken van de titel</string>
   <string name="dialogtitle_description">Bewerken van beschrijving</string>
   <string name="dialog_hint_title">Titel</string>
@@ -412,8 +370,8 @@
   <string name="donation_donate">Doneren</string>
   <string name="donation_setting_title">Donatie herinnering</string>
   <string name="donation_setting_description">Donatie herinnering inschakelen</string>
-  <!--Plugin-->
+  <!--Extension-->
   <string name="unable_to_load">Niet in staat %1$s te laden</string>
-  <string name="load_sucess">%1$s: ingeschakeld</string>
-  <string name="unload_sucess">%1$s: uitgeschakeld</string>
+  <string name="load_success">%1$s: ingeschakeld</string>
+  <string name="unload_success">%1$s: uitgeschakeld</string>
 </resources>

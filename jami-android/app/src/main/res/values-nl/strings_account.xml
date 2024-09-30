@@ -21,17 +21,11 @@
   <string name="dialog_wait_create_details">Uw nieuw account wordt toegevoegd, even geduld…</string>
   <string name="dialog_wait_update">Account wordt bijgewerkt</string>
   <string name="dialog_wait_update_details">Uw account wordt bijgewerkt, even geduld…</string>
-  <string name="dialog_warn_ip2ip_account_title">Leeg SIP-account aanmaken?</string>
-  <string name="dialog_warn_ip2ip_account_message">U staat op het punt een SIP-account zonder geldige hostnaam toe te voegen.
-U zult er enkel rechtstreekse IP-oproepen mee kunnen maken en ontvangen.
-U kunt uw account later bewerken</string>
   <string name="account_type_ip2ip">IP-account</string>
   <string name="help_ring">Een Jami-account stelt u in staat andere mensen veilig te bereiken in peer-to-peer middels een volledig gedistribueerd netwerk.</string>
-  <string name="help_sip_title">Uw SIP-account toevoegen</string>
+  <string name="help_sip_title">SIP-account toevoegen</string>
   <string name="help_sip">Een bestaand SIP-account configureren</string>
-  <string name="create_sip_account">SIP-account toevoegen</string>
   <!--Strings related to account deletion-->
-  <string name="account_delete_dialog_title">Account verwijderen?</string>
   <string name="account_delete_dialog_message">Deze handeling kan niet ongedaan gemaakt worden.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Geen account geregistreerd</string>
@@ -40,8 +34,6 @@ U kunt uw account later bewerken</string>
   <string name="account_device_revoke">Apparaat intrekken</string>
   <string name="account_device_revocation_success_title">Klaar</string>
   <string name="account_device_revocation_success">Het apparaat is nu ingetrokken!</string>
-  <string name="account_device_revocation_error_title">Kan apparaat niet intrekken</string>
-  <string name="account_device_revocation_wrong_password">Verkeerd wachtwoord.</string>
   <string name="account_device_revocation_unknown_device">Onbekend apparaat.</string>
   <string name="account_device_revocation_error_unknown">Onbekende fout.</string>
   <string name="account_password_change">Wachtwoord wijzigen</string>
@@ -63,8 +55,7 @@ U kunt uw account later bewerken</string>
   <string name="account_rendezvous_summary">In Rendezvous mode, worden inkomende oproepen aan een conferentie toegevoegd</string>
   <string name="account_upnp_label">UPnP inschakelen</string>
   <string name="account_proxy_field">Proxy</string>
-  <!--Plugin Details-->
-  <string name="account_preference_plugin_tab">Plugins</string>
+  <!--Extension Details-->
   <!--Audio Details-->
   <string name="account_audio_label">Geluid</string>
   <string name="account_preferences_media_tab">Media</string>
@@ -144,14 +135,9 @@ U kunt uw account later bewerken</string>
   <string name="export_account_wait_message">Accountinformatie wordt geëxporteerd</string>
   <string name="account_export_file">Reservekopie van account maken</string>
   <string name="account_export_file_summary">Backup je account op je apparaat om het later te herstellen.</string>
-  <string name="account_export_end_decryption_message">Kon uw account niet ontgrendelen met het opgegeven wachtwoord.</string>
   <string name="account_export_end_network_title">Netwerkfout</string>
-  <string name="account_export_end_network_message">Kon account niet exporteren over het netwerk. Controleer uw netwerkverbinding.</string>
   <string name="account_export_end_error_title">Fout</string>
-  <string name="account_export_end_error_message">Kon account niet exporteren. Er trad een onbekende fout op.</string>
   <string name="account_enter_password">Voer wachtwoord in</string>
-  <string name="account_share_body">Contacteer me met ‘%1$s’ op Jami, het gedistribueerde communicatieplatform: %2$s</string>
-  <string name="account_share_body_with_username">Contacteer me met ‘%1$s’ of mijn openbare gebruikersnaam ‘%2$s’ op Jami, het gedistribueerde communicatieplatform: %3$s</string>
   <string name="account_contact_me">Contacteer me op Jami!</string>
   <string name="update_account">Account bijwerken</string>
   <string name="account_migration">Uw Jami-account kan worden bijgewerkt.\nVoer uw wachtwoord in.</string>
@@ -159,20 +145,13 @@ U kunt uw account later bewerken</string>
   <string name="sip_account">SIP-rekening</string>
   <string name="ring_account_identity">Identiteit</string>
   <string name="account_migration_title_dialog">Accountmigratie</string>
-  <string name="account_migration_message_dialog">Uw account moet worden bijgewerkt. Wilt u naar het accountbeheerscherm gaan om deze handeling uit te voeren?</string>
   <string name="account_update_needed">Update vereist</string>
-  <string name="account_cannot_be_found_title">Account kan niet gevonden worden</string>
-  <string name="account_cannot_be_found_message">Account kon niet gevonden worden op het Jami-netwerk.\nControleer of het account geëxporteerd is van een bestaand apparaat en dat de ingevoerde gebruikersreferenties correct zijn.</string>
   <string name="account_sip_cannot_be_registered_message">U kunt doorgaan met het aanmaken van uw account, of uw gegevens hier aanpassen. Aanpassen is later ook mogelijk vanuit de accountinstellingen.</string>
-  <string name="account_no_network_title">Kan geen verbinding maken met het netwerk</string>
-  <string name="account_no_network_message">Kon het account niet toevoegen omdat Jami geen verbinding kon maken met het gedistribueerde netwerk. Controleer de netwerkverbinding van uw apparaat.</string>
+  <string name="account_no_network_title">Netwerkfout</string>
   <string name="account_device_added_title">Accountapparaat toegevoegd</string>
   <string name="account_device_added_message">Uw Jami-account is met succes op dit apparaat ingesteld.</string>
   <string name="account_device_updated_title">Accountapparaat bijgewerkt</string>
   <string name="account_device_updated_message">Uw Jami-account is met succes bijgewerkt.</string>
-  <string name="account_cannot_be_updated_message">Accountapparaat kon niet bijgewerkt worden. Controleer uw wachtwoord.</string>
-  <string name="account_sip_success_title">SIP-account geregistreerd</string>
-  <string name="account_sip_success_message">Uw SIP-account is met succes geregistreerd.</string>
   <string name="account_sip_register_anyway">Toch registreren</string>
   <!--TV-->
   <string name="account_tv_settings_header">Accountinstellingen</string>
@@ -192,11 +171,8 @@ U kunt uw account later bewerken</string>
   <string name="account_link_export_button">Een nieuw apparaat koppelen</string>
   <string name="account_link_show_button">Toon %d meer gekoppelde apparaten</string>
   <string name="account_link_hide_button">Gekoppelde apparaten verbergen</string>
-  <string name="account_link_export_info">Om dit account op andere apparaten te gebruiken dient u deze eerst op Jami bloot te stellen. Er zal een pincode gegenereerd worden die u op het nieuwe apparaat invoert om het account in te stellen. De pincode is 10 minuten geldig.</string>
   <string name="account_start_export_button">Pincode genereren</string>
   <string name="account_end_export_button">sluiten</string>
-  <string name="account_end_export_infos">Uw pincode is:\n\n%%\n\nOm het proces te voltooien opent u Jami op het nieuwe apparaat. Voeg een Jami-account toe met ‘Dit apparaat koppelen’. Uw pincode is 10 minuten geldig.</string>
-  <string name="account_link_export_info_light">Om dit account op andere apparaten te gebruiken dient u deze eerst op Ring bloot te stellen. Er zal een pincode gegenereerd worden die u op het nieuwe apparaat invoert om het account in te stellen. De pincode is 10 minuten geldig.</string>
   <string name="account_export_title">Link account naar andere apparaten</string>
   <string name="account_connect_server_button">Verbinden met beheerserver</string>
   <string name="account_connect_button">Verbinden</string>
@@ -228,21 +204,17 @@ U kunt uw account later bewerken</string>
   <string name="account_creation_profile">Maak uw profiel aan</string>
   <string name="account_creation_ring">Maak uw Jami-account aan</string>
   <string name="account_link_title">Dit apparaat koppelen</string>
-  <string name="account_sip_cannot_be_registered">Account kan niet geregistreerd worden</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">Bewerk mijn account</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Voer wachtwoord in om te bevestigen</string>
   <string name="enter_password">Voer wachtwoord in</string>
   <string name="revoke_device_title">Apparaat intrekken</string>
-  <string name="revoke_device_message">Weet u zeker dat u %1$s wilt intrekken?</string>
   <string name="revoke_device_wait_title">Even geduld…</string>
   <string name="revoke_device_wait_message">Apparaat wordt ingetrokken</string>
   <string name="rename_device_title">Dit apparaat hernoemen</string>
   <string name="rename_device_message">Kies een nieuwe naam om dit apparaat te identificeren in uw Jami-account</string>
   <string name="rename_device_button">Apparaat hernoemen</string>
   <string name="account_rename_device_hint">Kies een nieuwe apparaatnaam</string>
-  <string name="account_device_name_empty">Apparaatnaam kan niet leeg zijn</string>
   <string name="account_device_this_indicator">Dit apparaat</string>
   <string name="account_disabled_indicator">uitgeschakeld</string>
   <!--Link a new device-->

@@ -27,7 +27,6 @@
   <string name="pref_startOnBoot_title">Έναρξη του Jami κατά την εκκίνηση</string>
   <string name="pref_startOnBoot_summary">Κάντε Τζάμι στο φόντο όταν ξεκινήσει το σύστημα.</string>
   <string name="pref_clearHistory_title">Διαγραφή ιστορικού</string>
-  <string name="pref_clearHistory_summary">Καθαρίστε όλα τα ιστορικά συνομιλιών.</string>
   <string name="pref_notification_title">Ορατότητα ειδοποιήσεων</string>
   <string name="pref_notification_summary">Εναρτώντας την ορατότητα των ειδοποιήσεων εφαρμογής στην οθόνη κλειδαριού.</string>
   <string name="pref_blackList_title">Λίστα μπλοκαρισμένων</string>
@@ -52,19 +51,6 @@
   <string name="notification_public">Δημόσια π.χ. προβολή κοινοποιήσεων και περιεχομένου τους στην οθόνη κλειδαριού)</string>
   <string name="notification_private">Ειδικό πίνακα \n(δείξτε τις ειδοποιήσεις αλλά κρύψτε το περιεχόμενό τους στην οθόνη κλειδαριού) \n</string>
   <string name="notification_secret">Μυστικό \n(δεν εμφανίζονται ειδοποιήσεις στην οθόνη κλειδαριού)</string>
-  <!--Plugin-->
-  <string name="pref_plugins_title">Επενδύσεις</string>
-  <string name="pref_plugins_summary">Ενεργοποιήστε plugins και ρυθμίστε τις παραμέτρους τους</string>
-  <string name="fab_plugins_add">Προσθήκη νέου προγραμματισμού</string>
-  <string name="plugin_uninstall_title">Αποσύρετε το Plugin;</string>
-  <string name="plugin_reset_preferences">Ανακατάσταση προτιμήσεων plugin</string>
-  <string name="plugin_reset_preferences_summary">Οι ρυθμίσεις του plugin σας θα είναι προεπιλεγμένες</string>
-  <string name="plugin_reset_preferences_ask">Θέλετε να επαναφέρετε τις γενικές ρυθμίσεις του plugin;</string>
-  <string name="plugin_reset_account_preferences_ask">Θέλετε να επαναφέρετε τις ρυθμίσεις του plugin λογαριασμού;</string>
-  <string name="plugin_successfully_installed">Το προγραμματισμό <b>%1$s</b> εγκατεστημένο επιτυχώς</string>
-  <string name="plugin_install_failure">Αποτύχει να εγκαταστήσει το plugin: <b>%1$s</b></string>
-  <string name="plugin_recent_version_exception">Έχετε μια πιο πρόσφατη έκδοση του: <b>%1$s</b></string>
-  <string name="plugin_same_version_exception">Εγκαταστάθηκε η ίδια έκδοση του <b>%1$s</b></string>
-  <string name="plugin_force_install">βία εγκατάσταση</string>
-  <string name="plugin_path_image_add">Προσθήκη νέας εικόνας</string>
+  <!--Extension-->
+  <string name="extension_force_install">βία εγκατάσταση</string>
 </resources>

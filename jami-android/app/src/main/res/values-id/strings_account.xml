@@ -21,16 +21,12 @@
   <string name="dialog_wait_create_details">Mohon tunggu...</string>
   <string name="dialog_wait_update">Memperbarui akun</string>
   <string name="dialog_wait_update_details">Mohon tunggu...</string>
-  <string name="dialog_warn_ip2ip_account_title">Buat akun SIP kosong?</string>
-  <string name="dialog_warn_ip2ip_account_message">Anda akan membuat akun SIP tanpa nama host yang valid. Anda hanya akan dapat membuat dan menerima panggilan ip langsung. Anda dapat mengedit akun Anda nanti</string>
   <string name="account_type_ip2ip">Akun IP</string>
   <string name="help_ring">Akun Jami memungkinkan Anda untuk menjangkau orang-orang dengan aman secara peer to peer melalui jaringan yang sepenuhnya terdistribusi.</string>
-  <string name="help_sip_title">Tambah akun SIP anda</string>
+  <string name="help_sip_title">Tambahkan akun SIP</string>
   <string name="help_sip">Konfigurasikan akun SIP yang ada.</string>
-  <string name="create_sip_account">Tambahkan akun SIP</string>
   <!--Strings related to account deletion-->
-  <string name="account_delete_dialog_title">Hapus akun?</string>
-  <string name="account_delete_dialog_message">Aksi ini tidak dapat dibatalkan.</string>
+  <string name="account_delete_dialog_message">Aksi ini tak bisa dibatalkan</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Tidak ada akun yang terdaftar</string>
   <string name="normal_accounts_titles">Akun</string>
@@ -38,8 +34,6 @@
   <string name="account_device_revoke">Hapus perangkat</string>
   <string name="account_device_revocation_success_title">Sukses</string>
   <string name="account_device_revocation_success">Perangkat telah dihapus</string>
-  <string name="account_device_revocation_error_title">Tak dapat menghapus perangkat</string>
-  <string name="account_device_revocation_wrong_password">Kata sandi salah.</string>
   <string name="account_device_revocation_unknown_device">Perangkat tidak diketahui.</string>
   <string name="account_device_revocation_error_unknown">Error tak dikenal.</string>
   <string name="account_password_change">Ubah kata sandi</string>
@@ -61,8 +55,7 @@
   <string name="account_rendezvous_summary">Dalam mode Rendezvous, panggilan masuk akan ditambahkan ke ruang konferensi.</string>
   <string name="account_upnp_label">Aktifkan UPnP</string>
   <string name="account_proxy_field">Proksi</string>
-  <!--Plugin Details-->
-  <string name="account_preference_plugin_tab">Plugin</string>
+  <!--Extension Details-->
   <!--Audio Details-->
   <string name="account_audio_label">Suara</string>
   <string name="account_preferences_media_tab">Media</string>
@@ -142,35 +135,23 @@
   <string name="export_account_wait_message">Mengekspor informasi akun</string>
   <string name="account_export_file">Cadangkan akun</string>
   <string name="account_export_file_summary">Cadangkan akun di perangkat anda untuk memulihkannya nanti.</string>
-  <string name="account_export_end_decryption_message">Tidak dapat membuka akun Anda menggunakan kata sandi yang diberikan.</string>
   <string name="account_export_end_network_title">Galat jaringan</string>
-  <string name="account_export_end_network_message">Tidak dapat mengekspor akun. Harap periksa jaringan internet Anda.</string>
   <string name="account_export_end_error_title">Eror</string>
-  <string name="account_export_end_error_message">Tidak dapat mengekspor akun. Terjadi kesalahan yang tidak diketahui.</string>
   <string name="account_enter_password">Masukan kata sandi</string>
-  <string name="account_share_body">Hubungi saya menggunakan \'%1$s\' pada platform komunikasi terdistribusi Jami: %2$s</string>
-  <string name="account_share_body_with_username">Hubungi saya menggunakan \'%1$s\' atau nama pengguna publik saya \'%2$s\' di platform komunikasi terdistribusi Jami: %3$s</string>
-  <string name="account_contact_me">Kontak saya di Jami !</string>
+  <string name="account_contact_me">Hubungi saya di Jami!</string>
   <string name="update_account">Perbarui akun</string>
   <string name="account_migration">Akun Jami anda dapat diperbarui. \nSilakan masukkan kata sandi anda.</string>
   <string name="ring_account">Akun Jami</string>
   <string name="sip_account">Akun SIP</string>
   <string name="ring_account_identity">Identitas</string>
   <string name="account_migration_title_dialog">Migrasi akun</string>
-  <string name="account_migration_message_dialog">Akun Anda perlu diperbarui. Apakah Anda ingin membuka layar Manajemen akun untuk melakukan operasi ini?</string>
   <string name="account_update_needed">Perlu diperbarui</string>
-  <string name="account_cannot_be_found_title">Akun tidak ditemukan</string>
-  <string name="account_cannot_be_found_message">Akun tidak dapat ditemukan di jaringan Jami.\nPastikan akun tersebut diekspor di Jami dari perangkat yang sudah ada, dan kredensial yang diberikan sudah benar.</string>
   <string name="account_sip_cannot_be_registered_message">Anda bisa melanjutkan proses pembuatan akun atau mengedit informasi Anda di sini. Edisi masih dimungkinkan nanti dalam pengaturan akun.</string>
-  <string name="account_no_network_title">Tidak dapat terhubung ke jaringan</string>
-  <string name="account_no_network_message">Tidak dapat menambahkan akun karena Jami tidak dapat terhubung ke jaringan terdistribusi. Periksa konektivitas perangkat Anda.</string>
+  <string name="account_no_network_title">Galat jaringan</string>
   <string name="account_device_added_title">Akun perangkat ditambahkan</string>
   <string name="account_device_added_message">Setup akun anda telah selesai.</string>
   <string name="account_device_updated_title">Akun perangkat diperbarui</string>
   <string name="account_device_updated_message">Akun jami anda berhasil diperbarui.</string>
-  <string name="account_cannot_be_updated_message">Akun perangkat tidak dapat diperbarui. Harap periksa kata sandi anda.</string>
-  <string name="account_sip_success_title">Akun SIP terdaftarkan</string>
-  <string name="account_sip_success_message">Anda telah berhasil mendaftarkan akun SIP</string>
   <string name="account_sip_register_anyway">Daftar saja</string>
   <!--TV-->
   <string name="account_tv_settings_header">Pengaturan akun</string>
@@ -190,11 +171,8 @@
   <string name="account_link_export_button">Hubungkan perangkat baru</string>
   <string name="account_link_show_button">Tampilkan %d lebih banyak perangkat yang ditautkan</string>
   <string name="account_link_hide_button">Sembunyikan perangkat yang tertaut</string>
-  <string name="account_link_export_info">Untuk menggunakan akun ini pada perangkat lain, Anda harus mengeksposnya terlebih dahulu di Jami. Ini akan menghasilkan kode PIN yang harus Anda masukkan pada perangkat baru untuk mengatur akun. PIN berlaku selama 10 menit.</string>
   <string name="account_start_export_button">Buat PIN</string>
   <string name="account_end_export_button">tutup</string>
-  <string name="account_end_export_infos">PIN Anda adalah:\n\n%%\n\nUntuk menyelesaikan prosesnya, Anda perlu membuka Jami pada perangkat baru. Buat akun baru dengan \"Tautkan perangkat ini ke akun\". PIN Anda berlaku selama 10 menit.</string>
-  <string name="account_link_export_info_light">Untuk menggunakan akun ini pada perangkat lain, Anda harus mengeksposnya terlebih dahulu di Jami. Ini akan menghasilkan kode PIN yang harus Anda masukkan pada perangkat baru untuk mengatur akun. PIN berlaku selama 10 menit.</string>
   <string name="account_export_title">Tautkan akun ke perangkat lain</string>
   <string name="account_connect_server_button">Hubungkan ke peladen manajemen</string>
   <string name="account_connect_button">Hubungkan</string>
@@ -226,21 +204,17 @@
   <string name="account_creation_profile">Buat profil Anda</string>
   <string name="account_creation_ring">Buat akun Jami Anda</string>
   <string name="account_link_title">Hubungkan perangkat ini</string>
-  <string name="account_sip_cannot_be_registered">Tidak bisa mendaftarkan akun</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">Edit akun saya</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Masukkan kata sandi untuk konfirmasi</string>
   <string name="enter_password">Masukan kata sandi</string>
   <string name="revoke_device_title">Hapus perangkat</string>
-  <string name="revoke_device_message">Anda yakin ingin menghapus %1$s ?</string>
   <string name="revoke_device_wait_title">Harap tunggu...</string>
   <string name="revoke_device_wait_message">Hapus perangkat</string>
   <string name="rename_device_title">Ubah nama perangkat ini</string>
   <string name="rename_device_message">Pilih nama baru untuk mengidentifikasi perangkat ini pada akun Jami Anda</string>
   <string name="rename_device_button">Ubah nama perangkat</string>
   <string name="account_rename_device_hint">Pilih nama perangkat baru</string>
-  <string name="account_device_name_empty">Nama perangkat tidak boleh kosong</string>
   <string name="account_device_this_indicator">Perangkat ini</string>
   <string name="account_disabled_indicator">nonaktif</string>
   <!--Link a new device-->

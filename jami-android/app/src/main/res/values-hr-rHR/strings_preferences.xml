@@ -19,7 +19,6 @@
   <string name="pref_systemDialer_summary">Koristite Jami da postavite sustavne pozive kad je to moguće.</string>
   <string name="pref_startOnBoot_title">Počnite Jami na pokretanje</string>
   <string name="pref_startOnBoot_summary">-Uzmi Jamija u pozadini kada se sustav pokrene.</string>
-  <string name="pref_clearHistory_summary">Očisti sve priče o razgovorima.</string>
   <string name="pref_notification_title">U pogledu primjene podataka</string>
   <string name="pref_notification_summary">Nastavite vidljivost obavijesti aplikacije na zaslonu zaključavanja.</string>
   <string name="pref_blackList_title">Popis blokova</string>
@@ -44,18 +43,6 @@
   <string name="notification_public">Publika \n(prikazi i njihov sadržaj na zaslonu zaključavanja) \n</string>
   <string name="notification_private">Privatne \n(prikazuju obavijesti, ali skrivaju njihov sadržaj na zaslonu zaključavanja)\n</string>
   <string name="notification_secret">Tajna \n(ne prikazuje obavijesti na zaslonu zaključavanja)</string>
-  <!--Plugin-->
-  <string name="pref_plugins_summary">Aktivirajte plugine i postavite njihove parametre</string>
-  <string name="fab_plugins_add">Dodajte novi plugin</string>
-  <string name="plugin_uninstall_title">Uninstall plugin?</string>
-  <string name="plugin_reset_preferences">Nastavljanje preferencija</string>
-  <string name="plugin_reset_preferences_summary">Nastavke plugin-a će biti podrazumevane</string>
-  <string name="plugin_reset_preferences_ask">Želite li nastaviti opće postavke plugin-a?</string>
-  <string name="plugin_reset_account_preferences_ask">Želite li nastaviti postavke plugin računa?</string>
-  <string name="plugin_successfully_installed">Plugin <b>%1$s</b> uspješno instaliran</string>
-  <string name="plugin_install_failure">Neposposposobno instalirati plugin: <b>%1$s</b></string>
-  <string name="plugin_recent_version_exception">Imate noviju verziju: <b>%1$s</b></string>
-  <string name="plugin_same_version_exception">Ugrađena je ista verzija <b>%1$s</b></string>
-  <string name="plugin_force_install">prisiljava \n instalirati</string>
-  <string name="plugin_path_image_add">Dodajte novu sliku</string>
+  <!--Extension-->
+  <string name="extension_force_install">prisiljava \n instalirati</string>
 </resources>

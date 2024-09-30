@@ -1,11 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--Strings for xml content description of images-->
-  <string name="contact_quick_call_description">Snel bellen</string>
-  <string name="contact_picture_description">Contactfoto</string>
   <string name="dial_numeric_pad">Numeriek toetsenbord</string>
   <string name="contact_unblock">Deblokkeren</string>
-  <string name="video_plugins">Video-plugins</string>
   <string name="file_download_button">Download</string>
   <string name="control_play">Afspelen</string>
   <string name="control_replay">Opnieuw afspelen</string>

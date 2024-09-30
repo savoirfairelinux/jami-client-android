@@ -27,7 +27,6 @@
   <string name="pref_startOnBoot_title">Iniciar Jami na puesta en marcha</string>
   <string name="pref_startOnBoot_summary">La so carrera foi de la so carrera.</string>
   <string name="pref_clearHistory_title">La hestoria clara</string>
-  <string name="pref_clearHistory_summary">La so primer apaición foi nel so papel nel papel de la actriz.</string>
   <string name="pref_notification_title">La visibilidá de la notificación</string>
   <string name="pref_notification_summary">Establecer la visibilidá de les notificaciones d\'aplicaciones na pantalla de bloqueo.</string>
   <string name="pref_blackList_title">Lista de bloques</string>
@@ -52,19 +51,6 @@
   <string name="notification_public">Publicar notificaciones y el so conteníu na pantalla de bloqueo)</string>
   <string name="notification_private">El so conteníu nun se ve en pantalla de bloqueo.</string>
   <string name="notification_secret">Secretos \n(nun muestren notificaciones na pantalla de bloqueo)</string>
-  <!--Plugin-->
-  <string name="pref_plugins_title">Plugins</string>
-  <string name="pref_plugins_summary">Activu plugins y establez los sos parámetros</string>
-  <string name="fab_plugins_add">A añadir un nuevu plug-in</string>
-  <string name="plugin_uninstall_title">¿ Desinstalar el plugín?</string>
-  <string name="plugin_reset_preferences">Les preferencies de plugin de restablecimientu</string>
-  <string name="plugin_reset_preferences_summary">La configuración del plugín va ser defectu</string>
-  <string name="plugin_reset_preferences_ask">¿ Quiere restablecer les configuraciones xenerales del plug-in?</string>
-  <string name="plugin_reset_account_preferences_ask">¿ Quiere restablecer les configuraciones del plug-in de la cuenta?</string>
-  <string name="plugin_successfully_installed">Plugin <b>%1$s</b> instaláu con ésitu</string>
-  <string name="plugin_install_failure">Faló en instalar el plugin: <b>%1$s</b></string>
-  <string name="plugin_recent_version_exception">Hai una versión más reciente de: <b>%1$s</b></string>
-  <string name="plugin_same_version_exception">Hai la mesma versión de <b>%1$s</b> instalada</string>
-  <string name="plugin_force_install">La fuerza \n instalación</string>
-  <string name="plugin_path_image_add">Axega una imaxe nueva</string>
+  <!--Extension-->
+  <string name="extension_force_install">La fuerza \n instalación</string>
 </resources>

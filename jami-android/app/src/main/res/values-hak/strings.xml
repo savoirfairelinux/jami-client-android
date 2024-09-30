@@ -1,8 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
+  <string name="no_browser_app_installed">沒有網頁瀏覽程式，請安裝一個以便觀看這網頁</string>
+  <string name="website_chooser_title">使用…浏览网站</string>
+  <string name="license">本软件由版权持有人及其他责任者“按原样”提供，不提供任何形式的担保。详细信息请参阅 <u>GNU 通用公共许可证版本 3 或更新</u></string>
   <!--About dialog-->
-  <string name="credits_volunteers">还有为这个项目做出贡献的志愿者们！</string>
+  <string name="media">媒体</string>
   <!--RingActivity-->
   <!--AB menus-->
   <!--Sections-->
@@ -20,6 +23,7 @@
   <!--Call Fragment-->
   <string name="action_call_minimize">缩小</string>
   <string name="call_duration">最后的%s</string>
+  <string name="action_call_accept">接听通话</string>
   <string name="ab_action_audio_call">发起语音通话</string>
   <string name="ab_action_video_call">開始視訊通話</string>
   <string name="qr_code_not_contact">不是Jami的二维码</string>
@@ -37,6 +41,7 @@
   <!--Conversation-->
   <string name="conversation_details">对话详情</string>
   <string name="contact_details">联系人详情</string>
+  <string name="conversation_action_delete_this_message">此操作不可撤销。</string>
   <string name="conversation_action_go_to_call">返回通话</string>
   <string name="conversation_action_incoming_call">来电</string>
   <string name="conversation_message_deleted">%s删除了一条消息</string>
@@ -60,8 +65,8 @@
   <string name="pin_copied">PIN码复制到剪贴板</string>
   <!--Account Summary-->
   <!--Share fragment-->
-  <!--Pending contact requests-->
-  <!--Send contact requests-->
+  <!--Pending invitations-->
+  <string name="invitation_message">您有 %1$d 个联系人请求</string>
   <!--Blacklist-->
   <!--Smartlist-->
   <!--File Transfer-->
@@ -76,11 +81,13 @@
   <string name="audio_permission_rationale_message">Jami需要获得麦克风许可才能使用语音转文本和录制音频功能。下一步将对此进行询问</string>
   <string name="camera_permission_rationale_message">Jami需要摄像头许可才能录制视频和进行视频通话。下一步将对此进行询问</string>
   <string name="unable_to_start_recorder">无法开始录制音频</string>
-  <string name="error_sharing_file">共享文件时出错</string>
-  <string name="error_opening_file">打开文件时出错</string>
   <!--Wizard-->
   <!--Bottom sheet-->
+  <string name="bottomSheet_extensions_btn">扩展</string>
+  <string name="bottomSheet_hangup_btn">結束電話</string>
   <!--Swarm Detail-->
+  <string name="tab_files">文件</string>
+  <string name="tab_settings">設定</string>
   <string name="error_open_no_app_found">找不到处理此文件的应用程序：%1$s</string>
   <string name="swarm_detail_no_document">你还没有文件</string>
   <!--JamiId-->
@@ -101,10 +108,10 @@
   <string name="donation_donate">捐助</string>
   <string name="donation_setting_title">捐赠提醒</string>
   <string name="donation_setting_description">禁用捐赠提醒</string>
-  <!--Plugin-->
+  <!--Extension-->
   <string name="unable_to_load">无法加载 %1$s</string>
-  <string name="load_sucess">%1$s: 已启用</string>
-  <string name="unload_sucess">%1$s: 已禁用</string>
-  <string name="install_sucess">扩展%1$s已成功安装</string>
+  <string name="load_success">%1$s: 已启用</string>
+  <string name="unload_success">%1$s: 已禁用</string>
+  <string name="install_success">扩展%1$s已成功安装</string>
   <string name="install_error">导入扩展时出错</string>
 </resources>

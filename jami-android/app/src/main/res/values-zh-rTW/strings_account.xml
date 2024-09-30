@@ -23,18 +23,12 @@
   <string name="dialog_wait_create_details">正在加入你的新帳號，請稍等...</string>
   <string name="dialog_wait_update">正在更新帳號</string>
   <string name="dialog_wait_update_details">正在更新你的新帳號，請稍等...</string>
-  <string name="dialog_warn_ip2ip_account_title">建立空的 SIP 帳號嗎？</string>
-  <string name="dialog_warn_ip2ip_account_message">您將要建立一個沒有有效主機名稱的 SIP 帳號。
-        您將僅能撥出與接收直接 IP 通話。
-        您稍後可以編輯您的帳號</string>
   <string name="account_type_ip2ip">IP 帳號</string>
   <string name="help_ring">Jami 帳號讓您可以在完全分散式的網路中安全地點對點接觸其他人。</string>
-  <string name="help_sip_title">加入你的 SIP 帳號</string>
+  <string name="help_sip_title">新增 SIP 帳號</string>
   <string name="help_sip">配製一個存在的 SIP 帳號。</string>
-  <string name="create_sip_account">新增 SIP 帳號</string>
   <!--Strings related to account deletion-->
-  <string name="account_delete_dialog_title">刪除帳號嗎？</string>
-  <string name="account_delete_dialog_message">這個動作無法被復原。</string>
+  <string name="account_delete_dialog_message">此動作無法復原。</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">沒有註冊的帳號</string>
   <string name="normal_accounts_titles">帳號</string>
@@ -42,8 +36,6 @@
   <string name="account_device_revoke">撤銷裝置</string>
   <string name="account_device_revocation_success_title">成功</string>
   <string name="account_device_revocation_success">裝置現在已撤銷！</string>
-  <string name="account_device_revocation_error_title">無法撤銷裝置</string>
-  <string name="account_device_revocation_wrong_password">錯誤的密碼。</string>
   <string name="account_device_revocation_unknown_device">未知的裝置。</string>
   <string name="account_device_revocation_error_unknown">未知的錯誤。</string>
   <string name="account_password_change">變更密碼</string>
@@ -68,8 +60,8 @@
   <string name="account_rendezvous_summary">在 Rendezvous 模式中，來電會被新增到會議室中。</string>
   <string name="account_upnp_label">啟用 UPnP</string>
   <string name="account_proxy_field">Proxy</string>
-  <!--Plugin Details-->
-  <string name="account_preference_plugin_tab">外掛程式</string>
+  <!--Extension Details-->
+  <string name="account_preferences_extension_tab">扩展</string>
   <!--Audio Details-->
   <string name="account_audio_label">音訊</string>
   <string name="account_preferences_media_tab">媒體</string>
@@ -150,35 +142,23 @@
   <string name="export_account_wait_message">正在匯出帳號資訊</string>
   <string name="account_export_file">備份帳號</string>
   <string name="account_export_file_summary">將您的帳號備份到裝置上以便稍後復原。</string>
-  <string name="account_export_end_decryption_message">無法使用您提供的密碼來解鎖您的帳號。</string>
   <string name="account_export_end_network_title">網路錯誤</string>
-  <string name="account_export_end_network_message">無法在網路上匯出帳號。檢查您的連線。</string>
   <string name="account_export_end_error_title">錯誤</string>
-  <string name="account_export_end_error_message">無法匯出帳號。遇到未知的錯誤。</string>
   <string name="account_enter_password">輸入密碼</string>
-  <string name="account_share_body">在 Jami 分散式通訊平臺上使用「%1$s」聯絡我：%2$s</string>
-  <string name="account_share_body_with_username">在 Jami 分散式通訊平臺上使用「%1$s」或是我的公開使用者名稱「%2$s」聯絡我：%3$s</string>
-  <string name="account_contact_me">在 Jami 上聯絡我！</string>
+  <string name="account_contact_me">在 Jami 上聯絡我</string>
   <string name="update_account">更新帳號</string>
   <string name="account_migration">您的 Jami 帳號可以更新。\n請輸入您的密碼。</string>
   <string name="ring_account">Jami 帳號</string>
   <string name="sip_account">SIP 账户</string>
   <string name="ring_account_identity">身份</string>
   <string name="account_migration_title_dialog">帳號遷移</string>
-  <string name="account_migration_message_dialog">您的帳號需要更新。您想要到帳號管理畫面來執行這個動作嗎？</string>
   <string name="account_update_needed">需要更新</string>
-  <string name="account_cannot_be_found_title">找不到帳號</string>
-  <string name="account_cannot_be_found_message">在 Jami 網路中找不到帳號。請確定其已在 Jami 上從既有的裝置匯出，以及提供的憑證是正確的。</string>
   <string name="account_sip_cannot_be_registered_message">您可以繼續帳號建立程序，或是在這裡編輯您的資訊。稍後仍可以在帳號設定中編輯。</string>
-  <string name="account_no_network_title">無法連接到網路</string>
-  <string name="account_no_network_message">因為 Jami 無法連線到分散式網路，所以無法新增帳號。請檢查您裝置的網路連線。</string>
+  <string name="account_no_network_title">網路錯誤</string>
   <string name="account_device_added_title">已新增裝置到帳號中</string>
   <string name="account_device_added_message">你已經在這個裝置上成功設定你的 Jami 帳號。</string>
   <string name="account_device_updated_title">已更新帳號中的裝置</string>
   <string name="account_device_updated_message">您已經成功地更新您的 Jami 帳號。</string>
-  <string name="account_cannot_be_updated_message">帳號裝置無法更新。請檢查您的密碼。</string>
-  <string name="account_sip_success_title">SIP 帳號已註冊</string>
-  <string name="account_sip_success_message">您已成功註冊您的 SIP 帳號。</string>
   <string name="account_sip_register_anyway">無論如何都要註冊</string>
   <!--TV-->
   <string name="account_tv_settings_header">帳號設定</string>
@@ -198,11 +178,8 @@
   <string name="account_link_export_button">連結新裝置</string>
   <string name="account_link_show_button">顯示 %d 個已連結的裝置</string>
   <string name="account_link_hide_button">隱藏已連結的裝置</string>
-  <string name="account_link_export_info">要在其他裝置上使用這個帳號，您必須先在 Jami 上揭露它。這將會生成一個您必須在新裝置上輸入以設定帳號的 PIN 碼。PIN 碼在 10 分鐘內有效。</string>
   <string name="account_start_export_button">生成 PIN 碼</string>
   <string name="account_end_export_button">關閉</string>
-  <string name="account_end_export_infos">您的 PIN 碼是：\n\n%%\n\n要完成過程，您需要在新裝置上開啟 Jami。以「連結這個裝置到一個帳號」來建立新帳號。您的 PIN 碼在 10 分鐘內有效。</string>
-  <string name="account_link_export_info_light">要在其他裝置上使用這個帳號，您必須先在 Jami 上揭露它。這將會生成一個您必須在新裝置上輸入以設定帳號的 PIN 碼。PIN 碼在 10 分鐘內有效。</string>
   <string name="account_export_title">將帳號連結至其他裝置</string>
   <string name="account_connect_server_button">連線到管理伺服器</string>
   <string name="account_connect_button">連線</string>
@@ -234,21 +211,17 @@
   <string name="account_creation_profile">建立您的檔案</string>
   <string name="account_creation_ring">建立您的 Jami 帳號</string>
   <string name="account_link_title">連結此裝置</string>
-  <string name="account_sip_cannot_be_registered">無法註冊帳號</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">編輯我的帳號</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">輸入密碼以確認</string>
   <string name="enter_password">輸入密碼</string>
   <string name="revoke_device_title">撤銷裝置</string>
-  <string name="revoke_device_message">您確定您想要撤銷 %1$s 嗎？</string>
   <string name="revoke_device_wait_title">請等待...</string>
   <string name="revoke_device_wait_message">正在撤銷裝置</string>
   <string name="rename_device_title">重新命名此裝置</string>
   <string name="rename_device_message">選擇新名稱來在您的 Jami 帳號上辨識此裝置</string>
   <string name="rename_device_button">重新命名裝置</string>
   <string name="account_rename_device_hint">選擇新裝置名稱</string>
-  <string name="account_device_name_empty">裝置名稱不能為空</string>
   <string name="account_device_this_indicator">此裝置</string>
   <string name="account_disabled_indicator">已停用</string>
   <!--Link a new device-->
@@ -261,12 +234,8 @@
   <string name="account_link_password">此帐户是密码加密的，请输入密码以生成PIN码</string>
   <string name="account_link_generate_button">生成</string>
   <string name="account_link_time_valid">PIN码将失效：%1$s</string>
-  <string name="account_link_device_info">从其他Jami应用程序中选择“链接新设备”以显示QR码或PIN</string>
   <string name="account_generate_export_device">在其他设备上</string>
-  <string name="account_generate_export_info">安装并启动Jami，选择“从其他设备导入”并扫描QR码</string>
   <string name="content_description_qr_generated">你的二维码</string>
-  <string name="account_generate_export_invalid">PIN不再有效。输入密码并生成新的密码以链接新设备。</string>
-  <string name="account_generate_export_invalid_two">PIN不再有效。\n 生成新PIN以链接新设备。</string>
   <string name="help_pin_info">如果帐户是密码加密的，请输入</string>
   <string name="connect_device_scanqr">扫描二维码</string>
   <string name="connect_device_enterPIN">或输入PIN</string>

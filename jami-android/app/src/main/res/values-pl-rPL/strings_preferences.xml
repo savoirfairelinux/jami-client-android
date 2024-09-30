@@ -27,7 +27,6 @@
   <string name="pref_startOnBoot_title">Uruchamiaj Jami przy starcie</string>
   <string name="pref_startOnBoot_summary">Uruchom Jami w tle, podczas uruchamiania systemu.</string>
   <string name="pref_clearHistory_title">Wyczyść historię</string>
-  <string name="pref_clearHistory_summary">Wyczyść całą historię konwersacji. Ta czynność nie może być cofnięta.</string>
   <string name="pref_notification_title">Widoczność powiadomień</string>
   <string name="pref_notification_summary">Ustaw widoczność powiadomień aplikacji na ekranie blokady.</string>
   <string name="pref_blackList_title">Czarna lista</string>
@@ -52,22 +51,8 @@
   <string name="notification_public">Publiczne \n(pokaż powiadomienia i ich zawartość na ekranie blokady)\n</string>
   <string name="notification_private">Prywatne \n(pokaż powiadomienia, ale ukryj ich zawartość na ekranie blokady)\n</string>
   <string name="notification_secret">Sekret \n(nie pokazuj powiadomień na ekranie blokady)</string>
-  <!--Plugin-->
-  <string name="pref_plugins_title">Dodatki</string>
-  <string name="pref_plugins_summary">Włącz wtyczki i ustaw ich parametry</string>
-  <string name="fab_plugins_add">Dodaj nowy plugin</string>
-  <string name="plugin_uninstall_title">Odinstaluj Wtyczkę ?</string>
-  <string name="plugin_reset_preferences">Zresertuj preferencje wtyczki</string>
-  <string name="plugin_reset_preferences_summary">Twoje ustawienia wtyczki zostaną przywrócone do domyślnych</string>
-  <string name="plugin_reset_preferences_ask">Chcesz resetować ogólne ustawienia wtyczki?</string>
-  <string name="plugin_reset_account_preferences_ask">Chcesz resetować ustawienia wtyczki konta?</string>
-  <string name="plugin_successfully_installed">Wtyczka <b>%1$s</b> zainstalowana pomyślnie</string>
-  <string name="plugin_install_failure">Nie udało się zainstalować wtyczki: <b>%1$s</b></string>
-  <string name="plugin_recent_version_exception">Masz nowszą wersję wtyczki: <b>%1$s</b></string>
-  <string name="plugin_same_version_exception">Masz zainstalowaną tę samą wersję wtyczki <b>%1$s</b></string>
-  <string name="plugin_invalid_signature">%1$s ma nieprawidłowy podpis</string>
-  <string name="plugin_invalid_authority">Nie można zweryfikować uprawnień dla: %1$s</string>
-  <string name="plugin_invalid_format">Nieprawidłowy format wtyczki: %1$s</string>
-  <string name="plugin_force_install">Wymuś instalacje</string>
-  <string name="plugin_path_image_add">Dodaj nowy obraz</string>
+  <!--Extension-->
+  <string name="pref_extensions_title">Rozszerzenia</string>
+  <string name="extension_invalid_signature">%1$s ma nieprawidłowy podpis</string>
+  <string name="extension_force_install">Wymuś instalacje</string>
 </resources>

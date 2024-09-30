@@ -27,7 +27,6 @@
   <string name="pref_startOnBoot_title">Començar Jami en partença</string>
   <string name="pref_startOnBoot_summary">Fau Jami dins l\'arrièr plan quand lo sistèma se lança.</string>
   <string name="pref_clearHistory_title">Escafar l’istoric</string>
-  <string name="pref_clearHistory_summary">Escargar totes los istòrias de las conversas.</string>
   <string name="pref_notification_title">Visibilitat de la notificacion</string>
   <string name="pref_notification_summary">Configura la visibilitat de las notificacions de l\'aplicacion sus l\'ecran de blocatge.</string>
   <string name="pref_blackList_title">Lista de blocs</string>
@@ -52,19 +51,6 @@
   <string name="notification_public">Public \n(montrar las notificacions e lor contengut sus l\'ecran de blocatge) \n</string>
   <string name="notification_private">Primièra \n(mostrar las notificacions mas amagar lor contengut sus l\'ecran de blocatge) \n</string>
   <string name="notification_secret">Secrèt \n(mos pas mostrar las notificacions sus l\'escran de blocatge)</string>
-  <!--Plugin-->
-  <string name="pref_plugins_title">Extensions</string>
-  <string name="pref_plugins_summary">Abilitar los plugins e definir los paramètres</string>
-  <string name="fab_plugins_add">Ajustar un novèl plug-in</string>
-  <string name="plugin_uninstall_title">Desinstalar lo plug-in?</string>
-  <string name="plugin_reset_preferences">Reset las preferéncias del plugin</string>
-  <string name="plugin_reset_preferences_summary">Las configuracions de vòstre plugin seràn difusadas</string>
-  <string name="plugin_reset_preferences_ask">Volètz restaurar las configuracions generalas del plug-in?</string>
-  <string name="plugin_reset_account_preferences_ask">Volètz tornar ajustar las configuracions del plugin de compte?</string>
-  <string name="plugin_successfully_installed">Plugin <b>%1$s</b> installat amb succès</string>
-  <string name="plugin_install_failure">Foguèt pas installat lo plugin: <b>%1$s</b></string>
-  <string name="plugin_recent_version_exception">Avètz una version mai recenta de: <b>%1$s</b></string>
-  <string name="plugin_same_version_exception">Avètz la meteissa version de <b>%1$s</b> installada</string>
-  <string name="plugin_force_install">forçar \ n installar</string>
-  <string name="plugin_path_image_add">Ajustar una imatge novèla</string>
+  <!--Extension-->
+  <string name="extension_force_install">forçar \ n installar</string>
 </resources>

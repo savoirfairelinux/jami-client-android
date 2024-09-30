@@ -27,7 +27,6 @@
   <string name="pref_startOnBoot_title">ಜಾಮಿ ಆರಂಭಿಕ ಆರಂಭದಲ್ಲಿ ಪ್ರಾರಂಭಿಸಿ</string>
   <string name="pref_startOnBoot_summary">ವ್ಯವಸ್ಥೆ ಪ್ರಾರಂಭವಾದಾಗ ಜಾಮಿಯನ್ನು ಹಿನ್ನೆಲೆಯಲ್ಲಿ ಚಲಾಯಿಸಿ.</string>
   <string name="pref_clearHistory_title">ಸ್ಪಷ್ಟ ಇತಿಹಾಸ</string>
-  <string name="pref_clearHistory_summary">ಎಲ್ಲಾ ಸಂಭಾಷಣೆಗಳ ಇತಿಹಾಸವನ್ನು ತೆರವುಗೊಳಿಸಿ. ಈ ಕ್ರಿಯೆಯನ್ನು ಹಿಂತೆಗೆದುಕೊಳ್ಳಲಾಗುವುದಿಲ್ಲ.</string>
   <string name="pref_notification_title">ಅಧಿಸೂಚನೆಗಳ ಗೋಚರತೆ</string>
   <string name="pref_notification_summary">ಅಪ್ಲಿಕೇಶನ್ ಅಧಿಸೂಚನೆಗಳ ಗೋಚರತೆಯನ್ನು ಲಾಕ್ ಸ್ಕ್ರೀನ್ನಲ್ಲಿ ಹೊಂದಿಸಿ.</string>
   <string name="pref_blackList_title">ಬ್ಲಾಕ್ ಪಟ್ಟಿ</string>
@@ -52,19 +51,6 @@
   <string name="notification_public">ಸಾರ್ವಜನಿಕ                                                                                                                                                                                                                                                         </string>
   <string name="notification_private">ಖಾಸಗಿ \n(ಅಧಿಸೂಚನೆಗಳನ್ನು ತೋರಿಸು ಆದರೆ ಅವುಗಳ ವಿಷಯವನ್ನು ಲಾಕ್ ಸ್ಕ್ರೀನ್ ನಲ್ಲಿ ಮರೆಮಾಡಿ) \n</string>
   <string name="notification_secret">ರಹಸ್ಯ \n(ಲಾಕ್ ಸ್ಕ್ರೀನ್ನಲ್ಲಿ ಅಧಿಸೂಚನೆಗಳನ್ನು ತೋರಿಸುವುದಿಲ್ಲ)</string>
-  <!--Plugin-->
-  <string name="pref_plugins_title">ಪ್ಲಗ್ಇನ್ಗಳು</string>
-  <string name="pref_plugins_summary">ಪ್ಲಗಿನ್ಗಳನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿ ಮತ್ತು ಅವುಗಳ ನಿಯತಾಂಕಗಳನ್ನು ಹೊಂದಿಸಿ</string>
-  <string name="fab_plugins_add">ಹೊಸ ಪ್ಲಗಿನ್ ಸೇರಿಸಿ</string>
-  <string name="plugin_uninstall_title">ಪ್ಲಗ್ಇನ್ ಅನ್ನು ಅಸ್ಥಾಪನೆ ಮಾಡು?</string>
-  <string name="plugin_reset_preferences">ಪ್ಲಗಿನ್ ಆದ್ಯತೆಗಳನ್ನು ಮರುಹೊಂದಿಸಿ</string>
-  <string name="plugin_reset_preferences_summary">ನಿಮ್ಮ ಪ್ಲಗಿನ್ ಸೆಟ್ಟಿಂಗ್ಗಳನ್ನು ಡೀಫಾಲ್ಟ್ ಮಾಡಲಾಗುವುದು</string>
-  <string name="plugin_reset_preferences_ask">ನೀವು ಸಾಮಾನ್ಯ ಪ್ಲಗಿನ್ ಸೆಟ್ಟಿಂಗ್ಗಳನ್ನು ಮರುಹೊಂದಿಸಲು ಬಯಸುವಿರಾ?</string>
-  <string name="plugin_reset_account_preferences_ask">ನೀವು ಖಾತೆ ಪ್ಲಗಿನ್ ಸೆಟ್ಟಿಂಗ್ಗಳನ್ನು ಮರುಹೊಂದಿಸಲು ಬಯಸುವಿರಾ?</string>
-  <string name="plugin_successfully_installed">ಪ್ಲಗಿನ್ <b>%1$s</b> ಯಶಸ್ವಿಯಾಗಿ ಸ್ಥಾಪಿಸಲಾಗಿದೆ</string>
-  <string name="plugin_install_failure">ಪ್ಲಗಿನ್ ಅನ್ನು ಸ್ಥಾಪಿಸಲು ವಿಫಲವಾಗಿದೆಃ <b>%1$s</b></string>
-  <string name="plugin_recent_version_exception">ನೀವು ಇತ್ತೀಚಿನ ಆವೃತ್ತಿಯನ್ನು ಹೊಂದಿದ್ದೀರಿಃ <b>%1$s</b></string>
-  <string name="plugin_same_version_exception">ನೀವು <b>%1$s</b> ನ ಅದೇ ಆವೃತ್ತಿಯನ್ನು ಸ್ಥಾಪಿಸಿದ್ದೀರಿ</string>
-  <string name="plugin_force_install">ಬಲವಂತ \ n ಅನುಸ್ಥಾಪಿಸಲು</string>
-  <string name="plugin_path_image_add">ಹೊಸ ಚಿತ್ರವನ್ನು ಸೇರಿಸಿ</string>
+  <!--Extension-->
+  <string name="extension_force_install">ಬಲವಂತ \ n ಅನುಸ್ಥಾಪಿಸಲು</string>
 </resources>

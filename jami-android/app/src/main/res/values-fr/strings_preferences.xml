@@ -27,7 +27,7 @@
   <string name="pref_startOnBoot_title">Lancer Jami au démarrage de la session</string>
   <string name="pref_startOnBoot_summary">Exécuter Jami en arrière plan au démarrage de l\'appareil.</string>
   <string name="pref_clearHistory_title">Effacer l\'historique</string>
-  <string name="pref_clearHistory_summary">Effacer l\'historique des conversation. L\'action est irréversible.</string>
+  <string name="pref_clearHistory_summary">Effacer les historiques de toutes les conversations. L\'action est irréversible.</string>
   <string name="pref_notification_title">Mode d\'affichage des notifications</string>
   <string name="pref_notification_summary">Options d\'affichage des notifications lorsque l\'écran est verrouillé.</string>
   <string name="pref_blackList_title">Liste  des comptes bloqués</string>
@@ -52,22 +52,22 @@
   <string name="notification_public">Public \n(affiche les notifications et leur contenu sur l\'écran verrouillé)\n</string>
   <string name="notification_private">Privé \n(affiche les notifications mais cache leur contenu sur l\'écran verrouillé)\n</string>
   <string name="notification_secret">Secret \n(n\'affiche pas les notifications sur l\'écran verrouillé)</string>
-  <!--Plugin-->
-  <string name="pref_plugins_title">Modules d\'extension</string>
-  <string name="pref_plugins_summary">Activer les modules d\'extension et les paramétrer</string>
-  <string name="fab_plugins_add">Ajouter un nouveau module d\'extension</string>
-  <string name="plugin_uninstall_title">Désinstaller le module d\'extension ?</string>
-  <string name="plugin_reset_preferences">Réinitialiser les paramètres du module d\'extension</string>
-  <string name="plugin_reset_preferences_summary">Vos paramètres du module d\'extension seront réinitialisés</string>
-  <string name="plugin_reset_preferences_ask">Voulez-vous réinitialiser les paramètres généraux du module d\'extension ?</string>
-  <string name="plugin_reset_account_preferences_ask">Voulez-vous réinitialiser les paramètres de compte du module d’extension ?</string>
-  <string name="plugin_successfully_installed">Le module d\'extension <b>%1$s</b> a été correctement installé</string>
-  <string name="plugin_install_failure">Échec de l\'installation du module d\'extension : <b>%1$s</b></string>
-  <string name="plugin_recent_version_exception">Une version plus récente de <b>%1$s</b> est déjà installée</string>
-  <string name="plugin_same_version_exception">La même version de <b>%1$s</b> est déjà installée</string>
-  <string name="plugin_invalid_signature"><b>%1$s</b> a une signature invalide</string>
-  <string name="plugin_invalid_authority">Impossible de vérifier l\'autorité pour : <b>%1$s</b></string>
-  <string name="plugin_invalid_format">Format du plugin invalide : <b>%1$s</b></string>
-  <string name="plugin_force_install">Forcer l\'installation</string>
-  <string name="plugin_path_image_add">Ajouter une nouvelle image</string>
+  <!--Extension-->
+  <string name="pref_extensions_title">Extensions</string>
+  <string name="pref_extensions_summary">Activer les modules d\'extension et les paramétrer</string>
+  <string name="fab_extensions_add">Ajouter un nouveau module d\'extension</string>
+  <string name="extension_uninstall_title">Désinstaller le module d\'extension ?</string>
+  <string name="extension_reset_preferences">Réinitialiser les paramètres du module d\'extension</string>
+  <string name="extension_reset_preferences_summary">Les paramètres  des extensions ont été réinitialisés à leur valeur par défaut.</string>
+  <string name="extension_reset_preferences_ask">Voulez-vous réinitialiser les paramètres généraux du module d\'extension ?</string>
+  <string name="extension_reset_account_preferences_ask">Voulez-vous réinitialiser les paramètres généraux du module d\'extension ?</string>
+  <string name="extension_successfully_installed">Le module d\'extension <b>%1$s</b> a été correctement installé</string>
+  <string name="extension_install_failure">Une erreur s\'est produite pendant l\'installation du module d\'extension : <b>%1$s</b></string>
+  <string name="extension_recent_version_exception">Une version plus récente de <b>%1$s</b> est déjà installée</string>
+  <string name="extension_same_version_exception">La même version de <b>%1$s</b> est déjà installée</string>
+  <string name="extension_invalid_signature"><b>%1$s</b> a une signature invalide</string>
+  <string name="extension_invalid_authority">Impossible de vérifier l\'autorité pour : <b>%1$s</b></string>
+  <string name="extension_invalid_format">Format du module d\'extension invalide : <b>%1$s</b></string>
+  <string name="extension_force_install">Forcer l\'installation</string>
+  <string name="extension_path_image_add">Ajouter une nouvelle image</string>
 </resources>

@@ -23,17 +23,11 @@
   <string name="dialog_wait_create_details">Сачекај да се твој нови налог дода…</string>
   <string name="dialog_wait_update">Ажурирање налога</string>
   <string name="dialog_wait_update_details">Сачекај да се твој нови налог ажурира…</string>
-  <string name="dialog_warn_ip2ip_account_title">Направи празан SIP налог?</string>
-  <string name="dialog_warn_ip2ip_account_message">Управо ћете креирати SIP налог без важећег имена хоста.
-Моћи ћете само да упућујете и примате директне IP позиве.
-Касније можете да измените свој налог</string>
   <string name="account_type_ip2ip">IP налог</string>
   <string name="help_ring">Јами налог вам омогућава да безбедно дођете до људи peer to peer преко потпуно дистрибуиране мреже.</string>
-  <string name="help_sip_title">Додај свој SIP налог</string>
+  <string name="help_sip_title">Додај SIP налог</string>
   <string name="help_sip">Конфигуриши постојећи SIP налог.</string>
-  <string name="create_sip_account">Додај SIP налог</string>
   <!--Strings related to account deletion-->
-  <string name="account_delete_dialog_title">Обрисати налог ?</string>
   <string name="account_delete_dialog_message">Ова радња се не може опозвати.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Нема регистрованог налога</string>
@@ -42,8 +36,6 @@
   <string name="account_device_revoke">Опозови уређај</string>
   <string name="account_device_revocation_success_title">Успешно</string>
   <string name="account_device_revocation_success">Уређај је сада опозван!</string>
-  <string name="account_device_revocation_error_title">Није могуће опозвати уређај</string>
-  <string name="account_device_revocation_wrong_password">Погрешна лозинка.</string>
   <string name="account_device_revocation_unknown_device">Непознат уређај.</string>
   <string name="account_device_revocation_error_unknown">Непозната грешка.</string>
   <string name="account_password_change">Промени лозинку</string>
@@ -68,8 +60,8 @@
   <string name="account_rendezvous_summary">У режиму састанка, долазни позиви ће бити додати у конференцијску собу.</string>
   <string name="account_upnp_label">Омогући UPnP</string>
   <string name="account_proxy_field">Proxy</string>
-  <!--Plugin Details-->
-  <string name="account_preference_plugin_tab">Додаци</string>
+  <!--Extension Details-->
+  <string name="account_preferences_extension_tab">Proširenja</string>
   <!--Audio Details-->
   <string name="account_audio_label">Аудио</string>
   <string name="account_preferences_media_tab">Медији</string>
@@ -150,35 +142,23 @@
   <string name="export_account_wait_message">Извоз информација о налогу</string>
   <string name="account_export_file">Налог за резервну копију</string>
   <string name="account_export_file_summary">Направи резервну копију налога на уређају да бисте га касније вратили.</string>
-  <string name="account_export_end_decryption_message">Откључавање вашег налога помоћу наведене лозинке није успело.</string>
   <string name="account_export_end_network_title">Грешка на мрежи</string>
-  <string name="account_export_end_network_message">Није могуће извести налог на мрежу. Провери да ли сте повезани.</string>
   <string name="account_export_end_error_title">Грешка</string>
-  <string name="account_export_end_error_message">Није могуће извести налог. Дошло је до непознате грешке.</string>
   <string name="account_enter_password">Унеси лозинку</string>
-  <string name="account_share_body">Контактирај ме користећи \'%1$s\' на Јами дистрибуираној комуникацијској платформи: %2$s</string>
-  <string name="account_share_body_with_username">Контактирај ме користећи \'%1$s\' или моје јавно корисничко име \'%2$s\' на Јами дистрибуираној комуникацијској платформи: %3$s</string>
-  <string name="account_contact_me">Контактирај ме на Јамију!</string>
+  <string name="account_contact_me">Контактирај ме на Џами!</string>
   <string name="update_account">Ажурирај налог</string>
   <string name="account_migration">Твој Јами налог може да се ажурира.\nУнеси своју лозинку.</string>
   <string name="ring_account">Јами налог</string>
   <string name="sip_account">SIP налог</string>
   <string name="ring_account_identity">Идентитет</string>
   <string name="account_migration_title_dialog">Пренос налога</string>
-  <string name="account_migration_message_dialog">Ваше налоге треба ажурирати. Да ли желите да одете на екран за управљање налогом да бисте извршили ову операцију?</string>
   <string name="account_update_needed">Потребно је ажурирање</string>
-  <string name="account_cannot_be_found_title">Не могу да пронађем налог</string>
-  <string name="account_cannot_be_found_message">Налог није пронађен на Јами мрежи.\nУверите се да је извезено на Јамију са постојећег уређаја и да су обезбеђени акредитиви тачни.</string>
   <string name="account_sip_cannot_be_registered_message">Овде можете наставити са процесом креирања налога или уредити своје податке. Издање је и даље могуће касније у подешавањима налога.</string>
-  <string name="account_no_network_title">Не могу да се повежем на мрежу</string>
-  <string name="account_no_network_message">Није могуће додати налог јер Јами није могао да се повеже на дистрибуирану мрежу. Проверите повезаност уређаја.</string>
+  <string name="account_no_network_title">Мрежна грешка</string>
   <string name="account_device_added_title">Уређај налога је додат</string>
   <string name="account_device_added_message">Успешно сте подесили свој Јами налог на овом уређају.</string>
   <string name="account_device_updated_title">Уређај налога је ажуриран</string>
   <string name="account_device_updated_message">Успешно сте ажурирали свој Јами налог.</string>
-  <string name="account_cannot_be_updated_message">Ажурирање уређаја налога није успело. Молимо проверите своју лозинку.</string>
-  <string name="account_sip_success_title">SIP налог регистрован</string>
-  <string name="account_sip_success_message">Успешно сте регистровали свој SIP налог.</string>
   <string name="account_sip_register_anyway">Региструј се свеједно</string>
   <!--TV-->
   <string name="account_tv_settings_header">Подешавања налога</string>
@@ -198,11 +178,8 @@
   <string name="account_link_export_button">Повежи нови уређај</string>
   <string name="account_link_show_button">Прикажи %d више повезаних уређаја</string>
   <string name="account_link_hide_button">Сакриј повезани уређај</string>
-  <string name="account_link_export_info">Да бисте користили овај налог на другим уређајима, прво га морате открити на Јами-ју. Ово ће генерисати PIN код који морате да унесете на новом уређају да бисте подесили налог. PIN важи 10 минута.</string>
   <string name="account_start_export_button">Генериши ПИН</string>
   <string name="account_end_export_button">затвори</string>
-  <string name="account_end_export_infos">Ваш PIN је:\n\n%%\n\nДа бисте довршили процес, потребно је да отворите Јами на новом уређају. Направите нови налог са „Повежи овај уређај са налогом“. Ваш PIN важи 10 минута.</string>
-  <string name="account_link_export_info_light">Да бисте користили овај налог на другим уређајима, прво га морате изложити на Јамију. Ово ће генерисати PIN  код који морате да унесете на нови налог да бисте подесили налог. PIN код је валидан следећих 10 минута.</string>
   <string name="account_export_title">Повежи налог са другим уређајима</string>
   <string name="account_connect_server_button">Повежи се са сервером за управљање</string>
   <string name="account_connect_button">Повежи</string>
@@ -234,21 +211,17 @@
   <string name="account_creation_profile">Креирај свој профил</string>
   <string name="account_creation_ring">Креирај свој Јами налог</string>
   <string name="account_link_title">Повежи овај уређај</string>
-  <string name="account_sip_cannot_be_registered">Не могу да региструјем налог</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">Уреди мој налог</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Унесите лозинку за потврду</string>
   <string name="enter_password">Унеси лозинку</string>
   <string name="revoke_device_title">Опозови уређај</string>
-  <string name="revoke_device_message">Да ли сте сигурни да желите да опозовете %1$s ?</string>
   <string name="revoke_device_wait_title">Молимо сачекај…</string>
   <string name="revoke_device_wait_message">Опозивање уређаја</string>
   <string name="rename_device_title">Преименујте овај уређај</string>
   <string name="rename_device_message">Изабери ново име да бисте идентификовали овај уређај на свом Јами налогу</string>
   <string name="rename_device_button">Преименуј уређај</string>
   <string name="account_rename_device_hint">Изабери ново име уређаја</string>
-  <string name="account_device_name_empty">Назив уређаја не може бити празан</string>
   <string name="account_device_this_indicator">Овај уређај</string>
   <string name="account_disabled_indicator">онемогућено</string>
   <!--Link a new device-->
@@ -261,12 +234,8 @@
   <string name="account_link_password">Овај налог је шифрован лозинком, унесите лозинку да бисте генерисали PIN код.</string>
   <string name="account_link_generate_button">Генериши</string>
   <string name="account_link_time_valid">PIN код ће бити неважећи: %1$s.</string>
-  <string name="account_link_device_info">Изабери „Повежи нови уређај“ из друге Јами апликације да бисте приказали QR код или PIN</string>
   <string name="account_generate_export_device">На другом уређају</string>
-  <string name="account_generate_export_info">Instalirajte i pokrenite Jami, izaberite „Uvezi sa drugog uređaja“ i skenirajte QR kod.</string>
   <string name="content_description_qr_generated">Твој Qr код</string>
-  <string name="account_generate_export_invalid">PIN више није важећи.\n Унеси лозинку и генериши другу да бисте повезали нови уређај.</string>
-  <string name="account_generate_export_invalid_two">ПИН више није важећи.\n Генериши још један да бисте повезали нови уређај.</string>
   <string name="help_pin_info">Попуните ако је налог шифрован лозинком</string>
   <string name="connect_device_scanqr">Скенирај QR код</string>
   <string name="connect_device_enterPIN">Или унесите PIN</string>

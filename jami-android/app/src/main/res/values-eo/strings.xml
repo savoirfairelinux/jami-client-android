@@ -1,27 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
-  <string name="feedback_section">Reago</string>
-  <string name="report"><u>Sendu al ni retpoŝton</u></string>
   <string name="section_license">Licenco</string>
   <string name="sponsor_section">Jami estas libera programaro evoluigita kaj apogita de</string>
   <string name="copyright_section">Kopirajto</string>
   <string name="contribute_section">Kontribui</string>
   <string name="version_section">Eldono</string>
-  <string name="no_email_app_installed">Neniu retpoŝta programo trovita, instali unu por sendi al ni raporton</string>
-  <string name="no_browser_app_installed">Neniu retumilo apliko trovita, instali unu por rigardi ĉi tiun paĝon</string>
-  <string name="email_chooser_title">Sendu poŝton uzante...</string>
-  <string name="website_chooser_title">Vidu retejon uzante...</string>
-  <string name="license">Tiu programaro estas disponigita "kiel ĝi estas", sen garantio de iu speco. Por detaloj, vidu GNU General Public License version 3 aŭ pli posta&lt;/u&gt;</string>
   <string name="description">Jami estas libera softvaro por universala komunikado, kiu respektas la liberecojn kaj privatecon de siaj uzantoj.</string>
   <string name="credits">Kredito</string>
   <string name="pip_title">Jamia konferenco</string>
   <string name="call_service_description">Tiu servo estas necesa por teni viajn alvokojn funkciantajn en la unua plano. Ĝi funkcias nur dum alvokoj.</string>
   <string name="data_transfer_service_description">Tiu servo estas necesa por montri persistajn sciigojn dum dosiertransferoj. Ĝi nur funkcias dum dosiertransferoj.</string>
   <!--About dialog-->
-  <string name="developed_by">Developed by</string>
-  <string name="designed_by">Desegnita de</string>
-  <string name="ringtones_by">Ringtones de</string>
+  <string name="media">Aŭdvidaĵoj</string>
   <!--RingActivity-->
   <string name="error_no_network">Sen reta konekto</string>
   <string name="error_account_offline">La konto estas forigita</string>
@@ -35,7 +26,6 @@
   <string name="menu_item_settings">Agordoj</string>
   <string name="menu_item_advanced_settings">Antaŭaj agordoj</string>
   <string name="menu_item_account_settings">Konto-sekcioj</string>
-  <string name="menu_item_plugin_list">Plugins Settings</string>
   <string name="menu_item_share">Dividi mian konton</string>
   <string name="menu_item_about">Pri Jami</string>
   <string name="video_setting_title">Video-aj agordoj</string>
@@ -97,17 +87,9 @@
   <string name="ongoing_call">Aktiva voko</string>
   <string name="hist_in_call">Eniranta voko de %1$s</string>
   <string name="hist_out_call">Eliranta voko de %1$s</string>
-  <string name="start_error_title">Mi ne povas komenci Jami!</string>
   <string name="start_error_mic_required">Jamj bezonas la permeson de la mikrofono por labori.</string>
-  <string name="action_call_accept">Akcepti</string>
-  <string name="action_call_accept_audio">Respondo en aŭdio</string>
-  <string name="action_call_accept_video">Respondo en video</string>
-  <string name="action_call_hold_accept">Tenu kaj prenu la vokon aŭdio</string>
-  <string name="action_call_hold_accept_video">Atendu kaj prenu la telefonon video</string>
-  <string name="action_call_end_accept">Finigu kaj prenu la telefonon</string>
   <string name="action_call_decline">Rifuzi</string>
   <string name="action_call_mic_mute">Muta mikrofono</string>
-  <string name="action_load_plugin">Ŝarĝaĵo</string>
   <string name="ab_action_speakerphone">Ŝalti laŭtparolilon</string>
   <string name="ab_action_contact_add">Aldoni al kontaktoj</string>
   <string name="ab_action_contact_add_question">Ĉu aldoni al kontaktoj?</string>
@@ -143,11 +125,8 @@
   <string name="ringtone_error_size_too_big">Tiu dosiero estas tro granda. La maksimuma grandeco estas %1$dkB.</string>
   <string name="ringtone_custom_prompt">Setu laŭmokan sonorilringon</string>
   <string name="ringtone_custom_label">Propra</string>
-  <string name="ringtone_jami_tones">Jam Tones</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Jamji bezonas la permeson \"Legu kontaktojn\" por aktivigi tiun funkcion. Bonvolu doni ĝin.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Jam bezonas la permeson \"Kribi alvokan registron\" por aktivigi tiun funkcion. Bonvolu doni ĝin.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Skanu la QR Kodon de la konto, kiun vi volas aldoni.</string>
   <string name="title_activity_qrcode">Dividi mian konton</string>
@@ -163,15 +142,13 @@
   <string name="conversation_details">Detaloj de la konversacio</string>
   <string name="contact_details">Kontakto</string>
   <string name="conversation_action_delete_this">Forigi tiu ĉi konversacion</string>
-  <string name="conversation_action_delete_this_title">Ĉu forigi tiu ĉi konversacion ?</string>
-  <string name="conversation_action_delete_this_message">Tiu ĉi ago ne povos malfariĝi.</string>
+  <string name="conversation_action_delete_this_message">Tiu ago ne povas esti inversigita.</string>
   <string name="conversation_action_history_clear">Vakigi historion</string>
   <string name="conversation_action_history_clear_title">Ĉu vi forigis la konversacian historion?</string>
   <string name="conversation_action_history_clear_message">Tio certe purigos la konversacian historion.</string>
   <string name="conversation_action_remove_this">Forigi kontakton</string>
   <string name="conversation_action_remove_this_title">Forviŝi tiun kontakton?</string>
   <string name="conversation_action_remove_this_message">Tio forviŝos la kontakton kaj definitive forviŝos la konversacian historion.</string>
-  <string name="conversation_action_copy_peer_number">Kopii numeron</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s kopiita en tondejon</string>
   <string name="conversation_action_select_peer_number">Elektu numeron</string>
   <string name="conversation_action_block_this">Kontakto blokita</string>
@@ -201,7 +178,6 @@
   <string name="conversation_contact_invited">%1$s estis invitita</string>
   <string name="conversation_contact_added">%1$s aliĝis</string>
   <string name="conversation_contact_left">%1$ estas maldekstre</string>
-  <string name="conversation_contact_banned">%1$s estis malpermesita</string>
   <string name="conversation_search_hint">Serĉu konversacion</string>
   <string name="today">Hodiaŭ</string>
   <string name="yesterday">Hieraŭ</string>
@@ -216,14 +192,12 @@
   <string name="help_password_choose">Elektu fortan pasvorton, kiun vi memorigos por protekti vian konto Jami.</string>
   <string name="help_password_enter">Enigu vian ĉefan pasvorton de la konto Jami.</string>
   <string name="help_server_enter">Enigu la URL-adreson de administradservilo.</string>
-  <string name="help_pin_enter">Enmetu la PIN-kodon de alia konfigurita konto de Jami. Uzu la funkcion \"eksportu konto de Jami\" por akiri la PIN-kodon.</string>
   <string name="wizard_next">Sekva</string>
   <string name="wizard_back">Reiri</string>
   <string name="wizard_skip">Skip</string>
   <string name="hist_contact_invited">Invitita Kontakto</string>
   <string name="hist_contact_added">Aldoni kontakton</string>
   <string name="hist_contact_left">Kontakto maldekstre</string>
-  <string name="hist_contact_banned">Kontakto malpermesita</string>
   <string name="hist_invitation_received">Invito ricevita</string>
   <!--Account Summary-->
   <string name="profile">Profilo</string>
@@ -247,20 +221,9 @@
   <string name="generic_error_migration">Eraro</string>
   <string name="generic_error_migration_message">Eraro okazis dum migrado</string>
   <string name="title_share_with">Dividu kun...</string>
-  <!--Pending contact requests-->
+  <!--Pending invitations-->
   <string name="accept">Akcepti</string>
-  <string name="refuse">Rifuzi</string>
   <string name="block">Bloko</string>
-  <string name="contact_request_title">Nova kontakto peto</string>
-  <string name="contact_request_msg">Vi havas %1$d kontaktpetojn</string>
-  <string name="contact_request_account">Por %1$s</string>
-  <string name="no_requests">Vi ne havas kontaktpetojn</string>
-  <string name="message_contact_not_trusted_yet">%s ankoraŭ ne estas en viaj kontaktoj.\nĈu vi akceptas aŭ malakceptas ĉi tiun kontaktpeton?</string>
-  <string name="message_contact_not_trusted">%s ne estas en viaj kontaktoj.\nAĉetu novan kontakton?</string>
-  <!--Send contact requests-->
-  <string name="send_request_button">Sendi</string>
-  <string name="send_request_title">Sendu kontaktan peton</string>
-  <string name="send_request_msg">Vi devas sendi kontaktpeton por komuniki kun tiu uzanto. Dum via kontakto ne akceptis la peton, vi povas sendi mesaĝojn sed li ne povos respondi.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Neniu blokita kontakto</string>
   <!--Smartlist-->
@@ -272,7 +235,6 @@
   <string name="tv_contact_row_header">Kontaktoj</string>
   <string name="gallery_error_title">Neniu Galerio-apliko trovita</string>
   <string name="gallery_error_message">Neniu apliko trovita en la aparato por malfermi Galerion</string>
-  <string name="generic_error">Okazas nekonata eraro.</string>
   <!--File Transfer-->
   <string name="invalid_file">Nelaŭdata dosiero</string>
   <string name="not_able_to_write_file">Ne povas skribi dosieron</string>
@@ -292,7 +254,6 @@
   <string name="file_saved_in">Fiilo savita en %s</string>
   <string name="file_saved_successfully">Fiilo sukcesis</string>
   <string name="file_download">Elŝutu</string>
-  <string name="no_space_left_on_device">Neniu spaco restas sur la aparato</string>
   <string name="title_media_viewer">Amaskomunikila spektanto</string>
   <string name="menu_file_open">Malfermu dosieron</string>
   <string name="menu_file_download">Malŝarĝo</string>
@@ -343,11 +304,9 @@
   <string name="wizard_profile_button">Savu profilon</string>
   <string name="wizard_profile_skip">Ne faru tion poste.</string>
   <string name="fab_path_choose">Elektu alian dosieron</string>
-  <string name="chat_plugins">Ĉat Plugins</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Kunhavi</string>
   <string name="bottomSheet_dialpad_btn">Dialpad</string>
-  <string name="bottomSheet_plugins_btn">Plugins</string>
   <string name="bottomSheet_add_participants_btn">Aldoni</string>
   <string name="bottomSheet_change_camera_btn">Ŝanĝo</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Kamerao</string>
@@ -355,17 +314,13 @@
   <string name="bottomSheet_mute_microphone_btn">Mikro</string>
   <string name="bottomSheet_sound_output_btn">Sonas</string>
   <string name="bottomSheet_raiseHand_btn">Levu la manon</string>
-  <string name="open_account_plugin_settings">Malfermu la kontojn</string>
-  <string name="open_general_plugin_settings">Malfermu ĝeneralajn Pluginsettings</string>
   <string name="uninstall">Malinstaligi</string>
   <string name="reset">Re-sekvi</string>
   <!--Swarm Detail-->
   <string name="rename_btn">Konfirmu</string>
-  <string name="rename_error">Ne eblas esti malplena</string>
-  <string name="swarm_description">Aldonu priskribon</string>
-  <string name="tab_about">Pri</string>
   <string name="tab_members">Anoj</string>
-  <string name="tab_documetn">Dokumentoj</string>
+  <string name="tab_files">Fiŝoj</string>
+  <string name="tab_settings">Agordoj</string>
   <string name="dialogtitle_title">Redakti Swarm titolon</string>
   <string name="dialogtitle_description">Redakti Swarm priskribo</string>
   <string name="dialog_hint_title">Titolo</string>
@@ -381,5 +336,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Bonvenon al Jami.</string>
   <!--Donation-->
-  <!--Plugin-->
+  <!--Extension-->
 </resources>

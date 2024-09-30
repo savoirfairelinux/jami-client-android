@@ -21,25 +21,18 @@
   <string name="dialog_wait_create_details">Яңа хисабыгыз кушылганчы, көтсәгез...</string>
   <string name="dialog_wait_update">Актуальләштерү хисабы</string>
   <string name="dialog_wait_update_details">Яңа хисабыгыз яңаланганчы, көтсәгез...</string>
-  <string name="dialog_warn_ip2ip_account_title">Ирекле SIP хисабы булдыру?</string>
-  <string name="dialog_warn_ip2ip_account_message">Сез SIP хисабыгызны булдырырга җыенасыз, ләкин гамәли исемсез. Сез тик IP-ка турыдан-туры шалтыратулар ясап һәм кабул итә аласыз.</string>
   <string name="account_type_ip2ip">IP хисабы</string>
   <string name="help_ring">Jami хисабы ярдәмендә сез кешеләргә тулы таралган челтәр аша бер-берсенә туры килә аласыз.</string>
-  <string name="help_sip_title">SIP хисабыгызны өстәргә</string>
+  <string name="help_sip_title">SIP хисабын өстәү</string>
   <string name="help_sip">Хәзерге SIP хисабын көйләү.</string>
-  <string name="create_sip_account">SIP хисабын өстәү</string>
   <!--Strings related to account deletion-->
-  <string name="account_delete_dialog_title">Хисапны бетерү?</string>
-  <string name="account_delete_dialog_message">Бу эштән баш тартырга ярамый.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Хисап язмасы юк</string>
   <string name="normal_accounts_titles">Хисаплар</string>
-  <string name="normal_devices_titles">Бергә кушылган җайланмалар</string>
+  <string name="normal_devices_titles">Бәйләнешле җайланмалар</string>
   <string name="account_device_revoke">Ачу чарасы</string>
   <string name="account_device_revocation_success_title">Уңыш</string>
   <string name="account_device_revocation_success">Хәзер бу аппаратны кире кагалар!</string>
-  <string name="account_device_revocation_error_title">Урындыкны кире кайтара алмыйм</string>
-  <string name="account_device_revocation_wrong_password">Хаталы пароль.</string>
   <string name="account_device_revocation_unknown_device">Билгесез җайланма.</string>
   <string name="account_device_revocation_error_unknown">Билгесез хата.</string>
   <string name="account_password_change">Парольне үзгәртү</string>
@@ -61,8 +54,7 @@
   <string name="account_rendezvous_summary">Очрашу режимында керүче шалтыратулар конференция бүлмәсенә кушылачак.</string>
   <string name="account_upnp_label">UPnPны кую</string>
   <string name="account_proxy_field">Прокси</string>
-  <!--Plugin Details-->
-  <string name="account_preference_plugin_tab">Плюгины</string>
+  <!--Extension Details-->
   <!--Audio Details-->
   <string name="account_audio_label">Аудиоязма</string>
   <string name="account_preferences_media_tab">Медиа</string>
@@ -142,14 +134,9 @@
   <string name="export_account_wait_message">Экспорт хисабы турында мәгълүмат</string>
   <string name="account_export_file">Яңарту хисабы</string>
   <string name="account_export_file_summary">Аккаунтыгызны соңрак торгызу өчен, үз җайланмагызга резервка күчерегез.</string>
-  <string name="account_export_end_decryption_message">Кабул ителгән пароль ярдәмендә аккаунтыгызны ача алмадым.</string>
   <string name="account_export_end_network_title">Аварияләр</string>
-  <string name="account_export_end_network_message">Шабактагы хисабын экспортлый алмадым.</string>
   <string name="account_export_end_error_title">Хата</string>
-  <string name="account_export_end_error_message">Хисапны экспортлый алмадым, билгесез хата булды.</string>
   <string name="account_enter_password">Пароль кертегез</string>
-  <string name="account_share_body">Jami таратылган коммуникация платформасында \'%1$s\' кулланып, миңа мөрәҗәгать итегез: %2$s</string>
-  <string name="account_share_body_with_username">Jami таратулы коммуникация платформасында миңа \"%1$s\" яки минем ачык кулланучы исемем \"%2$s\" кулланып мөрәҗәгать итегез: %3$s</string>
   <string name="account_contact_me">Җәми белән элемтәгә керегез!</string>
   <string name="update_account">Аккаунтны яңарту</string>
   <string name="account_migration">Сезнең Jami хисабыгыз яңартыла ала.</string>
@@ -157,20 +144,13 @@
   <string name="sip_account">СИП хисабы</string>
   <string name="ring_account_identity">Идентификация</string>
   <string name="account_migration_title_dialog">Хисапны күчерү</string>
-  <string name="account_migration_message_dialog">Бу операцияне башкару өчен, сез хисапны идарә итү экраннарына кереп, бу операцияне башкарырга телисезме?</string>
   <string name="account_update_needed">Яңалык кирәк</string>
-  <string name="account_cannot_be_found_title">Бу хакта җавап таба алмыйм.</string>
-  <string name="account_cannot_be_found_message">Җәминең челтәрендә хисапны таба алмадылар. Җәмигә инде булган бер җайланмадан экспортталганлыгын һәм аның идентификациясе дөрес булуын тикшерегез.</string>
   <string name="account_sip_cannot_be_registered_message">Бу сайтта сез хисапны булдыру процессын дәвам итә аласыз яки мәгълүматны үзгәртә аласыз.</string>
-  <string name="account_no_network_title">Шабакага тоташа алмыйбыз.</string>
-  <string name="account_no_network_message">Җәминең таратылган челтәргә тоташа алмавы аркасында, хисапны өстәп булмый.</string>
+  <string name="account_no_network_title">Аварияләр</string>
   <string name="account_device_added_title">Аккаунт төре өстәлгән</string>
   <string name="account_device_added_message">Сез бу җайланмага Jami хисабыгызны уңышлы урнаштырдыгыз.</string>
   <string name="account_device_updated_title">Аккаунт төре яңартылган</string>
   <string name="account_device_updated_message">Син Җәми хисабыңны уңышлы яңарттың.</string>
-  <string name="account_cannot_be_updated_message">Аккаунт җайланмасы яңартылмады.</string>
-  <string name="account_sip_success_title">СИП хисабы теркәлгән</string>
-  <string name="account_sip_success_message">Син үз \"Sip\" хисабыңны уңышлы теркәдең.</string>
   <string name="account_sip_register_anyway">Һәрхәлдә теркәл.</string>
   <!--TV-->
   <string name="account_tv_settings_header">Хисапны урнаштыру</string>
@@ -190,11 +170,8 @@
   <string name="account_link_export_button">Яңа җайланманы тоташтыру</string>
   <string name="account_link_show_button">%d күбрәк бәйләнгән җайланманы күрсәтү</string>
   <string name="account_link_hide_button">Яшереп куелган җайланма</string>
-  <string name="account_link_export_info">Бу хисапны башка җайланмаларда кулланыр өчен, башта аны Jamiда күрсәтергә кирәк. Бу яңа җайланмага PIN кодын кертергә тиеш.</string>
   <string name="account_start_export_button">ПИНны булдыру</string>
   <string name="account_end_export_button">якын</string>
-  <string name="account_end_export_infos">Сезнең PIN:\n\n%%\n\nПроцессны тәмамлар өчен, сезгә яңа җайланмада Jami ачуыгыз кирәк. \"Бу җайланманы хисапка тоташтыру\" белән яңа хисапны булдырыгыз. Сезнең PIN 10 минут дәвамында гамәлдә.</string>
-  <string name="account_link_export_info_light">Бу хисапны башка җайланмаларда кулланыр өчен, башта аны Jamiда күрсәтергә кирәк. Бу яңа җайланмага PIN кодын кертергә тиеш.</string>
   <string name="account_export_title">Башка җайланмалар белән бәйләнеш хисабы</string>
   <string name="account_connect_server_button">Идарә серверына тоташтыру</string>
   <string name="account_connect_button">Бәйләнешкә кертү</string>
@@ -226,21 +203,17 @@
   <string name="account_creation_profile">Профиль төзегез</string>
   <string name="account_creation_ring">Jami хисабыгызны булдырыгыз</string>
   <string name="account_link_title">Бу җайланманы тоташтырыгыз</string>
-  <string name="account_sip_cannot_be_registered">Аккаунтны теркәп булмый.</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">Минем хисабымны үзгәртү</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Ышаныч бирү өчен пароль кертегез</string>
   <string name="enter_password">Пароль кертегез</string>
   <string name="revoke_device_title">Ачу чарасы</string>
-  <string name="revoke_device_message">%1$s ны кире кагуыгыз киләме?</string>
   <string name="revoke_device_wait_title">Сөйләмнәр.</string>
   <string name="revoke_device_wait_message">Искәртү аппараты</string>
   <string name="rename_device_title">Бу җайланманы үзгәртеп атагыз</string>
   <string name="rename_device_message">Бу җайланманы Jami хисабында танып белер өчен яңа исем сайлагыз</string>
   <string name="rename_device_button">Исем кую җайланмасы</string>
   <string name="account_rename_device_hint">Яңа җайланма исемен сайлагыз</string>
-  <string name="account_device_name_empty">Кушымта исеме буш була алмый</string>
   <string name="account_device_this_indicator">Бу корал</string>
   <string name="account_disabled_indicator">инвалид</string>
   <!--Link a new device-->

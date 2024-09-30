@@ -27,7 +27,6 @@
   <string name="pref_startOnBoot_title">Käynnistä Jami käynnistyksen yhteydessä</string>
   <string name="pref_startOnBoot_summary">Aja Jami taustalle, kun järjestelmä käynnistyy.</string>
   <string name="pref_clearHistory_title">Tyhjennä historia</string>
-  <string name="pref_clearHistory_summary">Tyhjennä koko keskusteluhistoria. Tätä toimintoa ei voi peruuttaa.</string>
   <string name="pref_notification_title">Ilmoituksen näkyvyys</string>
   <string name="pref_notification_summary">Aseta ilmoitusten näkyvyys lukitusruudulle.</string>
   <string name="pref_blackList_title">Estolista</string>
@@ -52,19 +51,6 @@
   <string name="notification_public">Julkinen \n(näytä ilmoitukset ja niiden sisältö lukitusruudulla)\n</string>
   <string name="notification_private">Yksityinen \n(näytä ilmoitukset, mutta piilottaa sisältö lukitusnäytöllä)\n</string>
   <string name="notification_secret">Salainen \n(älä näytä ilmoituksia lukitusnäytöllä)</string>
-  <!--Plugin-->
-  <string name="pref_plugins_title">Lisäosat</string>
-  <string name="pref_plugins_summary">Salli lisäosat ja aseta niiden parametrit</string>
-  <string name="fab_plugins_add">Lisää uusi lisäosa</string>
-  <string name="plugin_uninstall_title">Poista lisäosa ?</string>
-  <string name="plugin_reset_preferences">Nollaa lisäosan asetukset</string>
-  <string name="plugin_reset_preferences_summary">Lisäosasi asetukset palautetaan oletukseksi</string>
-  <string name="plugin_reset_preferences_ask">Haluatko nollata laajennuksen asetukset?</string>
-  <string name="plugin_reset_account_preferences_ask">Haluatko nollata tilin laajennuksen asetukset?</string>
-  <string name="plugin_successfully_installed">Lisäosa <b>%1$s</b> asennettu onnistuneesti</string>
-  <string name="plugin_install_failure">Lisäosan asennus epäonnistui: <b>%1$s</b></string>
-  <string name="plugin_recent_version_exception">Sinulla on uudempi versio: <b>%1$s</b></string>
-  <string name="plugin_same_version_exception">Sinulla on sama versio <b>%1$s</b> asennettuna</string>
-  <string name="plugin_force_install">pakota \n asennus</string>
-  <string name="plugin_path_image_add">Lisää uusi kuva</string>
+  <!--Extension-->
+  <string name="extension_force_install">pakota \n asennus</string>
 </resources>

@@ -27,7 +27,6 @@
   <string name="pref_startOnBoot_title">Стартиране на Jami при включване</string>
   <string name="pref_startOnBoot_summary">Jami стартира във фонов режим, когато системата се включи.</string>
   <string name="pref_clearHistory_title">Изчистване на историята</string>
-  <string name="pref_clearHistory_summary">Изтри всички разговори, не може да се отмени.</string>
   <string name="pref_notification_title">Видимост на уведомленията</string>
   <string name="pref_notification_summary">Настройка на видимостта на уведомленията за приложения на екрана за заключване.</string>
   <string name="pref_blackList_title">Списък на блокиране</string>
@@ -52,19 +51,6 @@
   <string name="notification_public">Публични \n(показване на уведомленията и тяхното съдържание на екрана за заключване)\n</string>
   <string name="notification_private">Приватни \n(показват уведомления, но скриват съдържанието им на екрана за заключване)\n</string>
   <string name="notification_secret">Тайна \n(не показват уведомления на екрана за заключване)</string>
-  <!--Plugin-->
-  <string name="pref_plugins_title">Включватели</string>
-  <string name="pref_plugins_summary">Осигуряване на плагините и настройка на техните параметри</string>
-  <string name="fab_plugins_add">Добавете нов плагин</string>
-  <string name="plugin_uninstall_title">Отключи инсталирането на плагината?</string>
-  <string name="plugin_reset_preferences">Презареждане на предпочитанията на плагин</string>
-  <string name="plugin_reset_preferences_summary">Настройките на вашия плагин ще бъдат дефолтирани</string>
-  <string name="plugin_reset_preferences_ask">Искаш ли да рестартираш общите настройки на плагината?</string>
-  <string name="plugin_reset_account_preferences_ask">Искаш ли да рестартираш настройките на плагин за акаунта?</string>
-  <string name="plugin_successfully_installed">Успешно инсталиран плагин <b>%1$s</b></string>
-  <string name="plugin_install_failure">Не успях да инсталирам плагин: <b>%1$s</b></string>
-  <string name="plugin_recent_version_exception">Имате по-новата версия на: <b>%1$s</b></string>
-  <string name="plugin_same_version_exception">Инсталирана е същата версия на <b>%1$s</b></string>
-  <string name="plugin_force_install">принудително \n инсталиране</string>
-  <string name="plugin_path_image_add">Добавете ново изображение</string>
+  <!--Extension-->
+  <string name="extension_force_install">принудително \n инсталиране</string>
 </resources>

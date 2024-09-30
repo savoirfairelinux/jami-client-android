@@ -21,18 +21,12 @@
   <string name="dialog_wait_create_details">Sila tunggu ketika akaun anda sedang dicipta…</string>
   <string name="dialog_wait_update">Kemaskini akaun</string>
   <string name="dialog_wait_update_details">Sila tunggu ketika akaun baharu anda sedang dikemaskini…</string>
-  <string name="dialog_warn_ip2ip_account_title">Cipta akaun SIP kosong ?</string>
-  <string name="dialog_warn_ip2ip_account_message">Anda sedang mencuba untuk mencipta akaun SIP tanpa alamat server yang sah.
-Anda hanya akan dapat menerima panggilan masuk secara terus sahaja.
-Anda masih akan dapat mengubah maklumat akaun anda pada masa hadapan</string>
   <string name="account_type_ip2ip">ഐപി അക്കൌണ്ട്</string>
   <string name="help_ring">ജാമി അക്കൌണ്ട് നിങ്ങളെ ഒരു പൂർണ്ണമായി വിതരണം ചെയ്ത നെറ്റ് വർക്കിലൂടെ സുരക്ഷിതമായി ആളുകളുമായി ബന്ധപ്പെടാൻ അനുവദിക്കുന്നു.</string>
-  <string name="help_sip_title">Tambah akaun SIP anda</string>
+  <string name="help_sip_title">SIP അക്കൌണ്ട് ചേർക്കുക</string>
   <string name="help_sip">Tetapkan maklumat akaun SIP yang telah sedia ada.</string>
-  <string name="create_sip_account">SIP അക്കൌണ്ട് ചേർക്കുക</string>
   <!--Strings related to account deletion-->
-  <string name="account_delete_dialog_title">Hapus akaun ?</string>
-  <string name="account_delete_dialog_message">Aksi ini tidak akan dapat dibuat ulang.</string>
+  <string name="account_delete_dialog_message">ഈ നടപടി മാറ്റാന് കഴിയില്ല.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Tiada akaun didaftarkan</string>
   <string name="normal_accounts_titles">Akaun</string>
@@ -40,8 +34,6 @@ Anda masih akan dapat mengubah maklumat akaun anda pada masa hadapan</string>
   <string name="account_device_revoke">പിൻവലിക്കൽ ഉപകരണം</string>
   <string name="account_device_revocation_success_title">വിജയം</string>
   <string name="account_device_revocation_success">ഉപകരണം ഇപ്പോൾ പിൻവലിച്ചു!</string>
-  <string name="account_device_revocation_error_title">ഉപകരണം പിൻവലിക്കാൻ കഴിയില്ല</string>
-  <string name="account_device_revocation_wrong_password">തെറ്റായ പാസ്വേഡ്.</string>
   <string name="account_device_revocation_unknown_device">അജ്ഞാതമായ ഉപകരണം.</string>
   <string name="account_device_revocation_error_unknown">അജ്ഞാതമായ പിശക്.</string>
   <string name="account_password_change">പാസ്വേഡ് മാറ്റുക</string>
@@ -63,8 +55,7 @@ Anda masih akan dapat mengubah maklumat akaun anda pada masa hadapan</string>
   <string name="account_rendezvous_summary">റെൻഡിവസ് മോഡിൽ, വരുന്ന കോളുകൾ ഒരു കോൺഫറൻസ് റൂമിലേക്ക് ചേർക്കും.</string>
   <string name="account_upnp_label">Aktifkan UPnP</string>
   <string name="account_proxy_field">Proksi</string>
-  <!--Plugin Details-->
-  <string name="account_preference_plugin_tab">പ്ലഗിൻ</string>
+  <!--Extension Details-->
   <!--Audio Details-->
   <string name="account_audio_label">Bunyi</string>
   <string name="account_preferences_media_tab">Media</string>
@@ -144,35 +135,23 @@ Anda masih akan dapat mengubah maklumat akaun anda pada masa hadapan</string>
   <string name="export_account_wait_message">കയറ്റുമതി അക്കൌണ്ട് വിവരങ്ങൾ</string>
   <string name="account_export_file">ബാക്കപ്പ് അക്കൌണ്ട്</string>
   <string name="account_export_file_summary">പിന്നീട് അത് പുനഃസ്ഥാപിക്കാനായി നിങ്ങളുടെ ഉപകരണത്തില് നിങ്ങളുടെ അക്കൌണ്ട് ബാക്കപ്പ് ചെയ്യുക.</string>
-  <string name="account_export_end_decryption_message">Tidak dapat menyahsulitkan akaun anda dengan kata laluan yang diberikan.</string>
   <string name="account_export_end_network_title">Rangkaian gagal</string>
-  <string name="account_export_end_network_message">Tidak dapat mengeksport akaun anda kepada rangkaian agihan. Sila periksa jaringan rangkaian anda.</string>
   <string name="account_export_end_error_title">Gagal</string>
-  <string name="account_export_end_error_message">Tidak dapat mengeksport akaun. Kegagalan yang tidak diketahui telah berlaku.</string>
   <string name="account_enter_password">Masukkan kata laluan</string>
-  <string name="account_share_body">ജാമി വിതരണം ചെയ്ത ആശയവിനിമയ പ്ലാറ്റ്ഫോമിലെ \'%1$s\' ഉപയോഗിച്ച് എന്നെ ബന്ധപ്പെടുകഃ %2$s</string>
-  <string name="account_share_body_with_username">ജാമി വിതരണം ചെയ്ത ആശയവിനിമയ പ്ലാറ്റ്ഫോമിലെ \'%1$s\' അല്ലെങ്കിൽ \'%2$s\' എന്ന പൊതു ഉപയോക്തൃനാമം ഉപയോഗിച്ച് എന്നെ ബന്ധപ്പെടുകഃ %3$s</string>
-  <string name="account_contact_me">ജാമി എന്നിവിടത്ത് എന്നെ ബന്ധപ്പെടുക!</string>
+  <string name="account_contact_me">ജാമി എന്നിവിടങ്ങളിൽ എന്നെ ബന്ധപ്പെടുക!</string>
   <string name="update_account">Kemaskini akaun</string>
   <string name="account_migration">നിങ്ങളുടെ ജാമി അക്കൌണ്ട് അപ്ഡേറ്റ് ചെയ്യാം. ദയവായി നിങ്ങളുടെ പാസ്വേഡ് നൽകുക.</string>
   <string name="ring_account">ജാമി അക്കൌണ്ട്</string>
   <string name="sip_account">എസ്ഐപി അക്കൌണ്ട്</string>
   <string name="ring_account_identity">ഐഡന്റിറ്റി</string>
   <string name="account_migration_title_dialog">Permindahan akaun</string>
-  <string name="account_migration_message_dialog">നിങ്ങളുടെ അക്കൌണ്ടുകള് അപ്ഡേറ്റ് ചെയ്യേണ്ടതുണ്ട്. ഈ പ്രവർത്തനം നടത്താന് അക്കൌണ്ട് മാനേജ്മെന്റ് സ്ക്രീനിലേക്ക് പോകണോ?</string>
   <string name="account_update_needed">Kemaskini diperlukan</string>
-  <string name="account_cannot_be_found_title">Akaun tidak ditemui</string>
-  <string name="account_cannot_be_found_message">ജാമി നെറ്റ്വർക്കിൽ അക്കൌണ്ട് കണ്ടെത്താനായില്ല. ജാമി നെറ്റ്വർക്കിൽ നിന്നും അത് കയറ്റുമതി ചെയ്തതായി ഉറപ്പുവരുത്തുക.</string>
   <string name="account_sip_cannot_be_registered_message">അക്കൌണ്ട് സൃഷ്ടിക്കൽ പ്രക്രിയ തുടരുകയോ നിങ്ങളുടെ വിവരങ്ങൾ ഇവിടെ എഡിറ്റുചെയ്യുകയോ ചെയ്യാം. അക്കൌണ്ട് ക്രമീകരണങ്ങളിൽ പിന്നീട് എഡിഷൻ ഇപ്പോഴും സാധ്യമാണ്.</string>
-  <string name="account_no_network_title">Tidak dapat berhubung dengan rangkaian</string>
-  <string name="account_no_network_message">ജാമിക്ക് വിതരണം ചെയ്ത നെറ്റ്വർക്കിലേക്ക് കണക്ട് ചെയ്യാനായില്ല.</string>
+  <string name="account_no_network_title">Rangkaian gagal</string>
   <string name="account_device_added_title">Berjaya menambah perangkat akaun</string>
   <string name="account_device_added_message">ഈ ഉപകരണത്തില് നിങ്ങള് ജാമി അക്കൌണ്ട് സജ്ജീകരിച്ചു.</string>
   <string name="account_device_updated_title">Akaun perangkat telah dikemaskinikan</string>
   <string name="account_device_updated_message">നിങ്ങള് ജാമി അക്കൌണ്ട് വിജയകരമായി അപ്ഡേറ്റ് ചെയ്തു.</string>
-  <string name="account_cannot_be_updated_message">അക്കൌണ്ട് ഉപകരണം അപ്ഡേറ്റ് ചെയ്തിട്ടില്ല. ദയവായി നിങ്ങളുടെ പാസ്വേഡ് പരിശോധിക്കുക.</string>
-  <string name="account_sip_success_title">സിപി അക്കൌണ്ട് രജിസ്റ്റർ ചെയ്തു</string>
-  <string name="account_sip_success_message">നിങ്ങള് നിങ്ങളുടെ സിപ് അക്കൌണ്ട് വിജയകരമായി രജിസ്റ്റര് ചെയ്തു.</string>
   <string name="account_sip_register_anyway">എന്തായാലും രജിസ്റ്റർ ചെയ്യുക</string>
   <!--TV-->
   <string name="account_tv_settings_header">അക്കൌണ്ട് ക്രമീകരണങ്ങൾ</string>
@@ -192,11 +171,8 @@ Anda masih akan dapat mengubah maklumat akaun anda pada masa hadapan</string>
   <string name="account_link_export_button">പുതിയ ഉപകരണം ബന്ധിപ്പിക്കുക</string>
   <string name="account_link_show_button">%d കൂടുതൽ ലിങ്കുചെയ്ത ഉപകരണം കാണിക്കുക</string>
   <string name="account_link_hide_button">ബന്ധിപ്പിച്ചിരിക്കുന്ന ഉപകരണം മറയ്ക്കുക</string>
-  <string name="account_link_export_info">മറ്റ് ഉപകരണങ്ങളിൽ ഈ അക്കൌണ്ട് ഉപയോഗിക്കുന്നതിന്, നിങ്ങൾ ആദ്യം അത് ജാമിയിൽ തുറക്കണം. ഇത് ഒരു പിൻ കോഡ് സൃഷ്ടിക്കും. അക്കൌണ്ട് സജ്ജീകരിക്കുന്നതിന് നിങ്ങൾ പുതിയ ഉപകരണത്തിൽ നൽകണം. പിൻ 10 മിനിറ്റ് സാധുവാണ്.</string>
   <string name="account_start_export_button">പി. എൻ. എ. സൃഷ്ടിക്കുക</string>
   <string name="account_end_export_button">tutup</string>
-  <string name="account_end_export_infos">നിങ്ങളുടെ PIN:\n\n%%\n\nപ്രക്രിയ പൂർത്തിയാക്കുന്നതിന്, നിങ്ങൾ പുതിയ ഉപകരണത്തിൽ ജാമി തുറക്കണം. \"ഈ ഉപകരണം ഒരു അക്കൌണ്ടിലേക്ക് ലിങ്ക് ചെയ്യുക\" എന്നതിലൂടെ ഒരു പുതിയ അക്കൌണ്ട് സൃഷ്ടിക്കുക. നിങ്ങളുടെ PIN 10 മിനിറ്റ് സാധുവാണ്.</string>
-  <string name="account_link_export_info_light">മറ്റ് ഉപകരണങ്ങളിൽ ഈ അക്കൌണ്ട് ഉപയോഗിക്കുന്നതിന്, നിങ്ങൾ ആദ്യം അത് ജാമിയിൽ തുറക്കണം. ഇത് ഒരു പിൻ കോഡ് സൃഷ്ടിക്കും. അക്കൌണ്ട് സജ്ജീകരിക്കുന്നതിന് നിങ്ങൾ പുതിയ ഉപകരണത്തിൽ നൽകണം. പിൻ 10 മിനിറ്റ് സാധുവാണ്.</string>
   <string name="account_export_title">മറ്റ് ഉപകരണങ്ങളുമായി ലിങ്ക് അക്കൌണ്ട്</string>
   <string name="account_connect_server_button">മാനേജ്മെന്റ് സെർവറുമായി ബന്ധിപ്പിക്കുക</string>
   <string name="account_connect_button">ബന്ധിപ്പിക്കുക</string>
@@ -228,21 +204,17 @@ Anda masih akan dapat mengubah maklumat akaun anda pada masa hadapan</string>
   <string name="account_creation_profile">നിങ്ങളുടെ പ്രൊഫൈല് സൃഷ്ടിക്കുക</string>
   <string name="account_creation_ring">നിങ്ങളുടെ ജാമി അക്കൌണ്ട് സൃഷ്ടിക്കുക</string>
   <string name="account_link_title">ഈ ഉപകരണം ബന്ധിപ്പിക്കുക</string>
-  <string name="account_sip_cannot_be_registered">അക്കൌണ്ട് രജിസ്റ്റർ ചെയ്യാൻ പറ്റുന്നില്ല</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">എന്റെ അക്കൌണ്ട് തിരുത്തുക</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">സ്ഥിരീകരിക്കാനായി പാസ്വേഡ് നൽകുക</string>
   <string name="enter_password">Masukkan kata laluan</string>
   <string name="revoke_device_title">പിൻവലിക്കൽ ഉപകരണം</string>
-  <string name="revoke_device_message">% 1$- നെ പിൻവലിക്കാൻ താങ്കൾക്ക് ഉറപ്പുണ്ടോ?</string>
   <string name="revoke_device_wait_title">Sila tunggu...</string>
   <string name="revoke_device_wait_message">പിൻവലിക്കൽ ഉപകരണം</string>
   <string name="rename_device_title">ഈ ഉപകരണം പുനർനാമകരണം ചെയ്യുക</string>
   <string name="rename_device_message">നിങ്ങളുടെ ജാമി അക്കൌണ്ടിൽ ഈ ഉപകരണം തിരിച്ചറിയുന്നതിനായി ഒരു പുതിയ പേര് തിരഞ്ഞെടുക്കുക</string>
   <string name="rename_device_button">പേരുമാറ്റ ഉപകരണം</string>
   <string name="account_rename_device_hint">പുതിയ ഉപകരണ നാമം തിരഞ്ഞെടുക്കുക</string>
-  <string name="account_device_name_empty">ഉപകരണത്തിന്റെ പേര് ശൂന്യമായിരിക്കരുത്</string>
   <string name="account_device_this_indicator">ഈ ഉപകരണം</string>
   <string name="account_disabled_indicator">വൈകല്യമുള്ളവർ</string>
   <!--Link a new device-->

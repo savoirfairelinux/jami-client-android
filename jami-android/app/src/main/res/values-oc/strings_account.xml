@@ -21,15 +21,11 @@
   <string name="dialog_wait_create_details">Esperatz pendent la creacion del compte…</string>
   <string name="dialog_wait_update">Mesa a nivèl del compte</string>
   <string name="dialog_wait_update_details">Espèri que lo nòu compte siá actualizat...</string>
-  <string name="dialog_warn_ip2ip_account_title">Crear un compte SIP vacat?</string>
-  <string name="dialog_warn_ip2ip_account_message">Se creatz un compte SIP sens nom d\'host valid. Podètz far e recebre solament de trucas IP dirèctas. Podètz modificar lo vòstre compte mai tard</string>
   <string name="account_type_ip2ip">Conta IP</string>
   <string name="help_ring">Un compte Jami vos permet de contactar de personas en securitat per un biais de comunicacion entièrament distribuit.</string>
-  <string name="help_sip_title">Ajustar lo vòstre compte SIP</string>
+  <string name="help_sip_title">Ajustar compte SIP</string>
   <string name="help_sip">Configurar un compte SIP existent.</string>
-  <string name="create_sip_account">Ajustar compte SIP</string>
   <!--Strings related to account deletion-->
-  <string name="account_delete_dialog_title">Suprimir lo compte ?</string>
   <string name="account_delete_dialog_message">Aquesta accion se pòt pas desvolopar.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Pas de compte inscrich</string>
@@ -38,8 +34,6 @@
   <string name="account_device_revoke">Dispositiu de revocacion</string>
   <string name="account_device_revocation_success_title">Succès</string>
   <string name="account_device_revocation_success">L\'aparelh es ara revocat!</string>
-  <string name="account_device_revocation_error_title">Pas de revòlta de dispositiu</string>
-  <string name="account_device_revocation_wrong_password">Pas la bona paròli.</string>
   <string name="account_device_revocation_unknown_device">Dispositiu desconegut.</string>
   <string name="account_device_revocation_error_unknown">Error desconegut.</string>
   <string name="account_password_change">Cambiar la contrassegura</string>
@@ -61,8 +55,7 @@
   <string name="account_rendezvous_summary">En mòde Rendezvous, las chamadas entrant seràn ajudas a una sala de conferéncias.</string>
   <string name="account_upnp_label">Abilitar UPnP</string>
   <string name="account_proxy_field">Servidor mandatari</string>
-  <!--Plugin Details-->
-  <string name="account_preference_plugin_tab">Extensions</string>
+  <!--Extension Details-->
   <!--Audio Details-->
   <string name="account_audio_label">Àudio</string>
   <string name="account_preferences_media_tab">Mèdia</string>
@@ -142,35 +135,23 @@
   <string name="export_account_wait_message">Informacions de compte d\'exportacion</string>
   <string name="account_export_file">Compte de backup</string>
   <string name="account_export_file_summary">Fau una copia de seguretat de vòstre compte sul vòstre dispositiu per lo restaurar mai tard.</string>
-  <string name="account_export_end_decryption_message">Podèm pas desbloquejar ton compte amb lo mot de passe donat.</string>
   <string name="account_export_end_network_title">Error ret</string>
-  <string name="account_export_end_network_message">Podèm pas exportar lo compte dins lo sistèma.</string>
   <string name="account_export_end_error_title">Error</string>
-  <string name="account_export_end_error_message">Pas pogut exportar lo compte. Un error desconegut se produch.</string>
   <string name="account_enter_password">Introducir la contraròtle</string>
-  <string name="account_share_body">Contacta-me en utilizant \'%1$s\' sus la plataforma de comunicacion distribuida de Jami: %2$s</string>
-  <string name="account_share_body_with_username">Me contactar amb \'%1$s\' o mon nom d\'utilizaire public \'%2$s\' sus la plataforma de comunicacion distribuida de Jami: %3$s</string>
-  <string name="account_contact_me">Contacta-me sus Jami!</string>
+  <string name="account_contact_me">Contactatz-me sus Jami !</string>
   <string name="update_account">Actualizacion de compte</string>
   <string name="account_migration">Ton compte Jami se pòt actualizar.\nEntratz la vòstra senha.</string>
   <string name="ring_account">Compte Jami</string>
   <string name="sip_account">Conta SIP</string>
   <string name="ring_account_identity">Identificacion</string>
   <string name="account_migration_title_dialog">Migracion de compte</string>
-  <string name="account_migration_message_dialog">Vos cal actualizar los comptes. Volián anar a l\' ecran de gestion de compte per realizar aquesta operacion?</string>
   <string name="account_update_needed">Actualizacion necessària</string>
-  <string name="account_cannot_be_found_title">Impossible de trobar aqueste compte</string>
-  <string name="account_cannot_be_found_message">L\'account se trobava pas sul sistèma de Jami. Avètz de segur qu\'èra exportat sus Jami d\'un dispositiu existent, e que las credencials son corrèctas.</string>
   <string name="account_sip_cannot_be_registered_message">Podètz contunhar amb lo procediment de creacion d\'un compte o modificar las vòstras informacions aquí.</string>
-  <string name="account_no_network_title">Connexion impossibla a la ret</string>
-  <string name="account_no_network_message">Podèm pas ajustar un compte perque Jami se pòt pas connectar al sistèma distribuit.</string>
+  <string name="account_no_network_title">Error ret</string>
   <string name="account_device_added_title">Dispositiu de compte ajustat</string>
   <string name="account_device_added_message">Avètz creat amb succès lo vòstre compte Jami sus aqueste dispositiu.</string>
   <string name="account_device_updated_title">Dispositiu de compte actualizat</string>
   <string name="account_device_updated_message">Avètz actualizat amb succès lo vòstre compte Jami.</string>
-  <string name="account_cannot_be_updated_message">Lo dispositiu de compte se pòt pas actualizar.</string>
-  <string name="account_sip_success_title">Compte Sip inscrich</string>
-  <string name="account_sip_success_message">Vos avètz enregistrat amb succès lo compte Sip.</string>
   <string name="account_sip_register_anyway">Registratz-vos de tot biais</string>
   <!--TV-->
   <string name="account_tv_settings_header">Configuracion del compte</string>
@@ -190,11 +171,8 @@
   <string name="account_link_export_button">Ligam un dispositiu novèl</string>
   <string name="account_link_show_button">Mostrar %d d\' autre dispositiu ligat</string>
   <string name="account_link_hide_button">Escondir un dispositiu ligat</string>
-  <string name="account_link_export_info">Per utilizar aquel compte sus d\'autres dispositius, cal d\'en primièr l\'explicar sus Jami. Aquò generarà un còde PIN que cal inserir sul nòu dispositiu per configurar l\'account. Lo PIN es valid pendent 10 minutas.</string>
   <string name="account_start_export_button">Generar lo PIN</string>
   <string name="account_end_export_button">près</string>
-  <string name="account_end_export_infos">Lo PIN es:\n\n%%\n\nPer completar lo procediment, cal obrir Jami sul nòu dispositiu. Crea un nòu compte amb \"Connect this device to an account\". Lo PIN es valide pendent 10 minutas.</string>
-  <string name="account_link_export_info_light">Per utilizar aquel compte sus d\'autres dispositius, cal d\'en primièr l\'explicar sus Jami. Aquò generarà un còde PIN que cal inserir sul nòu dispositiu per configurar l\'account. Lo PIN es valid pendent 10 minutas.</string>
   <string name="account_export_title">Conta de ligam a d\'autres dispositius</string>
   <string name="account_connect_server_button">Conectar al servidor de gestion</string>
   <string name="account_connect_button">Se connectar</string>
@@ -226,21 +204,17 @@
   <string name="account_creation_profile">Creacion de ton perfil</string>
   <string name="account_creation_ring">Creacion de ton compte Jami</string>
   <string name="account_link_title">Ligam aqueste dispositiu</string>
-  <string name="account_sip_cannot_be_registered">Pòdi pas enregistrar compte</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">Modificar mon compte</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Introducir lo mot de passe per confirmar</string>
   <string name="enter_password">Introducir la contraròtle</string>
   <string name="revoke_device_title">Dispositiu de revocacion</string>
-  <string name="revoke_device_message">S\' es segur que volètz revocar %1$s?</string>
   <string name="revoke_device_wait_title">Espèri...</string>
   <string name="revoke_device_wait_message">Dispositiu de revocacion</string>
   <string name="rename_device_title">Renomenar aqueste dispositiu</string>
   <string name="rename_device_message">Escotar un nom novèl per identificar aqueste dispositiu dins lo vòstre compte Jami</string>
   <string name="rename_device_button">Dispositiu de renomenatge</string>
   <string name="account_rename_device_hint">Seleccionar lo nom de l\' aparelh</string>
-  <string name="account_device_name_empty">Lo nom de l\'aparat pòt pas èsser vacat</string>
   <string name="account_device_this_indicator">Aqueste dispositiu</string>
   <string name="account_disabled_indicator">invalid</string>
   <!--Link a new device-->

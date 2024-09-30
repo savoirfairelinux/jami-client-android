@@ -1,16 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
-  <string name="feedback_section">Сапар</string>
-  <string name="report">Бізге электрондық пошта жіберіңіз</string>
   <string name="section_license">Лицензия</string>
   <string name="sponsor_section">Jami - бұл еркін бағдарламалық қамтамасыз ету</string>
   <string name="copyright_section">Авторлық құқық</string>
   <string name="contribute_section">Қосымша</string>
   <string name="version_section">нұсқасы</string>
-  <string name="no_email_app_installed">Электрондық пошта қолданбасы табылмады, хабарлау үшін бірін орнату</string>
   <string name="no_browser_app_installed">Веб-браузердің қолданбасы табылмады, осы бетті қарау үшін бірін орнату</string>
-  <string name="email_chooser_title">Хатты...</string>
   <string name="website_chooser_title">Веб-сайтты пайдалану арқылы қарау...</string>
   <string name="license">Бұл бағдарламалық жасақтама "барлығындай", ешқандай кепілдіксіз ұсынылады. Толығырақ білу үшін GNU жалпы қоғамдық лицензиясының 3 немесе одан кейінгі нұсқасын қараңыз&lt;/u&gt;</string>
   <string name="description">Jami - бұл пайдаланушылардың еркіндігі мен жеке өміріне құрмет көрсететін әмбебап байланыс үшін тегін бағдарламалық қамтамасыз ету.</string>
@@ -19,9 +15,7 @@
   <string name="call_service_description">Бұл қызмет сіздің шақыруларыңызды бірінші планда ұстау үшін қажет. Ол тек шақырулар кезінде ғана жүреді.</string>
   <string name="data_transfer_service_description">Бұл қызмет файлдарды беру кезінде тұрақты хабарламаларды көрсету үшін қажет.</string>
   <!--About dialog-->
-  <string name="developed_by">Дамушы</string>
-  <string name="designed_by">Жоспарланған</string>
-  <string name="ringtones_by">Бастықтар</string>
+  <string name="media">БАҚ</string>
   <!--RingActivity-->
   <string name="error_no_network">Желілік қосылым жоқ</string>
   <string name="error_account_offline">Тіркелгісі қосылмайды</string>
@@ -35,7 +29,6 @@
   <string name="menu_item_settings">Параметрлері</string>
   <string name="menu_item_advanced_settings">Жетілген параметрлер</string>
   <string name="menu_item_account_settings">Тіркелгі параметрлері</string>
-  <string name="menu_item_plugin_list">Қосылмалар параметрлері</string>
   <string name="menu_item_share">Менің тіркелгімді бөліңіз</string>
   <string name="menu_item_about">Жами туралы</string>
   <string name="video_setting_title">Видеоның параметрлері</string>
@@ -97,17 +90,9 @@
   <string name="ongoing_call">Ағымдағы шақыру</string>
   <string name="hist_in_call">%1$s кіріс шақыру</string>
   <string name="hist_out_call">%1$s шығыс шақыру</string>
-  <string name="start_error_title">Жами бастай алмаймын!</string>
   <string name="start_error_mic_required">Жами жұмыс істеу үшін микрофонға рұқсат қажет.</string>
-  <string name="action_call_accept">Санаға жауап бер</string>
-  <string name="action_call_accept_audio">Аудиомен жауап беру</string>
-  <string name="action_call_accept_video">Жауапты бейнелеу арқылы</string>
-  <string name="action_call_hold_accept">Зерттеуді тоқтатып, аудиоды қабылдаңыз</string>
-  <string name="action_call_hold_accept_video">Сөйлеуді видеоға түсіріп алыңыз</string>
-  <string name="action_call_end_accept">Аяқтап, шақыруды қабылдай</string>
   <string name="action_call_decline">Ауыру</string>
   <string name="action_call_mic_mute">Ақысыз микрофон</string>
-  <string name="action_load_plugin">Жүктіру плагины</string>
   <string name="ab_action_speakerphone">Дисплейтерді қосу</string>
   <string name="ab_action_contact_add">Байланыстарға қосу</string>
   <string name="ab_action_contact_add_question">Байланыстарға қосыл?</string>
@@ -143,11 +128,8 @@
   <string name="ringtone_error_size_too_big">Бұл файл тым үлкен. Максималды мөлшері %1$dkB.</string>
   <string name="ringtone_custom_prompt">Қалыпты дыбыс дыбысын орнату</string>
   <string name="ringtone_custom_label">Әдеттегі</string>
-  <string name="ringtone_jami_tones">Жами тонусы</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Жамиге осы мүмкіндікті қосу үшін \"Контакттарды оқу\" рұқсаты қажет.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Жамиге бұл мүмкіндікті қосу үшін \"Тұрастыру журналы\" рұқсаты қажет.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Қосылған тіркелгіңіздің QR кодын сканерлеу.</string>
   <string name="title_activity_qrcode">Менің тіркелгімді бөліңіз</string>
@@ -163,15 +145,13 @@
   <string name="conversation_details">Әңгімелік мәліметтері</string>
   <string name="contact_details">Байланыс деректері</string>
   <string name="conversation_action_delete_this">Бұл әңгімеді өшіру</string>
-  <string name="conversation_action_delete_this_title">Бұл әңгімеді өшіру?</string>
-  <string name="conversation_action_delete_this_message">Бұл әрекет қайталанбайды.</string>
+  <string name="conversation_action_delete_this_message">Бұл іс-әрекет кері қайтарылмайды.</string>
   <string name="conversation_action_history_clear">Тарихты анық</string>
   <string name="conversation_action_history_clear_title">Әңгіме тарихын тазарту?</string>
   <string name="conversation_action_history_clear_message">Бұл әңгіме тарихының тазаланатынын анық көрсетеді.</string>
   <string name="conversation_action_remove_this">Байланысты өшіру</string>
   <string name="conversation_action_remove_this_title">Бұл байланысты өшіру?</string>
   <string name="conversation_action_remove_this_message">Бұл байланыстарды өшіріп, әңгіме тарихын мүлдем өшіреді.</string>
-  <string name="conversation_action_copy_peer_number">Көшірме нөмірі</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s клипборда көшірілді</string>
   <string name="conversation_action_select_peer_number">Санды таңдау</string>
   <string name="conversation_action_block_this">Блок контакт</string>
@@ -201,7 +181,6 @@
   <string name="conversation_contact_invited">%1$s шақырылды</string>
   <string name="conversation_contact_added">%1$s қосылды</string>
   <string name="conversation_contact_left">%1$s сол жақ</string>
-  <string name="conversation_contact_banned">%1$s тыйым салынды</string>
   <string name="conversation_search_hint">Іздеу әңгімесі</string>
   <string name="today">Бүгінде</string>
   <string name="yesterday">Келесі күні</string>
@@ -216,14 +195,12 @@
   <string name="help_password_choose">Jami тіркелгіңізді қорғау үшін естен шығармайтын күшті парольді таңдаңыз.</string>
   <string name="help_password_enter">Негізгі Jami тіркелгіңіздің паролін келтіріңіз.</string>
   <string name="help_server_enter">Басқару серверінің URL-ін келтіріңіз.</string>
-  <string name="help_pin_enter">Басқа конфигурацияланған Jami тіркелгісінің PIN-ін келтіріңіз. PIN-ін алу үшін \"Export Jami account\" функцияларын қолданыңыз.</string>
   <string name="wizard_next">Келесі</string>
   <string name="wizard_back">Қайта оралу</string>
   <string name="wizard_skip">Кетіңіз</string>
   <string name="hist_contact_invited">Байланыс шақырылды</string>
   <string name="hist_contact_added">Қосылған байланыс</string>
   <string name="hist_contact_left">Сол жаққа байланыс</string>
-  <string name="hist_contact_banned">Байланыс тыйым салынған</string>
   <string name="hist_invitation_received">Қабылданған шақыру</string>
   <!--Account Summary-->
   <string name="profile">Профиль</string>
@@ -247,20 +224,11 @@
   <string name="generic_error_migration">Қате</string>
   <string name="generic_error_migration_message">Көшіру кезінде қате орын алды</string>
   <string name="title_share_with">...мен бөліс...</string>
-  <!--Pending contact requests-->
+  <!--Pending invitations-->
   <string name="accept">Қабылда</string>
-  <string name="refuse">Бас тарту</string>
+  <string name="decline">Ауыру</string>
   <string name="block">Блок</string>
-  <string name="contact_request_title">Жаңа байланыс сұранысы</string>
-  <string name="contact_request_msg">% 1 контакт сұрақтарыңыз бар</string>
-  <string name="contact_request_account">%1$s үшін</string>
-  <string name="no_requests">Сізде байланыс сұрақтары жоқ</string>
-  <string name="message_contact_not_trusted_yet">%s әлі байланыс орнында жоқ.\nБұл байланыс сұрауыңызды қабылдайсыз ба немесе бас тартасыз ба?</string>
-  <string name="message_contact_not_trusted">%s сіздің байланыс орныңызда жоқ.\nЖаңа байланыс орнын қосу?</string>
-  <!--Send contact requests-->
-  <string name="send_request_button">Жіберіңіз</string>
-  <string name="send_request_title">Байланыс сұрауыңызды жіберу</string>
-  <string name="send_request_msg">Сіз осы пайдаланушымен байланыс орнату үшін байланыс сұрауыңызды жіберіңіз. Егер сіздің байланыс телефоныңыз сұраныс қабылданбаған болса, сіз хабарлама жібере аласыз, бірақ ол жауап бере алмайды.</string>
+  <string name="invitation_message">% 1 контакт сұрақтарыңыз бар</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Контакттар тосқауылданбаған</string>
   <!--Smartlist-->
@@ -272,7 +240,6 @@
   <string name="tv_contact_row_header">Байланыстар</string>
   <string name="gallery_error_title">Галерея қолданбасы табылмады</string>
   <string name="gallery_error_message">Галереяны ашу үшін құрылғыда қолданба табылмады</string>
-  <string name="generic_error">Белгісіз қате пайда болды</string>
   <!--File Transfer-->
   <string name="invalid_file">Қате файл</string>
   <string name="not_able_to_write_file">Файл жазуға болмайды</string>
@@ -292,7 +259,6 @@
   <string name="file_saved_in">% s дегенде сақталған файл</string>
   <string name="file_saved_successfully">Жазба орындалған файл</string>
   <string name="file_download">Жүктеу</string>
-  <string name="no_space_left_on_device">Құрылғыда орын жоқ</string>
   <string name="title_media_viewer">Медиа қараушы</string>
   <string name="menu_file_open">Ашық файл</string>
   <string name="menu_file_download">Файл жүктеу</string>
@@ -343,11 +309,9 @@
   <string name="wizard_profile_button">Профильді сақтау</string>
   <string name="wizard_profile_skip">Сkip және мұны кейін жасаңыз</string>
   <string name="fab_path_choose">Басқа файл таңдаңыз</string>
-  <string name="chat_plugins">Әңгімелеу плагиндері</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Ортақ</string>
   <string name="bottomSheet_dialpad_btn">Диалог</string>
-  <string name="bottomSheet_plugins_btn">Қосылмалар</string>
   <string name="bottomSheet_add_participants_btn">Қосылу</string>
   <string name="bottomSheet_change_camera_btn">Өзгерістер</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Камера</string>
@@ -355,17 +319,13 @@
   <string name="bottomSheet_mute_microphone_btn">Микро</string>
   <string name="bottomSheet_sound_output_btn">Дыбыс</string>
   <string name="bottomSheet_raiseHand_btn">Қолын көтеру</string>
-  <string name="open_account_plugin_settings">Тіркелгі плагинын ашу параметрлері</string>
-  <string name="open_general_plugin_settings">Жалпы плагиннің параметрлерін ашу</string>
   <string name="uninstall">Құрылғыны алып тастау</string>
   <string name="reset">Қайта орнату</string>
   <!--Swarm Detail-->
   <string name="rename_btn">Куәлікті растау</string>
-  <string name="rename_error">бос бола алмайды</string>
-  <string name="swarm_description">Тасуирлеуді қосу</string>
-  <string name="tab_about">туралы</string>
   <string name="tab_members">Қауым мүшелері</string>
-  <string name="tab_documetn">Құжаттар</string>
+  <string name="tab_files">Файлдар</string>
+  <string name="tab_settings">Параметрлері</string>
   <string name="dialogtitle_title">Санақты атауын өңдеу</string>
   <string name="dialogtitle_description">Сабақ сипаттамасын өңдеу</string>
   <string name="dialog_hint_title">Атауы</string>
@@ -381,5 +341,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Жамиге қош келдіңіздер</string>
   <!--Donation-->
-  <!--Plugin-->
+  <!--Extension-->
 </resources>

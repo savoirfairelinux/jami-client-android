@@ -21,25 +21,19 @@
   <string name="dialog_wait_create_details">Παρακαλώ περιμένετε για την εισαγωγή του νέου λογαριασμού</string>
   <string name="dialog_wait_update">Αναβάθμιση λογαριασμού</string>
   <string name="dialog_wait_update_details">Παρακαλώ περιμένετε για την αναβάθμιση του λογαριασμού σας...</string>
-  <string name="dialog_warn_ip2ip_account_title">Δημιουργία κενού λογαριασμού SIP ?</string>
-  <string name="dialog_warn_ip2ip_account_message">Θα δημιουργήσετε ένα λογαριασμό SIP χωρίς έγκυρο όνομα φιλοξενούμενου. Θα μπορείτε να κάνετε και να λαμβάνετε μόνο απευθείας κλήσεις IP. Μπορείτε να επεξεργαστείτε το λογαριασμό σας αργότερα</string>
   <string name="account_type_ip2ip">Λογαριασμός IP</string>
   <string name="help_ring">Ένας λογαριασμός Jami σας επιτρέπει να επικοινωνείτε με ασφάλεια μέσω ενός πλήρως αποκεντρωμένου δικτύου peer-to-peer</string>
-  <string name="help_sip_title">Προσθήκη του SIP  λογαριασμού σας</string>
+  <string name="help_sip_title">Προσθήκη λογαριασμού SIP</string>
   <string name="help_sip">Διαμόρφωση ενός υπάρχοντος λογαριασμού SIP</string>
-  <string name="create_sip_account">Προσθήκη λογαριασμού SIP</string>
   <!--Strings related to account deletion-->
-  <string name="account_delete_dialog_title">Διαγραφή λογαριασμού;</string>
-  <string name="account_delete_dialog_message">Η ενέργεια αυτή δεν μπορεί να ανακληθεί.</string>
+  <string name="account_delete_dialog_message">Η ενέργεια δεν μπορεί να αναιρεθεί.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Κανένας εγγεγραμμένος λογαριασμός</string>
   <string name="normal_accounts_titles">Λογαριασμοί</string>
-  <string name="normal_devices_titles">Συνδεδεμένες Συσκευές</string>
+  <string name="normal_devices_titles">Συνδεδεμένες συσκευές</string>
   <string name="account_device_revoke">Αφαίρεση συσκευής</string>
   <string name="account_device_revocation_success_title">Επιτυχής</string>
   <string name="account_device_revocation_success">Η συσκευή αφαιρέθηκε!</string>
-  <string name="account_device_revocation_error_title">Αποτυχία αφαίρεσης συσκευής</string>
-  <string name="account_device_revocation_wrong_password">Λανθασμένος κωδικός.</string>
   <string name="account_device_revocation_unknown_device">Άγνωστη συσκευή.</string>
   <string name="account_device_revocation_error_unknown">Άγνωστο σφάλμα.</string>
   <string name="account_password_change">Αλλαγή κωδικού</string>
@@ -61,8 +55,7 @@
   <string name="account_rendezvous_summary">Στην κατάσταση συνάντησης, οι εισερχόμενες κλήσεις θα προστεθούν σε αίθουσα συνεδριάσεων.</string>
   <string name="account_upnp_label">Ενεργοποίηση UPnP</string>
   <string name="account_proxy_field">Διαμεσολαβητής</string>
-  <!--Plugin Details-->
-  <string name="account_preference_plugin_tab">Επενδύσεις</string>
+  <!--Extension Details-->
   <!--Audio Details-->
   <string name="account_audio_label">Ήχος</string>
   <string name="account_preferences_media_tab">Μέσα</string>
@@ -142,35 +135,23 @@
   <string name="export_account_wait_message">Πληροφορίες λογαριασμού εξαγωγής</string>
   <string name="account_export_file">Αντίγραφο ασφαλείας λογαριασμού</string>
   <string name="account_export_file_summary">Κάντε αντίγραφο ασφαλείας του λογαριασμού σας στην συσκευή σας για να το αποκαταστήσετε αργότερα.</string>
-  <string name="account_export_end_decryption_message">Δεν μπόρεσα να ξεκλειδώσω το λογαριασμό σου χρησιμοποιώντας το κωδικό πρόσβασης.</string>
   <string name="account_export_end_network_title">Σφάλμα δικτύου</string>
-  <string name="account_export_end_network_message">Δεν μπόρεσα να εξαγάγω λογαριασμό στο δίκτυο.</string>
   <string name="account_export_end_error_title">Σφάλμα</string>
-  <string name="account_export_end_error_message">Δεν μπόρεσα να εξαγάγω λογαριασμό.</string>
   <string name="account_enter_password">Εισάγετε τον κωδικό πρόσβασης</string>
-  <string name="account_share_body">Επικοινωνήστε μαζί μου χρησιμοποιώντας το \'%1$s\' στην πλατφόρμα επικοινωνίας της Jami: %2$s</string>
-  <string name="account_share_body_with_username">Επικοινωνήστε μαζί μου χρησιμοποιώντας το \'%1$s\' ή το δημόσιο όνομα χρήστη μου \'%2$s\' στην πλατφόρμα επικοινωνίας της Jami: %3$s</string>
-  <string name="account_contact_me">Επικοινωνήστε μαζί μου στο Τζάμι!</string>
+  <string name="account_contact_me">Επικοινωνήστε μαζί μου για την Τζάμι!</string>
   <string name="update_account">Ενημερώστε λογαριασμό</string>
   <string name="account_migration">Το λογαριασμό σας στο Τζάμι μπορεί να ενημερωθεί. Παρακαλώ εισάγετε το κωδικό πρόσβασης σας.</string>
   <string name="ring_account">Λογαριασμός Τζάμι</string>
   <string name="sip_account">Λογαριασμός SIP</string>
   <string name="ring_account_identity">Ταυτότητα</string>
   <string name="account_migration_title_dialog">Μεταφορά λογαριασμού</string>
-  <string name="account_migration_message_dialog">Θέλετε να πάτε στην οθόνη διαχείρισης λογαριασμών για να εκτελέσετε αυτή την πράξη;</string>
   <string name="account_update_needed">Απαιτείται ενημέρωση</string>
-  <string name="account_cannot_be_found_title">Μη δυνατή η εύρεση λογαριασμού</string>
-  <string name="account_cannot_be_found_message">Δεν βρέθηκε λογαριασμός στο δίκτυο Τζάμι. Βεβαιωθείτε ότι εξάγεται στο Τζάμι από υπάρχουσα συσκευή, και ότι τα στοιχεία είναι σωστά.</string>
   <string name="account_sip_cannot_be_registered_message">Μπορείτε να συνεχίσετε με τη διαδικασία δημιουργίας λογαριασμού ή να επεξεργαστείτε τις πληροφορίες σας εδώ.</string>
-  <string name="account_no_network_title">Αδύνατη η σύνδεση στο δύκτιο</string>
-  <string name="account_no_network_message">Δεν μπόρεσα να προσθέσω λογαριασμό επειδή η Τζάμι δεν μπορούσε να συνδεθεί με το διανεμημένο δίκτυο.</string>
+  <string name="account_no_network_title">Σφάλμα δικτύου</string>
   <string name="account_device_added_title">Προσθήκη συσκευής λογαριασμού</string>
   <string name="account_device_added_message">Έχετε δημιουργήσει επιτυχώς το λογαριασμό σας Jami σε αυτή τη συσκευή.</string>
   <string name="account_device_updated_title">Ενημερωμένη συσκευή λογαριασμού</string>
   <string name="account_device_updated_message">Ενεργοποίησες με επιτυχία το λογαριασμό σου στο Τζάμι.</string>
-  <string name="account_cannot_be_updated_message">Η συσκευή του λογαριασμού δεν μπορεί να ενημερωθεί.</string>
-  <string name="account_sip_success_title">Καταχωρισμένο λογαριασμό</string>
-  <string name="account_sip_success_message">Καταχωρίσατε με επιτυχία το λογαριασμό σας.</string>
   <string name="account_sip_register_anyway">Καταχωρήστε έτσι κι αλλιώς.</string>
   <!--TV-->
   <string name="account_tv_settings_header">Ρυθμίσεις λογαριασμού</string>
@@ -190,11 +171,8 @@
   <string name="account_link_export_button">Σύνδεση νέας συσκευής</string>
   <string name="account_link_show_button">Δείξτε %d περισσότερες συνδεδεμένες συσκευές</string>
   <string name="account_link_hide_button">Κρύψτε το συνδεδεμένο όργανο</string>
-  <string name="account_link_export_info">Για να χρησιμοποιήσετε αυτό το λογαριασμό σε άλλες συσκευές, πρέπει πρώτα να το εκθέσετε στο Jami. Αυτό θα δημιουργήσει έναν κωδικό PIN που πρέπει να εισάγετε στη νέα συσκευή για να δημιουργήσετε το λογαριασμό.</string>
   <string name="account_start_export_button">Γεννήσετε PIN</string>
   <string name="account_end_export_button">Κοντά</string>
-  <string name="account_end_export_infos">Το PIN σας είναι:\n\n%%\n\nΓια να ολοκληρώσετε τη διαδικασία, πρέπει να ανοίξετε το Jami στη νέα συσκευή. Δημιουργήστε ένα νέο λογαριασμό με το \"Συνδέστε αυτή τη συσκευή με λογαριασμό\". Το PIN σας είναι έγκυρο για 10 λεπτά.</string>
-  <string name="account_link_export_info_light">Για να χρησιμοποιήσετε αυτό το λογαριασμό σε άλλες συσκευές, πρέπει πρώτα να το εκθέσετε στο Jami. Αυτό θα δημιουργήσει έναν κωδικό PIN που πρέπει να εισάγετε στη νέα συσκευή για να δημιουργήσετε το λογαριασμό.</string>
   <string name="account_export_title">Λογαριασμός σύνδεσης με άλλες συσκευές</string>
   <string name="account_connect_server_button">Συνδέστε τον διακομιστή διαχείρισης</string>
   <string name="account_connect_button">Σύνδεση</string>
@@ -226,21 +204,17 @@
   <string name="account_creation_profile">Δημιουργήστε το προφίλ σας</string>
   <string name="account_creation_ring">Δημιουργήστε το λογαριασμό σας στο Jami</string>
   <string name="account_link_title">Συνδέστε αυτή τη συσκευή</string>
-  <string name="account_sip_cannot_be_registered">Δεν μπορώ να καταχωρήσω λογαριασμό.</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">Τροποποιήστε το λογαριασμό μου</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Εισάγετε κωδικό πρόσβασης για να επιβεβαιώσετε</string>
   <string name="enter_password">Εισάγετε τον κωδικό πρόσβασης</string>
   <string name="revoke_device_title">Αφαίρεση συσκευής</string>
-  <string name="revoke_device_message">Είσαι σίγουρος ότι θέλεις να ανακαλέσεις το %1$s;</string>
   <string name="revoke_device_wait_title">Σε παρακαλώ, περίμενε...</string>
   <string name="revoke_device_wait_message">Συσκευή ανάκλησης</string>
   <string name="rename_device_title">Μετανόμευση αυτής της συσκευής</string>
   <string name="rename_device_message">Επιλέξτε ένα νέο όνομα για να αναγνωρίσετε αυτή τη συσκευή στον λογαριασμό σας Jami</string>
   <string name="rename_device_button">Επανακατακατηγορία</string>
   <string name="account_rename_device_hint">Επιλέξτε νέο όνομα συσκευής</string>
-  <string name="account_device_name_empty">Το όνομα της συσκευής δεν μπορεί να είναι άδειο.</string>
   <string name="account_device_this_indicator">Αυτή η συσκευή</string>
   <string name="account_disabled_indicator">αναπηρία</string>
   <!--Link a new device-->

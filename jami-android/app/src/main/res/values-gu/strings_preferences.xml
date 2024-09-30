@@ -27,7 +27,6 @@
   <string name="pref_startOnBoot_title">સ્ટાર્ટઅપ પર જમી શરૂ કરો</string>
   <string name="pref_startOnBoot_summary">સિસ્ટમ શરૂ થાય ત્યારે પૃષ્ઠભૂમિમાં જમ્મી ચલાવો.</string>
   <string name="pref_clearHistory_title">સ્પષ્ટ ઇતિહાસ</string>
-  <string name="pref_clearHistory_summary">આ ક્રિયાને રદ કરી શકાતી નથી.</string>
   <string name="pref_notification_title">સૂચનાની દૃશ્યતા</string>
   <string name="pref_notification_summary">લૉક સ્ક્રીન પર એપ્લિકેશન સૂચનાઓની દૃશ્યતા સેટ કરો.</string>
   <string name="pref_blackList_title">બ્લોક યાદી</string>
@@ -52,19 +51,6 @@
   <string name="notification_public">જાહેર \n(લોક સ્ક્રીન પર સૂચનાઓ અને તેમની સામગ્રી બતાવો) \n</string>
   <string name="notification_private">ખાનગી \n(સૂચિઓ બતાવો પરંતુ લૉક સ્ક્રીન પર તેમની સામગ્રી છુપાવો) \n</string>
   <string name="notification_secret">ગુપ્ત \n(લૉક સ્ક્રીન પર સૂચનાઓ બતાવવા નથી)</string>
-  <!--Plugin-->
-  <string name="pref_plugins_title">પ્લગિન્સ</string>
-  <string name="pref_plugins_summary">પ્લગઇન્સ સક્રિય કરો અને તેમના પરિમાણો સેટ કરો</string>
-  <string name="fab_plugins_add">એક નવું પ્લગઇન ઉમેરો</string>
-  <string name="plugin_uninstall_title">પ્લગઇન અનઇન્સ્ટોલ કરો?</string>
-  <string name="plugin_reset_preferences">પ્લગઇન પસંદગીઓ રીસેટ</string>
-  <string name="plugin_reset_preferences_summary">તમારા પ્લગઇન સેટિંગ્સ મૂળભૂત રીતે કરવામાં આવશે</string>
-  <string name="plugin_reset_preferences_ask">તમે સામાન્ય પ્લગઇન સેટિંગ્સ રીસેટ કરવા માંગો છો?</string>
-  <string name="plugin_reset_account_preferences_ask">તમે એકાઉન્ટ પ્લગઇન સેટિંગ્સ રીસેટ કરવા માંગો છો?</string>
-  <string name="plugin_successfully_installed">પ્લગઇન <b>%1$s</b> સફળતાપૂર્વક સ્થાપિત</string>
-  <string name="plugin_install_failure">પ્લગઇન ઇન્સ્ટોલ કરવામાં નિષ્ફળઃ <b>%1$s</b></string>
-  <string name="plugin_recent_version_exception">તમારી પાસે તાજેતરની આવૃત્તિ છેઃ <b>%1$s</b></string>
-  <string name="plugin_same_version_exception">તમે <b>%1$s</b> ની સમાન આવૃત્તિ સ્થાપિત કરી છે</string>
-  <string name="plugin_force_install">બળ \ n સ્થાપિત</string>
-  <string name="plugin_path_image_add">નવી છબી ઉમેરો</string>
+  <!--Extension-->
+  <string name="extension_force_install">બળ \ n સ્થાપિત</string>
 </resources>

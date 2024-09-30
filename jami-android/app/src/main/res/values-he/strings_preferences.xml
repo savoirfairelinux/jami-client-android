@@ -27,7 +27,6 @@
   <string name="pref_startOnBoot_title">תתחילו עם ג\'ימי בהתחלה.</string>
   <string name="pref_startOnBoot_summary">תפעיל את ג\'מי בתאגרף כאשר המערכת תתחיל.</string>
   <string name="pref_clearHistory_title">היסטוריה ברורה</string>
-  <string name="pref_clearHistory_summary">תנקה את כל ההיסטוריה של השיחות, פעולה זו לא יכולה להיבטל.</string>
   <string name="pref_notification_title">רשימת הודעות</string>
   <string name="pref_notification_summary">הגדירו את רשימת ההודעות של היישום על מסך המנעול.</string>
   <string name="pref_blackList_title">רשימת חבילות</string>
@@ -52,19 +51,6 @@
   <string name="notification_public">הודעות ציבוריות מראות את התוכן שלהן על מסך המנעול)</string>
   <string name="notification_private">פרטי \n(ראה הודעות אבל להסתיר את התוכן שלהם על מסך נעילה) \n</string>
   <string name="notification_secret">סוד \n(לא מראה הודעות על מסך נעילה)</string>
-  <!--Plugin-->
-  <string name="pref_plugins_title">תוספים</string>
-  <string name="pref_plugins_summary">תפעיל תוספים ותתקן את הפרמטרים שלהם</string>
-  <string name="fab_plugins_add">הוסף תוספת חדשה</string>
-  <string name="plugin_uninstall_title">תנתק את הפלוגין?</string>
-  <string name="plugin_reset_preferences">הגדרת מחדש של העדפות הפלוגין</string>
-  <string name="plugin_reset_preferences_summary">הגדרות הפלוגין שלך יהיו דפוט</string>
-  <string name="plugin_reset_preferences_ask">אתה רוצה להפעיל מחדש את הגדרות הפלוגין הכלליות?</string>
-  <string name="plugin_reset_account_preferences_ask">אתה רוצה להשיב את הגדרות הפלוגין של החשבון?</string>
-  <string name="plugin_successfully_installed">תוספת <b>%1$s</b> התקנה בהצלחה</string>
-  <string name="plugin_install_failure">נכשלת בהקמת הפלוגין: <b>%1$s</b></string>
-  <string name="plugin_recent_version_exception">יש לך גרסה חדשה יותר של: <b>%1$s</b></string>
-  <string name="plugin_same_version_exception">יש לך את אותה גרסה של <b>%1$s</b> מותקן</string>
-  <string name="plugin_force_install">הכוח \n להתקין</string>
-  <string name="plugin_path_image_add">הוסף תמונה חדשה</string>
+  <!--Extension-->
+  <string name="extension_force_install">הכוח \n להתקין</string>
 </resources>

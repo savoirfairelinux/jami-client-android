@@ -21,27 +21,19 @@
   <string name="dialog_wait_create_details">الرجاء الإنتظار بينما يتم إضافة حسابك...</string>
   <string name="dialog_wait_update">تحديث الحساب</string>
   <string name="dialog_wait_update_details">يرجى الانتظار حتى يتم تحديث حسابك الجديد</string>
-  <string name="dialog_warn_ip2ip_account_title">إنشاء حساب SIP فارغ؟</string>
-  <string name="dialog_warn_ip2ip_account_message">انت تقوم بإنشاء حساب SIP بـ اسم مستضيف غير صالح.
-        فقط ستكون قادرا على إجراء وإستقبال مكالمات بعنوان الانترنت الخاص بك مباشرة 
-يمكنك تعديل حسابك فيما بعد</string>
   <string name="account_type_ip2ip">حساب عنوان الانترنت</string>
   <string name="help_ring">يسمح لك حساب جامي بالتواصل مع الآخرين بأمان عبر طريق الند للند من خلال شبكة موزعة بالكامل.</string>
-  <string name="help_sip_title">أضف حساب SIP الخاص بك</string>
+  <string name="help_sip_title">إضافة حساب SIP</string>
   <string name="help_sip">تهيئة حساب SIP موجود</string>
-  <string name="create_sip_account">إضافة حساب SIP</string>
   <!--Strings related to account deletion-->
-  <string name="account_delete_dialog_title">هل تريد حذف الحساب؟</string>
   <string name="account_delete_dialog_message">لا يمكن التراجع عن هذا الإجراء.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">لا يوجد حساب مسجل</string>
   <string name="normal_accounts_titles">حسابات</string>
-  <string name="normal_devices_titles">الأجهزة المرتبطة</string>
+  <string name="normal_devices_titles">الأجهزة المتصلة</string>
   <string name="account_device_revoke">إبطال جهاز</string>
   <string name="account_device_revocation_success_title">نجاح</string>
   <string name="account_device_revocation_success">تم إبطال الجهاز الان</string>
-  <string name="account_device_revocation_error_title">لم يتم التمكن من إبطال الجهاز</string>
-  <string name="account_device_revocation_wrong_password">كلمة مرور خاطئة.</string>
   <string name="account_device_revocation_unknown_device">جهاز غير معلوم.</string>
   <string name="account_device_revocation_error_unknown">خطأ غير معروف.</string>
   <string name="account_password_change">تغيير كلمة المرور</string>
@@ -63,8 +55,7 @@
   <string name="account_rendezvous_summary">في وضع الإجتماع، ستتم إضافة المكالمات الواردة إلى غرفة إجتماع</string>
   <string name="account_upnp_label">تفعيل بروتوكول PUnP</string>
   <string name="account_proxy_field">الوكيل</string>
-  <!--Plugin Details-->
-  <string name="account_preference_plugin_tab">الإضافات</string>
+  <!--Extension Details-->
   <!--Audio Details-->
   <string name="account_audio_label">صوت</string>
   <string name="account_preferences_media_tab">ميديا</string>
@@ -144,35 +135,23 @@
   <string name="export_account_wait_message">تصدير معلومات الحساب</string>
   <string name="account_export_file">حساب احتياطي</string>
   <string name="account_export_file_summary">قم بإجراء نسخ احتياطي لحسابك على جهازك لاستعادته في وقت لاحق.</string>
-  <string name="account_export_end_decryption_message">تعذر إلغاء قفل حسابك باستخدام كلمة المرور التي تم توفيرها.</string>
   <string name="account_export_end_network_title">خطأ في الشبكة</string>
-  <string name="account_export_end_network_message">تعذر تصدير الحساب على الشبكة. تحقق من الاتصال.</string>
   <string name="account_export_end_error_title">خطأ</string>
-  <string name="account_export_end_error_message">تعذر تصدير الحساب. حدث خطأ غير معروف.</string>
   <string name="account_enter_password">أدخِل كلمة المرور</string>
-  <string name="account_share_body">اتصل بي باستخدام \'%1$s\' على منصة اتصال Jami الموزعة:%2$s</string>
-  <string name="account_share_body_with_username">اتصل بي باستخدام \'%1$s\' أو اسم المستخدم العام \'%2$s\' على منصة اتصال Jami الموزعة: %3$s</string>
-  <string name="account_contact_me">اتصل بي على جامي!</string>
+  <string name="account_contact_me">اتصل بي عن (جامي)!</string>
   <string name="update_account">تحديث الحساب&lt;br&gt;</string>
   <string name="account_migration">هناك تحديث لحساب جامي. \n يرجى إدخال كلمة المرور.</string>
   <string name="ring_account">حساب جامي</string>
   <string name="sip_account">حساب SIP</string>
   <string name="ring_account_identity">الهوية</string>
   <string name="account_migration_title_dialog">هجرة الحساب</string>
-  <string name="account_migration_message_dialog">يجب تحديث حساباتك. هل تريد الانتقال إلى شاشة إدارة الحساب لتنفيذ ذلك⸮</string>
   <string name="account_update_needed">يلزم التحديث</string>
-  <string name="account_cannot_be_found_title">لم يعثر على الحساب</string>
-  <string name="account_cannot_be_found_message">تعذر العثور على الحساب على شبكة جامى. \n تأكد من أنه تم تصديره على جامى من جهاز موجود، وأن بيانات الاعتماد المقدمة صحيحة.</string>
   <string name="account_sip_cannot_be_registered_message">يمكنك متابعة عملية إنشاء الحساب أو تحرير معلوماتك هنا. لا يزال الإصدار ممكنًا في وقت لاحق في إعدادات الحساب.</string>
-  <string name="account_no_network_title">لا يستطيع الاتصال بالشبكة</string>
-  <string name="account_no_network_message">تعذرت إضافة حساب لأن جامي لم يتمكن من الاتصال بالشبكة الموزعة. تحقق من اتصال جهازك.</string>
+  <string name="account_no_network_title">خطأ في الشبكة</string>
   <string name="account_device_added_title">تم اضافة حساب جهاز</string>
   <string name="account_device_added_message">لقد قمت بإعداد حساب جامى بنجاح على هذا الجهاز.</string>
   <string name="account_device_updated_title">تم تحديث حساب الجهاز</string>
   <string name="account_device_updated_message">لقد قمت بتحديث حساب جامى بنجاح على هذا الجهاز.</string>
-  <string name="account_cannot_be_updated_message">تعذر تحديث جهاز الحساب. يرجى التحقق من كلمة المرور.</string>
-  <string name="account_sip_success_title">تم تسجيل حساب Sip</string>
-  <string name="account_sip_success_message">لقد نجحت في تسجيل حساب Sip الخاص بك.</string>
   <string name="account_sip_register_anyway">تسجيل على أى حال</string>
   <!--TV-->
   <string name="account_tv_settings_header">إعدادت الحساب</string>
@@ -192,11 +171,8 @@
   <string name="account_link_export_button">ربط جهاز جديد</string>
   <string name="account_link_show_button">إظهار %d المزيد من الأجهزة المرتبطة</string>
   <string name="account_link_hide_button">إخفاء الأجهزة المرتبطة</string>
-  <string name="account_link_export_info">لاستخدام هذا الحساب على أجهزة أخرى، يجب أولاً تعريضه على جامى. سيؤدي ذلك إلى إنشاء رمز PIN يجب إدخاله على الجهاز الجديد لإعداد الحساب. رمز PIN صالح لمدة 10 دقائق.</string>
   <string name="account_start_export_button">توليد رمز PIN</string>
   <string name="account_end_export_button">إغلاق</string>
-  <string name="account_end_export_infos">رقم PIN الخاص بك هو:\n\n%%\n/nلإكمال العملية، يجب فتح جامى على الجهاز الجديد. أنشئ حسابًا جديدًا باستخدام \"ربط هذا الجهاز بحساب\". رقم PIN صالح لمدة 10 دقائق.</string>
-  <string name="account_link_export_info_light">لاستخدام هذا الحساب على أجهزة أخرى، يجب أولاً تعريضه على جامى. سيؤدي ذلك إلى إنشاء رمز PIN يجب إدخاله على الجهاز الجديد لإعداد الحساب. رمز PIN صالح لمدة 10 دقائق.</string>
   <string name="account_export_title">رابط حساب للأجهزة الأخرى</string>
   <string name="account_connect_server_button">الاتصال بخادم الإدارة</string>
   <string name="account_connect_button">إتصال</string>
@@ -228,21 +204,17 @@
   <string name="account_creation_profile">أنشئ ملفك الشخصي</string>
   <string name="account_creation_ring">أنشئ حساب چامى الخاص بك</string>
   <string name="account_link_title">ربط هذا الجهاز</string>
-  <string name="account_sip_cannot_be_registered">يتعذر تسجيل الحساب</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">تحرير حسابي</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">أدخل كلمة المرور للتأكيد</string>
   <string name="enter_password">أدخِل كلمة المرور</string>
   <string name="revoke_device_title">إبطال جهاز</string>
-  <string name="revoke_device_message">هل أنت متأكد من أنك تريد إبطال %1$s⸮</string>
   <string name="revoke_device_wait_title">الرجاء الإنتظار...</string>
   <string name="revoke_device_wait_message">إبطال الجهاز</string>
   <string name="rename_device_title">أعد تسمية هذا الجهاز</string>
   <string name="rename_device_message">اختر اسماً جديداً لتعريف هذا الجهاز في حساب چامى</string>
   <string name="rename_device_button">أعد تسمية الجهاز</string>
   <string name="account_rename_device_hint">اختر اسم جهاز جديد</string>
-  <string name="account_device_name_empty">لا يمكن أن يكون اسم الجهاز فارغًا</string>
   <string name="account_device_this_indicator">هذا الجهاز</string>
   <string name="account_disabled_indicator">تحرير حسابي</string>
   <!--Link a new device-->

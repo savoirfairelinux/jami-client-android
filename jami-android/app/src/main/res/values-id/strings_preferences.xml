@@ -27,7 +27,6 @@
   <string name="pref_startOnBoot_title">Mulai Jami saat Startup</string>
   <string name="pref_startOnBoot_summary">Mulai Jami di latar belakang ketika sistem berjalan.</string>
   <string name="pref_clearHistory_title">Bersihkan riwayat</string>
-  <string name="pref_clearHistory_summary">Hapus semua riwayat percakapan. Tindakan ini tidak dapat diurungkan.</string>
   <string name="pref_notification_title">Visibilitas notifikasi</string>
   <string name="pref_notification_summary">Atur visibilitas notifikasi aplikasi di layar kunci.</string>
   <string name="pref_blackList_title">Daftar blokir</string>
@@ -52,19 +51,6 @@
   <string name="notification_public">Publik \n(tampilkan notifikasi dan kontennya di layar kunci)\n</string>
   <string name="notification_private">Pribadi \n(tampilkan notifikasi tetapi sembunyikan kontennya di layar kunci)\n</string>
   <string name="notification_secret">Rahasia \n(jangan tampilkan notifikasi di layar kunci)</string>
-  <!--Plugin-->
-  <string name="pref_plugins_title">Plugin</string>
-  <string name="pref_plugins_summary">Aktifkan plugin dan atur parameternya</string>
-  <string name="fab_plugins_add">Tambah plugin baru?</string>
-  <string name="plugin_uninstall_title">Copot Plugin?</string>
-  <string name="plugin_reset_preferences">Setel ulang pengaturan plugin</string>
-  <string name="plugin_reset_preferences_summary">Pengaturan plugin anda akan kembali seperti semula</string>
-  <string name="plugin_reset_preferences_ask">Apakah Anda ingin mengatur ulang pengaturan plugin umum?</string>
-  <string name="plugin_reset_account_preferences_ask">Apakah Anda ingin mengatur ulang pengaturan plugin akun?</string>
-  <string name="plugin_successfully_installed">Plugin <b>%1$s</b>berhasil dipasang</string>
-  <string name="plugin_install_failure">Gagal memasang plugin: <b>%1$s</b></string>
-  <string name="plugin_recent_version_exception">Anda memiliki versi terbaru dari: <b>%1$s</b></string>
-  <string name="plugin_same_version_exception">Anda memiliki versi yang sama<b>%1$s</b> terpasang</string>
-  <string name="plugin_force_install">Paksa \n pemasangan</string>
-  <string name="plugin_path_image_add">Tambah gambar baru</string>
+  <!--Extension-->
+  <string name="extension_force_install">Paksa \n pemasangan</string>
 </resources>

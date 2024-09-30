@@ -1,27 +1,19 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
-  <string name="feedback_section">Iruzkinak</string>
-  <string name="report"><u>Bidal iezaguzu posta elektroniko bat</u></string>
   <string name="section_license">Lizentzia</string>
   <string name="sponsor_section">Jami Software librea da, garatzaile eta babesleak: </string>
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Hartu parte</string>
   <string name="version_section">Bertsioa</string>
-  <string name="no_email_app_installed">Ez da e-mail aplikaziorik aurkitu, instalatu bat txostena bidaltzeko</string>
   <string name="no_browser_app_installed">Ez da web nabigatzailerik aurkitu, instalatu bat orri hau ikusteko</string>
-  <string name="email_chooser_title">Bidali e-maila hau erabiliz…</string>
-  <string name="website_chooser_title">Ikusi webgunea hau erabiliz…</string>
-  <string name="license">Software hau \"den moduan\" eskaintzen da, inolako bermeik gabe. Xehetasunetarako ikusi <u>General Public License lizentzia, 3. bertsioa edo berriagoa</u></string>
   <string name="description">Jami komunikazio unibertsalerako software librea da, erabiltzaileek askatasunak eta pribatutasuna aintzat hartzen dituena</string>
   <string name="credits">Kredituak</string>
   <string name="pip_title">Jami Konferentzia</string>
   <string name="call_service_description">Zerbitzu hau ezinbestekoa da zure deiak lehen planoan abian mantentzeko. Deietan zehar ari da soilik.</string>
   <string name="data_transfer_service_description">Zerbitzu hau ezinbestekoa da fitxategi transferentzien zehar jakinarazpen iraunkorrak bistaratzeko. Fitxategi transferentzietan zehar ari da soilik.</string>
   <!--About dialog-->
-  <string name="developed_by">Garatzaileak:</string>
-  <string name="designed_by">Diseinatzaileak:</string>
-  <string name="ringtones_by">noren partez txirrinak : </string>
+  <string name="media">Multimedia</string>
   <!--RingActivity-->
   <string name="error_no_network">Ez dago sare-konexiorik</string>
   <string name="error_account_offline">Kontua deskonektatuta dago</string>
@@ -35,7 +27,6 @@
   <string name="menu_item_settings">Ezarpenak</string>
   <string name="menu_item_advanced_settings">Jarriera aurreratuak</string>
   <string name="menu_item_account_settings">Kontuaren ezarpenak</string>
-  <string name="menu_item_plugin_list">Pluginen konfigurazioa</string>
   <string name="menu_item_share">partekatu nire kontua</string>
   <string name="menu_item_about">Jamiri buruz</string>
   <string name="video_setting_title">Bideoaren ezarpenak</string>
@@ -97,17 +88,10 @@
   <string name="ongoing_call">Deia abioan</string>
   <string name="hist_in_call">%1$s iraupeneko deia</string>
   <string name="hist_out_call">%1$s iraupeneko deia</string>
-  <string name="start_error_title">Ezin da Jami abiatu !</string>
   <string name="start_error_mic_required">Jamik mikrofonoa erabiltzeko baimena behar du funtzionatzeko.</string>
-  <string name="action_call_accept">Onartu deia</string>
-  <string name="action_call_accept_audio">Erantzun audioz</string>
-  <string name="action_call_accept_video">Erantzun bideoan</string>
-  <string name="action_call_hold_accept">Eutsi eta hartu deiaren audio-ahotsa</string>
-  <string name="action_call_hold_accept_video">Eutsi eta grabatu deiak bideoan.</string>
-  <string name="action_call_end_accept">Amaitu eta deia hartu</string>
+  <string name="action_call_accept">Deia onartu</string>
   <string name="action_call_decline">Ukatu</string>
   <string name="action_call_mic_mute">Mututu mikrofonoa</string>
-  <string name="action_load_plugin">Plugina kargatu</string>
   <string name="ab_action_speakerphone">Gaitu bozgorailua</string>
   <string name="ab_action_contact_add">Gehitu kontaktuetara</string>
   <string name="ab_action_contact_add_question">Gehitu kontaktuetara?</string>
@@ -143,11 +127,8 @@
   <string name="ringtone_error_size_too_big">Fitxategia handiegia da. Gehieneko tamaina %1$d KB da.</string>
   <string name="ringtone_custom_prompt">Ezarri dei-doinu pertsonalizatua</string>
   <string name="ringtone_custom_label">Pertsonala</string>
-  <string name="ringtone_jami_tones">Jami doinuak</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Jami \"Kontaktuak irakurri\" baimena behar du ezaugarri hau gaitzeko. Mesedez eman.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Jami \"Dei egunkaria idatzi\" baimena behar du ezaugarri hau gaitzeko. Mesedez eman.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Eskaneatu gehitu nahi duzun kontuaren QR kodea.</string>
   <string name="title_activity_qrcode">partekatu nire kontua</string>
@@ -163,7 +144,6 @@
   <string name="conversation_details">Elkarrizketa-detailak</string>
   <string name="contact_details">Kontaktuaren xehetasunak</string>
   <string name="conversation_action_delete_this">Ezabatu elkarrizketa hau</string>
-  <string name="conversation_action_delete_this_title">Ezabatu elkarrizketa hau ?</string>
   <string name="conversation_action_delete_this_message">Ekintza hau ezin da desegin.</string>
   <string name="conversation_action_history_clear">Garbitu historiala</string>
   <string name="conversation_action_history_clear_title">Garbitu elkarrizketa-historiala?</string>
@@ -171,7 +151,6 @@
   <string name="conversation_action_remove_this">Ezabatu kontaktua</string>
   <string name="conversation_action_remove_this_title">Ezabatu kontaktu hau?</string>
   <string name="conversation_action_remove_this_message">Honek kontaktu hau ezabatuko du eta behin betiko garbituko du elkarrizketa-historiala.</string>
-  <string name="conversation_action_copy_peer_number">Kopiatu zenbakia</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s arbelera kopiatuta</string>
   <string name="conversation_action_select_peer_number">Hautatu zenbaki bat</string>
   <string name="conversation_action_block_this">Blokeatu kontaktua</string>
@@ -201,7 +180,6 @@
   <string name="conversation_contact_invited">%1$s gonbidatu dute</string>
   <string name="conversation_contact_added">%1$s bat egin da</string>
   <string name="conversation_contact_left">%1$ ezkerrera</string>
-  <string name="conversation_contact_banned">%1$s debekatuta dago</string>
   <string name="conversation_search_hint">Bilaketa elkarrizketa</string>
   <string name="today">Gaur egun</string>
   <string name="yesterday">Atzo</string>
@@ -216,14 +194,12 @@
   <string name="help_password_choose">Hautatu gogoratuko duzun pasahitz sendo bat zure Jami kontua babesteko.</string>
   <string name="help_password_enter">Sartu zure Jami kontuaren pasahitza.</string>
   <string name="help_server_enter">Sartu kudeaketa zerbitzariaren URLa</string>
-  <string name="help_pin_enter">Sartu konfiguratutako beste kontu baten PIN kodea. Erabili \"esportatu Jami kontua\" ezaugarria PINa eskuratzeko.</string>
   <string name="wizard_next">Hurrengoa</string>
   <string name="wizard_back">Atzera</string>
   <string name="wizard_skip">Jauzi</string>
   <string name="hist_contact_invited">Harremanetan jarri behar dugu.</string>
   <string name="hist_contact_added">Kontaktua gehituta</string>
   <string name="hist_contact_left">Ezkerreko kontaktuak</string>
-  <string name="hist_contact_banned">Harremanetan jartzea debekatuta</string>
   <string name="hist_invitation_received">Gonbidapena jasota</string>
   <!--Account Summary-->
   <string name="profile">Profila</string>
@@ -247,20 +223,10 @@
   <string name="generic_error_migration">Errorea</string>
   <string name="generic_error_migration_message">Errore bat gertatu da migrazioan</string>
   <string name="title_share_with">Partekatu honekin…</string>
-  <!--Pending contact requests-->
+  <!--Pending invitations-->
   <string name="accept">Onartu</string>
-  <string name="refuse">Ukatu</string>
   <string name="block">Bloketu</string>
-  <string name="contact_request_title">Kontaktu-eskaera berria</string>
-  <string name="contact_request_msg">%1$d kontaktu-eskaerak dituzu</string>
-  <string name="contact_request_account">%1$s(r)entzat</string>
-  <string name="no_requests">Ez duzu kontaktu-eskaerarik.</string>
-  <string name="message_contact_not_trusted_yet">%s ez dago zure kontaktuen artean oraindik.\nKontaktu eskaera hau onartu ala ukatzen duzu?</string>
-  <string name="message_contact_not_trusted">%s ez dago zure kontaktuen artean oraindik.\nGehitu kontaktua?</string>
-  <!--Send contact requests-->
-  <string name="send_request_button">Bidali</string>
-  <string name="send_request_title">Bidali kontaktu-eskaera</string>
-  <string name="send_request_msg">Kontaktu eskaera bat bidali behar duzu erabiltzaile honekin komunikatzeko. Zure kontaktuak eskaera onartu bitartean, mezuak bidali ahal dizkiozu, baina ezin izango dizu erantzun.</string>
+  <string name="invitation_message">%1$d kontaktu-eskaerak dituzu</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Ez dago kontakturik blokeatuta</string>
   <!--Smartlist-->
@@ -272,7 +238,6 @@
   <string name="tv_contact_row_header">Kontaktuak</string>
   <string name="gallery_error_title">Ez da galeria aplikaziorik aurkitu</string>
   <string name="gallery_error_message">Galeri-errorearen mezua</string>
-  <string name="generic_error">Errore generikoa</string>
   <!--File Transfer-->
   <string name="invalid_file">Fitxategi baliogabea</string>
   <string name="not_able_to_write_file">Ezin izan da fitxategia idatzi</string>
@@ -292,7 +257,6 @@
   <string name="file_saved_in">Fitxategi gordetuta</string>
   <string name="file_saved_successfully">Fitxategia ongi gorde da</string>
   <string name="file_download">Deskargatu </string>
-  <string name="no_space_left_on_device">Ez dago espazio nahikorik gailuan</string>
   <string name="title_media_viewer">Titulu-euskarriko ikusle</string>
   <string name="menu_file_open">Ireki fitxategia</string>
   <string name="menu_file_download">Deskargatu fitxategia</string>
@@ -343,11 +307,9 @@
   <string name="wizard_profile_button">Aurreztu Profila</string>
   <string name="wizard_profile_skip">Utzi eta gero egin.</string>
   <string name="fab_path_choose">Beste fitxategi bat hautatu</string>
-  <string name="chat_plugins">Txateatzeko Plug-inak</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Partekatu</string>
   <string name="bottomSheet_dialpad_btn">Dialpad bat</string>
-  <string name="bottomSheet_plugins_btn">Pluginsak</string>
   <string name="bottomSheet_add_participants_btn">Gehitu</string>
   <string name="bottomSheet_change_camera_btn">Aldatu</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>
@@ -355,17 +317,13 @@
   <string name="bottomSheet_mute_microphone_btn">Mikro-ak</string>
   <string name="bottomSheet_sound_output_btn">Soinuak</string>
   <string name="bottomSheet_raiseHand_btn">Altxa eskua.</string>
-  <string name="open_account_plugin_settings">Ireki kontuaren sarrera-erreka</string>
-  <string name="open_general_plugin_settings">Zabaldu sarrera-aldaketa orokorrak</string>
   <string name="uninstall">Desinstalatu</string>
   <string name="reset">Berriz jartzea</string>
   <!--Swarm Detail-->
   <string name="rename_btn">Baieztatu.</string>
-  <string name="rename_error">Ezin da hutsik egon.</string>
-  <string name="swarm_description">Deskribazioa gehitu</string>
-  <string name="tab_about">Honi buruz</string>
   <string name="tab_members">Kideak</string>
-  <string name="tab_documetn">Dokumentuak</string>
+  <string name="tab_files">Fitxategiak</string>
+  <string name="tab_settings">Ezarpenak</string>
   <string name="dialogtitle_title">Editatu izpiaren izenburua</string>
   <string name="dialogtitle_description">Editatu multzoaren deskribapena</string>
   <string name="dialog_hint_title">Izenburua</string>
@@ -381,5 +339,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Ongi etorri Jamira</string>
   <!--Donation-->
-  <!--Plugin-->
+  <!--Extension-->
 </resources>

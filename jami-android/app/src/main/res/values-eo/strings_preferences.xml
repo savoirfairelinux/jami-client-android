@@ -27,7 +27,6 @@
   <string name="pref_startOnBoot_title">Komencu Jami sur komenco</string>
   <string name="pref_startOnBoot_summary">Faru Jami-n en la fono kiam la sistemo komencas.</string>
   <string name="pref_clearHistory_title">Vakigi historion</string>
-  <string name="pref_clearHistory_summary">Forigu la historion de ĉiuj konversacioj.</string>
   <string name="pref_notification_title">Vidobleco de la avizo</string>
   <string name="pref_notification_summary">Agordi la videblecon de aplikaj mesaĝoj sur ŝlosilekrano.</string>
   <string name="pref_blackList_title">Listo de blokoj</string>
@@ -52,19 +51,6 @@
   <string name="notification_public">Publikaj \n(montras sciigojn kaj ilia enhavo sur ŝlosilo ekrano) \n</string>
   <string name="notification_private">Privata \n(montras sciigojn sed kaŝas ilian enhavon sur ŝlosilo ekrano) \n</string>
   <string name="notification_secret">Sekreta \n(ne montras sciigojn sur ŝlosilo ekrano)</string>
-  <!--Plugin-->
-  <string name="pref_plugins_title">Plugins</string>
-  <string name="pref_plugins_summary">Aktivigu aldonaĵojn kaj agordi iliajn parametrojn</string>
-  <string name="fab_plugins_add">Aldonu novan aldonon</string>
-  <string name="plugin_uninstall_title">Malinstaligi la programon?</string>
-  <string name="plugin_reset_preferences">Reinstalu la Plugins preferencojn</string>
-  <string name="plugin_reset_preferences_summary">Viaj aldonaj agordojn estos defaŭlte</string>
-  <string name="plugin_reset_preferences_ask">Ĉu vi volas reinstalli la ĝeneralajn agordojn de la aldonaĵo?</string>
-  <string name="plugin_reset_account_preferences_ask">Ĉu vi volas reinstalli la kontojn de la aldonaĵo?</string>
-  <string name="plugin_successfully_installed">Plug-ino <b>%1$s</b> sukcese instalita</string>
-  <string name="plugin_install_failure">Ne instaliĝis aldonaĵo: <b>%1$s</b></string>
-  <string name="plugin_recent_version_exception">Vi havas pli lastan version de: <b>%1$s</b></string>
-  <string name="plugin_same_version_exception">Vi havas la saman version de <b>%1$s</b> instalita</string>
-  <string name="plugin_force_install">forto \n instali</string>
-  <string name="plugin_path_image_add">Aldonu novan bildon</string>
+  <!--Extension-->
+  <string name="extension_force_install">forto \n instali</string>
 </resources>

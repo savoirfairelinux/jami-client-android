@@ -21,15 +21,11 @@
   <string name="dialog_wait_create_details">Խնդրում եմ սպասել, մինչեւ ձեր նոր հաշիվը ավելացվի...</string>
   <string name="dialog_wait_update">Հաշվետու թարմացում</string>
   <string name="dialog_wait_update_details">Խնդրում եմ սպասել, մինչեւ ձեր նոր հաշիվը թարմացվի...</string>
-  <string name="dialog_warn_ip2ip_account_title">Ստեղծել դատարկ SIP հաշիվ:</string>
-  <string name="dialog_warn_ip2ip_account_message">Դուք պատրաստվում եք ստեղծել SIP հաշիվ առանց վավեր հոստային անունի: Դուք կարող եք կատարել եւ ստանալ ուղղակի IP զանգեր: Դուք կարող եք խմբագրել ձեր հաշիվը ավելի ուշ</string>
   <string name="account_type_ip2ip">IP հաշիվ</string>
   <string name="help_ring">Jami հաշիվը թույլ է տալիս ապահովորեն հասնել մարդկանց, զուգընկերների միջոցով ամբողջությամբ տարածված ցանցի միջոցով:</string>
-  <string name="help_sip_title">Բարձրացրեք ձեր SIP հաշիվը</string>
+  <string name="help_sip_title">Ավելացնել SIP հաշիվ</string>
   <string name="help_sip">Կազմակերպել գոյություն ունեցող SIP հաշիվ:</string>
-  <string name="create_sip_account">Ավելացնել SIP հաշիվ</string>
   <!--Strings related to account deletion-->
-  <string name="account_delete_dialog_title">Հաշիվը ջնջել:</string>
   <string name="account_delete_dialog_message">Այս գործողությունը չի կարող չեղարկվել:</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Ոչ մի հաշիվ չի գրանցվել</string>
@@ -38,8 +34,6 @@
   <string name="account_device_revoke">Վերադարձի սարք</string>
   <string name="account_device_revocation_success_title">Հաջողություն</string>
   <string name="account_device_revocation_success">Հեռացրեք սարքը:</string>
-  <string name="account_device_revocation_error_title">Չեմ կարող վերացնել սարքը</string>
-  <string name="account_device_revocation_wrong_password">սխալ գաղտնաբառ:</string>
   <string name="account_device_revocation_unknown_device">Անհայտ սարք:</string>
   <string name="account_device_revocation_error_unknown">Անհայտ սխալ:</string>
   <string name="account_password_change">Փոխել գաղտնաբառը</string>
@@ -61,8 +55,7 @@
   <string name="account_rendezvous_summary">Հանդիպման ռեժիմում ներկա զանգերը կավելացվեն խորհրդակցությունների սենյակին:</string>
   <string name="account_upnp_label">Հնարավորացնել UPnP- ը</string>
   <string name="account_proxy_field">Պրոկսի</string>
-  <!--Plugin Details-->
-  <string name="account_preference_plugin_tab">Պլագիններ</string>
+  <!--Extension Details-->
   <!--Audio Details-->
   <string name="account_audio_label">Ձայնային ձայն</string>
   <string name="account_preferences_media_tab">ԶԼՄ-ներ</string>
@@ -142,35 +135,23 @@
   <string name="export_account_wait_message">Արտահանման հաշվետվության տեղեկատվություն</string>
   <string name="account_export_file">Բաքու հաշիվ</string>
   <string name="account_export_file_summary">Ձեր հաշիվը պահուստային պահեստով պահեք ձեր սարքում, որպեսզի այն հետագայում վերականգնվի:</string>
-  <string name="account_export_end_decryption_message">Չկարողացա բացել ձեր հաշիվը տրամադրված գաղտնաբառով:</string>
   <string name="account_export_end_network_title">Համացանցի սխալ</string>
-  <string name="account_export_end_network_message">Չկարողացա արտահանել ցանցի հաշիվը:</string>
   <string name="account_export_end_error_title">Սխալ</string>
-  <string name="account_export_end_error_message">Հաշիվը չի կարող արտահանել, անհայտ սխալ է տեղի ունեցել:</string>
   <string name="account_enter_password">Գտեք գաղտնաբառ</string>
-  <string name="account_share_body">Կապվեք ինձ հետ \'%1$s\' օգտագործելով Jami- ի տարածված հաղորդակցման հարթակում. %2$s</string>
-  <string name="account_share_body_with_username">Կապվեք ինձ հետ \'%1$s\' կամ իմ հանրային օգտատերական անուն \'%2$s\' օգտագործելով Jami- ի տարածված հաղորդակցման հարթակում. %3$s</string>
-  <string name="account_contact_me">Կապվեք ինձ հետ Ջամիի հետ:</string>
+  <string name="account_contact_me">Կապվեք ինձ հետ Ջամիի մասին:</string>
   <string name="update_account">Հաշիվի թարմացում</string>
   <string name="account_migration">Ձեր Ջամի հաշիվը կարող է թարմացվել: Խնդրում ենք մուտքագրել գաղտնաբառը:</string>
   <string name="ring_account">Ջամի հաշիվը</string>
   <string name="sip_account">SIP հաշիվ</string>
   <string name="ring_account_identity">Անձնագրություն</string>
   <string name="account_migration_title_dialog">Հաշվետու միգրացիա</string>
-  <string name="account_migration_message_dialog">Ձեր հաշիվները պետք է թարմացվեն: Ցանկանում եք գնալ հաշիվների կառավարման էկրանը, որպեսզի կատարեք այս գործողությունը:</string>
   <string name="account_update_needed">Պահանջվում է թարմացում</string>
-  <string name="account_cannot_be_found_title">Չեմ կարողանում հաշիվ գտնել</string>
-  <string name="account_cannot_be_found_message">Հաշիվը չի գտնվել Ջամիի ցանցում։ Համոզվեք, որ այն արտահանվել է Ջամիի վրա գոյություն ունեցող սարքից եւ որ հավատարմագրերը ճիշտ են։</string>
   <string name="account_sip_cannot_be_registered_message">Դուք կարող եք շարունակել հաշիվ ստեղծելու գործընթացը կամ խմբագրել ձեր տեղեկատվությունը այստեղ: Էդիգիան դեռ հնարավոր է ավելի ուշ հաշիվի կարգավորումների մեջ:</string>
-  <string name="account_no_network_title">Չեմ կարող կապվել ցանցի հետ</string>
-  <string name="account_no_network_message">Չկարողացա ավելացնել հաշիվ, քանի որ Ջամի չի կարողացել միանալ տարածված ցանցին:</string>
+  <string name="account_no_network_title">Համացանցի սխալ</string>
   <string name="account_device_added_title">Բաժնորդագրության սարք ավելացվել</string>
   <string name="account_device_added_message">Դուք հաջողությամբ տեղադրել եք ձեր Ջամի հաշիվը այս սարքում:</string>
   <string name="account_device_updated_title">Հաշվետու սարքը թարմացվել է</string>
   <string name="account_device_updated_message">Դուք հաջողությամբ թարմացրել եք ձեր Ջամի հաշիվը:</string>
-  <string name="account_cannot_be_updated_message">Հաշվետու սարքը չի կարող թարմացվել, խնդրում ենք ստուգեք գաղտնաբառը:</string>
-  <string name="account_sip_success_title">գրանցված սիպ հաշիվ</string>
-  <string name="account_sip_success_message">Դուք հաջողությամբ գրանցել եք ձեր Սիպ հաշիվը:</string>
   <string name="account_sip_register_anyway">Գրանցվեք ամեն դեպքում</string>
   <!--TV-->
   <string name="account_tv_settings_header">Հաշվեի կարգավորումները</string>
@@ -190,11 +171,8 @@
   <string name="account_link_export_button">Կապակցեք նոր սարք</string>
   <string name="account_link_show_button">Ցուցադրել %d ավելի շատ կապված սարք</string>
   <string name="account_link_hide_button">Հավաքել միացված սարքը</string>
-  <string name="account_link_export_info">Այս հաշիվը օգտագործելու համար այլ սարքերում, դուք պետք է նախ բացեք այն Jami- ում: Սա կստեղծի PIN կոդ, որը դուք պետք է մուտքագրեք նոր սարքում հաշիվը ստեղծելու համար: PIN- ը գործում է 10 րոպե:</string>
   <string name="account_start_export_button">Գործադրեք PIN- ն</string>
   <string name="account_end_export_button">մոտ</string>
-  <string name="account_end_export_infos">Ձեր PIN-ը:\n\n%%\n\nԱնձնական գործընթացը ավարտելու համար պետք է բացեք Jami- ն նոր սարքում: Ստեղծեք նոր հաշիվ \"Հավելվածը միացրեք հաշիվ\": Ձեր PIN-ը գործում է 10 րոպե:</string>
-  <string name="account_link_export_info_light">Այս հաշիվը օգտագործելու համար այլ սարքերում, դուք պետք է նախ բացեք այն Jami- ում: Սա կստեղծի PIN կոդ, որը դուք պետք է մուտքագրեք նոր սարքում հաշիվը ստեղծելու համար: PIN- ը գործում է 10 րոպե:</string>
   <string name="account_export_title">Կապակցում հաշիվ այլ սարքեր</string>
   <string name="account_connect_server_button">Կապակցեք կառավարման սերվերի հետ</string>
   <string name="account_connect_button">Կապակցել</string>
@@ -226,21 +204,17 @@
   <string name="account_creation_profile">Ստեղծեք ձեր պրոֆիլը</string>
   <string name="account_creation_ring">Ստեղծեք ձեր Jami հաշիվը</string>
   <string name="account_link_title">Կապակցեք այս սարքը</string>
-  <string name="account_sip_cannot_be_registered">Չեմ կարող գրանցել հաշիվ</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">Թարգմանեք իմ հաշիվը</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Փոխանցեք գաղտնաբառը հաստատելու համար</string>
   <string name="enter_password">Գտեք գաղտնաբառ</string>
   <string name="revoke_device_title">Վերադարձի սարք</string>
-  <string name="revoke_device_message">Համոզված եք, որ ցանկանում եք չեղարկել %1$- ը:</string>
   <string name="revoke_device_wait_title">Խնդրում եմ սպասեք...</string>
   <string name="revoke_device_wait_message">Վերադարձի սարք</string>
   <string name="rename_device_title">Վերանվանեք այս սարքը</string>
   <string name="rename_device_message">Ընտրեք նոր անուն, որպեսզի այս սարքը ճանաչվի ձեր Jami հաշիվում</string>
   <string name="rename_device_button">Անունափոխման սարք</string>
   <string name="account_rename_device_hint">Ընտրեք սարքի նոր անունը</string>
-  <string name="account_device_name_empty">սարքի անունը չի կարող դատարկ լինել</string>
   <string name="account_device_this_indicator">Այս սարքը</string>
   <string name="account_disabled_indicator">հաշմանդամություն ունեցող</string>
   <!--Link a new device-->

@@ -27,7 +27,6 @@
   <string name="pref_startOnBoot_title">Starta Jami vid systemstart</string>
   <string name="pref_startOnBoot_summary">Kör Jami i bakgrunden när systemet startas</string>
   <string name="pref_clearHistory_title">Rensa historik</string>
-  <string name="pref_clearHistory_summary">Radera all konversationshistorik. Denna åtgärd kan inte ångras. </string>
   <string name="pref_notification_title">Synlighet för notiser. </string>
   <string name="pref_notification_summary">Ange synlighet för appens notiser på låst skärm. </string>
   <string name="pref_blackList_title">Blocklista</string>
@@ -52,19 +51,6 @@
   <string name="notification_public">Offentlig \n(visa notiser och innehållet på låsskärm)\n</string>
   <string name="notification_private">Privat \n(visa notiser men inte innehållet på låsskärm)\n</string>
   <string name="notification_secret">Hemlig \n(visa inte på låsskärm)\n</string>
-  <!--Plugin-->
-  <string name="pref_plugins_title">Insticksmoduler</string>
-  <string name="pref_plugins_summary">Använd tillägg och ange förutsättningar </string>
-  <string name="fab_plugins_add">Lägg till ett nytt tillägg</string>
-  <string name="plugin_uninstall_title">Avinstallera tillägg?</string>
-  <string name="plugin_reset_preferences">Återställ tillägg</string>
-  <string name="plugin_reset_preferences_summary">Dina inställningar för tillägg återställs</string>
-  <string name="plugin_reset_preferences_ask">Vill du återställa de allmänna plugin inställningarna?</string>
-  <string name="plugin_reset_account_preferences_ask">Vill du återställa inställningarna för kontoplugin?</string>
-  <string name="plugin_successfully_installed">Tillägg <b>%1$s</b> installerades </string>
-  <string name="plugin_install_failure">Misslyckades med att installera tillägg: <b>%1$s</b></string>
-  <string name="plugin_recent_version_exception">Det finns en senare version av<b>%1$s </b> </string>
-  <string name="plugin_same_version_exception">Du har samma version av <b>%1$s</b> installerad</string>
-  <string name="plugin_force_install">tvinga \n installation</string>
-  <string name="plugin_path_image_add">Lägg till en ny bild</string>
+  <!--Extension-->
+  <string name="extension_force_install">tvinga \n installation</string>
 </resources>

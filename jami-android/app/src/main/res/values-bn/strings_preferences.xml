@@ -27,7 +27,6 @@
   <string name="pref_startOnBoot_title">স্টার্টআপের সময় জামি শুরু করুন</string>
   <string name="pref_startOnBoot_summary">সিস্টেম শুরু হলে জামিকে ব্যাকগ্রাউন্ডে চালাও।</string>
   <string name="pref_clearHistory_title">পরিষ্কার ইতিহাস</string>
-  <string name="pref_clearHistory_summary">সব কথোপকথনের ইতিহাস মুছে ফেলুন, এই কাজটি বাতিল করা যাবে না।</string>
   <string name="pref_notification_title">বিজ্ঞপ্তি দৃশ্যমানতা</string>
   <string name="pref_notification_summary">লক স্ক্রিনে অ্যাপ্লিকেশন বিজ্ঞপ্তি দৃশ্যমানতা সেট করুন।</string>
   <string name="pref_blackList_title">ব্লক তালিকা</string>
@@ -52,19 +51,6 @@
   <string name="notification_public">পাবলিক \n(সাবধানসমূহ এবং তাদের বিষয়বস্তু লক স্ক্রিনে দেখান) \n</string>
   <string name="notification_private">ব্যক্তিগত \n(সাবধান প্রদর্শন কিন্তু লক স্ক্রিনে তাদের বিষয়বস্তু লুকান) \n</string>
   <string name="notification_secret">গোপন \n(লক স্ক্রিনে বিজ্ঞপ্তি দেখায় না)</string>
-  <!--Plugin-->
-  <string name="pref_plugins_title">প্লাগইন</string>
-  <string name="pref_plugins_summary">প্লাগইন সক্ষম করুন এবং তাদের পরামিতি সেট করুন</string>
-  <string name="fab_plugins_add">একটি নতুন প্লাগইন যোগ করুন</string>
-  <string name="plugin_uninstall_title">প্লাগইন আনইনস্টল করা?</string>
-  <string name="plugin_reset_preferences">প্লাগইন পছন্দ পুনরায় সেট করুন</string>
-  <string name="plugin_reset_preferences_summary">আপনার প্লাগইন সেটিংস ডিফল্ট হবে</string>
-  <string name="plugin_reset_preferences_ask">আপনি সাধারণ প্লাগইন সেটিংস রিসেট করতে চান?</string>
-  <string name="plugin_reset_account_preferences_ask">আপনি কি অ্যাকাউন্ট প্লাগইন সেটিংস রিসেট করতে চান?</string>
-  <string name="plugin_successfully_installed">প্লাগইন <b>%1$s</b> সফলভাবে ইনস্টল করা হয়েছে</string>
-  <string name="plugin_install_failure">প্লাগইন ইনস্টল করতে ব্যর্থঃ <b>%1$s</b></string>
-  <string name="plugin_recent_version_exception">আপনার কাছে একটি সাম্প্রতিক সংস্করণ রয়েছেঃ <b>%1$s</b></string>
-  <string name="plugin_same_version_exception">আপনার <b>%1$s</b> এর একই সংস্করণ ইনস্টল করা আছে</string>
-  <string name="plugin_force_install">জোর করে ইনস্টল করা</string>
-  <string name="plugin_path_image_add">একটি নতুন চিত্র যোগ করুন</string>
+  <!--Extension-->
+  <string name="extension_force_install">জোর করে ইনস্টল করা</string>
 </resources>

@@ -27,7 +27,6 @@
   <string name="pref_startOnBoot_title">Paleisti Jami paleisties metu</string>
   <string name="pref_startOnBoot_summary">Sistemos paleidimo metu, paleisti Jami fone.</string>
   <string name="pref_clearHistory_title">Išvalyti istoriją</string>
-  <string name="pref_clearHistory_summary">Išvalyti visą pokalbių istoriją. Šio veiksmo negalima bus atšaukti.</string>
   <string name="pref_notification_title">pranešimų matomumas</string>
   <string name="pref_notification_summary">Įdėkite pranešimų apie programą matomumą užrakintos ekrane.</string>
   <string name="pref_blackList_title">Blokų sąrašas</string>
@@ -52,19 +51,6 @@
   <string name="notification_public">Visuomenė \n(iššvietimo pranešimai ir jų turinys užrakintos ekrane) \n</string>
   <string name="notification_private">Privati pranešimai rodomi, tačiau jų turinys paslėptas užrakintos ekrane)</string>
   <string name="notification_secret">Paslapti \n(nešinkti pranešimų užrakintos ekrane)</string>
-  <!--Plugin-->
-  <string name="pref_plugins_title">Įskiepiai</string>
-  <string name="pref_plugins_summary">Įjungti priedus ir nustatyti jų parametrus</string>
-  <string name="fab_plugins_add">Įdėkite naują priedą</string>
-  <string name="plugin_uninstall_title">Išinstaluoti įtaisą?</string>
-  <string name="plugin_reset_preferences">Paskutinis įtaisas</string>
-  <string name="plugin_reset_preferences_summary">Jūsų papildinio nustatymas bus numatytas</string>
-  <string name="plugin_reset_preferences_ask">Ar norite atkurti bendrą papildinio nustatymus?</string>
-  <string name="plugin_reset_account_preferences_ask">Ar norite atkurti sąskaitų papildinio įrankių nustatymus?</string>
-  <string name="plugin_successfully_installed">Plugin <b>%1$s</b> sėkmingai įdiegtas</string>
-  <string name="plugin_install_failure">Nesugebėjo įdiegti papildinio įrankio: <b>%1$s</b></string>
-  <string name="plugin_recent_version_exception">Turite naujausią versiją: <b>%1$s</b></string>
-  <string name="plugin_same_version_exception">Įstatyta tokia pati <b>%1$s</b> versija</string>
-  <string name="plugin_force_install">Įstatymas</string>
-  <string name="plugin_path_image_add">Įdėkite naują vaizdą</string>
+  <!--Extension-->
+  <string name="extension_force_install">Įstatymas</string>
 </resources>

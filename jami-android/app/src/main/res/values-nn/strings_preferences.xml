@@ -27,7 +27,6 @@
   <string name="pref_startOnBoot_title">Start Jami på start</string>
   <string name="pref_startOnBoot_summary">La Jami stå i bakgrunnen når systemet startar.</string>
   <string name="pref_clearHistory_title">Klare historie</string>
-  <string name="pref_clearHistory_summary">Ta bort samtalshistoria.</string>
   <string name="pref_notification_title">Siðivhet i meldinga</string>
   <string name="pref_notification_summary">Sett visible for meldingar på låsskjerma.</string>
   <string name="pref_blackList_title">Blokklista</string>
@@ -52,19 +51,6 @@
   <string name="notification_public">Allmennare \n(skjer meldingar og innhaldet på låsskjerma) \n</string>
   <string name="notification_private">Privat \n(skjelver meldingar men skjul innhaldet på låsskjerma) \n</string>
   <string name="notification_secret">Geheim \n(skjelver ikkje meldingar på låsskjerma)</string>
-  <!--Plugin-->
-  <string name="pref_plugins_title">Plugins</string>
-  <string name="pref_plugins_summary">Legg på plugins og innstill parametrarne</string>
-  <string name="fab_plugins_add">Legg til eit nytt plugin</string>
-  <string name="plugin_uninstall_title">Uninstall Plugin?</string>
-  <string name="plugin_reset_preferences">Setti pluginsinnlegg</string>
-  <string name="plugin_reset_preferences_summary">Innstillinga på pluginane dine vert default</string>
-  <string name="plugin_reset_preferences_ask">Vil du tilbakestilla dei generelle innstillingane til plugin?</string>
-  <string name="plugin_reset_account_preferences_ask">Vil du tilbakestilla kontoinformasjonsinnstillingane?</string>
-  <string name="plugin_successfully_installed">Plugin <b>%1$s</b> installert med suksess</string>
-  <string name="plugin_install_failure">Ufør å installere plugin: <b>%1$s</b></string>
-  <string name="plugin_recent_version_exception">Du har ein nyare versjon av: <b>%1$s</b></string>
-  <string name="plugin_same_version_exception">Du har same versjon av <b>%1$s</b> installert</string>
-  <string name="plugin_force_install">tvinga installasjon</string>
-  <string name="plugin_path_image_add">Legg til eit nytt bilde</string>
+  <!--Extension-->
+  <string name="extension_force_install">tvinga installasjon</string>
 </resources>

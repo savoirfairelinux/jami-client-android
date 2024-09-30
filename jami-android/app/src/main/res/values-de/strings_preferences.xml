@@ -27,7 +27,7 @@
   <string name="pref_startOnBoot_title">Jami beim Hochfahren starten</string>
   <string name="pref_startOnBoot_summary">Jami im Hintergrund laufen lassen, wenn das System startet</string>
   <string name="pref_clearHistory_title">Verlauf leeren</string>
-  <string name="pref_clearHistory_summary">Kompletten Unterhaltungsverlauf löschen. Diese Aktion kann nicht rückgängig gemacht werden.</string>
+  <string name="pref_clearHistory_summary">Verlauf aller Unterhaltungen löschen. Diese Aktion kann nicht rückgängig gemacht werden.</string>
   <string name="pref_notification_title">Sichtbarkeit der Benachrichtigung</string>
   <string name="pref_notification_summary">Sichtbarkeit von Anwendungsbenachrichtigungen auf dem Sperrbildschirm einstellen.</string>
   <string name="pref_blackList_title">Blockierte Kontakte</string>
@@ -52,22 +52,22 @@
   <string name="notification_public">Öffentlich \n(Benachrichtigungen und deren Inhalt auf dem Sperrbildschirm anzeigen)\n</string>
   <string name="notification_private">Privat \n(Benachrichtigungen anzeigen, aber deren Inhalt auf dem Sperrbildschirm ausblenden)\n</string>
   <string name="notification_secret">Geheim \n(Benachrichtigungen nicht auf dem Sperrbildschirm anzeigen)</string>
-  <!--Plugin-->
-  <string name="pref_plugins_title">Plugins</string>
-  <string name="pref_plugins_summary">Aktivierung des Plugins und Einstellen dieser Parameter</string>
-  <string name="fab_plugins_add">Ein neues Plugin hinzufügen</string>
-  <string name="plugin_uninstall_title">Plugin deinstallieren ?</string>
-  <string name="plugin_reset_preferences">Plugin-Einstellungen zurücksetzen</string>
-  <string name="plugin_reset_preferences_summary">Die Plugin-Einstellungen werden voreingestellt</string>
-  <string name="plugin_reset_preferences_ask">Möchten Sie die allgemeinen Plugin-Einstellungen zurücksetzen?</string>
-  <string name="plugin_reset_account_preferences_ask">Möchten Sie die Konto-Plugin-Einstellungen zurücksetzen?</string>
-  <string name="plugin_successfully_installed">Plugin <b>%1$s</b> erfolgreich installiert</string>
-  <string name="plugin_install_failure">Installation des Plugins ist fehlgeschlagen: <b>%1$s</b></string>
-  <string name="plugin_recent_version_exception">Sie haben eine neuere Version von: <b>%1$s</b></string>
-  <string name="plugin_same_version_exception">Sie haben die gleiche Version von <b>%1$s</b> installiert</string>
-  <string name="plugin_invalid_signature"><b>%1$s</b> hat eine ungültige Signatur</string>
-  <string name="plugin_invalid_authority">Die Autorität kann nicht überprüft werden für:<b>%1$s</b></string>
-  <string name="plugin_invalid_format">Ungültiges Plugin-Format: <b>%1$s</b></string>
-  <string name="plugin_force_install">Erzwinge \n Installation</string>
-  <string name="plugin_path_image_add">Ein neues Bild hinzufügen</string>
+  <!--Extension-->
+  <string name="pref_extensions_title">Erweiterungen</string>
+  <string name="pref_extensions_summary">Erweiterungen aktivieren und deren Parameter festlegen</string>
+  <string name="fab_extensions_add">Neue Erweiterung hinzufügen</string>
+  <string name="extension_uninstall_title">Erweiterung deinstallieren?</string>
+  <string name="extension_reset_preferences">Erweiterungseinstellungen zurücksetzen</string>
+  <string name="extension_reset_preferences_summary">Erweiterung auf die Standardeinstellungen zurückgesetzt</string>
+  <string name="extension_reset_preferences_ask">Möchten Sie die allgemeinen Erweiterungseinstellungen zurücksetzen?</string>
+  <string name="extension_reset_account_preferences_ask">Möchten Sie die Kontoerweiterungseinstellungen zurücksetzen?</string>
+  <string name="extension_successfully_installed">Erweiterung <b>%1$s</b> erfolgreich installiert</string>
+  <string name="extension_install_failure">Bei der Installation der folgenden Erweiterung ist ein Fehler aufgetreten: <b>%1$s</b></string>
+  <string name="extension_recent_version_exception">Eine neuere Version von <b>%1$s</b> ist installiert.</string>
+  <string name="extension_same_version_exception">Es ist die dieselbe Version <b>%1$s</b> von installiert.</string>
+  <string name="extension_invalid_signature"><b>%1$s</b> hat eine ungültige Signatur</string>
+  <string name="extension_invalid_authority">Die Autorität kann nicht überprüft werden für: <b>%1$s</b></string>
+  <string name="extension_invalid_format">Ungültiges Erweiterungsformat: <b>%1$s</b></string>
+  <string name="extension_force_install">Erzwinge \n Installation</string>
+  <string name="extension_path_image_add">Neues Bild hinzufügen</string>
 </resources>

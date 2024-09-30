@@ -21,25 +21,19 @@
   <string name="dialog_wait_create_details">कृपया अपने नए खाते को जोड़ने के लिए प्रतीक्षा करें...</string>
   <string name="dialog_wait_update">खाता अद्यतन करना</string>
   <string name="dialog_wait_update_details">कृपया अपने नए खाते को अपडेट करते समय प्रतीक्षा करें...</string>
-  <string name="dialog_warn_ip2ip_account_title">खाली SIP खाता बनाना?</string>
-  <string name="dialog_warn_ip2ip_account_message">आप बिना किसी वैध होस्टनाम के एक SIP खाता बनाने के बारे में हैं। आप केवल प्रत्यक्ष आईपी कॉल कर सकते हैं और प्राप्त कर सकते हैं। आप बाद में अपने खाते को संपादित कर सकते हैं</string>
   <string name="account_type_ip2ip">आईपी खाता</string>
   <string name="help_ring">एक जेमी खाता आपको पूरी तरह से वितरित नेटवर्क के माध्यम से लोगों तक सुरक्षित रूप से पीयर-टू-पीयर पहुंचने की अनुमति देता है।</string>
-  <string name="help_sip_title">अपना SIP खाता जोड़ें</string>
+  <string name="help_sip_title">SIP खाता जोड़ें</string>
   <string name="help_sip">मौजूदा SIP खाते को कॉन्फ़िगर करें।</string>
-  <string name="create_sip_account">SIP खाता जोड़ें</string>
   <!--Strings related to account deletion-->
-  <string name="account_delete_dialog_title">खाता हटाएं?</string>
   <string name="account_delete_dialog_message">इस कार्य को निरस्त नहीं किया जा सकता।</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">कोई खाता पंजीकृत नहीं</string>
   <string name="normal_accounts_titles">खाते</string>
-  <string name="normal_devices_titles">जुड़ी हुई उपकरणे</string>
+  <string name="normal_devices_titles">जुड़े हुए उपकरण</string>
   <string name="account_device_revoke">निरसन उपकरण</string>
   <string name="account_device_revocation_success_title">सफलता</string>
   <string name="account_device_revocation_success">डिवाइस अब रद्द कर दिया गया है!</string>
-  <string name="account_device_revocation_error_title">डिवाइस को वापस नहीं ले सकते</string>
-  <string name="account_device_revocation_wrong_password">गलत पासवर्ड.</string>
   <string name="account_device_revocation_unknown_device">अज्ञात उपकरण।</string>
   <string name="account_device_revocation_error_unknown">अज्ञात त्रुटि।</string>
   <string name="account_password_change">पासवर्ड बदलें</string>
@@ -61,8 +55,7 @@
   <string name="account_rendezvous_summary">रिंडिज़ोव मोड में, आने वाले कॉल को एक सम्मेलन कक्ष में जोड़ा जाएगा।</string>
   <string name="account_upnp_label">UPnP को सक्षम करें</string>
   <string name="account_proxy_field">प्रॉक्सी</string>
-  <!--Plugin Details-->
-  <string name="account_preference_plugin_tab">प्लगइन्स</string>
+  <!--Extension Details-->
   <!--Audio Details-->
   <string name="account_audio_label">ऑडियो</string>
   <string name="account_preferences_media_tab">मीडिया</string>
@@ -142,14 +135,9 @@
   <string name="export_account_wait_message">निर्यात खाता की जानकारी</string>
   <string name="account_export_file">बैकअप खाता</string>
   <string name="account_export_file_summary">बाद में इसे बहाल करने के लिए अपने डिवाइस पर अपने खाते का बैकअप लें।</string>
-  <string name="account_export_end_decryption_message">प्रदान किए गए पासवर्ड का उपयोग करके अपने खाते को अनलॉक नहीं किया जा सका।</string>
   <string name="account_export_end_network_title">नेटवर्क त्रुटि</string>
-  <string name="account_export_end_network_message">नेटवर्क पर खाता निर्यात नहीं किया जा सका. अपने कनेक्टिविटी की जाँच करें.</string>
   <string name="account_export_end_error_title">त्रुटि</string>
-  <string name="account_export_end_error_message">खाता निर्यात नहीं किया जा सका. एक अज्ञात त्रुटि हुई.</string>
   <string name="account_enter_password">पासवर्ड दर्ज करें</string>
-  <string name="account_share_body">जामी वितरित संचार मंच पर \'%1$s\' का उपयोग करके मुझसे संपर्क करेंः %2$s</string>
-  <string name="account_share_body_with_username">जामी वितरित संचार मंच पर \'%1$s\' या मेरे सार्वजनिक उपयोगकर्ता नाम \'%2$s\' का उपयोग करके मुझसे संपर्क करेंः %3$s</string>
   <string name="account_contact_me">Jami पर मुझसे संपर्क करें!</string>
   <string name="update_account">खाता अद्यतन</string>
   <string name="account_migration">आपका जेमी खाता अपडेट किया जा सकता है. कृपया अपना पासवर्ड दर्ज करें.</string>
@@ -157,20 +145,13 @@
   <string name="sip_account">एसआईपी खाता</string>
   <string name="ring_account_identity">पहचान</string>
   <string name="account_migration_title_dialog">खाता माइग्रेशन</string>
-  <string name="account_migration_message_dialog">क्या आप इस ऑपरेशन को करने के लिए खाता प्रबंधन स्क्रीन पर जाना चाहते हैं?</string>
   <string name="account_update_needed">अद्यतन की आवश्यकता</string>
-  <string name="account_cannot_be_found_title">खाता नहीं मिल सकता</string>
-  <string name="account_cannot_be_found_message">खाता Jami नेटवर्क पर नहीं पाया जा सका.\nयह सुनिश्चित करें कि यह एक मौजूदा डिवाइस से Jami पर निर्यात किया गया था, और कि प्रमाणीकरण सही हैं प्रदान की.</string>
   <string name="account_sip_cannot_be_registered_message">आप खाता निर्माण प्रक्रिया को जारी रख सकते हैं या अपनी जानकारी को यहां संपादित कर सकते हैं। खाता सेटिंग्स में बाद में संस्करण अभी भी संभव है।</string>
-  <string name="account_no_network_title">नेटवर्क से कनेक्ट नहीं कर सकते</string>
-  <string name="account_no_network_message">मैं खाता जोड़ने में असमर्थ था क्योंकि जेमी वितरित नेटवर्क से कनेक्ट नहीं कर सका। अपने डिवाइस कनेक्टिविटी की जांच करें।</string>
+  <string name="account_no_network_title">नेटवर्क त्रुटि</string>
   <string name="account_device_added_title">खाता उपकरण जोड़ा गया</string>
   <string name="account_device_added_message">आपने इस डिवाइस पर अपने Jami खाते को सफलतापूर्वक सेट किया है।</string>
   <string name="account_device_updated_title">खाता उपकरण अद्यतन</string>
   <string name="account_device_updated_message">आपने अपने जेमी खाते को सफलतापूर्वक अपडेट किया है।</string>
-  <string name="account_cannot_be_updated_message">खाता डिवाइस अद्यतन नहीं किया जा सकता है. कृपया अपना पासवर्ड जांचें.</string>
-  <string name="account_sip_success_title">सिप खाता पंजीकृत</string>
-  <string name="account_sip_success_message">आपने अपने सिप खाते को सफलतापूर्वक पंजीकृत किया है।</string>
   <string name="account_sip_register_anyway">वैसे भी पंजीकरण करें</string>
   <!--TV-->
   <string name="account_tv_settings_header">खाता सेटिंग्स</string>
@@ -190,11 +171,8 @@
   <string name="account_link_export_button">एक नई डिवाइस को लिंक करें</string>
   <string name="account_link_show_button">%d अधिक जुड़ी हुई डिवाइस दिखाएँ</string>
   <string name="account_link_hide_button">छुपाए हुए कनेक्टेड डिवाइस</string>
-  <string name="account_link_export_info">इस खाते का उपयोग करने के लिए आपको पहले इसे Jami पर उजागर करना होगा। इससे एक पिन कोड उत्पन्न होगा जिसे आपको खाते को सेट करने के लिए नए डिवाइस पर दर्ज करना होगा। पिन 10 मिनट के लिए मान्य है।</string>
   <string name="account_start_export_button">पिन उत्पन्न करें</string>
   <string name="account_end_export_button">निकट</string>
-  <string name="account_end_export_infos">आपका पिन हैः\n\n%%\n\nप्रक्रिया पूरा करने के लिए, आपको नई डिवाइस पर Jami खोलना होगा। \"इस डिवाइस को एक खाते से लिंक करें\" के साथ एक नया खाता बनाएं। आपका पिन 10 मिनट के लिए मान्य है।</string>
-  <string name="account_link_export_info_light">इस खाते का उपयोग करने के लिए आपको पहले इसे Jami पर उजागर करना होगा। इससे एक पिन कोड उत्पन्न होगा जिसे आपको खाते को सेट करने के लिए नए डिवाइस पर दर्ज करना होगा। पिन 10 मिनट के लिए मान्य है।</string>
   <string name="account_export_title">अन्य उपकरणों से लिंक खाता</string>
   <string name="account_connect_server_button">प्रबंधन सर्वर से कनेक्ट करें</string>
   <string name="account_connect_button">कनेक्ट करें</string>
@@ -226,21 +204,17 @@
   <string name="account_creation_profile">अपनी प्रोफ़ाइल बनाएं</string>
   <string name="account_creation_ring">अपना जेमी खाता बनाएं</string>
   <string name="account_link_title">इस डिवाइस को लिंक करें</string>
-  <string name="account_sip_cannot_be_registered">खाता पंजीकृत नहीं कर सकते</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">मेरे खाते को संपादित करें</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">पुष्टि करने के लिए पासवर्ड दर्ज करें</string>
   <string name="enter_password">पासवर्ड दर्ज करें</string>
   <string name="revoke_device_title">निरसन उपकरण</string>
-  <string name="revoke_device_message">क्या आप निश्चित हैं कि आप %1$s को रद्द करना चाहते हैं?</string>
   <string name="revoke_device_wait_title">कृपया प्रतीक्षा करें...</string>
   <string name="revoke_device_wait_message">निरसन उपकरण</string>
   <string name="rename_device_title">इस डिवाइस का नाम बदलें</string>
   <string name="rename_device_message">अपने Jami खाते में इस डिवाइस की पहचान करने के लिए एक नया नाम चुनें</string>
   <string name="rename_device_button">नामकरण उपकरण</string>
   <string name="account_rename_device_hint">नई डिवाइस का नाम चुनें</string>
-  <string name="account_device_name_empty">डिवाइस का नाम खाली नहीं हो सकता है</string>
   <string name="account_device_this_indicator">यह उपकरण</string>
   <string name="account_disabled_indicator">विकलांग</string>
   <!--Link a new device-->

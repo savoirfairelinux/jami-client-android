@@ -1,7 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--Strings for xml content description of images-->
-  <string name="video_plugins">Video ugrađivači</string>
   <string name="file_download_button">Snimka</string>
   <string name="control_play">izvodi</string>
   <string name="control_replay">Odgovori</string>

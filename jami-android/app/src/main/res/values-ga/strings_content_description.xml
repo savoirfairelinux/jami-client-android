@@ -1,9 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--Strings for xml content description of images-->
-  <string name="contact_quick_call_description">Ceall go tapa</string>
-  <string name="contact_picture_description">Dealbh Contae</string>
   <string name="dial_numeric_pad">Cluicheí uimhir</string>
   <string name="contact_unblock">Fág an blocaíocht</string>
-  <string name="video_plugins">Plugins físeáin</string>
 </resources>

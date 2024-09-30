@@ -27,7 +27,6 @@
   <string name="pref_startOnBoot_title">Покрени Јами при покретању</string>
   <string name="pref_startOnBoot_summary">Покрени Јами у позадини када се систем покрене.</string>
   <string name="pref_clearHistory_title">Очисти историју</string>
-  <string name="pref_clearHistory_summary">Обриши сву историју разговора. Ова радња се не може опозвати.</string>
   <string name="pref_notification_title">Видљивост обавештења</string>
   <string name="pref_notification_summary">Подеси видљивост обавештења апликација на закључаном екрану.</string>
   <string name="pref_blackList_title">Блок листа</string>
@@ -52,22 +51,8 @@
   <string name="notification_public">Јавно \n(прикажи обавештења и њихов садржај на закључаном екрану)\n</string>
   <string name="notification_private">Приватно \n(приказуј обавештења, али сакриј њихов садржај на закључаном екрану)\n</string>
   <string name="notification_secret">Тајно \n(не приказују обавештења на закључаном екрану)</string>
-  <!--Plugin-->
-  <string name="pref_plugins_title">Додаци</string>
-  <string name="pref_plugins_summary">Омогући додатке и подесите њихове параметре</string>
-  <string name="fab_plugins_add">Додај нови додатак</string>
-  <string name="plugin_uninstall_title">Деинсталирати додатак?</string>
-  <string name="plugin_reset_preferences">Ресетуј подешавања додатака</string>
-  <string name="plugin_reset_preferences_summary">Подешавања додатака ће бити подразумевана</string>
-  <string name="plugin_reset_preferences_ask">Да ли желиш да ресетујеш општа подешавања додатка?</string>
-  <string name="plugin_reset_account_preferences_ask">Да ли желиш да ресетујеш подешавања додатка налога?</string>
-  <string name="plugin_successfully_installed">Додатак <b>%1$s</b> успешно инсталиран</string>
-  <string name="plugin_install_failure">Инсталација није успела за додатак: <b>%1$s</b></string>
-  <string name="plugin_recent_version_exception">Имаш новију верзију: <b>%1$s</b></string>
-  <string name="plugin_same_version_exception">Имаш инсталирану исту верзију <b>%1$s</b></string>
-  <string name="plugin_invalid_signature"><b>%1$s</b> има неважећи потпис</string>
-  <string name="plugin_invalid_authority">Не могу да потврдим овлашћење за: <b>%1$s</b></string>
-  <string name="plugin_invalid_format">Неважећи формат додатка: <b>%1$s</b></string>
-  <string name="plugin_force_install">форсирај \n инсталацију</string>
-  <string name="plugin_path_image_add">Додај нову слику</string>
+  <!--Extension-->
+  <string name="pref_extensions_title">Proširenja</string>
+  <string name="extension_invalid_signature"><b>%1$s</b> има неважећи потпис</string>
+  <string name="extension_force_install">форсирај \n инсталацију</string>
 </resources>

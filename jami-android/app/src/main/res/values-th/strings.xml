@@ -1,16 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
-  <string name="feedback_section">ข้อเสนอแนะ</string>
-  <string name="report"><u>ส่งอีเมลถึงเรา</u></string>
   <string name="section_license">ใบอนุญาต</string>
   <string name="sponsor_section">Jami เป็นซอฟต์แวร์ฟรีที่พัฒนาและสนับสนุนโดย</string>
   <string name="copyright_section">ลิขสิทธิ์</string>
   <string name="contribute_section">มีส่วนช่วย</string>
   <string name="version_section">เวอร์ชั่น</string>
-  <string name="no_email_app_installed">ไม่พบแอปอีเมล ติดตั้งแอปเพื่อส่งรายงานถึงเรา</string>
   <string name="no_browser_app_installed">ไม่พบแอปเว็บเบราว์เซอร์ ติดตั้งแอปเพื่อดูหน้านี้</string>
-  <string name="email_chooser_title">ส่งอีเมลโดยใช้...</string>
   <string name="website_chooser_title">ดูเว็บไซต์โดยใช้...</string>
   <string name="license">ซอฟต์แวร์นี้มีให้ "ตามที่เป็น" โดยไม่มีการรับประกันใดๆ สำหรับรายละเอียด โปรดดูที่&lt;u&gt; GNU General Public License เวอร์ชัน 3 หรือใหม่กว่า</string>
   <string name="description">Jami เป็นซอฟต์แวร์ฟรีสำหรับการสื่อสารแบบสากลซึ่งเคารพเสรีภาพและความเป็นส่วนตัวของผู้ใช้</string>
@@ -19,9 +15,7 @@
   <string name="call_service_description">บริการนี้จำเป็นเพื่อให้การโทรของคุณทำงานอยู่เบื้องหน้า มันทำงานระหว่างการโทรเท่านั้น</string>
   <string name="data_transfer_service_description">บริการนี้จำเป็นสำหรับการแสดงการแจ้งเตือนอย่างต่อเนื่องระหว่างการถ่ายโอนไฟล์ มันทำงานเฉพาะระหว่างการถ่ายโอนไฟล์</string>
   <!--About dialog-->
-  <string name="developed_by">พัฒนาโดย</string>
-  <string name="designed_by">ออกแบบโดย</string>
-  <string name="ringtones_by">เสียงเรียกเข้าโดย</string>
+  <string name="media">สื่อ</string>
   <!--RingActivity-->
   <string name="error_no_network">ไม่มีการเชื่อมต่อเครือข่าย</string>
   <string name="error_account_offline">บัญชีออฟไลน์อยู่</string>
@@ -35,7 +29,6 @@
   <string name="menu_item_settings">การตั้งค่า</string>
   <string name="menu_item_advanced_settings">การตั้งค่าที่ทันสมัย</string>
   <string name="menu_item_account_settings">การตั้งค่าบัญชี</string>
-  <string name="menu_item_plugin_list">การตั้งค่าปลั๊กอิน</string>
   <string name="menu_item_share">แบ่งปันบัญชีของฉัน</string>
   <string name="menu_item_about">เกี่ยวกับ Jami</string>
   <string name="video_setting_title">การตั้งค่าวีดีโอ</string>
@@ -96,17 +89,9 @@
   <string name="ongoing_call">กำลังโทร</string>
   <string name="hist_in_call">สายเรียกเข้าของ%1$s</string>
   <string name="hist_out_call">การโทรออกของ%1$s</string>
-  <string name="start_error_title">เริ่ม Jami ไม่ได้ !</string>
   <string name="start_error_mic_required">Jami ต้องได้รับอนุญาตจากไมโครโฟนจึงจะใช้งานได้</string>
-  <string name="action_call_accept">รับสาย</string>
-  <string name="action_call_accept_audio">ตอบแบบเสียง</string>
-  <string name="action_call_accept_video">คำตอบในวิดีโอ</string>
-  <string name="action_call_hold_accept">พักสายและรับสายเสียง</string>
-  <string name="action_call_hold_accept_video">พักสายและรับสายวิดีโอ</string>
-  <string name="action_call_end_accept">วางสายและรับสาย</string>
   <string name="action_call_decline">ปฏิเสธ</string>
   <string name="action_call_mic_mute">ปิดเสียงไมโครโฟน</string>
-  <string name="action_load_plugin">โหลดปลั๊กอิน</string>
   <string name="ab_action_speakerphone">เปิดใช้งานลำโพง</string>
   <string name="ab_action_contact_add">เพิ่มในรายชื่อติดต่อ</string>
   <string name="ab_action_contact_add_question">เพิ่มในรายชื่อติดต่อไหม</string>
@@ -142,11 +127,8 @@
   <string name="ringtone_error_size_too_big">ไฟล์นี้ใหญ่เกินไป ขนาดสูงสุดคือ%1$dkB.</string>
   <string name="ringtone_custom_prompt">ตั้งเสียงเรียกเข้าแบบกำหนดเอง</string>
   <string name="ringtone_custom_label">กำหนดเอง</string>
-  <string name="ringtone_jami_tones">Jami เสียงสูงต่ำ</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Jami ต้องการสิทธิ์ \"อ่านรายชื่อติดต่อ\" เพื่อเปิดใช้คุณลักษณะนี้ โปรดยินยอมให้</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Jami ต้องการสิทธิ์ \"เขียนบันทึกการโทร\" เพื่อเปิดใช้งานคุณสมบัตินี้ โปรดยินยอมให้</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">สแกนรหัส QR ของบัญชีที่คุณต้องการเพิ่ม</string>
   <string name="title_activity_qrcode">แบ่งปันบัญชีของฉัน</string>
@@ -162,7 +144,6 @@
   <string name="conversation_details">รายละเอียดการพูดคุย</string>
   <string name="contact_details">รายละเอียดการติดต่อ</string>
   <string name="conversation_action_delete_this">ลบบทสนทนานี้</string>
-  <string name="conversation_action_delete_this_title">ลบการสนทนานี้ไหม</string>
   <string name="conversation_action_delete_this_message">การดำเนินการนี้ไม่สามารถยกเลิกได้</string>
   <string name="conversation_action_history_clear">ล้างประวัติ</string>
   <string name="conversation_action_history_clear_title">ล้างประวัติการสนทนาไหม</string>
@@ -170,7 +151,6 @@
   <string name="conversation_action_remove_this">ลบผู้ติดต่อ</string>
   <string name="conversation_action_remove_this_title">ลบรายชื่อติดต่อนี้ไหม</string>
   <string name="conversation_action_remove_this_message">การดำเนินการนี้จะลบผู้ติดต่อและล้างประวัติการสนทนาอย่างแน่นอน</string>
-  <string name="conversation_action_copy_peer_number">คัดลอกหมายเลข</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s ถูกสําเนาไปยังกระดานตัด</string>
   <string name="conversation_action_select_peer_number">เลือกหมายเลข</string>
   <string name="conversation_action_block_this">บล็อคการติดต่อ</string>
@@ -200,7 +180,6 @@
   <string name="conversation_contact_invited">%1$sได้รับเชิญ</string>
   <string name="conversation_contact_added">%1$sเข้าร่วม</string>
   <string name="conversation_contact_left">%1$ อยู่ซ้าย</string>
-  <string name="conversation_contact_banned">%1$sถูกห้าม</string>
   <string name="conversation_search_hint">ค้นหาบทสนทนา</string>
   <string name="today">วัน นี้</string>
   <string name="yesterday">เมื่อวาน</string>
@@ -215,14 +194,12 @@
   <string name="help_password_choose">เลือกรหัสผ่านที่รัดกุมซึ่งคุณจะต้องจำไว้เพื่อปกป้องบัญชี Jami ของคุณ</string>
   <string name="help_password_enter">ป้อนรหัสผ่านบัญชี Jami หลักของคุณ</string>
   <string name="help_server_enter">ป้อน URL ของเซิร์ฟเวอร์การจัดการ</string>
-  <string name="help_pin_enter">ป้อน PIN จากบัญชี Jami อื่นที่กำหนดค่าไว้ ใช้คุณสมบัติ \"ส่งออกบัญชี Jami\" เพื่อรับ PIN</string>
   <string name="wizard_next">ต่อไป</string>
   <string name="wizard_back">กลับ</string>
   <string name="wizard_skip">ข้าม</string>
   <string name="hist_contact_invited">เชิญติดต่อ</string>
   <string name="hist_contact_added">เพิ่มผู้ติดต่อ</string>
   <string name="hist_contact_left">ติดต่อซ้าย</string>
-  <string name="hist_contact_banned">ห้ามติดต่อ</string>
   <string name="hist_invitation_received">ได้รับคำเชิญ</string>
   <!--Account Summary-->
   <string name="profile">ประวัติโดยย่อ</string>
@@ -246,20 +223,11 @@
   <string name="generic_error_migration">ข้อผิดพลาด</string>
   <string name="generic_error_migration_message">เกิดข้อผิดพลาดระหว่างการย้ายข้อมูล</string>
   <string name="title_share_with">ร่วมกับ…</string>
-  <!--Pending contact requests-->
+  <!--Pending invitations-->
   <string name="accept">ยอมรับ</string>
-  <string name="refuse">ปฏิเสธ</string>
+  <string name="decline">ปฏิเสธ</string>
   <string name="block">ปิดกั้น</string>
-  <string name="contact_request_title">คำขอติดต่อใหม่</string>
-  <string name="contact_request_msg">คุณมี %1$d การขอติดต่อ</string>
-  <string name="contact_request_account">สำหรับ%1$s</string>
-  <string name="no_requests">คุณไม่มีคำขอติดต่อ</string>
-  <string name="message_contact_not_trusted_yet">%sยังไม่อยู่ในรายชื่อติดต่อของคุณ\nคุณยอมรับหรือปฏิเสธคำขอติดต่อนี้หรือไม่</string>
-  <string name="message_contact_not_trusted">%sไม่อยู่ในรายชื่อติดต่อของคุณ\nเพิ่มที่อยู่ติดต่อใหม่หรือไม่</string>
-  <!--Send contact requests-->
-  <string name="send_request_button">ส่ง</string>
-  <string name="send_request_title">ส่งคำขอติดต่อ</string>
-  <string name="send_request_msg">คุณต้องส่งคำขอติดต่อเพื่อสื่อสารกับผู้ใช้รายนี้ ตราบใดที่ผู้ติดต่อของคุณไม่ยอมรับคำขอ คุณสามารถส่งข้อความได้ แต่เขาจะไม่สามารถตอบได้</string>
+  <string name="invitation_message">คุณมี %1$d การขอติดต่อ</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">ไม่มีผู้ติดต่อที่ถูกบล็อก</string>
   <!--Smartlist-->
@@ -271,7 +239,6 @@
   <string name="tv_contact_row_header">ติดต่อ</string>
   <string name="gallery_error_title">ไม่พบแอปแกลเลอรี</string>
   <string name="gallery_error_message">ไม่พบแอปพลิเคชันบนอุปกรณ์ที่จะเปิด Gallery</string>
-  <string name="generic_error">เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ</string>
   <!--File Transfer-->
   <string name="invalid_file">ไฟล์ไม่ถูกต้อง</string>
   <string name="not_able_to_write_file">เขียนไฟล์ไม่ได้</string>
@@ -291,7 +258,6 @@
   <string name="file_saved_in">ไฟล์ที่บันทึกไว้ใน%s</string>
   <string name="file_saved_successfully">บันทึกไฟล์เรียบร้อยแล้ว</string>
   <string name="file_download">ดาวน์โหลด</string>
-  <string name="no_space_left_on_device">ไม่มีพื้นที่เหลือบนอุปกรณ์</string>
   <string name="title_media_viewer">โปรแกรมดูสื่อ</string>
   <string name="menu_file_open">เปิดไฟล์</string>
   <string name="menu_file_download">Download file</string>
@@ -342,11 +308,9 @@
   <string name="wizard_profile_button">เก็บประวัติโดยย่อ</string>
   <string name="wizard_profile_skip">ข้ามไปทำทีหลัง</string>
   <string name="fab_path_choose">เลือกไฟล์อื่น</string>
-  <string name="chat_plugins">ปลั๊กอินแชท</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">แบ่งปัน</string>
   <string name="bottomSheet_dialpad_btn">แป้นหมายเลข</string>
-  <string name="bottomSheet_plugins_btn">ปลั๊กอิน</string>
   <string name="bottomSheet_add_participants_btn">เพิ่ม</string>
   <string name="bottomSheet_change_camera_btn">เปลี่ยน</string>
   <string name="bottomSheet_camera_onoff_switch_btn">กล้อง</string>
@@ -354,17 +318,13 @@
   <string name="bottomSheet_mute_microphone_btn">ไมโคร</string>
   <string name="bottomSheet_sound_output_btn">เสียง</string>
   <string name="bottomSheet_raiseHand_btn">ยกมือ</string>
-  <string name="open_account_plugin_settings">เปิดการตั้งค่าปลั๊กอินบัญชี</string>
-  <string name="open_general_plugin_settings">เปิดการตั้งค่าปลั๊กอินทั่วไป</string>
   <string name="uninstall">ถอนการติดตั้ง</string>
   <string name="reset">รีเซ็ต</string>
   <!--Swarm Detail-->
   <string name="rename_btn">ยืนยัน</string>
-  <string name="rename_error">มันไม่มีอะไรว่าง</string>
-  <string name="swarm_description">เพิ่มคําอธิบาย</string>
-  <string name="tab_about">เกี่ยวกับ</string>
   <string name="tab_members">สมาชิก</string>
-  <string name="tab_documetn">เอกสาร</string>
+  <string name="tab_files">ไฟล์</string>
+  <string name="tab_settings">การตั้งค่า</string>
   <string name="dialogtitle_title">ปรับเปลี่ยนหัวข้อ Swarm</string>
   <string name="dialogtitle_description">ปรับเปลี่ยนการอธิบายของ Swarm</string>
   <string name="dialog_hint_title">ชื่อ</string>
@@ -380,5 +340,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">ยินดีต้อนรับสู่ Jami</string>
   <!--Donation-->
-  <!--Plugin-->
+  <!--Extension-->
 </resources>
