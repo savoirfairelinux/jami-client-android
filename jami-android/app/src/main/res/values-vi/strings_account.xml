@@ -21,16 +21,11 @@
   <string name="dialog_wait_create_details">Xin hãy chờ đợi khi tài khoản mới của bạn được thêm vào...</string>
   <string name="dialog_wait_update">Tài khoản cập nhật</string>
   <string name="dialog_wait_update_details">Xin hãy chờ đợi khi tài khoản mới của bạn được cập nhật...</string>
-  <string name="dialog_warn_ip2ip_account_title">Tạo tài khoản SIP trống?</string>
-  <string name="dialog_warn_ip2ip_account_message">Bạn sắp tạo một tài khoản SIP mà không có tên chủ sở hữu hợp lệ. Bạn chỉ có thể thực hiện và nhận cuộc gọi IP trực tiếp. Bạn có thể chỉnh sửa tài khoản của mình sau đó</string>
   <string name="account_type_ip2ip">Tài khoản IP</string>
   <string name="help_ring">Một tài khoản Jami cho phép bạn tiếp cận mọi người an toàn bằng cách cùng cấp thông qua một mạng lưới được phân phối đầy đủ.</string>
-  <string name="help_sip_title">Thêm tài khoản SIP của bạn</string>
+  <string name="help_sip_title">Thêm tài khoản SIP</string>
   <string name="help_sip">Thiết lập tài khoản SIP hiện có.</string>
-  <string name="create_sip_account">Thêm tài khoản SIP</string>
   <!--Strings related to account deletion-->
-  <string name="account_delete_dialog_title">xóa tài khoản?</string>
-  <string name="account_delete_dialog_message">Hành động này không thể không được thực hiện.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Không có tài khoản đăng ký</string>
   <string name="normal_accounts_titles">Tài khoản</string>
@@ -38,8 +33,6 @@
   <string name="account_device_revoke">Thiết bị hủy bỏ</string>
   <string name="account_device_revocation_success_title">Thành công</string>
   <string name="account_device_revocation_success">Máy này đã bị hủy bỏ!</string>
-  <string name="account_device_revocation_error_title">Không thể hủy thiết bị</string>
-  <string name="account_device_revocation_wrong_password">Mật khẩu sai.</string>
   <string name="account_device_revocation_unknown_device">Thiết bị không rõ.</string>
   <string name="account_device_revocation_error_unknown">Lỗi không rõ.</string>
   <string name="account_password_change">Thay đổi mật khẩu</string>
@@ -61,8 +54,7 @@
   <string name="account_rendezvous_summary">Trong chế độ Rendezvous, các cuộc gọi tiếp nhận sẽ được thêm vào phòng hội nghị.</string>
   <string name="account_upnp_label">Khả năng UPnP</string>
   <string name="account_proxy_field">Tín hiệu</string>
-  <!--Plugin Details-->
-  <string name="account_preference_plugin_tab">Plugins</string>
+  <!--Extension Details-->
   <!--Audio Details-->
   <string name="account_audio_label">Âm thanh</string>
   <string name="account_preferences_media_tab">Truyền thông</string>
@@ -142,35 +134,23 @@
   <string name="export_account_wait_message">Thông tin tài khoản xuất khẩu</string>
   <string name="account_export_file">Tài khoản sao lưu</string>
   <string name="account_export_file_summary">sao lưu tài khoản của bạn trên thiết bị của bạn để khôi phục nó sau đó.</string>
-  <string name="account_export_end_decryption_message">Không thể mở khóa tài khoản của bạn bằng mật khẩu được cung cấp.</string>
   <string name="account_export_end_network_title">Hầm mạng</string>
-  <string name="account_export_end_network_message">Không thể xuất tài khoản trên mạng.</string>
   <string name="account_export_end_error_title">Trận lỗi</string>
-  <string name="account_export_end_error_message">Không thể xuất tài khoản, lỗi không rõ đã xảy ra.</string>
   <string name="account_enter_password">Nhập mật khẩu</string>
-  <string name="account_share_body">Liên hệ với tôi bằng cách sử dụng \'%1$s\' trên nền tảng truyền thông phân phối của Jami: %2$s</string>
-  <string name="account_share_body_with_username">Liên hệ với tôi bằng cách sử dụng \'%1$s\' hoặc tên người dùng công khai của tôi \'%2$s\' trên nền tảng truyền thông phân phối của Jami: %3$s</string>
-  <string name="account_contact_me">Liên hệ với tôi ở Jami!</string>
+  <string name="account_contact_me">Liên hệ với tôi về Jami!</string>
   <string name="update_account">Tải đổi tài khoản</string>
   <string name="account_migration">Tài khoản Jami của bạn có thể được cập nhật. Xin hãy nhập mật khẩu của bạn.</string>
   <string name="ring_account">Tài khoản Jami</string>
   <string name="sip_account">Tài khoản SIP</string>
   <string name="ring_account_identity">Định dạng</string>
   <string name="account_migration_title_dialog">Di chuyển tài khoản</string>
-  <string name="account_migration_message_dialog">Tài khoản của bạn cần phải được cập nhật. Bạn có muốn đi vào màn hình quản lý tài khoản để thực hiện hoạt động này không?</string>
   <string name="account_update_needed">Cần cập nhật</string>
-  <string name="account_cannot_be_found_title">Không tìm được tài khoản</string>
-  <string name="account_cannot_be_found_message">Tài khoản không thể tìm thấy trên mạng Jami. Đảm bảo nó được xuất khẩu vào Jami từ một thiết bị hiện có, và chỉ cần xác nhận là chính xác.</string>
   <string name="account_sip_cannot_be_registered_message">Bạn có thể tiếp tục quá trình tạo tài khoản hoặc chỉnh sửa thông tin của mình ở đây.</string>
-  <string name="account_no_network_title">Không thể kết nối mạng</string>
-  <string name="account_no_network_message">Không thể thêm tài khoản vì Jami không thể kết nối với mạng phân tán.</string>
+  <string name="account_no_network_title">Hầm mạng</string>
   <string name="account_device_added_title">Thiết bị tài khoản được thêm vào</string>
   <string name="account_device_added_message">Bạn đã thành công thiết lập tài khoản Jami của mình trên thiết bị này.</string>
   <string name="account_device_updated_title">Thiết bị tài khoản được cập nhật</string>
   <string name="account_device_updated_message">Ông đã cập nhật tài khoản Jami của mình thành công.</string>
-  <string name="account_cannot_be_updated_message">Thiết bị tài khoản không thể được cập nhật. Xin kiểm tra mật khẩu của bạn.</string>
-  <string name="account_sip_success_title">Tài khoản Sip được đăng ký</string>
-  <string name="account_sip_success_message">Bạn đã đăng ký tài khoản Sip của mình thành công.</string>
   <string name="account_sip_register_anyway">Dù sao thì hãy đăng ký.</string>
   <!--TV-->
   <string name="account_tv_settings_header">Cài đặt tài khoản</string>
@@ -190,11 +170,8 @@
   <string name="account_link_export_button">Kết nối một thiết bị mới</string>
   <string name="account_link_show_button">hiển thị %d thiết bị liên kết khác</string>
   <string name="account_link_hide_button">Cụm thiết bị kết nối</string>
-  <string name="account_link_export_info">Để sử dụng tài khoản này trên các thiết bị khác, bạn phải đầu tiên phơi bày nó trên Jami. Điều này sẽ tạo ra một mã PIN mà bạn phải nhập trên thiết bị mới để thiết lập tài khoản. PIN là hợp lệ trong 10 phút.</string>
   <string name="account_start_export_button">Tạo PIN</string>
   <string name="account_end_export_button">gần</string>
-  <string name="account_end_export_infos">PIN của bạn là:\n\n%%\n\n Để hoàn thành quá trình, bạn cần mở Jami trên thiết bị mới. Tạo một tài khoản mới với \"Công nối thiết bị này với một tài khoản\". PIN của bạn là hợp lệ trong 10 phút.</string>
-  <string name="account_link_export_info_light">Để sử dụng tài khoản này trên các thiết bị khác, bạn phải đầu tiên phơi bày nó trên Jami. Điều này sẽ tạo ra một mã PIN mà bạn phải nhập trên thiết bị mới để thiết lập tài khoản. PIN là hợp lệ trong 10 phút.</string>
   <string name="account_export_title">Tài khoản liên kết với các thiết bị khác</string>
   <string name="account_connect_server_button">Kết nối với máy chủ quản lý</string>
   <string name="account_connect_button">Kết nối</string>
@@ -226,21 +203,17 @@
   <string name="account_creation_profile">Tạo hồ sơ của bạn</string>
   <string name="account_creation_ring">Tạo tài khoản Jami của bạn</string>
   <string name="account_link_title">Kết nối thiết bị này</string>
-  <string name="account_sip_cannot_be_registered">Không thể đăng ký tài khoản</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">Tạo tài khoản của tôi</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Nhập mật khẩu để xác nhận</string>
   <string name="enter_password">Nhập mật khẩu</string>
   <string name="revoke_device_title">Thiết bị hủy bỏ</string>
-  <string name="revoke_device_message">Bạn có chắc rằng bạn muốn hủy bỏ %1$s không?</string>
   <string name="revoke_device_wait_title">Xin anh chờ...</string>
   <string name="revoke_device_wait_message">Thiết bị hủy bỏ</string>
   <string name="rename_device_title">Thay đổi tên thiết bị này</string>
   <string name="rename_device_message">Chọn tên mới để xác định thiết bị này trong tài khoản Jami của bạn</string>
   <string name="rename_device_button">Thiết bị đổi tên</string>
   <string name="account_rename_device_hint">Chọn tên thiết bị mới</string>
-  <string name="account_device_name_empty">Tên thiết bị không thể trống</string>
   <string name="account_device_this_indicator">Thiết bị này</string>
   <string name="account_disabled_indicator">người khuyết tật</string>
   <!--Link a new device-->

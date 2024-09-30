@@ -27,7 +27,6 @@
   <string name="pref_startOnBoot_title">Pokrenite Jami pri pokretanju</string>
   <string name="pref_startOnBoot_summary">Pokrenite Jami u pozadini kada se sistem pokrene.</string>
   <string name="pref_clearHistory_title">Izbriši istoriju</string>
-  <string name="pref_clearHistory_summary">Obrišite svu istoriju razgovora. Ova radnja se ne može opozvati.</string>
   <string name="pref_notification_title">Vidljivost obaveštenja</string>
   <string name="pref_notification_summary">Podesite vidljivost obaveštenja aplikacija na zaključanom ekranu.</string>
   <string name="pref_blackList_title">Blok lista</string>
@@ -52,22 +51,8 @@
   <string name="notification_public">Javno \n(prikaži obaveštenja i njihov sadržaj na zaključanom ekranu)\n</string>
   <string name="notification_private">Privatno \n(prikaži obaveštenja, ali sakrij njihov sadržaj na zaključanom ekranu)\n</string>
   <string name="notification_secret">Tajnо \n(ne prikazuj obaveštenja na zaključanom ekranu)</string>
-  <!--Plugin-->
-  <string name="pref_plugins_title">Dodaci</string>
-  <string name="pref_plugins_summary">Omogućite dodatke i podesite njihove parametre</string>
-  <string name="fab_plugins_add">Dodajte novi dodatak</string>
-  <string name="plugin_uninstall_title">Deinstalirati dodatak?</string>
-  <string name="plugin_reset_preferences">Resetujte podešavanja dodataka</string>
-  <string name="plugin_reset_preferences_summary">Podešavanja dodataka će biti podrazumevana</string>
-  <string name="plugin_reset_preferences_ask">Da li želite da resetujete opšta podešavanja dodatka?</string>
-  <string name="plugin_reset_account_preferences_ask">Da li želite da resetujete podešavanja dodatka naloga?</string>
-  <string name="plugin_successfully_installed">Dodatak <b>%1$s</b> je uspešno instaliran</string>
-  <string name="plugin_install_failure">Instaliranje dodatka nije uspelo: <b>%1$s</b></string>
-  <string name="plugin_recent_version_exception">Imate noviju verziju: <b>%1$s</b></string>
-  <string name="plugin_same_version_exception">Imate instaliranu istu verziju <b>%1$s</b> </string>
-  <string name="plugin_invalid_signature"><b>%1$s</b> ima nevažeći potpis</string>
-  <string name="plugin_invalid_authority">Ne mogu da potvrdim ovlašćenje za: <b>%1$s</b></string>
-  <string name="plugin_invalid_format">Nevažeći format dodatka: <b>%1$s</b></string>
-  <string name="plugin_force_install">prisilno \n instalirati</string>
-  <string name="plugin_path_image_add">Dodajte novu sliku</string>
+  <!--Extension-->
+  <string name="pref_extensions_title">Proširenja</string>
+  <string name="extension_invalid_signature"><b>%1$s</b> ima nevažeći potpis</string>
+  <string name="extension_force_install">prisilno \n instalirati</string>
 </resources>

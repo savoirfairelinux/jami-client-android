@@ -23,17 +23,11 @@
   <string name="dialog_wait_create_details">Počakajte, dokler nov račun ne bo dodan ...</string>
   <string name="dialog_wait_update">Posodabljanje računa</string>
   <string name="dialog_wait_update_details">Počakajte, da bo račun posodobljen ...</string>
-  <string name="dialog_warn_ip2ip_account_title">Ali želite ustvariti prazen račun SIP?</string>
-  <string name="dialog_warn_ip2ip_account_message">Ustvariti želite račun SIP brez veljavnega imena gostitelja.
-        Lahko boste prejemali in opravili le neposredne Ip klice.
-        Svoj račun lahko uredite kasneje</string>
   <string name="account_type_ip2ip">IP-račun</string>
   <string name="help_ring">Račun Jami omogoča varno sporazumevanje z ljudmi preko polno distribuiranega omrežja P2P.</string>
-  <string name="help_sip_title">Dodajte svoj račun SIP</string>
+  <string name="help_sip_title">Dodaj račun SIP</string>
   <string name="help_sip">Prilagodite obstoječi račun SIP.</string>
-  <string name="create_sip_account">Dodaj račun SIP</string>
   <!--Strings related to account deletion-->
-  <string name="account_delete_dialog_title">Ali želite izbrisati račun?</string>
   <string name="account_delete_dialog_message">Tega dejanja ni mogoče razveljaviti.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Ni prijavljenih računov</string>
@@ -42,8 +36,6 @@
   <string name="account_device_revoke">Odstrani napravo</string>
   <string name="account_device_revocation_success_title">Uspeh</string>
   <string name="account_device_revocation_success">Naprava je zdaj odstranjena!</string>
-  <string name="account_device_revocation_error_title">Ne morem odstraniti naprave</string>
-  <string name="account_device_revocation_wrong_password">Napačno geslo.</string>
   <string name="account_device_revocation_unknown_device">neznana naprava.</string>
   <string name="account_device_revocation_error_unknown">Neznana napaka</string>
   <string name="account_password_change">Spremeni geslo</string>
@@ -68,8 +60,8 @@
   <string name="account_rendezvous_summary">V načinu točka srečevanja bodo vsi klici dodani v konferenčni prostor</string>
   <string name="account_upnp_label">Omogoči UPnP</string>
   <string name="account_proxy_field">Posredniški strežnik</string>
-  <!--Plugin Details-->
-  <string name="account_preference_plugin_tab">Vtičniki</string>
+  <!--Extension Details-->
+  <string name="account_preferences_extension_tab">Razširitve</string>
   <!--Audio Details-->
   <string name="account_audio_label">Zvok</string>
   <string name="account_preferences_media_tab">Mediji</string>
@@ -152,35 +144,26 @@
   <string name="export_account_wait_message">Izvažanje podatkov računa</string>
   <string name="account_export_file">Varnostno kopiranje računa</string>
   <string name="account_export_file_summary">Varnostno kopiranje računa za kasnejšo obnovitev.</string>
-  <string name="account_export_end_decryption_message">Vašega računa ni bilo mogoče odkleniti s podanim geslom.</string>
+  <string name="account_export_end_decryption_message">Nepravilno geslo. Poskusite znova s pravim geslom.</string>
   <string name="account_export_end_network_title">Napaka na omrežju</string>
-  <string name="account_export_end_network_message">Računa ni bilo mogoče izvoziti preko omrežja. Preverite povezavo.</string>
   <string name="account_export_end_error_title">Napaka</string>
-  <string name="account_export_end_error_message">Računa ni bilo mogoče izvoziti. Zgodila se je neznana napaka.</string>
   <string name="account_enter_password">Vnesite geslo</string>
-  <string name="account_share_body">Kontaktiraj me z uporabo \'%1$s\' na Jami razpršeni komunikacijski platformi: %2$s</string>
-  <string name="account_share_body_with_username">Kontaktiraj me z uporabo \'%1$s\' ali mojim javnim uporabniškim imenom \'%2$s\' na razpršeni komunikacijski platformi Jami: %3$s </string>
-  <string name="account_contact_me">Kontaktiraj me na Jamiju!</string>
+  <string name="account_contact_me">Poišči me na Jami-ju!</string>
   <string name="update_account">Posodobi račun</string>
   <string name="account_migration">Vaš Jami račun je mogoče posodobiti.\nVnesite geslo.</string>
   <string name="ring_account">Jami račun</string>
   <string name="sip_account">Račun SIP</string>
   <string name="ring_account_identity">Identiteta</string>
   <string name="account_migration_title_dialog">Selitev računa</string>
-  <string name="account_migration_message_dialog">Vaši računi morajo biti posodobljeni. Želite na zaslon za urejanje računa, da to izvedete?</string>
   <string name="account_update_needed">Potrebna je posodobitev</string>
-  <string name="account_cannot_be_found_title">Računa ni mogoče najti</string>
-  <string name="account_cannot_be_found_message">Računa ni bilo mogoče najti v Jami omrežju.\nPreverite ali je bilo izvoženo na Jami iz obstoječe naprave in da so bili posredovani pravi podatki.</string>
+  <string name="account_cannot_be_found_title">Napaka računa</string>
+  <string name="account_cannot_be_found_message">Računa v omrežju Jami ni bilo mogoče najti. Preverite, da je bilo izvoženo na Jami iz obstoječe naprave in da so bili posredovani pravi podatki.</string>
   <string name="account_sip_cannot_be_registered_message">Lahko nadaljujete z ustvarjanjem računa ali tukaj uredite svoje podatke. Urejanje je še možno tudi kasneje v nastavitvah računa.</string>
-  <string name="account_no_network_title">Povezave z omrežjem ni mogoče vzpostaviti</string>
-  <string name="account_no_network_message">Računa ni bilo mogoče dodati, ker se Jami ni mogel povezati z razpršenim omrežjem. Preverite povezavo.</string>
+  <string name="account_no_network_title">Napaka na omrežju</string>
   <string name="account_device_added_title">Naprava računa je dodana</string>
   <string name="account_device_added_message">Svoj Jami račun se uspešno namestili na to napravo</string>
   <string name="account_device_updated_title">Naprava računa je posodobljena</string>
   <string name="account_device_updated_message">Uspešno ste posodobili svoj račun Jami.</string>
-  <string name="account_cannot_be_updated_message">Naprave računa ni bilo mogoče posodobiti. Preverite geslo.</string>
-  <string name="account_sip_success_title">Račun SIP je registriran</string>
-  <string name="account_sip_success_message">Uspešno ste registrirali račun SIP.</string>
   <string name="account_sip_register_anyway">Vseeno registriraj</string>
   <!--TV-->
   <string name="account_tv_settings_header">Nastavitve računa</string>
@@ -200,11 +183,8 @@
   <string name="account_link_export_button">Poveži novo napravo</string>
   <string name="account_link_show_button">Prikaži %d več povezanih naprav</string>
   <string name="account_link_hide_button">Skrij povezano napravo</string>
-  <string name="account_link_export_info">Da bi uporabili ta račun na drugo napravi, jo morate najprej razkriti na Jamiju. To bo ustvarilo PIN kodo, ki jo morate vnesti v novo napravo, da bi ustvarili račun. PIN je veljaven 10 minut.</string>
   <string name="account_start_export_button">Ustvari PIN</string>
   <string name="account_end_export_button">zapri</string>
-  <string name="account_end_export_infos">Vaš PIN je:\n\n%%\n\nZa dokončanje postopka morate odpreti Jami na novi napravi. Ustvarite nov račun preko \"Poveži to napravo z računom\". Vaš PIN je veljaven 10 minut.</string>
-  <string name="account_link_export_info_light">Da bi uporabili ta račun na drugi napravi, jo morate najprej razkriti na Jamiju. To bo ustvarilo PIN kodo, ki jo morate vnesti v novo napravo, da ustvarite račun. PIN je veljaven 10 minut.</string>
   <string name="account_export_title">Poveži račun z drugimi napravami</string>
   <string name="account_connect_server_button">Povezava na upravljalni strežnik</string>
   <string name="account_connect_button">Poveži</string>
@@ -236,21 +216,17 @@
   <string name="account_creation_profile">Ustvari profil</string>
   <string name="account_creation_ring">Ustvari račun Jami</string>
   <string name="account_link_title">Poveži to napravo</string>
-  <string name="account_sip_cannot_be_registered">Ne morem prijaviti računa</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">Uredi moj račun</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Vnesite geslo za potrditev</string>
   <string name="enter_password">Vnesite geslo</string>
   <string name="revoke_device_title">Odstrani napravo</string>
-  <string name="revoke_device_message">Ali ste prepričani, da želite odstraniti %1$s?</string>
   <string name="revoke_device_wait_title">Počakajte ...</string>
   <string name="revoke_device_wait_message">Odstranitev naprave</string>
   <string name="rename_device_title">Preimenuj to napravo</string>
   <string name="rename_device_message">Izberite novo ime za identifikacijo te naprave v vašem računu Jami</string>
   <string name="rename_device_button">Preimenuj napravo</string>
   <string name="account_rename_device_hint">Izberite novo ime naprave</string>
-  <string name="account_device_name_empty">Ime naprave ne more biti prazno</string>
   <string name="account_device_this_indicator">Ta naprava</string>
   <string name="account_disabled_indicator">onemogočeno</string>
   <!--Link a new device-->
@@ -265,10 +241,7 @@
   <string name="account_link_time_valid">Koda PIN bo neveljavna: %1$s.</string>
   <string name="account_link_device_info">Izberite \"Poveži novo napravo\" v drugem programu Jami, da prikažete QR-kodo ali PIN</string>
   <string name="account_generate_export_device">Na drugi napravi</string>
-  <string name="account_generate_export_info">Namestite in zaženite Jami, izberite \"Uvozi iz druge naprave\" in optično preberite kodo QR.</string>
   <string name="content_description_qr_generated">Vaša koda QR</string>
-  <string name="account_generate_export_invalid">PIN ni več veljaven.\n Vnesite geslo in tvorite novi PIN, da se povežete z novo napravo.</string>
-  <string name="account_generate_export_invalid_two">PIN ni več veljaven.\n Tvorite novega, da se povežete z novo napravo.</string>
   <string name="help_pin_info">Izpolnite, če je račun zaščiten z geslom</string>
   <string name="connect_device_scanqr">Optično preberi QR</string>
   <string name="connect_device_enterPIN">Ali vnesite PIN</string>

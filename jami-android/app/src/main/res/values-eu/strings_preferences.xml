@@ -27,7 +27,6 @@
   <string name="pref_startOnBoot_title">Hasi Jami abioan</string>
   <string name="pref_startOnBoot_summary">Hasi Jami bigarren planoan sistema abiatzean.</string>
   <string name="pref_clearHistory_title">Garbitu historiala</string>
-  <string name="pref_clearHistory_summary">Garbitu elkarrizketa guztien historiala. Ekintza hau ezin da desegin.</string>
   <string name="pref_notification_title">Oharretako ikusgarritasuna</string>
   <string name="pref_notification_summary">Aplikazioen jakinarazpenak itxita dagoen pantailan ikusgai jartzea.</string>
   <string name="pref_blackList_title">Blokeen zerrenda</string>
@@ -52,19 +51,6 @@
   <string name="notification_public">Publikoak \n(oharrei eta haien edukiei irekiko pantailan erakutsi) \n</string>
   <string name="notification_private">Pribatuko jakinarazpenak erakutsi, baina ezkutatu edukia sarraila-ekipoan)</string>
   <string name="notification_secret">Sekretuak ez dira iragarkiak irekiko pantailan agertzen)</string>
-  <!--Plugin-->
-  <string name="pref_plugins_title">Pluginsak</string>
-  <string name="pref_plugins_summary">Plug-inak aktibatu eta euren parametroak ezarri</string>
-  <string name="fab_plugins_add">Plugin berria gehitu</string>
-  <string name="plugin_uninstall_title">Plugin desinstalatu behar duzu?</string>
-  <string name="plugin_reset_preferences">Plugin-en hautaketak berrabiarazi</string>
-  <string name="plugin_reset_preferences_summary">Zure pluginaren ezarpenak ez dira beteko.</string>
-  <string name="plugin_reset_preferences_ask">Pluginaren jarduera orokorrak berreskuratu nahi dituzu?</string>
-  <string name="plugin_reset_account_preferences_ask">Kontuaren pluginaren konfigurazioa berreskuratu nahi duzu?</string>
-  <string name="plugin_successfully_installed">Plugin <b>%1$s</b> arrakastaz instalatua</string>
-  <string name="plugin_install_failure">Plugin bat ezarri ez bada: <b>%1$s</b></string>
-  <string name="plugin_recent_version_exception">Azken bertsio bat duzu: <b>%1$s</b></string>
-  <string name="plugin_same_version_exception">%1$s-en bertsio bera dago instalatua.</string>
-  <string name="plugin_force_install">Indarrez instalatu</string>
-  <string name="plugin_path_image_add">Irudi berria gehitu</string>
+  <!--Extension-->
+  <string name="extension_force_install">Indarrez instalatu</string>
 </resources>

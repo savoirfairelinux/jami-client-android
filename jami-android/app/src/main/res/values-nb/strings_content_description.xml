@@ -1,11 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--Strings for xml content description of images-->
-  <string name="contact_quick_call_description">Hurtigoppringing</string>
-  <string name="contact_picture_description">Kontaktbilde</string>
   <string name="dial_numeric_pad">Numerisk tastatur</string>
   <string name="contact_unblock">Fjern blokkering</string>
-  <string name="video_plugins">Video tillegg</string>
   <string name="file_download_button">Last ned</string>
   <string name="control_play">Spill av</string>
   <string name="control_pause">Pause</string>

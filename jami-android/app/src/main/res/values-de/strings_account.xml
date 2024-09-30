@@ -23,15 +23,15 @@
   <string name="dialog_wait_create_details">Bitte warten Sie während Ihr neues Konto eingerichtet wird...</string>
   <string name="dialog_wait_update">Konto wird aktualisiert</string>
   <string name="dialog_wait_update_details">Bitte warten Sie während ihr Konto aktualisiert wird</string>
-  <string name="dialog_warn_ip2ip_account_title">Ein leeres SIP-Konto erstellen?</string>
-  <string name="dialog_warn_ip2ip_account_message">Sie sind im Begriff ein SIP-Konto ohne gültigen Hostnamen anzulegen.
-Es wird ihnen nur möglich sein direkte IP-Anrufe zu machen und zu empfangen.
-Sie können ihr Konto später bearbeiten</string>
+  <string name="dialog_warn_ip2ip_account_title">Leeres SIP-Konto erstellen?</string>
+  <string name="dialog_warn_ip2ip_account_message">Sie sind dabei, ein SIP-Konto ohne gültigen Hostnamen zu erstellen.
+Sie können nur direkte IP-Anrufe tätigen und empfangen.
+Sie können Ihr Konto später bearbeiten</string>
   <string name="account_type_ip2ip">IP-Konto</string>
   <string name="help_ring">Ein Jami-Konto erlaubt es Ihnen andere Menschen auf sichere Art direkt über ein verteiltes Netzwerk zu erreichen</string>
-  <string name="help_sip_title">Ihr SIP-Konto hinzufgügen</string>
+  <string name="help_sip_title">SIP-Konto hinzufügen</string>
   <string name="help_sip">Mit bereits bestehendem SIP-Konto anmelden.</string>
-  <string name="create_sip_account">SIP-Konto hinzufügen</string>
+  <string name="create_sip_account">SIP-Konto konfigurieren</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_title">Konto löschen?</string>
   <string name="account_delete_dialog_message">Diese Aktion kann nicht rückgängig gemacht werden.</string>
@@ -42,7 +42,7 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="account_device_revoke">Gerät widerrufen</string>
   <string name="account_device_revocation_success_title">Erfolgreich</string>
   <string name="account_device_revocation_success">Gerät wird jetzt widerrufen!</string>
-  <string name="account_device_revocation_error_title">Gerät konnte nicht widerrufen werden</string>
+  <string name="account_device_revocation_error_title">Gerätefehler rückgängig machen</string>
   <string name="account_device_revocation_wrong_password">Falsches Passwort.</string>
   <string name="account_device_revocation_unknown_device">Unbekanntes Gerät.</string>
   <string name="account_device_revocation_error_unknown">Unbekannter Fehler.</string>
@@ -68,8 +68,8 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="account_rendezvous_summary">Im Rendezvous-Modus werden eingehende Anrufe einem Konferenzraum hinzugefügt.</string>
   <string name="account_upnp_label"> UPnP aktivieren</string>
   <string name="account_proxy_field">Proxy</string>
-  <!--Plugin Details-->
-  <string name="account_preference_plugin_tab">Plugins</string>
+  <!--Extension Details-->
+  <string name="account_preferences_extension_tab">Erweiterungen</string>
   <!--Audio Details-->
   <string name="account_audio_label">Audio</string>
   <string name="account_preferences_media_tab">Medium</string>
@@ -152,14 +152,14 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="export_account_wait_message">Kontodaten werden exportiert</string>
   <string name="account_export_file">Konto sichern</string>
   <string name="account_export_file_summary">Machen Sie eine Sicherheitskopie Ihrer Benutzerkennung auf ihrem Gerät um sie im Fehlerfall wiederherstellen zu können.</string>
-  <string name="account_export_end_decryption_message">Ihr Konto konnte mit dem angegebenen Passwort nicht entsperrt werden</string>
+  <string name="account_export_end_decryption_message">Falsches Passwort. Bitte versuchen Sie es erneut mit dem richtigen Passwort.</string>
   <string name="account_export_end_network_title">Netzwerkfehler</string>
-  <string name="account_export_end_network_message">Das Konto konnte nicht in das Netzwerk exportiert werden. Überprüfen sie ihre Verbindung.</string>
+  <string name="account_export_end_network_message">Beim Exportieren des Kontos ist ein Netzwerkfehler aufgetreten. Überprüfen Sie Ihre Konnektivität.</string>
   <string name="account_export_end_error_title">Fehler</string>
-  <string name="account_export_end_error_message">Konto konnte nicht exportiert werden. Ein unbekannter Fehler ist aufgetreten.</string>
+  <string name="account_export_end_error_message">Beim Exportieren des Kontos ist ein unbekannter Fehler aufgetreten.</string>
   <string name="account_enter_password">Passwort eingeben</string>
-  <string name="account_share_body">Kontaktieren Sie mich über „%1$s” auf der dezentralen Kommunikationsplattform Jami: %2$s</string>
-  <string name="account_share_body_with_username">Kontaktieren Sie mich über „%1$s” oder meinem öffentlichen Benutzernamen „%2$s” auf der dezentralen Kommunikationsplattform Jami: %3$s</string>
+  <string name="account_share_body">Kontaktieren Sie mich über „%1$s“ auf der Jami-Plattform für verteilte Kommunikation: %2$s</string>
+  <string name="account_share_body_with_username">Kontaktieren Sie mich über „%1$s“ oder meinen öffentlichen Benutzernamen „%2$s“ auf der verteilten Kommunikationsplattform Jami:%3$s</string>
   <string name="account_contact_me">Kontaktieren Sie mich über Jami!</string>
   <string name="update_account">Konto aktualisieren</string>
   <string name="account_migration">Ihr Jami-Konto kann aktualisiert werden.\nBitte geben Sie Ihr Passwort ein.</string>
@@ -167,20 +167,20 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="sip_account">SIP-Konto</string>
   <string name="ring_account_identity">Identität</string>
   <string name="account_migration_title_dialog">Konto-Migration</string>
-  <string name="account_migration_message_dialog">Ihre Konten müssen aktualisiert werden. Möchten Sie zum Kontoverwaltungsfenster gehen, um diesen Vorgang auszuführen?</string>
+  <string name="account_migration_message_dialog">Ihre Konten müssen aktualisiert werden. Möchten Sie zum Bildschirm „Kontoverwaltung“ wechseln, um diesen Vorgang auszuführen?</string>
   <string name="account_update_needed">Aktualisierung durchführen</string>
-  <string name="account_cannot_be_found_title">Kann Konto nicht finden</string>
-  <string name="account_cannot_be_found_message">Konto kann im Jami-Netzwerk nicht gefunden werden.\nStellen Sie sicher, dass es von einem bereits konfigurierten Gerät exportiert wurde und dass die angegebenen Zugangsdaten korrekt sind.</string>
+  <string name="account_cannot_be_found_title">Kontofehler</string>
+  <string name="account_cannot_be_found_message">Konto im Jami-Netzwerk konnte nicht gefunden werden. Stellen Sie sicher, dass es von einem vorhandenen Gerät auf Jami exportiert wurde und dass die angegebenen Anmeldeinformationen korrekt sind.</string>
   <string name="account_sip_cannot_be_registered_message">Sie können mit dem Kontoerstellungsprozess fortfahren oder Ihre Informationen hier bearbeiten. Änderungen sind später in den Kontoeinstellungen noch möglich.</string>
-  <string name="account_no_network_title">Verbindung mit dem Netzwerk nicht möglich</string>
-  <string name="account_no_network_message">Konto konnte nicht hinzugefügt werden, da Jami sich nicht mit dem verteilten Netzwerk verbinden konnte. Überprüfen sie die Verbindung ihres Gerätes.</string>
+  <string name="account_no_network_title">Netzwerkfehler</string>
+  <string name="account_no_network_message">Beim Hinzufügen des Jami-Kontos zum verteilten Netzwerk ist ein Verbindungsfehler aufgetreten. Überprüfen Sie die Konnektivität Ihres Geräts.</string>
   <string name="account_device_added_title">Konto-Gerät hinzugefügt</string>
   <string name="account_device_added_message">Sie haben erfolgreich ihr Jami-Konto auf diesem Gerät erstellt.</string>
   <string name="account_device_updated_title">Konto-Gerät aktualisiert</string>
   <string name="account_device_updated_message">Sie haben erfolgreich Ihr Jami-Konto aktualisiert.</string>
-  <string name="account_cannot_be_updated_message">Konto-Gerät konnte nicht aktualisiert werden. Bitte überprüfen Sie Ihr Passwort.</string>
+  <string name="account_cannot_be_updated_message">Beim Aktualisieren des Kontos ist ein Fehler aufgetreten. Bitte überprüfen Sie Ihr Passwort.</string>
   <string name="account_sip_success_title">SIP-Konto registriert</string>
-  <string name="account_sip_success_message">Sie haben erfolgreich Ihr SIP-Konto registriert.</string>
+  <string name="account_sip_success_message">Sie haben Ihr SIP-Konto erfolgreich registriert.</string>
   <string name="account_sip_register_anyway">Trotzdem registieren</string>
   <!--TV-->
   <string name="account_tv_settings_header">Kontoeinstellungen</string>
@@ -200,11 +200,11 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="account_link_export_button">Verbinde ein neues Gerät</string>
   <string name="account_link_show_button">Zeige weitere %d verbundene Geräte</string>
   <string name="account_link_hide_button">Verstecke dieses verbundene Gerät</string>
-  <string name="account_link_export_info">Um dieses Konto auf weiteren Geräten zu verwenden, müssen Sie zuerst eine PIN generieren. Diese muss auf dem neuen Gerät eingeben werden, um das Konto zu importieren. Die PIN ist für 10 Minuten gültig.</string>
+  <string name="account_link_export_info">Um dieses Konto auf anderen Geräten verwenden zu können, müssen Sie es zunächst auf Jami verfügbar machen. Dadurch wird ein PIN-Code generiert, den Sie auf dem neuen Gerät eingeben müssen, um das Konto einzurichten. Die PIN läuft in 10 Minuten ab.</string>
   <string name="account_start_export_button">PIN generieren</string>
   <string name="account_end_export_button">Schließen</string>
-  <string name="account_end_export_infos">Ihre PIN lautet:\n\n%%\n\nUm den Vorgang abzuschließen öffnen Sie Jami auf dem neuen Gerät. Erstellen Sie ein neues Konto mit \"Dieses Gerät mit einem Konto verknüpfen\". Ihre PIN ist 10 Minuten gültig.</string>
-  <string name="account_link_export_info_light">Um dieses Konto auf weiteren Geräten zu verwenden, müssen Sie zuerst eine PIN generieren. Diese muss auf dem neuen Gerät eingeben werden, um das Konto zu importieren. Die PIN ist für 10 Minuten gültig.</string>
+  <string name="account_end_export_infos">Ihre PIN lautet:\n\n%%\n\nUm den Vorgang abzuschließen, müssen Sie Jami auf dem neuen Gerät öffnen. Erstellen Sie ein neues Konto mit „Dieses Gerät mit einem Konto verknüpfen“. Die PIN läuft in 10 Minuten ab.</string>
+  <string name="account_link_export_info_light">Um dieses Konto auf anderen Geräten verwenden zu können, müssen Sie es zunächst auf Jami verfügbar machen. Dadurch wird ein PIN-Code generiert, den Sie auf dem neuen Gerät eingeben müssen, um das Konto einzurichten. Die PIN läuft in 10 Minuten ab.</string>
   <string name="account_export_title">Konto mit anderen Geräten verbinden</string>
   <string name="account_connect_server_button">Verbindung zum Management-Server</string>
   <string name="account_connect_button">Verbinden</string>
@@ -236,21 +236,21 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="account_creation_profile">Erstellen Sie Ihr Profil</string>
   <string name="account_creation_ring">Erstellen Sie Ihr Jami-Konto</string>
   <string name="account_link_title">Verbinde diese Gerät</string>
-  <string name="account_sip_cannot_be_registered">Konto kann nicht registriert werden</string>
+  <string name="account_sip_cannot_be_registered">Beim Registrieren des SIP-Kontos ist ein Fehler aufgetreten.</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">Mein Konto bearbeiten</string>
+  <string name="account_edit_profile">Profil bearbeiten</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Passwort zur Bestätigung eingeben</string>
   <string name="enter_password">Passwort eingeben</string>
   <string name="revoke_device_title">Gerät widerrufen</string>
-  <string name="revoke_device_message">Sind Sie sich sicher, dass Sie %1$s widerrufen wollen?</string>
+  <string name="revoke_device_message">Sind Sie sicher, dass Sie %1$s widerrufen möchten?</string>
   <string name="revoke_device_wait_title">Bitte warten…</string>
   <string name="revoke_device_wait_message">Gerät wird widerrufen</string>
   <string name="rename_device_title">Gerät umbenennen</string>
   <string name="rename_device_message">Wählen Sie einen neuen Namen für dieses Gerät um es im Jami-Konto zuzuordnen.</string>
   <string name="rename_device_button">Gerät umbenennen</string>
   <string name="account_rename_device_hint">Wählen Sie einen neuen Gerätenamen</string>
-  <string name="account_device_name_empty">Geräte darf nicht leer sein</string>
+  <string name="account_device_name_empty">Der Gerätename darf nicht leer sein.</string>
   <string name="account_device_this_indicator">Dieses Gerät</string>
   <string name="account_disabled_indicator">deaktiviert</string>
   <!--Link a new device-->
@@ -267,8 +267,8 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="account_generate_export_device">Auf dem anderen Gerät</string>
   <string name="account_generate_export_info">Installieren und starten Sie Jami, wählen Sie „Von einem anderen Gerät importieren“ und scannen Sie den QR-Code.</string>
   <string name="content_description_qr_generated">Ihr QR-Code</string>
-  <string name="account_generate_export_invalid">Die PIN ist nicht mehr gültig.\n Geben Sie das Passwort ein und generieren Sie ein neues, um das neue Gerät zu verknüpfen.</string>
-  <string name="account_generate_export_invalid_two">Die PIN ist nicht mehr gültig.\n Generieren Sie eine andere, um das neue Gerät zu verknüpfen.</string>
+  <string name="account_generate_export_invalid">Die PIN ist nicht mehr gültig.\nGeben Sie das Passwort ein und generieren Sie ein neues, um das neue Gerät zu verknüpfen.</string>
+  <string name="account_generate_export_invalid_two">Die PIN ist nicht mehr gültig.\nGenerieren Sie eine andere, um das neue Gerät zu verknüpfen.</string>
   <string name="help_pin_info">Dieses Feld ausfüllen, wenn das Konto passwortverschlüsselt ist</string>
   <string name="connect_device_scanqr">QR scannen</string>
   <string name="connect_device_enterPIN">Oder PIN eingeben</string>

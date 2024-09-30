@@ -27,7 +27,6 @@
   <string name="pref_startOnBoot_title">ప్రారంభంలో జామి ప్రారంభించండి</string>
   <string name="pref_startOnBoot_summary">వ్యవస్థ ప్రారంభించినప్పుడు నేపథ్యంలో Jami అమలు.</string>
   <string name="pref_clearHistory_title">స్పష్టమైన చరిత్ర</string>
-  <string name="pref_clearHistory_summary">అన్ని సంభాషణల చరిత్రను క్లియర్ చేయండి. ఈ చర్యను తిరస్కరించలేము.</string>
   <string name="pref_notification_title">నోటిఫికేషన్ల దృశ్యమానత</string>
   <string name="pref_notification_summary">లాక్ స్క్రీన్ లో అప్లికేషన్ నోటిఫికేషన్ల దృశ్యమానతను సెట్ చేయండి.</string>
   <string name="pref_blackList_title">బ్లాక్ జాబితా</string>
@@ -52,19 +51,6 @@
   <string name="notification_public">పబ్లిక్ \n(ప్రకటనలను లాక్ స్క్రీన్ లో చూపించు</string>
   <string name="notification_private">ప్రైవేట్ \n(ప్రవేశం నోటిఫికేషన్లు కానీ లాక్ స్క్రీన్ లో వాటి కంటెంట్ దాచడానికి) \n</string>
   <string name="notification_secret">రహస్యంగా \n(లాక్ స్క్రీన్ లో నోటిఫికేషన్లు చూపించవద్దు)</string>
-  <!--Plugin-->
-  <string name="pref_plugins_title">ప్లగిన్లు</string>
-  <string name="pref_plugins_summary">ప్లగిన్లను ప్రారంభించండి మరియు వారి పారామితులను సెట్</string>
-  <string name="fab_plugins_add">కొత్త ప్లగ్ఇన్ జోడించండి</string>
-  <string name="plugin_uninstall_title">ప్లగ్ఇన్ అన్ఇన్స్టాల్?</string>
-  <string name="plugin_reset_preferences">ప్లగ్ఇన్ ప్రాధాన్యతలను రీసెట్ చేయండి</string>
-  <string name="plugin_reset_preferences_summary">మీ ప్లగ్ఇన్ సెట్టింగులు డిఫాల్ట్గా ఉంటాయి</string>
-  <string name="plugin_reset_preferences_ask">మీరు సాధారణ ప్లగ్ఇన్ సెట్టింగులను రీసెట్ చేయాలనుకుంటున్నారా?</string>
-  <string name="plugin_reset_account_preferences_ask">మీరు ఖాతా ప్లగ్ఇన్ సెట్టింగులను రీసెట్ చేయాలనుకుంటున్నారా?</string>
-  <string name="plugin_successfully_installed">ప్లగిన్ <b>%1$s</b> విజయవంతంగా ఇన్స్టాల్ చేయబడింది</string>
-  <string name="plugin_install_failure">ప్లగ్ఇన్ ఇన్స్టాల్ చేయడంలో విఫలమైందిః <b>%1$s</b></string>
-  <string name="plugin_recent_version_exception">మీకు ఇటీవలి సంస్కరణ ఉందిః <b>%1$s</b></string>
-  <string name="plugin_same_version_exception">మీరు <b>%1$s</b> యొక్క అదే వెర్షన్ను ఇన్స్టాల్ చేసారు</string>
-  <string name="plugin_force_install">బలవంతంగా \ n ఇన్స్టాల్</string>
-  <string name="plugin_path_image_add">క్రొత్త చిత్రాన్ని జోడించండి</string>
+  <!--Extension-->
+  <string name="extension_force_install">బలవంతంగా \ n ఇన్స్టాల్</string>
 </resources>

@@ -1,11 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--Strings for xml content description of images-->
-  <string name="contact_quick_call_description">Արագ զանգահարում</string>
-  <string name="contact_picture_description">Հաղորդակցի նկար</string>
   <string name="dial_numeric_pad">Թվային դիալպա</string>
   <string name="contact_unblock">Բաց թողնել</string>
-  <string name="video_plugins">Տեսանյութերի հավելվածներ</string>
   <string name="file_download_button">Ներբեռնել</string>
   <string name="control_play">Խաղալ</string>
   <string name="control_pause">Պահանջ</string>

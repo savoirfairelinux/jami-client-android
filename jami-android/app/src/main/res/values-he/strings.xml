@@ -1,16 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
-  <string name="feedback_section">משוב</string>
-  <string name="report"><u>שלח לנו דואר אלקטרוני</u></string>
   <string name="section_license">רישיון</string>
   <string name="sponsor_section">ג\'מי הוא תוכנה חופשית שפותחה ותומכת על ידי</string>
   <string name="copyright_section">זכויות יוצרים</string>
   <string name="contribute_section">תרום</string>
   <string name="version_section">גרסה</string>
-  <string name="no_email_app_installed">לא מצאתי אפליקציה אימייל, תקין אחת כדי לשלוח לנו דיווח</string>
   <string name="no_browser_app_installed">לא נמצא אפליקציה בלוחץ אינטרנט, תקין אחת כדי להציג את הדף הזה</string>
-  <string name="email_chooser_title">לשלוח דואר באמצעות...</string>
   <string name="website_chooser_title">צפו באתר באמצעות...</string>
   <string name="license">תוכנת זו מסופקת "כפי שהיא", ללא אחריות של כל סוג. לפרטים, ראה GNU General Public License גרסה 3 או מאוחר יותר&lt;/u&gt;</string>
   <string name="description">ג\'אמי היא תוכנה חופשית לתקשורת אוניברסלית שמכבדת את החירות והפרטיות של המשתמשים שלה.</string>
@@ -19,9 +15,7 @@
   <string name="call_service_description">שירות זה הכרחי כדי לשמור על השיחות שלך פועלות בקודם. הוא פועל רק במהלך השיחות.</string>
   <string name="data_transfer_service_description">שירות זה הכרחי להציג הודעות מתמשכות במהלך העברת קבצים. הוא פועל רק במהלך העברת קבצים.</string>
   <!--About dialog-->
-  <string name="developed_by">פותחה על ידי</string>
-  <string name="designed_by">מעוצבת על ידי</string>
-  <string name="ringtones_by">שירים</string>
+  <string name="media">מדיה</string>
   <!--RingActivity-->
   <string name="error_no_network">אין חיבור לרשת</string>
   <string name="error_account_offline">החשבון לא פועל.</string>
@@ -35,7 +29,6 @@
   <string name="menu_item_settings">הגדרות</string>
   <string name="menu_item_advanced_settings">הגדרות מתקדמות</string>
   <string name="menu_item_account_settings">הגדרות החשבון</string>
-  <string name="menu_item_plugin_list">הגדרות הפלוגינים</string>
   <string name="menu_item_share">לחלוק את החשבון שלי</string>
   <string name="menu_item_about">על אודות Jami</string>
   <string name="video_setting_title">הגדרות הוידאו</string>
@@ -96,9 +89,7 @@
   <!--Conversation-->
   <string name="conversation_details">פרטים בשיחה</string>
   <string name="contact_details">פרטי קשר</string>
-  <string name="conversation_action_delete_this_message">פעולה זו לא יכולה להיבטל.</string>
   <string name="conversation_action_history_clear">היסטוריה ברורה</string>
-  <string name="conversation_action_copy_peer_number">העתקת מספר</string>
   <string name="conversation_action_block_this">פגע בלוק</string>
   <string name="conversation_action_incoming_call">שיחה נכנסת</string>
   <string name="conversation_action_latest">גלול לקצה השיחה</string>
@@ -125,12 +116,9 @@
   <!--Share fragment-->
   <string name="share_label">שיתוף</string>
   <string name="generic_error_migration">שגיאה</string>
-  <!--Pending contact requests-->
+  <!--Pending invitations-->
   <string name="accept">לקבל</string>
-  <string name="refuse">לדחות</string>
   <string name="block">חסימה</string>
-  <!--Send contact requests-->
-  <string name="send_request_button">שליחה</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">אין קשרים חסומים</string>
   <!--Smartlist-->
@@ -165,19 +153,17 @@
   <string name="wizard_profile_info">פרופיל משתף רק עם אנשי קשר</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">שיתוף</string>
-  <string name="bottomSheet_plugins_btn">תוספים</string>
   <string name="bottomSheet_add_participants_btn">הוסף</string>
   <string name="bottomSheet_change_camera_btn">שינוי</string>
-  <string name="bottomSheet_hangup_btn">סיום שיחה</string>
+  <string name="bottomSheet_hangup_btn">סיום השיחה</string>
   <string name="bottomSheet_raiseHand_btn">תרים את היד.</string>
   <string name="uninstall">תורידו את ההתקנה</string>
   <string name="reset">-הקמת מחדש</string>
   <!--Swarm Detail-->
   <string name="rename_btn">אישר</string>
-  <string name="swarm_description">הוסף תיאור</string>
-  <string name="tab_about">על אודות</string>
   <string name="tab_members">חברי</string>
-  <string name="tab_documetn">מסמכים</string>
+  <string name="tab_files">קבצים</string>
+  <string name="tab_settings">הגדרות</string>
   <string name="dialog_hint_title">כותרת</string>
   <string name="dialog_hint_description">תיאור</string>
   <!--JamiId-->
@@ -187,5 +173,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">ברוך בואך אל Jami</string>
   <!--Donation-->
-  <!--Plugin-->
+  <!--Extension-->
 </resources>

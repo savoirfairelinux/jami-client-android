@@ -21,15 +21,11 @@
   <string name="dialog_wait_create_details">새로운 계정이 추가되는 동안 기다려 주세요</string>
   <string name="dialog_wait_update">업데이트 계정</string>
   <string name="dialog_wait_update_details">새로운 계정이 업데이트되는 동안 기다려 주세요</string>
-  <string name="dialog_warn_ip2ip_account_title">빈 SIP 계정을 만들까요?</string>
-  <string name="dialog_warn_ip2ip_account_message">유효한 호스트 이름 없이 SIP 계정을 만들려고 합니다. 당신은 단지 직결 IP 호출을 할 수 있습니다. 당신은 나중에 계정을 편집 할 수 있습니다</string>
   <string name="account_type_ip2ip">IP 계정</string>
   <string name="help_ring">자미 계정으로 인해 완전히 분산된 네트워크를 통해 안전하게 peer-to-peer으로 사람들을 만날 수 있습니다.</string>
   <string name="help_sip_title">SIP 계정을 추가</string>
   <string name="help_sip">기존 SIP 계정을 구성합니다.</string>
-  <string name="create_sip_account">SIP 계정을 추가</string>
   <!--Strings related to account deletion-->
-  <string name="account_delete_dialog_title">계좌 삭제?</string>
   <string name="account_delete_dialog_message">이 행동은 되돌릴 수 없습니다.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">등록된 계좌가 없습니다</string>
@@ -38,8 +34,6 @@
   <string name="account_device_revoke">취소 장치</string>
   <string name="account_device_revocation_success_title">성공</string>
   <string name="account_device_revocation_success">장치가 취소됐어요!</string>
-  <string name="account_device_revocation_error_title">기기를 취소할 수 없습니다</string>
-  <string name="account_device_revocation_wrong_password">잘못된 암호입니다.</string>
   <string name="account_device_revocation_unknown_device">알려지지 않은 장치</string>
   <string name="account_device_revocation_error_unknown">알 수 없는 오류</string>
   <string name="account_password_change">비밀번호 변경</string>
@@ -61,8 +55,7 @@
   <string name="account_rendezvous_summary">회담 모드에서는 수신 전화가 회의실에 추가됩니다.</string>
   <string name="account_upnp_label">UPnP를 활성화</string>
   <string name="account_proxy_field">프록시</string>
-  <!--Plugin Details-->
-  <string name="account_preference_plugin_tab">플러그인</string>
+  <!--Extension Details-->
   <!--Audio Details-->
   <string name="account_audio_label">음향</string>
   <string name="account_preferences_media_tab">미디어</string>
@@ -142,35 +135,23 @@
   <string name="export_account_wait_message">수출 계좌 정보</string>
   <string name="account_export_file">백업 계좌</string>
   <string name="account_export_file_summary">나중에 복구하기 위해 계정을 장치에 백업하십시오.</string>
-  <string name="account_export_end_decryption_message">제공된 비밀번호를 사용하여 계정을 열 수 없었습니다.</string>
   <string name="account_export_end_network_title">네트워크 오류</string>
-  <string name="account_export_end_network_message">네트워크에 있는 계정을 수출할 수 없었어요 연결을 확인하세요</string>
   <string name="account_export_end_error_title">오류</string>
-  <string name="account_export_end_error_message">계좌를 수출할 수 없었어요. 알려지지 않은 오류가 발생했습니다.</string>
   <string name="account_enter_password">비밀번호를 입력</string>
-  <string name="account_share_body">Jami 유통 통신 플랫폼에서 \'%1$s\'를 사용하여 연락하십시오: %2$s</string>
-  <string name="account_share_body_with_username">Jami 유통 통신 플랫폼에서 \'%1$s\' 또는 \'%2$s\'의 공개 사용자 이름을 사용하여 연락하십시오: %3$s</string>
-  <string name="account_contact_me">자미에 연락해</string>
+  <string name="account_contact_me">자미에 연락해!</string>
   <string name="update_account">계정 업데이트</string>
   <string name="account_migration">자미 계정 업데이트가 가능합니다. 비밀번호를 입력하세요.</string>
   <string name="ring_account">자미 계정</string>
   <string name="sip_account">SIP 계좌</string>
   <string name="ring_account_identity">신분</string>
   <string name="account_migration_title_dialog">계정 마이그레이션</string>
-  <string name="account_migration_message_dialog">계정 관리 스크린으로 이동하여 이 작업을 수행하려면 계정 관리 스크린을 클릭하고</string>
   <string name="account_update_needed">업데이트가 필요</string>
-  <string name="account_cannot_be_found_title">계산을 찾을 수 없어요</string>
-  <string name="account_cannot_be_found_message">자미 네트워크에서 계좌가 찾을 수 없었습니다. 자미에 이미 있는 기기에서 전송되었는지 확인하고,</string>
   <string name="account_sip_cannot_be_registered_message">계정 생성 과정 을 계속 하거나 이 부분 에서 정보 를 편집 할 수 있습니다. 계정 설정 에서 나중에 에디션 을 할 수 있습니다.</string>
-  <string name="account_no_network_title">네트워크에 연결할 수 없습니다</string>
-  <string name="account_no_network_message">자미가 유통 네트워크에 연결할 수 없었기 때문에 계정을 추가할 수 없었어요</string>
+  <string name="account_no_network_title">네트워크 오류</string>
   <string name="account_device_added_title">계정 장치 추가</string>
   <string name="account_device_added_message">이 기기에서 자미 계정을 성공적으로 설정했습니다.</string>
   <string name="account_device_updated_title">계정 장치 업데이트</string>
   <string name="account_device_updated_message">자미 계정을 성공적으로 업데이트했습니다.</string>
-  <string name="account_cannot_be_updated_message">계정 장치가 업데이트되지 않았어요 비밀번호 확인해 주세요</string>
-  <string name="account_sip_success_title">등록된 SIP 계좌</string>
-  <string name="account_sip_success_message">당신은 당신의 Sip 계정을 성공적으로 등록했습니다.</string>
   <string name="account_sip_register_anyway">어쨌든 등록해</string>
   <!--TV-->
   <string name="account_tv_settings_header">계정 설정</string>
@@ -190,11 +171,8 @@
   <string name="account_link_export_button">새로운 장치를 연결</string>
   <string name="account_link_show_button">%d 더 많은 연결된 장치를 표시</string>
   <string name="account_link_hide_button">연결된 장치를 숨기</string>
-  <string name="account_link_export_info">이 계정을 다른 장치에서 사용하기 위해서는 먼저 Jami에 노출해야 합니다. 이것은 새로운 장치에 PIN 코드를 생성합니다. 계정을 설정하려면 PIN가 유효합니다.</string>
   <string name="account_start_export_button">PIN을 생성</string>
   <string name="account_end_export_button">가까이</string>
-  <string name="account_end_export_infos">PIN는:\n\n%%\n\n 프로세스를 완료하려면 새로운 장치에서 Jami를 열어야 합니다. \"이 장치를 계정에 연결하십시오\"라는 새 계정을 생성하십시오. PIN는 10 분 동안 유효합니다.</string>
-  <string name="account_link_export_info_light">이 계정을 다른 장치에서 사용하기 위해서는 먼저 Jami에 노출해야 합니다. 이것은 새로운 장치에 PIN 코드를 생성합니다. 계정을 설정하려면 PIN가 유효합니다.</string>
   <string name="account_export_title">다른 장치에 연결된 계정</string>
   <string name="account_connect_server_button">관리 서버에 연결</string>
   <string name="account_connect_button">연결</string>
@@ -226,21 +204,17 @@
   <string name="account_creation_profile">프로필 만들기</string>
   <string name="account_creation_ring">자미 계정을 생성하세요</string>
   <string name="account_link_title">이 장치를 연결</string>
-  <string name="account_sip_cannot_be_registered">계좌 등록이 불가능해요</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">내 계정을 편집</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">확인하기 위해 비밀번호를 입력</string>
   <string name="enter_password">비밀번호를 입력</string>
   <string name="revoke_device_title">취소 장치</string>
-  <string name="revoke_device_message">%1$s를 취소하고 싶다는 확신이 있습니까?</string>
   <string name="revoke_device_wait_title">잠깐만요</string>
   <string name="revoke_device_wait_message">취소 장치</string>
   <string name="rename_device_title">이 장치의 이름을 바꾸</string>
   <string name="rename_device_message">Jami 계정에서 이 장치를 식별하기 위해 새로운 이름을 선택하십시오</string>
   <string name="rename_device_button">이름 변경 장치</string>
   <string name="account_rename_device_hint">새로운 장치 이름을 선택</string>
-  <string name="account_device_name_empty">장치 이름은 빈 게 될 수 없습니다</string>
   <string name="account_device_this_indicator">이 장치</string>
   <string name="account_disabled_indicator">장애인</string>
   <!--Link a new device-->

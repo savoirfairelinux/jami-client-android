@@ -1,11 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--Strings for xml content description of images-->
-  <string name="contact_quick_call_description">تماس سریع</string>
-  <string name="contact_picture_description">تصویر مخاطب</string>
   <string name="dial_numeric_pad">شماره‌گیر عددی</string>
   <string name="contact_unblock">رفع مسدودی</string>
-  <string name="video_plugins">افزونه‌های ویدیویی</string>
   <string name="file_download_button">دانلود</string>
   <string name="control_play">پخش</string>
   <string name="control_replay">پاسخ</string>

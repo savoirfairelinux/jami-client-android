@@ -21,25 +21,19 @@
   <string name="dialog_wait_create_details">Itxaron zure kontu berria gehitzen den bitartean...</string>
   <string name="dialog_wait_update">Kontua eguneratzen</string>
   <string name="dialog_wait_update_details">Itxaron zure kontu berria eguneratzen den bitartean...</string>
-  <string name="dialog_warn_ip2ip_account_title">Sortu SIP kontu hutsa?</string>
-  <string name="dialog_warn_ip2ip_account_message">SIP kontua sortzeko zorian zaude, izen-abizen baliodurik gabe. IP dei zuzenak egin eta jaso ahal izango dituzu soilik. Geroago editatu ahal izango duzu zure kontua</string>
   <string name="account_type_ip2ip">IP kontua</string>
   <string name="help_ring">Jami-ren kontua da jendearekin harremanetan jartzeko aukera.</string>
-  <string name="help_sip_title">Gehitu zure SIP kontua</string>
+  <string name="help_sip_title">Gehitu SIP kontua</string>
   <string name="help_sip">Konfiguratu aurretik badagoen SIP kontu bat</string>
-  <string name="create_sip_account">Gehitu SIP kontua</string>
   <!--Strings related to account deletion-->
-  <string name="account_delete_dialog_title">Ezabatu kontua?</string>
   <string name="account_delete_dialog_message">Ekintza hau ezin da desegin.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Ez dago erregistratutako konturik</string>
   <string name="normal_accounts_titles">Kontuak</string>
-  <string name="normal_devices_titles">Lotutako gailuak</string>
+  <string name="normal_devices_titles">Estekatuta dauden gailuak</string>
   <string name="account_device_revoke">Atzera egiteko gailua</string>
   <string name="account_device_revocation_success_title">Ongi</string>
   <string name="account_device_revocation_success">Gailua bertan behera utzi dute!</string>
-  <string name="account_device_revocation_error_title">Ezin dut desegin.</string>
-  <string name="account_device_revocation_wrong_password">Pasahitz okerra.</string>
   <string name="account_device_revocation_unknown_device">Gailu ezezaguna.</string>
   <string name="account_device_revocation_error_unknown">Errore ezezaguna.</string>
   <string name="account_password_change">Aldatu pasahitza</string>
@@ -61,8 +55,7 @@
   <string name="account_rendezvous_summary">Bilera-moduan, deiak bilera gelara gehituko dira.</string>
   <string name="account_upnp_label">UPnP aktibatu</string>
   <string name="account_proxy_field">Proxya</string>
-  <!--Plugin Details-->
-  <string name="account_preference_plugin_tab">Pluginsak</string>
+  <!--Extension Details-->
   <!--Audio Details-->
   <string name="account_audio_label">Audioa</string>
   <string name="account_preferences_media_tab">Multimedia</string>
@@ -142,35 +135,23 @@
   <string name="export_account_wait_message">Kontuaren informazioa esportatzen</string>
   <string name="account_export_file">Egin kontuaren babes-kopia</string>
   <string name="account_export_file_summary">Zure kontua zure gailuan babestu eta gero berreskuratu.</string>
-  <string name="account_export_end_decryption_message">Ezin izan dut zure kontua ireki eman duzun pasahitza erabiliz.</string>
   <string name="account_export_end_network_title">Sare errorea</string>
-  <string name="account_export_end_network_message">Ezin izan dut kontua esportatu.</string>
   <string name="account_export_end_error_title">Errorea</string>
-  <string name="account_export_end_error_message">Ezin izan dut kontua esportatu, akats ezezagun bat gertatu da.</string>
   <string name="account_enter_password">Sartu pasahitza</string>
-  <string name="account_share_body">Jarri harremanetan nirekin Jami-ko komunikazio plataforma banatuan %1$s erabiliz: %2$s</string>
-  <string name="account_share_body_with_username">Jarri harremanetan nirekin \'%1$s\' edo nire erabiltzaile-izen publikoa \'%2$s\' erabiliz Jami-ren komunikazio plataforma banatuan: %3$s</string>
-  <string name="account_contact_me">Kontaktatu nazazu Jami bidez!</string>
+  <string name="account_contact_me">Jarri harremanetan Jami-rekin!</string>
   <string name="update_account">Eguneratu kontua</string>
   <string name="account_migration">Zure Jami kontua eguneratu daiteke. Mesedez sartu pasahitza.</string>
   <string name="ring_account">Jami kontua</string>
   <string name="sip_account">SIP kontuak</string>
   <string name="ring_account_identity">Identitatea</string>
   <string name="account_migration_title_dialog">Kontuaren migrazioa</string>
-  <string name="account_migration_message_dialog">Kontuak eguneratu behar dira.</string>
   <string name="account_update_needed">Eguneratu behar da</string>
-  <string name="account_cannot_be_found_title">Ezin da kontua aurkitu</string>
-  <string name="account_cannot_be_found_message">Kontua ez da Jami-ren sarean aurkitu. Ziurtatu Jami-ra exportua izan dela.</string>
   <string name="account_sip_cannot_be_registered_message">Kontuaren sorrera prozesuarekin jarraitu dezakezu edo zure informazioa editatu hemen.</string>
-  <string name="account_no_network_title">Ezin da sarera konektatu</string>
-  <string name="account_no_network_message">Ezin izan dut kontua gehitu, Jami-k ez zuelako konexioa lortu.</string>
+  <string name="account_no_network_title">Sare errorea</string>
   <string name="account_device_added_title">Kontuaren gailua gehituta</string>
   <string name="account_device_added_message">Zure Jami kontua sortu duzu gailu honetan.</string>
   <string name="account_device_updated_title">Kontuaren gailua eguneratu da</string>
   <string name="account_device_updated_message">Zure kontuak eguneratu dituzu.</string>
-  <string name="account_cannot_be_updated_message">Kontuaren gailua ez da eguneratu.</string>
-  <string name="account_sip_success_title">SIP kontuak erregistratua</string>
-  <string name="account_sip_success_message">Zure SIP kontua arrakastarekin erregistratu duzu.</string>
   <string name="account_sip_register_anyway">Erregistratu hala ere</string>
   <!--TV-->
   <string name="account_tv_settings_header">Kontuaren ezarpenak</string>
@@ -190,11 +171,8 @@
   <string name="account_link_export_button">Estekatu gailu berria</string>
   <string name="account_link_show_button">%d gehiagoren konektatutako gailua erakutsi</string>
   <string name="account_link_hide_button">Ezkutatu lotutako gailua</string>
-  <string name="account_link_export_info">Beste gailu batzuetan erabiltzeko, lehenik Jami-n azaldu behar da. Honek PIN kodea sortuko du eta gailu berrian sartu behar da kontua ezartzeko. PINa 10 minutuz baliagarria da.</string>
   <string name="account_start_export_button">Sortu PIN-a</string>
   <string name="account_end_export_button">itxi</string>
-  <string name="account_end_export_infos">Zure PIN-a da:\n\n%%\nProzesua osatzeko, Jami ireki behar duzu gailu berrian. Kontu berria sortu \"Gailu hau kontu batera lotzeko\"arekin. Zure PIN-a 10 minutuz baliagarria da.</string>
-  <string name="account_link_export_info_light">Beste gailu batzuetan erabiltzeko, lehenik Jami-n azaldu behar da. Honek PIN kodea sortuko du eta gailu berrian sartu behar da kontua ezartzeko. PINa 10 minutuz baliagarria da.</string>
   <string name="account_export_title">Beste gailu batzuekin lotutako kontuak</string>
   <string name="account_connect_server_button">Administrazio zerbitzariarekin konektatu</string>
   <string name="account_connect_button">Konektatu</string>
@@ -226,21 +204,17 @@
   <string name="account_creation_profile">Sortu zure profila</string>
   <string name="account_creation_ring">Sortu zure Jami kontua</string>
   <string name="account_link_title">Estekatu gailu hau</string>
-  <string name="account_sip_cannot_be_registered">Ezin da kontua erregistratu</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">Nire kontua editatu</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Sartu pasahitza berresteko</string>
   <string name="enter_password">Sartu pasahitza</string>
   <string name="revoke_device_title">Atzera egiteko gailua</string>
-  <string name="revoke_device_message">%1$s bertan behera utzi nahi duzula ziur zaude?</string>
   <string name="revoke_device_wait_title">Itxaron mesedez...</string>
   <string name="revoke_device_wait_message">Deuseztatzeko gailua</string>
   <string name="rename_device_title">Aldatu izena gailu honi</string>
   <string name="rename_device_message">Aukeratu izen berria zure Jami kontuan.</string>
   <string name="rename_device_button">Aldatu izena gailuari</string>
   <string name="account_rename_device_hint">Aukeratu gailuaren izen berria</string>
-  <string name="account_device_name_empty">Gailuaren izena ezin da hutsik laga</string>
   <string name="account_device_this_indicator">Gailu hau</string>
   <string name="account_disabled_indicator">desgaituta</string>
   <!--Link a new device-->

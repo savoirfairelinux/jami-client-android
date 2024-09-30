@@ -1,16 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
-  <string name="feedback_section">Freagra</string>
-  <string name="report"><u>Scríobh ríomhphost dúinn</u></string>
   <string name="section_license">Ceadúnas</string>
   <string name="sponsor_section">Jami Is éard atá ar fáil ar an bogearraí saor in aisce a d\'fhorbair agus a thacaíonn le</string>
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Cuidiú</string>
   <string name="version_section">An leagan</string>
-  <string name="no_email_app_installed">Ní fhaightear aon aip ríomhphoist, suiteáil ceann chun tuarascáil a sheoladh chugainn</string>
   <string name="no_browser_app_installed">Ní fhaightear aon aip brabhsálaí gréasáin, suiteáil ceann chun an leathanach seo a fheiceáil</string>
-  <string name="email_chooser_title">Cuir post a sheoladh ag baint úsáide as...</string>
   <string name="website_chooser_title">Féach ar an suíomh Gréasáin ag baint úsáide as...</string>
   <string name="license">Tá an bogearraí seo ar fáil "mar atá", gan ráthaíocht de chineál ar bith. Le haghaidh sonraí, féach GNU GNU Ceadúnas Poiblí Ginearálta leagan 3 nó níos déanaí&lt;/u&gt;</string>
   <string name="description">Is bogearraí saor in aisce é Jami do chumarsáid uilethréimhseach a thugann urram do shaoirseanna agus do phríobháideacht a úsáideoirí.</string>
@@ -19,9 +15,7 @@
   <string name="call_service_description">Tá an tseirbhís seo riachtanach chun do ghlaoí a choinneáil ag rith i d\'ard-scéal.</string>
   <string name="data_transfer_service_description">Tá an tseirbhís seo riachtanach chun fógraí leanúnacha a thaispeáint le linn aistriú comhaid.</string>
   <!--About dialog-->
-  <string name="developed_by">Forbartha ag</string>
-  <string name="designed_by">Deartha ag</string>
-  <string name="ringtones_by">Ringtones ag</string>
+  <string name="media">Meáin</string>
   <!--RingActivity-->
   <string name="error_no_network">Ní bheidh aon nasc líonra</string>
   <string name="error_account_offline">Tá an cuntas ar líne</string>
@@ -35,7 +29,6 @@
   <string name="menu_item_settings">Cinntí</string>
   <string name="menu_item_advanced_settings">Cinntíocht Leathraithe</string>
   <string name="menu_item_account_settings">Cinntí cuntas</string>
-  <string name="menu_item_plugin_list">Cluiche Cluiche Cluiche</string>
   <string name="menu_item_share">Comhroinn mo chuntas</string>
   <string name="menu_item_about">Maidir le Jami</string>
   <string name="video_setting_title">Suíomh-bhreathnú</string>
@@ -86,7 +79,6 @@
   <!--Conversation-->
   <string name="conversation_details">Níos mó sonraí ag an gcaithne</string>
   <string name="contact_details">sonraí teagmhála</string>
-  <string name="conversation_action_delete_this_message">Ní féidir an gníomh seo a dhéanamh ar ais.</string>
   <string name="conversation_action_history_clear">Tuairiscí soiléir</string>
   <string name="conversation_action_block_this">Contae Bloc</string>
   <string name="conversation_action_incoming_call">Glacadh isteach</string>
@@ -112,12 +104,9 @@
   <!--Share fragment-->
   <string name="share_label">Comhroinnt</string>
   <string name="generic_error_migration">Meas</string>
-  <!--Pending contact requests-->
+  <!--Pending invitations-->
   <string name="accept">Tabhair faoi deara</string>
-  <string name="refuse">Diúltú</string>
   <string name="block">Bloc</string>
-  <!--Send contact requests-->
-  <string name="send_request_button">Cuir isteach</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Ní thiocfar teagmhálacha</string>
   <!--Smartlist-->
@@ -151,7 +140,6 @@
   <string name="wizard_profile_info">Ní roinntear próifíl ach le teagmhálacha</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Comhroinnt</string>
-  <string name="bottomSheet_plugins_btn">Plugins</string>
   <string name="bottomSheet_add_participants_btn">Cuir leis</string>
   <string name="bottomSheet_change_camera_btn">Athrú</string>
   <string name="bottomSheet_hangup_btn">Críochnaigh an glao</string>
@@ -160,10 +148,9 @@
   <string name="reset">Athsheasamh</string>
   <!--Swarm Detail-->
   <string name="rename_btn">Cinntíonn</string>
-  <string name="swarm_description">Cuir síos leis</string>
-  <string name="tab_about">Maidir le</string>
   <string name="tab_members">Comhaltaí</string>
-  <string name="tab_documetn">Dhomhnaill</string>
+  <string name="tab_files">Fioscail</string>
+  <string name="tab_settings">Cinntí</string>
   <string name="dialog_hint_title">Teideal</string>
   <string name="dialog_hint_description">Tuairisc</string>
   <!--JamiId-->
@@ -173,5 +160,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Fáilte go Jami</string>
   <!--Donation-->
-  <!--Plugin-->
+  <!--Extension-->
 </resources>

@@ -52,22 +52,22 @@
   <string name="notification_public">Public \n(arată notificările și conținutul lor pe ecranul blocat)\n</string>
   <string name="notification_private">Privat \n(arată notificările, dar ascunde conținutul lor pe ecranul blocat)\n</string>
   <string name="notification_secret">Secret \n(nu arăta notificările pe ecranul blocat)</string>
-  <!--Plugin-->
-  <string name="pref_plugins_title">Extensii</string>
-  <string name="pref_plugins_summary">Activează extensiile și reglează-le parametrii</string>
-  <string name="fab_plugins_add">Adaugă o extensie nouă</string>
-  <string name="plugin_uninstall_title">Dezinstalezi extensia?</string>
-  <string name="plugin_reset_preferences">Restabilește reglările inițiale ale extensiei</string>
-  <string name="plugin_reset_preferences_summary">Reglările extensiei vor reveni ca la început</string>
-  <string name="plugin_reset_preferences_ask">Vrei să restabilești opțiunile generale ale extensiei?</string>
-  <string name="plugin_reset_account_preferences_ask">Vrei să restabilești opțiunile pentru cont ale extensiei?</string>
-  <string name="plugin_successfully_installed">Extensia <b>%1$s</b> instalată cu succes</string>
-  <string name="plugin_install_failure">Nu s-a reușit instalarea extensiei: <b>%1$s</b></string>
-  <string name="plugin_recent_version_exception">Ai o versiune mai recentă de: <b>%1$s</b></string>
-  <string name="plugin_same_version_exception">Ai aceeași versiune de <b>%1$s</b> instalată</string>
-  <string name="plugin_invalid_signature"><b>%1$s</b> are o semnătură incorectă</string>
-  <string name="plugin_invalid_authority">Nu se poate verifica autoritatea pentru: <b>%1$s</b></string>
-  <string name="plugin_invalid_format">Format de extensie neacceptat: <b>%1$s</b></string>
-  <string name="plugin_force_install">forțează \n instalarea</string>
-  <string name="plugin_path_image_add">Adaugă o imagine nouă</string>
+  <!--Extension-->
+  <string name="pref_extensions_title">Extensii</string>
+  <string name="pref_extensions_summary">Activează extensiile și reglează-le parametrii</string>
+  <string name="fab_extensions_add">Adaugă o extensie nouă</string>
+  <string name="extension_uninstall_title">Dezinstalezi extensia?</string>
+  <string name="extension_reset_preferences">Restabilește reglările inițiale ale extensiei</string>
+  <string name="extension_reset_preferences_summary">Reglările inițiale ale extensiei au fost restabilite</string>
+  <string name="extension_reset_preferences_ask">Vrei să restabilești reglările generale ale extensiei?</string>
+  <string name="extension_reset_account_preferences_ask">Vrei să restabilești reglările pentru cont ale extensiei?</string>
+  <string name="extension_successfully_installed">Extensia <b>%1$s</b> a fost instalată cu succes</string>
+  <string name="extension_install_failure">A apărut o eroare la instalarea extensiei: <b>%1$s</b></string>
+  <string name="extension_recent_version_exception">Este instalată o versiune mai recentă de <b>%1$s</b>.</string>
+  <string name="extension_same_version_exception">Este instalată aceeași versiune a <b>%1$s</b>.</string>
+  <string name="extension_invalid_signature"><b>%1$s</b> are o semnătură incorectă</string>
+  <string name="extension_invalid_authority">Nu se poate verifica autoritatea pentru: <b>%1$s</b></string>
+  <string name="extension_invalid_format">Format de extensie neacceptat: <b>%1$s</b></string>
+  <string name="extension_force_install">forțează \n instalarea</string>
+  <string name="extension_path_image_add">Adaugă o imagine nouă</string>
 </resources>

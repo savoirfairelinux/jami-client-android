@@ -27,7 +27,6 @@
   <string name="pref_startOnBoot_title">ڤمبيلن Jami دالم ڤمبيلن</string>
   <string name="pref_startOnBoot_summary">جادي جادي جادي دالم سبواه ڤرتنديڠن كتيک سيسيڠ.</string>
   <string name="pref_clearHistory_title">تاريخ يڠ برڤنتيڠ</string>
-  <string name="pref_clearHistory_summary">كامي مڠهادڤي سموا تاريخ ڤمباچ.</string>
   <string name="pref_notification_title">ڤرلو دڤرلوكن</string>
   <string name="pref_notification_summary">ڤڠڬوناكن ڤمبلاجرن ڤرساتوان ڤرلو دڤرچايا?? ي دالم سكرين لاك.</string>
   <string name="pref_blackList_title">ڤمباچ ڤڠوربان</string>
@@ -52,19 +51,6 @@
   <string name="notification_public">ڤرلاونن ڤرلاونن دان ڤمبنتوقڽ دالم سكرين لاك)</string>
   <string name="notification_private">سڤرتي \n(مبيلي ڤمبلايهن تتاڤي مڠهادڤي ڤڠوربانڽ دالم سكرين لاك) \n</string>
   <string name="notification_secret">سيكريت \n(مبليكن ڤمبليهيڠ دڤرچايا?? ي ڤرسكوتوان دڤرچايا?? ي)</string>
-  <!--Plugin-->
-  <string name="pref_plugins_title">ڤلاڬين</string>
-  <string name="pref_plugins_summary">ممبنتو ڤلاڬين دان ممبنتو ڤاراميتيرنڽ</string>
-  <string name="fab_plugins_add">مڠهادڤي ڤلاڬين بارو</string>
-  <string name="plugin_uninstall_title">ڤلاڬين دڤرچايا?? ي ؟</string>
-  <string name="plugin_reset_preferences">ڤرليڤورن ڤلاڬين</string>
-  <string name="plugin_reset_preferences_summary">ڤڠاجرن ڤلاڬين ايت برڤڠاجرن</string>
-  <string name="plugin_reset_preferences_ask">هل تريد إعادة إعدادات المكونات العامة ؟</string>
-  <string name="plugin_reset_account_preferences_ask">آيا مي خوايد تنظیمات افزونه حساب را بازيابي كنيد ؟</string>
-  <string name="plugin_successfully_installed">ڤلاڬين <b>%1$s</b> دڤرچايا?? ي</string>
-  <string name="plugin_install_failure">ڤڠاجرن ڤلاڬين: <b>%1$s</b></string>
-  <string name="plugin_recent_version_exception">توڠڬوڤ ڤرسمڤڠن يڠ لبيه بارو: <b>%1$s</b></string>
-  <string name="plugin_same_version_exception">توڤي ڤرسي <b>%1$s</b> يڠ سام دڤرساتوان</string>
-  <string name="plugin_force_install">ڤڠڬيلن ڤڠڬيلن</string>
-  <string name="plugin_path_image_add">مڠهادڤي ڤرسمباڬن بارو</string>
+  <!--Extension-->
+  <string name="extension_force_install">ڤڠڬيلن ڤڠڬيلن</string>
 </resources>

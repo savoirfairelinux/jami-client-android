@@ -27,7 +27,6 @@
   <string name="pref_startOnBoot_title">جمیو با شروع شروع کنید</string>
   <string name="pref_startOnBoot_summary">سیستم باشلادیغی زامان جمیی آرخادا قوی.</string>
   <string name="pref_clearHistory_title">واضح تاریخ</string>
-  <string name="pref_clearHistory_summary">بوتون موباحیثه لرین تاریخی نی پاک ائتمک.</string>
   <string name="pref_notification_title">اطلاعیه لرین گؤرونوشو</string>
   <string name="pref_notification_summary">قفل اِشیتمه سینده ایستیفاده ائدیرمه لرینین گؤرونوشونو تنظیم ائدیر.</string>
   <string name="pref_blackList_title">بلاک لیستی</string>
@@ -52,19 +51,6 @@
   <string name="notification_public">عمومی \n(بایاندیرما لار و اونلارین محتواسی قفللی صفحه ده گؤرونتولور) \n</string>
   <string name="notification_private">خصوصی \n(بایاندیرما گؤستریر، آنجاق محتواونو قفل صفحه سینده گئزلَتیر) \n</string>
   <string name="notification_secret">سئرتی \n(بایغات لار قفل صفحه سینده گؤرونمز)</string>
-  <!--Plugin-->
-  <string name="pref_plugins_title">پلگین</string>
-  <string name="pref_plugins_summary">پلگینلرین فعاللاییب پارامترلرینی تنظیم ائدیر</string>
-  <string name="fab_plugins_add">یئنی پلگین قوش</string>
-  <string name="plugin_uninstall_title">پلگینین یاشاییشینی آرادان آپارماق ؟</string>
-  <string name="plugin_reset_preferences">پلگین سئچیش لری</string>
-  <string name="plugin_reset_preferences_summary">آپلاين سايتلارينيز اؤنملي اولماز</string>
-  <string name="plugin_reset_preferences_ask">عمومی پلگین تنظیماتینی یئنی دن تنظیم ائتمک ایسته ییریک؟</string>
-  <string name="plugin_reset_account_preferences_ask">حساب پلگین سیتیشمالاری نی یئنی دن تنظیم ائتمک ایسته ییریک؟</string>
-  <string name="plugin_successfully_installed">پلگین <b>%1$s</b> اوغورلا نصب اولوب</string>
-  <string name="plugin_install_failure">پلگین نصب ائتمه دی: <b>%1$s</b></string>
-  <string name="plugin_recent_version_exception"><b>%1$s</b> نین داها یاخین ورژنونه sahibسن</string>
-  <string name="plugin_same_version_exception"><b>%1$s</b> نين همن نسلي وار</string>
-  <string name="plugin_force_install">قوهر نصب</string>
-  <string name="plugin_path_image_add">تزه بیر تصویر قوش</string>
+  <!--Extension-->
+  <string name="extension_force_install">قوهر نصب</string>
 </resources>

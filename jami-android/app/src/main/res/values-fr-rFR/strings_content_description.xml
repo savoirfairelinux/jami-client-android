@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--Strings for xml content description of images-->
-  <string name="contact_quick_call_description">appel rapide</string>
-  <string name="contact_picture_description">la photo du contact</string>
+  <string name="contact_quick_call_description">Appel rapide</string>
+  <string name="contact_picture_description">Photo du contact</string>
   <string name="dial_numeric_pad">pavé numérique</string>
   <string name="contact_unblock">débloquer</string>
-  <string name="video_plugins">Module d\'extension Video</string>
+  <string name="video_extensions">Extensions Vidéo</string>
   <string name="file_download_button">Télécharger</string>
   <string name="control_play">Jouer</string>
   <string name="control_replay">Répéter</string>

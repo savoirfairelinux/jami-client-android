@@ -1,27 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
-  <string name="feedback_section">ڤڠاجرن</string>
-  <string name="report"><u>مبليكن كيت اي ميل</u></string>
   <string name="section_license">ڤرودوک</string>
   <string name="sponsor_section">Jami اداله سوفيتوير براوسيا دان دڤرتودوهكن اوليه</string>
   <string name="copyright_section">ڤڠاجين ڤڠاجين</string>
   <string name="contribute_section">ڤڠاجين</string>
   <string name="version_section">ڤرسي</string>
-  <string name="no_email_app_installed">تيدق اد ڤرلو دڤرچايا?? ي اي ميل، مڠمبيل سياڤا اونتوق مڠهادڤي كيت</string>
-  <string name="no_browser_app_installed">تيدق دڤرچايا?? ي ڤرودوک ويب، مڠمبيل ڤرودوک اونتوق مڠمبيل ڤرودوک اين</string>
-  <string name="email_chooser_title">مڠهادڤي ڤرسکوتوان دڠن...</string>
-  <string name="website_chooser_title">مڠمبيل ڤرچاي ويب دڠن...</string>
-  <string name="license">ڤوۏيرو اين دبريكن \"ساي كيت،\" دڠن كرجاسام سياڤا. اونتوق ڤرليندوڠن، اكن مڠيكوت <u>GNU General Public License ڤرسي 3 اتاو ڤرليندوڠ</u></string>
   <string name="description">Jami اداله سوفيتور براوسيا اونورسال يڠ ممڤرچايا?? ي ڤرليبتن دان ڤريۏيتي ڤڠڬوناڽ.</string>
   <string name="credits">ڤرودوک</string>
   <string name="pip_title">كونفرنس جامي</string>
   <string name="call_service_description">ڤرلو مڠڬوناكن ڤرسكوتوان اين اونتوق ممڤرچايا?? ي ڤرسكوتوان كيت دالم ڤرچايا?? ن.</string>
   <string name="data_transfer_service_description">ڤرلاون اين ڤرلو دڤرچايا?? ي ڤمبلا?? ين ڤرساتوان ڤرساتوان دالم ڤرچايا?? ن ڤمباچ.</string>
   <!--About dialog-->
-  <string name="developed_by">دڤرچايا?? ي اوليه</string>
-  <string name="designed_by">دڤرچايا?? ي اوليه</string>
-  <string name="ringtones_by">Ringtones by</string>
+  <string name="media">ميديا</string>
   <!--RingActivity-->
   <string name="error_no_network">تيدق اد ڤڠاجرن نيتۏرك</string>
   <string name="error_account_offline">حسابڽ اكن دتاهن</string>
@@ -35,7 +26,6 @@
   <string name="menu_item_settings">سيٽنگون</string>
   <string name="menu_item_advanced_settings">ڤڠاجرن ڤڠاجرن</string>
   <string name="menu_item_account_settings">ڤڠاجرن حساب</string>
-  <string name="menu_item_plugin_list">ڤلاڬين ڤڠاجرن</string>
   <string name="menu_item_share">مڠمبيل ڤڠاجرن ساي</string>
   <string name="menu_item_about">دري جامي</string>
   <string name="video_setting_title">ڤڠاجرن ڤيديو</string>
@@ -86,7 +76,6 @@
   <!--Conversation-->
   <string name="conversation_details">ڤڠاجرن ڤڠاجرن</string>
   <string name="contact_details">ڤڠاجرن</string>
-  <string name="conversation_action_delete_this_message">ڤرودوک اين تيدق دڤرچايا?? ي.</string>
   <string name="conversation_action_history_clear">تاريخ يڠ برڤنتيڠ</string>
   <string name="conversation_action_block_this">ڤڠاجرن ڤڠاجرن</string>
   <string name="conversation_action_incoming_call">ڤڠاجين يڠ دڤرچايا?? ي</string>
@@ -112,12 +101,9 @@
   <!--Share fragment-->
   <string name="share_label">ڤڠاجين</string>
   <string name="generic_error_migration">خطأ</string>
-  <!--Pending contact requests-->
+  <!--Pending invitations-->
   <string name="accept">مڠاتاه</string>
-  <string name="refuse">رد</string>
   <string name="block">ڤڠاجرن</string>
-  <!--Send contact requests-->
-  <string name="send_request_button">مڠهادڤ</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">تيدق ڤرلو ممبليكن ڤڠاجرن</string>
   <!--Smartlist-->
@@ -149,18 +135,17 @@
   <string name="wizard_profile_info">ڤروڤيل دڤرچايا?? يكن دڠن ڤڠاجرن</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">ڤڠاجين</string>
-  <string name="bottomSheet_plugins_btn">ڤلاڬين</string>
   <string name="bottomSheet_add_participants_btn">مڠمبيل</string>
   <string name="bottomSheet_change_camera_btn">ڤرچاي</string>
+  <string name="bottomSheet_hangup_btn">ڤڠاجرن اخير</string>
   <string name="bottomSheet_raiseHand_btn">كرانڽ</string>
   <string name="uninstall">ڤڠڬيلڠ</string>
   <string name="reset">ڤڠاجرن</string>
   <!--Swarm Detail-->
   <string name="rename_btn">ڤڠاجرن</string>
-  <string name="swarm_description">مڠهادڤن ڤرسمڤڠن</string>
-  <string name="tab_about">دري ڤڠاجرن</string>
   <string name="tab_members">ڤڠڬونا</string>
-  <string name="tab_documetn">ڤرودوک</string>
+  <string name="tab_files">ڤرچاي</string>
+  <string name="tab_settings">سيٽنگون</string>
   <string name="dialog_hint_title">عنوان</string>
   <string name="dialog_hint_description">ڤرسمباڬان</string>
   <!--JamiId-->
@@ -170,5 +155,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">خوش اومدن جامي</string>
   <!--Donation-->
-  <!--Plugin-->
+  <!--Extension-->
 </resources>

@@ -1,11 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--Strings for xml content description of images-->
-  <string name="contact_quick_call_description">Pikapuhelu</string>
-  <string name="contact_picture_description">Yhteystiedon kuva</string>
   <string name="dial_numeric_pad">Numeeriset valintanäppäimet</string>
   <string name="contact_unblock">Poista esto</string>
-  <string name="video_plugins">Video lisäosat</string>
   <string name="file_download_button">Lataa</string>
   <string name="control_play">Toista</string>
   <string name="control_replay">Toista uudelleen</string>

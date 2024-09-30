@@ -1,16 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
-  <string name="feedback_section">フィードバック</string>
-  <string name="report"><u>チームにメールを送信する</u></string>
   <string name="section_license">ライセンス</string>
   <string name="sponsor_section">Jamiは以下によって開発、サポートされているフリーソフトウェアです</string>
   <string name="copyright_section">著作権表示</string>
   <string name="contribute_section">開発に協力</string>
   <string name="version_section">バージョン</string>
-  <string name="no_email_app_installed">メールアプリが見つかりませんでした。報告するにはメールアプリをインストールしてください</string>
   <string name="no_browser_app_installed">Webブラウザーアプリが見つかりませんでした。このページを表示するためにインストールしてください</string>
-  <string name="email_chooser_title">メール送信に使用するアプリ...</string>
   <string name="website_chooser_title">Webサイトを表示…</string>
   <string name="license">このソフトウェアは、いかなる保証もなしに現状のまま提供されます。詳細については、<u>GNU General Public Licenseのversion 3以降</u>を参照してください。</string>
   <string name="description">Jamiは世界中の利用者と繋がることができる自由ソフトウェアであり，利用者の自由と私事権とを尊重しています。</string>
@@ -19,9 +15,7 @@
   <string name="call_service_description">このサービスは、通話をフォアグラウンドで実行し続けるために必要です。通話中にのみ実行されます。</string>
   <string name="data_transfer_service_description">このサービスは、ファイル転送中に持続的な通知を表示するために必要です。ファイル転送中にのみ実行されます。</string>
   <!--About dialog-->
-  <string name="developed_by">開発者</string>
-  <string name="designed_by">デザイン</string>
-  <string name="ringtones_by">着信音</string>
+  <string name="media">メディア</string>
   <!--RingActivity-->
   <string name="error_no_network">ネットワーク接続がありません</string>
   <string name="error_account_offline">アカウントがオフラインです</string>
@@ -35,7 +29,6 @@
   <string name="menu_item_settings">設定</string>
   <string name="menu_item_advanced_settings">詳細設定</string>
   <string name="menu_item_account_settings">アカウント設定</string>
-  <string name="menu_item_plugin_list">プラグイン設定</string>
   <string name="menu_item_share">アカウントの共有</string>
   <string name="menu_item_about">Jamiについて</string>
   <string name="video_setting_title">ビデオ設定</string>
@@ -98,17 +91,10 @@
   <string name="ongoing_call">通話中</string>
   <string name="hist_in_call">%1$s の着信</string>
   <string name="hist_out_call">%1$s の発信</string>
-  <string name="start_error_title">Jamiを開始できません</string>
   <string name="start_error_mic_required">Jamiはマイク使用の権限を必要とします</string>
-  <string name="action_call_accept">通話を開始</string>
-  <string name="action_call_accept_audio">音声のみで応答</string>
-  <string name="action_call_accept_video">ビデオで応答</string>
-  <string name="action_call_hold_accept">いまの通話を保持して電話に出る</string>
-  <string name="action_call_hold_accept_video">いまの通話を保持してビデオ電話に出る</string>
-  <string name="action_call_end_accept">いまの通話を終了して電話に出る</string>
+  <string name="action_call_accept">着信を受ける</string>
   <string name="action_call_decline">辞退</string>
   <string name="action_call_mic_mute">マイクをミュート</string>
-  <string name="action_load_plugin">プラグインの読み込み</string>
   <string name="ab_action_speakerphone">スピーカーを有効にする</string>
   <string name="ab_action_contact_add">連絡先に追加</string>
   <string name="ab_action_contact_add_question">連絡先を追加しますか？</string>
@@ -146,11 +132,8 @@
   <string name="ringtone_error_size_too_big">ファイルのサイズが大きすぎます。最大サイズは%1$dkBです。</string>
   <string name="ringtone_custom_prompt">カスタム着信音を設定する</string>
   <string name="ringtone_custom_label">カスタム</string>
-  <string name="ringtone_jami_tones">Jamiの発信音</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Jamiは連絡先へのアクセスが必要です。権限を許可してください。</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Jamiは着信履歴へのアクセスが必要です。権限を許可してください。</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">追加したいアカウントの QR コードをスキャンしてください。</string>
   <string name="title_activity_qrcode">アカウントの共有</string>
@@ -166,7 +149,6 @@
   <string name="conversation_details">話し合いの詳細</string>
   <string name="contact_details">連絡先の詳細</string>
   <string name="conversation_action_delete_this">この会話を削除</string>
-  <string name="conversation_action_delete_this_title">この会話を削除しますか ?</string>
   <string name="conversation_action_delete_this_message">この操作は元に戻せません。</string>
   <string name="conversation_action_history_clear">履歴を消去</string>
   <string name="conversation_action_history_clear_title">会話の履歴を削除しますか？</string>
@@ -174,7 +156,6 @@
   <string name="conversation_action_remove_this">連絡先を削除</string>
   <string name="conversation_action_remove_this_title">この連絡先を削除しますか？</string>
   <string name="conversation_action_remove_this_message">この操作は連絡先を削除し、会話の履歴を完全に削除します。</string>
-  <string name="conversation_action_copy_peer_number">番号をコピー</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s をクリップボードにコピーしました</string>
   <string name="conversation_action_select_peer_number">番号を選択</string>
   <string name="conversation_action_block_this">連絡先をブロック</string>
@@ -204,7 +185,6 @@
   <string name="conversation_contact_invited">%1$s が招待されました</string>
   <string name="conversation_contact_added">%1$s が加入</string>
   <string name="conversation_contact_left">残り%1$s</string>
-  <string name="conversation_contact_banned">%1$s は禁止されました</string>
   <string name="conversation_search_hint">会話を検索</string>
   <string name="today">今日</string>
   <string name="yesterday">昨日</string>
@@ -219,14 +199,12 @@
   <string name="help_password_choose">あなたのJamiアカウントを守るために強固なパスワードを設定してください。また、このパスワードを忘れないでください。</string>
   <string name="help_password_enter">現在のJamiアカウントのパスワードを入力してください。</string>
   <string name="help_server_enter">管理サーバーのURLを入力してください。</string>
-  <string name="help_pin_enter">設定済みの別のJamiアカウントからPINを入力してください。 PINを取得するには、\"Jamiアカウントをエクスポート\" 機能を使用します。</string>
   <string name="wizard_next">次へ</string>
   <string name="wizard_back">戻る</string>
   <string name="wizard_skip">スキップ</string>
   <string name="hist_contact_invited">連絡先を招待しました</string>
   <string name="hist_contact_added">連絡先を追加しました</string>
   <string name="hist_contact_left">連絡先が退出しました</string>
-  <string name="hist_contact_banned">連絡禁止</string>
   <string name="hist_invitation_received">招待を受信しました</string>
   <!--Account Summary-->
   <string name="profile">プロフィール</string>
@@ -250,22 +228,11 @@
   <string name="generic_error_migration">エラー</string>
   <string name="generic_error_migration_message">移行中にエラーが発生しました。</string>
   <string name="title_share_with">共有</string>
-  <!--Pending contact requests-->
+  <!--Pending invitations-->
   <string name="accept">受け入れ</string>
-  <string name="refuse">拒否</string>
+  <string name="decline">辞退</string>
   <string name="block">ブロック</string>
-  <string name="contact_request_title">新しい連絡先リクエスト</string>
-  <string name="contact_request_msg">連絡先のリクエストが%1$d件あります</string>
-  <string name="contact_request_account">%1$s に</string>
-  <string name="no_requests">連絡先リクエストはありません</string>
-  <string name="message_contact_not_trusted_yet">%s さんはあなたの連絡先に追加されていません。
-この連絡先のリクエストを許可しますか？</string>
-  <string name="message_contact_not_trusted">%s さんはあなたの連絡先に追加されていません。
-新しい連絡先に追加しますか？</string>
-  <!--Send contact requests-->
-  <string name="send_request_button">送信</string>
-  <string name="send_request_title">連絡先リクエストを送信</string>
-  <string name="send_request_msg">このユーザーと会話するには、コンタクトリクエストを送信しなければなりません。連絡先のリクエストを許可するまでは、あなたはメッセージを送れますが、相手は返事を送れません。</string>
+  <string name="invitation_message">連絡先のリクエストが%1$d件あります</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">ブロックした連絡先はありません</string>
   <!--Smartlist-->
@@ -277,7 +244,6 @@
   <string name="tv_contact_row_header">連絡先</string>
   <string name="gallery_error_title">ギャラリーアプリがありません</string>
   <string name="gallery_error_message">デバイス上にギャラリーを開くアプリがありません</string>
-  <string name="generic_error">不明なエラーが起こりました</string>
   <!--File Transfer-->
   <string name="invalid_file">無効なファイル</string>
   <string name="not_able_to_write_file">ファイルを書き込めません</string>
@@ -297,7 +263,6 @@
   <string name="file_saved_in">%sに保存しました</string>
   <string name="file_saved_successfully">ファイルが保存されました</string>
   <string name="file_download">入手</string>
-  <string name="no_space_left_on_device">空き容量がありません</string>
   <string name="title_media_viewer">メディアビューアー</string>
   <string name="menu_file_open">ファイルを開く</string>
   <string name="menu_file_download">ファイルをダウンロード</string>
@@ -348,11 +313,9 @@
   <string name="wizard_profile_button">プロフィールを保存</string>
   <string name="wizard_profile_skip">スキップして後で行う</string>
   <string name="fab_path_choose">他のファイルを選択</string>
-  <string name="chat_plugins">チャットのプラグイン</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">共有</string>
   <string name="bottomSheet_dialpad_btn">ダイヤルパッド</string>
-  <string name="bottomSheet_plugins_btn">プラグイン</string>
   <string name="bottomSheet_add_participants_btn">追加</string>
   <string name="bottomSheet_change_camera_btn">カメラ切替</string>
   <string name="bottomSheet_camera_onoff_switch_btn">カメラ</string>
@@ -360,17 +323,13 @@
   <string name="bottomSheet_mute_microphone_btn">マイク</string>
   <string name="bottomSheet_sound_output_btn">スピーカー</string>
   <string name="bottomSheet_raiseHand_btn">手を挙げる</string>
-  <string name="open_account_plugin_settings">アカウントプラグイン設定を開く</string>
-  <string name="open_general_plugin_settings">一般プラグイン設定を開く</string>
   <string name="uninstall">解除する</string>
   <string name="reset">リセット</string>
   <!--Swarm Detail-->
   <string name="rename_btn">確認</string>
-  <string name="rename_error">空にすることはできない</string>
-  <string name="swarm_description">記述を追加する</string>
-  <string name="tab_about">アプリについて</string>
   <string name="tab_members">要員</string>
-  <string name="tab_documetn">文書</string>
+  <string name="tab_files">ファイル</string>
+  <string name="tab_settings">設定</string>
   <string name="dialogtitle_title">Swarmタイトル編集</string>
   <string name="dialogtitle_description">Swarm記述を編集する</string>
   <string name="dialog_hint_title">タイトル</string>
@@ -386,5 +345,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Jamiへようこそ</string>
   <!--Donation-->
-  <!--Plugin-->
+  <!--Extension-->
 </resources>

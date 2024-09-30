@@ -1,16 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
-  <string name="feedback_section">Părere</string>
-  <string name="report"><u>Trimite-ne un e-mail</u></string>
   <string name="section_license">Licența</string>
   <string name="sponsor_section">Jami este un program liber, creat și susținut de</string>
   <string name="copyright_section">Drepturi de autor</string>
   <string name="contribute_section">Contribuie</string>
   <string name="version_section">Versiune</string>
-  <string name="no_email_app_installed">Nu a fost găsită o aplicație de e-mail. Instalează una pentru a ne putea trimite un raport.</string>
   <string name="no_browser_app_installed">Nu a fost găsită o aplicație de navigare în internet. Instalează una pentru a vedea această pagină.</string>
-  <string name="email_chooser_title">Trimite e-mail folosind...</string>
   <string name="website_chooser_title">Vezi adresa de internet folosind...</string>
   <string name="license">Acest program este furnizat „așa cum este”, fără nicio garanție. A se vedea <u>GNU General Public License versiunea 3 sau ulterioară</u></string>
   <string name="description">Jami este un program liber pentru comunicare universală care respectă libertățile și intimitatea utilizatorilor săi.</string>
@@ -19,10 +15,12 @@
   <string name="call_service_description">Acest serviciu este necesar pentru a menține apelurile în prim plan. Funcționează numai în timpul apelurilor.</string>
   <string name="data_transfer_service_description">Acest serviciu e necesar pentru a afișa notificări persistente în timpul transferurilor de fișiere. Funcționează numai în timpul transferurilor de fișiere.</string>
   <!--About dialog-->
-  <string name="developed_by">Creat de</string>
-  <string name="designed_by">Proiectat de</string>
-  <string name="ringtones_by">Sonerii de</string>
-  <string name="credits_volunteers">Și voluntarii care contribuie la acest proiect!</string>
+  <string name="thank_note">Mulțumim colaboratorilor noștri, ale căror eforturi de-a lungul multor ani au făcut din acest software ceea ce este.</string>
+  <string name="developers">Programatori</string>
+  <string name="media">Media</string>
+  <string name="community_management">Gestionarea comunității</string>
+  <string name="special_thanks">Mulțumiri speciale</string>
+  <string name="end_note">Aceasta este o listă de oameni care au făcut o investiție semnificativă de timp, cu rezultate utile, în Jami. Orice astfel de colaboratori care doresc să fie adăugați pe listă trebuie să contacteze echipa Jami la contact@jami.net.</string>
   <!--RingActivity-->
   <string name="error_no_network">Nu există conectare la rețea</string>
   <string name="error_account_offline">Contul este deconectat</string>
@@ -36,7 +34,7 @@
   <string name="menu_item_settings">Reglări</string>
   <string name="menu_item_advanced_settings">Reglări avansate</string>
   <string name="menu_item_account_settings">Reglările contului</string>
-  <string name="menu_item_plugin_list">Reglări Extensii</string>
+  <string name="menu_item_extension_list">Reglări Extensii</string>
   <string name="menu_item_share">Distribuie contul meu</string>
   <string name="menu_item_about">Despre Jami</string>
   <string name="video_setting_title">Reglări video</string>
@@ -103,17 +101,17 @@
   <string name="hist_in_call">Apel primit %1$s</string>
   <string name="hist_out_call">Apel efectuat %1$s</string>
   <string name="call_duration">Durata %s</string>
-  <string name="start_error_title">Jami nu se deschide!</string>
+  <string name="start_error_title">Jami nu pornește!</string>
   <string name="start_error_mic_required">Jami trebuie să folosească microfonul ca să funcționeze.</string>
-  <string name="action_call_accept">Răspunde</string>
-  <string name="action_call_accept_audio">Vocal</string>
-  <string name="action_call_accept_video">Video</string>
-  <string name="action_call_hold_accept">Pauză și răspunde doar vocal</string>
-  <string name="action_call_hold_accept_video">Pauză și răspunde cu video</string>
-  <string name="action_call_end_accept">Închide și răspunde la apel</string>
+  <string name="action_call_accept">Acceptă apelul</string>
+  <string name="action_call_accept_audio">Răspunde doar vocal</string>
+  <string name="action_call_accept_video">Răspunde cu video</string>
+  <string name="action_call_hold_accept">Răspunde doar vocal și pune în pauză apelul actual</string>
+  <string name="action_call_hold_accept_video">Răspunde cu video și pune în pauză apelul actual</string>
+  <string name="action_call_end_accept">Răspunde și termină apelul actual</string>
   <string name="action_call_decline">Refuză</string>
   <string name="action_call_mic_mute">Oprește microfonul</string>
-  <string name="action_load_plugin">Pornește Extensia</string>
+  <string name="action_load_extension">Încarcă extensia</string>
   <string name="ab_action_speakerphone">Activează difuzorul</string>
   <string name="ab_action_contact_add">Adaugă la contacte</string>
   <string name="ab_action_contact_add_question">Adaugi la contacte?</string>
@@ -182,7 +180,6 @@
   <string name="conversation_action_remove_this">Șterge contactul</string>
   <string name="conversation_action_remove_this_title">Ștergi acest contact?</string>
   <string name="conversation_action_remove_this_message">Aceasta va șterge contactul și va elimina definitiv cronologia conversației.</string>
-  <string name="conversation_action_copy_peer_number">Copiază numărul</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s copiat în memorie</string>
   <string name="conversation_action_select_peer_number">Alege un număr</string>
   <string name="conversation_action_block_this">Blochează contactul</string>
@@ -214,8 +211,8 @@
   <string name="conversation_contact_invited">%1$s a fost invitat</string>
   <string name="conversation_contact_added">%1$s s-a alăturat</string>
   <string name="conversation_contact_left">%1$s a ieșit</string>
-  <string name="conversation_contact_banned">%1$s a fost blocat</string>
-  <string name="conversation_contact_unbanned">%1$s a fost deblocat</string>
+  <string name="conversation_contact_blocked">%1$s a fost blocat</string>
+  <string name="conversation_contact_unblocked">%1$s a fost deblocat</string>
   <string name="conversation_search_hint">Caută conversația</string>
   <string name="audio_recorder_error">Aplicația de înregistrare audio nu a fost găsită.</string>
   <string name="video_recorder_error">Aplicația de înregistrare video nu a fost găsită.</string>
@@ -243,7 +240,7 @@
   <string name="help_password_choose">Alege o parolă complexă pe care să ți-o amintești, pentru a proteja contul tău Jami.</string>
   <string name="help_password_enter">Introdu parola contului tău principal Jami.</string>
   <string name="help_server_enter">Introdu URL-ul serverului de administrare</string>
-  <string name="help_pin_enter">Introdu codul PIN obținut de la un cont Jami. Folosește opțiunea„ Exportă contul Jami” pentru a obține codul PIN.</string>
+  <string name="help_pin_enter">Introdu codul PIN obținut de la un cont Jami. Folosește opțiunea „Exportă contul Jami” pentru a obține codul PIN.</string>
   <string name="pin_copied">Cod PIN copiat în memorie.</string>
   <string name="wizard_next">Înainte</string>
   <string name="wizard_back">Înapoi</string>
@@ -251,8 +248,8 @@
   <string name="hist_contact_invited">Contact invitat</string>
   <string name="hist_contact_added">Contact adăugat</string>
   <string name="hist_contact_left">Contact ignorat</string>
-  <string name="hist_contact_banned">Contact blocat</string>
-  <string name="hist_contact_unbanned">Contact deblocat</string>
+  <string name="hist_contact_blocked">Contact blocat</string>
+  <string name="hist_contact_unblocked">Contact deblocat</string>
   <string name="hist_invitation_received">Invitație primită</string>
   <!--Account Summary-->
   <string name="profile">Profilul</string>
@@ -276,20 +273,11 @@
   <string name="generic_error_migration">Eroare</string>
   <string name="generic_error_migration_message">A apărut o eroare în timpul transferului</string>
   <string name="title_share_with">Distribuie către...</string>
-  <!--Pending contact requests-->
+  <!--Pending invitations-->
   <string name="accept">Acceptă</string>
-  <string name="refuse">Refuză</string>
+  <string name="decline">Refuză</string>
   <string name="block">Blochează</string>
-  <string name="contact_request_title">O nouă cerere de contact</string>
-  <string name="contact_request_msg">Ai %1$d cereri de contact</string>
-  <string name="contact_request_account">Pentru %1$s</string>
-  <string name="no_requests">Nu ai cereri de contact</string>
-  <string name="message_contact_not_trusted_yet">%s nu este încă în contactele tale.\nAccepți sau refuzi această cerere de contact?</string>
-  <string name="message_contact_not_trusted">%s nu este în contactele tale.\nAdaugi un contact nou?</string>
-  <!--Send contact requests-->
-  <string name="send_request_button">Trimite</string>
-  <string name="send_request_title">Trimite o cerere de contact</string>
-  <string name="send_request_msg">Trebuie să trimiți o cerere de contact pentru a comunica cu acest utilizator. Atîta timp cît contactul tău nu a acceptat cererea, poți trimite mesaje, dar acesta nu va putea răspunde.</string>
+  <string name="invitation_message">Ai %1$d cereri de contact</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Niciun contact blocat</string>
   <!--Smartlist-->
@@ -301,7 +289,7 @@
   <string name="tv_contact_row_header">Contacte</string>
   <string name="gallery_error_title">Aplicația „Galerie” nu a fost găsită</string>
   <string name="gallery_error_message">Nu a fost găsită nicio aplicație instalată care să deschidă galeria</string>
-  <string name="generic_error">A apărut o eroare necunoscută</string>
+  <string name="generic_error">A apărut o eroare necunoscută.</string>
   <!--File Transfer-->
   <string name="invalid_file">Fișier greșit</string>
   <string name="not_able_to_write_file">Fișierul nu poate fi scris</string>
@@ -364,8 +352,8 @@
   <string name="audio_permission_rationale_message">Jami are nevoie de acces la microfon pentru a transforma vorbirea în text și pentru a înregistra audio. Acesta va fi solicitat la pasul următor.</string>
   <string name="camera_permission_rationale_message">Jami are nevoie de acces la cameră pentru a înregistra video și a efectua apeluri video. Acesta va fi solicitat la pasul următor.</string>
   <string name="unable_to_start_recorder">Nu se poate începe înregistrarea audio.</string>
-  <string name="error_sharing_file">Eroare la trimiterea fișierului.</string>
-  <string name="error_opening_file">Eroare la deschiderea fișierului.</string>
+  <string name="error_sharing_file">A apărut o eroare în timpul trimiterii fișierului.</string>
+  <string name="error_opening_file">A apărut o eroare la deschiderea fișierului.</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Recomandat</string>
   <string name="wizard_status_optional">Facultativ</string>
@@ -383,11 +371,11 @@
   <string name="wizard_profile_button">Salvează profilul</string>
   <string name="wizard_profile_skip">Saltă și fă asta mai tîrziu</string>
   <string name="fab_path_choose">Alege alt fișier</string>
-  <string name="chat_plugins">Extensii pentru discuții</string>
+  <string name="chat_extensions">Extensii pentru discuții</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Distribuie</string>
   <string name="bottomSheet_dialpad_btn">Tastatura</string>
-  <string name="bottomSheet_plugins_btn">Extensii</string>
+  <string name="bottomSheet_extensions_btn">Extensii</string>
   <string name="bottomSheet_add_participants_btn">Adaugă</string>
   <string name="bottomSheet_change_camera_btn">Schimbă</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Camera</string>
@@ -395,17 +383,17 @@
   <string name="bottomSheet_mute_microphone_btn">Microfon</string>
   <string name="bottomSheet_sound_output_btn">Sunet</string>
   <string name="bottomSheet_raiseHand_btn">Mîna sus</string>
-  <string name="open_account_plugin_settings">Arată opțiunile pentru cont</string>
-  <string name="open_general_plugin_settings">Arată opțiunile generale</string>
+  <string name="open_account_extension_settings">Deschide reglările extensiei contului</string>
+  <string name="open_general_extension_settings">Deschide reglările generale ale extensiei</string>
   <string name="uninstall">Dezinstalează</string>
   <string name="reset">Restabilește</string>
   <!--Swarm Detail-->
   <string name="rename_btn">Confirmă</string>
   <string name="rename_error">nu poate fi gol</string>
   <string name="swarm_description">Adaugă o descriere</string>
-  <string name="tab_about">Despre</string>
   <string name="tab_members">Membri</string>
-  <string name="tab_documetn">Documente</string>
+  <string name="tab_files">Fișiere</string>
+  <string name="tab_settings">Reglări</string>
   <string name="not_admin_toast">Numai administratorii pot modifica informațiile acestui grup</string>
   <string name="dialogtitle_title">Modifică titlul grupului</string>
   <string name="dialogtitle_description">Modifică descrierea grupului</string>
@@ -437,10 +425,10 @@
   <string name="donation_donate">Donează</string>
   <string name="donation_setting_title">Reamintire donații</string>
   <string name="donation_setting_description">Activează reamintirea pentru a dona</string>
-  <!--Plugin-->
+  <!--Extension-->
   <string name="unable_to_load">Nu se poate încărca %1$s</string>
-  <string name="load_sucess">%1$s: activat</string>
-  <string name="unload_sucess">%1$s: dezactivat</string>
-  <string name="install_sucess">Extensia %1$s a fost instalată cu succes.</string>
+  <string name="load_success">%1$s: activat</string>
+  <string name="unload_success">%1$s: dezactivat</string>
+  <string name="install_success">Extensia %1$s a fost instalată cu succes.</string>
   <string name="install_error">A apărut o eroare la importarea extensiei.</string>
 </resources>

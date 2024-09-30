@@ -27,7 +27,6 @@
   <string name="pref_startOnBoot_title">प्रारंभ करताना जमी सुरू करा</string>
   <string name="pref_startOnBoot_summary">जेव्हा सिस्टम सुरू होते तेव्हा जामीला पार्श्वभूमीवर चालवा.</string>
   <string name="pref_clearHistory_title">स्पष्ट इतिहास</string>
-  <string name="pref_clearHistory_summary">या क्रिया रद्द करता येणार नाहीत.</string>
   <string name="pref_notification_title">अधिसूचना दृश्यमानता</string>
   <string name="pref_notification_summary">लॉक स्क्रीनवर अॅप्लिकेशन सूचना दृश्यमानता सेट करा.</string>
   <string name="pref_blackList_title">ब्लॉक यादी</string>
@@ -52,19 +51,6 @@
   <string name="notification_public">सार्वजनिक सूचना आणि त्यातील सामग्री लॉक स्क्रीनवर दाखवा)</string>
   <string name="notification_private">खासगी \n(जाहिरात सूचना दाखवा पण लॉक स्क्रीनवर त्यांची सामग्री लपवा) \n</string>
   <string name="notification_secret">गुप्त \n(लॉक स्क्रीनवर सूचना दाखवत नाहीत)</string>
-  <!--Plugin-->
-  <string name="pref_plugins_title">प्लगइन</string>
-  <string name="pref_plugins_summary">प्लगइन सक्षम करा आणि त्यांचे पॅरामीटर्स सेट करा</string>
-  <string name="fab_plugins_add">नवीन प्लगइन जोडा</string>
-  <string name="plugin_uninstall_title">प्लगइन अनइंस्टॉल करा?</string>
-  <string name="plugin_reset_preferences">प्लगइनची प्राधान्ये रीसेट करा</string>
-  <string name="plugin_reset_preferences_summary">प्लगइन सेटिंग्ज डिफॉल्ट आहेत</string>
-  <string name="plugin_reset_preferences_ask">तुम्हाला प्लगइनची सामान्य सेटिंग्ज रीसेट करायची आहेत का?</string>
-  <string name="plugin_reset_account_preferences_ask">तुम्हाला खाते प्लगइन सेटिंग्ज रीसेट करायच्या आहेत का?</string>
-  <string name="plugin_successfully_installed">प्लगइन <b>%1$s</b> यशस्वीपणे स्थापित</string>
-  <string name="plugin_install_failure">प्लगइन स्थापित करण्यात अपयश: <b>%1$s</b></string>
-  <string name="plugin_recent_version_exception">तुमच्याकडे <b>%1$s</b> ची अधिक अलीकडील आवृत्ती आहे</string>
-  <string name="plugin_same_version_exception"><b>%1$s</b> ची हीच आवृत्ती स्थापित आहे</string>
-  <string name="plugin_force_install">सक्ती \n प्रतिष्ठापन</string>
-  <string name="plugin_path_image_add">नवीन प्रतिमा जोडा</string>
+  <!--Extension-->
+  <string name="extension_force_install">सक्ती \n प्रतिष्ठापन</string>
 </resources>

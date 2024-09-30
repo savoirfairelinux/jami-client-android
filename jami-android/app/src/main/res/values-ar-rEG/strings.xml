@@ -1,27 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
-  <string name="feedback_section">سبر راي</string>
-  <string name="report"><u>راسلنا بالبريد الإلكتروني</u></string>
   <string name="section_license">الرخصة</string>
   <string name="sponsor_section">جامي هو برنامج حر طٌور و دٌعم من قبل</string>
   <string name="copyright_section">حقوق النشر</string>
   <string name="contribute_section">مساهمة</string>
   <string name="version_section">الإصدار</string>
-  <string name="no_email_app_installed">ﻻ يوجد برنامج بريد الكتروني, قم بتثبيت أحدهم لترسل لنا تقريراً</string>
-  <string name="no_browser_app_installed">ﻻ يوجد برنامج متصفح للويب, قم بتثبيت أحدهم لترى هذه الصفحة</string>
-  <string name="email_chooser_title">إرسال بريد إلكتروني باستخدام...</string>
-  <string name="website_chooser_title">معاينة الموقع الإلكتروني بواسطة...</string>
-  <string name="license">هذا البرنامج مقدم \"كما هو\", بدون ضمان من أي نوع, للتفاصيل, أنظر <u>رخصة غنو العمومية إصدار الترخيص 3 أو ما بعدها</u></string>
   <string name="description">جامى هو برنامج حر مجانى للتواصل العالمى الذى يحترم حريات وخصوصيات مستخدميه.</string>
   <string name="credits">الأطراف الداعمة</string>
   <string name="pip_title">اجتماع جامي مرئي</string>
   <string name="call_service_description">هذه الخدمه ضرورية لتبقي المكالمات تعمل في الواجهة. إنها تعمل فقط أثناء المكالمات.</string>
   <string name="data_transfer_service_description">هذه الخدمة ضرورية لعرض الإعلامات المستمرة أثناء نقل الملفات. تعمل فقط أثناء نقل الملفات.</string>
   <!--About dialog-->
-  <string name="developed_by">طٌوّر بواسطة</string>
-  <string name="designed_by">صٌمم بواسطة</string>
-  <string name="ringtones_by">النغمات بواسطة</string>
+  <string name="media">وسائط</string>
   <!--RingActivity-->
   <string name="error_no_network">لا يوجد اتصال بالشبكة</string>
   <string name="error_account_offline">الحساب غير متصل</string>
@@ -35,7 +26,6 @@
   <string name="menu_item_settings">الإعدادات</string>
   <string name="menu_item_advanced_settings">إعدادات متقدمة</string>
   <string name="menu_item_account_settings">إعدادت الحساب</string>
-  <string name="menu_item_plugin_list">إعدادت الإضافات</string>
   <string name="menu_item_share">مشاركة حسابي</string>
   <string name="menu_item_about">حول جامي</string>
   <string name="video_setting_title">إعدادات الفيديو</string>
@@ -93,17 +83,9 @@
   <string name="ongoing_call">مكالمة جارية</string>
   <string name="hist_in_call">مكالمة واردة من %1$s</string>
   <string name="hist_out_call">مكالمة صادرة من %1$s</string>
-  <string name="start_error_title">ﻻ يمكن تشغيل جامي !</string>
   <string name="start_error_mic_required">جامي يستوجب الحصول على صلاحيات المايكروفون للعمل.</string>
-  <string name="action_call_accept">قبول مكالمة</string>
-  <string name="action_call_accept_audio">الرد بالصوت</string>
-  <string name="action_call_accept_video">الرد بالفيديو</string>
-  <string name="action_call_hold_accept">إحتفظوا و استمعوا إلى صوت المكالمة</string>
-  <string name="action_call_hold_accept_video">استمر في الاستخدام</string>
-  <string name="action_call_end_accept">إنهاء وإجراء مكالمة</string>
   <string name="action_call_decline">رفض</string>
   <string name="action_call_mic_mute">كتم ميكروفون</string>
-  <string name="action_load_plugin">جلب إضافة</string>
   <string name="ab_action_speakerphone">تفعيل مكبر الصوت</string>
   <string name="ab_action_contact_add">إضافة إلى جهات الاتصال</string>
   <string name="ab_action_contact_add_question">إضافة إلى جهات الإتصال؟</string>
@@ -139,11 +121,8 @@
   <string name="ringtone_error_size_too_big">هذا الملف كبير جداً. الحجم الأقصى هو %1$dكيلو بايت.</string>
   <string name="ringtone_custom_prompt">تعيين نغمة رنين مخصصة</string>
   <string name="ringtone_custom_label">تخصيص</string>
-  <string name="ringtone_jami_tones">نغمات جامي</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">جامي يحتاج الى صلاحيات \"قراءة جهات الإتصال\" لكي يتم تفعيل هذه الميزة. الرجاء منح الصلاحيات.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">جامي يحتاج إلى صلاحيات \"كتابة سجل المكالمات\" لكي يتم تفعيل هذه الميزة. الرجاء منح الصلاحيات.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">مسح رمز الاستجابة السريعة للحساب الذي تريد إضافته.</string>
   <string name="title_activity_qrcode">مشاركة حسابي</string>
@@ -159,7 +138,6 @@
   <string name="conversation_details">تفاصيل المحادثة</string>
   <string name="contact_details">تفاصيل جهة الأتصال</string>
   <string name="conversation_action_delete_this">حذف هذه المحادثة</string>
-  <string name="conversation_action_delete_this_title">حذف هذه المحادثة؟</string>
   <string name="conversation_action_delete_this_message">لا يمكن التراجع عن هذا الإجراء.</string>
   <string name="conversation_action_history_clear">حذف المحفوظات</string>
   <string name="conversation_action_history_clear_title">حذف محفوظات المحادثة؟</string>
@@ -167,7 +145,6 @@
   <string name="conversation_action_remove_this">حذف جهة إتصال</string>
   <string name="conversation_action_remove_this_title">حذف جهة الإتصال؟</string>
   <string name="conversation_action_remove_this_message">هذا سيزيل جهة الإتصال و بالتأكيد سيزيل تاريخ المحادثة.</string>
-  <string name="conversation_action_copy_peer_number">نسخ رقم</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$sتم النسخ إلى الحافظة</string>
   <string name="conversation_action_select_peer_number">إختيار رقم</string>
   <string name="conversation_action_block_this">حظر جهة إتصال</string>
@@ -197,7 +174,6 @@
   <string name="conversation_contact_invited">%1$s تم دعوته</string>
   <string name="conversation_contact_added">%1$s متضمن</string>
   <string name="conversation_contact_left">%1$ يسار</string>
-  <string name="conversation_contact_banned">تم حظر %1$s</string>
   <string name="conversation_search_hint">بحث عن المحادثة</string>
   <string name="today">اليوم</string>
   <string name="yesterday">البارحة</string>
@@ -212,14 +188,12 @@
   <string name="help_password_choose">إختيار كلمة مرور قوية يمكن تذكرها لحماية حساب جامي الخاص بك.</string>
   <string name="help_password_enter">إدخال كلمة مرور حسابك الرئيسي على جامي.</string>
   <string name="help_server_enter">إدخال رابط خادم الإدارة.</string>
-  <string name="help_pin_enter">إدخال رمز الأمان من حساب جامي آخر مٌهيء. إستعمل \"تصدير حساب جامي\" للحصول على رمز الأمان.</string>
   <string name="wizard_next">التالي</string>
   <string name="wizard_back">السابق</string>
   <string name="wizard_skip">تخطي</string>
   <string name="hist_contact_invited">الاتصال مدعو</string>
   <string name="hist_contact_added">تم إضافة جهة إتصال</string>
   <string name="hist_contact_left">الاتصال يسارا</string>
-  <string name="hist_contact_banned">ممنوع الاتصال</string>
   <string name="hist_invitation_received">تم تلقي دعوة</string>
   <!--Account Summary-->
   <string name="profile">الملف الشخصى</string>
@@ -243,20 +217,9 @@
   <string name="generic_error_migration">خطأ</string>
   <string name="generic_error_migration_message">حدث خطأ أثناء الترحيل</string>
   <string name="title_share_with">شارك مع...</string>
-  <!--Pending contact requests-->
+  <!--Pending invitations-->
   <string name="accept">اقبل</string>
-  <string name="refuse">أرفض</string>
   <string name="block">حظر</string>
-  <string name="contact_request_title">طلب جهة إتصال جديد</string>
-  <string name="contact_request_msg">لديك %1$d طلبات جهات اتصال</string>
-  <string name="contact_request_account">لـ%1$s</string>
-  <string name="no_requests">لا يوجد لديك طلبات جهة إتصال جديدة</string>
-  <string name="message_contact_not_trusted_yet">%s ليس في جهات إتصالك بعد.\nهل تقبل أم ترفض جهة الإتصال هذه؟</string>
-  <string name="message_contact_not_trusted">%s ليس في جهات إتصالك.\nإضافة جهة إتصال جديدة؟</string>
-  <!--Send contact requests-->
-  <string name="send_request_button">إرسال</string>
-  <string name="send_request_title">إرسل طلب جهة إتصال</string>
-  <string name="send_request_msg">يجب أن ترسل طلب جهة إتصال لتتواصل مع هذا المستخدم. طالما لم يقبل المستخدم هذا الطلب, يمكنك إرسال رسائل و لكنه لن يستطيع الرد.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">لا توجد جهات إتصال محظورة</string>
   <!--Smartlist-->
@@ -268,7 +231,6 @@
   <string name="tv_contact_row_header">جهات الاتصال</string>
   <string name="gallery_error_title">لا يوجد برنامج المعرض</string>
   <string name="gallery_error_message">لم يتم إيجاد برنامج على الجهاز لفتح المعرض</string>
-  <string name="generic_error">حدث خطأ غير معروف</string>
   <!--File Transfer-->
   <string name="invalid_file">ملف غير صالح</string>
   <string name="not_able_to_write_file">غير قابل على كتابة ملف</string>
@@ -288,7 +250,6 @@
   <string name="file_saved_in">تم تخزين الملف في %s</string>
   <string name="file_saved_successfully">تم تخزين الملف بنجاح</string>
   <string name="file_download">تنزيل</string>
-  <string name="no_space_left_on_device">ﻻ توجد مساحة باقية على الجهاز</string>
   <string name="title_media_viewer">عارض الوسائط</string>
   <string name="menu_file_open">فتح ملف</string>
   <string name="menu_file_download">تحميل ملف</string>
@@ -339,11 +300,9 @@
   <string name="wizard_profile_button">حفظ الملف الشخصي</string>
   <string name="wizard_profile_skip">تخطي وعمل ذلك فيما بعد</string>
   <string name="fab_path_choose">اختر وثيقة أخرى</string>
-  <string name="chat_plugins">إضافات الدردشة</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">مشاركة</string>
   <string name="bottomSheet_dialpad_btn">لوحة الطلب</string>
-  <string name="bottomSheet_plugins_btn">الإضافات</string>
   <string name="bottomSheet_add_participants_btn">إضافة</string>
   <string name="bottomSheet_change_camera_btn">التغيير</string>
   <string name="bottomSheet_camera_onoff_switch_btn">كاميرا</string>
@@ -351,17 +310,13 @@
   <string name="bottomSheet_mute_microphone_btn">الميكرفون</string>
   <string name="bottomSheet_sound_output_btn">الأصوات</string>
   <string name="bottomSheet_raiseHand_btn">رفع اليد</string>
-  <string name="open_account_plugin_settings">إعدادات مكونات المكونات المفتوحة</string>
-  <string name="open_general_plugin_settings">افتح إعدادات المكونات العامة</string>
   <string name="uninstall">إزالة التثبيت</string>
   <string name="reset">إعادة تعيين</string>
   <!--Swarm Detail-->
   <string name="rename_btn">تأكيد</string>
-  <string name="rename_error">لا يمكن أن تكون فارغة</string>
-  <string name="swarm_description">إضافة وصف</string>
-  <string name="tab_about">عن RING</string>
   <string name="tab_members">الأعضاء</string>
-  <string name="tab_documetn">الوثائق</string>
+  <string name="tab_files">الملفات</string>
+  <string name="tab_settings">الإعدادات</string>
   <string name="dialogtitle_title">تحرير عنوان السحابة</string>
   <string name="dialogtitle_description">تحرير وصف السحلة</string>
   <string name="dialog_hint_title">العنوان</string>
@@ -377,5 +332,5 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">مرحبا بك في جامي</string>
   <!--Donation-->
-  <!--Plugin-->
+  <!--Extension-->
 </resources>
