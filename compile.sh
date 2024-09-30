@@ -48,10 +48,6 @@ if [ -n "$ANDROID_ABI" ]; then
     GRADLE_PROPERTIES="-Parchs=${ANDROID_ABI}"
 fi
 
-# Generate JNI interface
-cd "$JNIDIR" || exit 1
-PACKAGEDIR=$ANDROID_APP_DIR/libjamiclient/src/main/java ./make-swig.sh
-
 if [[ $DAEMON_ONLY -eq 0 ]]; then
     if [ -z "$RING_BUILD_FIREBASE" ]; then
         echo "Building without Firebase support"
