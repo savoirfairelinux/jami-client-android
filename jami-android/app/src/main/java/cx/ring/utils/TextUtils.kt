@@ -19,8 +19,10 @@ package cx.ring.utils
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.os.Build
 import android.text.TextUtils
 import android.text.format.DateUtils
+import android.widget.Toast
 import cx.ring.R
 import net.jami.model.Interaction.TransferStatus
 import java.util.*
@@ -28,19 +30,19 @@ import java.util.*
 object TextUtils {
     val TAG = TextUtils::class.simpleName!!
 
-    fun copyToClipboard(context: Context, text: String?) {
-        if (TextUtils.isEmpty(text)) {
-            return
-        }
+    /**
+     * Copy the text to the clipboard and show a toast to notify the user.
+     */
+    fun copyAndShow(context: Context, label: String, text: String?) {
+        if (text.isNullOrEmpty()) return
         val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        clipboard.setPrimaryClip(ClipData.newPlainText(context.getText(R.string.clip_contact_uri), text))
-    }
+        clipboard.setPrimaryClip(ClipData.newPlainText(label, text))
 
-    fun getShortenedNumber(number: String): String {
-        val size = number.length
-        if (size > 18)
-            return number.substring(0, 9) + "\u2026" + number.substring(size - 9, size)
-        return number
+        // Android 13 and higher automatically provide visual feedback when an app copies content
+        // to the clipboard. Provide manual notification in Android 12L (API level 32) and lower
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2)
+            Toast.makeText(context, context.getString(R.string.pin_copied), Toast.LENGTH_SHORT)
+                .show()
     }
 
     /**

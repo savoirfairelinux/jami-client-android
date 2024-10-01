@@ -41,6 +41,7 @@ import cx.ring.account.AccountEditionFragment
 import cx.ring.databinding.FragLinkDeviceBinding
 import cx.ring.mvp.BaseBottomSheetFragment
 import cx.ring.utils.KeyboardVisibilityManager.hideKeyboard
+import cx.ring.utils.TextUtils.copyAndShow
 import dagger.hilt.android.AndroidEntryPoint
 import net.jami.account.LinkDevicePresenter
 import net.jami.account.LinkDeviceView
@@ -62,18 +63,7 @@ class LinkDeviceFragment : BaseBottomSheetFragment<LinkDevicePresenter>(), LinkD
         password.setOnEditorActionListener { pwd: TextView, actionId: Int, event: KeyEvent? ->
             onPasswordEditorAction(pwd, actionId, event)
         }
-        pin.setOnClickListener {
-            val pinCode = pin.text
-            if (pinCode.isNotEmpty()) {
-                val clipboard = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager?
-                clipboard?.setPrimaryClip(ClipData.newPlainText(PIN_LABEL, pinCode))
-
-                // Android 13 and higher automatically provide visual feedback when an app copies content
-                // to the clipboard. Provide manual notification in Android 12L (API level 32) and lower
-                if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2)
-                    Toast.makeText(context, getString(R.string.pin_copied), Toast.LENGTH_SHORT).show()
-            }
-        }
+        pin.setOnClickListener { copyAndShow(requireContext(), PIN_LABEL, pin.text.toString()) }
 
         mBinding = this
         pageContainer.visibility = View.GONE

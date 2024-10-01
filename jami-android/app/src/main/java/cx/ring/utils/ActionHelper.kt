@@ -17,15 +17,12 @@
 package cx.ring.utils
 
 import android.content.*
-import android.os.Build
 import android.provider.ContactsContract
 import android.util.Log
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.ImageView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.snackbar.Snackbar
 import cx.ring.R
 import cx.ring.views.AvatarView
 import net.jami.model.Contact
@@ -79,28 +76,6 @@ object ActionHelper {
                     sharingIntent, context.getString(R.string.share_via)
                 )
             )
-        }
-    }
-
-    /**
-     * Copy the given string to the clipboard and show a snackbar to inform the user.
-     * @param context the context
-     * @param view the view to attach the snackbar to
-     * @param toCopy the string to copy
-     */
-    fun copyAndShow(context: Context, view: View, toCopy: String) {
-        val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        clipboard.setPrimaryClip(
-            ClipData.newPlainText(context.getString(R.string.clip_contact_uri), toCopy)
-        )
-        // Only show a toast for Android 12 and lower (avoid duplicate notification).
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2) {
-            Snackbar.make(
-                view,
-                context
-                    .getString(R.string.conversation_action_copied_peer_number_clipboard, toCopy),
-                Snackbar.LENGTH_LONG
-            ).show()
         }
     }
 
