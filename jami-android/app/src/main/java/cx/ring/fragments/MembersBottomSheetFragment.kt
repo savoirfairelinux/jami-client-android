@@ -17,24 +17,21 @@
 package cx.ring.fragments
 
 import android.app.Dialog
-import android.content.ClipData
-import android.content.ClipboardManager
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.view.*
 import androidx.annotation.DrawableRes
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.snackbar.Snackbar
 import cx.ring.R
 import cx.ring.client.ConversationDetailsActivity
 import cx.ring.databinding.FragMembersBottomsheetBinding
 import cx.ring.databinding.ItemMembersBottomsheetBinding
 import cx.ring.utils.ConversationPath
+import cx.ring.utils.TextUtils.copyAndShow
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -75,7 +72,7 @@ class MembersBottomSheetFragment : BottomSheetDialogFragment() {
 
         adapter.actions.add(ContactAction(null,
             getString(R.string.bottomsheet_contact, contactUri.host)) {
-            copyAndShow(contactUri.host)
+            copyAndShow(requireContext(), getString(R.string.clip_contact_uri), contactUri.host)
         })
 
         adapter.actions.add(ContactAction(null, getText(R.string.ab_action_audio_call)) {
@@ -115,12 +112,6 @@ class MembersBottomSheetFragment : BottomSheetDialogFragment() {
         mDisposableBag.dispose()
         super.onDestroy()
         binding = null
-    }
-
-    private fun copyAndShow(toCopy: String) {
-        val clipboard = requireActivity().getSystemService(AppCompatActivity.CLIPBOARD_SERVICE) as ClipboardManager
-        clipboard.setPrimaryClip(ClipData.newPlainText(getText(R.string.clip_contact_uri), toCopy))
-        Snackbar.make(binding!!.root, getString(R.string.conversation_action_copied_peer_number_clipboard, toCopy), Snackbar.LENGTH_LONG).show()
     }
 
     private class ContactActionAdapter(private val disposable: CompositeDisposable) :
