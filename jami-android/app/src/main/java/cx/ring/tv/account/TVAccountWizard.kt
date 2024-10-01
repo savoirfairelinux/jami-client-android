@@ -19,6 +19,7 @@ package cx.ring.tv.account
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.text.TextUtils
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
@@ -46,6 +47,7 @@ class TVAccountWizard : BaseActivity<AccountWizardPresenter>(), AccountWizardVie
     private var mLinkAccount = false
     private var mAccountType: String? = null
     private var mAlertDialog: AlertDialog? = null
+    private var mJamsAccount = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,10 +86,15 @@ class TVAccountWizard : BaseActivity<AccountWizardPresenter>(), AccountWizardVie
     fun createAccount() {
         val viewModel: AccountCreationViewModel by viewModels()
         val model = viewModel.model
-        if (model.isLink) {
+        if (!TextUtils.isEmpty(model.managementServer)) {
+             presenter.initJamiAccountConnect(model, getText(R.string.ring_account_default_name).toString())
+             mJamsAccount = true
+        } else if (model.isLink) {
             presenter.initJamiAccountLink(model, getText(R.string.ring_account_default_name).toString())
+            mJamsAccount = false
         } else {
             presenter.initJamiAccountCreation(model, getText(R.string.ring_account_default_name).toString())
+            mJamsAccount = false
         }
     }
 
@@ -98,12 +105,18 @@ class TVAccountWizard : BaseActivity<AccountWizardPresenter>(), AccountWizardVie
             is TVProfileCreationFragment -> finish()
             is TVHomeAccountCreationFragment -> finishAffinity()
             is TVJamiAccountCreationFragment -> supportFragmentManager.popBackStack()
+            is TVJamiAccountConnectFragment -> supportFragmentManager.popBackStack()
             else -> super.onBackPressed()
         }
     }
 
     override fun goToProfileCreation() {
-        GuidedStepSupportFragment.add(supportFragmentManager, TVProfileCreationFragment())
+        if (mJamsAccount) {
+            setResult(RESULT_OK, Intent())
+            finish()
+        } else {
+            GuidedStepSupportFragment.add(supportFragmentManager, TVProfileCreationFragment())
+        }
     }
 
     override fun displayProgress(display: Boolean) {
