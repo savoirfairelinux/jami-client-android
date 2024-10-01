@@ -213,6 +213,7 @@ along with this program; if not, write to the Free Software
     <string name="account_update_needed">Update needed</string>
     <string name="account_cannot_be_found_title">Account error</string>
     <string name="account_cannot_be_found_message">Unable to find account on the Jami network. Make sure it was exported on Jami from an existing device, and that provided credentials are correct.</string>
+    <string name="jams_account_cannot_be_found_message">An error occured while connecting the account. Please check credentials and try again.</string>
     <string name="account_sip_cannot_be_registered_message">You can continue with the account creation process or edit your information here. Edition is still possible later in the account settings.</string>
     <string name="account_no_network_title">Network error</string>
     <string name="account_no_network_message">A connectivity error occurred while adding Jami account to the distributed network. Check your device connectivity.</string>
@@ -256,6 +257,9 @@ along with this program; if not, write to the Free Software
     <string name="help_credentials_enter">Enter your organisation credentials</string>
     <string name="help_connect_password_enter">Enter your organisation password</string>
     <string name="account_connect_prompt_username">Username</string>
+    <string name="account_connect_server">Connect to JAMS server</string>
+    <string name="account_enter_username">Enter username</string>
+    <string name="account_enter_servername">Enter server</string>
 
     <!-- Name registration -->
     <string name="error_username_empty">Enter a username</string>

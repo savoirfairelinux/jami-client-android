@@ -47,7 +47,10 @@ class TVHomeAccountCreationFragment : JamiGuidedStepFragment<HomeAccountCreation
     }
 
     override fun goToAccountConnect() {
-        //TODO
+        model.model = AccountCreationModelImpl().apply {
+            isLink = true
+        }
+        add(parentFragmentManager, TVJamiAccountConnectFragment())
     }
 
     override fun goToSIPAccountCreation() {
@@ -68,12 +71,15 @@ class TVHomeAccountCreationFragment : JamiGuidedStepFragment<HomeAccountCreation
         val context = requireContext()
         addAction(context, actions, LINK_ACCOUNT, getString(R.string.account_link_button), "", true)
         addAction(context, actions, CREATE_ACCOUNT, getString(R.string.account_create_title), "", true)
+        addAction(context, actions, CREATE_JAMS_ACCOUNT, getString(R.string.account_connect_server_button),
+            "", true)
     }
 
     override fun onGuidedActionClicked(action: GuidedAction) {
         when (action.id) {
             LINK_ACCOUNT -> presenter.clickOnLinkAccount()
             CREATE_ACCOUNT -> presenter.clickOnCreateAccount()
+            CREATE_JAMS_ACCOUNT -> presenter.clickOnConnectAccount()
             else -> requireActivity().finish()
         }
     }
@@ -81,5 +87,6 @@ class TVHomeAccountCreationFragment : JamiGuidedStepFragment<HomeAccountCreation
     companion object {
         private const val LINK_ACCOUNT = 0L
         private const val CREATE_ACCOUNT = 1L
+        private const val CREATE_JAMS_ACCOUNT = 2L
     }
 }
