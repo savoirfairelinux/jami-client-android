@@ -1,8 +1,0 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<resources>
-  <!--Strings for xml content description of images-->
-  <string name="contact_quick_call_description">Snel bellen</string>
-  <string name="contact_picture_description">Contact afbeelding</string>
-  <string name="dial_numeric_pad">Numeriek toetsenbord</string>
-  <string name="contact_unblock">Deblokkeren</string>
-</resources>
