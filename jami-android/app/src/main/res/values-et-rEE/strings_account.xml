@@ -91,7 +91,7 @@
   <string name="account_accept_files_max_size">Maksimaalne automaatselt aktsepteeritav faili suurus</string>
   <string name="account_accept_files_never">Ära kunagi automaatselt vastu võta</string>
   <string name="account_accept_files_always">Võta alati automaatselt vastu</string>
-  <string name="size_mb">% 1$d MB</string>
+  <string name="size_mb">%1$d MB</string>
   <string name="account_turn_enable_label">Kasutage TURN</string>
   <string name="account_turn_server_label">Turneeringu server</string>
   <string name="account_turn_username_label">Kasutaja nimi TURN</string>
