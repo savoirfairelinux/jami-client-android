@@ -256,6 +256,9 @@ along with this program; if not, write to the Free Software
     <string name="help_credentials_enter">Enter your organisation credentials</string>
     <string name="help_connect_password_enter">Enter your organisation password</string>
     <string name="account_connect_prompt_username">Username</string>
+    <string name="account_connect_server">Connect to JAMS server</string>
+    <string name="account_enter_username">Enter username</string>
+    <string name="account_enter_servername">Enter server</string>
 
     <!-- Name registration -->
     <string name="error_username_empty">Enter a username</string>
