@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "951582b2_901f989b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-10-01T15:00:30Z",
+      "side": 1,
+      "message": "if translation is no longer supported, the file should be fully removed",
+      "revId": "ed19fa24331d41ae6f86b55dd29e7b34d4eb6937",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
