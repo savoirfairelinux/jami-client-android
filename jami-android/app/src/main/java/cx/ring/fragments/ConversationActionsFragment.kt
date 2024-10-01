@@ -184,7 +184,7 @@ class ConversationActionsFragment : Fragment() {
                         qrCode.setOnClickListener { showContactQRCode(identifier) }
                     }
             )
-            conversationDelete.text = resources.getString(R.string.delete_conversation)
+            conversationDelete.text = resources.getString(R.string.leave_conversation)
             conversationDelete.setOnClickListener {  }
 
             descriptionPanel.isVisible = false  // Disable description edit for 1-to-1 conversation
@@ -223,7 +223,7 @@ class ConversationActionsFragment : Fragment() {
                 builder.setNegativeButton(android.R.string.cancel, null).show()
             }
         } else {    // If conversation mode is not one to one
-            conversationDelete.text = resources.getString(R.string.leave_swarm)
+            conversationDelete.text = resources.getString(R.string.leave_conversation)
             blockSwitch.isVisible = false
         }
 
