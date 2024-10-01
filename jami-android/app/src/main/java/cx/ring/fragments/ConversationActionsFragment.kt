@@ -73,6 +73,19 @@ class ConversationActionsFragment : Fragment() {
         conversationIdPanel.setOnClickListener {
             copyAndShow(requireContext(), getString(R.string.swarm_id), path.conversationId)
         }
+        userNamePanel.setOnClickListener {
+            copyAndShow(
+                requireContext(),
+                getString(R.string.clip_contact_uri), binding?.userName?.text.toString()
+            )
+        }
+        identifierPanel.setOnClickListener {
+            copyAndShow(
+                requireContext(),
+                getString(R.string.clip_contact_uri), binding?.identifier?.text.toString()
+            )
+        }
+
         conversationId.text = conversationUri
         conversationPath = path
 
