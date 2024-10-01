@@ -19,6 +19,7 @@ package cx.ring.tv.account
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.text.TextUtils
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
@@ -84,7 +85,9 @@ class TVAccountWizard : BaseActivity<AccountWizardPresenter>(), AccountWizardVie
     fun createAccount() {
         val viewModel: AccountCreationViewModel by viewModels()
         val model = viewModel.model
-        if (model.isLink) {
+        if (!TextUtils.isEmpty(model.managementServer)) {
+             presenter.initJamiAccountConnect(model, getText(R.string.ring_account_default_name).toString())
+        } else if (model.isLink) {
             presenter.initJamiAccountLink(model, getText(R.string.ring_account_default_name).toString())
         } else {
             presenter.initJamiAccountCreation(model, getText(R.string.ring_account_default_name).toString())
@@ -98,6 +101,7 @@ class TVAccountWizard : BaseActivity<AccountWizardPresenter>(), AccountWizardVie
             is TVProfileCreationFragment -> finish()
             is TVHomeAccountCreationFragment -> finishAffinity()
             is TVJamiAccountCreationFragment -> supportFragmentManager.popBackStack()
+            is TVJamiAccountConnectFragment -> supportFragmentManager.popBackStack()
             else -> super.onBackPressed()
         }
     }

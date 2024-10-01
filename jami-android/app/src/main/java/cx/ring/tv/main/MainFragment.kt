@@ -78,6 +78,7 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
     private var accountSettingsRow: ListRow? = null
     private val mDisposable = CompositeDisposable()
     private val mHomeChannelDisposable = CompositeDisposable()
+    private var mDeviceCardPresent = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -126,6 +127,7 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
             add(IconCardHelper.getAccountAddDeviceCard(context))
             add(IconCardHelper.getAccountShareCard(context, null).apply { qrCard = this })
         }
+        mDeviceCardPresent = true
         return createRow(getString(R.string.account_tv_settings_header), cards, false)
     }
 
@@ -249,6 +251,17 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
         } else {
             mTitleView?.setAlias(address)
         }
+        val settingsAdapter = accountSettingsRow?.adapter as? ArrayObjectAdapter
+        if (account.hasManager() && mDeviceCardPresent) {
+            settingsAdapter?.let {
+                val addDeviceCard = it[1]
+                if (addDeviceCard != null) {
+                    it.remove(addDeviceCard)
+                    mDeviceCardPresent = false
+                }
+            }
+        }
+        settingsAdapter?.notifyArrayItemRangeChanged(0, settingsAdapter.size())
         mTitleView?.apply {
             settingsButton.visibility = View.VISIBLE
             logoView.visibility = View.VISIBLE
