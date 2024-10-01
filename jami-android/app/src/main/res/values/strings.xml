@@ -317,13 +317,12 @@ along with this program; if not, write to the Free Software
     <string name="contact_details">Contact details</string>
     <string name="conversation_action_delete_this">Delete this conversation</string>
     <string name="conversation_action_delete_this_title">Delete this conversation?</string>
-    <string name="delete_conversation">Delete conversation</string>
-    <string name="leave_swarm">Leave Swarm</string>
+    <string name="leave_conversation">Leave conversation</string>
     <string name="conversation_action_delete_this_message">This action cannot be undone.</string>
     <string name="conversation_action_history_clear">Clear history</string>
     <string name="conversation_action_history_clear_title">Clear the conversation history?</string>
     <string name="conversation_action_history_clear_message">This will definitely clear the conversation history.</string>
-    <string name="conversation_action_remove_this">Delete contact</string>
+    <string name="delete_contact">Delete contact</string>
     <string name="conversation_action_remove_this_title">Delete this contact?</string>
     <string name="conversation_action_remove_this_message">This will delete the contact and definitely clear the conversation history.</string>
     <string name="swarm_group_action_leave">Leave group</string>

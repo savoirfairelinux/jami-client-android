@@ -20,12 +20,12 @@ along with this program; if not, write to the Free Software
     <string-array name="conversation_actions">
         <item>@string/conversation_action_copy_peer_number</item>
         <item>@string/conversation_action_history_clear</item>
-        <item>@string/conversation_action_remove_this</item>
+        <item>@string/delete_contact</item>
         <item>@string/conversation_action_block_this</item>
     </string-array>
     <string-array name="swarm_one_to_one_actions">
         <item>@string/conversation_action_copy_peer_number</item>
-        <item>@string/conversation_action_remove_this</item>
+        <item>@string/delete_contact</item>
         <item>@string/conversation_action_block_this</item>
     </string-array>
     <string-array name="swarm_group_actions">
