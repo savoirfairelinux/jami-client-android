@@ -66,6 +66,7 @@ import cx.ring.utils.*
 import cx.ring.utils.ActionHelper.Padding
 import cx.ring.utils.ActionHelper.setPadding
 import cx.ring.utils.ContentUri.getUriForFile
+import cx.ring.utils.TextUtils.copyAndShow
 import cx.ring.viewholders.ConversationViewHolder
 import cx.ring.views.AvatarDrawable
 import cx.ring.views.MessageStatusView
@@ -662,13 +663,6 @@ class ConversationAdapter(
         }
     }
 
-    private fun addToClipboard(text: String?) {
-        if (text.isNullOrEmpty()) return
-        val clipboard = conversationFragment.requireActivity()
-            .getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
-        clipboard?.setPrimaryClip(ClipData.newPlainText("Copied Message", text))
-    }
-
     private fun configureImage(
         viewHolder: ConversationViewHolder,
         path: File,
@@ -975,7 +969,8 @@ class ConversationAdapter(
 
             // Manage copy
             convActionCopyText.setOnClickListener {
-                addToClipboard(interaction.body)
+                conversationFragment.requireContext()
+                    .let { copyAndShow(it, it.getString(R.string.clip_message), interaction.body) }
                 popupWindow.dismiss()
             }
 
