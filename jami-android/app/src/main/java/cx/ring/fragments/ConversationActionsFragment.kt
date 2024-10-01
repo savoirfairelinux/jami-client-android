@@ -18,6 +18,7 @@ package cx.ring.fragments
 
 import android.content.ClipData
 import android.content.ClipboardManager
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.annotation.StringRes
@@ -40,6 +41,7 @@ import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.model.Conversation
 import net.jami.model.Uri
+import net.jami.qrcode.QRCodePresenter
 import net.jami.services.AccountService
 import net.jami.services.ConversationFacade
 import javax.inject.Inject
@@ -163,12 +165,14 @@ class ConversationActionsFragment : Fragment() {
                             if (registeredName.isEmpty()) R.drawable.background_rounded_16_top
                             else R.drawable.background_clickable
                         )
+                        shareButton.setOnClickListener {
+                            shareContact(registeredName.ifEmpty { identifier.uri })
+                        }
+                        qrCode.setOnClickListener { showContactQRCode(identifier) }
                     }
             )
             conversationDelete.text = resources.getString(R.string.delete_conversation)
             conversationDelete.setOnClickListener {  }
-            qrCode.setOnClickListener {  }
-            shareButton.setOnClickListener {  }
 
             descriptionPanel.isVisible = false  // Disable description edit for 1-to-1 conversation
             // Description being hidden, we put the rounded background on the secureP2pConnection.
@@ -266,6 +270,28 @@ class ConversationActionsFragment : Fragment() {
         val clipboard = requireActivity().getSystemService(AppCompatActivity.CLIPBOARD_SERVICE) as ClipboardManager
         clipboard.setPrimaryClip(ClipData.newPlainText(getText(R.string.clip_contact_uri), toCopy))
         Snackbar.make(binding!!.root, getString(R.string.conversation_action_copied_peer_number_clipboard, toCopy), Snackbar.LENGTH_LONG).show()
+    }
+
+    private fun shareContact(displayName: String) {
+        val sharingIntent = Intent(Intent.ACTION_SEND)
+        sharingIntent.type = "text/plain"
+        sharingIntent.putExtra(Intent.EXTRA_SUBJECT, getText(R.string.share_contact_intent_title))
+        sharingIntent.putExtra(
+            Intent.EXTRA_TEXT,
+            getString(
+                R.string.share_contact_intent_body,
+                displayName,
+                getText(R.string.app_website)
+            )
+        )
+        startActivity(Intent.createChooser(sharingIntent, getText(R.string.share_via)))
+    }
+
+    private fun showContactQRCode(contactUri: Uri) {
+        QRCodeFragment.newInstance(
+            QRCodePresenter.MODE_SHARE,
+            contactUri = contactUri
+        ).show(parentFragmentManager, QRCodeFragment::class.java.simpleName)
     }
 
     companion object {
