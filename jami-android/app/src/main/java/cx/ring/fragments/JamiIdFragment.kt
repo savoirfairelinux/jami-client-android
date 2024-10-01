@@ -34,10 +34,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import cx.ring.R
 import cx.ring.databinding.JamiIdLayoutBinding
-import cx.ring.utils.ActionHelper.copyAndShow
 import cx.ring.utils.ActionHelper.shareAccount
 import cx.ring.utils.KeyboardVisibilityManager.showKeyboard
 import cx.ring.utils.RegisteredNameFilter
+import cx.ring.utils.TextUtils.copyAndShow
 import cx.ring.viewmodel.JamiIdStatus
 import cx.ring.viewmodel.JamiIdUiState
 import cx.ring.viewmodel.JamiIdViewModel
@@ -279,7 +279,7 @@ class JamiIdFragment : Fragment() {
 
         // Connect the copy, share, choose username and validate buttons
         binding.jamiIdCopyButton.setOnClickListener {
-            copyAndShow(requireContext(), binding.root, username)
+            copyAndShow(requireContext(), getString(R.string.clip_contact_uri), username)
         }
         binding.jamiIdShareButton.setOnClickListener {
             shareAccount(requireContext(), username)
@@ -372,7 +372,7 @@ class JamiIdFragment : Fragment() {
 
         // Update listeners on copy and share buttons
         binding.jamiIdCopyButton.setOnClickListener {
-            copyAndShow(requireContext(), binding.root, username)
+            copyAndShow(requireContext(), getString(R.string.clip_contact_uri), username)
         }
         binding.jamiIdShareButton.setOnClickListener {
             shareAccount(requireContext(), username)
