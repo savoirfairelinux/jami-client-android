@@ -36,6 +36,7 @@ import cx.ring.services.SharedPreferencesServiceImpl.Companion.getConversationCo
 import cx.ring.services.SharedPreferencesServiceImpl.Companion.getConversationSymbol
 import cx.ring.utils.ConversationPath
 import cx.ring.utils.DeviceUtils
+import cx.ring.utils.TextUtils.copyAndShow
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -72,7 +73,9 @@ class ConversationActionsFragment : Fragment() {
             .blockingGet()
 
         val conversationUri = conversation.uri.toString()
-        conversationIdPanel.setOnClickListener { copyAndShow(path.conversationId) }
+        conversationIdPanel.setOnClickListener {
+            copyAndShow(requireContext(), getString(R.string.swarm_id), path.conversationId)
+        }
         conversationId.text = conversationUri
         conversationPath = path
 
@@ -264,12 +267,6 @@ class ConversationActionsFragment : Fragment() {
         binding = null
         mDisposableBag.dispose()
         super.onDestroy()
-    }
-
-    private fun copyAndShow(toCopy: String) {
-        val clipboard = requireActivity().getSystemService(AppCompatActivity.CLIPBOARD_SERVICE) as ClipboardManager
-        clipboard.setPrimaryClip(ClipData.newPlainText(getText(R.string.clip_contact_uri), toCopy))
-        Snackbar.make(binding!!.root, getString(R.string.conversation_action_copied_peer_number_clipboard, toCopy), Snackbar.LENGTH_LONG).show()
     }
 
     private fun shareContact(displayName: String) {
