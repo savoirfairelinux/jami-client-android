@@ -210,7 +210,7 @@
   <string name="conversation_type_group">Gruppide rühm</string>
   <string name="conversation_contact_invited">%1$s kutsuti</string>
   <string name="conversation_contact_added">%1$s liitub</string>
-  <string name="conversation_contact_left">%1$ on vasak</string>
+  <string name="conversation_contact_left">%1$s on vasak</string>
   <string name="conversation_contact_banned">%1$s on keelatud</string>
   <string name="conversation_search_hint">Otsingühendus</string>
   <string name="today">Tänapäeval</string>
