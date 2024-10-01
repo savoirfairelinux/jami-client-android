@@ -103,6 +103,19 @@ object ActionHelper {
             .show()
     }
 
+    fun launchDeleteSwarmOneToOneAction(
+        context: Context,
+        accountId: String,
+        uri: Uri,
+        callback: (accountId: String, uri: Uri) -> Unit,
+    ) {
+        MaterialAlertDialogBuilder(context)
+            .setTitle(R.string.conversation_action_remove_this_title)
+            .setMessage(R.string.conversation_action_remove_this_message)
+            .setPositiveButton(android.R.string.ok) { _, _ -> callback(accountId, uri) }
+            .setNegativeButton(android.R.string.cancel) { _, _ -> }.show()
+    }
+
     fun launchDeleteSwarmGroupAction(
         context: Context, accountId: String, uri: Uri, callback: ConversationActionCallback,
     ) {
