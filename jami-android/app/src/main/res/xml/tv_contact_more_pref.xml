@@ -9,7 +9,7 @@
             />
         <Preference
             android:key="Contact.delete"
-            android:title="@string/conversation_action_remove_this"
+            android:title="@string/delete_contact"
             android:icon="@drawable/baseline_androidtv_deletecontact"
             />
     </PreferenceCategory>
