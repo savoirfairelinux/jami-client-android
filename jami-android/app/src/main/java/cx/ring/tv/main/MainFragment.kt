@@ -249,6 +249,29 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
         } else {
             mTitleView?.setAlias(address)
         }
+        val settingsAdapter = accountSettingsRow?.adapter as? ArrayObjectAdapter
+        if (account.hasManager()) {
+            settingsAdapter?.let {
+                var managementCardIndex: Int? = null
+                var addDeviceCardIndex: Int? = null
+
+                for (i in 0 until it.size()) {
+                    val card = it[i] as? IconCard
+                    when (card?.type) {
+                        Card.Type.ACCOUNT_EDIT_PROFILE -> managementCardIndex = i
+                        Card.Type.ACCOUNT_ADD_DEVICE -> addDeviceCardIndex = i
+                        else -> {}
+                    }
+                }
+                if (addDeviceCardIndex != null) {
+                    it.removeItems(addDeviceCardIndex, 1)
+                }
+                if (managementCardIndex != null) {
+                    it.removeItems(managementCardIndex, 1)
+                }
+            }
+        }
+        settingsAdapter?.notifyArrayItemRangeChanged(0, settingsAdapter.size())
         mTitleView?.apply {
             settingsButton.visibility = View.VISIBLE
             logoView.visibility = View.VISIBLE
