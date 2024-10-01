@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1dce9e5f_6b435eb7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-10-01T17:24:27Z",
+      "side": 1,
+      "message": "done @adrien.beraud@savoirfairelinux.com",
+      "revId": "09d6ff19b51db72d1603161fc4a4c8bd91f5a2a9",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
