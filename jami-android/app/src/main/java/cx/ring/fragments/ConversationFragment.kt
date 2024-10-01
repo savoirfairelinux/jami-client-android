@@ -42,6 +42,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.ColorInt
 import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.SearchView
+import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.*
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -924,12 +925,19 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         }
     }
 
+    private val conversationDetailsActivityLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            // Let's interpret result code to the fact that user was banned or blocked.
+            if (result.resultCode == Activity.RESULT_OK) goToHome()
+        }
+
     override fun goToDetailsActivity(accountId: String, uri: net.jami.model.Uri) {
         val logo = binding!!.conversationAvatar
+        val options = ActivityOptionsCompat
+            .makeSceneTransitionAnimation(requireActivity(), logo, "conversationIcon")
         val intent = Intent(Intent.ACTION_VIEW, ConversationPath.toUri(accountId, uri))
             .setClass(requireContext().applicationContext, ConversationDetailsActivity::class.java)
-        startActivity(intent,
-            ActivityOptions.makeSceneTransitionAnimation(activity, logo, "conversationIcon").toBundle())
+        conversationDetailsActivityLauncher.launch(intent, options)
     }
 
     override fun goToCallActivity(conferenceId: String, withCamera: Boolean) {

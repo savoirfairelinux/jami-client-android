@@ -16,6 +16,7 @@
  */
 package cx.ring.fragments
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
@@ -31,12 +32,14 @@ import cx.ring.databinding.DialogSwarmTitleBinding
 import cx.ring.databinding.FragConversationActionsBinding
 import cx.ring.services.SharedPreferencesServiceImpl.Companion.getConversationColor
 import cx.ring.services.SharedPreferencesServiceImpl.Companion.getConversationSymbol
+import cx.ring.utils.ActionHelper
 import cx.ring.utils.ConversationPath
 import cx.ring.utils.DeviceUtils
 import cx.ring.utils.TextUtils.copyAndShow
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import net.jami.model.Contact
 import net.jami.model.Conversation
 import net.jami.model.Uri
 import net.jami.qrcode.QRCodePresenter
@@ -163,13 +166,14 @@ class ConversationActionsFragment : Fragment() {
         if (conversationMode == Conversation.Mode.OneToOne) {
             mDisposableBag.add(
                 conversation.contactUpdates
-                    .observeOn(DeviceUtils.uiScheduler)
                     // Filter out the user.
-                    .map { contacts -> contacts.filterNot { it.isUser }[0] }
+                    .map { contacts -> contacts.filterNot { it.isUser } }
+                    .filter(List<Contact>::isNotEmpty)
+                    .map { it.first() }
                     .flatMapSingle { contact ->
                         contact.username?.map { username -> Pair(username, contact.uri) }
                             ?: Single.just(Pair("", contact.uri))
-                    }
+                    }.observeOn(DeviceUtils.uiScheduler)
                     .subscribe { (registeredName, identifier) ->
                         userNamePanel.isVisible = registeredName.isNotEmpty()
                         userName.text = registeredName
@@ -184,8 +188,20 @@ class ConversationActionsFragment : Fragment() {
                         qrCode.setOnClickListener { showContactQRCode(identifier) }
                     }
             )
-            conversationDelete.text = resources.getString(R.string.leave_conversation)
-            conversationDelete.setOnClickListener {  }
+            conversationDelete.text = resources.getString(R.string.delete_contact)
+            conversationDelete.setOnClickListener {
+                ActionHelper.launchDeleteSwarmOneToOneAction(
+                    context = requireContext(),
+                    accountId = mAccountService.currentAccount!!.accountId,
+                    uri = conversation.uri,
+                    callback = { accountId: String, conversationUri: Uri ->
+                        mConversationFacade.removeConversation(accountId, conversationUri)
+                            .subscribe().apply { mDisposableBag.add(this) }
+                        // Result is OK, should be interpreted to go back to home.
+                        requireActivity().setResult(Activity.RESULT_OK)
+                        requireActivity().finish()
+                    })
+            }
 
             descriptionPanel.isVisible = false  // Disable description edit for 1-to-1 conversation
             // Description being hidden, we put the rounded background on the secureP2pConnection.
