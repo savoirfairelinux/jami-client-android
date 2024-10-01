@@ -46,6 +46,7 @@ class TVAccountWizard : BaseActivity<AccountWizardPresenter>(), AccountWizardVie
     private var mLinkAccount = false
     private var mAccountType: String? = null
     private var mAlertDialog: AlertDialog? = null
+    private var mJamsAccount = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,7 +62,11 @@ class TVAccountWizard : BaseActivity<AccountWizardPresenter>(), AccountWizardVie
             mAccountType = AccountConfig.ACCOUNT_TYPE_JAMI
         }
         if (savedInstanceState == null) {
-            GuidedStepSupportFragment.addAsRoot(this, TVHomeAccountCreationFragment(), android.R.id.content)
+            GuidedStepSupportFragment.addAsRoot(
+                this,
+                TVHomeAccountCreationFragment(),
+                android.R.id.content
+            )
         } else {
             mLinkAccount = savedInstanceState.getBoolean("mLinkAccount")
         }
@@ -84,10 +89,16 @@ class TVAccountWizard : BaseActivity<AccountWizardPresenter>(), AccountWizardVie
     fun createAccount() {
         val viewModel: AccountCreationViewModel by viewModels()
         val model = viewModel.model
-        if (model.isLink) {
-            presenter.initJamiAccountLink(model, getText(R.string.ring_account_default_name).toString())
+        val defaultAccountName = getText(R.string.ring_account_default_name).toString()
+        if (!model.managementServer.isNullOrEmpty()) {
+            presenter.initJamiAccountConnect(model, defaultAccountName)
+            mJamsAccount = true
+        } else if (model.isLink) {
+            presenter.initJamiAccountLink(model, defaultAccountName)
+            mJamsAccount = false
         } else {
-            presenter.initJamiAccountCreation(model, getText(R.string.ring_account_default_name).toString())
+            presenter.initJamiAccountCreation(model, defaultAccountName)
+            mJamsAccount = false
         }
     }
 
@@ -98,12 +109,18 @@ class TVAccountWizard : BaseActivity<AccountWizardPresenter>(), AccountWizardVie
             is TVProfileCreationFragment -> finish()
             is TVHomeAccountCreationFragment -> finishAffinity()
             is TVJamiAccountCreationFragment -> supportFragmentManager.popBackStack()
+            is TVJamiAccountConnectFragment -> supportFragmentManager.popBackStack()
             else -> super.onBackPressed()
         }
     }
 
     override fun goToProfileCreation() {
-        GuidedStepSupportFragment.add(supportFragmentManager, TVProfileCreationFragment())
+        if (mJamsAccount) {
+            setResult(RESULT_OK, Intent())
+            finish()
+        } else {
+            GuidedStepSupportFragment.add(supportFragmentManager, TVProfileCreationFragment())
+        }
     }
 
     override fun displayProgress(display: Boolean) {
@@ -124,7 +141,11 @@ class TVAccountWizard : BaseActivity<AccountWizardPresenter>(), AccountWizardVie
     }
 
     override fun displayCreationError() {
-        Toast.makeText(this@TVAccountWizard, getString(R.string.account_creation_error), Toast.LENGTH_SHORT).show()
+        Toast.makeText(
+            this@TVAccountWizard,
+            getString(R.string.account_creation_error),
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
     override fun blockOrientation() {
@@ -149,7 +170,8 @@ class TVAccountWizard : BaseActivity<AccountWizardPresenter>(), AccountWizardVie
         val model: AccountCreationViewModel by viewModels()
         return model.model.toVCard()
             .flatMap { vcard ->
-                account.loadedProfile = Single.fromCallable { VCardServiceImpl.readData(vcard) }.cache()
+                account.loadedProfile =
+                    Single.fromCallable { VCardServiceImpl.readData(vcard) }.cache()
                 VCardUtils.saveLocalProfileToDisk(vcard, account.accountId, filedir)
             }
             .subscribeOn(Schedulers.io())
@@ -178,13 +200,15 @@ class TVAccountWizard : BaseActivity<AccountWizardPresenter>(), AccountWizardVie
     }
 
     override fun displayCannotBeFoundError() {
-        if (mAlertDialog != null && mAlertDialog!!.isShowing) {
-            return
-        }
+        if (mAlertDialog != null && mAlertDialog!!.isShowing) return
+
+        val message =
+            if (mJamsAccount) getString(R.string.jams_account_cannot_be_found_message)
+            else getString(R.string.account_cannot_be_found_message)
         mAlertDialog = AlertDialog.Builder(this@TVAccountWizard)
             .setPositiveButton(android.R.string.ok, null)
             .setTitle(R.string.account_cannot_be_found_title)
-            .setMessage(R.string.account_cannot_be_found_message)
+            .setMessage(message)
             .show()
     }
 
