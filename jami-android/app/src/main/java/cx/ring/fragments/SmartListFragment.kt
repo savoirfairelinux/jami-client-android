@@ -32,7 +32,7 @@ import cx.ring.databinding.FragSmartlistBinding
 import cx.ring.mvp.BaseSupportFragment
 import cx.ring.utils.ActionHelper
 import cx.ring.utils.ConversationPath
-import cx.ring.utils.TextUtils
+import cx.ring.utils.TextUtils.copyAndShow
 import cx.ring.viewholders.SmartListViewHolder.SmartListListeners
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -75,7 +75,7 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
     }
 
     override fun copyContactNumberToClipboard(contactNumber: String) {
-        TextUtils.copyToClipboard(requireContext(), contactNumber)
+        copyAndShow(requireContext(), getString(R.string.clip_contact_uri), contactNumber)
     }
 
     override fun displayChooseNumberDialog(numbers: Array<CharSequence>) {
