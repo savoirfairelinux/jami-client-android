@@ -240,6 +240,19 @@ class ConversationActionsFragment : Fragment() {
             }
         } else {    // If conversation mode is not one to one
             conversationDelete.text = resources.getString(R.string.leave_conversation)
+            conversationDelete.setOnClickListener {
+                ActionHelper.launchDeleteSwarmGroupAction(
+                    context = requireContext(),
+                    accountId = mAccountService.currentAccount!!.accountId,
+                    uri = conversation.uri,
+                    callback = { accountId: String, conversationUri: Uri ->
+                        mConversationFacade.removeConversation(accountId, conversationUri)
+                            .subscribe().apply { mDisposableBag.add(this) }
+                        // Result is OK, should be interpreted to go back to home.
+                        requireActivity().setResult(Activity.RESULT_OK)
+                        requireActivity().finish()
+                    })
+            }
             blockSwitch.isVisible = false
         }
 
