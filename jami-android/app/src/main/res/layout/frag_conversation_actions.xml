@@ -409,22 +409,10 @@ along with this program; if not, write to the Free Software
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginVertical="1dp"
-                android:background="@color/background_secondary"
-                android:paddingHorizontal="12dp"
-                android:text="@string/mute_conversation"
-                android:textAlignment="textStart"
-                android:textColor="@color/colorOnSurface"
-                tools:checked="true" />
-
-            <com.google.android.material.switchmaterial.SwitchMaterial
-                android:id="@+id/block_switch"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginVertical="1dp"
                 android:background="@drawable/background_rounded_16_bottom"
                 android:backgroundTint="@color/background_secondary"
                 android:paddingHorizontal="12dp"
-                android:text="@string/conversation_action_block_this"
+                android:text="@string/mute_conversation"
                 android:textAlignment="textStart"
                 android:textColor="@color/colorOnSurface"
                 tools:checked="true" />
@@ -444,7 +432,22 @@ along with this program; if not, write to the Free Software
             android:paddingVertical="14dp"
             android:textColor="@color/red_600"
             android:textSize="14sp"
-            tools:text="Delete Conversation / Leave Swarm" />
+            tools:text="@string/delete_contact" />
+
+        <TextView
+            android:id="@+id/block_contact"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/background_rounded_16"
+            android:backgroundTint="@color/background_secondary"
+            android:drawablePadding="12dp"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="14dp"
+            android:text="@string/conversation_action_block_this"
+            android:textColor="@color/red_600"
+            android:textSize="14sp" />
 
     </LinearLayout>
 

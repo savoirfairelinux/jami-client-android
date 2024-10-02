@@ -142,6 +142,21 @@ object ActionHelper {
             .setNegativeButton(android.R.string.cancel) { _, _ -> }.show()
     }
 
+    fun launchBlockContactAction(
+        context: Context,
+        accountId: String,
+        contact: Contact,
+        callback: (accountId: String, uri: Uri) -> Unit,
+    ) {
+        val displayName =
+            contact.username?.blockingGet().takeIf { !it.isNullOrEmpty() } ?: contact.uri.uri
+        MaterialAlertDialogBuilder(context)
+            .setTitle(context.getString(R.string.block_contact_dialog_title, displayName))
+            .setMessage(context.getString(R.string.block_contact_dialog_message, displayName))
+            .setPositiveButton(android.R.string.ok) { _, _ -> callback(accountId, contact.uri) }
+            .setNegativeButton(android.R.string.cancel) { _, _ -> }.show()
+    }
+
     fun getAddNumberIntentForContact(contact: Contact): Intent {
         val intent = Intent(Intent.ACTION_INSERT_OR_EDIT)
         intent.type = ContactsContract.Contacts.CONTENT_ITEM_TYPE
