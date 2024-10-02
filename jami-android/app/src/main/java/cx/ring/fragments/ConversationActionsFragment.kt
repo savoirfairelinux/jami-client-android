@@ -24,7 +24,6 @@ import androidx.annotation.StringRes
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.snackbar.Snackbar
 import cx.ring.R
 import cx.ring.client.ColorChooserBottomSheet
 import cx.ring.client.EmojiChooserBottomSheet
@@ -206,37 +205,16 @@ class ConversationActionsFragment : Fragment() {
             descriptionPanel.isVisible = false  // Disable description edit for 1-to-1 conversation
             // Description being hidden, we put the rounded background on the secureP2pConnection.
             secureP2pConnection.setBackgroundResource(R.drawable.background_rounded_16_top)
-
-            blockSwitch.isChecked = conversation.contact!!.isBanned
-            blockSwitch.setOnClickListener {
-                val ctx = requireContext()
-                val builder = MaterialAlertDialogBuilder(ctx)
-                if (blockSwitch.isChecked) {    // the contact is already blocked
-                    builder.setTitle(getString(R.string.unblock_contact_dialog_title, conversationUri))
-                    builder.setMessage(getString(R.string.unblock_contact_dialog_message, conversationUri))
-                    builder.setPositiveButton(R.string.conversation_action_unblock_this) { _, _ ->
-                        // Unblock the contact and display a toast
-                        mAccountService.addContact(conversation.accountId, conversation.contact!!.uri.rawRingId)
-                        Snackbar.make(root,
-                            getString(R.string.unblock_contact_completed, conversationUri),
-                            Snackbar.LENGTH_LONG
-                        ).show()
-                        blockSwitch.isChecked = false
-                    }
-                } else {
-                    builder.setTitle(getString(R.string.block_contact_dialog_title, conversationUri))
-                    builder.setMessage(getString(R.string.block_contact_dialog_message, conversationUri))
-                    builder.setPositiveButton(R.string.conversation_action_block_this) { _, _ ->
-                        // Block the conversation and display a toast
-                        mConversationFacade.banConversation(conversation.accountId, conversation.uri)
-                        Snackbar.make(root,
-                            getString(R.string.block_contact_completed, conversationUri),
-                            Snackbar.LENGTH_LONG
-                        ).show()
-                        blockSwitch.isChecked = true
-                    }
+            blockContact.setOnClickListener {
+                ActionHelper.launchBlockContactAction(
+                    context = requireContext(),
+                    accountId = mAccountService.currentAccount!!.accountId,
+                    contact = conversation.contact!!,
+                ) { accountId: String, contactUri: Uri ->
+                    mAccountService.removeContact(accountId, contactUri.uri, true)
+                    requireActivity().setResult(Activity.RESULT_OK)
+                    requireActivity().finish()
                 }
-                builder.setNegativeButton(android.R.string.cancel, null).show()
             }
         } else {    // If conversation mode is not one to one
             conversationDelete.text = resources.getString(R.string.leave_conversation)
@@ -253,7 +231,7 @@ class ConversationActionsFragment : Fragment() {
                         requireActivity().finish()
                     })
             }
-            blockSwitch.isVisible = false
+            blockContact.isVisible = false
         }
 
         @StringRes val infoString =
