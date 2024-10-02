@@ -129,6 +129,19 @@ object ActionHelper {
             .show()
     }
 
+    fun launchDeleteSwarmGroupAction(
+        context: Context,
+        accountId: String,
+        uri: Uri,
+        callback: (accountId: String, uri: Uri) -> Unit,
+    ) {
+        MaterialAlertDialogBuilder(context)
+            .setTitle(R.string.swarm_group_action_leave_title)
+            .setMessage(R.string.swarm_group_action_leave_message)
+            .setPositiveButton(android.R.string.ok) { _, _ -> callback(accountId, uri) }
+            .setNegativeButton(android.R.string.cancel) { _, _ -> }.show()
+    }
+
     fun getAddNumberIntentForContact(contact: Contact): Intent {
         val intent = Intent(Intent.ACTION_INSERT_OR_EDIT)
         intent.type = ContactsContract.Contacts.CONTENT_ITEM_TYPE
