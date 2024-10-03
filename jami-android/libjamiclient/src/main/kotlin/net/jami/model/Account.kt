@@ -761,8 +761,7 @@ class Account(
         val key = uri.uri
         //Log.w(TAG, "contactAdded " + accountId + " " + uri + " " + contact.conversationUri.blockingFirst())
         if (contact.conversationUri.blockingFirst() != uri) {
-            //Log.w(TAG, "contactAdded Don't add conversation if we have a swarm conversation")
-            // Don't add conversation if we have a swarm conversation
+            conversationChanged() // Useful for unban contact case.
             return
         }
         synchronized(conversations) {
