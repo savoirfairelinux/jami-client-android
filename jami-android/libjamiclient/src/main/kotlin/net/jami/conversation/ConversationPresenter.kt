@@ -137,7 +137,7 @@ class ConversationPresenter @Inject constructor(
             } else {
                 val req = c.request
                 if (req == null) {
-                    view.switchToUnknownView(c.uriTitle)
+                    view.switchToUnknownView()
                 } else {
                     val displayName = req.profile?.blockingGet()?.displayName ?: c.uriTitle
                     view.switchToIncomingTrustRequestView(displayName, req.mode)
