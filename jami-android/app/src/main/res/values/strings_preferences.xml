@@ -86,7 +86,7 @@
     <string name="extension_reset_preferences_summary">Extension restored to the default settings</string>
     <string name="extension_reset_preferences_ask">Do you want to reset the general extension settings?</string>
     <string name="extension_reset_account_preferences_ask">Do you want to reset the account extension settings?</string>
-    <string name="extension_successfully_installed">Extension <b>%1$s</b> successfully installed</string>
+    <string name="extension_successfully_installed">Extension <b>%1$s</b> installed successfully.</string>
     <string name="extension_install_failure">An error occurred while installing the following extension: <b>%1$s</b></string>
     <string name="extension_recent_version_exception">A more recent version of <b>%1$s</b> is installed.</string>
     <string name="extension_same_version_exception">The same version of <b>%1$s</b> is installed.</string>
