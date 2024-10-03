@@ -231,6 +231,7 @@ class ConversationActionsFragment : Fragment() {
                         requireActivity().finish()
                     })
             }
+            conversationDelete.setBackgroundResource(R.drawable.background_rounded_16)
             blockContact.isVisible = false
         }
 
