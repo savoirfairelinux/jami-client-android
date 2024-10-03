@@ -462,6 +462,8 @@ class ConversationDetailsActivity : AppCompatActivity(), ContactPickerFragment.O
 
     companion object {
         val TAG = ConversationDetailsActivity::class.simpleName!!
+        const val EXIT_REASON = "exit_reason"
+        enum class ExitReason { CONTACT_DELETED, CONTACT_BLOCKED, CONVERSATION_LEFT }
         const val REQUEST_CODE_CALL = 3
     }
 }
