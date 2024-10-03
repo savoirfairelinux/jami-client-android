@@ -394,8 +394,6 @@ along with this program; if not, write to the Free Software
                     android:layout_width="wrap_content"
                     android:layout_height="36dp"
                     android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:textAlignment="textEnd"
                     android:textSize="24sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -404,7 +402,7 @@ along with this program; if not, write to the Free Software
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <com.google.android.material.switchmaterial.SwitchMaterial
+            <com.google.android.material.materialswitch.MaterialSwitch
                 android:id="@+id/mute_switch"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -424,7 +422,8 @@ along with this program; if not, write to the Free Software
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="8dp"
-            android:background="@drawable/background_rounded_16"
+            android:layout_marginBottom="1dp"
+            android:background="@drawable/background_rounded_16_top"
             android:backgroundTint="@color/background_secondary"
             android:drawablePadding="12dp"
             android:gravity="center_vertical"
@@ -438,8 +437,8 @@ along with this program; if not, write to the Free Software
             android:id="@+id/block_contact"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/background_rounded_16"
+            android:layout_marginTop="1dp"
+            android:background="@drawable/background_rounded_16_bottom"
             android:backgroundTint="@color/background_secondary"
             android:drawablePadding="12dp"
             android:gravity="center_vertical"
