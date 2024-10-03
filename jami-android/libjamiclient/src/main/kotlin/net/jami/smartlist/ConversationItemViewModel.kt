@@ -82,6 +82,9 @@ class ConversationItemViewModel(
         return if (contacts.isNotEmpty()) contacts[0] else null
     }
 
+    // Conversation mode when consulting a non-added contact.
+    fun isLegacy(): Boolean = mode == Conversation.Mode.Legacy
+
     fun isGroup(): Boolean =
         // SwarmGroup is a conversation were there are multiple participants (not a 1:1
         // conversation). To know this, we need to check the conversation mode.
