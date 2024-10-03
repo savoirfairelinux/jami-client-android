@@ -17,6 +17,7 @@
 package net.jami.smartlist
 
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import net.jami.model.Contact
 import net.jami.model.Uri
 import net.jami.services.ConversationFacade
 
@@ -25,6 +26,7 @@ interface SmartListView {
     fun displayNoConversationMessage()
     fun displayClearDialog(accountId: String, conversationUri: Uri)
     fun displayDeleteDialog(accountId: String, conversationUri: Uri, isGroup: Boolean)
+    fun displayBlockDialog(accountId: String, contact: Contact)
     fun copyNumber(uri: Uri)
     fun setLoading(loading: Boolean)
     fun hideList()
