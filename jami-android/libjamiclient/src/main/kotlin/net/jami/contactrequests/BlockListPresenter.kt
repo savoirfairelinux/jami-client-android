@@ -34,15 +34,12 @@ class BlockListPresenter @Inject constructor(
 ) : RootPresenter<BlockListView>() {
     private var mAccountID: String? = null
 
+    // TODO: Update only differences (e.g., addBlockedContact(), removeBlockedContact())
+    //  to delegate list differences handling to the adapter.
     private fun updateList(list: Collection<ContactViewModel>) {
         val view = view ?: return
-        if (list.isEmpty()) {
-            view.hideListView()
-            view.displayEmptyListMessage(true)
-        } else {
-            view.updateView(list)
-            view.displayEmptyListMessage(false)
-        }
+        view.updateView(list)
+        view.displayEmptyListMessage(list.isEmpty())
     }
 
     fun setAccountId(accountID: String) {

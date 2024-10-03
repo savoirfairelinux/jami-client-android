@@ -27,15 +27,23 @@ import cx.ring.viewholders.BlockListViewHolder.BlockListListeners
 import cx.ring.databinding.FragBlocklistBinding
 import cx.ring.interfaces.AppBarStateListener
 import cx.ring.mvp.BaseSupportFragment
+import cx.ring.utils.ActionHelper.launchUnblockContactAction
 import dagger.hilt.android.AndroidEntryPoint
 import net.jami.contactrequests.BlockListPresenter
 import net.jami.contactrequests.BlockListView
 import net.jami.model.Contact
 import net.jami.model.ContactViewModel
+import net.jami.services.AccountService
+import javax.inject.Inject
+import javax.inject.Singleton
 
 @AndroidEntryPoint
 class BlockListFragment : BaseSupportFragment<BlockListPresenter, BlockListView>(), BlockListView,
     BlockListListeners {
+
+    @Inject
+    @Singleton
+    lateinit var mAccountService: AccountService
 
     private var mAdapter: BlockListAdapter? = null
     private var binding: FragBlocklistBinding? = null
@@ -60,11 +68,14 @@ class BlockListFragment : BaseSupportFragment<BlockListPresenter, BlockListView>
     }
 
     override fun onUnblockClicked(contact: Contact) {
-        presenter.unblockClicked(contact)
+        launchUnblockContactAction(
+            context = requireContext(),
+            accountId = mAccountService.currentAccount!!.accountId,
+            contact = contact
+        ) { _, _ -> presenter.unblockClicked(contact) }
     }
 
     override fun updateView(list: Collection<ContactViewModel>) {
-        binding!!.blocklist.visibility = View.VISIBLE
         if (binding!!.blocklist.adapter != null) {
             mAdapter!!.replaceAll(list)
         } else {
@@ -73,10 +84,6 @@ class BlockListFragment : BaseSupportFragment<BlockListPresenter, BlockListView>
             binding!!.blocklist.layoutManager = layoutManager
             binding!!.blocklist.adapter = mAdapter
         }
-    }
-
-    override fun hideListView() {
-        binding!!.blocklist.visibility = View.GONE
     }
 
     override fun displayEmptyListMessage(display: Boolean) {

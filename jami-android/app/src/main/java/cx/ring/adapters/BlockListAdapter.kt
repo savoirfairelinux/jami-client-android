@@ -18,6 +18,7 @@ package cx.ring.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import cx.ring.R
 import cx.ring.viewholders.BlockListViewHolder
@@ -29,9 +30,11 @@ class BlockListAdapter(viewModels: Collection<ContactViewModel>, listener: Block
     private val mListener: BlockListListeners = listener
     private val mBlacklisted: ArrayList<ContactViewModel> = ArrayList(viewModels)
     fun replaceAll(viewModels: Collection<ContactViewModel>) {
+        val diffCallback = ContactDiffCallback(mBlacklisted, viewModels.toList())
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
         mBlacklisted.clear()
         mBlacklisted.addAll(viewModels)
-        notifyDataSetChanged()
+        diffResult.dispatchUpdatesTo(this)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BlockListViewHolder {
@@ -49,4 +52,22 @@ class BlockListAdapter(viewModels: Collection<ContactViewModel>, listener: Block
         return mBlacklisted.size
     }
 
+}
+
+class ContactDiffCallback(
+    private val oldList: List<ContactViewModel>,
+    private val newList: List<ContactViewModel>
+) : DiffUtil.Callback() {
+
+    override fun getOldListSize(): Int = oldList.size
+
+    override fun getNewListSize(): Int = newList.size
+
+    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        return oldList[oldItemPosition].contact.uri == newList[newItemPosition].contact.uri
+    }
+
+    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        return oldList[oldItemPosition].contact.uri == newList[newItemPosition].contact.uri
+    }
 }
