@@ -20,6 +20,5 @@ import net.jami.model.ContactViewModel
 
 interface BlockListView {
     fun updateView(list: Collection<ContactViewModel>)
-    fun hideListView()
     fun displayEmptyListMessage(display: Boolean)
 }
