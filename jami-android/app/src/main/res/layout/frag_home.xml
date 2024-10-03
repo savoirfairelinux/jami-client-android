@@ -144,7 +144,7 @@ along with this program; if not, write to the Free Software
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:drawablePadding="8dp"
-                        android:text="@string/new_swarm"
+                        android:text="@string/new_group"
                         android:textSize="@dimen/text_size_large"
                         app:drawableStartCompat="@drawable/baseline_group_add_24"
                         app:drawableTint="@color/icon_color" />
