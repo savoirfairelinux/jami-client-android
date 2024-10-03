@@ -20,7 +20,6 @@ import android.Manifest
 import android.animation.LayoutTransition
 import android.animation.ValueAnimator
 import android.app.Activity
-import android.app.ActivityOptions
 import android.content.*
 import android.content.pm.PackageManager
 import android.graphics.drawable.AnimatedVectorDrawable
@@ -52,6 +51,8 @@ import cx.ring.adapters.ConversationAdapter
 import cx.ring.client.CallActivity
 import cx.ring.client.ConversationDetailsActivity
 import cx.ring.client.ConversationActivity
+import cx.ring.client.DetailsActivity.Companion.EXIT_REASON
+import cx.ring.client.DetailsActivity.Companion.ExitReason
 import cx.ring.databinding.FragConversationBinding
 import cx.ring.mvp.BaseSupportFragment
 import cx.ring.service.DRingService
@@ -927,8 +928,16 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 
     private val conversationDetailsActivityLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            // Let's interpret result code to the fact that user was banned or blocked.
-            if (result.resultCode == Activity.RESULT_OK) goToHome()
+            if (result.resultCode == Activity.RESULT_OK) {
+                result.data?.extras?.getString(EXIT_REASON)?.let {
+                    when (it) {
+                        ExitReason.CONTACT_DELETED.toString(),
+                        ExitReason.CONTACT_BLOCKED.toString(),
+                        ExitReason.CONVERSATION_LEFT.toString() -> goToHome()
+                        else -> {}
+                    }
+                }
+            }
         }
 
     override fun goToDetailsActivity(accountId: String, uri: net.jami.model.Uri) {
