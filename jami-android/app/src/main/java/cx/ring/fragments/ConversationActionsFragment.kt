@@ -26,6 +26,8 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.R
 import cx.ring.client.ColorChooserBottomSheet
+import cx.ring.client.DetailsActivity.Companion.EXIT_REASON
+import cx.ring.client.DetailsActivity.Companion.ExitReason
 import cx.ring.client.EmojiChooserBottomSheet
 import cx.ring.databinding.DialogSwarmTitleBinding
 import cx.ring.databinding.FragConversationActionsBinding
@@ -196,8 +198,9 @@ class ConversationActionsFragment : Fragment() {
                     callback = { accountId: String, conversationUri: Uri ->
                         mConversationFacade.removeConversation(accountId, conversationUri)
                             .subscribe().apply { mDisposableBag.add(this) }
-                        // Result is OK, should be interpreted to go back to home.
-                        requireActivity().setResult(Activity.RESULT_OK)
+                        val resultIntent = Intent()
+                            .putExtra(EXIT_REASON, ExitReason.CONTACT_DELETED.toString())
+                        requireActivity().setResult(Activity.RESULT_OK, resultIntent)
                         requireActivity().finish()
                     })
             }
@@ -212,7 +215,9 @@ class ConversationActionsFragment : Fragment() {
                     contact = conversation.contact!!,
                 ) { accountId: String, contactUri: Uri ->
                     mAccountService.removeContact(accountId, contactUri.uri, true)
-                    requireActivity().setResult(Activity.RESULT_OK)
+                    val resultIntent = Intent()
+                        .putExtra(EXIT_REASON, ExitReason.CONTACT_BLOCKED.toString())
+                    requireActivity().setResult(Activity.RESULT_OK, resultIntent)
                     requireActivity().finish()
                 }
             }
@@ -226,8 +231,9 @@ class ConversationActionsFragment : Fragment() {
                     callback = { accountId: String, conversationUri: Uri ->
                         mConversationFacade.removeConversation(accountId, conversationUri)
                             .subscribe().apply { mDisposableBag.add(this) }
-                        // Result is OK, should be interpreted to go back to home.
-                        requireActivity().setResult(Activity.RESULT_OK)
+                        val resultIntent = Intent()
+                            .putExtra(EXIT_REASON, ExitReason.CONVERSATION_LEFT.toString())
+                        requireActivity().setResult(Activity.RESULT_OK, resultIntent)
                         requireActivity().finish()
                     })
             }
