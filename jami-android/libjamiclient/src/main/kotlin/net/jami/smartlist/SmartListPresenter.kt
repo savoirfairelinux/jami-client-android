@@ -18,9 +18,11 @@ package net.jami.smartlist
 
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.schedulers.Schedulers
+import net.jami.model.Contact
 import net.jami.model.Conversation
 import net.jami.model.Uri
 import net.jami.mvp.RootPresenter
+import net.jami.services.AccountService
 import net.jami.services.ConversationFacade
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -28,6 +30,7 @@ import javax.inject.Named
 
 class SmartListPresenter @Inject constructor(
     private val conversationFacade: ConversationFacade,
+    private val mAccountService: AccountService,
     @param:Named("UiScheduler") private val uiScheduler: Scheduler
 ) : RootPresenter<SmartListView>() {
 
@@ -69,6 +72,12 @@ class SmartListPresenter @Inject constructor(
             .subscribeOn(Schedulers.computation()).subscribe())
     }
 
+    fun blockContact(conversation: Conversation) =
+        view?.displayBlockDialog(conversation.accountId, conversation.contact!!)
+
+    fun blockContact(accountId: String, contact: Contact) =
+        mAccountService.removeContact(accountId, contact.uri.uri, true)
+
     fun removeConversation(conversation: Conversation) =
         view?.displayDeleteDialog(
             conversation.accountId,
@@ -80,9 +89,4 @@ class SmartListPresenter @Inject constructor(
         mCompositeDisposable.add(conversationFacade.removeConversation(accountId, uri)
             .subscribe())
     }
-
-    fun banContact(conversation: Conversation) {
-        conversationFacade.banConversation(conversation.accountId, conversation.uri)
-    }
-
 }
