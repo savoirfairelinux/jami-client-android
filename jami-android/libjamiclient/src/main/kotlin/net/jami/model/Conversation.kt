@@ -809,6 +809,9 @@ class Conversation : ConversationHistory {
 
         val isSwarm: Boolean
             get() = this == OneToOne || this == InvitesOnly || this == Public
+
+        val isGroup: Boolean
+            get() = this == AdminInvitesOnly || this == InvitesOnly || this == Public
     }
 
     interface ConversationActionCallback {
