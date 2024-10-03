@@ -1012,12 +1012,12 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 //        presenter.onAcceptIncomingContactRequest()
 //    }
 
-    override fun switchToUnknownView(name: String) {
+    override fun switchToUnknownView() {
         binding?.apply {
             cvMessageInput.visibility = View.GONE
             unknownContactPrompt.visibility = View.VISIBLE
             trustRequestPrompt.visibility = View.GONE
-            tvTrustRequestMessage.text = getString(R.string.invitation_received_message, name)
+            tvTrustRequestMessage.text = getString(R.string.outgoing_contact_invitation_message)
             trustRequestMessageLayout.visibility = View.VISIBLE
             currentBottomView = unknownContactPrompt
         }
