@@ -279,7 +279,7 @@ class AvatarDrawable : Drawable {
         }
 
         fun withViewModel(vm: ConversationItemViewModel): Builder =
-            if (vm.isGroup())
+            if (!vm.isLegacy() && vm.isGroup())
                 withId(vm.uri.rawUriString)
                     .withContacts(vm.conversationProfile, vm.contacts)
                     .setGroup()
