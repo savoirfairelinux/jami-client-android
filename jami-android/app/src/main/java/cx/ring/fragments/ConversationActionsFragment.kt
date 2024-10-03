@@ -150,9 +150,9 @@ class ConversationActionsFragment : Fragment(), Colorable {
             @StringRes val infoString =
                 if (conversation.isSwarm) {
                     if (conversationMode == Conversation.Mode.OneToOne)
-                        R.string.conversation_type_private
+                        R.string.conversation_type_121
                     else {
-                        R.string.conversation_type_group
+                        R.string.conversation_type_private_group
                     }
                 }
                 else R.string.conversation_type_contact
