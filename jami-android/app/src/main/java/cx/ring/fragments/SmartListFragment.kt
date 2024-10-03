@@ -36,6 +36,7 @@ import cx.ring.utils.TextUtils.copyAndShow
 import cx.ring.viewholders.SmartListViewHolder.SmartListListeners
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import net.jami.model.Contact
 import net.jami.model.Conversation
 import net.jami.model.Conversation.ConversationActionCallback
 import net.jami.model.Uri
@@ -120,6 +121,13 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
             )
     }
 
+    override fun displayBlockDialog(accountId: String, contact: Contact) =
+        ActionHelper.launchBlockContactAction(
+            context = requireContext(),
+            accountId = accountId,
+            contact = contact
+        ) { _, _ -> presenter.blockContact(accountId, contact) }
+
     override fun copyNumber(uri: Uri) {
         copyContactNumberToClipboard(uri.toString())
     }
@@ -189,7 +197,7 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
                         when (which) {
                             0 -> presenter.copyNumber(item)
                             1 -> presenter.removeConversation(item)
-                            2 -> presenter.banContact(item)
+                            2 -> presenter.blockContact(item)
                         }
                     }
                     .show()
@@ -201,7 +209,7 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
                         ActionHelper.ACTION_COPY -> presenter.copyNumber(item)
                         ActionHelper.ACTION_CLEAR -> presenter.clearConversation(item)
                         ActionHelper.ACTION_DELETE -> presenter.removeConversation(item)
-                        ActionHelper.ACTION_BLOCK -> presenter.banContact(item)
+                        ActionHelper.ACTION_BLOCK -> presenter.blockContact(item)
                     }
                 }
                 .show()
