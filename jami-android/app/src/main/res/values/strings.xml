@@ -258,7 +258,7 @@ along with this program; if not, write to the Free Software
     <string name="scan_qr">Scan QR Code</string>
     <string name="qr_code">QR Code</string>
     <string name="qr_code_not_contact">Not a Jami contact QR code</string>
-    <string name="new_swarm">Start Swarm</string>
+    <string name="new_group">Create new group</string>
     <string name="ab_action_flipcamera">Flip camera</string>
     <string name="ab_action_hidepreview">Hide preview</string>
     <string name="remote_recording">%s recording…</string>
@@ -357,8 +357,8 @@ along with this program; if not, write to the Free Software
     <string name="conversation_preference_color">Conversation color</string>
     <string name="conversation_preference_emoji">Conversation emoji</string>
     <string name="conversation_type_contact">Jami contact</string>
-    <string name="conversation_type_private">Private Swarm</string>
-    <string name="conversation_type_group">Group Swarm</string>
+    <string name="conversation_type_private">Private</string>
+    <string name="conversation_type_group">Group</string>
     <string name="conversation_contact_invited">%1$s was invited</string>
     <string name="conversation_contact_added">%1$s joined</string>
     <string name="conversation_contact_left">%1$s left</string>
