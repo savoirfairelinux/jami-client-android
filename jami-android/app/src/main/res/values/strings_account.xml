@@ -217,12 +217,12 @@ along with this program; if not, write to the Free Software
     <string name="account_no_network_title">Network error</string>
     <string name="account_no_network_message">A connectivity error occurred while adding Jami account to the distributed network. Check your device connectivity.</string>
     <string name="account_device_added_title">Account device added</string>
-    <string name="account_device_added_message">You have successfully setup your Jami account on this device.</string>
+    <string name="account_device_added_message">Jami account set up successfully on this device.</string>
     <string name="account_device_updated_title">Account device updated</string>
-    <string name="account_device_updated_message">You have successfully updated your Jami account.</string>
+    <string name="account_device_updated_message">Jami account updated successfully.</string>
     <string name="account_cannot_be_updated_message">An error occurred while updating account. Please check your password.</string>
     <string name="account_sip_success_title">SIP account registered</string>
-    <string name="account_sip_success_message">You have successfully registered your SIP account.</string>
+    <string name="account_sip_success_message">SIP account registered successfully.</string>
     <string name="account_sip_register_anyway">Register anyway</string>
 
     <!-- TV -->
