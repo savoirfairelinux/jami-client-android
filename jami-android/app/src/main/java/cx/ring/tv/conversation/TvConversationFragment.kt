@@ -623,10 +623,10 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
     }
 
     override fun goToDetailsActivity(accountId: String, uri: net.jami.model.Uri) {}
-    override fun switchToUnknownView(name: String) {
+    override fun switchToUnknownView() {
         binding?.apply {
             conversationActionGroup.isVisible = false
-            conversationActionMessage.text = getString(R.string.invitation_received_message, name)
+            conversationActionMessage.text = getString(R.string.outgoing_contact_invitation_message)
             conversationActionMessage.isVisible = true
         }
     }
