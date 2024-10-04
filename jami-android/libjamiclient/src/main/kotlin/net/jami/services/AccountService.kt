@@ -307,7 +307,7 @@ class AccountService(
                     var contact = conversation.findContact(uri)
                     if (contact == null) {
                         contact = account.getContactFromCache(uri)
-                        if (role != MemberRole.BANNED) conversation.addContact(contact, role)
+                        if (role != MemberRole.BLOCKED) conversation.addContact(contact, role)
                     }
                     if (!lastDisplayed.isNullOrEmpty()) {
                         if (contact.isUser) {
@@ -899,9 +899,9 @@ class AccountService(
     /**
      * Remove an existing contact for the account Id on the Daemon
      */
-    fun removeContact(accountId: String, uri: String, ban: Boolean) {
-        Log.i(TAG, "removeContact() $accountId $uri ban:$ban")
-        mExecutor.execute { JamiService.removeContact(accountId, uri, ban) }
+    fun removeContact(accountId: String, uri: String, block: Boolean) {
+        Log.i(TAG, "removeContact() $accountId $uri block:$block")
+        mExecutor.execute { JamiService.removeContact(accountId, uri, block) }
     }
 
     fun findRegistrationByName(account: String, nameserver: String, name: String): Single<RegisteredName> =
@@ -1226,11 +1226,11 @@ class AccountService(
         }
     }
 
-    fun contactRemoved(accountId: String, uri: String, banned: Boolean) {
-        Log.d(TAG, "Contact removed: $uri User is banned: $banned")
+    fun contactRemoved(accountId: String, uri: String, blocked: Boolean) {
+        Log.d(TAG, "Contact removed: $uri User is blocked: $blocked")
         getAccount(accountId)?.let { account ->
             mHistoryService.clearHistory(uri, accountId, true).subscribe()
-            account.removeContact(uri, banned)
+            account.removeContact(uri, blocked)
         }
     }
 
@@ -1412,7 +1412,7 @@ class AccountService(
     }
 
     private enum class ConversationMemberEvent {
-        Add, Join, Remove, Ban, Unban
+        Add, Join, Remove, Block, Unblock
     }
 
     fun conversationMemberEvent(accountId: String, conversationId: String, peerUri: String, event: Int) {
@@ -1422,7 +1422,7 @@ class AccountService(
             when (val memberEvent = ConversationMemberEvent.entries[event]) {
                 ConversationMemberEvent.Add,
                 ConversationMemberEvent.Join,
-                ConversationMemberEvent.Unban -> {
+                ConversationMemberEvent.Unblock -> {
                     val contact = conversation.findContact(uri)
                     if (contact == null) {
                         val role = if (memberEvent == ConversationMemberEvent.Add)
@@ -1430,7 +1430,7 @@ class AccountService(
                         conversation.addContact(account.getContactFromCache(uri), role)
                     }
                 }
-                ConversationMemberEvent.Remove, ConversationMemberEvent.Ban -> {
+                ConversationMemberEvent.Remove, ConversationMemberEvent.Block -> {
                     if (conversation.mode.blockingFirst() != Conversation.Mode.OneToOne) {
                         conversation.findContact(uri)?.let { contact -> conversation.removeContact(contact) }
                     }
@@ -1472,7 +1472,7 @@ class AccountService(
                 var contact = conversation.findContact(memberUri)
                 if (contact == null) {
                     contact = account.getContactFromCache(memberUri)
-                    if (role != MemberRole.BANNED) conversation.addContact(contact, role)
+                    if (role != MemberRole.BLOCKED) conversation.addContact(contact, role)
                 }
             }
             if (!conversation.lastElementLoadedSubject.hasValue())
