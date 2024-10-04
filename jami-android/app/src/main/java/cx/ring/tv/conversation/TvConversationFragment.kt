@@ -646,7 +646,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
         }
     }
 
-    override fun switchToBannedView() {
+    override fun switchToBlockedView() {
         binding?.apply {
             conversationActionGroup.isVisible = false
             conversationActionMessage.text = getString(R.string.conversation_contact_blocked, "")

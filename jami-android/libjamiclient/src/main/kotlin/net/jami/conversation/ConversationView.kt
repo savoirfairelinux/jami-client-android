@@ -39,7 +39,7 @@ interface ConversationView {
     fun switchToUnknownView()
     fun switchToIncomingTrustRequestView(name: String, requestMode: Conversation.Mode)
     fun switchToConversationView()
-    fun switchToBannedView()
+    fun switchToBlockedView()
     fun switchToSyncingView()
     fun switchToEndedView()
     fun openFilePicker()
