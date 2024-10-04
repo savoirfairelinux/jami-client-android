@@ -463,7 +463,10 @@ class DetailsActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPi
     companion object {
         val TAG = DetailsActivity::class.simpleName!!
         const val EXIT_REASON = "exit_reason"
-        enum class ExitReason { CONTACT_DELETED, CONTACT_BLOCKED, CONVERSATION_LEFT }
+        enum class ExitReason {
+            CONTACT_ADDED, CONTACT_DELETED, CONVERSATION_LEFT,
+            CONTACT_BLOCKED, CONTACT_UNBLOCKED,
+        }
         const val REQUEST_CODE_CALL = 3
     }
 }

@@ -325,6 +325,7 @@ along with this program; if not, write to the Free Software
     <string name="delete_contact">Delete contact</string>
     <string name="conversation_action_remove_this_title">Delete this contact?</string>
     <string name="conversation_action_remove_this_message">This will delete the contact and definitely clear the conversation history.</string>
+    <string name="conversation_action_add_this_message">This will send a connection request.</string>
     <string name="swarm_group_action_leave">Leave group</string>
     <string name="swarm_group_action_leave_title">Leave this group?</string>
     <string name="swarm_group_action_leave_message">This will remove the conversation from your conversations list</string>
