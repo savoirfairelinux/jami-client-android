@@ -727,6 +727,9 @@ class Conversation : ConversationHistory {
     /** Legacy means that user is consulting a contact */
     fun isLegacy() = mode.blockingFirst() == Mode.Legacy
 
+    /** Syncing means that Jami is trying to download conversation from peer */
+    fun isSyncing() = mode.blockingFirst() == Mode.Syncing
+
     /** Tells if the conversation is a swarm:group. No matter how many participants. */
     fun isSwarmGroup() = isSwarm && mode.blockingFirst().let {
         if (it == Mode.Request) request?.mode != Mode.OneToOne
