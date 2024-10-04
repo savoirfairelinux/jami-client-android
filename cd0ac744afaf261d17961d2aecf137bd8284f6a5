@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "54ba0b40_fcf5144d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-10-04T20:05:43Z",
+      "side": 1,
+      "message": "Thank you",
+      "revId": "cd0ac744afaf261d17961d2aecf137bd8284f6a5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "37671bb2_4f68200d",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/ConversationFacade.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-10-04T20:05:43Z",
+      "side": 1,
+      "message": "`A(n) [type] error occurred while {verb} {noun}.`\n\n`An error occurred while blocking conversation`",
+      "range": {
+        "startLine": 693,
+        "startChar": 49,
+        "endLine": 693,
+        "endChar": 76
+      },
+      "revId": "cd0ac744afaf261d17961d2aecf137bd8284f6a5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
