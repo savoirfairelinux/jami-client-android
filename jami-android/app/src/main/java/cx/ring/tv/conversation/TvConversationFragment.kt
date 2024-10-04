@@ -662,14 +662,6 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
         }
     }
 
-    override fun switchToEndedView() {
-        binding?.apply {
-            conversationActionGroup.isVisible = false
-            conversationActionMessage.text = getText(R.string.conversation_ended)
-            conversationActionMessage.isVisible = true
-        }
-    }
-
     override fun openFilePicker() {}
     override fun acceptFile(accountId: String, conversationUri: net.jami.model.Uri, transfer: DataTransfer) {
         val cacheDir = requireContext().cacheDir
