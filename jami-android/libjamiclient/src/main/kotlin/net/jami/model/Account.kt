@@ -190,12 +190,12 @@ class Account(
         }
     }
 
-    fun getConversationsSubject(withBanned: Boolean = false): Observable<List<Conversation>> =
-        if (withBanned) conversationsSubject
+    fun getConversationsSubject(withBlocked: Boolean = false): Observable<List<Conversation>> =
+        if (withBlocked) conversationsSubject
         else conversationsSubject.map { list ->
-            // In case where banned contact is in a swarm:group, we want to keep the conversation,
+            // In case where blocked contact is in a swarm:group, we want to keep the conversation,
             // except if it is a swarm:group with only him and the user.
-            list.filter { it.isGroup() || it.contact?.isBanned == false }
+            list.filter { it.isGroup() || it.contact?.isBlocked == false }
         }
 
     /**
@@ -369,8 +369,8 @@ class Account(
         return conversation
     }
 
-    val bannedContactsUpdates: Observable<Collection<Contact>>
-        get() = contactListSubject.map { list -> list.filterTo(ArrayList(list.size), Contact::isBanned) }
+    val blockedContactsUpdates: Observable<Collection<Contact>>
+        get() = contactListSubject.map { list -> list.filterTo(ArrayList(list.size), Contact::isBlocked) }
 
     fun getContactFromCache(key: Uri): Contact =
         synchronized(mContactCache) {
@@ -562,15 +562,15 @@ class Account(
         get() = getDetail(ConfigKey.ACCOUNT_DEVICE_NAME)
     val contacts: Map<String, Contact>
         get() = mContacts
-    val bannedContacts: List<Contact>
+    val blockedContacts: List<Contact>
         get() {
-            val banned = ArrayList<Contact>()
+            val blocked = ArrayList<Contact>()
             for (contact in mContacts.values) {
-                if (contact.isBanned) {
-                    banned.add(contact)
+                if (contact.isBlocked) {
+                    blocked.add(contact)
                 }
             }
-            return banned
+            return blocked
         }
 
 
@@ -585,15 +585,15 @@ class Account(
         contactListSubject.onNext(mContacts.values)
     }
 
-    fun removeContact(id: String, banned: Boolean) {
-        Log.w(TAG, "removeContact $id $banned")
+    fun removeContact(id: String, blocked: Boolean) {
+        Log.w(TAG, "removeContact $id $blocked")
         var contact = mContacts[id]
-        if (banned) {
+        if (blocked) {
             if (contact == null) {
                 contact = getContactFromCache(Uri.fromId(id))
                 mContacts[id] = contact
             }
-            contact.status = Contact.Status.BANNED
+            contact.status = Contact.Status.BLOCKED
         } else {
             mContacts.remove(id)
         }
@@ -611,8 +611,8 @@ class Account(
             val added = addedStr.toLong()
             callContact.addedDate = Date(added * 1000)
         }
-        if (contact.containsKey(CONTACT_BANNED) && contact[CONTACT_BANNED] == "true") {
-            callContact.status = Contact.Status.BANNED
+        if (contact.containsKey(CONTACT_BLOCKED) && contact[CONTACT_BLOCKED] == "true") {
+            callContact.status = Contact.Status.BLOCKED
         } else if (contact.containsKey(CONTACT_CONFIRMED)) {
             callContact.status = if (contact[CONTACT_CONFIRMED].toBoolean()) Contact.Status.CONFIRMED else Contact.Status.REQUEST_SENT
         }
@@ -761,7 +761,7 @@ class Account(
         val key = uri.uri
         //Log.w(TAG, "contactAdded " + accountId + " " + uri + " " + contact.conversationUri.blockingFirst())
         if (contact.conversationUri.blockingFirst() != uri) {
-            conversationChanged() // Useful for unban contact case.
+            conversationChanged() // Useful for unblock contact case.
             return
         }
         synchronized(conversations) {
@@ -938,7 +938,7 @@ class Account(
         private val TAG = Account::class.simpleName!!
         private const val CONTACT_ADDED = "added"
         private const val CONTACT_CONFIRMED = "confirmed"
-        private const val CONTACT_BANNED = "banned"
+        private const val CONTACT_BLOCKED = "banned"
         private const val CONTACT_ID = "id"
         private const val CONTACT_CONVERSATION = "conversationId"
         private const val LOCATION_SHARING_EXPIRATION_MS = 1000 * 60 * 2
