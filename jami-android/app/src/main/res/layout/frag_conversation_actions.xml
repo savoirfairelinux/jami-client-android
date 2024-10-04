@@ -29,7 +29,7 @@ along with this program; if not, write to the Free Software
         android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/group1"
+            android:id="@+id/private_conversation_panel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
