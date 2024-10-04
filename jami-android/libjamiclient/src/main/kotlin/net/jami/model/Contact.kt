@@ -25,7 +25,7 @@ import java.util.*
 
 class Contact constructor(val uri: Uri, val isUser: Boolean = false) {
     enum class Status {
-        BANNED, REQUEST_SENT, CONFIRMED, NO_REQUEST
+        BLOCKED, REQUEST_SENT, CONFIRMED, NO_REQUEST
     }
 
     var username: Single<String>? = null
@@ -130,8 +130,8 @@ class Contact constructor(val uri: Uri, val isUser: Boolean = false) {
         if (!hasNumber(tel)) phones.add(Phone(tel, cat, label, type))
     }
 
-    val isBanned: Boolean
-        get() = status == Status.BANNED
+    val isBlocked: Boolean
+        get() = status == Status.BLOCKED
 
     fun setProfile(profile: Single<Profile>) {
         loadedProfile = profile

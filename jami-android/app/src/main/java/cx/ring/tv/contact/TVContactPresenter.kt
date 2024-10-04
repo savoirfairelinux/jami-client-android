@@ -113,7 +113,7 @@ class TVContactPresenter @Inject constructor(
     }
 
     fun blockTrustRequest() {
-        mConversationService.banConversation(mAccountId!!, mUri!!)
+        mConversationService.blockConversation(mAccountId!!, mUri!!)
         mConversationService.discardRequest(mAccountId!!, mUri!!)
         view?.finishView()
     }
