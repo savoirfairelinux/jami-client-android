@@ -435,21 +435,58 @@ class DetailsActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPi
             val conversationId = conversation.uri
             val mode = conversation.mode.blockingFirst()
 
-            if (mode == Conversation.Mode.OneToOne || mode == Conversation.Mode.Legacy) {
-                titles = listOf(getString(R.string.details), getString(R.string.tab_files))
-                fragments = listOf(
-                    ConversationActionsFragment.newInstance(accountId, conversationId),
-                    ConversationGalleryFragment.newInstance(accountId, conversationId))
-            } else {
-                fragments = listOf(
-                    ConversationActionsFragment.newInstance(accountId, conversationId),
-                    ConversationMembersFragment.newInstance(accountId, conversationId),
-                    ConversationGalleryFragment.newInstance(accountId, conversationId))
+            when (mode) {
+                Conversation.Mode.OneToOne -> {
+                    if (conversation.contact!!.isBlocked) {
+                        titles = listOf(getString(R.string.details))
+                        fragments = listOf(
+                            ConversationActionsFragment.newInstance(accountId, conversationId)
+                        )
+                    } else {
+                        titles = listOf(getString(R.string.details), getString(R.string.tab_files))
+                        fragments = listOf(
+                            ConversationActionsFragment.newInstance(accountId, conversationId),
+                            ConversationGalleryFragment.newInstance(accountId, conversationId)
+                        )
+                    }
 
-                titles = listOf(
-                    getString(R.string.details),
-                    getString(R.string.tab_members),
-                    getString(R.string.tab_files))
+                }
+
+                Conversation.Mode.Legacy -> {
+                    titles = listOf(getString(R.string.details))
+                    fragments =
+                        listOf(ConversationActionsFragment.newInstance(accountId, conversationId))
+                }
+
+                Conversation.Mode.Request, Conversation.Mode.Syncing -> {
+                    if (conversation.request?.mode == Conversation.Mode.OneToOne) {
+                        titles = listOf(getString(R.string.details))
+                        fragments = listOf(
+                            ConversationActionsFragment.newInstance(accountId, conversationId)
+                        )
+                    } else {
+                        titles = listOf(
+                            getString(R.string.details), getString(R.string.tab_members)
+                        )
+                        fragments = listOf(
+                            ConversationActionsFragment.newInstance(accountId, conversationId),
+                            ConversationMembersFragment.newInstance(accountId, conversationId)
+                        )
+                    }
+                }
+
+                else -> {
+                    titles = listOf(
+                        getString(R.string.details),
+                        getString(R.string.tab_members),
+                        getString(R.string.tab_files)
+                    )
+                    fragments = listOf(
+                        ConversationActionsFragment.newInstance(accountId, conversationId),
+                        ConversationMembersFragment.newInstance(accountId, conversationId),
+                        ConversationGalleryFragment.newInstance(accountId, conversationId)
+                    )
+                }
             }
         }
 
