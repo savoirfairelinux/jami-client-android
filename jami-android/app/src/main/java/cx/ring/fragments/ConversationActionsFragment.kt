@@ -165,7 +165,7 @@ class ConversationActionsFragment : Fragment() {
                 conversation.request!!.mode
             else conversation.mode.blockingFirst()
 
-        if (conversationMode == Conversation.Mode.OneToOne) {
+        if (conversationMode == Conversation.Mode.OneToOne || conversation.isLegacy()) {
             mDisposableBag.add(
                 conversation.contactUpdates
                     // Filter out the user.
@@ -190,20 +190,32 @@ class ConversationActionsFragment : Fragment() {
                         qrCode.setOnClickListener { showContactQRCode(identifier) }
                     }
             )
-            conversationDelete.text = resources.getString(R.string.delete_contact)
             conversationDelete.setOnClickListener {
-                ActionHelper.launchDeleteSwarmOneToOneAction(
-                    context = requireContext(),
-                    accountId = mAccountService.currentAccount!!.accountId,
-                    uri = conversation.uri,
-                    callback = { accountId: String, conversationUri: Uri ->
-                        mConversationFacade.removeConversation(accountId, conversationUri)
-                            .subscribe().apply { mDisposableBag.add(this) }
+                if (conversation.isLegacy())
+                    ActionHelper.launchAddContactAction(
+                        context = requireContext(),
+                        accountId = mAccountService.currentAccount!!.accountId,
+                        contact = conversation.contact!!
+                    ) { accountId: String, contactUri: Uri ->
+                        mAccountService.addContact(accountId, contactUri.uri)
                         val resultIntent = Intent()
-                            .putExtra(EXIT_REASON, ExitReason.CONTACT_DELETED.toString())
+                            .putExtra(EXIT_REASON, ExitReason.CONTACT_ADDED.toString())
                         requireActivity().setResult(Activity.RESULT_OK, resultIntent)
                         requireActivity().finish()
-                    })
+                    }
+                else
+                    ActionHelper.launchDeleteSwarmOneToOneAction(
+                        context = requireContext(),
+                        accountId = mAccountService.currentAccount!!.accountId,
+                        uri = conversation.uri,
+                        callback = { accountId: String, conversationUri: Uri ->
+                            mConversationFacade.removeConversation(accountId, conversationUri)
+                                .subscribe().apply { mDisposableBag.add(this) }
+                            val resultIntent = Intent()
+                                .putExtra(EXIT_REASON, ExitReason.CONTACT_DELETED.toString())
+                            requireActivity().setResult(Activity.RESULT_OK, resultIntent)
+                            requireActivity().finish()
+                        })
             }
 
             descriptionPanel.isVisible = false  // Disable description edit for 1-to-1 conversation
@@ -246,6 +258,17 @@ class ConversationActionsFragment : Fragment() {
                 }
                 conversationDetailsPanel.visibility = View.GONE
                 conversationActionsPanel.visibility = View.GONE
+            }
+
+            if (conversation.isLegacy()){
+                blockContact.isVisible = false
+                conversationDelete.setBackgroundResource(R.drawable.background_rounded_16)
+                conversationActionsPanel.visibility = View.GONE
+                conversationDetailsPanel.visibility = View.GONE
+                conversationDelete.text = resources.getString(R.string.ab_action_contact_add)
+            }
+            else {
+                conversationDelete.text = resources.getString(R.string.delete_contact)
             }
         } else {    // If conversation mode is not one to one
             privateConversationPanel.isVisible = false

@@ -724,6 +724,9 @@ class Conversation : ConversationHistory {
     /** Tells if the conversation is a swarm:group with more than 2 participants (including user) */
     fun isGroup() = isSwarm && contacts.size > 2
 
+    /** Legacy means that user is consulting a contact */
+    fun isLegacy() = mode.blockingFirst() == Mode.Legacy
+
     /** Tells if the conversation is a swarm:group. No matter how many participants. */
     fun isSwarmGroup() = isSwarm && mode.blockingFirst().let {
         if (it == Mode.Request) request?.mode != Mode.OneToOne
