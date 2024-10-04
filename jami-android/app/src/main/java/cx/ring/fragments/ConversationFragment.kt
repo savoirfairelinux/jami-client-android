@@ -933,6 +933,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                     when (it) {
                         ExitReason.CONTACT_DELETED.toString(),
                         ExitReason.CONTACT_BLOCKED.toString(),
+                        ExitReason.CONTACT_UNBLOCKED.toString(),
                         ExitReason.CONVERSATION_LEFT.toString() -> goToHome()
                         else -> {}
                     }

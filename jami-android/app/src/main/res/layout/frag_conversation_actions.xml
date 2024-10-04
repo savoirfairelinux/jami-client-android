@@ -32,7 +32,7 @@ along with this program; if not, write to the Free Software
             android:id="@+id/private_conversation_panel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/account_details_group_margin"
             android:background="@drawable/background_rounded_16_top"
             android:clickable="false"
             android:orientation="vertical">
@@ -171,9 +171,10 @@ along with this program; if not, write to the Free Software
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/conversation_details_panel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/account_details_group_margin"
             android:background="@drawable/background_rounded_16_top"
             android:clickable="false"
             android:orientation="vertical">
@@ -324,9 +325,10 @@ along with this program; if not, write to the Free Software
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/conversation_actions_panel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/account_details_group_margin"
             android:background="@drawable/background_rounded_16_top"
             android:clickable="false"
             android:orientation="vertical">
@@ -421,7 +423,7 @@ along with this program; if not, write to the Free Software
             android:id="@+id/conversation_delete"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/account_details_group_margin"
             android:layout_marginBottom="1dp"
             android:background="@drawable/background_rounded_16_top"
             android:backgroundTint="@color/background_secondary"
