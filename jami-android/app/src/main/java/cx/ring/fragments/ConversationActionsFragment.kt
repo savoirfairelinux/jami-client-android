@@ -222,6 +222,8 @@ class ConversationActionsFragment : Fragment() {
                 }
             }
         } else {    // If conversation mode is not one to one
+            privateConversationPanel.isVisible = false
+            userNamePanel.isVisible = false
             conversationDelete.text = resources.getString(R.string.leave_conversation)
             conversationDelete.setOnClickListener {
                 ActionHelper.launchDeleteSwarmGroupAction(
