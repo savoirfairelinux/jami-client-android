@@ -103,6 +103,19 @@ object ActionHelper {
             .show()
     }
 
+    fun launchAddContactAction(
+        context: Context,
+        accountId: String,
+        contact: Contact,
+        callback: (accountId: String, uri: Uri) -> Unit,
+    ) {
+        MaterialAlertDialogBuilder(context)
+            .setTitle(R.string.ab_action_contact_add_question)
+            .setMessage(R.string.conversation_action_add_this_message)
+            .setPositiveButton(android.R.string.ok) { _, _ -> callback(accountId, contact.uri) }
+            .setNegativeButton(android.R.string.cancel) { _, _ -> }.show()
+    }
+
     fun launchDeleteSwarmOneToOneAction(
         context: Context,
         accountId: String,
