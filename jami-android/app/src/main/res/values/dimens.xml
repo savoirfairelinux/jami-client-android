@@ -157,4 +157,7 @@ along with this program; if not, write to the Free Software
 
     <!--  Account List  -->
     <dimen name="account_unread_radius">10dp</dimen>
+
+    <!--  Account Details  -->
+    <dimen name="account_details_group_margin">8dp</dimen>
 </resources>
