@@ -1066,7 +1066,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         currentBottomView = null
     }
 
-    override fun switchToBannedView() {
+    override fun switchToBlockedView() {
         binding?.apply {
             cvMessageInput.visibility = View.GONE
             unknownContactPrompt.visibility = View.GONE

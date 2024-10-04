@@ -17,8 +17,6 @@
 package cx.ring.adapters
 
 import android.annotation.SuppressLint
-import android.content.ClipData
-import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -1540,8 +1538,8 @@ class ConversationAdapter(
                         ContactEvent.Event.ADDED -> R.string.conversation_contact_added
                         ContactEvent.Event.INVITED -> R.string.conversation_contact_invited
                         ContactEvent.Event.REMOVED -> R.string.conversation_contact_left
-                        ContactEvent.Event.BANNED -> R.string.conversation_contact_blocked
-                        ContactEvent.Event.UNBANNED -> R.string.conversation_contact_unblocked
+                        ContactEvent.Event.BLOCKED -> R.string.conversation_contact_blocked
+                        ContactEvent.Event.UNBLOCKED -> R.string.conversation_contact_unblocked
                         else -> R.string.hist_contact_added
                     }, vm.displayName)
                     viewHolder.mMsgTxt?.text = "$eventString, $timestamp"
@@ -1551,8 +1549,8 @@ class ConversationAdapter(
                 ContactEvent.Event.ADDED -> R.string.hist_contact_added
                 ContactEvent.Event.INVITED -> R.string.hist_contact_invited
                 ContactEvent.Event.REMOVED -> R.string.hist_contact_left
-                ContactEvent.Event.BANNED -> R.string.hist_contact_blocked
-                ContactEvent.Event.UNBANNED -> R.string.hist_contact_unblocked
+                ContactEvent.Event.BLOCKED -> R.string.hist_contact_blocked
+                ContactEvent.Event.UNBLOCKED -> R.string.hist_contact_unblocked
                 ContactEvent.Event.INCOMING_REQUEST -> R.string.hist_invitation_received
                 else -> R.string.hist_contact_added
             }
