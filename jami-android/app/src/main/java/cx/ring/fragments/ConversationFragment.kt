@@ -891,13 +891,13 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             (binding.returnActiveCallIcon.background as? AnimatedVectorDrawable)?.start()
             val icon = if (hasVideo) R.drawable.outline_videocam_24 else R.drawable.outline_call_24
             binding.returnActiveCallIcon.setImageResource(icon)
-            binding.toolbar.menu.findItem(R.id.conv_action_videocall).setVisible(false)
-            binding.toolbar.menu.findItem(R.id.conv_action_audiocall).setVisible(false)
+            binding.toolbar.menu.findItem(R.id.conv_action_videocall).setEnabled(false)
+            binding.toolbar.menu.findItem(R.id.conv_action_audiocall).setEnabled(false)
             binding.ongoingCallPane.visibility = View.VISIBLE
         } else {
             (binding.returnActiveCallIcon.background as? AnimatedVectorDrawable)?.stop()
-            binding.toolbar.menu.findItem(R.id.conv_action_videocall).setVisible(true)
-            binding.toolbar.menu.findItem(R.id.conv_action_audiocall).setVisible(true)
+            binding.toolbar.menu.findItem(R.id.conv_action_videocall).setEnabled(true)
+            binding.toolbar.menu.findItem(R.id.conv_action_audiocall).setEnabled(true)
             binding.ongoingCallPane.visibility = View.GONE
         }
     }
@@ -1025,6 +1025,9 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 
     override fun switchToUnknownView() {
         binding?.apply {
+            toolbar.menu.findItem(R.id.conv_search).setVisible(false)
+            toolbar.menu.findItem(R.id.conv_action_videocall).setVisible(false)
+            toolbar.menu.findItem(R.id.conv_action_audiocall).setVisible(false)
             cvMessageInput.visibility = View.GONE
             unknownContactPrompt.visibility = View.VISIBLE
             trustRequestPrompt.visibility = View.GONE
@@ -1036,6 +1039,9 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 
     override fun switchToIncomingTrustRequestView(name: String, requestMode: Conversation.Mode) {
         binding?.apply {
+            toolbar.menu.findItem(R.id.conv_search).setVisible(false)
+            toolbar.menu.findItem(R.id.conv_action_videocall).setVisible(false)
+            toolbar.menu.findItem(R.id.conv_action_audiocall).setVisible(false)
             cvMessageInput.visibility = View.GONE
             unknownContactPrompt.visibility = View.GONE
             trustRequestPrompt.visibility = View.VISIBLE
@@ -1048,6 +1054,9 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 
     override fun switchToConversationView() {
         binding?.apply {
+            toolbar.menu.findItem(R.id.conv_search).setVisible(true)
+            toolbar.menu.findItem(R.id.conv_action_videocall).setVisible(true)
+            toolbar.menu.findItem(R.id.conv_action_audiocall).setVisible(true)
             cvMessageInput.visibility = View.VISIBLE
             unknownContactPrompt.visibility = View.GONE
             trustRequestPrompt.visibility = View.GONE
@@ -1059,6 +1068,9 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 
     override fun switchToSyncingView() {
         binding?.apply {
+            toolbar.menu.findItem(R.id.conv_search).setVisible(false)
+            toolbar.menu.findItem(R.id.conv_action_videocall).setVisible(false)
+            toolbar.menu.findItem(R.id.conv_action_audiocall).setVisible(false)
             cvMessageInput.visibility = View.GONE
             unknownContactPrompt.visibility = View.GONE
             trustRequestPrompt.visibility = View.GONE
@@ -1070,6 +1082,9 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 
     override fun switchToBlockedView() {
         binding?.apply {
+            toolbar.menu.findItem(R.id.conv_search).setVisible(false)
+            toolbar.menu.findItem(R.id.conv_action_videocall).setVisible(false)
+            toolbar.menu.findItem(R.id.conv_action_audiocall).setVisible(false)
             cvMessageInput.visibility = View.GONE
             unknownContactPrompt.visibility = View.GONE
             trustRequestPrompt.visibility = View.GONE
