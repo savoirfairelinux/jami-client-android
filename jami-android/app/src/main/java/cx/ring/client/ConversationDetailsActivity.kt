@@ -173,19 +173,17 @@ class ConversationDetailsActivity : AppCompatActivity(), ContactPickerFragment.O
 
                 // Note: For a random account from search results, mode will be Legacy
                 if (vm.request != null){
+                    binding.btnPanel.isVisible = false
                     binding.conversationTitle.setOnClickListener(null)
-//                    binding.description.setOnClickListener(null)
                     binding.conversationAvatar.setOnClickListener(null)
-//                    binding.tabLayout.removeTabAt(TAB_FILES)
-//                    binding.tabLayout.removeTabAt(TAB_MEMBERS)
                 } else if (vm.mode == Conversation.Mode.OneToOne
                     || vm.mode == Conversation.Mode.Legacy
                 ) {
+                    if(conversation.contact!!.isBlocked || conversation.isLegacy())
+                        binding.btnPanel.isVisible = false
                     binding.conversationTitle.setOnClickListener(null)
                     binding.conversationAvatar.setOnClickListener(null)
-//                    binding.tabLayout.removeTabAt(TAB_MEMBERS)
                     binding.addMember.isVisible = false
-
                     val callUri = conversation.contact!!.uri
                     binding.audioCall.setOnClickListener { goToCallActivity(conversation, callUri, false) }
                     binding.videoCall.setOnClickListener { goToCallActivity(conversation, callUri, true) }
