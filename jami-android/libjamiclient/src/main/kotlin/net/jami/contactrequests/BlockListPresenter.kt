@@ -49,7 +49,7 @@ class BlockListPresenter @Inject constructor(
         mCompositeDisposable.clear()
         mCompositeDisposable.add(mAccountService
             .getAccountSingle(accountID)
-            .flatMapObservable(Account::bannedContactsUpdates)
+            .flatMapObservable(Account::blockedContactsUpdates)
             .switchMapSingle { contacts -> contactService.getLoadedContact(accountID, contacts) }
             .observeOn(mUiScheduler)
             .subscribe({ list -> updateList(list) })

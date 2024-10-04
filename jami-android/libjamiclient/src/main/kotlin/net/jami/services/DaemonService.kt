@@ -190,8 +190,8 @@ class DaemonService(
             mExecutor.submit { mAccountService.contactAdded(accountId, uri, confirmed) }
         }
 
-        override fun contactRemoved(accountId: String, uri: String, banned: Boolean) {
-            mExecutor.submit { mAccountService.contactRemoved(accountId, uri, banned) }
+        override fun contactRemoved(accountId: String, uri: String, blocked: Boolean) {
+            mExecutor.submit { mAccountService.contactRemoved(accountId, uri, blocked) }
         }
 
         override fun messageSend(message: String) {
