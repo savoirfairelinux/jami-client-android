@@ -1078,17 +1078,6 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         }
     }
 
-    override fun switchToEndedView() {
-        binding?.apply {
-            cvMessageInput.visibility = View.GONE
-            unknownContactPrompt.visibility = View.GONE
-            trustRequestPrompt.visibility = View.GONE
-            trustRequestMessageLayout.visibility = View.VISIBLE
-            tvTrustRequestMessage.text = getText(R.string.conversation_ended)
-        }
-        currentBottomView = null
-    }
-
     private fun setLoading(isLoading: Boolean) {
         val binding = binding ?: return
         if (isLoading) {

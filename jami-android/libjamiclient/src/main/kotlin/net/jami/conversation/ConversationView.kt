@@ -41,7 +41,6 @@ interface ConversationView {
     fun switchToConversationView()
     fun switchToBlockedView()
     fun switchToSyncingView()
-    fun switchToEndedView()
     fun openFilePicker()
     fun acceptFile(accountId: String, conversationUri: Uri, transfer: DataTransfer)
     fun goToGroupCall(conversation: Conversation, contactUri: net.jami.model.Uri, hasVideo: Boolean)
