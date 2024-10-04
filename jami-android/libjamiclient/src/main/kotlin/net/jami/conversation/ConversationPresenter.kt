@@ -130,8 +130,8 @@ class ConversationPresenter @Inject constructor(
             } else if (c.mode == Conversation.Mode.Request) {
                 view.switchToIncomingTrustRequestView(c.uriTitle, c.request!!.mode)
             } else if (c.isSwarm || account.isContact(c.uri)) {
-                if ((c.mode == Conversation.Mode.OneToOne) && c.getContact()?.contact?.isBanned == true) {
-                    view.switchToBannedView()
+                if ((c.mode == Conversation.Mode.OneToOne) && c.getContact()?.contact?.isBlocked == true) {
+                    view.switchToBlockedView()
                 } else
                     view.switchToConversationView()
             } else {
@@ -396,7 +396,7 @@ class ConversationPresenter @Inject constructor(
 
     fun onBlockIncomingContactRequest() {
         mConversation?.let { conversation ->
-            conversationFacade.banConversation(conversation.accountId, conversation.uri)
+            conversationFacade.blockConversation(conversation.accountId, conversation.uri)
             conversationFacade.discardRequest(conversation.accountId, conversation.uri)
         }
         view?.goToHome()

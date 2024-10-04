@@ -48,8 +48,8 @@ class ContactRequestsPresenter @Inject internal constructor(
         conversationFacade.discardRequest(item.accountId, item.uri)
     }
 
-    fun banContact(item: Conversation) {
-        conversationFacade.banConversation(item.accountId, item.uri)
+    fun blockContact(item: Conversation) {
+        conversationFacade.blockConversation(item.accountId, item.uri)
         conversationFacade.discardRequest(item.accountId, item.uri)
     }
 
