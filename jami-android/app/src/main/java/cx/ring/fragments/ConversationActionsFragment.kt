@@ -22,6 +22,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.annotation.StringRes
 import androidx.core.view.isVisible
+import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.R
@@ -209,17 +210,42 @@ class ConversationActionsFragment : Fragment() {
             // Description being hidden, we put the rounded background on the secureP2pConnection.
             secureP2pConnection.setBackgroundResource(R.drawable.background_rounded_16_top)
             blockContact.setOnClickListener {
-                ActionHelper.launchBlockContactAction(
-                    context = requireContext(),
-                    accountId = mAccountService.currentAccount!!.accountId,
-                    contact = conversation.contact!!,
-                ) { accountId: String, contactUri: Uri ->
-                    mAccountService.removeContact(accountId, contactUri.uri, true)
-                    val resultIntent = Intent()
-                        .putExtra(EXIT_REASON, ExitReason.CONTACT_BLOCKED.toString())
-                    requireActivity().setResult(Activity.RESULT_OK, resultIntent)
-                    requireActivity().finish()
+                if (conversation.contact!!.isBlocked) {
+                    ActionHelper.launchUnblockContactAction(
+                        context = requireContext(),
+                        accountId = mAccountService.currentAccount!!.accountId,
+                        contact = conversation.contact!!,
+                    ) { accountId: String, contactUri: Uri ->
+                        mAccountService.addContact(accountId, contactUri.uri)
+                        val resultIntent = Intent()
+                            .putExtra(EXIT_REASON, ExitReason.CONTACT_UNBLOCKED.toString())
+                        requireActivity().setResult(Activity.RESULT_OK, resultIntent)
+                        requireActivity().finish()
+                    }
+                } else
+                    ActionHelper.launchBlockContactAction(
+                        context = requireContext(),
+                        accountId = mAccountService.currentAccount!!.accountId,
+                        contact = conversation.contact!!,
+                    ) { accountId: String, contactUri: Uri ->
+                        mAccountService.removeContact(accountId, contactUri.uri, true)
+                        val resultIntent = Intent()
+                            .putExtra(EXIT_REASON, ExitReason.CONTACT_BLOCKED.toString())
+                        requireActivity().setResult(Activity.RESULT_OK, resultIntent)
+                        requireActivity().finish()
+                    }
+            }
+
+            // Hide details not useful for blocked contact
+            if (conversation.contact!!.isBlocked) {
+                conversationDelete.isVisible = false
+                blockContact.setBackgroundResource(R.drawable.background_rounded_16)
+                blockContact.text = resources.getString(R.string.conversation_action_unblock_this)
+                blockContact.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                    topMargin = resources.getDimension(R.dimen.account_details_group_margin).toInt()
                 }
+                conversationDetailsPanel.visibility = View.GONE
+                conversationActionsPanel.visibility = View.GONE
             }
         } else {    // If conversation mode is not one to one
             privateConversationPanel.isVisible = false
