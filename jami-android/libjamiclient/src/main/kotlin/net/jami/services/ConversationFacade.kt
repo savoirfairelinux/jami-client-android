@@ -26,7 +26,6 @@ import net.jami.model.*
 import net.jami.model.Account.ContactLocationEntry
 import net.jami.model.Call.CallStatus
 import net.jami.model.Interaction.TransferStatus
-import net.jami.services.AccountService.RegisteredName
 import net.jami.smartlist.ConversationItemViewModel
 import net.jami.utils.FileUtils.moveFile
 import net.jami.utils.Log
@@ -449,10 +448,10 @@ class ConversationFacade(
             } else Single.just(ConversationList(emptyList(), list.searchResult, list.latestQuery))
         }
 
-    fun getFullConversationList(currentAccount: Observable<Account>, query: Observable<String>, withBanned: Boolean = false): Observable<ConversationList> =
+    fun getFullConversationList(currentAccount: Observable<Account>, query: Observable<String>, withBlocked: Boolean = false): Observable<ConversationList> =
         currentAccount.switchMap { account ->
             Observable.combineLatest(
-                account.getConversationsSubject(withBanned),
+                account.getConversationsSubject(withBlocked),
                 query.switchMapSingle { mAccountService.getConversationSearchResults(account, it) },
                 query
             ) { conversations, searchResults, q -> ConversationList(conversations, searchResults, q) }
@@ -681,7 +680,7 @@ class ConversationFacade(
         }
     }
 
-    fun banConversation(accountId: String, conversationUri: Uri) {
+    fun blockConversation(accountId: String, conversationUri: Uri) {
         if (conversationUri.isSwarm) {
             mDisposableBag.add(
                 startConversation(accountId, conversationUri).subscribe({ v: Conversation ->
@@ -691,7 +690,7 @@ class ConversationFacade(
                     } catch (e: Exception) {
                         mAccountService.removeConversation(accountId, conversationUri)
                     }
-                }, { e: Throwable -> Log.e(TAG, "Error banning conversation", e) })
+                }, { e: Throwable -> Log.e(TAG, "Error blocking conversation", e) })
             )
         } else mAccountService.removeContact(accountId, conversationUri.rawRingId, true)
     }

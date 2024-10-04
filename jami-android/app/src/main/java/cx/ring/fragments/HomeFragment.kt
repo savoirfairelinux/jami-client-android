@@ -288,7 +288,7 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
                         1 -> mConversationFacade
                             .discardRequest(conversation.accountId, conversation.uri)
                         2 -> mConversationFacade
-                            .banConversation(conversation.accountId, conversation.uri)
+                            .blockConversation(conversation.accountId, conversation.uri)
                     }
                 }.show()
         else
