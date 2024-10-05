@@ -16,6 +16,24 @@
       "message": "terminology around groups and swarms to be discussed",
       "revId": "486db2b4e985e422bddf14be28478ceb2ef5b572",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "67cee6b2_8294f687",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-10-05T03:48:29Z",
+      "side": 1,
+      "message": "Email received which states:\n\u003e Attention is currently required from: Óvári\n\n1. When would you like to discuss? Please advise suitable times?\n\n2. Where would you like to discuss? here, on Jami, at GitLab #1845, elsewhere? If required, it might be easier to discuss in an audio call (instead of just text).\n\nThank you",
+      "parentUuid": "4b512a34_21659069",
+      "revId": "486db2b4e985e422bddf14be28478ceb2ef5b572",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
