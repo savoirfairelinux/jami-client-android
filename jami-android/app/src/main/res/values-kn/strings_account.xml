@@ -209,6 +209,7 @@
   <string name="account_revoke_device_hint">ಖಚಿತಪಡಿಸಲು ಪಾಸ್ವರ್ಡ್ ನಮೂದಿಸಿ</string>
   <string name="enter_password">ಪಾಸ್ವರ್ಡ್ ನಮೂದಿಸಿ</string>
   <string name="revoke_device_title">ರದ್ದುಗೊಳಿಸುವ ಸಾಧನ</string>
+  <string name="revoke_device_message">%1$s ಗಳನ್ನು ರದ್ದುಗೊಳಿಸಬೇಕೆಂಬುದು ನಿಮಗೆ ಖಚಿತವಾಗಿದೆಯೇ?</string>
   <string name="revoke_device_wait_title">ದಯವಿಟ್ಟು ಕಾಯಿರಿ.</string>
   <string name="revoke_device_wait_message">ಮರುಕಳಿಸುವ ಸಾಧನ</string>
   <string name="rename_device_title">ಈ ಸಾಧನವನ್ನು ಮರುನಾಮಕರಣ ಮಾಡಿ</string>

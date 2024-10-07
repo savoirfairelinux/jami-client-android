@@ -6,6 +6,9 @@
   <string name="copyright_section">কপিরাইট</string>
   <string name="contribute_section">অবদান</string>
   <string name="version_section">সংস্করণ</string>
+  <string name="no_browser_app_installed">কোন ওয়েব ব্রাউজার অ্যাপ পাওয়া যায় নি, এই পৃষ্ঠাটি দেখতে একটি ইনস্টল করুন</string>
+  <string name="website_chooser_title">ওয়েবসাইট দেখুন...</string>
+  <string name="license">এই সফ্টওয়্যারটি \"যেমনটি\", কোনও ধরণের গ্যারান্টি ছাড়াই সরবরাহ করা হয়। বিস্তারিত জানার জন্য, দেখুন <u>GNU সাধারণ পাবলিক লাইসেন্স সংস্করণ 3 বা তার পরে</u></string>
   <string name="description">জামি হল সার্বজনীন যোগাযোগের জন্য একটি মুক্ত সফটওয়্যার যা ব্যবহারকারীদের স্বাধীনতা ও গোপনীয়তাকে সম্মান করে।</string>
   <string name="credits">ক্রেডিট</string>
   <string name="pip_title">জামি সম্মেলন</string>
@@ -223,7 +226,9 @@
   <string name="title_share_with">ভাগ করে নিন...</string>
   <!--Pending invitations-->
   <string name="accept">গ্রহণ করুন</string>
+  <string name="decline">হ্রাস</string>
   <string name="block">ব্লক</string>
+  <string name="invitation_message">আপনার %1$d যোগাযোগের অনুরোধ আছে</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">কোন অবরুদ্ধ যোগাযোগ নেই</string>
   <!--Smartlist-->

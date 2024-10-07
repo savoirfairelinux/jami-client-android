@@ -6,6 +6,9 @@
   <string name="copyright_section">Аўтарскія правы</string>
   <string name="contribute_section">Уклад</string>
   <string name="version_section">Версія</string>
+  <string name="no_browser_app_installed">Ніякіх прыкладанняў вэб-браўзэра не знайшлі, усталяваць адзін, каб праглядзець гэтую старонку</string>
+  <string name="website_chooser_title">Праглядзіце сайт з дапамогай...</string>
+  <string name="license">Гэты праграмны праграмны прадукт прадастаўляецца "як ёсць", без гарантыі якога-небудзь роду. Для падрабязнасці, глядзіце GNU General Public License версія 3 або пазней&lt;/u&gt;</string>
   <string name="description">Jami з\'яўляецца свабодным праграмным забеспячэннем для універсальнай камунікацыі, якое паважае свабоды і прыватнасць сваіх карыстальнікаў.</string>
   <string name="credits">Крэдыты</string>
   <string name="pip_title">Канферэнцыя Джані</string>
@@ -103,6 +106,7 @@
   <string name="generic_error_migration">Памылка</string>
   <!--Pending invitations-->
   <string name="accept">Прыняць</string>
+  <string name="decline">Падзенне</string>
   <string name="block">Блокіроўванне</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Ніякіх заблакаваных кантактаў</string>

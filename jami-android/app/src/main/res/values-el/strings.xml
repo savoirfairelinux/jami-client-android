@@ -6,6 +6,9 @@
   <string name="copyright_section">Πνευματική Ιδιοκτησία</string>
   <string name="contribute_section">Συνεισφέρετε</string>
   <string name="version_section">Έκδοση</string>
+  <string name="no_browser_app_installed">Δεν βρέθηκε πρόγραμμα περιήγησης, εγκαταστήστε ένα για να δείτε την σελίδα</string>
+  <string name="website_chooser_title">Προβολή σελίδας με...</string>
+  <string name="license">Το παρόν λογισμικό παρέχεται \"ως έχει\", άνευ οποιασδήποτε εγγύησης. Για περισσότερα βλ.<u> Γενική Άδεια Δημόσιας Χρήσης GNU έκδοση 3 ή νεώτερη</u></string>
   <string name="description">To Jami είναι ένα ελεύθερο λογισμικό για επικοινωνία με όλο τον κόσμο. Σέβεται την ελευθερία και την ιδιωτικότητα των χρηστών/στριών του.</string>
   <string name="credits">Συντελεστές</string>
   <string name="pip_title">Συνδιάσκεψη Jami</string>
@@ -225,7 +228,9 @@
   <string name="title_share_with">Κοινοποίησε με...</string>
   <!--Pending invitations-->
   <string name="accept">Αποδοχή</string>
+  <string name="decline">Απόρριψη κλήσης</string>
   <string name="block">Μπλοκάρισμα</string>
+  <string name="invitation_message">Έχεις %1$d αιτήματα επαφών</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Μη μπλοκαρισμένες επαφές</string>
   <!--Smartlist-->

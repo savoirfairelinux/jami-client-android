@@ -180,7 +180,7 @@
   <string name="conversation_type_group">Товчмын хуримтлагууд</string>
   <string name="conversation_contact_invited">%1$s-ийг урьсан</string>
   <string name="conversation_contact_added">%1$s-ийг холбосон</string>
-  <string name="conversation_contact_left">%1$ нь үлдлээ</string>
+  <string name="conversation_contact_left">%1$s нь үлдлээ</string>
   <string name="conversation_search_hint">Танд ярилцлага хайх</string>
   <string name="today">Өнөөдөр</string>
   <string name="yesterday">Өчигдөр</string>

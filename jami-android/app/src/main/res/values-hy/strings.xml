@@ -161,7 +161,7 @@
   <string name="conversation_open_file_error">Այս ֆայլերի տեսակը բացելու համար տեղադրված ծրագիր չկա:</string>
   <string name="clip_contact_uri">Հաղորդակցական հասցե</string>
   <string name="block_contact_dialog_title">%1$s-ը արգելափակո՞ւմ է:</string>
-  <string name="block_contact_dialog_message">%1$-ը չի կարող կապ հաստատել ձեզ հետ, մինչեւ չբլոկեք այն:</string>
+  <string name="block_contact_dialog_message">%1$s-ը չի կարող կապ հաստատել ձեզ հետ, մինչեւ չբլոկեք այն:</string>
   <string name="block_contact_completed">%1$s-ը արգելափակվել է:</string>
   <string name="unblock_contact_dialog_title">Բաց թողնել %1$s- ը:</string>
   <string name="unblock_contact_dialog_message">%1$s-ը կկարողանա կրկին կապ հաստատել ձեզ հետ:</string>
@@ -180,7 +180,7 @@
   <string name="conversation_type_group">Խմբային խումբ</string>
   <string name="conversation_contact_invited">%1$s-ը հրավիրվել է</string>
   <string name="conversation_contact_added">%1$s-ը միացել է</string>
-  <string name="conversation_contact_left">%1$-ը ձախ է</string>
+  <string name="conversation_contact_left">%1$s-ը ձախ է</string>
   <string name="conversation_search_hint">Հետազոտական զրույց</string>
   <string name="today">Այսօր</string>
   <string name="yesterday">Երեկ</string>

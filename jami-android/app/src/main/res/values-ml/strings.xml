@@ -180,7 +180,7 @@
   <string name="conversation_type_group">ഗ്രൂപ്പ് സ്വാം</string>
   <string name="conversation_contact_invited">%1$s ക്ഷണിച്ചു</string>
   <string name="conversation_contact_added">%1$s ചേർന്നു</string>
-  <string name="conversation_contact_left">%1$ ഇടതുവശത്ത്</string>
+  <string name="conversation_contact_left">%1$s ഇടതുവശത്ത്</string>
   <string name="conversation_search_hint">തിരയൽ സംഭാഷണം</string>
   <string name="today">ഇന്ന്</string>
   <string name="yesterday">ഇന്നലെ</string>

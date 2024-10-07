@@ -232,6 +232,7 @@
   <string name="title_share_with">Compartir con...</string>
   <!--Pending invitations-->
   <string name="accept">Aceptar</string>
+  <string name="decline">Rexeitar</string>
   <string name="block">Bloquar</string>
   <string name="invitation_message">Tes %1$d solicitudes de contacto  </string>
   <!--Blacklist-->

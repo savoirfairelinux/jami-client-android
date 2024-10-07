@@ -7,6 +7,9 @@
   <string name="contribute_section">مشارکت و همکاری</string>
   <string name="version_section">نسخه</string>
   <string name="no_browser_app_installed">هیچ برنامه مرورگری یافت نشد یک نسخه نصب کرده تا بتوانید این صفحه را مشاهده کنید</string>
+  <string name="website_chooser_title">مشاهده وبسایت با ...</string>
+  <string name="license">این نرم افزار این نرم افزار \"همانطور که هست\" ارائه شده و هیچ تضمینی وجود ندارد برای جزئیات ببینید 
+<u> GNU General Public License version 3 or later </u></string>
   <string name="description">جمی یک برنامه رایگان هست که برای ارتباط همگانی طراحی شده
 از اهداف اصلی آن احترام به آزادی و حریم خصوصی کاربران می باشد</string>
   <string name="credits">حامیان</string>
@@ -230,6 +233,7 @@
   <string name="title_share_with">هم‌رسانی با...</string>
   <!--Pending invitations-->
   <string name="accept">پذیرش</string>
+  <string name="decline">ردکردن</string>
   <string name="block">مسدود</string>
   <string name="invitation_message">شما‫ %1$d درخواست ارتباط دارید</string>
   <!--Blacklist-->

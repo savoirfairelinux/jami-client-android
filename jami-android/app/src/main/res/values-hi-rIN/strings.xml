@@ -191,7 +191,7 @@
   <string name="conversation_type_group">समूह समूह</string>
   <string name="conversation_contact_invited">%1$s को आमंत्रित किया गया था</string>
   <string name="conversation_contact_added">%1$s जोड़ा गया</string>
-  <string name="conversation_contact_left">%1$ बाएं</string>
+  <string name="conversation_contact_left">%1$s बाएं</string>
   <string name="conversation_search_hint">खोज वार्तालाप</string>
   <string name="audio_recorder_error">ऑडियो रिकॉर्डर ऐप नहीं मिला.</string>
   <string name="video_recorder_error">वीडियो रिकॉर्डर ऐप नहीं मिला.</string>
@@ -251,6 +251,7 @@
   <string name="title_share_with">साझा करें...</string>
   <!--Pending invitations-->
   <string name="accept">स्वीकार करें</string>
+  <string name="decline">गिरावट</string>
   <string name="block">ब्लॉक</string>
   <string name="invitation_message">आपके पास %1$d संपर्क अनुरोध है</string>
   <!--Blacklist-->

@@ -187,7 +187,7 @@
   <string name="conversation_type_group">Груповий скоп</string>
   <string name="conversation_contact_invited">%1$s запрошений</string>
   <string name="conversation_contact_added">%1$s приєднаний</string>
-  <string name="conversation_contact_left">%1$ залишився</string>
+  <string name="conversation_contact_left">%1$s залишився</string>
   <string name="conversation_search_hint">Пошук розмов</string>
   <string name="today">Сьогодні</string>
   <string name="yesterday">Учора</string>

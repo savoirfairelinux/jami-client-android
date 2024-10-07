@@ -200,11 +200,11 @@ Vous pourrez apporter des modifications à ce compte plus tard.</string>
   <string name="account_link_export_button">Associer un nouvel appareil</string>
   <string name="account_link_show_button">Montrer %d appareils liés suppléementaires</string>
   <string name="account_link_hide_button">Cacher les appareils liés</string>
-  <string name="account_link_export_info">Pour utiliser ce compte sur d\'autres appareils, vous devez d\'abord l\'exposer sur Jami. Ceci générera un code NIP que vous devrez entrer sur le nouvel appareil pour configurer le compte. Le NIP restera valide pendant 10 minutes. </string>
+  <string name="account_link_export_info">Pour utiliser ce compte sur d\'autres appareils, vous devez d\'abord l\'exposer sur Jami. Ceci génèrera un code NIP que vous devrez entrer sur le nouvel appareil pour configurer le compte. Le NIP restera valide pendant 10 minutes.</string>
   <string name="account_start_export_button">Générer le NIP</string>
   <string name="account_end_export_button">fermer</string>
   <string name="account_end_export_infos">Votre NIP est:\n\n%%\n\nPour terminer l\'opération, vous devez ouvrir Jami sur un autre appareil puis créer un nouveau compte avec \"Lier cet appareil à un compte\".  Votre NIP est utilisable pendant 10 minutes.</string>
-  <string name="account_link_export_info_light">Pour utiliser ce compte sur d\'autres appareils, vous devez d\'abord l\'exposer sur Jami. Ceci générera un code NIP que vous devrez entrer sur le nouvel appareil pour configurer le compte. Le NIP restera valide pendant 10 minutes. </string>
+  <string name="account_link_export_info_light">Pour utiliser ce compte sur d\'autres appareils, vous devez d\'abord l\'exposer sur Jami. Ceci génèrera un code NIP que vous devrez entrer sur le nouvel appareil pour configurer le compte. Le NIP restera valide pendant 10 minutes.</string>
   <string name="account_export_title">Associer le compte à d\'autres appareils</string>
   <string name="account_connect_server_button">Se connecter à partir d\'un serveur d\'entreprise</string>
   <string name="account_connect_button">Se connecter</string>

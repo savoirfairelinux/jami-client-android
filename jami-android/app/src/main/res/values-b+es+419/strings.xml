@@ -1,6 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
+  <string name="no_browser_app_installed">No se ha encontrado Navegador Web, instala uno para ver esta página</string>
+  <string name="website_chooser_title">Mira la pagina web usando...</string>
+  <string name="license">Este software se proporciona \"tal cual\" sin garantía de ningún tipo. Para mas información, vea 1 GNU General Public License versión 3 o superior</string>
   <!--About dialog-->
   <string name="media">Medios</string>
   <!--RingActivity-->
@@ -62,6 +65,7 @@
   <!--Account Summary-->
   <!--Share fragment-->
   <!--Pending invitations-->
+  <string name="decline">Rechazar</string>
   <string name="invitation_message">Tenés %1$d solicitudes de contacto</string>
   <!--Blacklist-->
   <!--Smartlist-->

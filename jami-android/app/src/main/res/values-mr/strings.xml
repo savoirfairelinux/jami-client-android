@@ -180,7 +180,7 @@
   <string name="conversation_type_group">गटातील गट</string>
   <string name="conversation_contact_invited">%1$s ला आमंत्रित केले</string>
   <string name="conversation_contact_added">%1$s जोडले</string>
-  <string name="conversation_contact_left">%1$ बाकी आहे</string>
+  <string name="conversation_contact_left">%1$s बाकी आहे</string>
   <string name="conversation_search_hint">शोध संभाषण</string>
   <string name="today">आज</string>
   <string name="yesterday">काल</string>

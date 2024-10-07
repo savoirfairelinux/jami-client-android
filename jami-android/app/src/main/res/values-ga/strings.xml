@@ -106,6 +106,7 @@
   <string name="generic_error_migration">Meas</string>
   <!--Pending invitations-->
   <string name="accept">Tabhair faoi deara</string>
+  <string name="decline">Tarraing</string>
   <string name="block">Bloc</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Ní thiocfar teagmhálacha</string>

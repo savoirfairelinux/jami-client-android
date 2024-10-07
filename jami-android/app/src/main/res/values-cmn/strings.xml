@@ -1,6 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
+  <string name="no_browser_app_installed">沒有網頁瀏覽程式，請安裝一個以便觀看這網頁</string>
+  <string name="website_chooser_title">使用…浏览网站</string>
+  <string name="license">本软件由版权持有人及其他责任者“按原样”提供，不提供任何形式的担保。详细信息请参阅 <u>GNU 通用公共许可证版本 3 或更新</u></string>
   <!--About dialog-->
   <string name="media">媒体</string>
   <!--RingActivity-->
@@ -63,6 +66,8 @@
   <!--Account Summary-->
   <!--Share fragment-->
   <!--Pending invitations-->
+  <string name="decline">拒接</string>
+  <string name="invitation_message">您有 %1$d 个联系人请求</string>
   <!--Blacklist-->
   <!--Smartlist-->
   <!--File Transfer-->

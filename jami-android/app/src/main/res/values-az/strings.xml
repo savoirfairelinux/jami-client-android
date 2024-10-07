@@ -6,6 +6,9 @@
   <string name="copyright_section">حق اشغال</string>
   <string name="contribute_section">بؤلوملر</string>
   <string name="version_section">نسخه</string>
+  <string name="no_browser_app_installed">هیچ web browser app تاپیلدی، بو صفحه نی گؤرمک اوچون بیری سی نصب ائت</string>
+  <string name="website_chooser_title">سايتين سايتيني...</string>
+  <string name="license">بو نرم افزار هر نوع گارانتیسیز \"هماناً\" وئریلیر.</string>
   <string name="description">جامی، آلیشمیش آلیشما اوچون آزاد بیر نرم افزار دیر کی، اؤز ایستیفاده چیلرینین آزادلیقلارینا و خصوصی لیکلرینه حؤرمت ائدیر.</string>
   <string name="credits">اعتبارلار</string>
   <string name="pip_title">جامي کنفرانس</string>
@@ -177,7 +180,7 @@
   <string name="conversation_type_group">گروه توپلو</string>
   <string name="conversation_contact_invited">%1$s دعوت ائدیلدی</string>
   <string name="conversation_contact_added">%1$s قوشولدو</string>
-  <string name="conversation_contact_left">%1$ سولدو</string>
+  <string name="conversation_contact_left">%1$s سولدو</string>
   <string name="conversation_search_hint">بحث آختارماق</string>
   <string name="today">بو گون</string>
   <string name="yesterday">دونن</string>
@@ -223,7 +226,9 @@
   <string name="title_share_with">...تشارق ائله</string>
   <!--Pending invitations-->
   <string name="accept">قبول ائدیر</string>
+  <string name="decline">آشاغی صفحه</string>
   <string name="block">بلوک</string>
+  <string name="invitation_message">%1$d تماس طلبلرینی آلدی</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">موغوط ائتمه دی</string>
   <!--Smartlist-->

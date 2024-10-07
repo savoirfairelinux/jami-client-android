@@ -80,7 +80,7 @@
   <string name="conversation_type_group">Grupa Swarm</string>
   <string name="conversation_contact_invited">%1$s je pozvan</string>
   <string name="conversation_contact_added">%1$s se pridružio</string>
-  <string name="conversation_contact_left">%1$ je lijevo</string>
+  <string name="conversation_contact_left">%1$s je lijevo</string>
   <string name="conversation_search_hint">Razgovor za pretragu</string>
   <string name="today">Danas</string>
   <string name="yesterday">Jučer</string>
@@ -101,6 +101,7 @@
   <string name="share_your_account_information">Podeli moje kontaktne podatke</string>
   <string name="generic_error_migration_message">Pogreška se dogodila tijekom migracije</string>
   <!--Pending invitations-->
+  <string name="decline">Odbij</string>
   <string name="invitation_message">Imate %1$d zahtjeve za kontakt</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Nema blokiranih kontakata</string>

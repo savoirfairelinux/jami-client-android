@@ -6,6 +6,9 @@
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Přispět</string>
   <string name="version_section">Verze</string>
+  <string name="no_browser_app_installed">Nenalezen žádný program na  prohlížení internetových stránek. Nainstalujte jej pro zobrazení této stránky.</string>
+  <string name="website_chooser_title">Zobrazit stránku pomocí...</string>
+  <string name="license">Tento program je poskytován tak, jak je, bez jakýchkoli záruk. Na podrobnosti se podívejte na znění licence <u>GNU General Public License ve verzi 3 nebo pozdější</u></string>
   <string name="description">Jami je svobodný software určený k univerzální komunikaci, který respektuje svobody a práva uživatelů.</string>
   <string name="credits">Zásluhy</string>
   <string name="pip_title">Konference Jami</string>
@@ -226,7 +229,9 @@
   <string name="title_share_with">Sdílet s…</string>
   <!--Pending invitations-->
   <string name="accept">Přijmout</string>
+  <string name="decline">Nepřijmout</string>
   <string name="block">Blokovat</string>
+  <string name="invitation_message">Máš%1$džádostí o kontakt</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Žádné blokované kontakty</string>
   <!--Smartlist-->

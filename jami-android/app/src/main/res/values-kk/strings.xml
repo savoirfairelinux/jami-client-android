@@ -228,7 +228,7 @@
   <string name="accept">Қабылда</string>
   <string name="decline">Ауыру</string>
   <string name="block">Блок</string>
-  <string name="invitation_message">% 1 контакт сұрақтарыңыз бар</string>
+  <string name="invitation_message">%1$d контакт сұрақтарыңыз бар</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Контакттар тосқауылданбаған</string>
   <!--Smartlist-->

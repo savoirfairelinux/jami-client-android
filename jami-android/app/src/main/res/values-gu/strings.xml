@@ -180,7 +180,7 @@
   <string name="conversation_type_group">જૂથ સમૂહ</string>
   <string name="conversation_contact_invited">%1$s આમંત્રિત કરવામાં આવી હતી</string>
   <string name="conversation_contact_added">%1$s જોડાયા</string>
-  <string name="conversation_contact_left">%1$ ડાબી</string>
+  <string name="conversation_contact_left">%1$s ડાબી</string>
   <string name="conversation_search_hint">શોધ વાતચીત</string>
   <string name="today">આજે</string>
   <string name="yesterday">ગઈકાલે</string>
@@ -226,6 +226,7 @@
   <string name="title_share_with">.. સાથે શેર કરો.</string>
   <!--Pending invitations-->
   <string name="accept">સ્વીકારો</string>
+  <string name="decline">ઘટાડો</string>
   <string name="block">બ્લોક</string>
   <string name="invitation_message">તમારી પાસે %1$d સંપર્ક વિનંતીઓ છે</string>
   <!--Blacklist-->

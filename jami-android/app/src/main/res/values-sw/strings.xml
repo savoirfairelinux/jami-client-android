@@ -180,7 +180,7 @@
   <string name="conversation_type_group">Mwili wa Kikundi</string>
   <string name="conversation_contact_invited">%1$s aliitwa</string>
   <string name="conversation_contact_added">%1$s imeunganishwa</string>
-  <string name="conversation_contact_left">%1$s%1$ ni kushoto</string>
+  <string name="conversation_contact_left">%1$s ni kushoto</string>
   <string name="conversation_search_hint">Tafuta mazungumzo</string>
   <string name="today">Leo</string>
   <string name="yesterday">Jana</string>

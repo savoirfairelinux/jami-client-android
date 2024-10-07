@@ -1,11 +1,16 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
+  <string name="submit_issue_title">Problem übermitteln</string>
+  <string name="submit_issue_action_description"><u>Neues Problem erstellen</u></string>
   <string name="section_license">Lizenz</string>
   <string name="sponsor_section">Jami ist freie Software, entwickelt und unterstützt durch</string>
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Beitragen</string>
   <string name="version_section">Version</string>
+  <string name="no_browser_app_installed">Keine Webbrowser-App gefunden, installieren Sie einen, um diese Seite anzuzeigen</string>
+  <string name="website_chooser_title">Webseite anzeigen mit...</string>
+  <string name="license">Diese Software wird \"wie sie ist\" ohne Gewährleistung irgendwelcher Art zur Verfügung gestellt. Details finden Sie unter <u>GNU General Public License Version 3 oder höher</u></string>
   <string name="description">Jami ist eine freie Software für universelle Kommunikation und respektiert die Freiheiten und Privatsphäre der Benutzer.</string>
   <string name="credits">Würdigung</string>
   <string name="pip_title">Jami-Konferenz</string>
@@ -176,6 +181,10 @@
   <string name="conversation_action_remove_this">Kontakt löschen</string>
   <string name="conversation_action_remove_this_title">Diesen Kontakt löschen?</string>
   <string name="conversation_action_remove_this_message">Das wird den Kontakt und den Unterhaltungsverlauf endgültig löschen.</string>
+  <string name="swarm_group_action_leave">Gruppe verlassen</string>
+  <string name="swarm_group_action_leave_title">Diese Gruppe verlassen?</string>
+  <string name="swarm_group_action_leave_message">Dadurch wird die Unterhaltung aus Ihrer Unterhaltungsliste entfernt</string>
+  <string name="conversation_action_copy_peer_number">Kontakt-ID kopieren</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s in die Zwischenablage kopiert</string>
   <string name="conversation_action_select_peer_number">Eine Nummer auswählen</string>
   <string name="conversation_action_block_this">Kontakt blockieren</string>
@@ -271,7 +280,14 @@
   <string name="title_share_with">Teilen mit...</string>
   <!--Pending invitations-->
   <string name="accept">Annehmen</string>
+  <string name="decline">Ablehnen</string>
   <string name="block">Blockieren</string>
+  <string name="decline_invitation">Einladung ablehnen</string>
+  <string name="accept_invitation">Einladung annehmen</string>
+  <string name="new_invitation_request_title">Neue Einladung</string>
+  <string name="invitation_message">Sie haben %1$d Kontaktanfragen</string>
+  <string name="no_invitations">Es sind keine Chat-Einladungen zum Anzeigen vorhanden.</string>
+  <string name="invitation_received_message">Chat-Einladung erhalten von %s.\nChat-Einladung annehmen oder ablehnen?</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Keine blockierten Kontakte</string>
   <!--Smartlist-->

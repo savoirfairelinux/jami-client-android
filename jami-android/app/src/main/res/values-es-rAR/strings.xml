@@ -6,6 +6,9 @@
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Contribuya</string>
   <string name="version_section">Versión</string>
+  <string name="no_browser_app_installed">No se detectó ningún navegador, instale uno para ver esta página</string>
+  <string name="website_chooser_title">Ver página con...</string>
+  <string name="license">Este software se proporciona \"tal cual es\", sin ninguna garantía de ningún tipo. Para más detalles, consultá <u>Licencia Pública General de GNU versión 3 o posterior</u></string>
   <string name="description">Jami es un software libre para comunicarse univesalmente, el cual respeta las libertades y la privacidad de sus usuarios.</string>
   <string name="credits">Créditos</string>
   <string name="pip_title">Conferencia Jami</string>
@@ -233,6 +236,7 @@
   <string name="title_share_with">Compartir con...</string>
   <!--Pending invitations-->
   <string name="accept">Aceptar</string>
+  <string name="decline">Rechazar</string>
   <string name="block">Bloquear</string>
   <string name="invitation_message">Tenés %1$d solicitudes de contacto</string>
   <!--Blacklist-->

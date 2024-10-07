@@ -7,6 +7,8 @@
   <string name="contribute_section">Osale kaastöös</string>
   <string name="version_section">Versioon</string>
   <string name="no_browser_app_installed">Veebibrauserit ei leitud, paigalda see lehe avamiseks</string>
+  <string name="website_chooser_title">Vaata veebisaiti kasutades...</string>
+  <string name="license">See tarkvara on pakutav „nii nagu on“, ilma mingisuguse garantiideta. Lisateave: <u>GNU Üldise Avaliku Litsentsi versioon 3 või hilisem</u></string>
   <string name="description">Jami on universaalse suhtlemise vaba tarkvara, mis austab kasutajate vabadusi ja privaatsust.</string>
   <string name="credits">Tänuavaldused</string>
   <string name="pip_title">Jami konverents</string>
@@ -232,6 +234,7 @@
   <string name="title_share_with">Jaga seda...</string>
   <!--Pending invitations-->
   <string name="accept">Võta vastu</string>
+  <string name="decline">Keeldu</string>
   <string name="block">Blokeeri</string>
   <string name="invitation_message">Sul on %1$d kontaktipäring(ut)</string>
   <!--Blacklist-->

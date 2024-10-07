@@ -181,7 +181,7 @@
   <string name="conversation_type_group">Grupa Swarm</string>
   <string name="conversation_contact_invited">%1$s je pozvan</string>
   <string name="conversation_contact_added">%1$s se pridružio</string>
-  <string name="conversation_contact_left">%1$ je lijevo</string>
+  <string name="conversation_contact_left">%1$s je lijevo</string>
   <string name="conversation_search_hint">Razgovor za pretragu</string>
   <string name="today">Danas</string>
   <string name="yesterday">Jučer</string>
@@ -227,6 +227,7 @@
   <string name="title_share_with">Dijeli sa...</string>
   <!--Pending invitations-->
   <string name="accept">Prihvati</string>
+  <string name="decline">Odbij</string>
   <string name="block">Blokiraj</string>
   <string name="invitation_message">Imate %1$d zahtjeve za kontakt</string>
   <!--Blacklist-->

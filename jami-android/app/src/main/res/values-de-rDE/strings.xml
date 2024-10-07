@@ -1,6 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
+  <string name="submit_issue_title">Problem übermitteln</string>
+  <string name="submit_issue_action_description"><u>Neues Problem erstellen</u></string>
+  <string name="no_browser_app_installed">Keine Browser-App gefunden, installiere eine, um die Homepage darzustellen</string>
+  <string name="website_chooser_title">Darstellung der Homepage mit...</string>
+  <string name="license">Diese Software wird \"wie sie ist\" ohne Gewährleistung irgendwelcher Art zur Verfügung gestellt. Details finden Sie unter <u>GNU General Public License Version 3 oder später</u></string>
   <!--About dialog-->
   <string name="thank_note">Wir möchten uns bei unseren Mitwirkenden bedanken, deren langjähriger Einsatz diese Software zu dem gemacht hat, was sie ist.</string>
   <string name="developers">Entwickler</string>
@@ -45,6 +50,10 @@
   <string name="contact_details">Kontaktdetails</string>
   <string name="conversation_action_delete_this_title">Diese Unterhaltung löschen?</string>
   <string name="conversation_action_delete_this_message">Diese Aktion kann nicht rückgängig gemacht werden.</string>
+  <string name="swarm_group_action_leave">Gruppe verlassen</string>
+  <string name="swarm_group_action_leave_title">Diese Gruppe verlassen?</string>
+  <string name="swarm_group_action_leave_message">Dadurch wird die Unterhaltung aus Ihrer Unterhaltungsliste entfernt</string>
+  <string name="conversation_action_copy_peer_number">Kontakt-ID kopieren</string>
   <string name="conversation_contact_blocked">%1$s wurde blockiert</string>
   <string name="conversation_contact_unblocked">Blockierung von %1$swurde aufgehoben</string>
   <!--Contacts-->
@@ -54,6 +63,13 @@
   <!--Account Summary-->
   <!--Share fragment-->
   <!--Pending invitations-->
+  <string name="decline">Ablehnen</string>
+  <string name="decline_invitation">Einladung ablehnen</string>
+  <string name="accept_invitation">Einladung annehmen</string>
+  <string name="new_invitation_request_title">Neue Einladung</string>
+  <string name="invitation_message">Du hast %1$d Kontaktanfragen</string>
+  <string name="no_invitations">Es sind keine Chat-Einladungen zum Anzeigen vorhanden.</string>
+  <string name="invitation_received_message">Chat-Einladung erhalten von %s.\nChat-Einladung annehmen oder ablehnen?</string>
   <!--Blacklist-->
   <!--Smartlist-->
   <string name="generic_error">Ein unbekannter Fehler ist aufgetreten.</string>

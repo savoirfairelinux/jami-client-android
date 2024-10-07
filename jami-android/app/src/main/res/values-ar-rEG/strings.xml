@@ -6,6 +6,9 @@
   <string name="copyright_section">حقوق النشر</string>
   <string name="contribute_section">مساهمة</string>
   <string name="version_section">الإصدار</string>
+  <string name="no_browser_app_installed">ﻻ يوجد برنامج متصفح للويب, قم بتثبيت أحدهم لترى هذه الصفحة</string>
+  <string name="website_chooser_title">معاينة الموقع الإلكتروني بواسطة...</string>
+  <string name="license">هذا البرنامج مقدم \"كما هو\", بدون ضمان من أي نوع, للتفاصيل, أنظر <u>رخصة غنو العمومية إصدار الترخيص 3 أو ما بعدها</u></string>
   <string name="description">جامى هو برنامج حر مجانى للتواصل العالمى الذى يحترم حريات وخصوصيات مستخدميه.</string>
   <string name="credits">الأطراف الداعمة</string>
   <string name="pip_title">اجتماع جامي مرئي</string>
@@ -173,7 +176,7 @@
   <string name="conversation_type_group">مجموعة من المجموعات</string>
   <string name="conversation_contact_invited">%1$s تم دعوته</string>
   <string name="conversation_contact_added">%1$s متضمن</string>
-  <string name="conversation_contact_left">%1$ يسار</string>
+  <string name="conversation_contact_left">%1$s يسار</string>
   <string name="conversation_search_hint">بحث عن المحادثة</string>
   <string name="today">اليوم</string>
   <string name="yesterday">البارحة</string>
@@ -219,7 +222,9 @@
   <string name="title_share_with">شارك مع...</string>
   <!--Pending invitations-->
   <string name="accept">اقبل</string>
+  <string name="decline">رفض</string>
   <string name="block">حظر</string>
+  <string name="invitation_message">لديك %1$d طلبات جهات اتصال</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">لا توجد جهات إتصال محظورة</string>
   <!--Smartlist-->
