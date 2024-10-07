@@ -488,6 +488,9 @@ class DetailsActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPi
                     )
                 }
             }
+
+            // Hide tab layout if there is only one tab
+            binding?.tabLayout?.isVisible = titles.size > 1
         }
 
         override fun getItemCount(): Int = fragments.size
