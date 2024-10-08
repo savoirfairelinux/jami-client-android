@@ -45,6 +45,7 @@ class Conversation : ConversationHistory {
     private val composingStatusSubject: Subject<Account.ComposingStatus> = BehaviorSubject.createDefault(Account.ComposingStatus.Idle)
     private val color: Subject<Int> = BehaviorSubject.createDefault(0)
     private val symbol: Subject<CharSequence> = BehaviorSubject.createDefault("")
+    private val notification: Subject<Boolean> = BehaviorSubject.createDefault(true)
     private val mContactSubject: Subject<List<Contact>> = BehaviorSubject.create()
     var loaded: Single<Conversation>? = null
     val lastElementLoadedSubject = SingleSubject.create<Completable>()
@@ -704,9 +705,19 @@ class Conversation : ConversationHistory {
         symbol.onNext(s)
     }
 
+    fun setNotification(enable: Boolean) {
+        notification.onNext(enable)
+    }
+
     fun getColor(): Observable<Int> = color
 
     fun getSymbol(): Observable<CharSequence> = symbol
+
+    /**
+     * Get the notification preference.
+     * @return true if the notification is enabled, false otherwise.
+     */
+    fun getNotification(): Observable<Boolean> = notification
 
     fun updatePreferences(preferences: Map<String, String>) {
         val colorValue = preferences[KEY_PREFERENCE_CONVERSATION_COLOR]
@@ -719,6 +730,9 @@ class Conversation : ConversationHistory {
         preferences[KEY_PREFERENCE_CONVERSATION_SYMBOL].let {
             symbol.onNext(if (StringUtils.isOnlyEmoji(it)) it!! else "")
         }
+        preferences[KEY_PREFERENCE_CONVERSATION_NOTIFICATION]?.let {
+            notification.onNext(it.toBoolean())
+        }?: Log.w(TAG, "No notification preference found")
     }
 
     /** Tells if the conversation is a swarm:group with more than 2 participants (including user) */
@@ -827,6 +841,7 @@ class Conversation : ConversationHistory {
         private val TAG = Conversation::class.simpleName!!
         const val KEY_PREFERENCE_CONVERSATION_COLOR = "color"
         const val KEY_PREFERENCE_CONVERSATION_SYMBOL = "symbol"
+        const val KEY_PREFERENCE_CONVERSATION_NOTIFICATION = "notification"
 
         private fun getTypedInteraction(interaction: Interaction) = when (interaction.type) {
             Interaction.InteractionType.TEXT -> TextMessage(interaction)
