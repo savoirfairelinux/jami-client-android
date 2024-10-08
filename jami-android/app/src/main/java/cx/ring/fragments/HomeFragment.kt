@@ -127,12 +127,8 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
         savedInstanceState: Bundle?,
     ): View = FragHomeBinding.inflate(inflater, container, false).apply {
 
-        qrCode.setOnClickListener {
-            goToQRFragment()
-        }
-        newSwarm.setOnClickListener {
-            startNewSwarm()
-        }
+        qrCode.setOnClickListener { goToQRFragment() }
+        newSwarm.setOnClickListener { startNewSwarm() }
 
         // SearchBar is composed of:
         // - Account selection (navigation)
@@ -464,6 +460,7 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
         mDisposable.add(mAccountService.currentAccountSubject
             .observeOn(DeviceUtils.uiScheduler)
             .subscribe {
+                mBinding?.newSwarm?.isVisible = !it.isSip
                 mBinding?.searchBar?.menu?.findItem(R.id.menu_account_settings)?.isEnabled = true
             }
         )
