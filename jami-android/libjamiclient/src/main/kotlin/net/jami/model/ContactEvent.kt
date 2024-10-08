@@ -32,11 +32,11 @@ class ContactEvent : Interaction {
         event = getEventFromStatus(interaction.status)
     }
 
-    constructor() {
+    constructor(time: Long) {
         author = null
         event = Event.ADDED
         type = InteractionType.CONTACT
-        timestamp = System.currentTimeMillis()
+        timestamp = time
         status = InteractionStatus.SUCCESS
         mIsRead = 1
     }
