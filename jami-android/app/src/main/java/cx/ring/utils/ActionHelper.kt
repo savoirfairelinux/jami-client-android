@@ -26,6 +26,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.R
 import cx.ring.views.AvatarView
 import net.jami.model.Contact
+import net.jami.model.Conversation
 import net.jami.model.Conversation.ConversationActionCallback
 import net.jami.model.Uri
 import java.util.*
@@ -167,6 +168,20 @@ object ActionHelper {
             .setTitle(context.getString(R.string.block_contact_dialog_title, displayName))
             .setMessage(context.getString(R.string.block_contact_dialog_message, displayName))
             .setPositiveButton(android.R.string.ok) { _, _ -> callback(accountId, contact.uri) }
+            .setNegativeButton(android.R.string.cancel) { _, _ -> }.show()
+    }
+
+    fun launchAcceptInvitation(
+        context: Context,
+        conversation: Conversation,
+        callback: (conversation: Conversation) -> Unit,
+    ) {
+        val displayName = conversation.contact!!.username?.blockingGet()
+            .takeIf { !it.isNullOrEmpty() } ?: conversation.contact!!.uri.uri
+        MaterialAlertDialogBuilder(context)
+            .setTitle(R.string.accept_invitation)
+            .setMessage(context.getString(R.string.accept_invitation_body, displayName))
+            .setPositiveButton(android.R.string.ok) { _, _ -> callback(conversation) }
             .setNegativeButton(android.R.string.cancel) { _, _ -> }.show()
     }
 
