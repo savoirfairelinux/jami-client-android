@@ -931,11 +931,13 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             if (result.resultCode == Activity.RESULT_OK) {
                 result.data?.extras?.getString(EXIT_REASON)?.let {
                     when (it) {
+                        // Todo: Go to conversation for CONTACT_UNBLOCKED and INVITATION_ACCEPTED
                         ExitReason.CONTACT_ADDED.toString(),
                         ExitReason.CONTACT_DELETED.toString(),
                         ExitReason.CONTACT_BLOCKED.toString(),
                         ExitReason.CONTACT_UNBLOCKED.toString(),
-                        ExitReason.CONVERSATION_LEFT.toString() -> goToHome()
+                        ExitReason.CONVERSATION_LEFT.toString(),
+                        ExitReason.INVITATION_ACCEPTED.toString() -> goToHome()
                         else -> {}
                     }
                 }
