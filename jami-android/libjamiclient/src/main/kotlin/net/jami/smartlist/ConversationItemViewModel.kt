@@ -87,7 +87,7 @@ class ConversationItemViewModel(
         // conversation). To know this, we need to check the conversation mode.
         // However, conversation mode can also be a request. In this case, we need to check the
         // request mode to know if it is a 1:1 conversation or not (request attribute).
-        if (mode == Conversation.Mode.Request)
+        if (mode == Conversation.Mode.Request || mode == Conversation.Mode.Syncing)
             request?.mode != Conversation.Mode.OneToOne
         else mode != Conversation.Mode.OneToOne
 
