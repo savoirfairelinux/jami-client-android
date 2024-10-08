@@ -440,6 +440,7 @@ along with this program; if not, write to the Free Software
     <string name="block">Block</string>
     <string name="decline_invitation">Decline invitation</string>
     <string name="accept_invitation">Accept invitation</string>
+    <string name="accept_invitation_body">Chat invitation received from %s.</string>
     <string name="new_invitation_request_title">New invitation</string>
     <string name="invitation_message">You have %1$d contact requests</string>
     <string name="no_invitations">There are no chat invitations to display.</string>
