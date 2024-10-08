@@ -503,7 +503,7 @@ class ConversationDetailsActivity : AppCompatActivity(), ContactPickerFragment.O
         const val EXIT_REASON = "exit_reason"
         enum class ExitReason {
             CONTACT_ADDED, CONTACT_DELETED, CONVERSATION_LEFT,
-            CONTACT_BLOCKED, CONTACT_UNBLOCKED,
+            CONTACT_BLOCKED, CONTACT_UNBLOCKED, INVITATION_ACCEPTED
         }
         const val REQUEST_CODE_CALL = 3
     }
