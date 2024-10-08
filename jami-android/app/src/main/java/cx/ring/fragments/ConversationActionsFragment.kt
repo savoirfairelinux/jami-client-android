@@ -300,11 +300,13 @@ class ConversationActionsFragment : Fragment() {
                 conversationActionsPanel.visibility = View.GONE
             }
 
+            // Also going there for SIP account
             if (conversation.isLegacy()){
                 blockContact.isVisible = false
                 conversationDelete.setBackgroundResource(R.drawable.background_rounded_16)
                 conversationActionsPanel.visibility = View.GONE
                 conversationDetailsPanel.visibility = View.GONE
+                conversationDelete.isVisible = !mAccountService.currentAccount!!.isSip
                 conversationDelete.text = resources.getString(R.string.ab_action_contact_add)
             } else if (conversation.mode.blockingFirst() == Conversation.Mode.Request) {
                 conversationDelete.text = resources.getString(R.string.accept_invitation)
