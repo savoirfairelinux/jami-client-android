@@ -130,8 +130,9 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
         qrCode.setOnClickListener {
             goToQRFragment()
         }
-        newSwarm.setOnClickListener {
-            startNewSwarm()
+        newSwarm.apply {
+            setOnClickListener { startNewSwarm() }
+            isVisible = !mAccountService.currentAccount!!.isSip
         }
 
         // SearchBar is composed of:
