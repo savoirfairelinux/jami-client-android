@@ -47,6 +47,7 @@ import net.jami.model.Uri
 import net.jami.qrcode.QRCodePresenter
 import net.jami.services.AccountService
 import net.jami.services.ConversationFacade
+import net.jami.utils.Log
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -142,6 +143,16 @@ class ConversationActionsFragment : Fragment() {
             }.show(parentFragmentManager, "emojiChooser")
         }
 
+        muteSwitch.setOnClickListener{
+            val isMuted = muteSwitch.isChecked
+            mConversationFacade.setConversationPreferences(
+                path.accountId,
+                path.conversationUri,
+                mapOf(Conversation.KEY_PREFERENCE_CONVERSATION_NOTIFICATION to (!isMuted).toString())
+            )
+            if (!path.conversationUri.isSwarm) conversation.setNotification(!isMuted)
+        }
+
         mDisposableBag.add(conversation.profile
             .observeOn(DeviceUtils.uiScheduler)
             .subscribe { profile -> description.text = profile.description })
@@ -155,6 +166,11 @@ class ConversationActionsFragment : Fragment() {
         mDisposableBag.add(conversation.getSymbol()
             .observeOn(DeviceUtils.uiScheduler)
             .subscribe { emojiPick.text = getConversationSymbol(requireContext(), it) })
+
+        // Update mute switch on RX signal.
+        mDisposableBag.add(conversation.isNotificationEnabledObservable
+            .observeOn(DeviceUtils.uiScheduler)
+            .subscribe { muteSwitch.isChecked = !it })
 
         // Setup card with
         //  - conversation type (such as "Private swarm")

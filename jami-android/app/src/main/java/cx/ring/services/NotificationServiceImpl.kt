@@ -212,6 +212,9 @@ class NotificationServiceImpl(
     override fun showCallNotification(notifId: Int): Any? = callNotifications.remove(notifId)
 
     override fun showLocationNotification(first: Account, contact: Contact, conversation: Conversation) {
+        // Ignore new notification if conversation is muted.
+        if (!conversation.isNotificationEnabled) return
+
         val profile = getProfile(conversation)
         val path = ConversationPath.toUri(conversation)
 
@@ -261,6 +264,24 @@ class NotificationServiceImpl(
      * @param remove     true if it should be removed from current calls
      */
     override fun handleCallNotification(conference: Conference, remove: Boolean, startScreenshare: Boolean) {
+        val contact = conference.call?.contact
+        val conversationId = conference.call?.conversationId
+        val account = mAccountService.getAccount(conference.accountId)!!
+        val conversation =
+            if (conversationId == null)
+                if (contact == null) {
+                    Log.e(TAG, "Unable to show notification. contact and conversationId are null")
+                    return
+                } else
+                    account.getByUri(contact.conversationUri.blockingFirst())
+                        ?: account.getByUri(contact.uri)
+            else
+                account.getByUri(Uri(net.jami.model.Uri.SWARM_SCHEME, conversationId))
+
+        // Ignore new notification if conversation is muted.
+        // Always try to remove notification (case where conversation is muted during a call).
+        if (!remove && !conversation!!.isNotificationEnabled) return
+
         if (!remove && conference.isIncoming && conference.state == Call.CallStatus.RINGING) {
             // Filter case where state is ringing but we haven't receive the media list yet
             val call = conference.call ?: return
@@ -471,6 +492,10 @@ class NotificationServiceImpl(
 
     override fun showTextNotification(conversation: Conversation) {
         val texts = conversation.unreadTextMessages
+        if (!conversation.isNotificationEnabled) {
+            cancelTextNotification(conversation.accountId, conversation.uri)
+            return
+        }
         if (!conversation.isBubble && (texts.isEmpty() || conversation.isVisible)) {
             cancelTextNotification(conversation.accountId, conversation.uri)
             return
@@ -488,7 +513,10 @@ class NotificationServiceImpl(
      * Function to show a group call notification.
      */
     override fun showGroupCallNotification(conversation: Conversation, remove: Boolean) {
-        // Call the showGroupCallNotification function with the loaded conversation.
+        // Ignore new notification if conversation is muted.
+        // Always try to remove notification (case where conversation is muted during a call).
+        if (!remove && !conversation.isNotificationEnabled) return
+
         mContactService.getLoadedConversation(conversation)
             .subscribe({ cvm -> showGroupCallNotification(cvm, remove) })
             { e: Throwable -> Log.w(TAG, "Can't load contact", e) }
@@ -765,6 +793,12 @@ class NotificationServiceImpl(
             if (info.isOutgoing || info.isError) {
                 return
             }
+        }
+
+        // Ignore new notification if conversation is muted.
+        if (!conversation.isNotificationEnabled) return
+
+        if(event.isOver){
             val notif = NotificationCompat.Builder(mContext, NOTIF_CHANNEL_FILE_TRANSFER)
                 .setSmallIcon(R.drawable.ic_ring_logo_white)
                 .setContentIntent(PendingIntent.getActivity(mContext, random.nextInt(), intentViewConversation, ContentUri.immutable()))
@@ -875,13 +909,30 @@ class NotificationServiceImpl(
     }
 
     override fun showMissedCallNotification(call: Call) {
+        val conversationId = call.conversationId
+        val contact = call.contact
+        val account = mAccountService.getAccount(call.account)!!
+        val conversation =
+            if (conversationId == null)
+                if (contact == null) {
+                    Log.e(TAG, "Unable to show missed call notification. contact and conversationId are null")
+                    return
+                } else
+                    account.getByUri(contact.conversationUri.blockingFirst())
+                        ?: account.getByUri(contact.uri)
+            else
+                account.getByUri(Uri(net.jami.model.Uri.SWARM_SCHEME, conversationId))
+
+        // Ignore new notification if conversation is muted.
+        if (!conversation!!.isNotificationEnabled) return
+
         val notificationId = call.daemonIdString.hashCode()
         val messageNotificationBuilder = mNotificationBuilders[notificationId]
             ?: NotificationCompat.Builder(mContext, NOTIF_CHANNEL_MISSED_CALL)
         val path = ConversationPath.toUri(call)
         val intentConversation = Intent(Intent.ACTION_VIEW, path, mContext, HomeActivity::class.java)
             .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        val contact = getProfile(call.account!!, call.contact!!)
+        val contactViewModel = getProfile(call.account!!, call.contact!!)
 
         messageNotificationBuilder.setContentTitle(mContext.getText(R.string.notif_missed_incoming_call))
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
@@ -890,10 +941,10 @@ class NotificationServiceImpl(
             .setCategory(NotificationCompat.CATEGORY_CALL)
             .setOnlyAlertOnce(true)
             .setAutoCancel(true)
-            .setContentText(contact.displayName)
+            .setContentText(contactViewModel.displayName)
             .setContentIntent(PendingIntent.getActivity(mContext, random.nextInt(), intentConversation, ContentUri.immutable(PendingIntent.FLAG_ONE_SHOT)))
             .color = ResourcesCompat.getColor(mContext.resources, R.color.color_primary_dark, null)
-        setContactPicture(contact, messageNotificationBuilder)
+        setContactPicture(contactViewModel, messageNotificationBuilder)
         notificationManager.notify(notificationId, messageNotificationBuilder.build())
     }
 
