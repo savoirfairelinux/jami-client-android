@@ -1695,18 +1695,6 @@ class ConversationAdapter(
             if (call.isIncoming) {
                 // Show the avatar of the caller if last or single.
 
-                // Manage animation to only display the avatar of the last message.
-                if (endOfSeq) {
-                    avatar?.setAvatar(conversationFragment.getConversationAvatar(contact.primaryNumber))
-                    avatar?.visibility = View.VISIBLE
-                } else {
-                    if (position == lastMsgPos - 1) {
-                        avatar?.let { ActionHelper.startFadeOutAnimation(avatar) }
-                    } else {
-                        avatar?.setAvatar(null)
-                        avatar?.visibility = View.INVISIBLE
-                    }
-                }
                 // We can call ourselves in a group call with different devices.
                 // Set the message to the left when it is incoming.
                 convViewHolder.mGroupCallLayout?.gravity = Gravity.START
@@ -1736,7 +1724,6 @@ class ConversationAdapter(
                 convViewHolder.mGroupCallLayout?.gravity = Gravity.END
                 // Hide the name of the contact.
                 peerDisplayName?.visibility = View.GONE
-                avatar?.visibility = View.GONE
                 // Set the color to the call started message.
                 if (convColor != 0) {
                     callAcceptLayout.background.setTint(convColor)
