@@ -288,6 +288,10 @@ class AccountService(
                 val mode = if ("true" == info["syncing"]) Conversation.Mode.Syncing else Conversation.Mode.entries[info["mode"]?.toInt() ?: Conversation.Mode.Syncing.ordinal]
                 val conversation = account.newSwarm(conversationId, mode)
                 conversation.setProfile(mVCardService.loadConversationProfile(info))
+                if (mode == Conversation.Mode.Syncing) {
+                    val created = (info["created"]?.toLong() ?: 0) * 1000L
+                    conversation.lastEvent = ContactEvent(created)
+                }
                 JamiService.getActiveCalls(account.accountId, conversationId)
                     .map { Conversation.ActiveCall(it) }
                     .let { conversation.setActiveCalls(it) }
