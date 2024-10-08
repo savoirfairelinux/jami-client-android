@@ -219,6 +219,17 @@ class ConversationActionsFragment : Fragment() {
                         requireActivity().setResult(Activity.RESULT_OK, resultIntent)
                         requireActivity().finish()
                     }
+                else if (conversation.mode.blockingFirst() == Conversation.Mode.Request)
+                    ActionHelper.launchAcceptInvitation(
+                        context = requireContext(),
+                        conversation = conversation
+                    ) {
+                        mConversationFacade.acceptRequest(it)
+                        val resultIntent = Intent()
+                            .putExtra(EXIT_REASON, ExitReason.INVITATION_ACCEPTED.toString())
+                        requireActivity().setResult(Activity.RESULT_OK, resultIntent)
+                        requireActivity().finish()
+                    }
                 else
                     ActionHelper.launchDeleteSwarmOneToOneAction(
                         context = requireContext(),
@@ -238,7 +249,20 @@ class ConversationActionsFragment : Fragment() {
             // Description being hidden, we put the rounded background on the secureP2pConnection.
             secureP2pConnection.setBackgroundResource(R.drawable.background_rounded_16_top)
             blockContact.setOnClickListener {
-                if (conversation.contact!!.isBlocked) {
+                if(conversation.mode.blockingFirst()==Conversation.Mode.Request)
+                    ActionHelper.launchBlockContactAction(
+                        context = requireContext(),
+                        accountId = mAccountService.currentAccount!!.accountId,
+                        contact = conversation.contact!!
+                    ) { accountId: String, _: Uri ->
+                        mConversationFacade.blockConversation(accountId, conversation.uri)
+                        mConversationFacade.discardRequest(accountId, conversation.uri)
+                        val resultIntent = Intent()
+                            .putExtra(EXIT_REASON, ExitReason.CONTACT_BLOCKED.toString())
+                        requireActivity().setResult(Activity.RESULT_OK, resultIntent)
+                        requireActivity().finish()
+                    }
+                else if (conversation.contact!!.isBlocked)
                     ActionHelper.launchUnblockContactAction(
                         context = requireContext(),
                         accountId = mAccountService.currentAccount!!.accountId,
@@ -250,7 +274,7 @@ class ConversationActionsFragment : Fragment() {
                         requireActivity().setResult(Activity.RESULT_OK, resultIntent)
                         requireActivity().finish()
                     }
-                } else
+                else
                     ActionHelper.launchBlockContactAction(
                         context = requireContext(),
                         accountId = mAccountService.currentAccount!!.accountId,
@@ -282,8 +306,10 @@ class ConversationActionsFragment : Fragment() {
                 conversationActionsPanel.visibility = View.GONE
                 conversationDetailsPanel.visibility = View.GONE
                 conversationDelete.text = resources.getString(R.string.ab_action_contact_add)
-            }
-            else {
+            } else if (conversation.mode.blockingFirst() == Conversation.Mode.Request) {
+                conversationDelete.text = resources.getString(R.string.accept_invitation)
+                conversationActionsPanel.visibility = View.GONE
+            } else {
                 conversationDelete.text = resources.getString(R.string.delete_contact)
             }
         } else {    // If conversation mode is not one to one
@@ -291,19 +317,37 @@ class ConversationActionsFragment : Fragment() {
             userNamePanel.isVisible = false
             conversationDelete.text = resources.getString(R.string.leave_conversation)
             conversationDelete.setOnClickListener {
-                ActionHelper.launchDeleteSwarmGroupAction(
-                    context = requireContext(),
-                    accountId = mAccountService.currentAccount!!.accountId,
-                    uri = conversation.uri,
-                    callback = { accountId: String, conversationUri: Uri ->
-                        mConversationFacade.removeConversation(accountId, conversationUri)
-                            .subscribe().apply { mDisposableBag.add(this) }
+                if (conversation.mode.blockingFirst() == Conversation.Mode.Request)
+                    ActionHelper.launchAcceptInvitation(
+                        context = requireContext(),
+                        conversation = conversation
+                    ) {
+                        mConversationFacade.acceptRequest(it)
                         val resultIntent = Intent()
-                            .putExtra(EXIT_REASON, ExitReason.CONVERSATION_LEFT.toString())
+                            .putExtra(EXIT_REASON, ExitReason.INVITATION_ACCEPTED.toString())
                         requireActivity().setResult(Activity.RESULT_OK, resultIntent)
                         requireActivity().finish()
-                    })
+                    }
+                else
+                    ActionHelper.launchDeleteSwarmGroupAction(
+                        context = requireContext(),
+                        accountId = mAccountService.currentAccount!!.accountId,
+                        uri = conversation.uri,
+                        callback = { accountId: String, conversationUri: Uri ->
+                            mConversationFacade.removeConversation(accountId, conversationUri)
+                                .subscribe().apply { mDisposableBag.add(this) }
+                            val resultIntent = Intent()
+                                .putExtra(EXIT_REASON, ExitReason.CONVERSATION_LEFT.toString())
+                            requireActivity().setResult(Activity.RESULT_OK, resultIntent)
+                            requireActivity().finish()
+                        })
             }
+
+            if (conversation.mode.blockingFirst() == Conversation.Mode.Request) {
+                conversationDelete.text = resources.getString(R.string.accept_invitation)
+                conversationActionsPanel.visibility = View.GONE
+            }
+
             conversationDelete.setBackgroundResource(R.drawable.background_rounded_16)
             blockContact.isVisible = false
         }
