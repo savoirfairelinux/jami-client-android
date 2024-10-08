@@ -122,7 +122,7 @@ class Conversation : ConversationHistory {
         ArrayList(aggregateHistory)
     }
     var lastEvent: Interaction? = null
-        private set(e) {
+        set(e) {
             field = e
             if (e != null)
                 lastEventSubject.onNext(e)
