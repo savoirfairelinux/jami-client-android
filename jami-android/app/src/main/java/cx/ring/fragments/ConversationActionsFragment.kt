@@ -20,6 +20,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
@@ -96,6 +97,14 @@ class ConversationActionsFragment : Fragment() {
         conversationPath = path
 
         descriptionPanel.setOnClickListener {
+            if (!conversation.isUserGroupAdmin()) {
+                Toast.makeText(
+                    requireContext(),
+                    R.string.not_admin_toast,
+                    Toast.LENGTH_SHORT
+                ).show()
+                return@setOnClickListener
+            }
             val dialogBinding = DialogSwarmTitleBinding.inflate(LayoutInflater.from(requireContext())).apply {
                 titleTxt.setText(conversation.profile.blockingFirst().description)
                 titleTxtBox.hint = getString(R.string.dialog_hint_description)
