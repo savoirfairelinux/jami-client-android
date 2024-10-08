@@ -189,13 +189,11 @@ class ConversationDetailsActivity : AppCompatActivity(), ContactPickerFragment.O
                     binding.videoCall.setOnClickListener { goToCallActivity(conversation, callUri, true) }
                 } else if(vm.isGroup() and !conversation.isUserGroupAdmin()) {
                     // Block conversation edition for non-admin users.
-                    // Todo: adapt this to new contact details layout
-//                    binding.addMember.isVisible = true
-//                    fun showNotAdminToast() =
-//                        Toast.makeText(this, R.string.not_admin_toast, Toast.LENGTH_SHORT).show()
-//                    binding.title.setOnClickListener { showNotAdminToast() }
-//                    binding.description.setOnClickListener { showNotAdminToast() }
-//                    binding.conversationAvatar.setOnClickListener { showNotAdminToast() }
+                    binding.addMember.isVisible = true
+                    fun showNotAdminToast() =
+                        Toast.makeText(this, R.string.not_admin_toast, Toast.LENGTH_SHORT).show()
+                    binding.conversationTitle.setOnClickListener { showNotAdminToast() }
+                    binding.conversationAvatar.setOnClickListener { showNotAdminToast() }
                 } else {
                     binding.audioCall.setOnClickListener { goToCallActivity(conversation, conversation.uri, false) }
                     binding.videoCall.setOnClickListener { goToCallActivity(conversation, conversation.uri, true) }
