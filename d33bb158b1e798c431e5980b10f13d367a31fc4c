@@ -16,6 +16,23 @@
       "message": "avoid including unneeded files",
       "revId": "d33bb158b1e798c431e5980b10f13d367a31fc4c",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e69347d3_cf4e5e95",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-10-09T20:16:40Z",
+      "side": 1,
+      "message": "Resolve @ovari123@zoho.com suggestions before merging.",
+      "revId": "d33bb158b1e798c431e5980b10f13d367a31fc4c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
