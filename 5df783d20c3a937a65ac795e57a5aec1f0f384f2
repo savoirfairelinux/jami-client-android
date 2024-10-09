@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c1c27c29_e3103b84",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-10-09T20:17:22Z",
+      "side": 1,
+      "message": "Resolve @ovari123@zoho.com suggestion before merging.",
+      "revId": "5df783d20c3a937a65ac795e57a5aec1f0f384f2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
