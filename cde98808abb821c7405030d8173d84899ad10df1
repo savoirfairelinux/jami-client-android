@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "10b778ff_57524a80",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-10-09T18:12:19Z",
+      "side": 1,
+      "message": "1 - Need a gitlab ticket to be attached.\n2 - If puting wrong credentials, prompt says something unrelated\n3 - Remove `link account` feature (unrelated to jams account)\n4 - Please follow the project\u0027s line length limit for better readability.",
+      "revId": "cde98808abb821c7405030d8173d84899ad10df1",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0ba8f02a_43044340",
+        "filename": "jami-android/app/src/main/java/cx/ring/tv/account/TVAccountWizard.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-10-09T18:12:19Z",
+      "side": 1,
+      "message": "No importance, but `!model.managementServer.isNullOrEmpty()` is more idiomatic",
+      "range": {
+        "startLine": 89,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 2
+      },
+      "revId": "cde98808abb821c7405030d8173d84899ad10df1",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ba3f398e_0016efe7",
+        "filename": "jami-android/app/src/main/java/cx/ring/tv/account/TVJamiAccountConnectFragment.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-10-09T18:12:19Z",
+      "side": 1,
+      "message": "Not sure to understand in which scenario this could be non-null ?",
+      "range": {
+        "startLine": 41,
+        "startChar": 10,
+        "endLine": 43,
+        "endChar": 9
+      },
+      "revId": "cde98808abb821c7405030d8173d84899ad10df1",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e9fc7e6e_37abe3f2",
+        "filename": "jami-android/app/src/main/java/cx/ring/tv/account/TVJamiAccountConnectFragment.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-10-09T18:12:19Z",
+      "side": 1,
+      "message": "Why do we show both messages ? I think `help_credentials_enter` is enough.\n\n`val description \u003d  getString(R.string.help_credentials_enter)`",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 2
+      },
+      "revId": "cde98808abb821c7405030d8173d84899ad10df1",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5b5e282a_679532bc",
+        "filename": "jami-android/app/src/main/java/cx/ring/tv/account/TVJamiAccountConnectFragment.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-10-09T18:12:19Z",
+      "side": 1,
+      "message": "Incorrect string.",
+      "range": {
+        "startLine": 70,
+        "startChar": 88,
+        "endLine": 70,
+        "endChar": 101
+      },
+      "revId": "cde98808abb821c7405030d8173d84899ad10df1",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
