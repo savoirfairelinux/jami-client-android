@@ -39,6 +39,30 @@
       },
       "revId": "cd0ac744afaf261d17961d2aecf137bd8284f6a5",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c8ad29c4_54841430",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/ConversationFacade.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-10-10T11:57:59Z",
+      "side": 1,
+      "message": "Acknowledged.\nLog is for the developer to understand what happened while debugging the code.\nActually we don\u0027t need pretty sentences. The more concise the better.",
+      "parentUuid": "37671bb2_4f68200d",
+      "range": {
+        "startLine": 693,
+        "startChar": 49,
+        "endLine": 693,
+        "endChar": 76
+      },
+      "revId": "cd0ac744afaf261d17961d2aecf137bd8284f6a5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
