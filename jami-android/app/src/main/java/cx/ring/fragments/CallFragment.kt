@@ -1201,20 +1201,18 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
      */
     override fun prepareCall(acceptIncomingCall: Boolean) {
         val hasVideo = presenter.wantVideo
+
         val permissionType =
             if (acceptIncomingCall) REQUEST_PERMISSION_INCOMING else REQUEST_PERMISSION_OUTGOING
         val audioGranted = mDeviceRuntimeService.hasAudioPermission()
         val videoGranted = !hasVideo || mDeviceRuntimeService.hasVideoPermission()
+
         if (!audioGranted || !videoGranted) {
             val perms = ArrayList<String>()
-            if (!videoGranted)
-                perms.add(Manifest.permission.CAMERA)
-            if (!audioGranted)
-                perms.add(Manifest.permission.RECORD_AUDIO)
+            if (!videoGranted) perms.add(Manifest.permission.CAMERA)
+            if (!audioGranted) perms.add(Manifest.permission.RECORD_AUDIO)
             requestPermissions(perms.toTypedArray(), permissionType)
-        } else {
-            initializeCall(acceptIncomingCall, hasVideo)
-        }
+        } else initializeCall(acceptIncomingCall, hasVideo)
     }
 
     /**
@@ -1223,11 +1221,9 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
      * @param isIncoming true if call is incoming, false for outgoing
      * @param hasVideo true if we already know that conversation has video
      */
-
     private fun initializeCall(isIncoming: Boolean, hasVideo: Boolean) {
-        if (isIncoming) {
-            presenter.acceptCall(hasVideo)
-        } else {
+        if (isIncoming) presenter.acceptCall(hasVideo)
+        else
             arguments?.let { args ->
                 val conversation = ConversationPath.fromBundle(args)!!
                 presenter.initOutGoing(
@@ -1237,7 +1233,6 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                     hasVideo
                 )
             }
-        }
     }
 
     override fun finish(hangupReason: CallPresenter.HangupReason) {

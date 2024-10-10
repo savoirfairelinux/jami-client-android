@@ -193,10 +193,11 @@ abstract class CallService(
             call.setSystemConnection(null)
         }
     }
+
     open fun requestPlaceCall(
         accountId: String,
         conversationUri: Uri?,
-        contactUri: String,
+        contactUri: Uri,
         hasVideo: Boolean
     ): Single<SystemCall> = CALL_ALLOWED
 
@@ -208,31 +209,50 @@ abstract class CallService(
         placeCall(accountId, conversationUri, number, hasVideo)
             .flatMapObservable { call: Call -> getCallUpdates(call) }
 
-    fun placeCallIfAllowed(account: String, conversationUri: Uri?, number: Uri, hasVideo: Boolean): Single<Call> =
-        requestPlaceCall(account, conversationUri, number.rawUriString, hasVideo)
-            .onErrorReturnItem(CALL_ALLOWED_VAL)
-            .flatMap { result ->
+    fun placeCallIfAllowed(
+        account: String, conversationUri: Uri?, numberUri: Uri, hasVideo: Boolean
+    ): Single<Call> =
+        // Need to check if the call is allowed by system before placing it.
+        requestPlaceCall(account, conversationUri, numberUri, hasVideo)
+            .onErrorReturnItem(CALL_ALLOWED_VAL) // Fallback to not block the call.
+            .flatMap { result: SystemCall ->
                 if (!result.allowed)
                     Single.error(SecurityException())
                 else
-                    placeCall(account, conversationUri, number, hasVideo)
+                    placeCall(account, conversationUri, numberUri, hasVideo)
                         .doOnSuccess { result.setCall(it) }
             }
 
-    private fun placeCall(account: String, conversationUri: Uri?, number: Uri, hasVideo: Boolean): Single<Call> =
+    private fun placeCall(
+        account: String, conversationUri: Uri?, numberUri: Uri, hasVideo: Boolean
+    ): Single<Call> =
         Single.fromCallable<Call> {
-            Log.i(TAG, "placeCall() thread running… $number hasVideo: $hasVideo")
-            val media = VectMap()
-            media.reserve(if (hasVideo) 2 else 1)
-            media.add(Media.DEFAULT_AUDIO.toMap())
-            if (hasVideo)
-                media.add(Media.DEFAULT_VIDEO.toMap())
-            val callId = JamiService.placeCallWithMedia(account, number.uri, media)
+            Log.i(TAG, "placeCall() account=$account conversationUri=$conversationUri numberUri=$numberUri hasVideo=$hasVideo")
+
+            // Create a media list with audio and video (optional).
+            val mediaList =
+                if (hasVideo) listOf(Media.DEFAULT_AUDIO, Media.DEFAULT_VIDEO)
+                else listOf(Media.DEFAULT_AUDIO)
+            val mediaMap = VectMap().apply {
+                mediaList.let {
+                    reserve(it.size)
+                    it.map { media -> this.add(media.toMap()) }
+                }
+            }
+
+            val callId = JamiService.placeCallWithMedia(account, numberUri.uri, mediaMap)
+
+            // Todo: Wrong logic here since callId can be null in a normal case (host conference).
             if (callId == null || callId.isEmpty()) throw RuntimeException()
-            val call = addCall(account, callId, number, Call.Direction.OUTGOING, if (hasVideo) listOf(Media.DEFAULT_AUDIO, Media.DEFAULT_VIDEO) else listOf(Media.DEFAULT_AUDIO))
-            if (conversationUri != null && conversationUri.isSwarm) call.setSwarmInfo(conversationUri.rawRingId)
-            updateConnectionCount()
-            call
+
+            // Add the call to the list.
+            val call =
+                addCall(account, callId, numberUri, Call.Direction.OUTGOING, mediaList).apply {
+                    if (conversationUri != null && conversationUri.isSwarm)
+                        this.setSwarmInfo(conversationUri.rawRingId)
+                }
+
+            return@fromCallable call
         }.subscribeOn(Schedulers.from(mExecutor))
 
     fun refuse(accountId:String, callId: String) {
@@ -773,7 +793,8 @@ abstract class CallService(
         const val MEDIA_TYPE_VIDEO = "MEDIA_TYPE_VIDEO"
 
         val CALL_ALLOWED_VAL = SystemCall(true)
+        val CALL_DISALLOWED_VAL = SystemCall(false)
         val CALL_ALLOWED = Single.just(CALL_ALLOWED_VAL)
-        val CALL_DISALLOWED = Single.just(SystemCall(false))
+        val CALL_DISALLOWED = Single.just(CALL_DISALLOWED_VAL)
     }
 }
