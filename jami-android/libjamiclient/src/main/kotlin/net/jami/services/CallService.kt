@@ -189,8 +189,8 @@ abstract class CallService(
 
     /** Use a system API, if available, to request to start a call. */
     open class SystemCall(val allowed: Boolean) {
-        open fun setCall(call: Call) {
-            call.setSystemConnection(null)
+        open fun setCall(call: Call?) {
+            call?.setSystemConnection(null)
         }
     }
 
@@ -221,6 +221,7 @@ abstract class CallService(
                 else
                     placeCall(account, conversationUri, numberUri, hasVideo)
                         .doOnSuccess { result.setCall(it) }
+                        .doOnError { result.setCall(null) }
             }
 
     private fun placeCall(

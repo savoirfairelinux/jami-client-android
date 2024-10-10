@@ -19,6 +19,7 @@ package cx.ring.services
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
+import android.telecom.DisconnectCause
 import android.telecom.TelecomManager
 import android.telecom.VideoProfile
 import android.util.Log
@@ -52,12 +53,17 @@ class CallServiceImpl(val mContext: Context, executor: ScheduledExecutorService,
     private val incomingCallRequests = ConcurrentHashMap<String, Pair<Call, SingleSubject<SystemCall>>>()
 
     class AndroidCall(val connection: CallConnection?) : SystemCall(connection != null) {
-        override fun setCall(call: Call) {
+        override fun setCall(call: Call?) {
             // Telecom API is a Android 9 new feature.
             if (Build.VERSION.SDK_INT >= CONNECTION_SERVICE_TELECOM_API_SDK_COMPATIBILITY) {
-                this.connection?.call = call
-                call.setSystemConnection(this)
-            } else call.setSystemConnection(null)
+                if (call != null) {
+                    this.connection?.call = call
+                    call.setSystemConnection(this)
+                } else {
+                    this.connection?.setDisconnected(DisconnectCause(DisconnectCause.CANCELED))
+                    this.connection?.dispose()
+                }
+            } else call?.setSystemConnection(null)
         }
     }
 
