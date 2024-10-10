@@ -21,6 +21,8 @@ import com.google.firebase.FirebaseApp
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.RemoteMessage
 import dagger.hilt.android.HiltAndroidApp
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 
 @HiltAndroidApp
 class JamiApplicationFirebase : JamiApplication() {
@@ -59,6 +61,13 @@ class JamiApplicationFirebase : JamiApplication() {
         // Log.d(TAG, "onMessageReceived: ${remoteMessage.from} ${remoteMessage.priority} ${remoteMessage.originalPriority}")
         mAccountService.pushNotificationReceived(remoteMessage.from ?: "", remoteMessage.data)
         mNotificationService.processPush()
+        val messageData = remoteMessage.data.toString()
+        val currentTimestamp = LocalTime.now().format(DateTimeFormatter
+            .ofPattern("HH:mm:ss.SSS"))
+        if (remoteMessage.priority != remoteMessage.originalPriority) {
+            hardwareService.pushLogMessage("[$currentTimestamp] Received message from: "
+                + "${remoteMessage.from}, data: $messageData")
+        }
     }
 
     companion object {
