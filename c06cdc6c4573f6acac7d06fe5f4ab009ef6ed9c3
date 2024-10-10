@@ -16,6 +16,24 @@
       "message": "e: file:///jami-client-android/jami-android/app/src/main/java/cx/ring/client/ContactDetailsActivity.kt:160:29 Unresolved reference: description\ne: file:///jami-client-android/jami-android/app/src/main/java/cx/ring/client/ContactDetailsActivity.kt:162:51 Unresolved reference: TAB_FILES\ne: file:///jami-client-android/jami-android/app/src/main/java/cx/ring/client/ContactDetailsActivity.kt:163:51 Unresolved reference: TAB_MEMBERS",
       "revId": "c06cdc6c4573f6acac7d06fe5f4ab009ef6ed9c3",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f121de06_bdf6448f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-10-10T18:05:40Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "ed2a17c2_a612a8d9",
+      "revId": "c06cdc6c4573f6acac7d06fe5f4ab009ef6ed9c3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
