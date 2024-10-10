@@ -2,4 +2,5 @@
 <paths>
     <cache-path name="file_cache" path="tmp" />
     <files-path name="conversation_data" path="conversation_data" />
+    <files-path name="internal_files" path="." />
 </paths>

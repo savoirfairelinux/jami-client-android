@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".client.HomeActivity">
+    <item
+        android:id="@+id/menu_clear"
+        android:icon="@drawable/baseline_delete_24"
+        android:title="ClearAll"
+        app:iconTint="@color/icon_color"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/menu_share"
+        android:icon="@drawable/baseline_share_24"
+        android:title="@string/share_label"
+        app:iconTint="@color/icon_color"
+        app:showAsAction="collapseActionView|always" />
+
+    <item
+        android:id="@+id/menu_save"
+        android:icon="@drawable/baseline_file_download_24"
+        android:title="@string/menu_file_save"
+        app:iconTint="@color/icon_color"
+        app:showAsAction="always" />
+
+</menu>
