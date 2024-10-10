@@ -30,6 +30,7 @@ import net.jami.daemon.StringMap
 import net.jami.model.Call
 import net.jami.model.Conference
 import net.jami.utils.Log
+import java.io.File
 import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.TimeUnit
 import kotlin.jvm.Synchronized
@@ -152,8 +153,19 @@ abstract class HardwareService(
 
     abstract fun setDeviceOrientation(rotation: Int)
     protected abstract fun videoDevices(): List<String>
+    abstract fun saveLoggingState(enabled: Boolean)
+
+    abstract val pushLogFile: File
     private var logs: Observable<List<String>>? = null
     private var logEmitter: Emitter<String>? = null
+    private var pushLogs: Observable<String>? = null
+    private var pushLogEmitter: Emitter<String>? = null
+    var pushLogEnabled = false
+    var highPriorityPushCount = 0
+    var normalPriorityPushCount = 0
+    var unknownPriorityPushCount = 0
+    var startTime: String? = null
+
 
     @get:Synchronized
     val isLogging: Boolean
@@ -193,6 +205,49 @@ abstract class HardwareService(
     fun logMessage(message: String) {
         if (message.isNotEmpty())
             logEmitter?.onNext(message)
+    }
+
+    @Synchronized
+    fun startPushLogs(): Observable<String> {
+        pushLogFile.createNewFile()
+        pushLogEnabled = true
+        saveLoggingState(true)
+        return pushLogs ?: Observable.concat(
+            Observable.fromIterable(pushLogFile.readLines()),
+            Observable.create { emitter: ObservableEmitter<String> ->
+                pushLogEmitter = emitter
+                emitter.setCancellable {
+                    synchronized(this@HardwareService) {
+                        pushLogEmitter = null
+                        pushLogs = null
+                    }
+                }
+            }
+        )
+            .apply { pushLogs = this }
+    }
+
+    @Synchronized
+    fun stopPushLogs() {
+        pushLogEnabled = false
+        saveLoggingState(false)
+        pushLogEmitter?.let { emitter ->
+            emitter.onComplete()
+            pushLogEmitter = null
+            pushLogs = null
+        }
+    }
+
+    @get:Synchronized
+    val loggingStatus: Boolean
+        get() = pushLogEnabled
+
+
+    fun pushLogMessage(message: String) {
+        if (pushLogEnabled) {
+            pushLogFile.appendText(message + "\n")
+            pushLogEmitter?.onNext(message)
+        }
     }
 
     companion object {
