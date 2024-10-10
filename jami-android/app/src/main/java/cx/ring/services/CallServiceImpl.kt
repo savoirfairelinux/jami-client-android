@@ -51,45 +51,50 @@ class CallServiceImpl(val mContext: Context, executor: ScheduledExecutorService,
     private val pendingCallRequests = ConcurrentHashMap<String, SingleSubject<SystemCall>>()
     private val incomingCallRequests = ConcurrentHashMap<String, Pair<Call, SingleSubject<SystemCall>>>()
 
-    class AndroidCall(val connection: CallConnection?): SystemCall(connection != null) {
+    class AndroidCall(val connection: CallConnection?) : SystemCall(connection != null) {
         override fun setCall(call: Call) {
+            // Telecom API is a Android 9 new feature.
             if (Build.VERSION.SDK_INT >= CONNECTION_SERVICE_TELECOM_API_SDK_COMPATIBILITY) {
                 this.connection?.call = call
                 call.setSystemConnection(this)
-            } else {
-                call.setSystemConnection(null)
-            }
+            } else call.setSystemConnection(null)
         }
-
     }
 
-    override fun requestPlaceCall(accountId: String, conversationUri: Uri?, contactUri: String, hasVideo: Boolean): Single<SystemCall> {
-        // Use the Android Telecom API to implement requestPlaceCall if available
+    override fun requestPlaceCall(
+        accountId: String, conversationUri: Uri?, contactUri: Uri, hasVideo: Boolean
+    ): Single<SystemCall> {
+        // Use the Android Telecom API to implement requestPlaceCall if available.
 
         // Disabled because doesn't seem well integrated. GitLab: #1337.
         if(DeviceUtils.isTv(mContext)) return CALL_ALLOWED
 
         if (Build.VERSION.SDK_INT >= CONNECTION_SERVICE_TELECOM_API_SDK_COMPATIBILITY) {
-            mContext.getSystemService<TelecomManager>()?.let { telecomService ->
-                val accountHandle = JamiApplication.instance!!.androidPhoneAccountHandle ?: return CALL_ALLOWED
+            mContext.getSystemService<TelecomManager>()?.let { telecomManager ->
 
                 // Disabled because of a bug on Lenovo Tab P12 Pro (Android 12) where
                 // isOutgoingCallPermitted() is always returning false. GitLab: #1288.
                 // Less optimal but still functional.
                 /* // Dismiss the call immediately if disallowed
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                if (!telecomService.isOutgoingCallPermitted(accountHandle))
-                    return CALL_DISALLOWED
-            }*/
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    if (!telecomManager.isOutgoingCallPermitted(accountHandle))
+                        return CALL_DISALLOWED
+                }*/
 
                 // Build call parameters
+                val accountHandle = JamiApplication.instance!!.androidPhoneAccountHandle
+                    ?: run {
+                        Log.w(TAG, "androidPhoneAccountHandle is null, fallback on CALL_ALLOWED")
+                        return CALL_ALLOWED
+                    }
                 val params = Bundle().apply {
                     putParcelable(TelecomManager.EXTRA_PHONE_ACCOUNT_HANDLE, accountHandle)
                     putBundle(TelecomManager.EXTRA_OUTGOING_CALL_EXTRAS, Bundle().apply {
                         putString(ConversationPath.KEY_ACCOUNT_ID, accountId)
-                        putString(ConversationPath.KEY_CONVERSATION_URI, contactUri)
-                        if (conversationUri != null)
-                            putString(ConversationPath.KEY_CONVERSATION_URI, conversationUri.uri)
+                        putString(
+                            ConversationPath.KEY_CONVERSATION_URI,
+                            conversationUri?.uri ?: contactUri.rawRingId
+                        )
                     })
                     putInt(
                         TelecomManager.EXTRA_START_CALL_WITH_VIDEO_STATE,
@@ -99,15 +104,15 @@ class CallServiceImpl(val mContext: Context, executor: ScheduledExecutorService,
                 }
 
                 // Build contact' Android URI
-                val callUri = android.net.Uri.parse(contactUri)
+                val callUri = android.net.Uri.parse(contactUri.rawUriString)
                 val key = "$accountId/$callUri"
                 val subject = SingleSubject.create<SystemCall>()
 
                 // Place call request
                 pendingCallRequests[key] = subject
                 try {
-                    Log.w(TAG, "Telecom API: new outgoing call request for $callUri")
-                    telecomService.placeCall(callUri, params)
+                    Log.i(TAG, "Telecom API: new outgoing call request for $callUri")
+                    telecomManager.placeCall(callUri, params)
                     return subject
                 } catch (e: SecurityException) {
                     pendingCallRequests.remove(key)?.onSuccess(CALL_ALLOWED_VAL)
@@ -118,17 +123,17 @@ class CallServiceImpl(val mContext: Context, executor: ScheduledExecutorService,
                 }
             }
         }
-        // Fallback to allowing the call
+        // Fallback to allowing the call.
         return CALL_ALLOWED
     }
 
+    // Result is null if the call was rejected.
     @RequiresApi(CONNECTION_SERVICE_TELECOM_API_SDK_COMPATIBILITY)
     fun onPlaceCallResult(uri: android.net.Uri, extras: Bundle, result: CallConnection?) {
         val accountId = extras.getString(ConversationPath.KEY_ACCOUNT_ID) ?: return
-        Log.w(TAG, "Telecom API: outgoing call request for $uri has result $result")
+        Log.i(TAG, "Telecom API: outgoing call request for $uri has result $result")
         val call = pendingCallRequests.remove("$accountId/$uri")
-        if (call != null)
-            call.onSuccess(AndroidCall(result))
+        if (call != null) call.onSuccess(AndroidCall(result))
         else result?.dispose()
     }
 
@@ -139,7 +144,7 @@ class CallServiceImpl(val mContext: Context, executor: ScheduledExecutorService,
         if(DeviceUtils.isTv(mContext)) return CALL_ALLOWED
 
         if (Build.VERSION.SDK_INT >= CONNECTION_SERVICE_TELECOM_API_SDK_COMPATIBILITY) {
-            mContext.getSystemService<TelecomManager>()?.let { telecomService ->
+            mContext.getSystemService<TelecomManager>()?.let { telecomManager ->
                 val accountHandle = JamiApplication.instance!!.androidPhoneAccountHandle ?: return CALL_ALLOWED
                 val extras = Bundle()
                 if (call.hasActiveMedia(Media.MediaType.MEDIA_TYPE_VIDEO))
@@ -161,7 +166,7 @@ class CallServiceImpl(val mContext: Context, executor: ScheduledExecutorService,
                 incomingCallRequests[key] = Pair(call, subject)
                 try {
                     Log.w(TAG, "Telecom API: new incoming call request for $key")
-                    telecomService.addNewIncomingCall(accountHandle, extras)
+                    telecomManager.addNewIncomingCall(accountHandle, extras)
                     return subject
                 } catch (e: SecurityException) {
                     incomingCallRequests.remove(key)

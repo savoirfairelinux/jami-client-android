@@ -87,8 +87,10 @@ class CallPresenter @Inject constructor(
             .subscribe { state: AudioState -> this.view?.updateAudioState(state) })
     }
 
-    fun initOutGoing(accountId: String, conversationUri: Uri?, contactUri: String?, hasVideo: Boolean) {
-        Log.e(TAG, "initOutGoing")
+    fun initOutGoing(
+        accountId: String, conversationUri: Uri?, contactUri: String?, hasVideo: Boolean
+    ) {
+        Log.i(TAG, "initOutGoing")
         if (accountId.isEmpty() || contactUri == null) {
             Log.e(TAG, "initOutGoing: null account or contact")
             hangupCall()
