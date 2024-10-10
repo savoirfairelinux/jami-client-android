@@ -16,6 +16,24 @@
       "message": "See @ovari123@zoho.com comment here: https://git.jami.net/savoirfairelinux/jami-client-android/-/issues/1775#note_53461\n\n\u003e Should Start Swarm be renamed to Create new group? SIP calls allow for group conversations. Thank you",
       "revId": "836e2cc2a9f0f4b2f7c14873eb48026be7adc93d",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df093657_8cc5ed38",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-10-10T11:30:43Z",
+      "side": 1,
+      "message": "unresolved",
+      "parentUuid": "8244ee48_bf50aee1",
+      "revId": "836e2cc2a9f0f4b2f7c14873eb48026be7adc93d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
