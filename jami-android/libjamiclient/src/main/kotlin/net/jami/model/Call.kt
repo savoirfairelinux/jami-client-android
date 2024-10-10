@@ -85,16 +85,15 @@ class Call : Interaction {
         mediaListSubject.onNext(mediaList)
     }
 
-    private val systemConnectionSubject: SingleSubject<CallService.SystemCall> = SingleSubject.create()
+    private val systemConnectionSubject: SingleSubject<CallService.SystemCall> =
+        SingleSubject.create()
+    val systemConnection: Single<CallService.SystemCall> get() = systemConnectionSubject
+
     fun setSystemConnection(value: CallService.SystemCall?) {
-        Log.w(TAG, "Telecom API: setSystemConnection $value")
-        if (value != null)
-            systemConnectionSubject.onSuccess(value);
-        else
-            systemConnectionSubject.onError(UnsupportedOperationException())
+        Log.i(TAG, "Telecom API: setSystemConnection $value")
+        if (value != null) systemConnectionSubject.onSuccess(value);
+        else systemConnectionSubject.onError(UnsupportedOperationException())
     }
-    val systemConnection: Single<CallService.SystemCall>
-        get() = systemConnectionSubject
 
     constructor(
         daemonId: String?,
