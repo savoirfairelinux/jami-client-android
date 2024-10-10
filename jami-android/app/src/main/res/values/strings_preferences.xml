@@ -63,6 +63,10 @@
     <string name="pref_logs_start">Start Logging</string>
     <string name="pref_logs_stop">Stop logging</string>
 
+    <string name="pref_push_notifications_logs_title">Push notifications logs</string>
+    <string name="pref_push_notifications_logs_summary">View logs captured from push
+        notifications.</string>
+
     <string name="pref_typing_title">Enable typing indicators</string>
     <string name="pref_typing_summary">Send and receive typing indicators showing that a message is being typed.</string>
 

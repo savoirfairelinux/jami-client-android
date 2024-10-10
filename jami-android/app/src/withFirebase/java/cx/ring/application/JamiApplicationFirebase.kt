@@ -21,10 +21,14 @@ import com.google.firebase.FirebaseApp
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.RemoteMessage
 import dagger.hilt.android.HiltAndroidApp
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 @HiltAndroidApp
 class JamiApplicationFirebase : JamiApplication() {
     override val pushPlatform: String = PUSH_PLATFORM
+    private var startTime: String? = null
 
     override var pushToken: String = ""
         set(token) {
@@ -39,6 +43,11 @@ class JamiApplicationFirebase : JamiApplication() {
 
     override fun onCreate() {
         super.onCreate()
+        startTime = getCurrentTimestamp()
+        hardwareService.startTime = startTime
+        hardwareService.highPriorityPushCount = 0
+        hardwareService.normalPriorityPushCount = 0
+        hardwareService.unknownPriorityPushCount = 0
         try {
             Log.w(TAG, "onCreate()")
             FirebaseApp.initializeApp(this)
@@ -55,10 +64,27 @@ class JamiApplicationFirebase : JamiApplication() {
         }
     }
 
+    private fun getCurrentTimestamp(withMilliseconds: Boolean = false): String {
+        val pattern = if (withMilliseconds) "yyyy-MM-dd HH:mm:ss.SSS" else "yyyy-MM-dd HH:mm:ss"
+        val formatter = SimpleDateFormat(pattern, Locale.getDefault())
+        return formatter.format(Date())
+    }
+
     fun onMessageReceived(remoteMessage: RemoteMessage) {
         // Log.d(TAG, "onMessageReceived: ${remoteMessage.from} ${remoteMessage.priority} ${remoteMessage.originalPriority}")
         mAccountService.pushNotificationReceived(remoteMessage.from ?: "", remoteMessage.data)
         mNotificationService.processPush()
+        when (remoteMessage.priority) {
+            RemoteMessage.PRIORITY_HIGH -> hardwareService.highPriorityPushCount++
+            RemoteMessage.PRIORITY_NORMAL -> hardwareService.normalPriorityPushCount++
+            RemoteMessage.PRIORITY_UNKNOWN -> hardwareService.unknownPriorityPushCount++
+        }
+        if (remoteMessage.priority != remoteMessage.originalPriority) {
+            val messageData = remoteMessage.data.toString()
+            val currentTimestamp = getCurrentTimestamp(withMilliseconds = true)
+            hardwareService.pushLogMessage("[$currentTimestamp] Received message from: "
+                + "${remoteMessage.from}, data: $messageData")
+        }
     }
 
     companion object {
