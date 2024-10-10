@@ -24,6 +24,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d88ba36_6ca4e86d",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-10-10T11:53:29Z",
+      "side": 1,
+      "message": "Done here: https://review.jami.net/c/jami-client-android/+/29163/4",
+      "parentUuid": "cf7c26ab_adc3fc5a",
+      "range": {
+        "startLine": 321,
+        "startChar": 31,
+        "endLine": 321,
+        "endChar": 42
+      },
+      "revId": "c512acae2cf3509738ac27bb3f13703af86f80c8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "61c0fa4d_4f4ebc5d",
@@ -47,6 +71,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "22ff5717_b22b7514",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-10-10T11:53:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61c0fa4d_4f4ebc5d",
+      "range": {
+        "startLine": 410,
+        "startChar": 9,
+        "endLine": 410,
+        "endChar": 24
+      },
+      "revId": "c512acae2cf3509738ac27bb3f13703af86f80c8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bfdf4dd9_298d558e",
@@ -60,6 +108,30 @@
       "writtenOn": "2024-09-24T20:24:02Z",
       "side": 1,
       "message": "Qt client\nJamiStrings.qml\n`property string typeOfSwarm: qsTr(\"Type\")`\n\nTo unify terminology across clients, should string name and value be:\n`\u003cstring name\u003d\"type_of_swarm\"\u003eType\u003c/string\u003e`\n\nThank you",
+      "range": {
+        "startLine": 602,
+        "startChar": 0,
+        "endLine": 602,
+        "endChar": 52
+      },
+      "revId": "c512acae2cf3509738ac27bb3f13703af86f80c8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fa7f0d05_e70013d2",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-10-10T11:53:29Z",
+      "side": 1,
+      "message": "From what I understood, we want to get rid of the `swarm` word (through clients only). So no need to unify with qt client.\n\nHowever `Type of swarm` got changed ti `Type of conversation` here:\nhttps://review.jami.net/c/jami-client-android/+/29107",
+      "parentUuid": "bfdf4dd9_298d558e",
       "range": {
         "startLine": 602,
         "startChar": 0,
