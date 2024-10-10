@@ -33,6 +33,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.R
 import cx.ring.application.JamiApplication
 import cx.ring.client.LogsActivity
+import cx.ring.client.PushNotificationLogsActivity
 import cx.ring.databinding.FragSettingsBinding
 import cx.ring.fragments.ConnectionMonitorFragment
 import cx.ring.interfaces.AppBarStateListener
@@ -129,6 +130,7 @@ class SettingsFragment :
             settingsLogs.setOnClickListener { v: View ->
                 startActivity(Intent(v.context, LogsActivity::class.java))
             }
+            
             connectionMonitor.setOnClickListener { v: View ->
                 val content = ConnectionMonitorFragment()
                 childFragmentManager
@@ -140,6 +142,15 @@ class SettingsFragment :
                 donateButton.isVisible = false
                 backPressedCallback.isEnabled = true
             }
+            
+            if (TextUtils.isEmpty(JamiApplication.instance?.pushToken)) {
+                settingsPushnotificationslogs.visibility = View.GONE
+            } else {
+                settingsPushnotificationslogs.setOnClickListener { v: View ->
+                    startActivity(Intent(v.context, PushNotificationLogsActivity::class.java))
+                }
+            }
+            
             toolbar.setNavigationOnClickListener {
                 activity?.onBackPressedDispatcher?.onBackPressed()
             }
