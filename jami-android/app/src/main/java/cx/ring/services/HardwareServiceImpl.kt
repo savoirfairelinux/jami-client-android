@@ -19,6 +19,7 @@ package cx.ring.services
 import android.annotation.SuppressLint
 import android.bluetooth.BluetoothHeadset
 import android.content.Context
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.media.AudioDeviceInfo
 import android.media.AudioManager
@@ -77,6 +78,13 @@ class HardwareServiceImpl(
     private var mIsChooseExtension = false
     private var mMediaHandlerId: String? = null
     private var mExtensionCallId: String? = null
+    private val sharedPreferences: SharedPreferences = context
+        .getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+    override val pushLogFile: File = File(context.filesDir, "firebaselog.txt")
+
+    init {
+        pushLogEnabled = sharedPreferences.getBoolean(LOGGING_ENABLED_KEY, false)
+    }
 
     override fun initVideo(): Completable = cameraService.init()
 
@@ -674,6 +682,12 @@ class HardwareServiceImpl(
         cameraService.unregisterCameraDetectionCallback()
     }
 
+    override fun saveLoggingState(enabled: Boolean) {
+        sharedPreferences.edit()
+            .putBoolean(LOGGING_ENABLED_KEY, enabled)
+            .apply()
+    }
+
     companion object {
         private val VIDEO_SIZE_LOW = Size(480, 320)
         private val VIDEO_SIZE_SD = Size(720, 480)
@@ -697,5 +711,7 @@ class HardwareServiceImpl(
         private var mCameraExtensionPreviewSurface = WeakReference<SurfaceView>(null)
         private var mCameraPreviewCall = WeakReference<Conference>(null)
         private val videoSurfaces = HashMap<String, WeakReference<SurfaceHolder>>()
+        private const val PREFS_NAME = "logging"
+        private const val LOGGING_ENABLED_KEY = "logging_enabled"
     }
 }
