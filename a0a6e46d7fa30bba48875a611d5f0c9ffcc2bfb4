@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9edfbf5b_88c569e4",
+        "filename": "jami-android/app/src/main/java/cx/ring/client/DetailsActivity.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-10-10T18:30:24Z",
+      "side": 1,
+      "message": "ConversationDetailsActivity",
+      "range": {
+        "startLine": 77,
+        "startChar": 6,
+        "endLine": 77,
+        "endChar": 21
+      },
+      "revId": "a0a6e46d7fa30bba48875a611d5f0c9ffcc2bfb4",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
