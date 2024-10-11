@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5704e5a2_e9d0f3db",
+        "filename": "jami-android/app/src/main/res/xml/file_paths.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-10-11T02:54:36Z",
+      "side": 1,
+      "message": "copy file to cache instead of exposing internal app files",
+      "range": {
+        "startLine": 5,
+        "startChar": 4,
+        "endLine": 5,
+        "endChar": 49
+      },
+      "revId": "9c4075fe77fc01cc5eb8238ab3573b8f6b312484",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
