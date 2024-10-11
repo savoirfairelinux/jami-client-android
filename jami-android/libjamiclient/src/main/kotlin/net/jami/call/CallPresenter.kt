@@ -97,19 +97,38 @@ class CallPresenter @Inject constructor(
             return
         }
         val pHasVideo = hasVideo && mHardwareService.hasCamera()
-        val callObservable = mCallService
-            .placeCallIfAllowed(accountId, conversationUri, fromString(toNumber(contactUri)!!), pHasVideo)
-            .flatMapObservable { call: Call -> mCallService.getConfUpdates(call) }
-            .share()
-        mCompositeDisposable.add(callObservable
-            .observeOn(mUiScheduler)
-            .subscribe({ conference ->
-                confUpdate(conference)
-            }) { e: Throwable ->
-                hangupCall(HangupReason.ERROR)
-                Log.e(TAG, "Error with initOutgoing: " + e.message, e)
-            })
-        showConference(callObservable)
+//        val callObservable = mCallService
+//            .placeCallIfAllowed(accountId, conversationUri, fromString(toNumber(contactUri)!!), pHasVideo)
+//            .flatMapObservable { call: Call -> mCallService.getConfUpdates(call) }
+//            .share()
+
+        mCompositeDisposable.add(
+            mCallService.hostConference(
+                accountId,
+                conversationUri,
+                fromString(toNumber(contactUri)!!),
+                pHasVideo
+            )
+                .flatMapObservable { call: Conference -> mCallService.getConfUpdates(call) }.share()
+                .observeOn(mUiScheduler).subscribe(
+                    { conference: Conference ->
+                        confUpdate(conference)
+                    }) { e: Throwable ->
+                    hangupCall(HangupReason.ERROR)
+                    Log.e(TAG, "Error with initOutgoing: " + e.message, e)
+                }
+        )
+
+
+//        mCompositeDisposable.add(callObservable
+//            .observeOn(mUiScheduler)
+//            .subscribe({ conference ->
+//                confUpdate(conference)
+//            }) { e: Throwable ->
+//                hangupCall(HangupReason.ERROR)
+//                Log.e(TAG, "Error with initOutgoing: " + e.message, e)
+//            })
+//        showConference(callObservable)
     }
 
     /**

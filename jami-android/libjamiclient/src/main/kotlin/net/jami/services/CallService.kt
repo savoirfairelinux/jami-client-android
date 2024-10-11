@@ -21,6 +21,9 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.PublishSubject
+import net.jami.call.CallPresenter
+import net.jami.call.CallPresenter.Companion
+import net.jami.call.CallPresenter.HangupReason
 import net.jami.daemon.JamiService
 import net.jami.daemon.StringMap
 import net.jami.daemon.VectMap
@@ -30,7 +33,9 @@ import net.jami.model.Conference
 import net.jami.model.Conference.ParticipantInfo
 import net.jami.model.Media
 import net.jami.model.Uri
+import net.jami.model.Uri.Companion.fromString
 import net.jami.utils.Log
+import net.jami.utils.StringUtils.toNumber
 import java.util.*
 import java.util.concurrent.ScheduledExecutorService
 
@@ -156,7 +161,7 @@ abstract class CallService(
 
     fun getConfUpdates(call: Call): Observable<Conference> = getConfUpdates(getConference(call))
 
-    private fun getConfUpdates(conference: Conference): Observable<Conference> {
+    fun getConfUpdates(conference: Conference): Observable<Conference> {
         Log.w(TAG, "getConfUpdates " + conference.id)
         val conferenceEntity = ConferenceEntity(conference)
         return conferenceSubject
@@ -223,6 +228,28 @@ abstract class CallService(
                         .doOnSuccess { result.setCall(it) }
                         .doOnError { result.setCall(null) }
             }
+
+    fun hostConference(
+        account: String, conversationUri: Uri?, numberUri: Uri, hasVideo: Boolean
+    ): Single<Conference> {
+
+        Log.i(TAG, "hostConference() account=$account conversationUri=$conversationUri numberUri=$numberUri hasVideo=$hasVideo")
+
+        // Create a media list with audio and video (optional).
+        val mediaList =
+            if (hasVideo) listOf(Media.DEFAULT_AUDIO, Media.DEFAULT_VIDEO)
+            else listOf(Media.DEFAULT_AUDIO)
+        val mediaMap = VectMap().apply {
+            mediaList.let {
+                reserve(it.size)
+                it.map { media -> this.add(media.toMap()) }
+            }
+        }
+
+        //
+        JamiService.placeCallWithMedia(account, numberUri.uri, mediaMap)
+        return conferenceSubject.firstOrError()
+    }
 
     private fun placeCall(
         account: String, conversationUri: Uri?, numberUri: Uri, hasVideo: Boolean
