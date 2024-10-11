@@ -21,8 +21,8 @@ android {
     defaultConfig {
         minSdk = 24
         targetSdk = 34
-        versionCode = 431
-        versionName = "20240926-01"
+        versionCode = 432
+        versionName = "20241011-01"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         externalNativeBuild {
             cmake {
@@ -112,7 +112,7 @@ dependencies {
     implementation ("androidx.sharetarget:sharetarget:1.2.0")
     implementation ("androidx.emoji2:emoji2:1.5.0")
     implementation ("androidx.emoji2:emoji2-emojipicker:1.5.0")
-    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.5")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.6")
     implementation ("androidx.window:window:1.3.0")
     implementation ("com.google.android.material:material:1.12.0")
     implementation ("androidx.biometric:biometric:1.1.0")
