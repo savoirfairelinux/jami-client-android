@@ -156,7 +156,7 @@ abstract class CallService(
 
     fun getConfUpdates(call: Call): Observable<Conference> = getConfUpdates(getConference(call))
 
-    private fun getConfUpdates(conference: Conference): Observable<Conference> {
+    fun getConfUpdates(conference: Conference): Observable<Conference> {
         Log.w(TAG, "getConfUpdates " + conference.id)
         val conferenceEntity = ConferenceEntity(conference)
         return conferenceSubject
@@ -223,6 +223,27 @@ abstract class CallService(
                         .doOnSuccess { result.setCall(it) }
                         .doOnError { result.setCall(null) }
             }
+
+    fun hostConference(
+        account: String, numberUri: Uri, hasVideo: Boolean
+    ): Single<Conference> {
+        // Create a media list with audio and video (optional).
+        val mediaList =
+            if (hasVideo) listOf(Media.DEFAULT_AUDIO, Media.DEFAULT_VIDEO)
+            else listOf(Media.DEFAULT_AUDIO)
+        val mediaMap = VectMap().apply {
+            mediaList.let {
+                reserve(it.size)
+                it.map { media -> this.add(media.toMap()) }
+            }
+        }
+
+        return conferenceSubject.firstOrError().doOnSubscribe {
+            mExecutor.execute {
+                JamiService.placeCallWithMedia(account, numberUri.uri, mediaMap)
+            }
+        }
+    }
 
     private fun placeCall(
         account: String, conversationUri: Uri?, numberUri: Uri, hasVideo: Boolean
