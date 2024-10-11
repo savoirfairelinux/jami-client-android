@@ -964,6 +964,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         hasActiveCameraVideo: Boolean,
         hasActiveScreenShare: Boolean
     ) {
+        net.jami.utils.Log.w("devdebug", "callpresenter updateBottomSheetButtonStatus")
         binding?.apply {
             extensionsBtnContainer.isVisible = showExtensionBtn
             raiseHandBtnContainer.isVisible = mConferenceMode
