@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c3505edf_98084d87",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/smartlist/ConversationItemViewModel.kt",
+        "patchSetId": 8
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-10-11T16:11:49Z",
+      "side": 1,
+      "message": "isGroup should return false for legacy",
+      "range": {
+        "startLine": 88,
+        "startChar": 8,
+        "endLine": 88,
+        "endChar": 15
+      },
+      "revId": "a1bfe7649b3027f0f446017b4458cf6e38f59195",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
