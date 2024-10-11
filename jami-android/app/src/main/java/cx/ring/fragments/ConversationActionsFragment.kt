@@ -28,8 +28,8 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.R
 import cx.ring.client.ColorChooserBottomSheet
-import cx.ring.client.DetailsActivity.Companion.EXIT_REASON
-import cx.ring.client.DetailsActivity.Companion.ExitReason
+import cx.ring.client.ConversationDetailsActivity.Companion.EXIT_REASON
+import cx.ring.client.ConversationDetailsActivity.Companion.ExitReason
 import cx.ring.client.EmojiChooserBottomSheet
 import cx.ring.databinding.DialogSwarmTitleBinding
 import cx.ring.databinding.FragConversationActionsBinding

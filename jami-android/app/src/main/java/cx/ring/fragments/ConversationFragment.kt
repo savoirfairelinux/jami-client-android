@@ -51,8 +51,8 @@ import cx.ring.adapters.ConversationAdapter
 import cx.ring.client.CallActivity
 import cx.ring.client.ConversationDetailsActivity
 import cx.ring.client.ConversationActivity
-import cx.ring.client.DetailsActivity.Companion.EXIT_REASON
-import cx.ring.client.DetailsActivity.Companion.ExitReason
+import cx.ring.client.ConversationDetailsActivity.Companion.EXIT_REASON
+import cx.ring.client.ConversationDetailsActivity.Companion.ExitReason
 import cx.ring.databinding.FragConversationBinding
 import cx.ring.mvp.BaseSupportFragment
 import cx.ring.service.DRingService
