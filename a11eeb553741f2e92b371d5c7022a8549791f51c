@@ -22,6 +22,30 @@
       },
       "revId": "a11eeb553741f2e92b371d5c7022a8549791f51c",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1292b177_178f7bae",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/model/Conversation.kt",
+        "patchSetId": 10
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-10-11T19:44:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "519c933c_20edc82e",
+      "range": {
+        "startLine": 48,
+        "startChar": 16,
+        "endLine": 48,
+        "endChar": 28
+      },
+      "revId": "a11eeb553741f2e92b371d5c7022a8549791f51c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
