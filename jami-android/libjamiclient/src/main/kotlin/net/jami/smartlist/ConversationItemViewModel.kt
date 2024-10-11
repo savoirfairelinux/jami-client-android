@@ -83,7 +83,7 @@ class ConversationItemViewModel(
     }
 
     // Conversation mode can also be a request. In this case, we need to check the request mode.
-    fun isGroup(): Boolean = mode.isGroup || request.mode.isGroup
+    fun isGroup(): Boolean = mode.isGroup || request?.mode?.isGroup ?: false
 
     override fun equals(other: Any?): Boolean {
         if (other !is ConversationItemViewModel) return false
