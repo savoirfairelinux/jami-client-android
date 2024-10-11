@@ -18,6 +18,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4e87165c_2212c462",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2024-10-11T15:42:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10b778ff_57524a80",
+      "revId": "cde98808abb821c7405030d8173d84899ad10df1",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0ba8f02a_43044340",
@@ -31,6 +49,30 @@
       "writtenOn": "2024-10-09T18:12:19Z",
       "side": 1,
       "message": "No importance, but `!model.managementServer.isNullOrEmpty()` is more idiomatic",
+      "range": {
+        "startLine": 89,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 2
+      },
+      "revId": "cde98808abb821c7405030d8173d84899ad10df1",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ec5f60c_d51b924a",
+        "filename": "jami-android/app/src/main/java/cx/ring/tv/account/TVAccountWizard.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2024-10-11T15:42:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ba8f02a_43044340",
       "range": {
         "startLine": 89,
         "startChar": 0,
@@ -64,6 +106,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f1e9817d_088c1788",
+        "filename": "jami-android/app/src/main/java/cx/ring/tv/account/TVJamiAccountConnectFragment.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2024-10-11T15:42:14Z",
+      "side": 1,
+      "message": "For now, null check is included similar to other fragments",
+      "parentUuid": "ba3f398e_0016efe7",
+      "range": {
+        "startLine": 41,
+        "startChar": 10,
+        "endLine": 43,
+        "endChar": 9
+      },
+      "revId": "cde98808abb821c7405030d8173d84899ad10df1",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e9fc7e6e_37abe3f2",
@@ -87,6 +153,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f4b8495_4c2aceb9",
+        "filename": "jami-android/app/src/main/java/cx/ring/tv/account/TVJamiAccountConnectFragment.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2024-10-11T15:42:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9fc7e6e_37abe3f2",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 2
+      },
+      "revId": "cde98808abb821c7405030d8173d84899ad10df1",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5b5e282a_679532bc",
@@ -100,6 +190,30 @@
       "writtenOn": "2024-10-09T18:12:19Z",
       "side": 1,
       "message": "Incorrect string.",
+      "range": {
+        "startLine": 70,
+        "startChar": 88,
+        "endLine": 70,
+        "endChar": 101
+      },
+      "revId": "cde98808abb821c7405030d8173d84899ad10df1",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5b8fac28_7d7e06f8",
+        "filename": "jami-android/app/src/main/java/cx/ring/tv/account/TVJamiAccountConnectFragment.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2024-10-11T15:42:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b5e282a_679532bc",
       "range": {
         "startLine": 70,
         "startChar": 88,
