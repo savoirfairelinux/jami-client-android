@@ -90,26 +90,51 @@ class CallPresenter @Inject constructor(
     fun initOutGoing(
         accountId: String, conversationUri: Uri?, contactUri: String?, hasVideo: Boolean
     ) {
-        Log.i(TAG, "initOutGoing")
+        Log.i("devdebug", "initOutGoing")
         if (accountId.isEmpty() || contactUri == null) {
             Log.e(TAG, "initOutGoing: null account or contact")
             hangupCall()
             return
         }
         val pHasVideo = hasVideo && mHardwareService.hasCamera()
-        val callObservable = mCallService
-            .placeCallIfAllowed(accountId, conversationUri, fromString(toNumber(contactUri)!!), pHasVideo)
-            .flatMapObservable { call: Call -> mCallService.getConfUpdates(call) }
-            .share()
-        mCompositeDisposable.add(callObservable
-            .observeOn(mUiScheduler)
-            .subscribe({ conference ->
-                confUpdate(conference)
-            }) { e: Throwable ->
-                hangupCall(HangupReason.ERROR)
-                Log.e(TAG, "Error with initOutgoing: " + e.message, e)
-            })
-        showConference(callObservable)
+//        val callObservable = mCallService
+//            .placeCallIfAllowed(accountId, conversationUri, fromString(toNumber(contactUri)!!), pHasVideo)
+//            .flatMapObservable { call: Call -> mCallService.getConfUpdates(call) }
+//            .share()
+
+        mCompositeDisposable.add(
+            mCallService.hostConference(
+                accountId,
+                conversationUri,
+                fromString(toNumber(contactUri)!!),
+                pHasVideo
+            ).map { Log.w("devdebug", "abcd")
+                it }
+                .flatMapObservable { conference: Conference ->
+                    Log.w("devdebug", "1 conference id=${conference.id} state=${conference.confState}")
+                    mCallService.getConfUpdates(conference) }
+                .observeOn(mUiScheduler).subscribe(
+                    { conference: Conference ->
+                        Log.w("devdebug", "2 conference id=${conference.id} state=${conference.confState}")
+
+                        confUpdate(conference)
+                    }) { e: Throwable ->
+                    hangupCall(HangupReason.ERROR)
+                    Log.e(TAG, "Error with initOutgoing: " + e.message, e)
+                }
+        )
+        Log.w("devdebug", "too late !")
+
+
+//        mCompositeDisposable.add(callObservable
+//            .observeOn(mUiScheduler)
+//            .subscribe({ conference ->
+//                confUpdate(conference)
+//            }) { e: Throwable ->
+//                hangupCall(HangupReason.ERROR)
+//                Log.e(TAG, "Error with initOutgoing: " + e.message, e)
+//            })
+//        showConference(callObservable)
     }
 
     /**
@@ -169,6 +194,7 @@ class CallPresenter @Inject constructor(
      * @param conference: conference whose value have been updated
      */
     private fun showConference(conference: Observable<Conference>){
+        Log.w("devdebug", "showConference")
         val conference = conference.distinctUntilChanged()
         mCompositeDisposable.add(conference
             .switchMap { obj: Conference ->
@@ -203,6 +229,7 @@ class CallPresenter @Inject constructor(
      * Get all the call details in order to display each elements correctly
      * */
     fun prepareBottomSheetButtonsStatus() {
+        Log.w("devdebug", "callpresenter prepareBottomSheetButtonsStatus")
         val conference = mConference ?: return
         val canDial = mOnGoingCall
         val displayExtensionsButton = view?.displayExtensionsButton() == true
@@ -392,31 +419,35 @@ class CallPresenter @Inject constructor(
     }
 
     /**
-     * This fonctions define some global var and the UI screen/elements to show based on the Call/Conference properties.
+     * This function define some global var and the UI screen/elements to show based on the Call/Conference properties.
      * @example: it will update the bottomSheet elements based on the conference data.
      * */
-    private fun confUpdate(call: Conference) {
-        mConference = call
-        val status = call.state
-        if (status === CallStatus.HOLD) {
-            if (call.isSimpleCall) mCallService.unhold(call.accountId, call.id) else JamiService.addMainParticipant(call.accountId, call.id)
-        }
-        val hasVideo = call.hasVideo()
-        val hasActiveCameraVideo = call.hasActiveNonScreenShareVideo()
+    private fun confUpdate(conference: Conference) {
+        mConference = conference
+        val status = conference.state
+        Log.w("devdebug", "CallPresenter confUpdate entry status=$status participants.size=${conference.participants.size}")
+
+        if (status === CallStatus.HOLD)
+            if (conference.isSimpleCall) mCallService.unhold(conference.accountId, conference.id)
+            else JamiService.addMainParticipant(conference.accountId, conference.id)
+
+        val hasVideo = conference.hasVideo()
+        val hasActiveCameraVideo = conference.hasActiveNonScreenShareVideo()
         val view = view ?: return
-        if (call.isOnGoing) {
+        if (conference.isOnGoing or conference.isHostedConference) {
             mOnGoingCall = true
             view.initNormalStateDisplay()
+            // Todo: adapt here for conference (will update the buttons)
             prepareBottomSheetButtonsStatus()
             if (hasVideo) {
                 mHardwareService.setPreviewSettings()
-                mHardwareService.updatePreviewVideoSurface(call)
-                videoSurfaceUpdateId(call.id)
-                extensionSurfaceUpdateId(call.extensionId)
+                mHardwareService.updatePreviewVideoSurface(conference)
+                videoSurfaceUpdateId(conference.id)
+                extensionSurfaceUpdateId(conference.extensionId)
                 view.displayLocalVideo(hasActiveCameraVideo && mDeviceRuntimeService.hasVideoPermission())
                 if (permissionChanged) {
                     val camId = mHardwareService.changeCamera(true)
-                    mCallService.replaceVideoMedia(call, "camera://$camId", true)
+                    mCallService.replaceVideoMedia(conference, "camera://$camId", true)
                     permissionChanged = false
                 }
             }
@@ -425,8 +456,8 @@ class CallPresenter @Inject constructor(
             }*/
             timeUpdateTask?.dispose()
             timeUpdateTask = mUiScheduler.schedulePeriodicallyDirect({ updateTime() }, 0, 1, TimeUnit.SECONDS)
-        } else if (call.isRinging) {
-            val scall = call.call!!
+        } else if (conference.isRinging) {
+            val scall = conference.call!!
             view.handleCallWakelock(!hasVideo)
             if (scall.isIncoming) {
                 if (mAccountService.getAccount(scall.account)?.isAutoanswerEnabled == true) {
@@ -442,7 +473,8 @@ class CallPresenter @Inject constructor(
                 view.initOutGoingCallDisplay()
             }
         } else {
-            finish()
+            Log.w("devdebug", "CallPresenter confUpdate finish()")
+//            finish()
         }
     }
 
@@ -549,6 +581,7 @@ class CallPresenter @Inject constructor(
     }
 
     fun addConferenceParticipant(accountId: String, uri: Uri) {
+        Log.w("devdebug", "addConferenceParticipant")
         val conference = mConference ?: return
         mCompositeDisposable.add(mConversationFacade.startConversation(accountId, uri)
             .subscribe { conversation: Conversation ->
