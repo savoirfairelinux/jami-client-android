@@ -88,7 +88,7 @@ class CallPresenter @Inject constructor(
     }
 
     fun initOutGoing(
-        accountId: String, conversationUri: Uri?, contactUri: String?, hasVideo: Boolean
+        accountId: String, conversationUri: Uri, contactUri: String?, hasVideo: Boolean
     ) {
         Log.i(TAG, "initOutGoing")
         if (accountId.isEmpty() || contactUri == null) {
@@ -97,19 +97,34 @@ class CallPresenter @Inject constructor(
             return
         }
         val pHasVideo = hasVideo && mHardwareService.hasCamera()
-        val callObservable = mCallService
-            .placeCallIfAllowed(accountId, conversationUri, fromString(toNumber(contactUri)!!), pHasVideo)
-            .flatMapObservable { call: Call -> mCallService.getConfUpdates(call) }
-            .share()
-        mCompositeDisposable.add(callObservable
-            .observeOn(mUiScheduler)
-            .subscribe({ conference ->
-                confUpdate(conference)
-            }) { e: Throwable ->
-                hangupCall(HangupReason.ERROR)
-                Log.e(TAG, "Error with initOutgoing: " + e.message, e)
-            })
-        showConference(callObservable)
+
+        mConversationFacade.startConversation(accountId, conversationUri)
+            .subscribe { conversation ->
+                val callObservable = if (conversation.isSwarmGroup()) {
+                    mCallService.hostConference(
+                        accountId,
+                        numberUri = fromString(toNumber(contactUri)!!),
+                        pHasVideo
+                    ).flatMapObservable { conference: Conference ->
+                        mCallService.getConfUpdates(conference)
+                    }
+                } else {
+                    mCallService.placeCallIfAllowed(
+                        accountId, conversationUri,
+                        numberUri = fromString(toNumber(contactUri)!!),
+                        pHasVideo
+                    ).flatMapObservable { call: Call -> mCallService.getConfUpdates(call) }.share()
+                }
+                showConference(callObservable)
+
+                mCompositeDisposable.add(
+                    callObservable.observeOn(mUiScheduler).subscribe(
+                        { conference: Conference -> confUpdate(conference) }) { e: Throwable ->
+                        hangupCall(HangupReason.ERROR)
+                        Log.e(TAG, "Error with initOutgoing: " + e.message, e)
+                    }
+                )
+            }.apply { mCompositeDisposable.add(this) }
     }
 
     /**
@@ -173,7 +188,7 @@ class CallPresenter @Inject constructor(
         mCompositeDisposable.add(conference
             .switchMap { obj: Conference ->
                 Observable.combineLatest(obj.participantInfo, obj.pendingCalls,
-                if (obj.isConference)
+                if (obj.isConference || obj.isHostedConference)
                     ContactViewModel.EMPTY_VM
                 else
                     mContactService.observeContact(obj.accountId, obj.call!!.contact!!, false))
@@ -392,31 +407,33 @@ class CallPresenter @Inject constructor(
     }
 
     /**
-     * This fonctions define some global var and the UI screen/elements to show based on the Call/Conference properties.
+     * This function define some global var and the UI screen/elements to show based on the Call/Conference properties.
      * @example: it will update the bottomSheet elements based on the conference data.
      * */
-    private fun confUpdate(call: Conference) {
-        mConference = call
-        val status = call.state
-        if (status === CallStatus.HOLD) {
-            if (call.isSimpleCall) mCallService.unhold(call.accountId, call.id) else JamiService.addMainParticipant(call.accountId, call.id)
-        }
-        val hasVideo = call.hasVideo()
-        val hasActiveCameraVideo = call.hasActiveNonScreenShareVideo()
+    private fun confUpdate(conference: Conference) {
+        mConference = conference
+        val status = conference.state
+
+        if (status === CallStatus.HOLD)
+            if (conference.isSimpleCall) mCallService.unhold(conference.accountId, conference.id)
+            else JamiService.addMainParticipant(conference.accountId, conference.id)
+
+        val hasVideo = conference.hasVideo()
+        val hasActiveCameraVideo = conference.hasActiveNonScreenShareVideo()
         val view = view ?: return
-        if (call.isOnGoing) {
+        if (conference.isOnGoing or conference.isHostedConference) {
             mOnGoingCall = true
             view.initNormalStateDisplay()
             prepareBottomSheetButtonsStatus()
             if (hasVideo) {
                 mHardwareService.setPreviewSettings()
-                mHardwareService.updatePreviewVideoSurface(call)
-                videoSurfaceUpdateId(call.id)
-                extensionSurfaceUpdateId(call.extensionId)
+                mHardwareService.updatePreviewVideoSurface(conference)
+                videoSurfaceUpdateId(conference.id)
+                extensionSurfaceUpdateId(conference.extensionId)
                 view.displayLocalVideo(hasActiveCameraVideo && mDeviceRuntimeService.hasVideoPermission())
                 if (permissionChanged) {
                     val camId = mHardwareService.changeCamera(true)
-                    mCallService.replaceVideoMedia(call, "camera://$camId", true)
+                    mCallService.replaceVideoMedia(conference, "camera://$camId", true)
                     permissionChanged = false
                 }
             }
@@ -425,8 +442,8 @@ class CallPresenter @Inject constructor(
             }*/
             timeUpdateTask?.dispose()
             timeUpdateTask = mUiScheduler.schedulePeriodicallyDirect({ updateTime() }, 0, 1, TimeUnit.SECONDS)
-        } else if (call.isRinging) {
-            val scall = call.call!!
+        } else if (conference.isRinging) {
+            val scall = conference.call!!
             view.handleCallWakelock(!hasVideo)
             if (scall.isIncoming) {
                 if (mAccountService.getAccount(scall.account)?.isAutoanswerEnabled == true) {
