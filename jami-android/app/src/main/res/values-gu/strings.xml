@@ -149,10 +149,8 @@
   <string name="conversation_action_history_clear">સ્પષ્ટ ઇતિહાસ</string>
   <string name="conversation_action_history_clear_title">વાતચીત ઇતિહાસ સાફ કરો?</string>
   <string name="conversation_action_history_clear_message">આ ચોક્કસપણે વાતચીત ઇતિહાસ સાફ કરશે.</string>
-  <string name="conversation_action_remove_this">સંપર્કને કાઢી નાખો</string>
   <string name="conversation_action_remove_this_title">આ સંપર્કને કાઢી નાખો?</string>
   <string name="conversation_action_remove_this_message">આ સંપર્કને કાઢી નાખશે અને વાતચીત ઇતિહાસને ચોક્કસપણે સાફ કરશે.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s ક્લિપબોર્ડ પર કૉપિ</string>
   <string name="conversation_action_select_peer_number">એક નંબર પસંદ કરો</string>
   <string name="conversation_action_block_this">બ્લોક સંપર્ક</string>
   <string name="conversation_action_unblock_this">સંપર્કને અનબ્લોક કરો</string>
@@ -180,7 +178,7 @@
   <string name="conversation_type_group">જૂથ સમૂહ</string>
   <string name="conversation_contact_invited">%1$s આમંત્રિત કરવામાં આવી હતી</string>
   <string name="conversation_contact_added">%1$s જોડાયા</string>
-  <string name="conversation_contact_left">%1$ ડાબી</string>
+  <string name="conversation_contact_left">%1$s ડાબી</string>
   <string name="conversation_search_hint">શોધ વાતચીત</string>
   <string name="today">આજે</string>
   <string name="yesterday">ગઈકાલે</string>
@@ -202,7 +200,7 @@
   <string name="hist_contact_added">સંપર્ક ઉમેરવામાં આવ્યો</string>
   <string name="hist_contact_left">સંપર્ક ડાબી</string>
   <string name="hist_invitation_received">પ્રાપ્ત આમંત્રણ</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">પ્રોફાઇલ</string>
   <string name="profile_name">પ્રોફાઇલ નામ</string>
   <string name="profile_message_warning">તમારી પ્રોફાઇલ ફક્ત તમારા સંપર્કો સાથે શેર કરવામાં આવે છે</string>
@@ -226,6 +224,7 @@
   <string name="title_share_with">.. સાથે શેર કરો.</string>
   <!--Pending invitations-->
   <string name="accept">સ્વીકારો</string>
+  <string name="decline">ઘટાડો</string>
   <string name="block">બ્લોક</string>
   <string name="invitation_message">તમારી પાસે %1$d સંપર્ક વિનંતીઓ છે</string>
   <!--Blacklist-->
@@ -320,7 +319,7 @@
   <string name="bottomSheet_raiseHand_btn">હાથ ઉઠાવો</string>
   <string name="uninstall">અનઇન્સ્ટોલ કરો</string>
   <string name="reset">રીસેટ</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">પુષ્ટિ</string>
   <string name="tab_members">સભ્યો</string>
   <string name="tab_files">ફાઇલો</string>
@@ -339,6 +338,7 @@
   <string name="jami_id_choose_username">વપરાશકર્તા નામ પસંદ કરો</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">જમીમાં આપનું સ્વાગત છે</string>
+  <!--Conversation details-->
   <!--Donation-->
   <!--Extension-->
 </resources>

@@ -192,6 +192,7 @@
   <string name="help_credentials_enter">Digite as credenciais da sua organização</string>
   <string name="help_connect_password_enter">Digite a senha da sua organização</string>
   <string name="account_connect_prompt_username">Nome de usuário</string>
+  <string name="account_enter_username">Entre o nome de usuário</string>
   <!--Name registration-->
   <string name="error_username_empty">Digite um nome de usuário</string>
   <string name="no_registered_name_for_account">Sem nome registrado</string>

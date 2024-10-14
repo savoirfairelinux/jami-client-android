@@ -180,6 +180,7 @@
   <string name="help_credentials_enter">Tast inn opplysninger om din organisasjon</string>
   <string name="help_connect_password_enter">Tast inn passordet til din organisasjon</string>
   <string name="account_connect_prompt_username">Brukernavn</string>
+  <string name="account_enter_username">Skriv inn brukernavn</string>
   <!--Name registration-->
   <string name="error_username_empty">Skriv inn et brukernavn</string>
   <string name="no_registered_name_for_account">Ikke et registrert navn</string>

@@ -59,6 +59,7 @@
   <string name="account_upnp_label">Activar UPnP</string>
   <string name="account_proxy_field">Proxy</string>
   <!--Extension Details-->
+  <string name="account_preferences_extension_tab">Extensions</string>
   <!--Audio Details-->
   <string name="account_audio_label">Audio</string>
   <string name="account_preferences_media_tab">Medios</string>
@@ -184,6 +185,7 @@
   <string name="help_credentials_enter">Ingresá tus credenciales de la organización</string>
   <string name="help_connect_password_enter">Ingresá tu contraseña de la organización</string>
   <string name="account_connect_prompt_username">Nombre de usuario</string>
+  <string name="account_enter_username">Ingresar nombre de usuario</string>
   <!--Name registration-->
   <string name="error_username_empty">Ingresá un nombre de usuario</string>
   <string name="no_registered_name_for_account">El nombre de usuario no está registrado</string>

@@ -149,10 +149,8 @@
   <string name="conversation_action_history_clear">Bersihkan riwayat</string>
   <string name="conversation_action_history_clear_title">Hapus riwayat percakapan?</string>
   <string name="conversation_action_history_clear_message">Ini akan membersihkan riwayat obrolan</string>
-  <string name="conversation_action_remove_this">Hapus kontak</string>
   <string name="conversation_action_remove_this_title">Hapus kontak ini?</string>
   <string name="conversation_action_remove_this_message">Ini akan menghapus kontak dan membersihkan riwayat percakapan.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s telah disalin</string>
   <string name="conversation_action_select_peer_number">Pilih nomor</string>
   <string name="conversation_action_block_this">Blokir kontak</string>
   <string name="conversation_action_unblock_this">Buka blokir kontak</string>
@@ -202,7 +200,7 @@
   <string name="hist_contact_added">Kontak ditambahkan</string>
   <string name="hist_contact_left">Kontak keluar</string>
   <string name="hist_invitation_received">Undangan diterima</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">Profil</string>
   <string name="profile_name">Nama Profil</string>
   <string name="profile_message_warning">Profil Anda hanya dibagikan kepada kontak Anda</string>
@@ -321,7 +319,7 @@
   <string name="bottomSheet_raiseHand_btn">Angkat</string>
   <string name="uninstall">Copot pemasangan</string>
   <string name="reset">Reset</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">Konfirmasi</string>
   <string name="tab_members">Anggota</string>
   <string name="tab_files">Berkas</string>
@@ -340,6 +338,7 @@
   <string name="jami_id_choose_username">Tentukan nama pengguna</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Selamat datang di Jami</string>
+  <!--Conversation details-->
   <!--Donation-->
   <!--Extension-->
 </resources>

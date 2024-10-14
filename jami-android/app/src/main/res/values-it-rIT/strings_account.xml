@@ -212,6 +212,7 @@ Si potra modificare questo account più tardi.</string>
   <string name="help_credentials_enter">Inserisci le credenziali della tua organizzazione</string>
   <string name="help_connect_password_enter">Inserisci la password della tua organizzazione</string>
   <string name="account_connect_prompt_username">Utente</string>
+  <string name="account_enter_username">Inserire il nome utente</string>
   <!--Name registration-->
   <string name="error_username_empty">Inserire un nome utente</string>
   <string name="no_registered_name_for_account">Nessun nome registrato</string>

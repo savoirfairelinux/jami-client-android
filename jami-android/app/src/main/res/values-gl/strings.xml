@@ -155,10 +155,8 @@
   <string name="conversation_action_history_clear">Eliminar historial</string>
   <string name="conversation_action_history_clear_title">Eliminar o historial da conversa?</string>
   <string name="conversation_action_history_clear_message">Esto eliminará definitivamente o historial da conversa.</string>
-  <string name="conversation_action_remove_this">Eliminar contacto</string>
   <string name="conversation_action_remove_this_title">Eliminar este contacto?</string>
   <string name="conversation_action_remove_this_message">Esto eliminará o contacto de xeito definitivo e tamén o historial da conversa.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s copiado ao portapapeis</string>
   <string name="conversation_action_select_peer_number">Escolle un número</string>
   <string name="conversation_action_block_this">Bloquear contacto</string>
   <string name="conversation_action_unblock_this">Desbloquear contacto</string>
@@ -208,7 +206,7 @@
   <string name="hist_contact_added">Contacto engadido</string>
   <string name="hist_contact_left">Contacto desbotado</string>
   <string name="hist_invitation_received">Convite recibido</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">Perfil</string>
   <string name="profile_name">Nome do perfil</string>
   <string name="profile_message_warning">O teu perfil só se comparte cos teus contactos</string>
@@ -232,6 +230,7 @@
   <string name="title_share_with">Compartir con...</string>
   <!--Pending invitations-->
   <string name="accept">Aceptar</string>
+  <string name="decline">Rexeitar</string>
   <string name="block">Bloquar</string>
   <string name="invitation_message">Tes %1$d solicitudes de contacto  </string>
   <!--Blacklist-->
@@ -327,7 +326,7 @@
   <string name="bottomSheet_raiseHand_btn">Ergue a man</string>
   <string name="uninstall">Desinstalar</string>
   <string name="reset">Restablecer</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">Confirmar</string>
   <string name="tab_members">Membresía</string>
   <string name="tab_files">Arquivos</string>
@@ -353,6 +352,7 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Benvida/o a Jami</string>
   <string name="welcome_jami_description">Comparte o teu identificador Jami para que te atopen máis facilmente!</string>
+  <!--Conversation details-->
   <!--Donation-->
   <string name="donation_card_description">Se desfrutas usando Jami e cres nos nosos obxectivos, farías unha doazón?</string>
   <string name="donation_card_not_now">Agora non</string>

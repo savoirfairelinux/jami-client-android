@@ -6,6 +6,9 @@
   <string name="copyright_section">El derechu d\'autor</string>
   <string name="contribute_section">Contribuyir</string>
   <string name="version_section">La versión</string>
+  <string name="no_browser_app_installed">Nun se atopó aplicación del navegador web, instala una pa ver esta páxina</string>
+  <string name="website_chooser_title">La vista web usando...</string>
+  <string name="license">El software ye proporcionáu \"como ye\", ensin garantía de nengún tipu.</string>
   <string name="description">Jami ye un software llibre pa la comunicación universal que respeta les llibertaes y la privacidá de los sos usuarios.</string>
   <string name="credits">Créditos</string>
   <string name="pip_title">La Conferencia Jami</string>
@@ -146,10 +149,8 @@
   <string name="conversation_action_history_clear">La hestoria clara</string>
   <string name="conversation_action_history_clear_title">¿Clarar el historial de conversaciones?</string>
   <string name="conversation_action_history_clear_message">Esto definitivamente va despeñar el historial de conversación.</string>
-  <string name="conversation_action_remove_this">La so direición de la páxina web</string>
   <string name="conversation_action_remove_this_title">¿Borrear esti contautu?</string>
   <string name="conversation_action_remove_this_message">Esto borrará\'l contautu y definitivamente borrará\'l historial de conversaciones.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s copiáu na taquilla</string>
   <string name="conversation_action_select_peer_number">Seleccione un númberu</string>
   <string name="conversation_action_block_this">Bloquear el contacto</string>
   <string name="conversation_action_unblock_this">Desbloquear el contacto</string>
@@ -177,7 +178,7 @@
   <string name="conversation_type_group">El grupu de grupos</string>
   <string name="conversation_contact_invited">%1$s foi convidáu</string>
   <string name="conversation_contact_added">%1$s xuníu</string>
-  <string name="conversation_contact_left">%1$ ye izquierdu</string>
+  <string name="conversation_contact_left">%1$s ye izquierdu</string>
   <string name="conversation_search_hint">La conversación de busca</string>
   <string name="today">El so nome ye \"El pueblu de Dios\".</string>
   <string name="yesterday">En xineru de 2011</string>
@@ -199,7 +200,7 @@
   <string name="hist_contact_added">Añedióse\'l contacto</string>
   <string name="hist_contact_left">La so direición orixinal ye:</string>
   <string name="hist_invitation_received">La invitación recibida</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">Perfil</string>
   <string name="profile_name">Nombre de perfil</string>
   <string name="profile_message_warning">El so perfil ye compartidu solamente con los sos contactos.</string>
@@ -223,7 +224,9 @@
   <string name="title_share_with">Compartir con...</string>
   <!--Pending invitations-->
   <string name="accept">Acceptar</string>
+  <string name="decline">El declive</string>
   <string name="block">Bloqueáu</string>
+  <string name="invitation_message">Hai solicitúes de contautu %1$d</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Nun hai contactos bloqueaos</string>
   <!--Smartlist-->
@@ -316,7 +319,7 @@
   <string name="bottomSheet_raiseHand_btn">Ellí ye la mano.</string>
   <string name="uninstall">Desinstalar</string>
   <string name="reset">Reimpartir</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">Confirmar</string>
   <string name="tab_members">Los miembros</string>
   <string name="tab_files">Archivos</string>
@@ -335,6 +338,7 @@
   <string name="jami_id_choose_username">Escueye un nome d\' usuariu</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Bienveníu a Jami.</string>
+  <!--Conversation details-->
   <!--Donation-->
   <!--Extension-->
 </resources>

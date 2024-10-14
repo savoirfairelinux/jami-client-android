@@ -149,10 +149,8 @@
   <string name="conversation_action_history_clear">Тарихты анық</string>
   <string name="conversation_action_history_clear_title">Әңгіме тарихын тазарту?</string>
   <string name="conversation_action_history_clear_message">Бұл әңгіме тарихының тазаланатынын анық көрсетеді.</string>
-  <string name="conversation_action_remove_this">Байланысты өшіру</string>
   <string name="conversation_action_remove_this_title">Бұл байланысты өшіру?</string>
   <string name="conversation_action_remove_this_message">Бұл байланыстарды өшіріп, әңгіме тарихын мүлдем өшіреді.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s клипборда көшірілді</string>
   <string name="conversation_action_select_peer_number">Санды таңдау</string>
   <string name="conversation_action_block_this">Блок контакт</string>
   <string name="conversation_action_unblock_this">Байланысты бұғаттау</string>
@@ -202,7 +200,7 @@
   <string name="hist_contact_added">Қосылған байланыс</string>
   <string name="hist_contact_left">Сол жаққа байланыс</string>
   <string name="hist_invitation_received">Қабылданған шақыру</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">Профиль</string>
   <string name="profile_name">Профиль атауы</string>
   <string name="profile_message_warning">Профиліңіз тек байланыс адамдарыңызбен бөлінеді</string>
@@ -228,7 +226,7 @@
   <string name="accept">Қабылда</string>
   <string name="decline">Ауыру</string>
   <string name="block">Блок</string>
-  <string name="invitation_message">% 1 контакт сұрақтарыңыз бар</string>
+  <string name="invitation_message">%1$d контакт сұрақтарыңыз бар</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Контакттар тосқауылданбаған</string>
   <!--Smartlist-->
@@ -321,7 +319,7 @@
   <string name="bottomSheet_raiseHand_btn">Қолын көтеру</string>
   <string name="uninstall">Құрылғыны алып тастау</string>
   <string name="reset">Қайта орнату</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">Куәлікті растау</string>
   <string name="tab_members">Қауым мүшелері</string>
   <string name="tab_files">Файлдар</string>
@@ -340,6 +338,7 @@
   <string name="jami_id_choose_username">Пайдаланушы атауын таңдау</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Жамиге қош келдіңіздер</string>
+  <!--Conversation details-->
   <!--Donation-->
   <!--Extension-->
 </resources>

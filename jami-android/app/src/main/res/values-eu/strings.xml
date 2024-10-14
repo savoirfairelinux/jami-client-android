@@ -7,6 +7,8 @@
   <string name="contribute_section">Hartu parte</string>
   <string name="version_section">Bertsioa</string>
   <string name="no_browser_app_installed">Ez da web nabigatzailerik aurkitu, instalatu bat orri hau ikusteko</string>
+  <string name="website_chooser_title">Ikusi webgunea hau erabiliz…</string>
+  <string name="license">Software hau \"den moduan\" eskaintzen da, inolako bermeik gabe. Xehetasunetarako ikusi <u>General Public License lizentzia, 3. bertsioa edo berriagoa</u></string>
   <string name="description">Jami komunikazio unibertsalerako software librea da, erabiltzaileek askatasunak eta pribatutasuna aintzat hartzen dituena</string>
   <string name="credits">Kredituak</string>
   <string name="pip_title">Jami Konferentzia</string>
@@ -148,10 +150,8 @@
   <string name="conversation_action_history_clear">Garbitu historiala</string>
   <string name="conversation_action_history_clear_title">Garbitu elkarrizketa-historiala?</string>
   <string name="conversation_action_history_clear_message">Honek behin betiko ezabatuko du elkarrizketa-historiala.</string>
-  <string name="conversation_action_remove_this">Ezabatu kontaktua</string>
   <string name="conversation_action_remove_this_title">Ezabatu kontaktu hau?</string>
   <string name="conversation_action_remove_this_message">Honek kontaktu hau ezabatuko du eta behin betiko garbituko du elkarrizketa-historiala.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s arbelera kopiatuta</string>
   <string name="conversation_action_select_peer_number">Hautatu zenbaki bat</string>
   <string name="conversation_action_block_this">Blokeatu kontaktua</string>
   <string name="conversation_action_unblock_this">Kontaktuak desblokeatu</string>
@@ -179,7 +179,7 @@
   <string name="conversation_type_group">Talde-taldea</string>
   <string name="conversation_contact_invited">%1$s gonbidatu dute</string>
   <string name="conversation_contact_added">%1$s bat egin da</string>
-  <string name="conversation_contact_left">%1$ ezkerrera</string>
+  <string name="conversation_contact_left">%1$s ezkerrera</string>
   <string name="conversation_search_hint">Bilaketa elkarrizketa</string>
   <string name="today">Gaur egun</string>
   <string name="yesterday">Atzo</string>
@@ -201,7 +201,7 @@
   <string name="hist_contact_added">Kontaktua gehituta</string>
   <string name="hist_contact_left">Ezkerreko kontaktuak</string>
   <string name="hist_invitation_received">Gonbidapena jasota</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">Profila</string>
   <string name="profile_name">Profilaren izena</string>
   <string name="profile_message_warning">Zure profila zure kontaktuekin partekatzen da soilik</string>
@@ -225,6 +225,7 @@
   <string name="title_share_with">Partekatu honekin…</string>
   <!--Pending invitations-->
   <string name="accept">Onartu</string>
+  <string name="decline">Ukatu</string>
   <string name="block">Bloketu</string>
   <string name="invitation_message">%1$d kontaktu-eskaerak dituzu</string>
   <!--Blacklist-->
@@ -319,7 +320,7 @@
   <string name="bottomSheet_raiseHand_btn">Altxa eskua.</string>
   <string name="uninstall">Desinstalatu</string>
   <string name="reset">Berriz jartzea</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">Baieztatu.</string>
   <string name="tab_members">Kideak</string>
   <string name="tab_files">Fitxategiak</string>
@@ -338,6 +339,7 @@
   <string name="jami_id_choose_username">Erabiltzaile izena aukeratu</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Ongi etorri Jamira</string>
+  <!--Conversation details-->
   <!--Donation-->
   <!--Extension-->
 </resources>

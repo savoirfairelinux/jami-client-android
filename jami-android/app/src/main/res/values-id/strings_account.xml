@@ -180,6 +180,7 @@
   <string name="help_credentials_enter">Masukkan kredensial organisasi Anda</string>
   <string name="help_connect_password_enter">Masukkan kata sandi organisasi Anda</string>
   <string name="account_connect_prompt_username">Nama pengguna</string>
+  <string name="account_enter_username">Masukkan nama pengguna</string>
   <!--Name registration-->
   <string name="error_username_empty">Masukkan nama pengguna</string>
   <string name="no_registered_name_for_account">Nama tidak terdaftar</string>

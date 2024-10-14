@@ -180,6 +180,7 @@
   <string name="help_credentials_enter">Ange din organisations inloggningsdata </string>
   <string name="help_connect_password_enter">Ange din organisations lösenord </string>
   <string name="account_connect_prompt_username">Användarnamn</string>
+  <string name="account_enter_username">Ange användarnamn</string>
   <!--Name registration-->
   <string name="error_username_empty">Ange ett användarnamn</string>
   <string name="no_registered_name_for_account">Inget registrerat namn</string>

@@ -153,10 +153,8 @@
   <string name="conversation_action_history_clear">履歴を消去</string>
   <string name="conversation_action_history_clear_title">会話の履歴を削除しますか？</string>
   <string name="conversation_action_history_clear_message">この操作は会話の履歴を完全に削除します。</string>
-  <string name="conversation_action_remove_this">連絡先を削除</string>
   <string name="conversation_action_remove_this_title">この連絡先を削除しますか？</string>
   <string name="conversation_action_remove_this_message">この操作は連絡先を削除し、会話の履歴を完全に削除します。</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s をクリップボードにコピーしました</string>
   <string name="conversation_action_select_peer_number">番号を選択</string>
   <string name="conversation_action_block_this">連絡先をブロック</string>
   <string name="conversation_action_unblock_this">連絡先の解禁</string>
@@ -206,7 +204,7 @@
   <string name="hist_contact_added">連絡先を追加しました</string>
   <string name="hist_contact_left">連絡先が退出しました</string>
   <string name="hist_invitation_received">招待を受信しました</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">プロフィール</string>
   <string name="profile_name">プロフィール名</string>
   <string name="profile_message_warning">プロフィールは連絡先以外に共有されません</string>
@@ -325,7 +323,7 @@
   <string name="bottomSheet_raiseHand_btn">手を挙げる</string>
   <string name="uninstall">解除する</string>
   <string name="reset">リセット</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">確認</string>
   <string name="tab_members">要員</string>
   <string name="tab_files">ファイル</string>
@@ -344,6 +342,7 @@
   <string name="jami_id_choose_username">ユーザー名を選択する</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Jamiへようこそ</string>
+  <!--Conversation details-->
   <!--Donation-->
   <!--Extension-->
 </resources>

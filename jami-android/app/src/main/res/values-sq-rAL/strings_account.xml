@@ -192,6 +192,7 @@
   <string name="help_credentials_enter">Jepni kredencialet e hyrjes për entin tuaj</string>
   <string name="help_connect_password_enter">Jepni fjalëkalimin e entit tuaj</string>
   <string name="account_connect_prompt_username">Emër përdoruesi</string>
+  <string name="account_enter_username">Jepni emër përdoruesi</string>
   <!--Name registration-->
   <string name="error_username_empty">Jepni një emër përdoruesi</string>
   <string name="no_registered_name_for_account">Pa emër të regjistruar</string>

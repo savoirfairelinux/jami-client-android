@@ -212,6 +212,7 @@
   <string name="help_credentials_enter">Introdu datele de autentificare ale organizației tale</string>
   <string name="help_connect_password_enter">Introdu parola organizației tale</string>
   <string name="account_connect_prompt_username">Nume de utilizator</string>
+  <string name="account_enter_username">Introdu numele de utilizator</string>
   <!--Name registration-->
   <string name="error_username_empty">Introdu un nume de utilizator</string>
   <string name="no_registered_name_for_account">Niciun nume înscris</string>

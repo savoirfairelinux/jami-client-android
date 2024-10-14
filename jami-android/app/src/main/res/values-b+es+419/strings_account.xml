@@ -29,6 +29,7 @@
   <string name="sip_account">Cuenta SIP</string>
   <string name="account_no_network_title">Error de red</string>
   <!--TV-->
+  <string name="account_enter_username">Ingresar nombre de usuario</string>
   <!--Name registration-->
   <!--Create account-->
   <!--Edit profile-->

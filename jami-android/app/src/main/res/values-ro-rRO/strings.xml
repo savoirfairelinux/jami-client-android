@@ -1,6 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
+  <string name="submit_issue_title">Defecțiuni</string>
+  <string name="submit_issue_action_description"><u>Defecțiune nouă</u></string>
   <string name="section_license">Licență</string>
   <string name="sponsor_section">Jami este un program liber, creat și susținut de</string>
   <string name="copyright_section">Drepturi de autor</string>
@@ -173,14 +175,19 @@
   <string name="contact_details">Detaliile contactului</string>
   <string name="conversation_action_delete_this">Șterge această conversație</string>
   <string name="conversation_action_delete_this_title">Ștergi această conversație?</string>
+  <string name="leave_conversation">Termină conversația</string>
   <string name="conversation_action_delete_this_message">Această acțiune este ireversibilă.</string>
   <string name="conversation_action_history_clear">Șterge conversația</string>
   <string name="conversation_action_history_clear_title">Ștergi cronologia conversației?</string>
   <string name="conversation_action_history_clear_message">Aceasta va șterge definitiv cronologia conversației.</string>
-  <string name="conversation_action_remove_this">Șterge contactul</string>
+  <string name="delete_contact">Șterge contactul</string>
   <string name="conversation_action_remove_this_title">Ștergi acest contact?</string>
   <string name="conversation_action_remove_this_message">Aceasta va șterge contactul și va elimina definitiv cronologia conversației.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s copiat în memorie</string>
+  <string name="swarm_group_action_leave">Părăsește grupul</string>
+  <string name="swarm_group_action_leave_title">Părăsești acest grup?</string>
+  <string name="swarm_group_action_leave_message">Aceasta va elimina conversația din lista conversațiilor</string>
+  <string name="conversation_action_copy_peer_number">Copiază identificatorul contactului</string>
+  <string name="copied_to_clipboard">%1$s copiat în memorie</string>
   <string name="conversation_action_select_peer_number">Alege un număr</string>
   <string name="conversation_action_block_this">Blochează contactul</string>
   <string name="conversation_action_unblock_this">Deblochează contactul</string>
@@ -251,7 +258,7 @@
   <string name="hist_contact_blocked">Contact blocat</string>
   <string name="hist_contact_unblocked">Contact deblocat</string>
   <string name="hist_invitation_received">Invitație primită</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">Profil</string>
   <string name="profile_name">Numele profilului</string>
   <string name="profile_message_warning">Profilul tău este distribuit doar contactelor tale</string>
@@ -261,6 +268,7 @@
   <string name="registered_name">Nume înscris</string>
   <string name="no_registered_name">Niciun nume înscris</string>
   <string name="identity">Identitate</string>
+  <string name="identifier">Identificator</string>
   <string name="account">Cont</string>
   <string name="link_new_device">Asociază alt aparat</string>
   <string name="devices">Aparate asociate</string>
@@ -277,7 +285,12 @@
   <string name="accept">Acceptă</string>
   <string name="decline">Refuză</string>
   <string name="block">Blochează</string>
+  <string name="decline_invitation">Refuză invitația</string>
+  <string name="accept_invitation">Acceptă invitația</string>
+  <string name="new_invitation_request_title">Invitație nouă</string>
   <string name="invitation_message">Ai %1$d cereri de contact</string>
+  <string name="no_invitations">Nu există invitații la discuție</string>
+  <string name="invitation_received_message">Invitație primită de la %s.\nAccepți sau refuzi invitația la discuție?</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Niciun contact blocat</string>
   <!--Smartlist-->
@@ -387,7 +400,7 @@
   <string name="open_general_extension_settings">Deschide reglările generale ale extensiei</string>
   <string name="uninstall">Dezinstalează</string>
   <string name="reset">Restabilește</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">Confirmă</string>
   <string name="rename_error">nu poate fi gol</string>
   <string name="swarm_description">Adaugă o descriere</string>
@@ -419,6 +432,9 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Bine ai venit pe Jami</string>
   <string name="welcome_jami_description">Împărtășește identificatorul tău Jami pentru a fi contactat mai ușor!</string>
+  <!--Conversation details-->
+  <string name="details">Detalii</string>
+  <string name="Private">Privat</string>
   <!--Donation-->
   <string name="donation_card_description">Dacă îți place să folosești Jami și crezi că misiunea noastră este importantă, poți face o donație?</string>
   <string name="donation_card_not_now">Nu acum</string>

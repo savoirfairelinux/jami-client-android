@@ -156,14 +156,15 @@
   <string name="conversation_details">Detalhes da conversa</string>
   <string name="contact_details">Detalhes do contacto</string>
   <string name="conversation_action_delete_this">Eliminar esta conversa</string>
+  <string name="leave_conversation">Abandonar a conversa</string>
   <string name="conversation_action_delete_this_message">Esta ação não pode ser desfeita.</string>
   <string name="conversation_action_history_clear">Limpar histórico</string>
   <string name="conversation_action_history_clear_title">Limpar o histórico da conversação?</string>
   <string name="conversation_action_history_clear_message">Isto irá eliminar o histórico da conversação permanentemente.</string>
-  <string name="conversation_action_remove_this">Eliminar contacto</string>
+  <string name="delete_contact">Eliminar contacto</string>
   <string name="conversation_action_remove_this_title">Eliminar este contacto?</string>
   <string name="conversation_action_remove_this_message">Isto irá eliminar o contacto e limpar o histórico de conversação definitivamente.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s copiado</string>
+  <string name="copied_to_clipboard">%1$s copiado</string>
   <string name="conversation_action_select_peer_number">Selecione um número</string>
   <string name="conversation_action_block_this">Bloquear contacto</string>
   <string name="conversation_action_unblock_this">Desbloquear contacto</string>
@@ -229,7 +230,7 @@
   <string name="hist_contact_added">Contacto adicionado</string>
   <string name="hist_contact_left">O contacto saiu</string>
   <string name="hist_invitation_received">Convite recebido</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">Perfil</string>
   <string name="profile_name">Nome do perfil</string>
   <string name="profile_message_warning">O seu perfil é partilhado apenas com seus contactos</string>
@@ -239,6 +240,7 @@
   <string name="registered_name">Nome registado</string>
   <string name="no_registered_name">Sem nome registado</string>
   <string name="identity">Identidade</string>
+  <string name="identifier">Identificador</string>
   <string name="account">Conta</string>
   <string name="link_new_device">Vincular um novo dispositivo</string>
   <string name="devices">Dispositivos vinculados</string>
@@ -359,7 +361,7 @@
   <string name="bottomSheet_raiseHand_btn">Levantar a mão</string>
   <string name="uninstall">Desinstalar</string>
   <string name="reset">Repor</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">Confirmar</string>
   <string name="swarm_description">Adicionar descrição</string>
   <string name="tab_members">Membros</string>
@@ -390,6 +392,8 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Bem-vindo(a) ao Jami</string>
   <string name="welcome_jami_description">Partilhe o seu identificador Jami para ser contactado mais facilmente!</string>
+  <!--Conversation details-->
+  <string name="Private">Privado</string>
   <!--Donation-->
   <string name="donation_card_description">Se gosta de utilizar o Jami e acredita na nossa missão, pode fazer um donativo?</string>
   <string name="donation_card_not_now">Agora não</string>

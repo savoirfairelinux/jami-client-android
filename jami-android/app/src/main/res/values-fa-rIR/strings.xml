@@ -7,6 +7,8 @@
   <string name="contribute_section">مشارکت</string>
   <string name="version_section">نسخه</string>
   <string name="no_browser_app_installed">هیچ برنامه مرورگری پیدا نشد، برای مشاهده این صفحه، یکی را نصب کنید</string>
+  <string name="website_chooser_title">مشاهده سایت اینترنتی از طریق…</string>
+  <string name="license">این نرم‌افزار همان گونه که هست، بدون هیچ ضمانتی ارائه شده است. برای جزئیات بیش‌تر، <u>نگارش 3 یا جدیدتر پروانه عمومی همگانی GNU</u>را ببینید</string>
   <string name="description">جمی نرم‌افزاری آزاد برای ارتباط جهانی است؛ که به آزادی‌ها و حریم خصوصی کاربرانش احترام می‌گذارد.</string>
   <string name="credits">دست‌اندرکاران</string>
   <string name="pip_title">کنفرانس جامی</string>
@@ -151,10 +153,8 @@
   <string name="conversation_action_history_clear">پاک‌سازی تاریخچه</string>
   <string name="conversation_action_history_clear_title">پاک‌سازی تاریخچه گفتگو؟</string>
   <string name="conversation_action_history_clear_message">این کار قطعا باعث پاک شدن تاریخچه گفتگو خواهد شد.</string>
-  <string name="conversation_action_remove_this">مخاطب را حذف کنید</string>
   <string name="conversation_action_remove_this_title">حذف این مخاطب؟</string>
   <string name="conversation_action_remove_this_message">این باعث حذف مخاطب شده و قطعا تاریخچه گفتگو را پاک خواهد کرد.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">‫%1$s در حافظه رونویسی شد</string>
   <string name="conversation_action_select_peer_number">گزینش یک شماره</string>
   <string name="conversation_action_block_this">مسدودسازی مخاطب</string>
   <string name="conversation_action_unblock_this">رفع مسدودی آشنا</string>
@@ -205,7 +205,7 @@
   <string name="hist_contact_added">مخاطب افزوده شد</string>
   <string name="hist_contact_left">مخاطب از تماس خارج شد</string>
   <string name="hist_invitation_received">دعوت‌نامه دریافت شد</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">نمایه</string>
   <string name="profile_name">نام نمایه</string>
   <string name="profile_message_warning">نمایه شما تنها با مخاطبانتان هم‌رسانی می‌شود</string>
@@ -229,6 +229,7 @@
   <string name="title_share_with">هم‌رسانی با...</string>
   <!--Pending invitations-->
   <string name="accept">قبول</string>
+  <string name="decline">ردکردن</string>
   <string name="block">مسدود</string>
   <string name="invitation_message">شما‫ %1$d درخواست ارتباط دارید</string>
   <!--Blacklist-->
@@ -323,7 +324,7 @@
   <string name="bottomSheet_raiseHand_btn">بالا بردن دست </string>
   <string name="uninstall">حذف نصب</string>
   <string name="reset">بازنشانی</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">تایید</string>
   <string name="tab_members">اعضا</string>
   <string name="tab_files">فایل ها</string>
@@ -343,6 +344,7 @@
   <string name="jami_id_choose_username">یک نام کاربری را انتخاب کنید</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">به جمی خوش آمدید</string>
+  <!--Conversation details-->
   <!--Donation-->
   <string name="donation_card_not_now">الان نه</string>
   <string name="donation_donate">اهدا کنید</string>

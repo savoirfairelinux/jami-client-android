@@ -59,6 +59,7 @@
   <string name="account_upnp_label">Võta UPnP kasutusele</string>
   <string name="account_proxy_field">Proksiserver</string>
   <!--Extension Details-->
+  <string name="account_preferences_extension_tab">Lisamoodulid</string>
   <!--Audio Details-->
   <string name="account_audio_label">Audio</string>
   <string name="account_preferences_media_tab">Meedia</string>

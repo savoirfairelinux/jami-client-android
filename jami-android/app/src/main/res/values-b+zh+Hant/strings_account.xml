@@ -27,6 +27,7 @@
   <string name="account_contact_me">在 Jami 上联系我！</string>
   <string name="account_no_network_title">网络错误</string>
   <!--TV-->
+  <string name="account_enter_username">输入用户名</string>
   <!--Name registration-->
   <!--Create account-->
   <!--Edit profile-->

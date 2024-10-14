@@ -212,6 +212,7 @@ Sie können Ihr Konto später bearbeiten</string>
   <string name="help_credentials_enter">Geben Sie die Anmeldedaten für Ihr Unternehmen ein</string>
   <string name="help_connect_password_enter">Geben Sie das Passwort für Ihr Unternehmen ein</string>
   <string name="account_connect_prompt_username">Benutzername</string>
+  <string name="account_enter_username">Benutzername eingeben</string>
   <!--Name registration-->
   <string name="error_username_empty">Benutzername eingeben</string>
   <string name="no_registered_name_for_account">Kein registrierter Name</string>

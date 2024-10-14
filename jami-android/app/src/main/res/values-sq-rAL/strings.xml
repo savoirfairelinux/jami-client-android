@@ -155,14 +155,15 @@
   <string name="conversation_details">Hollësi bisede</string>
   <string name="contact_details">Hollësi kontakti</string>
   <string name="conversation_action_delete_this">Fshije këtë bisedë</string>
+  <string name="leave_conversation">Braktise bisedën</string>
   <string name="conversation_action_delete_this_message">Ky veprim s\’mund të zhbëhet.</string>
   <string name="conversation_action_history_clear">Spastroje historikun</string>
   <string name="conversation_action_history_clear_title">Të spastrohet historiku i bisedave?</string>
   <string name="conversation_action_history_clear_message">Kjo do të shkaktojë përfundimisht pastrimin e historikut të bisedës.</string>
-  <string name="conversation_action_remove_this">Fshije kontaktin</string>
+  <string name="delete_contact">Fshije kontaktin</string>
   <string name="conversation_action_remove_this_title">Të fshihet ky kontakt?</string>
   <string name="conversation_action_remove_this_message">Kjo do të shkaktojë fshirjen e kontaktit dhe përfundimisht fshirjen e historikut të bisedave.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s u kopjua te e papastra</string>
+  <string name="copied_to_clipboard">%1$s u kopjua te e papastra</string>
   <string name="conversation_action_select_peer_number">Përzgjidhni një numër</string>
   <string name="conversation_action_block_this">Bllokojeni kontaktin</string>
   <string name="conversation_action_unblock_this">Zhbllokoje kontaktin</string>
@@ -227,7 +228,7 @@
   <string name="hist_contact_added">Kontakti u shtua</string>
   <string name="hist_contact_left">Kontakti iku</string>
   <string name="hist_invitation_received">Ftesa u mor</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">Profil</string>
   <string name="profile_name">Emër Profili</string>
   <string name="profile_message_warning">Profili juaj ndahet vetëm me kontaktet tuaja</string>
@@ -237,6 +238,7 @@
   <string name="registered_name">Emër i Regjistruar</string>
   <string name="no_registered_name">Pa emër të regjistruar</string>
   <string name="identity">Identitet</string>
+  <string name="identifier">Identifikues</string>
   <string name="account">Llogari</string>
   <string name="link_new_device">Lidhni një pajisje të re</string>
   <string name="devices">Pajisje të lidhura</string>
@@ -356,7 +358,7 @@
   <string name="bottomSheet_raiseHand_btn">Ngrini dorën</string>
   <string name="uninstall">Çinstaloje</string>
   <string name="reset">Riktheji te parazgjedhjet</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">Ripohoje</string>
   <string name="swarm_description">Shtoni përshkrim</string>
   <string name="tab_members">Anëtarë</string>
@@ -387,6 +389,9 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Mirë se vini te Jami</string>
   <string name="welcome_jami_description">Jepuani të tjerëve identifikuesin tuaj Jami, që të lidhen më lehtësisht me ju!</string>
+  <!--Conversation details-->
+  <string name="details">Hollësi</string>
+  <string name="Private">Privat</string>
   <!--Donation-->
   <string name="donation_card_description">Nëse ju shijon të përdorni Jami-n dhe besoni në misionin tonë, a do të bënit një dhurim?</string>
   <string name="donation_card_not_now">Jo tani</string>

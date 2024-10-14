@@ -6,6 +6,9 @@
   <string name="copyright_section">Авторски права</string>
   <string name="contribute_section">Принос</string>
   <string name="version_section">Версия</string>
+  <string name="no_browser_app_installed">Не е открито приложение-браузър. Инсталирайте такова, за да видите тази страница.</string>
+  <string name="website_chooser_title">Преглед на уеб сайта чрез…</string>
+  <string name="license">Този софтуер се предоставя във вида, в който е, без никакви гаранции. За повече подробности, вижте <u>Общия публичен лиценз на GNU, версия 3 или по-нов</u></string>
   <string name="description">Ring е безплатен софтуер за универсална комуникация, който уважава свободата и личните данни на потребителите си.</string>
   <string name="credits">Заслуги</string>
   <string name="pip_title">Конференция на Джами</string>
@@ -72,7 +75,7 @@
   <string name="notif_location_title">Споделяне на местоположение с %1$s</string>
   <string name="location_share_contact">%1$s споделя местоположението с вас</string>
   <string name="notif_location_multi_title">Споделяне на местоположение с %1$d контакти</string>
-  <string name="notif_location_remaining">Остават % 1$d минути</string>
+  <string name="notif_location_remaining">Остават %1$d минути</string>
   <string name="notif_location_action_stop">Престанете да споделяте местоположението</string>
   <string name="location_share_action_start">Започнете споделянето</string>
   <string name="location_share_action_stop">Спрете да споделяте</string>
@@ -147,10 +150,8 @@
   <string name="conversation_action_history_clear">Изчистване на историята</string>
   <string name="conversation_action_history_clear_title">Изчистване на историята на повикванията?</string>
   <string name="conversation_action_history_clear_message">Това определено ще изчисти историята на повикванията.</string>
-  <string name="conversation_action_remove_this">Изтриване на контакт</string>
   <string name="conversation_action_remove_this_title">Изтриване на този контакт?</string>
   <string name="conversation_action_remove_this_message">Това определено ще изтрие този контакт и ще изчисти историята на повикванията.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s е копиран</string>
   <string name="conversation_action_select_peer_number">Изберете номер</string>
   <string name="conversation_action_block_this">Блокиране на контакт</string>
   <string name="conversation_action_unblock_this">Деблокиране на контакта</string>
@@ -178,7 +179,7 @@
   <string name="conversation_type_group">Групи</string>
   <string name="conversation_contact_invited">%1$s е поканен</string>
   <string name="conversation_contact_added">%1$s е включен</string>
-  <string name="conversation_contact_left">%1$ е останал</string>
+  <string name="conversation_contact_left">%1$s е останал</string>
   <string name="conversation_search_hint">Търсене на разговор</string>
   <string name="today">Днес</string>
   <string name="yesterday">Вчера</string>
@@ -200,7 +201,7 @@
   <string name="hist_contact_added">Контактът е добавен</string>
   <string name="hist_contact_left">Контакт наляво</string>
   <string name="hist_invitation_received">Поканата е приета</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">Профил</string>
   <string name="profile_name">Профил</string>
   <string name="profile_message_warning">Профилът Ви се споделя само с контактите Ви</string>
@@ -224,7 +225,9 @@
   <string name="title_share_with">Споделете с...</string>
   <!--Pending invitations-->
   <string name="accept">Приемане</string>
+  <string name="decline">Отказ</string>
   <string name="block">Блокиране</string>
+  <string name="invitation_message">Имате %1$d заявки за контакт</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Без блокирани контакти</string>
   <!--Smartlist-->
@@ -317,7 +320,7 @@
   <string name="bottomSheet_raiseHand_btn">Вдигнете ръка</string>
   <string name="uninstall">Отключване на инсталирането</string>
   <string name="reset">Презареждане</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">Потвърди</string>
   <string name="tab_members">Членове</string>
   <string name="tab_files">Файлове</string>
@@ -336,6 +339,7 @@
   <string name="jami_id_choose_username">Изберете потребителско име</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Добре дошли в Jami</string>
+  <!--Conversation details-->
   <!--Donation-->
   <!--Extension-->
 </resources>

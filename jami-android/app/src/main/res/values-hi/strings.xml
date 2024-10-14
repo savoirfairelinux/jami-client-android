@@ -158,10 +158,8 @@
   <string name="conversation_action_history_clear">स्पष्ट इतिहास</string>
   <string name="conversation_action_history_clear_title">बातचीत इतिहास को साफ करें?</string>
   <string name="conversation_action_history_clear_message">यह निश्चित रूप से बातचीत इतिहास को साफ करेगा।</string>
-  <string name="conversation_action_remove_this">संपर्क हटाएँ</string>
   <string name="conversation_action_remove_this_title">इस संपर्क को हटा दें?</string>
   <string name="conversation_action_remove_this_message">यह संपर्क को हटा देगा और बातचीत इतिहास को निश्चित रूप से साफ कर देगा।</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s क्लिपबोर्ड पर कॉपी किया गया</string>
   <string name="conversation_action_select_peer_number">एक संख्या चुनें</string>
   <string name="conversation_action_block_this">ब्लॉक संपर्क</string>
   <string name="conversation_action_unblock_this">संपर्क अवरोधित करें</string>
@@ -227,7 +225,7 @@
   <string name="hist_contact_added">संपर्क जोड़ा गया</string>
   <string name="hist_contact_left">संपर्क बाएं</string>
   <string name="hist_invitation_received">प्राप्त निमंत्रण</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">प्रोफ़ाइल</string>
   <string name="profile_name">प्रोफ़ाइल नाम</string>
   <string name="profile_message_warning">आपकी प्रोफ़ाइल केवल आपके संपर्कों के साथ साझा की जाती है</string>
@@ -251,6 +249,7 @@
   <string name="title_share_with">साझा करें...</string>
   <!--Pending invitations-->
   <string name="accept">स्वीकार करें</string>
+  <string name="decline">गिरावट</string>
   <string name="block">ब्लॉक</string>
   <string name="invitation_message">आपके पास %1$d संपर्क अनुरोध है</string>
   <!--Blacklist-->
@@ -354,7 +353,7 @@
   <string name="bottomSheet_raiseHand_btn">हाथ उठाओ</string>
   <string name="uninstall">अनइंस्टॉल करें</string>
   <string name="reset">रीसेट करें</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">पुष्टि करें</string>
   <string name="tab_members">सदस्य</string>
   <string name="tab_files">फ़ाइलें</string>
@@ -384,6 +383,7 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">जामी में आपका स्वागत है</string>
   <string name="welcome_jami_description">अधिक आसानी से संपर्क करने के लिए अपना जामी पहचानकर्ता साझा करें</string>
+  <!--Conversation details-->
   <!--Donation-->
   <string name="donation_card_description">यदि आपको जैमी का उपयोग करना अच्छा लगता है और आप हमारे मिशन में विश्वास करते हैं, तो क्या आप दान देंगे?</string>
   <string name="donation_card_not_now">अभी नहीं</string>

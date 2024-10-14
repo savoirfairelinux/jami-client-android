@@ -1,6 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
+  <string name="submit_issue_title">Segnala un problema</string>
+  <string name="submit_issue_action_description"><u>Crea un nuovo problema</u></string>
   <string name="section_license">Licenza</string>
   <string name="sponsor_section">Jami è un software gratuito sviluppato e supportato da</string>
   <string name="copyright_section">Copyright</string>
@@ -177,10 +179,12 @@
   <string name="conversation_action_history_clear">Cancella cronologia</string>
   <string name="conversation_action_history_clear_title">Cancellare la cronologia della conversazione?</string>
   <string name="conversation_action_history_clear_message">Questo cancellerà definitivamente la cronologia della conversazione.</string>
-  <string name="conversation_action_remove_this">Elimina contatto</string>
   <string name="conversation_action_remove_this_title">Eliminare questo contatto?</string>
   <string name="conversation_action_remove_this_message">Questo eliminerà il contatto e cancellerà definitivamente la cronologia della conversazione.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s copiato negli appunti</string>
+  <string name="swarm_group_action_leave">Lascia il gruppo</string>
+  <string name="swarm_group_action_leave_title">Lasciare questo gruppo?</string>
+  <string name="swarm_group_action_leave_message">Ciò rimuoverà la conversazione dall\'elenco delle conversazioni</string>
+  <string name="conversation_action_copy_peer_number">Copiare l\'identificatore del contatto</string>
   <string name="conversation_action_select_peer_number">Scegli un numero</string>
   <string name="conversation_action_block_this">Blocca contatto</string>
   <string name="conversation_action_unblock_this">Sblocca il contatto</string>
@@ -251,7 +255,7 @@
   <string name="hist_contact_blocked">Contatto bloccato</string>
   <string name="hist_contact_unblocked">Contatto sbloccato</string>
   <string name="hist_invitation_received">Invito ricevuto</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">Profilo</string>
   <string name="profile_name">Nome del profilo</string>
   <string name="profile_message_warning">Il tuo profilo è condiviso solo con i tuoi contatti</string>
@@ -277,7 +281,12 @@
   <string name="accept">Accetta</string>
   <string name="decline">Rifiuta</string>
   <string name="block">Blocca</string>
+  <string name="decline_invitation">Rifiuta l\'invito</string>
+  <string name="accept_invitation">Accetta l\'invito</string>
+  <string name="new_invitation_request_title">Nuovo invito</string>
   <string name="invitation_message">Hai %1$d richieste di contatto</string>
+  <string name="no_invitations">Non ci sono inviti da visualizzare.</string>
+  <string name="invitation_received_message">Invito ricevuto da %s.\nAccettare o rifiutare l\'invito alla chat?</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Nessun contatto bloccato</string>
   <!--Smartlist-->
@@ -387,7 +396,7 @@
   <string name="open_general_extension_settings">Apri le impostazioni generali dell\'estensione</string>
   <string name="uninstall">Disinstalla</string>
   <string name="reset">Ripristina</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">Conferma</string>
   <string name="rename_error">non può essere vuoto</string>
   <string name="swarm_description">Aggiungi descrizione</string>
@@ -419,6 +428,7 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Benvenuto in Jami</string>
   <string name="welcome_jami_description">Condividi il tuo identificatore Jami per essere contattato più facilmente!</string>
+  <!--Conversation details-->
   <!--Donation-->
   <string name="donation_card_description">Se ti piace usare Jami e pensi che la nostra missione sia importante, puoi fare una donazione?</string>
   <string name="donation_card_not_now">Non adesso</string>

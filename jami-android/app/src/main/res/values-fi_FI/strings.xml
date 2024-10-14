@@ -1,12 +1,13 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
-  <string name="version_section">අනුවාදය</string>
+  <string name="no_browser_app_installed">Selainsovellusta ei löytynyt, asenna sellainen tämän sivun näyttämiseksi</string>
+  <string name="website_chooser_title">Näytä verkkosivu käyttäen...</string>
+  <string name="license">Tämä ohjelmisto on jaettu sellaisenaan, ilman minkäänlaista takuuta. Saadaksesi lisätietoja, katso <u>GNU General Public License versio 3 tai myöhempi</u></string>
   <!--About dialog-->
   <!--RingActivity-->
   <!--AB menus-->
   <!--Sections-->
-  <string name="menu_item_settings">සැකසුම්</string>
   <!--Dialing Fragment-->
   <!--History Fragment-->
   <!--Home Fragment-->
@@ -16,7 +17,6 @@
   <!--Notifications-->
   <!--Call Fragment-->
   <!--Text messages-->
-  <string name="send_file">ගොනුව යවන්න</string>
   <!--MediaPreferenceFragment-->
   <!--Ringtone activity-->
   <!--Read contacts permission-->
@@ -24,21 +24,21 @@
   <!--QRCode Scan-->
   <!--Settings-->
   <!--Conversation-->
+  <string name="conversation_contact_left">%1$s on vasemmisto</string>
   <!--Contacts-->
   <!--Account summary-->
   <!--Share fragment-->
   <!--Pending invitations-->
+  <string name="decline">Kieltäydy</string>
+  <string name="invitation_message">Sinulla on %1$d yhteyspyyntöjä</string>
   <!--Blacklist-->
   <!--Smartlist-->
   <!--File Transfer-->
-  <string name="file_transfer_status_cancelled">අවලංගු කළා</string>
   <!--Bottom Navigation-->
   <!--TV-->
   <!--Wizard-->
   <!--Bottom sheet-->
-  <string name="bottomSheet_hangup_btn">ඇමතුම අවසන් කරන්න</string>
   <!--Swarm Details-->
-  <string name="tab_settings">සැකසුම්</string>
   <!--JamiId-->
   <!--WelcomeJami-->
   <!--Conversation details-->

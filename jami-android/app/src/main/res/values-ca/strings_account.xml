@@ -181,6 +181,7 @@
   <string name="help_credentials_enter">Inseriu els credencials de la vostra organització</string>
   <string name="help_connect_password_enter">Inseriu la contrasenya de la vostra organització</string>
   <string name="account_connect_prompt_username">Nom d\'usuari</string>
+  <string name="account_enter_username">Inseriu el vostre nom d\\'usuari</string>
   <!--Name registration-->
   <string name="error_username_empty">Inseriu el vostre nom d\'usuari</string>
   <string name="no_registered_name_for_account">Sense connexió</string>

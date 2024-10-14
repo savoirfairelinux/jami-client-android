@@ -6,6 +6,9 @@
   <string name="copyright_section">حق اشغال</string>
   <string name="contribute_section">بؤلوملر</string>
   <string name="version_section">نسخه</string>
+  <string name="no_browser_app_installed">هیچ web browser app تاپیلدی، بو صفحه نی گؤرمک اوچون بیری سی نصب ائت</string>
+  <string name="website_chooser_title">سايتين سايتيني...</string>
+  <string name="license">بو نرم افزار هر نوع گارانتیسیز \"هماناً\" وئریلیر.</string>
   <string name="description">جامی، آلیشمیش آلیشما اوچون آزاد بیر نرم افزار دیر کی، اؤز ایستیفاده چیلرینین آزادلیقلارینا و خصوصی لیکلرینه حؤرمت ائدیر.</string>
   <string name="credits">اعتبارلار</string>
   <string name="pip_title">جامي کنفرانس</string>
@@ -146,10 +149,8 @@
   <string name="conversation_action_history_clear">واضح تاریخ</string>
   <string name="conversation_action_history_clear_title">دانیشما تاریخینی پاک ائدیرسن؟</string>
   <string name="conversation_action_history_clear_message">بو قطعن موباحئثه تاریخینی پاک ائد جک.</string>
-  <string name="conversation_action_remove_this">تماس لری سنده</string>
   <string name="conversation_action_remove_this_title">بو تماسو سينديرماق؟</string>
   <string name="conversation_action_remove_this_message">بو تماسو سينديرار و دانیشما تاريخيني قطعن پاک ائدر.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s کلیپبوردا کاپیلندی</string>
   <string name="conversation_action_select_peer_number">ساییچ سئچیب</string>
   <string name="conversation_action_block_this">بلاک کنتاکت</string>
   <string name="conversation_action_unblock_this">تماس رو باز کن</string>
@@ -177,7 +178,7 @@
   <string name="conversation_type_group">گروه توپلو</string>
   <string name="conversation_contact_invited">%1$s دعوت ائدیلدی</string>
   <string name="conversation_contact_added">%1$s قوشولدو</string>
-  <string name="conversation_contact_left">%1$ سولدو</string>
+  <string name="conversation_contact_left">%1$s سولدو</string>
   <string name="conversation_search_hint">بحث آختارماق</string>
   <string name="today">بو گون</string>
   <string name="yesterday">دونن</string>
@@ -199,7 +200,7 @@
   <string name="hist_contact_added">تماس قوشولدو</string>
   <string name="hist_contact_left">تماس چپ</string>
   <string name="hist_invitation_received">دعوت آلدی</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">پروفایل</string>
   <string name="profile_name">پروفایل آد</string>
   <string name="profile_message_warning">پروفایلینیز آنجاق تماس لاریزا اشتراک اولونور</string>
@@ -223,7 +224,9 @@
   <string name="title_share_with">...تشارق ائله</string>
   <!--Pending invitations-->
   <string name="accept">قبول ائدیر</string>
+  <string name="decline">آشاغی صفحه</string>
   <string name="block">بلوک</string>
+  <string name="invitation_message">%1$d تماس طلبلرینی آلدی</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">موغوط ائتمه دی</string>
   <!--Smartlist-->
@@ -316,7 +319,7 @@
   <string name="bottomSheet_raiseHand_btn">ال قالديريب</string>
   <string name="uninstall">نصب ائتمک</string>
   <string name="reset">قاییتماق</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">تأکید ائدیر</string>
   <string name="tab_members">عضولری</string>
   <string name="tab_files">فایللار</string>
@@ -335,6 +338,7 @@
   <string name="jami_id_choose_username">ایستیفاده چی آدینی سئچیب</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">\" جامي \" نين خوش آمديد</string>
+  <!--Conversation details-->
   <!--Donation-->
   <!--Extension-->
 </resources>

@@ -180,6 +180,7 @@
   <string name="help_credentials_enter">Įveskite organizacijos kredencialus</string>
   <string name="help_connect_password_enter">Įveskite organizacijos slaptažodį</string>
   <string name="account_connect_prompt_username">Naudotojo vardas</string>
+  <string name="account_enter_username">Įveskite naudotojo vardą</string>
   <!--Name registration-->
   <string name="error_username_empty">Įveskite naudotojo vardą</string>
   <string name="no_registered_name_for_account">Nėra registruoto pavadinimo</string>

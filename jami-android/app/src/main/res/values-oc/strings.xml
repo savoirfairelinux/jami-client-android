@@ -146,14 +146,15 @@
   <string name="conversation_details">Detalhs de la conversacion</string>
   <string name="contact_details">Detalhs de contacte</string>
   <string name="conversation_action_delete_this">Eliminar aquesta conversacion</string>
+  <string name="leave_conversation">Quita la conversacion</string>
   <string name="conversation_action_delete_this_message">Aquesta accion se pòt pas desvolopar.</string>
   <string name="conversation_action_history_clear">Escafar l’istoric</string>
   <string name="conversation_action_history_clear_title">Desliurar l\'istòria de la conversacion?</string>
   <string name="conversation_action_history_clear_message">Aquò netarà definitivament l\'istòria de la conversacion.</string>
-  <string name="conversation_action_remove_this">Eliminar lo contacte</string>
+  <string name="delete_contact">Eliminar lo contacte</string>
   <string name="conversation_action_remove_this_title">Eliminar aquel contacte?</string>
   <string name="conversation_action_remove_this_message">Aquò eliminarà lo contacte e eliminatz definitivament l\'istòria de la conversacion.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s copiat a la pinça</string>
+  <string name="copied_to_clipboard">%1$s copiat a la pinça</string>
   <string name="conversation_action_select_peer_number">Seleccionar un nombre</string>
   <string name="conversation_action_block_this">Blocar contacte</string>
   <string name="conversation_action_unblock_this">Desblocar contacte</string>
@@ -203,7 +204,7 @@
   <string name="hist_contact_added">Contacte ajustat</string>
   <string name="hist_contact_left">Contacte a esquèrra</string>
   <string name="hist_invitation_received">Invitacion recebuda</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">Perfil</string>
   <string name="profile_name">Nom de perfil</string>
   <string name="profile_message_warning">Lo vòstre perfil es pas compartida que amb los vòstres contactes</string>
@@ -322,7 +323,7 @@
   <string name="bottomSheet_raiseHand_btn">Levant la man</string>
   <string name="uninstall">Desinstalar</string>
   <string name="reset">Restar sus</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">Confirmacion</string>
   <string name="tab_members">Membres</string>
   <string name="tab_files">Dossièrs</string>
@@ -341,6 +342,8 @@
   <string name="jami_id_choose_username">Escotar un nom d\' utilizaire</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Benvenguts a Jami</string>
+  <!--Conversation details-->
+  <string name="Private">Privat</string>
   <!--Donation-->
   <!--Extension-->
 </resources>

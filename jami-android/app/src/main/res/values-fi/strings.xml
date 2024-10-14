@@ -7,6 +7,8 @@
   <string name="contribute_section">Tuo panoksesi</string>
   <string name="version_section">Versio</string>
   <string name="no_browser_app_installed">Selainsovellusta ei löytynyt, asenna sellainen tämän sivun näyttämiseksi</string>
+  <string name="website_chooser_title">Näytä verkkosivu käyttäen...</string>
+  <string name="license">Tämä ohjelmisto on jaettu sellaisenaan, ilman minkäänlaista takuuta. Saadaksesi lisätietoja, katso <u>GNU General Public License versio 3 tai myöhempi</u></string>
   <string name="description">Jami on vapaa ja universaali viestintäalusta, joka kunnioittaa käyttäjiensä vapauksia ja yksityisyyttä.</string>
   <string name="credits">Tekijät</string>
   <string name="pip_title">Jami-konferenssi</string>
@@ -148,10 +150,8 @@
   <string name="conversation_action_history_clear">Tyhjennä historia</string>
   <string name="conversation_action_history_clear_title">Tyhjennä keskusteluhistoria?</string>
   <string name="conversation_action_history_clear_message">Tämä selvästikin tyhjentää keskusteluhistorian.</string>
-  <string name="conversation_action_remove_this">Poista henkilö</string>
   <string name="conversation_action_remove_this_title">Poistetaanko tämä henkilö?</string>
   <string name="conversation_action_remove_this_message">Tämä poistaa henkilön ja kaikki keskustelut tämän kanssa.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s kopioitu leikepöydälle</string>
   <string name="conversation_action_select_peer_number">Valitse numero</string>
   <string name="conversation_action_block_this">Estä henkilö</string>
   <string name="conversation_action_unblock_this">Poista kontaktin esto</string>
@@ -179,7 +179,7 @@
   <string name="conversation_type_group">Ryhmätyö</string>
   <string name="conversation_contact_invited">%1$s kutsuttiin</string>
   <string name="conversation_contact_added">%1$s liittyi</string>
-  <string name="conversation_contact_left">%1$ on vasemmisto</string>
+  <string name="conversation_contact_left">%1$s on vasemmisto</string>
   <string name="conversation_search_hint">Etsintä keskustelu</string>
   <string name="today">Tänään</string>
   <string name="yesterday">Eilen</string>
@@ -201,7 +201,7 @@
   <string name="hist_contact_added">Henkilö lisätty</string>
   <string name="hist_contact_left">Henkilö poistui</string>
   <string name="hist_invitation_received">Kutsu vastaanotettu</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">Profiili</string>
   <string name="profile_name">Profiilin nimi</string>
   <string name="profile_message_warning">Profiilisi jaetaan vain sinun yhteystietojen kanssa</string>
@@ -225,6 +225,7 @@
   <string name="title_share_with">Jaa...</string>
   <!--Pending invitations-->
   <string name="accept">Hyväksy</string>
+  <string name="decline">Kieltäydy</string>
   <string name="block">Estä</string>
   <string name="invitation_message">Sinulla on %1$d yhteyspyyntöjä</string>
   <!--Blacklist-->
@@ -319,7 +320,7 @@
   <string name="bottomSheet_raiseHand_btn">Käsi ylös</string>
   <string name="uninstall">Poista asennus</string>
   <string name="reset">Nollaa</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">Vahvista</string>
   <string name="tab_members">Jäsenet</string>
   <string name="tab_files">Tiedostoja</string>
@@ -338,6 +339,7 @@
   <string name="jami_id_choose_username">Valitse käyttäjätunnus</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Tervetuloa Jamiin</string>
+  <!--Conversation details-->
   <!--Donation-->
   <!--Extension-->
 </resources>

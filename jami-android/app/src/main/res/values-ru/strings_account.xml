@@ -212,6 +212,7 @@
   <string name="help_credentials_enter">Введите учетные данные вашей организации</string>
   <string name="help_connect_password_enter">Введите пароль вашей организации</string>
   <string name="account_connect_prompt_username">Имя пользователя</string>
+  <string name="account_enter_username">Введите имя пользователя</string>
   <!--Name registration-->
   <string name="error_username_empty">Введите имя пользователя</string>
   <string name="no_registered_name_for_account">Нет зарегистрированного имени</string>

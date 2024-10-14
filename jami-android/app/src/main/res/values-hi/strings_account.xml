@@ -180,6 +180,7 @@
   <string name="help_credentials_enter">अपनी संगठन की पहचान दर्ज करें</string>
   <string name="help_connect_password_enter">अपनी संगठन की पासवर्ड दर्ज करें</string>
   <string name="account_connect_prompt_username">उपयोगकर्ता नाम</string>
+  <string name="account_enter_username">उपयोगकर्ता नाम दर्ज करें</string>
   <!--Name registration-->
   <string name="error_username_empty">एक उपयोगकर्ता नाम दर्ज करें</string>
   <string name="no_registered_name_for_account">कोई पंजीकृत नाम नहीं</string>

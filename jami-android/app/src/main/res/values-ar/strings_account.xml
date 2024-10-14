@@ -180,6 +180,7 @@
   <string name="help_credentials_enter">أدخل بيانات اعتماد مؤسستك</string>
   <string name="help_connect_password_enter">أدخل كلمة مرور مؤسستك</string>
   <string name="account_connect_prompt_username">اسم المستخدم</string>
+  <string name="account_enter_username">أدخِل اسم المستخدم</string>
   <!--Name registration-->
   <string name="error_username_empty">أدخل اسم مستخدم</string>
   <string name="no_registered_name_for_account">لا يوجد اسم مسجل</string>

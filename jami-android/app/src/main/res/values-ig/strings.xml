@@ -94,7 +94,7 @@
   <string name="wizard_skip">Ịpụ</string>
   <string name="hist_contact_added">E gbakwunyere kọntaktị</string>
   <string name="hist_invitation_received">Òkù a kpọrọ</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">Ihe gbasara ya</string>
   <string name="profile_message_warning">A na-ekenye profaịlụ gị naanị na kọntaktị gị</string>
   <string name="profile_name_hint">Tinye aha gị</string>
@@ -148,7 +148,7 @@
   <string name="bottomSheet_raiseHand_btn">Welie aka gị</string>
   <string name="uninstall">Wepụ ihe nrụnye</string>
   <string name="reset">Tọgharia</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">Kwado</string>
   <string name="tab_members">Ndị otu</string>
   <string name="tab_files">Ihe ndekọ</string>
@@ -161,6 +161,7 @@
   <string name="jami_id_choose_username">Họrọ aha njirimara</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Mmadụ Bịa na Jami</string>
+  <!--Conversation details-->
   <!--Donation-->
   <!--Extension-->
 </resources>

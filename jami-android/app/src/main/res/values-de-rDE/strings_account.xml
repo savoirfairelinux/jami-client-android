@@ -46,6 +46,7 @@ Sie können Ihr Konto später bearbeiten</string>
   <string name="account_link_export_info">Um dieses Konto auf anderen Geräten verwenden zu können, müssen Sie es zunächst auf Jami verfügbar machen. Dadurch wird ein PIN-Code generiert, den Sie auf dem neuen Gerät eingeben müssen, um das Konto einzurichten. Die PIN läuft in 10 Minuten ab.</string>
   <string name="account_end_export_infos">Ihre PIN lautet:\n\n%%\n\nUm den Vorgang abzuschließen, müssen Sie Jami auf dem neuen Gerät öffnen. Erstellen Sie ein neues Konto mit „Dieses Gerät mit einem Konto verknüpfen“. Die PIN läuft in 10 Minuten ab.</string>
   <string name="account_link_export_info_light">Um dieses Konto auf anderen Geräten verwenden zu können, müssen Sie es zunächst auf Jami verfügbar machen. Dadurch wird ein PIN-Code generiert, den Sie auf dem neuen Gerät eingeben müssen, um das Konto einzurichten. Die PIN läuft in 10 Minuten ab.</string>
+  <string name="account_enter_username">Benutzernamen eingeben</string>
   <!--Name registration-->
   <!--Create account-->
   <string name="account_sip_cannot_be_registered">Beim Registrieren des SIP-Kontos ist ein Fehler aufgetreten.</string>

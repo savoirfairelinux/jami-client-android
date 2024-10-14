@@ -185,6 +185,7 @@
   <string name="help_credentials_enter">Ingresa tus credenciales de la organización</string>
   <string name="help_connect_password_enter">Ingresa tu contraseña de la organización</string>
   <string name="account_connect_prompt_username">Nombre de usuario</string>
+  <string name="account_enter_username">Introducir nombre de usuario</string>
   <!--Name registration-->
   <string name="error_username_empty">Ingresa un nombre de usuario</string>
   <string name="no_registered_name_for_account">El nombre no está registrado</string>

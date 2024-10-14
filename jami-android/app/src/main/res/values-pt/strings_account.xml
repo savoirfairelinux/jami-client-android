@@ -192,6 +192,7 @@
   <string name="help_credentials_enter">Introduza as credenciais da sua organização</string>
   <string name="help_connect_password_enter">Introduza a palavra-passe da sua organização</string>
   <string name="account_connect_prompt_username">Nome de utilizador</string>
+  <string name="account_enter_username">Introduza o nome de utilizador</string>
   <!--Name registration-->
   <string name="error_username_empty">Introduza um nome de utilizador</string>
   <string name="no_registered_name_for_account">Sem nome registado</string>

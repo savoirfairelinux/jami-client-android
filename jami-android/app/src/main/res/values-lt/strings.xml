@@ -152,10 +152,8 @@
   <string name="conversation_action_history_clear">Išvalyti istoriją</string>
   <string name="conversation_action_history_clear_title">Išvalyti pokalbio istoriją?</string>
   <string name="conversation_action_history_clear_message">Tai išvalys pokalbio istoriją.</string>
-  <string name="conversation_action_remove_this">Ištrinti adresatą</string>
   <string name="conversation_action_remove_this_title">Ištrinti šį adresatą?</string>
   <string name="conversation_action_remove_this_message">Tai ištrins adresatą ir išvalys pokalbio istoriją.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s nukopijuota į iškarpinę</string>
   <string name="conversation_action_select_peer_number">Pasirinkite numerį</string>
   <string name="conversation_action_block_this">Užblokuoti adresatą</string>
   <string name="conversation_action_unblock_this">Atblokuoti adresatą</string>
@@ -205,7 +203,7 @@
   <string name="hist_contact_added">Adresatas pridėtas</string>
   <string name="hist_contact_left">Kontaktas kairėje</string>
   <string name="hist_invitation_received">Gautas pakvietimas</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">Profilis</string>
   <string name="profile_name">Profilio pavadinimas</string>
   <string name="profile_message_warning">Jūsų profilis yra bendrinamas tik su jūsų adresatais</string>
@@ -231,7 +229,7 @@
   <string name="accept">Priimti</string>
   <string name="decline">Atmesti</string>
   <string name="block">Užblokuoti</string>
-  <string name="invitation_message">Jūs turite % 1$d ryšių prašymus</string>
+  <string name="invitation_message">Jūs turite %1$d ryšių prašymus</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Užblokuotų adresatų nėra</string>
   <!--Smartlist-->
@@ -324,7 +322,7 @@
   <string name="bottomSheet_raiseHand_btn">Pakelti ranką</string>
   <string name="uninstall">Išinstaluokite</string>
   <string name="reset">Atstatyti</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">Patvirtinti</string>
   <string name="tab_members">Parlamento nariai</string>
   <string name="tab_files">Failai</string>
@@ -343,6 +341,7 @@
   <string name="jami_id_choose_username">Pasirinkite naudotojo vardą</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Sveiki atvykę į Jami</string>
+  <!--Conversation details-->
   <!--Donation-->
   <!--Extension-->
 </resources>

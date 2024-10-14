@@ -180,6 +180,7 @@
   <string name="help_credentials_enter">Indtast din organisations legitimationsoplysninger</string>
   <string name="help_connect_password_enter">Indtast dit organisations adgangskode</string>
   <string name="account_connect_prompt_username">Brugernavn</string>
+  <string name="account_enter_username">Indtast brugernavn</string>
   <!--Name registration-->
   <string name="error_username_empty">Indtast et brugernavn</string>
   <string name="no_registered_name_for_account">Intet registreret navn</string>

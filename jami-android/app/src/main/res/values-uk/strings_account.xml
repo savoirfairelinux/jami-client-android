@@ -182,6 +182,7 @@
   <string name="help_credentials_enter">Введіть дані організації</string>
   <string name="help_connect_password_enter">Введіть пароль організації</string>
   <string name="account_connect_prompt_username">Ім’я</string>
+  <string name="account_enter_username">Ввести ім\'я користувача</string>
   <!--Name registration-->
   <string name="error_username_empty">Ввести ім\'я користувача</string>
   <string name="no_registered_name_for_account">Ніщо зареєстроване ім\'я</string>

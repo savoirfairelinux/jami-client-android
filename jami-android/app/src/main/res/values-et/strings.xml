@@ -7,6 +7,8 @@
   <string name="contribute_section">Osale kaastöös</string>
   <string name="version_section">Versioon</string>
   <string name="no_browser_app_installed">Veebibrauserit ei leitud, paigalda see lehe avamiseks</string>
+  <string name="website_chooser_title">Vaata veebisaiti kasutades...</string>
+  <string name="license">See tarkvara on pakutav „nii nagu on“, ilma mingisuguse garantiideta. Lisateave: <u>GNU Üldise Avaliku Litsentsi versioon 3 või hilisem</u></string>
   <string name="description">Jami on universaalse suhtlemise vaba tarkvara, mis austab kasutajate vabadusi ja privaatsust.</string>
   <string name="credits">Tänuavaldused</string>
   <string name="pip_title">Jami konverents</string>
@@ -154,10 +156,8 @@
   <string name="conversation_action_history_clear">Kustuta ajalugu</string>
   <string name="conversation_action_history_clear_title">Kas kustutame vestluse ajaloo?</string>
   <string name="conversation_action_history_clear_message">Järgnevaga üheselt kustutatakse vestluse ajalugu.</string>
-  <string name="conversation_action_remove_this">Kustuta kontakt</string>
   <string name="conversation_action_remove_this_title">Kas kustutame kontakti?</string>
   <string name="conversation_action_remove_this_message">Järgnevaga üheselt kustutatakse kontakt ja temaga peetud vestluste ajalugu.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s on kopeeritud lõikelauale</string>
   <string name="conversation_action_select_peer_number">Vali number</string>
   <string name="conversation_action_block_this">Blokeeri kontakt</string>
   <string name="conversation_action_unblock_this">Eemalda kontakti blokeering</string>
@@ -208,7 +208,7 @@
   <string name="hist_contact_added">Kontakt on lisatud</string>
   <string name="hist_contact_left">Kontakt lahkus</string>
   <string name="hist_invitation_received">Said kutse</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">Profiil</string>
   <string name="profile_name">Profiili nimi</string>
   <string name="profile_message_warning">Sinu profiil on jagatud ainult sinu kontaktidega</string>
@@ -232,6 +232,7 @@
   <string name="title_share_with">Jaga seda...</string>
   <!--Pending invitations-->
   <string name="accept">Võta vastu</string>
+  <string name="decline">Keeldu</string>
   <string name="block">Blokeeri</string>
   <string name="invitation_message">Sul on %1$d kontaktipäring(ut)</string>
   <!--Blacklist-->
@@ -335,7 +336,7 @@
   <string name="bottomSheet_raiseHand_btn">Anna käega märku</string>
   <string name="uninstall">Eemalda</string>
   <string name="reset">Lähtesta</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">Kinnita</string>
   <string name="tab_members">Liikmed</string>
   <string name="tab_files">Failid</string>
@@ -361,6 +362,7 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Tere tulemast kasutama suhtlusrakendust Jami</string>
   <string name="welcome_jami_description">Et sinuga oleks lihtsam ühendust võtta, palun jaga oma Jami kasutajatunnust</string>
+  <!--Conversation details-->
   <!--Donation-->
   <string name="donation_card_description">Kui sulle Jami meeldib ja sa usud meie visiooni, siis kas sa oleksid nõus meid rahaliselt toetama?</string>
   <string name="donation_card_not_now">Mitte praegu</string>
