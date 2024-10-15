@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb02d56a_4eb6bb3c",
+        "filename": "jami-android/app/src/main/res/values/strings_preferences.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1035
+      },
+      "writtenOn": "2024-10-15T19:37:55Z",
+      "side": 1,
+      "message": "User lowercase here to be consistent with the other settings on that page: Logs -\u003e logs",
+      "range": {
+        "startLine": 66,
+        "startChar": 73,
+        "endLine": 66,
+        "endChar": 77
+      },
+      "revId": "b0c1188695886d91b05deda6fffe87671226bf46",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc303a99_78ab221f",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/application/JamiApplicationFirebase.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1035
+      },
+      "writtenOn": "2024-10-15T19:37:55Z",
+      "side": 1,
+      "message": "Android Studio gives me warnings for this line:\n```\nCall requires API level 26 (current min is 24): java.time.LocalTime#now\nCall requires API level 26 (current min is 24): java.time.LocalTime#format\nCall requires API level 26 (current min is 24): java.time.format.DateTimeFormatter#ofPattern\n```",
+      "range": {
+        "startLine": 65,
+        "startChar": 41,
+        "endLine": 65,
+        "endChar": 46
+      },
+      "revId": "b0c1188695886d91b05deda6fffe87671226bf46",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d1b222e_c07e8da3",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/application/JamiApplicationFirebase.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1035
+      },
+      "writtenOn": "2024-10-15T19:37:55Z",
+      "side": 1,
+      "message": "Shouldn\u0027t these two variables be defined inside the if block?",
+      "range": {
+        "startLine": 64,
+        "startChar": 8,
+        "endLine": 65,
+        "endChar": 28
+      },
+      "revId": "b0c1188695886d91b05deda6fffe87671226bf46",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b90431a0_e09e5beb",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/application/JamiApplicationFirebase.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1035
+      },
+      "writtenOn": "2024-10-15T19:37:55Z",
+      "side": 1,
+      "message": "The timestamp should also include the date (at least the month and day).",
+      "range": {
+        "startLine": 66,
+        "startChar": 24,
+        "endLine": 66,
+        "endChar": 36
+      },
+      "revId": "b0c1188695886d91b05deda6fffe87671226bf46",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2e8719f5_00d61630",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/application/JamiApplicationFirebase.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1035
+      },
+      "writtenOn": "2024-10-15T19:37:55Z",
+      "side": 1,
+      "message": "In the cases where `priority` matches `originalPriority`, we don\u0027t want to log the notification\u0027s content, but I think we should still increase a counter so that we can display a little summary of the number of notifications received above the logs. It could look something like this:\n```\nPush notifications received since 2024-10-15 10:26:33:\n- 18 high priority\n- 12 normal priority\n```\nThese counts don\u0027t have to be saved to a file, it\u0027s fine if they only take into account the notifications received since Jami was last started. The point is that\n(1) it\u0027s useful to know roughly at what rate we\u0027re receiving notifications;\n(2) it\u0027ll be clearer to users that the push notification logs are working; right now it looks like nothing happens when the \"Start Logging\" button is pressed.",
+      "range": {
+        "startLine": 67,
+        "startChar": 12,
+        "endLine": 67,
+        "endChar": 68
+      },
+      "revId": "b0c1188695886d91b05deda6fffe87671226bf46",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
