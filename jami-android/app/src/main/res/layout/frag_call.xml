@@ -352,7 +352,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:visibility="gone"
+            android:background="@drawable/background_call_menu"
+            android:visibility="invisible"
             app:behavior_fitToContents="false"
             app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
             tools:visibility="visible">
@@ -360,8 +361,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraint_bs_container"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/background_call_menu">
+                android:layout_height="wrap_content">
                 <!-- handle bar -->
                 <View
                     android:id="@+id/call_drawer_handle"
@@ -381,6 +381,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:columnCount="5"
+                    android:paddingBottom="10dp"
                     android:visibility="visible"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
