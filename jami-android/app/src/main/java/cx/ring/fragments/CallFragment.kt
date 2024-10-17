@@ -1023,13 +1023,6 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         binding.callOptionsBottomSheet.isVisible = display && presenter.mOnGoingCall == true
     }
 
-    override fun resetBottomSheetState() {
-        bottomSheetParams?.let { bs ->
-            bs.isHideable = false
-            bs.state = BottomSheetBehavior.STATE_COLLAPSED
-        }
-    }
-
     enum class BottomSheetAnimation {
         UP, DOWN
     }
