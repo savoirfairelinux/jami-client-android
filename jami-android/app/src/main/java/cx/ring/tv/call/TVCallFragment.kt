@@ -291,8 +291,6 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
         hasActiveScreenShare: Boolean) {
     }
 
-    override fun resetBottomSheetState() {}
-
     override fun initNormalStateDisplay() {
         mSession!!.isActive = true
         binding?.apply {
