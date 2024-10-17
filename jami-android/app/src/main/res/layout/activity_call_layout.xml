@@ -19,7 +19,6 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     android:id="@+id/main_call_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".client.CallActivity"
-    >
+    tools:context=".client.CallActivity">
 
 </cx.ring.views.FitsWindowsLayout>
