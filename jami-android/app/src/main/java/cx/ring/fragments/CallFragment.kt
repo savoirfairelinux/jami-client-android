@@ -43,6 +43,8 @@ import android.text.TextWatcher
 import android.util.Log
 import android.util.Rational
 import android.view.*
+import android.view.Surface.ROTATION_0
+import android.view.Surface.ROTATION_180
 import android.view.TextureView.SurfaceTextureListener
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
@@ -98,7 +100,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     private var binding: FragCallBinding? = null
     private var mOrientationListener: OrientationEventListener? = null
     private var mScreenWakeLock: PowerManager.WakeLock? = null
-    private var mCurrentOrientation = 0
+    private var mCurrentOrientation = ROTATION_0
     private var mPreviewWidth = 720
     private var mPreviewHeight = 1280
     private var mPreviewSurfaceWidth = 0
@@ -212,6 +214,23 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         }
     }
 
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        displayBottomSheet(false)
+        moveBottomSheet(BottomSheetAnimation.UP)
+
+        // Todo: Migrate logic to use `newConfig.orientation`.
+        val rot = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) // API30
+            requireContext().display?.rotation ?: 0
+        else (requireContext().getSystemService(Context.WINDOW_SERVICE) as WindowManager)
+            .defaultDisplay.rotation
+
+        presenter.configurationChanged(rot)
+        if (newConfig.orientation == ROTATION_0 || newConfig.orientation == ROTATION_180)
+            resetPreviewVideoSize(null, null, 90)
+        else resetPreviewVideoSize(null, null, 180)
+    }
+
     @SuppressLint("ClickableViewAccessibility", "RtlHardcoded", "WakelockTimeout")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setHasOptionsMenu(false)
@@ -219,6 +238,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
 
         val windowManager = view.context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
         mCurrentOrientation = windowManager.defaultDisplay.rotation
+
         val dpRatio = requireActivity().resources.displayMetrics.density
         val previewContainerMargin = resources.getDimensionPixelSize(R.dimen.call_preview_margin)
         animation.addUpdateListener { valueAnimator ->
@@ -270,18 +290,6 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             insets?.apply {
                 presenter.uiVisibilityChanged(this.isVisible(WindowInsetsCompat.Type.navigationBars()))
             }
-
-            // todo: doublon with CallActivity.onConfigurationChanged ??
-            mOrientationListener = object : OrientationEventListener(context) {
-                override fun onOrientationChanged(orientation: Int) {
-                    val rot = windowManager.defaultDisplay.rotation
-                    if (mCurrentOrientation != rot) {
-                        mCurrentOrientation = rot
-                        presenter.configurationChanged(rot)
-                        if (rot == 0 || rot == 2) resetPreviewVideoSize( null, null, 90) else resetPreviewVideoSize( null, null, 180)
-                    }
-                }
-            }.apply { if (canDetectOrientation()) enable() }
 
             binding.callSpeakerBtn.isChecked = presenter.isSpeakerphoneOn()
             binding.callMicBtn.isChecked = presenter.isMicrophoneMuted
