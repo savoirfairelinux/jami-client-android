@@ -352,15 +352,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:visibility="gone"
+            android:visibility="invisible"
             app:behavior_fitToContents="false"
             app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
             tools:visibility="visible">
 
+            <!-- Padding is used to draw under the bottom inset. The value is arbitrary since we
+            cannot know which size will be the real bottom inset. Could have been done with
+            `getInsetsIgnoringVisibility` in fragment creation but sometimes returning 0. -->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraint_bs_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingBottom="300dp"
                 android:background="@drawable/background_call_menu">
                 <!-- handle bar -->
                 <View
