@@ -346,9 +346,9 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                             previewSnapAnimation.cancel()
                             previewDrag = null
                             v.elevation = v.context.resources.getDimension(R.dimen.call_preview_elevation)
-                            var ml = 0;
-                            var mr = 0;
-                            var mt = 0;
+                            var ml = 0
+                            var mr = 0
+                            var mt = 0
                             var mb = 0
                             val hp = binding.extensionPreviewHandle.layoutParams as FrameLayout.LayoutParams
                             if (params.leftMargin + v.width / 2 > parent.width / 2) {
@@ -983,40 +983,48 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         }
     }
 
-    /**
-     * Set bottom sheet, define height for each state (Expanded/Half-expanded/Collapsed) based on current Display metrics (density & size)
-     */
     private fun setBottomSheet(newInset: WindowInsetsCompat? = null) {
         val binding = binding ?: return
-        val bsView = binding.callOptionsBottomSheet
-        val bsHeight = binding.constraintBsContainer.height
-        if (isInPIP || !bsView.isVisible) return
+        val bottomSheetView = binding.callOptionsBottomSheet
+
+        if (isInPIP || !bottomSheetView.isVisible) return
 
         val dm = resources.displayMetrics
         val density = dm.density
-        val screenHeight = binding.callCoordinatorOptionContainer.height
-        val gridViewHeight = binding.callParametersGrid.height
-        val land = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
 
-        // define bottomsheet width based on screen orientation
-        val bsViewParam = bsView.layoutParams
-        bsViewParam.width = if (land) getBottomSheetMaxWidth(dm.widthPixels, density) else -1
-        bsView.layoutParams = bsViewParam
+        // Include insets in the calculation.
+        val screenHeight = binding.callCoordinatorOptionContainer.measuredHeight
+            .takeIf { it > 0 } ?: return
+        // Calculate the height of the grid view (content only).
+        val gridViewHeight = binding.callParametersGrid.height
+
+        val isLandscape = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+
+        // Define bottomSheet width based on screen orientation.
+        bottomSheetView.layoutParams.apply {
+            width = if (isLandscape) getBottomSheetMaxWidth(dm.widthPixels, density) else -1
+        }
 
         val inset = newInset ?: ViewCompat.getRootWindowInsets(requireView()) ?: return
-        val bottomInsets = inset.getInsetsIgnoringVisibility(WindowInsetsCompat.Type.navigationBars()).bottom
-        val topInsets = inset.getInsetsIgnoringVisibility(WindowInsetsCompat.Type.statusBars()).top
 
-        val desiredPeekHeight = if (land) (10f * density) + (gridViewHeight / 2f) else (10f * density) + (gridViewHeight / 2f) + bottomInsets
-        val halfRatio = ((10f * density) + gridViewHeight + bottomInsets) / screenHeight
+        val bottomInset = inset.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
 
-        val fullyExpandedOffset = if (screenHeight <= bsHeight + bottomInsets)
-                (50 * density).toInt()
-        else
-                (screenHeight - bsHeight - bottomInsets)
+        val bottomSheetHeight = binding.constraintBsContainer.height
 
-        binding.callCoordinatorOptionContainer.updatePadding(bottom = if (land) 0 else bottomInsets)
-        binding.callOptionsBottomSheet.updatePadding(bottom = if (land) (topInsets - (5 * density)).toInt() else bottomInsets)
+        // Corresponds to what will be shown when the bottom sheet is collapsed.
+        // Let's show half of the options, with a 10dp extra.
+        val desiredPeekHeight = (10f * density) + (gridViewHeight / 2f) + bottomInset
+
+        // Correspond to what will be shown when the bottom sheet is expanded.
+        // FullExpandedState is not used in our case.
+        // Offset is the space between the top of the screen and the top of the bottom sheet.
+        val offset = screenHeight.toFloat() - bottomSheetHeight - bottomInset
+        val halfRatio = 1 - (offset) / screenHeight
+
+        // Since not used, should limit to HalfExpandedState.
+        val fullyExpandedOffset =
+            if (screenHeight <= bottomSheetHeight) (50 * density).toInt()
+            else offset.toInt()
 
         bottomSheetParams?.apply {
             expandedOffset = fullyExpandedOffset
@@ -1031,9 +1039,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         binding.callOptionsBottomSheet.isVisible = display && presenter.mOnGoingCall == true
     }
 
-    enum class BottomSheetAnimation {
-        UP, DOWN
-    }
+    enum class BottomSheetAnimation { UP, DOWN }
 
     fun moveBottomSheet(movement: BottomSheetAnimation) {
         val binding = binding ?: return
@@ -1052,8 +1058,6 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             }
             BottomSheetAnimation.DOWN -> {
                 binding.callCoordinatorOptionContainer.apply {
-                    this@apply.updatePadding(bottom = 0)
-                    binding.callOptionsBottomSheet.updatePadding(bottom = 0)
                     animate()
                         .translationY(250f)
                         .alpha(0.0f)
@@ -1062,11 +1066,6 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                                 displayBottomSheet(false)
                             }
                         })
-                    WindowInsetsControllerCompat(requireActivity().window, binding.root).apply {
-                        requireActivity().window.navigationBarColor = resources.getColor(R.color.transparent)
-                        hide(WindowInsetsCompat.Type.systemBars())
-                        systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-                    }
                 }
             }
         }
