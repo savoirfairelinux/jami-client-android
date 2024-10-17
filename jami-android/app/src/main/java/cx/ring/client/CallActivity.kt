@@ -17,22 +17,21 @@
 package cx.ring.client
 
 import android.content.Intent
-import android.content.res.Configuration
 import android.media.AudioManager
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.KeyEvent
-import android.view.View
 import android.view.WindowManager
-import androidx.annotation.RequiresApi
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import cx.ring.R
 import cx.ring.application.JamiApplication
+import cx.ring.databinding.ActivityCallLayoutBinding
 import cx.ring.fragments.CallFragment
 import cx.ring.service.DRingService
 import cx.ring.utils.ConversationPath.Companion.fromIntent
@@ -44,52 +43,63 @@ import net.jami.services.NotificationService
 
 @AndroidEntryPoint
 class CallActivity : AppCompatActivity() {
-    private var mMainView: View? = null
+    private var binding: ActivityCallLayoutBinding? = null
     private var handler: Handler? = null
-    private var currentOrientation = 1
-    private var isFullscreen = false
+    private var areControlsVisible = false
+
+    // Get the callFragment.
+    private val callFragment: CallFragment?
+        get() = supportFragmentManager.findFragmentByTag(CALL_FRAGMENT_TAG) as CallFragment?
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
-            onBackInvokedDispatcher.registerOnBackInvokedCallback(1) { onBackPressed() }
+
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val presenter = callFragment?.presenter
+                if (presenter?.mOnGoingCall == true && presenter.isVideoActive()) {
+                    presenter.requestPipMode()
+                } else {
+                    isEnabled = false
+                    onBackPressedDispatcher.onBackPressed()
+                }
+            }
+        })
+
         JamiApplication.instance?.startDaemon(this)
+
+        // Setup the activity to be shown on locked screen.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
             setTurnScreenOn(true)
             setShowWhenLocked(true)
             window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         } else {
-            window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED or
-                    WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON or
-                    WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+            @Suppress("DEPRECATION") // Deprecated in API 27.
+            window.addFlags(
+                WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED or
+                        WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON or
+                        WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+            )
         }
-        setContentView(R.layout.activity_call_layout)
+
         volumeControlStream = AudioManager.STREAM_VOICE_CALL
         handler = Handler(Looper.getMainLooper())
-        mMainView = findViewById<View>(R.id.main_call_layout)?.apply {
-            WindowCompat.setDecorFitsSystemWindows(window, false)
-            setOnClickListener {
-                if (!isFullscreen)
-                    hideSystemUI()
-                else
-                    showSystemUI()
-            }
-        }
-        intent?.let { handleNewIntent(it) }
-    }
 
-    override fun onBackPressed() {
-        val presenter = callFragment?.presenter
-        if (presenter?.mOnGoingCall == true && presenter.isVideoActive()) {
-            presenter.requestPipMode()
-        } else {
-            super.onBackPressed()
+        // Init the layout.
+        binding = ActivityCallLayoutBinding.inflate(layoutInflater).apply {
+            setContentView(root)
+
+            WindowInsetsControllerCompat(window, root).hide(WindowInsetsCompat.Type.systemBars())
+            WindowCompat.setDecorFitsSystemWindows(window, false)
+
+            root.setOnClickListener { if (!areControlsVisible) hideSystemUI() else showSystemUI() }
         }
+
+        intent?.let { handleNewIntent(it) }
     }
 
     override fun onResume() {
         super.onResume()
-        currentOrientation = resources.configuration.orientation
         volumeControlStream = AudioManager.STREAM_VOICE_CALL
     }
 
@@ -112,7 +122,8 @@ class CallActivity : AppCompatActivity() {
         when (action) {
             Intent.ACTION_CALL -> {
                 val contactId = intent.getStringExtra(Intent.EXTRA_PHONE_NUMBER)
-                val callFragment = CallFragment.newInstance(action, fromIntent(intent), contactId, wantVideo, acceptOption)
+                val callFragment = CallFragment
+                    .newInstance(action, fromIntent(intent), contactId, wantVideo, acceptOption)
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.main_call_layout, callFragment, CALL_FRAGMENT_TAG).commit()
             }
@@ -120,7 +131,8 @@ class CallActivity : AppCompatActivity() {
             DRingService.ACTION_CALL_ACCEPT -> {
                 val currentId = callFragment?.arguments?.getString(NotificationService.KEY_CALL_ID)
                 if (currentId != confId) {
-                    val callFragment = CallFragment.newInstance(action, confId, wantVideo, acceptOption)
+                    val callFragment = CallFragment
+                        .newInstance(action, confId, wantVideo, acceptOption)
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.main_call_layout, callFragment, CALL_FRAGMENT_TAG).commit()
                 } else if (action != Intent.ACTION_VIEW) {
@@ -130,12 +142,9 @@ class CallActivity : AppCompatActivity() {
         }
     }
 
-    private val onNoInteraction = Runnable {
-        if (!isFullscreen) {
-            hideSystemUI()
-        }
-    }
+    private val onNoInteraction = Runnable { if (!areControlsVisible) hideSystemUI() }
 
+    // Restart the timer for hiding the system UI.
     private fun restartNoInteractionTimer() {
         handler?.let { handler ->
             handler.removeCallbacks(onNoInteraction)
@@ -147,59 +156,6 @@ class CallActivity : AppCompatActivity() {
         restartNoInteractionTimer()
     }
 
-    public override fun onUserLeaveHint() {
-        callFragment?.onUserLeave()
-    }
-
-    @RequiresApi(Build.VERSION_CODES.N)
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-        if (currentOrientation != newConfig.orientation) {
-            currentOrientation = newConfig.orientation
-            if (!(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && isInPictureInPictureMode) && !isFullscreen) {
-                mMainView?.let {
-                    when (currentOrientation) {
-                        Configuration.ORIENTATION_LANDSCAPE -> WindowInsetsControllerCompat(window, it).hide(
-                            WindowInsetsCompat.Type.systemBars()
-                        )
-                        Configuration.ORIENTATION_PORTRAIT -> WindowInsetsControllerCompat(window, it).show(
-                            WindowInsetsCompat.Type.systemBars()
-                        )
-                    }
-                }
-            }
-        }
-    }
-
-    fun hideSystemUI() {
-        val callFragment = callFragment ?: return
-        KeyboardVisibilityManager.hideKeyboard(this)
-        callFragment.resetBottomSheetState()
-        callFragment.moveBottomSheet(CallFragment.BottomSheetAnimation.DOWN)
-        isFullscreen = true
-        if (!callFragment.isChooseExtensionMode) {
-            //callFragment.toggleVideoExtensionsCarousel(false)
-        }
-        handler?.removeCallbacks(onNoInteraction)
-    }
-
-    fun showSystemUI() {
-        val callFragment = callFragment ?: return
-        mMainView?.apply {
-            if (currentOrientation != 1) {
-                WindowInsetsControllerCompat(window, this).show(WindowInsetsCompat.Type.statusBars())
-                WindowInsetsControllerCompat(window, this).hide(WindowInsetsCompat.Type.navigationBars())
-            } else {
-                window.navigationBarColor = resources.getColor(R.color.color_bottom_sheet_background)
-                WindowInsetsControllerCompat(window, this).show(WindowInsetsCompat.Type.systemBars())
-            }
-            callFragment.moveBottomSheet(CallFragment.BottomSheetAnimation.UP)
-            //callFragment.toggleVideoExtensionsCarousel(true)
-            restartNoInteractionTimer()
-        }
-        isFullscreen = false
-    }
-
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
         val fragment = callFragment
         if (fragment != null && MediaButtonsHelper.handleMediaKeyCode(keyCode, fragment))
@@ -207,15 +163,37 @@ class CallActivity : AppCompatActivity() {
         return super.onKeyDown(keyCode, event)
     }
 
-    // Get the call Fragment
-    private val callFragment: CallFragment?
-        get() = supportFragmentManager.findFragmentByTag(CALL_FRAGMENT_TAG) as CallFragment?
+    public override fun onUserLeaveHint() {
+        callFragment?.onUserLeave()
+    }
+
+    fun hideSystemUI() {
+        val callFragment = callFragment ?: return
+        KeyboardVisibilityManager.hideKeyboard(this)
+        callFragment.moveBottomSheet(CallFragment.BottomSheetAnimation.DOWN)
+        areControlsVisible = true
+        binding?.root?.apply {
+            WindowInsetsControllerCompat(window, this).apply {
+                hide(WindowInsetsCompat.Type.statusBars())
+                hide(WindowInsetsCompat.Type.navigationBars())
+            }
+        }
+        handler?.removeCallbacks(onNoInteraction)
+    }
+
+    fun showSystemUI() {
+        val callFragment = callFragment ?: return
+        areControlsVisible = false
+        binding?.root?.apply {
+            WindowInsetsControllerCompat(window, this)
+                .show(WindowInsetsCompat.Type.statusBars())
+            callFragment.moveBottomSheet(CallFragment.BottomSheetAnimation.UP)
+            restartNoInteractionTimer()
+        }
+    }
 
     companion object {
         private val TAG = CallActivity::class.simpleName!!
         private const val CALL_FRAGMENT_TAG = "CALL_FRAGMENT_TAG"
-
-        /* result code sent in case of call failure */
-        var RESULT_FAILURE = -10
     }
 }
