@@ -1024,7 +1024,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         // Since not used, should limit to HalfExpandedState.
         val fullyExpandedOffset =
             if (screenHeight <= bottomSheetHeight) (50 * density).toInt()
-            else screenHeight - bottomSheetHeight - bottomInset
+            else offset.toInt()
 
         Log.d("devdebug", "desiredPeekHeight: $desiredPeekHeight, halfRatio: $halfRatio, fullyExpandedOffset: $fullyExpandedOffset")
         bottomSheetParams?.apply {
