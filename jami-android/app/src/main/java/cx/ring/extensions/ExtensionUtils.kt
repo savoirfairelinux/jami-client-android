@@ -62,7 +62,7 @@ object ExtensionUtils {
         val mediaHandlers = JamiService.getCallMediaHandlers().toList()
         for (callMediaHandler in mediaHandlers) {
             val pDetail = JamiService.getCallMediaHandlerDetails(callMediaHandler)
-            if (pDetail["extensionId"]!!.lowercase(Locale.getDefault()).contains(name.lowercase(Locale.getDefault())))
+            if (pDetail["pluginId"]!!.lowercase(Locale.getDefault()).contains(name.lowercase(Locale.getDefault())))
             {
                 res = callMediaHandler!!
             }
