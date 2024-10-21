@@ -16,9 +16,7 @@
  */
 package net.jami.model
 
-import ezvcard.VCard
 import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.Subject
 import java.io.File
@@ -28,7 +26,6 @@ class AccountCreationModel {
     var username = ""
     var password = ""
     var archive: File? = null
-    var isLink = false
     var isPush = true
 
     var newAccount: Account? = null

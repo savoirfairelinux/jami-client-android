@@ -19,14 +19,7 @@ package cx.ring.tv.account
 import android.app.AlertDialog
 import android.app.DownloadManager
 import android.content.Context
-import android.graphics.Typeface
 import android.os.Bundle
-import android.text.Layout
-import android.text.Spannable
-import android.text.SpannableString
-import android.text.style.AlignmentSpan
-import android.text.style.RelativeSizeSpan
-import android.text.style.StyleSpan
 import android.view.View
 import androidx.leanback.widget.GuidanceStylist.Guidance
 import androidx.leanback.widget.GuidedAction
@@ -52,28 +45,31 @@ class TVAccountExport : JamiGuidedStepFragment<JamiAccountSummaryPresenter, Jami
     }
 
     override fun onCreateGuidance(savedInstanceState: Bundle?): Guidance {
+        // Todo: finish to clean up.
         val title = getString(R.string.account_export_title)
         val breadcrumb = ""
-        val description = getString(R.string.account_link_export_info_light)
         val icon = requireContext().getDrawable(R.drawable.baseline_devices_24)
-        return Guidance(title, description, breadcrumb, icon)
+        return Guidance(title, null, breadcrumb, icon)
     }
 
     override fun onCreateActions(actions: MutableList<GuidedAction>, savedInstanceState: Bundle?) {
         val context = requireContext()
-        if (mHasPassword) {
-            addPasswordAction(context, actions, PASSWORD, getString(R.string.account_enter_password), "", "")
-        } else {
-            addAction(context, actions, ACTION, R.string.account_start_export_button)
-        }
+        // Todo: finish to clean up.
+//        if (mHasPassword) {
+//            addPasswordAction(context, actions, PASSWORD, getString(R.string.account_enter_password), "", "")
+//        } else {
+        addAction(context, actions, ACTION, R.string.account_start_export_button)
+//        }
     }
 
     override fun onGuidedActionClicked(action: GuidedAction) {
-        presenter.startAccountExport("")
+        // Todo: finish to clean up.
+//        presenter.startAccountExport("")
     }
 
     override fun onGuidedActionEditedAndProceed(action: GuidedAction): Long {
-        presenter.startAccountExport(action.description.toString())
+        // Todo: finish to clean up.
+//        presenter.startAccountExport(action.description.toString())
         return GuidedAction.ACTION_ID_NEXT
     }
 
@@ -92,61 +88,6 @@ class TVAccountExport : JamiGuidedStepFragment<JamiAccountSummaryPresenter, Jami
 
     override fun showPasswordProgressDialog() {}
     override fun accountChanged(account: Account, profile: Profile) {}
-    override fun showNetworkError() {
-        mWaitDialog?.dismiss()
-        AlertDialog.Builder(activity)
-            .setTitle(R.string.account_export_end_network_title)
-            .setMessage(R.string.account_export_end_network_message)
-            .setPositiveButton(android.R.string.ok, null)
-            .show()
-    }
-
-    override fun showPasswordError() {
-        mWaitDialog?.dismiss()
-        AlertDialog.Builder(activity)
-            .setTitle(R.string.account_export_end_error_title)
-            .setMessage(R.string.account_export_end_decryption_message)
-            .setPositiveButton(android.R.string.ok, null)
-            .show()
-    }
-
-    override fun showGenericError() {
-        mWaitDialog?.dismiss()
-        AlertDialog.Builder(activity)
-            .setTitle(R.string.account_export_end_error_title)
-            .setMessage(R.string.account_export_end_error_message)
-            .setPositiveButton(android.R.string.ok, null)
-            .show()
-    }
-
-    override fun showPIN(pin: String) {
-        mWaitDialog?.dismiss()
-        val pined = getString(R.string.account_end_export_infos).replace("%%", pin)
-        val styledResultText = SpannableString(pined)
-        val pos = pined.lastIndexOf(pin)
-        styledResultText.setSpan(
-            AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER),
-            pos,
-            pos + pin.length,
-            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
-        styledResultText.setSpan(
-            StyleSpan(Typeface.BOLD),
-            pos,
-            pos + pin.length,
-            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
-        styledResultText.setSpan(
-            RelativeSizeSpan(2.8f),
-            pos,
-            pos + pin.length,
-            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
-        AlertDialog.Builder(activity)
-            .setMessage(styledResultText)
-            .setPositiveButton(android.R.string.ok) { _, _ -> parentFragmentManager.popBackStack() }
-            .show()
-    }
 
     override fun passwordChangeEnded(accountId: String, ok: Boolean, newPassword: String) {}
     override fun displayCompleteArchive(dest: File) {
