@@ -159,10 +159,6 @@ class DaemonService(
             mExecutor.submit { mAccountService.knownDevicesChanged(accountId, jdevices) }
         }
 
-        override fun exportOnRingEnded(accountId: String, code: Int, pin: String) {
-            mAccountService.exportOnRingEnded(accountId, code, pin)
-        }
-
         override fun nameRegistrationEnded(accountId: String, state: Int, name: String) {
             mAccountService.nameRegistrationEnded(accountId, state, name)
         }
