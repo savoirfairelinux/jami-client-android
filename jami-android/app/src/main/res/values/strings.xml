@@ -394,7 +394,6 @@ along with this program; if not, write to the Free Software
     <string name="help_password_choose">Choose a strong password you will remember to protect your Jami account.</string>
     <string name="help_password_enter">Enter your main Jami account password.</string>
     <string name="help_server_enter">Enter URL of management server.</string>
-    <string name="help_pin_enter">Enter the PIN from another configured Jami account. Use the “Export Jami account” feature to obtain a PIN.</string>
     <string name="pin_copied">PIN code copied to clipboard.</string>
     <string name="wizard_next">Next</string>
     <string name="wizard_back">Back</string>

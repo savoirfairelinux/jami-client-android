@@ -99,7 +99,10 @@ class AccountWizardPresenter @Inject constructor(
         createAccount(accountCreationModel, newAccount)
     }
 
-    fun initJamiAccountLink(accountCreationModel: AccountCreationModel, defaultAccountName: String) {
+    fun initJamiAccountBackup(
+        accountCreationModel: AccountCreationModel,
+        defaultAccountName: String
+    ) {
         val newAccount = initJamiAccountDetails(defaultAccountName)
             .map<Map<String, String>> { accountDetails ->
                 val settings = mPreferences.settings
@@ -111,7 +114,8 @@ class AccountWizardPresenter @Inject constructor(
                     accountDetails[ConfigKey.ARCHIVE_PASSWORD.key] = accountCreationModel.password
                 }
                 if (accountCreationModel.archive != null) {
-                    accountDetails[ConfigKey.ARCHIVE_PATH.key] = accountCreationModel.archive!!.absolutePath
+                    accountDetails[ConfigKey.ARCHIVE_PATH.key] =
+                        accountCreationModel.archive!!.absolutePath
                 } else if (accountCreationModel.pin.isNotEmpty()) {
                     accountDetails[ConfigKey.ARCHIVE_PIN.key] = accountCreationModel.pin
                 }
@@ -120,9 +124,15 @@ class AccountWizardPresenter @Inject constructor(
         createAccount(accountCreationModel, newAccount)
     }
 
-    private fun createAccount(accountCreationModel: AccountCreationModel, details: Single<Map<String, String>>) {
-        val newAccount = details.flatMapObservable { accountDetails -> createNewAccount(accountCreationModel, accountDetails) }
+    private fun createAccount(
+        accountCreationModel: AccountCreationModel,
+        details: Single<Map<String, String>>
+    ) {
+        val newAccount = details.flatMapObservable { accountDetails ->
+            createNewAccount(accountCreationModel, accountDetails)
+        }
         accountCreationModel.accountObservable = newAccount
+
         mCompositeDisposable.add(newAccount
             .observeOn(mUiScheduler)
             .subscribe({ account: Account -> accountCreationModel.newAccount = account })
@@ -142,7 +152,7 @@ class AccountWizardPresenter @Inject constructor(
                         val newState = acc.registrationState
                         if (newState == AccountConfig.RegistrationState.ERROR_GENERIC) {
                             mCreatingAccount = false
-                            if (accountCreationModel.archive == null) view.displayCannotBeFoundError() else view.displayGenericError()
+                            view.displayGenericError()
                         } else {
                             view.goToProfileCreation()
                         }

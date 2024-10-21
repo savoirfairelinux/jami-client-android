@@ -195,10 +195,6 @@ along with this program; if not, write to the Free Software
     <string name="account_export_file">Backup account</string>
     <string name="account_export_file_summary">Backup your account on your device to restore it later.</string>
     <string name="account_export_end_decryption_message">Incorrect password. Please try again with the correct password.</string>
-    <string name="account_export_end_network_title">Network error</string>
-    <string name="account_export_end_network_message">A network error occurred while exporting the account. Check your connectivity.</string>
-    <string name="account_export_end_error_title">Error</string>
-    <string name="account_export_end_error_message">An unknown error occurred while exporting the account.</string>
     <string name="account_enter_password">Enter password</string>
     <string name="account_share_body">Contact me using “%1$s” on the Jami distributed communication platform: %2$s</string>
     <string name="account_share_body_with_username">Contact me using “%1$s” or my public username “%2$s” on the Jami distributed communication platform: %3$s</string>
@@ -240,16 +236,12 @@ along with this program; if not, write to the Free Software
     <string name="account_link_device">Connect from another device</string>
     <string name="account_link_button">Connect from network</string>
     <string name="account_link_archive_button">Connect from backup</string>
-    <string name="account_link_prompt_pin">Enter PIN</string>
     <string name="account_new_button">Create a Jami account</string>
     <string name="account_link_export_button">Link a new device</string>
     <string name="account_link_show_button">Show %d more linked device</string>
     <string name="account_link_hide_button">Hide linked device</string>
-    <string name="account_link_export_info">To use this account on other devices, you must first expose it on Jami. This will generate a PIN code that you must enter on the new device to set up the account. The PIN will expire in 10 minutes.</string>
     <string name="account_start_export_button">Generate PIN</string>
     <string name="account_end_export_button">close</string>
-    <string name="account_end_export_infos">Your PIN is:\n\n%%\n\nTo complete the process, you need to open Jami on the new device. Create a new account with “Link this device to an account”. The PIN will expire in 10 minutes.</string>
-    <string name="account_link_export_info_light">To use this account on other devices, you must first expose it on Jami. This will generate a PIN code that you must enter on the new device to set up the account. The PIN will expire in 10 minutes.</string>
     <string name="account_export_title">Link account to other devices</string>
     <string name="account_connect_server_button">Connect to management server</string>
     <string name="account_connect_button">Connect</string>
@@ -285,7 +277,6 @@ along with this program; if not, write to the Free Software
     <string name="account_creation_home">Welcome to Jami</string>
     <string name="account_creation_profile">Create your profile</string>
     <string name="account_creation_ring">Create your Jami account</string>
-    <string name="account_link_title">Link this device</string>
     <string name="account_sip_cannot_be_registered">An error occurred while registering the SIP account.</string>
 
     <!-- Edit profile-->
@@ -307,9 +298,6 @@ along with this program; if not, write to the Free Software
     <string name="account_disabled_indicator">disabled</string>
 
     <!-- Link a new device -->
-    <string name="account_link_prompt_pin_manually">Enter PIN manually</string>
-    <string name="qr_invalid">Not a Jami Authentication QR code</string>
-    <string name="content_description_checkbox">Your Qr Code is valid</string>
     <string name="error_format_not_supported">This format is not supported.</string>
     <string name="account_link_info">On the new Jami app, scan the QR code or enter manually the PIN.</string>
     <string name="account_link_device_title">Link a new device</string>
@@ -323,8 +311,6 @@ along with this program; if not, write to the Free Software
     <string name="account_generate_export_invalid">The PIN is no longer valid.\nEnter the password and generate another one to link the new device.</string>
     <string name="account_generate_export_invalid_two">The PIN is no longer valid.\nGenerate another one to link the new device.</string>
     <string name="help_pin_info">Fill if the account is password-encrypted</string>
-    <string name="connect_device_scanqr">Scan QR</string>
-    <string name="connect_device_enterPIN">Or enter PIN</string>
     <string name="account_link_device_button">Connect</string>
 
     <!-- Biometry -->
