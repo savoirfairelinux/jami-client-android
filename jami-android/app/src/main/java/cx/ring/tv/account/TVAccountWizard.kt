@@ -41,7 +41,6 @@ import net.jami.model.AccountCreationModel
 @AndroidEntryPoint
 class TVAccountWizard : BaseActivity<AccountWizardPresenter>(), AccountWizardView {
     private var mProgress: AlertDialog? = null
-    private var mLinkAccount = false
     private var mAccountType: String? = null
     private var mAlertDialog: AlertDialog? = null
     private var mJamsAccount = false
@@ -65,15 +64,8 @@ class TVAccountWizard : BaseActivity<AccountWizardPresenter>(), AccountWizardVie
                 TVHomeAccountCreationFragment(),
                 android.R.id.content
             )
-        } else {
-            mLinkAccount = savedInstanceState.getBoolean("mLinkAccount")
         }
         presenter.init(getIntent().action ?: AccountConfig.ACCOUNT_TYPE_JAMI)
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putBoolean("mLinkAccount", mLinkAccount)
     }
 
     override fun onDestroy() {
@@ -91,9 +83,6 @@ class TVAccountWizard : BaseActivity<AccountWizardPresenter>(), AccountWizardVie
         if (!model.managementServer.isNullOrEmpty()) {
             presenter.initJamiAccountConnect(model, defaultAccountName)
             mJamsAccount = true
-        } else if (model.isLink) {
-            presenter.initJamiAccountLink(model, defaultAccountName)
-            mJamsAccount = false
         } else {
             presenter.initJamiAccountCreation(model, defaultAccountName)
             mJamsAccount = false
