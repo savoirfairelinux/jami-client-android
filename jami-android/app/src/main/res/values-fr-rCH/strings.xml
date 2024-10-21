@@ -7,6 +7,7 @@
   <string name="contribute_section">Contribuer</string>
   <string name="version_section">Version</string>
   <string name="no_browser_app_installed">Aucune navigateur internet trouvée, installez en un pour voir cette page</string>
+  <string name="website_chooser_title">Voir le site web en utilisant...</string>
   <string name="license">Ce logiciel est fourni en l\'état, sans garantie d\'aucune sorte. Pour plus de détails, se référer à la <u>GNU General Public License version 3 ou plus récente</u></string>
   <string name="description">Jami est un logiciel libre de communication universel qui respecte la vie privée et l\'intimité de ses utilisateurs.</string>
   <string name="credits">Crédits</string>
@@ -172,14 +173,15 @@
   <string name="contact_details">Détails du contact</string>
   <string name="conversation_action_delete_this">Supprimer cette conversation</string>
   <string name="conversation_action_delete_this_title">Supprimer cette conversation ?</string>
+  <string name="leave_conversation">Quitter la conversation</string>
   <string name="conversation_action_delete_this_message">Cette action ne peut être annulée.</string>
   <string name="conversation_action_history_clear">Effacer l\'historique</string>
   <string name="conversation_action_history_clear_title">Effacer l\'historique de conversation ?</string>
   <string name="conversation_action_history_clear_message">Cela va effacer définitivement l\'historique de conversation.</string>
-  <string name="conversation_action_remove_this">Supprimer le contact</string>
+  <string name="delete_contact">Supprimer le contact</string>
   <string name="conversation_action_remove_this_title">Supprimer ce contact ?</string>
   <string name="conversation_action_remove_this_message">Cela supprimera le contact et effacera l\'historique de conversation.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s copié dans le presse papiers</string>
+  <string name="copied_to_clipboard">%1$s copié dans le presse papiers</string>
   <string name="conversation_action_select_peer_number">Sélectionner un numéro de téléphone</string>
   <string name="conversation_action_block_this">Bloquer le contact</string>
   <string name="conversation_action_unblock_this">Débloquer un contact</string>
@@ -250,7 +252,7 @@
   <string name="hist_contact_blocked">Contact bloqué</string>
   <string name="hist_contact_unblocked">Contact débloqué</string>
   <string name="hist_invitation_received">Invitation reçue</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">Profil</string>
   <string name="profile_name">Nom du profil</string>
   <string name="profile_message_warning">Votre profil n\'est partagé qu\'avec vos contacts</string>
@@ -260,6 +262,7 @@
   <string name="registered_name">Nom enregistré</string>
   <string name="no_registered_name">Aucun nom enregistré</string>
   <string name="identity">Identité</string>
+  <string name="identifier">Identifiant </string>
   <string name="account">Compte</string>
   <string name="link_new_device">Associer un nouvel appareil</string>
   <string name="devices">Appareils liés</string>
@@ -274,6 +277,7 @@
   <string name="title_share_with">Partager avec...</string>
   <!--Pending invitations-->
   <string name="accept">Accepter</string>
+  <string name="decline">Décliner</string>
   <string name="block">Bloquer</string>
   <string name="invitation_message">Vous avez %1$d demande(s) de contact</string>
   <!--Blacklist-->
@@ -385,7 +389,7 @@
   <string name="open_general_extension_settings">Ouvrir les paramètres généraux de l\'extension</string>
   <string name="uninstall">Désinstaller</string>
   <string name="reset">Réinitialiser</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">Confirmer</string>
   <string name="rename_error">ne peut être vide.</string>
   <string name="swarm_description">Ajouter une description</string>
@@ -417,6 +421,9 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Bienvenue sur Jami</string>
   <string name="welcome_jami_description">Partagez votre identifiant Jami afin d\'être contacté plus facilement !</string>
+  <!--Conversation details-->
+  <string name="details">Détails</string>
+  <string name="Private">Privé</string>
   <!--Donation-->
   <string name="donation_card_description">Si vous appréciez Jami et que vous croyez à notre mission, feriez-vous une donation ?</string>
   <string name="donation_card_not_now">Pas maintenant</string>

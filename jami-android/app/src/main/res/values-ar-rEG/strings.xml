@@ -6,6 +6,9 @@
   <string name="copyright_section">حقوق النشر</string>
   <string name="contribute_section">مساهمة</string>
   <string name="version_section">الإصدار</string>
+  <string name="no_browser_app_installed">ﻻ يوجد برنامج متصفح للويب, قم بتثبيت أحدهم لترى هذه الصفحة</string>
+  <string name="website_chooser_title">معاينة الموقع الإلكتروني بواسطة...</string>
+  <string name="license">هذا البرنامج مقدم \"كما هو\", بدون ضمان من أي نوع, للتفاصيل, أنظر <u>رخصة غنو العمومية إصدار الترخيص 3 أو ما بعدها</u></string>
   <string name="description">جامى هو برنامج حر مجانى للتواصل العالمى الذى يحترم حريات وخصوصيات مستخدميه.</string>
   <string name="credits">الأطراف الداعمة</string>
   <string name="pip_title">اجتماع جامي مرئي</string>
@@ -138,14 +141,15 @@
   <string name="conversation_details">تفاصيل المحادثة</string>
   <string name="contact_details">تفاصيل جهة الأتصال</string>
   <string name="conversation_action_delete_this">حذف هذه المحادثة</string>
+  <string name="leave_conversation">أترك المحادثة</string>
   <string name="conversation_action_delete_this_message">لا يمكن التراجع عن هذا الإجراء.</string>
   <string name="conversation_action_history_clear">حذف المحفوظات</string>
   <string name="conversation_action_history_clear_title">حذف محفوظات المحادثة؟</string>
   <string name="conversation_action_history_clear_message">هذا بالتأكيد سيزيل تاريخ المحادثة.</string>
-  <string name="conversation_action_remove_this">حذف جهة إتصال</string>
+  <string name="delete_contact">حذف جهة إتصال</string>
   <string name="conversation_action_remove_this_title">حذف جهة الإتصال؟</string>
   <string name="conversation_action_remove_this_message">هذا سيزيل جهة الإتصال و بالتأكيد سيزيل تاريخ المحادثة.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$sتم النسخ إلى الحافظة</string>
+  <string name="copied_to_clipboard">%1$sتم النسخ إلى الحافظة</string>
   <string name="conversation_action_select_peer_number">إختيار رقم</string>
   <string name="conversation_action_block_this">حظر جهة إتصال</string>
   <string name="conversation_action_unblock_this">فك الحظر على الاتصال</string>
@@ -173,7 +177,7 @@
   <string name="conversation_type_group">مجموعة من المجموعات</string>
   <string name="conversation_contact_invited">%1$s تم دعوته</string>
   <string name="conversation_contact_added">%1$s متضمن</string>
-  <string name="conversation_contact_left">%1$ يسار</string>
+  <string name="conversation_contact_left">%1$s يسار</string>
   <string name="conversation_search_hint">بحث عن المحادثة</string>
   <string name="today">اليوم</string>
   <string name="yesterday">البارحة</string>
@@ -195,7 +199,7 @@
   <string name="hist_contact_added">تم إضافة جهة إتصال</string>
   <string name="hist_contact_left">الاتصال يسارا</string>
   <string name="hist_invitation_received">تم تلقي دعوة</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">الملف الشخصى</string>
   <string name="profile_name">اسم الملف الشخصى</string>
   <string name="profile_message_warning">حسابك مشارك فقط مع جهات إتصالك</string>
@@ -205,6 +209,7 @@
   <string name="registered_name">الاسم المسجل</string>
   <string name="no_registered_name">لا يوجد اسم مسجل</string>
   <string name="identity">الهوية</string>
+  <string name="identifier">المعرف</string>
   <string name="account">الحساب</string>
   <string name="link_new_device">ربط جهاز جديد</string>
   <string name="devices">الأجهزة المتصلة</string>
@@ -219,7 +224,9 @@
   <string name="title_share_with">شارك مع...</string>
   <!--Pending invitations-->
   <string name="accept">اقبل</string>
+  <string name="decline">رفض</string>
   <string name="block">حظر</string>
+  <string name="invitation_message">لديك %1$d طلبات جهات اتصال</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">لا توجد جهات إتصال محظورة</string>
   <!--Smartlist-->
@@ -312,7 +319,7 @@
   <string name="bottomSheet_raiseHand_btn">رفع اليد</string>
   <string name="uninstall">إزالة التثبيت</string>
   <string name="reset">إعادة تعيين</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">تأكيد</string>
   <string name="tab_members">الأعضاء</string>
   <string name="tab_files">الملفات</string>
@@ -331,6 +338,9 @@
   <string name="jami_id_choose_username">اختر اسم مستخدم</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">مرحبا بك في جامي</string>
+  <!--Conversation details-->
+  <string name="details">التفاصيل</string>
+  <string name="Private">خاص</string>
   <!--Donation-->
   <!--Extension-->
 </resources>

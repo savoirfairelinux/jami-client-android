@@ -180,6 +180,7 @@
   <string name="help_credentials_enter">組織のログイン情報を入力</string>
   <string name="help_connect_password_enter">組織のパスワードを入力</string>
   <string name="account_connect_prompt_username">ユーザー名</string>
+  <string name="account_enter_username">ユーザー名を入力</string>
   <!--Name registration-->
   <string name="error_username_empty">ユーザー名を入力してください</string>
   <string name="no_registered_name_for_account">登録された名前がありません</string>

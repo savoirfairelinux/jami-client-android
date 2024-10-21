@@ -180,6 +180,7 @@
   <string name="help_credentials_enter">Введете идентификационните данни на организацията си</string>
   <string name="help_connect_password_enter">Введете паролата на организацията си</string>
   <string name="account_connect_prompt_username">Потребителско име</string>
+  <string name="account_enter_username">Въведете потребителско име</string>
   <!--Name registration-->
   <string name="error_username_empty">Въведете потребителско име</string>
   <string name="no_registered_name_for_account">Без регистрирано име</string>

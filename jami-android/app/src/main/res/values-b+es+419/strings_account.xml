@@ -2,6 +2,7 @@
 <resources>
   <!--Strings related to account edition screen-->
   <!--Strings related to account creation-->
+  <string name="account_creation_error">Se produjo un error al crear la cuenta.</string>
   <string name="help_sip_title">Añadir cuenta SIP</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_message">Esta acción no puede deshacerse.</string>
@@ -27,8 +28,11 @@
   <string name="account_export_file">Crear copia de seguridad de la cuenta</string>
   <string name="account_contact_me">Contactame en Jami</string>
   <string name="sip_account">Cuenta SIP</string>
+  <string name="account_cannot_be_found_title">Error de cuenta</string>
+  <string name="account_cannot_be_found_message">No se puede encontrar la cuenta en la red Jami. Asegúrese de que se haya exportado en Jami desde un dispositivo existente y de que las credenciales proporcionadas sean correctas.</string>
   <string name="account_no_network_title">Error de red</string>
   <!--TV-->
+  <string name="account_enter_username">Ingresar nombre de usuario</string>
   <!--Name registration-->
   <!--Create account-->
   <!--Edit profile-->

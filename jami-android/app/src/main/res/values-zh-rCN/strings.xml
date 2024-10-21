@@ -154,14 +154,15 @@
   <string name="conversation_details">对话详情</string>
   <string name="contact_details">联系人详情</string>
   <string name="conversation_action_delete_this">删除该会话</string>
+  <string name="leave_conversation">离开谈话</string>
   <string name="conversation_action_delete_this_message">此操作不可撤销。</string>
   <string name="conversation_action_history_clear">清除历史记录</string>
   <string name="conversation_action_history_clear_title">清除会话历史吗？</string>
   <string name="conversation_action_history_clear_message">这将会清除所有会话记录。</string>
-  <string name="conversation_action_remove_this">删除联系人</string>
+  <string name="delete_contact">删除联系人</string>
   <string name="conversation_action_remove_this_title">删除该联系人？</string>
   <string name="conversation_action_remove_this_message">这将删除联系人并彻底清除会话历史记录。</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s已复制至剪贴板</string>
+  <string name="copied_to_clipboard">%1$s已复制至剪贴板</string>
   <string name="conversation_action_select_peer_number">选择一个数字</string>
   <string name="conversation_action_block_this">屏蔽联系人</string>
   <string name="conversation_action_unblock_this">取消屏蔽联系人</string>
@@ -227,7 +228,7 @@
   <string name="hist_contact_added">已加入通讯录</string>
   <string name="hist_contact_left">联系人离开</string>
   <string name="hist_invitation_received">已接受邀请</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">账户资料</string>
   <string name="profile_name">账户资料名称</string>
   <string name="profile_message_warning">您的账户资料仅会与您的联系人分享</string>
@@ -237,6 +238,7 @@
   <string name="registered_name">注册名称</string>
   <string name="no_registered_name">没有注册名称</string>
   <string name="identity">身份</string>
+  <string name="identifier">标识符</string>
   <string name="account">账户</string>
   <string name="link_new_device">关联新设备</string>
   <string name="devices">关联设备</string>
@@ -356,7 +358,7 @@
   <string name="bottomSheet_raiseHand_btn">举手</string>
   <string name="uninstall">卸载</string>
   <string name="reset">重置</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">确认</string>
   <string name="tab_members">成员</string>
   <string name="tab_files">文件</string>
@@ -383,6 +385,9 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">欢迎使用 Jami</string>
   <string name="welcome_jami_description">分享您的 Jami 识别码，以便更方便地与您联系！</string>
+  <!--Conversation details-->
+  <string name="details">详细</string>
+  <string name="Private">私人</string>
   <!--Donation-->
   <string name="donation_card_description">如果您喜欢使用 Jami 并相信我们的使命，您愿意捐款吗？</string>
   <string name="donation_card_not_now">现在不要</string>

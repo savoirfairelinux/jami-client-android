@@ -56,6 +56,7 @@
   <string name="account_upnp_label">UPnP päälle</string>
   <string name="account_proxy_field">Välityspalvelin</string>
   <!--Extension Details-->
+  <string name="account_preferences_extension_tab">Laajennukset</string>
   <!--Audio Details-->
   <string name="account_audio_label">Ääni</string>
   <string name="account_preferences_media_tab">Media</string>
@@ -180,6 +181,7 @@
   <string name="help_credentials_enter">Anna organisaatiosi tunnistetiedot</string>
   <string name="help_connect_password_enter">Anna organisaatiosi salasana</string>
   <string name="account_connect_prompt_username">Käyttäjänimi</string>
+  <string name="account_enter_username">Anna käyttäjänimi</string>
   <!--Name registration-->
   <string name="error_username_empty">Anna käyttäjänimi</string>
   <string name="no_registered_name_for_account">Ei rekisteröityä nimeä</string>

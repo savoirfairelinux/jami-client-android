@@ -145,14 +145,15 @@
   <string name="conversation_details">चर्चा तपशील</string>
   <string name="contact_details">संपर्क तपशील</string>
   <string name="conversation_action_delete_this">हा संभाषण हटवा</string>
+  <string name="leave_conversation">संभाषण सोड</string>
   <string name="conversation_action_delete_this_message">या कारवाईला मागे टाकता येणार नाही.</string>
   <string name="conversation_action_history_clear">स्पष्ट इतिहास</string>
   <string name="conversation_action_history_clear_title">संभाषण इतिहास साफ करा?</string>
   <string name="conversation_action_history_clear_message">यामुळे संभाषणाचा इतिहास साफ होईल.</string>
-  <string name="conversation_action_remove_this">संपर्क हटवा</string>
+  <string name="delete_contact">संपर्क हटवा</string>
   <string name="conversation_action_remove_this_title">हा संपर्क हटवा?</string>
   <string name="conversation_action_remove_this_message">यामुळे संपर्क हटवला जाईल आणि संभाषणाचा इतिहास निश्चितपणे साफ केला जाईल.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s क्लिपबोर्डवर कॉपी</string>
+  <string name="copied_to_clipboard">%1$s क्लिपबोर्डवर कॉपी</string>
   <string name="conversation_action_select_peer_number">एक नंबर निवडा</string>
   <string name="conversation_action_block_this">ब्लॉक संपर्क</string>
   <string name="conversation_action_unblock_this">संपर्क अवरोधित करा</string>
@@ -180,7 +181,7 @@
   <string name="conversation_type_group">गटातील गट</string>
   <string name="conversation_contact_invited">%1$s ला आमंत्रित केले</string>
   <string name="conversation_contact_added">%1$s जोडले</string>
-  <string name="conversation_contact_left">%1$ बाकी आहे</string>
+  <string name="conversation_contact_left">%1$s बाकी आहे</string>
   <string name="conversation_search_hint">शोध संभाषण</string>
   <string name="today">आज</string>
   <string name="yesterday">काल</string>
@@ -202,7 +203,7 @@
   <string name="hist_contact_added">संपर्क जोडला</string>
   <string name="hist_contact_left">डावीकडे संपर्क</string>
   <string name="hist_invitation_received">प्राप्त आमंत्रण</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">प्रोफाइल</string>
   <string name="profile_name">प्रोफाइल नाव</string>
   <string name="profile_message_warning">तुमचा प्रोफाइल केवळ तुमच्या संपर्क सदस्यांसोबत शेअर केला जातो</string>
@@ -212,6 +213,7 @@
   <string name="registered_name">नोंदणीकृत नाव</string>
   <string name="no_registered_name">नोंदणीकृत नाव नाही</string>
   <string name="identity">ओळख</string>
+  <string name="identifier">ओळखकर्ता</string>
   <string name="account">खाते</string>
   <string name="link_new_device">नवीन डिव्हाइस लिंक करा</string>
   <string name="devices">जोडलेले उपकरणे</string>
@@ -321,7 +323,7 @@
   <string name="bottomSheet_raiseHand_btn">हात उंचावा</string>
   <string name="uninstall">अनइंस्टॉल करा</string>
   <string name="reset">रीसेट</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">पुष्टी करा</string>
   <string name="tab_members">सदस्य</string>
   <string name="tab_files">फाईल</string>
@@ -340,6 +342,9 @@
   <string name="jami_id_choose_username">एक वापरकर्तानाव निवडा</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">जामी येथे आपले स्वागत आहे</string>
+  <!--Conversation details-->
+  <string name="details">तपशील</string>
+  <string name="Private">खासगी</string>
   <!--Donation-->
   <!--Extension-->
 </resources>

@@ -182,6 +182,7 @@
   <string name="help_credentials_enter">Escribe as credenciais da túa organización</string>
   <string name="help_connect_password_enter">Escribe o contrasinal da túa organización</string>
   <string name="account_connect_prompt_username">Nome de usuaria</string>
+  <string name="account_enter_username">Escribir nome de usuaria</string>
   <!--Name registration-->
   <string name="error_username_empty">Escribe nome de usuaria</string>
   <string name="no_registered_name_for_account">Sen nome rexistrado</string>

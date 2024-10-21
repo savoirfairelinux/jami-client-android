@@ -152,14 +152,15 @@
   <string name="conversation_details">Деталі розмови</string>
   <string name="contact_details">Деталі контакту</string>
   <string name="conversation_action_delete_this">Видалити цю розмову</string>
+  <string name="leave_conversation">Не переконвайтеся</string>
   <string name="conversation_action_delete_this_message">Наслідки цієї дії не можна буде змінити.</string>
   <string name="conversation_action_history_clear">Видалити історію</string>
   <string name="conversation_action_history_clear_title">Очистити історію розмов?</string>
   <string name="conversation_action_history_clear_message">Це остаточно очистить історію розмов.</string>
-  <string name="conversation_action_remove_this">Видалити контакт</string>
+  <string name="delete_contact">Видалити контакт</string>
   <string name="conversation_action_remove_this_title">Видалити цей контакт?</string>
   <string name="conversation_action_remove_this_message">Це видалить контакт і остаточно очистить історію розмов.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s збережено у буфер</string>
+  <string name="copied_to_clipboard">%1$s збережено у буфер</string>
   <string name="conversation_action_select_peer_number">Виберіть номер</string>
   <string name="conversation_action_block_this">Заблокувати контакт</string>
   <string name="conversation_action_unblock_this">Відблокувати контакт</string>
@@ -187,7 +188,7 @@
   <string name="conversation_type_group">Груповий скоп</string>
   <string name="conversation_contact_invited">%1$s запрошений</string>
   <string name="conversation_contact_added">%1$s приєднаний</string>
-  <string name="conversation_contact_left">%1$ залишився</string>
+  <string name="conversation_contact_left">%1$s залишився</string>
   <string name="conversation_search_hint">Пошук розмов</string>
   <string name="today">Сьогодні</string>
   <string name="yesterday">Учора</string>
@@ -209,7 +210,7 @@
   <string name="hist_contact_added">Контакт додано</string>
   <string name="hist_contact_left">Контакт ліво</string>
   <string name="hist_invitation_received">Отримано запрошення</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">Профіль</string>
   <string name="profile_name">Назва профіля</string>
   <string name="profile_message_warning">Ваш профіль бачитимуть лише ваші контакти</string>
@@ -219,6 +220,7 @@
   <string name="registered_name">Зареєстроване ім\'я</string>
   <string name="no_registered_name">Немає зареєстрованого ім\'я</string>
   <string name="identity">Особа</string>
+  <string name="identifier">Ідентифікатор</string>
   <string name="account">Обліковий запис</string>
   <string name="link_new_device">Прив\'язати новий пристрій</string>
   <string name="devices">Привʼязані пристрої</string>
@@ -329,7 +331,7 @@
   <string name="bottomSheet_raiseHand_btn">Підняти руку</string>
   <string name="uninstall">Видалити</string>
   <string name="reset">Скинути</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">Підтвердження</string>
   <string name="tab_members">Учасники</string>
   <string name="tab_files">Файли</string>
@@ -355,6 +357,9 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Вітаємо в Jami</string>
   <string name="welcome_jami_description">Поділіться своїм ідентифікатором Jami, щоб можна було легше з вами звʼязатися!</string>
+  <!--Conversation details-->
+  <string name="details">Подробиці</string>
+  <string name="Private">Приватне</string>
   <!--Donation-->
   <string name="donation_card_description">Якщо вам подобається Jami і ви вірите в нашу місію, чи не зробили б ви пожертву?</string>
   <string name="donation_card_not_now">Не зараз</string>

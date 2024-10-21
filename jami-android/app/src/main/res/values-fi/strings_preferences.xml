@@ -52,5 +52,6 @@
   <string name="notification_private">Yksityinen \n(näytä ilmoitukset, mutta piilottaa sisältö lukitusnäytöllä)\n</string>
   <string name="notification_secret">Salainen \n(älä näytä ilmoituksia lukitusnäytöllä)</string>
   <!--Extension-->
+  <string name="pref_extensions_title">Laajennukset</string>
   <string name="extension_force_install">pakota \n asennus</string>
 </resources>

@@ -41,7 +41,10 @@
   <!--Conversation-->
   <string name="conversation_details">对话详情</string>
   <string name="contact_details">联系人详情</string>
+  <string name="leave_conversation">离开谈话</string>
   <string name="conversation_action_delete_this_message">此操作不可撤销。</string>
+  <string name="delete_contact">刪除聯絡人</string>
+  <string name="copied_to_clipboard">%1$s已复制至剪贴板</string>
   <string name="conversation_action_go_to_call">返回通话</string>
   <string name="conversation_action_incoming_call">来电</string>
   <string name="conversation_message_deleted">%s删除了一条消息</string>
@@ -63,9 +66,11 @@
   <string name="yesterday">昨天</string>
   <!--Contacts-->
   <string name="pin_copied">PIN码复制到剪贴板</string>
-  <!--Account Summary-->
+  <!--Account summary-->
+  <string name="identifier">識別碼</string>
   <!--Share fragment-->
   <!--Pending invitations-->
+  <string name="decline">拒接</string>
   <string name="invitation_message">您有 %1$d 个联系人请求</string>
   <!--Blacklist-->
   <!--Smartlist-->
@@ -85,7 +90,7 @@
   <!--Bottom sheet-->
   <string name="bottomSheet_extensions_btn">扩展</string>
   <string name="bottomSheet_hangup_btn">結束電話</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="tab_files">文件</string>
   <string name="tab_settings">設定</string>
   <string name="error_open_no_app_found">找不到处理此文件的应用程序：%1$s</string>
@@ -102,6 +107,9 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">欢迎使用 Jami</string>
   <string name="welcome_jami_description">分享您的 Jami 识别码，以便更方便地与您联系！</string>
+  <!--Conversation details-->
+  <string name="details">详细</string>
+  <string name="Private">私人</string>
   <!--Donation-->
   <string name="donation_card_description">如果您喜欢使用 Jami 并相信我们的使命，您愿意捐款吗？</string>
   <string name="donation_card_not_now">现在不要</string>

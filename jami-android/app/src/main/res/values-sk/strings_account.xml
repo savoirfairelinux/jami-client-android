@@ -180,6 +180,7 @@
   <string name="help_credentials_enter">Zadajte údaje vašej organizácie</string>
   <string name="help_connect_password_enter">Zadajte heslo vašej organizácie</string>
   <string name="account_connect_prompt_username">Používateľské meno</string>
+  <string name="account_enter_username">Zadajte používateľské meno</string>
   <!--Name registration-->
   <string name="error_username_empty">Zadajte používateľské meno</string>
   <string name="no_registered_name_for_account">Žiadne registrované meno</string>

@@ -171,6 +171,7 @@
   <string name="account_update_needed">Actualizare necesară</string>
   <string name="account_cannot_be_found_title">Eroare a contului</string>
   <string name="account_cannot_be_found_message">Contul nu poate fi găsit în rețeaua Jami. Asigură-te că a fost exportat pe Jami dintr-un aparat existent și datele de autentificare sunt corecte.</string>
+  <string name="jams_account_cannot_be_found_message">A apărut o eroare în timpul conectării contului. Verifică datele și încearcă din nou.</string>
   <string name="account_sip_cannot_be_registered_message">Poți continua cu procesul de creare a contului sau poți modifica datele tale aici. Modificarea e posibilă ulterior în reglările contului.</string>
   <string name="account_no_network_title">Eroare de rețea</string>
   <string name="account_no_network_message">A apărut o eroare de conectare în timpul adăugării contului Jami la rețeaua distribuită. Verifică conectarea.</string>
@@ -212,6 +213,9 @@
   <string name="help_credentials_enter">Introdu datele de autentificare ale organizației tale</string>
   <string name="help_connect_password_enter">Introdu parola organizației tale</string>
   <string name="account_connect_prompt_username">Nume de utilizator</string>
+  <string name="account_connect_server">Conectează la un server JAMS</string>
+  <string name="account_enter_username">Introdu numele de utilizator</string>
+  <string name="account_enter_servername">Introdu serverul</string>
   <!--Name registration-->
   <string name="error_username_empty">Introdu un nume de utilizator</string>
   <string name="no_registered_name_for_account">Niciun nume înscris</string>

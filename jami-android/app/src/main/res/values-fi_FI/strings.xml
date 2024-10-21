@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--About-->
+  <string name="no_browser_app_installed">Selainsovellusta ei löytynyt, asenna sellainen tämän sivun näyttämiseksi</string>
+  <string name="website_chooser_title">Näytä verkkosivu käyttäen...</string>
+  <string name="license">Tämä ohjelmisto on jaettu sellaisenaan, ilman minkäänlaista takuuta. Saadaksesi lisätietoja, katso <u>GNU General Public License versio 3 tai myöhempi</u></string>
+  <!--About dialog-->
+  <!--RingActivity-->
+  <!--AB menus-->
+  <!--Sections-->
+  <!--Dialing Fragment-->
+  <!--History Fragment-->
+  <!--Home Fragment-->
+  <!--ContactList Fragment-->
+  <!--FileExplorerDFragement-->
+  <!--TransferDFragment-->
+  <!--Notifications-->
+  <string name="notif_incoming_call">Puhelu</string>
+  <!--Call Fragment-->
+  <!--Text messages-->
+  <!--MediaPreferenceFragment-->
+  <!--Ringtone activity-->
+  <!--Read contacts permission-->
+  <!--Write call log permission-->
+  <!--QRCode Scan-->
+  <!--Settings-->
+  <!--Conversation-->
+  <string name="leave_conversation">Jätä keskustelu</string>
+  <string name="delete_contact">Poista henkilö</string>
+  <string name="copied_to_clipboard">%1$s kopioitu leikepöydälle</string>
+  <string name="conversation_action_incoming_call">Puhelu</string>
+  <string name="conversation_contact_left">%1$s on vasemmisto</string>
+  <!--Contacts-->
+  <!--Account summary-->
+  <string name="identifier">Tunniste</string>
+  <!--Share fragment-->
+  <!--Pending invitations-->
+  <string name="decline">Kieltäydy</string>
+  <string name="invitation_message">Sinulla on %1$d yhteyspyyntöjä</string>
+  <!--Blacklist-->
+  <!--Smartlist-->
+  <!--File Transfer-->
+  <!--Bottom Navigation-->
+  <!--TV-->
+  <!--Wizard-->
+  <!--Bottom sheet-->
+  <string name="bottomSheet_extensions_btn">Laajennukset</string>
+  <!--Swarm Details-->
+  <!--JamiId-->
+  <!--WelcomeJami-->
+  <!--Conversation details-->
+  <string name="details">Tiedot</string>
+  <string name="Private">Yksityinen</string>
+  <!--Donation-->
+  <!--Extension-->
+</resources>

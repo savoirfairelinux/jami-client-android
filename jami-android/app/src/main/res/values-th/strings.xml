@@ -144,14 +144,15 @@
   <string name="conversation_details">รายละเอียดการพูดคุย</string>
   <string name="contact_details">รายละเอียดการติดต่อ</string>
   <string name="conversation_action_delete_this">ลบบทสนทนานี้</string>
+  <string name="leave_conversation">ปล่อยการพูดคุย</string>
   <string name="conversation_action_delete_this_message">การดำเนินการนี้ไม่สามารถยกเลิกได้</string>
   <string name="conversation_action_history_clear">ล้างประวัติ</string>
   <string name="conversation_action_history_clear_title">ล้างประวัติการสนทนาไหม</string>
   <string name="conversation_action_history_clear_message">สิ่งนี้จะล้างประวัติการสนทนาอย่างแน่นอน</string>
-  <string name="conversation_action_remove_this">ลบผู้ติดต่อ</string>
+  <string name="delete_contact">ลบผู้ติดต่อ</string>
   <string name="conversation_action_remove_this_title">ลบรายชื่อติดต่อนี้ไหม</string>
   <string name="conversation_action_remove_this_message">การดำเนินการนี้จะลบผู้ติดต่อและล้างประวัติการสนทนาอย่างแน่นอน</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s ถูกสําเนาไปยังกระดานตัด</string>
+  <string name="copied_to_clipboard">%1$s ถูกสําเนาไปยังกระดานตัด</string>
   <string name="conversation_action_select_peer_number">เลือกหมายเลข</string>
   <string name="conversation_action_block_this">บล็อคการติดต่อ</string>
   <string name="conversation_action_unblock_this">กดติดต่อ</string>
@@ -179,7 +180,7 @@
   <string name="conversation_type_group">กลุ่มกลุ่ม</string>
   <string name="conversation_contact_invited">%1$sได้รับเชิญ</string>
   <string name="conversation_contact_added">%1$sเข้าร่วม</string>
-  <string name="conversation_contact_left">%1$ อยู่ซ้าย</string>
+  <string name="conversation_contact_left">%1$s อยู่ซ้าย</string>
   <string name="conversation_search_hint">ค้นหาบทสนทนา</string>
   <string name="today">วัน นี้</string>
   <string name="yesterday">เมื่อวาน</string>
@@ -201,7 +202,7 @@
   <string name="hist_contact_added">เพิ่มผู้ติดต่อ</string>
   <string name="hist_contact_left">ติดต่อซ้าย</string>
   <string name="hist_invitation_received">ได้รับคำเชิญ</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">ประวัติโดยย่อ</string>
   <string name="profile_name">ชื่อโปรไฟล์</string>
   <string name="profile_message_warning">โปรไฟล์ของคุณจะถูกแชร์กับผู้ติดต่อของคุณเท่านั้น</string>
@@ -211,6 +212,7 @@
   <string name="registered_name">ชื่อจดทะเบียน</string>
   <string name="no_registered_name">ไม่ระบุชื่อ</string>
   <string name="identity">ตัวตน</string>
+  <string name="identifier">ตัวประจําตัว</string>
   <string name="account">บัญชี</string>
   <string name="link_new_device">เชื่อมโยงอุปกรณ์ใหม่</string>
   <string name="devices">อุปกรณ์ที่เชื่อมโยง</string>
@@ -320,7 +322,7 @@
   <string name="bottomSheet_raiseHand_btn">ยกมือ</string>
   <string name="uninstall">ถอนการติดตั้ง</string>
   <string name="reset">รีเซ็ต</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">ยืนยัน</string>
   <string name="tab_members">สมาชิก</string>
   <string name="tab_files">ไฟล์</string>
@@ -339,6 +341,9 @@
   <string name="jami_id_choose_username">เลือกชื่อผู้ใช้งาน</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">ยินดีต้อนรับสู่ Jami</string>
+  <!--Conversation details-->
+  <string name="details">รายละเอียด</string>
+  <string name="Private">เอกชน</string>
   <!--Donation-->
   <!--Extension-->
 </resources>

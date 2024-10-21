@@ -187,6 +187,7 @@
   <string name="help_credentials_enter">输入您的组织凭据</string>
   <string name="help_connect_password_enter">输入您的组织密码</string>
   <string name="account_connect_prompt_username">用户名</string>
+  <string name="account_enter_username">输入用户名</string>
   <!--Name registration-->
   <string name="error_username_empty">输入用户名</string>
   <string name="no_registered_name_for_account">没有注册名称</string>

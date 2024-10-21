@@ -6,6 +6,9 @@
   <string name="copyright_section">ڤڠاجين ڤڠاجين</string>
   <string name="contribute_section">ڤڠاجين</string>
   <string name="version_section">ڤرسي</string>
+  <string name="no_browser_app_installed">تيدق دڤرچايا?? ي ڤرودوک ويب، مڠمبيل ڤرودوک اونتوق مڠمبيل ڤرودوک اين</string>
+  <string name="website_chooser_title">مڠمبيل ڤرچاي ويب دڠن...</string>
+  <string name="license">ڤوۏيرو اين دبريكن \"ساي كيت،\" دڠن كرجاسام سياڤا. اونتوق ڤرليندوڠن، اكن مڠيكوت <u>GNU General Public License ڤرسي 3 اتاو ڤرليندوڠ</u></string>
   <string name="description">Jami اداله سوفيتور براوسيا اونورسال يڠ ممڤرچايا?? ي ڤرليبتن دان ڤريۏيتي ڤڠڬوناڽ.</string>
   <string name="credits">ڤرودوک</string>
   <string name="pip_title">كونفرنس جامي</string>
@@ -76,6 +79,7 @@
   <!--Conversation-->
   <string name="conversation_details">ڤڠاجرن ڤڠاجرن</string>
   <string name="contact_details">ڤڠاجرن</string>
+  <string name="leave_conversation">ترك ڤڠاجرن</string>
   <string name="conversation_action_history_clear">تاريخ يڠ برڤنتيڠ</string>
   <string name="conversation_action_block_this">ڤڠاجرن ڤڠاجرن</string>
   <string name="conversation_action_incoming_call">ڤڠاجين يڠ دڤرچايا?? ي</string>
@@ -90,11 +94,12 @@
   <string name="wizard_skip">سكيڤ</string>
   <string name="hist_contact_added">ڤڠاجين دڤرچايا?? ي</string>
   <string name="hist_invitation_received">ڤڠاجين يڠ دڤرچايا?? ي</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">ڤروڤيل</string>
   <string name="profile_message_warning">ڤروڤيلڽ اداله دڤرچايا?? ي دڠن ڤڠاجرنڽ</string>
   <string name="profile_name_hint">نامت ڤدڤن</string>
   <string name="identity">ادينتيتي</string>
+  <string name="identifier">ڤڠڬونا</string>
   <string name="account">حساب</string>
   <string name="link_new_device">منچيلكن ڤڠڬونا?? ن بارو</string>
   <string name="devices">ڤڠڬيلن يڠ دڤرچايا?? ي</string>
@@ -103,6 +108,7 @@
   <string name="generic_error_migration">خطأ</string>
   <!--Pending invitations-->
   <string name="accept">مڠاتاه</string>
+  <string name="decline">ڤڠڬيلن</string>
   <string name="block">ڤڠاجرن</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">تيدق ڤرلو ممبليكن ڤڠاجرن</string>
@@ -141,7 +147,7 @@
   <string name="bottomSheet_raiseHand_btn">كرانڽ</string>
   <string name="uninstall">ڤڠڬيلڠ</string>
   <string name="reset">ڤڠاجرن</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">ڤڠاجرن</string>
   <string name="tab_members">ڤڠڬونا</string>
   <string name="tab_files">ڤرچاي</string>
@@ -154,6 +160,9 @@
   <string name="jami_id_choose_username">مميليه نام ڤڠڬونا</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">خوش اومدن جامي</string>
+  <!--Conversation details-->
+  <string name="details">ڤڠاجرن</string>
+  <string name="Private">ڤريڤوت</string>
   <!--Donation-->
   <!--Extension-->
 </resources>

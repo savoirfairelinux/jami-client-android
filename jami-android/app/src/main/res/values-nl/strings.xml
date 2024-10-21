@@ -153,14 +153,15 @@
   <string name="conversation_details">Besprekingsgegevens</string>
   <string name="contact_details">Contactdetails</string>
   <string name="conversation_action_delete_this">Dit gesprek verwijderen</string>
+  <string name="leave_conversation">Laat het gesprek</string>
   <string name="conversation_action_delete_this_message">Deze handeling kan niet ongedaan gemaakt worden.</string>
   <string name="conversation_action_history_clear">Geschiedenis wissen</string>
   <string name="conversation_action_history_clear_title">De gespreksgeschiedenis wissen?</string>
   <string name="conversation_action_history_clear_message">Dit zal de gespreksgeschiedenis voorgoed wissen.</string>
-  <string name="conversation_action_remove_this">Contact verwijderen</string>
+  <string name="delete_contact">Contact verwijderen</string>
   <string name="conversation_action_remove_this_title">Dit contact verwijderen?</string>
   <string name="conversation_action_remove_this_message">Dit zal het contact verwijderen en de gespreksgeschiedenis voorgoed wissen.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s gekopieerd naar klembord</string>
+  <string name="copied_to_clipboard">%1$s gekopieerd naar klembord</string>
   <string name="conversation_action_select_peer_number">Kies een nummer</string>
   <string name="conversation_action_block_this">Contact blokkeren</string>
   <string name="conversation_action_unblock_this">Contact deblokkeren</string>
@@ -189,7 +190,7 @@
   <string name="conversation_type_group">Groepzwerm</string>
   <string name="conversation_contact_invited">%1$s is uitgenodigd</string>
   <string name="conversation_contact_added">%1$s is aangesloten</string>
-  <string name="conversation_contact_left">%1$ is links</string>
+  <string name="conversation_contact_left">%1$s is links</string>
   <string name="conversation_search_hint">Zoek gesprek</string>
   <string name="today">Vandaag</string>
   <string name="yesterday">Gisteren</string>
@@ -211,7 +212,7 @@
   <string name="hist_contact_added">Contact toegevoegd</string>
   <string name="hist_contact_left">Links contact</string>
   <string name="hist_invitation_received">Uitnodiging ontvangen</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">Profiel</string>
   <string name="profile_name">Profielnaam</string>
   <string name="profile_message_warning">Uw profiel wordt enkel gedeeld met uw contacten</string>
@@ -221,6 +222,7 @@
   <string name="registered_name">Geregistreerde naam</string>
   <string name="no_registered_name">Geen naam geregistreerd</string>
   <string name="identity">Identiteit</string>
+  <string name="identifier">Identificatie</string>
   <string name="account">Account</string>
   <string name="link_new_device">Een nieuw apparaat koppelen</string>
   <string name="devices">Gekoppelde apparaten</string>
@@ -338,7 +340,7 @@
   <string name="bottomSheet_raiseHand_btn">Hand opsteken</string>
   <string name="uninstall">Oninstalleren</string>
   <string name="reset">Herstellen</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">Bevestigen</string>
   <string name="tab_members">Lid-Staten</string>
   <string name="tab_files">Dossiers</string>
@@ -364,6 +366,9 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Welkom bij Jami</string>
   <string name="welcome_jami_description">Deel uw Jami Identifier zodat u makkelijker bereikbaar bent!</string>
+  <!--Conversation details-->
+  <string name="details">Details</string>
+  <string name="Private">Privé</string>
   <!--Donation-->
   <string name="donation_card_description">Als u van Jami geniet en in onze missie gelooft, zou u een donatie wilen doen?</string>
   <string name="donation_card_not_now">Niet nu</string>

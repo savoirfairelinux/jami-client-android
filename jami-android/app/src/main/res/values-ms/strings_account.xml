@@ -209,6 +209,7 @@
   <string name="account_revoke_device_hint">സ്ഥിരീകരിക്കാനായി പാസ്വേഡ് നൽകുക</string>
   <string name="enter_password">Masukkan kata laluan</string>
   <string name="revoke_device_title">പിൻവലിക്കൽ ഉപകരണം</string>
+  <string name="revoke_device_message">%1$s- നെ പിൻവലിക്കാൻ താങ്കൾക്ക് ഉറപ്പുണ്ടോ?</string>
   <string name="revoke_device_wait_title">Sila tunggu...</string>
   <string name="revoke_device_wait_message">പിൻവലിക്കൽ ഉപകരണം</string>
   <string name="rename_device_title">ഈ ഉപകരണം പുനർനാമകരണം ചെയ്യുക</string>

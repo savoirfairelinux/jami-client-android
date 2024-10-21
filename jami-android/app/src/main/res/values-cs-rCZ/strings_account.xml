@@ -181,6 +181,7 @@ Zadejte, prosím, své heslo.</string>
   <string name="help_credentials_enter">Zadejte přihlašovací údaje vaší organizace</string>
   <string name="help_connect_password_enter">Zadejte heslo vaší organizace</string>
   <string name="account_connect_prompt_username">Uživatelské jméno</string>
+  <string name="account_enter_username">Zadejte uživatelské jméno</string>
   <!--Name registration-->
   <string name="error_username_empty">Zadejte uživatelské jméno</string>
   <string name="no_registered_name_for_account">Žádný registrovaný název</string>

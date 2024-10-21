@@ -59,7 +59,10 @@
   <!--Conversation-->
   <string name="conversation_details">Podrobnosti razgovora</string>
   <string name="contact_details">Pojedinosti kontakta</string>
+  <string name="leave_conversation">Ostavi razgovor</string>
   <string name="conversation_action_delete_this_message">Ova akcija se ne može poništiti.</string>
+  <string name="delete_contact">Izbriši kontakt</string>
+  <string name="copied_to_clipboard">%1$s kopiran u međuspremnik</string>
   <string name="conversation_action_unblock_this">Otključaj kontakt</string>
   <string name="conversation_action_incoming_call">Dolazni poziv</string>
   <string name="conversation_action_latest">Pomicanje na kraj razgovora</string>
@@ -80,7 +83,7 @@
   <string name="conversation_type_group">Grupa Swarm</string>
   <string name="conversation_contact_invited">%1$s je pozvan</string>
   <string name="conversation_contact_added">%1$s se pridružio</string>
-  <string name="conversation_contact_left">%1$ je lijevo</string>
+  <string name="conversation_contact_left">%1$s je lijevo</string>
   <string name="conversation_search_hint">Razgovor za pretragu</string>
   <string name="today">Danas</string>
   <string name="yesterday">Jučer</string>
@@ -89,11 +92,12 @@
   <string name="help_server_enter">Ubaci URL-a za upravljački server.</string>
   <string name="hist_contact_invited">Kontakt pozvani</string>
   <string name="hist_contact_left">Kontakt lijevo</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile_name">Ime profila</string>
   <string name="registered_name">Upisno ime</string>
   <string name="no_registered_name">Ne postoji registrirano ime</string>
   <string name="identity">Identifikacija</string>
+  <string name="identifier">Identifikacija</string>
   <string name="link_new_device">Povežite novi uređaj</string>
   <string name="total_devices">Ukupna količina uređaja: </string>
   <!--Share fragment-->
@@ -101,6 +105,7 @@
   <string name="share_your_account_information">Podeli moje kontaktne podatke</string>
   <string name="generic_error_migration_message">Pogreška se dogodila tijekom migracije</string>
   <!--Pending invitations-->
+  <string name="decline">Odbij</string>
   <string name="invitation_message">Imate %1$d zahtjeve za kontakt</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Nema blokiranih kontakata</string>
@@ -172,7 +177,7 @@
   <string name="bottomSheet_mute_microphone_btn">Mikro</string>
   <string name="uninstall">Neinstalacija</string>
   <string name="reset">Nastavljanje</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">Potvrdi</string>
   <string name="tab_members">Članovi</string>
   <string name="tab_files">Dosje</string>
@@ -191,6 +196,9 @@
   <string name="jami_id_choose_username">Izaberite korisničko ime</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Dobrodošli u Jami</string>
+  <!--Conversation details-->
+  <string name="details">Pojedinosti</string>
+  <string name="Private">Privredni</string>
   <!--Donation-->
   <!--Extension-->
 </resources>

@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--Strings related to account edition screen-->
+  <!--Strings related to account creation-->
+  <!--Strings related to account deletion-->
+  <!--AccountManagementFragment-->
+  <!--Basic Details-->
+  <!--Extension Details-->
+  <string name="account_preferences_extension_tab">Laajennukset</string>
+  <!--Audio Details-->
+  <!--Video Details-->
+  <!--Advanced Details-->
+  <string name="account_turn_enable_label">Käytä TURN</string>
+  <!--Security Details-->
+  <!--SRTP Details-->
+  <!--SIP-->
+  <!--TLS Details-->
+  <!--restore/backup-->
+  <!--TV-->
+  <string name="account_enter_username">Anna käyttäjänimi</string>
+  <!--Name registration-->
+  <!--Create account-->
+  <!--Edit profile-->
+  <!--Devices-->
+  <!--Link a new device-->
+  <!--Biometry-->
+</resources>

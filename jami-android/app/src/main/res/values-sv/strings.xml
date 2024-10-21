@@ -146,14 +146,15 @@
   <string name="conversation_details">Samtalens detaljer</string>
   <string name="contact_details">Kontaktdetaljer</string>
   <string name="conversation_action_delete_this">Ta bort den här konversationen</string>
+  <string name="leave_conversation">Lämna samtalet</string>
   <string name="conversation_action_delete_this_message">Denna åtgärd kan inte ångras.</string>
   <string name="conversation_action_history_clear">Rensa historik</string>
   <string name="conversation_action_history_clear_title">Rensa konversationshistoriken?</string>
   <string name="conversation_action_history_clear_message">Detta kommer att rensa konversationshistoriken för gott.</string>
-  <string name="conversation_action_remove_this">Ta bort kontakt</string>
+  <string name="delete_contact">Ta bort kontakt</string>
   <string name="conversation_action_remove_this_title">Ta bort den här kontakten?</string>
   <string name="conversation_action_remove_this_message">Detta kommer att ta bort kontakten och rensa konversationshistoriken för gott.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s kopierat till urklipp</string>
+  <string name="copied_to_clipboard">%1$s kopierat till urklipp</string>
   <string name="conversation_action_select_peer_number">Välj ett nummer</string>
   <string name="conversation_action_block_this">Blockera kontakt</string>
   <string name="conversation_action_unblock_this">Avblockera kontakt</string>
@@ -181,7 +182,7 @@
   <string name="conversation_type_group">Gruppssärm</string>
   <string name="conversation_contact_invited">%1$s har blivit inbjuden</string>
   <string name="conversation_contact_added">%1$s ansluten</string>
-  <string name="conversation_contact_left">%1$ är vänster</string>
+  <string name="conversation_contact_left">%1$s är vänster</string>
   <string name="conversation_search_hint">Söksamtal</string>
   <string name="today">I dag</string>
   <string name="yesterday">I går</string>
@@ -203,7 +204,7 @@
   <string name="hist_contact_added">Kontakt tillagt</string>
   <string name="hist_contact_left">Mottagaren lämnade</string>
   <string name="hist_invitation_received">Inbjudan mottagen</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">Profil</string>
   <string name="profile_name">Profilnamn</string>
   <string name="profile_message_warning">Din profil delas endast med dina kontakter</string>
@@ -213,6 +214,7 @@
   <string name="registered_name">Registrerat namn</string>
   <string name="no_registered_name">Inget namn är registrerat</string>
   <string name="identity">Identitet</string>
+  <string name="identifier">identifierare</string>
   <string name="account">Konto</string>
   <string name="link_new_device">Koppla en ny enhet</string>
   <string name="devices">Kopplade enheter</string>
@@ -322,7 +324,7 @@
   <string name="bottomSheet_raiseHand_btn">Räck upp handen</string>
   <string name="uninstall">Avinstallera</string>
   <string name="reset">Återställ</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">Bekräfta</string>
   <string name="tab_members">Medlemmar</string>
   <string name="tab_files">Filer</string>
@@ -341,6 +343,9 @@
   <string name="jami_id_choose_username">Välj ett användarnamn</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Välkommen till Jami!</string>
+  <!--Conversation details-->
+  <string name="details">Detaljer</string>
+  <string name="Private">Privat</string>
   <!--Donation-->
   <!--Extension-->
 </resources>

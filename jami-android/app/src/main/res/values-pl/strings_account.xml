@@ -189,6 +189,7 @@
   <string name="help_credentials_enter">Wprowadź swoje poświadczenia organizacji</string>
   <string name="help_connect_password_enter">Wprowadź swoje hasło organizacji</string>
   <string name="account_connect_prompt_username">Nazwa użytkownika</string>
+  <string name="account_enter_username">Wpisz nazwę użytkownika</string>
   <!--Name registration-->
   <string name="error_username_empty">Wprowadź nazwę użytkownika</string>
   <string name="no_registered_name_for_account">Brak zarejestrowanej nazwy</string>

@@ -147,14 +147,15 @@
   <string name="conversation_details">Samtale detaljer</string>
   <string name="contact_details">Kontaktdetaljer</string>
   <string name="conversation_action_delete_this">Slett denne samtalen</string>
+  <string name="leave_conversation">La samtalen være</string>
   <string name="conversation_action_delete_this_message">Denne handlingen kan ikke angres.</string>
   <string name="conversation_action_history_clear">Slett historikk</string>
   <string name="conversation_action_history_clear_title">Slett samtaleloggen?</string>
   <string name="conversation_action_history_clear_message">Dette vil definitivt slette samtaleloggen.</string>
-  <string name="conversation_action_remove_this">Slett kontakt</string>
+  <string name="delete_contact">Slett kontakt</string>
   <string name="conversation_action_remove_this_title">Slett denne kontakten?</string>
   <string name="conversation_action_remove_this_message">Dette vil slette denne kontakten og permanent nullstille samtalehistorikken.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s kopiert til utklippstavle</string>
+  <string name="copied_to_clipboard">%1$s kopiert til utklippstavle</string>
   <string name="conversation_action_select_peer_number">Velg et nummer</string>
   <string name="conversation_action_block_this">Blokker kontakt</string>
   <string name="conversation_action_unblock_this">Fjern kontaktblokkering</string>
@@ -182,7 +183,7 @@
   <string name="conversation_type_group">Gruppssparm</string>
   <string name="conversation_contact_invited">%1$s ble invitert</string>
   <string name="conversation_contact_added">%1$s er blitt lagt til</string>
-  <string name="conversation_contact_left">%1$ er venstre</string>
+  <string name="conversation_contact_left">%1$s er venstre</string>
   <string name="conversation_search_hint">Søk samtale</string>
   <string name="today">I dag</string>
   <string name="yesterday">Igår</string>
@@ -204,7 +205,7 @@
   <string name="hist_contact_added">Kontakt lagt til</string>
   <string name="hist_contact_left">Har forlatt samtalen</string>
   <string name="hist_invitation_received">Invitasjon mottatt</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">Profil</string>
   <string name="profile_name">Profilnavn</string>
   <string name="profile_message_warning">Din profil deles bare med dine kontakter</string>
@@ -214,6 +215,7 @@
   <string name="registered_name">Registrert navn</string>
   <string name="no_registered_name">Navn ikke registrert</string>
   <string name="identity">Identitet</string>
+  <string name="identifier">Identifikator</string>
   <string name="account">Konto</string>
   <string name="link_new_device">Koble til en ny enhet</string>
   <string name="devices">Koblede enheter</string>
@@ -323,7 +325,7 @@
   <string name="bottomSheet_raiseHand_btn">Rekk opp hånden</string>
   <string name="uninstall">Avinstaller</string>
   <string name="reset">Nullstill</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">Bekreft</string>
   <string name="tab_members">Medlemmer</string>
   <string name="tab_files">Filer</string>
@@ -342,6 +344,9 @@
   <string name="jami_id_choose_username">Velg et brukernavn</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Velkommen til Jami</string>
+  <!--Conversation details-->
+  <string name="details">Detaljer</string>
+  <string name="Private">Privat</string>
   <!--Donation-->
   <string name="donation_card_description">Hvis du liker å bruke Jami og tror på prosjektet vårt, vil du gi en donasjon?</string>
   <string name="donation_card_not_now">Ikke nå</string>

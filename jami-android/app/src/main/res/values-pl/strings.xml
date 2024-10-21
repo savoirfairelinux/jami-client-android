@@ -157,14 +157,15 @@
   <string name="conversation_details">Szczegóły rozmowy</string>
   <string name="contact_details">Detale kontaktu</string>
   <string name="conversation_action_delete_this">Usuń tę rozmowę</string>
+  <string name="leave_conversation">/Nie mówcie o tym.</string>
   <string name="conversation_action_delete_this_message">Tej czynności nie można cofnąć.</string>
   <string name="conversation_action_history_clear">Wyczyść historię</string>
   <string name="conversation_action_history_clear_title">Wyczyścić historię rozmowy?</string>
   <string name="conversation_action_history_clear_message">To całkowicie usunie historię rozmowy.</string>
-  <string name="conversation_action_remove_this">Usuń kontakt</string>
+  <string name="delete_contact">Usuń kontakt</string>
   <string name="conversation_action_remove_this_title">Usunąć ten kontakt?</string>
   <string name="conversation_action_remove_this_message">To usunie kontakt i całkowicie wyczyści historię rozmowy.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s skopiowany do schowka</string>
+  <string name="copied_to_clipboard">%1$s skopiowany do schowka</string>
   <string name="conversation_action_select_peer_number">Wybierz numer</string>
   <string name="conversation_action_block_this">Blokuj kontakt</string>
   <string name="conversation_action_unblock_this">Odblokuj kontakt</string>
@@ -194,7 +195,7 @@
   <string name="conversation_type_group">Grupa Swarm</string>
   <string name="conversation_contact_invited">Zaproszono %1$s</string>
   <string name="conversation_contact_added">%1$s dołączony</string>
-  <string name="conversation_contact_left">%1$ jest lewy</string>
+  <string name="conversation_contact_left">%1$s jest lewy</string>
   <string name="conversation_search_hint">Szukaj rozmowy</string>
   <string name="audio_recorder_error">Nie znaleziono aplikacji rejestratora dźwięku.</string>
   <string name="video_recorder_error">Nie znaleziono aplikacji do nagrywania wideo.</string>
@@ -230,7 +231,7 @@
   <string name="hist_contact_added">Kontakt dodany</string>
   <string name="hist_contact_left">Kontakt opuścił</string>
   <string name="hist_invitation_received">Otrzymano zaproszenie</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">Profil</string>
   <string name="profile_name">Nazwa Profilu</string>
   <string name="profile_message_warning">Twój profil jest udostępniany tylko twoim kontaktom</string>
@@ -240,6 +241,7 @@
   <string name="registered_name">Zarejestrowana nazwa</string>
   <string name="no_registered_name">Brak zarejestrowanej nazwy</string>
   <string name="identity">Tożsamość</string>
+  <string name="identifier">Identyfikator</string>
   <string name="account">Konto</string>
   <string name="link_new_device">Połącz nowe urządzenie</string>
   <string name="devices">Połączone urządzenia</string>
@@ -359,7 +361,7 @@
   <string name="bottomSheet_raiseHand_btn">Podnieś rękę</string>
   <string name="uninstall">Odinstaluj</string>
   <string name="reset">Zresetuj</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">Potwierdź</string>
   <string name="tab_members">Użytkownicy</string>
   <string name="tab_files">Pliki</string>
@@ -386,6 +388,8 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Witaj w Jami</string>
   <string name="welcome_jami_description">Udostępnij swój identyfikator Jami aby ułatwić skontaktowanie się z Tobą!</string>
+  <!--Conversation details-->
+  <string name="Private">Prywatne</string>
   <!--Donation-->
   <string name="donation_card_description">Jeśli lubisz korzystać z Jami i wierzysz w naszą misję, czy mógłbyś przekazać darowiznę?</string>
   <string name="donation_card_not_now">Nie w tej chwili</string>

@@ -147,14 +147,15 @@
   <string name="conversation_details">대화 세부 사항</string>
   <string name="contact_details">연락처</string>
   <string name="conversation_action_delete_this">이 대화를 삭제</string>
+  <string name="leave_conversation">대화는 그만둬</string>
   <string name="conversation_action_delete_this_message">이 행동은 되돌릴 수 없습니다.</string>
   <string name="conversation_action_history_clear">명확한 역사</string>
   <string name="conversation_action_history_clear_title">대화 역사를 정리해?</string>
   <string name="conversation_action_history_clear_message">이것은 확실히 대화 역사를 깨끗하게 할 것입니다.</string>
-  <string name="conversation_action_remove_this">연락처 삭제</string>
+  <string name="delete_contact">연락처 삭제</string>
   <string name="conversation_action_remove_this_title">이 연락처를 삭제하세요?</string>
   <string name="conversation_action_remove_this_message">이것은 연락처를 삭제하고 대화 역사를 확실히 삭제합니다.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s는 클립보드에 복사</string>
+  <string name="copied_to_clipboard">%1$s는 클립보드에 복사</string>
   <string name="conversation_action_select_peer_number">번호를 선택</string>
   <string name="conversation_action_block_this">차단 접촉</string>
   <string name="conversation_action_unblock_this">연결 차단</string>
@@ -183,7 +184,7 @@
   <string name="conversation_type_group">집단 집단</string>
   <string name="conversation_contact_invited">%1$s가 초청되었습니다</string>
   <string name="conversation_contact_added">%1$s가 합류</string>
-  <string name="conversation_contact_left">%1$는 왼쪽</string>
+  <string name="conversation_contact_left">%1$s는 왼쪽</string>
   <string name="conversation_search_hint">검색 대화</string>
   <string name="audio_recorder_error">녹음 앱을 찾을 수 없음</string>
   <string name="video_recorder_error">녹화 앱을 찾을 수 없음</string>
@@ -210,7 +211,7 @@
   <string name="hist_contact_added">연락처 추가</string>
   <string name="hist_contact_left">좌측 연락처</string>
   <string name="hist_invitation_received">초대 받은 것</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">프로필</string>
   <string name="profile_name">프로필 이름</string>
   <string name="profile_message_warning">귀하의 프로필은 귀하의 연락처와만 공유됩니다</string>
@@ -220,6 +221,7 @@
   <string name="registered_name">등록된 이름</string>
   <string name="no_registered_name">등록된 이름도 없습니다</string>
   <string name="identity">신분</string>
+  <string name="identifier">식별자</string>
   <string name="account">계정</string>
   <string name="link_new_device">새로운 장치를 연결</string>
   <string name="devices">연결된 장치</string>
@@ -331,7 +333,7 @@
   <string name="bottomSheet_raiseHand_btn">손 들기</string>
   <string name="uninstall">설치 해제</string>
   <string name="reset">다시 설정</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">확인</string>
   <string name="tab_members">의원</string>
   <string name="tab_files">파일</string>
@@ -350,6 +352,9 @@
   <string name="jami_id_choose_username">사용자 이름을 선택</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">자미에 오신 것을 환영합니다</string>
+  <!--Conversation details-->
+  <string name="details">세부 사항</string>
+  <string name="Private">개인</string>
   <!--Donation-->
   <!--Extension-->
 </resources>

@@ -153,14 +153,15 @@
   <string name="conversation_details">Детаљи разговора</string>
   <string name="contact_details">Детаљи о контакту</string>
   <string name="conversation_action_delete_this">Избришите ову конверзацију</string>
+  <string name="leave_conversation">Оставите разговор</string>
   <string name="conversation_action_delete_this_message">Ова радња се не може опозвати.</string>
   <string name="conversation_action_history_clear">Очисти историју</string>
   <string name="conversation_action_history_clear_title">Очисти историју разговора?</string>
   <string name="conversation_action_history_clear_message">Ово ће дефинитивно очистити историју разговора.</string>
-  <string name="conversation_action_remove_this">Избриши контакт</string>
+  <string name="delete_contact">Избриши контакт</string>
   <string name="conversation_action_remove_this_title">Желите ли да избришете овај контакт?</string>
   <string name="conversation_action_remove_this_message">Ово ће избрисати контакт и дефинитивно избрисати историју разговора.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s копиран у привремену меморију</string>
+  <string name="copied_to_clipboard">%1$s копиран у привремену меморију</string>
   <string name="conversation_action_select_peer_number">Изабери број</string>
   <string name="conversation_action_block_this">Блокирај контакт</string>
   <string name="conversation_action_unblock_this">Одблокирај контакт</string>
@@ -211,7 +212,7 @@
   <string name="hist_contact_added">Контакт је додат</string>
   <string name="hist_contact_left">Контакт је напустио</string>
   <string name="hist_invitation_received">Позивница је примљена</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">Профил</string>
   <string name="profile_name">Име профила</string>
   <string name="profile_message_warning">Ваш профил се дели само са вашим контактима</string>
@@ -221,6 +222,7 @@
   <string name="registered_name">Регистровано име</string>
   <string name="no_registered_name">Нема регистрованог имена</string>
   <string name="identity">Идентитет</string>
+  <string name="identifier">Идентификатор</string>
   <string name="account">Налог</string>
   <string name="link_new_device">Повежи нови уређај</string>
   <string name="devices">Повезани уређаји</string>
@@ -339,7 +341,7 @@
   <string name="bottomSheet_raiseHand_btn">Подигни руку</string>
   <string name="uninstall">Деинсталирај</string>
   <string name="reset">Ресетуј</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">Потврди</string>
   <string name="tab_members">Чланови</string>
   <string name="tab_files">Датотеке</string>
@@ -365,6 +367,9 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Добродошли у Јами</string>
   <string name="welcome_jami_description">Поделите свој Јами идентификатор како бисте лакше контактирали sa drugima!</string>
+  <!--Conversation details-->
+  <string name="details">Детали</string>
+  <string name="Private">Приватно</string>
   <!--Donation-->
   <string name="donation_card_description">Ако уживате у коришћењу Јамија и верујете у нашу мисију, да ли бисте дали донацију?</string>
   <string name="donation_card_not_now">Не сада</string>

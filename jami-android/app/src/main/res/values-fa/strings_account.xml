@@ -180,6 +180,7 @@
   <string name="help_credentials_enter">اعتبار‌نامه سازمانی خود را وارد کنید</string>
   <string name="help_connect_password_enter">گذرواژه سازمانی خود را وارد کنید</string>
   <string name="account_connect_prompt_username">نام کاربری</string>
+  <string name="account_enter_username">نام کاربری را وارد کنید</string>
   <!--Name registration-->
   <string name="error_username_empty">یک نام کاربری وارد کنید</string>
   <string name="no_registered_name_for_account">بدون نام ثبت‌شده</string>

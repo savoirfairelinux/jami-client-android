@@ -89,6 +89,7 @@
   <!--Conversation-->
   <string name="conversation_details">פרטים בשיחה</string>
   <string name="contact_details">פרטי קשר</string>
+  <string name="leave_conversation">עזוב את השיחה</string>
   <string name="conversation_action_history_clear">היסטוריה ברורה</string>
   <string name="conversation_action_block_this">פגע בלוק</string>
   <string name="conversation_action_incoming_call">שיחה נכנסת</string>
@@ -104,12 +105,13 @@
   <string name="wizard_skip">דילוג</string>
   <string name="hist_contact_added">הוספת קשר</string>
   <string name="hist_invitation_received">הזמנה התקבלה</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">פרופיל</string>
   <string name="profile_name">שם הפרופיל</string>
   <string name="profile_message_warning">הפרופיל שלך משתף רק עם אנשי הקשר שלך</string>
   <string name="profile_name_hint">הכנס את שמך</string>
   <string name="identity">זהות</string>
+  <string name="identifier">זיהוי</string>
   <string name="account">חשבון</string>
   <string name="link_new_device">קישור מכשיר חדש</string>
   <string name="devices">מכשירים מחוברים</string>
@@ -118,6 +120,7 @@
   <string name="generic_error_migration">שגיאה</string>
   <!--Pending invitations-->
   <string name="accept">לקבל</string>
+  <string name="decline">ירידה</string>
   <string name="block">חסימה</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">אין קשרים חסומים</string>
@@ -159,7 +162,7 @@
   <string name="bottomSheet_raiseHand_btn">תרים את היד.</string>
   <string name="uninstall">תורידו את ההתקנה</string>
   <string name="reset">-הקמת מחדש</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">אישר</string>
   <string name="tab_members">חברי</string>
   <string name="tab_files">קבצים</string>
@@ -172,6 +175,9 @@
   <string name="jami_id_choose_username">בחר שם משתמש</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">ברוך בואך אל Jami</string>
+  <!--Conversation details-->
+  <string name="details">פרטים</string>
+  <string name="Private">פרטי</string>
   <!--Donation-->
   <!--Extension-->
 </resources>

@@ -80,6 +80,7 @@
   <!--Conversation-->
   <string name="conversation_details">Ihe ndị e kwuru n\'okwu ahụ</string>
   <string name="contact_details">Ihe ndị a ga-eji kparịta ụka</string>
+  <string name="leave_conversation">Hapụ mkparịta ụka ahụ</string>
   <string name="conversation_action_history_clear">Akụkọ ihe mere eme doro anya</string>
   <string name="conversation_action_block_this">Njikọ na-ekpuchi</string>
   <string name="conversation_action_incoming_call">N\'ọhịa</string>
@@ -94,11 +95,12 @@
   <string name="wizard_skip">Ịpụ</string>
   <string name="hist_contact_added">E gbakwunyere kọntaktị</string>
   <string name="hist_invitation_received">Òkù a kpọrọ</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">Ihe gbasara ya</string>
   <string name="profile_message_warning">A na-ekenye profaịlụ gị naanị na kọntaktị gị</string>
   <string name="profile_name_hint">Tinye aha gị</string>
   <string name="identity">Ihe Ndị A Kpọrọ Mmadụ</string>
+  <string name="identifier">Ihe Nkọwapụta</string>
   <string name="account">Ihe ndekọ</string>
   <string name="link_new_device">Jikọọ ngwaọrụ ọhụrụ</string>
   <string name="devices">Ngwaọrụ jikọtara</string>
@@ -148,7 +150,7 @@
   <string name="bottomSheet_raiseHand_btn">Welie aka gị</string>
   <string name="uninstall">Wepụ ihe nrụnye</string>
   <string name="reset">Tọgharia</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">Kwado</string>
   <string name="tab_members">Ndị otu</string>
   <string name="tab_files">Ihe ndekọ</string>
@@ -161,6 +163,9 @@
   <string name="jami_id_choose_username">Họrọ aha njirimara</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Mmadụ Bịa na Jami</string>
+  <!--Conversation details-->
+  <string name="details">Ihe ndị ọzọ</string>
+  <string name="Private">Ndị mmadụ n\'onwe ha</string>
   <!--Donation-->
   <!--Extension-->
 </resources>

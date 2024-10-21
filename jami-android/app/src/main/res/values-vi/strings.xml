@@ -102,6 +102,7 @@
   <!--Conversation-->
   <string name="conversation_details">Chi tiết cuộc trò chuyện</string>
   <string name="contact_details">Thông tin liên lạc</string>
+  <string name="leave_conversation">Để lại cuộc trò chuyện</string>
   <string name="conversation_action_history_clear">Lịch sử rõ ràng</string>
   <string name="conversation_action_block_this">Chặn liên hệ</string>
   <string name="conversation_action_unblock_this">Bỏ chặn liên hệ</string>
@@ -124,11 +125,12 @@
   <string name="wizard_skip">Tháo</string>
   <string name="hist_contact_added">Liên hệ được thêm vào</string>
   <string name="hist_invitation_received">Thỉnh cầu được nhận</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">Tương tự</string>
   <string name="profile_message_warning">Profile của bạn chỉ được chia sẻ với các liên lạc của bạn</string>
   <string name="profile_name_hint">Nhập tên của bạn</string>
   <string name="identity">Định dạng</string>
+  <string name="identifier">Định dạng</string>
   <string name="account">Tài khoản</string>
   <string name="link_new_device">Kết nối một thiết bị mới</string>
   <string name="devices">Các thiết bị liên kết</string>
@@ -180,7 +182,7 @@
   <string name="bottomSheet_raiseHand_btn">Giơ tay</string>
   <string name="uninstall">Tháo cài đặt</string>
   <string name="reset">Tái thiết</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">Đảm nhận</string>
   <string name="tab_members">Các thành viên</string>
   <string name="tab_files">Các tập tin</string>
@@ -193,6 +195,9 @@
   <string name="jami_id_choose_username">Chọn tên người dùng</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Chào mừng đến với Jami.</string>
+  <!--Conversation details-->
+  <string name="details">Chi tiết</string>
+  <string name="Private">Tự riêng</string>
   <!--Donation-->
   <!--Extension-->
 </resources>

@@ -145,14 +145,15 @@
   <string name="conversation_details">സംഭാഷണ വിശദാംശങ്ങള്</string>
   <string name="contact_details">ബന്ധപ്പെടാനുള്ള വിവരങ്ങൾ</string>
   <string name="conversation_action_delete_this">ഈ സംഭാഷണം ഇല്ലാതാക്കുക</string>
+  <string name="leave_conversation">സംഭാഷണം ഉപേക്ഷിക്കുക</string>
   <string name="conversation_action_delete_this_message">ഈ നടപടി മാറ്റാന് കഴിയില്ല.</string>
   <string name="conversation_action_history_clear">വ്യക്തമായ ചരിത്രം</string>
   <string name="conversation_action_history_clear_title">സംഭാഷണ ചരിത്രം മായ്ക്കുക?</string>
   <string name="conversation_action_history_clear_message">ഇത് സംഭാഷണ ചരിത്രം മായ്ക്കും.</string>
-  <string name="conversation_action_remove_this">ബന്ധം ഇല്ലാതാക്കുക</string>
+  <string name="delete_contact">ബന്ധം ഇല്ലാതാക്കുക</string>
   <string name="conversation_action_remove_this_title">ഈ കോൺടാക്റ്റ് ഇല്ലാതാക്കണോ?</string>
   <string name="conversation_action_remove_this_message">ഇത് ബന്ധം ഇല്ലാതാക്കുകയും സംഭാഷണ ചരിത്രം മായ്ക്കുകയും ചെയ്യും.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s ക്ലിപ്പ്ബോർഡിൽ പകർത്തി</string>
+  <string name="copied_to_clipboard">%1$s ക്ലിപ്പ്ബോർഡിൽ പകർത്തി</string>
   <string name="conversation_action_select_peer_number">ഒരു നമ്പര് തിരഞ്ഞെടുക്കുക</string>
   <string name="conversation_action_block_this">തടയൽ കോൺടാക്റ്റ്</string>
   <string name="conversation_action_unblock_this">കോൺടാക്റ്റ് തടയുക</string>
@@ -180,7 +181,7 @@
   <string name="conversation_type_group">ഗ്രൂപ്പ് സ്വാം</string>
   <string name="conversation_contact_invited">%1$s ക്ഷണിച്ചു</string>
   <string name="conversation_contact_added">%1$s ചേർന്നു</string>
-  <string name="conversation_contact_left">%1$ ഇടതുവശത്ത്</string>
+  <string name="conversation_contact_left">%1$s ഇടതുവശത്ത്</string>
   <string name="conversation_search_hint">തിരയൽ സംഭാഷണം</string>
   <string name="today">ഇന്ന്</string>
   <string name="yesterday">ഇന്നലെ</string>
@@ -202,7 +203,7 @@
   <string name="hist_contact_added">ബന്ധം കൂട്ടിച്ചേർത്തു</string>
   <string name="hist_contact_left">ഇടതുവശത്തുള്ള കോൺടാക്ട്</string>
   <string name="hist_invitation_received">ക്ഷണം ലഭിച്ചത്</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">പ്രൊഫൈല്</string>
   <string name="profile_name">പ്രൊഫൈൽ നാമം</string>
   <string name="profile_message_warning">നിങ്ങളുടെ പ്രൊഫൈല് നിങ്ങളുടെ കോൺടാക്റ്റുകളുമായി മാത്രമേ പങ്കിടാന് കഴിയൂ</string>
@@ -212,6 +213,7 @@
   <string name="registered_name">രജിസ്റ്റർ ചെയ്ത പേര്</string>
   <string name="no_registered_name">രജിസ്റ്റർ ചെയ്തിട്ടില്ല</string>
   <string name="identity">ഐഡന്റിറ്റി</string>
+  <string name="identifier">ഐഡന്റിഫയർ</string>
   <string name="account">അക്കൌണ്ട്</string>
   <string name="link_new_device">പുതിയ ഉപകരണം ബന്ധിപ്പിക്കുക</string>
   <string name="devices">ബന്ധിപ്പിച്ച ഉപകരണങ്ങൾ</string>
@@ -321,7 +323,7 @@
   <string name="bottomSheet_raiseHand_btn">കൈ ഉയര് ത്തുക</string>
   <string name="uninstall">അൺഇൻസ്റ്റാൾ ചെയ്യുക</string>
   <string name="reset">പുനഃ സജ്ജീകരണം</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">സ്ഥിരീകരണം</string>
   <string name="tab_members">അംഗങ്ങള്</string>
   <string name="tab_files">ഫയലുകൾ</string>
@@ -340,6 +342,9 @@
   <string name="jami_id_choose_username">ഒരു ഉപയോക്തൃനാമം തിരഞ്ഞെടുക്കുക</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">ജാമിയിൽ സ്വാഗതം</string>
+  <!--Conversation details-->
+  <string name="details">വിശദാംശങ്ങള്</string>
+  <string name="Private">സ്വകാര്യ</string>
   <!--Donation-->
   <!--Extension-->
 </resources>

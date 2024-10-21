@@ -6,6 +6,9 @@
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Přispět</string>
   <string name="version_section">Verze</string>
+  <string name="no_browser_app_installed">Nenalezen žádný program na  prohlížení internetových stránek. Nainstalujte jej pro zobrazení této stránky.</string>
+  <string name="website_chooser_title">Zobrazit stránku pomocí...</string>
+  <string name="license">Tento program je poskytován tak, jak je, bez jakýchkoli záruk. Na podrobnosti se podívejte na znění licence <u>GNU General Public License ve verzi 3 nebo pozdější</u></string>
   <string name="description">Jami je svobodný software určený k univerzální komunikaci, který respektuje svobody a práva uživatelů.</string>
   <string name="credits">Zásluhy</string>
   <string name="pip_title">Konference Jami</string>
@@ -145,14 +148,15 @@
   <string name="conversation_details">Detaily konverzace</string>
   <string name="contact_details">Podrobnosti spojení</string>
   <string name="conversation_action_delete_this">Odstranit tuto konverzaci</string>
+  <string name="leave_conversation">Opustit konverzaci</string>
   <string name="conversation_action_delete_this_message">Tento krok nelze vrátit zpět.</string>
   <string name="conversation_action_history_clear">Vymazat historii</string>
   <string name="conversation_action_history_clear_title">Vymazat konverzační historii?</string>
   <string name="conversation_action_history_clear_message">Toto s konečnou platností vymaže konverzační historii.</string>
-  <string name="conversation_action_remove_this">Smazat kontakt</string>
+  <string name="delete_contact">Smazat kontakt</string>
   <string name="conversation_action_remove_this_title">Smazat toto spojení?</string>
   <string name="conversation_action_remove_this_message">Toto smaže kontakt a s konečnou platností vymaže konverzační historii.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s zkopírováno do schránky</string>
+  <string name="copied_to_clipboard">%1$s zkopírováno do schránky</string>
   <string name="conversation_action_select_peer_number">Vyberte číslo</string>
   <string name="conversation_action_block_this">Blokovat spojení</string>
   <string name="conversation_action_unblock_this">Odblokovat kontakt</string>
@@ -202,7 +206,7 @@
   <string name="hist_contact_added">Kontakt přidán</string>
   <string name="hist_contact_left">Kontakt odešel</string>
   <string name="hist_invitation_received">Pozvání přijato</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">Profil</string>
   <string name="profile_name">Název profilu</string>
   <string name="profile_message_warning">Váš profil je sdílen jen s vašimi kontakty</string>
@@ -212,6 +216,7 @@
   <string name="registered_name">Registrované jméno</string>
   <string name="no_registered_name">Žádné registrované jméno</string>
   <string name="identity">Totožnost</string>
+  <string name="identifier">Identifikátor</string>
   <string name="account">Účet</string>
   <string name="link_new_device">Připojit nové zařízení</string>
   <string name="devices">Připojená zařízení</string>
@@ -226,7 +231,9 @@
   <string name="title_share_with">Sdílet s…</string>
   <!--Pending invitations-->
   <string name="accept">Přijmout</string>
+  <string name="decline">Nepřijmout</string>
   <string name="block">Blokovat</string>
+  <string name="invitation_message">Máš%1$džádostí o kontakt</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Žádné blokované kontakty</string>
   <!--Smartlist-->
@@ -319,7 +326,7 @@
   <string name="bottomSheet_raiseHand_btn">Zvednout ruku</string>
   <string name="uninstall">Odinstalovat</string>
   <string name="reset">Resetovat</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">Potvrdit</string>
   <string name="tab_members">Členové</string>
   <string name="tab_files">Soubory</string>
@@ -338,6 +345,9 @@
   <string name="jami_id_choose_username">Výberte uživatelské jméno</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Vítejte v Jami</string>
+  <!--Conversation details-->
+  <string name="details">Detaily</string>
+  <string name="Private">Soukromý</string>
   <!--Donation-->
   <!--Extension-->
 </resources>

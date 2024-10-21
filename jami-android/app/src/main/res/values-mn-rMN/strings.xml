@@ -145,14 +145,15 @@
   <string name="conversation_details">Хэлэлцүүлгийн дэлгэрэнгүй мэдээ</string>
   <string name="contact_details">Байлцаах мэдээлэл</string>
   <string name="conversation_action_delete_this">Энэ яриаг устгах</string>
+  <string name="leave_conversation">Хэлэлцүүлгийг орхи</string>
   <string name="conversation_action_delete_this_message">Энэ үйлдлийг сэргийлэх боломжгүй.</string>
   <string name="conversation_action_history_clear">Тарих нь тодорхой</string>
   <string name="conversation_action_history_clear_title">Хэлэлцээрийн түүхийг цэвэрлэх үү?</string>
   <string name="conversation_action_history_clear_message">Энэ нь ярианы түүхийг цэвэрлэнэ.</string>
-  <string name="conversation_action_remove_this">Байрлагыг устгах</string>
+  <string name="delete_contact">Байрлагыг устгах</string>
   <string name="conversation_action_remove_this_title">Энэ холбоосыг устгах уу?</string>
   <string name="conversation_action_remove_this_message">Энэ нь холбоосыг устгаж, ярианы түүхийг арилгана.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s-ийг клипборд дээр хуулбарлан</string>
+  <string name="copied_to_clipboard">%1$s-ийг клипборд дээр хуулбарлан</string>
   <string name="conversation_action_select_peer_number">Үргэлж</string>
   <string name="conversation_action_block_this">Блок-тай холбоо тогтоох</string>
   <string name="conversation_action_unblock_this">Байлгын сүлжээг буулгах</string>
@@ -180,7 +181,7 @@
   <string name="conversation_type_group">Товчмын хуримтлагууд</string>
   <string name="conversation_contact_invited">%1$s-ийг урьсан</string>
   <string name="conversation_contact_added">%1$s-ийг холбосон</string>
-  <string name="conversation_contact_left">%1$ нь үлдлээ</string>
+  <string name="conversation_contact_left">%1$s нь үлдлээ</string>
   <string name="conversation_search_hint">Танд ярилцлага хайх</string>
   <string name="today">Өнөөдөр</string>
   <string name="yesterday">Өчигдөр</string>
@@ -202,7 +203,7 @@
   <string name="hist_contact_added">Байлцаагч нэмэгдсэн</string>
   <string name="hist_contact_left">Зүүн талд холбогдох</string>
   <string name="hist_invitation_received">Нээлтийг хүлээн авсан</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">Профиль</string>
   <string name="profile_name">Профилийн нэр</string>
   <string name="profile_message_warning">Таны профил таны холбоотонтай л хуваалцаж байна</string>
@@ -212,6 +213,7 @@
   <string name="registered_name">бүртгэлтэй нэр</string>
   <string name="no_registered_name">Үүнд бүртгэлтэй нэр байхгүй</string>
   <string name="identity">Хууль зүйн</string>
+  <string name="identifier">Төлөөлөгч</string>
   <string name="account">Санхүүжилт</string>
   <string name="link_new_device">Шинэ төхөөрөмжийг холбох</string>
   <string name="devices">Хөгжлийн багаж хэрэгсэл</string>
@@ -321,7 +323,7 @@
   <string name="bottomSheet_raiseHand_btn">Та гар нь дээшлүүлж</string>
   <string name="uninstall">Уулгаж өгөөч</string>
   <string name="reset">Урьдчилгааг сэргээх</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">Дашрамд</string>
   <string name="tab_members">Улсчдын гишүүд</string>
   <string name="tab_files">Файл</string>
@@ -340,6 +342,9 @@
   <string name="jami_id_choose_username">Хэрэглэгчийн нэрийг сонго</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Жэми-д тавтай морилно уу</string>
+  <!--Conversation details-->
+  <string name="details">Тодруулбал</string>
+  <string name="Private">Хувь хүн</string>
   <!--Donation-->
   <!--Extension-->
 </resources>

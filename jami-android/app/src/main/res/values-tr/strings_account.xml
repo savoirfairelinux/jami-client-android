@@ -182,6 +182,7 @@
   <string name="help_credentials_enter">Kuruluş kimlik bilgilerinizi girin</string>
   <string name="help_connect_password_enter">Kuruluş parolanızı girin</string>
   <string name="account_connect_prompt_username">Kullanıcı adı</string>
+  <string name="account_enter_username">Kullanıcı adını girin</string>
   <!--Name registration-->
   <string name="error_username_empty">Kullanıcı adı gir</string>
   <string name="no_registered_name_for_account">Kayıtlı ad yok</string>

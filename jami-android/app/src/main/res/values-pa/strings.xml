@@ -141,10 +141,10 @@
   <string name="conversation_action_history_clear">ਇਤਿਹਾਸ ਮਿਟਾਓ</string>
   <string name="conversation_action_history_clear_title">ਗੱਲਬਾਤ ਦਾ ਇਤਿਹਾਸ ਮਿਟਾਈਏ?</string>
   <string name="conversation_action_history_clear_message">ਇੰਝ ਕਰਨ ਨਾਲ ਗੱਲਬਾਤ ਇਤਿਹਾਸ ਮਿਟ ਜਾਵੇਗਾ।</string>
-  <string name="conversation_action_remove_this">ਸੰਪਰਕ ਮਿਟਾਓ</string>
+  <string name="delete_contact">ਸੰਪਰਕ ਮਿਟਾਓ</string>
   <string name="conversation_action_remove_this_title">ਇਹ ਸੰਪਰਕ ਮਿਟਾਈਏ?</string>
   <string name="conversation_action_remove_this_message">ਇੰਝ ਕਰਨ ਨਾਲ ਸੰਪਰਕ ਅਤੇ ਗੱਲਬਾਤ ਦਾ ਇਤਿਹਾਸ ਮਿਟ ਜਾਵੇਗਾ।</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s ਨੂੰ ਚੂੰਢੀ-ਤਖਤੀ \'ਤੇ ਕਾਪੀ ਕੀਤਾ ਗਿਆ</string>
+  <string name="copied_to_clipboard">%1$s ਨੂੰ ਚੂੰਢੀ-ਤਖਤੀ \'ਤੇ ਕਾਪੀ ਕੀਤਾ ਗਿਆ</string>
   <string name="conversation_action_select_peer_number">ਕੋਈ ਨੰਬਰ ਚੁਣੋ</string>
   <string name="conversation_action_block_this">ਸੰਪਰਕ \'ਤੇ ਬੰਦਸ਼ ਲਗਾਓ</string>
   <string name="conversation_action_incoming_call">ਆਉਂਦੀ ਕਾਲ</string>
@@ -177,7 +177,7 @@
   <string name="hist_contact_invited">ਸੰਪਰਕ ਸੱਦਿਆ ਗਿਆ</string>
   <string name="hist_contact_added">ਸੰਪਰਕ ਜੋੜਿਆ ਗਿਆ</string>
   <string name="hist_invitation_received">ਸੱਦਾ ਮਿਲਿਆ</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">ਪ੍ਰੋਫ਼ਾਈਲ</string>
   <string name="profile_name">ਪ੍ਰੋਫ਼ਾਈਲ ਦਾ ਨਾਂ</string>
   <string name="profile_message_warning">ਤੁਹਾਡੀ ਪ੍ਰੋਫਾਈਲ ਸਿਰਫ਼ ਤੁਹਾਡੇ ਸੰਪਰਕਾਂ ਨਾਲ ਸਾਂਝਾ ਕੀਤੀ ਜਾਂਦੀ ਹੈ</string>
@@ -281,7 +281,7 @@
   <string name="bottomSheet_change_camera_btn">ਬਦਲੋ</string>
   <string name="bottomSheet_hangup_btn">ਕਾਲ ਸਮਾਪਤ ਕਰੋ</string>
   <string name="bottomSheet_sound_output_btn">ਸਪੀਕਰ</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="tab_members">ਸਾਥੀ</string>
   <string name="tab_settings">ਸੈਟਿੰਗਾਂ</string>
   <string name="dialog_hint_title">ਸਿਰਲੇਖ</string>
@@ -289,6 +289,7 @@
   <string name="jami_id_looking_for_availability">ਵਰਤੋਂਕਾਰ ਨਾਂ ਦੀ ਉਪਲਬਧਤਾ ਲੱਭੀ ਜਾ ਰਹੀ ਹੈ…</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Jami ਵਿੱਚ ਜੀ ਆਇਆਂ ਨੂੰ</string>
+  <!--Conversation details-->
   <!--Donation-->
   <!--Extension-->
 </resources>
