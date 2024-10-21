@@ -195,12 +195,6 @@ class AccountService(
     private val registeredNameSubject: Subject<RegisteredName> = PublishSubject.create()
     private val searchResultSubject: Subject<UserSearchResult> = PublishSubject.create()
 
-    private data class ExportOnRingResult (
-        val accountId: String,
-        val code: Int,
-        val pin: String?
-    )
-
     private data class DeviceRevocationResult (
         val accountId: String,
         val deviceId: String,
@@ -212,7 +206,6 @@ class AccountService(
         val state: String
     )
 
-    private val mExportSubject: Subject<ExportOnRingResult> = PublishSubject.create()
     private val mDeviceRevocationSubject: Subject<DeviceRevocationResult> = PublishSubject.create()
     private val mMigrationSubject: Subject<MigrationResult> = PublishSubject.create()
     private val registeredNames: Observable<RegisteredName>
@@ -626,27 +619,6 @@ class AccountService(
     fun updateProfile(accountId: String, displayName: String) {
         JamiService.updateProfile(accountId, displayName, "", "", 0)
     }
-
-    /**
-     * Exports the account on the DHT (used for multi-devices feature)
-     */
-    fun exportOnRing(accountId: String, password: String): Single<String> =
-        mExportSubject
-            .filter { r: ExportOnRingResult -> r.accountId == accountId }
-            .firstOrError()
-            .map { result: ExportOnRingResult ->
-                when (result.code) {
-                    PIN_GENERATION_SUCCESS -> return@map result.pin!!
-                    PIN_GENERATION_WRONG_PASSWORD -> throw IllegalArgumentException()
-                    PIN_GENERATION_NETWORK_ERROR -> throw SocketException()
-                    else -> throw UnsupportedOperationException()
-                }
-            }
-            .doOnSubscribe {
-                Log.i(TAG, "exportOnRing() $accountId")
-                mExecutor.execute { JamiService.exportOnRing(accountId, password) }
-            }
-            .subscribeOn(Schedulers.io())
 
     /**
      * @return the list of the account's devices from the Daemon
@@ -1155,11 +1127,6 @@ class AccountService(
             account.devices = devices
             observableAccounts.onNext(account)
         }
-    }
-
-    fun exportOnRingEnded(accountId: String, code: Int, pin: String) {
-        Log.d(TAG, "exportOnRingEnded: $accountId, $code, $pin")
-        mExportSubject.onNext(ExportOnRingResult(accountId, code, pin))
     }
 
     fun nameRegistrationEnded(accountId: String, state: Int, name: String) {
@@ -1816,9 +1783,6 @@ class AccountService(
         private val TAG = AccountService::class.java.simpleName
         private const val VCARD_CHUNK_SIZE = 1000
         private const val DATA_TRANSFER_REFRESH_PERIOD: Long = 500
-        private const val PIN_GENERATION_SUCCESS = 0
-        private const val PIN_GENERATION_WRONG_PASSWORD = 1
-        private const val PIN_GENERATION_NETWORK_ERROR = 2
 
         const val ACCOUNT_SCHEME_NONE = ""
         const val ACCOUNT_SCHEME_PASSWORD = "password"
