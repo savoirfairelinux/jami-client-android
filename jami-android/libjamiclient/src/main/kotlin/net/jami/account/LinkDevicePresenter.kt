@@ -17,10 +17,8 @@
 package net.jami.account
 
 import io.reactivex.rxjava3.core.Scheduler
-import net.jami.model.Account
 import net.jami.mvp.RootPresenter
 import net.jami.services.AccountService
-import java.net.SocketException
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -31,32 +29,9 @@ class LinkDevicePresenter @Inject constructor(
 ) : RootPresenter<LinkDeviceView>() {
     private var mAccountID: String? = null
 
-    fun startAccountExport(password: String) {
-        val v = view ?: return
-        v.showExportingProgress()
-        mCompositeDisposable.add(accountService
-            .exportOnRing(mAccountID!!, password)
-            .observeOn(uiScheduler)
-            .subscribe({ pin: String -> view?.showPIN(pin) })
-            { error: Throwable ->
-                view?.dismissExportingProgress()
-                when (error) {
-                    is IllegalArgumentException -> view?.showPasswordError()
-                    is SocketException -> view?.showNetworkError()
-                    else -> view?.showGenericError()
-                }
-            })
-    }
-
     fun setAccountId(accountID: String) {
         mCompositeDisposable.clear()
         mAccountID = accountID
-        accountService.getAccount(accountID)?.let { account ->
-            view?.accountChanged(account)
-        }
-        mCompositeDisposable.add(accountService.getObservableAccountUpdates(accountID)
-            .observeOn(uiScheduler)
-            .subscribe { a: Account -> view?.accountChanged(a) })
     }
 
     companion object {
