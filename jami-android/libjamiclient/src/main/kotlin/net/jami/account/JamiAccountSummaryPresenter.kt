@@ -32,7 +32,6 @@ import net.jami.services.VCardService
 import net.jami.utils.Log
 import net.jami.utils.VCardUtils
 import java.io.File
-import java.net.SocketException
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -48,23 +47,6 @@ class JamiAccountSummaryPresenter @Inject constructor(
     fun registerName(name: String, scheme: String, password: String) {
         val account = mAccountService.getAccount(mAccountID) ?: return
         mAccountService.registerName(account, name, scheme, password)
-    }
-
-    fun startAccountExport(password: String?) {
-        if (view == null || mAccountID == null) {
-            return
-        }
-        view?.showExportingProgressDialog()
-        mCompositeDisposable.add(mAccountService
-            .exportOnRing(mAccountID!!, password!!)
-            .observeOn(mUiScheduler)
-            .subscribe({ pin: String -> view?.showPIN(pin) }) { error: Throwable ->
-                when (error) {
-                    is IllegalArgumentException -> view?.showPasswordError()
-                    is SocketException -> view?.showNetworkError()
-                    else -> view?.showGenericError()
-                }
-            })
     }
 
     fun setAccountId(accountId: String) {
