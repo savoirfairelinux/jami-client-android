@@ -33,23 +33,14 @@ class TVHomeAccountCreationFragment : JamiGuidedStepFragment<HomeAccountCreation
     private val model: AccountCreationViewModel by activityViewModels()
 
     override fun goToAccountCreation() {
-        model.model = AccountCreationModel().apply {
-            isLink = false
-        }
         add(parentFragmentManager, TVJamiAccountCreationFragment())
     }
 
-    override fun goToAccountLink() {
-        model.model = AccountCreationModel().apply {
-            isLink = true
-        }
-        add(parentFragmentManager, TVJamiLinkAccountFragment())
+    override fun goToAccountLink() { // Todo: Legacy code. Implement new UI instead of TVJamiLinkAccountFragment.
+//        add(parentFragmentManager, TVJamiLinkAccountFragment())
     }
 
     override fun goToAccountConnect() {
-        model.model = AccountCreationModel().apply {
-            isLink = true
-        }
         add(parentFragmentManager, TVJamiAccountConnectFragment())
     }
 
