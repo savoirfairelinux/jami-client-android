@@ -56,7 +56,6 @@ class HomeAccountCreationFragment :
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ file: File ->
                         model.model = AccountCreationModel().apply {
-                            isLink = true
                             archive = file
                         }
                         replaceFragmentWithSlide(
@@ -108,17 +107,11 @@ class HomeAccountCreationFragment :
     }
 
     override fun goToAccountLink() {
-        model.model = AccountCreationModel().apply {
-            isLink = true
-        }
         linkDeviceActivityLauncher
             .launch(Intent(requireContext(), LinkDeviceImportSideActivity::class.java))
     }
 
     override fun goToAccountConnect() {
-        model.model = AccountCreationModel().apply {
-            isLink = true
-        }
         replaceFragmentWithSlide(JamiAccountConnectFragment(), JamiAccountConnectFragment.TAG, R.id.wizard_container)
     }
 
