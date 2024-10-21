@@ -280,34 +280,6 @@ class JamiAccountSummaryFragment :
         setSwitchStatus(account)
     }
 
-    private fun showWizard(accountId: String) {
-        LinkDeviceFragment.newInstance(accountId)
-            .show(parentFragmentManager, LinkDeviceFragment.TAG)
-    }
-
-    override fun showNetworkError() {
-        dismissWaitDialog()
-        MaterialAlertDialogBuilder(requireContext())
-            .setTitle(R.string.account_export_end_network_title)
-            .setMessage(R.string.account_export_end_network_message)
-            .setPositiveButton(android.R.string.ok, null)
-            .show()
-    }
-
-    override fun showPasswordError() {
-        dismissWaitDialog()
-    }
-
-    override fun showGenericError() {
-        dismissWaitDialog()
-        MaterialAlertDialogBuilder(requireContext())
-            .setTitle(R.string.account_export_end_error_title)
-            .setMessage(R.string.account_export_end_error_message)
-            .setPositiveButton(android.R.string.ok, null)
-            .show()
-    }
-
-    override fun showPIN(pin: String) {}
     private fun profileContainerClicked(account: Account) {
         val inflater = LayoutInflater.from(activity)
         val view = DialogProfileBinding.inflate(inflater).apply {
