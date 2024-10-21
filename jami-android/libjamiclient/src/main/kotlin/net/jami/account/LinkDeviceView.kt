@@ -16,14 +16,4 @@
  */
 package net.jami.account
 
-import net.jami.model.Account
-
-interface LinkDeviceView {
-    fun showExportingProgress()
-    fun dismissExportingProgress()
-    fun accountChanged(account: Account)
-    fun showNetworkError()
-    fun showPasswordError()
-    fun showGenericError()
-    fun showPIN(pin: String)
-}
+interface LinkDeviceView
