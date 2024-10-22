@@ -62,15 +62,26 @@ Make sure to have the Android SDK and NDK available.
 
 ## Build instructions
 
-With Android Studio:
+### With Android Studio:
+
 * Add 'jami-android' in Android Studio
 * Click on build
 * Enjoy!
 
-With the command line:
+### With the command line:
+
 ```sh
 cd jami-client-android/jami-android
 ./gradlew assembleDebug
+```
+
+### Troubleshoot
+
+Jami Android doesn't use the system's `pkg-config`; it builds its own version with custom parameters to support cross-compilation. However, after cleaning the project, `pkg-config` may not be rebuilt, which could result in falling back to the system's version, leading to errors when trying to locate shared libraries.
+
+```sh
+cd jami-client-android/daemon/extras/tools
+./bootstrap && make
 ```
 
 ## Update translations
@@ -80,14 +91,14 @@ Update translations using the Transifex client (tx) :
 ./update-translations.sh
 ```
 
-# Generate new release commit
+## Generate new release commit
 
 Generate a new release commit updating the version code and version string:
 ```sh
 ./update_version.py --commit
 ```
 
-# Report issues
+## Report issues
 
 Report issues on Gitlab:
 https://git.jami.net/savoirfairelinux/jami-client-android
