@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3c53e86c_6d5ff91e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-10-23T17:38:58Z",
+      "side": 1,
+      "message": "ok but bindings are not used by this class and add unnecessary overhead here",
+      "revId": "49c1c4dcd2198848bdedbc35d9f654eeee388763",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
