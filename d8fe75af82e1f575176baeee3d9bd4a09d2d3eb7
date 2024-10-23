@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e303fc1_f88126f9",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-10-23T17:34:42Z",
+      "side": 1,
+      "message": "unused string, could be removed.",
+      "range": {
+        "startLine": 148,
+        "startChar": 4,
+        "endLine": 148,
+        "endChar": 171
+      },
+      "revId": "d8fe75af82e1f575176baeee3d9bd4a09d2d3eb7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a1c4ccb3_7d174069",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-10-23T17:34:42Z",
+      "side": 1,
+      "message": "unused string (Jami doesn\u0027t require the mic permission to work anymore)",
+      "range": {
+        "startLine": 239,
+        "startChar": 18,
+        "endLine": 239,
+        "endChar": 42
+      },
+      "revId": "d8fe75af82e1f575176baeee3d9bd4a09d2d3eb7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6cbeea97_7adaf098",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-10-23T17:34:42Z",
+      "side": 1,
+      "message": "Avoid changing the string key when possible, since it means losing existing translations (even if transifex will suggest the previous translation).",
+      "range": {
+        "startLine": 256,
+        "startChar": 18,
+        "endLine": 256,
+        "endChar": 31
+      },
+      "revId": "d8fe75af82e1f575176baeee3d9bd4a09d2d3eb7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "75717a53_1a4f1a6b",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-10-23T17:34:42Z",
+      "side": 1,
+      "message": "Avoid changing the string key when possible, since it means losing existing translations (even if transifex will suggest the previous translation).",
+      "range": {
+        "startLine": 278,
+        "startChar": 18,
+        "endLine": 278,
+        "endChar": 30
+      },
+      "revId": "d8fe75af82e1f575176baeee3d9bd4a09d2d3eb7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
