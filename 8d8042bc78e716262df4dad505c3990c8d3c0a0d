@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "89750629_6541547e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-10-24T20:52:58Z",
+      "side": 1,
+      "message": "Rebased this patch and the `Code-Review +2` review from @adrien.beraud@savoirfairelinux.com disappeared. Can you please add `Code-Review +2` to enable the `Submit` button to show again? Thank you",
+      "revId": "8d8042bc78e716262df4dad505c3990c8d3c0a0d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
