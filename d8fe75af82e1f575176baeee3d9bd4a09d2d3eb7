@@ -48,6 +48,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e664ee90_acb2555c",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-10-25T20:02:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a31cb343_e8ede623",
+      "range": {
+        "startLine": 148,
+        "startChar": 4,
+        "endLine": 148,
+        "endChar": 171
+      },
+      "revId": "d8fe75af82e1f575176baeee3d9bd4a09d2d3eb7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a1c4ccb3_7d174069",
@@ -85,6 +109,30 @@
       "side": 1,
       "message": "`Could` means is can be removed; however, it can remain. Is that what you meant or do you mean `should`?\n\nIf you meant `could`, happy to leave string.\n\nIf you meant `should`, happy to remove the string.\n\nThank you",
       "parentUuid": "a1c4ccb3_7d174069",
+      "range": {
+        "startLine": 239,
+        "startChar": 18,
+        "endLine": 239,
+        "endChar": 42
+      },
+      "revId": "d8fe75af82e1f575176baeee3d9bd4a09d2d3eb7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c41ceb8a_570782b1",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-10-25T20:02:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21e98c6c_333de3be",
       "range": {
         "startLine": 239,
         "startChar": 18,
@@ -142,6 +190,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "32b9d07e_13e04479",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-10-25T20:02:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67deba86_505fac31",
+      "range": {
+        "startLine": 256,
+        "startChar": 18,
+        "endLine": 256,
+        "endChar": 31
+      },
+      "revId": "d8fe75af82e1f575176baeee3d9bd4a09d2d3eb7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "75717a53_1a4f1a6b",
@@ -179,6 +251,30 @@
       "side": 1,
       "message": "The updated string key word order was homogenized with the string to reduce technical debt (and dyslexic code)\n\nThank you",
       "parentUuid": "75717a53_1a4f1a6b",
+      "range": {
+        "startLine": 278,
+        "startChar": 18,
+        "endLine": 278,
+        "endChar": 30
+      },
+      "revId": "d8fe75af82e1f575176baeee3d9bd4a09d2d3eb7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cfc9467e_61009b6f",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-10-25T20:02:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed54a06b_7400fbfe",
       "range": {
         "startLine": 278,
         "startChar": 18,
