@@ -45,7 +45,6 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.model.Contact
 import net.jami.model.Conversation
 import net.jami.model.Uri
-import net.jami.qrcode.QRCodePresenter
 import net.jami.services.AccountService
 import net.jami.services.ConversationFacade
 import net.jami.utils.Log
@@ -432,7 +431,7 @@ class ConversationActionsFragment : Fragment() {
 
     private fun showContactQRCode(contactUri: Uri) {
         QRCodeFragment.newInstance(
-            QRCodePresenter.MODE_SHARE,
+            QRCodeFragment.MODE_SHARE,
             contactUri = contactUri
         ).show(parentFragmentManager, QRCodeFragment::class.java.simpleName)
     }

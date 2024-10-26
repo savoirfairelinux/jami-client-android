@@ -119,6 +119,7 @@ dependencies {
     implementation ("androidx.biometric:biometric:1.1.0")
     implementation ("com.google.android.flexbox:flexbox:3.0.0")
     implementation ("com.google.protobuf:protobuf-javalite:4.27.0")
+    implementation("androidx.annotation:annotation-jvm:1.9.0")
 
     // ORM
     implementation ("com.j256.ormlite:ormlite-android:5.7")

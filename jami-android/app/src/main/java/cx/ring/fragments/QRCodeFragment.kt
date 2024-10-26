@@ -21,6 +21,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.IntDef
 import androidx.annotation.StringRes
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.Fragment
@@ -36,14 +37,9 @@ import cx.ring.databinding.FragQrcodeBinding
 import cx.ring.share.ScanFragment
 import cx.ring.share.ShareFragment
 import net.jami.model.Uri
-import net.jami.qrcode.QRCodePresenter
-import net.jami.qrcode.QRCodePresenter.Companion.QRCodeMode
-import net.jami.qrcode.QRCodePresenter.Companion.MODE_SCAN
-import net.jami.qrcode.QRCodePresenter.Companion.MODE_SHARE
 
 class QRCodeFragment : BottomSheetDialogFragment() {
     private var mBinding: FragQrcodeBinding? = null
-    private lateinit var presenter: QRCodePresenter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -55,7 +51,6 @@ class QRCodeFragment : BottomSheetDialogFragment() {
         val mode = arguments?.getInt(ARG_MODE) ?: 0
         val startMode = arguments?.getInt(ARG_START_MODE) ?: 0
         val contactUri = Uri.fromString(arguments?.getString(ARG_CONTACT_URI) ?: "")
-        presenter = QRCodePresenter()
 
         return FragQrcodeBinding.inflate(inflater, container, false).apply {
             when (mode) { // Check on mode
@@ -170,6 +165,13 @@ class QRCodeFragment : BottomSheetDialogFragment() {
         const val ARG_CONTACT_URI = "contact_uri"
         const val INDEX_SHARE = 0
         const val INDEX_SCAN = 1
+
+        const val MODE_SCAN = 1
+        const val MODE_SHARE = 2
+
+        @IntDef(flag = true, value = [MODE_SCAN, MODE_SHARE])
+        @Retention(AnnotationRetention.SOURCE)
+        annotation class QRCodeMode
 
         /**
          * Create a new instance of QRCodeFragment.
