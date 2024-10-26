@@ -98,7 +98,7 @@ class VCardServiceImpl(private val mContext: Context) : VCardService() {
 
         fun readData(vcard: VCard?): Profile = readData(VCardUtils.readData(vcard))
 
-        private fun readData(profile: Pair<String?, ByteArray?>): Profile =
+        fun readData(profile: Pair<String?, ByteArray?>): Profile =
             Profile(profile.first, BitmapUtils.bytesToBitmap(profile.second))
     }
 }
