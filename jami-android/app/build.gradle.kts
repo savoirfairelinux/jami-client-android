@@ -118,7 +118,7 @@ dependencies {
     implementation ("com.google.android.material:material:1.12.0")
     implementation ("androidx.biometric:biometric:1.1.0")
     implementation ("com.google.android.flexbox:flexbox:3.0.0")
-    implementation ("com.google.protobuf:protobuf-javalite:4.27.0")
+    implementation ("com.google.protobuf:protobuf-javalite:4.28.3")
     implementation("androidx.annotation:annotation-jvm:1.9.0")
 
     // ORM
@@ -150,10 +150,10 @@ dependencies {
 
     // RxAndroid
     implementation ("io.reactivex.rxjava3:rxandroid:3.0.2")
-    implementation ("io.reactivex.rxjava3:rxjava:3.1.8")
+    implementation ("io.reactivex.rxjava3:rxjava:3.1.9")
 
     // Open Street Map
-    implementation ("org.osmdroid:osmdroid-android:6.1.18")
+    implementation ("org.osmdroid:osmdroid-android:6.1.20")
 
     // Markwon (Markdown support)
     implementation ("io.noties.markwon:core:$markwon_version")
@@ -165,7 +165,7 @@ dependencies {
         exclude(group= "com.fasterxml.jackson.core", module= "jackson-core")
     }
 
-    "withFirebaseImplementation"("com.google.firebase:firebase-messaging:24.0.0") {
+    "withFirebaseImplementation"("com.google.firebase:firebase-messaging:24.0.3") {
         exclude(group= "com.google.firebase", module= "firebase-core")
         exclude(group= "com.google.firebase", module= "firebase-analytics")
         exclude(group= "com.google.firebase", module= "firebase-measurement-connector")
