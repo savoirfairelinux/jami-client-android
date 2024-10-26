@@ -132,9 +132,33 @@ object VCardUtils {
     }
 
     @Throws(IOException::class)
-    fun loadPeerProfileFromDisk(filesDir: File, filename: String, accountId: String): VCard? {
-        val profileFolder = peerProfilePath(filesDir, accountId)
-        return loadFromDisk(File(profileFolder, filename))
+    fun loadPeerProfileFromDisk(filesDir: File, cacheDir: File, filename: String, accountId: String): Pair<String?, ByteArray?> {
+        val cacheFolder = peerProfileCachePath(cacheDir, accountId)
+        val cacheName = File(cacheFolder, filename + ".txt")
+        val cachePicture = File(cacheFolder, filename)
+        val profileFile = File(peerProfilePath(filesDir, accountId), filename + ".vcf")
+
+        // Case 1: no profile for this peer
+        if (!profileFile.exists()) {
+            return Pair(null, null)
+        }
+
+        // Case 2: read profile from cache
+        if (cacheName.exists() && cacheName.lastModified() > profileFile.lastModified()) {
+            return Pair(
+                cacheName.readText(),
+                if (cachePicture.exists()) cachePicture.readBytes() else null
+            )
+        }
+
+        // Case 3: read profile from disk and update cache
+        val data = readData(loadFromDisk(profileFile))
+        val (name, picture) = data
+        cacheName.writeText(name ?: "")
+        if (picture != null) {
+            cachePicture.writeBytes(picture)
+        }
+        return data
     }
 
     fun loadLocalProfileFromDisk(filesDir: File, accountId: String): Single<VCard> =
@@ -191,6 +215,10 @@ object VCardUtils {
 
     private fun peerProfilePath(filesDir: File, accountId: String): File {
         val accountDir = File(filesDir, accountId)
+        return File(accountDir, "profiles").apply { mkdirs() }
+    }
+    private fun peerProfileCachePath(cacheDir: File, accountId: String): File {
+        val accountDir = File(cacheDir, accountId)
         return File(accountDir, "profiles").apply { mkdirs() }
     }
 
