@@ -75,7 +75,6 @@ import cx.ring.databinding.FragHomeBinding
 import cx.ring.utils.ActionHelper.openJamiDonateWebPage
 import io.reactivex.rxjava3.disposables.Disposable
 import net.jami.model.Uri
-import net.jami.qrcode.QRCodePresenter
 import net.jami.services.NotificationService
 
 @AndroidEntryPoint
@@ -583,8 +582,8 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
             .hideSoftInputFromWindow(requireView().windowToken, 0)
 
         QRCodeFragment.newInstance(
-            QRCodePresenter.MODE_SHARE or QRCodePresenter.MODE_SCAN,
-            QRCodePresenter.MODE_SCAN,
+            QRCodeFragment.MODE_SHARE or QRCodeFragment.MODE_SCAN,
+            QRCodeFragment.MODE_SCAN,
             Uri.fromString(mAccountService.currentAccount?.uri!!)
         ).show(parentFragmentManager, QRCodeFragment.TAG)
 
