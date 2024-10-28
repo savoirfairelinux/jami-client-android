@@ -1,6 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
+  <string name="submit_issue_title">Probléma küldése</string>
+  <string name="submit_issue_action_description"><u>Új probléma küldésének létrehozása</u></string>
   <string name="section_license">Licenc</string>
   <string name="sponsor_section">A Jami szabad szoftver, amelynek fejlesztője és támogatója:</string>
   <string name="copyright_section">Copyright</string>
@@ -112,8 +114,8 @@
   <string name="action_call_mic_mute">Mikrofon elnémítása</string>
   <string name="action_load_extension">Bővítmény betöltése</string>
   <string name="ab_action_speakerphone">Hangszóró engedélyezése</string>
-  <string name="ab_action_contact_add">Hozzáadás a kapcsolatokhoz</string>
-  <string name="ab_action_contact_add_question">Hozzáadja a kapcsolatokhoz?</string>
+  <string name="ab_action_contact_add">Hozzáadás a kapcsolattartók közé</string>
+  <string name="ab_action_contact_add_question">Hozzáadás a kapcsolattartók közé?</string>
   <string name="ab_action_audio_call">Hanghívás indítása</string>
   <string name="ab_action_video_call">Videohívás indítása</string>
   <string name="ab_action_change_screen_orientation">Képernyő tájolásának megváltoztatása</string>
@@ -122,7 +124,6 @@
   <string name="scan_qr">QR-kód beolvasása</string>
   <string name="qr_code">QR-kód</string>
   <string name="qr_code_not_contact">Nem Jami kapcsolati QR-kód</string>
-  <string name="new_swarm">Rajcsoport indítása</string>
   <string name="ab_action_flipcamera">Fényképezőgép tükrözése</string>
   <string name="ab_action_hidepreview">Előnézet elrejtése</string>
   <string name="remote_recording">%s felvétel folyamatban…</string>
@@ -169,44 +170,49 @@
   <string name="clear_history">Törlés</string>
   <!--Conversation-->
   <string name="conversation_details">Beszélgetés részletei</string>
-  <string name="contact_details">Elérhetőségei</string>
+  <string name="contact_details">Kapcsolattartó részletei</string>
   <string name="conversation_action_delete_this">Beszélgetés törlése</string>
   <string name="conversation_action_delete_this_title">Törli ezt a beszélgetést?</string>
+  <string name="leave_conversation">Kilépés a beszélgetésből</string>
   <string name="conversation_action_delete_this_message">Ez a művelet nem vonható vissza.</string>
   <string name="conversation_action_history_clear">Előzmények törlése</string>
   <string name="conversation_action_history_clear_title">Törli a beszélgetés előzményeit?</string>
   <string name="conversation_action_history_clear_message">Ez törölni fogja a beszélgetések előzményeit.</string>
-  <string name="conversation_action_remove_this">Kapcsolat törlése</string>
-  <string name="conversation_action_remove_this_title">Kapcsolat törlése?</string>
+  <string name="delete_contact">Kapcsolattartó törlése</string>
+  <string name="conversation_action_remove_this_title">Kapcsolattartó törlése?</string>
   <string name="conversation_action_remove_this_message">Ez törölni fogja a kapcsolatot és a hozzá kapcsolódó beszélgetések előzményeit</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s kimásolva a vágólapra</string>
+  <string name="conversation_action_add_this_message">Ez kapcsolódási kérelmet fog küldeni.</string>
+  <string name="swarm_group_action_leave">Kilépés a csoportból</string>
+  <string name="swarm_group_action_leave_title">Kilép ebből a csoportból?</string>
+  <string name="swarm_group_action_leave_message">Ez eltávolít a beszélgetést a beszélgetéslistájáról.</string>
+  <string name="conversation_action_copy_peer_number">Kapcsolattartó-azonosító másolása</string>
+  <string name="copied_to_clipboard">%1$s kimásolva a vágólapra</string>
   <string name="conversation_action_select_peer_number">Válasszon egy számot</string>
-  <string name="conversation_action_block_this">Kapcsolat letiltása</string>
-  <string name="conversation_action_unblock_this">Kapcsolat letiltás feloldása</string>
+  <string name="conversation_action_block_this">Kapcsolattartó letiltása</string>
+  <string name="conversation_action_unblock_this">Kapcsolattartó letiltás feloldása</string>
   <string name="conversation_action_go_to_call">Visszatérés a híváshoz</string>
   <string name="conversation_action_incoming_call">Bejövő hívás</string>
   <string name="conversation_action_latest">Görgetés a beszélgetés végére</string>
   <string name="conversation_open_file_error">Nem található alkalmazás ehhez a fájltípushoz.</string>
-  <string name="clip_contact_uri">Kapcsolattartási címe</string>
+  <string name="clip_contact_uri">Kapcsolattartó címe</string>
+  <string name="clip_message">Üzenet tartalma</string>
   <string name="block_contact_dialog_title">%1$sletiltása?</string>
   <string name="block_contact_dialog_message">%1$s nem lesz képes felvenni veled a kapcsolatot, amíg nincsen feloldva a tiltásod.</string>
   <string name="block_contact_completed">%1$s letiltva lett.</string>
   <string name="unblock_contact_dialog_title">%1$s letiltásának feloldása?</string>
   <string name="unblock_contact_dialog_message">%1$s ismét kapcsolatba léphet Önnel.</string>
   <string name="unblock_contact_completed">%1$s letiltása feloldva.</string>
-  <string name="conversation_contact_is_typing">Kapcsolat éppen gépel…</string>
+  <string name="conversation_contact_is_typing">Kapcsolattartó éppen gépel…</string>
   <string name="conversation_info_contact_you">Ön</string>
   <string name="conversation_members">Tagok</string>
   <string name="conversation_syncing">Beszélgetés letöltése a társaktól</string>
-  <string name="conversation_blocked">Ez a kapcsolat le van tiltva.</string>
+  <string name="conversation_blocked">Ez a kapcsolattartó le van tiltva.</string>
   <string name="conversation_ended">Véget ért a beszélgetés.</string>
   <string name="conversation_message_deleted">%s törölt egy üzenetet</string>
   <string name="conversation_reply_you">Ön</string>
   <string name="conversation_preference_color">Beszélgetés színe</string>
   <string name="conversation_preference_emoji">Beszélgetés hangulatjel</string>
-  <string name="conversation_type_contact">Jami-kapcsolat</string>
-  <string name="conversation_type_private">Személyes rajcsoport</string>
-  <string name="conversation_type_group">Rajcsoport</string>
+  <string name="conversation_type_contact">Jami-kapcsolattartó</string>
   <string name="conversation_contact_invited">%1$s meghívva lett</string>
   <string name="conversation_contact_added">%1$s csatlakozott</string>
   <string name="conversation_contact_left">%1$s kilépett</string>
@@ -244,22 +250,23 @@
   <string name="wizard_next">Tovább</string>
   <string name="wizard_back">Vissza</string>
   <string name="wizard_skip">Átugrani</string>
-  <string name="hist_contact_invited">Kapcsolat meghívva</string>
-  <string name="hist_contact_added">Kapcsolat hozzáadva</string>
-  <string name="hist_contact_left">Kapcsolat kilépett</string>
-  <string name="hist_contact_blocked">Kapcsolat letiltva</string>
-  <string name="hist_contact_unblocked">Kapcsolat letiltása feloldva</string>
+  <string name="hist_contact_invited">Kapcsolattartó meghívva</string>
+  <string name="hist_contact_added">Kapcsolattartó hozzáadva</string>
+  <string name="hist_contact_left">Kapcsolattartó kilépett</string>
+  <string name="hist_contact_blocked">Kapcsolattartó letiltva</string>
+  <string name="hist_contact_unblocked">Kapcsolattartó letiltása feloldva</string>
   <string name="hist_invitation_received">Meghívás megérkezett</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">Névjegy</string>
   <string name="profile_name">Névjegynév</string>
-  <string name="profile_message_warning">A névjegyed csak a kapcsolataival kerül megosztásra</string>
+  <string name="profile_message_warning">A névjegyed csak a kapcsolattartóival kerül megosztásra</string>
   <string name="open_the_gallery">Gyűjtemény megnyitása</string>
   <string name="take_a_photo">Fénykép készítése</string>
   <string name="profile_name_hint">Név megadása</string>
   <string name="registered_name">Bejegyzett név</string>
   <string name="no_registered_name">Nincs bejegyzett név</string>
   <string name="identity">Személyazonosság</string>
+  <string name="identifier">Azonosító</string>
   <string name="account">Fiók</string>
   <string name="link_new_device">Új eszköz összekapcsolása</string>
   <string name="devices">Összekapcsolt eszközök</string>
@@ -267,24 +274,30 @@
   <!--Share fragment-->
   <string name="share_message">Olvassa be a kódot a Jami programmal</string>
   <string name="share_message_no_account">Fiókmegosztás kijelölése</string>
-  <string name="share_your_account_information">Kapcsolati adatok megosztása</string>
+  <string name="share_your_account_information">Névjegy adatainak megosztása</string>
+  <string name="share_contact_information">Kapcsolattartó részletei megosztása</string>
   <string name="share_label">Megosztás </string>
   <string name="generic_error_migration">Hiba</string>
   <string name="generic_error_migration_message">Hiba történt a fiók áttelepítése közben.</string>
   <string name="title_share_with">Megosztás a következővel…</string>
   <!--Pending invitations-->
   <string name="accept">Elfogadás</string>
+  <string name="decline">Elutasítás</string>
   <string name="block">Letiltás</string>
+  <string name="decline_invitation">Meghívás visszautasítása</string>
+  <string name="accept_invitation">Meghívás elfogadása</string>
+  <string name="new_invitation_request_title">Új meghívó</string>
   <string name="invitation_message">%1$d kapcsolatfelvételi kérelme van</string>
+  <string name="outgoing_contact_invitation_message">Ez a kapcsolattartó nem szerepel a kapcsolattartólistában.\nKapcsolatfelvételi kérelem küldése.</string>
   <!--Blacklist-->
-  <string name="no_blocked_contact">Nincsenek letiltott kapcsolatok</string>
+  <string name="no_blocked_contact">Nincsenek letiltott kapcsolattartók</string>
   <!--Smartlist-->
   <string name="no_contact_request">Nincs elküldött kapcsolatfelvételi kérelme</string>
   <string name="conversation_placeholder">Még nincsenek beszélgetései.</string>
   <string name="contact_request_sent">Kapcsolatfelvételi kérelem elküldve</string>
   <string name="start_conversation">Beszélgetés indítása</string>
   <string name="search_results">Keresési eredmények</string>
-  <string name="tv_contact_row_header">Kapcsolatok</string>
+  <string name="tv_contact_row_header">Kapcsolattartók</string>
   <string name="gallery_error_title">Nem található Gyűjtemény alkalmazás</string>
   <string name="gallery_error_message">Nem található alkalmazás a készüléken a Gyűjtemény megnyitásához</string>
   <string name="generic_error">Ismeretlen hiba történt.</string>
@@ -365,7 +378,7 @@
   <string name="wizard_password_skip">Fiók létrehozása</string>
   <string name="wizard_password_switch">Fiók titkosítása jelszóval</string>
   <string name="wizard_password_warning">Vegye figyelembe, hogy a jelszó nem lehet helyreállított</string>
-  <string name="wizard_profile_info">Névjegy megosztva csak a névjegyekkel</string>
+  <string name="wizard_profile_info">Névjegy megosztása csak a kapcsolattartókkal</string>
   <string name="wizard_profile_button">Névjegy mentése</string>
   <string name="wizard_profile_skip">Későbbre halasztás</string>
   <string name="fab_path_choose">Más fájl kiválasztása</string>
@@ -385,7 +398,7 @@
   <string name="open_general_extension_settings">Általános bővítménybeállítások megnyitása</string>
   <string name="uninstall">Eltávolítás</string>
   <string name="reset">Visszaállítás</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">Megerősítés</string>
   <string name="rename_error">nem lehet üres.</string>
   <string name="swarm_description">Leírás hozzáadása</string>
@@ -393,18 +406,20 @@
   <string name="tab_files">Fájlok</string>
   <string name="tab_settings">Beállítások</string>
   <string name="not_admin_toast">Csak a rendszergazdák szerkeszthetik a csoport adatait.</string>
-  <string name="dialogtitle_title">Rajcsoport címének szerkesztése</string>
-  <string name="dialogtitle_description">Rajcsoport leírásának szerkesztése</string>
+  <string name="dialogtitle_title">Csoportcím szerkesztése</string>
+  <string name="dialogtitle_description">Csoportleírás szerkesztése</string>
   <string name="dialog_hint_title">Cím</string>
   <string name="dialog_hint_description">Leírás</string>
-  <string name="picker_title">Kapcsolatok kijelölése</string>
-  <string name="picker_btn">Kapcsolatok kijelölése</string>
-  <string name="no_contact_to_add">Nincsenek hozzáadható kapcsolatok.</string>
+  <string name="picker_title">Kapcsolattartók kijelölése</string>
+  <string name="picker_btn">Kapcsolattartók kijelölése</string>
+  <string name="no_contact_to_add">Nincsenek hozzáadható kapcsolattartók.</string>
   <string name="bottomsheet_contact">Forduljon a Jamihez\n%1$s</string>
-  <string name="bottomsheet_remove">Eltávolítás a rajcsoportból</string>
+  <string name="bottomsheet_remove">Eltávolítás a csoportból</string>
   <string name="error_open_no_app_found">Nem található alkalmazás a fájl kezelésére: %1$s</string>
   <string name="swarm_detail_no_document">Még nincsenek dokumentumai.</string>
   <string name="group_admin">Rendszergazda</string>
+  <string name="share_contact_intent_title">Add hozzá ezt a Jami-kapcsolattartót!</string>
+  <string name="share_contact_intent_body">Felveheti a(z) „%1$s” kapcsolattartót a Jami elosztott kommunikációs platformon: %2$s</string>
   <!--JamiId-->
   <string name="jami_id_copy">Jami-azonosító másolása</string>
   <string name="jami_id_share">Jami-azonosító megosztása</string>
@@ -417,6 +432,15 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Üdvözli a Jami</string>
   <string name="welcome_jami_description">Oszd meg ennek a fióknak a Jami-azonosítóját, hogy mások könnyebben kapcsolatba léphessenek Önnel!</string>
+  <!--Conversation details-->
+  <string name="details">Részletek</string>
+  <string name="secure_p2p_connection">Biztonságos egyenrangú kapcsolat</string>
+  <string name="swarm_type">Beszélgetés típusa</string>
+  <string name="Private">Magánjellegű</string>
+  <string name="swarm_id">Csoportazonosító</string>
+  <string name="show_qr_code">QR-kód megjelenítése</string>
+  <string name="show_certificate">Tanúsítvány megjelenítése</string>
+  <string name="mute_conversation">Beszélgetés elnémítása</string>
   <!--Donation-->
   <string name="donation_card_description">Ha hisz a küldetésünkben, adományozna?</string>
   <string name="donation_card_not_now">Máskor</string>

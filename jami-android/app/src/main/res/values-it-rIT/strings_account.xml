@@ -171,16 +171,14 @@ Si potra modificare questo account più tardi.</string>
   <string name="account_update_needed">Aggiornamento necessario</string>
   <string name="account_cannot_be_found_title">Errore dell\'account</string>
   <string name="account_cannot_be_found_message">L\'account non è stato trovato sulla rete Jami. Assicurati che sia stato esportato su Jami da un dispositivo esistente e che le credenziali fornite siano corrette.</string>
+  <string name="jams_account_cannot_be_found_message">Si è verificato un errore durante la connessione dell\'account. Controlla le credenziali e riprova.</string>
   <string name="account_sip_cannot_be_registered_message">Puoi continuare con la creazione dell\'account oppure modificare le tue informazioni qui. La modifica sarà comunque possibile più tardi nelle impostazioni dell\'account.</string>
   <string name="account_no_network_title">Errore di rete</string>
   <string name="account_no_network_message">Impossibile aggiungere l\'account perché Jami non riesce a connettersi alla rete. Controlla la connettività del dispositivo.</string>
   <string name="account_device_added_title">Il dispositivo è stato aggiunto</string>
-  <string name="account_device_added_message">Hai configurato correttamente il tuo account Jami su questo dispositivo.</string>
   <string name="account_device_updated_title">Dispositivo aggiornato</string>
-  <string name="account_device_updated_message">Hai aggiornato con successo il tuo account Jami.</string>
   <string name="account_cannot_be_updated_message">Si è verificato un errore durante l\'aggiornamento dell\'account. Controllare la password.</string>
   <string name="account_sip_success_title">Account SIP registrato</string>
-  <string name="account_sip_success_message">Hai registrato il tuo account Sip con successo.</string>
   <string name="account_sip_register_anyway">Registrati lo stesso</string>
   <!--TV-->
   <string name="account_tv_settings_header">Impostazioni dell\'account</string>
@@ -212,6 +210,9 @@ Si potra modificare questo account più tardi.</string>
   <string name="help_credentials_enter">Inserisci le credenziali della tua organizzazione</string>
   <string name="help_connect_password_enter">Inserisci la password della tua organizzazione</string>
   <string name="account_connect_prompt_username">Utente</string>
+  <string name="account_connect_server">Connetti al server Jams</string>
+  <string name="account_enter_username">Inserire il nome utente</string>
+  <string name="account_enter_servername">Inserire il server</string>
   <!--Name registration-->
   <string name="error_username_empty">Inserire un nome utente</string>
   <string name="no_registered_name_for_account">Nessun nome registrato</string>

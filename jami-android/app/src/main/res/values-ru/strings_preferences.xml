@@ -61,7 +61,6 @@
   <string name="extension_reset_preferences_summary">Расширение сброшено к настройкам по умолчанию</string>
   <string name="extension_reset_preferences_ask">Вы хотите сбросить общие настройки расширения?</string>
   <string name="extension_reset_account_preferences_ask">Вы хотите сбросить настройки расширения аккаунта?</string>
-  <string name="extension_successfully_installed">Расширение <b>%1$s</b> успешно установлено</string>
   <string name="extension_install_failure">Произошла ошибка при установке расширения: <b>%1$s</b></string>
   <string name="extension_recent_version_exception">Уже установлена более новая версия <b>%1$s</b></string>
   <string name="extension_same_version_exception">Уже установлена та же версия <b>%1$s</b></string>

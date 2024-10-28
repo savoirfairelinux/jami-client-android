@@ -6,6 +6,9 @@
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Contribuya</string>
   <string name="version_section">Versión</string>
+  <string name="no_browser_app_installed">No se detectó ningún navegador, instale uno para ver esta página</string>
+  <string name="website_chooser_title">Ver página con...</string>
+  <string name="license">Este software se proporciona \"tal cual es\", sin ninguna garantía de ningún tipo. Para más detalles, consultá <u>Licencia Pública General de GNU versión 3 o posterior</u></string>
   <string name="description">Jami es un software libre para comunicarse univesalmente, el cual respeta las libertades y la privacidad de sus usuarios.</string>
   <string name="credits">Créditos</string>
   <string name="pip_title">Conferencia Jami</string>
@@ -106,7 +109,6 @@
   <string name="write_a_message">Escribí un mensaje</string>
   <string name="scan_qr">Leer código QR</string>
   <string name="qr_code">Código QR</string>
-  <string name="new_swarm">Iniciar swarm</string>
   <string name="ab_action_flipcamera">Girar cámara</string>
   <string name="ab_action_hidepreview">Ocultar previsualización</string>
   <string name="remote_recording">%s grabando...</string>
@@ -151,14 +153,15 @@
   <string name="conversation_details">Detalles de conversación</string>
   <string name="contact_details">Detalles de contacto</string>
   <string name="conversation_action_delete_this">Borrar conversación</string>
+  <string name="leave_conversation">Dejar la conversación</string>
   <string name="conversation_action_delete_this_message">Esta acción no puede deshacerse.</string>
   <string name="conversation_action_history_clear">Borrar historial</string>
   <string name="conversation_action_history_clear_title">¿Borrar el historial de conversaciones?</string>
   <string name="conversation_action_history_clear_message">Esta acción borrará definitivamente el historial de conversaciones.</string>
-  <string name="conversation_action_remove_this">Eliminar contacto</string>
+  <string name="delete_contact">Eliminar contacto</string>
   <string name="conversation_action_remove_this_title">¿Eliminar este contacto?</string>
   <string name="conversation_action_remove_this_message">Esta acción eliminará el contacto y borrará definitivamente el historial de conversaciones.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s copiado al portapapeles</string>
+  <string name="copied_to_clipboard">%1$s copiado al portapapeles</string>
   <string name="conversation_action_select_peer_number">Seleccioná un número</string>
   <string name="conversation_action_block_this">Bloquear contacto</string>
   <string name="conversation_action_unblock_this">Desbloquear contacto</string>
@@ -183,8 +186,6 @@
   <string name="conversation_preference_color">Color de la conversación</string>
   <string name="conversation_preference_emoji">Emoji de la conversación</string>
   <string name="conversation_type_contact">Contacto de Jami</string>
-  <string name="conversation_type_private">Enjambre privado</string>
-  <string name="conversation_type_group">Enjambre grupal</string>
   <string name="conversation_contact_invited">%1$s fue invitado</string>
   <string name="conversation_contact_added">%1$s se unió</string>
   <string name="conversation_contact_left">%1$sse salió</string>
@@ -209,7 +210,7 @@
   <string name="hist_contact_added">Contacto añadido</string>
   <string name="hist_contact_left">El contacto se ha ido</string>
   <string name="hist_invitation_received">Invitación recibida</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">Perfil</string>
   <string name="profile_name">Nombre de perfil</string>
   <string name="profile_message_warning">Tu perfil sólo es compartido con tus contactos</string>
@@ -219,6 +220,7 @@
   <string name="registered_name">Nombre Registrado</string>
   <string name="no_registered_name">Ningún nombre registrado</string>
   <string name="identity">Identidad</string>
+  <string name="identifier">Identificador</string>
   <string name="account">Cuenta</string>
   <string name="link_new_device">Vincular un nuevo dispositivo</string>
   <string name="devices">Dispositivos vinculados</string>
@@ -233,6 +235,7 @@
   <string name="title_share_with">Compartir con...</string>
   <!--Pending invitations-->
   <string name="accept">Aceptar</string>
+  <string name="decline">Rechazar</string>
   <string name="block">Bloquear</string>
   <string name="invitation_message">Tenés %1$d solicitudes de contacto</string>
   <!--Blacklist-->
@@ -336,8 +339,9 @@
   <string name="bottomSheet_raiseHand_btn">Levanta tu mano</string>
   <string name="uninstall">Desinstalar</string>
   <string name="reset">Reiniciar</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">Confirmar</string>
+  <string name="swarm_description">Añadir descripción</string>
   <string name="tab_members">Miembros</string>
   <string name="tab_files">Archivos</string>
   <string name="tab_settings">Ajustes</string>
@@ -362,6 +366,9 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Bienvenido a Jami</string>
   <string name="welcome_jami_description">¡Comparta su identificador Jami para contactar más fácilmente!</string>
+  <!--Conversation details-->
+  <string name="details">Detalles</string>
+  <string name="Private">Privado</string>
   <!--Donation-->
   <string name="donation_card_description">Si disfruta usando Jami y cree en nuestra misión, ¿le gustaría hacer una donación?</string>
   <string name="donation_card_not_now">Ahora no</string>

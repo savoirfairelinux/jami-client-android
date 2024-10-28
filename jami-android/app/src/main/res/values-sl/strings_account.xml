@@ -161,9 +161,7 @@
   <string name="account_sip_cannot_be_registered_message">Lahko nadaljujete z ustvarjanjem računa ali tukaj uredite svoje podatke. Urejanje je še možno tudi kasneje v nastavitvah računa.</string>
   <string name="account_no_network_title">Napaka na omrežju</string>
   <string name="account_device_added_title">Naprava računa je dodana</string>
-  <string name="account_device_added_message">Svoj Jami račun se uspešno namestili na to napravo</string>
   <string name="account_device_updated_title">Naprava računa je posodobljena</string>
-  <string name="account_device_updated_message">Uspešno ste posodobili svoj račun Jami.</string>
   <string name="account_sip_register_anyway">Vseeno registriraj</string>
   <!--TV-->
   <string name="account_tv_settings_header">Nastavitve računa</string>
@@ -192,6 +190,7 @@
   <string name="help_credentials_enter">Vnesite podatke o svoji organizaciji</string>
   <string name="help_connect_password_enter">Vnesite geslo svoje organizacije</string>
   <string name="account_connect_prompt_username">Uporabnik</string>
+  <string name="account_enter_username">Vnesite uporabniško ime</string>
   <!--Name registration-->
   <string name="error_username_empty">Vnesite uporabniško ime</string>
   <string name="no_registered_name_for_account">Ni registriranega imena</string>

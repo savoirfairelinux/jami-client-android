@@ -145,14 +145,15 @@
   <string name="conversation_details">Detaljer om samtalen</string>
   <string name="contact_details">Kontaktinformasjon</string>
   <string name="conversation_action_delete_this">Ta av denne samtalen</string>
+  <string name="leave_conversation">Lat samtalen vera</string>
   <string name="conversation_action_delete_this_message">Denne handlingen kan ikkje bli gjort til nytt.</string>
   <string name="conversation_action_history_clear">Klare historie</string>
   <string name="conversation_action_history_clear_title">Vil du fjerne dialogen?</string>
   <string name="conversation_action_history_clear_message">Dette vil definitivt rens historia i samrøytane.</string>
-  <string name="conversation_action_remove_this">Ta bort kontakt</string>
+  <string name="delete_contact">Ta bort kontakt</string>
   <string name="conversation_action_remove_this_title">Vil du sletta denne kontakten?</string>
   <string name="conversation_action_remove_this_message">Dette vil fjerne kontakta og definitivt fjerne samtalshistoria.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s kopiert til klippbrett</string>
+  <string name="copied_to_clipboard">%1$s kopiert til klippbrett</string>
   <string name="conversation_action_select_peer_number">Velg eit nummer</string>
   <string name="conversation_action_block_this">Blockkontakt</string>
   <string name="conversation_action_unblock_this">Avbløka kontakt</string>
@@ -176,11 +177,9 @@
   <string name="conversation_preference_color">Farge for samtal</string>
   <string name="conversation_preference_emoji">Samtal emoji</string>
   <string name="conversation_type_contact">Jami kontakt</string>
-  <string name="conversation_type_private">Privat svam</string>
-  <string name="conversation_type_group">Gruppsjæra</string>
   <string name="conversation_contact_invited">%1$s vart invitert</string>
   <string name="conversation_contact_added">%1$s er tilslutte</string>
-  <string name="conversation_contact_left">%1$ er til venstre</string>
+  <string name="conversation_contact_left">%1$s er til venstre</string>
   <string name="conversation_search_hint">Søk samtale</string>
   <string name="today">I dag</string>
   <string name="yesterday">I går</string>
@@ -202,7 +201,7 @@
   <string name="hist_contact_added">Legg til kontakt</string>
   <string name="hist_contact_left">Kontakt til venstre</string>
   <string name="hist_invitation_received">Innbyding motteke</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">Profil</string>
   <string name="profile_name">Profilnavn</string>
   <string name="profile_message_warning">Profilen din blir berre delt med kontaktane dine</string>
@@ -212,6 +211,7 @@
   <string name="registered_name">Namn som er registrert</string>
   <string name="no_registered_name">Ingen namn registrert</string>
   <string name="identity">Identitet</string>
+  <string name="identifier">Identifikator</string>
   <string name="account">Konto</string>
   <string name="link_new_device">Legg ein ny enhet til</string>
   <string name="devices">Kopplande utstyr</string>
@@ -321,7 +321,7 @@
   <string name="bottomSheet_raiseHand_btn">Rekk opp handa</string>
   <string name="uninstall">Uninstallere</string>
   <string name="reset">Omsetning</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">Bekreft</string>
   <string name="tab_members">Medlemmar</string>
   <string name="tab_files">Dateiar</string>
@@ -340,6 +340,9 @@
   <string name="jami_id_choose_username">Velg ein brukernavn</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Velkommen til Jami</string>
+  <!--Conversation details-->
+  <string name="details">Detaljer</string>
+  <string name="Private">Privat</string>
   <!--Donation-->
   <!--Extension-->
 </resources>

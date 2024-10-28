@@ -111,7 +111,6 @@
   <string name="scan_qr">Preberi QR-kodo</string>
   <string name="qr_code">QR-koda</string>
   <string name="qr_code_not_contact">Ni koda QR stika Jami</string>
-  <string name="new_swarm">Zaženi roj</string>
   <string name="ab_action_flipcamera">Zrcali kamero</string>
   <string name="ab_action_hidepreview">Skrij predogled</string>
   <string name="remote_recording">%s snema …</string>
@@ -157,14 +156,15 @@
   <string name="conversation_details">Podrobnosti pogovora</string>
   <string name="contact_details">Podrobnosti stika</string>
   <string name="conversation_action_delete_this">Izbriši ta pogovor</string>
+  <string name="leave_conversation">Zapusti pogovor</string>
   <string name="conversation_action_delete_this_message">Tega dejanja ni mogoče razveljaviti.</string>
   <string name="conversation_action_history_clear">Počisti zgodovino</string>
   <string name="conversation_action_history_clear_title">Želite počistiti zgodovino pogovora?</string>
   <string name="conversation_action_history_clear_message">To bo dokončno počistilo zgodovino pogovora.</string>
-  <string name="conversation_action_remove_this">Izbriši stik</string>
+  <string name="delete_contact">Izbriši stik</string>
   <string name="conversation_action_remove_this_title">Ali želite izbrisati ta stik?</string>
   <string name="conversation_action_remove_this_message">To bo izbrisalo stik in dokončno počistilo zgodovino pogovora.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s kopirano na odložišče</string>
+  <string name="copied_to_clipboard">%1$s kopirano na odložišče</string>
   <string name="conversation_action_select_peer_number">Izberi številko</string>
   <string name="conversation_action_block_this">Blokiraj stik</string>
   <string name="conversation_action_unblock_this">Odblokiraj stik</string>
@@ -190,8 +190,7 @@
   <string name="conversation_preference_color">Barva pogovora</string>
   <string name="conversation_preference_emoji">Emoji pogovora</string>
   <string name="conversation_type_contact">Stik Jami</string>
-  <string name="conversation_type_private">Zasebni roj</string>
-  <string name="conversation_type_group">Skupinski roj</string>
+  <string name="conversation_type_group">Skupina</string>
   <string name="conversation_contact_invited">%1$s je povabljen/a</string>
   <string name="conversation_contact_added">%1$s se je pridružil/a</string>
   <string name="conversation_contact_left">%1$s je odšel/a</string>
@@ -230,7 +229,7 @@
   <string name="hist_contact_added">Stik je dodan</string>
   <string name="hist_contact_left">Stik je odšel</string>
   <string name="hist_invitation_received">Povabilo je sprejeto</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">Profil</string>
   <string name="profile_name">Ime profila</string>
   <string name="profile_message_warning">Vaš profil se deli samo z vašimi stiki</string>
@@ -240,6 +239,7 @@
   <string name="registered_name">Registrirano ime</string>
   <string name="no_registered_name">Ni registriranega imena</string>
   <string name="identity">Identiteta</string>
+  <string name="identifier">identifikator</string>
   <string name="account">Račun</string>
   <string name="link_new_device">Poveži novo napravo</string>
   <string name="devices">Povezane naprave</string>
@@ -360,7 +360,7 @@
   <string name="bottomSheet_raiseHand_btn">Dvigni roko</string>
   <string name="uninstall">Odnamesti</string>
   <string name="reset">Ponastavi</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">Potrdi</string>
   <string name="swarm_description">Dodaj opis</string>
   <string name="tab_members">Člani</string>
@@ -391,6 +391,9 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Dobrodošli v Jami</string>
   <string name="welcome_jami_description">Delite svoj identifikator Jami, da vas lažje najdejo!</string>
+  <!--Conversation details-->
+  <string name="details">Detajli</string>
+  <string name="Private">Zasebno</string>
   <!--Donation-->
   <string name="donation_card_description">Če vam je všeč Jami in verjamete v naše poslanstvo - bi prispevali projektu?</string>
   <string name="donation_card_not_now">Ne zdaj</string>

@@ -149,9 +149,7 @@
   <string name="account_sip_cannot_be_registered_message">คุณสามารถต่อเนื่องกับกระบวนการสร้างบัญชี หรือแก้ไขข้อมูลของคุณได้ที่นี่ การแก้ไขยังสามารถเกิดขึ้นได้ในช่วงหลังในการตั้งค่าบัญชี</string>
   <string name="account_no_network_title">ความผิดพลาดในเครือข่าย</string>
   <string name="account_device_added_title">รายการอุปกรณ์เพิ่ม</string>
-  <string name="account_device_added_message">คุณได้ตั้งบัญชีจามิของคุณไว้บนเครื่องนี้</string>
   <string name="account_device_updated_title">อุปโภคบัญชี</string>
-  <string name="account_device_updated_message">คุณได้ปรับปรุงบัญชีจามิของคุณได้สําเร็จ</string>
   <string name="account_sip_register_anyway">ไม่ว่ายังไงก็ลงทะเบียน</string>
   <!--TV-->
   <string name="account_tv_settings_header">การตั้งค่าบัญชี</string>

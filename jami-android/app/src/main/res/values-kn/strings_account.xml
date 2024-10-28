@@ -149,9 +149,7 @@
   <string name="account_sip_cannot_be_registered_message">ನೀವು ಖಾತೆ ರಚನೆ ಪ್ರಕ್ರಿಯೆಯನ್ನು ಮುಂದುವರಿಸಬಹುದು ಅಥವಾ ನಿಮ್ಮ ಮಾಹಿತಿಯನ್ನು ಇಲ್ಲಿ ಸಂಪಾದಿಸಬಹುದು. ಖಾತೆ ಸೆಟ್ಟಿಂಗ್ಗಳಲ್ಲಿ ನಂತರದ ಆವೃತ್ತಿ ಇನ್ನೂ ಸಾಧ್ಯವಿದೆ.</string>
   <string name="account_no_network_title">ನೆಟ್ವರ್ಕ್ ದೋಷ</string>
   <string name="account_device_added_title">ಖಾತೆ ಸಾಧನ ಸೇರಿಸಲಾಗಿದೆ</string>
-  <string name="account_device_added_message">ಈ ಸಾಧನದಲ್ಲಿ ನಿಮ್ಮ ಜಾಮಿ ಖಾತೆಯನ್ನು ನೀವು ಯಶಸ್ವಿಯಾಗಿ ಸ್ಥಾಪಿಸಿದ್ದೀರಿ.</string>
   <string name="account_device_updated_title">ಖಾತೆ ಸಾಧನ ನವೀಕರಿಸಲಾಗಿದೆ</string>
-  <string name="account_device_updated_message">ನಿಮ್ಮ ಜಾಮಿ ಖಾತೆಯನ್ನು ನೀವು ಯಶಸ್ವಿಯಾಗಿ ನವೀಕರಿಸಿದ್ದೀರಿ.</string>
   <string name="account_sip_register_anyway">ಹೇಗಾದರೂ ನೋಂದಣಿ</string>
   <!--TV-->
   <string name="account_tv_settings_header">ಖಾತೆ ಸೆಟ್ಟಿಂಗ್ಗಳು</string>
@@ -209,6 +207,7 @@
   <string name="account_revoke_device_hint">ಖಚಿತಪಡಿಸಲು ಪಾಸ್ವರ್ಡ್ ನಮೂದಿಸಿ</string>
   <string name="enter_password">ಪಾಸ್ವರ್ಡ್ ನಮೂದಿಸಿ</string>
   <string name="revoke_device_title">ರದ್ದುಗೊಳಿಸುವ ಸಾಧನ</string>
+  <string name="revoke_device_message">%1$s ಗಳನ್ನು ರದ್ದುಗೊಳಿಸಬೇಕೆಂಬುದು ನಿಮಗೆ ಖಚಿತವಾಗಿದೆಯೇ?</string>
   <string name="revoke_device_wait_title">ದಯವಿಟ್ಟು ಕಾಯಿರಿ.</string>
   <string name="revoke_device_wait_message">ಮರುಕಳಿಸುವ ಸಾಧನ</string>
   <string name="rename_device_title">ಈ ಸಾಧನವನ್ನು ಮರುನಾಮಕರಣ ಮಾಡಿ</string>

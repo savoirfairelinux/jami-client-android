@@ -1,6 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
+  <string name="submit_issue_title">Defecțiuni</string>
+  <string name="submit_issue_action_description"><u>Defecțiune nouă</u></string>
   <string name="section_license">Licența</string>
   <string name="sponsor_section">Jami este un program liber, creat și susținut de</string>
   <string name="copyright_section">Drepturi de autor</string>
@@ -123,7 +125,6 @@
   <string name="scan_qr">Scanează Codul QR</string>
   <string name="qr_code">Cod QR</string>
   <string name="qr_code_not_contact">Nu este un cod QR de contact Jami</string>
-  <string name="new_swarm">Grup nou</string>
   <string name="ab_action_flipcamera">Schimbă camera</string>
   <string name="ab_action_hidepreview">Ascunde previzualizarea</string>
   <string name="remote_recording">%s înregistrează…</string>
@@ -173,14 +174,20 @@
   <string name="contact_details">Detaliile contactului</string>
   <string name="conversation_action_delete_this">Șterge această conversație</string>
   <string name="conversation_action_delete_this_title">Ștergi această conversație?</string>
+  <string name="leave_conversation">Termină conversația</string>
   <string name="conversation_action_delete_this_message">Această acțiune este ireversibilă.</string>
   <string name="conversation_action_history_clear">Șterge conversația</string>
   <string name="conversation_action_history_clear_title">Ștergi cronologia conversației?</string>
   <string name="conversation_action_history_clear_message">Aceasta va șterge definitiv cronologia conversației.</string>
-  <string name="conversation_action_remove_this">Șterge contactul</string>
+  <string name="delete_contact">Șterge contactul</string>
   <string name="conversation_action_remove_this_title">Ștergi acest contact?</string>
   <string name="conversation_action_remove_this_message">Aceasta va șterge contactul și va elimina definitiv cronologia conversației.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s copiat în memorie</string>
+  <string name="conversation_action_add_this_message">Se va trimite o cerere de conectare.</string>
+  <string name="swarm_group_action_leave">Părăsește grupul</string>
+  <string name="swarm_group_action_leave_title">Părăsești acest grup?</string>
+  <string name="swarm_group_action_leave_message">Aceasta va elimina conversația din lista conversațiilor</string>
+  <string name="conversation_action_copy_peer_number">Copiază identificatorul contactului</string>
+  <string name="copied_to_clipboard">%1$s copiat în memorie</string>
   <string name="conversation_action_select_peer_number">Alege un număr</string>
   <string name="conversation_action_block_this">Blochează contactul</string>
   <string name="conversation_action_unblock_this">Deblochează contactul</string>
@@ -189,6 +196,7 @@
   <string name="conversation_action_latest">Saltă la ultimul</string>
   <string name="conversation_open_file_error">Nu există o aplicație instalată capabilă să deschidă acest tip de fișier.</string>
   <string name="clip_contact_uri">Adresă de contact</string>
+  <string name="clip_message">Conținutul mesajului</string>
   <string name="block_contact_dialog_title">Blochezi %1$s?</string>
   <string name="block_contact_dialog_message">%1$s nu te va putea contacta cît timp va fi blocat.</string>
   <string name="block_contact_completed">%1$s a fost blocat.</string>
@@ -206,8 +214,6 @@
   <string name="conversation_preference_color">Culoarea conversației</string>
   <string name="conversation_preference_emoji">Emoji de conversație</string>
   <string name="conversation_type_contact">Contact Jami</string>
-  <string name="conversation_type_private">Grup privat</string>
-  <string name="conversation_type_group">Grup</string>
   <string name="conversation_contact_invited">%1$s a fost invitat</string>
   <string name="conversation_contact_added">%1$s s-a alăturat</string>
   <string name="conversation_contact_left">%1$s a ieșit</string>
@@ -251,7 +257,7 @@
   <string name="hist_contact_blocked">Contact blocat</string>
   <string name="hist_contact_unblocked">Contact deblocat</string>
   <string name="hist_invitation_received">Invitație primită</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">Profilul</string>
   <string name="profile_name">Numele profilului</string>
   <string name="profile_message_warning">Profilul tău este distribuit doar contactelor tale</string>
@@ -261,6 +267,7 @@
   <string name="registered_name">Nume înscris</string>
   <string name="no_registered_name">Niciun nume înscris</string>
   <string name="identity">Identitate</string>
+  <string name="identifier">Identificator</string>
   <string name="account">Cont</string>
   <string name="link_new_device">Asociază alt aparat</string>
   <string name="devices">Aparate asociate</string>
@@ -268,7 +275,8 @@
   <!--Share fragment-->
   <string name="share_message">Scanează acest cod cu Jami</string>
   <string name="share_message_no_account">Alege un cont de distribuit.</string>
-  <string name="share_your_account_information">Distribuie datele mele de contact</string>
+  <string name="share_your_account_information">Trimite datele mele de contact</string>
+  <string name="share_contact_information">Trimite datele de contact</string>
   <string name="share_label">Distribuie</string>
   <string name="generic_error_migration">Eroare</string>
   <string name="generic_error_migration_message">A apărut o eroare în timpul transferului</string>
@@ -277,7 +285,11 @@
   <string name="accept">Acceptă</string>
   <string name="decline">Refuză</string>
   <string name="block">Blochează</string>
+  <string name="decline_invitation">Refuză invitația</string>
+  <string name="accept_invitation">Acceptă invitația</string>
+  <string name="new_invitation_request_title">Invitație nouă</string>
   <string name="invitation_message">Ai %1$d cereri de contact</string>
+  <string name="outgoing_contact_invitation_message">Acest contact nu se află în lista de contacte.\nTrimite o cerere de conectare.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Niciun contact blocat</string>
   <!--Smartlist-->
@@ -387,7 +399,7 @@
   <string name="open_general_extension_settings">Deschide reglările generale ale extensiei</string>
   <string name="uninstall">Dezinstalează</string>
   <string name="reset">Restabilește</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">Confirmă</string>
   <string name="rename_error">nu poate fi gol</string>
   <string name="swarm_description">Adaugă o descriere</string>
@@ -407,6 +419,8 @@
   <string name="error_open_no_app_found">Nu s-a găsit nicio aplicație care să gestioneze acest fișier: %1$s</string>
   <string name="swarm_detail_no_document">Încă nu ai documente.</string>
   <string name="group_admin">Administrator</string>
+  <string name="share_contact_intent_title">Adaugă acest contact în Jami!</string>
+  <string name="share_contact_intent_body">Poți adăuga acest contact „%1$s” pe platforma de comunicare distribuită Jami: %2$s</string>
   <!--JamiId-->
   <string name="jami_id_copy">Copiază JamiID</string>
   <string name="jami_id_share">Distribuie JamiID</string>
@@ -419,6 +433,15 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Bine ai venit pe Jami</string>
   <string name="welcome_jami_description">Împărtășește identificatorul tău Jami pentru a fi contactat mai ușor!</string>
+  <!--Conversation details-->
+  <string name="details">Detalii</string>
+  <string name="secure_p2p_connection">Conexiune sigură</string>
+  <string name="swarm_type">Tipul conversației</string>
+  <string name="Private">Privat</string>
+  <string name="swarm_id">ID-ul grupului</string>
+  <string name="show_qr_code">Arată codul QR</string>
+  <string name="show_certificate">Arată certificatul</string>
+  <string name="mute_conversation">Dezactivează notificările</string>
   <!--Donation-->
   <string name="donation_card_description">Dacă îți place să folosești Jami și crezi că misiunea noastră este importantă, poți face o donație?</string>
   <string name="donation_card_not_now">Nu acum</string>

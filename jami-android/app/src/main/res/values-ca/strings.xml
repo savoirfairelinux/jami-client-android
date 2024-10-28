@@ -6,6 +6,9 @@
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Contribueix</string>
   <string name="version_section">Versió</string>
+  <string name="no_browser_app_installed">No s\'ha trobat cap navegador web, instal·leu-ne un per a visualitzar aquesta pàgina</string>
+  <string name="website_chooser_title">Visualitza el lloc web amb...</string>
+  <string name="license">Aquest programari es proporciona \"tal i com es\" sense garantia de cap tipus. Per més detalls, veure la<u> Llicència Pública General GNU versió 3 o posterior</u> </string>
   <string name="description">Jami és un programari lliure de comunicació universal, que respecta les llibertats i la privacitat dels seus usuaris.</string>
   <string name="credits">Crèdits</string>
   <string name="pip_title">Conferència Jami</string>
@@ -149,14 +152,15 @@
   <string name="conversation_details">Detalls de la conversa</string>
   <string name="contact_details">Detalls de contacte</string>
   <string name="conversation_action_delete_this">Esborra aquesta conversa</string>
+  <string name="leave_conversation">Deixar la conversa</string>
   <string name="conversation_action_delete_this_message">Aquesta acció no es pot desfer.</string>
   <string name="conversation_action_history_clear">Neteja historial</string>
   <string name="conversation_action_history_clear_title">Netejar l\'historial de converses?</string>
   <string name="conversation_action_history_clear_message">Això netejarà definitivament l\'historial de converses.</string>
-  <string name="conversation_action_remove_this">Esborrar contacte</string>
+  <string name="delete_contact">Esborrar contacte</string>
   <string name="conversation_action_remove_this_title">Esborrar aquest contacte?</string>
   <string name="conversation_action_remove_this_message">Això esborrarà el contacte i netejarà definitivament l\'historial de converses.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s copiat al porta-retalls</string>
+  <string name="copied_to_clipboard">%1$s copiat al porta-retalls</string>
   <string name="conversation_action_select_peer_number">Seleccioneu un número</string>
   <string name="conversation_action_block_this">Bloqueja el contacte</string>
   <string name="conversation_action_unblock_this">Desbloca contacte</string>
@@ -181,8 +185,6 @@
   <string name="conversation_preference_color">Color de conversa</string>
   <string name="conversation_preference_emoji">Emoticona de conversa</string>
   <string name="conversation_type_contact">Contacte de Jami</string>
-  <string name="conversation_type_private">Un grup privat</string>
-  <string name="conversation_type_group">En grup</string>
   <string name="conversation_contact_invited">%1$s ha estat convidat</string>
   <string name="conversation_contact_added">%1$s s\'ha unit</string>
   <string name="conversation_contact_left">%1$s ha sortit</string>
@@ -208,7 +210,7 @@
   <string name="hist_contact_added">Contacte afegit</string>
   <string name="hist_contact_left">El contacte ha marxat</string>
   <string name="hist_invitation_received">S\'ha rebut una invitació</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">Perfil</string>
   <string name="profile_name">Nom de perfil</string>
   <string name="profile_message_warning">El vostre perfil només es comparteix amb els vostres contactes</string>
@@ -218,6 +220,7 @@
   <string name="registered_name">Nom registrat</string>
   <string name="no_registered_name">Sense nom registrat</string>
   <string name="identity">Identitat</string>
+  <string name="identifier">Identificador</string>
   <string name="account">Compte</string>
   <string name="link_new_device">Enllaça un nou dispositiu</string>
   <string name="devices">Dispositius enllaçats</string>
@@ -232,7 +235,9 @@
   <string name="title_share_with">Comparteix amb…</string>
   <!--Pending invitations-->
   <string name="accept">Accepta</string>
+  <string name="decline">Rebutja</string>
   <string name="block">Bloca</string>
+  <string name="invitation_message">Tu tens %1$dpeticions de contacte</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Sense contactes blocats</string>
   <!--Smartlist-->
@@ -302,7 +307,7 @@
   <string name="wizard_status_recommended">Recomanat</string>
   <string name="wizard_status_optional">Opcional</string>
   <string name="wizard_status_required">Requerit</string>
-  <string name="wizard_username_info">Escull un nom s\'usuari pel teu compte</string>
+  <string name="wizard_username_info">Escull un nom d\'usuari pel teu compte</string>
   <string name="wizard_username_button">Escull un nom d\'usuari</string>
   <string name="wizard_username_skip">Salta l\'elecció de nom d\'usuari</string>
   <string name="wizard_password_info">Contrassenya de compte</string>
@@ -327,8 +332,9 @@
   <string name="bottomSheet_raiseHand_btn">Aixeca la mà</string>
   <string name="uninstall">Desinstala</string>
   <string name="reset">Reconfigura</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">Confirma</string>
+  <string name="swarm_description">Afegir descripció</string>
   <string name="tab_members">Membres</string>
   <string name="tab_files">Arxius</string>
   <string name="tab_settings">Opcions</string>
@@ -352,6 +358,9 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Benvingut a Jami</string>
   <string name="welcome_jami_description">Comparteix el teu identificador de Jami per tal de ser contactat mes fàcilment!</string>
+  <!--Conversation details-->
+  <string name="details">Detalls</string>
+  <string name="Private">Privat</string>
   <!--Donation-->
   <string name="donation_card_description">Si gaudeixes utilitzant el Jami i creus en la nostre missió, faries una donació?</string>
   <string name="donation_card_not_now">Ara no</string>

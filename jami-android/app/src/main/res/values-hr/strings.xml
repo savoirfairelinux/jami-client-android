@@ -146,14 +146,15 @@
   <string name="conversation_details">Podrobnosti razgovora</string>
   <string name="contact_details">Pojedinosti kontakta</string>
   <string name="conversation_action_delete_this">Izbrišite ovaj razgovor</string>
+  <string name="leave_conversation">Ostavi razgovor</string>
   <string name="conversation_action_delete_this_message">Ova akcija se ne može poništiti.</string>
   <string name="conversation_action_history_clear">Očisti povijest</string>
   <string name="conversation_action_history_clear_title">Očistiti povijest razgovora?</string>
   <string name="conversation_action_history_clear_message">Ovo će definitivno obrisati povijest razgovora.</string>
-  <string name="conversation_action_remove_this">Izbriši kontakt</string>
+  <string name="delete_contact">Izbriši kontakt</string>
   <string name="conversation_action_remove_this_title">Obrisati ovaj kontakt?</string>
   <string name="conversation_action_remove_this_message">Ovo će obrisati kontakt i definitivno obrisati povijest razgovora.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s kopiran u međuspremnik</string>
+  <string name="copied_to_clipboard">%1$s kopiran u međuspremnik</string>
   <string name="conversation_action_select_peer_number">Odaberite broj</string>
   <string name="conversation_action_block_this">Blokiraj kontakt</string>
   <string name="conversation_action_unblock_this">Otključaj kontakt</string>
@@ -177,11 +178,9 @@
   <string name="conversation_preference_color">Boja razgovora</string>
   <string name="conversation_preference_emoji">Emoji razgovora</string>
   <string name="conversation_type_contact">Kontakt s Jamijem</string>
-  <string name="conversation_type_private">Privatna grupa</string>
-  <string name="conversation_type_group">Grupa Swarm</string>
   <string name="conversation_contact_invited">%1$s je pozvan</string>
   <string name="conversation_contact_added">%1$s se pridružio</string>
-  <string name="conversation_contact_left">%1$ je lijevo</string>
+  <string name="conversation_contact_left">%1$s je lijevo</string>
   <string name="conversation_search_hint">Razgovor za pretragu</string>
   <string name="today">Danas</string>
   <string name="yesterday">Jučer</string>
@@ -203,7 +202,7 @@
   <string name="hist_contact_added">Kontakt dodan</string>
   <string name="hist_contact_left">Kontakt lijevo</string>
   <string name="hist_invitation_received">Poziv primljen</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">Profil</string>
   <string name="profile_name">Ime profila</string>
   <string name="profile_message_warning">Vaš profil je podjeljen samo sa vašim kontaktima</string>
@@ -213,6 +212,7 @@
   <string name="registered_name">Upisno ime</string>
   <string name="no_registered_name">Ne postoji registrirano ime</string>
   <string name="identity">Identifikacija</string>
+  <string name="identifier">Identifikacija</string>
   <string name="account">Račun</string>
   <string name="link_new_device">Povežite novi uređaj</string>
   <string name="devices">Povezani uređaji</string>
@@ -227,6 +227,7 @@
   <string name="title_share_with">Dijeli sa...</string>
   <!--Pending invitations-->
   <string name="accept">Prihvati</string>
+  <string name="decline">Odbij</string>
   <string name="block">Blokiraj</string>
   <string name="invitation_message">Imate %1$d zahtjeve za kontakt</string>
   <!--Blacklist-->
@@ -321,7 +322,7 @@
   <string name="bottomSheet_raiseHand_btn">Podignite ruku</string>
   <string name="uninstall">Neinstalacija</string>
   <string name="reset">Nastavljanje</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">Potvrdi</string>
   <string name="tab_members">Članovi</string>
   <string name="tab_files">Dosje</string>
@@ -340,6 +341,9 @@
   <string name="jami_id_choose_username">Izaberite korisničko ime</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Dobrodošli u Jami</string>
+  <!--Conversation details-->
+  <string name="details">Pojedinosti</string>
+  <string name="Private">Privredni</string>
   <!--Donation-->
   <!--Extension-->
 </resources>

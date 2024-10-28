@@ -8,6 +8,7 @@
   <string name="add_ring_account_title">Añadir cuenta</string>
   <string name="add_sip_account_title">Añadir cuenta SIP</string>
   <string name="ring_account_default_name">Cuenta Jami %1$s</string>
+  <string name="account_creation_error">Se produjo un error al crear la cuenta.</string>
   <string name="prompt_alias">Alias</string>
   <string name="prompt_hostname">Nombre del anfitrión</string>
   <string name="prompt_username">Nombre de usuario</string>
@@ -59,6 +60,7 @@
   <string name="account_upnp_label">Activar UPnP</string>
   <string name="account_proxy_field">Proxy</string>
   <!--Extension Details-->
+  <string name="account_preferences_extension_tab">Extensions</string>
   <!--Audio Details-->
   <string name="account_audio_label">Audio</string>
   <string name="account_preferences_media_tab">Medios</string>
@@ -139,6 +141,7 @@
   <string name="export_account_wait_message">Exportando la información de la cuenta</string>
   <string name="account_export_file">Crear copia de seguridad de la cuenta</string>
   <string name="account_export_file_summary">Crear una copia de respaldo en tu dispositivo para luego poder recuperar tu cuenta.</string>
+  <string name="account_export_end_decryption_message">Contraseña incorrecta. Por favor, inténtelo de nuevo con la contraseña correcta.</string>
   <string name="account_export_end_network_title">Error de red</string>
   <string name="account_export_end_error_title">Error</string>
   <string name="account_enter_password">Ingresar contraseña</string>
@@ -150,12 +153,12 @@
   <string name="ring_account_identity">Identidad</string>
   <string name="account_migration_title_dialog">Migración de cuenta</string>
   <string name="account_update_needed">Actualización necesaria</string>
+  <string name="account_cannot_be_found_title">Error de cuenta</string>
+  <string name="account_cannot_be_found_message">No se puede encontrar la cuenta en la red Jami. Asegúrese de que se haya exportado en Jami desde un dispositivo existente y de que las credenciales proporcionadas sean correctas.</string>
   <string name="account_sip_cannot_be_registered_message">Podés continuar con el proceso de creación de la cuenta o editar tu información aquí mismo. También podrás editarla luego ingresando a la configuración de la cuenta.</string>
   <string name="account_no_network_title">Error de red</string>
   <string name="account_device_added_title">Cuenta del dispositivo añadida</string>
-  <string name="account_device_added_message">Has configurado con éxito tu cuenta de Jami en este dispositivo.</string>
   <string name="account_device_updated_title">Cuenta del dispositivo actualizada</string>
-  <string name="account_device_updated_message">Has actualizado con éxito tu cuenta de Jami.</string>
   <string name="account_sip_register_anyway">Registrarse de todas maneras</string>
   <!--TV-->
   <string name="account_tv_settings_header">Configuración de la cuenta</string>
@@ -184,6 +187,7 @@
   <string name="help_credentials_enter">Ingresá tus credenciales de la organización</string>
   <string name="help_connect_password_enter">Ingresá tu contraseña de la organización</string>
   <string name="account_connect_prompt_username">Nombre de usuario</string>
+  <string name="account_enter_username">Ingresar nombre de usuario</string>
   <!--Name registration-->
   <string name="error_username_empty">Ingresá un nombre de usuario</string>
   <string name="no_registered_name_for_account">El nombre de usuario no está registrado</string>

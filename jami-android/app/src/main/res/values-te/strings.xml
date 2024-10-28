@@ -145,14 +145,15 @@
   <string name="conversation_details">సంభాషణ వివరాలు</string>
   <string name="contact_details">సంప్రదింపు వివరాలు</string>
   <string name="conversation_action_delete_this">ఈ సంభాషణను తొలగించు</string>
+  <string name="leave_conversation">సంభాషణను వదిలివేయండి</string>
   <string name="conversation_action_delete_this_message">ఈ చర్యను తిరస్కరించలేము.</string>
   <string name="conversation_action_history_clear">స్పష్టమైన చరిత్ర</string>
   <string name="conversation_action_history_clear_title">సంభాషణ చరిత్ర క్లియర్?</string>
   <string name="conversation_action_history_clear_message">ఇది ఖచ్చితంగా సంభాషణ చరిత్ర క్లియర్ చేస్తుంది.</string>
-  <string name="conversation_action_remove_this">పరిచయాన్ని తొలగించు</string>
+  <string name="delete_contact">పరిచయాన్ని తొలగించు</string>
   <string name="conversation_action_remove_this_title">ఈ పరిచయం తొలగించడానికి?</string>
   <string name="conversation_action_remove_this_message">ఇది పరిచయాన్ని తొలగిస్తుంది మరియు సంభాషణ చరిత్రను ఖచ్చితంగా క్లియర్ చేస్తుంది.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s ను క్లిప్బోర్డ్ కు కాపీ చేయబడింది</string>
+  <string name="copied_to_clipboard">%1$s ను క్లిప్బోర్డ్ కు కాపీ చేయబడింది</string>
   <string name="conversation_action_select_peer_number">ఒక సంఖ్యను ఎంచుకోండి</string>
   <string name="conversation_action_block_this">బ్లాక్ కాంటాక్ట్</string>
   <string name="conversation_action_unblock_this">పరిచయాలను అన్బ్లాక్ చేయండి</string>
@@ -176,8 +177,6 @@
   <string name="conversation_preference_color">సంభాషణ రంగు</string>
   <string name="conversation_preference_emoji">సంభాషణ ఎమోజీ</string>
   <string name="conversation_type_contact">జామి పరిచయం</string>
-  <string name="conversation_type_private">ప్రైవేటు గుంపు</string>
-  <string name="conversation_type_group">సమూహ సమూహం</string>
   <string name="conversation_contact_invited">%1$s ఆహ్వానించబడింది</string>
   <string name="conversation_contact_added">%1$s చేరింది</string>
   <string name="conversation_contact_left">%1$s ఎడమవైపు</string>
@@ -202,7 +201,7 @@
   <string name="hist_contact_added">పరిచయం జోడించబడింది</string>
   <string name="hist_contact_left">ఎడమవైపున పరిచయం</string>
   <string name="hist_invitation_received">అందుకున్న ఆహ్వానం</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">ప్రొఫైల్</string>
   <string name="profile_name">ప్రొఫైల్ పేరు</string>
   <string name="profile_message_warning">మీ ప్రొఫైల్ మీ పరిచయాలతో మాత్రమే పంచుకుంటుంది</string>
@@ -212,6 +211,7 @@
   <string name="registered_name">నమోదు చేయబడిన పేరు</string>
   <string name="no_registered_name">నమోదు చేయని పేరు</string>
   <string name="identity">గుర్తింపు</string>
+  <string name="identifier">గుర్తింపు</string>
   <string name="account">ఖాతా</string>
   <string name="link_new_device">కొత్త పరికరాన్ని లింక్ చేయండి</string>
   <string name="devices">లింక్ చేయబడిన పరికరాలు</string>
@@ -321,7 +321,7 @@
   <string name="bottomSheet_raiseHand_btn">చేతి పైకి</string>
   <string name="uninstall">అన్ఇన్స్టాల్ చేయండి</string>
   <string name="reset">రీసెట్</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">ధృవీకరించు</string>
   <string name="tab_members">సభ్యులు</string>
   <string name="tab_files">ఫైళ్లు</string>
@@ -340,6 +340,9 @@
   <string name="jami_id_choose_username">ఒక వినియోగదారు పేరును ఎంచుకోండి</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">జామికి స్వాగతం</string>
+  <!--Conversation details-->
+  <string name="details">వివరాలు</string>
+  <string name="Private">ప్రైవేటు</string>
   <!--Donation-->
   <!--Extension-->
 </resources>

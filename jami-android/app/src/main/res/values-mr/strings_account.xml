@@ -150,9 +150,7 @@
   <string name="account_sip_cannot_be_registered_message">आपण खाते तयार करण्याच्या प्रक्रियेस पुढे जाऊ शकता किंवा आपली माहिती येथे संपादित करू शकता. खाते सेटिंग्जमध्ये नंतर आवृत्ती अद्याप शक्य आहे.</string>
   <string name="account_no_network_title">नेटवर्क त्रुटी</string>
   <string name="account_device_added_title">खाते उपकरणे जोडली</string>
-  <string name="account_device_added_message">तुम्ही या डिव्हाइसवर तुमचे जेमी अकाऊंट यशस्वीरीत्या सेट केले आहे.</string>
   <string name="account_device_updated_title">खाते यंत्र अद्यतनित</string>
-  <string name="account_device_updated_message">तुम्ही तुमच्या जामी अकाऊंटला यशस्वीरित्या अपडेट केले आहे.</string>
   <string name="account_sip_register_anyway">तरी नोंदणी करा</string>
   <!--TV-->
   <string name="account_tv_settings_header">खाते सेटिंग्ज</string>

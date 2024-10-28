@@ -79,6 +79,7 @@
   <!--Conversation-->
   <string name="conversation_details">Níos mó sonraí ag an gcaithne</string>
   <string name="contact_details">sonraí teagmhála</string>
+  <string name="leave_conversation">Cinnigh comhrá</string>
   <string name="conversation_action_history_clear">Tuairiscí soiléir</string>
   <string name="conversation_action_block_this">Contae Bloc</string>
   <string name="conversation_action_incoming_call">Glacadh isteach</string>
@@ -93,11 +94,12 @@
   <string name="wizard_skip">Skip</string>
   <string name="hist_contact_added">Contaeanna a chur leis</string>
   <string name="hist_invitation_received">Ag iarraidh a fháil</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">Proifíl</string>
   <string name="profile_message_warning">Ní roinntear do phróifíl ach le do chaontaithe</string>
   <string name="profile_name_hint">Cuir isteach do ainm</string>
   <string name="identity">Úinéir</string>
+  <string name="identifier">Cluiche</string>
   <string name="account">Contae</string>
   <string name="link_new_device">Déan nasc a dhéanamh ar ghléas nua</string>
   <string name="devices">Feistí ceangailte</string>
@@ -106,6 +108,7 @@
   <string name="generic_error_migration">Meas</string>
   <!--Pending invitations-->
   <string name="accept">Tabhair faoi deara</string>
+  <string name="decline">Tarraing</string>
   <string name="block">Bloc</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Ní thiocfar teagmhálacha</string>
@@ -146,7 +149,7 @@
   <string name="bottomSheet_raiseHand_btn">Cuir lámh suas</string>
   <string name="uninstall">De-isintú</string>
   <string name="reset">Athsheasamh</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">Cinntíonn</string>
   <string name="tab_members">Comhaltaí</string>
   <string name="tab_files">Fioscail</string>
@@ -159,6 +162,9 @@
   <string name="jami_id_choose_username">Roghnaigh ainm úsáideora</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Fáilte go Jami</string>
+  <!--Conversation details-->
+  <string name="details">Níos mó</string>
+  <string name="Private">Priontáil</string>
   <!--Donation-->
   <!--Extension-->
 </resources>

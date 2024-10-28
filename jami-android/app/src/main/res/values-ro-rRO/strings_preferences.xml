@@ -61,7 +61,6 @@
   <string name="extension_reset_preferences_summary">Reglările inițiale ale extensiei au fost restabilite</string>
   <string name="extension_reset_preferences_ask">Vrei să restabilești reglările generale ale extensiei?</string>
   <string name="extension_reset_account_preferences_ask">Vrei să restabilești reglările pentru cont ale extensiei?</string>
-  <string name="extension_successfully_installed">Extensia <b>%1$s</b> a fost instalată cu succes</string>
   <string name="extension_install_failure">A apărut o eroare la instalarea extensiei: <b>%1$s</b></string>
   <string name="extension_recent_version_exception">Este instalată o versiune mai recentă de <b>%1$s</b>.</string>
   <string name="extension_same_version_exception">Este instalată aceeași versiune a <b>%1$s</b>.</string>

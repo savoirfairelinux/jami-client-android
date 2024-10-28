@@ -1,12 +1,15 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
+  <string name="submit_issue_title">Soumettre un bug</string>
+  <string name="submit_issue_action_description"><u>Créer un nouveau ticket</u></string>
   <string name="section_license">Licence</string>
   <string name="sponsor_section">Jami est un logiciel libre développé et soutenu par</string>
   <string name="copyright_section">Droits d\'auteurs</string>
   <string name="contribute_section">Contribuer</string>
   <string name="version_section">Version</string>
   <string name="no_browser_app_installed">Aucun navigateur Web n\'a été trouvé; installez-en un pour afficher cette page</string>
+  <string name="website_chooser_title">Voir le site web avec...</string>
   <string name="license">Ce logiciel est fourni en l\'état, sans garantie d\'aucune sorte. Pour plus de détails, se référer à la <u>GNU General Public License version 3 ou plus récente</u></string>
   <string name="description">Jami est un logiciel libre de communication universel qui respecte les libertés et la vie privée de ses utilisateurs.</string>
   <string name="credits">Crédits</string>
@@ -122,7 +125,6 @@
   <string name="scan_qr">Numériser le code QR</string>
   <string name="qr_code">Code QR</string>
   <string name="qr_code_not_contact">QR code de contact Jami invalide</string>
-  <string name="new_swarm">Démarrer un Swarm</string>
   <string name="ab_action_flipcamera">Inverser la caméra</string>
   <string name="ab_action_hidepreview">Cacher la prévisualisation</string>
   <string name="remote_recording">%s en cours d\'enregistrement...</string>
@@ -172,14 +174,20 @@
   <string name="contact_details">Détails du contact</string>
   <string name="conversation_action_delete_this">Supprimer cette conversation</string>
   <string name="conversation_action_delete_this_title">Supprimer cette conversation ?</string>
+  <string name="leave_conversation">Quitter la conversation</string>
   <string name="conversation_action_delete_this_message">Cette action ne peut être annulée.</string>
   <string name="conversation_action_history_clear">Effacer l\'historique</string>
   <string name="conversation_action_history_clear_title">Effacer l\'historique des conversations ?</string>
   <string name="conversation_action_history_clear_message">Cela va effacer définitivement l\'historique des conversations.</string>
-  <string name="conversation_action_remove_this">Supprimer le contact</string>
+  <string name="delete_contact">Supprimer le contact</string>
   <string name="conversation_action_remove_this_title">Supprimer ce contact ?</string>
   <string name="conversation_action_remove_this_message">Cela supprimera le contact et effacera définitivement l\'historique des conversations.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s copié dans le presse-papier</string>
+  <string name="conversation_action_add_this_message">Ceci enverra une demande de connexion</string>
+  <string name="swarm_group_action_leave">Quitter le groupe</string>
+  <string name="swarm_group_action_leave_title">Quitter le groupe ?</string>
+  <string name="swarm_group_action_leave_message">Cela supprimera cette conversation de la liste.</string>
+  <string name="conversation_action_copy_peer_number">Copiez l\'identifiant du contact</string>
+  <string name="copied_to_clipboard">%1$s copié dans le presse-papier</string>
   <string name="conversation_action_select_peer_number">Choisir un numéro</string>
   <string name="conversation_action_block_this">Bloquer le contact</string>
   <string name="conversation_action_unblock_this">Débloquer le contact</string>
@@ -188,6 +196,7 @@
   <string name="conversation_action_latest">Faire défiler jusqu\'à la fin de la conversation</string>
   <string name="conversation_open_file_error">Aucune application capable d\'ouvrir ce type de fichier n\'a été trouvée.</string>
   <string name="clip_contact_uri">Adresse du contact</string>
+  <string name="clip_message">Contenu du message</string>
   <string name="block_contact_dialog_title">Bloquer %1$s ?</string>
   <string name="block_contact_dialog_message">%1$s ne sera plus en mesure de vous contacter tant que vous ne l\'aurez pas débloqué.</string>
   <string name="block_contact_completed">%1$s a été bloqué.</string>
@@ -205,8 +214,6 @@
   <string name="conversation_preference_color">Couleur de la conversation</string>
   <string name="conversation_preference_emoji">Émoji de la conversation</string>
   <string name="conversation_type_contact">Contact Jami</string>
-  <string name="conversation_type_private">Swarm privé</string>
-  <string name="conversation_type_group">Swarm</string>
   <string name="conversation_contact_invited">%1$s a été invité</string>
   <string name="conversation_contact_added">%1$s a rejoint la discussion</string>
   <string name="conversation_contact_left">%1$s restant</string>
@@ -250,7 +257,7 @@
   <string name="hist_contact_blocked">Contact bloqué</string>
   <string name="hist_contact_unblocked">Contact débloqué</string>
   <string name="hist_invitation_received">Invitation reçue</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">Profil</string>
   <string name="profile_name">Nom du profil</string>
   <string name="profile_message_warning">Votre profil n\'est partagé qu\'avec vos contacts</string>
@@ -260,6 +267,7 @@
   <string name="registered_name">Nom enregistré</string>
   <string name="no_registered_name">Aucun nom enregistré</string>
   <string name="identity">Identité</string>
+  <string name="identifier">Identifiant </string>
   <string name="account">Compte</string>
   <string name="link_new_device">Associer un nouvel appareil</string>
   <string name="devices">Appareils associés</string>
@@ -268,14 +276,20 @@
   <string name="share_message">Numériser ce code avec Jami</string>
   <string name="share_message_no_account">Sélectionnez un compte à partager.</string>
   <string name="share_your_account_information">Partager mes informations de contact</string>
+  <string name="share_contact_information">Partager les informations du contact</string>
   <string name="share_label">Partager</string>
   <string name="generic_error_migration">Erreur</string>
   <string name="generic_error_migration_message">Une erreur s\'est produite durant la migration</string>
   <string name="title_share_with">Partager avec...</string>
   <!--Pending invitations-->
   <string name="accept">Accepter</string>
+  <string name="decline">Refuser</string>
   <string name="block">Bloquer</string>
+  <string name="decline_invitation">Décliner l\'invitation</string>
+  <string name="accept_invitation">Accepter l\'invitation</string>
+  <string name="new_invitation_request_title">Nouvelle invitation</string>
   <string name="invitation_message">Vous avez %1$d demandes de contact</string>
+  <string name="outgoing_contact_invitation_message">Ce contact n\'est pas dans votre liste.\nSouhaitez-vous l\'ajouter ?</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Aucun contact bloqué</string>
   <!--Smartlist-->
@@ -385,7 +399,7 @@
   <string name="open_general_extension_settings">Ouvrir les paramètres généraux de l\'extension</string>
   <string name="uninstall">Désinstaller</string>
   <string name="reset">Réinitialiser</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">Confirmer</string>
   <string name="rename_error">ne peut être vide.</string>
   <string name="swarm_description">Ajouter une description</string>
@@ -405,6 +419,8 @@
   <string name="error_open_no_app_found">Aucune application trouvée pour gérer le fichier %1$s</string>
   <string name="swarm_detail_no_document">Vous n\'avez pas encore de documents.</string>
   <string name="group_admin">Administrateur</string>
+  <string name="share_contact_intent_title">Ajouter ce contact à Jami !</string>
+  <string name="share_contact_intent_body">Vous pouvez ajouter ce contact “%1$s” sur la plateforme de communication distribuée : %2$s</string>
   <!--JamiId-->
   <string name="jami_id_copy">Copier le JamiId</string>
   <string name="jami_id_share">Partager votre JamiId</string>
@@ -417,6 +433,15 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Bienvenue sur Jami</string>
   <string name="welcome_jami_description">Partagez votre identifiant Jami afin d\'être contacté plus facilement !</string>
+  <!--Conversation details-->
+  <string name="details">Détails</string>
+  <string name="secure_p2p_connection">Connexion pair à pair sécurisée</string>
+  <string name="swarm_type">Type de conversation</string>
+  <string name="Private">Privé</string>
+  <string name="swarm_id">Swarm ID</string>
+  <string name="show_qr_code">Afficher le code QR</string>
+  <string name="show_certificate">Montrer le certificat</string>
+  <string name="mute_conversation">Amuïr la conversation</string>
   <!--Donation-->
   <string name="donation_card_description">Si vous appréciez Jami et que vous croyez à notre mission, feriez-vous une donation ?</string>
   <string name="donation_card_not_now">Pas maintenant</string>

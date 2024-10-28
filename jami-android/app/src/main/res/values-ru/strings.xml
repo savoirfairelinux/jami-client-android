@@ -124,7 +124,6 @@
   <string name="scan_qr">Сканировать QR код</string>
   <string name="qr_code">QR-код</string>
   <string name="qr_code_not_contact">Не QR-код контакта Jami</string>
-  <string name="new_swarm">Запустить Рой</string>
   <string name="ab_action_flipcamera">Переключить камеру</string>
   <string name="ab_action_hidepreview">Скрыть предпросмотр</string>
   <string name="remote_recording">%s запись...</string>
@@ -174,14 +173,15 @@
   <string name="contact_details">Информация о контакте</string>
   <string name="conversation_action_delete_this">Удалить этот разговор</string>
   <string name="conversation_action_delete_this_title">Удалить этот разговор?</string>
+  <string name="leave_conversation">Покинуть беседу</string>
   <string name="conversation_action_delete_this_message">Это действие невозможно отменить.</string>
   <string name="conversation_action_history_clear">Очистить историю</string>
   <string name="conversation_action_history_clear_title">Очистить историю разговоров?</string>
   <string name="conversation_action_history_clear_message">Это очистит историю разговоров.</string>
-  <string name="conversation_action_remove_this">Удалить контакт</string>
+  <string name="delete_contact">Удалить контакт</string>
   <string name="conversation_action_remove_this_title">Удалить этот контакт?</string>
   <string name="conversation_action_remove_this_message">Это удалит контакт и очистит историю разговоров.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s скопировано в буфер обмена</string>
+  <string name="copied_to_clipboard">%1$s скопировано в буфер обмена</string>
   <string name="conversation_action_select_peer_number">Выбрать номер</string>
   <string name="conversation_action_block_this">Заблокировать контакт</string>
   <string name="conversation_action_unblock_this">Разблокировать контакт</string>
@@ -207,8 +207,7 @@
   <string name="conversation_preference_color">Цвет беседы</string>
   <string name="conversation_preference_emoji">Эмоджи беседы</string>
   <string name="conversation_type_contact">Контакт Jami</string>
-  <string name="conversation_type_private">Личная беседа</string>
-  <string name="conversation_type_group">Групповая беседа</string>
+  <string name="conversation_type_group">Группа</string>
   <string name="conversation_contact_invited">%1$s приглашён</string>
   <string name="conversation_contact_added">%1$s присоединился</string>
   <string name="conversation_contact_left">%1$s вышел</string>
@@ -252,7 +251,7 @@
   <string name="hist_contact_blocked">Контакт заблокирован</string>
   <string name="hist_contact_unblocked">Контакт разблокирован</string>
   <string name="hist_invitation_received">Получено приглашение</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">Профиль</string>
   <string name="profile_name">Имя профиля</string>
   <string name="profile_message_warning">Ваш профиль доступен только вашим контактам</string>
@@ -262,6 +261,7 @@
   <string name="registered_name">Зарегистрированное Имя</string>
   <string name="no_registered_name">Имя не зарегистрировано</string>
   <string name="identity">Идентификатор</string>
+  <string name="identifier">Идентификатор</string>
   <string name="account">Аккаунт</string>
   <string name="link_new_device">Привязать новое устройство</string>
   <string name="devices">Привязанные устройства</string>
@@ -388,7 +388,7 @@
   <string name="open_general_extension_settings">Открыть общие настройки расширения</string>
   <string name="uninstall">Удалить</string>
   <string name="reset">Сброс</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">Подтвердить</string>
   <string name="rename_error">не может быть пустым.</string>
   <string name="swarm_description">Добавить описание</string>
@@ -420,6 +420,9 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Добро пожаловать в Jami</string>
   <string name="welcome_jami_description">Поделитесь своим идентификатором Jami, чтобы с вами было проще связаться!</string>
+  <!--Conversation details-->
+  <string name="details">Подробности</string>
+  <string name="Private">Приватная</string>
   <!--Donation-->
   <string name="donation_card_description">Если Вам нравится использовать Jami и Вы верите в нашу миссию, Вы бы сделали пожертвование?</string>
   <string name="donation_card_not_now">Не сейчас</string>

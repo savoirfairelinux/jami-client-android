@@ -1,6 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
+  <string name="no_browser_app_installed">No se ha encontrado Navegador Web, instala uno para ver esta página</string>
+  <string name="website_chooser_title">Mira la pagina web usando...</string>
+  <string name="license">Este software se proporciona \"tal cual\" sin garantía de ningún tipo. Para mas información, vea 1 GNU General Public License versión 3 o superior</string>
   <!--About dialog-->
   <string name="media">Medios</string>
   <!--RingActivity-->
@@ -28,7 +31,6 @@
   <string name="action_call_accept">Aceptar llamada</string>
   <string name="ab_action_audio_call">Iniciar una llamada con audio</string>
   <string name="ab_action_video_call">Realizar una videollamada</string>
-  <string name="new_swarm">Iniciar swarm</string>
   <!--Text messages-->
   <string name="ongoing_group_call">Llamada en curso</string>
   <string name="started_call">Comenzó una llamada</string>
@@ -42,7 +44,10 @@
   <!--Conversation-->
   <string name="conversation_details">Detalles de conversación</string>
   <string name="contact_details">Detalles de contacto</string>
+  <string name="leave_conversation">Salir de la conversación</string>
   <string name="conversation_action_delete_this_message">Esta acción no puede deshacerse.</string>
+  <string name="delete_contact">Eliminar contacto</string>
+  <string name="copied_to_clipboard">%1$s copiado al portapapeles</string>
   <string name="conversation_action_unblock_this">Desbloquear contacto</string>
   <string name="conversation_action_incoming_call">Llamada entrante</string>
   <string name="conversation_action_latest">Desplazar hasta el final de la conversación</string>
@@ -53,15 +58,15 @@
   <string name="conversation_ended">Conversación terminada.</string>
   <string name="conversation_message_deleted">%s Eliminar mensaje</string>
   <string name="conversation_reply_you">Tú</string>
-  <string name="conversation_type_private">Enjambre privado</string>
-  <string name="conversation_type_group">Enjambre grupal</string>
   <string name="conversation_search_hint">Buscar conversación</string>
   <string name="today">Hoy</string>
   <string name="yesterday">Ayer</string>
   <!--Contacts-->
-  <!--Account Summary-->
+  <!--Account summary-->
+  <string name="identifier">Identificador</string>
   <!--Share fragment-->
   <!--Pending invitations-->
+  <string name="decline">Rechazar</string>
   <string name="invitation_message">Tenés %1$d solicitudes de contacto</string>
   <!--Blacklist-->
   <!--Smartlist-->
@@ -84,8 +89,9 @@
   <!--Bottom sheet-->
   <string name="bottomSheet_extensions_btn">Extensions</string>
   <string name="bottomSheet_hangup_btn">Terminar llamada</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">Confirmar</string>
+  <string name="swarm_description">Añadir descripción</string>
   <string name="tab_members">Miembros</string>
   <string name="tab_files">Archivos</string>
   <string name="tab_settings">Configuraciones</string>
@@ -110,6 +116,9 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Bienvenido a Jami</string>
   <string name="welcome_jami_description">¡Comparta su identificador Jami para contactar más fácilmente!</string>
+  <!--Conversation details-->
+  <string name="details">Detalles</string>
+  <string name="Private">Privado</string>
   <!--Donation-->
   <string name="donation_card_description">Si disfruta usando Jami y cree en nuestra misión, ¿le gustaría hacer una donación?</string>
   <string name="donation_card_not_now">Ahora no</string>

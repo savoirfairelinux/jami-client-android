@@ -23,11 +23,17 @@
   <string name="dialog_wait_create_details">Ju lutemi, pritni teksa shtohet llogaria juaj e re…</string>
   <string name="dialog_wait_update">Po përditësohet llogaria</string>
   <string name="dialog_wait_update_details">Ju lutemi, pritni teksa përditësohet llogaria juaj e re…</string>
+  <string name="dialog_warn_ip2ip_account_title">Të krijohet një llogari SIP e zbrazët?</string>
+  <string name="dialog_warn_ip2ip_account_message">Ju ndan një hap nga krijimi i një llogarie SIP pa strehëemër të vlefshëm.
+        Do të jeni në gjendje vetëm të bëni dhe merrni thirrje të drejtpërdrejta IP.
+        Mundeni ta përpunoni më vonë llogarinë tuaj</string>
   <string name="account_type_ip2ip">Llogari IP</string>
   <string name="help_ring">Një llogari Jami ju lejon të lidheni në mënyrë të sigurt me njerëz, sipas modelit tek për tek, përmes një rrjeti tërësisht të shpërndarë.</string>
   <string name="help_sip_title">Shtoni llogari SIP</string>
   <string name="help_sip">Formësoni një llogari SIP ekzistuese.</string>
+  <string name="create_sip_account">Formësoni llogari SIP</string>
   <!--Strings related to account deletion-->
+  <string name="account_delete_dialog_title">Të fshihet llogaria?</string>
   <string name="account_delete_dialog_message">Ky veprim s\’mund të zhbëhet.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">S\’ka llogari të regjistruar</string>
@@ -36,6 +42,8 @@
   <string name="account_device_revoke">Shfuqizoje pajisjes</string>
   <string name="account_device_revocation_success_title">Sukses</string>
   <string name="account_device_revocation_success">Pajisja tani është shfuqizuar!</string>
+  <string name="account_device_revocation_error_title">Gabim shfuqizimi pajisjeje</string>
+  <string name="account_device_revocation_wrong_password">Fjalëkalim i pasaktë</string>
   <string name="account_device_revocation_unknown_device">Pajisje e panjohur.</string>
   <string name="account_device_revocation_error_unknown">Gabim i panjohur.</string>
   <string name="account_password_change">Ndryshoni Fjalëkalimin</string>
@@ -146,8 +154,12 @@
   <string name="account_export_file_summary">Kopjeruajeni llogarinë tuaj në pajisjen tuaj për ta rikthyer më vonë.</string>
   <string name="account_export_end_decryption_message">Fjalëkalim i pasaktë. Ju lutemi, riprovoni me fjalëkalimin e saktë.</string>
   <string name="account_export_end_network_title">Gabim rrjeti</string>
+  <string name="account_export_end_network_message">Ndodhi një gabim rrjeti teksa eksportohej llogaria. Kontrolloni lidhjen tuaj në internet.</string>
   <string name="account_export_end_error_title">Gabim</string>
+  <string name="account_export_end_error_message">Ndodhi një gabim i panjohur teksa eksportohej llogaria.</string>
   <string name="account_enter_password">Jepni fjalëkalimin</string>
+  <string name="account_share_body">Lidhuni me mua duke përdorur “%1$s” në platformën Jami të komunikimeve të shpërndara: %2$s</string>
+  <string name="account_share_body_with_username">Lidhuni me mua duke përdorur “%1$s”, ose emrin tim publik të përdoruesit “%2$s” në platformën Jami të komunikimeve të shpërndara: %3$s</string>
   <string name="account_contact_me">Lidhuni me mua në Jami!</string>
   <string name="update_account">Përditësoje llogarinë</string>
   <string name="account_migration">Llogaria juaj Jami mund të përditësohet.\nJu lutemi, jepni fjalëkalimin tuaj.</string>
@@ -155,15 +167,18 @@
   <string name="sip_account">Llogari SIP</string>
   <string name="ring_account_identity">Identitet</string>
   <string name="account_migration_title_dialog">Migrim llogarie</string>
+  <string name="account_migration_message_dialog">Llogaritë tuaja lypset të përditësohen. Doni të kalohet te skena e administrimit të Llogarive që të kryeni këtë veprim?</string>
   <string name="account_update_needed">Lypset përditësim</string>
   <string name="account_cannot_be_found_title">Gabim lidhjeje</string>
   <string name="account_cannot_be_found_message">S’arrihet të gjendet llogari në rrjetin Jami. Sigurohuni që qe eksportuar në Jami që prej një pajisjeje ekzistuese dhe se kredencialet e dhëna për hyrjen janë të sakta.</string>
+  <string name="jams_account_cannot_be_found_message">Ndodhi një gabim teksa lidhej llogaria. Ju lutemi, kontrolloni kredencialet dhe riprovoni.</string>
   <string name="account_sip_cannot_be_registered_message">Mund të vazhdoni me procesin e krijimit të llogarisë ose të përpunoni këtu të dhënat tuaja. Përpunimi është i mundshëm edhe më vonë, që nga rregullimet llogarie.</string>
   <string name="account_no_network_title">Gabim rrjeti</string>
+  <string name="account_no_network_message">Ndodhi një gabim lidhjeje, teksa shtohej llogari Jami te rrjeti i shpërndarë. Kontrolloni lidhjen e pajisjes tuaj.</string>
   <string name="account_device_added_title">Pajisja e llogarisë u shtua</string>
-  <string name="account_device_added_message">E keni rregulluar me sukses llogarinë tuaj Jami në këtë pajisje.</string>
   <string name="account_device_updated_title">Pajisja e llogarisë u përditësua</string>
-  <string name="account_device_updated_message">E përditësuat me sukses llogarinë tuaj Jami.</string>
+  <string name="account_cannot_be_updated_message">Ndodhi një gabim teksa përditësohej llogaria. Ju lutemi, kontrolloni fjalëkalimin tuaj.</string>
+  <string name="account_sip_success_title">U regjistrua llogari SIP</string>
   <string name="account_sip_register_anyway">Regjistroje sido qoftë</string>
   <!--TV-->
   <string name="account_tv_settings_header">Rregullime llogarie</string>
@@ -183,8 +198,11 @@
   <string name="account_link_export_button">Lidhni një pajisje të re</string>
   <string name="account_link_show_button">Shfaq %d pajisje të tjera të lidhura</string>
   <string name="account_link_hide_button">Fshihe pajisjen e lidhur</string>
+  <string name="account_link_export_info">Që të përdorni këtë llogari në pajisje të tjera, së pari duhet t\ia ekspozoni atë Jami-t. Kështu do të prodhohet një kod PIN që duhet ta jepni te pajisja e re për të rregulluar llogarinë. PIN-i do të skadojë pas 10 minutash.</string>
   <string name="account_start_export_button">Prodho PIN</string>
   <string name="account_end_export_button">mbylle</string>
+  <string name="account_end_export_infos">PIN-i juaj është:\n\n%%\n\nQë të plotësohet procesi, lypset të hapni Jami-n në pajisjen e re. Krijoni një llogari të re përmes “Lidhe këtë pajisje te një llogari”. PIN-i juaj do të skadojë pas 10 minutash.</string>
+  <string name="account_link_export_info_light">Që të përdorni këtë llogari në pajisje të tjera, së pari duhet t\ia ekspozoni atë Jami-t. Kështu do të prodhohet një kod PIN që duhet ta jepni te pajisja e re për të rregulluar llogarinë. PIN-i do të skadojë pas 10 minutash.</string>
   <string name="account_export_title">Lidheni llogarinë te pajisje të tjera</string>
   <string name="account_connect_server_button">Lidhu me shërbyesin e administrimit</string>
   <string name="account_connect_button">Lidhu</string>
@@ -192,6 +210,9 @@
   <string name="help_credentials_enter">Jepni kredencialet e hyrjes për entin tuaj</string>
   <string name="help_connect_password_enter">Jepni fjalëkalimin e entit tuaj</string>
   <string name="account_connect_prompt_username">Emër përdoruesi</string>
+  <string name="account_connect_server">Lidhu me një shërbyes JAMS</string>
+  <string name="account_enter_username">Jepni emër përdoruesi</string>
+  <string name="account_enter_servername">Jepni shërbyesin</string>
   <!--Name registration-->
   <string name="error_username_empty">Jepni një emër përdoruesi</string>
   <string name="no_registered_name_for_account">Pa emër të regjistruar</string>
@@ -216,17 +237,21 @@
   <string name="account_creation_profile">Krijoni profilin tuaj</string>
   <string name="account_creation_ring">Krijoni llogarinë tuaj Jami</string>
   <string name="account_link_title">Lidhe këtë pajisje</string>
+  <string name="account_sip_cannot_be_registered">Ndodhi një gabim teksa regjistrohej llogaria SIP.</string>
   <!--Edit profile-->
+  <string name="account_edit_profile">Përpunoni profil</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Jepni fjalëkalimin që ta ripohoni</string>
   <string name="enter_password">Jepni fjalëkalimin</string>
   <string name="revoke_device_title">Shfuqizoje pajisjen</string>
+  <string name="revoke_device_message">Jeni i sigurt se doni të shfuqizohet %1$s?</string>
   <string name="revoke_device_wait_title">Ju lutemi, pritni…</string>
   <string name="revoke_device_wait_message">Pajisja po shfuqizohet</string>
   <string name="rename_device_title">Riemërtojeni këtë pajisje</string>
   <string name="rename_device_message">Zgjidhni një emër të ri për identifikim të kësaj pajisjeje në llogarinë tuaj Jami</string>
   <string name="rename_device_button">Riemërtoje pajisjen</string>
   <string name="account_rename_device_hint">Zgjidhni një emër të ri për pajisjen</string>
+  <string name="account_device_name_empty">Emri i pajisjes s\’mund të jetë i zbrazët</string>
   <string name="account_device_this_indicator">Këtë pajisje</string>
   <string name="account_disabled_indicator">e çaktivizuar</string>
   <!--Link a new device-->
@@ -241,7 +266,10 @@
   <string name="account_link_time_valid">Kodi PIN do të jetë i pavlefshëm: %1$s.</string>
   <string name="account_link_device_info">Zgjidhni “Lidhni një pajisje të re”, që nga aplikacioni tjetër Jami, që të shfaqet kodi QR, ose PIN-i</string>
   <string name="account_generate_export_device">Te pajisja tjetër</string>
+  <string name="account_generate_export_info">Instaloni dhe niseni Jami-n, përzgjidhni “Importo prej pajisje tjetër” dhe skanoni kodin QR.</string>
   <string name="content_description_qr_generated">Kodi juaj QR</string>
+  <string name="account_generate_export_invalid">PIN-i s’është më i vlefshëm.\n Që të lidhni pajisjen e re, jepni fjalëkalimin dhe prodhoni një tjetër.</string>
+  <string name="account_generate_export_invalid_two">PIN-i s’është më i vlefshëm.\nQë të lidhni pajisjen e re, prodhoni një tjetër.</string>
   <string name="help_pin_info">Plotësojeni nëse llogaria është e fshehtëzuar me fjalëkalim</string>
   <string name="connect_device_scanqr">Skanoni QR-in</string>
   <string name="connect_device_enterPIN">Ose jepni PIN-in</string>

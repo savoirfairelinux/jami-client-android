@@ -61,7 +61,6 @@
   <string name="extension_reset_preferences_summary">Estensione ripristinata alle impostazioni predefinite</string>
   <string name="extension_reset_preferences_ask">Si desidera ripristinare le impostazioni generali dell\'estensione?</string>
   <string name="extension_reset_account_preferences_ask">Si desidera ripristinare le impostazioni dell\'estensione dell\'account?</string>
-  <string name="extension_successfully_installed">Estensione <b>%1$s</b> installata con successo</string>
   <string name="extension_install_failure">Si è verificato un errore durante l\'installazione dell\'estensione: <b>%1$s</b></string>
   <string name="extension_recent_version_exception">È installata una versione più recente di <b>%1$s</b>.</string>
   <string name="extension_same_version_exception">È installata la stessa versione di <b>%1$s</b>.</string>

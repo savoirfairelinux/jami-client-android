@@ -1,6 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
+  <string name="submit_issue_title">Reportar problema</string>
+  <string name="submit_issue_action_description"><u>Criar um novo relatório de problema</u></string>
   <string name="section_license">Licença</string>
   <string name="sponsor_section">Jami é um software livre desenvolvido e mantido por</string>
   <string name="copyright_section">Direitos autorais</string>
@@ -15,7 +17,12 @@
   <string name="call_service_description">Este serviço é necessário para manter suas chamadas no primeiro plano. Ele só executa durante chamadas.</string>
   <string name="data_transfer_service_description">Este serviço é necessário para exibir notificações persistentes durante transferências de arquivos. Ele só executa durante transferência de arquivos.</string>
   <!--About dialog-->
+  <string name="thank_note">Gostaríamos de agradecer aos nossos colaboradores, cujos esforços ao longo de muitos anos tornaram este software naquilo que é.</string>
+  <string name="developers">Programadores</string>
   <string name="media">Mídia</string>
+  <string name="community_management">Gestão da comunidade</string>
+  <string name="special_thanks">Agradecimentos especiais a</string>
+  <string name="end_note">Esta é uma lista de pessoas que fizeram um investimento significativo de tempo, com resultados úteis, no Jami. Quaisquer contribuidores que desejem ser adicionados à lista devem contactar a equipa do Jami em contact@jami.net.</string>
   <!--RingActivity-->
   <string name="error_no_network">Sem conectividade</string>
   <string name="error_account_offline">A conta está offline</string>
@@ -29,6 +36,7 @@
   <string name="menu_item_settings">Configurações</string>
   <string name="menu_item_advanced_settings">Configurações avançadas</string>
   <string name="menu_item_account_settings">Configurações da conta</string>
+  <string name="menu_item_extension_list">Configurações de extensões</string>
   <string name="menu_item_share">Compartilhar minha conta</string>
   <string name="menu_item_about">Sobre Jami</string>
   <string name="video_setting_title">Configurações de vídeo</string>
@@ -95,10 +103,18 @@
   <string name="hist_in_call">Chamada recebida de %1$s</string>
   <string name="hist_out_call">Chamada de saída de %1$s</string>
   <string name="call_duration">Durou %s</string>
+  <string name="start_error_title">Não foi possível iniciar o Jami!</string>
   <string name="start_error_mic_required">O Jami requer permissão para uso do microfone para funcionar.</string>
   <string name="action_call_accept">Aceitar a chamada</string>
+  <string name="action_call_accept_audio">Aceitar chamada recebida apenas com áudio</string>
+  <string name="action_call_accept_video">Aceitar chamada recebida com vídeo</string>
+  <string name="action_call_hold_accept">Aceitar a chamada recebida apenas com áudio e colocar a chamada atual em espera
+</string>
+  <string name="action_call_hold_accept_video">Aceitar a chamada recebida com vídeo e colocar a chamada atual em espera</string>
+  <string name="action_call_end_accept">Aceitar a chamada recebida e terminar a chamada atual</string>
   <string name="action_call_decline">Rejeitar</string>
   <string name="action_call_mic_mute">Desativar microfone</string>
+  <string name="action_load_extension">Carregar extensão</string>
   <string name="ab_action_speakerphone">Habilitar viva-voz</string>
   <string name="ab_action_contact_add">Adicionar aos contatos</string>
   <string name="ab_action_contact_add_question">Adicionar aos contatos?</string>
@@ -110,7 +126,6 @@
   <string name="scan_qr">Escanear código QR</string>
   <string name="qr_code">Código QR</string>
   <string name="qr_code_not_contact">Não é um código QR de contacto Jami</string>
-  <string name="new_swarm">Iniciar enxame</string>
   <string name="ab_action_flipcamera">Virar câmera</string>
   <string name="ab_action_hidepreview">Oculta visualização</string>
   <string name="remote_recording">%s gravando…</string>
@@ -139,8 +154,11 @@
   <string name="ringtone_error_size_too_big">Este arquivo é grande demais. O tamanho máximo é %1$dkB.</string>
   <string name="ringtone_custom_prompt">Definir um toque personalizado</string>
   <string name="ringtone_custom_label">Personalizado</string>
+  <string name="ringtone_jami_tones">Toques Jami</string>
   <!--Read contacts permission-->
+  <string name="permission_dialog_read_contacts_message">O Jami necessita da permissão “Ler contactos” para ativar esta funcionalidade. Conceda esta permissão.</string>
   <!--Write call log permission-->
+  <string name="permission_dialog_write_call_log_message">O Jami precisa da permissão “Gravar registo de chamadas” para ativar esta funcionalidade. Conceda esta permissão.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Escanear o código QR da conta que deseja adicionar.</string>
   <string name="title_activity_qrcode">Compartilhar minha conta</string>
@@ -156,14 +174,21 @@
   <string name="conversation_details">Detalhes da conversa</string>
   <string name="contact_details">Detalhes do contato</string>
   <string name="conversation_action_delete_this">Deletar esta conversa</string>
+  <string name="conversation_action_delete_this_title">Eliminar esta conversa?</string>
+  <string name="leave_conversation">Deixe a conversa</string>
   <string name="conversation_action_delete_this_message">Esta ação não pode ser desfeita.</string>
   <string name="conversation_action_history_clear">Limpar histórico</string>
   <string name="conversation_action_history_clear_title">Limpar o histórico da conversação?</string>
   <string name="conversation_action_history_clear_message">Isto irá apagar o histórico da conversação.</string>
-  <string name="conversation_action_remove_this">Deletar contato</string>
+  <string name="delete_contact">Deletar contato</string>
   <string name="conversation_action_remove_this_title">Deletar este contato?</string>
   <string name="conversation_action_remove_this_message">Isto irá deletar o contato e limpar o histórico de conversação definitivamente.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s copiado para área de transferência</string>
+  <string name="conversation_action_add_this_message">Isto enviará um pedido de conexão.</string>
+  <string name="swarm_group_action_leave">Sair do grupo</string>
+  <string name="swarm_group_action_leave_title">Sair deste grupo?</string>
+  <string name="swarm_group_action_leave_message">Isto irá remover a conversa da sua lista de conversas</string>
+  <string name="conversation_action_copy_peer_number">Copiar identificador de contacto</string>
+  <string name="copied_to_clipboard">%1$s copiado para área de transferência</string>
   <string name="conversation_action_select_peer_number">Selecione um número</string>
   <string name="conversation_action_block_this">Bloquear contato</string>
   <string name="conversation_action_unblock_this">Desbloquear contato</string>
@@ -172,6 +197,7 @@
   <string name="conversation_action_latest">Rolar para o fim da conversa</string>
   <string name="conversation_open_file_error">Não há aplicativo instalado capaz de abrir este tipo de arquivo.</string>
   <string name="clip_contact_uri">Endereço do contato</string>
+  <string name="clip_message">Conteúdo da mensagem</string>
   <string name="block_contact_dialog_title">Bloquear %1$s?</string>
   <string name="block_contact_dialog_message">%1$s não poderá entrar em contato com você até que você o desbloqueie.</string>
   <string name="block_contact_completed">%1$s foi bloqueado.</string>
@@ -189,11 +215,12 @@
   <string name="conversation_preference_color">Cor da conversação</string>
   <string name="conversation_preference_emoji">Emoji de conversação</string>
   <string name="conversation_type_contact">Contato Jami</string>
-  <string name="conversation_type_private">Enxame privado</string>
-  <string name="conversation_type_group">Enxame de grupos</string>
+  <string name="conversation_type_group">Grupo</string>
   <string name="conversation_contact_invited">%1$s foi convidado</string>
   <string name="conversation_contact_added">%1$s se juntou</string>
   <string name="conversation_contact_left">%1$s saiu</string>
+  <string name="conversation_contact_blocked">%1$s foi bloqueado(a)</string>
+  <string name="conversation_contact_unblocked">%1$s foi desbloqueado(a)</string>
   <string name="conversation_search_hint">Buscar conversas</string>
   <string name="audio_recorder_error">A aplicação do gravador de áudio não foi encontrada.</string>
   <string name="video_recorder_error">A aplicação do gravador de vídeo não foi encontrada.</string>
@@ -221,6 +248,7 @@
   <string name="help_password_choose">Escolha uma senha difícil que você poderá lembrar para proteger a sua conta Jami. </string>
   <string name="help_password_enter">Digite a senha principal da sua conta Jami.</string>
   <string name="help_server_enter">Digite o URL do servidor de gerenciamento.</string>
+  <string name="help_pin_enter">Introduzir o PIN de outra conta Jami configurada. Utilizar a funcionalidade “Exportar conta Jami” para obter um PIN.</string>
   <string name="pin_copied">Código PIN copiado para a área de transferência.</string>
   <string name="wizard_next">Próximo</string>
   <string name="wizard_back">Anterior</string>
@@ -228,8 +256,10 @@
   <string name="hist_contact_invited">O contato foi convidado</string>
   <string name="hist_contact_added">O contato foi adicionado</string>
   <string name="hist_contact_left">O contato saiu</string>
+  <string name="hist_contact_blocked">Contacto bloqueado</string>
+  <string name="hist_contact_unblocked">Contacto desbloqueado</string>
   <string name="hist_invitation_received">Convite recebido</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">Perfil</string>
   <string name="profile_name">Nome do perfil</string>
   <string name="profile_message_warning">Seu perfil é compartilhado apenas com seus contatos</string>
@@ -239,6 +269,7 @@
   <string name="registered_name">Nome registrado</string>
   <string name="no_registered_name">Nenhum nome registrado</string>
   <string name="identity">Identidade</string>
+  <string name="identifier">Identificador</string>
   <string name="account">Conta</string>
   <string name="link_new_device">Vincular um novo dispositivo</string>
   <string name="devices">Dispositivos vinculados</string>
@@ -247,6 +278,7 @@
   <string name="share_message">Digitalize este código com Jami</string>
   <string name="share_message_no_account">Por favor selecione uma conta para compartilhar.</string>
   <string name="share_your_account_information">Compartilhar minhas informações de contato</string>
+  <string name="share_contact_information">Partilhar informação do contacto</string>
   <string name="share_label">Compartilhar</string>
   <string name="generic_error_migration">Erro</string>
   <string name="generic_error_migration_message">Ocorreu um erro durante a migração</string>
@@ -255,7 +287,11 @@
   <string name="accept">Aceitar</string>
   <string name="decline">Rejeitar</string>
   <string name="block">Bloquear</string>
+  <string name="decline_invitation">Recusar convite</string>
+  <string name="accept_invitation">Aceitar convite</string>
+  <string name="new_invitation_request_title">Novo convite</string>
   <string name="invitation_message">Você possui %1$d solicitações de contato</string>
+  <string name="outgoing_contact_invitation_message">Este contacto não se encontra na sua lista de contactos.\nEnvie um pedido para se conectarem</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Nenhum contato bloqueado</string>
   <!--Smartlist-->
@@ -267,6 +303,7 @@
   <string name="tv_contact_row_header">Contatos</string>
   <string name="gallery_error_title">Galeria de aplicativos não encontrada</string>
   <string name="gallery_error_message">Aplicativo não encontrado no dispositivo para abrir a Galeria</string>
+  <string name="generic_error">Ocorreu um erro desconhecido.</string>
   <!--File Transfer-->
   <string name="invalid_file">Arquivo inválido</string>
   <string name="not_able_to_write_file">Não foi possível gravar o arquivo</string>
@@ -286,6 +323,7 @@
   <string name="file_saved_in">Arquivo salvo em %s</string>
   <string name="file_saved_successfully">Arquivo salvo com sucesso</string>
   <string name="file_download">Baixar</string>
+  <string name="no_space_left_on_device">Não há espaço de armazenamento disponível no dispositivo</string>
   <string name="title_media_viewer">Visualizador de mídia</string>
   <string name="menu_file_open">Abrir arquivo</string>
   <string name="menu_file_download">Baixar arquivo</string>
@@ -329,6 +367,7 @@
   <string name="camera_permission_rationale_message">Jami requer a permissão de câmera para gravar vídeo e para chamada de vídeo. Será solicitado no próximo passo.</string>
   <string name="unable_to_start_recorder">Não é possível iniciar a gravação de áudio.</string>
   <string name="error_sharing_file">Ocorreu um erro ao partilhar o ficheiro.</string>
+  <string name="error_opening_file">Ocorreu um erro ao abrir o ficheiro.</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Recomendado</string>
   <string name="wizard_status_optional">Opcional</string>
@@ -346,6 +385,7 @@
   <string name="wizard_profile_button">Salvar perfil</string>
   <string name="wizard_profile_skip">Pular e fazer depois</string>
   <string name="fab_path_choose">Escolha outro arquivo</string>
+  <string name="chat_extensions">Extensões de conversação</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Compartilhar</string>
   <string name="bottomSheet_dialpad_btn">Teclado de discagem</string>
@@ -357,10 +397,13 @@
   <string name="bottomSheet_mute_microphone_btn">Microfone</string>
   <string name="bottomSheet_sound_output_btn">Sons</string>
   <string name="bottomSheet_raiseHand_btn">Levantar a mão</string>
+  <string name="open_account_extension_settings">Abrir configurações da extensão de conta</string>
+  <string name="open_general_extension_settings">Abrir configurações da extensão de conta</string>
   <string name="uninstall">Desinstalar</string>
   <string name="reset">Resetar</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">Confirmar</string>
+  <string name="rename_error">não pode estar vazio.</string>
   <string name="swarm_description">Adicionar descrição</string>
   <string name="tab_members">Membros</string>
   <string name="tab_files">Arquivos</string>
@@ -378,6 +421,8 @@
   <string name="error_open_no_app_found">Nenhum aplicativo encontrado para abrir este arquivo: %1$s</string>
   <string name="swarm_detail_no_document">Ainda não tem documentos.</string>
   <string name="group_admin">Admin</string>
+  <string name="share_contact_intent_title">Adicionar este contacto ao Jami!</string>
+  <string name="share_contact_intent_body">Pode adicionar o contacto “%1$s” na plataforma de comunicação distribuída Jami: %2$s</string>
   <!--JamiId-->
   <string name="jami_id_copy">Copiar identidade Jami</string>
   <string name="jami_id_share">Compartilhar identidade Jami</string>
@@ -390,6 +435,15 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Bem-vindo ao Jami</string>
   <string name="welcome_jami_description">Compartilhe seu identificador Jami para ser contatado mais facilmente!</string>
+  <!--Conversation details-->
+  <string name="details">Detalhes</string>
+  <string name="secure_p2p_connection">Ligação segura ponto a ponto</string>
+  <string name="swarm_type">Tipo de conversação</string>
+  <string name="Private">Privado</string>
+  <string name="swarm_id">ID do enxame</string>
+  <string name="show_qr_code">Mostrar código QR</string>
+  <string name="show_certificate">Mostrar certificado</string>
+  <string name="mute_conversation">Silenciar conversa</string>
   <!--Donation-->
   <string name="donation_card_description">Se você está gostando do Jami e acredita na nossa missão, gostaria de fazer uma doação?</string>
   <string name="donation_card_not_now">Não agora</string>

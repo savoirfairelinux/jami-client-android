@@ -105,7 +105,6 @@
   <string name="write_a_message">メッセージを入力</string>
   <string name="scan_qr">QR コードをスキャン</string>
   <string name="qr_code">QRコード</string>
-  <string name="new_swarm">Swarmを動かす</string>
   <string name="ab_action_flipcamera">カメラを押す</string>
   <string name="ab_action_hidepreview">プレビューを隠す</string>
   <string name="remote_recording">%s記録中…</string>
@@ -149,14 +148,15 @@
   <string name="conversation_details">話し合いの詳細</string>
   <string name="contact_details">連絡先の詳細</string>
   <string name="conversation_action_delete_this">この会話を削除</string>
+  <string name="leave_conversation">話しをやめましょう</string>
   <string name="conversation_action_delete_this_message">この操作は元に戻せません。</string>
   <string name="conversation_action_history_clear">履歴を消去</string>
   <string name="conversation_action_history_clear_title">会話の履歴を削除しますか？</string>
   <string name="conversation_action_history_clear_message">この操作は会話の履歴を完全に削除します。</string>
-  <string name="conversation_action_remove_this">連絡先を削除</string>
+  <string name="delete_contact">連絡先を削除</string>
   <string name="conversation_action_remove_this_title">この連絡先を削除しますか？</string>
   <string name="conversation_action_remove_this_message">この操作は連絡先を削除し、会話の履歴を完全に削除します。</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s をクリップボードにコピーしました</string>
+  <string name="copied_to_clipboard">%1$s をクリップボードにコピーしました</string>
   <string name="conversation_action_select_peer_number">番号を選択</string>
   <string name="conversation_action_block_this">連絡先をブロック</string>
   <string name="conversation_action_unblock_this">連絡先の解禁</string>
@@ -180,8 +180,6 @@
   <string name="conversation_preference_color">会話の色</string>
   <string name="conversation_preference_emoji">会話の絵文字</string>
   <string name="conversation_type_contact">Jamiの連絡先</string>
-  <string name="conversation_type_private">プライベートSwarm</string>
-  <string name="conversation_type_group">グループSwarm</string>
   <string name="conversation_contact_invited">%1$s が招待されました</string>
   <string name="conversation_contact_added">%1$s が加入</string>
   <string name="conversation_contact_left">残り%1$s</string>
@@ -206,7 +204,7 @@
   <string name="hist_contact_added">連絡先を追加しました</string>
   <string name="hist_contact_left">連絡先が退出しました</string>
   <string name="hist_invitation_received">招待を受信しました</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">プロフィール</string>
   <string name="profile_name">プロフィール名</string>
   <string name="profile_message_warning">プロフィールは連絡先以外に共有されません</string>
@@ -216,6 +214,7 @@
   <string name="registered_name">登録名</string>
   <string name="no_registered_name">名前が登録されていません</string>
   <string name="identity">ID</string>
+  <string name="identifier">識別子</string>
   <string name="account">アカウント</string>
   <string name="link_new_device">新しいデバイスをリンク</string>
   <string name="devices">リンクされたデバイス</string>
@@ -325,7 +324,7 @@
   <string name="bottomSheet_raiseHand_btn">手を挙げる</string>
   <string name="uninstall">解除する</string>
   <string name="reset">リセット</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">確認</string>
   <string name="tab_members">要員</string>
   <string name="tab_files">ファイル</string>
@@ -344,6 +343,9 @@
   <string name="jami_id_choose_username">ユーザー名を選択する</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Jamiへようこそ</string>
+  <!--Conversation details-->
+  <string name="details">詳細</string>
+  <string name="Private">プライベート</string>
   <!--Donation-->
   <!--Extension-->
 </resources>

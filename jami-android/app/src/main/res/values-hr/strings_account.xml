@@ -149,9 +149,7 @@
   <string name="account_sip_cannot_be_registered_message">Možete nastaviti s procesom stvaranja računa ili uređivati svoje informacije ovdje.</string>
   <string name="account_no_network_title">Greška mreže</string>
   <string name="account_device_added_title">Dodavanje računa</string>
-  <string name="account_device_added_message">Uspješno si uspostavio svoj račun na ovom uređaju.</string>
   <string name="account_device_updated_title">Upgradiran račun</string>
-  <string name="account_device_updated_message">Uspješno si ažurirao svoj račun u Jamiju.</string>
   <string name="account_sip_register_anyway">U svakom slučaju, prijavi se.</string>
   <!--TV-->
   <string name="account_tv_settings_header">Nastavljanje računa</string>

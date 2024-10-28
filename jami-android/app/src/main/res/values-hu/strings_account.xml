@@ -3,7 +3,7 @@
   <!--Strings related to account edition screen-->
   <string name="ic_delete_menu">Törlés</string>
   <string name="ic_advanced_menu">Haladó beállítások</string>
-  <string name="ic_blacklist_menu">Letiltott kapcsolatok</string>
+  <string name="ic_blacklist_menu">Letiltott kapcsolattartók</string>
   <!--Strings related to account creation-->
   <string name="account_selection">Fiók kijelölése</string>
   <string name="add_ring_account_title">Fiók hozzáadása</string>
@@ -88,7 +88,7 @@
   <string name="account_read_receipts_label">Olvasási visszaigazolások küldése</string>
   <string name="account_read_receipts_summary">Küldjön és fogadjon nyugtákat, jelezve, hogy üzenet jelenik meg.</string>
   <string name="account_call_settings_title">Hívás beállítások</string>
-  <string name="account_dht_public_in_calls_label">Az ismeretlen kapcsolatoktól érkező bejövő hívások engedélyezése</string>
+  <string name="account_dht_public_in_calls_label">Az ismeretlen kapcsolattartóktól érkező bejövő hívások engedélyezése</string>
   <string name="account_registration_exp_label">Bejegyeztetés lejárata</string>
   <string name="account_local_interface_label">Helyi csatoló</string>
   <string name="account_local_port_label">Helyi kikötő</string>
@@ -171,21 +171,19 @@
   <string name="account_update_needed">Frissítés szükséges</string>
   <string name="account_cannot_be_found_title">Fiókhiba</string>
   <string name="account_cannot_be_found_message">Nem található fiók a Jami hálózaton. Győződjön meg arról, hogy a Jami-re exportálták egy meglévő eszközről, és hogy a megadott hitelesítő adatok helyesek.</string>
+  <string name="jams_account_cannot_be_found_message">Hiba történt a fiók csatlakoztatása közben. Kérjük, ellenőrizze a hitelesítő adatokat, és próbálkozzon újra.</string>
   <string name="account_sip_cannot_be_registered_message">Folytathatja a fiók létrehozásának folyamatát vagy itt szerkesztheti adatait. A fiókbeállítások később is szerkeszthetők.</string>
   <string name="account_no_network_title">Hálózati hiba</string>
   <string name="account_no_network_message">Kapcsolódási hiba történt a Jami-fióknak az elosztott hálózathoz való hozzáadása közben. Ellenőrizze az eszköz csatlakoztatását.</string>
   <string name="account_device_added_title">Fiókeszköz hozzáadva</string>
-  <string name="account_device_added_message">Jami-fiók sikeresen beállítva.</string>
   <string name="account_device_updated_title">A fiókeszköz frissítve</string>
-  <string name="account_device_updated_message">Jami-fiók sikeresen frissítve.</string>
   <string name="account_cannot_be_updated_message">Hiba történt a fiók frissítése közben. Ellenőrizze a fiók jelszavát.</string>
   <string name="account_sip_success_title">SIP-fiók regisztrálva</string>
-  <string name="account_sip_success_message">SIP-fiók sikeresen regisztrálva.</string>
   <string name="account_sip_register_anyway">Regisztráció mindenképp</string>
   <!--TV-->
   <string name="account_tv_settings_header">Fiókbeállítások</string>
   <string name="account_tv_advance_settings_header">Haladó beállítások</string>
-  <string name="account_tv_add_contact">Kapcsolat hozzáadása</string>
+  <string name="account_tv_add_contact">Kapcsolattartó hozzáadása</string>
   <string name="account_tv_advanced_settings">Általános beállítások szerkesztése</string>
   <string name="account_tv_about">A Jami névjegye</string>
   <string name="tv_about_version">Verzió</string>
@@ -212,6 +210,9 @@
   <string name="help_credentials_enter">Adja meg a szervezet hitelesítő adatait</string>
   <string name="help_connect_password_enter">Szervezet jelszavának megadása</string>
   <string name="account_connect_prompt_username">Felhasználónév</string>
+  <string name="account_connect_server">Csatlakozás a JAMS kiszolgálóhoz</string>
+  <string name="account_enter_username">Felhasználónév megadása</string>
+  <string name="account_enter_servername">Kiszolgáló megadása</string>
   <!--Name registration-->
   <string name="error_username_empty">Felhasználónév megadása</string>
   <string name="no_registered_name_for_account">Nincs bejegyzett név</string>

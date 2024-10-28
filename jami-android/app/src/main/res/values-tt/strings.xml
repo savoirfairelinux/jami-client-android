@@ -79,6 +79,7 @@
   <!--Conversation-->
   <string name="conversation_details">Сөйләшүнең җентеклелекләре</string>
   <string name="contact_details">Контакт мәгълүматлары</string>
+  <string name="leave_conversation">Сөйләшүне калдырыгыз</string>
   <string name="conversation_action_history_clear">Тарих ачык</string>
   <string name="conversation_action_block_this">Блок белән элемтә</string>
   <string name="conversation_action_incoming_call">Килүче чакыру</string>
@@ -93,11 +94,12 @@
   <string name="wizard_skip">Карап чык</string>
   <string name="hist_contact_added">Контактлар өстәлгән</string>
   <string name="hist_invitation_received">Чакыру кабул ителгән</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">Профиль</string>
   <string name="profile_message_warning">Профильгез сезнең контактларыгыз белән генә уртаклаша</string>
   <string name="profile_name_hint">Исемегезне кертегез</string>
   <string name="identity">Идентификация</string>
+  <string name="identifier">Идентификатор</string>
   <string name="account">Хисап</string>
   <string name="link_new_device">Яңа җайланманы тоташтыру</string>
   <string name="devices">Бәйләнешле җайланмалар</string>
@@ -146,7 +148,7 @@
   <string name="bottomSheet_raiseHand_btn">Кулыңны күтәр!</string>
   <string name="uninstall">Кушымтаны урнаштыру</string>
   <string name="reset">Кайта кую</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">Ышанычлылык</string>
   <string name="tab_members">Депутатлар</string>
   <string name="tab_files">Файллар</string>
@@ -159,6 +161,9 @@
   <string name="jami_id_choose_username">Кулланучы исемен сайлагыз</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Җәмигә рәхим итегез.</string>
+  <!--Conversation details-->
+  <string name="details">Мәгълүматлар</string>
+  <string name="Private">Шәхси</string>
   <!--Donation-->
   <!--Extension-->
 </resources>

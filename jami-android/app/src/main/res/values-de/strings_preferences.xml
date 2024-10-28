@@ -61,7 +61,6 @@
   <string name="extension_reset_preferences_summary">Erweiterung auf die Standardeinstellungen zurückgesetzt</string>
   <string name="extension_reset_preferences_ask">Möchten Sie die allgemeinen Erweiterungseinstellungen zurücksetzen?</string>
   <string name="extension_reset_account_preferences_ask">Möchten Sie die Kontoerweiterungseinstellungen zurücksetzen?</string>
-  <string name="extension_successfully_installed">Erweiterung <b>%1$s</b> erfolgreich installiert</string>
   <string name="extension_install_failure">Bei der Installation der folgenden Erweiterung ist ein Fehler aufgetreten: <b>%1$s</b></string>
   <string name="extension_recent_version_exception">Eine neuere Version von <b>%1$s</b> ist installiert.</string>
   <string name="extension_same_version_exception">Es ist die dieselbe Version <b>%1$s</b> von installiert.</string>

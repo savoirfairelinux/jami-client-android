@@ -143,14 +143,15 @@
   <string name="conversation_details">Podrobnosti rozhovoru</string>
   <string name="contact_details">Informácie o kontakte</string>
   <string name="conversation_action_delete_this">Vymazať túto konverzáciu</string>
+  <string name="leave_conversation">Nechaj rozhovor</string>
   <string name="conversation_action_delete_this_message">Túto operáciu nie je možné vrátiť.</string>
   <string name="conversation_action_history_clear">Vymazať históriu</string>
   <string name="conversation_action_history_clear_title">Vymazať históriu konverzácie?</string>
   <string name="conversation_action_history_clear_message">História konverzácie bude natrvalo vymazaná. </string>
-  <string name="conversation_action_remove_this">Odstrániť kontakt</string>
+  <string name="delete_contact">Odstrániť kontakt</string>
   <string name="conversation_action_remove_this_title">Odstrániť tento kontakt?</string>
   <string name="conversation_action_remove_this_message">Kontakt i história konverzácie bude natrvalo vymazaná. </string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s skopírované do schránky</string>
+  <string name="copied_to_clipboard">%1$s skopírované do schránky</string>
   <string name="conversation_action_select_peer_number">Zvoliť číslo</string>
   <string name="conversation_action_block_this">Zablokovať kontakt</string>
   <string name="conversation_action_unblock_this">Odblokovať kontakt</string>
@@ -174,11 +175,10 @@
   <string name="conversation_preference_color">Farba konverzácie</string>
   <string name="conversation_preference_emoji">Emoji konverzácie</string>
   <string name="conversation_type_contact">Kontakt s Jami</string>
-  <string name="conversation_type_private">Privátna skupina</string>
   <string name="conversation_type_group">Skupina</string>
   <string name="conversation_contact_invited">%1$s bol pozvaný</string>
   <string name="conversation_contact_added">Pridaný %1$s</string>
-  <string name="conversation_contact_left">%1$ je ľavý</string>
+  <string name="conversation_contact_left">%1$s je ľavý</string>
   <string name="conversation_search_hint">Vyhľadávacie rozhovor</string>
   <string name="today">Dnes</string>
   <string name="yesterday">Včera</string>
@@ -200,7 +200,7 @@
   <string name="hist_contact_added">Kontakt pridaný</string>
   <string name="hist_contact_left">Kontakt doľava</string>
   <string name="hist_invitation_received">Bola prijatá pozvánka</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">Profil</string>
   <string name="profile_name">Názov profilu</string>
   <string name="profile_message_warning">Váš profil je zdieľaný iba s vašimi kontaktmi</string>
@@ -210,6 +210,7 @@
   <string name="registered_name">Registrované meno</string>
   <string name="no_registered_name">Žiadne registrované meno</string>
   <string name="identity">Identita</string>
+  <string name="identifier">Identifikátor</string>
   <string name="account">Účet</string>
   <string name="link_new_device">Prepojiť nové zariadenie</string>
   <string name="devices">Prepojené zariadenia</string>
@@ -319,7 +320,7 @@
   <string name="bottomSheet_raiseHand_btn">Zdvihnite ruku</string>
   <string name="uninstall">Odinstalacia</string>
   <string name="reset">Nastavenie</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">Potvrdiť</string>
   <string name="tab_members">Členovia</string>
   <string name="tab_files">Súbory</string>
@@ -338,6 +339,9 @@
   <string name="jami_id_choose_username">Vyberte používateľské meno</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Vitajte v Jami</string>
+  <!--Conversation details-->
+  <string name="details">Detaily</string>
+  <string name="Private">Privátny</string>
   <!--Donation-->
   <string name="donation_card_description">Ak radi používate Jami a veríte v naše poslanie, prispeli by ste nám?</string>
   <string name="donation_card_not_now">Teraz nie</string>

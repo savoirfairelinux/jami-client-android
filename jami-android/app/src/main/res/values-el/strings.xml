@@ -6,6 +6,9 @@
   <string name="copyright_section">Πνευματική Ιδιοκτησία</string>
   <string name="contribute_section">Συνεισφέρετε</string>
   <string name="version_section">Έκδοση</string>
+  <string name="no_browser_app_installed">Δεν βρέθηκε πρόγραμμα περιήγησης, εγκαταστήστε ένα για να δείτε την σελίδα</string>
+  <string name="website_chooser_title">Προβολή σελίδας με...</string>
+  <string name="license">Το παρόν λογισμικό παρέχεται \"ως έχει\", άνευ οποιασδήποτε εγγύησης. Για περισσότερα βλ.<u> Γενική Άδεια Δημόσιας Χρήσης GNU έκδοση 3 ή νεώτερη</u></string>
   <string name="description">To Jami είναι ένα ελεύθερο λογισμικό για επικοινωνία με όλο τον κόσμο. Σέβεται την ελευθερία και την ιδιωτικότητα των χρηστών/στριών του.</string>
   <string name="credits">Συντελεστές</string>
   <string name="pip_title">Συνδιάσκεψη Jami</string>
@@ -101,7 +104,6 @@
   <string name="write_a_message">Γράψε μήνυμα</string>
   <string name="scan_qr">Σάρωση QR κώδικα</string>
   <string name="qr_code">QR κώδικας</string>
-  <string name="new_swarm">Δημιουργία σμήνους</string>
   <string name="ab_action_flipcamera">Εναλλαγή κάμερας</string>
   <string name="ab_action_hidepreview">Απόκρυψη προεπισκόπησης</string>
   <string name="remote_recording">%s καταγράφει...</string>
@@ -144,14 +146,15 @@
   <string name="conversation_details">Πληροφορίες συνομιλίας</string>
   <string name="contact_details">Λεπτομέρειες επαφών</string>
   <string name="conversation_action_delete_this">Διαγραφή αυτής της συνομιλίας</string>
+  <string name="leave_conversation">Αφήστε τη συζήτηση</string>
   <string name="conversation_action_delete_this_message">Η ενέργεια δεν μπορεί να αναιρεθεί.</string>
   <string name="conversation_action_history_clear">Διαγραφή ιστορικού</string>
   <string name="conversation_action_history_clear_title">Διαγραφή ιστορικού συνομιλιών;</string>
   <string name="conversation_action_history_clear_message">Αυτό σίγουρα θα διαγράψει το ιστορικό συνομιλίας.</string>
-  <string name="conversation_action_remove_this">Διαγραφή επαφής</string>
+  <string name="delete_contact">Διαγραφή επαφής</string>
   <string name="conversation_action_remove_this_title">Διαγραφή αυτής της επαφής;</string>
   <string name="conversation_action_remove_this_message">Αυτό θα διαγράψει την επαφή και σίγουρα και το ιστορικό συνομιλίας.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s αντιγράφτηκε στο πρόχειρο</string>
+  <string name="copied_to_clipboard">%1$s αντιγράφτηκε στο πρόχειρο</string>
   <string name="conversation_action_select_peer_number">Επιλέξτε αριθμό </string>
   <string name="conversation_action_block_this">Μπλοκάρισμα επαφής</string>
   <string name="conversation_action_unblock_this">Ανοίξτε την επαφή</string>
@@ -175,8 +178,6 @@
   <string name="conversation_preference_color">Χρώμα συνομιλίας</string>
   <string name="conversation_preference_emoji">Emoji συνομιλίας</string>
   <string name="conversation_type_contact">Επαφή Jami</string>
-  <string name="conversation_type_private">Ιδιωτικό σμήνος</string>
-  <string name="conversation_type_group">Ομαδικό σμήνος</string>
   <string name="conversation_contact_invited">%1$s προσκλήθηκε</string>
   <string name="conversation_contact_added">%1$s μπήκε</string>
   <string name="conversation_contact_left">%1$s έφυγε</string>
@@ -201,7 +202,7 @@
   <string name="hist_contact_added">Η επαφή προστέθηκε</string>
   <string name="hist_contact_left">Η επαφή αποχώρησε</string>
   <string name="hist_invitation_received">Η πρόσκληση παραλήφθηκε</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">Προφίλ</string>
   <string name="profile_name">Όνομα προφίλ</string>
   <string name="profile_message_warning">Το προφίλ σας διαμοιράζεται μόνο με τις επαφές σας</string>
@@ -211,6 +212,7 @@
   <string name="registered_name">Καταχωρημένο Όνομα</string>
   <string name="no_registered_name">Δεν καταχωρήθηκε όνομα</string>
   <string name="identity">Ταυτότητα</string>
+  <string name="identifier">Ταυτοποιητής</string>
   <string name="account">Λογαριασμός</string>
   <string name="link_new_device">Σύνδεση νέας συσκευής</string>
   <string name="devices">Συνδεδεμένες συσκευές</string>
@@ -225,7 +227,9 @@
   <string name="title_share_with">Κοινοποίησε με...</string>
   <!--Pending invitations-->
   <string name="accept">Αποδοχή</string>
+  <string name="decline">Απόρριψη κλήσης</string>
   <string name="block">Μπλοκάρισμα</string>
+  <string name="invitation_message">Έχεις %1$d αιτήματα επαφών</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Μη μπλοκαρισμένες επαφές</string>
   <!--Smartlist-->
@@ -318,7 +322,7 @@
   <string name="bottomSheet_raiseHand_btn">Σηκώστε το χέρι σας</string>
   <string name="uninstall">Απεγκατάσταση</string>
   <string name="reset">Ανακατάσταση</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">Επιβεβαίωση</string>
   <string name="tab_members">Μέλη</string>
   <string name="tab_files">Αρχεία</string>
@@ -337,6 +341,9 @@
   <string name="jami_id_choose_username">Επιλέξτε όνομα χρήστη</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Καλώς ήλθατε στο  Jami</string>
+  <!--Conversation details-->
+  <string name="details">Λεπτομέρειες</string>
+  <string name="Private">Ιδιωτικό</string>
   <!--Donation-->
   <!--Extension-->
 </resources>

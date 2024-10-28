@@ -175,12 +175,9 @@
   <string name="account_no_network_title">Ошибка сети</string>
   <string name="account_no_network_message">При добавлении аккаунта Jami в распределенную сеть возникла ошибка подключения. Проверьте соединение вашего устройства.</string>
   <string name="account_device_added_title">Аккаунт создан</string>
-  <string name="account_device_added_message">Вы успешно настроили аккаунт Jami на этом устройстве.</string>
   <string name="account_device_updated_title">Устройство аккаунта обновлено</string>
-  <string name="account_device_updated_message">Вы успешно обновили ваш аккаунт Jami.</string>
   <string name="account_cannot_be_updated_message">При обновлении аккаунта произошла ошибка. Пожалуйста, проверьте свой пароль.</string>
   <string name="account_sip_success_title">SIP-аккаунт зарегистрирован</string>
-  <string name="account_sip_success_message">SIP-аккаунт успешно зарегистрирован.</string>
   <string name="account_sip_register_anyway">Все равно зарегистрироваться</string>
   <!--TV-->
   <string name="account_tv_settings_header">Настройки аккаунта</string>
@@ -212,6 +209,7 @@
   <string name="help_credentials_enter">Введите учетные данные вашей организации</string>
   <string name="help_connect_password_enter">Введите пароль вашей организации</string>
   <string name="account_connect_prompt_username">Имя пользователя</string>
+  <string name="account_enter_username">Введите имя пользователя</string>
   <!--Name registration-->
   <string name="error_username_empty">Введите имя пользователя</string>
   <string name="no_registered_name_for_account">Нет зарегистрированного имени</string>

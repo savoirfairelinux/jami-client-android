@@ -145,14 +145,15 @@
   <string name="conversation_details">உரையாடலின் விவரங்கள்</string>
   <string name="contact_details">தொடர்பு விவரங்கள்</string>
   <string name="conversation_action_delete_this">இந்த உரையாடலை நீக்கவும்</string>
+  <string name="leave_conversation">உரையாடலை விட்டுவிடுங்கள்</string>
   <string name="conversation_action_delete_this_message">இந்த நடவடிக்கை திரும்பப் பெற முடியாது.</string>
   <string name="conversation_action_history_clear">தெளிவான வரலாறு</string>
   <string name="conversation_action_history_clear_title">உரையாடல் வரலாற்றை அழிக்க?</string>
   <string name="conversation_action_history_clear_message">இது நிச்சயமாக உரையாடல் வரலாற்றை அழிக்கும்.</string>
-  <string name="conversation_action_remove_this">தொடர்புகளை நீக்கவும்</string>
+  <string name="delete_contact">தொடர்புகளை நீக்கவும்</string>
   <string name="conversation_action_remove_this_title">இந்த தொடர்பு நீக்க?</string>
   <string name="conversation_action_remove_this_message">இது தொடர்பு நீக்கி உரையாடல் வரலாற்றை அழிக்கும்.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s கிளிப்போர்டில் நகலெடுக்கப்பட்டது</string>
+  <string name="copied_to_clipboard">%1$s கிளிப்போர்டில் நகலெடுக்கப்பட்டது</string>
   <string name="conversation_action_select_peer_number">ஒரு எண்ணைத் தேர்ந்தெடுக்கவும்</string>
   <string name="conversation_action_block_this">பிளாக் தொடர்பு</string>
   <string name="conversation_action_unblock_this">தொடர்புகளைத் திறக்கவும்</string>
@@ -176,11 +177,9 @@
   <string name="conversation_preference_color">உரையாடல் நிறம்</string>
   <string name="conversation_preference_emoji">உரையாடல் ஈமோஜி</string>
   <string name="conversation_type_contact">ஜாமி தொடர்பு</string>
-  <string name="conversation_type_private">தனியார் கும்பல்</string>
-  <string name="conversation_type_group">குழுக்கள்</string>
   <string name="conversation_contact_invited">%1$s அழைக்கப்பட்டார்</string>
   <string name="conversation_contact_added">%1$s சேர்க்கப்பட்டது</string>
-  <string name="conversation_contact_left">%1$ இடது</string>
+  <string name="conversation_contact_left">%1$s இடது</string>
   <string name="conversation_search_hint">தேடல் உரையாடல்</string>
   <string name="today">இன்று</string>
   <string name="yesterday">நேற்று</string>
@@ -202,7 +201,7 @@
   <string name="hist_contact_added">தொடர்பு சேர்க்கப்பட்டது</string>
   <string name="hist_contact_left">தொடர்பு இடது</string>
   <string name="hist_invitation_received">அழைப்பு</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">சுயவிவரம்</string>
   <string name="profile_name">சுயவிவர பெயர்</string>
   <string name="profile_message_warning">உங்கள் சுயவிவரம் உங்கள் தொடர்புகளுடன் மட்டுமே பகிரப்படுகிறது</string>
@@ -212,6 +211,7 @@
   <string name="registered_name">பதிவு செய்யப்பட்ட பெயர்</string>
   <string name="no_registered_name">பதிவு செய்யப்படாத பெயர்</string>
   <string name="identity">அடையாளம்</string>
+  <string name="identifier">அடையாளங்காட்டி</string>
   <string name="account">கணக்கு</string>
   <string name="link_new_device">புதிய சாதனத்தை இணைக்கவும்</string>
   <string name="devices">இணைக்கப்பட்ட சாதனங்கள்</string>
@@ -321,7 +321,7 @@
   <string name="bottomSheet_raiseHand_btn">கை உயர்த்தி</string>
   <string name="uninstall">நிறுவல் நீக்கு</string>
   <string name="reset">மீட்டமை</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">உறுதிப்படுத்தவும்</string>
   <string name="tab_members">உறுப்பினர்</string>
   <string name="tab_files">கோப்புகள்</string>
@@ -340,6 +340,9 @@
   <string name="jami_id_choose_username">ஒரு பயனர்பெயரைத் தேர்ந்தெடுக்கவும்</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">ஜாமிக்கு வரவேற்கிறோம்</string>
+  <!--Conversation details-->
+  <string name="details">விவரங்கள்</string>
+  <string name="Private">தனியார்</string>
   <!--Donation-->
   <!--Extension-->
 </resources>

@@ -1,0 +1,155 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--Strings related to account edition screen-->
+  <string name="ic_blacklist_menu">Estetyt henkilöt</string>
+  <!--Strings related to account creation-->
+  <string name="account_selection">Valitse tili</string>
+  <string name="add_ring_account_title">Lisää tili</string>
+  <string name="add_sip_account_title">Lisää SIP-tili</string>
+  <string name="account_creation_error">Tilin luomisen aikana tapahtui virhe.</string>
+  <string name="action_create">Luo tili</string>
+  <string name="dialog_wait_create">Lisätään tiliä</string>
+  <string name="dialog_wait_create_details">Odota kunnes tilisi on lisätty...</string>
+  <string name="dialog_warn_ip2ip_account_title">Luodaanko tyhjä SIP-tunnus?</string>
+  <string name="dialog_warn_ip2ip_account_message">Olet luomassa SIP-tiliä, jolla ei ole kelvollista isäntänimeä..
+Voit soittaa sekä vastaanottaa vain suoria IP-puheluita.
+Voit muokata tiliäsi myöhemmin</string>
+  <string name="help_ring">Jami-tilillä tavoitat ihmiset turvallisesti vertaisverkossa täysin hajautetun verkoston kautta.</string>
+  <string name="help_sip_title">Lisää SIP-tili</string>
+  <string name="help_sip">Määritä olemassa oleva SIP-tili.</string>
+  <string name="create_sip_account">Määritä SIP-tili</string>
+  <!--Strings related to account deletion-->
+  <string name="account_delete_dialog_title">Poistetaanko tili?</string>
+  <!--AccountManagementFragment-->
+  <string name="empty_account_list">Ei rekistöröityä tiliä!</string>
+  <string name="normal_accounts_titles">Tilit</string>
+  <string name="account_device_revocation_success">Laite on nyt poistettu!</string>
+  <string name="account_device_revocation_error_title">Poistamisen laitevirhe</string>
+  <string name="account_device_revocation_wrong_password">Väärä salasana.</string>
+  <string name="account_password_change_wait_message">Tilin salasanan vaihtaminen</string>
+  <string name="account_biometric_disable">Poista biometrinen todennus käytöstä</string>
+  <string name="account_biometric_set">Ota biometrinen todennus käyttöön</string>
+  <string name="account_biometric_summary">Hallinnoi tilisi biometristä todennusta.</string>
+  <!--Basic Details-->
+  <string name="account_useragent_label">Käyttäjän ohjelma</string>
+  <string name="account_autoanswer_label">Autom. vastaaja</string>
+  <string name="account_rendezvous_label">Kohtaamispaikka</string>
+  <string name="account_rendezvous_summary">Kohtaamispaikassa saapuvat puhelut lisätään keskusteluhuoneeseen.</string>
+  <string name="account_upnp_label">Käytä UPnP</string>
+  <!--Extension Details-->
+  <string name="account_preferences_extension_tab">Laajennukset</string>
+  <!--Audio Details-->
+  <string name="account_audio_label">Audio</string>
+  <!--Video Details-->
+  <string name="account_video_enable">Video käyttöön</string>
+  <!--Advanced Details-->
+  <string name="account_preferences_advanced_tab">Lisäasetukset</string>
+  <string name="account_chat_settings_title">Chat-asetukset</string>
+  <string name="account_read_receipts_summary">Lähetä ja vastaanota kuittaus, että viesti on nähty.</string>
+  <string name="account_dht_public_in_calls_label">Salli tuntemattomien henkilöiden puhelut</string>
+  <string name="account_accept_files_max_size">Autom. hyväksyttävän tiedoston enimmäiskoko</string>
+  <string name="account_turn_enable_label">Käytä TURN</string>
+  <string name="disabled">Poistettu</string>
+  <string name="account_proxy_list_enable_label">Käytä DHT-välityspalvelin luetteloa</string>
+  <string name="account_proxy_server_list_label">DHT-välityspalvelimen luettelon URL</string>
+  <string name="account_proxy_server_used">Käytetään: %1$s</string>
+  <string name="account_peer_discovery_label">Paikallinen vertaisten haku</string>
+  <string name="account_peer_discovery_enable_label">Salli paikallinen vertaisten haku</string>
+  <string name="account_peer_discovery_enable_summary">Yhdistä muihin DHT-solmuihin, jotka ilmoittautuvat meidän verkossa</string>
+  <!--Security Details-->
+  <!--SRTP Details-->
+  <!--SIP-->
+  <!--TLS Details-->
+  <string name="account_tls_transport_switch_label">Käytä TLS-siirtoa</string>
+  <string name="account_tls_port_label">Kuunneltava TLS-portti</string>
+  <string name="account_tls_private_key_file_label">Salausavain</string>
+  <string name="account_tls_method_label">TLS-menetelmä</string>
+  <string name="account_tls_ciphers_label">TLS-salaukset</string>
+  <string name="account_rtp_port_range">RTP porttialue</string>
+  <!--restore/backup-->
+  <string name="account_export_file">Varmuuskopioi tili</string>
+  <string name="account_export_end_decryption_message">Väärä salasana. Yritä uudelleen oikealla salasanalla.</string>
+  <string name="account_export_end_network_message">Tiliä vietäessä tapahtui verkkovirhe. Tarkista yhteytesi.</string>
+  <string name="account_export_end_error_message">Tiliä vietäessä tapahtui tuntematon virhe.</string>
+  <string name="account_enter_password">Anna salasana</string>
+  <string name="account_share_body">Ota minuun yhteyttä käyttämällä \"%1$s\" Jamin hajautettua viestintäalustaa: %2$s</string>
+  <string name="account_share_body_with_username">Ota minuun yhteyttä käyttämällä \"%1$s\" tai julkista käyttäjänimeä \"%2$s\" Jamin hajautetulla viestintäalustalla: %3$s</string>
+  <string name="sip_account">SIP-tili</string>
+  <string name="ring_account_identity">Identiteetti</string>
+  <string name="account_migration_message_dialog">Sinun tilisi on päivitettävä. Haluatko siirtyä Tilinhallintaan ja suorittaa tämän toiminnon?</string>
+  <string name="account_cannot_be_found_title">Tilivirhe</string>
+  <string name="account_cannot_be_found_message">Tiliä ei löydy Jami-verkosta. Varmista, että se vietiin Jamiin olemassa olevasta laitteesta ja annetut kirjautumistiedot ovat oikein.</string>
+  <string name="jams_account_cannot_be_found_message">Tilin yhdistämisen aikana tapahtui virhe. Tarkista kirjautumistiedot ja yritä uudelleen.</string>
+  <string name="account_sip_cannot_be_registered_message">Voit jatkaa tilin luontia tai muokata tietojasi täällä. Muokkaus on mahdollista tehdä tiliasetuksissa myöhemmin.</string>
+  <string name="account_no_network_message">Kun Jami-tiliä lisättiin hajautettuun verkkoon, tapahtui verkkovirhe. Tarkista laitteesi verkkoyhteys.</string>
+  <string name="account_cannot_be_updated_message">Tiliä päivitettäessä tapahtui virhe. Tarkista salasanasi.</string>
+  <string name="account_sip_success_title">SIP-tili rekisteröity</string>
+  <!--TV-->
+  <string name="account_tv_settings_header">Tiliasetukset</string>
+  <string name="account_tv_add_contact">Lisää henkilö</string>
+  <string name="account_tv_about">Tietoja Jami\'sta</string>
+  <string name="tv_about_author">Tekijän oikeudet</string>
+  <string name="account_link_button">Yhdistä verkosta</string>
+  <string name="account_link_archive_button">Yhdistä varmuuskopiosta</string>
+  <string name="account_link_prompt_pin">Anna PIN-koodi</string>
+  <string name="account_new_button">Luo Jami-tili</string>
+  <string name="account_link_show_button">Näytä %d muuta linkitettyä laitetta</string>
+  <string name="account_link_export_info">Jotta voit käyttää tiliä muilla laitteilla, sinun on ensin vietävä se Jami:lle. Tämä luo PIN-koodin, joka sinun on annettava uuteen laitteeseen tilin luomiseksi. PIN-koodi vanhenee 10 minuutissa.</string>
+  <string name="account_end_export_infos">PIN-koodisi on:\n\n%%\n\nSuorita prosessin loppuun, avaamalla Jami uudessa laitteessa. Luo uusi tili, valitse \"Yhdistä tämä laite tiliin\". Huomaa: PIN-koodi vanhenee 10 minuutissa.</string>
+  <string name="account_link_export_info_light">Jotta voit käyttää tiliä muilla laitteilla, sinun on ensin vietävä se Jami:lle. Tämä luo PIN-koodin, joka sinun on annettava uuteen laitteeseen tilin luomiseksi. PIN-koodi vanhenee 10 minuutissa.</string>
+  <string name="prompt_server">Jamin hallintapalvelimen URL</string>
+  <string name="account_connect_server">Yhdistä JAMS-palvelimeen</string>
+  <string name="account_enter_username">Anna käyttäjänimi</string>
+  <string name="account_enter_servername">Anna palvelin</string>
+  <!--Name registration-->
+  <string name="username_available">Käyttäjänimi on saatavilla!</string>
+  <string name="username_already_taken">Käyttäjänimi on jo varattu</string>
+  <string name="invalid_username">Virheellinen käyttäjänimi</string>
+  <string name="looking_for_username_availability">Tarkistetaan, onko käyttäjänimi vapaana...</string>
+  <string name="account_status_connecting">Yhdistetään</string>
+  <!--Create account-->
+  <string name="account_creation_profile">Luo sinun profiili</string>
+  <string name="account_creation_ring">Luo sinun Jami-tili</string>
+  <string name="account_sip_cannot_be_registered">SIP-tilin rekisteröinnin aikana tapahtui virhe.</string>
+  <!--Edit profile-->
+  <string name="account_edit_profile">Muokkaa profiilia</string>
+  <!--Devices-->
+  <string name="enter_password">Anna salasana</string>
+  <string name="revoke_device_message">Oletko varma että haluat poistaa %1$s?</string>
+  <string name="revoke_device_wait_message">Laitetta peruutetaan</string>
+  <string name="rename_device_title">Nimeä tämä laite</string>
+  <string name="rename_device_message">Valitse uusi nimi, josta tunnistaa tämän laitteen sinun Jami-tilillä</string>
+  <string name="rename_device_button">Nimeä laite</string>
+  <string name="account_rename_device_hint">Valitse laitteelle uusi nimi</string>
+  <string name="account_device_name_empty">Laitteen nimi ei voi olla tyhjä.</string>
+  <!--Link a new device-->
+  <string name="account_link_prompt_pin_manually">Anna PIN manuaalisesti</string>
+  <string name="qr_invalid">Ei Jamin QR-koodi</string>
+  <string name="content_description_checkbox">Sinun QR-koodi on voimassa</string>
+  <string name="account_link_info">Skannaa QR-koodi uudessa Jami-sovelluksessa tai anna PIN-koodi manuaalisesti.</string>
+  <string name="account_link_password">Tili on salattu salasanalla, anna salasana ja luo PIN-koodi.</string>
+  <string name="account_link_generate_button">Luo</string>
+  <string name="account_link_time_valid">PIN-koodi on virheellinen: %1$s.</string>
+  <string name="account_link_device_info">Valitse \"Linkitä uusi laite\" toisesta Jami-sovelluksesta nähdäksesi QR-koodin tai PIN-koodin</string>
+  <string name="account_generate_export_device">Toisella laitteella</string>
+  <string name="account_generate_export_info">Asenna ja käynnistä Jami. Valitse \"Tuo toisesta laitteesta\" ja skannaa QR-koodi.</string>
+  <string name="content_description_qr_generated">Sinun QR-koodi</string>
+  <string name="account_generate_export_invalid">PIN-koodi ei ole enää voimassa.\nAnna salasana ja luo uusi linkittääksesi laite uudelleen.</string>
+  <string name="account_generate_export_invalid_two">PIN-koodi ei ole enää voimassa.\nLuo toinen, jotta voit linkittää laitteen uudelleen.</string>
+  <string name="help_pin_info">Täytä, jos tili on salattu salasanalla</string>
+  <string name="connect_device_scanqr">Skannaa QR</string>
+  <string name="connect_device_enterPIN">tai anna PIN</string>
+  <!--Biometry-->
+  <string name="account_biometry_auth_title">Avaa Jami-tilin lukitus</string>
+  <string name="account_biometry_auth_message">Käytä biometrisiä tietoja tilisi lukituksen avaamiseen</string>
+  <string name="account_biometry_enroll_title">Käytätkö biometristä tunnistautumista?</string>
+  <string name="account_biometry_enroll_message">Laitteesi tukee biometristä todennusta. Biometrinen tai laitetodennus lisää kätevän tavan avata pääsy Jami-tilillesi. Voit silti käyttää salasanaasi.</string>
+  <string name="account_biometry_enroll_accept">Käytä biometristä</string>
+  <string name="no_thanks">Ei kiitos</string>
+  <string name="account_biometry_enroll_auth_title">Lisää todennus sinun Jami-tilille</string>
+  <string name="account_biometry_enroll_auth_message">Lisää suojattu biometrinen tai laitetodennus vaihtoehtona salasanallesi</string>
+  <string name="account_auth_error">Todennusvirhe: %1$s</string>
+  <string name="account_auth_success">Todennus onnistui</string>
+  <string name="account_auth_key_error">Tilin avaimen salauksen purku epäonnistui</string>
+  <string name="account_auth_password">Käytä tilin salasanaa</string>
+</resources>

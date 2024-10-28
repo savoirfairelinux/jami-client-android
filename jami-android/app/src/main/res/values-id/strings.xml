@@ -145,14 +145,15 @@
   <string name="conversation_details">Rincian percapakan</string>
   <string name="contact_details">Rincian kontak</string>
   <string name="conversation_action_delete_this">Hapus percakapan ini</string>
+  <string name="leave_conversation">Tinggalkan percakapan</string>
   <string name="conversation_action_delete_this_message">Aksi ini tak bisa dibatalkan</string>
   <string name="conversation_action_history_clear">Bersihkan riwayat</string>
   <string name="conversation_action_history_clear_title">Hapus riwayat percakapan?</string>
   <string name="conversation_action_history_clear_message">Ini akan membersihkan riwayat obrolan</string>
-  <string name="conversation_action_remove_this">Hapus kontak</string>
+  <string name="delete_contact">Hapus kontak</string>
   <string name="conversation_action_remove_this_title">Hapus kontak ini?</string>
   <string name="conversation_action_remove_this_message">Ini akan menghapus kontak dan membersihkan riwayat percakapan.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s telah disalin</string>
+  <string name="copied_to_clipboard">%1$s telah disalin</string>
   <string name="conversation_action_select_peer_number">Pilih nomor</string>
   <string name="conversation_action_block_this">Blokir kontak</string>
   <string name="conversation_action_unblock_this">Buka blokir kontak</string>
@@ -176,8 +177,6 @@
   <string name="conversation_preference_color">Warna percakapan</string>
   <string name="conversation_preference_emoji">Emoji percakapan</string>
   <string name="conversation_type_contact">Kontak jami</string>
-  <string name="conversation_type_private">Swarm Privat</string>
-  <string name="conversation_type_group">Grup Swarm</string>
   <string name="conversation_contact_invited"> %1$sdiundang</string>
   <string name="conversation_contact_added">%1$s bergabung</string>
   <string name="conversation_contact_left">%1$s keluar</string>
@@ -202,7 +201,7 @@
   <string name="hist_contact_added">Kontak ditambahkan</string>
   <string name="hist_contact_left">Kontak keluar</string>
   <string name="hist_invitation_received">Undangan diterima</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">Profil</string>
   <string name="profile_name">Nama Profil</string>
   <string name="profile_message_warning">Profil Anda hanya dibagikan kepada kontak Anda</string>
@@ -212,6 +211,7 @@
   <string name="registered_name">Nama terdaftar</string>
   <string name="no_registered_name">Nama tidak terdaftar</string>
   <string name="identity">Identitas</string>
+  <string name="identifier">Pengidentifikasi</string>
   <string name="account">Akun</string>
   <string name="link_new_device">Hubungkan perangkat baru</string>
   <string name="devices">Perangkat yang terhubung</string>
@@ -321,7 +321,7 @@
   <string name="bottomSheet_raiseHand_btn">Angkat</string>
   <string name="uninstall">Copot pemasangan</string>
   <string name="reset">Reset</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">Konfirmasi</string>
   <string name="tab_members">Anggota</string>
   <string name="tab_files">Berkas</string>
@@ -340,6 +340,9 @@
   <string name="jami_id_choose_username">Tentukan nama pengguna</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Selamat datang di Jami</string>
+  <!--Conversation details-->
+  <string name="details">Detail</string>
+  <string name="Private">Privat</string>
   <!--Donation-->
   <!--Extension-->
 </resources>

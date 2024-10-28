@@ -149,9 +149,7 @@
   <string name="account_sip_cannot_be_registered_message">Та дансыг үүсгэх үйл явцыг үргэлжлүүлэн хийж болно эсвэл энэ газарт мэдээлэлээ өөрчилж болно.</string>
   <string name="account_no_network_title">Хүлжээний алдаа</string>
   <string name="account_device_added_title">Хэтгэлийн төхөөрөмж нэмсэн</string>
-  <string name="account_device_added_message">Та энэ төхөөрөмж дээр Jami-ийн дансыг амжилттай байгуулсан.</string>
   <string name="account_device_updated_title">Хэтгэлийн төхөөрөмж шинэчлэн найруулсан</string>
-  <string name="account_device_updated_message">Та Jami-ийн дансыг амжилттай шинэчлэн баталсан.</string>
   <string name="account_sip_register_anyway">Ямар ч байсан бүртгүүлээрэй.</string>
   <!--TV-->
   <string name="account_tv_settings_header">Нягтлан бодох бүртгэлийн тохируулалт</string>

@@ -145,14 +145,15 @@
   <string name="conversation_details">ಸಂಭಾಷಣೆಯ ವಿವರಗಳು</string>
   <string name="contact_details">ಸಂಪರ್ಕ ವಿವರಗಳು</string>
   <string name="conversation_action_delete_this">ಈ ಸಂಭಾಷಣೆಯನ್ನು ಅಳಿಸಿ</string>
+  <string name="leave_conversation">ಸಂಭಾಷಣೆಯನ್ನು ಬಿಟ್ಟುಬಿಡಿ</string>
   <string name="conversation_action_delete_this_message">ಈ ಕ್ರಮವನ್ನು ಹಿಂತೆಗೆದುಕೊಳ್ಳಲು ಸಾಧ್ಯವಿಲ್ಲ.</string>
   <string name="conversation_action_history_clear">ಸ್ಪಷ್ಟ ಇತಿಹಾಸ</string>
   <string name="conversation_action_history_clear_title">ಸಂಭಾಷಣೆ ಇತಿಹಾಸವನ್ನು ತೆರವುಗೊಳಿಸಿ?</string>
   <string name="conversation_action_history_clear_message">ಇದು ಖಂಡಿತವಾಗಿಯೂ ಸಂಭಾಷಣೆಯ ಇತಿಹಾಸವನ್ನು ತೆರವುಗೊಳಿಸುತ್ತದೆ.</string>
-  <string name="conversation_action_remove_this">ಸಂಪರ್ಕವನ್ನು ಅಳಿಸಿ</string>
+  <string name="delete_contact">ಸಂಪರ್ಕವನ್ನು ಅಳಿಸಿ</string>
   <string name="conversation_action_remove_this_title">ಈ ಸಂಪರ್ಕವನ್ನು ಅಳಿಸಲು?</string>
   <string name="conversation_action_remove_this_message">ಇದು ಸಂಪರ್ಕವನ್ನು ಅಳಿಸುತ್ತದೆ ಮತ್ತು ಸಂಭಾಷಣೆ ಇತಿಹಾಸವನ್ನು ಖಂಡಿತವಾಗಿಯೂ ತೆರವುಗೊಳಿಸುತ್ತದೆ.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s ಅನ್ನು ಕ್ಲಿಪ್ಬೋರ್ಡ್ಗೆ ನಕಲಿಸಲಾಗಿದೆ</string>
+  <string name="copied_to_clipboard">%1$s ಅನ್ನು ಕ್ಲಿಪ್ಬೋರ್ಡ್ಗೆ ನಕಲಿಸಲಾಗಿದೆ</string>
   <string name="conversation_action_select_peer_number">ಒಂದು ಸಂಖ್ಯೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ</string>
   <string name="conversation_action_block_this">ಬ್ಲಾಕ್ ಸಂಪರ್ಕ</string>
   <string name="conversation_action_unblock_this">ಸಂಪರ್ಕವನ್ನು ನಿರ್ಬಂಧಿಸಲು</string>
@@ -176,11 +177,9 @@
   <string name="conversation_preference_color">ಸಂಭಾಷಣೆ ಬಣ್ಣ</string>
   <string name="conversation_preference_emoji">ಸಂಭಾಷಣೆ ಎಮೋಜಿ</string>
   <string name="conversation_type_contact">ಜಾಮಿ ಸಂಪರ್ಕ</string>
-  <string name="conversation_type_private">ಖಾಸಗಿ ಗುಂಪು</string>
-  <string name="conversation_type_group">ಗುಂಪು ಗುಂಪು</string>
   <string name="conversation_contact_invited">%1$s ಅನ್ನು ಆಹ್ವಾನಿಸಲಾಗಿದೆ</string>
   <string name="conversation_contact_added">%1$s ಸೇರಿಕೊಂಡಿದೆ</string>
-  <string name="conversation_contact_left">%1$ ಎಡಕ್ಕೆ</string>
+  <string name="conversation_contact_left">%1$s ಎಡಕ್ಕೆ</string>
   <string name="conversation_search_hint">ಹುಡುಕಾಟ ಸಂಭಾಷಣೆ</string>
   <string name="today">ಇಂದು</string>
   <string name="yesterday">ನಿನ್ನೆ</string>
@@ -202,7 +201,7 @@
   <string name="hist_contact_added">ಸಂಪರ್ಕ ಸೇರಿಸಲಾಗಿದೆ</string>
   <string name="hist_contact_left">ಸಂಪರ್ಕ ಎಡ</string>
   <string name="hist_invitation_received">ಸ್ವೀಕರಿಸಿದ ಆಹ್ವಾನ</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">ಪ್ರೊಫೈಲ್</string>
   <string name="profile_name">ಪ್ರೊಫೈಲ್ ಹೆಸರು</string>
   <string name="profile_message_warning">ನಿಮ್ಮ ಪ್ರೊಫೈಲ್ ನಿಮ್ಮ ಸಂಪರ್ಕಗಳೊಂದಿಗೆ ಮಾತ್ರ ಹಂಚಿಕೊಳ್ಳಲಾಗುತ್ತದೆ</string>
@@ -212,6 +211,7 @@
   <string name="registered_name">ನೋಂದಾಯಿತ ಹೆಸರು</string>
   <string name="no_registered_name">ನೋಂದಾಯಿತ ಹೆಸರು ಇಲ್ಲ</string>
   <string name="identity">ಗುರುತಿನ</string>
+  <string name="identifier">ಗುರುತಿನ ಚೀಟಿ</string>
   <string name="account">ಖಾತೆ</string>
   <string name="link_new_device">ಹೊಸ ಸಾಧನವನ್ನು ಸಂಪರ್ಕಿಸಿ</string>
   <string name="devices">ಸಂಪರ್ಕಿತ ಸಾಧನಗಳು</string>
@@ -321,7 +321,7 @@
   <string name="bottomSheet_raiseHand_btn">ಕೈ ಎತ್ತಿ</string>
   <string name="uninstall">ಅಳವಡಿಕೆ ತೆಗೆದುಹಾಕಿ</string>
   <string name="reset">ಮರುಹೊಂದಿಸಿ</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">ದೃಢೀಕರಿಸಿ</string>
   <string name="tab_members">ಸದಸ್ಯರು</string>
   <string name="tab_files">ಫೈಲ್ಗಳು</string>
@@ -332,7 +332,7 @@
   <string name="dialog_hint_description">ವಿವರಣೆ</string>
   <string name="picker_title">ಸಂಪರ್ಕಗಳನ್ನು ಆಯ್ಕೆಮಾಡಿ</string>
   <string name="picker_btn">ಸಂಪರ್ಕಗಳನ್ನು ಆಯ್ಕೆಮಾಡಿ</string>
-  <string name="bottomsheet_contact">ಜಾಮಿ % 1$ ಗಳನ್ನು ಸಂಪರ್ಕಿಸಿ</string>
+  <string name="bottomsheet_contact">ಜಾಮಿ %1$s ಗಳನ್ನು ಸಂಪರ್ಕಿಸಿ</string>
   <string name="bottomsheet_remove">ದಣಿದಿಂದ ಹೊರಹಾಕಿ</string>
   <!--JamiId-->
   <string name="jami_id_validate">ಬಳಕೆದಾರ ಹೆಸರನ್ನು ನೋಂದಾಯಿಸಿ</string>
@@ -340,6 +340,9 @@
   <string name="jami_id_choose_username">ಬಳಕೆದಾರ ಹೆಸರನ್ನು ಆರಿಸಿ</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">ಜಾಮಿಗೆ ಸ್ವಾಗತ</string>
+  <!--Conversation details-->
+  <string name="details">ವಿವರಗಳು</string>
+  <string name="Private">ಖಾಸಗಿ</string>
   <!--Donation-->
   <!--Extension-->
 </resources>

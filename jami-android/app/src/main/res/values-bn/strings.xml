@@ -6,6 +6,9 @@
   <string name="copyright_section">কপিরাইট</string>
   <string name="contribute_section">অবদান</string>
   <string name="version_section">সংস্করণ</string>
+  <string name="no_browser_app_installed">কোন ওয়েব ব্রাউজার অ্যাপ পাওয়া যায় নি, এই পৃষ্ঠাটি দেখতে একটি ইনস্টল করুন</string>
+  <string name="website_chooser_title">ওয়েবসাইট দেখুন...</string>
+  <string name="license">এই সফ্টওয়্যারটি \"যেমনটি\", কোনও ধরণের গ্যারান্টি ছাড়াই সরবরাহ করা হয়। বিস্তারিত জানার জন্য, দেখুন <u>GNU সাধারণ পাবলিক লাইসেন্স সংস্করণ 3 বা তার পরে</u></string>
   <string name="description">জামি হল সার্বজনীন যোগাযোগের জন্য একটি মুক্ত সফটওয়্যার যা ব্যবহারকারীদের স্বাধীনতা ও গোপনীয়তাকে সম্মান করে।</string>
   <string name="credits">ক্রেডিট</string>
   <string name="pip_title">জামি সম্মেলন</string>
@@ -142,14 +145,15 @@
   <string name="conversation_details">কথোপকথনের বিস্তারিত</string>
   <string name="contact_details">যোগাযোগের তথ্য</string>
   <string name="conversation_action_delete_this">এই কথোপকথন মুছে ফেলুন</string>
+  <string name="leave_conversation">কথোপকথন ছেড়ে দিন</string>
   <string name="conversation_action_delete_this_message">এই পদক্ষেপটি বাতিল করা যাবে না।</string>
   <string name="conversation_action_history_clear">পরিষ্কার ইতিহাস</string>
   <string name="conversation_action_history_clear_title">কথোপকথনের ইতিহাস পরিষ্কার করা?</string>
   <string name="conversation_action_history_clear_message">এটা অবশ্যই কথোপকথনের ইতিহাস পরিষ্কার করবে।</string>
-  <string name="conversation_action_remove_this">যোগাযোগ মুছে ফেলুন</string>
+  <string name="delete_contact">যোগাযোগ মুছে ফেলুন</string>
   <string name="conversation_action_remove_this_title">এই যোগাযোগ মুছে ফেলুন?</string>
   <string name="conversation_action_remove_this_message">এটি যোগাযোগ মুছে ফেলবে এবং কথোপকথনের ইতিহাস অবশ্যই মুছে ফেলবে।</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s ক্লিপবোর্ডে অনুলিপি করা হয়েছে</string>
+  <string name="copied_to_clipboard">%1$s ক্লিপবোর্ডে অনুলিপি করা হয়েছে</string>
   <string name="conversation_action_select_peer_number">একটি নম্বর নির্বাচন করুন</string>
   <string name="conversation_action_block_this">ব্লক যোগাযোগ</string>
   <string name="conversation_action_unblock_this">যোগাযোগ বন্ধ করুন</string>
@@ -173,8 +177,6 @@
   <string name="conversation_preference_color">কথোপকথনের রঙ</string>
   <string name="conversation_preference_emoji">কথোপকথন ইমোজি</string>
   <string name="conversation_type_contact">জামি যোগাযোগ</string>
-  <string name="conversation_type_private">ব্যক্তিগত সমষ্টি</string>
-  <string name="conversation_type_group">গ্রুপ স্টাফ</string>
   <string name="conversation_contact_invited">%1$s আমন্ত্রিত হয়েছে</string>
   <string name="conversation_contact_added">%1$s যোগ করা হয়েছে</string>
   <string name="conversation_contact_left">%1$s বাম</string>
@@ -199,7 +201,7 @@
   <string name="hist_contact_added">যোগ করা হয়েছে যোগাযোগ</string>
   <string name="hist_contact_left">বাম দিকে যোগাযোগ</string>
   <string name="hist_invitation_received">আমন্ত্রণ প্রাপ্তি</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">প্রোফাইল</string>
   <string name="profile_name">প্রোফাইল নাম</string>
   <string name="profile_message_warning">আপনার প্রোফাইল শুধুমাত্র আপনার পরিচিতির সাথে ভাগ করা হয়</string>
@@ -209,6 +211,7 @@
   <string name="registered_name">নিবন্ধিত নাম</string>
   <string name="no_registered_name">নিবন্ধিত নাম নেই</string>
   <string name="identity">পরিচয়</string>
+  <string name="identifier">সনাক্তকরণ</string>
   <string name="account">অ্যাকাউন্ট</string>
   <string name="link_new_device">একটি নতুন ডিভাইস লিঙ্ক</string>
   <string name="devices">সংযুক্ত ডিভাইস</string>
@@ -223,7 +226,9 @@
   <string name="title_share_with">ভাগ করে নিন...</string>
   <!--Pending invitations-->
   <string name="accept">গ্রহণ করুন</string>
+  <string name="decline">হ্রাস</string>
   <string name="block">ব্লক</string>
+  <string name="invitation_message">আপনার %1$d যোগাযোগের অনুরোধ আছে</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">কোন অবরুদ্ধ যোগাযোগ নেই</string>
   <!--Smartlist-->
@@ -316,7 +321,7 @@
   <string name="bottomSheet_raiseHand_btn">হাত বাড়াও</string>
   <string name="uninstall">আনইনস্টল করুন</string>
   <string name="reset">রিসেট</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">নিশ্চিত করুন</string>
   <string name="tab_members">সদস্য</string>
   <string name="tab_files">ফাইল</string>
@@ -336,6 +341,9 @@
   <string name="jami_id_choose_username">একটি ব্যবহারকারীর নাম নির্বাচন করুন</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">জামিতে স্বাগতম</string>
+  <!--Conversation details-->
+  <string name="details">বিস্তারিত</string>
+  <string name="Private">ব্যক্তিগত</string>
   <!--Donation-->
   <!--Extension-->
 </resources>

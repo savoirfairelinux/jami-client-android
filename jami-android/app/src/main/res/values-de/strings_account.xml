@@ -171,16 +171,14 @@ Sie können Ihr Konto später bearbeiten</string>
   <string name="account_update_needed">Aktualisierung durchführen</string>
   <string name="account_cannot_be_found_title">Kontofehler</string>
   <string name="account_cannot_be_found_message">Konto im Jami-Netzwerk konnte nicht gefunden werden. Stellen Sie sicher, dass es von einem vorhandenen Gerät auf Jami exportiert wurde und dass die angegebenen Anmeldeinformationen korrekt sind.</string>
+  <string name="jams_account_cannot_be_found_message">Beim Verbinden des Kontos ist ein Fehler aufgetreten. Bitte überprüfen Sie Ihre Anmeldedaten und versuchen Sie es erneut.</string>
   <string name="account_sip_cannot_be_registered_message">Sie können mit dem Kontoerstellungsprozess fortfahren oder Ihre Informationen hier bearbeiten. Änderungen sind später in den Kontoeinstellungen noch möglich.</string>
   <string name="account_no_network_title">Netzwerkfehler</string>
   <string name="account_no_network_message">Beim Hinzufügen des Jami-Kontos zum verteilten Netzwerk ist ein Verbindungsfehler aufgetreten. Überprüfen Sie die Konnektivität Ihres Geräts.</string>
   <string name="account_device_added_title">Konto-Gerät hinzugefügt</string>
-  <string name="account_device_added_message">Sie haben erfolgreich ihr Jami-Konto auf diesem Gerät erstellt.</string>
   <string name="account_device_updated_title">Konto-Gerät aktualisiert</string>
-  <string name="account_device_updated_message">Sie haben erfolgreich Ihr Jami-Konto aktualisiert.</string>
   <string name="account_cannot_be_updated_message">Beim Aktualisieren des Kontos ist ein Fehler aufgetreten. Bitte überprüfen Sie Ihr Passwort.</string>
   <string name="account_sip_success_title">SIP-Konto registriert</string>
-  <string name="account_sip_success_message">Sie haben Ihr SIP-Konto erfolgreich registriert.</string>
   <string name="account_sip_register_anyway">Trotzdem registieren</string>
   <!--TV-->
   <string name="account_tv_settings_header">Kontoeinstellungen</string>
@@ -212,6 +210,9 @@ Sie können Ihr Konto später bearbeiten</string>
   <string name="help_credentials_enter">Geben Sie die Anmeldedaten für Ihr Unternehmen ein</string>
   <string name="help_connect_password_enter">Geben Sie das Passwort für Ihr Unternehmen ein</string>
   <string name="account_connect_prompt_username">Benutzername</string>
+  <string name="account_connect_server">Verbindung zum JAMS-Server herstellen</string>
+  <string name="account_enter_username">Benutzername eingeben</string>
+  <string name="account_enter_servername">Server eingeben</string>
   <!--Name registration-->
   <string name="error_username_empty">Benutzername eingeben</string>
   <string name="no_registered_name_for_account">Kein registrierter Name</string>

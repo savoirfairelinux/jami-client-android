@@ -6,6 +6,9 @@
   <string name="copyright_section">Kopirajto</string>
   <string name="contribute_section">Kontribui</string>
   <string name="version_section">Eldono</string>
+  <string name="no_browser_app_installed">Neniu retumilo apliko trovita, instali unu por rigardi ĉi tiun paĝon</string>
+  <string name="website_chooser_title">Vidu retejon uzante...</string>
+  <string name="license">Tiu programaro estas disponigita "kiel ĝi estas", sen garantio de iu speco. Por detaloj, vidu GNU General Public License version 3 aŭ pli posta&lt;/u&gt;</string>
   <string name="description">Jami estas libera softvaro por universala komunikado, kiu respektas la liberecojn kaj privatecon de siaj uzantoj.</string>
   <string name="credits">Kredito</string>
   <string name="pip_title">Jamia konferenco</string>
@@ -142,14 +145,15 @@
   <string name="conversation_details">Detaloj de la konversacio</string>
   <string name="contact_details">Kontakto</string>
   <string name="conversation_action_delete_this">Forigi tiu ĉi konversacion</string>
+  <string name="leave_conversation">Lasu la konversacion</string>
   <string name="conversation_action_delete_this_message">Tiu ago ne povas esti inversigita.</string>
   <string name="conversation_action_history_clear">Vakigi historion</string>
   <string name="conversation_action_history_clear_title">Ĉu vi forigis la konversacian historion?</string>
   <string name="conversation_action_history_clear_message">Tio certe purigos la konversacian historion.</string>
-  <string name="conversation_action_remove_this">Forigi kontakton</string>
+  <string name="delete_contact">Forigi kontakton</string>
   <string name="conversation_action_remove_this_title">Forviŝi tiun kontakton?</string>
   <string name="conversation_action_remove_this_message">Tio forviŝos la kontakton kaj definitive forviŝos la konversacian historion.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s kopiita en tondejon</string>
+  <string name="copied_to_clipboard">%1$s kopiita en tondejon</string>
   <string name="conversation_action_select_peer_number">Elektu numeron</string>
   <string name="conversation_action_block_this">Kontakto blokita</string>
   <string name="conversation_action_unblock_this">Malblokigu kontakton</string>
@@ -173,11 +177,9 @@
   <string name="conversation_preference_color">Koloro de konversacio</string>
   <string name="conversation_preference_emoji">Konversacio emoji</string>
   <string name="conversation_type_contact">Jam kontakto</string>
-  <string name="conversation_type_private">Privata amaskomunikilaro</string>
-  <string name="conversation_type_group">Grupo-Skarmo</string>
   <string name="conversation_contact_invited">%1$s estis invitita</string>
   <string name="conversation_contact_added">%1$s aliĝis</string>
-  <string name="conversation_contact_left">%1$ estas maldekstre</string>
+  <string name="conversation_contact_left">%1$s estas maldekstre</string>
   <string name="conversation_search_hint">Serĉu konversacion</string>
   <string name="today">Hodiaŭ</string>
   <string name="yesterday">Hieraŭ</string>
@@ -199,7 +201,7 @@
   <string name="hist_contact_added">Aldoni kontakton</string>
   <string name="hist_contact_left">Kontakto maldekstre</string>
   <string name="hist_invitation_received">Invito ricevita</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">Profilo</string>
   <string name="profile_name">Profilo nomo</string>
   <string name="profile_message_warning">Via profilo estas nur dividita kun viaj kontaktoj</string>
@@ -209,6 +211,7 @@
   <string name="registered_name">Registrita nomo</string>
   <string name="no_registered_name">Neniu nomo registrita</string>
   <string name="identity">Identigo</string>
+  <string name="identifier">Identigilo</string>
   <string name="account">Konto</string>
   <string name="link_new_device">Ligigu novan aparaton</string>
   <string name="devices">Interligitaj aparatoj</string>
@@ -223,7 +226,9 @@
   <string name="title_share_with">Dividu kun...</string>
   <!--Pending invitations-->
   <string name="accept">Akcepti</string>
+  <string name="decline">Rifuzi</string>
   <string name="block">Bloko</string>
+  <string name="invitation_message">Vi havas %1$d kontaktpetojn</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Neniu blokita kontakto</string>
   <!--Smartlist-->
@@ -316,7 +321,7 @@
   <string name="bottomSheet_raiseHand_btn">Levu la manon</string>
   <string name="uninstall">Malinstaligi</string>
   <string name="reset">Re-sekvi</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">Konfirmu</string>
   <string name="tab_members">Anoj</string>
   <string name="tab_files">Fiŝoj</string>
@@ -335,6 +340,9 @@
   <string name="jami_id_choose_username">Elektu uzantnomon</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Bonvenon al Jami.</string>
+  <!--Conversation details-->
+  <string name="details">Detaloj</string>
+  <string name="Private">Privata</string>
   <!--Donation-->
   <!--Extension-->
 </resources>

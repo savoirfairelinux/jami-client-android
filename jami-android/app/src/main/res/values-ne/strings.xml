@@ -145,14 +145,15 @@
   <string name="conversation_details">वार्तालापको विवरण</string>
   <string name="contact_details">सम्पर्क विवरण</string>
   <string name="conversation_action_delete_this">यो कुराकानी मेटाउनुहोस्</string>
+  <string name="leave_conversation">कुराकानी छोड्नुहोस्</string>
   <string name="conversation_action_delete_this_message">यो कार्यलाई उल्टाउन सकिँदैन।</string>
   <string name="conversation_action_history_clear">स्पष्ट इतिहास</string>
   <string name="conversation_action_history_clear_title">कुराकानीको इतिहास खाली गर्ने?</string>
   <string name="conversation_action_history_clear_message">यो कुराकानीको इतिहासलाई स्पष्ट पार्नेछ।</string>
-  <string name="conversation_action_remove_this">सम्पर्क हटाउने</string>
+  <string name="delete_contact">सम्पर्क हटाउने</string>
   <string name="conversation_action_remove_this_title">यो सम्पर्क मेटाउन?</string>
   <string name="conversation_action_remove_this_message">यसले सम्पर्क मेटाउँछ र वार्तालाप इतिहासलाई निश्चित रूपमा मेटाउँछ।</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s क्लिपबोर्डमा प्रतिलिपि गरिएको</string>
+  <string name="copied_to_clipboard">%1$s क्लिपबोर्डमा प्रतिलिपि गरिएको</string>
   <string name="conversation_action_select_peer_number">एउटा नम्बर चयन गर्नुहोस्</string>
   <string name="conversation_action_block_this">सम्पर्कको अवरोध</string>
   <string name="conversation_action_unblock_this">सम्पर्क रोक्न</string>
@@ -176,8 +177,6 @@
   <string name="conversation_preference_color">वार्तालापको रंग</string>
   <string name="conversation_preference_emoji">वार्तालाप इमोजी</string>
   <string name="conversation_type_contact">जमी सम्पर्क</string>
-  <string name="conversation_type_private">निजी झुण्ड</string>
-  <string name="conversation_type_group">समूह समूह</string>
   <string name="conversation_contact_invited">%1$s लाई आमन्त्रित गरियो</string>
   <string name="conversation_contact_added">%1$s सम्मिलित</string>
   <string name="conversation_contact_left">%1$s बायाँ</string>
@@ -202,7 +201,7 @@
   <string name="hist_contact_added">सम्पर्क थपियो</string>
   <string name="hist_contact_left">सम्पर्क बायाँ</string>
   <string name="hist_invitation_received">निमन्त्रणा प्राप्त</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">प्रोफाइल</string>
   <string name="profile_name">प्रोफाइल नाम</string>
   <string name="profile_message_warning">तपाईंको प्रोफाइल केवल तपाईंको सम्पर्कहरूसँग साझा गरिन्छ</string>
@@ -212,6 +211,7 @@
   <string name="registered_name">नाम दर्ता</string>
   <string name="no_registered_name">कुनै नाम दर्ता गरिएको छैन</string>
   <string name="identity">पहिचान</string>
+  <string name="identifier">पहिचानकर्ता</string>
   <string name="account">खाता</string>
   <string name="link_new_device">नयाँ उपकरण जडान गर्नुहोस्</string>
   <string name="devices">जोडिएका यन्त्रहरू</string>
@@ -321,7 +321,7 @@
   <string name="bottomSheet_raiseHand_btn">हात उठाउनुहोस्</string>
   <string name="uninstall">स्थापना रद्द गर्नुहोस्</string>
   <string name="reset">पुनःसेट</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">पुष्टि गर्नुहोस्</string>
   <string name="tab_members">सदस्यहरू</string>
   <string name="tab_files">फाइलहरू</string>
@@ -340,6 +340,9 @@
   <string name="jami_id_choose_username">प्रयोगकर्ता नाम चयन गर्नुहोस्</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">जामीमा स्वागत छ</string>
+  <!--Conversation details-->
+  <string name="details">विवरणहरू</string>
+  <string name="Private">निजी</string>
   <!--Donation-->
   <!--Extension-->
 </resources>
