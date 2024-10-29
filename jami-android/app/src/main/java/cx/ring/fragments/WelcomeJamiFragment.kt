@@ -28,7 +28,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import cx.ring.R
 import cx.ring.databinding.WelcomeJamiLayoutBinding
 import cx.ring.utils.BackgroundType
@@ -95,7 +94,7 @@ class WelcomeJamiFragment : Fragment() {
                                 backgroundUrl?.let {
                                     Glide.with(binding.welcomeJamiBackground.context)
                                         .load(it)
-                                        //.transition(DrawableTransitionOptions.withCrossFade())
+                                        .error(R.drawable.background_welcome_jami)
                                         .into(binding.welcomeJamiBackground)
                                 }
                                 binding.welcomeJamiBackground.setBackgroundColor(0)
@@ -107,7 +106,7 @@ class WelcomeJamiFragment : Fragment() {
                         logoUrl?.let {
                             Glide.with(binding.welcomeJamiLogo.context)
                                 .load(it)
-                                //.transition(DrawableTransitionOptions.withCrossFade())
+                                .error(R.drawable.jami_full_logo)
                                 .into(binding.welcomeJamiLogo)
                         }
                         logoSize?.let { size ->
