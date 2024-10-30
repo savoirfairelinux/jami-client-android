@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f9877cdc_3b1da39b",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 14
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-10-30T22:23:56Z",
+      "side": 1,
+      "message": "Should `Delete` be changed to `Remove`? Thank you",
+      "range": {
+        "startLine": 417,
+        "startChar": 34,
+        "endLine": 417,
+        "endChar": 46
+      },
+      "revId": "158f11843be1f18f7b21be45c9a91f927ff0db2a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eff1d8e3_5ee1080c",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 14
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-10-30T22:23:56Z",
+      "side": 1,
+      "message": "Should variable name be changed to `remove_photo`? Thank you",
+      "range": {
+        "startLine": 417,
+        "startChar": 18,
+        "endLine": 417,
+        "endChar": 32
+      },
+      "revId": "158f11843be1f18f7b21be45c9a91f927ff0db2a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
