@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "42a59175_aea9bd10",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 18
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-10-31T14:05:30Z",
+      "side": 0,
+      "message": "Unresolved reference: take_a_photo",
+      "range": {
+        "startLine": 416,
+        "startChar": 18,
+        "endLine": 416,
+        "endChar": 30
+      },
+      "revId": "caf2ca9308f161f02e7e24c86bded2d3abf5ae24",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
