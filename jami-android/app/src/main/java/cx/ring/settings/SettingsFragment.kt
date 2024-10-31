@@ -34,6 +34,7 @@ import cx.ring.R
 import cx.ring.application.JamiApplication
 import cx.ring.client.LogsActivity
 import cx.ring.databinding.FragSettingsBinding
+import cx.ring.fragments.ConnectionMonitor
 import cx.ring.interfaces.AppBarStateListener
 import cx.ring.mvp.BaseSupportFragment
 import cx.ring.settings.extensionssettings.ExtensionDetails
@@ -129,6 +130,17 @@ class SettingsFragment :
             }
             settingsLogs.setOnClickListener { v: View ->
                 startActivity(Intent(v.context, LogsActivity::class.java))
+            }
+            connectionMonitor.setOnClickListener { v: View ->
+                val content = ConnectionMonitor()
+                childFragmentManager
+                    .beginTransaction()
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                    .replace(R.id.fragment_container, content, VIDEO_SETTINGS_TAG)
+                    .addToBackStack(VIDEO_SETTINGS_TAG).commit()
+                fragmentContainer.isVisible = true
+                donateButton.isVisible = false
+                backPressedCallback.isEnabled = true
             }
             toolbar.setNavigationOnClickListener {
                 activity?.onBackPressedDispatcher?.onBackPressed()
