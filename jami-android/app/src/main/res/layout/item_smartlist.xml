@@ -27,8 +27,8 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
     <cx.ring.views.AvatarView
         android:id="@+id/photo"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
         android:layout_centerVertical="true"
         android:layout_marginEnd="16dp"
         tools:uri="@tools:sample/us_phones"
