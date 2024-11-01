@@ -46,6 +46,30 @@
       },
       "revId": "caf2ca9308f161f02e7e24c86bded2d3abf5ae24",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f786b3e_5bc7653a",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 18
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-11-01T23:37:49Z",
+      "side": 0,
+      "message": "Unable to find the unresolved reference `take_a_photo`. All `take_photo` reverted to `take_a_photo`. Hopefully it now builds. Thank you",
+      "parentUuid": "5d69586f_9662fbed",
+      "range": {
+        "startLine": 416,
+        "startChar": 18,
+        "endLine": 416,
+        "endChar": 30
+      },
+      "revId": "caf2ca9308f161f02e7e24c86bded2d3abf5ae24",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
