@@ -136,6 +136,7 @@ class ShareWithFragment : Fragment() {
                     intent.putExtras(ConversationPath.toBundle(item.accountId, item.uri))
                     intent.setClass(requireActivity(), HomeActivity::class.java)
                     startActivity(intent)
+                    requireActivity().finish()
                 }
             }
 
