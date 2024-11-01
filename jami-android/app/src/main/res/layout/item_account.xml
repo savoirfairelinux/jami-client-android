@@ -23,7 +23,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     android:paddingRight="16dp"
     android:paddingTop="8dp">
 
-    <ImageView
+    <cx.ring.views.AvatarView
         android:id="@+id/account_photo"
         android:layout_width="40dp"
         android:layout_height="40dp"
@@ -41,7 +41,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         android:ellipsize="end"
         android:lines="1"
         android:textAppearance="@style/ListPrimary"
-        tools:text="Ring account" />
+        tools:text="Jami account" />
 
     <TextView
         android:id="@+id/account_disabled"
@@ -66,7 +66,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         android:ellipsize="middle"
         android:singleLine="true"
         android:textAppearance="@style/ListSecondary"
-        tools:text="ring:b982672502b9f1236a68353d74734cb82f9d1fab" />
+        tools:text="jami:b982672502b9f1236a68353d74734cb82f9d1fab" />
 
     <ProgressBar
         android:id="@+id/loading_indicator"
