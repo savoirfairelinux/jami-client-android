@@ -70,6 +70,30 @@
       },
       "revId": "caf2ca9308f161f02e7e24c86bded2d3abf5ae24",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7a024ce3_436a020a",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 18
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-11-02T02:25:05Z",
+      "side": 0,
+      "message": "Thank you for the `take_a_photo` unresolved reference tip. If you add a `Code-Review +2`, please feel free to `Rebase` and `Submit`.\n\nHopefully this can be patch can be merged before the next `i18n: automatic bump`.\n\nThank you once again.",
+      "parentUuid": "9f786b3e_5bc7653a",
+      "range": {
+        "startLine": 416,
+        "startChar": 18,
+        "endLine": 416,
+        "endChar": 30
+      },
+      "revId": "caf2ca9308f161f02e7e24c86bded2d3abf5ae24",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
