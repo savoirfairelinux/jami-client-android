@@ -38,7 +38,7 @@ class JamiJobService : JobService() {
                 Log.e(TAG, "Error starting service", e)
             }
             JamiApplication.instance?.startDaemon(this)
-            Handler().postDelayed({
+            Handler(mainLooper).postDelayed({
                 Log.w(TAG, "jobFinished() $params")
                 jobFinished(params, false)
             }, JOB_DURATION + 500)
@@ -53,7 +53,7 @@ class JamiJobService : JobService() {
         try {
             startService(Intent(SyncService.ACTION_STOP)
                 .setClass(this, SyncService::class.java))
-        } catch (ignored: IllegalStateException) {
+        } catch (_: IllegalStateException) {
         } catch (e: Exception) {
             Log.e(TAG, "onStopJob failed", e)
         }
