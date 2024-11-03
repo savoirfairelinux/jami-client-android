@@ -338,7 +338,7 @@ abstract class CallService(
     }
 
     fun muteRingTone(mute: Boolean) {
-        Log.d(TAG, (if (mute) "Muting." else "Unmuting.") + " ringtone.")
+        Log.d(TAG, "${if (mute) "Muting." else "Unmuting."} ringtone.")
         JamiService.muteRingtone(mute)
     }
 
