@@ -159,7 +159,7 @@ abstract class JamiApplication : Application() {
                 // load accounts from Daemon
                 mAccountService.loadAccountsFromDaemon(mPreferencesService.hasNetworkConnected())
                 if (mPreferencesService.settings.enablePushNotifications) {
-                    pushToken.let { token -> JamiService.setPushNotificationToken(token) }
+                    pushToken.let { token -> if (!token.isEmpty()) JamiService.setPushNotificationToken(token) }
                 } else {
                     JamiService.setPushNotificationToken("")
                 }
