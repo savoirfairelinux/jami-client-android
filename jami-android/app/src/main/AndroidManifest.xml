@@ -448,7 +448,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:name=".client.MediaViewerActivity"
             android:exported="false"
             android:label="@string/title_media_viewer"
-            android:theme="@style/AppTheme.MediaViewer" />
+            android:theme="@style/AppTheme" />
+
+        <activity android:name=".client.CertificateViewerActivity"
+            android:exported="false"
+            android:label="@string/certificate"
+            android:theme="@style/AppTheme.Navigation" />
 
         <service
             android:name=".service.JamiJobService"

@@ -5,9 +5,8 @@ val hilt_version: String by rootProject.extra
 val dokka_version: String by rootProject.extra
 
 plugins {
-    id("kotlin")
-    id("java")
-    kotlin("kapt")
+    id("java-library")
+    id("org.jetbrains.kotlin.jvm")
 }
 
 dependencies {
@@ -31,7 +30,7 @@ dependencies {
     // gson
     implementation ("com.google.code.gson:gson:2.11.0")
     api("com.google.dagger:dagger:$hilt_version")
-    kapt("com.google.dagger:dagger-compiler:$hilt_version")
+    //kapt("com.google.dagger:dagger-compiler:$hilt_version")
 }
 
 java {
