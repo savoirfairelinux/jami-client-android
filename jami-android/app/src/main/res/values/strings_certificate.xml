@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="certificate">Certificate</string>
+
+    <!-- DN -->
+    <string name="cert_subject">Subject</string>
+    <string name="cert_issuer">Issuer</string>
+    <string name="cert_uid">UID</string>
+    <string name="cert_common_name">Common Name</string>
+    <string name="cert_name">Name</string>
+    <string name="cert_organization">Organization</string>
+    <string name="cert_organizational_unit">Organizational Unit</string>
+    <string name="cert_locality">Locality</string>
+    <string name="cert_state">State</string>
+    <string name="cert_country">Country</string>
+
+    <!-- public key -->
+    <string name="cert_public_key">Public Key</string>
+    <string name="cert_public_key_id">Public Key ID</string>
+    <string name="cert_key_algorithm">Algorithm</string>
+
+    <!-- signature -->
+    <string name="cert_signature">Signature</string>
+    <string name="cert_signature_algorithm">Signature Algorithm</string>
+
+    <!-- validity -->
+    <string name="cert_validity">Validity</string>
+    <string name="cert_valid_from">Not before</string>
+    <string name="cert_valid_to">Not after</string>
+
+    <!-- tags -->
+    <string name="cert_is_ca">Certificate Authority</string>
+    <string name="cert_is_self_signed">Self-Signed</string>
+
+
+</resources>
