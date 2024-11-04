@@ -148,9 +148,7 @@
   <string name="account_sip_cannot_be_registered_message">אתה יכול להמשיך בתהליך יצירת חשבון או לערוך את המידע שלך כאן. עיתון עדיין אפשרי מאוחר יותר בהגדרות החשבון.</string>
   <string name="account_no_network_title">טעות רשת</string>
   <string name="account_device_added_title">מכשיר חשבון הוסף</string>
-  <string name="account_device_added_message">הצלחת להגדיר את חשבון ג\'מי שלך על המכשיר הזה.</string>
   <string name="account_device_updated_title">התקנת החשבון מעודכנת</string>
-  <string name="account_device_updated_message">שיחדת בהצלחה את חשבון ג\'מי שלך.</string>
   <string name="account_sip_register_anyway">-תתתיר בכל מקרה.</string>
   <!--TV-->
   <string name="account_tv_settings_header">הגדרות החשבון</string>

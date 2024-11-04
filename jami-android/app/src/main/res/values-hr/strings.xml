@@ -2,11 +2,9 @@
 <resources>
   <!--About-->
   <string name="section_license">Licenca</string>
-  <string name="sponsor_section">Jami je slobodan softver razvijen i podržan od strane</string>
   <string name="copyright_section">Autorska prava</string>
   <string name="contribute_section">Doprinesite</string>
   <string name="version_section">Verzija</string>
-  <string name="no_browser_app_installed">NIje pronađen nijedan web preglednik, instalirajte jadan da biste visjeli stranicu</string>
   <string name="website_chooser_title">Pogledaj web stranicu koristeći...</string>
   <string name="license">Ovaj softver je dostavljen \"kao što je\", bez ikakve jamstva.</string>
   <string name="description">Jami je slobodni software za univerzalnu komunikaciju koji poštuje slobode i privatnost svojih korisnika.</string>
@@ -19,7 +17,6 @@
   <!--RingActivity-->
   <string name="error_no_network">Veza nedostupna</string>
   <string name="error_account_offline">Račun je isključen.</string>
-  <string name="error_mobile_network_available_but_disabled">Molimo, dozvolite aplikaciji pristup mobilnim podacima u postavkama.</string>
   <!--AB menus-->
   <string name="ab_action_chat">Dopisivanje</string>
   <!--Sections-->
@@ -33,7 +30,6 @@
   <string name="menu_item_about">O Jami-u</string>
   <string name="video_setting_title">Nastavke video</string>
   <!--Dialing Fragment-->
-  <string name="dial_number">Pozovi broj</string>
   <!--History Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
@@ -54,7 +50,6 @@
   <string name="notif_outgoing_call">Odlazni poziv</string>
   <string name="notif_current_call_title">Odlazni poziv sa %1$s</string>
   <string name="notif_current_call">Poziv koji je u tijeku</string>
-  <string name="notif_channel_call_in_progress">Poziv u tijeku</string>
   <string name="notif_channel_calls">Pozivi</string>
   <string name="notif_channel_missed_calls">Propušteni pozivi</string>
   <string name="notif_channel_incoming_calls">Dolazni pozivi</string>
@@ -65,7 +60,6 @@
   <string name="notif_channel_background_service">Pozadinska usluga</string>
   <string name="notif_channel_background_service_descr">Dopušta primanje poziva i poruka bilo kada.</string>
   <string name="notif_group_calls">Pozivi</string>
-  <string name="notif_background_service">Jami je trenutno pokrenut u pozadini</string>
   <string name="notif_mark_as_read">Označi kao pročitano</string>
   <string name="notif_dismiss">Odbacujem</string>
   <string name="notif_reply">Odgovori</string>
@@ -91,7 +85,6 @@
   <string name="ongoing_call">Poziv koji je u tijeku</string>
   <string name="hist_in_call">Dolazni poziv od %1$s</string>
   <string name="hist_out_call">Odlazni poziv prema %1$s</string>
-  <string name="start_error_mic_required">Jami zahtijeva dozvolu za rad.</string>
   <string name="action_call_decline">Odbij</string>
   <string name="action_call_mic_mute">Utišaj mikrofon</string>
   <string name="ab_action_speakerphone">Omogući zvučnik</string>
@@ -101,7 +94,6 @@
   <string name="ab_action_video_call">Pokrenite video pozive</string>
   <string name="ab_action_change_screen_orientation">Promjeni orijentaciju zaslona</string>
   <string name="share_via">Dijeli putem</string>
-  <string name="write_a_message">Napiši poruku</string>
   <string name="scan_qr">Skeniraj QR kod</string>
   <string name="qr_code">QR kod</string>
   <string name="ab_action_flipcamera">Okreni kameru</string>
@@ -119,10 +111,10 @@
   <string name="conversation_send_audio">Zapisi audio klip</string>
   <string name="conversation_send_video">Snimanje video klipa</string>
   <string name="conversation_share_location">Podijeli lokaciju</string>
+  <string name="ongoing_group_call">Poziv koji je u tijeku</string>
   <string name="in_reply_to">U odgovor na</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Dozvola kamere</string>
-  <string name="permission_dialog_camera_message">Video pozivi zahtjevaju dozvolu korištenja kamere. Molimo dozvolite aplikaciji korištenje kamere.</string>
   <!--Ringtone activity-->
   <string name="ringtone_error_title">Greška</string>
   <string name="ringtone_error_format_not_supported">Ovaj format nije podržan.</string>
@@ -134,7 +126,6 @@
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Skenirajte QR kod korisnika kojeg želite dodati.</string>
   <string name="title_activity_qrcode">Dijeli moj račun</string>
-  <string name="error_scan_no_camera_permissions">QR skener zahtijeva ovlaštenja kamere da radi</string>
   <string name="tab_code">Moj kod</string>
   <string name="tab_scan">Skeniraj kod</string>
   <!--Settings-->
@@ -146,14 +137,15 @@
   <string name="conversation_details">Podrobnosti razgovora</string>
   <string name="contact_details">Pojedinosti kontakta</string>
   <string name="conversation_action_delete_this">Izbrišite ovaj razgovor</string>
+  <string name="leave_conversation">Ostavi razgovor</string>
   <string name="conversation_action_delete_this_message">Ova akcija se ne može poništiti.</string>
   <string name="conversation_action_history_clear">Očisti povijest</string>
   <string name="conversation_action_history_clear_title">Očistiti povijest razgovora?</string>
   <string name="conversation_action_history_clear_message">Ovo će definitivno obrisati povijest razgovora.</string>
-  <string name="conversation_action_remove_this">Izbriši kontakt</string>
+  <string name="delete_contact">Izbriši kontakt</string>
   <string name="conversation_action_remove_this_title">Obrisati ovaj kontakt?</string>
   <string name="conversation_action_remove_this_message">Ovo će obrisati kontakt i definitivno obrisati povijest razgovora.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s kopiran u međuspremnik</string>
+  <string name="copied_to_clipboard">%1$s kopiran u međuspremnik</string>
   <string name="conversation_action_select_peer_number">Odaberite broj</string>
   <string name="conversation_action_block_this">Blokiraj kontakt</string>
   <string name="conversation_action_unblock_this">Otključaj kontakt</string>
@@ -177,11 +169,11 @@
   <string name="conversation_preference_color">Boja razgovora</string>
   <string name="conversation_preference_emoji">Emoji razgovora</string>
   <string name="conversation_type_contact">Kontakt s Jamijem</string>
-  <string name="conversation_type_private">Privatna grupa</string>
-  <string name="conversation_type_group">Grupa Swarm</string>
+  <string name="conversation_type_private">Privredni</string>
+  <string name="conversation_type_group">Grupa</string>
   <string name="conversation_contact_invited">%1$s je pozvan</string>
   <string name="conversation_contact_added">%1$s se pridružio</string>
-  <string name="conversation_contact_left">%1$ je lijevo</string>
+  <string name="conversation_contact_left">%1$s je lijevo</string>
   <string name="conversation_search_hint">Razgovor za pretragu</string>
   <string name="today">Danas</string>
   <string name="yesterday">Jučer</string>
@@ -203,16 +195,15 @@
   <string name="hist_contact_added">Kontakt dodan</string>
   <string name="hist_contact_left">Kontakt lijevo</string>
   <string name="hist_invitation_received">Poziv primljen</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">Profil</string>
-  <string name="profile_name">Ime profila</string>
   <string name="profile_message_warning">Vaš profil je podjeljen samo sa vašim kontaktima</string>
   <string name="open_the_gallery">Otvorite galeriju</string>
-  <string name="take_a_photo">Fotografiraj</string>
   <string name="profile_name_hint">Unesite svoje ime</string>
   <string name="registered_name">Upisno ime</string>
   <string name="no_registered_name">Ne postoji registrirano ime</string>
   <string name="identity">Identifikacija</string>
+  <string name="identifier">Identifikacija</string>
   <string name="account">Račun</string>
   <string name="link_new_device">Povežite novi uređaj</string>
   <string name="devices">Povezani uređaji</string>
@@ -223,10 +214,10 @@
   <string name="share_your_account_information">Podeli moje kontaktne podatke</string>
   <string name="share_label">Podijeli</string>
   <string name="generic_error_migration">Greška</string>
-  <string name="generic_error_migration_message">Pogreška se dogodila tijekom migracije</string>
   <string name="title_share_with">Dijeli sa...</string>
   <!--Pending invitations-->
   <string name="accept">Prihvati</string>
+  <string name="decline">Odbij</string>
   <string name="block">Blokiraj</string>
   <string name="invitation_message">Imate %1$d zahtjeve za kontakt</string>
   <!--Blacklist-->
@@ -321,7 +312,7 @@
   <string name="bottomSheet_raiseHand_btn">Podignite ruku</string>
   <string name="uninstall">Neinstalacija</string>
   <string name="reset">Nastavljanje</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">Potvrdi</string>
   <string name="tab_members">Članovi</string>
   <string name="tab_files">Dosje</string>
@@ -340,6 +331,9 @@
   <string name="jami_id_choose_username">Izaberite korisničko ime</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Dobrodošli u Jami</string>
+  <!--Conversation details-->
+  <string name="details">Pojedinosti</string>
+  <string name="Private">Privredni</string>
   <!--Donation-->
   <!--Extension-->
 </resources>

@@ -151,9 +151,7 @@
   <string name="account_sip_cannot_be_registered_message">Podes continuar co proceso de creación da conta ou editar a túa información aquí. A edición é posible posteriormente nos axustes da conta.</string>
   <string name="account_no_network_title">Fallo na rede</string>
   <string name="account_device_added_title">Conta engadida no dispositivo</string>
-  <string name="account_device_added_message">Configuraches correctamente a túa conta Jami neste dispositivo.</string>
   <string name="account_device_updated_title">Actualizada a conta no dispositivo</string>
-  <string name="account_device_updated_message">Actualizaches a túa conta Jami.</string>
   <string name="account_sip_register_anyway">Rexistrar igualmente</string>
   <!--TV-->
   <string name="account_tv_settings_header">Axustes da conta</string>
@@ -182,6 +180,7 @@
   <string name="help_credentials_enter">Escribe as credenciais da túa organización</string>
   <string name="help_connect_password_enter">Escribe o contrasinal da túa organización</string>
   <string name="account_connect_prompt_username">Nome de usuaria</string>
+  <string name="account_enter_username">Escribir nome de usuaria</string>
   <!--Name registration-->
   <string name="error_username_empty">Escribe nome de usuaria</string>
   <string name="no_registered_name_for_account">Sen nome rexistrado</string>

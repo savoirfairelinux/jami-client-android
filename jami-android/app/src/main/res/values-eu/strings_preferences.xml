@@ -32,9 +32,6 @@
   <string name="pref_blackList_title">Blokeen zerrenda</string>
   <string name="pref_blackList_summary">Begiratu zure blokeo zerrenda.</string>
   <string name="pref_delete_account_title">Kontua ezabatu</string>
-  <string name="pref_delete_account_summary">Ezabatu zure kontua gailu honetatik</string>
-  <string name="pref_persistNotification_title">Aritu bigarren planoan</string>
-  <string name="pref_persistNotification_summary">Baimendu bigarren planoan aritzea deiak eta mezuak jasotzeko.</string>
   <string name="pref_newGroup_title">Talde-txata aktibatu</string>
   <string name="pref_newGroup_summary">Jami-n taldeak sortzea ahalbidetu.</string>
   <string name="pref_logs_title">Diagnostikoen egunerokoa</string>
@@ -48,9 +45,5 @@
   <string name="pref_link_preview_title">Elkarrizketetan esteka aurreikuspenak erakutsi</string>
   <string name="pref_link_preview_summary">Aurrez ikusi behar da hirugarrenen zerbitzarietatik edukiak deskargatzea.</string>
   <!--Notifications Visibility-->
-  <string name="notification_public">Publikoak \n(oharrei eta haien edukiei irekiko pantailan erakutsi) \n</string>
-  <string name="notification_private">Pribatuko jakinarazpenak erakutsi, baina ezkutatu edukia sarraila-ekipoan)</string>
-  <string name="notification_secret">Sekretuak ez dira iragarkiak irekiko pantailan agertzen)</string>
   <!--Extension-->
-  <string name="extension_force_install">Indarrez instalatu</string>
 </resources>

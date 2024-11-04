@@ -32,9 +32,6 @@
   <string name="pref_blackList_title">Lista de blocs</string>
   <string name="pref_blackList_summary">Verifiquètz la lista de blocs.</string>
   <string name="pref_delete_account_title">Suprimir lo compte</string>
-  <string name="pref_delete_account_summary">Eliminar son compte d\' aqueste dispositiu</string>
-  <string name="pref_persistNotification_title">Correr en fons</string>
-  <string name="pref_persistNotification_summary">Permetètz de córrer en fons per recebre de trucas e de messatges.</string>
   <string name="pref_newGroup_title">Abilitar lo chat de grop</string>
   <string name="pref_newGroup_summary">Permet de crear de grops a Jami.</string>
   <string name="pref_logs_title">Registris de diagnostic</string>
@@ -48,9 +45,5 @@
   <string name="pref_link_preview_title">Mostrar las previatges de ligams dins las conversas</string>
   <string name="pref_link_preview_summary">Las previradas necessitan de descargar de contengut de servidors de tèrces.</string>
   <!--Notifications Visibility-->
-  <string name="notification_public">Public \n(montrar las notificacions e lor contengut sus l\'ecran de blocatge) \n</string>
-  <string name="notification_private">Primièra \n(mostrar las notificacions mas amagar lor contengut sus l\'ecran de blocatge) \n</string>
-  <string name="notification_secret">Secrèt \n(mos pas mostrar las notificacions sus l\'escran de blocatge)</string>
   <!--Extension-->
-  <string name="extension_force_install">forçar \ n installar</string>
 </resources>

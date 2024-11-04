@@ -158,9 +158,7 @@
   <string name="account_sip_cannot_be_registered_message">Możesz kontynuować proces tworzenia konta albo edytować informacje w tym miejscu. Późniejsza edycja jest możliwa w ustawieniach konta.</string>
   <string name="account_no_network_title">Błąd sieci</string>
   <string name="account_device_added_title">Konto dodane do urządzenia</string>
-  <string name="account_device_added_message">Pomyślnie skonfigurowałeś konto Jami na tym urządzeniu.</string>
   <string name="account_device_updated_title">Konto na urządzeniu zaktualizowane</string>
-  <string name="account_device_updated_message">Pomyślnie zaktualizowano konto Jami na tym urządzeniu.</string>
   <string name="account_sip_register_anyway">Zarejestruj mimo to</string>
   <!--TV-->
   <string name="account_tv_settings_header">Ustawienia konta</string>
@@ -189,6 +187,7 @@
   <string name="help_credentials_enter">Wprowadź swoje poświadczenia organizacji</string>
   <string name="help_connect_password_enter">Wprowadź swoje hasło organizacji</string>
   <string name="account_connect_prompt_username">Nazwa użytkownika</string>
+  <string name="account_enter_username">Wpisz nazwę użytkownika</string>
   <!--Name registration-->
   <string name="error_username_empty">Wprowadź nazwę użytkownika</string>
   <string name="no_registered_name_for_account">Brak zarejestrowanej nazwy</string>

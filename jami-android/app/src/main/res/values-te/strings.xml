@@ -2,11 +2,9 @@
 <resources>
   <!--About-->
   <string name="section_license">లైసెన్స్</string>
-  <string name="sponsor_section">జామి అనేది ఉచిత సాఫ్ట్వేర్, దీనిని</string>
   <string name="copyright_section">కాపీరైట్</string>
   <string name="contribute_section">సహకారం</string>
   <string name="version_section">వెర్షన్</string>
-  <string name="no_browser_app_installed">వెబ్ బ్రౌజర్ అనువర్తనం కనుగొనబడలేదు, ఈ పేజీని వీక్షించడానికి ఒకదాన్ని ఇన్స్టాల్ చేయండి</string>
   <string name="website_chooser_title">వెబ్సైట్ను ఉపయోగించి వీక్షించండి.</string>
   <string name="license">ఈ సాఫ్ట్వేర్ ఏ రకమైన హామీ లేకుండా "అలాగే" అందించబడుతుంది. వివరాల కోసం, చూడండి GNU జనరల్ పబ్లిక్ లైసెన్స్ వెర్షన్ 3 లేదా తరువాత&lt;/u&gt;</string>
   <string name="description">జామి అనేది సార్వత్రిక కమ్యూనికేషన్ కోసం ఉచిత సాఫ్ట్వేర్, ఇది దాని వినియోగదారుల స్వేచ్ఛ మరియు గోప్యతను గౌరవిస్తుంది.</string>
@@ -19,7 +17,6 @@
   <!--RingActivity-->
   <string name="error_no_network">నెట్వర్క్ కనెక్టివిటీ లేదు</string>
   <string name="error_account_offline">ఖాతా ఆఫ్లైన్</string>
-  <string name="error_mobile_network_available_but_disabled">సెట్టింగుల స్క్రీన్ లో సెల్ నెట్వర్క్ యాక్సెస్ ఇవ్వండి.</string>
   <!--AB menus-->
   <string name="ab_action_chat">టెక్స్ట్ సందేశాలు</string>
   <!--Sections-->
@@ -33,7 +30,6 @@
   <string name="menu_item_about">జామి గురించి</string>
   <string name="video_setting_title">వీడియో సెట్టింగులు</string>
   <!--Dialing Fragment-->
-  <string name="dial_number">ఒక సంఖ్యను డయల్ చేయండి</string>
   <!--History Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
@@ -53,7 +49,6 @@
   <string name="notif_outgoing_call">బయటి కాల్</string>
   <string name="notif_current_call_title">%1$s తో కొనసాగుతున్న కాల్</string>
   <string name="notif_current_call">కొనసాగుతున్న కాల్</string>
-  <string name="notif_channel_call_in_progress">పురోగతి కోసం పిలుపు</string>
   <string name="notif_channel_calls">కాల్స్</string>
   <string name="notif_channel_missed_calls">మిస్డ్ కాల్స్</string>
   <string name="notif_channel_incoming_calls">వస్తున్న కాల్స్</string>
@@ -64,7 +59,6 @@
   <string name="notif_channel_background_service">నేపథ్య సేవ</string>
   <string name="notif_channel_background_service_descr">కాల్స్ మరియు సందేశాలను ఎప్పుడైనా స్వీకరించడానికి అనుమతిస్తుంది.</string>
   <string name="notif_group_calls">కాల్స్</string>
-  <string name="notif_background_service">జామి ప్రస్తుతం నేపథ్యంలో నడుస్తోంది</string>
   <string name="notif_mark_as_read">చదవబడిన విధంగా మార్క్</string>
   <string name="notif_dismiss">విరమణ</string>
   <string name="notif_reply">జవాబు</string>
@@ -90,7 +84,6 @@
   <string name="ongoing_call">కొనసాగుతున్న కాల్</string>
   <string name="hist_in_call">%1$s లో ఇన్కమింగ్ కాల్</string>
   <string name="hist_out_call">%1$s యొక్క అవుట్గోయింగ్ కాల్</string>
-  <string name="start_error_mic_required">జామి పని చేయడానికి మైక్రోఫోన్ అనుమతి అవసరం.</string>
   <string name="action_call_decline">తగ్గుదల</string>
   <string name="action_call_mic_mute">మ్యూట్ మైక్రోఫోన్</string>
   <string name="ab_action_speakerphone">స్పీకర్ను ప్రారంభించండి</string>
@@ -100,7 +93,6 @@
   <string name="ab_action_video_call">వీడియో కాల్ ప్రారంభించండి</string>
   <string name="ab_action_change_screen_orientation">స్క్రీన్ దిశను మార్చు</string>
   <string name="share_via">ద్వారా భాగస్వామ్యం</string>
-  <string name="write_a_message">ఒక సందేశాన్ని వ్రాయండి</string>
   <string name="scan_qr">QR కోడ్ స్కాన్</string>
   <string name="qr_code">QR కోడ్</string>
   <string name="ab_action_flipcamera">ఫ్లిప్ కెమెరా</string>
@@ -118,10 +110,10 @@
   <string name="conversation_send_audio">ఆడియో క్లిప్ రికార్డ్</string>
   <string name="conversation_send_video">వీడియో క్లిప్ రికార్డ్</string>
   <string name="conversation_share_location">భాగస్వామ్యం స్థానం</string>
+  <string name="ongoing_group_call">కొనసాగుతున్న కాల్</string>
   <string name="in_reply_to">దీనికి ప్రతిస్పందనగా</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">కెమెరా అనుమతి</string>
-  <string name="permission_dialog_camera_message">వీడియో సంభాషణలు పనిచేయడానికి కెమెరా అనుమతి అవసరం. దయచేసి దీన్ని ప్రారంభించాలని పరిగణించండి.</string>
   <!--Ringtone activity-->
   <string name="ringtone_error_title">తప్పు</string>
   <string name="ringtone_error_format_not_supported">ఈ ఫార్మాట్కు మద్దతు లేదు.</string>
@@ -133,7 +125,6 @@
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">మీరు జోడించాలనుకుంటున్న ఖాతా యొక్క QR కోడ్ను స్కాన్ చేయండి.</string>
   <string name="title_activity_qrcode">నా ఖాతాను పంచుకోండి</string>
-  <string name="error_scan_no_camera_permissions">QR స్కానర్ పనిచేయడానికి కెమెరా అనుమతులు అవసరం</string>
   <string name="tab_code">నా కోడ్</string>
   <string name="tab_scan">స్కాన్ కోడ్</string>
   <!--Settings-->
@@ -145,14 +136,15 @@
   <string name="conversation_details">సంభాషణ వివరాలు</string>
   <string name="contact_details">సంప్రదింపు వివరాలు</string>
   <string name="conversation_action_delete_this">ఈ సంభాషణను తొలగించు</string>
+  <string name="leave_conversation">సంభాషణను వదిలివేయండి</string>
   <string name="conversation_action_delete_this_message">ఈ చర్యను తిరస్కరించలేము.</string>
   <string name="conversation_action_history_clear">స్పష్టమైన చరిత్ర</string>
   <string name="conversation_action_history_clear_title">సంభాషణ చరిత్ర క్లియర్?</string>
   <string name="conversation_action_history_clear_message">ఇది ఖచ్చితంగా సంభాషణ చరిత్ర క్లియర్ చేస్తుంది.</string>
-  <string name="conversation_action_remove_this">పరిచయాన్ని తొలగించు</string>
+  <string name="delete_contact">పరిచయాన్ని తొలగించు</string>
   <string name="conversation_action_remove_this_title">ఈ పరిచయం తొలగించడానికి?</string>
   <string name="conversation_action_remove_this_message">ఇది పరిచయాన్ని తొలగిస్తుంది మరియు సంభాషణ చరిత్రను ఖచ్చితంగా క్లియర్ చేస్తుంది.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s ను క్లిప్బోర్డ్ కు కాపీ చేయబడింది</string>
+  <string name="copied_to_clipboard">%1$s ను క్లిప్బోర్డ్ కు కాపీ చేయబడింది</string>
   <string name="conversation_action_select_peer_number">ఒక సంఖ్యను ఎంచుకోండి</string>
   <string name="conversation_action_block_this">బ్లాక్ కాంటాక్ట్</string>
   <string name="conversation_action_unblock_this">పరిచయాలను అన్బ్లాక్ చేయండి</string>
@@ -176,8 +168,7 @@
   <string name="conversation_preference_color">సంభాషణ రంగు</string>
   <string name="conversation_preference_emoji">సంభాషణ ఎమోజీ</string>
   <string name="conversation_type_contact">జామి పరిచయం</string>
-  <string name="conversation_type_private">ప్రైవేటు గుంపు</string>
-  <string name="conversation_type_group">సమూహ సమూహం</string>
+  <string name="conversation_type_private">ప్రైవేటు</string>
   <string name="conversation_contact_invited">%1$s ఆహ్వానించబడింది</string>
   <string name="conversation_contact_added">%1$s చేరింది</string>
   <string name="conversation_contact_left">%1$s ఎడమవైపు</string>
@@ -202,16 +193,16 @@
   <string name="hist_contact_added">పరిచయం జోడించబడింది</string>
   <string name="hist_contact_left">ఎడమవైపున పరిచయం</string>
   <string name="hist_invitation_received">అందుకున్న ఆహ్వానం</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">ప్రొఫైల్</string>
-  <string name="profile_name">ప్రొఫైల్ పేరు</string>
   <string name="profile_message_warning">మీ ప్రొఫైల్ మీ పరిచయాలతో మాత్రమే పంచుకుంటుంది</string>
   <string name="open_the_gallery">గ్యాలరీ తెరవండి</string>
-  <string name="take_a_photo">ఒక ఫోటో తీయండి</string>
+  <string name="take_a_photo">ఫోటో తీయండి</string>
   <string name="profile_name_hint">మీ పేరు నమోదు</string>
   <string name="registered_name">నమోదు చేయబడిన పేరు</string>
   <string name="no_registered_name">నమోదు చేయని పేరు</string>
   <string name="identity">గుర్తింపు</string>
+  <string name="identifier">గుర్తింపు</string>
   <string name="account">ఖాతా</string>
   <string name="link_new_device">కొత్త పరికరాన్ని లింక్ చేయండి</string>
   <string name="devices">లింక్ చేయబడిన పరికరాలు</string>
@@ -222,7 +213,6 @@
   <string name="share_your_account_information">నా సంప్రదింపు సమాచారాన్ని పంచుకోండి</string>
   <string name="share_label">భాగస్వామ్యం</string>
   <string name="generic_error_migration">తప్పు</string>
-  <string name="generic_error_migration_message">వలస సమయంలో ఒక లోపం సంభవించింది</string>
   <string name="title_share_with">భాగస్వామ్యం తో...</string>
   <!--Pending invitations-->
   <string name="accept">అంగీకరించు</string>
@@ -321,7 +311,7 @@
   <string name="bottomSheet_raiseHand_btn">చేతి పైకి</string>
   <string name="uninstall">అన్ఇన్స్టాల్ చేయండి</string>
   <string name="reset">రీసెట్</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">ధృవీకరించు</string>
   <string name="tab_members">సభ్యులు</string>
   <string name="tab_files">ఫైళ్లు</string>
@@ -340,6 +330,9 @@
   <string name="jami_id_choose_username">ఒక వినియోగదారు పేరును ఎంచుకోండి</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">జామికి స్వాగతం</string>
+  <!--Conversation details-->
+  <string name="details">వివరాలు</string>
+  <string name="Private">ప్రైవేటు</string>
   <!--Donation-->
   <!--Extension-->
 </resources>

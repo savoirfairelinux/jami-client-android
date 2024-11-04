@@ -2,11 +2,9 @@
 <resources>
   <!--About-->
   <string name="section_license">רישיון</string>
-  <string name="sponsor_section">ג\'מי הוא תוכנה חופשית שפותחה ותומכת על ידי</string>
   <string name="copyright_section">זכויות יוצרים</string>
   <string name="contribute_section">תרום</string>
   <string name="version_section">גרסה</string>
-  <string name="no_browser_app_installed">לא נמצא אפליקציה בלוחץ אינטרנט, תקין אחת כדי להציג את הדף הזה</string>
   <string name="website_chooser_title">צפו באתר באמצעות...</string>
   <string name="license">תוכנת זו מסופקת "כפי שהיא", ללא אחריות של כל סוג. לפרטים, ראה GNU General Public License גרסה 3 או מאוחר יותר&lt;/u&gt;</string>
   <string name="description">ג\'אמי היא תוכנה חופשית לתקשורת אוניברסלית שמכבדת את החירות והפרטיות של המשתמשים שלה.</string>
@@ -19,7 +17,6 @@
   <!--RingActivity-->
   <string name="error_no_network">אין חיבור לרשת</string>
   <string name="error_account_offline">החשבון לא פועל.</string>
-  <string name="error_mobile_network_available_but_disabled">אנא הענק גישה לרשת סלולרית במסך ההגדרות.</string>
   <!--AB menus-->
   <string name="ab_action_chat">הודעות טקסט</string>
   <!--Sections-->
@@ -33,7 +30,6 @@
   <string name="menu_item_about">על אודות Jami</string>
   <string name="video_setting_title">הגדרות הוידאו</string>
   <!--Dialing Fragment-->
-  <string name="dial_number">צלקי מספר</string>
   <!--History Fragment-->
   <!--Home Fragment-->
   <!--ContactList Fragment-->
@@ -74,6 +70,7 @@
   <string name="message_failed">כשל</string>
   <string name="send_file">שלח קובץ</string>
   <string name="conversation_share_location">מיקום שיתוף</string>
+  <string name="ongoing_group_call">שיחה יוצאת</string>
   <string name="in_reply_to">בתשובה</string>
   <!--MediaPreferenceFragment-->
   <!--Ringtone activity-->
@@ -89,11 +86,14 @@
   <!--Conversation-->
   <string name="conversation_details">פרטים בשיחה</string>
   <string name="contact_details">פרטי קשר</string>
+  <string name="leave_conversation">עזוב את השיחה</string>
   <string name="conversation_action_history_clear">היסטוריה ברורה</string>
   <string name="conversation_action_block_this">פגע בלוק</string>
   <string name="conversation_action_incoming_call">שיחה נכנסת</string>
   <string name="conversation_action_latest">גלול לקצה השיחה</string>
   <string name="conversation_members">חברי</string>
+  <string name="conversation_type_private">פרטי</string>
+  <string name="conversation_type_group">קבוצה</string>
   <string name="today">היום</string>
   <string name="yesterday">אתמול</string>
   <!--Contacts-->
@@ -104,12 +104,12 @@
   <string name="wizard_skip">דילוג</string>
   <string name="hist_contact_added">הוספת קשר</string>
   <string name="hist_invitation_received">הזמנה התקבלה</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">פרופיל</string>
-  <string name="profile_name">שם הפרופיל</string>
   <string name="profile_message_warning">הפרופיל שלך משתף רק עם אנשי הקשר שלך</string>
   <string name="profile_name_hint">הכנס את שמך</string>
   <string name="identity">זהות</string>
+  <string name="identifier">זיהוי</string>
   <string name="account">חשבון</string>
   <string name="link_new_device">קישור מכשיר חדש</string>
   <string name="devices">מכשירים מחוברים</string>
@@ -118,6 +118,7 @@
   <string name="generic_error_migration">שגיאה</string>
   <!--Pending invitations-->
   <string name="accept">לקבל</string>
+  <string name="decline">ירידה</string>
   <string name="block">חסימה</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">אין קשרים חסומים</string>
@@ -159,7 +160,7 @@
   <string name="bottomSheet_raiseHand_btn">תרים את היד.</string>
   <string name="uninstall">תורידו את ההתקנה</string>
   <string name="reset">-הקמת מחדש</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">אישר</string>
   <string name="tab_members">חברי</string>
   <string name="tab_files">קבצים</string>
@@ -172,6 +173,9 @@
   <string name="jami_id_choose_username">בחר שם משתמש</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">ברוך בואך אל Jami</string>
+  <!--Conversation details-->
+  <string name="details">פרטים</string>
+  <string name="Private">פרטי</string>
   <!--Donation-->
   <!--Extension-->
 </resources>

@@ -2,11 +2,9 @@
 <resources>
   <!--About-->
   <string name="section_license">अनुज्ञा पत्र</string>
-  <string name="sponsor_section">जामी एक मुफ्त सॉफ्टवेयर है </string>
   <string name="copyright_section">प्रकाशनाधिकार</string>
   <string name="contribute_section">योगदान दें</string>
   <string name="version_section">वर्श़न/उल्था</string>
-  <string name="no_browser_app_installed">कृपया पृष्ठ को देखने हेतु, वेब ब्राउज़र/विचरक ऐप्प इंस्टाॅल करें</string>
   <string name="website_chooser_title">इस पृष्ठ को निम्नलिखित में से एक के द्वारा देखें</string>
   <string name="license">यह सॉफ़्टवेयर किसी भी प्रकार की वारंटी के बिना प्रदान किया जाता है। विवरण के लिए, <u>जीएनयू जनरल पब्लिक लाइसेंस संस्करण 3 या बाद के संस्करण देखे</u></string>
   <string name="description">जामी सर्व-जन संचार के लिए मुफ्त सॉफ्टवेयर है जो अपने उपयोगकर्ताओं की स्वतंत्रता और गोपनीयता का सम्मान करता है।</string>
@@ -19,7 +17,6 @@
   <!--RingActivity-->
   <string name="error_no_network">नेटवर्क संपर्क नही है</string>
   <string name="error_account_offline">खाता ऑफ़लाइन है</string>
-  <string name="error_mobile_network_available_but_disabled">कृपया सेटिंग स्क्रीन में सेलुलर नेटवर्क तक पहुंच प्रदान करें।</string>
   <!--AB menus-->
   <string name="ab_action_chat">टेक्स्ट संदेश</string>
   <!--Sections-->
@@ -33,7 +30,6 @@
   <string name="menu_item_about">जामी के बारे में</string>
   <string name="video_setting_title">वीडियो सेटिंग्स</string>
   <!--Dialing Fragment-->
-  <string name="dial_number">एक नम्बर डायल करें</string>
   <!--History Fragment-->
   <!--Home Fragment-->
   <string name="invitation_card_title">आमंत्रण प्राप्त हुवा</string>
@@ -55,7 +51,7 @@
   <string name="notif_outgoing_call">आउटगोइंग कॉल</string>
   <string name="notif_current_call_title">%1$s के साथ चल रहा कॉल </string>
   <string name="notif_current_call">चल रहा कॉल</string>
-  <string name="notif_channel_call_in_progress">कॉल लग रहा है/कॉल चल रहा है/कॉल जारी है</string>
+  <string name="notif_channel_call_in_progress">कॉल चल रहा है/कॉल जारी है</string>
   <string name="notif_channel_calls">कॉल</string>
   <string name="notif_channel_missed_calls">छूटे हुए कॉल </string>
   <string name="notif_channel_incoming_calls">आने वाले फोन कॉले </string>
@@ -67,7 +63,6 @@
   <string name="notif_channel_background_service_descr">किसी भी समय कॉल और संदेश प्राप्त करने की अनुमति दे ।</string>
   <string name="notif_group_calls">कॉल</string>
   <string name="notif_inprogress_group_call">कॉल चल रहा है/कॉल जारी है</string>
-  <string name="notif_background_service">जामी वर्तमान में पृष्ठभूमि में चल रहा है</string>
   <string name="notif_mark_as_read">पढ़ा हुआ चिह्नित करें</string>
   <string name="notif_dismiss">खारिज करे </string>
   <string name="notif_reply">जवाब दे</string>
@@ -94,7 +89,6 @@
   <string name="hist_in_call">%1$s का आने वाला कॉल</string>
   <string name="hist_out_call">%1$s का आउटगोइंग कॉल</string>
   <string name="call_duration">%sचला</string>
-  <string name="start_error_mic_required">जामी को काम करने के लिए माइक्रोफोन की अनुमति की आवश्यकता है।</string>
   <string name="action_call_decline">गिरावट</string>
   <string name="action_call_mic_mute">मूक माइक्रोफोन</string>
   <string name="ab_action_speakerphone">स्पीकर सक्षम करें</string>
@@ -104,11 +98,9 @@
   <string name="ab_action_video_call">वीडियो कॉल शुरू करें</string>
   <string name="ab_action_change_screen_orientation">स्क्रीन अभिविन्यास बदलें</string>
   <string name="share_via">साझा करें</string>
-  <string name="write_a_message">एक संदेश लिखें</string>
   <string name="scan_qr">QR कोड स्कैन करें</string>
   <string name="qr_code">क्यूआर कोड</string>
   <string name="qr_code_not_contact">यह जामी संपर्क क्यूआर कोड नहीं है</string>
-  <string name="new_swarm">झुंड शुरू करें</string>
   <string name="ab_action_flipcamera">फ्लिप कैमरा</string>
   <string name="ab_action_hidepreview">पूर्वावलोकन छिपाएँ</string>
   <string name="remote_recording">%s रिकॉर्डिंग...</string>
@@ -125,11 +117,9 @@
   <string name="conversation_send_video">वीडियो क्लिप रिकॉर्ड करें</string>
   <string name="conversation_share_location">साझा स्थान</string>
   <string name="ongoing_group_call">चल रहा कॉल/जारी कॉल</string>
-  <string name="started_call">कॉल शुरू किया</string>
   <string name="in_reply_to">उत्तर में</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">कैमरा अनुमति</string>
-  <string name="permission_dialog_camera_message">वीडियो वार्तालापों के लिए कैमरा अनुमति की आवश्यकता होती है काम करने के लिए. कृपया इसे सक्षम करने पर विचार करें.</string>
   <string name="camera_error">कैमरा शुरू करते समय एक त्रुटि हुई</string>
   <!--Ringtone activity-->
   <string name="ringtone_error_title">त्रुटि</string>
@@ -142,7 +132,6 @@
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">आपके द्वारा जोड़ा जाने वाले खाते का QR कोड स्कैन करें।</string>
   <string name="title_activity_qrcode">मेरा खाता साझा करें</string>
-  <string name="error_scan_no_camera_permissions">क्यूआर स्कैनर काम करने के लिए कैमरा अनुमति की आवश्यकता होती है</string>
   <string name="tab_code">मेरा कोड</string>
   <string name="tab_scan">स्कैन कोड</string>
   <!--Settings-->
@@ -154,14 +143,15 @@
   <string name="conversation_details">वार्तालाप विवरण</string>
   <string name="contact_details">संपर्क विवरण</string>
   <string name="conversation_action_delete_this">इस वार्तालाप को हटा दें</string>
+  <string name="leave_conversation">बातचीत छोड़ दें</string>
   <string name="conversation_action_delete_this_message">इस कार्य को निरस्त नहीं किया जा सकता।</string>
   <string name="conversation_action_history_clear">स्पष्ट इतिहास</string>
   <string name="conversation_action_history_clear_title">बातचीत इतिहास को साफ करें?</string>
   <string name="conversation_action_history_clear_message">यह निश्चित रूप से बातचीत इतिहास को साफ करेगा।</string>
-  <string name="conversation_action_remove_this">संपर्क हटाएँ</string>
+  <string name="delete_contact">संपर्क हटाएँ</string>
   <string name="conversation_action_remove_this_title">इस संपर्क को हटा दें?</string>
   <string name="conversation_action_remove_this_message">यह संपर्क को हटा देगा और बातचीत इतिहास को निश्चित रूप से साफ कर देगा।</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s क्लिपबोर्ड पर कॉपी किया गया</string>
+  <string name="copied_to_clipboard">%1$s क्लिपबोर्ड पर कॉपी किया गया</string>
   <string name="conversation_action_select_peer_number">एक संख्या चुनें</string>
   <string name="conversation_action_block_this">ब्लॉक संपर्क</string>
   <string name="conversation_action_unblock_this">संपर्क अवरोधित करें</string>
@@ -187,24 +177,19 @@
   <string name="conversation_preference_color">वार्तालाप का रंग</string>
   <string name="conversation_preference_emoji">वार्तालाप इमोजी</string>
   <string name="conversation_type_contact">जमी संपर्क</string>
-  <string name="conversation_type_private">निजी झुंड</string>
-  <string name="conversation_type_group">समूह समूह</string>
+  <string name="conversation_type_private">निजी</string>
   <string name="conversation_contact_invited">%1$s को आमंत्रित किया गया था</string>
   <string name="conversation_contact_added">%1$s जोड़ा गया</string>
-  <string name="conversation_contact_left">%1$ बाएं</string>
+  <string name="conversation_contact_left">%1$s बाएं</string>
   <string name="conversation_search_hint">खोज वार्तालाप</string>
   <string name="audio_recorder_error">ऑडियो रिकॉर्डर ऐप नहीं मिला.</string>
   <string name="video_recorder_error">वीडियो रिकॉर्डर ऐप नहीं मिला.</string>
-  <string name="taking_picture_error">चित्र लेते समय एक त्रुटि घटित हुई.</string>
-  <string name="find_picture_error">चित्र ढूंढते समय एक त्रुटि हुई</string>
   <string name="open_camera_error">कैमरा खोलते समय एक त्रुटि हुई</string>
   <string name="starting_recorder_error">रिकॉर्डर प्रारंभ करते समय एक त्रुटि हुई</string>
   <string name="starting_camera_error">कैमरा शुरू करते समय एक त्रुटि हुई</string>
   <string name="browser_error">इस डिवाइस पर कोई फ़ाइल ब्राउज़र उपलब्ध नहीं है</string>
   <string name="import_archive_error">संग्रह आयात करते समय एक त्रुटि हुई</string>
   <string name="export_archive_error">संग्रह निर्यात करते समय एक त्रुटि हुई</string>
-  <string name="load_ringtone_error">रिंगटोन लोड करते समय एक त्रुटि हुई</string>
-  <string name="sharing_log_error">लॉग साझा करते समय एक त्रुटि हुई</string>
   <string name="no_native_crash">हाल ही में कोई स्थानीय दुर्घटना नहीं हुई</string>
   <string name="today">आज</string>
   <string name="yesterday">कल</string>
@@ -227,16 +212,15 @@
   <string name="hist_contact_added">संपर्क जोड़ा गया</string>
   <string name="hist_contact_left">संपर्क बाएं</string>
   <string name="hist_invitation_received">प्राप्त निमंत्रण</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">प्रोफ़ाइल</string>
-  <string name="profile_name">प्रोफ़ाइल नाम</string>
   <string name="profile_message_warning">आपकी प्रोफ़ाइल केवल आपके संपर्कों के साथ साझा की जाती है</string>
   <string name="open_the_gallery">गैलरी खोलें</string>
-  <string name="take_a_photo">एक तस्वीर लें</string>
   <string name="profile_name_hint">अपना नाम दर्ज करें</string>
   <string name="registered_name">पंजीकृत नाम</string>
   <string name="no_registered_name">कोई नाम पंजीकृत नहीं</string>
   <string name="identity">पहचान</string>
+  <string name="identifier">पहचानकर्ता</string>
   <string name="account">खाता</string>
   <string name="link_new_device">एक नई डिवाइस को लिंक करें</string>
   <string name="devices">जुड़े हुए उपकरण</string>
@@ -247,10 +231,10 @@
   <string name="share_your_account_information">मेरी संपर्क जानकारी साझा करें</string>
   <string name="share_label">बाटें </string>
   <string name="generic_error_migration">त्रुटि</string>
-  <string name="generic_error_migration_message">प्रवासन के दौरान त्रुटि हुई</string>
   <string name="title_share_with">साझा करें...</string>
   <!--Pending invitations-->
   <string name="accept">स्वीकार करें</string>
+  <string name="decline">गिरावट</string>
   <string name="block">ब्लॉक</string>
   <string name="invitation_message">आपके पास %1$d संपर्क अनुरोध है</string>
   <!--Blacklist-->
@@ -317,11 +301,8 @@
   <string name="tv_send_video">मीडिया भेजें</string>
   <string name="tv_action_more">अधिक</string>
   <string name="conversation_input_speech_hint">कुछ कहो...</string>
-  <string name="audio_permission_denied">कृपया जामी ऑडियो सुविधाओं का उपयोग करने के लिए माइक्रोफ़ोन तक अनुमति प्रदान करें</string>
-  <string name="camera_permission_denied">कृपया जामी वीडियो सुविधाओं का उपयोग करने के लिए कैमरे तक अनुमति प्रदान करें</string>
   <string name="speech_recogniton_unavailable">वाक् पहचान उपलब्ध नहीं है</string>
   <string name="audio_permission_rationale_title">ऑडियो अनुमति आवश्यक</string>
-  <string name="camera_permission_rationale_title">वीडियो अनुमति आवश्यक</string>
   <string name="audio_permission_rationale_message">जैमी को स्पीच-टू-टेक्स्ट और ऑडियो रिकॉर्ड करने की सुविधाओं का उपयोग करने के लिए माइक्रोफ़ोन की अनुमति की आवश्यकता होती है। यह अगले चरण में पूछा जाएगा</string>
   <string name="camera_permission_rationale_message">जैमी को वीडियो रिकॉर्ड करने और वीडियो कॉल करने के लिए कैमरे की अनुमति की आवश्यकता है। यह अगले चरण में पूछा जाएगा</string>
   <string name="unable_to_start_recorder">ऑडियो रिकॉर्डिंग शुरू करने में असमर्थ</string>
@@ -354,7 +335,7 @@
   <string name="bottomSheet_raiseHand_btn">हाथ उठाओ</string>
   <string name="uninstall">अनइंस्टॉल करें</string>
   <string name="reset">रीसेट करें</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">पुष्टि करें</string>
   <string name="tab_members">सदस्य</string>
   <string name="tab_files">फ़ाइलें</string>
@@ -384,6 +365,9 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">जामी में आपका स्वागत है</string>
   <string name="welcome_jami_description">अधिक आसानी से संपर्क करने के लिए अपना जामी पहचानकर्ता साझा करें</string>
+  <!--Conversation details-->
+  <string name="details">विवरण</string>
+  <string name="Private">निजी</string>
   <!--Donation-->
   <string name="donation_card_description">यदि आपको जैमी का उपयोग करना अच्छा लगता है और आप हमारे मिशन में विश्वास करते हैं, तो क्या आप दान देंगे?</string>
   <string name="donation_card_not_now">अभी नहीं</string>

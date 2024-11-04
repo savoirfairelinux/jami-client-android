@@ -2,11 +2,9 @@
 <resources>
   <!--About-->
   <string name="section_license">Лицензия</string>
-  <string name="sponsor_section">Jami - бұл еркін бағдарламалық қамтамасыз ету</string>
   <string name="copyright_section">Авторлық құқық</string>
   <string name="contribute_section">Қосымша</string>
   <string name="version_section">нұсқасы</string>
-  <string name="no_browser_app_installed">Веб-браузердің қолданбасы табылмады, осы бетті қарау үшін бірін орнату</string>
   <string name="website_chooser_title">Веб-сайтты пайдалану арқылы қарау...</string>
   <string name="license">Бұл бағдарламалық жасақтама "барлығындай", ешқандай кепілдіксіз ұсынылады. Толығырақ білу үшін GNU жалпы қоғамдық лицензиясының 3 немесе одан кейінгі нұсқасын қараңыз&lt;/u&gt;</string>
   <string name="description">Jami - бұл пайдаланушылардың еркіндігі мен жеке өміріне құрмет көрсететін әмбебап байланыс үшін тегін бағдарламалық қамтамасыз ету.</string>
@@ -19,7 +17,6 @@
   <!--RingActivity-->
   <string name="error_no_network">Желілік қосылым жоқ</string>
   <string name="error_account_offline">Тіркелгісі қосылмайды</string>
-  <string name="error_mobile_network_available_but_disabled">Орнату экраннан ұялы желіге қол жеткізуді рұқсат етіңіз.</string>
   <!--AB menus-->
   <string name="ab_action_chat">Мәтін хабарламасы</string>
   <!--Sections-->
@@ -33,7 +30,6 @@
   <string name="menu_item_about">Жами туралы</string>
   <string name="video_setting_title">Видеоның параметрлері</string>
   <!--Dialing Fragment-->
-  <string name="dial_number">Номерді таңдаңыз</string>
   <!--History Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
@@ -53,7 +49,6 @@
   <string name="notif_outgoing_call">Шығушы шақыру</string>
   <string name="notif_current_call_title">%1$s-пен жалғасып жатқан шақыру</string>
   <string name="notif_current_call">Ағымдағы шақыру</string>
-  <string name="notif_channel_call_in_progress">Алға қарай шақыру</string>
   <string name="notif_channel_calls">Зерттеу</string>
   <string name="notif_channel_missed_calls">Ұсталған шақырулар</string>
   <string name="notif_channel_incoming_calls">Келесі шақырулар</string>
@@ -64,7 +59,6 @@
   <string name="notif_channel_background_service">Баяғы қызмет</string>
   <string name="notif_channel_background_service_descr">Кез келген уақытта хабарлар мен шақыруларды алуға мүмкіндік береді.</string>
   <string name="notif_group_calls">Зерттеу</string>
-  <string name="notif_background_service">Жами қазіргі уақытта тылда жүгіріп жатыр</string>
   <string name="notif_mark_as_read">Оқылған белгі</string>
   <string name="notif_dismiss">Алып тастау</string>
   <string name="notif_reply">Жауап беру</string>
@@ -90,7 +84,6 @@
   <string name="ongoing_call">Ағымдағы шақыру</string>
   <string name="hist_in_call">%1$s кіріс шақыру</string>
   <string name="hist_out_call">%1$s шығыс шақыру</string>
-  <string name="start_error_mic_required">Жами жұмыс істеу үшін микрофонға рұқсат қажет.</string>
   <string name="action_call_decline">Ауыру</string>
   <string name="action_call_mic_mute">Ақысыз микрофон</string>
   <string name="ab_action_speakerphone">Дисплейтерді қосу</string>
@@ -100,7 +93,6 @@
   <string name="ab_action_video_call">Видео шақыруды бастаңыз</string>
   <string name="ab_action_change_screen_orientation">Экранның бағдарын өзгерту</string>
   <string name="share_via">арқылы бөлісу</string>
-  <string name="write_a_message">Хат жазыңыз</string>
   <string name="scan_qr">QR кодын сканерлеу</string>
   <string name="qr_code">QR кодтары</string>
   <string name="ab_action_flipcamera">Қалған камера</string>
@@ -118,10 +110,10 @@
   <string name="conversation_send_audio">Аудио клип жазу</string>
   <string name="conversation_send_video">Видео клип жазу</string>
   <string name="conversation_share_location">Ортақ жер</string>
+  <string name="ongoing_group_call">Ағымдағы шақыру</string>
   <string name="in_reply_to">Жауап ретінде</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Камера рұқсаты</string>
-  <string name="permission_dialog_camera_message">Видео сөйлесу үшін камера рұқсат қажет.</string>
   <!--Ringtone activity-->
   <string name="ringtone_error_title">Қате</string>
   <string name="ringtone_error_format_not_supported">Бұл форматты қолдамайды.</string>
@@ -133,7 +125,6 @@
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Қосылған тіркелгіңіздің QR кодын сканерлеу.</string>
   <string name="title_activity_qrcode">Менің тіркелгімді бөліңіз</string>
-  <string name="error_scan_no_camera_permissions">QR сканер жұмыс істеу үшін камера рұқсаттарын қажет етеді</string>
   <string name="tab_code">Менің Код</string>
   <string name="tab_scan">Сканерлеу коды</string>
   <!--Settings-->
@@ -145,14 +136,15 @@
   <string name="conversation_details">Әңгімелік мәліметтері</string>
   <string name="contact_details">Байланыс деректері</string>
   <string name="conversation_action_delete_this">Бұл әңгімеді өшіру</string>
+  <string name="leave_conversation">Әңгімелеуді қалдырыңыз</string>
   <string name="conversation_action_delete_this_message">Бұл іс-әрекет кері қайтарылмайды.</string>
   <string name="conversation_action_history_clear">Тарихты анық</string>
   <string name="conversation_action_history_clear_title">Әңгіме тарихын тазарту?</string>
   <string name="conversation_action_history_clear_message">Бұл әңгіме тарихының тазаланатынын анық көрсетеді.</string>
-  <string name="conversation_action_remove_this">Байланысты өшіру</string>
+  <string name="delete_contact">Байланысты өшіру</string>
   <string name="conversation_action_remove_this_title">Бұл байланысты өшіру?</string>
   <string name="conversation_action_remove_this_message">Бұл байланыстарды өшіріп, әңгіме тарихын мүлдем өшіреді.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s клипборда көшірілді</string>
+  <string name="copied_to_clipboard">%1$s клипборда көшірілді</string>
   <string name="conversation_action_select_peer_number">Санды таңдау</string>
   <string name="conversation_action_block_this">Блок контакт</string>
   <string name="conversation_action_unblock_this">Байланысты бұғаттау</string>
@@ -176,8 +168,7 @@
   <string name="conversation_preference_color">Әңгімелеудің түсі</string>
   <string name="conversation_preference_emoji">Әңгімелеу эмоджисі</string>
   <string name="conversation_type_contact">Jami байланысы</string>
-  <string name="conversation_type_private">Жеке тобыр</string>
-  <string name="conversation_type_group">Топтық ұя</string>
+  <string name="conversation_type_private">Жеке</string>
   <string name="conversation_contact_invited">%1$s шақырылды</string>
   <string name="conversation_contact_added">%1$s қосылды</string>
   <string name="conversation_contact_left">%1$s сол жақ</string>
@@ -202,16 +193,15 @@
   <string name="hist_contact_added">Қосылған байланыс</string>
   <string name="hist_contact_left">Сол жаққа байланыс</string>
   <string name="hist_invitation_received">Қабылданған шақыру</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">Профиль</string>
-  <string name="profile_name">Профиль атауы</string>
   <string name="profile_message_warning">Профиліңіз тек байланыс адамдарыңызбен бөлінеді</string>
   <string name="open_the_gallery">Галереяны ашу</string>
-  <string name="take_a_photo">Сүртті түсіріңіз</string>
   <string name="profile_name_hint">Атыңызды келтіріңіз</string>
   <string name="registered_name">Тіркелген атауы</string>
   <string name="no_registered_name">Тіркелген аты жоқ</string>
   <string name="identity">Жеке басын анықтау</string>
+  <string name="identifier">Тұлғаны анықтау</string>
   <string name="account">Есеп</string>
   <string name="link_new_device">Жаңа құрылғыны қосу</string>
   <string name="devices">Қосылған құрылғылар</string>
@@ -222,13 +212,12 @@
   <string name="share_your_account_information">Байланыс мәліметіммен бөліс</string>
   <string name="share_label">Ортақ</string>
   <string name="generic_error_migration">Қате</string>
-  <string name="generic_error_migration_message">Көшіру кезінде қате орын алды</string>
   <string name="title_share_with">...мен бөліс...</string>
   <!--Pending invitations-->
   <string name="accept">Қабылда</string>
   <string name="decline">Ауыру</string>
   <string name="block">Блок</string>
-  <string name="invitation_message">% 1 контакт сұрақтарыңыз бар</string>
+  <string name="invitation_message">%1$d контакт сұрақтарыңыз бар</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Контакттар тосқауылданбаған</string>
   <!--Smartlist-->
@@ -321,7 +310,7 @@
   <string name="bottomSheet_raiseHand_btn">Қолын көтеру</string>
   <string name="uninstall">Құрылғыны алып тастау</string>
   <string name="reset">Қайта орнату</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">Куәлікті растау</string>
   <string name="tab_members">Қауым мүшелері</string>
   <string name="tab_files">Файлдар</string>
@@ -340,6 +329,9 @@
   <string name="jami_id_choose_username">Пайдаланушы атауын таңдау</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Жамиге қош келдіңіздер</string>
+  <!--Conversation details-->
+  <string name="details">Толығырақ</string>
+  <string name="Private">Жеке</string>
   <!--Donation-->
   <!--Extension-->
 </resources>

@@ -59,6 +59,7 @@
   <string name="account_upnp_label">Võta UPnP kasutusele</string>
   <string name="account_proxy_field">Proksiserver</string>
   <!--Extension Details-->
+  <string name="account_preferences_extension_tab">Lisamoodulid</string>
   <!--Audio Details-->
   <string name="account_audio_label">Audio</string>
   <string name="account_preferences_media_tab">Meedia</string>
@@ -153,9 +154,7 @@
   <string name="account_sip_cannot_be_registered_message">Sa saad jätkata kasutajakonto loomisega või muuta siinolevat teavet. Lisaks saad hiljem muuta andmeid kasutajakonto seadistustest.</string>
   <string name="account_no_network_title">Võrgu viga</string>
   <string name="account_device_added_title">Kasutajakonto seade on lisatud</string>
-  <string name="account_device_added_message">Sa oled oma Jami kasutajakonto selles seadmes edukalt seadistanud.</string>
   <string name="account_device_updated_title">Kasutajakonto seade on uuendatud</string>
-  <string name="account_device_updated_message">Sa oled oma Jami kasutajakontot edukalt uuendanud.</string>
   <string name="account_sip_register_anyway">Registreeru ikkagi</string>
   <!--TV-->
   <string name="account_tv_settings_header">Kasutajakonto seadistused</string>

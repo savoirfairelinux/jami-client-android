@@ -2,10 +2,11 @@
 <resources>
   <!--About-->
   <string name="section_license">Povolení</string>
-  <string name="sponsor_section">Jami je svobodný software, jejž vyvíjí a podporuje</string>
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Přispět</string>
   <string name="version_section">Verze</string>
+  <string name="website_chooser_title">Zobrazit stránku pomocí...</string>
+  <string name="license">Tento program je poskytován tak, jak je, bez jakýchkoli záruk. Na podrobnosti se podívejte na znění licence <u>GNU General Public License ve verzi 3 nebo pozdější</u></string>
   <string name="description">Jami je svobodný software určený k univerzální komunikaci, který respektuje svobody a práva uživatelů.</string>
   <string name="credits">Zásluhy</string>
   <string name="pip_title">Konference Jami</string>
@@ -16,7 +17,6 @@
   <!--RingActivity-->
   <string name="error_no_network">Chybí připojení</string>
   <string name="error_account_offline">Účet je offline</string>
-  <string name="error_mobile_network_available_but_disabled">Povolte prosím v nastavení přístup k mobilním datům</string>
   <!--AB menus-->
   <string name="ab_action_chat">Textové zprávy</string>
   <!--Sections-->
@@ -30,7 +30,6 @@
   <string name="menu_item_about">O Jami</string>
   <string name="video_setting_title">Nastavení videa</string>
   <!--Dialing Fragment-->
-  <string name="dial_number">Vytočit číslo</string>
   <!--History Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
@@ -52,7 +51,6 @@
   <string name="notif_outgoing_call">Odchozí hovor</string>
   <string name="notif_current_call_title">Probíhající hovor s %1$s</string>
   <string name="notif_current_call">Probíhající hovor</string>
-  <string name="notif_channel_call_in_progress">Probíhá hovor</string>
   <string name="notif_channel_calls">Hovory</string>
   <string name="notif_channel_missed_calls">Zmeškané hovory</string>
   <string name="notif_channel_incoming_calls">Příchozí hovory</string>
@@ -63,7 +61,6 @@
   <string name="notif_channel_background_service">Služba na pozadí</string>
   <string name="notif_channel_background_service_descr">Umožňuje příjem hovorů a zpráv kdykoli.</string>
   <string name="notif_group_calls">Hovory</string>
-  <string name="notif_background_service">Jami nyní běží na pozadí</string>
   <string name="notif_mark_as_read">Označit jako přečtené</string>
   <string name="notif_dismiss">Odmítnout</string>
   <string name="notif_reply">Odpovědět</string>
@@ -89,7 +86,6 @@
   <string name="ongoing_call">Probíhající hovor</string>
   <string name="hist_in_call">Příchozí hovor %1$s</string>
   <string name="hist_out_call">Odchozí hovor %1$s</string>
-  <string name="start_error_mic_required">Aby Jami správně pracoval, vyžaduje přístup k mikrofonu.</string>
   <string name="action_call_accept">Přijmout hovor</string>
   <string name="action_call_decline">Odmítnout</string>
   <string name="action_call_mic_mute">Ztlumit mikrofon</string>
@@ -100,7 +96,6 @@
   <string name="ab_action_video_call">Začít video hovor</string>
   <string name="ab_action_change_screen_orientation">Změnit natočení obrazovky</string>
   <string name="share_via">Sdílet přes</string>
-  <string name="write_a_message">Napsat zprávu</string>
   <string name="scan_qr">Skenovat kód QR</string>
   <string name="qr_code">Kód QR</string>
   <string name="ab_action_flipcamera">Otočit kameru</string>
@@ -121,7 +116,6 @@
   <string name="in_reply_to">V odpovědi na</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Povolení ke kameře</string>
-  <string name="permission_dialog_camera_message">Video konverzace vyžadují povolení ke kameře. Prosím zvažte jeho povolení.</string>
   <!--Ringtone activity-->
   <string name="ringtone_error_title">Chyba</string>
   <string name="ringtone_error_format_not_supported">Tento formát je nepodporovaný.</string>
@@ -133,7 +127,6 @@
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Oskenujte QR kód účtu, který chcete přidat.</string>
   <string name="title_activity_qrcode">Sdílet můj účet</string>
-  <string name="error_scan_no_camera_permissions">Skener kódů QR potřebuje přístup ke kameře</string>
   <string name="tab_code">Můj kód</string>
   <string name="tab_scan">Skenovat kód</string>
   <!--Settings-->
@@ -145,14 +138,15 @@
   <string name="conversation_details">Detaily konverzace</string>
   <string name="contact_details">Podrobnosti spojení</string>
   <string name="conversation_action_delete_this">Odstranit tuto konverzaci</string>
+  <string name="leave_conversation">Opustit konverzaci</string>
   <string name="conversation_action_delete_this_message">Tento krok nelze vrátit zpět.</string>
   <string name="conversation_action_history_clear">Vymazat historii</string>
   <string name="conversation_action_history_clear_title">Vymazat konverzační historii?</string>
   <string name="conversation_action_history_clear_message">Toto s konečnou platností vymaže konverzační historii.</string>
-  <string name="conversation_action_remove_this">Smazat kontakt</string>
+  <string name="delete_contact">Smazat kontakt</string>
   <string name="conversation_action_remove_this_title">Smazat toto spojení?</string>
   <string name="conversation_action_remove_this_message">Toto smaže kontakt a s konečnou platností vymaže konverzační historii.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s zkopírováno do schránky</string>
+  <string name="copied_to_clipboard">%1$s zkopírováno do schránky</string>
   <string name="conversation_action_select_peer_number">Vyberte číslo</string>
   <string name="conversation_action_block_this">Blokovat spojení</string>
   <string name="conversation_action_unblock_this">Odblokovat kontakt</string>
@@ -176,8 +170,8 @@
   <string name="conversation_preference_color">Barva konverzace</string>
   <string name="conversation_preference_emoji">Emoji konverzace</string>
   <string name="conversation_type_contact">Kontakt na Jami</string>
-  <string name="conversation_type_private">Soukromý swarm</string>
-  <string name="conversation_type_group">Skupinový swarm</string>
+  <string name="conversation_type_private">Soukromý</string>
+  <string name="conversation_type_group">Skupina</string>
   <string name="conversation_contact_invited">%1$sbyl pozván</string>
   <string name="conversation_contact_added">%1$sse připojil</string>
   <string name="conversation_contact_left">%1$sodešel</string>
@@ -202,16 +196,15 @@
   <string name="hist_contact_added">Kontakt přidán</string>
   <string name="hist_contact_left">Kontakt odešel</string>
   <string name="hist_invitation_received">Pozvání přijato</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">Profil</string>
-  <string name="profile_name">Název profilu</string>
   <string name="profile_message_warning">Váš profil je sdílen jen s vašimi kontakty</string>
   <string name="open_the_gallery">Otevřít galerii</string>
-  <string name="take_a_photo">Pořídit fotku</string>
   <string name="profile_name_hint">Zadejte své jméno</string>
   <string name="registered_name">Registrované jméno</string>
   <string name="no_registered_name">Žádné registrované jméno</string>
   <string name="identity">Totožnost</string>
+  <string name="identifier">Identifikátor</string>
   <string name="account">Účet</string>
   <string name="link_new_device">Připojit nové zařízení</string>
   <string name="devices">Připojená zařízení</string>
@@ -222,11 +215,12 @@
   <string name="share_your_account_information">Sdílet mé kontaktní informace</string>
   <string name="share_label">Sdílet</string>
   <string name="generic_error_migration">Chyba</string>
-  <string name="generic_error_migration_message">Při převádění došlo k chybě</string>
   <string name="title_share_with">Sdílet s…</string>
   <!--Pending invitations-->
   <string name="accept">Přijmout</string>
+  <string name="decline">Nepřijmout</string>
   <string name="block">Blokovat</string>
+  <string name="invitation_message">Máš%1$džádostí o kontakt</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Žádné blokované kontakty</string>
   <!--Smartlist-->
@@ -319,7 +313,7 @@
   <string name="bottomSheet_raiseHand_btn">Zvednout ruku</string>
   <string name="uninstall">Odinstalovat</string>
   <string name="reset">Resetovat</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">Potvrdit</string>
   <string name="tab_members">Členové</string>
   <string name="tab_files">Soubory</string>
@@ -338,6 +332,9 @@
   <string name="jami_id_choose_username">Výberte uživatelské jméno</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Vítejte v Jami</string>
+  <!--Conversation details-->
+  <string name="details">Detaily</string>
+  <string name="Private">Soukromý</string>
   <!--Donation-->
   <!--Extension-->
 </resources>

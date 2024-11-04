@@ -32,9 +32,6 @@
   <string name="pref_blackList_title">Lista de bloqueo</string>
   <string name="pref_blackList_summary">Comproba a lista de bloqueo.</string>
   <string name="pref_delete_account_title">Eliminar conta</string>
-  <string name="pref_delete_account_summary">Elimina a túa conta deste dispositivo.</string>
-  <string name="pref_persistNotification_title">Executar en segundo plano</string>
-  <string name="pref_persistNotification_summary">Permitir a execución en segundo plano para recibir mensaxe e chamadas.</string>
   <string name="pref_newGroup_title">Activar a parola en grupo</string>
   <string name="pref_newGroup_summary">Permitir crear grupos en Jami.</string>
   <string name="pref_logs_title">Rexistros do diagnóstico</string>
@@ -48,11 +45,7 @@
   <string name="pref_link_preview_title">Mostrar na conversa vista previa das ligazóns</string>
   <string name="pref_link_preview_summary">A vista previa precisa descargar contido desde servidores de terceiras partes.</string>
   <!--Notifications Visibility-->
-  <string name="notification_public">Públicas \n(mostra notificacións e o seu contido na pantalla de bloqueo)\n</string>
-  <string name="notification_private">Privadas \n(mostra notificacións pero agocha o seu contido na pantalla de bloqueo)\n</string>
-  <string name="notification_secret">Segredas \n(non mostra notificacións na pantalla de bloqueo)</string>
   <!--Extension-->
   <string name="pref_extensions_title">Complementos</string>
   <string name="extension_invalid_signature"><b>%1$s</b> ten unha sinatura non válida</string>
-  <string name="extension_force_install">forzar \n instalación</string>
 </resources>

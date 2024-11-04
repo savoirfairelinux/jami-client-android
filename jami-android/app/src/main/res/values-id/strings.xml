@@ -2,11 +2,9 @@
 <resources>
   <!--About-->
   <string name="section_license">Lisensi</string>
-  <string name="sponsor_section">Jami adalah perangkat lunak gratis dan didukung oleh</string>
   <string name="copyright_section">Hak cipta</string>
   <string name="contribute_section">Berkontribusi</string>
   <string name="version_section">Versi</string>
-  <string name="no_browser_app_installed">Aplikasi peramban tidak ditemukan, silakan pasang salah satu untuk melihat halaman ini</string>
   <string name="website_chooser_title">Lihat halaman menggunakan...</string>
   <string name="license">Perangkat lunak ini disediakan \"apa adanya\", tanpa jaminan apapun. Untuk detalinya, <u>GNU General Public License versi 3 atau yang lebih baru</u></string>
   <string name="description">Jami adalah perangkat lunak gratis untuk komunikasi universal yang menghormati kebebasan dan privasi penggunanya</string>
@@ -19,7 +17,6 @@
   <!--RingActivity-->
   <string name="error_no_network">Tidak ada jaringan internet</string>
   <string name="error_account_offline">Akun sedang offline</string>
-  <string name="error_mobile_network_available_but_disabled">Tolong beri akses ke jaringan seluler di layar pengaturan</string>
   <!--AB menus-->
   <string name="ab_action_chat">Pesan teks</string>
   <!--Sections-->
@@ -33,7 +30,6 @@
   <string name="menu_item_about">Tentang Jami</string>
   <string name="video_setting_title">Pengaturan Video</string>
   <!--Dialing Fragment-->
-  <string name="dial_number">Tekan nomor</string>
   <!--History Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
@@ -52,7 +48,6 @@
   <string name="notif_outgoing_call">Panggilan keluar</string>
   <string name="notif_current_call_title">Panggilan berlangsung dengan %1$s</string>
   <string name="notif_current_call">Panggilan berlangsung</string>
-  <string name="notif_channel_call_in_progress">Panggilan sedang berlangsung</string>
   <string name="notif_channel_calls">Panggilan</string>
   <string name="notif_channel_missed_calls">Panggilan tak terjawab</string>
   <string name="notif_channel_incoming_calls">Panggilan masuk</string>
@@ -63,7 +58,6 @@
   <string name="notif_channel_background_service">Layanan latar belakang</string>
   <string name="notif_channel_background_service_descr">Selalu terima panggilan dan pesan kapan pun</string>
   <string name="notif_group_calls">Panggilan</string>
-  <string name="notif_background_service">Jami sedang berjalan di latar belakang</string>
   <string name="notif_mark_as_read">Tandai sudah dibaca</string>
   <string name="notif_dismiss">Abaikan</string>
   <string name="notif_reply">Balas</string>
@@ -89,7 +83,6 @@
   <string name="ongoing_call">Panggilan berlangsung</string>
   <string name="hist_in_call">Panggilan masuk dari %1$s</string>
   <string name="hist_out_call">Panggilan keluar dari %1$s</string>
-  <string name="start_error_mic_required">Jami butuh izin akses mikrofon untuk bekerja.</string>
   <string name="action_call_accept">Terima panggilan</string>
   <string name="action_call_decline">Tolak</string>
   <string name="action_call_mic_mute">Senyapkan mikrofon</string>
@@ -100,7 +93,6 @@
   <string name="ab_action_video_call">Mulai panggilan video</string>
   <string name="ab_action_change_screen_orientation">Ganti orientasi layar</string>
   <string name="share_via">Bagikan melalui</string>
-  <string name="write_a_message">Tulis pesan</string>
   <string name="scan_qr">Pindai QR Code</string>
   <string name="qr_code">Kode QR</string>
   <string name="ab_action_flipcamera">Tukar kamera</string>
@@ -118,10 +110,10 @@
   <string name="conversation_send_audio">Rekam klip audio</string>
   <string name="conversation_send_video">Rekam klip video</string>
   <string name="conversation_share_location">Berbagi lokasi</string>
+  <string name="ongoing_group_call">Panggilan berlangsung</string>
   <string name="in_reply_to">Sebagai balasan</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Izin kamera</string>
-  <string name="permission_dialog_camera_message">Percakapan video memerlukan izin kamera agar dapat bekerja.</string>
   <!--Ringtone activity-->
   <string name="ringtone_error_title">Galat</string>
   <string name="ringtone_error_format_not_supported">Format tidak didukung.</string>
@@ -133,7 +125,6 @@
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Pindai QR Code dari akun yang ingin Anda tambahkan.</string>
   <string name="title_activity_qrcode">Bagikan akun saya</string>
-  <string name="error_scan_no_camera_permissions">Izin kamera dibutuhkan agar pemindai QR berfungsi</string>
   <string name="tab_code">Kode Saya</string>
   <string name="tab_scan">Pindai Kode</string>
   <!--Settings-->
@@ -145,14 +136,15 @@
   <string name="conversation_details">Rincian percapakan</string>
   <string name="contact_details">Rincian kontak</string>
   <string name="conversation_action_delete_this">Hapus percakapan ini</string>
+  <string name="leave_conversation">Tinggalkan percakapan</string>
   <string name="conversation_action_delete_this_message">Aksi ini tak bisa dibatalkan</string>
   <string name="conversation_action_history_clear">Bersihkan riwayat</string>
   <string name="conversation_action_history_clear_title">Hapus riwayat percakapan?</string>
   <string name="conversation_action_history_clear_message">Ini akan membersihkan riwayat obrolan</string>
-  <string name="conversation_action_remove_this">Hapus kontak</string>
+  <string name="delete_contact">Hapus kontak</string>
   <string name="conversation_action_remove_this_title">Hapus kontak ini?</string>
   <string name="conversation_action_remove_this_message">Ini akan menghapus kontak dan membersihkan riwayat percakapan.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s telah disalin</string>
+  <string name="copied_to_clipboard">%1$s telah disalin</string>
   <string name="conversation_action_select_peer_number">Pilih nomor</string>
   <string name="conversation_action_block_this">Blokir kontak</string>
   <string name="conversation_action_unblock_this">Buka blokir kontak</string>
@@ -176,8 +168,7 @@
   <string name="conversation_preference_color">Warna percakapan</string>
   <string name="conversation_preference_emoji">Emoji percakapan</string>
   <string name="conversation_type_contact">Kontak jami</string>
-  <string name="conversation_type_private">Swarm Privat</string>
-  <string name="conversation_type_group">Grup Swarm</string>
+  <string name="conversation_type_private">Privat</string>
   <string name="conversation_contact_invited"> %1$sdiundang</string>
   <string name="conversation_contact_added">%1$s bergabung</string>
   <string name="conversation_contact_left">%1$s keluar</string>
@@ -202,16 +193,15 @@
   <string name="hist_contact_added">Kontak ditambahkan</string>
   <string name="hist_contact_left">Kontak keluar</string>
   <string name="hist_invitation_received">Undangan diterima</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">Profil</string>
-  <string name="profile_name">Nama Profil</string>
   <string name="profile_message_warning">Profil Anda hanya dibagikan kepada kontak Anda</string>
   <string name="open_the_gallery">Buka galeri</string>
-  <string name="take_a_photo">Ambil foto</string>
   <string name="profile_name_hint">Masukkan nama anda</string>
   <string name="registered_name">Nama terdaftar</string>
   <string name="no_registered_name">Nama tidak terdaftar</string>
   <string name="identity">Identitas</string>
+  <string name="identifier">Pengidentifikasi</string>
   <string name="account">Akun</string>
   <string name="link_new_device">Hubungkan perangkat baru</string>
   <string name="devices">Perangkat yang terhubung</string>
@@ -222,7 +212,6 @@
   <string name="share_your_account_information">Bagikan informasi kontak saya</string>
   <string name="share_label">Bagikan</string>
   <string name="generic_error_migration">Galat</string>
-  <string name="generic_error_migration_message">Galat terjadi selama proses migrasi</string>
   <string name="title_share_with">Bagikan dengan...</string>
   <!--Pending invitations-->
   <string name="accept">Terima</string>
@@ -321,7 +310,7 @@
   <string name="bottomSheet_raiseHand_btn">Angkat</string>
   <string name="uninstall">Copot pemasangan</string>
   <string name="reset">Reset</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">Konfirmasi</string>
   <string name="tab_members">Anggota</string>
   <string name="tab_files">Berkas</string>
@@ -340,6 +329,9 @@
   <string name="jami_id_choose_username">Tentukan nama pengguna</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Selamat datang di Jami</string>
+  <!--Conversation details-->
+  <string name="details">Detail</string>
+  <string name="Private">Privat</string>
   <!--Donation-->
   <!--Extension-->
 </resources>

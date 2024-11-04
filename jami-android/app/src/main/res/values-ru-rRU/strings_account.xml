@@ -173,14 +173,9 @@
   <string name="account_cannot_be_found_message">Не удалось найти аккаунт в сети Jami. Убедитесь, что он был экспортирован из Jami с другого устройства, и что предоставленные учетные данные верны.</string>
   <string name="account_sip_cannot_be_registered_message">Вы можете продолжить процесс создания учетной записи или изменить свою информацию здесь. Редактирование все еще возможно позже в настройках аккаунта.</string>
   <string name="account_no_network_title">Ошибка сети</string>
-  <string name="account_no_network_message">При добавлении аккаунта Jami в распределенную сеть возникла ошибка подключения. Проверьте соединение вашего устройства.</string>
   <string name="account_device_added_title">Аккаунт устройства добавлен</string>
-  <string name="account_device_added_message">Вы успешно настроили свой аккаунт Jami на этом устройстве.</string>
   <string name="account_device_updated_title">Аккаунт устройства обновлён</string>
-  <string name="account_device_updated_message">Вы успешно обновили свой Jami аккаунт.</string>
-  <string name="account_cannot_be_updated_message">При обновлении аккаунта произошла ошибка. Пожалуйста, проверьте свой пароль.</string>
   <string name="account_sip_success_title">SIP-аккаунт зарегистрирован</string>
-  <string name="account_sip_success_message">SIP-аккаунт успешно зарегистрирован.</string>
   <string name="account_sip_register_anyway">Зарегистрироваться несмотря ни на что</string>
   <!--TV-->
   <string name="account_tv_settings_header">Настройки аккаунта</string>
@@ -212,6 +207,7 @@
   <string name="help_credentials_enter">Введите учетные данные организации</string>
   <string name="help_connect_password_enter">Введите пароль своей организации</string>
   <string name="account_connect_prompt_username">Имя пользователя</string>
+  <string name="account_enter_username">Введите имя пользователя</string>
   <!--Name registration-->
   <string name="error_username_empty">Введите имя пользователя</string>
   <string name="no_registered_name_for_account">Нет зарегистрированного имени</string>
@@ -236,14 +232,12 @@
   <string name="account_creation_profile">Создать свой профиль</string>
   <string name="account_creation_ring">Создать свой Jami аккаунт</string>
   <string name="account_link_title">Привязать это устройство</string>
-  <string name="account_sip_cannot_be_registered">При регистрации SIP-аккаунта произошла ошибка.</string>
   <!--Edit profile-->
   <string name="account_edit_profile">Редактировать профиль</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Введите пароль для подтверждения</string>
   <string name="enter_password">Введите пароль</string>
   <string name="revoke_device_title">Отозвать устройство</string>
-  <string name="revoke_device_message">Вы уверены, что хотите отозвать %1$s?</string>
   <string name="revoke_device_wait_title">Пожалуйста, подождите...</string>
   <string name="revoke_device_wait_message">Сбросить устройство</string>
   <string name="rename_device_title">Переименовать это устройство</string>

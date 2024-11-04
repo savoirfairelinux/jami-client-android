@@ -2,11 +2,9 @@
 <resources>
   <!--About-->
   <string name="section_license">Licencija</string>
-  <string name="sponsor_section">Jami yra laisva programinė įranga, kurią kuria ir palaiko</string>
   <string name="copyright_section">Autorių teisės</string>
   <string name="contribute_section">Talkinti</string>
   <string name="version_section">Versija</string>
-  <string name="no_browser_app_installed">Nerasta jokios interneto naršyklės programėlės, įdiekite interneto naršyklę, kad peržiūrėti šį puslapį</string>
   <string name="website_chooser_title">Rodyti svetainę, naudojant...</string>
   <string name="license">Ši programinė įranga yra pateikiama \"tokia, kokia yra\", be jokios garantijos. Išsamesnei informacijai, žiūrėkite <u>GNU Bendrąją Viešąją Licenciją, versiją 3 arba vėlesnę</u></string>
   <string name="description">Jami yra visuotiniam bendravimui skirta laisva programinė įranga, kuri gerbia savo naudotojų laisves ir privatumą.</string>
@@ -16,10 +14,10 @@
   <string name="data_transfer_service_description">Ši paslauga reikalinga, kad būtų rodomi nuolatiniai pranešimai per failų pervedimus.</string>
   <!--About dialog-->
   <string name="media">Medija</string>
+  <string name="special_thanks">Ypatingai dėkojame</string>
   <!--RingActivity-->
   <string name="error_no_network">Nėra tinklo ryšio</string>
   <string name="error_account_offline">Sąskaita yra išjungti</string>
-  <string name="error_mobile_network_available_but_disabled">Prašome nustatymų ekrane suteikti prieigą prie korinio tinklo.</string>
   <!--AB menus-->
   <string name="ab_action_chat">Tekstinis susirašinėjimas</string>
   <!--Sections-->
@@ -33,7 +31,6 @@
   <string name="menu_item_about">Apie Jami</string>
   <string name="video_setting_title">Vaizdo nustatymai</string>
   <!--Dialing Fragment-->
-  <string name="dial_number">Rinkti numerį</string>
   <!--History Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
@@ -55,7 +52,6 @@
   <string name="notif_outgoing_call">Išsiunčiamasis skambutis</string>
   <string name="notif_current_call_title">Bendras skambučio kvietimas %1$s</string>
   <string name="notif_current_call">Esamas skambutis</string>
-  <string name="notif_channel_call_in_progress">Kvietimas į pažangą</string>
   <string name="notif_channel_calls">Skambučiai</string>
   <string name="notif_channel_missed_calls">Praleisti skambučiai</string>
   <string name="notif_channel_incoming_calls">Gauti skambučiai</string>
@@ -66,7 +62,6 @@
   <string name="notif_channel_background_service">Foninė tarnyba</string>
   <string name="notif_channel_background_service_descr">Leidžia bet kuriuo metu priimti skambučius ir gauti žinutes.</string>
   <string name="notif_group_calls">Skambučiai</string>
-  <string name="notif_background_service">Šiuo metu Jami veikia fone</string>
   <string name="notif_mark_as_read">Žymėti kaip skaitytą</string>
   <string name="notif_dismiss">Atmesti</string>
   <string name="notif_reply">Atsakyti</string>
@@ -92,7 +87,6 @@
   <string name="ongoing_call">Esamas skambutis</string>
   <string name="hist_in_call">%1$s gaunamasis skambutis</string>
   <string name="hist_out_call">%1$s išsiunčiamasis skambutis</string>
-  <string name="start_error_mic_required">Jami darbui, reikalingas leidimas naudoti mikrofoną.</string>
   <string name="action_call_accept">Atsiliepti</string>
   <string name="action_call_decline">Atmesti</string>
   <string name="action_call_mic_mute">Išjungti mikrofoną</string>
@@ -103,7 +97,6 @@
   <string name="ab_action_video_call">Pradėti vaizdo skambutį</string>
   <string name="ab_action_change_screen_orientation">Keisti ekrano orientaciją</string>
   <string name="share_via">Bendrinti per</string>
-  <string name="write_a_message">Rašykite žinutę</string>
   <string name="scan_qr">Skenuoti QR kodą</string>
   <string name="qr_code">QR kodas</string>
   <string name="ab_action_flipcamera">Apversti kamerą</string>
@@ -121,10 +114,10 @@
   <string name="conversation_send_audio">Įregistruoti garso klipą</string>
   <string name="conversation_send_video">Užregistruoti vaizdo įrašą</string>
   <string name="conversation_share_location">Pasidalinkite vieta</string>
+  <string name="ongoing_group_call">Esamas skambutis</string>
   <string name="in_reply_to">Atsakydamas į</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kameros leidimas</string>
-  <string name="permission_dialog_camera_message">Video pokalbis reikalauja, kad kamera veiktų.</string>
   <!--Ringtone activity-->
   <string name="ringtone_error_title">Klaida</string>
   <string name="ringtone_error_format_not_supported">Šis formatas yra nepalaikomas.</string>
@@ -136,7 +129,6 @@
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Nuskenuokite paskyros, kurią norite pridėti, QR kodą.</string>
   <string name="title_activity_qrcode">Bendrinti mano paskyrą</string>
-  <string name="error_scan_no_camera_permissions">QR skaneriui reikia kameros leidimų dirbti</string>
   <string name="tab_code">Mano kodas</string>
   <string name="tab_scan">Skenuoti kodą</string>
   <!--Settings-->
@@ -148,14 +140,15 @@
   <string name="conversation_details">Išsamiau apie pokalbį</string>
   <string name="contact_details">Išsamiau apie adresatą</string>
   <string name="conversation_action_delete_this">Ištrinti šį pokalbį</string>
+  <string name="leave_conversation">Palikite pokalbį</string>
   <string name="conversation_action_delete_this_message">Šio veiksmo neįmanoma bus atšaukti.</string>
   <string name="conversation_action_history_clear">Išvalyti istoriją</string>
   <string name="conversation_action_history_clear_title">Išvalyti pokalbio istoriją?</string>
   <string name="conversation_action_history_clear_message">Tai išvalys pokalbio istoriją.</string>
-  <string name="conversation_action_remove_this">Ištrinti adresatą</string>
+  <string name="delete_contact">Ištrinti adresatą</string>
   <string name="conversation_action_remove_this_title">Ištrinti šį adresatą?</string>
   <string name="conversation_action_remove_this_message">Tai ištrins adresatą ir išvalys pokalbio istoriją.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s nukopijuota į iškarpinę</string>
+  <string name="copied_to_clipboard">%1$s nukopijuota į iškarpinę</string>
   <string name="conversation_action_select_peer_number">Pasirinkite numerį</string>
   <string name="conversation_action_block_this">Užblokuoti adresatą</string>
   <string name="conversation_action_unblock_this">Atblokuoti adresatą</string>
@@ -179,8 +172,8 @@
   <string name="conversation_preference_color">Pokalbio spalva</string>
   <string name="conversation_preference_emoji">Kalbėjimų emoji</string>
   <string name="conversation_type_contact">Jami adresatas</string>
-  <string name="conversation_type_private">Privatiji srauta</string>
-  <string name="conversation_type_group">Grupinės grupės</string>
+  <string name="conversation_type_private">Privati</string>
+  <string name="conversation_type_group">Grupė</string>
   <string name="conversation_contact_invited">%1$s buvo pakviestas</string>
   <string name="conversation_contact_added">%1$s prisijungė</string>
   <string name="conversation_contact_left">%1$s išėjo</string>
@@ -205,7 +198,7 @@
   <string name="hist_contact_added">Adresatas pridėtas</string>
   <string name="hist_contact_left">Kontaktas kairėje</string>
   <string name="hist_invitation_received">Gautas pakvietimas</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">Profilis</string>
   <string name="profile_name">Profilio pavadinimas</string>
   <string name="profile_message_warning">Jūsų profilis yra bendrinamas tik su jūsų adresatais</string>
@@ -215,6 +208,7 @@
   <string name="registered_name">Registruotas vardas</string>
   <string name="no_registered_name">Nėra registruota vardo</string>
   <string name="identity">Tapatybė</string>
+  <string name="identifier">Identifikavimo ženklas</string>
   <string name="account">Paskyra</string>
   <string name="link_new_device">Susieti naują įrenginį</string>
   <string name="devices">Susieti įrenginiai</string>
@@ -225,13 +219,12 @@
   <string name="share_your_account_information">Bendrinti mano kontaktinę informaciją</string>
   <string name="share_label">Bendrinti</string>
   <string name="generic_error_migration">Klaida</string>
-  <string name="generic_error_migration_message">Perkėlimo metu įvyko klaida</string>
   <string name="title_share_with">Dalytis su…</string>
   <!--Pending invitations-->
   <string name="accept">Priimti</string>
   <string name="decline">Atmesti</string>
   <string name="block">Užblokuoti</string>
-  <string name="invitation_message">Jūs turite % 1$d ryšių prašymus</string>
+  <string name="invitation_message">Jūs turite %1$d ryšių prašymus</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Užblokuotų adresatų nėra</string>
   <!--Smartlist-->
@@ -324,7 +317,7 @@
   <string name="bottomSheet_raiseHand_btn">Pakelti ranką</string>
   <string name="uninstall">Išinstaluokite</string>
   <string name="reset">Atstatyti</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">Patvirtinti</string>
   <string name="tab_members">Parlamento nariai</string>
   <string name="tab_files">Failai</string>
@@ -343,6 +336,9 @@
   <string name="jami_id_choose_username">Pasirinkite naudotojo vardą</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Sveiki atvykę į Jami</string>
+  <!--Conversation details-->
+  <string name="details">Išsamiau</string>
+  <string name="Private">Privati</string>
   <!--Donation-->
   <!--Extension-->
 </resources>

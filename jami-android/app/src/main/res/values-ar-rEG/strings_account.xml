@@ -149,9 +149,7 @@
   <string name="account_sip_cannot_be_registered_message">يمكنك متابعة عملية إنشاء الحساب أو تحرير معلوماتك هنا. لا يزال الإصدار ممكنًا في وقت لاحق في إعدادات الحساب.</string>
   <string name="account_no_network_title">خطأ في الشبكة</string>
   <string name="account_device_added_title">تم اضافة حساب جهاز</string>
-  <string name="account_device_added_message">لقد قمت بإعداد حساب جامى بنجاح على هذا الجهاز.</string>
   <string name="account_device_updated_title">تم تحديث حساب الجهاز</string>
-  <string name="account_device_updated_message">لقد قمت بتحديث حساب جامى بنجاح على هذا الجهاز.</string>
   <string name="account_sip_register_anyway">تسجيل على أى حال</string>
   <!--TV-->
   <string name="account_tv_settings_header">إعدادت الحساب</string>
@@ -180,6 +178,7 @@
   <string name="help_credentials_enter">أدخل بيانات اعتماد مؤسستك</string>
   <string name="help_connect_password_enter">أدخل كلمة مرور مؤسستك</string>
   <string name="account_connect_prompt_username">اسم المستخدم</string>
+  <string name="account_enter_username">أدخِل اسم المستخدم</string>
   <!--Name registration-->
   <string name="error_username_empty">أدخل اسم مستخدم</string>
   <string name="no_registered_name_for_account">لا يوجد اسم مسجل</string>

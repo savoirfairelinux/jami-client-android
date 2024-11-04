@@ -149,9 +149,7 @@
   <string name="account_sip_cannot_be_registered_message">Anda bisa melanjutkan proses pembuatan akun atau mengedit informasi Anda di sini. Edisi masih dimungkinkan nanti dalam pengaturan akun.</string>
   <string name="account_no_network_title">Galat jaringan</string>
   <string name="account_device_added_title">Akun perangkat ditambahkan</string>
-  <string name="account_device_added_message">Setup akun anda telah selesai.</string>
   <string name="account_device_updated_title">Akun perangkat diperbarui</string>
-  <string name="account_device_updated_message">Akun jami anda berhasil diperbarui.</string>
   <string name="account_sip_register_anyway">Daftar saja</string>
   <!--TV-->
   <string name="account_tv_settings_header">Pengaturan akun</string>
@@ -180,6 +178,7 @@
   <string name="help_credentials_enter">Masukkan kredensial organisasi Anda</string>
   <string name="help_connect_password_enter">Masukkan kata sandi organisasi Anda</string>
   <string name="account_connect_prompt_username">Nama pengguna</string>
+  <string name="account_enter_username">Masukkan nama pengguna</string>
   <!--Name registration-->
   <string name="error_username_empty">Masukkan nama pengguna</string>
   <string name="no_registered_name_for_account">Nama tidak terdaftar</string>

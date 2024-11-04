@@ -2,11 +2,9 @@
 <resources>
   <!--About-->
   <string name="section_license">உரிமம்</string>
-  <string name="sponsor_section">ஜாமி ஒரு இலவச மென்பொருள் ஆகும்</string>
   <string name="copyright_section">பதிப்புரிமை</string>
   <string name="contribute_section">பங்களிப்பு</string>
   <string name="version_section">பதிப்பு</string>
-  <string name="no_browser_app_installed">எந்த வலை உலாவி பயன்பாடு காணப்படவில்லை, இந்த பக்கத்தை பார்க்க ஒரு நிறுவவும்</string>
   <string name="website_chooser_title">இணையதளத்தைப் பயன்படுத்தி பார்க்கவும்.</string>
   <string name="license">இந்த மென்பொருள் எந்தவொரு உத்தரவாதமும் இல்லாமல் \"அதுபோல்\" வழங்கப்படுகிறது. விவரங்களுக்கு, <u>GNU பொது பொது உரிமம் பதிப்பு 3 அல்லது அதற்குப் பிறகு</u> ஐப் பார்க்கவும்</string>
   <string name="description">ஜாமி என்பது பொதுவான தகவல்தொடர்புக்கான இலவச மென்பொருள் ஆகும், இது அதன் பயனர்களின் சுதந்திரங்களையும் தனியுரிமையையும் மதிக்கிறது.</string>
@@ -19,7 +17,6 @@
   <!--RingActivity-->
   <string name="error_no_network">நெட்வொர்க் இணைப்பு இல்லை</string>
   <string name="error_account_offline">கணக்கு ஆஃப்லைன்</string>
-  <string name="error_mobile_network_available_but_disabled">தயவுசெய்து அமைப்புகள் திரையில் செல்போன் வலையமைப்பிற்கு அணுகலை வழங்கவும்.</string>
   <!--AB menus-->
   <string name="ab_action_chat">குறுஞ்செய்தி அனுப்புதல்</string>
   <!--Sections-->
@@ -33,7 +30,6 @@
   <string name="menu_item_about">ஜாமி பற்றி</string>
   <string name="video_setting_title">வீடியோ அமைப்புகள்</string>
   <!--Dialing Fragment-->
-  <string name="dial_number">ஒரு எண்ணைத் தேர்ந்தெடுக்கவும்</string>
   <!--History Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
@@ -53,7 +49,6 @@
   <string name="notif_outgoing_call">வெளியேறும் அழைப்பு</string>
   <string name="notif_current_call_title">%1$s உடன் தற்போதைய அழைப்பு</string>
   <string name="notif_current_call">தொடர்ச்சியான அழைப்பு</string>
-  <string name="notif_channel_call_in_progress">முன்னேற்றத்திற்கு அழைப்பு</string>
   <string name="notif_channel_calls">அழைப்புகள்</string>
   <string name="notif_channel_missed_calls">தொலைபேசி அழைப்புகளை தவறவிட்டேன்</string>
   <string name="notif_channel_incoming_calls">வருகின்ற அழைப்புகள்</string>
@@ -64,7 +59,6 @@
   <string name="notif_channel_background_service">பின்னணி சேவை</string>
   <string name="notif_channel_background_service_descr">எந்த நேரத்திலும் அழைப்புகள் மற்றும் செய்திகளை பெற அனுமதிக்கிறது.</string>
   <string name="notif_group_calls">அழைப்புகள்</string>
-  <string name="notif_background_service">ஜாமி தற்போது பின்னணியில் இயங்குகிறார்</string>
   <string name="notif_mark_as_read">படித்தபடி குறி</string>
   <string name="notif_dismiss">விலக்கு</string>
   <string name="notif_reply">பதில்</string>
@@ -90,7 +84,6 @@
   <string name="ongoing_call">தொடர்ச்சியான அழைப்பு</string>
   <string name="hist_in_call">%1$s இன் வருகின்ற அழைப்பு</string>
   <string name="hist_out_call">%1$s இன் வெளிவரும் அழைப்பு</string>
-  <string name="start_error_mic_required">ஜாமி வேலை செய்ய மைக்ரோஃபோன் அனுமதி தேவை.</string>
   <string name="action_call_decline">குறைவு</string>
   <string name="action_call_mic_mute">மைக்ரோஃபோன் முடக்கப்பட்டது</string>
   <string name="ab_action_speakerphone">பேச்சாளர் இயக்கு</string>
@@ -100,7 +93,6 @@
   <string name="ab_action_video_call">வீடியோ அழைப்பைத் தொடங்கவும்</string>
   <string name="ab_action_change_screen_orientation">திரை நோக்குநிலை மாற்றம்</string>
   <string name="share_via">வழியாக பகிர்ந்து கொள்ளவும்</string>
-  <string name="write_a_message">ஒரு செய்தியை எழுது</string>
   <string name="scan_qr">QR குறியீட்டை ஸ்கேன் செய்யவும்</string>
   <string name="qr_code">QR குறியீடு</string>
   <string name="ab_action_flipcamera">ஃபில்ப் கேமரா</string>
@@ -118,10 +110,10 @@
   <string name="conversation_send_audio">ஆடியோ கிளிப்பை பதிவு செய்யவும்</string>
   <string name="conversation_send_video">வீடியோ கிளிப்பை பதிவு செய்யவும்</string>
   <string name="conversation_share_location">பகிர்வு இடம்</string>
+  <string name="ongoing_group_call">தொடர்ச்சியான அழைப்பு</string>
   <string name="in_reply_to">பதில்</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">கேமரா அனுமதி</string>
-  <string name="permission_dialog_camera_message">வீடியோ உரையாடல்கள் செயல்பட கேமரா அனுமதி தேவை. தயவுசெய்து அதை இயக்குவதை கருத்தில் கொள்ளவும்.</string>
   <!--Ringtone activity-->
   <string name="ringtone_error_title">தவறு</string>
   <string name="ringtone_error_format_not_supported">இந்த வடிவம் ஆதரிக்கப்படவில்லை.</string>
@@ -133,7 +125,6 @@
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">நீங்கள் சேர்க்க விரும்பும் கணக்கின் QR குறியீட்டை ஸ்கேன் செய்யவும்.</string>
   <string name="title_activity_qrcode">எனது கணக்கை பகிர்ந்து கொள்ளுங்கள்</string>
-  <string name="error_scan_no_camera_permissions">QR ஸ்கேனர் வேலை செய்ய கேமரா அனுமதிகளை தேவை</string>
   <string name="tab_code">என் குறியீடு</string>
   <string name="tab_scan">ஸ்கேன் குறியீடு</string>
   <!--Settings-->
@@ -145,14 +136,15 @@
   <string name="conversation_details">உரையாடலின் விவரங்கள்</string>
   <string name="contact_details">தொடர்பு விவரங்கள்</string>
   <string name="conversation_action_delete_this">இந்த உரையாடலை நீக்கவும்</string>
+  <string name="leave_conversation">உரையாடலை விட்டுவிடுங்கள்</string>
   <string name="conversation_action_delete_this_message">இந்த நடவடிக்கை திரும்பப் பெற முடியாது.</string>
   <string name="conversation_action_history_clear">தெளிவான வரலாறு</string>
   <string name="conversation_action_history_clear_title">உரையாடல் வரலாற்றை அழிக்க?</string>
   <string name="conversation_action_history_clear_message">இது நிச்சயமாக உரையாடல் வரலாற்றை அழிக்கும்.</string>
-  <string name="conversation_action_remove_this">தொடர்புகளை நீக்கவும்</string>
+  <string name="delete_contact">தொடர்புகளை நீக்கவும்</string>
   <string name="conversation_action_remove_this_title">இந்த தொடர்பு நீக்க?</string>
   <string name="conversation_action_remove_this_message">இது தொடர்பு நீக்கி உரையாடல் வரலாற்றை அழிக்கும்.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s கிளிப்போர்டில் நகலெடுக்கப்பட்டது</string>
+  <string name="copied_to_clipboard">%1$s கிளிப்போர்டில் நகலெடுக்கப்பட்டது</string>
   <string name="conversation_action_select_peer_number">ஒரு எண்ணைத் தேர்ந்தெடுக்கவும்</string>
   <string name="conversation_action_block_this">பிளாக் தொடர்பு</string>
   <string name="conversation_action_unblock_this">தொடர்புகளைத் திறக்கவும்</string>
@@ -176,11 +168,10 @@
   <string name="conversation_preference_color">உரையாடல் நிறம்</string>
   <string name="conversation_preference_emoji">உரையாடல் ஈமோஜி</string>
   <string name="conversation_type_contact">ஜாமி தொடர்பு</string>
-  <string name="conversation_type_private">தனியார் கும்பல்</string>
-  <string name="conversation_type_group">குழுக்கள்</string>
+  <string name="conversation_type_private">தனியார்</string>
   <string name="conversation_contact_invited">%1$s அழைக்கப்பட்டார்</string>
   <string name="conversation_contact_added">%1$s சேர்க்கப்பட்டது</string>
-  <string name="conversation_contact_left">%1$ இடது</string>
+  <string name="conversation_contact_left">%1$s இடது</string>
   <string name="conversation_search_hint">தேடல் உரையாடல்</string>
   <string name="today">இன்று</string>
   <string name="yesterday">நேற்று</string>
@@ -202,16 +193,16 @@
   <string name="hist_contact_added">தொடர்பு சேர்க்கப்பட்டது</string>
   <string name="hist_contact_left">தொடர்பு இடது</string>
   <string name="hist_invitation_received">அழைப்பு</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">சுயவிவரம்</string>
-  <string name="profile_name">சுயவிவர பெயர்</string>
   <string name="profile_message_warning">உங்கள் சுயவிவரம் உங்கள் தொடர்புகளுடன் மட்டுமே பகிரப்படுகிறது</string>
   <string name="open_the_gallery">காட்சியகம் திறக்க</string>
-  <string name="take_a_photo">ஒரு புகைப்படம் எடுக்க</string>
+  <string name="take_a_photo">புகைப்படம் எடு</string>
   <string name="profile_name_hint">உங்கள் பெயரை உள்ளிடவும்</string>
   <string name="registered_name">பதிவு செய்யப்பட்ட பெயர்</string>
   <string name="no_registered_name">பதிவு செய்யப்படாத பெயர்</string>
   <string name="identity">அடையாளம்</string>
+  <string name="identifier">அடையாளங்காட்டி</string>
   <string name="account">கணக்கு</string>
   <string name="link_new_device">புதிய சாதனத்தை இணைக்கவும்</string>
   <string name="devices">இணைக்கப்பட்ட சாதனங்கள்</string>
@@ -222,7 +213,6 @@
   <string name="share_your_account_information">எனது தொடர்புத் தகவலை பகிர்ந்து கொள்ளுங்கள்</string>
   <string name="share_label">பகிர்வு</string>
   <string name="generic_error_migration">தவறு</string>
-  <string name="generic_error_migration_message">இடம்பெயர்வு போது ஒரு தவறு ஏற்பட்டது</string>
   <string name="title_share_with">பகிர்ந்து கொள்ள...</string>
   <!--Pending invitations-->
   <string name="accept">ஏற்றுக்கொள்ளுங்கள்</string>
@@ -321,7 +311,7 @@
   <string name="bottomSheet_raiseHand_btn">கை உயர்த்தி</string>
   <string name="uninstall">நிறுவல் நீக்கு</string>
   <string name="reset">மீட்டமை</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">உறுதிப்படுத்தவும்</string>
   <string name="tab_members">உறுப்பினர்</string>
   <string name="tab_files">கோப்புகள்</string>
@@ -340,6 +330,9 @@
   <string name="jami_id_choose_username">ஒரு பயனர்பெயரைத் தேர்ந்தெடுக்கவும்</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">ஜாமிக்கு வரவேற்கிறோம்</string>
+  <!--Conversation details-->
+  <string name="details">விவரங்கள்</string>
+  <string name="Private">தனியார்</string>
   <!--Donation-->
   <!--Extension-->
 </resources>

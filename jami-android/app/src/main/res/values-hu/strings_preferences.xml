@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <string name="pref_category_network">Hálózat</string>
-  <string name="pref_category_contacts">Kapcsolatok</string>
+  <string name="pref_category_contacts">Kapcsolattartók</string>
   <string name="pref_category_video">Videó</string>
   <string name="pref_category_system">Rendszer</string>
   <string name="pref_category_privacy">Adatvédelem</string>
@@ -20,8 +20,8 @@
   <string name="pref_videoBitrate_summary">Alapértelmezett kimenő videó átviteli sebesség kijelölése (KB/mp)</string>
   <string name="pref_videoResolution_title">Videó felbontás</string>
   <string name="pref_videoResolution_summary">Alapértelmezett kimenő videofelbontás kijelölése</string>
-  <string name="pref_systemContacts_title">Rendszer kapcsolatainak használata</string>
-  <string name="pref_systemContacts_summary">A rendszer kapcsolatainak használata a hívó adatainak megjelenítéséhez.</string>
+  <string name="pref_systemContacts_title">Rendszer kapcsolattartóinak használata</string>
+  <string name="pref_systemContacts_summary">A rendszer kapcsolattartóinak használata a hívó adatainak megjelenítéséhez.</string>
   <string name="pref_systemDialer_title">Jami használata telefonhívásokhoz</string>
   <string name="pref_systemDialer_summary">A Jami használata a telefonhívásokhoz, ha az lehetséges.</string>
   <string name="pref_startOnBoot_title">Alkalmazás futtatása rendszerindításkor</string>
@@ -33,9 +33,6 @@
   <string name="pref_blackList_title">Tiltólista</string>
   <string name="pref_blackList_summary">Letiltási lista ellenőrzése</string>
   <string name="pref_delete_account_title">Fiók törlése</string>
-  <string name="pref_delete_account_summary">Fiók törlése erről az eszközről</string>
-  <string name="pref_persistNotification_title">Háttérfolyamat engedélyezése</string>
-  <string name="pref_persistNotification_summary">Háttérfolyamat engedélyezése hívások és üzenetek fogadásához.</string>
   <string name="pref_newGroup_title">Csoportos csevegés engedélyezése</string>
   <string name="pref_newGroup_summary">Csoportok létrehozásának engedélyezése.</string>
   <string name="pref_logs_title">Diagnosztikai naplók</string>
@@ -49,9 +46,6 @@
   <string name="pref_link_preview_title">Hivatkozások előnézetének megjelenítése</string>
   <string name="pref_link_preview_summary">Az előnézethez tartalmat kell letölteni harmadik féltől származó kiszolgálókról.</string>
   <!--Notifications Visibility-->
-  <string name="notification_public">Nyilvános\n(az értesítések és azok tartalmának megjelenítése a zárolási képernyőn)\n</string>
-  <string name="notification_private">Magán\n(értesítések megjelenítése, de tartalmuk elrejtése a zárolási képernyőn)\n</string>
-  <string name="notification_secret">Titkos\n(ne jelenítsen meg értesítéseket a zárolási képernyőn) </string>
   <!--Extension-->
   <string name="pref_extensions_title">Bővítmények</string>
   <string name="pref_extensions_summary">Bővítmények engedélyezése és paramétereik beállítása</string>
@@ -66,8 +60,6 @@
   <string name="extension_recent_version_exception">A(z) <b>%1$s</b> bővítmény újabb verziója már telepítve van.</string>
   <string name="extension_same_version_exception">A(z) <b>%1$s</b> bővítmény ugyanaz a verziója már telepítve van.</string>
   <string name="extension_invalid_signature"><b>%1$s</b> aláírása érvénytelen</string>
-  <string name="extension_invalid_authority">Hiba történt a következő bővítmény jogosultságának ellenőrzése során: <b>%1$s</b></string>
   <string name="extension_invalid_format">Érvénytelen bővítményformátum: <b>%1$s</b></string>
-  <string name="extension_force_install">Telepítés\nkényszerítése</string>
   <string name="extension_path_image_add">Új kép hozzáadása</string>
 </resources>

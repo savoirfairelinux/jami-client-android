@@ -32,9 +32,6 @@
   <string name="pref_blackList_title">Liosta bloca</string>
   <string name="pref_blackList_summary">Déan seiceáil ar do liosta bloc.</string>
   <string name="pref_delete_account_title">Crios cuntas</string>
-  <string name="pref_delete_account_summary">Déan do chuntas a scriosadh ón bhfeiste seo</string>
-  <string name="pref_persistNotification_title">Rannú i gcúlra</string>
-  <string name="pref_persistNotification_summary">Lig do rith i gcúlra chun glaonna agus teachtaireachtaí a fháil.</string>
   <string name="pref_newGroup_title">Céadú comhrá grúpa</string>
   <string name="pref_newGroup_summary">Cumas a chur ar bun grúpaí i Jami.</string>
   <string name="pref_logs_title">Clár na n-aiscithe</string>
@@ -48,9 +45,5 @@
   <string name="pref_link_preview_title">Taispeánadh réamhshocraithe nasc i comhráite</string>
   <string name="pref_link_preview_summary">Ní mór don réamh-sheiceáil ábhar a íoslódáil ó sheirbhísí tríú páirtí.</string>
   <!--Notifications Visibility-->
-  <string name="notification_public">Taispeántas poiblí \n(scéal fógraí agus a ábhar ar scáileán blocadh) \n</string>
-  <string name="notification_private">Priobháideacha \n(show notices ach a gcuid ábhar a mhaoiniú ar scáileán cloch) \n</string>
-  <string name="notification_secret">Secret \n(ní thaispeánann fógraí ar scáileán cloch)</string>
   <!--Extension-->
-  <string name="extension_force_install">Forc \n suiteáil</string>
 </resources>

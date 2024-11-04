@@ -32,9 +32,6 @@
   <string name="pref_blackList_title">బ్లాక్ జాబితా</string>
   <string name="pref_blackList_summary">మీ బ్లాక్ జాబితా తనిఖీ.</string>
   <string name="pref_delete_account_title">ఖాతాను తొలగించు</string>
-  <string name="pref_delete_account_summary">ఈ పరికరము నుండి మీ ఖాతాను తొలగించు</string>
-  <string name="pref_persistNotification_title">నేపథ్యంలో అమలు</string>
-  <string name="pref_persistNotification_summary">కాల్స్ మరియు సందేశాలను స్వీకరించడానికి నేపథ్యంలో అమలు చేయడానికి అనుమతించండి.</string>
   <string name="pref_newGroup_title">సమూహ చాట్ను ప్రారంభించండి</string>
   <string name="pref_newGroup_summary">జమిలో సమూహాలను సృష్టించడం ప్రారంభించండి.</string>
   <string name="pref_logs_title">రోగ నిర్ధారణ పత్రాలు</string>
@@ -48,9 +45,5 @@
   <string name="pref_link_preview_title">సంభాషణలలో లింక్ ప్రివ్యూలను చూపించు</string>
   <string name="pref_link_preview_summary">ముందస్తు వీక్షణలు మూడవ పార్టీ సర్వర్ల నుండి కంటెంట్ను డౌన్లోడ్ చేసుకోవలసి ఉంటుంది.</string>
   <!--Notifications Visibility-->
-  <string name="notification_public">పబ్లిక్ \n(ప్రకటనలను లాక్ స్క్రీన్ లో చూపించు</string>
-  <string name="notification_private">ప్రైవేట్ \n(ప్రవేశం నోటిఫికేషన్లు కానీ లాక్ స్క్రీన్ లో వాటి కంటెంట్ దాచడానికి) \n</string>
-  <string name="notification_secret">రహస్యంగా \n(లాక్ స్క్రీన్ లో నోటిఫికేషన్లు చూపించవద్దు)</string>
   <!--Extension-->
-  <string name="extension_force_install">బలవంతంగా \ n ఇన్స్టాల్</string>
 </resources>

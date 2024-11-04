@@ -32,9 +32,6 @@
   <string name="pref_blackList_title">Blokų sąrašas</string>
   <string name="pref_blackList_summary">Pažiūrėk į savo blokų sąrašą.</string>
   <string name="pref_delete_account_title">Ištrinti paskyrą</string>
-  <string name="pref_delete_account_summary">Ištrinkite paskyrą iš šio įrenginio</string>
-  <string name="pref_persistNotification_title">Paleisti fone</string>
-  <string name="pref_persistNotification_summary">Leisti veikti fone, kad būtų priimami skambučiai ir žinutės.</string>
   <string name="pref_newGroup_title">Įjungti grupinį pokalbį</string>
   <string name="pref_newGroup_summary">Įgalinkite kurti grupes Džimije.</string>
   <string name="pref_logs_title">Diagnostiko įrašai</string>
@@ -48,9 +45,5 @@
   <string name="pref_link_preview_title">Parodykite nuorodos peržiūrą pokalbiuose</string>
   <string name="pref_link_preview_summary">Išankstinė apžiūra reikalauja atsisiųsti turinį iš trečiųjų šalių serverių.</string>
   <!--Notifications Visibility-->
-  <string name="notification_public">Visuomenė \n(iššvietimo pranešimai ir jų turinys užrakintos ekrane) \n</string>
-  <string name="notification_private">Privati pranešimai rodomi, tačiau jų turinys paslėptas užrakintos ekrane)</string>
-  <string name="notification_secret">Paslapti \n(nešinkti pranešimų užrakintos ekrane)</string>
   <!--Extension-->
-  <string name="extension_force_install">Įstatymas</string>
 </resources>

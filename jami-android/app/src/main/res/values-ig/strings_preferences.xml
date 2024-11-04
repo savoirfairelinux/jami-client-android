@@ -32,9 +32,6 @@
   <string name="pref_blackList_title">Ndepụta nke ndị na-emechi</string>
   <string name="pref_blackList_summary">Lelee ndepụta ndị ị na-eme.</string>
   <string name="pref_delete_account_title">Ihichapụ akaụntụ</string>
-  <string name="pref_delete_account_summary">Hichapụ akaụntụ gị site na ngwaọrụ a</string>
-  <string name="pref_persistNotification_title">Na-agba ọsọ na ndabere</string>
-  <string name="pref_persistNotification_summary">Kwe ka ọ na-agba ọsọ na ndabere iji nata oku na ozi.</string>
   <string name="pref_newGroup_title">Gbaa nkata otu</string>
   <string name="pref_newGroup_summary">Mee ka ndị otu na Jami nwee ike ịmepụta.</string>
   <string name="pref_logs_title">Ihe ndekọ nchọpụta</string>
@@ -48,9 +45,5 @@
   <string name="pref_link_preview_title">Gosi njikọ nlele na mkparịta ụka</string>
   <string name="pref_link_preview_summary">Nlele anya chọrọ ibudata ọdịnaya site na sava ndị ọzọ.</string>
   <!--Notifications Visibility-->
-  <string name="notification_public">Ọha \n(na-egosi ọkwa na ọdịnaya ha na ihuenyo mkpọchi) \n</string>
-  <string name="notification_private">Private \n(na-egosi ọkwa ma zoo ọdịnaya ha na mkpọchi ihuenyo) \n</string>
-  <string name="notification_secret">Nzuzo \n(adịghị egosi ọkwa na mkpọchi ihuenyo)</string>
   <!--Extension-->
-  <string name="extension_force_install">ike \ n wụnye</string>
 </resources>

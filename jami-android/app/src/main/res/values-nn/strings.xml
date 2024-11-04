@@ -2,11 +2,9 @@
 <resources>
   <!--About-->
   <string name="section_license">Licens</string>
-  <string name="sponsor_section">Jami er ein fri programvare utvikla og støttt av</string>
   <string name="copyright_section">Opphavsrett</string>
   <string name="contribute_section">Bidra til</string>
   <string name="version_section">Versionen</string>
-  <string name="no_browser_app_installed">Ingen nettlesarapp finnast, installar ein for å sjå denne sida</string>
   <string name="website_chooser_title">Vis webside ved bruk av...</string>
   <string name="license">Dette programvaren er levert "som det er", utan nokon garanti. For meir informasjon, sjå GNU General Public License versjon 3 eller seinare&lt;/u&gt;</string>
   <string name="description">Jami er fri programvare for universell kommunikasjon som respekterer friheitene og privatlivet til brukarane sine.</string>
@@ -19,7 +17,6 @@
   <!--RingActivity-->
   <string name="error_no_network">Ingen nettverksanslutning</string>
   <string name="error_account_offline">Denne kontoen er avlogga</string>
-  <string name="error_mobile_network_available_but_disabled">Vennligst gje deg tilgang til mobilnettverket i innstillingsskjermen.</string>
   <!--AB menus-->
   <string name="ab_action_chat">Tekstmeldingar</string>
   <!--Sections-->
@@ -33,7 +30,6 @@
   <string name="menu_item_about">Om Jami</string>
   <string name="video_setting_title">Videoinnstillingane</string>
   <!--Dialing Fragment-->
-  <string name="dial_number">Ring eit nummer</string>
   <!--History Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
@@ -53,7 +49,6 @@
   <string name="notif_outgoing_call">Utgående samtale</string>
   <string name="notif_current_call_title">Fortsett samtale med %1$s</string>
   <string name="notif_current_call">Forlopande samtale</string>
-  <string name="notif_channel_call_in_progress">Kalla fram mot framtida</string>
   <string name="notif_channel_calls">Ringing</string>
   <string name="notif_channel_missed_calls">Miska ring</string>
   <string name="notif_channel_incoming_calls">Innkommende samtal</string>
@@ -64,7 +59,6 @@
   <string name="notif_channel_background_service">Hygdeleg service</string>
   <string name="notif_channel_background_service_descr">Tillat til å motta samtal og meldingar når som helst.</string>
   <string name="notif_group_calls">Ringing</string>
-  <string name="notif_background_service">Jami held seg i bakgrunnen.</string>
   <string name="notif_mark_as_read">Merk som lesing</string>
   <string name="notif_dismiss">Kast bort</string>
   <string name="notif_reply">Svar</string>
@@ -90,7 +84,6 @@
   <string name="ongoing_call">Forlopande samtale</string>
   <string name="hist_in_call">Inkommande samtal av %1$s</string>
   <string name="hist_out_call">Utgående samtale av %1$s</string>
-  <string name="start_error_mic_required">Jami treng mikrofonen til å arbeida.</string>
   <string name="action_call_decline">Nedgang</string>
   <string name="action_call_mic_mute">Stum mikrofon</string>
   <string name="ab_action_speakerphone">Legg høyttaleren til</string>
@@ -100,7 +93,6 @@
   <string name="ab_action_video_call">Start video samtal</string>
   <string name="ab_action_change_screen_orientation">Endra skjermorienteringa</string>
   <string name="share_via">Del via</string>
-  <string name="write_a_message">Skriv ein melding</string>
   <string name="scan_qr">Skanna QR-kode</string>
   <string name="qr_code">QR-kode</string>
   <string name="ab_action_flipcamera">Flip-kamera</string>
@@ -118,10 +110,10 @@
   <string name="conversation_send_audio">Ta opp lydklipp</string>
   <string name="conversation_send_video">Ta opp videoen</string>
   <string name="conversation_share_location">Del plassering</string>
+  <string name="ongoing_group_call">Forlopande samtale</string>
   <string name="in_reply_to">I svar på</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Filmtillating til kamera</string>
-  <string name="permission_dialog_camera_message">Video samtal krever kameraets tillating til å arbeida. Vennligst tenk på å aktivera det.</string>
   <!--Ringtone activity-->
   <string name="ringtone_error_title">Feil</string>
   <string name="ringtone_error_format_not_supported">Dette formatet er ikkje støtta.</string>
@@ -133,7 +125,6 @@
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Skanna QR-koden til kontoen du vil legge til.</string>
   <string name="title_activity_qrcode">Deila kontoen min</string>
-  <string name="error_scan_no_camera_permissions">QR-skanneren krever kamerauttrekk for å fungere</string>
   <string name="tab_code">Kodeen min</string>
   <string name="tab_scan">Scankode</string>
   <!--Settings-->
@@ -145,14 +136,15 @@
   <string name="conversation_details">Detaljer om samtalen</string>
   <string name="contact_details">Kontaktinformasjon</string>
   <string name="conversation_action_delete_this">Ta av denne samtalen</string>
+  <string name="leave_conversation">Lat samtalen vera</string>
   <string name="conversation_action_delete_this_message">Denne handlingen kan ikkje bli gjort til nytt.</string>
   <string name="conversation_action_history_clear">Klare historie</string>
   <string name="conversation_action_history_clear_title">Vil du fjerne dialogen?</string>
   <string name="conversation_action_history_clear_message">Dette vil definitivt rens historia i samrøytane.</string>
-  <string name="conversation_action_remove_this">Ta bort kontakt</string>
+  <string name="delete_contact">Ta bort kontakt</string>
   <string name="conversation_action_remove_this_title">Vil du sletta denne kontakten?</string>
   <string name="conversation_action_remove_this_message">Dette vil fjerne kontakta og definitivt fjerne samtalshistoria.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s kopiert til klippbrett</string>
+  <string name="copied_to_clipboard">%1$s kopiert til klippbrett</string>
   <string name="conversation_action_select_peer_number">Velg eit nummer</string>
   <string name="conversation_action_block_this">Blockkontakt</string>
   <string name="conversation_action_unblock_this">Avbløka kontakt</string>
@@ -176,11 +168,10 @@
   <string name="conversation_preference_color">Farge for samtal</string>
   <string name="conversation_preference_emoji">Samtal emoji</string>
   <string name="conversation_type_contact">Jami kontakt</string>
-  <string name="conversation_type_private">Privat svam</string>
-  <string name="conversation_type_group">Gruppsjæra</string>
+  <string name="conversation_type_private">Privat</string>
   <string name="conversation_contact_invited">%1$s vart invitert</string>
   <string name="conversation_contact_added">%1$s er tilslutte</string>
-  <string name="conversation_contact_left">%1$ er til venstre</string>
+  <string name="conversation_contact_left">%1$s er til venstre</string>
   <string name="conversation_search_hint">Søk samtale</string>
   <string name="today">I dag</string>
   <string name="yesterday">I går</string>
@@ -202,9 +193,8 @@
   <string name="hist_contact_added">Legg til kontakt</string>
   <string name="hist_contact_left">Kontakt til venstre</string>
   <string name="hist_invitation_received">Innbyding motteke</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">Profil</string>
-  <string name="profile_name">Profilnavn</string>
   <string name="profile_message_warning">Profilen din blir berre delt med kontaktane dine</string>
   <string name="open_the_gallery">Opna galleriet</string>
   <string name="take_a_photo">Ta eit foto</string>
@@ -212,6 +202,7 @@
   <string name="registered_name">Namn som er registrert</string>
   <string name="no_registered_name">Ingen namn registrert</string>
   <string name="identity">Identitet</string>
+  <string name="identifier">Identifikator</string>
   <string name="account">Konto</string>
   <string name="link_new_device">Legg ein ny enhet til</string>
   <string name="devices">Kopplande utstyr</string>
@@ -222,7 +213,6 @@
   <string name="share_your_account_information">Deila min kontaktinformasjon</string>
   <string name="share_label">Deling</string>
   <string name="generic_error_migration">Feil</string>
-  <string name="generic_error_migration_message">Feil kom opp under flyt</string>
   <string name="title_share_with">Del med...</string>
   <!--Pending invitations-->
   <string name="accept">Ta imot</string>
@@ -321,7 +311,7 @@
   <string name="bottomSheet_raiseHand_btn">Rekk opp handa</string>
   <string name="uninstall">Uninstallere</string>
   <string name="reset">Omsetning</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">Bekreft</string>
   <string name="tab_members">Medlemmar</string>
   <string name="tab_files">Dateiar</string>
@@ -340,6 +330,9 @@
   <string name="jami_id_choose_username">Velg ein brukernavn</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Velkommen til Jami</string>
+  <!--Conversation details-->
+  <string name="details">Detaljer</string>
+  <string name="Private">Privat</string>
   <!--Donation-->
   <!--Extension-->
 </resources>

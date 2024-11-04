@@ -32,9 +32,6 @@
   <string name="pref_blackList_title">ब्लॉक यादी</string>
   <string name="pref_blackList_summary">तुमच्या ब्लॉक लिस्टची तपासणी करा.</string>
   <string name="pref_delete_account_title">खाते हटवा</string>
-  <string name="pref_delete_account_summary">या डिव्हाइसवरून आपले खाते हटवा</string>
-  <string name="pref_persistNotification_title">पार्श्वभूमीवर चालवा</string>
-  <string name="pref_persistNotification_summary">कॉल आणि मेसेज प्राप्त करण्यासाठी पार्श्वभूमीवर धावण्याची परवानगी द्या.</string>
   <string name="pref_newGroup_title">गट चॅट सक्षम करा</string>
   <string name="pref_newGroup_summary">Jami मध्ये गट तयार करण्यास सक्षम करा.</string>
   <string name="pref_logs_title">निदान नोंदी</string>
@@ -48,9 +45,5 @@
   <string name="pref_link_preview_title">संभाषणात लिंक पूर्वावलोकन दाखवा</string>
   <string name="pref_link_preview_summary">पूर्वावलोकन तृतीय पक्षाच्या सर्व्हरवरून सामग्री डाउनलोड करणे आवश्यक आहे.</string>
   <!--Notifications Visibility-->
-  <string name="notification_public">सार्वजनिक सूचना आणि त्यातील सामग्री लॉक स्क्रीनवर दाखवा)</string>
-  <string name="notification_private">खासगी \n(जाहिरात सूचना दाखवा पण लॉक स्क्रीनवर त्यांची सामग्री लपवा) \n</string>
-  <string name="notification_secret">गुप्त \n(लॉक स्क्रीनवर सूचना दाखवत नाहीत)</string>
   <!--Extension-->
-  <string name="extension_force_install">सक्ती \n प्रतिष्ठापन</string>
 </resources>

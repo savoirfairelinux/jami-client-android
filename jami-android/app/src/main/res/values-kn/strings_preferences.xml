@@ -32,9 +32,6 @@
   <string name="pref_blackList_title">ಬ್ಲಾಕ್ ಪಟ್ಟಿ</string>
   <string name="pref_blackList_summary">ನಿಮ್ಮ ಬ್ಲಾಕ್ ಪಟ್ಟಿಯನ್ನು ಪರಿಶೀಲಿಸಿ.</string>
   <string name="pref_delete_account_title">ಖಾತೆಯನ್ನು ಅಳಿಸಿ</string>
-  <string name="pref_delete_account_summary">ಈ ಸಾಧನದಿಂದ ನಿಮ್ಮ ಖಾತೆಯನ್ನು ಅಳಿಸಿ</string>
-  <string name="pref_persistNotification_title">ಹಿನ್ನೆಲೆಯಲ್ಲಿ ಚಲಾಯಿಸಿ</string>
-  <string name="pref_persistNotification_summary">ಕರೆಗಳು ಮತ್ತು ಸಂದೇಶಗಳನ್ನು ಸ್ವೀಕರಿಸಲು ಹಿನ್ನೆಲೆಯಲ್ಲಿ ಚಲಿಸುವಂತೆ ಅನುಮತಿಸಿ.</string>
   <string name="pref_newGroup_title">ಗುಂಪು ಚಾಟ್ ಅನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿ</string>
   <string name="pref_newGroup_summary">ಜಾಮಿಯಲ್ಲಿ ಗುಂಪುಗಳನ್ನು ರಚಿಸಲು ಅನುವು ಮಾಡಿಕೊಡಿ.</string>
   <string name="pref_logs_title">ರೋಗನಿರ್ಣಯ ದಾಖಲೆಗಳು</string>
@@ -48,9 +45,5 @@
   <string name="pref_link_preview_title">ಸಂಭಾಷಣೆಗಳಲ್ಲಿ ಲಿಂಕ್ ಪೂರ್ವವೀಕ್ಷಣೆಗಳನ್ನು ತೋರಿಸಿ</string>
   <string name="pref_link_preview_summary">ಪೂರ್ವವೀಕ್ಷಣೆಗಾಗಿ ಮೂರನೇ ವ್ಯಕ್ತಿಯ ಸರ್ವರ್ಗಳಿಂದ ವಿಷಯವನ್ನು ಡೌನ್ಲೋಡ್ ಮಾಡಬೇಕಾಗುತ್ತದೆ.</string>
   <!--Notifications Visibility-->
-  <string name="notification_public">ಸಾರ್ವಜನಿಕ                                                                                                                                                                                                                                                         </string>
-  <string name="notification_private">ಖಾಸಗಿ \n(ಅಧಿಸೂಚನೆಗಳನ್ನು ತೋರಿಸು ಆದರೆ ಅವುಗಳ ವಿಷಯವನ್ನು ಲಾಕ್ ಸ್ಕ್ರೀನ್ ನಲ್ಲಿ ಮರೆಮಾಡಿ) \n</string>
-  <string name="notification_secret">ರಹಸ್ಯ \n(ಲಾಕ್ ಸ್ಕ್ರೀನ್ನಲ್ಲಿ ಅಧಿಸೂಚನೆಗಳನ್ನು ತೋರಿಸುವುದಿಲ್ಲ)</string>
   <!--Extension-->
-  <string name="extension_force_install">ಬಲವಂತ \ n ಅನುಸ್ಥಾಪಿಸಲು</string>
 </resources>

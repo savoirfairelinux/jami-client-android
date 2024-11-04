@@ -11,4 +11,6 @@
   <string name="control_replay">Repornire</string>
   <string name="control_pause">Pauză</string>
   <string name="searchbar_navigation_account">Alege contul</string>
+  <string name="add_conversation_member">Adaugă un membru la conversație</string>
+  <string name="qrcode_to_scan">Cod QR de scanat</string>
 </resources>

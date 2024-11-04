@@ -2,11 +2,9 @@
 <resources>
   <!--About-->
   <string name="section_license">ಪರವಾನಗಿ</string>
-  <string name="sponsor_section">ಜಾಮಿ ಒಂದು ಉಚಿತ ಸಾಫ್ಟ್ವೇರ್ ಆಗಿದೆ</string>
   <string name="copyright_section">ಹಕ್ಕುಸ್ವಾಮ್ಯ</string>
   <string name="contribute_section">ಕೊಡುಗೆ</string>
   <string name="version_section">ಆವೃತ್ತಿ</string>
-  <string name="no_browser_app_installed">ವೆಬ್ ಬ್ರೌಸರ್ ಅಪ್ಲಿಕೇಶನ್ ಕಂಡುಬಂದಿಲ್ಲ, ಈ ಪುಟವನ್ನು ವೀಕ್ಷಿಸಲು ಒಂದನ್ನು ಸ್ಥಾಪಿಸಿ</string>
   <string name="website_chooser_title">ವೆಬ್ಸೈಟ್ ಅನ್ನು ಬಳಸಿ ವೀಕ್ಷಿಸಿ.</string>
   <string name="license">ಈ ಸಾಫ್ಟ್ವೇರ್ ಯಾವುದೇ ರೀತಿಯ ಖಾತರಿ ಇಲ್ಲದೆ \"ಅದು\" ಎಂದು ಒದಗಿಸಲಾಗಿದೆ. ವಿವರಗಳಿಗಾಗಿ, ನೋಡಿ <u>GNU ಜನರಲ್ ಪಬ್ಲಿಕ್ ಲೈಸೆನ್ಸ್ ಆವೃತ್ತಿ 3 ಅಥವಾ ನಂತರದ</u></string>
   <string name="description">ಜಾಮಿ ಸಾರ್ವತ್ರಿಕ ಸಂವಹನಕ್ಕಾಗಿ ಉಚಿತ ಸಾಫ್ಟ್ವೇರ್ ಆಗಿದ್ದು, ಅದು ಬಳಕೆದಾರರ ಸ್ವಾತಂತ್ರ್ಯ ಮತ್ತು ಗೌಪ್ಯತೆಯನ್ನು ಗೌರವಿಸುತ್ತದೆ.</string>
@@ -19,7 +17,6 @@
   <!--RingActivity-->
   <string name="error_no_network">ನೆಟ್ವರ್ಕ್ ಸಂಪರ್ಕವಿಲ್ಲ</string>
   <string name="error_account_offline">ಖಾತೆ ಆಫ್ ಆಗಿದೆ</string>
-  <string name="error_mobile_network_available_but_disabled">ದಯವಿಟ್ಟು ಸೆಲ್ ನೆಟ್ವರ್ಕ್ಗೆ ಸೆಟ್ಟಿಂಗ್ಗಳ ಪರದೆಯಲ್ಲಿ ಪ್ರವೇಶವನ್ನು ನೀಡಿ.</string>
   <!--AB menus-->
   <string name="ab_action_chat">ಪಠ್ಯ ಸಂದೇಶ ಕಳುಹಿಸುವಿಕೆ</string>
   <!--Sections-->
@@ -33,7 +30,6 @@
   <string name="menu_item_about">ಜಾಮಿ ಬಗ್ಗೆ</string>
   <string name="video_setting_title">ವೀಡಿಯೊ ಸೆಟ್ಟಿಂಗ್ಗಳು</string>
   <!--Dialing Fragment-->
-  <string name="dial_number">ಒಂದು ಸಂಖ್ಯೆಯನ್ನು ಡಯಲ್ ಮಾಡಿ</string>
   <!--History Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
@@ -53,7 +49,6 @@
   <string name="notif_outgoing_call">ಹೊರಹೋಗುವ ಕರೆ</string>
   <string name="notif_current_call_title">%1$s ನೊಂದಿಗೆ ನಡೆಯುತ್ತಿರುವ ಕರೆ</string>
   <string name="notif_current_call">ನಡೆಯುತ್ತಿರುವ ಕರೆ</string>
-  <string name="notif_channel_call_in_progress">ಪ್ರಗತಿಗಾಗಿ ಕರೆ</string>
   <string name="notif_channel_calls">ಕರೆಗಳು</string>
   <string name="notif_channel_missed_calls">ತಪ್ಪಿಸಿಕೊಂಡ ಕರೆಗಳು</string>
   <string name="notif_channel_incoming_calls">ಒಳಬರುವ ಕರೆಗಳು</string>
@@ -64,7 +59,6 @@
   <string name="notif_channel_background_service">ಹಿನ್ನೆಲೆ ಸೇವೆ</string>
   <string name="notif_channel_background_service_descr">ಯಾವುದೇ ಸಮಯದಲ್ಲಿ ಕರೆಗಳು ಮತ್ತು ಸಂದೇಶಗಳನ್ನು ಸ್ವೀಕರಿಸಲು ಅನುಮತಿಸುತ್ತದೆ.</string>
   <string name="notif_group_calls">ಕರೆಗಳು</string>
-  <string name="notif_background_service">ಜಾಮಿ ಪ್ರಸ್ತುತ ಹಿನ್ನೆಲೆಯಲ್ಲಿ ಓಡುತ್ತಾಳೆ</string>
   <string name="notif_mark_as_read">ಗುರುತು</string>
   <string name="notif_dismiss">ವಜಾಗೊಳಿಸುವುದು</string>
   <string name="notif_reply">ಉತ್ತರ</string>
@@ -90,7 +84,6 @@
   <string name="ongoing_call">ನಡೆಯುತ್ತಿರುವ ಕರೆ</string>
   <string name="hist_in_call">%1$s ನ ಒಳಬರುವ ಕರೆ</string>
   <string name="hist_out_call">%1$s ನ ಹೊರಹೋಗುವ ಕರೆ</string>
-  <string name="start_error_mic_required">ಜಾಮಿಗೆ ಮೈಕ್ರೊಫೋನ್ ಕೆಲಸ ಮಾಡಲು ಅನುಮತಿ ಬೇಕು.</string>
   <string name="action_call_decline">ಕುಸಿತ</string>
   <string name="action_call_mic_mute">ಮೂಕ ಮೈಕ್ರೊಫೋನ್</string>
   <string name="ab_action_speakerphone">ಸ್ಪೀಕರ್ ಅನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿ</string>
@@ -100,7 +93,6 @@
   <string name="ab_action_video_call">ವೀಡಿಯೊ ಕರೆ ಆರಂಭಿಸಿ</string>
   <string name="ab_action_change_screen_orientation">ಪರದೆಯ ದೃಷ್ಟಿಕೋನವನ್ನು ಬದಲಾಯಿಸಿ</string>
   <string name="share_via">ಮೂಲಕ ಹಂಚಿಕೆ</string>
-  <string name="write_a_message">ಸಂದೇಶವನ್ನು ಬರೆಯಿರಿ</string>
   <string name="scan_qr">QR ಕೋಡ್ ಸ್ಕ್ಯಾನ್ ಮಾಡಿ</string>
   <string name="qr_code">ಕ್ಯೂಆರ್ ಕೋಡ್</string>
   <string name="ab_action_flipcamera">ಫ್ಲಿಪ್ ಕ್ಯಾಮೆರಾ</string>
@@ -118,10 +110,10 @@
   <string name="conversation_send_audio">ಆಡಿಯೋ ಕ್ಲಿಪ್ ರೆಕಾರ್ಡ್ ಮಾಡಿ</string>
   <string name="conversation_send_video">ವೀಡಿಯೊ ಕ್ಲಿಪ್ ರೆಕಾರ್ಡ್ ಮಾಡಿ</string>
   <string name="conversation_share_location">ಹಂಚಿಕೆ ಸ್ಥಳ</string>
+  <string name="ongoing_group_call">ನಡೆಯುತ್ತಿರುವ ಕರೆ</string>
   <string name="in_reply_to">ಇದಕ್ಕೆ ಪ್ರತಿಕ್ರಿಯೆಯಾಗಿ</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">ಕ್ಯಾಮೆರಾ ಅನುಮತಿ</string>
-  <string name="permission_dialog_camera_message">ವೀಡಿಯೊ ಸಂಭಾಷಣೆಗಳಿಗೆ ಕ್ಯಾಮೆರಾ ಅನುಮತಿ ಅಗತ್ಯವಿರುತ್ತದೆ. ದಯವಿಟ್ಟು ಅದನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿ.</string>
   <!--Ringtone activity-->
   <string name="ringtone_error_title">ದೋಷ</string>
   <string name="ringtone_error_format_not_supported">ಈ ಸ್ವರೂಪವನ್ನು ಬೆಂಬಲಿಸುವುದಿಲ್ಲ.</string>
@@ -133,7 +125,6 @@
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">ನೀವು ಸೇರಿಸಲು ಬಯಸುವ ಖಾತೆಯ QR ಕೋಡ್ ಅನ್ನು ಸ್ಕ್ಯಾನ್ ಮಾಡಿ.</string>
   <string name="title_activity_qrcode">ನನ್ನ ಖಾತೆಯನ್ನು ಹಂಚಿಕೊಳ್ಳಿ</string>
-  <string name="error_scan_no_camera_permissions">QR ಸ್ಕ್ಯಾನರ್ ಕೆಲಸ ಮಾಡಲು ಕ್ಯಾಮೆರಾ ಅನುಮತಿಗಳನ್ನು ಅಗತ್ಯವಿದೆ</string>
   <string name="tab_code">ನನ್ನ ಕೋಡ್</string>
   <string name="tab_scan">ಸ್ಕ್ಯಾನ್ ಕೋಡ್</string>
   <!--Settings-->
@@ -145,14 +136,15 @@
   <string name="conversation_details">ಸಂಭಾಷಣೆಯ ವಿವರಗಳು</string>
   <string name="contact_details">ಸಂಪರ್ಕ ವಿವರಗಳು</string>
   <string name="conversation_action_delete_this">ಈ ಸಂಭಾಷಣೆಯನ್ನು ಅಳಿಸಿ</string>
+  <string name="leave_conversation">ಸಂಭಾಷಣೆಯನ್ನು ಬಿಟ್ಟುಬಿಡಿ</string>
   <string name="conversation_action_delete_this_message">ಈ ಕ್ರಮವನ್ನು ಹಿಂತೆಗೆದುಕೊಳ್ಳಲು ಸಾಧ್ಯವಿಲ್ಲ.</string>
   <string name="conversation_action_history_clear">ಸ್ಪಷ್ಟ ಇತಿಹಾಸ</string>
   <string name="conversation_action_history_clear_title">ಸಂಭಾಷಣೆ ಇತಿಹಾಸವನ್ನು ತೆರವುಗೊಳಿಸಿ?</string>
   <string name="conversation_action_history_clear_message">ಇದು ಖಂಡಿತವಾಗಿಯೂ ಸಂಭಾಷಣೆಯ ಇತಿಹಾಸವನ್ನು ತೆರವುಗೊಳಿಸುತ್ತದೆ.</string>
-  <string name="conversation_action_remove_this">ಸಂಪರ್ಕವನ್ನು ಅಳಿಸಿ</string>
+  <string name="delete_contact">ಸಂಪರ್ಕವನ್ನು ಅಳಿಸಿ</string>
   <string name="conversation_action_remove_this_title">ಈ ಸಂಪರ್ಕವನ್ನು ಅಳಿಸಲು?</string>
   <string name="conversation_action_remove_this_message">ಇದು ಸಂಪರ್ಕವನ್ನು ಅಳಿಸುತ್ತದೆ ಮತ್ತು ಸಂಭಾಷಣೆ ಇತಿಹಾಸವನ್ನು ಖಂಡಿತವಾಗಿಯೂ ತೆರವುಗೊಳಿಸುತ್ತದೆ.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s ಅನ್ನು ಕ್ಲಿಪ್ಬೋರ್ಡ್ಗೆ ನಕಲಿಸಲಾಗಿದೆ</string>
+  <string name="copied_to_clipboard">%1$s ಅನ್ನು ಕ್ಲಿಪ್ಬೋರ್ಡ್ಗೆ ನಕಲಿಸಲಾಗಿದೆ</string>
   <string name="conversation_action_select_peer_number">ಒಂದು ಸಂಖ್ಯೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ</string>
   <string name="conversation_action_block_this">ಬ್ಲಾಕ್ ಸಂಪರ್ಕ</string>
   <string name="conversation_action_unblock_this">ಸಂಪರ್ಕವನ್ನು ನಿರ್ಬಂಧಿಸಲು</string>
@@ -176,11 +168,10 @@
   <string name="conversation_preference_color">ಸಂಭಾಷಣೆ ಬಣ್ಣ</string>
   <string name="conversation_preference_emoji">ಸಂಭಾಷಣೆ ಎಮೋಜಿ</string>
   <string name="conversation_type_contact">ಜಾಮಿ ಸಂಪರ್ಕ</string>
-  <string name="conversation_type_private">ಖಾಸಗಿ ಗುಂಪು</string>
-  <string name="conversation_type_group">ಗುಂಪು ಗುಂಪು</string>
+  <string name="conversation_type_private">ಖಾಸಗಿ</string>
   <string name="conversation_contact_invited">%1$s ಅನ್ನು ಆಹ್ವಾನಿಸಲಾಗಿದೆ</string>
   <string name="conversation_contact_added">%1$s ಸೇರಿಕೊಂಡಿದೆ</string>
-  <string name="conversation_contact_left">%1$ ಎಡಕ್ಕೆ</string>
+  <string name="conversation_contact_left">%1$s ಎಡಕ್ಕೆ</string>
   <string name="conversation_search_hint">ಹುಡುಕಾಟ ಸಂಭಾಷಣೆ</string>
   <string name="today">ಇಂದು</string>
   <string name="yesterday">ನಿನ್ನೆ</string>
@@ -202,16 +193,15 @@
   <string name="hist_contact_added">ಸಂಪರ್ಕ ಸೇರಿಸಲಾಗಿದೆ</string>
   <string name="hist_contact_left">ಸಂಪರ್ಕ ಎಡ</string>
   <string name="hist_invitation_received">ಸ್ವೀಕರಿಸಿದ ಆಹ್ವಾನ</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">ಪ್ರೊಫೈಲ್</string>
-  <string name="profile_name">ಪ್ರೊಫೈಲ್ ಹೆಸರು</string>
   <string name="profile_message_warning">ನಿಮ್ಮ ಪ್ರೊಫೈಲ್ ನಿಮ್ಮ ಸಂಪರ್ಕಗಳೊಂದಿಗೆ ಮಾತ್ರ ಹಂಚಿಕೊಳ್ಳಲಾಗುತ್ತದೆ</string>
   <string name="open_the_gallery">ಗ್ಯಾಲರಿ ತೆರೆಯಿರಿ</string>
-  <string name="take_a_photo">ಫೋಟೋ ತೆಗೆದುಕೊ</string>
   <string name="profile_name_hint">ನಿಮ್ಮ ಹೆಸರನ್ನು ನಮೂದಿಸಿ</string>
   <string name="registered_name">ನೋಂದಾಯಿತ ಹೆಸರು</string>
   <string name="no_registered_name">ನೋಂದಾಯಿತ ಹೆಸರು ಇಲ್ಲ</string>
   <string name="identity">ಗುರುತಿನ</string>
+  <string name="identifier">ಗುರುತಿನ ಚೀಟಿ</string>
   <string name="account">ಖಾತೆ</string>
   <string name="link_new_device">ಹೊಸ ಸಾಧನವನ್ನು ಸಂಪರ್ಕಿಸಿ</string>
   <string name="devices">ಸಂಪರ್ಕಿತ ಸಾಧನಗಳು</string>
@@ -222,7 +212,6 @@
   <string name="share_your_account_information">ನನ್ನ ಸಂಪರ್ಕ ಮಾಹಿತಿಯನ್ನು ಹಂಚಿಕೊಳ್ಳಿ</string>
   <string name="share_label">ಹಂಚಿಕೆ</string>
   <string name="generic_error_migration">ದೋಷ</string>
-  <string name="generic_error_migration_message">ವಲಸೆ ಸಮಯದಲ್ಲಿ ದೋಷ ಸಂಭವಿಸಿದೆ</string>
   <string name="title_share_with">ಹಂಚಿಕೊಳ್ಳಿ.</string>
   <!--Pending invitations-->
   <string name="accept">ಒಪ್ಪಿಕೊಳ್ಳು</string>
@@ -321,7 +310,7 @@
   <string name="bottomSheet_raiseHand_btn">ಕೈ ಎತ್ತಿ</string>
   <string name="uninstall">ಅಳವಡಿಕೆ ತೆಗೆದುಹಾಕಿ</string>
   <string name="reset">ಮರುಹೊಂದಿಸಿ</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">ದೃಢೀಕರಿಸಿ</string>
   <string name="tab_members">ಸದಸ್ಯರು</string>
   <string name="tab_files">ಫೈಲ್ಗಳು</string>
@@ -332,7 +321,7 @@
   <string name="dialog_hint_description">ವಿವರಣೆ</string>
   <string name="picker_title">ಸಂಪರ್ಕಗಳನ್ನು ಆಯ್ಕೆಮಾಡಿ</string>
   <string name="picker_btn">ಸಂಪರ್ಕಗಳನ್ನು ಆಯ್ಕೆಮಾಡಿ</string>
-  <string name="bottomsheet_contact">ಜಾಮಿ % 1$ ಗಳನ್ನು ಸಂಪರ್ಕಿಸಿ</string>
+  <string name="bottomsheet_contact">ಜಾಮಿ %1$s ಗಳನ್ನು ಸಂಪರ್ಕಿಸಿ</string>
   <string name="bottomsheet_remove">ದಣಿದಿಂದ ಹೊರಹಾಕಿ</string>
   <!--JamiId-->
   <string name="jami_id_validate">ಬಳಕೆದಾರ ಹೆಸರನ್ನು ನೋಂದಾಯಿಸಿ</string>
@@ -340,6 +329,9 @@
   <string name="jami_id_choose_username">ಬಳಕೆದಾರ ಹೆಸರನ್ನು ಆರಿಸಿ</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">ಜಾಮಿಗೆ ಸ್ವಾಗತ</string>
+  <!--Conversation details-->
+  <string name="details">ವಿವರಗಳು</string>
+  <string name="Private">ಖಾಸಗಿ</string>
   <!--Donation-->
   <!--Extension-->
 </resources>

@@ -2,11 +2,9 @@
 <resources>
   <!--About-->
   <string name="section_license">Ліцензія</string>
-  <string name="sponsor_section">Jami — це вільне програмне забезпечення, яке розроблене й підтримується</string>
   <string name="copyright_section">Авторське право</string>
   <string name="contribute_section">Зробити внесок</string>
   <string name="version_section">Версія</string>
-  <string name="no_browser_app_installed">Не знайдено жодного браузера. Будь ласка, встановіть браузер, щоб переглянути цю сторінку.</string>
   <string name="website_chooser_title">Переглянути сайт за допомогою...</string>
   <string name="license">Це програмне забезпечення надається \"як є\", без будь-яких гарантій. Більш детально дивіться<u>GNU General Public License версію 3 чи новішу</u></string>
   <string name="description">Jami — це вільне програмне забезпечення для будь-якого звʼязку з повагою до свобод і приватності користувачів.</string>
@@ -19,7 +17,6 @@
   <!--RingActivity-->
   <string name="error_no_network">Відсутнє з’єднання з мережею</string>
   <string name="error_account_offline">Обліковий запис поза мережею</string>
-  <string name="error_mobile_network_available_but_disabled">Будь ласка, надайте права доступу для стільникової мережі у меню налаштувань.</string>
   <!--AB menus-->
   <string name="ab_action_chat">Текстова переписка</string>
   <!--Sections-->
@@ -33,7 +30,6 @@
   <string name="menu_item_about">Про Jami</string>
   <string name="video_setting_title">Настройки відео</string>
   <!--Dialing Fragment-->
-  <string name="dial_number">Набрати номер</string>
   <!--History Fragment-->
   <!--Home Fragment-->
   <string name="invitation_card_title">Запрошення отримані</string>
@@ -56,7 +52,7 @@
   <string name="notif_outgoing_call">Вихідний виклик</string>
   <string name="notif_current_call_title">Продовжений дзвін з %1$s</string>
   <string name="notif_current_call">Вихідний виклик</string>
-  <string name="notif_channel_call_in_progress">Дзвінок у процесі</string>
+  <string name="notif_channel_call_in_progress">Виклик у процесі</string>
   <string name="notif_channel_calls">Дзвінки</string>
   <string name="notif_channel_missed_calls">Пропущені виклики</string>
   <string name="notif_channel_incoming_calls">Вхідні звінки</string>
@@ -68,7 +64,6 @@
   <string name="notif_channel_background_service_descr">Дозволяє будь-коли отримувати дзвінки і повідомлення.</string>
   <string name="notif_group_calls">Дзвінки</string>
   <string name="notif_inprogress_group_call">Виклик у процесі</string>
-  <string name="notif_background_service">Jami зараз працює фоново</string>
   <string name="notif_mark_as_read">Позначити прочитаним</string>
   <string name="notif_dismiss">Відхилити</string>
   <string name="notif_reply">Відповісти</string>
@@ -95,7 +90,6 @@
   <string name="hist_in_call">Вхідний виклик тривалістю %1$s</string>
   <string name="hist_out_call">Вихідний виклик тривалістю %1$s</string>
   <string name="call_duration">Тривалість %s</string>
-  <string name="start_error_mic_required">Для роботи Jami потрібен доступ до мікрофону.</string>
   <string name="action_call_decline">Відхилити</string>
   <string name="action_call_mic_mute">Відключити мікрофон</string>
   <string name="ab_action_speakerphone">Увімкнути гучномовець</string>
@@ -105,10 +99,8 @@
   <string name="ab_action_video_call">Розпочати відеодзвінок</string>
   <string name="ab_action_change_screen_orientation">Змінити орієнтацію екрану</string>
   <string name="share_via">Поділитися за допомогою</string>
-  <string name="write_a_message">Написати повідомлення</string>
   <string name="scan_qr">Сканування QR коду</string>
   <string name="qr_code">QR код</string>
-  <string name="new_swarm">Стартувати рій</string>
   <string name="ab_action_flipcamera">Змінити камеру</string>
   <string name="ab_action_hidepreview">Сховати передогляд</string>
   <string name="remote_recording">Запис %s...</string>
@@ -124,11 +116,10 @@
   <string name="conversation_send_audio">Записати аудіо</string>
   <string name="conversation_send_video">Записати відео</string>
   <string name="conversation_share_location">Поділитися геоданними</string>
-  <string name="ongoing_group_call">Поточний виклик</string>
+  <string name="ongoing_group_call">Вихідний виклик</string>
   <string name="in_reply_to">Відповідно до</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Дозволи для камери</string>
-  <string name="permission_dialog_camera_message">Для здійснення відерозмови необхідно надати доступ до камери. Будь ласка, розгляньте дану можливість.</string>
   <!--Ringtone activity-->
   <string name="ringtone_error_title">Помилка</string>
   <string name="ringtone_error_format_not_supported">Цей формат не підтримується</string>
@@ -140,7 +131,6 @@
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Проскануйте QR-код облікового запису, який ви хочете додати.</string>
   <string name="title_activity_qrcode">Поділитися моїм обліковим записом</string>
-  <string name="error_scan_no_camera_permissions">Сканер QR-кодів потребує доступу до камери для роботи</string>
   <string name="tab_code">Мій код</string>
   <string name="tab_scan">Сканувати код</string>
   <!--Settings-->
@@ -152,14 +142,15 @@
   <string name="conversation_details">Деталі розмови</string>
   <string name="contact_details">Деталі контакту</string>
   <string name="conversation_action_delete_this">Видалити цю розмову</string>
+  <string name="leave_conversation">Не переконвайтеся</string>
   <string name="conversation_action_delete_this_message">Наслідки цієї дії не можна буде змінити.</string>
   <string name="conversation_action_history_clear">Видалити історію</string>
   <string name="conversation_action_history_clear_title">Очистити історію розмов?</string>
   <string name="conversation_action_history_clear_message">Це остаточно очистить історію розмов.</string>
-  <string name="conversation_action_remove_this">Видалити контакт</string>
+  <string name="delete_contact">Видалити контакт</string>
   <string name="conversation_action_remove_this_title">Видалити цей контакт?</string>
   <string name="conversation_action_remove_this_message">Це видалить контакт і остаточно очистить історію розмов.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s збережено у буфер</string>
+  <string name="copied_to_clipboard">%1$s збережено у буфер</string>
   <string name="conversation_action_select_peer_number">Виберіть номер</string>
   <string name="conversation_action_block_this">Заблокувати контакт</string>
   <string name="conversation_action_unblock_this">Відблокувати контакт</string>
@@ -183,11 +174,11 @@
   <string name="conversation_preference_color">Колір розмови</string>
   <string name="conversation_preference_emoji">Емоджи розмови</string>
   <string name="conversation_type_contact">Контакт Jami</string>
-  <string name="conversation_type_private">Частна група</string>
-  <string name="conversation_type_group">Груповий скоп</string>
+  <string name="conversation_type_private">Приватне</string>
+  <string name="conversation_type_group">Група</string>
   <string name="conversation_contact_invited">%1$s запрошений</string>
   <string name="conversation_contact_added">%1$s приєднаний</string>
-  <string name="conversation_contact_left">%1$ залишився</string>
+  <string name="conversation_contact_left">%1$s залишився</string>
   <string name="conversation_search_hint">Пошук розмов</string>
   <string name="today">Сьогодні</string>
   <string name="yesterday">Учора</string>
@@ -209,16 +200,16 @@
   <string name="hist_contact_added">Контакт додано</string>
   <string name="hist_contact_left">Контакт ліво</string>
   <string name="hist_invitation_received">Отримано запрошення</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">Профіль</string>
-  <string name="profile_name">Назва профіля</string>
   <string name="profile_message_warning">Ваш профіль бачитимуть лише ваші контакти</string>
   <string name="open_the_gallery">Відкрити галерею</string>
-  <string name="take_a_photo">Зробити фото</string>
+  <string name="take_a_photo">Сфотографувати</string>
   <string name="profile_name_hint">Введіть своє ім\'я</string>
   <string name="registered_name">Зареєстроване ім\'я</string>
   <string name="no_registered_name">Немає зареєстрованого ім\'я</string>
   <string name="identity">Особа</string>
+  <string name="identifier">Ідентифікатор</string>
   <string name="account">Обліковий запис</string>
   <string name="link_new_device">Прив\'язати новий пристрій</string>
   <string name="devices">Привʼязані пристрої</string>
@@ -229,7 +220,6 @@
   <string name="share_your_account_information">Поділитися моїми контактними відомостями</string>
   <string name="share_label">Поділитися</string>
   <string name="generic_error_migration">Помилка</string>
-  <string name="generic_error_migration_message">Збій переведення</string>
   <string name="title_share_with">Поділитися з...</string>
   <!--Pending invitations-->
   <string name="accept">Прийняти</string>
@@ -329,7 +319,7 @@
   <string name="bottomSheet_raiseHand_btn">Підняти руку</string>
   <string name="uninstall">Видалити</string>
   <string name="reset">Скинути</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">Підтвердження</string>
   <string name="tab_members">Учасники</string>
   <string name="tab_files">Файли</string>
@@ -355,6 +345,9 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Вітаємо в Jami</string>
   <string name="welcome_jami_description">Поділіться своїм ідентифікатором Jami, щоб можна було легше з вами звʼязатися!</string>
+  <!--Conversation details-->
+  <string name="details">Подробиці</string>
+  <string name="Private">Приватне</string>
   <!--Donation-->
   <string name="donation_card_description">Якщо вам подобається Jami і ви вірите в нашу місію, чи не зробили б ви пожертву?</string>
   <string name="donation_card_not_now">Не зараз</string>

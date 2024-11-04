@@ -148,9 +148,7 @@
   <string name="account_sip_cannot_be_registered_message">Is féidir leat leanúint leis an bpróiseas cruthaitheachta cuntas nó do chuid faisnéise a eisiúint anseo. Is féidir é a eisiúint níos déanaí sa shuíomh.</string>
   <string name="account_no_network_title">Measáin</string>
   <string name="account_device_added_title">Úinéireacht cuntas breise</string>
-  <string name="account_device_added_message">Tá tú a chur ar bun go rathúil do chuntas Jami ar an gléas seo.</string>
   <string name="account_device_updated_title">Úrsáid nua-aimseartha ar an gcuntas</string>
-  <string name="account_device_updated_message">Tá tú ag nuashonrú go rathúil do chuntas Jami.</string>
   <string name="account_sip_register_anyway">Déan clárú mar sin féin</string>
   <!--TV-->
   <string name="account_tv_settings_header">Cinntí cuntas</string>

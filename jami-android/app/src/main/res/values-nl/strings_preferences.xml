@@ -32,9 +32,6 @@
   <string name="pref_blackList_title">Blockslijst</string>
   <string name="pref_blackList_summary">Controleer je bloklijst.</string>
   <string name="pref_delete_account_title">Account verwijderen</string>
-  <string name="pref_delete_account_summary">Verwijder uw account van dit apparaat</string>
-  <string name="pref_persistNotification_title">Uitvoeren in achtergrond</string>
-  <string name="pref_persistNotification_summary">Maakt het mogelijk om in de achtergrond oproepen en berichten te ontvangen.</string>
   <string name="pref_newGroup_title">Groepschat inzetten</string>
   <string name="pref_newGroup_summary">Maak groepen in Jami mogelijk.</string>
   <string name="pref_logs_title">Diagnostische logs</string>
@@ -48,9 +45,5 @@
   <string name="pref_link_preview_title">Vertoon linkvoorziening in gesprekken</string>
   <string name="pref_link_preview_summary">Voorbeelden vereisen het downloaden van inhoud van servers van derden.</string>
   <!--Notifications Visibility-->
-  <string name="notification_public">Publiek \n(toon notificaties inclusief inhoud op het lock-scherm)\n</string>
-  <string name="notification_private">Prive \n(toon notificaties op het lock-scherm, maar verberg de inhoud)\n</string>
-  <string name="notification_secret">Geheim \n(laat geen notificaties op het lock-scherm zien)</string>
   <!--Extension-->
-  <string name="extension_force_install">forceer \n installatie</string>
 </resources>
