@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "39dd3796_f49971f8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1035
+      },
+      "writtenOn": "2024-11-04T21:43:27Z",
+      "side": 1,
+      "message": "I think this patch makes sense but it doesn\u0027t solve the specific issue I was having. The problem is that I\u0027m creating a new account, so it doesn\u0027t have a token yet. When I turn on the internet connection, Jami gets a token from Firebase and sets it correctly, but this only happens _after_ it\u0027s already connected to the DHT proxy server and done \u0027listen\u0027 operations. (I don\u0027t know if the order of events is deterministic or if there\u0027s a race condition here, but this is what I\u0027ve seen in all my tests so far.)",
+      "revId": "a375f18913969e3bf97541d8e8d6acb63b037a60",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
