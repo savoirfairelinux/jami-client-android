@@ -24,6 +24,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6c027a9f_c8479e4f",
+        "filename": "jami-android/app/src/main/res/layout/dialog_profile.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-11-05T15:39:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af885d32_99a7d9be",
+      "range": {
+        "startLine": 70,
+        "startChar": 56,
+        "endLine": 70,
+        "endChar": 68
+      },
+      "revId": "ff68b00da8e46b8e8263189f9e41dacad0e4315a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "50656d74_58bb1466",
@@ -37,6 +61,30 @@
       "writtenOn": "2024-11-01T21:25:08Z",
       "side": 1,
       "message": "`remove_photo`",
+      "range": {
+        "startLine": 78,
+        "startChar": 33,
+        "endLine": 78,
+        "endChar": 45
+      },
+      "revId": "ff68b00da8e46b8e8263189f9e41dacad0e4315a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e822eaf_e4bc7f19",
+        "filename": "jami-android/app/src/main/res/layout/dialog_profile.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-11-05T15:39:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50656d74_58bb1466",
       "range": {
         "startLine": 78,
         "startChar": 33,
@@ -70,6 +118,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "90e19056_d5e7e402",
+        "filename": "jami-android/app/src/main/res/layout/frag_acc_profile_create.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-11-05T15:39:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d6b5b57_69b59c06",
+      "range": {
+        "startLine": 99,
+        "startChar": 61,
+        "endLine": 99,
+        "endChar": 73
+      },
+      "revId": "ff68b00da8e46b8e8263189f9e41dacad0e4315a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dd675177_954b4ebc",
@@ -93,6 +165,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "312d2161_66bc2818",
+        "filename": "jami-android/app/src/main/res/layout/frag_acc_profile_create.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-11-05T15:39:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd675177_954b4ebc",
+      "range": {
+        "startLine": 106,
+        "startChar": 37,
+        "endLine": 106,
+        "endChar": 49
+      },
+      "revId": "ff68b00da8e46b8e8263189f9e41dacad0e4315a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4f9cfe54_c25fb771",
@@ -106,6 +202,30 @@
       "writtenOn": "2024-11-01T21:25:08Z",
       "side": 1,
       "message": "`Remove photo`",
+      "range": {
+        "startLine": 417,
+        "startChar": 32,
+        "endLine": 417,
+        "endChar": 44
+      },
+      "revId": "ff68b00da8e46b8e8263189f9e41dacad0e4315a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "96242b79_f484cddc",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-11-05T15:39:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f9cfe54_c25fb771",
       "range": {
         "startLine": 417,
         "startChar": 32,
