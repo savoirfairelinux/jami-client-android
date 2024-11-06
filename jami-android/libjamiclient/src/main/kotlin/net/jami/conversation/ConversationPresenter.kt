@@ -263,6 +263,7 @@ class ConversationPresenter @Inject constructor(
     }
 
     fun openContact() {
+        Log.w(TAG, "mConversationUri.isNull ${mConversationUri == null} view.isNull ${view == null}")
         mConversation?.let { conversation -> view?.goToDetailsActivity(conversation.accountId, conversation.uri) }
     }
 
