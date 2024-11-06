@@ -16,10 +16,10 @@
  */
 package cx.ring.client.message
 
-import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu
 import androidx.test.espresso.Espresso.pressBack
+import androidx.test.espresso.NoMatchingViewException
 import androidx.test.espresso.action.ViewActions.clearText
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.closeSoftKeyboard
@@ -38,6 +38,7 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import cx.ring.AccountUtils
+import cx.ring.NativeScreenshot
 import cx.ring.R
 import cx.ring.application.JamiApplication
 import cx.ring.client.ColorChooserBottomSheet
@@ -50,9 +51,9 @@ import cx.ring.waitUntil
 import net.jami.model.Account
 import net.jami.model.Conversation
 import net.jami.model.Uri
+import net.jami.utils.Log
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.not
-import org.junit.Before
 import org.junit.FixMethodOrder
 import org.junit.Rule
 import org.junit.Test
@@ -64,6 +65,8 @@ import org.junit.runners.MethodSorters
 class Messaging {
 
     companion object {
+        private val TAG = Messaging::class.java.simpleName
+
         const val TEST_MESSAGE_1 = "my test message"
         const val TEST_MESSAGE_2 = "my reply message"
         const val TEST_MESSAGE_3 = "my modified message"
@@ -86,8 +89,11 @@ class Messaging {
     @Rule
     val mActivityScenarioRule = ActivityScenarioRule(HomeActivity::class.java)
 
-    @Before
-    fun setup() {
+    @Test
+    fun a00_setup() {
+
+        NativeScreenshot.capture("Display-screen")
+
         if (accountsCreated) return
 
         val accountService = JamiApplication.instance!!.mAccountService
@@ -114,8 +120,7 @@ class Messaging {
         accountsCreated = true
 
         // Restart the activity to make load accounts.
-        mActivityScenarioRule.scenario.close()
-        ActivityScenario.launch(HomeActivity::class.java)
+//        mActivityScenarioRule.scenario.close()
     }
 
     @Test
@@ -368,6 +373,11 @@ class Messaging {
     @Test
     fun a11_changeConversationColor_changedInUserSide() {
         // Move to accountB.
+//        val testClassName = "Messaging"
+//        val testMethodName = "a11_changeConversationColor_changedInUserSide"
+//        mActivityScenarioRule.scenario.onActivity {
+//            Spoon.screenshot(it, "Display-screen", testClassName, testMethodName)
+//        }
         AccountNavigationUtils.moveToAccount(accountB.displayUri!!)
 
         // Open conversation with accountA.
@@ -377,6 +387,7 @@ class Messaging {
                 hasDescendant(withText(accountA.displayUri!!)), click()
             )
         )
+        Thread.sleep(2000)
 
         // Add a message.
         JamiApplication.instance!!.mAccountService.sendConversationMessage(
@@ -386,12 +397,30 @@ class Messaging {
             replyTo = null
         )
 
+        Log.w(TAG, "Message sent")
         // Click on conversation settings button.
-        openActionBarOverflowOrOptionsMenu(getInstrumentation().targetContext)
+//        openActionBarOverflowOrOptionsMenu(getInstrumentation().targetContext)
+
+
+        try {
+            onView(withId(R.id.conv_contact_details)).perform(click())
+        } catch (nmv: NoMatchingViewException) {
+            Log.w(TAG, "There is an overflow menu")
+            openActionBarOverflowOrOptionsMenu(getInstrumentation().targetContext)
+            Thread.sleep(2000)
+            NativeScreenshot.capture("conversation_details")
+
+            onView(allOf(withText(R.string.conversation_details), isDisplayed())).perform(click())
+        }
+//        Log.w(TAG, "Clicked on overflow menu")
 
         // Click on change color button. Select a color.
-        onView(withText(R.string.conversation_details)).perform(click())
+//        onView(withText(R.string.conversation_details)).perform(click())
+        Log.w(TAG, "Clicked on conversation details")
+        NativeScreenshot.capture("conversation_details_2")
+
         onView(withText(R.string.conversation_preference_color)).perform(click())
+
         // Position 12 = R.color.conversation_palette_red
         onView(withId(R.id.color_chooser)).perform(
             RecyclerViewActions

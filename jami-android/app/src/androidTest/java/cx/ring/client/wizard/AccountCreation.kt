@@ -34,11 +34,13 @@ import cx.ring.waitForView
 import org.hamcrest.Matchers.allOf
 import org.junit.Before
 import org.junit.FixMethodOrder
+import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.MethodSorters
 
+//@Ignore("Disabling all tests in this class temporarily")
 @LargeTest
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @RunWith(AndroidJUnit4::class)

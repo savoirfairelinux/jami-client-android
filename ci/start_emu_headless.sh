@@ -96,6 +96,10 @@ function disable_animation() {
     adb shell "settings put global animator_duration_scale 0.0"
 };
 
+function disable_notification() {
+    adb shell "settings put global zen_mode 1"
+};
+
 function hidden_policy() {
     adb shell "settings put global hidden_api_policy_pre_p_apps 1;settings put global hidden_api_policy_p_apps 1;settings put global hidden_api_policy 1"
 };
@@ -103,4 +107,5 @@ function hidden_policy() {
 launch_emulator
 check_emulator_status
 disable_animation
+disable_notification
 hidden_policy
