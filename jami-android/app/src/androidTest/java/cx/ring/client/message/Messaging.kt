@@ -50,6 +50,7 @@ import cx.ring.waitUntil
 import net.jami.model.Account
 import net.jami.model.Conversation
 import net.jami.model.Uri
+import net.jami.utils.Log
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.not
 import org.junit.Before
@@ -64,6 +65,8 @@ import org.junit.runners.MethodSorters
 class Messaging {
 
     companion object {
+        private val TAG = Messaging::class.java.simpleName
+
         const val TEST_MESSAGE_1 = "my test message"
         const val TEST_MESSAGE_2 = "my reply message"
         const val TEST_MESSAGE_3 = "my modified message"
@@ -370,6 +373,8 @@ class Messaging {
         // Move to accountB.
         AccountNavigationUtils.moveToAccount(accountB.displayUri!!)
 
+        Thread.sleep(5000)
+
         // Open conversation with accountA.
         onView(withId(R.id.confs_list)).perform(
             waitUntil(hasDescendant(allOf(withText(accountA.displayUri!!), isDisplayed()))),
@@ -377,6 +382,8 @@ class Messaging {
                 hasDescendant(withText(accountA.displayUri!!)), click()
             )
         )
+
+        Thread.sleep(5000)
 
         // Add a message.
         JamiApplication.instance!!.mAccountService.sendConversationMessage(
@@ -386,12 +393,27 @@ class Messaging {
             replyTo = null
         )
 
+        Thread.sleep(5000)
+
+
+        Log.w(TAG, "Message sent")
         // Click on conversation settings button.
         openActionBarOverflowOrOptionsMenu(getInstrumentation().targetContext)
+        Log.w(TAG, "Clicked on overflow menu")
+
+        Thread.sleep(5000)
+
 
         // Click on change color button. Select a color.
         onView(withText(R.string.conversation_details)).perform(click())
+        Log.w(TAG, "Clicked on conversation details")
+
+        Thread.sleep(15000)
+
+        Log.w(TAG, "Clicked on conversation details 3")
+
         onView(withText(R.string.conversation_preference_color)).perform(click())
+
         // Position 12 = R.color.conversation_palette_red
         onView(withId(R.id.color_chooser)).perform(
             RecyclerViewActions
