@@ -391,6 +391,7 @@ class Messaging {
 
         // Click on change color button. Select a color.
         onView(withText(R.string.conversation_details)).perform(click())
+        Thread.sleep(5000)
         onView(withText(R.string.conversation_preference_color)).perform(click())
         // Position 12 = R.color.conversation_palette_red
         onView(withId(R.id.color_chooser)).perform(
