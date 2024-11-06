@@ -46,6 +46,7 @@ import cx.ring.client.HomeActivity
 import cx.ring.client.addcontact.AccountNavigationUtils
 import cx.ring.hasBackgroundColor
 import cx.ring.viewholders.SmartListViewHolder
+import cx.ring.waitForView
 import cx.ring.waitUntil
 import net.jami.model.Account
 import net.jami.model.Conversation
@@ -391,7 +392,8 @@ class Messaging {
 
         // Click on change color button. Select a color.
         onView(withText(R.string.conversation_details)).perform(click())
-        onView(withText(R.string.conversation_preference_color)).perform(click())
+
+        waitForView(withText(R.string.conversation_preference_color)).perform(waitUntil(isDisplayed()), click())
         // Position 12 = R.color.conversation_palette_red
         onView(withId(R.id.color_chooser)).perform(
             RecyclerViewActions
