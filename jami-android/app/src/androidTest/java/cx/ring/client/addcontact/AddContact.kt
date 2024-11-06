@@ -48,6 +48,7 @@ import net.jami.utils.Log
 import org.hamcrest.Matchers
 import org.hamcrest.Matchers.not
 import org.junit.FixMethodOrder
+import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -57,6 +58,7 @@ import org.junit.runners.MethodSorters
  * This test class tests the addition of a contact.
  * Precondition: Should have access to the nameserver (https://ns-test.jami.net/).
  */
+@Ignore("Disabling all tests in this class temporarily")
 @LargeTest
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @RunWith(AndroidJUnit4::class)

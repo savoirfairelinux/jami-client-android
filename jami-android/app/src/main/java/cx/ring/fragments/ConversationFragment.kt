@@ -298,6 +298,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             btnRefuse.setOnClickListener { presenter.onRefuseIncomingContactRequest() }
             btnAccept.setOnClickListener { presenter.onAcceptIncomingContactRequest() }
 
+            Log.w(TAG, "devdebug onCreateView: binding done")
             binding = this
         }.root
     }
@@ -778,7 +779,10 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             when (item.itemId) {
                 R.id.conv_action_audiocall -> presenter.goToCall(false)
                 R.id.conv_action_videocall -> presenter.goToCall(true)
-                R.id.conv_contact_details -> presenter.openContact()
+                R.id.conv_contact_details -> {
+                    Log.w(TAG, "onMenuItemSelected: click on contact details")
+                    presenter.openContact()
+                }
                 else -> return false
             }
             return true
@@ -919,6 +923,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     override fun goToHome() {
         val hostActivity = activity
         if (hostActivity is ConversationActivity) {
+            Log.w(TAG, "devdebug goToHome: finish")
             hostActivity.finish()
         } else {
             // Post because we might be currently executing a fragment transaction
