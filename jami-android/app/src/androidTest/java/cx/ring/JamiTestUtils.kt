@@ -43,14 +43,14 @@ object AccountUtils {
 
         val accountObservableList = (0..<count).map { accountCount ->
             val username = "${baseUsername}_${time}_${accountCount}"
-            net.jami.utils.Log.d(TAG, "Account username: $username...")
+            Log.d(TAG, "Account username: $username...")
             accountService.getAccountTemplate(AccountConfig.ACCOUNT_TYPE_JAMI)
                 .map { accountDetails: HashMap<String, String> ->
                     accountDetails[ConfigKey.ACCOUNT_ALIAS.key] = "Jami account $accountCount"
                     accountDetails[ConfigKey.RINGNS_HOST.key] = NAME_SERVER_ADDRESS
                     accountDetails
                 }.flatMapObservable { details ->
-                    net.jami.utils.Log.d(TAG, "Adding account ...")
+                    Log.d(TAG, "Adding account ...")
                     accountService.addAccount(details)
                 }
                 .filter { account: Account ->
@@ -58,7 +58,7 @@ object AccountUtils {
                 }
                 .firstOrError()
                 .map { account: Account ->
-                    net.jami.utils.Log.d(TAG, "Registering account ...")
+                    Log.d(TAG, "Registering account ...")
                     accountService.registerName(
                         account, username, AccountService.ACCOUNT_SCHEME_PASSWORD, ""
                     )
