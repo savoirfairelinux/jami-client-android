@@ -130,6 +130,7 @@ class AddContact {
     @Test
     fun b1_searchForContact_usingRegisteredName() {
         // Move to account A
+        assert(accountA!!.registeredName.isNotEmpty())
         AccountNavigationUtils.moveToAccount(accountA!!.registeredName)
 
         // Click on the search bar
@@ -140,6 +141,7 @@ class AddContact {
             .perform(typeText(accountB!!.registeredName))
 
         // Check account B is in the search results
+        assert(accountB!!.registeredName.isNotEmpty())
         onView(isRoot()).perform(
             waitUntil(
                 hasDescendant(
