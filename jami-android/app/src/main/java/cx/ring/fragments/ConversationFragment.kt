@@ -778,7 +778,10 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             when (item.itemId) {
                 R.id.conv_action_audiocall -> presenter.goToCall(false)
                 R.id.conv_action_videocall -> presenter.goToCall(true)
-                R.id.conv_contact_details -> presenter.openContact()
+                R.id.conv_contact_details -> {
+                    Log.w(TAG, "onMenuItemSelected: click on contact details")
+                    presenter.openContact()
+                }
                 else -> return false
             }
             return true
