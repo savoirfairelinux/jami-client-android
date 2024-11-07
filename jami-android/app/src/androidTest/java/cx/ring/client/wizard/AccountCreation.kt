@@ -49,7 +49,7 @@ import cx.ring.utils.ContentUri.getUri
 import cx.ring.withImageUri
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.not
-import org.junit.Before
+import org.junit.After
 import org.junit.FixMethodOrder
 import org.junit.Rule
 import org.junit.Test
@@ -89,9 +89,6 @@ class AccountCreation {
             Log.d(TAG, "Images downloaded.")
         }
     }
-
-    @Before
-    fun moveToAccountCreation() = moveToWizard()
 
     /**
      * Checks if an account can be created by skipping all the steps.
@@ -469,16 +466,9 @@ class AccountCreation {
             .check(matches(allOf(isEnabled(), isDisplayed())))
     }
 
-    @Test
-    fun z_tearDown() {
-        // Doing this in a test is not ideal.
-        // Ideally, it should be in an `@After` method, but the problem is that it is executed
-        // after each test and not only at the end.
-        // That is the same problem with Android Test Orchestrator which removes the application
-        // between each test and not only at the end.
-        // `@AfterClass` could be used (executed once), but it does not have access to the activity.
+    @After
+    fun removeAccount() =
         AccountUtils.removeAllAccounts(accountService = JamiApplication.instance!!.mAccountService)
-    }
 
     private fun createDefaultAccount() {
         onView(withId(R.id.ring_create_btn)).perform(scrollTo(), click())
