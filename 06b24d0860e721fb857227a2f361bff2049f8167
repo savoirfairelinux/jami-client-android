@@ -1,0 +1,222 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "61861892_c5b927cb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-11-07T19:54:40Z",
+      "side": 1,
+      "message": "format all files",
+      "revId": "06b24d0860e721fb857227a2f361bff2049f8167",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3fed37a1_c0505724",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ConnectionMonitor.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-11-07T19:54:40Z",
+      "side": 1,
+      "message": "Is it ok that the filename doesnt contain `fragment` in it ?",
+      "revId": "06b24d0860e721fb857227a2f361bff2049f8167",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "149ad6fc_839bcdca",
+        "filename": "jami-android/app/src/main/res/layout/frag_settings.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 792,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-11-07T19:54:40Z",
+      "side": 1,
+      "message": "Google recommendation is to now use `constraintlayout` instead of relative layout",
+      "range": {
+        "startLine": 792,
+        "startChar": 0,
+        "endLine": 792,
+        "endChar": 2
+      },
+      "revId": "06b24d0860e721fb857227a2f361bff2049f8167",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "90361203_51f28acc",
+        "filename": "jami-android/app/src/main/res/layout/frag_settings.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 808,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-11-07T19:54:40Z",
+      "side": 1,
+      "message": "I think not needed with `constraintlayout` as a parent",
+      "range": {
+        "startLine": 808,
+        "startChar": 0,
+        "endLine": 808,
+        "endChar": 2
+      },
+      "revId": "06b24d0860e721fb857227a2f361bff2049f8167",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9c96c3b1_50795932",
+        "filename": "jami-android/app/src/main/res/layout/item_device_connection.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-11-07T19:54:40Z",
+      "side": 1,
+      "message": "Google recommendation is to now use `constraintlayout` instead of relative layout",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 2
+      },
+      "revId": "06b24d0860e721fb857227a2f361bff2049f8167",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "87e0ff36_2d37fab7",
+        "filename": "jami-android/app/src/main/res/layout/item_device_connection.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-11-07T19:54:40Z",
+      "side": 1,
+      "message": "Populate this with realistic data ? (preview purpose)",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 2
+      },
+      "revId": "06b24d0860e721fb857227a2f361bff2049f8167",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a9643c8a_2654fdc1",
+        "filename": "jami-android/app/src/main/res/layout/item_list_contact.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-11-07T19:54:40Z",
+      "side": 1,
+      "message": "Google recommendation is to now use `constraintlayout` instead of relative layout",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 2
+      },
+      "revId": "06b24d0860e721fb857227a2f361bff2049f8167",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e17236b_76b0c0f5",
+        "filename": "jami-android/app/src/main/res/layout/item_list_contact.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-11-07T19:54:40Z",
+      "side": 1,
+      "message": "I think not needed with `constraintlayout` as a parent",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 2
+      },
+      "revId": "06b24d0860e721fb857227a2f361bff2049f8167",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c9644c74_0e1e956c",
+        "filename": "jami-android/app/src/main/res/values/strings_preferences.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-11-07T19:54:40Z",
+      "side": 1,
+      "message": "Not used",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 2
+      },
+      "revId": "06b24d0860e721fb857227a2f361bff2049f8167",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9dee2a85_e567b13f",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 1686,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-11-07T19:54:40Z",
+      "side": 1,
+      "message": "private?",
+      "range": {
+        "startLine": 1686,
+        "startChar": 0,
+        "endLine": 1686,
+        "endChar": 2
+      },
+      "revId": "06b24d0860e721fb857227a2f361bff2049f8167",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
