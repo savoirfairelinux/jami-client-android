@@ -32,8 +32,8 @@ pipeline {
              pattern: 'jami-client-android']],
         triggerOnEvents: [
             commentAddedContains('!build'),
-            patchsetCreated(excludeDrafts: true, excludeNoCodeChange: true,
-                excludeTrivialRebase: true)]
+            patchsetCreated(excludeDrafts: true)
+            ]
     }
 
     options {
