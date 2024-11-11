@@ -2,10 +2,11 @@
 <resources>
   <!--About-->
   <string name="section_license">Άδεια</string>
-  <string name="sponsor_section">Το Jami είναι ένα ελεύθερο λογισμικό σε ανάπτυξη και υποστήριξη της</string>
   <string name="copyright_section">Πνευματική Ιδιοκτησία</string>
   <string name="contribute_section">Συνεισφέρετε</string>
   <string name="version_section">Έκδοση</string>
+  <string name="website_chooser_title">Προβολή σελίδας με...</string>
+  <string name="license">Το παρόν λογισμικό παρέχεται \"ως έχει\", άνευ οποιασδήποτε εγγύησης. Για περισσότερα βλ.<u> Γενική Άδεια Δημόσιας Χρήσης GNU έκδοση 3 ή νεώτερη</u></string>
   <string name="description">To Jami είναι ένα ελεύθερο λογισμικό για επικοινωνία με όλο τον κόσμο. Σέβεται την ελευθερία και την ιδιωτικότητα των χρηστών/στριών του.</string>
   <string name="credits">Συντελεστές</string>
   <string name="pip_title">Συνδιάσκεψη Jami</string>
@@ -16,7 +17,6 @@
   <!--RingActivity-->
   <string name="error_no_network">Χωρίς σύνδεση στο δίκτυο</string>
   <string name="error_account_offline">Ο λογαριασμός είναι εκτός σύνδεσης</string>
-  <string name="error_mobile_network_available_but_disabled">Παρακαλώ δώστε πρόσβαση στο δίκτυο κινητής τηλεφωνίας από τις  ρυθμίσεις του κινητού.</string>
   <!--AB menus-->
   <string name="ab_action_chat">Μήνυμα κειμένου</string>
   <!--Sections-->
@@ -30,7 +30,6 @@
   <string name="menu_item_about">Σχετικά με το Jami</string>
   <string name="video_setting_title">Εποθέματα Βίντεο</string>
   <!--Dialing Fragment-->
-  <string name="dial_number">Κλήση αριθμού</string>
   <!--History Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
@@ -50,7 +49,6 @@
   <string name="notif_outgoing_call">Εξερχόμενη κλήση</string>
   <string name="notif_current_call_title">Κλήση σε εξέλιξη με %1$s</string>
   <string name="notif_current_call">Εξερχόμενη κλήση</string>
-  <string name="notif_channel_call_in_progress">Κλήση σε Εξέλιξη</string>
   <string name="notif_channel_calls">Κλήσεις</string>
   <string name="notif_channel_missed_calls">Αναπάντητες Κλήσεις</string>
   <string name="notif_channel_incoming_calls">Εισερχόμενες Κλήσεις</string>
@@ -61,7 +59,6 @@
   <string name="notif_channel_background_service">Υπηρεσία Παρασκηνίου</string>
   <string name="notif_channel_background_service_descr">Επιτρέπει τη λήψη κλήσεων και μηνυμάτων οποτεδήποτε.</string>
   <string name="notif_group_calls">Κλήσεις</string>
-  <string name="notif_background_service">Η Τζάμι τρέχει στο φόντο.</string>
   <string name="notif_mark_as_read">Σημείωση ως αναγνωσμένο</string>
   <string name="notif_dismiss">Απόρριψη</string>
   <string name="notif_reply">Απάντηση</string>
@@ -87,7 +84,6 @@
   <string name="ongoing_call">Εξερχόμενη κλήση</string>
   <string name="hist_in_call">Εισερχόμενη κλήση από %1$s</string>
   <string name="hist_out_call">Εξερχόμενη κλήση από %1$s</string>
-  <string name="start_error_mic_required">Η Τζάμι χρειάζεται άδεια για να λειτουργήσει το μικρόφωνο.</string>
   <string name="action_call_accept">Αποδοχή κλήσης</string>
   <string name="action_call_decline">Απόρριψη κλήσης</string>
   <string name="action_call_mic_mute">Σίγαση μικροφώνου</string>
@@ -98,10 +94,9 @@
   <string name="ab_action_video_call">Ξεκινήστε την κλήση βίντεο</string>
   <string name="ab_action_change_screen_orientation">Στρίψτε την οθόνη</string>
   <string name="share_via">Μοίρασμα μέσω</string>
-  <string name="write_a_message">Γράψε μήνυμα</string>
   <string name="scan_qr">Σάρωση QR κώδικα</string>
   <string name="qr_code">QR κώδικας</string>
-  <string name="new_swarm">Δημιουργία σμήνους</string>
+  <string name="new_group">Δημιουργία νέας ομάδας</string>
   <string name="ab_action_flipcamera">Εναλλαγή κάμερας</string>
   <string name="ab_action_hidepreview">Απόκρυψη προεπισκόπησης</string>
   <string name="remote_recording">%s καταγράφει...</string>
@@ -117,10 +112,10 @@
   <string name="conversation_send_audio">Εγγραφή κλιπ ήχου</string>
   <string name="conversation_send_video">Εγγραφή κλιπ βίντεο</string>
   <string name="conversation_share_location">Κοινοποίηση τοποθεσίας</string>
+  <string name="ongoing_group_call">Εξερχόμενη κλήση</string>
   <string name="in_reply_to">Απαντώντας</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Άδεια πρόσβασης στην κάμερα</string>
-  <string name="permission_dialog_camera_message">Οι κλήσεις μέσω βίντεο χρειάζεται την άδεια στην κάμερά  για να δουλέψει. Παρακαλώ σκεφτείτε να την ενεργοποιήσετε.</string>
   <!--Ringtone activity-->
   <string name="ringtone_error_title">Σφάλμα</string>
   <string name="ringtone_error_format_not_supported">Η μορφή δεν υποστιρίζεται.</string>
@@ -132,7 +127,6 @@
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Σαρώστε τον κώδικα QR του λογαριασμού που θέλετε να προσθέσετε.</string>
   <string name="title_activity_qrcode">Κοινοποίηση λογαριασμού</string>
-  <string name="error_scan_no_camera_permissions">Ο σκανέρος QR απαιτεί άδειες κάμερας για να λειτουργήσει</string>
   <string name="tab_code">Ο Κώδικας μου</string>
   <string name="tab_scan">Κώδικας σαρώσεως</string>
   <!--Settings-->
@@ -144,14 +138,15 @@
   <string name="conversation_details">Πληροφορίες συνομιλίας</string>
   <string name="contact_details">Λεπτομέρειες επαφών</string>
   <string name="conversation_action_delete_this">Διαγραφή αυτής της συνομιλίας</string>
+  <string name="leave_conversation">Αφήστε τη συζήτηση</string>
   <string name="conversation_action_delete_this_message">Η ενέργεια δεν μπορεί να αναιρεθεί.</string>
   <string name="conversation_action_history_clear">Διαγραφή ιστορικού</string>
   <string name="conversation_action_history_clear_title">Διαγραφή ιστορικού συνομιλιών;</string>
   <string name="conversation_action_history_clear_message">Αυτό σίγουρα θα διαγράψει το ιστορικό συνομιλίας.</string>
-  <string name="conversation_action_remove_this">Διαγραφή επαφής</string>
+  <string name="delete_contact">Διαγραφή επαφής</string>
   <string name="conversation_action_remove_this_title">Διαγραφή αυτής της επαφής;</string>
   <string name="conversation_action_remove_this_message">Αυτό θα διαγράψει την επαφή και σίγουρα και το ιστορικό συνομιλίας.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s αντιγράφτηκε στο πρόχειρο</string>
+  <string name="copied_to_clipboard">%1$s αντιγράφτηκε στο πρόχειρο</string>
   <string name="conversation_action_select_peer_number">Επιλέξτε αριθμό </string>
   <string name="conversation_action_block_this">Μπλοκάρισμα επαφής</string>
   <string name="conversation_action_unblock_this">Ανοίξτε την επαφή</string>
@@ -175,8 +170,8 @@
   <string name="conversation_preference_color">Χρώμα συνομιλίας</string>
   <string name="conversation_preference_emoji">Emoji συνομιλίας</string>
   <string name="conversation_type_contact">Επαφή Jami</string>
-  <string name="conversation_type_private">Ιδιωτικό σμήνος</string>
-  <string name="conversation_type_group">Ομαδικό σμήνος</string>
+  <string name="conversation_type_private">Ιδιωτικό</string>
+  <string name="conversation_type_group">Ομάδα</string>
   <string name="conversation_contact_invited">%1$s προσκλήθηκε</string>
   <string name="conversation_contact_added">%1$s μπήκε</string>
   <string name="conversation_contact_left">%1$s έφυγε</string>
@@ -201,9 +196,8 @@
   <string name="hist_contact_added">Η επαφή προστέθηκε</string>
   <string name="hist_contact_left">Η επαφή αποχώρησε</string>
   <string name="hist_invitation_received">Η πρόσκληση παραλήφθηκε</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">Προφίλ</string>
-  <string name="profile_name">Όνομα προφίλ</string>
   <string name="profile_message_warning">Το προφίλ σας διαμοιράζεται μόνο με τις επαφές σας</string>
   <string name="open_the_gallery">Άνοιγμα έκθεσης</string>
   <string name="take_a_photo">Λήψη φωτογραφίας</string>
@@ -211,6 +205,7 @@
   <string name="registered_name">Καταχωρημένο Όνομα</string>
   <string name="no_registered_name">Δεν καταχωρήθηκε όνομα</string>
   <string name="identity">Ταυτότητα</string>
+  <string name="identifier">Ταυτοποιητής</string>
   <string name="account">Λογαριασμός</string>
   <string name="link_new_device">Σύνδεση νέας συσκευής</string>
   <string name="devices">Συνδεδεμένες συσκευές</string>
@@ -221,11 +216,12 @@
   <string name="share_your_account_information">Μοίρασε τις πληροφορίες των επαφών μου</string>
   <string name="share_label">Κοινοποίηση</string>
   <string name="generic_error_migration">Σφάλμα</string>
-  <string name="generic_error_migration_message">Δημιουργήθηκε σφάλμα κατα την μετακίνηση</string>
   <string name="title_share_with">Κοινοποίησε με...</string>
   <!--Pending invitations-->
   <string name="accept">Αποδοχή</string>
+  <string name="decline">Απόρριψη κλήσης</string>
   <string name="block">Μπλοκάρισμα</string>
+  <string name="invitation_message">Έχεις %1$d αιτήματα επαφών</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Μη μπλοκαρισμένες επαφές</string>
   <!--Smartlist-->
@@ -318,7 +314,7 @@
   <string name="bottomSheet_raiseHand_btn">Σηκώστε το χέρι σας</string>
   <string name="uninstall">Απεγκατάσταση</string>
   <string name="reset">Ανακατάσταση</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">Επιβεβαίωση</string>
   <string name="tab_members">Μέλη</string>
   <string name="tab_files">Αρχεία</string>
@@ -337,6 +333,11 @@
   <string name="jami_id_choose_username">Επιλέξτε όνομα χρήστη</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Καλώς ήλθατε στο  Jami</string>
+  <!--Conversation details-->
+  <string name="details">Λεπτομέρειες</string>
+  <string name="Private">Ιδιωτικό</string>
   <!--Donation-->
+  <string name="donation_card_not_now">Όχι τώρα</string>
+  <string name="donation_donate">Δωρεά</string>
   <!--Extension-->
 </resources>

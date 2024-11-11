@@ -151,9 +151,7 @@
   <string name="account_sip_cannot_be_registered_message">Ви можете продовжити створювати обліковий запис або змінити відомості тут. Зміни можна зробити пізніше в налаштуваннях облікового запису.</string>
   <string name="account_no_network_title">Збій мережі</string>
   <string name="account_device_added_title">Пристрій облікового запису додано</string>
-  <string name="account_device_added_message">Ви успішно налаштували ваш обліковий запис Джамі на цьому пристрої.</string>
   <string name="account_device_updated_title">Пристрій облікового запису оновлено</string>
-  <string name="account_device_updated_message">Ви успішно оновили свій обліковий запис Jami.</string>
   <string name="account_sip_register_anyway">Зареєструвати все одно</string>
   <!--TV-->
   <string name="account_tv_settings_header">Налаштування облікового запису</string>
@@ -182,6 +180,7 @@
   <string name="help_credentials_enter">Введіть дані організації</string>
   <string name="help_connect_password_enter">Введіть пароль організації</string>
   <string name="account_connect_prompt_username">Ім’я</string>
+  <string name="account_enter_username">Ввести ім\'я користувача</string>
   <!--Name registration-->
   <string name="error_username_empty">Ввести ім\'я користувача</string>
   <string name="no_registered_name_for_account">Ніщо зареєстроване ім\'я</string>

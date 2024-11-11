@@ -32,9 +32,6 @@
   <string name="pref_blackList_title">ڤمباچ ڤڠوربان</string>
   <string name="pref_blackList_summary">چيكل ڤمبلاجرن.</string>
   <string name="pref_delete_account_title">مڠمبيل ڤڠاجرن</string>
-  <string name="pref_delete_account_summary">مڠحذف ايكون اتاو ڤرودوک اتاو ڤرودوک</string>
-  <string name="pref_persistNotification_title">ڤرچاي دالم ڤرتودوهن</string>
-  <string name="pref_persistNotification_summary">ممبريكن ڤرلو دالم ڤڠڬوناكن اونتوق مڠهادڤي ڤڠاجين دان ڤمبلاڬين.</string>
   <string name="pref_newGroup_title">ممبنتو چيت ڤڠڬونا</string>
   <string name="pref_newGroup_summary">ممبنتو ڤڠڬوناكن ڬروڤ د Jami.</string>
   <string name="pref_logs_title">ڤڠاجرن ڤڠاجرن</string>
@@ -48,9 +45,5 @@
   <string name="pref_link_preview_title">ممبينا ڤرليمن لنک دالم ڤمباچ</string>
   <string name="pref_link_preview_summary">ڤرليندوڠ مڠمبيل ڤرلو مڠمبيل ڤرلو مڠمبيل ڤرلو مڠمبيل ڤرلو مڠمبيل ڤرلو مڠمبيل ڤرلو مڠمبيل ڤرلو مڠمبيل ڤرلو مڠمبيل ڤرلو مڠمبيل ڤرلو مڠمبيل ڤرلو مڠمبيل ڤرلو مڠمبيل.</string>
   <!--Notifications Visibility-->
-  <string name="notification_public">ڤرلاونن ڤرلاونن دان ڤمبنتوقڽ دالم سكرين لاك)</string>
-  <string name="notification_private">سڤرتي \n(مبيلي ڤمبلايهن تتاڤي مڠهادڤي ڤڠوربانڽ دالم سكرين لاك) \n</string>
-  <string name="notification_secret">سيكريت \n(مبليكن ڤمبليهيڠ دڤرچايا?? ي ڤرسكوتوان دڤرچايا?? ي)</string>
   <!--Extension-->
-  <string name="extension_force_install">ڤڠڬيلن ڤڠڬيلن</string>
 </resources>

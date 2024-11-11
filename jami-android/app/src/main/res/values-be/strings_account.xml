@@ -148,9 +148,7 @@
   <string name="account_sip_cannot_be_registered_message">Вы можаце працягнуць працэс стварэння ўліковага запісу або рэдагаваць інфармацыю тут.</string>
   <string name="account_no_network_title">Памылка сеткі</string>
   <string name="account_device_added_title">Дададзены прыбор рахунку</string>
-  <string name="account_device_added_message">Вы паспяхова ўсталявалі свой рахунак Jami на гэтым прыладзе.</string>
   <string name="account_device_updated_title">Абнаўленне прылады рахунку</string>
-  <string name="account_device_updated_message">Вы паспяхова абнавілі свой рахунак Jami.</string>
   <string name="account_sip_register_anyway">Падпішыцеся ў любым выпадку</string>
   <!--TV-->
   <string name="account_tv_settings_header">Налады ўліковых запісаў</string>

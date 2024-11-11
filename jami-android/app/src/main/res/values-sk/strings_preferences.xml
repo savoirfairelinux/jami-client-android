@@ -32,9 +32,6 @@
   <string name="pref_blackList_title">Zoznam blokov</string>
   <string name="pref_blackList_summary">Pozrite sa na zoznam blokov.</string>
   <string name="pref_delete_account_title">Odstrániť účet</string>
-  <string name="pref_delete_account_summary">Zmazať účet z tohto zariadenia</string>
-  <string name="pref_persistNotification_title">Spustiť na pozadí</string>
-  <string name="pref_persistNotification_summary">Povoliť spustenie na pozadí na prijímanie hovorov a spáv.</string>
   <string name="pref_newGroup_title">Umožniť skupinový chat</string>
   <string name="pref_newGroup_summary">Umožniť vytváranie skupín v Jami.</string>
   <string name="pref_logs_title">Diagnóstické záznamy</string>
@@ -48,9 +45,5 @@
   <string name="pref_link_preview_title">Vystúpiť prehľad prepojenia v konverzáciách</string>
   <string name="pref_link_preview_summary">Preverzie vyžadujú stiahnutie obsahu z serverov tretích strán.</string>
   <!--Notifications Visibility-->
-  <string name="notification_public">Verejné \n( zobraziť oznámenia a ich obsah na zámknutoch) \n</string>
-  <string name="notification_private">Privátne \n( zobraziť oznámenia, ale skryť ich obsah na zámknutý obrazovka)\n</string>
-  <string name="notification_secret">Tajnosť \n(nevykazujú oznámenia na zámknutých obrazovkách)</string>
   <!--Extension-->
-  <string name="extension_force_install">nútená inštalácia</string>
 </resources>

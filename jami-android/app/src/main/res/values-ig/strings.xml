@@ -2,11 +2,9 @@
 <resources>
   <!--About-->
   <string name="section_license">Akwụkwọ ikike</string>
-  <string name="sponsor_section">Jami bụ a free software mepụtara na akwado site</string>
   <string name="copyright_section">Ihe e dere n\'akwụkwọ</string>
   <string name="contribute_section">Nye aka</string>
   <string name="version_section">Version</string>
-  <string name="no_browser_app_installed">Enweghi ngwa nchọgharị weebụ achọtara, wụnye otu iji lee ibe a</string>
   <string name="website_chooser_title">Lee ebe nrụọrụ weebụ site na iji...</string>
   <string name="license">A na-enye ngwanrọ a \"dị ka ọ dị\", na-enweghị akwụkwọ ikike ọ bụla. Maka nkọwa, lee <u>GNU General Public License version 3 ma ọ bụ mgbe e mesịrị</u></string>
   <string name="description">Jami bụ ngwanrọ na-enweghị ihe ọ bụla maka nkwukọrịta zuru ụwa ọnụ nke na-akwanyere nnwere onwe na nzuzo nke ndị ọrụ ya ùgwù.</string>
@@ -19,7 +17,6 @@
   <!--RingActivity-->
   <string name="error_no_network">Enweghị njikọ netwọk</string>
   <string name="error_account_offline">Akaụntụ ahụ adịghị</string>
-  <string name="error_mobile_network_available_but_disabled">Biko nye ohere ịnweta netwọkụ cellular na ihuenyo ntọala.</string>
   <!--AB menus-->
   <string name="ab_action_chat">Izi ozi ederede</string>
   <!--Sections-->
@@ -33,7 +30,6 @@
   <string name="menu_item_about">Banyere Jami</string>
   <string name="video_setting_title">Ntọala nke Ihe Nlereanya</string>
   <!--Dialing Fragment-->
-  <string name="dial_number">Kpọọ nọmba</string>
   <!--History Fragment-->
   <!--Home Fragment-->
   <!--ContactList Fragment-->
@@ -80,10 +76,12 @@
   <!--Conversation-->
   <string name="conversation_details">Ihe ndị e kwuru n\'okwu ahụ</string>
   <string name="contact_details">Ihe ndị a ga-eji kparịta ụka</string>
+  <string name="leave_conversation">Hapụ mkparịta ụka ahụ</string>
   <string name="conversation_action_history_clear">Akụkọ ihe mere eme doro anya</string>
   <string name="conversation_action_block_this">Njikọ na-ekpuchi</string>
   <string name="conversation_action_incoming_call">N\'ọhịa</string>
   <string name="conversation_members">Ndị otu</string>
+  <string name="conversation_type_private">Ndị mmadụ n\'onwe ha</string>
   <string name="today">Taa</string>
   <string name="yesterday">N\'ụbọchị gara aga</string>
   <!--Contacts-->
@@ -94,11 +92,13 @@
   <string name="wizard_skip">Ịpụ</string>
   <string name="hist_contact_added">E gbakwunyere kọntaktị</string>
   <string name="hist_invitation_received">Òkù a kpọrọ</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">Ihe gbasara ya</string>
   <string name="profile_message_warning">A na-ekenye profaịlụ gị naanị na kọntaktị gị</string>
+  <string name="take_a_photo">Were foto</string>
   <string name="profile_name_hint">Tinye aha gị</string>
   <string name="identity">Ihe Ndị A Kpọrọ Mmadụ</string>
+  <string name="identifier">Ihe Nkọwapụta</string>
   <string name="account">Ihe ndekọ</string>
   <string name="link_new_device">Jikọọ ngwaọrụ ọhụrụ</string>
   <string name="devices">Ngwaọrụ jikọtara</string>
@@ -148,7 +148,7 @@
   <string name="bottomSheet_raiseHand_btn">Welie aka gị</string>
   <string name="uninstall">Wepụ ihe nrụnye</string>
   <string name="reset">Tọgharia</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">Kwado</string>
   <string name="tab_members">Ndị otu</string>
   <string name="tab_files">Ihe ndekọ</string>
@@ -161,6 +161,10 @@
   <string name="jami_id_choose_username">Họrọ aha njirimara</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Mmadụ Bịa na Jami</string>
+  <!--Conversation details-->
+  <string name="details">Ihe ndị ọzọ</string>
+  <string name="Private">Ndị mmadụ n\'onwe ha</string>
   <!--Donation-->
+  <string name="donation_card_not_now">Ọbụghị ugbu a</string>
   <!--Extension-->
 </resources>

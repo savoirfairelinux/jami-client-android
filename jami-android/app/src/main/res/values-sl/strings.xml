@@ -1,8 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
+  <string name="submit_issue_title">Pošlji poročilo o težavi</string>
+  <string name="submit_issue_action_description"><u>Ustvari novo težavo</u></string>
   <string name="section_license">Dovoljenje</string>
-  <string name="sponsor_section">Ring je prosto programje, ki ga razvija in podpira</string>
+  <string name="sponsor_section">Jami je prosto programje, ki ga razvija in podpira</string>
   <string name="copyright_section">Avtorske pravice</string>
   <string name="contribute_section">Prispevaj</string>
   <string name="version_section">Različica</string>
@@ -15,11 +17,12 @@
   <string name="call_service_description">Ta storitev je nujna za delovanje vaših klicev v ospredju. Deluje le med klici.</string>
   <string name="data_transfer_service_description">Ta storitev je nujna za prikaz obstojnih sporočil med prenosom datotek. Deluje le med prenašanjem datotek.</string>
   <!--About dialog-->
+  <string name="developers">Razvijalci</string>
   <string name="media">Medij</string>
+  <string name="special_thanks">Posebne zahvale</string>
   <!--RingActivity-->
   <string name="error_no_network">Ni omrežne povezave</string>
   <string name="error_account_offline">Račun ni povezan</string>
-  <string name="error_mobile_network_available_but_disabled">Dovolite dostop do mobilnega omrežja v nastavitvah.</string>
   <!--AB menus-->
   <string name="ab_action_chat">Besedilno sporočanje</string>
   <!--Sections-->
@@ -29,6 +32,7 @@
   <string name="menu_item_settings">Nastavitve</string>
   <string name="menu_item_advanced_settings">Napredne nastavitve</string>
   <string name="menu_item_account_settings">Nastavitve računa</string>
+  <string name="menu_item_extension_list">Nastavitve razširitev</string>
   <string name="menu_item_share">Deli moj račun</string>
   <string name="menu_item_about">O programu Jami</string>
   <string name="video_setting_title">Nastavitve videa</string>
@@ -96,10 +100,16 @@
   <string name="hist_in_call">Dohodni klic %1$s</string>
   <string name="hist_out_call">Odhodni klic do %1$s</string>
   <string name="call_duration">Trajanje: %s</string>
-  <string name="start_error_mic_required">Jami potrebuje za delovanje dovoljenje za uporabo mikrofona.</string>
+  <string name="start_error_title">Jami ni možno zagnati</string>
   <string name="action_call_accept">Sprejmi klic</string>
+  <string name="action_call_accept_audio">Sprejmi dohodni klic samo z zvokom</string>
+  <string name="action_call_accept_video">Sprejmi dohodni klic z videom</string>
+  <string name="action_call_hold_accept">Sprejmi dohodni klic samo z zvokom in zadrži trenutni klic</string>
+  <string name="action_call_hold_accept_video">Sprejmi dohodni klic z videom in zadrži trenutni klic</string>
+  <string name="action_call_end_accept">Sprejmi dohodni klic in končaj trenutni klic</string>
   <string name="action_call_decline">Zavrni</string>
   <string name="action_call_mic_mute">Izključi mikrofon</string>
+  <string name="action_load_extension">Naloži razširitev</string>
   <string name="ab_action_speakerphone">Vklopi zvočnik</string>
   <string name="ab_action_contact_add">Dodaj med stike</string>
   <string name="ab_action_contact_add_question">Želite dodati med stike?</string>
@@ -111,7 +121,7 @@
   <string name="scan_qr">Preberi QR-kodo</string>
   <string name="qr_code">QR-koda</string>
   <string name="qr_code_not_contact">Ni koda QR stika Jami</string>
-  <string name="new_swarm">Zaženi roj</string>
+  <string name="new_group">Ustvari novo skupino</string>
   <string name="ab_action_flipcamera">Zrcali kamero</string>
   <string name="ab_action_hidepreview">Skrij predogled</string>
   <string name="remote_recording">%s snema …</string>
@@ -128,11 +138,10 @@
   <string name="conversation_send_video">Posnemi video posnetek</string>
   <string name="conversation_share_location">Deli lokacijo</string>
   <string name="ongoing_group_call">Aktivni klic</string>
-  <string name="started_call">Je začel/a klic</string>
+  <string name="started_call">Klic je v teku</string>
   <string name="in_reply_to">Kot odgovor</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Dovoljenja za kamero</string>
-  <string name="permission_dialog_camera_message">Video pogovori zahtevajo dovoljenja za rabo kamere. Potrdite jih.</string>
   <string name="camera_error">Pri zagonu kamere je prišlo do napake.</string>
   <!--Ringtone activity-->
   <string name="ringtone_error_title">Napaka</string>
@@ -140,12 +149,14 @@
   <string name="ringtone_error_size_too_big">Ta datoteka je prevelika. Največja velikost je %1$d kB.</string>
   <string name="ringtone_custom_prompt">Določi zvonjenje po meri</string>
   <string name="ringtone_custom_label">Po meri</string>
+  <string name="ringtone_jami_tones">Zvonjenja Jami</string>
   <!--Read contacts permission-->
+  <string name="permission_dialog_read_contacts_message">Jami potrebuje dovoljenje za »branje stikov«, da bi uporabili to funkcijo. Potrdite ga v nastavitvah naprave..</string>
   <!--Write call log permission-->
+  <string name="permission_dialog_write_call_log_message">Jami potrebuje dovoljenje za »pisanje zapisnika klicev«, da bi uporabili to funkcijo. Potrdite ga v nastavitvah naprave..</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Preberite QR-kodo stika, ki ga želite dodati.</string>
   <string name="title_activity_qrcode">Deli moj račun</string>
-  <string name="error_scan_no_camera_permissions">QR-bralnik za delovanje potrebuje dovoljenje za kamero</string>
   <string name="tab_code">Moja koda</string>
   <string name="tab_scan">Optično preberi kodo</string>
   <!--Settings-->
@@ -157,14 +168,18 @@
   <string name="conversation_details">Podrobnosti pogovora</string>
   <string name="contact_details">Podrobnosti stika</string>
   <string name="conversation_action_delete_this">Izbriši ta pogovor</string>
+  <string name="conversation_action_delete_this_title">Ali želite izbrisati ta pogovor?</string>
+  <string name="leave_conversation">Zapusti pogovor</string>
   <string name="conversation_action_delete_this_message">Tega dejanja ni mogoče razveljaviti.</string>
   <string name="conversation_action_history_clear">Počisti zgodovino</string>
   <string name="conversation_action_history_clear_title">Želite počistiti zgodovino pogovora?</string>
   <string name="conversation_action_history_clear_message">To bo dokončno počistilo zgodovino pogovora.</string>
-  <string name="conversation_action_remove_this">Izbriši stik</string>
+  <string name="delete_contact">Izbriši stik</string>
   <string name="conversation_action_remove_this_title">Ali želite izbrisati ta stik?</string>
   <string name="conversation_action_remove_this_message">To bo izbrisalo stik in dokončno počistilo zgodovino pogovora.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s kopirano na odložišče</string>
+  <string name="swarm_group_action_leave">Zapusti skupino</string>
+  <string name="swarm_group_action_leave_title">Ali želite zapustiti to skupino?</string>
+  <string name="copied_to_clipboard">%1$s kopirano na odložišče</string>
   <string name="conversation_action_select_peer_number">Izberi številko</string>
   <string name="conversation_action_block_this">Blokiraj stik</string>
   <string name="conversation_action_unblock_this">Odblokiraj stik</string>
@@ -173,6 +188,7 @@
   <string name="conversation_action_latest">Skoči na zadnjega</string>
   <string name="conversation_open_file_error">Ni nameščene aplikacije za odpiranje te vrste datotek.</string>
   <string name="clip_contact_uri">Naslov stika</string>
+  <string name="clip_message">Vsebina sporočila</string>
   <string name="block_contact_dialog_title">Ali želite blokirati %1$s?</string>
   <string name="block_contact_dialog_message">%1$s vas ne bo mogel/a kontaktirati, dokler ga/je ne odblokirate.</string>
   <string name="block_contact_completed">%1$s je blokiran/a.</string>
@@ -190,11 +206,13 @@
   <string name="conversation_preference_color">Barva pogovora</string>
   <string name="conversation_preference_emoji">Emoji pogovora</string>
   <string name="conversation_type_contact">Stik Jami</string>
-  <string name="conversation_type_private">Zasebni roj</string>
-  <string name="conversation_type_group">Skupinski roj</string>
+  <string name="conversation_type_private">Zasebno</string>
+  <string name="conversation_type_group">Skupina</string>
   <string name="conversation_contact_invited">%1$s je povabljen/a</string>
   <string name="conversation_contact_added">%1$s se je pridružil/a</string>
   <string name="conversation_contact_left">%1$s je odšel/a</string>
+  <string name="conversation_contact_blocked">%1$s je blokiran/a</string>
+  <string name="conversation_contact_unblocked">%1$s je odblokiran/a</string>
   <string name="conversation_search_hint">Poišči pogovor</string>
   <string name="audio_recorder_error">Programa za snemanje zvoka ni možno najti.</string>
   <string name="video_recorder_error">Programa za snemanje videa ni možno najti.</string>
@@ -229,8 +247,10 @@
   <string name="hist_contact_invited">Stik povabljen</string>
   <string name="hist_contact_added">Stik je dodan</string>
   <string name="hist_contact_left">Stik je odšel</string>
+  <string name="hist_contact_blocked">Stik blokiran</string>
+  <string name="hist_contact_unblocked">Stik odblokiran</string>
   <string name="hist_invitation_received">Povabilo je sprejeto</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">Profil</string>
   <string name="profile_name">Ime profila</string>
   <string name="profile_message_warning">Vaš profil se deli samo z vašimi stiki</string>
@@ -240,6 +260,7 @@
   <string name="registered_name">Registrirano ime</string>
   <string name="no_registered_name">Ni registriranega imena</string>
   <string name="identity">Identiteta</string>
+  <string name="identifier">identifikator</string>
   <string name="account">Račun</string>
   <string name="link_new_device">Poveži novo napravo</string>
   <string name="devices">Povezane naprave</string>
@@ -250,12 +271,15 @@
   <string name="share_your_account_information">Deli podatke o mojem stiku</string>
   <string name="share_label">Deli</string>
   <string name="generic_error_migration">Napaka</string>
-  <string name="generic_error_migration_message">Zgodila se je napaka med selitvijo</string>
+  <string name="generic_error_migration_message">Pri migraciji računa je prišlo do napake.</string>
   <string name="title_share_with">Deli z ...</string>
   <!--Pending invitations-->
   <string name="accept">Sprejmi</string>
   <string name="decline">Zavrni</string>
   <string name="block">Blokiraj</string>
+  <string name="decline_invitation">Zavrni povabilo</string>
+  <string name="accept_invitation">Sprejmi povabilo</string>
+  <string name="new_invitation_request_title">Novo povabilo</string>
   <string name="invitation_message">Imate%1$d zahtev za stik</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Ni blokiranih stikov</string>
@@ -268,6 +292,7 @@
   <string name="tv_contact_row_header">Stiki</string>
   <string name="gallery_error_title">Ni aplikacije za galerijo</string>
   <string name="gallery_error_message">Na napravi ni bilo mogoče najti aplikacije za odpiranje galerije</string>
+  <string name="generic_error">Prišlo je do neznane napake.</string>
   <!--File Transfer-->
   <string name="invalid_file">Napačna datoteka</string>
   <string name="not_able_to_write_file">Ne možno zapisati datoteke</string>
@@ -287,6 +312,7 @@
   <string name="file_saved_in">Datoteka je shranjena v %s</string>
   <string name="file_saved_successfully">Datoteka je bila uspešno shranjena</string>
   <string name="file_download">Prenesi</string>
+  <string name="no_space_left_on_device">Na tej napravi ni več prostora za hrambo.</string>
   <string name="title_media_viewer">Prikazovalnik vsebin</string>
   <string name="menu_file_open">Odpri datoteko</string>
   <string name="menu_file_download">Prenesi datoteko</string>
@@ -321,15 +347,13 @@
   <string name="tv_send_video">Pošlji medij</string>
   <string name="tv_action_more">Dodatno</string>
   <string name="conversation_input_speech_hint">Recite nekaj ...</string>
-  <string name="audio_permission_denied">Dovolite dostop do mikrofona, da boste lahko uporabljali zvočne zmogljivosti Jamija.</string>
-  <string name="camera_permission_denied">Dovolite dostop do kamere, da boste lahko uporabljali video zmogljivosti Jamija.</string>
   <string name="speech_recogniton_unavailable">Razpoznavanje govora ni na voljo.</string>
   <string name="audio_permission_rationale_title">Zahtevano je dovoljenje za zvok</string>
-  <string name="camera_permission_rationale_title">Zahtevano je dovoljenje za video</string>
   <string name="audio_permission_rationale_message">Jami zahteva dovoljenje mikrofona za uporabo funkcije govor-v-besedilo in za funkcije snemanja zvoka. O tem boste povprašani v naslednjem koraku.</string>
   <string name="camera_permission_rationale_message">Jami zahteva dovoljenje kamere za snemanje videa in za vzpostavljanje videoklica. O tem boste povprašani v naslednjem koraku.</string>
   <string name="unable_to_start_recorder">Snemanja zvoka ni možno sprožiti.</string>
   <string name="error_sharing_file">Pri skupni rabi datoteke je prišlo do napake.</string>
+  <string name="error_opening_file">Pri odpiranju datoteke je prišlo do napake.</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Priporočeno</string>
   <string name="wizard_status_optional">Neobvezno</string>
@@ -347,6 +371,7 @@
   <string name="wizard_profile_button">Shrani profil</string>
   <string name="wizard_profile_skip">Preskoči in to naredi kasneje</string>
   <string name="fab_path_choose">Izberite še eno datoteko</string>
+  <string name="chat_extensions">Razširitve za klepet</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Deli</string>
   <string name="bottomSheet_dialpad_btn">Številčnica</string>
@@ -360,7 +385,7 @@
   <string name="bottomSheet_raiseHand_btn">Dvigni roko</string>
   <string name="uninstall">Odnamesti</string>
   <string name="reset">Ponastavi</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">Potrdi</string>
   <string name="swarm_description">Dodaj opis</string>
   <string name="tab_members">Člani</string>
@@ -379,6 +404,7 @@
   <string name="error_open_no_app_found">Ni programa, ki bi znal ravnati z datoteko: %1$s</string>
   <string name="swarm_detail_no_document">Trenutno še nimate dokumentov.</string>
   <string name="group_admin">Skrbnik</string>
+  <string name="share_contact_intent_title">Dodaj stik v Jami!</string>
   <!--JamiId-->
   <string name="jami_id_copy">Kopiraj JamiId</string>
   <string name="jami_id_share">Deli JamiId</string>
@@ -391,6 +417,14 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Dobrodošli v Jami</string>
   <string name="welcome_jami_description">Delite svoj identifikator Jami, da vas lažje najdejo!</string>
+  <!--Conversation details-->
+  <string name="details">Detajli</string>
+  <string name="swarm_type">Vrsta pogovora</string>
+  <string name="Private">Zasebno</string>
+  <string name="swarm_id">ID roja</string>
+  <string name="show_qr_code">Pokaži QR-kodo</string>
+  <string name="show_certificate">Pokaži potrdilo</string>
+  <string name="mute_conversation">Utišaj pogovor</string>
   <!--Donation-->
   <string name="donation_card_description">Če vam je všeč Jami in verjamete v naše poslanstvo - bi prispevali projektu?</string>
   <string name="donation_card_not_now">Ne zdaj</string>

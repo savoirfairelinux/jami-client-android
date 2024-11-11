@@ -150,9 +150,7 @@ Zadejte, prosím, své heslo.</string>
   <string name="account_sip_cannot_be_registered_message">Můžete pokračovat v postupu vytvoření účtu nebo údaje upravit zde. Úpravy jsou možné i později v nastavení účtu.</string>
   <string name="account_no_network_title">Chyba sítě</string>
   <string name="account_device_added_title">Přístroj přidán k účtu</string>
-  <string name="account_device_added_message">Úspěšně jste si na tomto zařízení nastavil svůj účet Jami.</string>
   <string name="account_device_updated_title">Aktualizován přístroj v účtu</string>
-  <string name="account_device_updated_message">Úspěšně jste si aktualizoval účet Jami.</string>
   <string name="account_sip_register_anyway">Přesto zaregistrovat</string>
   <!--TV-->
   <string name="account_tv_settings_header">Nastavení účtu</string>
@@ -181,6 +179,7 @@ Zadejte, prosím, své heslo.</string>
   <string name="help_credentials_enter">Zadejte přihlašovací údaje vaší organizace</string>
   <string name="help_connect_password_enter">Zadejte heslo vaší organizace</string>
   <string name="account_connect_prompt_username">Uživatelské jméno</string>
+  <string name="account_enter_username">Zadejte uživatelské jméno</string>
   <!--Name registration-->
   <string name="error_username_empty">Zadejte uživatelské jméno</string>
   <string name="no_registered_name_for_account">Žádný registrovaný název</string>

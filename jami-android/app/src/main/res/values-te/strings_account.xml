@@ -149,9 +149,7 @@
   <string name="account_sip_cannot_be_registered_message">మీరు ఖాతా సృష్టి ప్రక్రియను కొనసాగించవచ్చు లేదా మీ సమాచారాన్ని ఇక్కడ సవరించవచ్చు. ఖాతా సెట్టింగులలో తరువాత ఎడిషన్ ఇప్పటికీ సాధ్యమే.</string>
   <string name="account_no_network_title">నెట్వర్క్ లోపం</string>
   <string name="account_device_added_title">ఖాతా పరికరం జోడించబడింది</string>
-  <string name="account_device_added_message">మీరు ఈ పరికరంలో మీ జామి ఖాతాను విజయవంతంగా సెటప్ చేశారు.</string>
   <string name="account_device_updated_title">ఖాతా పరికరం నవీకరించబడింది</string>
-  <string name="account_device_updated_message">మీరు మీ జమీ ఖాతాను విజయవంతంగా నవీకరించారు.</string>
   <string name="account_sip_register_anyway">ఏమైనప్పటికీ నమోదు</string>
   <!--TV-->
   <string name="account_tv_settings_header">ఖాతా సెట్టింగులు</string>

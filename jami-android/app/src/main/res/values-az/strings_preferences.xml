@@ -32,9 +32,6 @@
   <string name="pref_blackList_title">بلاک لیستی</string>
   <string name="pref_blackList_summary">بلاک لئستینی چک.</string>
   <string name="pref_delete_account_title">حسابي سيندير</string>
-  <string name="pref_delete_account_summary">بو آلینادان حسابینیزین سئلینی</string>
-  <string name="pref_persistNotification_title">آرخادا چئوریل</string>
-  <string name="pref_persistNotification_summary">زنگلر و پيغاملار آلماق اوچون آرخادا قاچاراق چاليشماق ائجازه وئر.</string>
   <string name="pref_newGroup_title">گروه چیتی فعال ائتمک</string>
   <string name="pref_newGroup_summary">جامی دا گروهلار یاراتماق ائدک.</string>
   <string name="pref_logs_title">دیآگنوستک یازیلار</string>
@@ -48,9 +45,5 @@
   <string name="pref_link_preview_title">دانیشیقلاردا لینک لرین اؤرنک لرینی گؤستریر</string>
   <string name="pref_link_preview_summary">اؤتنلر اوچونجو طرفین سرورلاریندان محتوا آلینماسی لازیمدیر.</string>
   <!--Notifications Visibility-->
-  <string name="notification_public">عمومی \n(بایاندیرما لار و اونلارین محتواسی قفللی صفحه ده گؤرونتولور) \n</string>
-  <string name="notification_private">خصوصی \n(بایاندیرما گؤستریر، آنجاق محتواونو قفل صفحه سینده گئزلَتیر) \n</string>
-  <string name="notification_secret">سئرتی \n(بایغات لار قفل صفحه سینده گؤرونمز)</string>
   <!--Extension-->
-  <string name="extension_force_install">قوهر نصب</string>
 </resources>

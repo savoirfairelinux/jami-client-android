@@ -2,10 +2,11 @@
 <resources>
   <!--About-->
   <string name="section_license">رخصت</string>
-  <string name="sponsor_section">جامی (جامی) بیر آزاد نرم افزار دیر که توسط</string>
   <string name="copyright_section">حق اشغال</string>
   <string name="contribute_section">بؤلوملر</string>
   <string name="version_section">نسخه</string>
+  <string name="website_chooser_title">سايتين سايتيني...</string>
+  <string name="license">بو نرم افزار هر نوع گارانتیسیز \"هماناً\" وئریلیر.</string>
   <string name="description">جامی، آلیشمیش آلیشما اوچون آزاد بیر نرم افزار دیر کی، اؤز ایستیفاده چیلرینین آزادلیقلارینا و خصوصی لیکلرینه حؤرمت ائدیر.</string>
   <string name="credits">اعتبارلار</string>
   <string name="pip_title">جامي کنفرانس</string>
@@ -16,7 +17,6 @@
   <!--RingActivity-->
   <string name="error_no_network">شبکه باغلیغی یوخدور</string>
   <string name="error_account_offline">حساب آپلاين اولوب</string>
-  <string name="error_mobile_network_available_but_disabled">لطفاً تنظیمات صفحه سینده موبایل شبکه سینده دسترسی وئرین.</string>
   <!--AB menus-->
   <string name="ab_action_chat">پیامکلر</string>
   <!--Sections-->
@@ -30,7 +30,6 @@
   <string name="menu_item_about">جامی حاقّيندا</string>
   <string name="video_setting_title">ویدئو تنظیمات</string>
   <!--Dialing Fragment-->
-  <string name="dial_number">بیر سایی چال</string>
   <!--History Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
@@ -50,7 +49,6 @@
   <string name="notif_outgoing_call">گئدن چاغ</string>
   <string name="notif_current_call_title">%1$s ایله داوام ائد ن چاغیرما</string>
   <string name="notif_current_call">داوام ائد ن چاغیرما</string>
-  <string name="notif_channel_call_in_progress">تقدیمه دعوت ائدیر</string>
   <string name="notif_channel_calls">تماس</string>
   <string name="notif_channel_missed_calls">تلفونلار سيز قالمادي</string>
   <string name="notif_channel_incoming_calls">گئدن تماسلار</string>
@@ -61,7 +59,6 @@
   <string name="notif_channel_background_service">پس زمینه خدمات</string>
   <string name="notif_channel_background_service_descr">هر واخت زنگ و پيغاملار آلماق ائدیر.</string>
   <string name="notif_group_calls">تماس</string>
-  <string name="notif_background_service">جامي حال بو حالدا آرخادا قاچار</string>
   <string name="notif_mark_as_read">اوخونان مارک</string>
   <string name="notif_dismiss">رد</string>
   <string name="notif_reply">جاواب</string>
@@ -87,7 +84,6 @@
   <string name="ongoing_call">داوام ائد ن چاغیرما</string>
   <string name="hist_in_call">%1$s-ین گلیش زنگینی</string>
   <string name="hist_out_call">%1$s-ین چیخان چاغیرماسی</string>
-  <string name="start_error_mic_required">جامی میکروفونون ائشلشدیرمه یه اجازه سی لازیمدیر.</string>
   <string name="action_call_decline">آشاغی صفحه</string>
   <string name="action_call_mic_mute">Mikrofonu səssiz et</string>
   <string name="ab_action_speakerphone">اسپکر فعال ائدئ</string>
@@ -97,7 +93,6 @@
   <string name="ab_action_video_call">ویدئوی تماس باشلا</string>
   <string name="ab_action_change_screen_orientation">صفحه نین یوللاندیریلماسینی دَییشدیر</string>
   <string name="share_via">اشتراک</string>
-  <string name="write_a_message">بیر خبر یاز</string>
   <string name="scan_qr">QR کد سکن</string>
   <string name="qr_code">QR کد</string>
   <string name="ab_action_flipcamera">فلپ کاميرا</string>
@@ -115,10 +110,10 @@
   <string name="conversation_send_audio">آدیو کلیپ ضبط ائتمک</string>
   <string name="conversation_send_video">ویدئو کليپ ضبط ائتمک</string>
   <string name="conversation_share_location">بؤلوم یئرلری</string>
+  <string name="ongoing_group_call">داوام ائد ن چاغیرما</string>
   <string name="in_reply_to">جاوابدا</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">دوربین ائجازه سی</string>
-  <string name="permission_dialog_camera_message">ویدئو مکالمه لری اوچون کامرا ائجازه سی لازیمدیر.</string>
   <!--Ringtone activity-->
   <string name="ringtone_error_title">خطای</string>
   <string name="ringtone_error_format_not_supported">بو فورمات دا معاون دئییل.</string>
@@ -130,7 +125,6 @@
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">قوشماق ایسته ییبسن حسابین QR کدینی سکن ائدیرسن.</string>
   <string name="title_activity_qrcode">حسابيمي بؤلوشدور</string>
-  <string name="error_scan_no_camera_permissions">QR اسکنر کامرا ائجازه لرینی ایسته ییر</string>
   <string name="tab_code">کدوم</string>
   <string name="tab_scan">کد اسکن</string>
   <!--Settings-->
@@ -142,14 +136,15 @@
   <string name="conversation_details">دانیشیق کیمی</string>
   <string name="contact_details">تماس کیمیا</string>
   <string name="conversation_action_delete_this">بو مکالمه نی سئل</string>
+  <string name="leave_conversation">مکالمه دن اوزاقلاش</string>
   <string name="conversation_action_delete_this_message">بو عملین ردّ اولونماسی اولماز.</string>
   <string name="conversation_action_history_clear">واضح تاریخ</string>
   <string name="conversation_action_history_clear_title">دانیشما تاریخینی پاک ائدیرسن؟</string>
   <string name="conversation_action_history_clear_message">بو قطعن موباحئثه تاریخینی پاک ائد جک.</string>
-  <string name="conversation_action_remove_this">تماس لری سنده</string>
+  <string name="delete_contact">تماس لری سنده</string>
   <string name="conversation_action_remove_this_title">بو تماسو سينديرماق؟</string>
   <string name="conversation_action_remove_this_message">بو تماسو سينديرار و دانیشما تاريخيني قطعن پاک ائدر.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s کلیپبوردا کاپیلندی</string>
+  <string name="copied_to_clipboard">%1$s کلیپبوردا کاپیلندی</string>
   <string name="conversation_action_select_peer_number">ساییچ سئچیب</string>
   <string name="conversation_action_block_this">بلاک کنتاکت</string>
   <string name="conversation_action_unblock_this">تماس رو باز کن</string>
@@ -173,11 +168,10 @@
   <string name="conversation_preference_color">دانیشیق رنگینه</string>
   <string name="conversation_preference_emoji">مکالمات ایموجی</string>
   <string name="conversation_type_contact">جمی تماس</string>
-  <string name="conversation_type_private">خصوصی سوْنرا</string>
-  <string name="conversation_type_group">گروه توپلو</string>
+  <string name="conversation_type_private">خصوصی</string>
   <string name="conversation_contact_invited">%1$s دعوت ائدیلدی</string>
   <string name="conversation_contact_added">%1$s قوشولدو</string>
-  <string name="conversation_contact_left">%1$ سولدو</string>
+  <string name="conversation_contact_left">%1$s سولدو</string>
   <string name="conversation_search_hint">بحث آختارماق</string>
   <string name="today">بو گون</string>
   <string name="yesterday">دونن</string>
@@ -199,9 +193,8 @@
   <string name="hist_contact_added">تماس قوشولدو</string>
   <string name="hist_contact_left">تماس چپ</string>
   <string name="hist_invitation_received">دعوت آلدی</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">پروفایل</string>
-  <string name="profile_name">پروفایل آد</string>
   <string name="profile_message_warning">پروفایلینیز آنجاق تماس لاریزا اشتراک اولونور</string>
   <string name="open_the_gallery">گالری آچ</string>
   <string name="take_a_photo">عکس آل</string>
@@ -209,6 +202,7 @@
   <string name="registered_name">ثبت اولونموش آد</string>
   <string name="no_registered_name">آدلار ثبت اولمادی</string>
   <string name="identity">هویت</string>
+  <string name="identifier">آدیفئکتور</string>
   <string name="account">حساب</string>
   <string name="link_new_device">یئنی آلتی باغلا</string>
   <string name="devices">باغلانان سئلاحلار</string>
@@ -219,11 +213,12 @@
   <string name="share_your_account_information">تماس اطلاعاتيمي بؤلوم</string>
   <string name="share_label">بؤلوم</string>
   <string name="generic_error_migration">خطای</string>
-  <string name="generic_error_migration_message">کؤچمه ایله بیر خطره دوچار اولدوق</string>
   <string name="title_share_with">...تشارق ائله</string>
   <!--Pending invitations-->
   <string name="accept">قبول ائدیر</string>
+  <string name="decline">آشاغی صفحه</string>
   <string name="block">بلوک</string>
+  <string name="invitation_message">%1$d تماس طلبلرینی آلدی</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">موغوط ائتمه دی</string>
   <!--Smartlist-->
@@ -316,7 +311,7 @@
   <string name="bottomSheet_raiseHand_btn">ال قالديريب</string>
   <string name="uninstall">نصب ائتمک</string>
   <string name="reset">قاییتماق</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">تأکید ائدیر</string>
   <string name="tab_members">عضولری</string>
   <string name="tab_files">فایللار</string>
@@ -335,6 +330,9 @@
   <string name="jami_id_choose_username">ایستیفاده چی آدینی سئچیب</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">\" جامي \" نين خوش آمديد</string>
+  <!--Conversation details-->
+  <string name="details">جزئیات</string>
+  <string name="Private">خصوصی</string>
   <!--Donation-->
   <!--Extension-->
 </resources>

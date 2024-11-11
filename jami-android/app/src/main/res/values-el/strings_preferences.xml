@@ -32,9 +32,6 @@
   <string name="pref_blackList_title">Λίστα μπλοκαρισμένων</string>
   <string name="pref_blackList_summary">Έλεγξε τη λίστα αποκλεισμένων</string>
   <string name="pref_delete_account_title">Διαγραφή λογαριασμού</string>
-  <string name="pref_delete_account_summary">Διαγραφή λογαριασμού από αυτή τη συσκευή</string>
-  <string name="pref_persistNotification_title">Εκτέλεση στο παρασκήνιο</string>
-  <string name="pref_persistNotification_summary">Επιτρέψτε να τρέχετε στο φόντο για να λαμβάνετε κλήσεις και μηνύματα.</string>
   <string name="pref_newGroup_title">Ενεργοποιήστε ομαδική συνομιλία</string>
   <string name="pref_newGroup_summary">Επιτρέψτε τη δημιουργία ομάδων στο Jami.</string>
   <string name="pref_logs_title">Καταγραφέντα διαγνωστικά</string>
@@ -48,9 +45,5 @@
   <string name="pref_link_preview_title">Δείξτε προεπισκόπηση συνδέσμων στις συνομιλίες</string>
   <string name="pref_link_preview_summary">Οι προβολές απαιτούν να κατεβάσετε περιεχόμενο από διακομιστές τρίτων.</string>
   <!--Notifications Visibility-->
-  <string name="notification_public">Δημόσια π.χ. προβολή κοινοποιήσεων και περιεχομένου τους στην οθόνη κλειδαριού)</string>
-  <string name="notification_private">Ειδικό πίνακα \n(δείξτε τις ειδοποιήσεις αλλά κρύψτε το περιεχόμενό τους στην οθόνη κλειδαριού) \n</string>
-  <string name="notification_secret">Μυστικό \n(δεν εμφανίζονται ειδοποιήσεις στην οθόνη κλειδαριού)</string>
   <!--Extension-->
-  <string name="extension_force_install">βία εγκατάσταση</string>
 </resources>

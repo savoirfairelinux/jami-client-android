@@ -32,9 +32,6 @@
   <string name="pref_blackList_title">Llista de bloqueig</string>
   <string name="pref_blackList_summary">Comprova la llista de bloqueig</string>
   <string name="pref_delete_account_title">Esborrar compte</string>
-  <string name="pref_delete_account_summary">Elimina el compte del dispositiu</string>
-  <string name="pref_persistNotification_title">Executa en segon pla</string>
-  <string name="pref_persistNotification_summary">Permet executar en segon pla per rebre trucades i missatges.</string>
   <string name="pref_newGroup_title">Habilita el xat de grup</string>
   <string name="pref_newGroup_summary">Habilitar la creació de grups a Jami</string>
   <string name="pref_logs_title">Traces de diagnostic</string>
@@ -48,10 +45,6 @@
   <string name="pref_link_preview_title">Mostra previsualitzacions dels enllaços en les converses</string>
   <string name="pref_link_preview_summary">Les previsualitzacions requereixen descarregar contingut de llocs de tercers</string>
   <!--Notifications Visibility-->
-  <string name="notification_public">Públic \n(mostra notificacions i el contingut del missatge en la pantalla de bloqueig)\n</string>
-  <string name="notification_private">Privat \n(mostra notificacions però amaga el contingut del missatge en la pantalla de bloqueig)\n</string>
-  <string name="notification_secret">Secret \n(no mostra notificacions en la pantalla de bloqueig)</string>
   <!--Extension-->
   <string name="extension_invalid_signature"><b>%1$s</b> té una firma invàlida</string>
-  <string name="extension_force_install">Força \n instalar</string>
 </resources>

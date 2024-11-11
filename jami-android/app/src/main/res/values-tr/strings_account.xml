@@ -151,9 +151,7 @@
   <string name="account_sip_cannot_be_registered_message">Hesap oluşturma süreciyle devam edebilir ya da bilgilerini burada düzenleyebilirsin. Düzenleme daha sonra hesap ayarlarında yapılabilir.</string>
   <string name="account_no_network_title">Ağ hatası</string>
   <string name="account_device_added_title">Hesap aygıtı eklendi</string>
-  <string name="account_device_added_message">Jami hesabınızı bu aygıta başarıyla kurdunuz.</string>
   <string name="account_device_updated_title">Hesap aygıtı güncellendi</string>
-  <string name="account_device_updated_message">Jami hesabınızı başarıyla güncellediniz.</string>
   <string name="account_sip_register_anyway">Her koşulda kaydol</string>
   <!--TV-->
   <string name="account_tv_settings_header">Hesap ayarları</string>
@@ -182,6 +180,7 @@
   <string name="help_credentials_enter">Kuruluş kimlik bilgilerinizi girin</string>
   <string name="help_connect_password_enter">Kuruluş parolanızı girin</string>
   <string name="account_connect_prompt_username">Kullanıcı adı</string>
+  <string name="account_enter_username">Kullanıcı adını girin</string>
   <!--Name registration-->
   <string name="error_username_empty">Kullanıcı adı gir</string>
   <string name="no_registered_name_for_account">Kayıtlı ad yok</string>

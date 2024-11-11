@@ -149,9 +149,7 @@
   <string name="account_sip_cannot_be_registered_message">आप खाता निर्माण प्रक्रिया को जारी रख सकते हैं या अपनी जानकारी को यहां संपादित कर सकते हैं। खाता सेटिंग्स में बाद में संस्करण अभी भी संभव है।</string>
   <string name="account_no_network_title">नेटवर्क त्रुटि</string>
   <string name="account_device_added_title">खाता उपकरण जोड़ा गया</string>
-  <string name="account_device_added_message">आपने इस डिवाइस पर अपने Jami खाते को सफलतापूर्वक सेट किया है।</string>
   <string name="account_device_updated_title">खाता उपकरण अद्यतन</string>
-  <string name="account_device_updated_message">आपने अपने जेमी खाते को सफलतापूर्वक अपडेट किया है।</string>
   <string name="account_sip_register_anyway">वैसे भी पंजीकरण करें</string>
   <!--TV-->
   <string name="account_tv_settings_header">खाता सेटिंग्स</string>
@@ -180,6 +178,7 @@
   <string name="help_credentials_enter">अपनी संगठन की पहचान दर्ज करें</string>
   <string name="help_connect_password_enter">अपनी संगठन की पासवर्ड दर्ज करें</string>
   <string name="account_connect_prompt_username">उपयोगकर्ता नाम</string>
+  <string name="account_enter_username">उपयोगकर्ता नाम दर्ज करें</string>
   <!--Name registration-->
   <string name="error_username_empty">एक उपयोगकर्ता नाम दर्ज करें</string>
   <string name="no_registered_name_for_account">कोई पंजीकृत नाम नहीं</string>

@@ -32,9 +32,6 @@
   <string name="pref_blackList_title">Orodha ya vikwazo</string>
   <string name="pref_blackList_summary">Angalia orodha yako ya kuzuia.</string>
   <string name="pref_delete_account_title">Futa akaunti</string>
-  <string name="pref_delete_account_summary">Futa akaunti yako kutoka kifaa hiki</string>
-  <string name="pref_persistNotification_title">Kuendesha katika background</string>
-  <string name="pref_persistNotification_summary">Acha kukimbia katika background kupokea simu na ujumbe.</string>
   <string name="pref_newGroup_title">Kuwezesha gumzo la kikundi</string>
   <string name="pref_newGroup_summary">Kuwezesha kuunda makundi katika Jami.</string>
   <string name="pref_logs_title">Rekodi za utambuzi</string>
@@ -48,9 +45,5 @@
   <string name="pref_link_preview_title">Onyesha viungo vya kutafakari katika mazungumzo</string>
   <string name="pref_link_preview_summary">Kuangalia awali inahitaji kupakua maudhui kutoka kwa seva za mtu wa tatu.</string>
   <!--Notifications Visibility-->
-  <string name="notification_public">Public \n(show notices na maudhui yao kwenye screen lock) \n</string>
-  <string name="notification_private">Private \n(onyesha matangazo lakini kuficha maudhui yao kwenye screen kufuli) \n</string>
-  <string name="notification_secret">Siri \n(si kuonyesha taarifa kwenye screen kufuli)</string>
   <!--Extension-->
-  <string name="extension_force_install">nguvu \ n kufunga</string>
 </resources>

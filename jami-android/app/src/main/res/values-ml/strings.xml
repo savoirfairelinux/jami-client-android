@@ -2,11 +2,9 @@
 <resources>
   <!--About-->
   <string name="section_license">ലൈസൻസ്</string>
-  <string name="sponsor_section">ജാമി ഒരു സ്വതന്ത്ര സോഫ്റ്റ്വെയറാണ്.</string>
   <string name="copyright_section">പകർപ്പവകാശം</string>
   <string name="contribute_section">സംഭാവന ചെയ്യുക</string>
   <string name="version_section">പതിപ്പ്</string>
-  <string name="no_browser_app_installed">വെബ് ബ്രൌസർ ആപ്ലിക്കേഷൻ കണ്ടെത്തിയില്ല, ഈ പേജ് കാണുന്നതിന് ഒന്ന് ഇൻസ്റ്റാൾ ചെയ്യുക</string>
   <string name="website_chooser_title">വെബ്സൈറ്റ് കാണുക.</string>
   <string name="license">ഈ സോഫ്റ്റ്വെയർ \"അത് പോലെ തന്നെ\" നൽകുന്നു, യാതൊരു തരത്തിലുള്ള ഗ്യാരണ്ടിയും ഇല്ലാതെ. വിശദാംശങ്ങൾക്കായി, കാണുക <u>GNU ജനറൽ പബ്ലിക് ലൈസൻസ് പതിപ്പ് 3 അല്ലെങ്കിൽ അതിനുശേഷമുള്ളത്</u></string>
   <string name="description">ജാമി എന്നത് സാർവത്രിക ആശയവിനിമയത്തിനുള്ള ഒരു സ്വതന്ത്ര സോഫ്റ്റ്വെയറാണ്. അത് ഉപയോക്താക്കളുടെ സ്വതന്ത്രതയും സ്വകാര്യതയും ബഹുമാനിക്കുന്നു.</string>
@@ -19,7 +17,6 @@
   <!--RingActivity-->
   <string name="error_no_network">നെറ്റ് വർക്ക് കണക്റ്റിവിറ്റി ഇല്ല</string>
   <string name="error_account_offline">അക്കൌണ്ട് ഓഫ് ചെയ്തിരിക്കുന്നു</string>
-  <string name="error_mobile_network_available_but_disabled">ക്രമീകരണ സ്ക്രീനിൽ സെല്ലുലാർ നെറ്റ്വർക്ക് ആക്സസ് അനുവദിക്കുക.</string>
   <!--AB menus-->
   <string name="ab_action_chat">ടെക്സ്റ്റ് സന്ദേശമയയ്ക്കൽ</string>
   <!--Sections-->
@@ -33,7 +30,6 @@
   <string name="menu_item_about">ജാമിയെ കുറിച്ച്</string>
   <string name="video_setting_title">വീഡിയോ ക്രമീകരണങ്ങൾ</string>
   <!--Dialing Fragment-->
-  <string name="dial_number">ഒരു നമ്പര് വിളിക്കുക</string>
   <!--History Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
@@ -53,7 +49,6 @@
   <string name="notif_outgoing_call">പുറപ്പെടുന്ന വിളി</string>
   <string name="notif_current_call_title">%1$s എന്ന പേരിൽ നിലവിലുള്ള കോൾ</string>
   <string name="notif_current_call">തുടര് ന്ന വിളി</string>
-  <string name="notif_channel_call_in_progress">പുരോഗതിക്ക് വിളി</string>
   <string name="notif_channel_calls">വിളി</string>
   <string name="notif_channel_missed_calls">വിളി നഷ്ടപ്പെട്ടത്</string>
   <string name="notif_channel_incoming_calls">വരാനിരിക്കുന്ന കോളുകൾ</string>
@@ -64,7 +59,6 @@
   <string name="notif_channel_background_service">പശ്ചാത്തല സേവനം</string>
   <string name="notif_channel_background_service_descr">ഏതു സമയത്തും കോളുകളും സന്ദേശങ്ങളും സ്വീകരിക്കാൻ അനുവദിക്കുന്നു.</string>
   <string name="notif_group_calls">വിളി</string>
-  <string name="notif_background_service">ജാമി നിലവിൽ പശ്ചാത്തലത്തിൽ ഓടുകയാണ്</string>
   <string name="notif_mark_as_read">വായിക്കുന്നതു പോലെ അടയാളപ്പെടുത്തുക</string>
   <string name="notif_dismiss">വിസമ്മതിക്കുക</string>
   <string name="notif_reply">മറുപടി</string>
@@ -90,7 +84,6 @@
   <string name="ongoing_call">തുടര് ന്ന വിളി</string>
   <string name="hist_in_call">%1$s എന്ന പേരിൽ വരുന്ന കോൾ</string>
   <string name="hist_out_call">%1$s എന്നതിന്റെ ഔട്ട്ഗോയിംഗ് കോൾ</string>
-  <string name="start_error_mic_required">ജാമിക്ക് മൈക്രോഫോണിന് അനുമതി വേണം.</string>
   <string name="action_call_decline">കുറവ്</string>
   <string name="action_call_mic_mute">മിണ്ടാത്ത മൈക്രോഫോൺ</string>
   <string name="ab_action_speakerphone">സ്പീക്കർ പ്രവർത്തനക്ഷമമാക്കുക</string>
@@ -100,7 +93,6 @@
   <string name="ab_action_video_call">വീഡിയോ കോൾ ആരംഭിക്കുക</string>
   <string name="ab_action_change_screen_orientation">സ്ക്രീനിന്റെ ഓറിയന്റേഷൻ മാറ്റുക</string>
   <string name="share_via">∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ </string>
-  <string name="write_a_message">ഒരു സന്ദേശം എഴുതുക</string>
   <string name="scan_qr">ക്യുആർ കോഡ് സ്കാൻ ചെയ്യുക</string>
   <string name="qr_code">ക്യുആർ കോഡ്</string>
   <string name="ab_action_flipcamera">ഫ്ലിപ്പ് ക്യാമറ</string>
@@ -118,10 +110,10 @@
   <string name="conversation_send_audio">ഓഡിയോ ക്ലിപ്പ് റെക്കോർഡ് ചെയ്യുക</string>
   <string name="conversation_send_video">വീഡിയോ ക്ലിപ്പ് റെക്കോർഡ് ചെയ്യുക</string>
   <string name="conversation_share_location">പങ്കിടൽ സ്ഥാനം</string>
+  <string name="ongoing_group_call">തുടര് ന്ന വിളി</string>
   <string name="in_reply_to">ഇതിന് മറുപടിയായി</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">ക്യാമറ അനുമതി</string>
-  <string name="permission_dialog_camera_message">വീഡിയോ സംഭാഷണങ്ങള് ക്ക് ക്യാമറയുടെ അനുമതി ആവശ്യമാണ്. ദയവായി അത് പ്രവർത്തനക്ഷമമാക്കുന്നത് പരിഗണിക്കുക.</string>
   <!--Ringtone activity-->
   <string name="ringtone_error_title">പിശക്</string>
   <string name="ringtone_error_format_not_supported">ഈ ഫോർമാറ്റിന് പിന്തുണയില്ല.</string>
@@ -133,7 +125,6 @@
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">നിങ്ങൾ ചേർക്കാൻ ആഗ്രഹിക്കുന്ന അക്കൌണ്ടിന്റെ ക്യുആര് കോഡ് സ്കാൻ ചെയ്യുക.</string>
   <string name="title_activity_qrcode">എന്റെ അക്കൌണ്ട് പങ്കുവെക്കുക</string>
-  <string name="error_scan_no_camera_permissions">ക്യുആര് സ്കാനര് പ്രവർത്തിക്കുന്നതിന് ക്യാമറ അനുമതികൾ ആവശ്യമാണ്</string>
   <string name="tab_code">എന്റെ കോഡ്</string>
   <string name="tab_scan">സ്കാൻ കോഡ്</string>
   <!--Settings-->
@@ -145,14 +136,15 @@
   <string name="conversation_details">സംഭാഷണ വിശദാംശങ്ങള്</string>
   <string name="contact_details">ബന്ധപ്പെടാനുള്ള വിവരങ്ങൾ</string>
   <string name="conversation_action_delete_this">ഈ സംഭാഷണം ഇല്ലാതാക്കുക</string>
+  <string name="leave_conversation">സംഭാഷണം ഉപേക്ഷിക്കുക</string>
   <string name="conversation_action_delete_this_message">ഈ നടപടി മാറ്റാന് കഴിയില്ല.</string>
   <string name="conversation_action_history_clear">വ്യക്തമായ ചരിത്രം</string>
   <string name="conversation_action_history_clear_title">സംഭാഷണ ചരിത്രം മായ്ക്കുക?</string>
   <string name="conversation_action_history_clear_message">ഇത് സംഭാഷണ ചരിത്രം മായ്ക്കും.</string>
-  <string name="conversation_action_remove_this">ബന്ധം ഇല്ലാതാക്കുക</string>
+  <string name="delete_contact">ബന്ധം ഇല്ലാതാക്കുക</string>
   <string name="conversation_action_remove_this_title">ഈ കോൺടാക്റ്റ് ഇല്ലാതാക്കണോ?</string>
   <string name="conversation_action_remove_this_message">ഇത് ബന്ധം ഇല്ലാതാക്കുകയും സംഭാഷണ ചരിത്രം മായ്ക്കുകയും ചെയ്യും.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s ക്ലിപ്പ്ബോർഡിൽ പകർത്തി</string>
+  <string name="copied_to_clipboard">%1$s ക്ലിപ്പ്ബോർഡിൽ പകർത്തി</string>
   <string name="conversation_action_select_peer_number">ഒരു നമ്പര് തിരഞ്ഞെടുക്കുക</string>
   <string name="conversation_action_block_this">തടയൽ കോൺടാക്റ്റ്</string>
   <string name="conversation_action_unblock_this">കോൺടാക്റ്റ് തടയുക</string>
@@ -176,11 +168,10 @@
   <string name="conversation_preference_color">സംഭാഷണ നിറം</string>
   <string name="conversation_preference_emoji">സംഭാഷണ ഇമോജി</string>
   <string name="conversation_type_contact">ജാമി കോൺടാക്ട്</string>
-  <string name="conversation_type_private">സ്വകാര്യ കുതിര</string>
-  <string name="conversation_type_group">ഗ്രൂപ്പ് സ്വാം</string>
+  <string name="conversation_type_private">സ്വകാര്യ</string>
   <string name="conversation_contact_invited">%1$s ക്ഷണിച്ചു</string>
   <string name="conversation_contact_added">%1$s ചേർന്നു</string>
-  <string name="conversation_contact_left">%1$ ഇടതുവശത്ത്</string>
+  <string name="conversation_contact_left">%1$s ഇടതുവശത്ത്</string>
   <string name="conversation_search_hint">തിരയൽ സംഭാഷണം</string>
   <string name="today">ഇന്ന്</string>
   <string name="yesterday">ഇന്നലെ</string>
@@ -202,16 +193,16 @@
   <string name="hist_contact_added">ബന്ധം കൂട്ടിച്ചേർത്തു</string>
   <string name="hist_contact_left">ഇടതുവശത്തുള്ള കോൺടാക്ട്</string>
   <string name="hist_invitation_received">ക്ഷണം ലഭിച്ചത്</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">പ്രൊഫൈല്</string>
-  <string name="profile_name">പ്രൊഫൈൽ നാമം</string>
   <string name="profile_message_warning">നിങ്ങളുടെ പ്രൊഫൈല് നിങ്ങളുടെ കോൺടാക്റ്റുകളുമായി മാത്രമേ പങ്കിടാന് കഴിയൂ</string>
   <string name="open_the_gallery">ഗാലറി തുറക്കുക</string>
-  <string name="take_a_photo">ഒരു ഫോട്ടോ എടുക്കൂ</string>
+  <string name="take_a_photo">ഫോട്ടോ എടുക്കൂ</string>
   <string name="profile_name_hint">നിങ്ങളുടെ പേര് നൽകുക</string>
   <string name="registered_name">രജിസ്റ്റർ ചെയ്ത പേര്</string>
   <string name="no_registered_name">രജിസ്റ്റർ ചെയ്തിട്ടില്ല</string>
   <string name="identity">ഐഡന്റിറ്റി</string>
+  <string name="identifier">ഐഡന്റിഫയർ</string>
   <string name="account">അക്കൌണ്ട്</string>
   <string name="link_new_device">പുതിയ ഉപകരണം ബന്ധിപ്പിക്കുക</string>
   <string name="devices">ബന്ധിപ്പിച്ച ഉപകരണങ്ങൾ</string>
@@ -222,7 +213,6 @@
   <string name="share_your_account_information">എന്റെ ബന്ധപ്പെടാനുള്ള വിവരങ്ങൾ പങ്കുവെക്കുക</string>
   <string name="share_label">പങ്കിടുക</string>
   <string name="generic_error_migration">പിശക്</string>
-  <string name="generic_error_migration_message">മൈഗ്രേഷന് റെ സമയത്ത് ഒരു പിശക് സംഭവിച്ചു</string>
   <string name="title_share_with">പങ്കുവെക്കുക.</string>
   <!--Pending invitations-->
   <string name="accept">അംഗീകരിക്കുക</string>
@@ -321,7 +311,7 @@
   <string name="bottomSheet_raiseHand_btn">കൈ ഉയര് ത്തുക</string>
   <string name="uninstall">അൺഇൻസ്റ്റാൾ ചെയ്യുക</string>
   <string name="reset">പുനഃ സജ്ജീകരണം</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">സ്ഥിരീകരണം</string>
   <string name="tab_members">അംഗങ്ങള്</string>
   <string name="tab_files">ഫയലുകൾ</string>
@@ -340,6 +330,10 @@
   <string name="jami_id_choose_username">ഒരു ഉപയോക്തൃനാമം തിരഞ്ഞെടുക്കുക</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">ജാമിയിൽ സ്വാഗതം</string>
+  <!--Conversation details-->
+  <string name="details">വിശദാംശങ്ങള്</string>
+  <string name="Private">സ്വകാര്യ</string>
   <!--Donation-->
+  <string name="donation_card_not_now">ഇപ്പോൾ വേണ്ട</string>
   <!--Extension-->
 </resources>

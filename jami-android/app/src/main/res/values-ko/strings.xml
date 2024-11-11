@@ -2,11 +2,9 @@
 <resources>
   <!--About-->
   <string name="section_license">면허</string>
-  <string name="sponsor_section">자미는 자미에서 개발하고 지원하는 자유 소프트웨어입니다.</string>
   <string name="copyright_section">저작권</string>
   <string name="contribute_section">기여</string>
   <string name="version_section">버전</string>
-  <string name="no_browser_app_installed">웹 브라우저 앱은 발견되지 않았습니다. 이 페이지를 보기 위해 하나를 설치하십시오.</string>
   <string name="website_chooser_title">웹 사이트를 사용해서 볼 수 있습니다.</string>
   <string name="license">이 소프트웨어는 어떠한 보증도 없이 \"그대로\" 제공된다. 자세한 내용은 GNU 일반 공중 라이선스 버전 3 또는 후기를 참조하십시오.</string>
   <string name="description">자미는 이용자의 자유와 사생활을 존중하는 보편적 통신을 위한 자유 소프트웨어입니다.</string>
@@ -19,7 +17,6 @@
   <!--RingActivity-->
   <string name="error_no_network">네트워크 연결이 없습니다</string>
   <string name="error_account_offline">계정은 오프라인입니다</string>
-  <string name="error_mobile_network_available_but_disabled">설정 화면에서 셀룰러 네트워크에 액세스 할 수 있도록 허용하십시오.</string>
   <!--AB menus-->
   <string name="ab_action_chat">문자 메시지</string>
   <!--Sections-->
@@ -33,7 +30,6 @@
   <string name="menu_item_about">자미 에 관한 것</string>
   <string name="video_setting_title">비디오 설정</string>
   <!--Dialing Fragment-->
-  <string name="dial_number">번호를 호출</string>
   <!--History Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
@@ -53,7 +49,7 @@
   <string name="notif_outgoing_call">출력 전화</string>
   <string name="notif_current_call_title">%1$s에 대한 계속된 호출</string>
   <string name="notif_current_call">계속되는 전화</string>
-  <string name="notif_channel_call_in_progress">진전을 촉구</string>
+  <string name="notif_channel_call_in_progress">통화 진행 중</string>
   <string name="notif_channel_calls">전화</string>
   <string name="notif_channel_missed_calls">전화가 빠진 것</string>
   <string name="notif_channel_incoming_calls">수신 전화</string>
@@ -65,7 +61,6 @@
   <string name="notif_channel_background_service_descr">언제든 전화와 메시지를 받을 수 있습니다.</string>
   <string name="notif_group_calls">전화</string>
   <string name="notif_inprogress_group_call">통화 진행 중</string>
-  <string name="notif_background_service">자미는 현재 배경에서 달리고 있습니다.</string>
   <string name="notif_mark_as_read">기록 된 표기</string>
   <string name="notif_dismiss">해고</string>
   <string name="notif_reply">답변</string>
@@ -91,7 +86,6 @@
   <string name="ongoing_call">계속되는 전화</string>
   <string name="hist_in_call">%1$s의 수신 호출</string>
   <string name="hist_out_call">%1$s의 출력 호출</string>
-  <string name="start_error_mic_required">자미는 마이크를 사용하려면 허락을 받아야 합니다.</string>
   <string name="action_call_decline">감소</string>
   <string name="action_call_mic_mute">무음 마이크</string>
   <string name="ab_action_speakerphone">스피커를 활성화</string>
@@ -101,10 +95,10 @@
   <string name="ab_action_video_call">비디오 통화 시작</string>
   <string name="ab_action_change_screen_orientation">화면 방향 변경</string>
   <string name="share_via">공유</string>
-  <string name="write_a_message">메시지를 적어주세요</string>
   <string name="scan_qr">QR 코드를 스캔</string>
   <string name="qr_code">QR 코드</string>
   <string name="qr_code_not_contact">Jami 연락처 QR 코드가 아닙니다</string>
+  <string name="new_group">새 그룹 만들기</string>
   <string name="ab_action_flipcamera"> 카메라</string>
   <string name="ab_action_hidepreview">미리보기 숨기기</string>
   <string name="remote_recording">%s 기록...</string>
@@ -120,10 +114,10 @@
   <string name="conversation_send_audio">음원 클립을 녹음</string>
   <string name="conversation_send_video">비디오 클립을 녹음</string>
   <string name="conversation_share_location">공유 위치</string>
+  <string name="ongoing_group_call">계속되는 전화</string>
   <string name="in_reply_to">이에 대한 답변</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">카메라 권한</string>
-  <string name="permission_dialog_camera_message">비디오 대화는 카메라의 사용 권한이 필요합니다.</string>
   <!--Ringtone activity-->
   <string name="ringtone_error_title">오류</string>
   <string name="ringtone_error_format_not_supported">이 형식은 지원되지 않습니다.</string>
@@ -135,7 +129,6 @@
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">추가하려는 계정의 QR 코드를 스캔하십시오.</string>
   <string name="title_activity_qrcode">내 계정을 공유</string>
-  <string name="error_scan_no_camera_permissions">QR 스캐너는 작동하려면 카메라 권한이 필요합니다</string>
   <string name="tab_code">내 코드</string>
   <string name="tab_scan">스캔 코드</string>
   <!--Settings-->
@@ -147,14 +140,15 @@
   <string name="conversation_details">대화 세부 사항</string>
   <string name="contact_details">연락처</string>
   <string name="conversation_action_delete_this">이 대화를 삭제</string>
+  <string name="leave_conversation">대화는 그만둬</string>
   <string name="conversation_action_delete_this_message">이 행동은 되돌릴 수 없습니다.</string>
   <string name="conversation_action_history_clear">명확한 역사</string>
   <string name="conversation_action_history_clear_title">대화 역사를 정리해?</string>
   <string name="conversation_action_history_clear_message">이것은 확실히 대화 역사를 깨끗하게 할 것입니다.</string>
-  <string name="conversation_action_remove_this">연락처 삭제</string>
+  <string name="delete_contact">연락처 삭제</string>
   <string name="conversation_action_remove_this_title">이 연락처를 삭제하세요?</string>
   <string name="conversation_action_remove_this_message">이것은 연락처를 삭제하고 대화 역사를 확실히 삭제합니다.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s는 클립보드에 복사</string>
+  <string name="copied_to_clipboard">%1$s는 클립보드에 복사</string>
   <string name="conversation_action_select_peer_number">번호를 선택</string>
   <string name="conversation_action_block_this">차단 접촉</string>
   <string name="conversation_action_unblock_this">연결 차단</string>
@@ -179,15 +173,13 @@
   <string name="conversation_preference_color">대화 색상</string>
   <string name="conversation_preference_emoji">대화 에모지</string>
   <string name="conversation_type_contact">자미 연락처</string>
-  <string name="conversation_type_private">개인 무더기</string>
-  <string name="conversation_type_group">집단 집단</string>
+  <string name="conversation_type_private">개인</string>
   <string name="conversation_contact_invited">%1$s가 초청되었습니다</string>
   <string name="conversation_contact_added">%1$s가 합류</string>
-  <string name="conversation_contact_left">%1$는 왼쪽</string>
+  <string name="conversation_contact_left">%1$s는 왼쪽</string>
   <string name="conversation_search_hint">검색 대화</string>
   <string name="audio_recorder_error">녹음 앱을 찾을 수 없음</string>
   <string name="video_recorder_error">녹화 앱을 찾을 수 없음</string>
-  <string name="taking_picture_error">사진을 찍던 중 오류가 발생했습니다.</string>
   <string name="open_camera_error">카메라를 열던 중 오류가 발생했습니다.</string>
   <string name="today">오늘날</string>
   <string name="yesterday">어제</string>
@@ -210,16 +202,16 @@
   <string name="hist_contact_added">연락처 추가</string>
   <string name="hist_contact_left">좌측 연락처</string>
   <string name="hist_invitation_received">초대 받은 것</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">프로필</string>
-  <string name="profile_name">프로필 이름</string>
   <string name="profile_message_warning">귀하의 프로필은 귀하의 연락처와만 공유됩니다</string>
   <string name="open_the_gallery">갤러리를 열</string>
-  <string name="take_a_photo">사진 찍어</string>
+  <string name="take_a_photo">사진 찍기</string>
   <string name="profile_name_hint">네 이름을 입력해</string>
   <string name="registered_name">등록된 이름</string>
   <string name="no_registered_name">등록된 이름도 없습니다</string>
   <string name="identity">신분</string>
+  <string name="identifier">식별자</string>
   <string name="account">계정</string>
   <string name="link_new_device">새로운 장치를 연결</string>
   <string name="devices">연결된 장치</string>
@@ -230,7 +222,6 @@
   <string name="share_your_account_information">연락처 정보를 공유하세요</string>
   <string name="share_label">공유</string>
   <string name="generic_error_migration">오류</string>
-  <string name="generic_error_migration_message">마이그레이션 중에 오류가 발생</string>
   <string name="title_share_with">나눔을...</string>
   <!--Pending invitations-->
   <string name="accept">수락</string>
@@ -301,7 +292,6 @@
   <string name="tv_send_video">미디어 를 보내</string>
   <string name="tv_action_more">더 많은</string>
   <string name="conversation_input_speech_hint">뭐라...</string>
-  <string name="audio_permission_denied">Jami 의 음성 관련 기능을 사용하려면 마이크 접근 권한을 허락해주세요.</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">추천</string>
   <string name="wizard_status_optional">선택 사항</string>
@@ -331,7 +321,7 @@
   <string name="bottomSheet_raiseHand_btn">손 들기</string>
   <string name="uninstall">설치 해제</string>
   <string name="reset">다시 설정</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">확인</string>
   <string name="tab_members">의원</string>
   <string name="tab_files">파일</string>
@@ -350,6 +340,10 @@
   <string name="jami_id_choose_username">사용자 이름을 선택</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">자미에 오신 것을 환영합니다</string>
+  <!--Conversation details-->
+  <string name="details">세부 사항</string>
+  <string name="Private">개인</string>
   <!--Donation-->
+  <string name="donation_card_not_now">나중에</string>
   <!--Extension-->
 </resources>

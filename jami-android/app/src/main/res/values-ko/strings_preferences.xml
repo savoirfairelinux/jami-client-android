@@ -32,9 +32,6 @@
   <string name="pref_blackList_title">블록 목록</string>
   <string name="pref_blackList_summary">블록 리스트를 확인해</string>
   <string name="pref_delete_account_title">계정을 삭제</string>
-  <string name="pref_delete_account_summary">이 장치에서 계정을 삭제</string>
-  <string name="pref_persistNotification_title">배경에서 실행</string>
-  <string name="pref_persistNotification_summary">전화와 메시지를 수신하기 위해 배경에서 실행하도록 허용하십시오.</string>
   <string name="pref_newGroup_title">그룹 채팅을 활성화</string>
   <string name="pref_newGroup_summary">Jami에서 그룹을 만들 수 있도록 한다.</string>
   <string name="pref_logs_title">진단 기록</string>
@@ -48,9 +45,5 @@
   <string name="pref_link_preview_title">대화에서 링크 미리보기 표시</string>
   <string name="pref_link_preview_summary">미리보기에는 타사 서버에서 콘텐츠를 다운로드해야 합니다.</string>
   <!--Notifications Visibility-->
-  <string name="notification_public">공개                                                                                                                                                                                                                                                         </string>
-  <string name="notification_private">개인 \n(보지사항을 표시하지만 잠금 화면에 내용을 숨기기) \n</string>
-  <string name="notification_secret">비밀                         </string>
   <!--Extension-->
-  <string name="extension_force_install">강제 설치</string>
 </resources>

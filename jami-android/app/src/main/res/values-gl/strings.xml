@@ -2,11 +2,9 @@
 <resources>
   <!--About-->
   <string name="section_license">Licenza</string>
-  <string name="sponsor_section">Jami é software libre desenvolto e mantido por</string>
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Colaborar</string>
   <string name="version_section">Versión</string>
-  <string name="no_browser_app_installed">Non se atopou unha app de navegador, instala unha para ver esta páxina</string>
   <string name="website_chooser_title">Ver sitio web utilizando...</string>
   <string name="license">Este software proporcionase \"tal como é\", sen garantía de ningún tipo: Ao detalle en <u>GNU General Public License versión 3 ou posterior</u></string>
   <string name="description">Jami é software libre para comunicacións universais e que respecta as liberdades e privacidade das súas usuarias.</string>
@@ -19,7 +17,6 @@
   <!--RingActivity-->
   <string name="error_no_network">Sen conexión a rede</string>
   <string name="error_account_offline">A conta non está conectada</string>
-  <string name="error_mobile_network_available_but_disabled">Por favor, dalle permiso de acceso a rede móbil na pantalla de axustes:</string>
   <!--AB menus-->
   <string name="ab_action_chat">Mensaxes de texto</string>
   <!--Sections-->
@@ -33,7 +30,6 @@
   <string name="menu_item_about">Acerca de Jami</string>
   <string name="video_setting_title">Configuración de vídeo</string>
   <!--Dialing Fragment-->
-  <string name="dial_number">Marcar un número</string>
   <!--History Fragment-->
   <!--Home Fragment-->
   <string name="invitation_card_title">Convites recibidos</string>
@@ -54,7 +50,7 @@
   <string name="notif_outgoing_call">Chamada saínte</string>
   <string name="notif_current_call_title">Chamada en curso con %1$s</string>
   <string name="notif_current_call">Chamada en curso</string>
-  <string name="notif_channel_call_in_progress">Chamada en progreso</string>
+  <string name="notif_channel_call_in_progress">Chamada en curso</string>
   <string name="notif_channel_calls">Chamadas</string>
   <string name="notif_channel_missed_calls">Chamadas perdidas</string>
   <string name="notif_channel_incoming_calls">Chamadas entrantes</string>
@@ -66,7 +62,6 @@
   <string name="notif_channel_background_service_descr">Permite recibir chamadas e mensaxes en todo momento.</string>
   <string name="notif_group_calls">Chamadas</string>
   <string name="notif_inprogress_group_call">Chamada en curso</string>
-  <string name="notif_background_service">Jami está a funcionar en segundo plano</string>
   <string name="notif_mark_as_read">Marcar como lido</string>
   <string name="notif_dismiss">Desbotar</string>
   <string name="notif_reply">Responder</string>
@@ -93,7 +88,6 @@
   <string name="hist_in_call">Chamada de %1$s</string>
   <string name="hist_out_call">Chamada a %1$s</string>
   <string name="call_duration">Durou %s</string>
-  <string name="start_error_mic_required">Jami precisa permiso de acceso ao micrófono para funcionar:</string>
   <string name="action_call_accept">Aceptar chamada</string>
   <string name="action_call_decline">Rexeitar</string>
   <string name="action_call_mic_mute">Apagar micrófono</string>
@@ -104,10 +98,8 @@
   <string name="ab_action_video_call">Iniciar chamada de vídeo</string>
   <string name="ab_action_change_screen_orientation">Cambiar orientación da pantalla</string>
   <string name="share_via">Compartir vía</string>
-  <string name="write_a_message">Escribe unha mensaxe</string>
   <string name="scan_qr">Escanear código QR</string>
   <string name="qr_code">Código QR</string>
-  <string name="new_swarm">Comezar Swarm</string>
   <string name="ab_action_flipcamera">Cambiar de cámara</string>
   <string name="ab_action_hidepreview">Agochar vista previa</string>
   <string name="remote_recording">%s gravando...</string>
@@ -123,11 +115,10 @@
   <string name="conversation_send_audio">Gravar clip de audio</string>
   <string name="conversation_send_video">Gravar clip de vídeo</string>
   <string name="conversation_share_location">Compartir localización</string>
-  <string name="ongoing_group_call">Chamada saínte</string>
+  <string name="ongoing_group_call">Chamada en curso</string>
   <string name="in_reply_to">En resposta a</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Permiso de cámara</string>
-  <string name="permission_dialog_camera_message">As conversas con vídeo precisan poder acceder a cámara. Por favor, considera proporcionarllo.</string>
   <!--Ringtone activity-->
   <string name="ringtone_error_title">Erro</string>
   <string name="ringtone_error_format_not_supported">Este formato non está soportado.</string>
@@ -139,7 +130,6 @@
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Escanea o código QR da conta que queres engadir.</string>
   <string name="title_activity_qrcode">Compartir a miña conta</string>
-  <string name="error_scan_no_camera_permissions">O escáner QR precisa acceso a cámara para funcionar.</string>
   <string name="tab_code">O meu Código</string>
   <string name="tab_scan">Escanear Código</string>
   <!--Settings-->
@@ -151,14 +141,15 @@
   <string name="conversation_details">Detalles da conversa</string>
   <string name="contact_details">Detalles do contacto</string>
   <string name="conversation_action_delete_this">Eliminar esta conversa</string>
+  <string name="leave_conversation">Deixar a conversa</string>
   <string name="conversation_action_delete_this_message">Esta acción non ten volta.</string>
   <string name="conversation_action_history_clear">Eliminar historial</string>
   <string name="conversation_action_history_clear_title">Eliminar o historial da conversa?</string>
   <string name="conversation_action_history_clear_message">Esto eliminará definitivamente o historial da conversa.</string>
-  <string name="conversation_action_remove_this">Eliminar contacto</string>
+  <string name="delete_contact">Eliminar contacto</string>
   <string name="conversation_action_remove_this_title">Eliminar este contacto?</string>
   <string name="conversation_action_remove_this_message">Esto eliminará o contacto de xeito definitivo e tamén o historial da conversa.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s copiado ao portapapeis</string>
+  <string name="copied_to_clipboard">%1$s copiado ao portapapeis</string>
   <string name="conversation_action_select_peer_number">Escolle un número</string>
   <string name="conversation_action_block_this">Bloquear contacto</string>
   <string name="conversation_action_unblock_this">Desbloquear contacto</string>
@@ -182,8 +173,7 @@
   <string name="conversation_preference_color">Cor da conversa</string>
   <string name="conversation_preference_emoji">Emojis da conversa</string>
   <string name="conversation_type_contact">Contacto Jami</string>
-  <string name="conversation_type_private">Swarm privado</string>
-  <string name="conversation_type_group">Swarm en grupo</string>
+  <string name="conversation_type_private">Privado</string>
   <string name="conversation_contact_invited">Convidouse a %1$s</string>
   <string name="conversation_contact_added">%1$s uníuse</string>
   <string name="conversation_contact_left">%1$s saíu</string>
@@ -208,16 +198,16 @@
   <string name="hist_contact_added">Contacto engadido</string>
   <string name="hist_contact_left">Contacto desbotado</string>
   <string name="hist_invitation_received">Convite recibido</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">Perfil</string>
-  <string name="profile_name">Nome do perfil</string>
   <string name="profile_message_warning">O teu perfil só se comparte cos teus contactos</string>
   <string name="open_the_gallery">Abrir a galería</string>
-  <string name="take_a_photo">Tomar fotografía</string>
+  <string name="take_a_photo">Tomar foto</string>
   <string name="profile_name_hint">Escribe o teu nome</string>
   <string name="registered_name">Nome rexistrado</string>
   <string name="no_registered_name">Sen nome rexistrado</string>
   <string name="identity">Identidade</string>
+  <string name="identifier">Identificador</string>
   <string name="account">Conta</string>
   <string name="link_new_device">Ligar un novo dispositio</string>
   <string name="devices">Dispositivos ligados</string>
@@ -228,10 +218,10 @@
   <string name="share_your_account_information">Compartir a miña información de contacto</string>
   <string name="share_label">Compartir</string>
   <string name="generic_error_migration">Erro</string>
-  <string name="generic_error_migration_message">Algo fallou no proceso de migración</string>
   <string name="title_share_with">Compartir con...</string>
   <!--Pending invitations-->
   <string name="accept">Aceptar</string>
+  <string name="decline">Rexeitar</string>
   <string name="block">Bloquar</string>
   <string name="invitation_message">Tes %1$d solicitudes de contacto  </string>
   <!--Blacklist-->
@@ -327,7 +317,7 @@
   <string name="bottomSheet_raiseHand_btn">Ergue a man</string>
   <string name="uninstall">Desinstalar</string>
   <string name="reset">Restablecer</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">Confirmar</string>
   <string name="tab_members">Membresía</string>
   <string name="tab_files">Arquivos</string>
@@ -353,6 +343,9 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Benvida/o a Jami</string>
   <string name="welcome_jami_description">Comparte o teu identificador Jami para que te atopen máis facilmente!</string>
+  <!--Conversation details-->
+  <string name="details">Detalles</string>
+  <string name="Private">Privado</string>
   <!--Donation-->
   <string name="donation_card_description">Se desfrutas usando Jami e cres nos nosos obxectivos, farías unha doazón?</string>
   <string name="donation_card_not_now">Agora non</string>

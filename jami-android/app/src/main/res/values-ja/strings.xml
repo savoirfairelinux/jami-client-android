@@ -2,11 +2,9 @@
 <resources>
   <!--About-->
   <string name="section_license">ライセンス</string>
-  <string name="sponsor_section">Jamiは以下によって開発、サポートされているフリーソフトウェアです</string>
   <string name="copyright_section">著作権表示</string>
   <string name="contribute_section">開発に協力</string>
   <string name="version_section">バージョン</string>
-  <string name="no_browser_app_installed">Webブラウザーアプリが見つかりませんでした。このページを表示するためにインストールしてください</string>
   <string name="website_chooser_title">Webサイトを表示…</string>
   <string name="license">このソフトウェアは、いかなる保証もなしに現状のまま提供されます。詳細については、<u>GNU General Public Licenseのversion 3以降</u>を参照してください。</string>
   <string name="description">Jamiは世界中の利用者と繋がることができる自由ソフトウェアであり，利用者の自由と私事権とを尊重しています。</string>
@@ -19,7 +17,6 @@
   <!--RingActivity-->
   <string name="error_no_network">ネットワーク接続がありません</string>
   <string name="error_account_offline">アカウントがオフラインです</string>
-  <string name="error_mobile_network_available_but_disabled">設定画面で携帯ネットワークへのアクセスを許可してください。</string>
   <!--AB menus-->
   <string name="ab_action_chat">テキストメッセージ</string>
   <!--Sections-->
@@ -33,7 +30,6 @@
   <string name="menu_item_about">Jamiについて</string>
   <string name="video_setting_title">ビデオ設定</string>
   <!--Dialing Fragment-->
-  <string name="dial_number">電話番号を入力</string>
   <!--History Fragment-->
   <!--Home Fragment-->
   <string name="invitation_card_title">招待を受信しました</string>
@@ -65,7 +61,6 @@
   <string name="notif_channel_background_service_descr">着信とメッセージの受信を許可する</string>
   <string name="notif_group_calls">通話</string>
   <string name="notif_inprogress_group_call">発信中</string>
-  <string name="notif_background_service">Jamiはバックグラウンドで実行中</string>
   <string name="notif_mark_as_read">既読</string>
   <string name="notif_dismiss">退出</string>
   <string name="notif_reply">返信</string>
@@ -91,7 +86,6 @@
   <string name="ongoing_call">通話中</string>
   <string name="hist_in_call">%1$s の着信</string>
   <string name="hist_out_call">%1$s の発信</string>
-  <string name="start_error_mic_required">Jamiはマイク使用の権限を必要とします</string>
   <string name="action_call_accept">着信を受ける</string>
   <string name="action_call_decline">辞退</string>
   <string name="action_call_mic_mute">マイクをミュート</string>
@@ -102,10 +96,9 @@
   <string name="ab_action_video_call">ビデオ通話を開始</string>
   <string name="ab_action_change_screen_orientation">画面の向きを変更</string>
   <string name="share_via">共有...</string>
-  <string name="write_a_message">メッセージを入力</string>
   <string name="scan_qr">QR コードをスキャン</string>
   <string name="qr_code">QRコード</string>
-  <string name="new_swarm">Swarmを動かす</string>
+  <string name="new_group">新規グループを作成</string>
   <string name="ab_action_flipcamera">カメラを押す</string>
   <string name="ab_action_hidepreview">プレビューを隠す</string>
   <string name="remote_recording">%s記録中…</string>
@@ -125,7 +118,6 @@
   <string name="in_reply_to">メッセージへの返信</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">カメラのアクセス許可</string>
-  <string name="permission_dialog_camera_message">ビデオ会話ではカメラが動作するためにアクセス許可が必要です。 アクセスを許可してください。</string>
   <!--Ringtone activity-->
   <string name="ringtone_error_title">エラー</string>
   <string name="ringtone_error_format_not_supported">この形式はサポートされていません。</string>
@@ -137,7 +129,6 @@
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">追加したいアカウントの QR コードをスキャンしてください。</string>
   <string name="title_activity_qrcode">アカウントの共有</string>
-  <string name="error_scan_no_camera_permissions">QRコードスキャナーはカメラの権限を必要とします</string>
   <string name="tab_code">自分のコード</string>
   <string name="tab_scan">コードをスキャン</string>
   <!--Settings-->
@@ -149,14 +140,15 @@
   <string name="conversation_details">話し合いの詳細</string>
   <string name="contact_details">連絡先の詳細</string>
   <string name="conversation_action_delete_this">この会話を削除</string>
+  <string name="leave_conversation">話しをやめましょう</string>
   <string name="conversation_action_delete_this_message">この操作は元に戻せません。</string>
   <string name="conversation_action_history_clear">履歴を消去</string>
   <string name="conversation_action_history_clear_title">会話の履歴を削除しますか？</string>
   <string name="conversation_action_history_clear_message">この操作は会話の履歴を完全に削除します。</string>
-  <string name="conversation_action_remove_this">連絡先を削除</string>
+  <string name="delete_contact">連絡先を削除</string>
   <string name="conversation_action_remove_this_title">この連絡先を削除しますか？</string>
   <string name="conversation_action_remove_this_message">この操作は連絡先を削除し、会話の履歴を完全に削除します。</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s をクリップボードにコピーしました</string>
+  <string name="copied_to_clipboard">%1$s をクリップボードにコピーしました</string>
   <string name="conversation_action_select_peer_number">番号を選択</string>
   <string name="conversation_action_block_this">連絡先をブロック</string>
   <string name="conversation_action_unblock_this">連絡先の解禁</string>
@@ -180,8 +172,8 @@
   <string name="conversation_preference_color">会話の色</string>
   <string name="conversation_preference_emoji">会話の絵文字</string>
   <string name="conversation_type_contact">Jamiの連絡先</string>
-  <string name="conversation_type_private">プライベートSwarm</string>
-  <string name="conversation_type_group">グループSwarm</string>
+  <string name="conversation_type_private">プライベート</string>
+  <string name="conversation_type_group">グループ</string>
   <string name="conversation_contact_invited">%1$s が招待されました</string>
   <string name="conversation_contact_added">%1$s が加入</string>
   <string name="conversation_contact_left">残り%1$s</string>
@@ -206,16 +198,17 @@
   <string name="hist_contact_added">連絡先を追加しました</string>
   <string name="hist_contact_left">連絡先が退出しました</string>
   <string name="hist_invitation_received">招待を受信しました</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">プロフィール</string>
   <string name="profile_name">プロフィール名</string>
   <string name="profile_message_warning">プロフィールは連絡先以外に共有されません</string>
   <string name="open_the_gallery">ギャラリーを開く</string>
-  <string name="take_a_photo">写真を撮る</string>
+  <string name="take_a_photo">撮影</string>
   <string name="profile_name_hint">名前を入力</string>
   <string name="registered_name">登録名</string>
   <string name="no_registered_name">名前が登録されていません</string>
   <string name="identity">ID</string>
+  <string name="identifier">識別子</string>
   <string name="account">アカウント</string>
   <string name="link_new_device">新しいデバイスをリンク</string>
   <string name="devices">リンクされたデバイス</string>
@@ -226,7 +219,6 @@
   <string name="share_your_account_information">連絡先情報を共有</string>
   <string name="share_label">共有</string>
   <string name="generic_error_migration">エラー</string>
-  <string name="generic_error_migration_message">移行中にエラーが発生しました。</string>
   <string name="title_share_with">共有</string>
   <!--Pending invitations-->
   <string name="accept">受け入れ</string>
@@ -325,7 +317,7 @@
   <string name="bottomSheet_raiseHand_btn">手を挙げる</string>
   <string name="uninstall">解除する</string>
   <string name="reset">リセット</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">確認</string>
   <string name="tab_members">要員</string>
   <string name="tab_files">ファイル</string>
@@ -344,6 +336,10 @@
   <string name="jami_id_choose_username">ユーザー名を選択する</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Jamiへようこそ</string>
+  <!--Conversation details-->
+  <string name="details">詳細</string>
+  <string name="Private">プライベート</string>
   <!--Donation-->
+  <string name="donation_card_not_now">後で</string>
   <!--Extension-->
 </resources>

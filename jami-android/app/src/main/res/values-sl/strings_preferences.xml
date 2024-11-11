@@ -32,9 +32,8 @@
   <string name="pref_blackList_title">Seznam blokiranih</string>
   <string name="pref_blackList_summary">Preverite svoj seznam blokiranih</string>
   <string name="pref_delete_account_title">Izbriši račun</string>
-  <string name="pref_delete_account_summary">Izbrišite svoj račun s te naprave</string>
-  <string name="pref_persistNotification_title">Zagon v ozadju</string>
-  <string name="pref_persistNotification_summary">Dovoli izvajanje v ozadju za sprejemanje klicev in sporočil.</string>
+  <string name="pref_delete_account_summary">Izbriši račun s te naprave</string>
+  <string name="pref_persistNotification_title">Izvajaj v ozadju</string>
   <string name="pref_newGroup_title">Omogoči skupinski klepet</string>
   <string name="pref_newGroup_summary">Omogočite ustvarjanje skupin v Jamiju.</string>
   <string name="pref_logs_title">Diagnostični zapisniki</string>
@@ -48,11 +47,9 @@
   <string name="pref_link_preview_title">Pokaži predogled povezav v pogovorih</string>
   <string name="pref_link_preview_summary">Za predoglede je potrebno prenesti vsebino s strežnikov tretjih strani.</string>
   <!--Notifications Visibility-->
-  <string name="notification_public">Javno \n(pokaži obvestila in njihovo vsebino na zaklenjenem zaslonu)\n</string>
-  <string name="notification_private">Zasebno \n(pokaži obvestila, vendar skrij njihovo vsebino na zaklenjenem zaslonu)\n</string>
-  <string name="notification_secret">Skrivno \n(ne pokaži obvestil na zaklenjenem zaslonu)</string>
   <!--Extension-->
   <string name="pref_extensions_title">Razširitve</string>
+  <string name="fab_extensions_add">Dodaj novo razširitev</string>
   <string name="extension_invalid_signature"><b>%1$s</b> ima neveljaven podpis</string>
-  <string name="extension_force_install">prisili \n namestitev</string>
+  <string name="extension_path_image_add">Dodaj novo sliko</string>
 </resources>

@@ -16,20 +16,24 @@ along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 -->
 <resources>
+    <!-- Call error -->
+    <string name="call_error">Virhe aloitettaessa puhelua.</string>
     <string name="call_error_no_microphone">Puhelu peruutettu. Mikrofonia ei havaittu.</string>
     <string name="call_error_no_camera_no_microphone">Puhelu peruutettu. Kameraa tai mikrofonia ei havaittu.</string>
+    <string name="screen_sharing_error">Virhe aloitettaessa näytön jakamista.</string>
+
     <!-- SipCalls -->
-    <string name="call_human_state_searching">Etsintä</string>
+    <string name="call_human_state_searching">Hakee</string>
     <string name="call_human_state_incoming">Saapuva</string>
-    <string name="call_human_state_connecting">Yhdistää</string>
+    <string name="call_human_state_connecting">Yhdistetään</string>
     <string name="call_human_state_ringing">Soi</string>
     <string name="call_human_state_current">Puhuu</string>
     <string name="call_human_state_hungup">Katkaistu</string>
-    <string name="call_human_state_busy">Kiireinen</string>
+    <string name="call_human_state_busy">Varattu</string>
     <string name="call_human_state_failure">Epäonnistui</string>
-    <string name="call_human_state_hold">Laita pitoon</string>
+    <string name="call_human_state_hold">Pidossa</string>
     <string name="call_human_state_unhold">Poista pidosta</string>
-    <string name="call_human_state_over">Loppu</string>
+    <string name="call_human_state_over">Katkaistu</string>
     <!-- Conferences -->
     <string name="call_moderator">Valvoja</string>
     <string name="call_muted">Mykistetty</string>

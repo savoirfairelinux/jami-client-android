@@ -32,9 +32,6 @@
   <string name="pref_blackList_title">Lista de bloques</string>
   <string name="pref_blackList_summary">Verificar la so llista de bloques.</string>
   <string name="pref_delete_account_title">La cuenta ye borrada</string>
-  <string name="pref_delete_account_summary">La so cuenta ye borrada d\' este dispositivu</string>
-  <string name="pref_persistNotification_title">La carrera en fondu</string>
-  <string name="pref_persistNotification_summary">Permite correr en fondu pa recibir llamadas y mensaxes.</string>
   <string name="pref_newGroup_title">Activu del grupu de charla</string>
   <string name="pref_newGroup_summary">Permite crear grupos en Jami.</string>
   <string name="pref_logs_title">Los rexistros de diagnósticu</string>
@@ -48,9 +45,5 @@
   <string name="pref_link_preview_title">Mostrar previews de enllaces en conversaciones</string>
   <string name="pref_link_preview_summary">Les previsiones requieren descargar conteníos de servidores de terceros.</string>
   <!--Notifications Visibility-->
-  <string name="notification_public">Publicar notificaciones y el so conteníu na pantalla de bloqueo)</string>
-  <string name="notification_private">El so conteníu nun se ve en pantalla de bloqueo.</string>
-  <string name="notification_secret">Secretos \n(nun muestren notificaciones na pantalla de bloqueo)</string>
   <!--Extension-->
-  <string name="extension_force_install">La fuerza \n instalación</string>
 </resources>

@@ -150,9 +150,7 @@
   <string name="account_sip_cannot_be_registered_message">Podeu continuar amb el procés de creació del compte o editar la vostra informació aquí. L\'edició encara és possible més endavant a les preferències del compte.</string>
   <string name="account_no_network_title">Error de xarxa</string>
   <string name="account_device_added_title">S\'ha afegit el dispositiu del compte</string>
-  <string name="account_device_added_message">Ha configurat amb èxit el seu compte Jami en aquest dispositiu.</string>
   <string name="account_device_updated_title">S\'ha actualitzat el dispositiu del compte</string>
-  <string name="account_device_updated_message">Ha actualitzat amb èxit el teu compte Jami.</string>
   <string name="account_sip_register_anyway">Registre de totes maneres</string>
   <!--TV-->
   <string name="account_tv_settings_header">Opcions de compte</string>
@@ -181,6 +179,7 @@
   <string name="help_credentials_enter">Inseriu els credencials de la vostra organització</string>
   <string name="help_connect_password_enter">Inseriu la contrasenya de la vostra organització</string>
   <string name="account_connect_prompt_username">Nom d\'usuari</string>
+  <string name="account_enter_username">Inseriu el vostre nom d\'usuari</string>
   <!--Name registration-->
   <string name="error_username_empty">Inseriu el vostre nom d\'usuari</string>
   <string name="no_registered_name_for_account">Sense connexió</string>

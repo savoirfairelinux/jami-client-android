@@ -32,9 +32,6 @@
   <string name="pref_blackList_title">รายการบล็อก</string>
   <string name="pref_blackList_summary">ตรวจสอบรายการบล็อกของคุณ</string>
   <string name="pref_delete_account_title">ลบบัญชี</string>
-  <string name="pref_delete_account_summary">ลบบัญชีของคุณออกจากอุปกรณ์นี้</string>
-  <string name="pref_persistNotification_title">ทำงานในระบบพื้นหลัง</string>
-  <string name="pref_persistNotification_summary">อนุญาตให้ทำงานในพื้นหลังเพื่อรับสายและข้อความ</string>
   <string name="pref_newGroup_title">เปิดใช้งานการแชทเป็นกลุ่ม</string>
   <string name="pref_newGroup_summary">เปิดใช้งานการสร้างกลุ่มใน Jami</string>
   <string name="pref_logs_title">บันทึกการวินิจฉัย</string>
@@ -48,9 +45,5 @@
   <string name="pref_link_preview_title">แสดงตัวอย่างลิงก์ในการสนทนา</string>
   <string name="pref_link_preview_summary">การแสดงตัวอย่างจำเป็นต้องดาวน์โหลดเนื้อหาจากเซิร์ฟเวอร์บุคคลที่สาม</string>
   <!--Notifications Visibility-->
-  <string name="notification_public">สาธารณะ \n(แสดงการแจ้งเตือนและเนื้อหาบนหน้าจอล็อก)\n</string>
-  <string name="notification_private">ส่วนตัว \n(แสดงการแจ้งเตือนแต่ซ่อนเนื้อหาในหน้าจอล็อก)\n</string>
-  <string name="notification_secret">ความลับ \n(ไม่แสดงการแจ้งเตือนบนหน้าจอล็อก)</string>
   <!--Extension-->
-  <string name="extension_force_install">บังคับ \n ติดตั้ง</string>
 </resources>

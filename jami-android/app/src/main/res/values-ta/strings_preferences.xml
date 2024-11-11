@@ -32,9 +32,6 @@
   <string name="pref_blackList_title">தொகுப்பு பட்டியல்</string>
   <string name="pref_blackList_summary">உங்கள் தடை பட்டியலை சரிபார்க்கவும்.</string>
   <string name="pref_delete_account_title">கணக்கை நீக்கு</string>
-  <string name="pref_delete_account_summary">இந்த சாதனத்திலிருந்து உங்கள் கணக்கை நீக்கவும்</string>
-  <string name="pref_persistNotification_title">பின்னணியில் இயக்கு</string>
-  <string name="pref_persistNotification_summary">பின்னணியில் இயங்குவதற்கு அழைப்புகள் மற்றும் செய்திகளைப் பெற அனுமதி.</string>
   <string name="pref_newGroup_title">குழு அரட்டை செயல்படுத்தவும்</string>
   <string name="pref_newGroup_summary">ஜாமிவில் குழுக்களை உருவாக்குவதை இயக்கு.</string>
   <string name="pref_logs_title">நோயறிதல் பதிவுகள்</string>
@@ -48,9 +45,5 @@
   <string name="pref_link_preview_title">உரையாடல்களில் இணைப்பு முன்னோட்டங்களை காண்பி</string>
   <string name="pref_link_preview_summary">முன்னோட்டங்கள் மூன்றாம் தரப்பு சேவையகங்களிலிருந்து உள்ளடக்கத்தை பதிவிறக்கம் செய்ய வேண்டும்.</string>
   <!--Notifications Visibility-->
-  <string name="notification_public">பொதுமக்கள் அறிவிப்புகளையும் அவற்றின் உள்ளடக்கத்தையும் பூட்டுத் திரையில் காண்பித்தல்)</string>
-  <string name="notification_private">தனியார் \n(அறிவிப்புகளை காண்பித்து அவற்றின் உள்ளடக்கத்தை பூட்டு திரை மீது மறைக்கவும்) \n</string>
-  <string name="notification_secret">இரகசியம் \n(இணைப்பு திரையில் அறிவிப்புகளை காட்ட வேண்டாம்)</string>
   <!--Extension-->
-  <string name="extension_force_install">கட்டாய நிறுவல்</string>
 </resources>

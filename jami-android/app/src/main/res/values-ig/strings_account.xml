@@ -148,9 +148,7 @@
   <string name="account_sip_cannot_be_registered_message">Ị nwere ike ịga n\'ihu na usoro nke ịmepụta akaụntụ ma ọ bụ dezie ozi gị ebe a. Edition ka nwere ike mgbe e mesịrị na akaụntụ ntọala.</string>
   <string name="account_no_network_title">Njehie netwọk</string>
   <string name="account_device_added_title">E gbakwunyere ngwaọrụ akaụntụ</string>
-  <string name="account_device_added_message">I meela nke ọma n\'ịtọlite akaụntụ Jami gị na ngwaọrụ a.</string>
   <string name="account_device_updated_title">Akụkọ nke akụrụngwa akaụntụ</string>
-  <string name="account_device_updated_message">I meela nke ọma n\'ime ka akaụntụ Jami gị dị ọhụrụ.</string>
   <string name="account_sip_register_anyway">Debanye aha gị n\' agbanyeghị</string>
   <!--TV-->
   <string name="account_tv_settings_header">Ntọala akaụntụ</string>

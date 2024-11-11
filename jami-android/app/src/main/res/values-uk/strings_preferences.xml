@@ -32,9 +32,6 @@
   <string name="pref_blackList_title">Список заблокованих</string>
   <string name="pref_blackList_summary">Перевірте список заблокованих.</string>
   <string name="pref_delete_account_title">Видалити обліковий запис</string>
-  <string name="pref_delete_account_summary">Видалити свій обліковий запис з цього пристрою</string>
-  <string name="pref_persistNotification_title">Запускати у фоновому режимі</string>
-  <string name="pref_persistNotification_summary">Дозволити працювати у фоновому режимі, щоб отримувати дзвінки та повідомлення.</string>
   <string name="pref_newGroup_title">Дозволити групові чати</string>
   <string name="pref_newGroup_summary">Дозволити створювати групи в Jami.</string>
   <string name="pref_logs_title">Журнали діагностики</string>
@@ -48,11 +45,7 @@
   <string name="pref_link_preview_title">Показувати попередній перегляд посилань у розмовах</string>
   <string name="pref_link_preview_summary">Попередній перегляд працює шляхом завантаження вмісту зі сторонніх серверів.</string>
   <!--Notifications Visibility-->
-  <string name="notification_public">Загальнодоступні \n(показувати сповіщення та їх вміст на екрані блокування)\n</string>
-  <string name="notification_private">Приватні \n(показувати сповіщення, але приховувати їх вміст на екрані блокування)\n</string>
-  <string name="notification_secret">Секретні \n(не показувати сповіщення на екрані блокування)</string>
   <!--Extension-->
   <string name="pref_extensions_title">Розширення</string>
   <string name="extension_invalid_signature"><b>%1$s</b> має недійсний підпис</string>
-  <string name="extension_force_install">примусово \n встановити</string>
 </resources>

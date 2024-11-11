@@ -32,9 +32,6 @@
   <string name="pref_blackList_title">רשימת חבילות</string>
   <string name="pref_blackList_summary">בדוק את רשימת הבלוקים שלך.</string>
   <string name="pref_delete_account_title">למחוק חשבון</string>
-  <string name="pref_delete_account_summary">למחוק את החשבון שלך מהמכשיר הזה</string>
-  <string name="pref_persistNotification_title">תסתלקו בעקבות</string>
-  <string name="pref_persistNotification_summary">תן לריצה בעקבות כדי לקבל שיחות ומסרים.</string>
   <string name="pref_newGroup_title">תפעיל צ\'אט קבוצתי</string>
   <string name="pref_newGroup_summary">אפשר ליצור קבוצות בג\'מי.</string>
   <string name="pref_logs_title">רישומי האבחנה</string>
@@ -48,9 +45,5 @@
   <string name="pref_link_preview_title">הראה ראיות ראיות של קישורים בשיחות</string>
   <string name="pref_link_preview_summary">ראיות ראיות דורשות הורדה של תוכן משרתים של צד שלישי.</string>
   <!--Notifications Visibility-->
-  <string name="notification_public">הודעות ציבוריות מראות את התוכן שלהן על מסך המנעול)</string>
-  <string name="notification_private">פרטי \n(ראה הודעות אבל להסתיר את התוכן שלהם על מסך נעילה) \n</string>
-  <string name="notification_secret">סוד \n(לא מראה הודעות על מסך נעילה)</string>
   <!--Extension-->
-  <string name="extension_force_install">הכוח \n להתקין</string>
 </resources>

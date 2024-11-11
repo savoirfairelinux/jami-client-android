@@ -32,9 +32,6 @@
   <string name="pref_blackList_title">لیست مسدودی</string>
   <string name="pref_blackList_summary">لیست مسدودی خود را بررسی کنید.</string>
   <string name="pref_delete_account_title">حذف حساب</string>
-  <string name="pref_delete_account_summary">حساب خود را از روی این دستگاه حذف کنید.</string>
-  <string name="pref_persistNotification_title">اجرا در پس‌زمینه</string>
-  <string name="pref_persistNotification_summary">اجازه اجرا در پس‌زمینه برای دریافت تماس‌ها و پیام‌ها.</string>
   <string name="pref_newGroup_title">چت گروهی را فعال کن</string>
   <string name="pref_newGroup_summary">ایجاد گروه در جمی را فعال کن</string>
   <string name="pref_logs_title">گزارش‌های عیب‌یابی</string>
@@ -48,9 +45,5 @@
   <string name="pref_link_preview_title">نشان دادن پیش نمایش پیوندها در مکالمات</string>
   <string name="pref_link_preview_summary">پیش نمایش ها نیاز به دانلود محتوا از سرورهای شخص ثالث دارند.</string>
   <!--Notifications Visibility-->
-  <string name="notification_public">عمومی \n(نمایش اعلان‌ها و محتوای آنها در صفحه قفل)\n</string>
-  <string name="notification_private">خضوصی \n(نمایش اعلان‌ها و مخفی‌کردن محتوای آنها در صفحه قفل)\n</string>
-  <string name="notification_secret">محرمانه \n(عدم نمایش اعلان‌ها و محتوای آنها در صفحه قفل)</string>
   <!--Extension-->
-  <string name="extension_force_install">نصب به اجبار</string>
 </resources>
