@@ -149,9 +149,7 @@
   <string name="account_sip_cannot_be_registered_message">Դուք կարող եք շարունակել հաշիվ ստեղծելու գործընթացը կամ խմբագրել ձեր տեղեկատվությունը այստեղ: Էդիգիան դեռ հնարավոր է ավելի ուշ հաշիվի կարգավորումների մեջ:</string>
   <string name="account_no_network_title">Համացանցի սխալ</string>
   <string name="account_device_added_title">Բաժնորդագրության սարք ավելացվել</string>
-  <string name="account_device_added_message">Դուք հաջողությամբ տեղադրել եք ձեր Ջամի հաշիվը այս սարքում:</string>
   <string name="account_device_updated_title">Հաշվետու սարքը թարմացվել է</string>
-  <string name="account_device_updated_message">Դուք հաջողությամբ թարմացրել եք ձեր Ջամի հաշիվը:</string>
   <string name="account_sip_register_anyway">Գրանցվեք ամեն դեպքում</string>
   <!--TV-->
   <string name="account_tv_settings_header">Հաշվեի կարգավորումները</string>

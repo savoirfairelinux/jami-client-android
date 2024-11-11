@@ -32,9 +32,6 @@
   <string name="pref_blackList_title">Blok lista</string>
   <string name="pref_blackList_summary">Proverite svoju listu blokiranih.</string>
   <string name="pref_delete_account_title">Obrisati nalog</string>
-  <string name="pref_delete_account_summary">Izbrišite svoj nalog sa ovog uređaja</string>
-  <string name="pref_persistNotification_title">Radi u pozadini</string>
-  <string name="pref_persistNotification_summary">Dozvolite rad u pozadini za primanje poziva i poruka.</string>
   <string name="pref_newGroup_title">Omogući grupno ćaskanje</string>
   <string name="pref_newGroup_summary">Omogući kreiranje grupa u Jamiju.</string>
   <string name="pref_logs_title">Dijagnostičke evidencije</string>
@@ -48,11 +45,7 @@
   <string name="pref_link_preview_title">Prikaži preglede veza u razgovorima</string>
   <string name="pref_link_preview_summary">Pregledi zahtevaju preuzimanje sadržaja sa servera trećih strana.</string>
   <!--Notifications Visibility-->
-  <string name="notification_public">Javno \n(prikaži obaveštenja i njihov sadržaj na zaključanom ekranu)\n</string>
-  <string name="notification_private">Privatno \n(prikaži obaveštenja, ali sakrij njihov sadržaj na zaključanom ekranu)\n</string>
-  <string name="notification_secret">Tajnо \n(ne prikazuj obaveštenja na zaključanom ekranu)</string>
   <!--Extension-->
   <string name="pref_extensions_title">Proširenja</string>
   <string name="extension_invalid_signature"><b>%1$s</b> ima nevažeći potpis</string>
-  <string name="extension_force_install">prisilno \n instalirati</string>
 </resources>

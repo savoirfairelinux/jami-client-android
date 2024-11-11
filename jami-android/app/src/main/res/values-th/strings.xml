@@ -2,11 +2,9 @@
 <resources>
   <!--About-->
   <string name="section_license">ใบอนุญาต</string>
-  <string name="sponsor_section">Jami เป็นซอฟต์แวร์ฟรีที่พัฒนาและสนับสนุนโดย</string>
   <string name="copyright_section">ลิขสิทธิ์</string>
   <string name="contribute_section">มีส่วนช่วย</string>
   <string name="version_section">เวอร์ชั่น</string>
-  <string name="no_browser_app_installed">ไม่พบแอปเว็บเบราว์เซอร์ ติดตั้งแอปเพื่อดูหน้านี้</string>
   <string name="website_chooser_title">ดูเว็บไซต์โดยใช้...</string>
   <string name="license">ซอฟต์แวร์นี้มีให้ "ตามที่เป็น" โดยไม่มีการรับประกันใดๆ สำหรับรายละเอียด โปรดดูที่&lt;u&gt; GNU General Public License เวอร์ชัน 3 หรือใหม่กว่า</string>
   <string name="description">Jami เป็นซอฟต์แวร์ฟรีสำหรับการสื่อสารแบบสากลซึ่งเคารพเสรีภาพและความเป็นส่วนตัวของผู้ใช้</string>
@@ -19,7 +17,6 @@
   <!--RingActivity-->
   <string name="error_no_network">ไม่มีการเชื่อมต่อเครือข่าย</string>
   <string name="error_account_offline">บัญชีออฟไลน์อยู่</string>
-  <string name="error_mobile_network_available_but_disabled">โปรดให้สิทธิ์การเข้าถึงเครือข่ายเซลลูลาร์ในหน้าจอการตั้งค่า</string>
   <!--AB menus-->
   <string name="ab_action_chat">ข้อความ</string>
   <!--Sections-->
@@ -33,7 +30,6 @@
   <string name="menu_item_about">เกี่ยวกับ Jami</string>
   <string name="video_setting_title">การตั้งค่าวีดีโอ</string>
   <!--Dialing Fragment-->
-  <string name="dial_number">หมุนหมายเลข</string>
   <!--History Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
@@ -52,7 +48,6 @@
   <string name="notif_outgoing_call">โทรออก</string>
   <string name="notif_current_call_title">กำลังโทรอยู่กับ%1$s</string>
   <string name="notif_current_call">กำลังโทร</string>
-  <string name="notif_channel_call_in_progress">กำลังโทรอยู่</string>
   <string name="notif_channel_calls">โทร</string>
   <string name="notif_channel_missed_calls">สายที่ไม่ได้รับ</string>
   <string name="notif_channel_incoming_calls">สายเรียกเข้า</string>
@@ -63,7 +58,6 @@
   <string name="notif_channel_background_service">บริการอยู่เบื้องหลัง</string>
   <string name="notif_channel_background_service_descr">อนุญาตให้รับสายและข้อความได้ตลอดเวลา</string>
   <string name="notif_group_calls">โทร</string>
-  <string name="notif_background_service">Jami กำลังทำงานในเบื้องหลัง</string>
   <string name="notif_mark_as_read">ทำเครื่องหมายว่าอ่านแล้ว</string>
   <string name="notif_dismiss">อนุญาตให้ออกไป</string>
   <string name="notif_reply">ตอบกลับ</string>
@@ -89,7 +83,6 @@
   <string name="ongoing_call">กำลังโทร</string>
   <string name="hist_in_call">สายเรียกเข้าของ%1$s</string>
   <string name="hist_out_call">การโทรออกของ%1$s</string>
-  <string name="start_error_mic_required">Jami ต้องได้รับอนุญาตจากไมโครโฟนจึงจะใช้งานได้</string>
   <string name="action_call_decline">ปฏิเสธ</string>
   <string name="action_call_mic_mute">ปิดเสียงไมโครโฟน</string>
   <string name="ab_action_speakerphone">เปิดใช้งานลำโพง</string>
@@ -99,9 +92,9 @@
   <string name="ab_action_video_call">เริ่มการโทรวีดีโอ</string>
   <string name="ab_action_change_screen_orientation">เปลี่ยนการวางแนวหน้าจอ</string>
   <string name="share_via">แบ่งปันผ่าน</string>
-  <string name="write_a_message">เขียนข้อความ</string>
   <string name="scan_qr">สแกนคิวอาร์โค้ด</string>
   <string name="qr_code">คิวอาร์โค้ด</string>
+  <string name="new_group">สร้างกลุ่มใหม่</string>
   <string name="ab_action_flipcamera">พลิกกล้อง</string>
   <string name="ab_action_hidepreview">ซ่อนตัวอย่าง</string>
   <string name="remote_recording">กำลังบันทึก…%s</string>
@@ -117,10 +110,10 @@
   <string name="conversation_send_audio">บันทึกคลิปเสียง</string>
   <string name="conversation_send_video">บันทึกวิดีโอคลิป</string>
   <string name="conversation_share_location">แชร์ตำแหน่ง</string>
+  <string name="ongoing_group_call">กำลังโทร</string>
   <string name="in_reply_to">ตอบ</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">การอนุญาตกล้อง</string>
-  <string name="permission_dialog_camera_message">การสนทนาทางวิดีโอต้องได้รับอนุญาตจากกล้องจึงจะใช้งานได้ โปรดพิจารณาเปิดใช้งาน</string>
   <!--Ringtone activity-->
   <string name="ringtone_error_title">ข้อผิดพลาด</string>
   <string name="ringtone_error_format_not_supported">ไม่รองรับรูปแบบนี้</string>
@@ -132,7 +125,6 @@
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">สแกนรหัส QR ของบัญชีที่คุณต้องการเพิ่ม</string>
   <string name="title_activity_qrcode">แบ่งปันบัญชีของฉัน</string>
-  <string name="error_scan_no_camera_permissions">เครื่องสแกน QR ต้องได้รับอนุญาตจากกล้องในการทำงาน</string>
   <string name="tab_code">รหัสของฉัน</string>
   <string name="tab_scan">สแกนรหัส</string>
   <!--Settings-->
@@ -144,14 +136,15 @@
   <string name="conversation_details">รายละเอียดการพูดคุย</string>
   <string name="contact_details">รายละเอียดการติดต่อ</string>
   <string name="conversation_action_delete_this">ลบบทสนทนานี้</string>
+  <string name="leave_conversation">ปล่อยการพูดคุย</string>
   <string name="conversation_action_delete_this_message">การดำเนินการนี้ไม่สามารถยกเลิกได้</string>
   <string name="conversation_action_history_clear">ล้างประวัติ</string>
   <string name="conversation_action_history_clear_title">ล้างประวัติการสนทนาไหม</string>
   <string name="conversation_action_history_clear_message">สิ่งนี้จะล้างประวัติการสนทนาอย่างแน่นอน</string>
-  <string name="conversation_action_remove_this">ลบผู้ติดต่อ</string>
+  <string name="delete_contact">ลบผู้ติดต่อ</string>
   <string name="conversation_action_remove_this_title">ลบรายชื่อติดต่อนี้ไหม</string>
   <string name="conversation_action_remove_this_message">การดำเนินการนี้จะลบผู้ติดต่อและล้างประวัติการสนทนาอย่างแน่นอน</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s ถูกสําเนาไปยังกระดานตัด</string>
+  <string name="copied_to_clipboard">%1$s ถูกสําเนาไปยังกระดานตัด</string>
   <string name="conversation_action_select_peer_number">เลือกหมายเลข</string>
   <string name="conversation_action_block_this">บล็อคการติดต่อ</string>
   <string name="conversation_action_unblock_this">กดติดต่อ</string>
@@ -175,11 +168,10 @@
   <string name="conversation_preference_color">สีของการสนทนา</string>
   <string name="conversation_preference_emoji">อิโมจิการสนทนา</string>
   <string name="conversation_type_contact">๋ติดต่อ Jami</string>
-  <string name="conversation_type_private">สระส่วนตัว</string>
-  <string name="conversation_type_group">กลุ่มกลุ่ม</string>
+  <string name="conversation_type_private">เอกชน</string>
   <string name="conversation_contact_invited">%1$sได้รับเชิญ</string>
   <string name="conversation_contact_added">%1$sเข้าร่วม</string>
-  <string name="conversation_contact_left">%1$ อยู่ซ้าย</string>
+  <string name="conversation_contact_left">%1$s อยู่ซ้าย</string>
   <string name="conversation_search_hint">ค้นหาบทสนทนา</string>
   <string name="today">วัน นี้</string>
   <string name="yesterday">เมื่อวาน</string>
@@ -201,16 +193,16 @@
   <string name="hist_contact_added">เพิ่มผู้ติดต่อ</string>
   <string name="hist_contact_left">ติดต่อซ้าย</string>
   <string name="hist_invitation_received">ได้รับคำเชิญ</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">ประวัติโดยย่อ</string>
-  <string name="profile_name">ชื่อโปรไฟล์</string>
   <string name="profile_message_warning">โปรไฟล์ของคุณจะถูกแชร์กับผู้ติดต่อของคุณเท่านั้น</string>
   <string name="open_the_gallery">เปิดแกลเลอรี่</string>
-  <string name="take_a_photo">ถ่ายรูป</string>
+  <string name="take_a_photo">ถ่ายภาพ</string>
   <string name="profile_name_hint">ใส่ชื่อของคุณ</string>
   <string name="registered_name">ชื่อจดทะเบียน</string>
   <string name="no_registered_name">ไม่ระบุชื่อ</string>
   <string name="identity">ตัวตน</string>
+  <string name="identifier">ตัวประจําตัว</string>
   <string name="account">บัญชี</string>
   <string name="link_new_device">เชื่อมโยงอุปกรณ์ใหม่</string>
   <string name="devices">อุปกรณ์ที่เชื่อมโยง</string>
@@ -221,7 +213,6 @@
   <string name="share_your_account_information">แบ่งปันข้อมูลการติดต่อของฉัน</string>
   <string name="share_label">แบ่งปัน</string>
   <string name="generic_error_migration">ข้อผิดพลาด</string>
-  <string name="generic_error_migration_message">เกิดข้อผิดพลาดระหว่างการย้ายข้อมูล</string>
   <string name="title_share_with">ร่วมกับ…</string>
   <!--Pending invitations-->
   <string name="accept">ยอมรับ</string>
@@ -320,7 +311,7 @@
   <string name="bottomSheet_raiseHand_btn">ยกมือ</string>
   <string name="uninstall">ถอนการติดตั้ง</string>
   <string name="reset">รีเซ็ต</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">ยืนยัน</string>
   <string name="tab_members">สมาชิก</string>
   <string name="tab_files">ไฟล์</string>
@@ -339,6 +330,10 @@
   <string name="jami_id_choose_username">เลือกชื่อผู้ใช้งาน</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">ยินดีต้อนรับสู่ Jami</string>
+  <!--Conversation details-->
+  <string name="details">รายละเอียด</string>
+  <string name="Private">เอกชน</string>
   <!--Donation-->
+  <string name="donation_card_not_now">ไม่ใช่ตอนนี้</string>
   <!--Extension-->
 </resources>

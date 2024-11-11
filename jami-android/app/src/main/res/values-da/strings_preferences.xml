@@ -32,9 +32,6 @@
   <string name="pref_blackList_title">Blockliste</string>
   <string name="pref_blackList_summary">Tjek din blokliste.</string>
   <string name="pref_delete_account_title">Slet konto</string>
-  <string name="pref_delete_account_summary">Slet dit konto fra dette udstyr</string>
-  <string name="pref_persistNotification_title">Kør i baggrunden</string>
-  <string name="pref_persistNotification_summary">Tillad at køre i baggrunden for at modtage opkald og beskeder.</string>
   <string name="pref_newGroup_title">Aktivere gruppechat</string>
   <string name="pref_newGroup_summary">Tillad at oprette grupper i Jami.</string>
   <string name="pref_logs_title">Diagnostiklog</string>
@@ -48,9 +45,5 @@
   <string name="pref_link_preview_title">Vis linkforsyninger i samtaler</string>
   <string name="pref_link_preview_summary">Forudsigter kræver download af indhold fra tredjepartsservere.</string>
   <!--Notifications Visibility-->
-  <string name="notification_public">Offentlig \n(vis meddelelser og deres indhold på låseskærm) \n</string>
-  <string name="notification_private">Private \n(vis meddelelser men skjule deres indhold på låseskærm) \n</string>
-  <string name="notification_secret">Hemmelig \n(vis ikke meddelelser på låseskærmen)</string>
   <!--Extension-->
-  <string name="extension_force_install">tvang \ n installere</string>
 </resources>

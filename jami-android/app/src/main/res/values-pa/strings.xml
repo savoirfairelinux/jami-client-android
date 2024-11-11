@@ -2,11 +2,9 @@
 <resources>
   <!--About-->
   <string name="section_license">ਲਾਇਸੰਸ</string>
-  <string name="sponsor_section">Jami ਇਹਨਾਂ ਦਾ ਤਿਆਰ ਕੀਤਾ ਮੁਫ਼ਤ ਸਾਫ਼ਟਵੇਅਰ ਹੈ</string>
   <string name="copyright_section">ਕਾਪੀਰਾਈਟ</string>
   <string name="contribute_section">ਯੋਗਦਾਨ ਪਾਓ</string>
   <string name="version_section">ਵਰਜਨ</string>
-  <string name="no_browser_app_installed">ਕੋਈ ਵੈੱਬ ਬ੍ਰਾਊਜ਼ਰ ਨਹੀਂ ਮਿਲਿਆ, ਇਹ ਪੰਨਾ ਵੇਖਣ ਲਈ ਬ੍ਰਾਊਜ਼ਰ ਸਥਾਪਤ ਕਰੋ</string>
   <string name="website_chooser_title">ਇਹ ਵਰਤ ਕੇ ਵੈੱਬਸਾਈਟ ਵੇਖੋ…</string>
   <string name="license">ਇਹ ਸਾਫ਼ਟਵੇਅਰ \"ਜਿਵੇਂ ਵੀ ਐ\", ਕਿਸੇ ਵੀ ਵਰੰਟੀ ਦੇ ਬਿਨਾਂ ਦਿੱਤਾ ਜਾਂਦਾ ਹੈ। ਵੇਰਵਿਆਂ ਲਈ, <u>GNU General Public License version 3 ਜਾਂ ਬਾਅਦ ਵਾਲੇ ਲਾਇਸੰਸ</u> ਵੇਖੋ</string>
   <string name="description">Jami ਦੁਨੀਆ ਭਰ ਵਿੱਚ ਸੰਚਾਰ ਕਰਨ ਲਈ ਮੁਫ਼ਤ ਸਾਫ਼ਟਵੇਅਰ ਹੈ ਜੋ ਆਪਣੇ ਵਰਤੋਂਕਾਰਾਂ ਦੀ ਅਜ਼ਾਦੀ ਅਤੇ ਪਰਦੇਦਾਰੀ ਦਾ ਖਿਆਲ ਰੱਖਦਾ ਹੈ।</string>
@@ -19,7 +17,6 @@
   <!--RingActivity-->
   <string name="error_no_network">ਕੋਈ ਨੈੱਟਵਰਕ ਕਨੈਕਸ਼ਨ ਨਹੀਂ ਹੈ</string>
   <string name="error_account_offline">ਖਾਤਾ ਆਫ਼ਲਾਈਨ ਹੈ</string>
-  <string name="error_mobile_network_available_but_disabled">ਕਿਰਪਾ ਕਰਕੇ ਸੈਟਿੰਗਾਂ ਸਕ੍ਰੀਨ ਵਿੱਚ ਸੈਲਿਊਲਰ ਨੈੱਟਵਰਕ ਤੱਕ ਪਹੁੰਚ ਦਿਓ।</string>
   <!--AB menus-->
   <string name="ab_action_chat">ਲਿਖਤ ਸੁਨੇਹੇ</string>
   <!--Sections-->
@@ -32,7 +29,6 @@
   <string name="menu_item_share">ਮੇਰਾ ਖਾਤਾ ਸਾਂਝਾ ਕਰੋ</string>
   <string name="menu_item_about">Jami ਬਾਰੇ</string>
   <!--Dialing Fragment-->
-  <string name="dial_number">ਨੰਬਰ ਡਾਇਲ ਕਰੋ</string>
   <!--History Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
@@ -52,7 +48,6 @@
   <string name="notif_outgoing_call">ਜਾਂਦੀ ਕਾਲ</string>
   <string name="notif_current_call_title">%1$s ਨਾਲ ਜਾਰੀ ਕਾਲ</string>
   <string name="notif_current_call">ਜਾਂਦੀ ਕਾਲ</string>
-  <string name="notif_channel_call_in_progress">ਕਾਲ ਜਾਰੀ ਹੈ</string>
   <string name="notif_channel_calls">ਕਾਲਾਂ</string>
   <string name="notif_channel_missed_calls">ਖੁੰਝੀਆਂ ਕਾਲਾਂ</string>
   <string name="notif_channel_incoming_calls">ਆਈਆਂ ਕਾਲਾਂ</string>
@@ -63,7 +58,6 @@
   <string name="notif_channel_background_service">ਪਿਛਲੇ ਪਾਸੇ ਚੱਲਦੀ ਸੇਵਾ</string>
   <string name="notif_channel_background_service_descr">ਕਿਸੇ ਵੇਲੇ ਵੀ ਕਾਲਾਂ ਅਤੇ ਸੁਨੇਹੇ ਆਉਣ ਦਿਓ।</string>
   <string name="notif_group_calls">ਕਾਲਾਂ</string>
-  <string name="notif_background_service">Jami ਐਪ ਫਿਲਹਾਲ ਪਿਛਲੇ ਪਾਸੇ ਚੱਲ ਰਹੀ ਹੈ</string>
   <string name="notif_mark_as_read">ਪੜ੍ਹੇ ਦਾ ਨਿਸ਼ਾਨ ਲਾਓ</string>
   <string name="notif_dismiss">ਖਾਰਜ ਕਰੋ</string>
   <string name="notif_reply">ਜਵਾਬ ਦਿਓ</string>
@@ -89,7 +83,6 @@
   <string name="ongoing_call">ਜਾਂਦੀ ਕਾਲ</string>
   <string name="hist_in_call">%1$s ਤੋਂ ਆਉਂਦੀ ਕਾਲ</string>
   <string name="hist_out_call">%1$s ਨੂੰ ਜਾਂਦੀ ਕਾਲ</string>
-  <string name="start_error_mic_required">Jami ਨੂੰ ਚੱਲਣ ਲਈ ਮਾਈਕ੍ਰੋਫ਼ੋਨ ਇਜਾਜ਼ਤ ਦੀ ਲੋੜ ਹੈ।</string>
   <string name="action_call_decline">ਕਾਲ ਕੱਟੋ</string>
   <string name="action_call_mic_mute">ਮਾਈਕ੍ਰੋਫ਼ੋਨ ਬੰਦ ਕਰੋ</string>
   <string name="ab_action_speakerphone">ਸਪੀਕਰ ਚਾਲੂ ਕਰੋ</string>
@@ -97,7 +90,6 @@
   <string name="ab_action_contact_add_question">ਸੰਪਰਕਾਂ ਵਿੱਚ ਜੋੜੀਏ?</string>
   <string name="ab_action_change_screen_orientation">ਸਕ੍ਰੀਨ ਦੀ ਦਿਸ਼ਾ ਬਦਲੋ</string>
   <string name="share_via">ਇਸ ਰਾਹੀਂ ਸਾਂਝਾ ਕਰੋ</string>
-  <string name="write_a_message">ਕੋਈ ਸੁਨੇਹਾ ਲਿਖੋ</string>
   <string name="scan_qr">QR ਕੋਡ ਸਕੈਨ ਕਰੋ</string>
   <string name="qr_code">QR ਕੋਡ</string>
   <string name="ab_action_flipcamera">ਕੈਮਰਾ ਪਲਟਾਓ</string>
@@ -113,9 +105,9 @@
   <string name="conversation_send_audio">ਅਵਾਜ਼ੀ ਹਿੱਸਾ ਰਿਕਾਰਡ ਕਰੋ</string>
   <string name="conversation_send_video">ਵੀਡੀਓ ਹਿੱਸਾ ਰਿਕਾਰਡ ਕਰੋ</string>
   <string name="conversation_share_location">ਟਿਕਾਣਾ ਸਾਂਝਾ ਕਰੋ</string>
+  <string name="ongoing_group_call">ਜਾਂਦੀ ਕਾਲ</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">ਕੈਮਰਾ ਇਜਾਜ਼ਤ</string>
-  <string name="permission_dialog_camera_message">ਵੀਡੀਓ ਗੱਲਾਂਬਾਤਾਂ ਕਰਨ ਲਈ ਕੈਮਰਾ ਇਜਾਜ਼ਤ ਦੀ ਲੋੜ ਹੈ। ਇਜਾਜ਼ਤ ਚਾਲੂ ਕਰਨ ਬਾਰੇ ਵਿਚਾਰੋ।</string>
   <!--Ringtone activity-->
   <string name="ringtone_error_title">ਗੜਬੜ</string>
   <string name="ringtone_error_format_not_supported">ਇਸ ਵੰਨਗੀ ਵਿੱਚ ਨਹੀਂ ਵਰਤ ਸਕਦੇ।</string>
@@ -127,7 +119,6 @@
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">ਉਸ ਖਾਤੇ ਦਾ QR ਕੋਡ ਸਕੈਨ ਕਰੋ, ਜਿਸਨੂੰ ਤੁਸੀਂ ਜੋੜਨਾ ਚਾਹੁੰਦੇ ਹੋ।</string>
   <string name="title_activity_qrcode">ਮੇਰਾ ਖਾਤਾ ਸਾਂਝਾ ਕਰੋ</string>
-  <string name="error_scan_no_camera_permissions">QR ਸਕੈਨਰ ਨੂੰ ਚੱਲਣ ਲਈ ਕੈਮਰਾ ਇਜਾਜ਼ਤਾਂ ਦੀ ਲੋੜ ਹੈ</string>
   <string name="tab_code">ਮੇਰਾ ਕੋਡ</string>
   <string name="tab_scan">ਕੋਡ ਸਕੈਨ ਕਰੋ</string>
   <!--Settings-->
@@ -141,10 +132,10 @@
   <string name="conversation_action_history_clear">ਇਤਿਹਾਸ ਮਿਟਾਓ</string>
   <string name="conversation_action_history_clear_title">ਗੱਲਬਾਤ ਦਾ ਇਤਿਹਾਸ ਮਿਟਾਈਏ?</string>
   <string name="conversation_action_history_clear_message">ਇੰਝ ਕਰਨ ਨਾਲ ਗੱਲਬਾਤ ਇਤਿਹਾਸ ਮਿਟ ਜਾਵੇਗਾ।</string>
-  <string name="conversation_action_remove_this">ਸੰਪਰਕ ਮਿਟਾਓ</string>
+  <string name="delete_contact">ਸੰਪਰਕ ਮਿਟਾਓ</string>
   <string name="conversation_action_remove_this_title">ਇਹ ਸੰਪਰਕ ਮਿਟਾਈਏ?</string>
   <string name="conversation_action_remove_this_message">ਇੰਝ ਕਰਨ ਨਾਲ ਸੰਪਰਕ ਅਤੇ ਗੱਲਬਾਤ ਦਾ ਇਤਿਹਾਸ ਮਿਟ ਜਾਵੇਗਾ।</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s ਨੂੰ ਚੂੰਢੀ-ਤਖਤੀ \'ਤੇ ਕਾਪੀ ਕੀਤਾ ਗਿਆ</string>
+  <string name="copied_to_clipboard">%1$s ਨੂੰ ਚੂੰਢੀ-ਤਖਤੀ \'ਤੇ ਕਾਪੀ ਕੀਤਾ ਗਿਆ</string>
   <string name="conversation_action_select_peer_number">ਕੋਈ ਨੰਬਰ ਚੁਣੋ</string>
   <string name="conversation_action_block_this">ਸੰਪਰਕ \'ਤੇ ਬੰਦਸ਼ ਲਗਾਓ</string>
   <string name="conversation_action_incoming_call">ਆਉਂਦੀ ਕਾਲ</string>
@@ -158,6 +149,7 @@
   <string name="conversation_members">ਸਾਥੀ</string>
   <string name="conversation_preference_color">ਗੱਲਬਾਤ ਦਾ ਰੰਗ</string>
   <string name="conversation_preference_emoji">ਗੱਲਬਾਤ ਲਈ ਇਮੋਜੀ</string>
+  <string name="conversation_type_group">ਸਮੂਹ</string>
   <string name="today">ਅੱਜ</string>
   <string name="yesterday">ਕੱਲ੍ਹ</string>
   <!--Contacts-->
@@ -177,9 +169,8 @@
   <string name="hist_contact_invited">ਸੰਪਰਕ ਸੱਦਿਆ ਗਿਆ</string>
   <string name="hist_contact_added">ਸੰਪਰਕ ਜੋੜਿਆ ਗਿਆ</string>
   <string name="hist_invitation_received">ਸੱਦਾ ਮਿਲਿਆ</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">ਪ੍ਰੋਫ਼ਾਈਲ</string>
-  <string name="profile_name">ਪ੍ਰੋਫ਼ਾਈਲ ਦਾ ਨਾਂ</string>
   <string name="profile_message_warning">ਤੁਹਾਡੀ ਪ੍ਰੋਫਾਈਲ ਸਿਰਫ਼ ਤੁਹਾਡੇ ਸੰਪਰਕਾਂ ਨਾਲ ਸਾਂਝਾ ਕੀਤੀ ਜਾਂਦੀ ਹੈ</string>
   <string name="open_the_gallery">ਗੈਲਰੀ ਖੋਲ੍ਹੋ</string>
   <string name="take_a_photo">ਫ਼ੋਟੋ ਖਿੱਚੋ</string>
@@ -193,7 +184,6 @@
   <string name="share_your_account_information">ਮੇਰੀ ਸੰਪਰਕ ਜਾਣਕਾਰੀ ਸਾਂਝੀ ਕਰੋ</string>
   <string name="share_label">ਸਾਂਝਾ ਕਰੋ</string>
   <string name="generic_error_migration">ਗੜਬੜ</string>
-  <string name="generic_error_migration_message">ਤਬਾਦਲੇ ਵੇਲੇ ਕੋਈ ਗੜਬੜ ਹੋਈ</string>
   <string name="title_share_with">ਇਹਨਾਂ ਨਾਲ ਸਾਂਝਾ ਕਰੋ…</string>
   <!--Pending invitations-->
   <string name="accept">ਮਨਜ਼ੂਰ ਕਰੋ</string>
@@ -281,7 +271,7 @@
   <string name="bottomSheet_change_camera_btn">ਬਦਲੋ</string>
   <string name="bottomSheet_hangup_btn">ਕਾਲ ਸਮਾਪਤ ਕਰੋ</string>
   <string name="bottomSheet_sound_output_btn">ਸਪੀਕਰ</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="tab_members">ਸਾਥੀ</string>
   <string name="tab_settings">ਸੈਟਿੰਗਾਂ</string>
   <string name="dialog_hint_title">ਸਿਰਲੇਖ</string>
@@ -289,6 +279,8 @@
   <string name="jami_id_looking_for_availability">ਵਰਤੋਂਕਾਰ ਨਾਂ ਦੀ ਉਪਲਬਧਤਾ ਲੱਭੀ ਜਾ ਰਹੀ ਹੈ…</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Jami ਵਿੱਚ ਜੀ ਆਇਆਂ ਨੂੰ</string>
+  <!--Conversation details-->
   <!--Donation-->
+  <string name="donation_card_not_now">ਹਾਲੇ ਨਹੀਂ</string>
   <!--Extension-->
 </resources>

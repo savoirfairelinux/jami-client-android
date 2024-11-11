@@ -149,9 +149,7 @@
   <string name="account_sip_cannot_be_registered_message">Vi povas daŭrigi la procezon de kreado de konto aŭ redakti viajn informojn ĉi tie. Edito ankoraŭ eblas poste en la konto-instalo.</string>
   <string name="account_no_network_title">Reta eraro</string>
   <string name="account_device_added_title">Aldoniĝis konto-aparato</string>
-  <string name="account_device_added_message">Vi sukcese instalis vian kontoon sur tiu aparato.</string>
   <string name="account_device_updated_title">Konto aparato ĝisdatigita</string>
-  <string name="account_device_updated_message">Vi sukcese ĝisdatigis vian Jamja konton.</string>
   <string name="account_sip_register_anyway">Registru min ĉiuokaze.</string>
   <!--TV-->
   <string name="account_tv_settings_header">Konto-sekcioj</string>

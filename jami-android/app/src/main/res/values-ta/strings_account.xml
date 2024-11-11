@@ -149,9 +149,7 @@
   <string name="account_sip_cannot_be_registered_message">கணக்கு உருவாக்கும் செயல்முறையை நீங்கள் தொடரலாம் அல்லது உங்கள் தகவலை இங்கே திருத்தலாம். கணக்கு அமைப்புகளில் பின்னர் பதிப்பு இன்னும் சாத்தியமாகும்.</string>
   <string name="account_no_network_title">நெட்வொர்க் தவறு</string>
   <string name="account_device_added_title">கணக்கு சாதனம் சேர்க்கப்பட்டது</string>
-  <string name="account_device_added_message">இந்த சாதனத்தில் உங்கள் ஜாமி கணக்கை வெற்றிகரமாக அமைத்துள்ளீர்கள்.</string>
   <string name="account_device_updated_title">கணக்கு சாதனம் புதுப்பிக்கப்பட்டது</string>
-  <string name="account_device_updated_message">நீங்கள் உங்கள் ஜாமி கணக்கை வெற்றிகரமாக புதுப்பித்துள்ளீர்கள்.</string>
   <string name="account_sip_register_anyway">எப்படியும் பதிவு செய்யுங்கள்</string>
   <!--TV-->
   <string name="account_tv_settings_header">கணக்கு அமைப்புகள்</string>

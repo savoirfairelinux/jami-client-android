@@ -33,9 +33,9 @@
   <string name="pref_blackList_title">Blockierte Kontakte</string>
   <string name="pref_blackList_summary">Überprüfen Sie Ihre Blockliste.</string>
   <string name="pref_delete_account_title">Konto löschen</string>
-  <string name="pref_delete_account_summary">Dein Konto von diesem Gerät löschen</string>
-  <string name="pref_persistNotification_title">Im Hintergrund laufen lassen</string>
-  <string name="pref_persistNotification_summary">Jami erlauben im Hintergrund zu laufen, um Anrufe und Nachrichten zu empfangen.</string>
+  <string name="pref_delete_account_summary">Delete account from this device</string>
+  <string name="pref_persistNotification_title">Im Hintergrund ausführen</string>
+  <string name="pref_persistNotification_summary">Ausführung im Hintergrund erlauben, um Anrufe und Nachrichten zu empfangen.</string>
   <string name="pref_newGroup_title">Gruppenchat aktivieren</string>
   <string name="pref_newGroup_summary">Erstellen von Gruppen in Jami aktivieren</string>
   <string name="pref_logs_title">Diagnoseprotokolle</string>
@@ -49,9 +49,9 @@
   <string name="pref_link_preview_title">Linkvorschauen in Unterhaltungen anzeigen</string>
   <string name="pref_link_preview_summary">Vorschauen erfordern das Herunterladen von Inhalten von Drittanbieter-Servern</string>
   <!--Notifications Visibility-->
-  <string name="notification_public">Öffentlich \n(Benachrichtigungen und deren Inhalt auf dem Sperrbildschirm anzeigen)\n</string>
-  <string name="notification_private">Privat \n(Benachrichtigungen anzeigen, aber deren Inhalt auf dem Sperrbildschirm ausblenden)\n</string>
-  <string name="notification_secret">Geheim \n(Benachrichtigungen nicht auf dem Sperrbildschirm anzeigen)</string>
+  <string name="notification_public">Öffentlich\n(Benachrichtigungen und deren Inhalt auf dem Sperrbildschirm anzeigen)\n</string>
+  <string name="notification_private">Privat\n(Benachrichtigungen anzeigen, aber deren Inhalt auf dem Sperrbildschirm ausblenden)\n</string>
+  <string name="notification_secret">Geheim\n(Benachrichtigungen nicht auf Sperrbildschirm anzeigen)</string>
   <!--Extension-->
   <string name="pref_extensions_title">Erweiterungen</string>
   <string name="pref_extensions_summary">Erweiterungen aktivieren und deren Parameter festlegen</string>
@@ -61,13 +61,13 @@
   <string name="extension_reset_preferences_summary">Erweiterung auf die Standardeinstellungen zurückgesetzt</string>
   <string name="extension_reset_preferences_ask">Möchten Sie die allgemeinen Erweiterungseinstellungen zurücksetzen?</string>
   <string name="extension_reset_account_preferences_ask">Möchten Sie die Kontoerweiterungseinstellungen zurücksetzen?</string>
-  <string name="extension_successfully_installed">Erweiterung <b>%1$s</b> erfolgreich installiert</string>
+  <string name="extension_successfully_installed">Erweiterung <b>%1$s</b> erfolgreich installiert.</string>
   <string name="extension_install_failure">Bei der Installation der folgenden Erweiterung ist ein Fehler aufgetreten: <b>%1$s</b></string>
   <string name="extension_recent_version_exception">Eine neuere Version von <b>%1$s</b> ist installiert.</string>
   <string name="extension_same_version_exception">Es ist die dieselbe Version <b>%1$s</b> von installiert.</string>
   <string name="extension_invalid_signature"><b>%1$s</b> hat eine ungültige Signatur</string>
-  <string name="extension_invalid_authority">Die Autorität kann nicht überprüft werden für: <b>%1$s</b></string>
+  <string name="extension_invalid_authority">Ein Fehler ist während dem Überprüfen der Berechtigung bei der folgenden Erweiterung aufgetreten: <b>%1$s</b></string>
   <string name="extension_invalid_format">Ungültiges Erweiterungsformat: <b>%1$s</b></string>
-  <string name="extension_force_install">Erzwinge \n Installation</string>
+  <string name="extension_force_install">erzwingen\ninstallieren</string>
   <string name="extension_path_image_add">Neues Bild hinzufügen</string>
 </resources>

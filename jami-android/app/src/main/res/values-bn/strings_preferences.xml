@@ -32,9 +32,6 @@
   <string name="pref_blackList_title">ব্লক তালিকা</string>
   <string name="pref_blackList_summary">আপনার ব্লক লিস্ট চেক করুন।</string>
   <string name="pref_delete_account_title">অ্যাকাউন্ট মুছে ফেলুন</string>
-  <string name="pref_delete_account_summary">এই ডিভাইস থেকে আপনার অ্যাকাউন্ট মুছে ফেলুন</string>
-  <string name="pref_persistNotification_title">পটভূমিতে চালান</string>
-  <string name="pref_persistNotification_summary">ফোন এবং বার্তা পেতে ব্যাকগ্রাউন্ডে চলতে দিন।</string>
   <string name="pref_newGroup_title">গ্রুপ চ্যাট সক্ষম করুন</string>
   <string name="pref_newGroup_summary">জামিতে গ্রুপ তৈরি করতে সক্ষম করুন।</string>
   <string name="pref_logs_title">ডায়াগনস্টিক লগ</string>
@@ -48,9 +45,5 @@
   <string name="pref_link_preview_title">কথোপকথনে লিঙ্ক প্রিভিউ দেখান</string>
   <string name="pref_link_preview_summary">প্রিভিউতে তৃতীয় পক্ষের সার্ভার থেকে সামগ্রী ডাউনলোড করা প্রয়োজন।</string>
   <!--Notifications Visibility-->
-  <string name="notification_public">পাবলিক \n(সাবধানসমূহ এবং তাদের বিষয়বস্তু লক স্ক্রিনে দেখান) \n</string>
-  <string name="notification_private">ব্যক্তিগত \n(সাবধান প্রদর্শন কিন্তু লক স্ক্রিনে তাদের বিষয়বস্তু লুকান) \n</string>
-  <string name="notification_secret">গোপন \n(লক স্ক্রিনে বিজ্ঞপ্তি দেখায় না)</string>
   <!--Extension-->
-  <string name="extension_force_install">জোর করে ইনস্টল করা</string>
 </resources>

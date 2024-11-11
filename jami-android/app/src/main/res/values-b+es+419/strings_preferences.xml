@@ -6,5 +6,4 @@
   <!--Extension-->
   <string name="pref_extensions_title">Extensions</string>
   <string name="extension_invalid_signature"><b>%1$s</b> tiene una firma inválida.</string>
-  <string name="extension_force_install">forzar \n instalación</string>
 </resources>

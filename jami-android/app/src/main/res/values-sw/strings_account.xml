@@ -149,9 +149,7 @@
   <string name="account_sip_cannot_be_registered_message">Unaweza kuendelea na mchakato wa kuunda akaunti au kuhariri taarifa yako hapa.</string>
   <string name="account_no_network_title">Kosa la mtandao</string>
   <string name="account_device_added_title">Kifaa cha akaunti imeongezwa</string>
-  <string name="account_device_added_message">Umefanikiwa kuanzisha akaunti yako ya Jami kwenye kifaa hiki.</string>
   <string name="account_device_updated_title">Kifaa cha akaunti updated</string>
-  <string name="account_device_updated_message">Umefanikiwa kusasisha akaunti yako ya Jami.</string>
   <string name="account_sip_register_anyway">Kujiandikisha anyway</string>
   <!--TV-->
   <string name="account_tv_settings_header">Mipangilio ya akaunti</string>

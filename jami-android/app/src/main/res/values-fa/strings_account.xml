@@ -149,9 +149,7 @@
   <string name="account_sip_cannot_be_registered_message">می‌توانید فرایند ایجاد حساب را ادامه داده یا در اینجا اطلاعات خود را ویرایش کنید. ویرایش هم‌چنان پس از آن در تنظیمات حساب ممکن است.</string>
   <string name="account_no_network_title">خطای شبکه</string>
   <string name="account_device_added_title">حساب دستگاه افزوده شد.</string>
-  <string name="account_device_added_message">شما با موفقیت حساب کاربری خود را روی این دستگاه تنظیم کردید.</string>
   <string name="account_device_updated_title">حساب دستگاه به‌روز شد.</string>
-  <string name="account_device_updated_message">شما با موفقیت حساب جمی خود را به‌روز کردید.</string>
   <string name="account_sip_register_anyway">به هر حال ثبت کنید</string>
   <!--TV-->
   <string name="account_tv_settings_header">تنظیمات حساب کاربری</string>
@@ -180,6 +178,7 @@
   <string name="help_credentials_enter">اعتبار‌نامه سازمانی خود را وارد کنید</string>
   <string name="help_connect_password_enter">گذرواژه سازمانی خود را وارد کنید</string>
   <string name="account_connect_prompt_username">نام کاربری</string>
+  <string name="account_enter_username">نام کاربری را وارد کنید</string>
   <!--Name registration-->
   <string name="error_username_empty">یک نام کاربری وارد کنید</string>
   <string name="no_registered_name_for_account">بدون نام ثبت‌شده</string>

@@ -32,9 +32,6 @@
   <string name="pref_blackList_title">Seznak blokovaných kontaktů</string>
   <string name="pref_blackList_summary">Zkontrolujte seznam blokovaných kontaktů.</string>
   <string name="pref_delete_account_title">Odstranit účet</string>
-  <string name="pref_delete_account_summary">Odstraněnit svůj účet z tohoto zařízení</string>
-  <string name="pref_persistNotification_title">Běžet na pozadí</string>
-  <string name="pref_persistNotification_summary">Umožnit běh na pozadí pro příjem hovorů a zpráv.</string>
   <string name="pref_newGroup_title">Povolení skupinového chatu</string>
   <string name="pref_newGroup_summary">Povolení vytváření skupin v aplikaci Jami.</string>
   <string name="pref_logs_title">Diagnostické záznamy</string>
@@ -48,9 +45,5 @@
   <string name="pref_link_preview_title">Zobrazení náhledů odkazů v konverzacích</string>
   <string name="pref_link_preview_summary">Náhledy vyžadují stažení obsahu ze serverů třetích stran.</string>
   <!--Notifications Visibility-->
-  <string name="notification_public">Veřejné \n (zobrazení oznámení a jejich obsahu na uzamčené obrazovce) \n</string>
-  <string name="notification_private">Soukromé \n (zobrazení oznámení, ale skrytí jejich obsahu na uzamčené obrazovce) \n</string>
-  <string name="notification_secret">Tajné \n (nezobrazují se oznámení na uzamčené obrazovce)</string>
   <!--Extension-->
-  <string name="extension_force_install">vynutit instalaci</string>
 </resources>

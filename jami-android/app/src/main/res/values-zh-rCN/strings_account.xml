@@ -156,9 +156,7 @@
   <string name="account_sip_cannot_be_registered_message">您可以前往下一步或在这里编辑您的信息。账户创建后，您仍可在账户设置中进行编辑。</string>
   <string name="account_no_network_title">网络错误</string>
   <string name="account_device_added_title">账户设备已添加</string>
-  <string name="account_device_added_message">您已在此设备上成功设置了 Jami 账户。</string>
   <string name="account_device_updated_title">账户设备已更新</string>
-  <string name="account_device_updated_message">您的 Jami 账户已成功更新。</string>
   <string name="account_sip_register_anyway">仍然注册</string>
   <!--TV-->
   <string name="account_tv_settings_header">账户设置</string>
@@ -187,6 +185,7 @@
   <string name="help_credentials_enter">输入您的组织凭据</string>
   <string name="help_connect_password_enter">输入您的组织密码</string>
   <string name="account_connect_prompt_username">用户名</string>
+  <string name="account_enter_username">输入用户名</string>
   <!--Name registration-->
   <string name="error_username_empty">输入用户名</string>
   <string name="no_registered_name_for_account">没有注册名称</string>

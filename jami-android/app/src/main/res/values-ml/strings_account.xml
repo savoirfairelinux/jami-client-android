@@ -149,9 +149,7 @@
   <string name="account_sip_cannot_be_registered_message">അക്കൌണ്ട് സൃഷ്ടിക്കൽ പ്രക്രിയ തുടരുകയോ നിങ്ങളുടെ വിവരങ്ങൾ ഇവിടെ എഡിറ്റുചെയ്യുകയോ ചെയ്യാം. അക്കൌണ്ട് ക്രമീകരണങ്ങളിൽ പിന്നീട് എഡിഷൻ ഇപ്പോഴും സാധ്യമാണ്.</string>
   <string name="account_no_network_title">നെറ്റ് വർക്ക് പിശക്</string>
   <string name="account_device_added_title">അക്കൌണ്ട് ഉപകരണം ചേർത്തു</string>
-  <string name="account_device_added_message">ഈ ഉപകരണത്തില് നിങ്ങള് ജാമി അക്കൌണ്ട് സജ്ജീകരിച്ചു.</string>
   <string name="account_device_updated_title">അക്കൌണ്ട് ഉപകരണം അപ്ഡേറ്റുചെയ്തു</string>
-  <string name="account_device_updated_message">നിങ്ങള് ജാമി അക്കൌണ്ട് വിജയകരമായി അപ്ഡേറ്റ് ചെയ്തു.</string>
   <string name="account_sip_register_anyway">എന്തായാലും രജിസ്റ്റർ ചെയ്യുക</string>
   <!--TV-->
   <string name="account_tv_settings_header">അക്കൌണ്ട് ക്രമീകരണങ്ങൾ</string>

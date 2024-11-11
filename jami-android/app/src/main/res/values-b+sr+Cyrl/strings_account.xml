@@ -156,9 +156,7 @@
   <string name="account_sip_cannot_be_registered_message">Овде можете наставити са процесом креирања налога или уредити своје податке. Издање је и даље могуће касније у подешавањима налога.</string>
   <string name="account_no_network_title">Мрежна грешка</string>
   <string name="account_device_added_title">Уређај налога је додат</string>
-  <string name="account_device_added_message">Успешно сте подесили свој Јами налог на овом уређају.</string>
   <string name="account_device_updated_title">Уређај налога је ажуриран</string>
-  <string name="account_device_updated_message">Успешно сте ажурирали свој Јами налог.</string>
   <string name="account_sip_register_anyway">Региструј се свеједно</string>
   <!--TV-->
   <string name="account_tv_settings_header">Подешавања налога</string>

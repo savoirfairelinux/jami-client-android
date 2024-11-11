@@ -149,9 +149,7 @@
   <string name="account_sip_cannot_be_registered_message">Μπορείτε να συνεχίσετε με τη διαδικασία δημιουργίας λογαριασμού ή να επεξεργαστείτε τις πληροφορίες σας εδώ.</string>
   <string name="account_no_network_title">Σφάλμα δικτύου</string>
   <string name="account_device_added_title">Προσθήκη συσκευής λογαριασμού</string>
-  <string name="account_device_added_message">Έχετε δημιουργήσει επιτυχώς το λογαριασμό σας Jami σε αυτή τη συσκευή.</string>
   <string name="account_device_updated_title">Ενημερωμένη συσκευή λογαριασμού</string>
-  <string name="account_device_updated_message">Ενεργοποίησες με επιτυχία το λογαριασμό σου στο Τζάμι.</string>
   <string name="account_sip_register_anyway">Καταχωρήστε έτσι κι αλλιώς.</string>
   <!--TV-->
   <string name="account_tv_settings_header">Ρυθμίσεις λογαριασμού</string>

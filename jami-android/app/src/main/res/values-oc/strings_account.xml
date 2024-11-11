@@ -149,9 +149,7 @@
   <string name="account_sip_cannot_be_registered_message">Podètz contunhar amb lo procediment de creacion d\'un compte o modificar las vòstras informacions aquí.</string>
   <string name="account_no_network_title">Error ret</string>
   <string name="account_device_added_title">Dispositiu de compte ajustat</string>
-  <string name="account_device_added_message">Avètz creat amb succès lo vòstre compte Jami sus aqueste dispositiu.</string>
   <string name="account_device_updated_title">Dispositiu de compte actualizat</string>
-  <string name="account_device_updated_message">Avètz actualizat amb succès lo vòstre compte Jami.</string>
   <string name="account_sip_register_anyway">Registratz-vos de tot biais</string>
   <!--TV-->
   <string name="account_tv_settings_header">Configuracion del compte</string>

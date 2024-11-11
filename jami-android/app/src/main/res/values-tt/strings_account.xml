@@ -148,9 +148,7 @@
   <string name="account_sip_cannot_be_registered_message">Бу сайтта сез хисапны булдыру процессын дәвам итә аласыз яки мәгълүматны үзгәртә аласыз.</string>
   <string name="account_no_network_title">Аварияләр</string>
   <string name="account_device_added_title">Аккаунт төре өстәлгән</string>
-  <string name="account_device_added_message">Сез бу җайланмага Jami хисабыгызны уңышлы урнаштырдыгыз.</string>
   <string name="account_device_updated_title">Аккаунт төре яңартылган</string>
-  <string name="account_device_updated_message">Син Җәми хисабыңны уңышлы яңарттың.</string>
   <string name="account_sip_register_anyway">Һәрхәлдә теркәл.</string>
   <!--TV-->
   <string name="account_tv_settings_header">Хисапны урнаштыру</string>

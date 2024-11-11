@@ -1,12 +1,14 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
+  <string name="submit_issue_title">Parashtrojeni problemin</string>
+  <string name="submit_issue_action_description"><u>Krijoni çështje të re</u></string>
   <string name="section_license">Licencë</string>
   <string name="sponsor_section">Jami është software i lirë i zhvilluar dhe i mbuluar nga</string>
   <string name="copyright_section">Të drejta kopjimi</string>
   <string name="contribute_section">Kontribuoni</string>
   <string name="version_section">Version</string>
-  <string name="no_browser_app_installed">S\’u gjet aplikacion shfletuesi, që të shihni këtë faqe, instaloni një të tillë </string>
+  <string name="no_browser_app_installed">S\’u gjet aplikacion shfletuesi, që të shihni këtë faqe, instaloni një të tillë. </string>
   <string name="website_chooser_title">Shiheni sajtin duke përdorur…</string>
   <string name="license">Ky software jepet \"siç është\", pa asnjë garanci të çfarëdo lloji. Për hollësi, shihni <u>GNU General Public License, version 3 ose më të re</u></string>
   <string name="description">Jami është software i lirë për komunikim universal që respekton privatësinë e përdoruesve të tij.</string>
@@ -15,11 +17,15 @@
   <string name="call_service_description">Ky shërbim është i nevojshëm për t\’i mbajtur thirrjet tuaja në funksionim në pjesën e përparme. Ai xhiron vetëm gjatë thirrjesh.</string>
   <string name="data_transfer_service_description">Ky shërbim është i domosdoshëm për të shfaqur mesazhe gjatë shpërnguljesh kartelash. Xhiron vetëm gjatë shpërnguljesh kartelash.</string>
   <!--About dialog-->
+  <string name="thank_note">Do të donim të falënderojmë kontribuesit tanë, përpjekjet e të cilëve përgjatë shumë vitesh e kanë bërë këtë program atë çka është.</string>
+  <string name="developers">Zhvillues</string>
   <string name="media">Media</string>
+  <string name="community_management">Administrim Bashkësie</string>
+  <string name="special_thanks">Falënderime të posaçme për</string>
+  <string name="end_note">Kjo është një listë e personave që kanë bërë investim domethënës në kohë, me përfundime të dobishme, në Jami. Cilido kontribues që dëshiron të shtohet te lista, duhet të  lidhet me ekipin e Jami-t përmes contact@jami.net.</string>
   <!--RingActivity-->
   <string name="error_no_network">Pa lidhje në rrjet</string>
   <string name="error_account_offline">Llogaria s’është në linjë</string>
-  <string name="error_mobile_network_available_but_disabled">Ju lutemi, akordojini hyrje rrjetit celular te skena e rregullimeve.</string>
   <!--AB menus-->
   <string name="ab_action_chat">Shkëmbim mesazhesh tekst</string>
   <!--Sections-->
@@ -29,11 +35,12 @@
   <string name="menu_item_settings">Rregullime</string>
   <string name="menu_item_advanced_settings">Rregullime të Mëtejshme</string>
   <string name="menu_item_account_settings">Rregullime Llogarie</string>
+  <string name="menu_item_extension_list">Rregullime Zgjerimesh</string>
   <string name="menu_item_share">Ndaje llogarinë time</string>
   <string name="menu_item_about">Mbi Jami-n</string>
   <string name="video_setting_title">Rregullime Videoje</string>
   <!--Dialing Fragment-->
-  <string name="dial_number">Thirrni një numër</string>
+  <string name="dial_number">I bini numrit</string>
   <!--History Fragment-->
   <!--Home Fragment-->
   <string name="invitation_card_title">Ftesat u morën</string>
@@ -55,7 +62,7 @@
   <string name="notif_outgoing_call">Thirrje për</string>
   <string name="notif_current_call_title">Thirrje me %1$s</string>
   <string name="notif_current_call">Thirrje në kryerje e sipër</string>
-  <string name="notif_channel_call_in_progress">Thirrje në Ecuri e Sipër</string>
+  <string name="notif_channel_call_in_progress">Thirrje në ecuri e sipër</string>
   <string name="notif_channel_calls">Thirrje</string>
   <string name="notif_channel_missed_calls">Thirrje të humbura</string>
   <string name="notif_channel_incoming_calls">Thirrje ardhëse</string>
@@ -67,7 +74,7 @@
   <string name="notif_channel_background_service_descr">Lejon marrje thirrjesh dhe mesazhesh në çfarëdo kohe.</string>
   <string name="notif_group_calls">Thirrje</string>
   <string name="notif_inprogress_group_call">Thirrje në ecuri e sipër</string>
-  <string name="notif_background_service">Jami është duke xhiruar në prapaskenë</string>
+  <string name="notif_background_service">Jami aktualisht është duke xhiruar në prapaskenë</string>
   <string name="notif_mark_as_read">Vëri shenjë si të lexuar</string>
   <string name="notif_dismiss">Hidhe Tej</string>
   <string name="notif_reply">Përgjigjuni</string>
@@ -94,10 +101,16 @@
   <string name="hist_in_call">Thirrje nga %1$s</string>
   <string name="hist_out_call">Thirrje për %1$s</string>
   <string name="call_duration">Zgjati %s</string>
-  <string name="start_error_mic_required">Që të funksionojë, Jami lyp leje për mikrofonin.</string>
+  <string name="start_error_title">S’niset dot Jami!</string>
   <string name="action_call_accept">Pranoje thirrjen</string>
+  <string name="action_call_accept_audio">Prano thirrje ardhëse vetëm me audio </string>
+  <string name="action_call_accept_video">Prano thirrje ardhëse vetëm me video </string>
+  <string name="action_call_hold_accept">Prano thirrje ardhëse vetëm me audio dhe mbaj në pritje thirrjen e tanishme</string>
+  <string name="action_call_hold_accept_video">Prano thirrje ardhëse me audio dhe mbaj në pritje thirrjen e tanishme</string>
+  <string name="action_call_end_accept">Prano thirrje ardhëse dhe përfundo thirrjen e tanishme</string>
   <string name="action_call_decline">Hidhe tej</string>
   <string name="action_call_mic_mute">Heshtoje mikrofonin</string>
+  <string name="action_load_extension">Ngarko zgjerimin</string>
   <string name="ab_action_speakerphone">Aktivizoni altoparlantin</string>
   <string name="ab_action_contact_add">Shtoje te kontaktet</string>
   <string name="ab_action_contact_add_question">Të shtohet te kontaktet?</string>
@@ -105,11 +118,11 @@
   <string name="ab_action_video_call">Filloni thirrje video</string>
   <string name="ab_action_change_screen_orientation">Ndryshoni drejtim ekrani</string>
   <string name="share_via">Ndajeni përmes</string>
-  <string name="write_a_message">Shkruani një mesazh</string>
+  <string name="write_a_message">Shkruani mesazh</string>
   <string name="scan_qr">Skanoni Kodin QR</string>
   <string name="qr_code">Kod QR</string>
   <string name="qr_code_not_contact">S’është kod QR kontakti Jami</string>
-  <string name="new_swarm">Nisni Zgjua</string>
+  <string name="new_group">Krijoni grup të ri</string>
   <string name="ab_action_flipcamera">Rrotulloni kamerën</string>
   <string name="ab_action_hidepreview">Fshihe paraparjen</string>
   <string name="remote_recording">%s po regjistron…</string>
@@ -125,12 +138,12 @@
   <string name="conversation_send_audio">Incizoni copëz zanore</string>
   <string name="conversation_send_video">Regjistroni copës video</string>
   <string name="conversation_share_location">Ndani vendndodhje</string>
-  <string name="ongoing_group_call">Thirrje Në Ecuri E Sipër</string>
-  <string name="started_call">Nisi një thirrje</string>
+  <string name="ongoing_group_call">Thirrje në kryerje e sipër</string>
+  <string name="started_call">Thirrja filloi</string>
   <string name="in_reply_to">Në përgjigje të</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Leje për kamerën</string>
-  <string name="permission_dialog_camera_message">Që të funksionojnë, bisedat me video lypin doemos leje për kamerën. Ju lutemi, shihni mundësinë e akordimit të saj.</string>
+  <string name="permission_dialog_camera_message">Bisedat me kamera lypin leje mbi kamerën. Leja mbi kamerën është e çaktivizuar. Që të mund të përdorni këtë veçori, aktivizojeni te rregullimet e pajisjes.</string>
   <string name="camera_error">Ndodhi një gabim teksa nisej kamera.</string>
   <!--Ringtone activity-->
   <string name="ringtone_error_title">Gabim</string>
@@ -138,12 +151,15 @@
   <string name="ringtone_error_size_too_big">Kjo kartelë është shumë e madhe. Madhësia maksimum është %1$dkB.</string>
   <string name="ringtone_custom_prompt">Caktoni një zile vetjake</string>
   <string name="ringtone_custom_label">Vetjake</string>
+  <string name="ringtone_jami_tones">Zile Jami</string>
   <!--Read contacts permission-->
+  <string name="permission_dialog_read_contacts_message">Jami-t i duhet leja “Të lexojë kontakte”. Që të mund të përdorni këtë veçori, aktivizojeni te rregullimet e pajisjes.</string>
   <!--Write call log permission-->
+  <string name="permission_dialog_write_call_log_message">Jami lyp lejen “Të shkruajë regjistër thirrjesh”. Që të mund të përdorni këtë veçori, aktivizojeni te rregullimet e pajisjes.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Skanoni kodin QR të llogarisë që doni të shtoni.</string>
   <string name="title_activity_qrcode">Ndaje llogarinë time</string>
-  <string name="error_scan_no_camera_permissions">Që të funksionojë, skaneri QR lyp leje për kamerën</string>
+  <string name="error_scan_no_camera_permissions">Skaneri QR lyp leje mbi kamerën. Leja mbi kamerën është e çaktivizuar. Që të mund të përdorni këtë veçori, aktivizojeni te rregullimet e pajisjes.</string>
   <string name="tab_code">Kodi Im</string>
   <string name="tab_scan">Skanojeni Kodin</string>
   <!--Settings-->
@@ -155,14 +171,21 @@
   <string name="conversation_details">Hollësi bisede</string>
   <string name="contact_details">Hollësi kontakti</string>
   <string name="conversation_action_delete_this">Fshije këtë bisedë</string>
+  <string name="conversation_action_delete_this_title">Të fshihet kjo bisedë?</string>
+  <string name="leave_conversation">Braktise bisedën</string>
   <string name="conversation_action_delete_this_message">Ky veprim s\’mund të zhbëhet.</string>
   <string name="conversation_action_history_clear">Spastroje historikun</string>
   <string name="conversation_action_history_clear_title">Të spastrohet historiku i bisedave?</string>
   <string name="conversation_action_history_clear_message">Kjo do të shkaktojë përfundimisht pastrimin e historikut të bisedës.</string>
-  <string name="conversation_action_remove_this">Fshije kontaktin</string>
+  <string name="delete_contact">Fshije kontaktin</string>
   <string name="conversation_action_remove_this_title">Të fshihet ky kontakt?</string>
   <string name="conversation_action_remove_this_message">Kjo do të shkaktojë fshirjen e kontaktit dhe përfundimisht fshirjen e historikut të bisedave.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s u kopjua te e papastra</string>
+  <string name="conversation_action_add_this_message">Kjo do të dërgojë një kërkesë për lidhje.</string>
+  <string name="swarm_group_action_leave">Braktise grupin</string>
+  <string name="swarm_group_action_leave_title">Të braktiset ky grup?</string>
+  <string name="swarm_group_action_leave_message">Kjo do ta heqë bisedën nga lista e bisedave tuaja </string>
+  <string name="conversation_action_copy_peer_number">Kopjo identifikues kontakti</string>
+  <string name="copied_to_clipboard">%1$s u kopjua te e papastra</string>
   <string name="conversation_action_select_peer_number">Përzgjidhni një numër</string>
   <string name="conversation_action_block_this">Bllokojeni kontaktin</string>
   <string name="conversation_action_unblock_this">Zhbllokoje kontaktin</string>
@@ -171,6 +194,7 @@
   <string name="conversation_action_latest">Hidhu te më i riu</string>
   <string name="conversation_open_file_error">S’ka të instaluar aplikacion të aftë të hapë këtë lloj kartelash.</string>
   <string name="clip_contact_uri">Adresë kontakti</string>
+  <string name="clip_message">Lëndë mesazhi</string>
   <string name="block_contact_dialog_title">Të bllokohet %1$s?</string>
   <string name="block_contact_dialog_message">%1$s s’do të jetë në gjendje të lidhet me ju, deri sa ta zhbllokoni.</string>
   <string name="block_contact_completed">%1$s u bllokua.</string>
@@ -188,24 +212,26 @@
   <string name="conversation_preference_color">Ngjyrë bisede</string>
   <string name="conversation_preference_emoji">Emoji bisede</string>
   <string name="conversation_type_contact">Kontakt Jami</string>
-  <string name="conversation_type_private">Zgjua Privat</string>
-  <string name="conversation_type_group">Zgjua Grup</string>
+  <string name="conversation_type_private">Privat</string>
+  <string name="conversation_type_group">Grup</string>
   <string name="conversation_contact_invited">U ftua %1$s</string>
   <string name="conversation_contact_added">%1$s erdhi</string>
   <string name="conversation_contact_left">%1$s iku</string>
+  <string name="conversation_contact_blocked">%1$s u bllokua</string>
+  <string name="conversation_contact_unblocked">%1$s u zhbllokua</string>
   <string name="conversation_search_hint">Kërkoni bisedë</string>
   <string name="audio_recorder_error">S’u gjet aplikacion incizimi audio.</string>
   <string name="video_recorder_error">S’u gjet aplikacion regjistrimi video.</string>
-  <string name="taking_picture_error">Ndodhi një gabim teksa bëhej një foto.</string>
-  <string name="find_picture_error">Ndodhi një gabim teksa gjendej një foto.</string>
+  <string name="taking_picture_error">Ndodhi një gabim teksa bëhej fotoja.</string>
+  <string name="find_picture_error">Ndodhi një gabim teksa bëhej gjetja e fotos.</string>
   <string name="open_camera_error">Ndodhi një gabim teksa hapej kamera.</string>
   <string name="starting_recorder_error">Ndodhi një gabim teksa nisej incizuesi.</string>
   <string name="starting_camera_error">Ndodhi një gabim teksa nisej kamera.</string>
   <string name="browser_error">S’ka shfletues kartelash në këtë pajisje.</string>
   <string name="import_archive_error">Ndodhi një gabim teksa importohej arkivi.</string>
   <string name="export_archive_error">Ndodhi një gabim teksa eksportohej arkivi.</string>
-  <string name="load_ringtone_error">Ndodhi një gabim teksa ngarkohej zile.</string>
-  <string name="sharing_log_error">Ndodhi një gabim teksa jepeshin regjistra.</string>
+  <string name="load_ringtone_error">Ndodhi një gabim teksa ngarkohej zilja.</string>
+  <string name="sharing_log_error">Ndodhi një gabim teksa ndaheshin regjistrat me të tjerë.</string>
   <string name="today">Sot</string>
   <string name="yesterday">Dje</string>
   <!--Contacts-->
@@ -219,6 +245,7 @@
   <string name="help_password_choose">Për të mbrojtur llogarinë tuaj Jami, zgjidhni fjalëkalim të fuqishëm që do ta mbani mend.</string>
   <string name="help_password_enter">Jepni fjalëkalimin e llogarisë tuaj kryesore Jami.</string>
   <string name="help_server_enter">Jepni URL-në e shërbyesit të administrimeve.</string>
+  <string name="help_pin_enter">Jepni PIN-in prej një tjetër llogarie Jami të formësuar. Që të keni PIN-in, përdorni veçorinë “Eksportoni llogari Jami”.</string>
   <string name="pin_copied">Kodi PIN u kopjua në të papastër.</string>
   <string name="wizard_next">Pasuesi</string>
   <string name="wizard_back">Mbrapsht</string>
@@ -226,10 +253,12 @@
   <string name="hist_contact_invited">Kontakti u ftua</string>
   <string name="hist_contact_added">Kontakti u shtua</string>
   <string name="hist_contact_left">Kontakti iku</string>
+  <string name="hist_contact_blocked">Kontakti u bllokua </string>
+  <string name="hist_contact_unblocked">Kontakti u zhbllokua</string>
   <string name="hist_invitation_received">Ftesa u mor</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">Profil</string>
-  <string name="profile_name">Emër Profili</string>
+  <string name="profile_name">Emër profili</string>
   <string name="profile_message_warning">Profili juaj ndahet vetëm me kontaktet tuaja</string>
   <string name="open_the_gallery">Hape galerinë</string>
   <string name="take_a_photo">Bëni një foto</string>
@@ -237,6 +266,7 @@
   <string name="registered_name">Emër i Regjistruar</string>
   <string name="no_registered_name">Pa emër të regjistruar</string>
   <string name="identity">Identitet</string>
+  <string name="identifier">Identifikues</string>
   <string name="account">Llogari</string>
   <string name="link_new_device">Lidhni një pajisje të re</string>
   <string name="devices">Pajisje të lidhura</string>
@@ -245,15 +275,23 @@
   <string name="share_message">Skanojeni këtë kod me Jami-n</string>
   <string name="share_message_no_account">Ju lutemi, përzgjidhni një llogari për ndarje me të.</string>
   <string name="share_your_account_information">Ndaji me të tjerët të dhënat e mia të kontaktit</string>
+  <string name="share_contact_information">Jepni hollësi kontakti</string>
   <string name="share_label">Ndajeni me të tjerë</string>
   <string name="generic_error_migration">Gabim</string>
-  <string name="generic_error_migration_message">Ndodhi një gabim gjatë migrimit</string>
+  <string name="generic_error_migration_message">Ndodhi një gabim teksa migrohej llogaria.</string>
   <string name="title_share_with">Ndajeni me…</string>
   <!--Pending invitations-->
   <string name="accept">Pranoje</string>
   <string name="decline">Hidhe tej</string>
   <string name="block">Bllokoje</string>
+  <string name="decline_invitation">Hidhe poshtë ftesën</string>
+  <string name="accept_invitation">Pranoje ftesën</string>
+  <string name="accept_invitation_body">U mor ftesë nga %s.</string>
+  <string name="new_invitation_request_title">Ftesë e re</string>
   <string name="invitation_message">Keni %1$d kërkesa kontakti</string>
+  <string name="no_invitations">S’ka ftesa për shfaqje.</string>
+  <string name="invitation_received_message">U mor ftesë nga %s.\nTë pranohet, apo të hidhet poshtë ftesa?</string>
+  <string name="outgoing_contact_invitation_message">Ky kontakt s\’gjendet në listën e kontakteve tuaja.\nDërgoni një kërkesë për t’u lidhur.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">S’ka kontakte të bllokuar</string>
   <!--Smartlist-->
@@ -265,6 +303,7 @@
   <string name="tv_contact_row_header">Kontakte</string>
   <string name="gallery_error_title">S\’u gjet aplikacion galerie</string>
   <string name="gallery_error_message">Në këtë pajisje s\’u gjet aplikacion për të hapur Galerinë</string>
+  <string name="generic_error">Ndodhi një gabim i panjohur.</string>
   <!--File Transfer-->
   <string name="invalid_file">Kartelë e pavlefshme</string>
   <string name="not_able_to_write_file">S\’arrihet të shkruhet kartelë</string>
@@ -284,6 +323,7 @@
   <string name="file_saved_in">Kartela u ruajt te %s</string>
   <string name="file_saved_successfully">Kartela u ruajt me sukses</string>
   <string name="file_download">Shkarkoje</string>
+  <string name="no_space_left_on_device">Te pajisja s’ka hapësirë depozitimi të lirë. </string>
   <string name="title_media_viewer">Parës mediash</string>
   <string name="menu_file_open">Hap kartelë</string>
   <string name="menu_file_download">Shkarkoje kartelën</string>
@@ -318,15 +358,16 @@
   <string name="tv_send_video">Dërgoni Media</string>
   <string name="tv_action_more">Më tepër</string>
   <string name="conversation_input_speech_hint">Thoni diçka…</string>
-  <string name="audio_permission_denied">Ju lutemi, që të përdoren veçori audio të Jami-t, akordoni leje mbi mikrofonin.</string>
-  <string name="camera_permission_denied">Ju lutemi, që të përdoren veçori video të Jami-t, akordoni leje mbi kamerën.</string>
+  <string name="audio_permission_denied">Leja për mikrofonin është e çaktivizuar. Që të mund të përdorni këtë veçori, aktivizojeni te rregullimet e pajisjes.</string>
+  <string name="camera_permission_denied">Leja mbi kamerën është e çaktivizuar. Që të mund të përdorni këtë veçori, aktivizojeni te rregullimet e pajisjes.</string>
   <string name="speech_recogniton_unavailable">S’është e përdorshme njohja e të  folurit.</string>
   <string name="audio_permission_rationale_title">Lypset leje audio</string>
-  <string name="camera_permission_rationale_title">Lypset leje video</string>
+  <string name="camera_permission_rationale_title">Lypset leje kamere</string>
   <string name="audio_permission_rationale_message">Që të përdorë veçori shndërrimi të folure në tekst dhe incizimi audio, Jami lyp leje mbi mikrofonin. Do të kërkohet në hapin pasues.</string>
   <string name="camera_permission_rationale_message">Që të përdorë veçori regjistrimi videoje dhe për të bërë një thirrje me video, Jami lyp leje mbi kamerën. Do të kërkohet në hapin pasues.</string>
   <string name="unable_to_start_recorder">S’arrihet të niset incizim audio.</string>
   <string name="error_sharing_file">Ndodhi një gabim teksa ndahej kartela me të tjerë.</string>
+  <string name="error_opening_file">Ndodhi një gabim teksa hapej kartela.</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">E rekomanduar</string>
   <string name="wizard_status_optional">Opsionale</string>
@@ -344,6 +385,7 @@
   <string name="wizard_profile_button">Ruaje Profilin</string>
   <string name="wizard_profile_skip">Anashakalojeni dhe bëjeni këtë më vonë</string>
   <string name="fab_path_choose">Zgjidhni kartelë tjetër</string>
+  <string name="chat_extensions">Zgjerime fjalosjeje</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Ndajeni me të tjerë</string>
   <string name="bottomSheet_extensions_btn">Zgjerime</string>
@@ -354,10 +396,13 @@
   <string name="bottomSheet_mute_microphone_btn">Mikrofon</string>
   <string name="bottomSheet_sound_output_btn">Tinguj</string>
   <string name="bottomSheet_raiseHand_btn">Ngrini dorën</string>
+  <string name="open_account_extension_settings">Hap Rregullime Zgjerimesh Llogarish</string>
+  <string name="open_general_extension_settings">Hap Rregullime të Përgjithshme Zgjerimesh</string>
   <string name="uninstall">Çinstaloje</string>
   <string name="reset">Riktheji te parazgjedhjet</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">Ripohoje</string>
+  <string name="rename_error">s’mund të jetë e zbrazët.</string>
   <string name="swarm_description">Shtoni përshkrim</string>
   <string name="tab_members">Anëtarë</string>
   <string name="tab_files">Kartela</string>
@@ -375,6 +420,8 @@
   <string name="error_open_no_app_found">S’u gjet aplikacion për trajtim të kësaj kartele: %1$s</string>
   <string name="swarm_detail_no_document">Ende s’keni dokumente.</string>
   <string name="group_admin">Përgjegjës</string>
+  <string name="share_contact_intent_title">Shtoje këtë kontakt në Jami!</string>
+  <string name="share_contact_intent_body">Mund ta shtoni këtë kontakt “%1$s” në platformën e shpërndarë Jami: %2$s</string>
   <!--JamiId-->
   <string name="jami_id_copy">Kopjo JamiId</string>
   <string name="jami_id_share">Ndajeni JamiId-në me të tjerë</string>
@@ -387,6 +434,15 @@
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Mirë se vini te Jami</string>
   <string name="welcome_jami_description">Jepuani të tjerëve identifikuesin tuaj Jami, që të lidhen më lehtësisht me ju!</string>
+  <!--Conversation details-->
+  <string name="details">Hollësi</string>
+  <string name="secure_p2p_connection">Lidhje tek-për-tek e siguruar</string>
+  <string name="swarm_type">Lloj bisede</string>
+  <string name="Private">Privat</string>
+  <string name="swarm_id">ID zgjoi</string>
+  <string name="show_qr_code">Shfaq kod QR</string>
+  <string name="show_certificate">Shfaq dëshmi</string>
+  <string name="mute_conversation">Heshtoje Bisedëb</string>
   <!--Donation-->
   <string name="donation_card_description">Nëse ju shijon të përdorni Jami-n dhe besoni në misionin tonë, a do të bënit një dhurim?</string>
   <string name="donation_card_not_now">Jo tani</string>

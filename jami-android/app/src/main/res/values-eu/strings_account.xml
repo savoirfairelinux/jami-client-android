@@ -149,9 +149,7 @@
   <string name="account_sip_cannot_be_registered_message">Kontuaren sorrera prozesuarekin jarraitu dezakezu edo zure informazioa editatu hemen.</string>
   <string name="account_no_network_title">Sare errorea</string>
   <string name="account_device_added_title">Kontuaren gailua gehituta</string>
-  <string name="account_device_added_message">Zure Jami kontua sortu duzu gailu honetan.</string>
   <string name="account_device_updated_title">Kontuaren gailua eguneratu da</string>
-  <string name="account_device_updated_message">Zure kontuak eguneratu dituzu.</string>
   <string name="account_sip_register_anyway">Erregistratu hala ere</string>
   <!--TV-->
   <string name="account_tv_settings_header">Kontuaren ezarpenak</string>

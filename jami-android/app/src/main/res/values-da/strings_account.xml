@@ -149,9 +149,7 @@
   <string name="account_sip_cannot_be_registered_message">Du kan fortsætte med konto-oprettelsen eller redigere informationerne her. Du kan under alle omstændigheder lave ændringer senere under konti-indstillingerne.</string>
   <string name="account_no_network_title">Netværksfejl</string>
   <string name="account_device_added_title">Enheds-konto tilføjet</string>
-  <string name="account_device_added_message">Du har nu konfigureret din Jami-konto på denne enhed.</string>
   <string name="account_device_updated_title">Enheds-konto opdateret</string>
-  <string name="account_device_updated_message">Du har opdateret din Jami-konto.</string>
   <string name="account_sip_register_anyway">Registrer alligevel</string>
   <!--TV-->
   <string name="account_tv_settings_header">Kontoindstillinger</string>
@@ -180,6 +178,7 @@
   <string name="help_credentials_enter">Indtast din organisations legitimationsoplysninger</string>
   <string name="help_connect_password_enter">Indtast dit organisations adgangskode</string>
   <string name="account_connect_prompt_username">Brugernavn</string>
+  <string name="account_enter_username">Indtast brugernavn</string>
   <!--Name registration-->
   <string name="error_username_empty">Indtast et brugernavn</string>
   <string name="no_registered_name_for_account">Intet registreret navn</string>

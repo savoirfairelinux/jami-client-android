@@ -10,16 +10,11 @@
   <string name="pref_mobileData_summary">Leisti Jami 3G/LTE tinkluose, papildomai prie belaidžio tinklo (Wi-Fi)</string>
   <string name="pref_pushNotifications_title">\"Push\" pranešimai</string>
   <string name="pref_pushNotifications_summary">Naudoti Google serverius, kad būtų leista fone gauti skambučius/žinutes</string>
-  <string name="pref_unifiedPush_summary">Naudokite \"UnifiedPush\" paslaugą, kad galėtumėte priimti skambučius / pranešimus foną</string>
   <string name="pref_video_advanced_title">Išplėstiniai vaizdo nustatymai</string>
   <string name="pref_video_advanced_summary">Keisti vaizdo pralaidumą, raišką, o taip pat eksperimentines ypatybes</string>
   <string name="pref_hd_summary">Įjungti aukštos raiškos (HD) vaizdo siuntimą</string>
   <string name="pref_hwEncode_title">Įjungti paspartintą kodavimą</string>
   <string name="pref_hwEncode_summary">Eksperimentinė ypatybė</string>
-  <string name="pref_videoBitrate_title">Video bitų dažnis</string>
-  <string name="pref_videoBitrate_summary">Pasirinkite numatomą išvykstančio vaizdo bitų greitį (KB/s)</string>
-  <string name="pref_videoResolution_title">Video ryšys</string>
-  <string name="pref_videoResolution_summary">Pasirinkite numatomą išvykstančią vaizdo išryškį</string>
   <string name="pref_systemContacts_title">Naudoti sistemos adresatus</string>
   <string name="pref_systemContacts_summary">Naudoti sistemos adresatus, kad būtų rodoma skambinančio asmens informacija.</string>
   <string name="pref_systemDialer_title">Inicijuoti sistemos skambučius, naudojant Jami</string>
@@ -27,30 +22,8 @@
   <string name="pref_startOnBoot_title">Paleisti Jami paleisties metu</string>
   <string name="pref_startOnBoot_summary">Sistemos paleidimo metu, paleisti Jami fone.</string>
   <string name="pref_clearHistory_title">Išvalyti istoriją</string>
-  <string name="pref_notification_title">pranešimų matomumas</string>
-  <string name="pref_notification_summary">Įdėkite pranešimų apie programą matomumą užrakintos ekrane.</string>
-  <string name="pref_blackList_title">Blokų sąrašas</string>
-  <string name="pref_blackList_summary">Pažiūrėk į savo blokų sąrašą.</string>
   <string name="pref_delete_account_title">Ištrinti paskyrą</string>
-  <string name="pref_delete_account_summary">Ištrinkite paskyrą iš šio įrenginio</string>
-  <string name="pref_persistNotification_title">Paleisti fone</string>
-  <string name="pref_persistNotification_summary">Leisti veikti fone, kad būtų priimami skambučiai ir žinutės.</string>
-  <string name="pref_newGroup_title">Įjungti grupinį pokalbį</string>
-  <string name="pref_newGroup_summary">Įgalinkite kurti grupes Džimije.</string>
-  <string name="pref_logs_title">Diagnostiko įrašai</string>
   <string name="pref_logs_summary">Atverti diagnostikos žurnalo nustatymus</string>
-  <string name="pref_logs_start">Pradėkite užrašyti</string>
-  <string name="pref_logs_stop">Nustokite lazdyti</string>
-  <string name="pref_typing_title">Įgalinkite taikant rodiklius</string>
-  <string name="pref_typing_summary">Siųskite ir gaukite įrašo rodiklius, rodančius, kad įrašo pranešimą.</string>
-  <string name="pref_block_record_title">Užblokuoti ekrano nuotraukas ir įrašymas</string>
-  <string name="pref_block_record_summary">Užblokuokite ekraną ar įrašykite vaizdo įrašą.</string>
-  <string name="pref_link_preview_title">Parodykite nuorodos peržiūrą pokalbiuose</string>
-  <string name="pref_link_preview_summary">Išankstinė apžiūra reikalauja atsisiųsti turinį iš trečiųjų šalių serverių.</string>
   <!--Notifications Visibility-->
-  <string name="notification_public">Visuomenė \n(iššvietimo pranešimai ir jų turinys užrakintos ekrane) \n</string>
-  <string name="notification_private">Privati pranešimai rodomi, tačiau jų turinys paslėptas užrakintos ekrane)</string>
-  <string name="notification_secret">Paslapti \n(nešinkti pranešimų užrakintos ekrane)</string>
   <!--Extension-->
-  <string name="extension_force_install">Įstatymas</string>
 </resources>

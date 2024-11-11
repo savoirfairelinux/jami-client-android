@@ -2,11 +2,9 @@
 <resources>
   <!--About-->
   <string name="section_license">Лицензия</string>
-  <string name="sponsor_section">Jami - бу ирекле программа</string>
   <string name="copyright_section">Авторлык хокуклары</string>
   <string name="contribute_section">Өлешен кертү</string>
   <string name="version_section">Версия</string>
-  <string name="no_browser_app_installed">Веб-браузерда бернинди дә кушымта табылмады, бу битне карарга берсен урнаштыру</string>
   <string name="website_chooser_title">Сайтны...</string>
   <string name="license">Бу программа бернинди гарантиясез \"кайчан булса\" бирелә.</string>
   <string name="description">Jami - үз кулланучыларының ирекләрен һәм шәхси тормышын хөрмәт итүче универсаль коммуникация өчен ирекле программа.</string>
@@ -19,7 +17,6 @@
   <!--RingActivity-->
   <string name="error_no_network">Авылыбыз юк</string>
   <string name="error_account_offline">Хисапны кулга алу тыела</string>
-  <string name="error_mobile_network_available_but_disabled">Сөйләмнәр экраннарында күчермә челтәренә керү мөмкинлеге бирегез.</string>
   <!--AB menus-->
   <string name="ab_action_chat">СМСлар җибәрү</string>
   <!--Sections-->
@@ -33,7 +30,6 @@
   <string name="menu_item_about">Җәми турында</string>
   <string name="video_setting_title">Видеолар көйләү</string>
   <!--Dialing Fragment-->
-  <string name="dial_number">Номерны сайла</string>
   <!--History Fragment-->
   <!--Home Fragment-->
   <!--ContactList Fragment-->
@@ -64,6 +60,7 @@
   <string name="ab_action_video_call">Видеокүршетүне башлау</string>
   <!--Text messages-->
   <string name="message_failed">Җиңелгән</string>
+  <string name="time_just_now">Әле генә</string>
   <string name="send_file">Файлларны җибәрү</string>
   <string name="conversation_share_location">Биредә урнашу</string>
   <string name="in_reply_to">Бу сорауларга җавап итеп:</string>
@@ -79,10 +76,12 @@
   <!--Conversation-->
   <string name="conversation_details">Сөйләшүнең җентеклелекләре</string>
   <string name="contact_details">Контакт мәгълүматлары</string>
+  <string name="leave_conversation">Сөйләшүне калдырыгыз</string>
   <string name="conversation_action_history_clear">Тарих ачык</string>
   <string name="conversation_action_block_this">Блок белән элемтә</string>
   <string name="conversation_action_incoming_call">Килүче чакыру</string>
   <string name="conversation_members">Депутатлар</string>
+  <string name="conversation_type_private">Шәхси</string>
   <string name="today">Бүген</string>
   <string name="yesterday">Кичә</string>
   <!--Contacts-->
@@ -93,11 +92,13 @@
   <string name="wizard_skip">Карап чык</string>
   <string name="hist_contact_added">Контактлар өстәлгән</string>
   <string name="hist_invitation_received">Чакыру кабул ителгән</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">Профиль</string>
   <string name="profile_message_warning">Профильгез сезнең контактларыгыз белән генә уртаклаша</string>
+  <string name="take_a_photo">Фотога төшерегез</string>
   <string name="profile_name_hint">Исемегезне кертегез</string>
   <string name="identity">Идентификация</string>
+  <string name="identifier">Идентификатор</string>
   <string name="account">Хисап</string>
   <string name="link_new_device">Яңа җайланманы тоташтыру</string>
   <string name="devices">Бәйләнешле җайланмалар</string>
@@ -146,7 +147,7 @@
   <string name="bottomSheet_raiseHand_btn">Кулыңны күтәр!</string>
   <string name="uninstall">Кушымтаны урнаштыру</string>
   <string name="reset">Кайта кую</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">Ышанычлылык</string>
   <string name="tab_members">Депутатлар</string>
   <string name="tab_files">Файллар</string>
@@ -159,6 +160,10 @@
   <string name="jami_id_choose_username">Кулланучы исемен сайлагыз</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Җәмигә рәхим итегез.</string>
+  <!--Conversation details-->
+  <string name="details">Мәгълүматлар</string>
+  <string name="Private">Шәхси</string>
   <!--Donation-->
+  <string name="donation_card_not_now">Хәзер түгел</string>
   <!--Extension-->
 </resources>

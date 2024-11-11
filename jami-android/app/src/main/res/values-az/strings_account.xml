@@ -149,9 +149,7 @@
   <string name="account_sip_cannot_be_registered_message">حساب یاراتما پروسئسینه داوام ائدیرسن و یا معلوماتینی بورادا یئنیله ییرسن.</string>
   <string name="account_no_network_title">شبکه خطای</string>
   <string name="account_device_added_title">حساب آلتی آرتیر</string>
-  <string name="account_device_added_message">بو آلینادا جمی حسابینی اوغورلا قوروبسونوز.</string>
   <string name="account_device_updated_title">حساب آلتی یئنی دن</string>
-  <string name="account_device_updated_message">جامی حسابینی اوغورلو یئنیله دی.</string>
   <string name="account_sip_register_anyway">هر حالدا ثبت اولون</string>
   <!--TV-->
   <string name="account_tv_settings_header">حساب لارین قورولوشو</string>

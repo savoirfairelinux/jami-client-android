@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--Strings for xml content description of images-->
+  <string name="contact_quick_call_description">Pikapuhelu</string>
+  <string name="contact_picture_description">Henkilön kuva</string>
+  <string name="dial_numeric_pad">Numerot</string>
+  <string name="video_extensions">Videolaajennukset</string>
+  <string name="control_replay">Uudelleen</string>
+  <string name="control_pause">Pysäytä</string>
+  <string name="searchbar_navigation_account">Valitse tili</string>
+  <string name="add_conversation_member">Lisää keskusteluun jäsen</string>
+  <string name="qrcode_to_scan">Lue QR-koodi</string>
+</resources>

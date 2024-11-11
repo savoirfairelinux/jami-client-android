@@ -32,9 +32,6 @@
   <string name="pref_blackList_title">Blokklista</string>
   <string name="pref_blackList_summary">Sjå på blokk-listen din.</string>
   <string name="pref_delete_account_title">Ta bort kontoen</string>
-  <string name="pref_delete_account_summary">Slette kontoen din frå dette auke</string>
-  <string name="pref_persistNotification_title">Løp i bakgrunnen</string>
-  <string name="pref_persistNotification_summary">Lat deg rulle i bakgrunnen for å motta samtal og meldingar.</string>
   <string name="pref_newGroup_title">Legg til greiningar i gruppe</string>
   <string name="pref_newGroup_summary">Legg til rette for å oppretta grupper i Jami.</string>
   <string name="pref_logs_title">Diagnose loggar</string>
@@ -48,9 +45,5 @@
   <string name="pref_link_preview_title">Visa linkpreviews i samtal</string>
   <string name="pref_link_preview_summary">Forhandsvisningar krev å laste ned innhald frå tredjepartsserver.</string>
   <!--Notifications Visibility-->
-  <string name="notification_public">Allmennare \n(skjer meldingar og innhaldet på låsskjerma) \n</string>
-  <string name="notification_private">Privat \n(skjelver meldingar men skjul innhaldet på låsskjerma) \n</string>
-  <string name="notification_secret">Geheim \n(skjelver ikkje meldingar på låsskjerma)</string>
   <!--Extension-->
-  <string name="extension_force_install">tvinga installasjon</string>
 </resources>

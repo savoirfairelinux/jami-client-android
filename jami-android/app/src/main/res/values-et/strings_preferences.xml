@@ -32,9 +32,6 @@
   <string name="pref_blackList_title">Blokeeritud osapoolte nimekiri</string>
   <string name="pref_blackList_summary">Vaata oma blokeeritud osapoolte nimekirja.</string>
   <string name="pref_delete_account_title">Kustuta kasutajakonto</string>
-  <string name="pref_delete_account_summary">Kustuta oma kasutajakonto selle seadmest</string>
-  <string name="pref_persistNotification_title">Luba töötamine taustal</string>
-  <string name="pref_persistNotification_summary">Et saaksid kõnesid ja sõnumeid vastu võta, luba rakendusel töötada taustal.</string>
   <string name="pref_newGroup_title">Luba rühmavestlused</string>
   <string name="pref_newGroup_summary">Võimalda Jami rakenduses luua vestlusrühmi.</string>
   <string name="pref_logs_title">Diagnostika logid</string>
@@ -48,11 +45,7 @@
   <string name="pref_link_preview_title">Näita vestlustes linkide eelvaateid</string>
   <string name="pref_link_preview_summary">Eelvaadete näitamine eeldab sisu laadimist kolmandate osapoolte serveritest.</string>
   <!--Notifications Visibility-->
-  <string name="notification_public">Avalik\n(näita teavitusi ja nende sisu nutiseadme lukustusvaates)\n</string>
-  <string name="notification_private">Privaatne \n(näita teavitusi, aga peida nende sisu nutiseadme lukustusvaates) \n</string>
-  <string name="notification_secret">Salajane\n(ära näita nutiseadme lukustusvaates ei teavitusi ega nende sisu)</string>
   <!--Extension-->
   <string name="pref_extensions_title">Lisamoodulid</string>
   <string name="extension_invalid_signature">Plugina <b>%1$s</b> allkiri on vigane</string>
-  <string name="extension_force_install">sunnni\npaigaldamine</string>
 </resources>

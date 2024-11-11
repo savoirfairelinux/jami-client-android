@@ -32,9 +32,6 @@
   <string name="pref_blackList_title">Списък на блокиране</string>
   <string name="pref_blackList_summary">Проверете списъка с блокове.</string>
   <string name="pref_delete_account_title">Изтриване на акаунта</string>
-  <string name="pref_delete_account_summary">Изтрийте профила си от устройството</string>
-  <string name="pref_persistNotification_title">Фонов режим</string>
-  <string name="pref_persistNotification_summary">Jami работи във фонов режим, за да получава повиквания и съобщения.</string>
   <string name="pref_newGroup_title">Осигуряване на групния чат</string>
   <string name="pref_newGroup_summary">Осигуряване на създаване на групи в Jami.</string>
   <string name="pref_logs_title">Диагностични дневници</string>
@@ -48,9 +45,5 @@
   <string name="pref_link_preview_title">Покажете прегледи на връзките в разговорите</string>
   <string name="pref_link_preview_summary">Превизиите изискват изтегляне на съдържание от сървъри на трети страни.</string>
   <!--Notifications Visibility-->
-  <string name="notification_public">Публични \n(показване на уведомленията и тяхното съдържание на екрана за заключване)\n</string>
-  <string name="notification_private">Приватни \n(показват уведомления, но скриват съдържанието им на екрана за заключване)\n</string>
-  <string name="notification_secret">Тайна \n(не показват уведомления на екрана за заключване)</string>
   <!--Extension-->
-  <string name="extension_force_install">принудително \n инсталиране</string>
 </resources>

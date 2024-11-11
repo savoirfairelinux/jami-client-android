@@ -32,9 +32,6 @@
   <string name="pref_blackList_title">قائمة الحظر</string>
   <string name="pref_blackList_summary">تحقق من قائمة الحظر.</string>
   <string name="pref_delete_account_title">حذف الحساب</string>
-  <string name="pref_delete_account_summary">حذف حسابك من هذا الجهاز</string>
-  <string name="pref_persistNotification_title">التشغيل في الخلفية</string>
-  <string name="pref_persistNotification_summary">السماح بالتشغيل في الخلفية لاستقبال المكالمات والرسائل.</string>
   <string name="pref_newGroup_title">تمكين الدردشة الجماعية</string>
   <string name="pref_newGroup_summary">تمكين إنشاء مجموعات في جامي.</string>
   <string name="pref_logs_title">سجلات التشخيص</string>
@@ -48,9 +45,5 @@
   <string name="pref_link_preview_title">أظهر مشاهد المراسلة في المحادثات</string>
   <string name="pref_link_preview_summary">تطلب المشاهدة المسبقة تنزيل المحتوى من خوادم طرف ثالث.</string>
   <!--Notifications Visibility-->
-  <string name="notification_public">الإخطارات العامة و محتوىها على شاشة القفل</string>
-  <string name="notification_private">\n(تظهر إشعارات خاصة ولكن إخفاء محتوياتها على شاشة القفل) \n</string>
-  <string name="notification_secret">السر \n(لا تظهر الإخطارات على شاشة القفل)</string>
   <!--Extension-->
-  <string name="extension_force_install">سريع \n تثبيت</string>
 </resources>

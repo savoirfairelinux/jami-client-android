@@ -31,6 +31,7 @@
   <string name="sip_account">SIP 账户</string>
   <string name="account_no_network_title">网络错误</string>
   <!--TV-->
+  <string name="account_enter_username">输入用户名</string>
   <!--Name registration-->
   <!--Create account-->
   <string name="account_creation_home">欢迎使用 Jami</string>

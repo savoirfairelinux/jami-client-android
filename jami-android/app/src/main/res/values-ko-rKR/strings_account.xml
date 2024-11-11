@@ -149,9 +149,7 @@
   <string name="account_sip_cannot_be_registered_message">계정 생성 과정 을 계속 하거나 이 부분 에서 정보 를 편집 할 수 있습니다. 계정 설정 에서 나중에 에디션 을 할 수 있습니다.</string>
   <string name="account_no_network_title">네트워크 오류</string>
   <string name="account_device_added_title">계정 장치 추가</string>
-  <string name="account_device_added_message">이 기기에서 자미 계정을 성공적으로 설정했습니다.</string>
   <string name="account_device_updated_title">계정 장치 업데이트</string>
-  <string name="account_device_updated_message">자미 계정을 성공적으로 업데이트했습니다.</string>
   <string name="account_sip_register_anyway">어쨌든 등록해</string>
   <!--TV-->
   <string name="account_tv_settings_header">계정 설정</string>

@@ -15,7 +15,9 @@
   <!--TransferDFragment-->
   <!--Notifications-->
   <!--Call Fragment-->
+  <string name="new_group">නව සමූහය තනන්න</string>
   <!--Text messages-->
+  <string name="time_just_now">මේ දැන්</string>
   <string name="send_file">ගොනුව යවන්න</string>
   <!--MediaPreferenceFragment-->
   <!--Ringtone activity-->
@@ -25,7 +27,7 @@
   <!--Settings-->
   <!--Conversation-->
   <!--Contacts-->
-  <!--Account Summary-->
+  <!--Account summary-->
   <!--Share fragment-->
   <!--Pending invitations-->
   <!--Blacklist-->
@@ -37,10 +39,12 @@
   <!--Wizard-->
   <!--Bottom sheet-->
   <string name="bottomSheet_hangup_btn">ඇමතුම අවසන් කරන්න</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="tab_settings">සැකසුම්</string>
   <!--JamiId-->
   <!--WelcomeJami-->
+  <!--Conversation details-->
   <!--Donation-->
+  <string name="donation_card_not_now">දැන් නොවේ</string>
   <!--Extension-->
 </resources>

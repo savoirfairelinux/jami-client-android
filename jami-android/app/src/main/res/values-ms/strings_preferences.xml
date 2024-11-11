@@ -32,9 +32,6 @@
   <string name="pref_blackList_title">ബ്ലോക്ക് ലിസ്റ്റ്</string>
   <string name="pref_blackList_summary">നിങ്ങളുടെ ബ്ലോക്ക് ലിസ്റ്റ് പരിശോധിക്കുക.</string>
   <string name="pref_delete_account_title">അക്കൌണ്ട് ഇല്ലാതാക്കുക</string>
-  <string name="pref_delete_account_summary">ഈ ഉപകരണത്തിൽ നിന്നും നിങ്ങളുടെ അക്കൌണ്ട് ഇല്ലാതാക്കുക</string>
-  <string name="pref_persistNotification_title">പശ്ചാത്തലത്തിൽ ഓടിക്കുക</string>
-  <string name="pref_persistNotification_summary">കോൾ, സന്ദേശങ്ങള് സ്വീകരിക്കാന് പശ്ചാത്തലത്തില് ഓടാന് അനുവദിക്കുക.</string>
   <string name="pref_newGroup_title">ഗ്രൂപ്പ് ചാറ്റ് പ്രവർത്തനക്ഷമമാക്കുക</string>
   <string name="pref_newGroup_summary">ജാമിയിൽ ഗ്രൂപ്പുകള് സൃഷ്ടിക്കാന് പ്രാപ്തമാക്കുക.</string>
   <string name="pref_logs_title">രോഗനിർണയ രേഖകൾ</string>
@@ -48,9 +45,5 @@
   <string name="pref_link_preview_title">സംഭാഷണങ്ങളിൽ ലിങ്ക് പ്രിവ്യൂ കാണിക്കുക</string>
   <string name="pref_link_preview_summary">മുൻകൂർ കാണലുകൾക്ക് മൂന്നാം കക്ഷി സെർവറുകളിൽ നിന്നും ഉള്ളടക്കം ഡൌൺലോഡ് ചെയ്യണം.</string>
   <!--Notifications Visibility-->
-  <string name="notification_public">പൊതുവായ അറിയിപ്പുകളും അവയുടെ ഉള്ളടക്കവും ലോക്ക് സ്ക്രീനിൽ കാണിക്കുക</string>
-  <string name="notification_private">സ്വകാര്യമായ അറിയിപ്പുകൾ കാണിക്കുക, പക്ഷേ അവയുടെ ഉള്ളടക്കം ലോക്ക് സ്ക്രീനിൽ മറയ്ക്കുക)</string>
-  <string name="notification_secret">രഹസ്യമായത് (ലോക്ക് സ്ക്രീനിൽ അറിയിപ്പുകൾ കാണിക്കരുത്)</string>
   <!--Extension-->
-  <string name="extension_force_install">നിർബന്ധിതമായി ഇൻസ്റ്റാൾ ചെയ്യുക</string>
 </resources>

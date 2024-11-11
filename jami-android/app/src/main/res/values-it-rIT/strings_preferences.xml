@@ -33,9 +33,6 @@
   <string name="pref_blackList_title">Contatti bloccati</string>
   <string name="pref_blackList_summary">Controlla l\'elenco dei contatti bloccati.</string>
   <string name="pref_delete_account_title">Elimina l\'account</string>
-  <string name="pref_delete_account_summary">Elimina il tuo account da questo dispositivo</string>
-  <string name="pref_persistNotification_title">Esegui in background</string>
-  <string name="pref_persistNotification_summary">Consenti l\'esecuzione in background per ricevere chiamate e messaggi.</string>
   <string name="pref_newGroup_title">Abilita i gruppi</string>
   <string name="pref_newGroup_summary">Abilita la creazione di gruppi in Jami.</string>
   <string name="pref_logs_title">Registri di diagnostica</string>
@@ -49,9 +46,6 @@
   <string name="pref_link_preview_title">Mostra le anteprime dei collegamenti</string>
   <string name="pref_link_preview_summary">Le anteprime richiedono di scaricare contenuti da server di terze parti.</string>
   <!--Notifications Visibility-->
-  <string name="notification_public">Pubblico \n(mostra le notifiche e il relativo contenuto nella schermata di blocco)\n</string>
-  <string name="notification_private">Privato \n(mostra le notifiche ma nascondi il loro contenuto nella schermata di blocco)\n</string>
-  <string name="notification_secret">Segreto \n(non mostrare le notifiche nella schermata di blocco)</string>
   <!--Extension-->
   <string name="pref_extensions_title">Estensioni</string>
   <string name="pref_extensions_summary">Attiva le estensioni e imposta i loro parametri</string>
@@ -61,13 +55,11 @@
   <string name="extension_reset_preferences_summary">Estensione ripristinata alle impostazioni predefinite</string>
   <string name="extension_reset_preferences_ask">Si desidera ripristinare le impostazioni generali dell\'estensione?</string>
   <string name="extension_reset_account_preferences_ask">Si desidera ripristinare le impostazioni dell\'estensione dell\'account?</string>
-  <string name="extension_successfully_installed">Estensione <b>%1$s</b> installata con successo</string>
+  <string name="extension_successfully_installed">Estensione <b>%1$s</b> installata con successo.</string>
   <string name="extension_install_failure">Si è verificato un errore durante l\'installazione dell\'estensione: <b>%1$s</b></string>
   <string name="extension_recent_version_exception">È installata una versione più recente di <b>%1$s</b>.</string>
   <string name="extension_same_version_exception">È installata la stessa versione di <b>%1$s</b>.</string>
   <string name="extension_invalid_signature"><b>%1$s</b> ha una firma non valida</string>
-  <string name="extension_invalid_authority">Impossibile verificare l\'autorità per: <b>%1$s</b></string>
   <string name="extension_invalid_format">Formato estensione non valido: <b>%1$s</b></string>
-  <string name="extension_force_install">forza \n installazione</string>
   <string name="extension_path_image_add">Aggiungi nuova immagine</string>
 </resources>
