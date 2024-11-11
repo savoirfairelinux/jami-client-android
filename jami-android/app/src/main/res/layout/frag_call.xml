@@ -213,8 +213,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         android:layout_gravity="center"
                         android:layout_margin="8dp"
                         android:ellipsize="end"
+                        android:maxWidth="105dp"
                         android:scrollHorizontally="false"
-                        android:singleLine="true"
                         android:text="@string/action_call_hangup"
                         android:textAlignment="center"
                         android:textColor="@color/white"
@@ -250,8 +250,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         android:layout_gravity="center"
                         android:layout_margin="8dp"
                         android:ellipsize="end"
+                        android:maxWidth="105dp"
                         android:scrollHorizontally="false"
-                        android:singleLine="true"
                         android:text="@string/action_call_accept_audio"
                         android:textAlignment="center"
                         android:textColor="@color/white"
@@ -286,8 +286,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         android:layout_gravity="center"
                         android:layout_margin="8dp"
                         android:ellipsize="end"
+                        android:maxWidth="105dp"
                         android:scrollHorizontally="false"
-                        android:singleLine="true"
                         android:text="@string/action_call_accept_video"
                         android:textAlignment="center"
                         android:textColor="@color/white"
@@ -361,7 +361,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:id="@+id/constraint_bs_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/background_call_menu">
+                android:background="@drawable/background_call_menu"
+                tools:visibility="invisible">
                 <!-- handle bar -->
                 <View
                     android:id="@+id/call_drawer_handle"
