@@ -18,6 +18,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "54762df6_38d112d0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-11-11T14:24:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61861892_c5b927cb",
+      "revId": "06b24d0860e721fb857227a2f361bff2049f8167",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3fed37a1_c0505724",
@@ -35,6 +53,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "40d3976c_7141dbac",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ConnectionMonitor.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-11-11T14:24:59Z",
+      "side": 1,
+      "message": "During a philosophical reflection, I wondered why we should append the name of the parent class to a child class. \nIf we have a class Animal, the child classes would be Cat or Dog, not CatAnimal or DogAnimal.\nIn most cases it\u0027s not needed and can be redundant, especially in this case since the class already is in the fragment package.\nAnd I managed to write a ChatGPT prompt whose answer would confirm my assumptions!\n\nHowever, to respect the existing naming scheme I made the change to ConnectionMonitorFragment",
+      "parentUuid": "3fed37a1_c0505724",
+      "revId": "06b24d0860e721fb857227a2f361bff2049f8167",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "149ad6fc_839bcdca",
@@ -48,6 +84,30 @@
       "writtenOn": "2024-11-07T19:54:40Z",
       "side": 1,
       "message": "Google recommendation is to now use `constraintlayout` instead of relative layout",
+      "range": {
+        "startLine": 792,
+        "startChar": 0,
+        "endLine": 792,
+        "endChar": 2
+      },
+      "revId": "06b24d0860e721fb857227a2f361bff2049f8167",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "14b4afe9_1c326b60",
+        "filename": "jami-android/app/src/main/res/layout/frag_settings.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 792,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-11-11T14:24:59Z",
+      "side": 1,
+      "message": "* This is simply following the same pattern as other settings buttons, and refactoring this file would be out of the scope of this commit.\n* ConstraintLayout is much heavier and more complex than RelativeLayout.\n For simple cases, ConstraintLayout is slower than RelativeLayout: https://stackoverflow.com/a/38671211/641095 . It\u0027s not clear that moving to ConstraintLayout would bring significant performance advantages.",
+      "parentUuid": "149ad6fc_839bcdca",
       "range": {
         "startLine": 792,
         "startChar": 0,
@@ -81,6 +141,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2bd41285_10246e0b",
+        "filename": "jami-android/app/src/main/res/layout/frag_settings.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 808,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-11-11T14:24:59Z",
+      "side": 1,
+      "message": "see above",
+      "parentUuid": "90361203_51f28acc",
+      "range": {
+        "startLine": 808,
+        "startChar": 0,
+        "endLine": 808,
+        "endChar": 2
+      },
+      "revId": "06b24d0860e721fb857227a2f361bff2049f8167",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9c96c3b1_50795932",
@@ -94,6 +178,30 @@
       "writtenOn": "2024-11-07T19:54:40Z",
       "side": 1,
       "message": "Google recommendation is to now use `constraintlayout` instead of relative layout",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 2
+      },
+      "revId": "06b24d0860e721fb857227a2f361bff2049f8167",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9754efcb_e53ca93d",
+        "filename": "jami-android/app/src/main/res/layout/item_device_connection.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-11-11T14:24:59Z",
+      "side": 1,
+      "message": "see above",
+      "parentUuid": "9c96c3b1_50795932",
       "range": {
         "startLine": 2,
         "startChar": 0,
@@ -127,6 +235,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "131a03fe_00403fc2",
+        "filename": "jami-android/app/src/main/res/layout/item_device_connection.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-11-11T14:24:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87e0ff36_2d37fab7",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 2
+      },
+      "revId": "06b24d0860e721fb857227a2f361bff2049f8167",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a9643c8a_2654fdc1",
@@ -140,6 +272,30 @@
       "writtenOn": "2024-11-07T19:54:40Z",
       "side": 1,
       "message": "Google recommendation is to now use `constraintlayout` instead of relative layout",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 2
+      },
+      "revId": "06b24d0860e721fb857227a2f361bff2049f8167",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c213a4fe_d33bba1a",
+        "filename": "jami-android/app/src/main/res/layout/item_list_contact.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-11-11T14:24:59Z",
+      "side": 1,
+      "message": "see above",
+      "parentUuid": "a9643c8a_2654fdc1",
       "range": {
         "startLine": 18,
         "startChar": 0,
@@ -173,6 +329,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "29e11460_a83061b4",
+        "filename": "jami-android/app/src/main/res/layout/item_list_contact.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-11-11T14:24:59Z",
+      "side": 1,
+      "message": "see above",
+      "parentUuid": "0e17236b_76b0c0f5",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 2
+      },
+      "revId": "06b24d0860e721fb857227a2f361bff2049f8167",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c9644c74_0e1e956c",
@@ -196,6 +376,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "370981e6_8544451c",
+        "filename": "jami-android/app/src/main/res/values/strings_preferences.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-11-11T14:24:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9644c74_0e1e956c",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 2
+      },
+      "revId": "06b24d0860e721fb857227a2f361bff2049f8167",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9dee2a85_e567b13f",
@@ -209,6 +413,30 @@
       "writtenOn": "2024-11-07T19:54:40Z",
       "side": 1,
       "message": "private?",
+      "range": {
+        "startLine": 1686,
+        "startChar": 0,
+        "endLine": 1686,
+        "endChar": 2
+      },
+      "revId": "06b24d0860e721fb857227a2f361bff2049f8167",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c5ae3e0_ab9355f8",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 1686,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-11-11T14:24:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9dee2a85_e567b13f",
       "range": {
         "startLine": 1686,
         "startChar": 0,
