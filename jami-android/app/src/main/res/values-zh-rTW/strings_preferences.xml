@@ -32,9 +32,6 @@
   <string name="pref_blackList_title">封鎖清單</string>
   <string name="pref_blackList_summary">檢查您的封鎖清單。</string>
   <string name="pref_delete_account_title">刪除帳號</string>
-  <string name="pref_delete_account_summary">從此裝置刪除您的帳號</string>
-  <string name="pref_persistNotification_title">在背景執行</string>
-  <string name="pref_persistNotification_summary">允許在背景中執行以接收通話與訊息。</string>
   <string name="pref_newGroup_title">啟用群組聊天</string>
   <string name="pref_newGroup_summary">啟用在 Jami 中建立群組</string>
   <string name="pref_logs_title">診斷紀錄檔</string>
@@ -48,11 +45,7 @@
   <string name="pref_link_preview_title">在對話中顯示連結預覽</string>
   <string name="pref_link_preview_summary">預覽需要從第三方伺服器下載內容。</string>
   <!--Notifications Visibility-->
-  <string name="notification_public">公開 \n（在鎖定畫面上顯示通知及其內容）\n</string>
-  <string name="notification_private">私人 \n（在鎖定畫面上顯示通知但隱藏其內容）\n</string>
-  <string name="notification_secret">祕密 \n（不要在鎖定畫面上顯示通知）\n</string>
   <!--Extension-->
   <string name="pref_extensions_title">扩展</string>
   <string name="extension_invalid_signature"><b>%1$s</b>具有无效的签名</string>
-  <string name="extension_force_install">強制 \n 安裝</string>
 </resources>

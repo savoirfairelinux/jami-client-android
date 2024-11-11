@@ -4,5 +4,4 @@
   <!--Extension-->
   <string name="pref_extensions_title">扩展</string>
   <string name="extension_invalid_signature"><b>%1$s</b>具有无效的签名</string>
-  <string name="extension_force_install">强制 \n 安装</string>
 </resources>

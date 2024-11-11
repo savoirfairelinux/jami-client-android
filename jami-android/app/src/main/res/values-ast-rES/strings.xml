@@ -2,10 +2,11 @@
 <resources>
   <!--About-->
   <string name="section_license">Licencia</string>
-  <string name="sponsor_section">Jami ye un software llibre desenvolvimientu y soportáu por</string>
   <string name="copyright_section">El derechu d\'autor</string>
   <string name="contribute_section">Contribuyir</string>
   <string name="version_section">La versión</string>
+  <string name="website_chooser_title">La vista web usando...</string>
+  <string name="license">El software ye proporcionáu \"como ye\", ensin garantía de nengún tipu.</string>
   <string name="description">Jami ye un software llibre pa la comunicación universal que respeta les llibertaes y la privacidá de los sos usuarios.</string>
   <string name="credits">Créditos</string>
   <string name="pip_title">La Conferencia Jami</string>
@@ -16,7 +17,6 @@
   <!--RingActivity-->
   <string name="error_no_network">Nun hai conectividá de rede</string>
   <string name="error_account_offline">La cuenta nun ta disponible.</string>
-  <string name="error_mobile_network_available_but_disabled">Permítese conceder accesu a la rede celular na pantalla de configuración.</string>
   <!--AB menus-->
   <string name="ab_action_chat">La mensaxería de testu</string>
   <!--Sections-->
@@ -30,7 +30,6 @@
   <string name="menu_item_about">Sobre Jami</string>
   <string name="video_setting_title">La configuración de video</string>
   <!--Dialing Fragment-->
-  <string name="dial_number">Diálogu de un númberu</string>
   <!--History Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
@@ -50,7 +49,6 @@
   <string name="notif_outgoing_call">L\'escursión de salida</string>
   <string name="notif_current_call_title">Llamada continua con %1$s</string>
   <string name="notif_current_call">L\'español en cursu</string>
-  <string name="notif_channel_call_in_progress">El so nome ye \"El Señor\".</string>
   <string name="notif_channel_calls">Les llamadas</string>
   <string name="notif_channel_missed_calls">El so nome ye \"Call\".</string>
   <string name="notif_channel_incoming_calls">Les llamadas entrantes</string>
@@ -61,7 +59,6 @@
   <string name="notif_channel_background_service">Serviciu de fondo</string>
   <string name="notif_channel_background_service_descr">Permite recibir llamadas y mensaxes en cualquier momentu.</string>
   <string name="notif_group_calls">Les llamadas</string>
-  <string name="notif_background_service">Jami ye actualmente corriendo en fondu</string>
   <string name="notif_mark_as_read">Marca como se lee</string>
   <string name="notif_dismiss">Disposición</string>
   <string name="notif_reply">Respuesta</string>
@@ -87,7 +84,6 @@
   <string name="ongoing_call">L\'español en cursu</string>
   <string name="hist_in_call">L\' llamada entrante del %1$s</string>
   <string name="hist_out_call">L\' llamada saliente del %1$s</string>
-  <string name="start_error_mic_required">Jami requiere el micrófono pa trabayar.</string>
   <string name="action_call_decline">El declive</string>
   <string name="action_call_mic_mute">Micrófonos silenciosos</string>
   <string name="ab_action_speakerphone">Activu de altavoz</string>
@@ -97,7 +93,6 @@
   <string name="ab_action_video_call">Iniciativa pa la creación d\'una rede de televisión</string>
   <string name="ab_action_change_screen_orientation">Cambiar la orientación de la pantalla</string>
   <string name="share_via">Compartir a través</string>
-  <string name="write_a_message">Escribir un mensaxe</string>
   <string name="scan_qr">Archiváu dende l\' oxetivu</string>
   <string name="qr_code">Codiciu QR</string>
   <string name="ab_action_flipcamera">La cámara de vuelta</string>
@@ -115,10 +110,10 @@
   <string name="conversation_send_audio">Gravar un clip d\'únicu audio</string>
   <string name="conversation_send_video">Grabar vídeos</string>
   <string name="conversation_share_location">La posición compartida</string>
+  <string name="ongoing_group_call">L\'español en cursu</string>
   <string name="in_reply_to">En respuesta a</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Permisión de cámara</string>
-  <string name="permission_dialog_camera_message">Les conversaciones de video requieren el permiso de la cámara pa trabayar.</string>
   <!--Ringtone activity-->
   <string name="ringtone_error_title">Error de cita</string>
   <string name="ringtone_error_format_not_supported">Esta versión nun ye compatible.</string>
@@ -130,7 +125,6 @@
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Escanear el Códice QR de la cuenta que quier añadir.</string>
   <string name="title_activity_qrcode">Compartir la mio cuenta</string>
-  <string name="error_scan_no_camera_permissions">El scanner QR requiere permisos de cámara pa funcionar</string>
   <string name="tab_code">El mio Códigu</string>
   <string name="tab_scan">Códice de escaneamientu</string>
   <!--Settings-->
@@ -142,14 +136,15 @@
   <string name="conversation_details">Los detalles de la conversación</string>
   <string name="contact_details">Detalles de contacto</string>
   <string name="conversation_action_delete_this">La conversación ye borrada.</string>
+  <string name="leave_conversation">La conversación ye una conversación.</string>
   <string name="conversation_action_delete_this_message">Esta acción nun puede ser revocada.</string>
   <string name="conversation_action_history_clear">La hestoria clara</string>
   <string name="conversation_action_history_clear_title">¿Clarar el historial de conversaciones?</string>
   <string name="conversation_action_history_clear_message">Esto definitivamente va despeñar el historial de conversación.</string>
-  <string name="conversation_action_remove_this">La so direición de la páxina web</string>
+  <string name="delete_contact">La so direición de la páxina web</string>
   <string name="conversation_action_remove_this_title">¿Borrear esti contautu?</string>
   <string name="conversation_action_remove_this_message">Esto borrará\'l contautu y definitivamente borrará\'l historial de conversaciones.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s copiáu na taquilla</string>
+  <string name="copied_to_clipboard">%1$s copiáu na taquilla</string>
   <string name="conversation_action_select_peer_number">Seleccione un númberu</string>
   <string name="conversation_action_block_this">Bloquear el contacto</string>
   <string name="conversation_action_unblock_this">Desbloquear el contacto</string>
@@ -173,11 +168,10 @@
   <string name="conversation_preference_color">El color de la conversación</string>
   <string name="conversation_preference_emoji">Emoji de conversación</string>
   <string name="conversation_type_contact">El contautu Jami</string>
-  <string name="conversation_type_private">El so nome ye \"Swarm\"</string>
-  <string name="conversation_type_group">El grupu de grupos</string>
+  <string name="conversation_type_private">Privada</string>
   <string name="conversation_contact_invited">%1$s foi convidáu</string>
   <string name="conversation_contact_added">%1$s xuníu</string>
-  <string name="conversation_contact_left">%1$ ye izquierdu</string>
+  <string name="conversation_contact_left">%1$s ye izquierdu</string>
   <string name="conversation_search_hint">La conversación de busca</string>
   <string name="today">El so nome ye \"El pueblu de Dios\".</string>
   <string name="yesterday">En xineru de 2011</string>
@@ -199,16 +193,16 @@
   <string name="hist_contact_added">Añedióse\'l contacto</string>
   <string name="hist_contact_left">La so direición orixinal ye:</string>
   <string name="hist_invitation_received">La invitación recibida</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">Perfil</string>
-  <string name="profile_name">Nombre de perfil</string>
   <string name="profile_message_warning">El so perfil ye compartidu solamente con los sos contactos.</string>
   <string name="open_the_gallery">Abri la galería.</string>
-  <string name="take_a_photo">Ye una foto.</string>
+  <string name="take_a_photo">Ye una fotografía.</string>
   <string name="profile_name_hint">Entra\'l so nome</string>
   <string name="registered_name">Nombre rexistráu</string>
   <string name="no_registered_name">Nun hai nome rexistráu</string>
   <string name="identity">Identidá</string>
+  <string name="identifier">Identificador</string>
   <string name="account">Cuenta</string>
   <string name="link_new_device">Enlazar un nuevu dispositivu</string>
   <string name="devices">Dispositivos enllazaos</string>
@@ -219,11 +213,12 @@
   <string name="share_your_account_information">Compartir les mies informaciones de contacto</string>
   <string name="share_label">Compartir</string>
   <string name="generic_error_migration">Error de cita</string>
-  <string name="generic_error_migration_message">Un error asocedió mientres la migración</string>
   <string name="title_share_with">Compartir con...</string>
   <!--Pending invitations-->
   <string name="accept">Acceptar</string>
+  <string name="decline">El declive</string>
   <string name="block">Bloqueáu</string>
+  <string name="invitation_message">Hai solicitúes de contautu %1$d</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Nun hai contactos bloqueaos</string>
   <!--Smartlist-->
@@ -316,7 +311,7 @@
   <string name="bottomSheet_raiseHand_btn">Ellí ye la mano.</string>
   <string name="uninstall">Desinstalar</string>
   <string name="reset">Reimpartir</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">Confirmar</string>
   <string name="tab_members">Los miembros</string>
   <string name="tab_files">Archivos</string>
@@ -335,6 +330,9 @@
   <string name="jami_id_choose_username">Escueye un nome d\' usuariu</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Bienveníu a Jami.</string>
+  <!--Conversation details-->
+  <string name="details">Detalles</string>
+  <string name="Private">Privada</string>
   <!--Donation-->
   <!--Extension-->
 </resources>

@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--About-->
+  <!--About dialog-->
+  <!--RingActivity-->
+  <!--AB menus-->
+  <!--Sections-->
+  <string name="menu_item_account">ଆକାଉଣ୍ଟ ପରିଚାଳନା କରନ୍ତୁ</string>
+  <!--Dialing Fragment-->
+  <!--History Fragment-->
+  <!--Home Fragment-->
+  <!--ContactList Fragment-->
+  <!--FileExplorerDFragement-->
+  <!--TransferDFragment-->
+  <!--Notifications-->
+  <!--Call Fragment-->
+  <string name="action_call_mute">ମୌନ</string>
+  <string name="action_call_unmute">ଅନ୍‌ମ୍ୟୁଟ୍‌</string>
+  <string name="ab_action_video_call">ଭିଡିଓ କଲ୍ ଆରମ୍ଭ କରନ୍ତୁ</string>
+  <string name="new_group">ନୂତନ ଗୋଷ୍ଠୀ ସୃଷ୍ଟି କରନ୍ତୁ</string>
+  <!--Text messages-->
+  <!--MediaPreferenceFragment-->
+  <!--Ringtone activity-->
+  <!--Read contacts permission-->
+  <!--Write call log permission-->
+  <!--QRCode Scan-->
+  <!--Settings-->
+  <!--Conversation-->
+  <string name="contact_details">ସଂପର୍କ ବିବରଣୀଗୁଡିକ</string>
+  <string name="leave_conversation">ବାର୍ତ୍ତାଳାପ ତ୍ୟାଗ କରନ୍ତୁ</string>
+  <string name="conversation_action_block_this">ସମ୍ପର୍କ ଅବରୋଧ କରନ୍ତୁ</string>
+  <string name="conversation_action_unblock_this">ସମ୍ପର୍କ ଅନାବରୋଧ କରନ୍ତୁ</string>
+  <!--Contacts-->
+  <string name="hist_contact_blocked">ସମ୍ପର୍କ ଅବରୋଧ</string>
+  <string name="hist_contact_unblocked">ସମ୍ପର୍କ ଅବରୋଧ ହୋ‌ଇଛି</string>
+  <!--Account summary-->
+  <!--Share fragment-->
+  <!--Pending invitations-->
+  <!--Blacklist-->
+  <!--Smartlist-->
+  <string name="search_results">ସନ୍ଧାନ ଫଳାଫଳଗୁଡ଼ିକ</string>
+  <!--File Transfer-->
+  <!--Bottom Navigation-->
+  <!--TV-->
+  <!--Wizard-->
+  <!--Bottom sheet-->
+  <string name="bottomSheet_hangup_btn">କଲ୍ ଶେଷ</string>
+  <!--Swarm Details-->
+  <!--JamiId-->
+  <!--WelcomeJami-->
+  <!--Conversation details-->
+  <string name="details">ସବିଶେଷ</string>
+  <!--Donation-->
+  <string name="donation_card_not_now">ବର୍ତ୍ତମାନ ନୁହେଁ</string>
+  <!--Extension-->
+</resources>

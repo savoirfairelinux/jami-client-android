@@ -32,9 +32,6 @@
   <string name="pref_blackList_title">Բլոկային ցուցակ</string>
   <string name="pref_blackList_summary">Ստուգեք ձեր արգելափակման ցուցակը:</string>
   <string name="pref_delete_account_title">Հաշիվը ջնջել</string>
-  <string name="pref_delete_account_summary">Սեղմեք ձեր հաշիվը այս սարքից</string>
-  <string name="pref_persistNotification_title">Գնալ ֆոնում</string>
-  <string name="pref_persistNotification_summary">Թույլ տվեք հեռախոսազանգեր եւ հաղորդագրություններ ստանալու համար վազել ֆոնում:</string>
   <string name="pref_newGroup_title">Հավաքային զրույցը հնարավորացնել</string>
   <string name="pref_newGroup_summary">Թույլ տվեք ստեղծել խմբեր Ջամիում:</string>
   <string name="pref_logs_title">Դiagնոգոստային օրագրեր</string>
@@ -48,9 +45,5 @@
   <string name="pref_link_preview_title">Կապի նախադասություն ցուցադրեք զրույցներում</string>
   <string name="pref_link_preview_summary">Նախագահական դիտումները պահանջում են բովանդակություն ներբեռնել երրորդ կողմի սերվերներից:</string>
   <!--Notifications Visibility-->
-  <string name="notification_public">Հանրային \n(ցուցադրեք ծանուցումները եւ դրանց բովանդակությունը փակման էկրանում) \n</string>
-  <string name="notification_private">Անձնական \n(ցուցադրեք ծանուցումներ, բայց թաքցրեք դրանց բովանդակությունը փակման էկրանում) \n</string>
-  <string name="notification_secret">Գաղտնի \n(չցուցադրեք ծանուցումներ փակման էկրանում)</string>
   <!--Extension-->
-  <string name="extension_force_install">ուժ \n տեղադրել</string>
 </resources>

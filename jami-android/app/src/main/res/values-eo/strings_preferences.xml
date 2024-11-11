@@ -32,9 +32,6 @@
   <string name="pref_blackList_title">Listo de blokoj</string>
   <string name="pref_blackList_summary">Kontrolu vian blokliston.</string>
   <string name="pref_delete_account_title">Forviŝi konton</string>
-  <string name="pref_delete_account_summary">Forviŝu vian konton de ĉi tiu aparato</string>
-  <string name="pref_persistNotification_title">Faru en fono</string>
-  <string name="pref_persistNotification_summary">Permesu al ĝi kuri en fono por ricevi alvokojn kaj mesaĝojn.</string>
   <string name="pref_newGroup_title">Aktivigu grupĉaton</string>
   <string name="pref_newGroup_summary">Akceli kreadon de grupoj en Jami.</string>
   <string name="pref_logs_title">Diagnostikaj registroj</string>
@@ -48,9 +45,5 @@
   <string name="pref_link_preview_title">Montru antaŭrigardojn de ligiloj en konversacioj</string>
   <string name="pref_link_preview_summary">Antaŭvidoj postulas elŝuti enhavon de triaj serviloj.</string>
   <!--Notifications Visibility-->
-  <string name="notification_public">Publikaj \n(montras sciigojn kaj ilia enhavo sur ŝlosilo ekrano) \n</string>
-  <string name="notification_private">Privata \n(montras sciigojn sed kaŝas ilian enhavon sur ŝlosilo ekrano) \n</string>
-  <string name="notification_secret">Sekreta \n(ne montras sciigojn sur ŝlosilo ekrano)</string>
   <!--Extension-->
-  <string name="extension_force_install">forto \n instali</string>
 </resources>

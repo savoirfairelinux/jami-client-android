@@ -1,6 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
+  <string name="submit_issue_title">Problem übermitteln</string>
+  <string name="submit_issue_action_description"><u>Neues Problem erstellen</u></string>
+  <string name="sponsor_section">Jami ist eine kostenlose Software, die entwickelt und unterstützt wird von</string>
+  <string name="no_browser_app_installed">Keine Webbrowser-App gefunden. Installieren Sie eine, um diese Seite anzuzeigen.</string>
+  <string name="website_chooser_title">Darstellung der Homepage mit...</string>
+  <string name="license">Diese Software wird \"wie sie ist\" ohne Gewährleistung irgendwelcher Art zur Verfügung gestellt. Details finden Sie unter <u>GNU General Public License Version 3 oder später</u></string>
   <!--About dialog-->
   <string name="thank_note">Wir möchten uns bei unseren Mitwirkenden bedanken, deren langjähriger Einsatz diese Software zu dem gemacht hat, was sie ist.</string>
   <string name="developers">Entwickler</string>
@@ -13,14 +19,17 @@
   <!--Sections-->
   <string name="menu_item_extension_list">Erweiterungseinstellungen</string>
   <!--Dialing Fragment-->
+  <string name="dial_number">Nummer wählen</string>
   <!--History Fragment-->
   <!--Home Fragment-->
   <!--ContactList Fragment-->
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
+  <string name="notif_channel_call_in_progress">Anruf läuft</string>
+  <string name="notif_background_service">Jami läuft derzeit im Hintergrund</string>
   <!--Call Fragment-->
-  <string name="start_error_title">Jami kann nicht gestartet werden!</string>
+  <string name="start_error_title">Jami kann nicht gestartet werden</string>
   <string name="action_call_accept">Anruf annehmen</string>
   <string name="action_call_accept_audio">Eingehende Anrufe nur mit Audio annehmen</string>
   <string name="action_call_accept_video">Eingehende Anrufe mit Video annehmen</string>
@@ -30,30 +39,65 @@
   <string name="action_load_extension">Erweiterung laden</string>
   <string name="ab_action_audio_call">Einen Audioanruf beginnen</string>
   <string name="ab_action_video_call">Video-Anruf beginnen</string>
+  <string name="write_a_message">Nachricht schreiben</string>
+  <string name="new_group">Neue Gruppe erstellen</string>
   <!--Text messages-->
+  <string name="ongoing_group_call">Aktiver Anruf</string>
+  <string name="started_call">Anruf gestartet</string>
   <!--MediaPreferenceFragment-->
+  <string name="permission_dialog_camera_message">Für Videounterhaltungen ist eine Kameraberechtigung erforderlich. Die Kameraberechtigung ist deaktiviert. Aktivieren Sie diese in den Geräteeinstellungen, um diese Funktion zu nutzen.</string>
   <!--Ringtone activity-->
   <string name="ringtone_jami_tones">Jami-Klingeltöne</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Jami benötigt die Berechtigung „Kontakte lesen“, um diese Funktion zu aktivieren. Bitte gewähren Sie diese.</string>
+  <string name="permission_dialog_read_contacts_message">Jami benötigt die Berechtigung „Kontakte lesen“. Aktivieren Sie diese in den Geräteeinstellungen, um diese Funktion zu nutzen.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Jami benötigt die Berechtigung „Anrufliste schreiben“, um diese Funktion zu aktivieren. Bitte gewähren Sie diese.</string>
+  <string name="permission_dialog_write_call_log_message">Jami benötigt die Berechtigung „Anrufprotokoll schreiben“. Aktivieren Sie diese in den Geräteeinstellungen, um diese Funktion zu nutzen.</string>
   <!--QRCode Scan-->
+  <string name="error_scan_no_camera_permissions">Für den QR-Scanner ist eine Kameraberechtigung erforderlich. Die Kameraberechtigung ist deaktiviert. Aktivieren Sie diese in den Geräteeinstellungen, um diese Funktion zu nutzen.</string>
   <!--Settings-->
   <!--Conversation-->
   <string name="conversation_details">Unterhaltungsdetails</string>
   <string name="contact_details">Kontaktdetails</string>
   <string name="conversation_action_delete_this_title">Diese Unterhaltung löschen?</string>
+  <string name="leave_conversation">Unterhaltung verlassen</string>
   <string name="conversation_action_delete_this_message">Diese Aktion kann nicht rückgängig gemacht werden.</string>
+  <string name="delete_contact">Kontakt löschen</string>
+  <string name="conversation_action_add_this_message">Dadurch wird eine Verbindungsanfrage gesendet.</string>
+  <string name="swarm_group_action_leave">Gruppe verlassen</string>
+  <string name="swarm_group_action_leave_title">Diese Gruppe verlassen?</string>
+  <string name="swarm_group_action_leave_message">Dadurch wird die Unterhaltung aus Ihrer Unterhaltungsliste entfernt</string>
+  <string name="conversation_action_copy_peer_number">Kontakt-ID kopieren</string>
+  <string name="copied_to_clipboard">%1$s wurde in die Zwischenablage kopiert.</string>
+  <string name="clip_message">Nachrichteninhalt</string>
+  <string name="conversation_type_private">Privat</string>
+  <string name="conversation_type_group">Gruppe</string>
   <string name="conversation_contact_blocked">%1$s wurde blockiert</string>
   <string name="conversation_contact_unblocked">Blockierung von %1$swurde aufgehoben</string>
+  <string name="taking_picture_error">Beim Aufnehmen des Bildes ist ein Fehler aufgetreten.</string>
+  <string name="find_picture_error">Beim Suchen des Bildes ist ein Fehler aufgetreten.</string>
+  <string name="load_ringtone_error">Beim Laden des Klingeltons ist ein Fehler aufgetreten.</string>
+  <string name="sharing_log_error">Beim Teilen der Protokolle ist ein Fehler aufgetreten.</string>
   <!--Contacts-->
   <string name="help_pin_enter">Geben Sie die PIN eines anderen konfigurierten Jami-Kontos ein. Nutzen Sie die Funktion „Jami-Konto exportieren“, um eine PIN zu erhalten.</string>
   <string name="hist_contact_blocked">Kontakt blockiert</string>
   <string name="hist_contact_unblocked">Blockierung des Kontaktes aufgehoben</string>
-  <!--Account Summary-->
+  <!--Account summary-->
+  <string name="profile_name">Profilname</string>
+  <string name="take_a_photo">Bild aufnehmen</string>
+  <string name="identifier">Kennung</string>
   <!--Share fragment-->
+  <string name="share_contact_information">Kontaktinformationen teilen</string>
+  <string name="generic_error_migration_message">Beim Migrieren des Kontos ist ein Fehler aufgetreten.</string>
   <!--Pending invitations-->
+  <string name="decline">Ablehnen</string>
+  <string name="decline_invitation">Einladung ablehnen</string>
+  <string name="accept_invitation">Einladung annehmen</string>
+  <string name="accept_invitation_body">Einladung erhalten von %s.</string>
+  <string name="new_invitation_request_title">Neue Einladung</string>
+  <string name="invitation_message">Du hast %1$d Kontaktanfragen</string>
+  <string name="no_invitations">Es sind keine Einladungen zum Anzeigen vorhanden.</string>
+  <string name="invitation_received_message">Einladung erhalten von %s.\nEinladung annehmen oder ablehnen?</string>
+  <string name="outgoing_contact_invitation_message">Dieser Kontakt ist nicht in Ihrer Kontaktliste.\nSenden Sie eine Verbindungsanfrage.</string>
   <!--Blacklist-->
   <!--Smartlist-->
   <string name="generic_error">Ein unbekannter Fehler ist aufgetreten.</string>
@@ -61,6 +105,9 @@
   <string name="no_space_left_on_device">Auf dem Gerät ist kein Speicherplatz verfügbar</string>
   <!--Bottom Navigation-->
   <!--TV-->
+  <string name="audio_permission_denied">Die Mikrofonberechtigung ist deaktiviert. Aktivieren Sie diese in den Geräteeinstellungen, um diese Funktion zu nutzen.</string>
+  <string name="camera_permission_denied">Die Kameraberechtigung ist deaktiviert. Aktivieren Sie diese in den Geräteeinstellungen, um diese Funktion zu nutzen.</string>
+  <string name="camera_permission_rationale_title">Kameraberechtigung erforderlich</string>
   <string name="error_sharing_file">Beim Teilen der Datei ist ein Fehler aufgetreten.</string>
   <string name="error_opening_file">Beim Öffnen der Datei ist ein Fehler aufgetreten.</string>
   <!--Wizard-->
@@ -70,7 +117,7 @@
   <string name="bottomSheet_hangup_btn">Anruf beenden</string>
   <string name="open_account_extension_settings">Kontoerweiterungseinstellungen öffnen</string>
   <string name="open_general_extension_settings">Allgemeine Erweiterungseinstellungen öffnen</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_error">darf nicht leer sein.</string>
   <string name="swarm_description">Beschreibung hinzufügen</string>
   <string name="tab_files">Dateien</string>
@@ -78,8 +125,19 @@
   <string name="not_admin_toast">Nur Administratoren können die Informationen dieser Gruppe bearbeiten</string>
   <string name="no_contact_to_add">Sie haben keinen Kontakt zum Hinzufügen</string>
   <string name="group_admin">Administrator</string>
+  <string name="share_contact_intent_title">Diesen Kontakt zu Jami hinzufügen!</string>
+  <string name="share_contact_intent_body">Sie können diesen Kontakt „%1$s“ auf der verteilten Kommunikationsplattform Jami hinzufügen: %2$s</string>
   <!--JamiId-->
   <!--WelcomeJami-->
+  <!--Conversation details-->
+  <string name="details">Details</string>
+  <string name="secure_p2p_connection">Sichere Peer-to-Peer-Verbindung</string>
+  <string name="swarm_type">Art des Unterhaltung</string>
+  <string name="Private">Privat</string>
+  <string name="swarm_id">Schwarm-ID</string>
+  <string name="show_qr_code">QR-Code anzeigen</string>
+  <string name="show_certificate">Zertifikat anzeigen</string>
+  <string name="mute_conversation">Unterhaltung stummschalten</string>
   <!--Donation-->
   <!--Extension-->
   <string name="load_success">%1$s: aktiviert</string>

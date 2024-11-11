@@ -144,9 +144,7 @@
   <string name="account_sip_cannot_be_registered_message">ਤੁਸੀਂ ਖਾਤਾ ਬਣਾਉਣਾ ਜਾਰੀ ਰੱਖ ਸਕਦੇ ਹੋ ਜਾਂ ਇੱਥੇ ਆਪਣੀ ਜਾਣਕਾਰੀ ਦਾ ਸੰਪਾਦਨ ਕਰ ਸਕਦੇ ਹੋ। ਬਾਅਦ ਵਿੱਚ ਖਾਤਾ ਸੈਟਿੰਗਾਂ ਵਿੱਚ ਵੀ ਸੰਪਾਦਨ ਕੀਤਾ ਜਾ ਸਕਦਾ ਹੈ।</string>
   <string name="account_no_network_title">ਨੈੱਟਵਰਕ ਗੜਬੜ</string>
   <string name="account_device_added_title">ਖਾਤਾ ਡੀਵਾਈਸ ਸ਼ਾਮਲ ਕੀਤਾ ਗਿਆ</string>
-  <string name="account_device_added_message">ਤੁਸੀਂ ਇਸ ਡੀਵਾਈਸ \'ਤੇ ਆਪਣੇ Jami ਖਾਤੇ ਨੂੰ ਸਫਲਤਾਪੂਰਵਕ ਸੈੱਟਅੱਪ ਕੀਤਾ।</string>
   <string name="account_device_updated_title">ਖਾਤਾ ਡੀਵਾਈਸ ਅੱਪਡੇਟ ਕੀਤਾ ਗਿਆ</string>
-  <string name="account_device_updated_message">ਤੁਸੀਂ ਆਪਣਾ Jami ਖਾਤਾ ਸਫਲਤਾਪੂਰਵਕ ਅੱਪਡੇਟ ਕੀਤਾ।</string>
   <string name="account_sip_register_anyway">ਫਿਰ ਵੀ ਪੰਜੀਕਰਨ ਕਰੋ</string>
   <!--TV-->
   <string name="account_tv_settings_header">ਖਾਤਾ ਸੈਟਿੰਗਾਂ</string>

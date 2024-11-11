@@ -148,9 +148,7 @@
   <string name="account_sip_cannot_be_registered_message">Bạn có thể tiếp tục quá trình tạo tài khoản hoặc chỉnh sửa thông tin của mình ở đây.</string>
   <string name="account_no_network_title">Hầm mạng</string>
   <string name="account_device_added_title">Thiết bị tài khoản được thêm vào</string>
-  <string name="account_device_added_message">Bạn đã thành công thiết lập tài khoản Jami của mình trên thiết bị này.</string>
   <string name="account_device_updated_title">Thiết bị tài khoản được cập nhật</string>
-  <string name="account_device_updated_message">Ông đã cập nhật tài khoản Jami của mình thành công.</string>
   <string name="account_sip_register_anyway">Dù sao thì hãy đăng ký.</string>
   <!--TV-->
   <string name="account_tv_settings_header">Cài đặt tài khoản</string>

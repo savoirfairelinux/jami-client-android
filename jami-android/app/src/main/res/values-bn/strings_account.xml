@@ -149,9 +149,7 @@
   <string name="account_sip_cannot_be_registered_message">আপনি অ্যাকাউন্ট তৈরির প্রক্রিয়াটি চালিয়ে যেতে পারেন অথবা আপনার তথ্য এখানে সম্পাদনা করতে পারেন। অ্যাকাউন্ট সেটিংস পরে সংস্করণ এখনও সম্ভব।</string>
   <string name="account_no_network_title">নেটওয়ার্ক ত্রুটি</string>
   <string name="account_device_added_title">অ্যাকাউন্ট ডিভাইস যোগ করা হয়েছে</string>
-  <string name="account_device_added_message">আপনি সফলভাবে এই ডিভাইসে আপনার জামি অ্যাকাউন্ট সেটআপ করেছেন।</string>
   <string name="account_device_updated_title">অ্যাকাউন্ট ডিভাইস আপডেট</string>
-  <string name="account_device_updated_message">আপনি সফলভাবে আপনার জামি অ্যাকাউন্ট আপডেট করেছেন।</string>
   <string name="account_sip_register_anyway">যাই হোক রেজিস্টার করুন</string>
   <!--TV-->
   <string name="account_tv_settings_header">অ্যাকাউন্ট সেটিংস</string>

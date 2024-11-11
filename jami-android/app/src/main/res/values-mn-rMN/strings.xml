@@ -2,11 +2,9 @@
 <resources>
   <!--About-->
   <string name="section_license">Эрхэмжит зөвшөөрөл</string>
-  <string name="sponsor_section">Jami нь чөлөөт програм хангамж бөгөөд</string>
   <string name="copyright_section">Зохиогчийн эрх</string>
   <string name="contribute_section">Үргэлж</string>
   <string name="version_section">Хөгжлийн хувилбар</string>
-  <string name="no_browser_app_installed">Энэ хуудсыг үзэхэд вэб хөтөчүүдийн хэрэгсэл байхгүй, нэг орно</string>
   <string name="website_chooser_title">Сайтыг ашиглаж үзнэ үү...</string>
   <string name="license">Энэхүү програм хангамжийг ямар ч баталгаагүйгээр "хүнтэй" хүргэж байна. Тодруулбал GNU General Public License 3 болон дараагийн хувилбарыг үзнэ үү&lt;/u&gt;</string>
   <string name="description">Jami нь бүх нийтийн харилцааны чөлөөт програм бөгөөд хэрэглэгчийн эрх чөлөө, хувийн хэвшлийг хүндэтгэдэг.</string>
@@ -19,7 +17,6 @@
   <!--RingActivity-->
   <string name="error_no_network">Сүлжээний холболтгүй</string>
   <string name="error_account_offline">Хэтгэлээ хаасан</string>
-  <string name="error_mobile_network_available_but_disabled">Та загварын дэлгэц дээр соён тээврийн сүлжээг ашиглах боломжийг олгох уу.</string>
   <!--AB menus-->
   <string name="ab_action_chat">Хэвлэл мэдээлэл</string>
   <!--Sections-->
@@ -33,7 +30,6 @@
   <string name="menu_item_about">Жэмигийн тухай</string>
   <string name="video_setting_title">Видеогийн тохируулалт</string>
   <!--Dialing Fragment-->
-  <string name="dial_number">Үргэлж</string>
   <!--History Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
@@ -53,7 +49,6 @@
   <string name="notif_outgoing_call">Урьдчилсан дуудлага</string>
   <string name="notif_current_call_title">%1$s-ийн хамт үргэлжилж буй дуудлага</string>
   <string name="notif_current_call">Цаашид явагдаж буй</string>
-  <string name="notif_channel_call_in_progress">Хөгжлийн төлөөх дуудлага</string>
   <string name="notif_channel_calls">Зудлага</string>
   <string name="notif_channel_missed_calls">Зудлагыг алдсан</string>
   <string name="notif_channel_incoming_calls">Цаашид орж ирж буй дуудлага</string>
@@ -64,7 +59,6 @@
   <string name="notif_channel_background_service">Хөдөлмөрийн дэджэний үйлчилгээ</string>
   <string name="notif_channel_background_service_descr">Цаг хугацааны аль ч үед дуудлага, мэдээ хүлээн авах боломжийг олгодог.</string>
   <string name="notif_group_calls">Зудлага</string>
-  <string name="notif_background_service">Жами одоо хяналт тавих явцтай</string>
   <string name="notif_mark_as_read">Хэлсэн тэмдэг</string>
   <string name="notif_dismiss">Хөдөлмөрийг хая</string>
   <string name="notif_reply">Хариулт</string>
@@ -90,7 +84,6 @@
   <string name="ongoing_call">Цаашид явагдаж буй</string>
   <string name="hist_in_call">%1$s-ийн орж ирж буй дуудлага</string>
   <string name="hist_out_call">%1$s-ийн гадаад дуудлага</string>
-  <string name="start_error_mic_required">Жэми нь ажиллахын тулд микрофон зөвшөөрөл шаарддаг.</string>
   <string name="action_call_decline">Хөгжиж байна</string>
   <string name="action_call_mic_mute">Улаан чимээгүй микрофон</string>
   <string name="ab_action_speakerphone">Дуучинг идэвхжүүлнэ</string>
@@ -100,9 +93,9 @@
   <string name="ab_action_video_call">Видео утас эхлүүлэх</string>
   <string name="ab_action_change_screen_orientation">Скрингэрийн чиглэлийг өөрчлөх</string>
   <string name="share_via">Асуулгах</string>
-  <string name="write_a_message">Мэдээлэл бич</string>
   <string name="scan_qr">QR код сканируулна</string>
   <string name="qr_code">QR код</string>
+  <string name="new_group">Шинэ бүлэг үүсгэх</string>
   <string name="ab_action_flipcamera">Хэлтийн камер</string>
   <string name="ab_action_hidepreview">Урьдчилгаа нуух</string>
   <string name="remote_recording">%s-ийн бүртгэл...</string>
@@ -118,10 +111,10 @@
   <string name="conversation_send_audio">Зөгнөлийн клип бичнэ</string>
   <string name="conversation_send_video">Видео клип бичнэ</string>
   <string name="conversation_share_location">Харилцааны байршил</string>
+  <string name="ongoing_group_call">Цаашид явагдаж буй</string>
   <string name="in_reply_to">Хэвлэл мэдээллийн хэрэгсэл</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Камераны зөвшөөрөл</string>
-  <string name="permission_dialog_camera_message">Видео яриа хийхэд камерны зөвшөөрөл шаардлагатай.</string>
   <!--Ringtone activity-->
   <string name="ringtone_error_title">Хатаг</string>
   <string name="ringtone_error_format_not_supported">Энэ форматг дэмжихгүй.</string>
@@ -133,7 +126,6 @@
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Та нэмж байгаа дансны QR кодыг сканируарай.</string>
   <string name="title_activity_qrcode">Миний хуудас хуваалцаарай</string>
-  <string name="error_scan_no_camera_permissions">QR сканерийн ажил хийхэд камерын зөвшөөрөл шаарддаг</string>
   <string name="tab_code">Миний код</string>
   <string name="tab_scan">Скан код</string>
   <!--Settings-->
@@ -145,14 +137,15 @@
   <string name="conversation_details">Хэлэлцүүлгийн дэлгэрэнгүй мэдээ</string>
   <string name="contact_details">Байлцаах мэдээлэл</string>
   <string name="conversation_action_delete_this">Энэ яриаг устгах</string>
+  <string name="leave_conversation">Хэлэлцүүлгийг орхи</string>
   <string name="conversation_action_delete_this_message">Энэ үйлдлийг сэргийлэх боломжгүй.</string>
   <string name="conversation_action_history_clear">Тарих нь тодорхой</string>
   <string name="conversation_action_history_clear_title">Хэлэлцээрийн түүхийг цэвэрлэх үү?</string>
   <string name="conversation_action_history_clear_message">Энэ нь ярианы түүхийг цэвэрлэнэ.</string>
-  <string name="conversation_action_remove_this">Байрлагыг устгах</string>
+  <string name="delete_contact">Байрлагыг устгах</string>
   <string name="conversation_action_remove_this_title">Энэ холбоосыг устгах уу?</string>
   <string name="conversation_action_remove_this_message">Энэ нь холбоосыг устгаж, ярианы түүхийг арилгана.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s-ийг клипборд дээр хуулбарлан</string>
+  <string name="copied_to_clipboard">%1$s-ийг клипборд дээр хуулбарлан</string>
   <string name="conversation_action_select_peer_number">Үргэлж</string>
   <string name="conversation_action_block_this">Блок-тай холбоо тогтоох</string>
   <string name="conversation_action_unblock_this">Байлгын сүлжээг буулгах</string>
@@ -176,11 +169,10 @@
   <string name="conversation_preference_color">Хэлэлцүүлгийн өнгө</string>
   <string name="conversation_preference_emoji">Хэлэлцүүлгийн эможи</string>
   <string name="conversation_type_contact">Жэми-ийн холбоо</string>
-  <string name="conversation_type_private">Хувь хүний хуур</string>
-  <string name="conversation_type_group">Товчмын хуримтлагууд</string>
+  <string name="conversation_type_private">Хувь хүн</string>
   <string name="conversation_contact_invited">%1$s-ийг урьсан</string>
   <string name="conversation_contact_added">%1$s-ийг холбосон</string>
-  <string name="conversation_contact_left">%1$ нь үлдлээ</string>
+  <string name="conversation_contact_left">%1$s нь үлдлээ</string>
   <string name="conversation_search_hint">Танд ярилцлага хайх</string>
   <string name="today">Өнөөдөр</string>
   <string name="yesterday">Өчигдөр</string>
@@ -202,9 +194,8 @@
   <string name="hist_contact_added">Байлцаагч нэмэгдсэн</string>
   <string name="hist_contact_left">Зүүн талд холбогдох</string>
   <string name="hist_invitation_received">Нээлтийг хүлээн авсан</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">Профиль</string>
-  <string name="profile_name">Профилийн нэр</string>
   <string name="profile_message_warning">Таны профил таны холбоотонтай л хуваалцаж байна</string>
   <string name="open_the_gallery">Галерейг нээе</string>
   <string name="take_a_photo">Сүрэл зураг хий</string>
@@ -212,6 +203,7 @@
   <string name="registered_name">бүртгэлтэй нэр</string>
   <string name="no_registered_name">Үүнд бүртгэлтэй нэр байхгүй</string>
   <string name="identity">Хууль зүйн</string>
+  <string name="identifier">Төлөөлөгч</string>
   <string name="account">Санхүүжилт</string>
   <string name="link_new_device">Шинэ төхөөрөмжийг холбох</string>
   <string name="devices">Хөгжлийн багаж хэрэгсэл</string>
@@ -222,7 +214,6 @@
   <string name="share_your_account_information">Миний холбооны мэдээллийг хуваалцаарай</string>
   <string name="share_label">Хөдөлмөр</string>
   <string name="generic_error_migration">Хатаг</string>
-  <string name="generic_error_migration_message">Хөгжилтийн үеэр алдаа гарсан</string>
   <string name="title_share_with">-Хэрэв нэг хүнтэй хуваалцаж...</string>
   <!--Pending invitations-->
   <string name="accept">Үүнд хандаж</string>
@@ -321,7 +312,7 @@
   <string name="bottomSheet_raiseHand_btn">Та гар нь дээшлүүлж</string>
   <string name="uninstall">Уулгаж өгөөч</string>
   <string name="reset">Урьдчилгааг сэргээх</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">Дашрамд</string>
   <string name="tab_members">Улсчдын гишүүд</string>
   <string name="tab_files">Файл</string>
@@ -340,6 +331,10 @@
   <string name="jami_id_choose_username">Хэрэглэгчийн нэрийг сонго</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Жэми-д тавтай морилно уу</string>
+  <!--Conversation details-->
+  <string name="details">Тодруулбал</string>
+  <string name="Private">Хувь хүн</string>
   <!--Donation-->
+  <string name="donation_card_not_now">Одоо биш</string>
   <!--Extension-->
 </resources>

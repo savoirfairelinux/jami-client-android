@@ -32,9 +32,6 @@
   <string name="pref_blackList_title">Engellenenler listesi</string>
   <string name="pref_blackList_summary">Engelleme listeni gözden geçir.</string>
   <string name="pref_delete_account_title">Hesabı sil</string>
-  <string name="pref_delete_account_summary">Hesabını bu aygıttan sil</string>
-  <string name="pref_persistNotification_title">Arka planda çalış</string>
-  <string name="pref_persistNotification_summary">Arka planda çalışarak çağrı ve ileti almaya izin ver</string>
   <string name="pref_newGroup_title">Grup sohbetini etkinleştir</string>
   <string name="pref_newGroup_summary">Jami uygulamasında grup oluşturmayı etkinleştir.</string>
   <string name="pref_logs_title">Tanılama günlüğü</string>
@@ -48,11 +45,7 @@
   <string name="pref_link_preview_title">Görüşmelerde bağlantı ön izlemelerini göster</string>
   <string name="pref_link_preview_summary">Ön izlemeler üçüncü taraf sunuculardan içerik indirmeyi gerektirir</string>
   <!--Notifications Visibility-->
-  <string name="notification_public">Herkese açık \n(bildirimleri ve içeriğini kilit ekranında göster)\n</string>
-  <string name="notification_private">Özel \n(bildirimleri göster ancak içeriğini kilit ekranında gizle)\n</string>
-  <string name="notification_secret">Gizli \n(bildirimleri kilit ekranında gösterme)</string>
   <!--Extension-->
   <string name="pref_extensions_title">Uzantılar</string>
   <string name="extension_invalid_signature"><b>%1$s</b> geçersiz bir imza içeriyor.</string>
-  <string name="extension_force_install">zorla \n yükle</string>
 </resources>

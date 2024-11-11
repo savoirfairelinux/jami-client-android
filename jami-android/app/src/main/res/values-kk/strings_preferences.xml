@@ -32,9 +32,6 @@
   <string name="pref_blackList_title">Блоктар тізімі</string>
   <string name="pref_blackList_summary">Блок тізіміңізді тексеріңіз.</string>
   <string name="pref_delete_account_title">Тіркелгілерді өшіру</string>
-  <string name="pref_delete_account_summary">Бұл құрылғыдан тіркелгіңізді өшіру</string>
-  <string name="pref_persistNotification_title">Аядан өту</string>
-  <string name="pref_persistNotification_summary">Телефондар мен хаттарды алу үшін фонода жүруге рұқсат етіңіз.</string>
   <string name="pref_newGroup_title">Топтық әңгімелесуді рұқсат ету</string>
   <string name="pref_newGroup_summary">Jami-де топтарды құруға мүмкіндік береді.</string>
   <string name="pref_logs_title">Диагностикалық журналдары</string>
@@ -48,9 +45,5 @@
   <string name="pref_link_preview_title">Әңгімелерде сілтемелерді алдын ала қарау</string>
   <string name="pref_link_preview_summary">Алдын ала қарау үшін үшінші тараптың серверлерінен мазмұн жүгірту қажет.</string>
   <!--Notifications Visibility-->
-  <string name="notification_public">Қоғамдық \n(орындалған хабарламаларды және олардың мазмұнын құлыптау экранында көрсету) \n</string>
-  <string name="notification_private">Жеке \n(орындауларды көрсету, бірақ олардың мазмұнын құлыптау экранында жасыру) \n</string>
-  <string name="notification_secret">Құпия \n(бұлақтандыруларды құлыптау экранында көрсетпеу)</string>
   <!--Extension-->
-  <string name="extension_force_install">күшті орнату</string>
 </resources>

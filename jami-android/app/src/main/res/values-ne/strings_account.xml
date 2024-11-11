@@ -149,9 +149,7 @@
   <string name="account_sip_cannot_be_registered_message">तपाईं खाता सिर्जना प्रक्रिया जारी राख्न सक्नुहुन्छ वा यहाँ आफ्नो जानकारी सम्पादन गर्न सक्नुहुन्छ. संस्करण अझै पनि खाता सेटिंग्स मा पछि सम्भव छ.</string>
   <string name="account_no_network_title">नेटवर्क त्रुटि</string>
   <string name="account_device_added_title">खाता उपकरण थपियो</string>
-  <string name="account_device_added_message">तपाईंले यस उपकरणमा आफ्नो जेमी खाता सफलतापूर्वक सेट अप गर्नुभयो।</string>
   <string name="account_device_updated_title">खाता उपकरण अपडेट</string>
-  <string name="account_device_updated_message">तपाईंले आफ्नो जेमी खाता सफलतापूर्वक अपडेट गर्नुभयो।</string>
   <string name="account_sip_register_anyway">जे भए पनि दर्ता गर्नुहोस्</string>
   <!--TV-->
   <string name="account_tv_settings_header">खाता सेटिंग्स</string>

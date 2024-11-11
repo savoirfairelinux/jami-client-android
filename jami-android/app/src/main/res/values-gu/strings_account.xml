@@ -149,9 +149,7 @@
   <string name="account_sip_cannot_be_registered_message">તમે એકાઉન્ટ બનાવવાની પ્રક્રિયા ચાલુ રાખી શકો છો અથવા તમારી માહિતીને અહીં સંપાદિત કરી શકો છો. એકાઉન્ટ સેટિંગ્સમાં પછીથી આવૃત્તિ હજી પણ શક્ય છે.</string>
   <string name="account_no_network_title">નેટવર્ક ભૂલ</string>
   <string name="account_device_added_title">એકાઉન્ટ ડિવાઇસ ઉમેર્યું</string>
-  <string name="account_device_added_message">તમે સફળતાપૂર્વક આ ઉપકરણ પર તમારા Jami એકાઉન્ટ સેટ કર્યું છે.</string>
   <string name="account_device_updated_title">એકાઉન્ટ ઉપકરણ અપડેટ</string>
-  <string name="account_device_updated_message">તમે સફળતાપૂર્વક તમારા જમ્મી એકાઉન્ટને અપડેટ કર્યું છે.</string>
   <string name="account_sip_register_anyway">કોઈપણ રીતે નોંધણી</string>
   <!--TV-->
   <string name="account_tv_settings_header">એકાઉન્ટ સેટિંગ્સ</string>

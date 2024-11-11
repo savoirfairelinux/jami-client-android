@@ -32,9 +32,6 @@
   <string name="pref_blackList_title">Czarna lista</string>
   <string name="pref_blackList_summary">Sprawdź swoją czarną listę</string>
   <string name="pref_delete_account_title">Usuń konto</string>
-  <string name="pref_delete_account_summary">Usuń swoje konto z tego urządzenia</string>
-  <string name="pref_persistNotification_title">Zezwalaj na pracę w tle</string>
-  <string name="pref_persistNotification_summary">Zezwalaj na pracę w tle, aby odbierać rozmowy i wiadomości</string>
   <string name="pref_newGroup_title">Włącz rozmowę grupową</string>
   <string name="pref_newGroup_summary">Umożliwić tworzenie grup w Jami.</string>
   <string name="pref_logs_title">Logi diagnostyczne</string>
@@ -48,11 +45,7 @@
   <string name="pref_link_preview_title">Pokaż link do podglądu konwersacji</string>
   <string name="pref_link_preview_summary">Przegląd jest wymagany do ściągnięcia z serwerów innych partnerów.</string>
   <!--Notifications Visibility-->
-  <string name="notification_public">Publiczne \n(pokaż powiadomienia i ich zawartość na ekranie blokady)\n</string>
-  <string name="notification_private">Prywatne \n(pokaż powiadomienia, ale ukryj ich zawartość na ekranie blokady)\n</string>
-  <string name="notification_secret">Sekret \n(nie pokazuj powiadomień na ekranie blokady)</string>
   <!--Extension-->
   <string name="pref_extensions_title">Rozszerzenia</string>
   <string name="extension_invalid_signature">%1$s ma nieprawidłowy podpis</string>
-  <string name="extension_force_install">Wymuś instalacje</string>
 </resources>

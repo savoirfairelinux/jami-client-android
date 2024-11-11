@@ -84,7 +84,7 @@
   <string name="account_accept_files_max_size">Maximale bestandsgrootte wat automatisch geaccepteerd wordt</string>
   <string name="account_accept_files_never">Nooit automatisch accepteren</string>
   <string name="account_accept_files_always">Altijd automatisch accepteren</string>
-  <string name="size_mb">% 1$d MB</string>
+  <string name="size_mb">%1$d MB</string>
   <string name="account_turn_enable_label">TURN gebruiken</string>
   <string name="account_turn_server_label">TURN-server</string>
   <string name="account_turn_username_label">TURN-gebruikersnaam</string>
@@ -149,9 +149,7 @@
   <string name="account_sip_cannot_be_registered_message">U kunt doorgaan met het aanmaken van uw account, of uw gegevens hier aanpassen. Aanpassen is later ook mogelijk vanuit de accountinstellingen.</string>
   <string name="account_no_network_title">Netwerkfout</string>
   <string name="account_device_added_title">Accountapparaat toegevoegd</string>
-  <string name="account_device_added_message">Uw Jami-account is met succes op dit apparaat ingesteld.</string>
   <string name="account_device_updated_title">Accountapparaat bijgewerkt</string>
-  <string name="account_device_updated_message">Uw Jami-account is met succes bijgewerkt.</string>
   <string name="account_sip_register_anyway">Toch registreren</string>
   <!--TV-->
   <string name="account_tv_settings_header">Accountinstellingen</string>
@@ -180,6 +178,7 @@
   <string name="help_credentials_enter">Voer de referenties van uw organisatie in</string>
   <string name="help_connect_password_enter">Voer het wachtwoord van uw organisatie in</string>
   <string name="account_connect_prompt_username">Gebruikersnaam</string>
+  <string name="account_enter_username">Voer gebruikersnaam in</string>
   <!--Name registration-->
   <string name="error_username_empty">Voer een gebruikersnaam in</string>
   <string name="no_registered_name_for_account">Geen geregistreerde naam</string>

@@ -2,11 +2,12 @@
 <resources>
   <!--About-->
   <string name="section_license">مجوز</string>
-  <string name="sponsor_section">جمی یک برنامه رایگان هست که طراحی و پشتیبانی شده توسط</string>
   <string name="copyright_section">کپی رایت</string>
   <string name="contribute_section">مشارکت و همکاری</string>
   <string name="version_section">نسخه</string>
-  <string name="no_browser_app_installed">هیچ برنامه مرورگری یافت نشد یک نسخه نصب کرده تا بتوانید این صفحه را مشاهده کنید</string>
+  <string name="website_chooser_title">مشاهده وبسایت با ...</string>
+  <string name="license">این نرم افزار این نرم افزار \"همانطور که هست\" ارائه شده و هیچ تضمینی وجود ندارد برای جزئیات ببینید 
+<u> GNU General Public License version 3 or later </u></string>
   <string name="description">جمی یک برنامه رایگان هست که برای ارتباط همگانی طراحی شده
 از اهداف اصلی آن احترام به آزادی و حریم خصوصی کاربران می باشد</string>
   <string name="credits">حامیان</string>
@@ -18,7 +19,6 @@
   <!--RingActivity-->
   <string name="error_no_network">قطع ارتباط با شبکه</string>
   <string name="error_account_offline">حساب آنلاین نیست</string>
-  <string name="error_mobile_network_available_but_disabled">لطفا در صفحه تنظیمات به شبکه سلولی دسترسی دهید.</string>
   <!--AB menus-->
   <string name="ab_action_chat">پیغامدهی متنی</string>
   <!--Sections-->
@@ -32,7 +32,6 @@
   <string name="menu_item_about">درباره جمی</string>
   <string name="video_setting_title">تنظیمات ویدیو</string>
   <!--Dialing Fragment-->
-  <string name="dial_number">یک شماره بگیرید</string>
   <!--History Fragment-->
   <!--Home Fragment-->
   <string name="invitation_card_title">دعوت‌نامه‌های دریافت شد</string>
@@ -53,7 +52,7 @@
   <string name="notif_outgoing_call">تماس خروجی</string>
   <string name="notif_current_call_title">تماس جاری با %1$s</string>
   <string name="notif_current_call">تماس جاری</string>
-  <string name="notif_channel_call_in_progress">تماس در جریان</string>
+  <string name="notif_channel_call_in_progress">تماس در حال انجام</string>
   <string name="notif_channel_calls">تماس‌ها</string>
   <string name="notif_channel_missed_calls">تماس‌های از‌دست‌رفته</string>
   <string name="notif_channel_incoming_calls">تماس‌های ورودی</string>
@@ -65,7 +64,6 @@
   <string name="notif_channel_background_service_descr">اجازه دریافت تماس‌ها و پیام‌ها در هر زمان.</string>
   <string name="notif_group_calls">تماس‌ها</string>
   <string name="notif_inprogress_group_call">تماس در حال انجام</string>
-  <string name="notif_background_service">جمی هم ‌اکنون در پس‌زمینه در حال اجراست.</string>
   <string name="notif_mark_as_read">علامت‌گذاری به عنوان خوانده‌شده</string>
   <string name="notif_dismiss"> رد‌کردن</string>
   <string name="notif_reply">پاسخ</string>
@@ -91,7 +89,6 @@
   <string name="ongoing_call">تماس جاری</string>
   <string name="hist_in_call">تماس ورودی به مدت  %1$s</string>
   <string name="hist_out_call">تماس خروجی به مدت %1$s</string>
-  <string name="start_error_mic_required">جمی برای کار به مجوز میکروفون نیاز دارد.</string>
   <string name="action_call_accept">قبول تماس</string>
   <string name="action_call_decline">ردکردن</string>
   <string name="action_call_mic_mute">قطع میکروفون</string>
@@ -102,7 +99,6 @@
   <string name="ab_action_video_call">شروع تماس ویدیویی</string>
   <string name="ab_action_change_screen_orientation">تغییر جهت صفحه</string>
   <string name="share_via">اشتراک از طریق</string>
-  <string name="write_a_message">پیامی بنویسید</string>
   <string name="scan_qr">اسکن کد QR</string>
   <string name="qr_code">کد QR</string>
   <string name="ab_action_flipcamera">چرخاندن دوربین</string>
@@ -120,11 +116,10 @@
   <string name="conversation_send_audio">ضبط بُریده صوتی</string>
   <string name="conversation_send_video">ضبط بُریده ویدیویی</string>
   <string name="conversation_share_location">اشتراک مکان</string>
-  <string name="ongoing_group_call">تماس در حال انجام</string>
+  <string name="ongoing_group_call">تماس جاری</string>
   <string name="in_reply_to">در پاسخ به</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">مجوز دوربین</string>
-  <string name="permission_dialog_camera_message">گفتگوی ویدیویی برای کار نیاز به مجوز دوربین دارد. لطفا آن را فعال کنید.</string>
   <!--Ringtone activity-->
   <string name="ringtone_error_title">خطا</string>
   <string name="ringtone_error_format_not_supported">این قالب پشتیبانی نمی‌شود.</string>
@@ -136,7 +131,6 @@
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">کد QR حسابی را که می‌خواهید بیفزایید، اسکن کنید.</string>
   <string name="title_activity_qrcode">به اشتراک گذاری حساب من</string>
-  <string name="error_scan_no_camera_permissions">اسکنر QR برای کار به مجوزهای دوربین نیاز دارد</string>
   <string name="tab_code">کد من</string>
   <string name="tab_scan">اسکن کد</string>
   <!--Settings-->
@@ -148,14 +142,15 @@
   <string name="conversation_details">جزئیات مکالمه</string>
   <string name="contact_details">جزئیات مخاطب</string>
   <string name="conversation_action_delete_this">حذف این گفتگو</string>
+  <string name="leave_conversation">مکالمه رو ترک کن</string>
   <string name="conversation_action_delete_this_message">این کار قابل بازگشت نیست.</string>
   <string name="conversation_action_history_clear">پاک‌سازی تاریخچه</string>
   <string name="conversation_action_history_clear_title">پاک‌سازی تاریخچه گفتگو؟</string>
   <string name="conversation_action_history_clear_message">این کار قطعا باعث پاک شدن تاریخچه گفتگو خواهد شد.</string>
-  <string name="conversation_action_remove_this">مخاطب را حذف کنید</string>
+  <string name="delete_contact">مخاطب را حذف کنید</string>
   <string name="conversation_action_remove_this_title">حذف این مخاطب؟</string>
   <string name="conversation_action_remove_this_message">این باعث حذف مخاطب شده و قطعا تاریخچه گفتگو را پاک خواهد کرد.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">‫%1$s در حافظه رونویسی شد</string>
+  <string name="copied_to_clipboard">‫%1$s در حافظه رونویسی شد</string>
   <string name="conversation_action_select_peer_number">گزینش یک شماره</string>
   <string name="conversation_action_block_this">مسدودسازی مخاطب</string>
   <string name="conversation_action_unblock_this">رفع مسدودی مخاطب</string>
@@ -179,8 +174,8 @@
   <string name="conversation_preference_color">رنگ گفتگو</string>
   <string name="conversation_preference_emoji">شکلَک گفتگو</string>
   <string name="conversation_type_contact">مخاطب جامی</string>
-  <string name="conversation_type_private">گروه خصوصی</string>
-  <string name="conversation_type_group">گروه عمومی</string>
+  <string name="conversation_type_private">خصوصی</string>
+  <string name="conversation_type_group">گروه</string>
   <string name="conversation_contact_invited">%1$s دعوت شده است.</string>
   <string name="conversation_contact_added">%1$sپیوست</string>
   <string name="conversation_contact_left">%1$s ترک کرد</string>
@@ -206,16 +201,17 @@
   <string name="hist_contact_added">مخاطب افزوده شد</string>
   <string name="hist_contact_left">مخاطب از تماس خارج شد</string>
   <string name="hist_invitation_received">دعوت‌نامه دریافت شد</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">نمایه</string>
   <string name="profile_name">نام نمایه</string>
   <string name="profile_message_warning">نمایه شما تنها با مخاطبانتان هم‌رسانی می‌شود</string>
   <string name="open_the_gallery">گالری را باز کنید</string>
-  <string name="take_a_photo">عکسی بگیرید</string>
+  <string name="take_a_photo">عکس  بگیرید!</string>
   <string name="profile_name_hint">نام خود را وارد کنید</string>
   <string name="registered_name">نام ثبت‌شده</string>
   <string name="no_registered_name">هیچ نامی ثبت نشده است</string>
   <string name="identity">هویت</string>
+  <string name="identifier">شناسه</string>
   <string name="account">حساب</string>
   <string name="link_new_device">پیوند یک دستگاه جدید</string>
   <string name="devices">دستگاه‌های پیوند‌‌داده‌شده</string>
@@ -226,10 +222,10 @@
   <string name="share_your_account_information">هم‌رسانی اطلاعات تماس من</string>
   <string name="share_label">اشتراک گذاری</string>
   <string name="generic_error_migration">خطا</string>
-  <string name="generic_error_migration_message">هنگام مهاجرت، خطایی رخ داد</string>
   <string name="title_share_with">هم‌رسانی با...</string>
   <!--Pending invitations-->
   <string name="accept">پذیرش</string>
+  <string name="decline">ردکردن</string>
   <string name="block">مسدود</string>
   <string name="invitation_message">شما‫ %1$d درخواست ارتباط دارید</string>
   <!--Blacklist-->
@@ -324,7 +320,7 @@
   <string name="bottomSheet_raiseHand_btn">بالا بردن دست </string>
   <string name="uninstall">حذف نصب</string>
   <string name="reset">بازنشانی </string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">تایید</string>
   <string name="tab_members">اعضا</string>
   <string name="tab_files">فایل ها</string>
@@ -344,6 +340,9 @@
   <string name="jami_id_choose_username">یک نام کاربری را انتخاب کنید</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">به جمی خوش آمدید</string>
+  <!--Conversation details-->
+  <string name="details">جزییات</string>
+  <string name="Private">خصوصی</string>
   <!--Donation-->
   <string name="donation_card_not_now">الان نه</string>
   <string name="donation_donate">اهدا کنید</string>

@@ -32,9 +32,6 @@
   <string name="pref_blackList_title">બ્લોક યાદી</string>
   <string name="pref_blackList_summary">તમારી બ્લોક સૂચિ તપાસો.</string>
   <string name="pref_delete_account_title">એકાઉન્ટ કાઢી નાખો</string>
-  <string name="pref_delete_account_summary">આ ઉપકરણમાંથી તમારું એકાઉન્ટ કાઢી નાખો</string>
-  <string name="pref_persistNotification_title">પૃષ્ઠભૂમિ માં ચલાવો</string>
-  <string name="pref_persistNotification_summary">કૉલ્સ અને સંદેશાઓ પ્રાપ્ત કરવા માટે પૃષ્ઠભૂમિમાં ચાલી રહેલ પરવાનગી આપો.</string>
   <string name="pref_newGroup_title">જૂથ ચેટ સક્ષમ કરો</string>
   <string name="pref_newGroup_summary">જમીમાં જૂથો બનાવવાની મંજૂરી આપો.</string>
   <string name="pref_logs_title">નિદાન લોગ</string>
@@ -48,9 +45,5 @@
   <string name="pref_link_preview_title">વાતચીતમાં લિંક પૂર્વાવલોકન બતાવો</string>
   <string name="pref_link_preview_summary">પૂર્વાવલોકન માટે તૃતીય-પક્ષ સર્વર્સમાંથી સામગ્રી ડાઉનલોડ કરવાની જરૂર છે.</string>
   <!--Notifications Visibility-->
-  <string name="notification_public">જાહેર \n(લોક સ્ક્રીન પર સૂચનાઓ અને તેમની સામગ્રી બતાવો) \n</string>
-  <string name="notification_private">ખાનગી \n(સૂચિઓ બતાવો પરંતુ લૉક સ્ક્રીન પર તેમની સામગ્રી છુપાવો) \n</string>
-  <string name="notification_secret">ગુપ્ત \n(લૉક સ્ક્રીન પર સૂચનાઓ બતાવવા નથી)</string>
   <!--Extension-->
-  <string name="extension_force_install">બળ \ n સ્થાપિત</string>
 </resources>

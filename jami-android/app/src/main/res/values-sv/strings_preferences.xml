@@ -32,9 +32,6 @@
   <string name="pref_blackList_title">Blocklista</string>
   <string name="pref_blackList_summary">Kontrollera din blockeringslista. </string>
   <string name="pref_delete_account_title">Ta bort konto</string>
-  <string name="pref_delete_account_summary">Ta bort ditt konto från denna enhet</string>
-  <string name="pref_persistNotification_title">Kör i bakgrunden</string>
-  <string name="pref_persistNotification_summary">Tillåt bakgrundskörning för inkommande samtal och meddelanden.</string>
   <string name="pref_newGroup_title">Aktivera gruppchat</string>
   <string name="pref_newGroup_summary">Skapar grupper i Jami.</string>
   <string name="pref_logs_title">Diagnostiklogg</string>
@@ -48,9 +45,5 @@
   <string name="pref_link_preview_title">Visa länk till förhandsvisning i konversationer </string>
   <string name="pref_link_preview_summary">Förhandsvisning kräver nedladdning av innehåll från tredje-part server.  </string>
   <!--Notifications Visibility-->
-  <string name="notification_public">Offentlig \n(visa notiser och innehållet på låsskärm)\n</string>
-  <string name="notification_private">Privat \n(visa notiser men inte innehållet på låsskärm)\n</string>
-  <string name="notification_secret">Hemlig \n(visa inte på låsskärm)\n</string>
   <!--Extension-->
-  <string name="extension_force_install">tvinga \n installation</string>
 </resources>

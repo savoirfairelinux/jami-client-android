@@ -149,9 +149,7 @@
   <string name="account_sip_cannot_be_registered_message">Môžete pokračovať vo vytváraní alebo upraviť vaše údaje. Úprava bude tiež možná neskôr v nastaveniach.</string>
   <string name="account_no_network_title">Chyba siete</string>
   <string name="account_device_added_title">Zariadenie pridané k účtu</string>
-  <string name="account_device_added_message">Úspešne ste nastavili váš Jami účet na tomto zariadení.</string>
   <string name="account_device_updated_title">Zariadenie účtu aktualizované</string>
-  <string name="account_device_updated_message">Úspešne ste aktualizovali váš Jami účet.</string>
   <string name="account_sip_register_anyway">Napriek tomu registrovať</string>
   <!--TV-->
   <string name="account_tv_settings_header">Nastavenia účtu</string>
@@ -169,7 +167,6 @@
   <string name="account_link_prompt_pin">Zadajte PIN</string>
   <string name="account_new_button">Vytvoriť Jami účet</string>
   <string name="account_link_export_button">Prepojiť nové zariadenie</string>
-  <string name="account_link_show_button">Ukážte viac prepojených zariadení</string>
   <string name="account_link_hide_button">Skryjte prepojené zariadenie</string>
   <string name="account_start_export_button">Vygenerovať PIN</string>
   <string name="account_end_export_button">Zavrieť</string>
@@ -180,6 +177,7 @@
   <string name="help_credentials_enter">Zadajte údaje vašej organizácie</string>
   <string name="help_connect_password_enter">Zadajte heslo vašej organizácie</string>
   <string name="account_connect_prompt_username">Používateľské meno</string>
+  <string name="account_enter_username">Zadajte používateľské meno</string>
   <!--Name registration-->
   <string name="error_username_empty">Zadajte používateľské meno</string>
   <string name="no_registered_name_for_account">Žiadne registrované meno</string>

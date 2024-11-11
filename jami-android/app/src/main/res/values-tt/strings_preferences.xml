@@ -32,9 +32,6 @@
   <string name="pref_blackList_title">Блоклар исемлеге</string>
   <string name="pref_blackList_summary">Тәртипләр исемлеген тикшерегез.</string>
   <string name="pref_delete_account_title">Хисапны бетерү</string>
-  <string name="pref_delete_account_summary">Бу җайланмадан аккаунтыгызны бетерү</string>
-  <string name="pref_persistNotification_title">Фонада йөгереп барыгыз</string>
-  <string name="pref_persistNotification_summary">Телефон һәм хәбәрләр кабул итү өчен, фонында йөгерергә рөхсәт итегез.</string>
   <string name="pref_newGroup_title">Төркем чатын булдыру</string>
   <string name="pref_newGroup_summary">Җәмидә төркемнәр булдыру мөмкинлеге.</string>
   <string name="pref_logs_title">Диагностика журналы</string>
@@ -48,9 +45,5 @@
   <string name="pref_link_preview_title">Сөйләшүләрдә сылтамалар күрсәтү</string>
   <string name="pref_link_preview_summary">Премьералар өченче як серверларыннан йөкләү кирәк.</string>
   <!--Notifications Visibility-->
-  <string name="notification_public">Халык \n(язу белдерүләрен һәм аларның эчтәлеген кулга алу экранында күрсәтү) \n</string>
-  <string name="notification_private">Шәхси \n(укытуларны күрсәт, ләкин аларның эчтәлеген бикләү экранында яшер) \n</string>
-  <string name="notification_secret">Саклык \n(блокада экранда хәбәрләр күрсәтелми)</string>
   <!--Extension-->
-  <string name="extension_force_install">көчләп урнаштыру</string>
 </resources>

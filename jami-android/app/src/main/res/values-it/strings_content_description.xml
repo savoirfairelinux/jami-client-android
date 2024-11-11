@@ -11,4 +11,6 @@
   <string name="control_replay">Ripeti</string>
   <string name="control_pause">Pausa</string>
   <string name="searchbar_navigation_account">Seleziona account</string>
+  <string name="add_conversation_member">Aggiungi un membro alla conversazione</string>
+  <string name="qrcode_to_scan">Codice QR da scansionare</string>
 </resources>

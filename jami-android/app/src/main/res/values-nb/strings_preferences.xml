@@ -32,9 +32,6 @@
   <string name="pref_blackList_title">Blokkeringsliste</string>
   <string name="pref_blackList_summary">Sjekk din blokkeringsliste.</string>
   <string name="pref_delete_account_title">Slett konto</string>
-  <string name="pref_delete_account_summary">Slett din konto på denne enheten</string>
-  <string name="pref_persistNotification_title">Kjør i bakgrunnen</string>
-  <string name="pref_persistNotification_summary">Tillater kjøring i bakgrunnen for å motta samtaler og meldinger.</string>
   <string name="pref_newGroup_title">Aktiverer gruppechat</string>
   <string name="pref_newGroup_summary">Oppmuntre til å opprette grupper i Jami.</string>
   <string name="pref_logs_title">Feilfinningslogger</string>
@@ -48,9 +45,5 @@
   <string name="pref_link_preview_title">Forhåndsvis linker i samtaler</string>
   <string name="pref_link_preview_summary">Forhåndsvisninger betyr at Jami må laste ned media fra tredjeparts servere.</string>
   <!--Notifications Visibility-->
-  <string name="notification_public">Offentlig \n(vis varsler og innholdet på låseskjermen)</string>
-  <string name="notification_private">Privat \n(vis varsler, men ikke innholdet på låseskjermen)</string>
-  <string name="notification_secret">Hemmelig \n(vis ikke varsler på låseskjermen)</string>
   <!--Extension-->
-  <string name="extension_force_install">tving \n installasjon</string>
 </resources>

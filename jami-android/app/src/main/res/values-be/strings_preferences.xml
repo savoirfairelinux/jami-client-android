@@ -32,9 +32,6 @@
   <string name="pref_blackList_title">Спіс блокаў</string>
   <string name="pref_blackList_summary">Праверце ваш спіс блокаў.</string>
   <string name="pref_delete_account_title">Знішчыць рахунак</string>
-  <string name="pref_delete_account_summary">Знішчыць свой рахунак з гэтага прылады</string>
-  <string name="pref_persistNotification_title">Выконваць у фоне</string>
-  <string name="pref_persistNotification_summary">Дазвольце бегчы ў фоне, каб атрымаць званкі і паведамленні.</string>
   <string name="pref_newGroup_title">Уключыць груповы чат</string>
   <string name="pref_newGroup_summary">Дазвольце ствараць групы ў Jami.</string>
   <string name="pref_logs_title">Дзякуючы дыягнасту</string>
@@ -48,9 +45,5 @@
   <string name="pref_link_preview_title">Паказаць перагляд спасылкі ў размовах</string>
   <string name="pref_link_preview_summary">Перагляд патрабуе спампоўкі кантэнту з сервераў трэціх бакоў.</string>
   <!--Notifications Visibility-->
-  <string name="notification_public">Грамадскае \n(паведамленні паказваюць і іх змест на замак экрана) \n</string>
-  <string name="notification_private">Прыватныя \n(пакажыце паведамленні, але схаваць іх змест на замак экрана) \n</string>
-  <string name="notification_secret">Сакраты \n(не паказваюць паведамленні на замак экрана)</string>
   <!--Extension-->
-  <string name="extension_force_install">прымусіць \n ўсталяваць</string>
 </resources>

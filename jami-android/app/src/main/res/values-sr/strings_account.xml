@@ -156,9 +156,7 @@
   <string name="account_sip_cannot_be_registered_message">Možete nastaviti sa procesom pravljenja naloga ili možete uređivati svoje informacije ovde. Uređivanje će biti moguće i kasnije u podešavanju naloga.</string>
   <string name="account_no_network_title">Greška na mreži</string>
   <string name="account_device_added_title">Uređaj naloga je dodat</string>
-  <string name="account_device_added_message">Uspešno ste podesili Vaš Jami nalog na ovom uređaju</string>
   <string name="account_device_updated_title">Uređaj naloga je ažuriran</string>
-  <string name="account_device_updated_message">Uspešno ste ažurirali Vaš Jami nalog.</string>
   <string name="account_sip_register_anyway">Registruj se u svakom slučaju.</string>
   <!--TV-->
   <string name="account_tv_settings_header">Podešavanja za nalog</string>
@@ -176,7 +174,7 @@
   <string name="account_link_prompt_pin">Unesi PIN</string>
   <string name="account_new_button">Kreirajte Jami nalog</string>
   <string name="account_link_export_button">Povežite novi uređaj</string>
-  <string name="account_link_show_button">Prikaži %dviše povezanih uređaja</string>
+  <string name="account_link_show_button">Prikaži %d više povezanih uređaja</string>
   <string name="account_link_hide_button">Sakri povezane uređaje</string>
   <string name="account_start_export_button">Generiši PIN</string>
   <string name="account_end_export_button">zatvori</string>

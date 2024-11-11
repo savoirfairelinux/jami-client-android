@@ -2,10 +2,11 @@
 <resources>
   <!--About-->
   <string name="section_license">الرخصة</string>
-  <string name="sponsor_section">جامي هو برنامج حر طٌور و دٌعم من قبل</string>
   <string name="copyright_section">حقوق النشر</string>
   <string name="contribute_section">مساهمة</string>
   <string name="version_section">الإصدار</string>
+  <string name="website_chooser_title">معاينة الموقع الإلكتروني بواسطة...</string>
+  <string name="license">هذا البرنامج مقدم \"كما هو\", بدون ضمان من أي نوع, للتفاصيل, أنظر <u>رخصة غنو العمومية إصدار الترخيص 3 أو ما بعدها</u></string>
   <string name="description">جامى هو برنامج حر مجانى للتواصل العالمى الذى يحترم حريات وخصوصيات مستخدميه.</string>
   <string name="credits">الأطراف الداعمة</string>
   <string name="pip_title">اجتماع جامي مرئي</string>
@@ -16,7 +17,6 @@
   <!--RingActivity-->
   <string name="error_no_network">لا يوجد اتصال بالشبكة</string>
   <string name="error_account_offline">الحساب غير متصل</string>
-  <string name="error_mobile_network_available_but_disabled">الرجاء إعطاء صلاحيات الوصول إلى الشبكة الخلوية في شاشة الإعدادات.</string>
   <!--AB menus-->
   <string name="ab_action_chat">رسائل نصية</string>
   <!--Sections-->
@@ -30,7 +30,6 @@
   <string name="menu_item_about">حول جامي</string>
   <string name="video_setting_title">إعدادات الفيديو</string>
   <!--Dialing Fragment-->
-  <string name="dial_number">إتصال برقم</string>
   <!--History Fragment-->
   <!--Home Fragment-->
   <!--ContactList Fragment-->
@@ -46,7 +45,6 @@
   <string name="notif_outgoing_call">مكالمة صادرة</string>
   <string name="notif_current_call_title">مكالمة جارية مع %1$s</string>
   <string name="notif_current_call">مكالمة جارية</string>
-  <string name="notif_channel_call_in_progress">يتم اجراء مكالمة</string>
   <string name="notif_channel_calls">مكالمات</string>
   <string name="notif_channel_missed_calls">مكالمات فائتة</string>
   <string name="notif_channel_incoming_calls">مكالمات واردة</string>
@@ -57,7 +55,6 @@
   <string name="notif_channel_background_service">خدمة تعمل في الخلفية</string>
   <string name="notif_channel_background_service_descr">السماح بإستقبال مكالمات ورسائل بأي وقت.</string>
   <string name="notif_group_calls">مكالمات</string>
-  <string name="notif_background_service">جامي يعمل حاليا في الخلفية</string>
   <string name="notif_mark_as_read">وضع علامة مقروء</string>
   <string name="notif_dismiss">رفض</string>
   <string name="notif_reply">رد</string>
@@ -83,7 +80,6 @@
   <string name="ongoing_call">مكالمة جارية</string>
   <string name="hist_in_call">مكالمة واردة من %1$s</string>
   <string name="hist_out_call">مكالمة صادرة من %1$s</string>
-  <string name="start_error_mic_required">جامي يستوجب الحصول على صلاحيات المايكروفون للعمل.</string>
   <string name="action_call_decline">رفض</string>
   <string name="action_call_mic_mute">كتم ميكروفون</string>
   <string name="ab_action_speakerphone">تفعيل مكبر الصوت</string>
@@ -93,9 +89,9 @@
   <string name="ab_action_video_call">بدء مكالمة فيديو</string>
   <string name="ab_action_change_screen_orientation">تغيير إتجاه الشاشة</string>
   <string name="share_via">مشاركة عبر</string>
-  <string name="write_a_message">كتابة رسالة</string>
   <string name="scan_qr">مسح رمز الإستجابة السريعة</string>
   <string name="qr_code">رمز الإستجابة السريعة</string>
+  <string name="new_group">إنشاء مجموعة جديدة</string>
   <string name="ab_action_flipcamera">قلب كاميرا</string>
   <string name="ab_action_hidepreview">إخفاء معاينة</string>
   <string name="remote_recording">%s تسجيل... </string>
@@ -111,10 +107,10 @@
   <string name="conversation_send_audio">تسجيل مقطع صوتي</string>
   <string name="conversation_send_video">تسجيل مقطع فيديو</string>
   <string name="conversation_share_location">مشاركة الموقع</string>
+  <string name="ongoing_group_call">مكالمة جارية</string>
   <string name="in_reply_to">في جواب</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">صلاحيات الكاميرا</string>
-  <string name="permission_dialog_camera_message">محادثات الفيديو تستوجب صلاحيات الكاميرا للعمل. الرجاء النظر في تفعيلها.</string>
   <!--Ringtone activity-->
   <string name="ringtone_error_title">خطأ</string>
   <string name="ringtone_error_format_not_supported">هذا التنسيق غير مدعوم.</string>
@@ -126,7 +122,6 @@
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">مسح رمز الاستجابة السريعة للحساب الذي تريد إضافته.</string>
   <string name="title_activity_qrcode">مشاركة حسابي</string>
-  <string name="error_scan_no_camera_permissions">الماسح الضوئي QR يتطلب صلاحيات الكاميرا للعمل</string>
   <string name="tab_code">الكود الخاص بي</string>
   <string name="tab_scan">قراءة الكود</string>
   <!--Settings-->
@@ -138,14 +133,15 @@
   <string name="conversation_details">تفاصيل المحادثة</string>
   <string name="contact_details">تفاصيل جهة الأتصال</string>
   <string name="conversation_action_delete_this">حذف هذه المحادثة</string>
+  <string name="leave_conversation">أترك المحادثة</string>
   <string name="conversation_action_delete_this_message">لا يمكن التراجع عن هذا الإجراء.</string>
   <string name="conversation_action_history_clear">حذف المحفوظات</string>
   <string name="conversation_action_history_clear_title">حذف محفوظات المحادثة؟</string>
   <string name="conversation_action_history_clear_message">هذا بالتأكيد سيزيل تاريخ المحادثة.</string>
-  <string name="conversation_action_remove_this">حذف جهة إتصال</string>
+  <string name="delete_contact">حذف جهة إتصال</string>
   <string name="conversation_action_remove_this_title">حذف جهة الإتصال؟</string>
   <string name="conversation_action_remove_this_message">هذا سيزيل جهة الإتصال و بالتأكيد سيزيل تاريخ المحادثة.</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$sتم النسخ إلى الحافظة</string>
+  <string name="copied_to_clipboard">%1$sتم النسخ إلى الحافظة</string>
   <string name="conversation_action_select_peer_number">إختيار رقم</string>
   <string name="conversation_action_block_this">حظر جهة إتصال</string>
   <string name="conversation_action_unblock_this">فك الحظر على الاتصال</string>
@@ -169,11 +165,11 @@
   <string name="conversation_preference_color">لون المحادثة</string>
   <string name="conversation_preference_emoji">إيموجي المحادثة</string>
   <string name="conversation_type_contact">جهة اتصال جامي</string>
-  <string name="conversation_type_private">السحرة الخاصة</string>
-  <string name="conversation_type_group">مجموعة من المجموعات</string>
+  <string name="conversation_type_private">خاص</string>
+  <string name="conversation_type_group">مجموعة</string>
   <string name="conversation_contact_invited">%1$s تم دعوته</string>
   <string name="conversation_contact_added">%1$s متضمن</string>
-  <string name="conversation_contact_left">%1$ يسار</string>
+  <string name="conversation_contact_left">%1$s يسار</string>
   <string name="conversation_search_hint">بحث عن المحادثة</string>
   <string name="today">اليوم</string>
   <string name="yesterday">البارحة</string>
@@ -195,16 +191,16 @@
   <string name="hist_contact_added">تم إضافة جهة إتصال</string>
   <string name="hist_contact_left">الاتصال يسارا</string>
   <string name="hist_invitation_received">تم تلقي دعوة</string>
-  <!--Account Summary-->
+  <!--Account summary-->
   <string name="profile">الملف الشخصى</string>
-  <string name="profile_name">اسم الملف الشخصى</string>
   <string name="profile_message_warning">حسابك مشارك فقط مع جهات إتصالك</string>
   <string name="open_the_gallery">فتح المعرض</string>
-  <string name="take_a_photo">إلتقاط صورة</string>
+  <string name="take_a_photo">التقاط صورة</string>
   <string name="profile_name_hint">إدخال إسمك</string>
   <string name="registered_name">الاسم المسجل</string>
   <string name="no_registered_name">لا يوجد اسم مسجل</string>
   <string name="identity">الهوية</string>
+  <string name="identifier">المعرف</string>
   <string name="account">الحساب</string>
   <string name="link_new_device">ربط جهاز جديد</string>
   <string name="devices">الأجهزة المتصلة</string>
@@ -215,11 +211,12 @@
   <string name="share_your_account_information">شارك معلومات الإتصال الخاصة بي</string>
   <string name="share_label">مشاركة</string>
   <string name="generic_error_migration">خطأ</string>
-  <string name="generic_error_migration_message">حدث خطأ أثناء الترحيل</string>
   <string name="title_share_with">شارك مع...</string>
   <!--Pending invitations-->
   <string name="accept">اقبل</string>
+  <string name="decline">رفض</string>
   <string name="block">حظر</string>
+  <string name="invitation_message">لديك %1$d طلبات جهات اتصال</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">لا توجد جهات إتصال محظورة</string>
   <!--Smartlist-->
@@ -312,7 +309,7 @@
   <string name="bottomSheet_raiseHand_btn">رفع اليد</string>
   <string name="uninstall">إزالة التثبيت</string>
   <string name="reset">إعادة تعيين</string>
-  <!--Swarm Detail-->
+  <!--Swarm Details-->
   <string name="rename_btn">تأكيد</string>
   <string name="tab_members">الأعضاء</string>
   <string name="tab_files">الملفات</string>
@@ -331,6 +328,10 @@
   <string name="jami_id_choose_username">اختر اسم مستخدم</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">مرحبا بك في جامي</string>
+  <!--Conversation details-->
+  <string name="details">التفاصيل</string>
+  <string name="Private">خاص</string>
   <!--Donation-->
+  <string name="donation_card_not_now">ليس الآن</string>
   <!--Extension-->
 </resources>

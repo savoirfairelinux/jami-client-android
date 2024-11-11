@@ -32,9 +32,6 @@
   <string name="pref_blackList_title">屏蔽列表</string>
   <string name="pref_blackList_summary">检查您的屏蔽列表</string>
   <string name="pref_delete_account_title">删除账户</string>
-  <string name="pref_delete_account_summary">将您的账户从本设备删除</string>
-  <string name="pref_persistNotification_title">后台运行</string>
-  <string name="pref_persistNotification_summary">允许在后台运行以接收电话和消息。</string>
   <string name="pref_newGroup_title">启用群組聊天</string>
   <string name="pref_newGroup_summary">启用在 Jami 中建立群組</string>
   <string name="pref_logs_title">诊断日志</string>
@@ -48,11 +45,7 @@
   <string name="pref_link_preview_title">在对话中显示链接预览</string>
   <string name="pref_link_preview_summary">预览需要从第三方服务器下载内容。</string>
   <!--Notifications Visibility-->
-  <string name="notification_public">公开\n（在锁定屏幕上显示通知与内容）\n</string>
-  <string name="notification_private">隐私\n（在锁定屏幕上显示通知，但隐藏内容）\n</string>
-  <string name="notification_secret">秘密\n（不在锁定屏幕上显示通知） </string>
   <!--Extension-->
   <string name="pref_extensions_title">扩展</string>
   <string name="extension_invalid_signature"><b>%1$s</b>具有无效的签名</string>
-  <string name="extension_force_install">强制 \n 安装</string>
 </resources>

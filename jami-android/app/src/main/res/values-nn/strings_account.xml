@@ -149,9 +149,7 @@
   <string name="account_sip_cannot_be_registered_message">Du kan fortsette med kontooppbygginga eller redigera informasjonen din her. Utgåva er òg mogleg seinare i kontoinnstillingane.</string>
   <string name="account_no_network_title">Netverksfeil</string>
   <string name="account_device_added_title">Tilsett kontoapparat</string>
-  <string name="account_device_added_message">Du har sett opp kontoen din på denne telefonen.</string>
   <string name="account_device_updated_title">Rekontoapparat oppdatert</string>
-  <string name="account_device_updated_message">Du har oppdatert kontoen din til Jami med suksess.</string>
   <string name="account_sip_register_anyway">Registrer deg likevel.</string>
   <!--TV-->
   <string name="account_tv_settings_header">Innstillingar på konto</string>

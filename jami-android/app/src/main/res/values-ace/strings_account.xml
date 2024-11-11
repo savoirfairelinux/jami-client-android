@@ -148,9 +148,7 @@
   <string name="account_sip_cannot_be_registered_message">توڠڬوڤكن ڤروسيس ڤڠڬوناكن ايكون اتاو مڠمبيل معلومت اتاو ڤڠڬوناكن اين. ڤڠڬوناكن لاڬي ممبنتو دالم ڤڠڬوناكن ايكون.</string>
   <string name="account_no_network_title">خطأ شبكه</string>
   <string name="account_device_added_title">ڤڠڬوناكن ڤڠڬوناكن</string>
-  <string name="account_device_added_message">تو اونتوق ممبنتو ايكونت جامي دالم اين ڤرودوک.</string>
   <string name="account_device_updated_title">ڤڠڬوناكن ڤڠڬوناكن</string>
-  <string name="account_device_updated_message">توڠڬوڠكن كاوسن جامي.</string>
   <string name="account_sip_register_anyway">هرچيچيچي اونتوق مڠمبيل</string>
   <!--TV-->
   <string name="account_tv_settings_header">ڤڠاجرن حساب</string>

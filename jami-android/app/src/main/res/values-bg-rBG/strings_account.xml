@@ -149,9 +149,7 @@
   <string name="account_sip_cannot_be_registered_message">Можете да продължите с процеса по създаване на профил, или да редактирате информацията си тук. Можете да редактирате информацията и по-късно, в настройките на профила.</string>
   <string name="account_no_network_title">Мрежова грешка</string>
   <string name="account_device_added_title">Профилът е добавен на устройството</string>
-  <string name="account_device_added_message">Успешно си създал акаунта си на Джами.</string>
   <string name="account_device_updated_title">Профилът на устройството е обновен</string>
-  <string name="account_device_updated_message">Успешно сте актуализирали акаунта си в Jami.</string>
   <string name="account_sip_register_anyway">Регистриране въпреки това</string>
   <!--TV-->
   <string name="account_tv_settings_header">Настройки на сметката</string>
@@ -169,7 +167,6 @@
   <string name="account_link_prompt_pin">Въведете ПИН</string>
   <string name="account_new_button">Създаване на профил в Jami</string>
   <string name="account_link_export_button">Свържете ново устройство</string>
-  <string name="account_link_show_button">Покажете повече свързано устройство</string>
   <string name="account_link_hide_button">Скрийте свързано устройство</string>
   <string name="account_start_export_button">Генериране на PIN код</string>
   <string name="account_end_export_button">затваряне</string>
@@ -180,6 +177,7 @@
   <string name="help_credentials_enter">Введете идентификационните данни на организацията си</string>
   <string name="help_connect_password_enter">Введете паролата на организацията си</string>
   <string name="account_connect_prompt_username">Потребителско име</string>
+  <string name="account_enter_username">Въведете потребителско име</string>
   <!--Name registration-->
   <string name="error_username_empty">Въведете потребителско име</string>
   <string name="no_registered_name_for_account">Без регистрирано име</string>

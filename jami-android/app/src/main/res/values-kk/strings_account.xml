@@ -149,9 +149,7 @@
   <string name="account_sip_cannot_be_registered_message">Сіз тіркелгі құру процесіне жалғаса аласыз немесе ақпаратты осы жерден өңдеуіңіз мүмкін.</string>
   <string name="account_no_network_title">Желі қатесі</string>
   <string name="account_device_added_title">Есептік жазба құрылғысы қосылды</string>
-  <string name="account_device_added_message">Сіз осы құрылғыда Jami тіркелгіңізді сәтті орнаттыңыз.</string>
   <string name="account_device_updated_title">Есептік жазба құрылғысы жаңартылды</string>
-  <string name="account_device_updated_message">Сіз Жами тіркелгіңізді сәтті жаңарттыңыз.</string>
   <string name="account_sip_register_anyway">Қалай болса да тіркелсеңіз</string>
   <!--TV-->
   <string name="account_tv_settings_header">Есепшоттың параметрлері</string>

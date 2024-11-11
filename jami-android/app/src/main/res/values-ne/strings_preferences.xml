@@ -32,9 +32,6 @@
   <string name="pref_blackList_title">ब्लक सूची</string>
   <string name="pref_blackList_summary">आफ्नो ब्लक सूची जाँच गर्नुहोस्।</string>
   <string name="pref_delete_account_title">खाता मेटाउने</string>
-  <string name="pref_delete_account_summary">तपाईँको खाता यस यन्त्रबाट मेटाउनुहोस्</string>
-  <string name="pref_persistNotification_title">पृष्ठभूमिमा दौड</string>
-  <string name="pref_persistNotification_summary">फोन र सन्देशहरू प्राप्त गर्न पृष्ठभूमिमा दौडने अनुमति दिनुहोस्।</string>
   <string name="pref_newGroup_title">समूह च्याट सक्षम गर्नुहोस्</string>
   <string name="pref_newGroup_summary">Jami मा समूह सिर्जना गर्न सक्षम गर्नुहोस्।</string>
   <string name="pref_logs_title">निदानको लागि अभिलेख</string>
@@ -48,9 +45,5 @@
   <string name="pref_link_preview_title">वार्तालापमा लिंक पूर्वावलोकन देखाउनुहोस्</string>
   <string name="pref_link_preview_summary">पूर्वावलोकनहरू तेस्रो पक्ष सर्भरहरूबाट सामग्री डाउनलोड गर्न आवश्यक छ।</string>
   <!--Notifications Visibility-->
-  <string name="notification_public">सार्वजनिक सूचनाहरू र तिनीहरूको सामग्री लक स्क्रिनमा देखाउनुहोस्)</string>
-  <string name="notification_private">निजी \n(सन्देशहरू देखाउनुहोस् तर तिनीहरूको सामग्री लक स्क्रिनमा लुकाउनुहोस्) \n</string>
-  <string name="notification_secret">गुप्त \n(लक स्क्रीनमा सूचनाहरू देखाउँदैन)</string>
   <!--Extension-->
-  <string name="extension_force_install">बलियो स्थापना</string>
 </resources>

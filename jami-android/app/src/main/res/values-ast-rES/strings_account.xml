@@ -149,9 +149,7 @@
   <string name="account_sip_cannot_be_registered_message">El so nome ye\'l de la ciudá de Nueva York.</string>
   <string name="account_no_network_title">Error de red</string>
   <string name="account_device_added_title">Un dispositivu de cuenta añadíu</string>
-  <string name="account_device_added_message">Hai configuráu con ésitu la so cuenta Jami nun dispositivu.</string>
   <string name="account_device_updated_title">Dispositivu de cuenta actualizáu</string>
-  <string name="account_device_updated_message">Hai actualizaciones con ésitu na cuenta Jami.</string>
   <string name="account_sip_register_anyway">En cualquier casu, rexistrense.</string>
   <!--TV-->
   <string name="account_tv_settings_header">Configuración de cuenta</string>

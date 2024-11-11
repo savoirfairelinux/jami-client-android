@@ -32,9 +32,6 @@
   <string name="pref_blackList_title">Danh sách khối</string>
   <string name="pref_blackList_summary">Hãy kiểm tra danh sách các khối.</string>
   <string name="pref_delete_account_title">xóa tài khoản</string>
-  <string name="pref_delete_account_summary">Xóa tài khoản của bạn từ thiết bị này</string>
-  <string name="pref_persistNotification_title">Đi ngược lại</string>
-  <string name="pref_persistNotification_summary">Cho phép chạy trong nền để nhận cuộc gọi và tin nhắn.</string>
   <string name="pref_newGroup_title">Khả năng trò chuyện nhóm</string>
   <string name="pref_newGroup_summary">Khả năng tạo nhóm ở Jami.</string>
   <string name="pref_logs_title">Các nhật ký chẩn đoán</string>
@@ -48,9 +45,5 @@
   <string name="pref_link_preview_title">Hình trước liên kết trong các cuộc trò chuyện</string>
   <string name="pref_link_preview_summary">Xem trước yêu cầu tải nội dung từ các máy chủ bên thứ ba.</string>
   <!--Notifications Visibility-->
-  <string name="notification_public">Công cộng \n(mở các thông báo và nội dung của chúng trên màn hình khóa) \n</string>
-  <string name="notification_private">Cảnh báo riêng tư nhưng ẩn nội dung của chúng trên màn hình khóa)</string>
-  <string name="notification_secret">Bí mật \n(không hiển thị thông báo trên màn hình khóa)</string>
   <!--Extension-->
-  <string name="extension_force_install">buộc \n cài đặt</string>
 </resources>

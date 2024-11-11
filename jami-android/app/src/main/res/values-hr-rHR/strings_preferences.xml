@@ -24,9 +24,6 @@
   <string name="pref_blackList_title">Popis blokova</string>
   <string name="pref_blackList_summary">Provjeri popis blokiranja.</string>
   <string name="pref_delete_account_title">Izbrišite račun</string>
-  <string name="pref_delete_account_summary">Izbrišite svoj nalog sa ovog uređaja</string>
-  <string name="pref_persistNotification_title">Ulazi u pozadin</string>
-  <string name="pref_persistNotification_summary">Pusti da se radi u pozadini da bi primio pozive i poruke.</string>
   <string name="pref_newGroup_title">Aktivirajte grupni razgovor</string>
   <string name="pref_newGroup_summary">omogućiti stvaranje grupa u Jamiju.</string>
   <string name="pref_logs_title">U skladu s člankom 3.</string>
@@ -40,9 +37,5 @@
   <string name="pref_link_preview_title">Pokaži preview linkova u razgovorima</string>
   <string name="pref_link_preview_summary">Preview zahtijeva preuzimanje sadržaja sa trećih strana servera.</string>
   <!--Notifications Visibility-->
-  <string name="notification_public">Publika \n(prikazi i njihov sadržaj na zaslonu zaključavanja) \n</string>
-  <string name="notification_private">Privatne \n(prikazuju obavijesti, ali skrivaju njihov sadržaj na zaslonu zaključavanja)\n</string>
-  <string name="notification_secret">Tajna \n(ne prikazuje obavijesti na zaslonu zaključavanja)</string>
   <!--Extension-->
-  <string name="extension_force_install">prisiljava \n instalirati</string>
 </resources>
