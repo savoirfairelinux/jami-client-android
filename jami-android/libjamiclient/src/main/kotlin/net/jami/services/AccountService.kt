@@ -1663,6 +1663,51 @@ class AccountService(
         }
     }
 
+    enum class ConnectionStatus(val value: Int) {
+        Connected(0), TLS(1), ICE(2), Connecting(3), Waiting(4);
+        companion object {
+            fun fromInt(state: Int) = ConnectionStatus.entries[state]
+        }
+    }
+
+    data class DeviceConnection(
+        val accountId: String,
+        val id: String,
+        val device: String,
+        val status: ConnectionStatus,
+        val peer: String,
+        val remoteAddress: String?
+    )
+
+    fun monitorConnections(): Observable<Pair<String, List<Pair<String, List<DeviceConnection>>>>> =
+        currentAccountSubject
+            .switchMap { monitorConnections(it.accountId) }
+
+    private fun monitorConnections(accountId: String): Observable<Pair<String, List<Pair<String, List<DeviceConnection>>>>> =
+        Observable.interval(0, 1, TimeUnit.SECONDS, scheduler)
+            .map { _ ->
+                Pair(accountId, JamiService.getConnectionList(accountId, "")
+                    .mapNotNull { it: Map<String, String?> ->
+                        val status = ConnectionStatus.fromInt(it["status"]?.toInt() ?: 4)
+                        if (status == ConnectionStatus.Waiting || status == ConnectionStatus.Connecting) {
+                            null
+                        } else {
+                            DeviceConnection(
+                                accountId=accountId,
+                                id=it["id"]!!,
+                                device=it["device"]!!,
+                                status=status,
+                                peer=it["peer"]!!,
+                                remoteAddress=it["remoteAddress"]
+                            )
+                        }
+                    }
+                    .groupBy { it.peer }
+                    .map { Pair(it.key, it.value) }
+                    .sortedBy { it.first }
+                )
+            }
+
     companion object {
         private val TAG = AccountService::class.java.simpleName
         private const val VCARD_CHUNK_SIZE = 1000

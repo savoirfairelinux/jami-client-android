@@ -34,6 +34,7 @@ import cx.ring.R
 import cx.ring.application.JamiApplication
 import cx.ring.client.LogsActivity
 import cx.ring.databinding.FragSettingsBinding
+import cx.ring.fragments.ConnectionMonitorFragment
 import cx.ring.interfaces.AppBarStateListener
 import cx.ring.mvp.BaseSupportFragment
 import cx.ring.settings.extensionssettings.ExtensionDetails
@@ -49,8 +50,6 @@ import net.jami.mvp.GenericView
 import net.jami.settings.SettingsPresenter
 import net.jami.settings.SettingsViewModel
 import net.jami.utils.DonationUtils
-import net.jami.utils.DonationUtils.endDonationTimeMillis
-import net.jami.utils.DonationUtils.startDonationTimeMillis
 
 @AndroidEntryPoint
 class SettingsFragment :
@@ -129,6 +128,17 @@ class SettingsFragment :
             }
             settingsLogs.setOnClickListener { v: View ->
                 startActivity(Intent(v.context, LogsActivity::class.java))
+            }
+            connectionMonitor.setOnClickListener { v: View ->
+                val content = ConnectionMonitorFragment()
+                childFragmentManager
+                    .beginTransaction()
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                    .replace(R.id.fragment_container, content, VIDEO_SETTINGS_TAG)
+                    .addToBackStack(VIDEO_SETTINGS_TAG).commit()
+                fragmentContainer.isVisible = true
+                donateButton.isVisible = false
+                backPressedCallback.isEnabled = true
             }
             toolbar.setNavigationOnClickListener {
                 activity?.onBackPressedDispatcher?.onBackPressed()
@@ -293,7 +303,7 @@ class SettingsFragment :
         binding?.appBar?.setLiftOnScrollTargetView(v)
     }
 
-    override fun onToolbarTitleChanged(title: String) {
+    override fun onToolbarTitleChanged(title: CharSequence) {
         binding?.toolbar?.title = title
     }
     //=============== AppBar management end ===================

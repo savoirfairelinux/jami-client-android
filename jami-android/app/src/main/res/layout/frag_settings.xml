@@ -757,7 +757,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:id="@+id/system_diagnostics_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:contentDescription="@string/pref_persistNotification_summary"
+                    android:contentDescription="@string/pref_logs_title"
                     android:src="@drawable/baseline_article_24"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
@@ -787,6 +787,49 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 </LinearLayout>
 
             </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/connection_monitor"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/padding_large">
+
+                <ImageView
+                    android:id="@+id/connection_monitor_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/pref_connection_monitor_summary"
+                    android:src="@drawable/baseline_settings_ethernet_24"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="32dp"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@+id/connection_monitor_image"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/ListPrimary"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:text="@string/pref_connection_monitor" />
+
+                    <TextView
+                        style="@style/ListSecondary"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/pref_logs_summary" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
