@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a71371b_99c64e53",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-11-11T20:38:28Z",
+      "side": 1,
+      "message": "the underlying issue is the updated text which is too long for a button label.\nwe need shorter texts",
+      "revId": "c20c4644e5ad5cf7ee544c08015daf445eb33f0e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
