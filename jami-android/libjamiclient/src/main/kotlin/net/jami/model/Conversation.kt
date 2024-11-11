@@ -858,7 +858,7 @@ class Conversation : ConversationHistory {
 }
 
 enum class MemberRole {
-    ADMIN, MEMBER, INVITED, BLOCKED, LEFT;
+    ADMIN, MEMBER, INVITED, BLOCKED, LEFT, UNKNOWN;
 
     companion object{
         fun fromString(value: String): MemberRole = when(value){
@@ -867,6 +867,7 @@ enum class MemberRole {
             "invited" -> INVITED
             "banned" -> BLOCKED
             "left" -> LEFT
+            "" -> UNKNOWN
             else -> throw IllegalArgumentException("Unknown member role: $value")
         }
     }
