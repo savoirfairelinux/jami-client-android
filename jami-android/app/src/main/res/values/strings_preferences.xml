@@ -63,6 +63,9 @@
     <string name="pref_logs_start">Start Logging</string>
     <string name="pref_logs_stop">Stop logging</string>
 
+    <string name="pref_connection_monitor">Connection monitor</string>
+    <string name="pref_connection_monitor_summary">Monitor peer to peer connections</string>
+
     <string name="pref_typing_title">Enable typing indicators</string>
     <string name="pref_typing_summary">Send and receive typing indicators showing that a message is being typed.</string>
 
