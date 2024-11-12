@@ -5,7 +5,7 @@
     style="?attr/materialCardViewFilledStyle"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="8dp"
+    android:layout_margin="4dp"
     android:layout_marginHorizontal="8dp"
     app:cardBackgroundColor="?attr/colorSurfaceContainerLow">
 
