@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e3ab636c_945940ab",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-11-12T08:28:21Z",
+      "side": 1,
+      "message": "Should the topic for this patch be set to `unify-terminology`? Thank you",
+      "revId": "0a3ac93dccb9e3e3e86e138f8c799bd1a89afcdb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
