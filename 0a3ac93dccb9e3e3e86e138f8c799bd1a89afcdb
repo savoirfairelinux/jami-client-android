@@ -34,6 +34,24 @@
       "parentUuid": "e3ab636c_945940ab",
       "revId": "0a3ac93dccb9e3e3e86e138f8c799bd1a89afcdb",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3aafbcc4_c5df1bf6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-11-12T10:33:19Z",
+      "side": 1,
+      "message": "Perhaps `Decline call` should be used instead of just `Decline`. There is already `Decline invitation`",
+      "parentUuid": "44deb9c1_f75e3503",
+      "revId": "0a3ac93dccb9e3e3e86e138f8c799bd1a89afcdb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
