@@ -219,7 +219,7 @@ class JamiAccountSummaryFragment :
         mBinding?.appBar?.setLiftOnScrollTargetView(v)
     }
 
-    override fun onToolbarTitleChanged(title: CharSequence) {
+    override fun onToolbarTitleChanged(title: String) {
         mBinding?.toolbar?.title = title
     }
     //=============== AppBar management end ===================
