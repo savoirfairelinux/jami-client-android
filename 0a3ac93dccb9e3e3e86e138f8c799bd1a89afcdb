@@ -16,6 +16,24 @@
       "message": "Should the topic for this patch be set to `unify-terminology`? Thank you",
       "revId": "0a3ac93dccb9e3e3e86e138f8c799bd1a89afcdb",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "44deb9c1_f75e3503",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 943
+      },
+      "writtenOn": "2024-11-12T08:54:23Z",
+      "side": 1,
+      "message": "Actually \"Accept with audio\" and \"Accept with video\" should be enough for all clients. Microsoft Teams also uses these strings: https://support.microsoft.com/en-us/office/answer-a-call-in-microsoft-teams-780c6946-2061-4efc-82c3-336aabfc7da0\n\nAnyway would it be technically possible that a too long text will automatically generate a line break? For example if you use a phone with very low screen resolution like Unihertz Jelly Pro?",
+      "parentUuid": "e3ab636c_945940ab",
+      "revId": "0a3ac93dccb9e3e3e86e138f8c799bd1a89afcdb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
