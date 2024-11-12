@@ -302,7 +302,7 @@ class AccountService(
                         Log.w(TAG, "conversation member: " + i.getKey() + " " + i.getValue());
                     }*/
                     val uri = Uri.fromId(member["uri"]!!)
-                    val role = MemberRole.fromString(member["role"] ?: "")
+                    val role = MemberRole.fromString(member["role"]!!)
                     val lastDisplayed = member["lastDisplayed"]
                     var contact = conversation.findContact(uri)
                     if (contact == null) {
