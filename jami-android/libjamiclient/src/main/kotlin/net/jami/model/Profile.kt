@@ -30,7 +30,7 @@ class ContactViewModel(val contact: Contact, val profile: Profile, val registere
     val displayUri: String
         get() = registeredName ?: contact.uri.toString()
     val displayName: String
-        get() = profile.displayName?.ifBlank { displayUri } ?: displayUri
+        get() = profile.displayName ?: displayUri
 
     fun matches(query: String): Boolean =
         profile.displayName != null && profile.displayName.lowercase().contains(query)
