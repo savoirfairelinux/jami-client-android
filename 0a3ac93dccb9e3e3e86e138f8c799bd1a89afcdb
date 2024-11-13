@@ -52,6 +52,24 @@
       "parentUuid": "44deb9c1_f75e3503",
       "revId": "0a3ac93dccb9e3e3e86e138f8c799bd1a89afcdb",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "90a3a480_c4a63e38",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 943
+      },
+      "writtenOn": "2024-11-13T14:05:23Z",
+      "side": 1,
+      "message": "\"Decline call\" sounds good but will this text be too long? So we can avoid overlapping text?",
+      "parentUuid": "3aafbcc4_c5df1bf6",
+      "revId": "0a3ac93dccb9e3e3e86e138f8c799bd1a89afcdb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
