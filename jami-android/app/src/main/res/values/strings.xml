@@ -572,15 +572,15 @@ along with this program; if not, write to the Free Software
     <string name="tab_files">Files</string>
     <string name="tab_settings">Settings</string>
     <string name="not_admin_toast">Only admins can edit the information of this group</string>
-    <string name="dialogtitle_title">Edit Swarm title</string>
-    <string name="dialogtitle_description">Edit Swarm description</string>
+    <string name="dialogtitle_title">Edit group title</string>
+    <string name="dialogtitle_description">Edit group description</string>
     <string name="dialog_hint_title">Title</string>
     <string name="dialog_hint_description">Description</string>
     <string name="picker_title">Select contacts</string>
     <string name="picker_btn">Select contacts</string>
     <string name="no_contact_to_add">You have no contact to add</string>
     <string name="bottomsheet_contact">Contact Jami\n%1$s</string>
-    <string name="bottomsheet_remove">Remove from the swarm</string>
+    <string name="bottomsheet_remove">Remove member</string>
     <string name="error_open_no_app_found">No application found to handle this file: %1$s</string>
     <string name="swarm_detail_no_document">You have no documents yet.</string>
     <string name="group_admin">Admin</string>
@@ -604,12 +604,12 @@ along with this program; if not, write to the Free Software
     <!--  Conversation details  -->
     <string name="details">Details</string>
     <string name="secure_p2p_connection">Secure peer-to-peer connection</string>
-    <string name="swarm_type">Type of conversation</string>
+    <string name="swarm_type">Type</string>
     <string name="Private">Private</string>
     <string name="swarm_id">Swarm ID</string>
     <string name="show_qr_code">Show QR code</string>
     <string name="show_certificate">Show certificate</string>
-    <string name="mute_conversation">Mute Conversation</string>
+    <string name="mute_conversation">Mute conversation</string>
 
     <!-- Donation -->
     <string name="donation_card_description">If you enjoy using Jami and believe in our mission, would you make a donation?</string>
