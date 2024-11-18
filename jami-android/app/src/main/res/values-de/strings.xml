@@ -263,6 +263,7 @@
   <string name="profile_message_warning">Ihr Profil wird nur mit Ihren Kontakten geteilt</string>
   <string name="open_the_gallery">Galerie öffnen</string>
   <string name="take_a_photo">Foto aufnehmen</string>
+  <string name="remove_photo">Foto entfernen</string>
   <string name="profile_name_hint">Namen eingeben</string>
   <string name="registered_name">Registrierter Name</string>
   <string name="no_registered_name">Kein Name registriert</string>

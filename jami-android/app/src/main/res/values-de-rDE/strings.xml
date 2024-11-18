@@ -84,6 +84,7 @@
   <!--Account summary-->
   <string name="profile_name">Profilname</string>
   <string name="take_a_photo">Bild aufnehmen</string>
+  <string name="remove_photo">Foto entfernen</string>
   <string name="identifier">Kennung</string>
   <!--Share fragment-->
   <string name="share_contact_information">Kontaktinformationen teilen</string>

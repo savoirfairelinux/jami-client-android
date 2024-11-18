@@ -263,6 +263,7 @@
   <string name="profile_message_warning">A névjegyed csak a kapcsolattartóival kerül megosztásra</string>
   <string name="open_the_gallery">Gyűjtemény megnyitása</string>
   <string name="take_a_photo">Fénykép készítése</string>
+  <string name="remove_photo">Fénykép eltávolítása</string>
   <string name="profile_name_hint">Név megadása</string>
   <string name="registered_name">Bejegyzett név</string>
   <string name="no_registered_name">Nincs bejegyzett név</string>

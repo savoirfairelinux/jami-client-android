@@ -121,6 +121,7 @@
   <string name="export_account_wait_title">Prašome palaukti...</string>
   <string name="export_account_wait_message">Eksportuojama paskyros informacija</string>
   <string name="account_export_file">Padaryti paskyros atsarginę kopiją</string>
+  <string name="account_export_end_decryption_message">Neteisingas slaptažodis. Bandykite dar kartą naudodami teisingą slaptažodį</string>
   <string name="account_export_end_network_title">Tinklo klaida</string>
   <string name="account_export_end_error_title">Klaida</string>
   <string name="account_enter_password">Įveskite slaptažodį</string>
@@ -131,6 +132,7 @@
   <string name="ring_account_identity">Tapatybė</string>
   <string name="account_migration_title_dialog">Paskyros perkėlimas</string>
   <string name="account_update_needed">Reikalingas atnaujinimas</string>
+  <string name="account_cannot_be_found_title">Paskyros klaida</string>
   <string name="account_sip_cannot_be_registered_message">Galite tęsti paskyros kūrimo procesą arba taisyti savo informaciją čia. Vėliau taisymas taip pat yra įmanomas paskyros nustatymuose.</string>
   <string name="account_no_network_title">Tinklo klaida</string>
   <string name="account_device_added_title">Paskyros įrenginys pridėtas</string>

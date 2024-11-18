@@ -4,9 +4,11 @@
   <string name="submit_issue_title">Soumettre un bug</string>
   <string name="submit_issue_action_description"><u>Créer un nouveau ticket</u></string>
   <string name="section_license">Licence</string>
+  <string name="sponsor_section">Jami est un logiciel libre développé et supporté par</string>
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Contribuer</string>
   <string name="version_section">Version</string>
+  <string name="no_browser_app_installed">Aucun navigateur Web trouvé; installez-en un pour voir cette page</string>
   <string name="website_chooser_title">Voir le site web en utilisant...</string>
   <string name="license">Ce logiciel est fourni en l\'état, sans garantie d\'aucune sorte. Pour plus de détails, se référer à la <u>GNU General Public License version 3 ou plus récente</u></string>
   <string name="description">Jami est un logiciel libre de communication universel qui respecte la vie privée et l\'intimité de ses utilisateurs.</string>
@@ -38,6 +40,7 @@
   <string name="menu_item_about">À propos de Jami</string>
   <string name="video_setting_title">Paramètres vidéo </string>
   <!--Dialing Fragment-->
+  <string name="dial_number">Composer un numéro</string>
   <!--History Fragment-->
   <!--Home Fragment-->
   <string name="invitation_card_title">Invitations reçues</string>
@@ -72,6 +75,7 @@
   <string name="notif_channel_background_service_descr">Autorise la réception d\'appels et de messages à n\'importe quel moment.</string>
   <string name="notif_group_calls">Appels</string>
   <string name="notif_inprogress_group_call">Appel en cours</string>
+  <string name="notif_background_service">Jami s\'exécute actuellement en arrière-plan</string>
   <string name="notif_mark_as_read">Marquer comme lu</string>
   <string name="notif_dismiss">Ignorer</string>
   <string name="notif_reply">Répondre</string>
@@ -98,6 +102,7 @@
   <string name="hist_in_call">Appel entrant de %1$s</string>
   <string name="hist_out_call">Appel sortant de %1$s</string>
   <string name="call_duration">Dernier %s</string>
+  <string name="start_error_title">Impossible de démarrer Jami !</string>
   <string name="action_call_accept">Prendre l\'appel</string>
   <string name="action_call_accept_audio">Répondre en audio seulement</string>
   <string name="action_call_accept_video">Répondre en vidéo</string>
@@ -114,6 +119,7 @@
   <string name="ab_action_video_call">Démarrer appel video</string>
   <string name="ab_action_change_screen_orientation">Changer l\'orientation de l\'écran </string>
   <string name="share_via">Partager par</string>
+  <string name="write_a_message">Écrire un message</string>
   <string name="scan_qr">Numériser le code QR</string>
   <string name="qr_code">Code QR</string>
   <string name="qr_code_not_contact">QR code de contact Jami invalide</string>
@@ -134,9 +140,11 @@
   <string name="conversation_send_video">Enregistrer un message vidéo</string>
   <string name="conversation_share_location">Partager votre position</string>
   <string name="ongoing_group_call">Appel en cours</string>
+  <string name="started_call">Appel démarré</string>
   <string name="in_reply_to">En réponse à</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Permission d\'accès à la caméra</string>
+  <string name="permission_dialog_camera_message">Les conversations vidéo nécessitent la permission d\'utiliser la caméra. Veuillez l\'autoriser.</string>
   <string name="camera_error">Une erreur s\'est produite en démarrant la caméra.</string>
   <!--Ringtone activity-->
   <string name="ringtone_error_title">Erreur</string>
@@ -146,10 +154,13 @@
   <string name="ringtone_custom_label">Personnaliser</string>
   <string name="ringtone_jami_tones">Les sonneries de Jami</string>
   <!--Read contacts permission-->
+  <string name="permission_dialog_read_contacts_message">Jami nécessite d\'avoir la permission \"Lire les contacts\" pour activer cette fonctionnalité. Veuillez la lui accorder.</string>
   <!--Write call log permission-->
+  <string name="permission_dialog_write_call_log_message">Jami doit avoir la permission \"Écrire un journal d\'appels\" pour activer cette fonctionnalité. Veuillez la lui accorder.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Numériser le code QR du compte que vous désirez ajouter.</string>
   <string name="title_activity_qrcode">Partager mon compte</string>
+  <string name="error_scan_no_camera_permissions">La numérisation des codes QR a besoin des permissions de la caméra pour fonctionner</string>
   <string name="tab_code">Mon code</string>
   <string name="tab_scan">Numériser le code</string>
   <!--Settings-->
@@ -212,12 +223,16 @@
   <string name="conversation_search_hint">Rechercher des conversations</string>
   <string name="audio_recorder_error">L\'application d\'enregistrement audio n\'est pas trouvée.</string>
   <string name="video_recorder_error">L\'application d\'enregistrement vidéo n\'est pas trouvée.</string>
+  <string name="taking_picture_error">Une erreur s\'est produite en prenant une photo.</string>
+  <string name="find_picture_error">Une erreur s\'est produite en recherchant une image.</string>
   <string name="open_camera_error">Une erreur s\'est produite en démarrant la caméra.</string>
   <string name="starting_recorder_error">Une erreur s\'est produite en démarrant l\'enregistreur.</string>
   <string name="starting_camera_error">Une erreur s\'est produite en démarrant la caméra.</string>
   <string name="browser_error">Aucun explorateur de fichier sur cet appareil. </string>
   <string name="import_archive_error">Une erreur s\'est produite pendant l\'import d\'une archive.</string>
   <string name="export_archive_error">Une erreur s\'est produite pendant l\'export d\'une archive.</string>
+  <string name="load_ringtone_error">Une erreur s\'est produite en chargeant la sonnerie.</string>
+  <string name="sharing_log_error">Une erreur s\'est produite lors du partage des journaux.</string>
   <string name="no_native_crash">Aucun récent crash natif</string>
   <string name="today">Aujourd\'hui</string>
   <string name="yesterday">Hier</string>
@@ -249,6 +264,7 @@
   <string name="profile_message_warning">Votre profil n\'est partagé qu\'avec vos contacts</string>
   <string name="open_the_gallery">Ouvrir la galerie</string>
   <string name="take_a_photo">Prendre une photo</string>
+  <string name="remove_photo">Supprimer l\'image</string>
   <string name="profile_name_hint">Entrez votre nom</string>
   <string name="registered_name">Nom enregistré</string>
   <string name="no_registered_name">Aucun nom enregistré</string>
@@ -265,6 +281,7 @@
   <string name="share_contact_information">Partager les informations du contact</string>
   <string name="share_label">Partager</string>
   <string name="generic_error_migration">Erreur</string>
+  <string name="generic_error_migration_message">Une erreur s\'est produite pendant la migration du compte.</string>
   <string name="title_share_with">Partager avec...</string>
   <!--Pending invitations-->
   <string name="accept">Accepter</string>
@@ -344,8 +361,11 @@
   <string name="tv_send_video">Envoyer le média</string>
   <string name="tv_action_more">Plus</string>
   <string name="conversation_input_speech_hint">Dites quelque chose..</string>
+  <string name="audio_permission_denied">L\'accès à votre microphone est désactivé. Veuillez l\'activer dans les paramètres.</string>
+  <string name="camera_permission_denied">L\'accès à votre caméra est désactivé. Veuillez l\'activer dans les paramètres.</string>
   <string name="speech_recogniton_unavailable">La reconnaissance vocale n\'est pas disponible.</string>
   <string name="audio_permission_rationale_title">Autorisation audio nécessaire</string>
+  <string name="camera_permission_rationale_title">Autorisation vidéo nécessaire</string>
   <string name="audio_permission_rationale_message">Jami a besoin de l\'autorisation du microphone pour utiliser les fonctions de synthèse vocale et d\'enregistrement audio. Cette autorisation sera demandée à l\'étape suivante.</string>
   <string name="camera_permission_rationale_message">Jami a besoin de l\'autorisation de la caméra pour enregistrer des vidéos et passer des appels vidéo. Cette autorisation sera demandée à l\'étape suivante.</string>
   <string name="unable_to_start_recorder">Impossible de démarrer l\'enregistrement audio.</string>

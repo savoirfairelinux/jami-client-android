@@ -185,7 +185,7 @@
   <string name="swarm_group_action_leave">Lascia il gruppo</string>
   <string name="swarm_group_action_leave_title">Lasciare questo gruppo?</string>
   <string name="swarm_group_action_leave_message">Ciò rimuoverà la conversazione dall\'elenco delle conversazioni</string>
-  <string name="conversation_action_copy_peer_number">Copiare l\'identificatore del contatto</string>
+  <string name="conversation_action_copy_peer_number">Copia l\'identificatore del contatto</string>
   <string name="copied_to_clipboard">%1$s copiato negli appunti</string>
   <string name="conversation_action_select_peer_number">Seleziona un numero</string>
   <string name="conversation_action_block_this">Blocca contatto</string>

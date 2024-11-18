@@ -173,12 +173,15 @@ Vous pourrez apporter des modifications à ce compte plus tard.</string>
   <string name="account_update_needed">Mise à jour nécessaire</string>
   <string name="account_cannot_be_found_title">Erreur liée au compte</string>
   <string name="account_cannot_be_found_message">Le compte ne peut être trouvé sur le réseau Jami. Vérifiez qu\'il a bien été exporté par un autre appareil et que les identifiants fournis sont corrects.</string>
+  <string name="jams_account_cannot_be_found_message">Une erreur s\'est produite pendant la connexion du compte. Veuillez vérifier votre mot de passe.</string>
   <string name="account_sip_cannot_be_registered_message">Vous pouvez continuer le processus de création du compte ou mettre à jour vos informations ici. Vous pouvez également mettre à jour vos informations plus tard dans les paramètres de compte.</string>
   <string name="account_no_network_title">Erreur de réseau</string>
+  <string name="account_no_network_message">Une erreur de connectivité s\'est produite lors de l\'ajout de compte. Veuillez vérifier votre connectivité.</string>
   <string name="account_device_added_title">Appareil ajouté</string>
   <string name="account_device_added_message">Le compte Jami a été configuré correctement.</string>
   <string name="account_device_updated_title">Appareil mis à jour</string>
   <string name="account_device_updated_message">Le compte a été modifié.</string>
+  <string name="account_cannot_be_updated_message">La mise à jour de l\'appareil associé au compte a échoué. Vérifiez votre mot de passe.</string>
   <string name="account_sip_success_title">Le compte SIP est enregistré.</string>
   <string name="account_sip_success_message">Le compte SIP est enregistré.</string>
   <string name="account_sip_register_anyway">Poursuivre l\'inscription</string>
@@ -239,12 +242,14 @@ Vous pourrez apporter des modifications à ce compte plus tard.</string>
   <string name="account_creation_profile">Créer votre profil</string>
   <string name="account_creation_ring">Créer un compte Jami</string>
   <string name="account_link_title">Lier cet appareil</string>
+  <string name="account_sip_cannot_be_registered">Une erreur s\'est produite pendant l\'enregistrement du compte SIP.</string>
   <!--Edit profile-->
   <string name="account_edit_profile">Modifier votre profile</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Entrer le mot de passe pour confirmer</string>
   <string name="enter_password">Entrez votre mot de passe</string>
   <string name="revoke_device_title">Révoquer l\'appareil</string>
+  <string name="revoke_device_message">Êtes-vous certain de vouloir révoquer %1$s ?</string>
   <string name="revoke_device_wait_title">Veuillez patienter</string>
   <string name="revoke_device_wait_message">Révoquer un appareil</string>
   <string name="rename_device_title">Renommer cet appareil</string>

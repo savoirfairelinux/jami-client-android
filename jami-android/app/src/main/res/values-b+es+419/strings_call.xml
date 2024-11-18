@@ -18,4 +18,6 @@ along with this program; if not, write to the Free Software
 <resources>
     <!-- Call error -->
     <string name="call_error">Ocurrió un error al iniciar la llamada.</string>
+    <string name="screen_sharing_error">Se produjo un error al iniciar la pantalla compartida.</string>
+
     </resources>

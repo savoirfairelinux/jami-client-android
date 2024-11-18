@@ -23,11 +23,17 @@
   <string name="dialog_wait_create_details">正在创建您的账户，请稍等…</string>
   <string name="dialog_wait_update">更新账户</string>
   <string name="dialog_wait_update_details">正在更新您的账户，请稍等…</string>
+  <string name="dialog_warn_ip2ip_account_title">创建空SIP帐户吗？</string>
+  <string name="dialog_warn_ip2ip_account_message">您正在创建一个带有无效主机名的 SIP 账户。 
+  这样的话，您只能拨打和接听 ip 通话。 
+  您可以稍后编辑该账户。</string>
   <string name="account_type_ip2ip">IP 账户</string>
   <string name="help_ring">Jami 账户允许您通过完全分布式的网络与其他人进行安全的点对点通信。</string>
   <string name="help_sip_title">添加 SIP 账户</string>
   <string name="help_sip">配置已有的 SIP 账户。</string>
+  <string name="create_sip_account">添加 SIP 账户</string>
   <!--Strings related to account deletion-->
+  <string name="account_delete_dialog_title">是否删除账户？</string>
   <string name="account_delete_dialog_message">此操作不可撤销。</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">没有注册的账户</string>
@@ -36,6 +42,8 @@
   <string name="account_device_revoke">吊销设备</string>
   <string name="account_device_revocation_success_title">成功</string>
   <string name="account_device_revocation_success">裝置現在已撤銷！</string>
+  <string name="account_device_revocation_error_title">无法注销设备</string>
+  <string name="account_device_revocation_wrong_password">密码错误</string>
   <string name="account_device_revocation_unknown_device">未知的裝置。</string>
   <string name="account_device_revocation_error_unknown">未知的錯誤。</string>
   <string name="account_password_change">更改密码</string>
@@ -103,6 +111,7 @@
   <string name="enabled">启用</string>
   <string name="account_proxy_label">DHT 代理</string>
   <string name="account_proxy_enable_label">使用 DHT 代理</string>
+  <string name="account_proxy_list_enable_label">使用DHT代理列表</string>
   <string name="account_proxy_server_label">DHT 代理地址</string>
   <string name="account_proxy_server_list_label">DHT 代理列表 URL </string>
   <string name="account_sip_proxy_label">代理服務器</string>

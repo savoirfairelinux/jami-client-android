@@ -4,11 +4,19 @@
   <!--Strings related to account creation-->
   <string name="account_selection">选择帐户</string>
   <string name="account_creation_error">创建帐户时出错</string>
+  <string name="dialog_warn_ip2ip_account_title">创建空SIP帐户吗？</string>
+  <string name="dialog_warn_ip2ip_account_message">您正在创建一个带有无效主机名的 SIP 账户。 
+  这样的话，您只能拨打和接听 ip 通话。 
+  您可以稍后编辑该账户。</string>
   <string name="help_sip_title">添加 SIP 账户</string>
+  <string name="create_sip_account">添加 SIP 账户</string>
   <!--Strings related to account deletion-->
+  <string name="account_delete_dialog_title">是否删除账户？</string>
   <string name="account_delete_dialog_message">此操作不可撤销。</string>
   <!--AccountManagementFragment-->
   <string name="normal_devices_titles">关联设备</string>
+  <string name="account_device_revocation_error_title">无法注销设备</string>
+  <string name="account_device_revocation_wrong_password">密码错误</string>
   <string name="account_biometric_disable">禁用生物特征身份验证</string>
   <string name="account_biometric_set">启用生物特征身份验证</string>
   <string name="account_biometric_summary">管理帐户的生物特征身份验证</string>

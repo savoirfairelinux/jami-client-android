@@ -232,6 +232,7 @@
   <string name="export_archive_error">Ndodhi një gabim teksa eksportohej arkivi.</string>
   <string name="load_ringtone_error">Ndodhi një gabim teksa ngarkohej zilja.</string>
   <string name="sharing_log_error">Ndodhi një gabim teksa ndaheshin regjistrat me të tjerë.</string>
+  <string name="no_native_crash">Pa vithisje të afërt të brendshme</string>
   <string name="today">Sot</string>
   <string name="yesterday">Dje</string>
   <!--Contacts-->
@@ -262,6 +263,7 @@
   <string name="profile_message_warning">Profili juaj ndahet vetëm me kontaktet tuaja</string>
   <string name="open_the_gallery">Hape galerinë</string>
   <string name="take_a_photo">Bëni një foto</string>
+  <string name="remove_photo">Hiqe foton</string>
   <string name="profile_name_hint">Jepni emrin tuaj</string>
   <string name="registered_name">Emër i Regjistruar</string>
   <string name="no_registered_name">Pa emër të regjistruar</string>

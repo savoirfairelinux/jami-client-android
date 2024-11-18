@@ -150,7 +150,7 @@ Si potra modificare questo account più tardi.</string>
   <string name="error_passwords_not_equals">Le password non corrispondono</string>
   <string name="export_account_wait_title">Attendere…</string>
   <string name="export_account_wait_message">Esportazione dell\'account in corso</string>
-  <string name="account_export_file">Backup account</string>
+  <string name="account_export_file">Salva l\'account</string>
   <string name="account_export_file_summary">Esegui il backup del tuo account sul tuo dispositivo per ripristinarlo in seguito.</string>
   <string name="account_export_end_decryption_message">Password errata. Riprovare con la password corretta.</string>
   <string name="account_export_end_network_title">Errore di rete</string>

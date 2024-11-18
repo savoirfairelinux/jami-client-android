@@ -27,11 +27,15 @@
   <string name="pref_startOnBoot_title">Ejecutar Jami al inicio</string>
   <string name="pref_startOnBoot_summary">Ejecutar Jami en segundo plano al iniciar el sistema</string>
   <string name="pref_clearHistory_title">Limpiar historial</string>
+  <string name="pref_clearHistory_summary">Borra el historial de todas las conversaciones. Esta acción no se puede deshacer.</string>
   <string name="pref_notification_title">Visibilidad de notificaciones</string>
   <string name="pref_notification_summary">Establecer la visibilidad de las notificaciones en la pantalla de bloqueo.</string>
   <string name="pref_blackList_title">Lista de bloqueos</string>
   <string name="pref_blackList_summary">Revisar tu lista de bloqueos</string>
   <string name="pref_delete_account_title">Borrar cuenta</string>
+  <string name="pref_delete_account_summary">Eliminar cuenta de este dispositivo</string>
+  <string name="pref_persistNotification_title">Ejecutar en segundo plano</string>
+  <string name="pref_persistNotification_summary">Permitir que se ejecute en segundo plano para recibir llamadas y mensajes.</string>
   <string name="pref_newGroup_title">Habilitar chat grupal</string>
   <string name="pref_newGroup_summary">Habilitar la creación de grupos en Jami.</string>
   <string name="pref_logs_title">Registros de diagnóstico</string>
@@ -45,7 +49,27 @@
   <string name="pref_link_preview_title">Vistas previas de enlaces en conversaciones</string>
   <string name="pref_link_preview_summary">Las vistas previas requieren la descarga de contenido desde servidores de terceros.</string>
   <!--Notifications Visibility-->
+  <string name="notification_public">Públic\n(mostrar notificaciones y su contenido en la pantalla de bloqueo)\n</string>
+  <string name="notification_private">Private\n(mostrar notificaciones pero ocultar su contenido en la pantalla de bloqueo)\n</string>
+  <string name="notification_secret">Secret\n(no mostrar notificaciones en la pantalla de bloqueo)</string>
   <!--Extension-->
   <string name="pref_extensions_title">Extensions</string>
+  <string name="pref_extensions_summary">Habilitar extensiones y establecer sus parámetros</string>
+  <string name="fab_extensions_add">Agregar nueva extensión</string>
+  <string name="extension_uninstall_title">¿Desinstalar la extensión?</string>
+  <string name="extension_reset_preferences">Restablecer preferencias de extensión</string>
+  <string name="extension_reset_preferences_summary">Extensión restaurada a la configuración predeterminada</string>
+  <string name="extension_reset_preferences_ask">¿Desea restablecer la configuración general de la extensión?</string>
+  <string name="extension_reset_account_preferences_ask">¿Desea restablecer la configuración de la extensión de la cuenta?</string>
+  <string name="extension_successfully_installed">La extensión <b>%1$s</b> instalada correctamente.</string>
+  <string name="extension_install_failure">Se produjo un error al instalar la siguiente extensión: <b>%1$s</b></string>
+  <string name="extension_recent_version_exception">Se ha instalado una versión más reciente de
+<b>%1$s</b>.</string>
+  <string name="extension_same_version_exception">Se ha instalado la misma versión de
+<b>%1$s</b>.</string>
   <string name="extension_invalid_signature"><b>%1$s</b> tiene una firma inválida.</string>
+  <string name="extension_invalid_authority">Se produjo un error al verificar la autorización de la siguiente extensión:<b>%1$s</b></string>
+  <string name="extension_invalid_format">Formato de extensión no válido: <b>%1$s</b></string>
+  <string name="extension_force_install">force\ninstall</string>
+  <string name="extension_path_image_add">Agregar nueva imagen</string>
 </resources>
