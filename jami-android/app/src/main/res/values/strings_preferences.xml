@@ -46,6 +46,10 @@
     <string name="pref_notification_title">Notification visibility</string>
     <string name="pref_notification_summary">Set application notifications visibility on lock screen.</string>
 
+    <string name="pref_connectivity_title">Connectivity mode</string>
+    <string name="pref_connectivity_summary">Chose how to connect Jami to the distributed system to
+        receive calls and messages.</string>
+
     <string name="pref_blackList_title">Block list</string>
     <string name="pref_blackList_summary">Check your block list.</string>
 
@@ -83,6 +87,19 @@
     <string name="notification_public">Public\n(show notifications and their content on lock screen)\n</string>
     <string name="notification_private">Private\n(show notifications but hide their content on lock screen)\n</string>
     <string name="notification_secret">Secret\n(do not show notifications on lock screen)</string>
+
+    <string name="connectivity_google_services_title">Google services</string>
+    <string name="connectivity_google_services_description">Use Google Firebase and a DHT proxy to
+        receive push notifications.</string>
+    <string name="connectivity_local_node_title">Local DHT node</string>
+    <string name="connectivity_local_node_description">Use a local DHT node to connect with other
+        Jami devices and contacts.</string>
+    <string name="connectivity_unified_push_title">Unified push</string>
+    <string name="connectivity_unified_push_description">Use a custom unified Push server to
+        receive push notifications.</string>
+    <string name="connectivity_custom_title">Custom</string>
+    <string name="connectivity_custom_description">Currently not using any of the
+        available configuration presets.</string>
 
     <!-- Extension -->
     <string name="pref_extensions_title">Extensions</string>
