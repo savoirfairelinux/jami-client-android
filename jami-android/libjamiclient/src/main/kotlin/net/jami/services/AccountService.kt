@@ -27,6 +27,8 @@ import io.reactivex.rxjava3.subjects.PublishSubject
 import io.reactivex.rxjava3.subjects.SingleSubject
 import io.reactivex.rxjava3.subjects.Subject
 import net.jami.daemon.*
+import net.jami.linkdevice.presenter.AuthState
+import net.jami.linkdevice.presenter.AuthResult
 import net.jami.model.*
 import net.jami.model.Interaction.TransferStatus
 import net.jami.services.ConversationFacade.SearchResult
@@ -34,7 +36,6 @@ import net.jami.utils.Log
 import net.jami.utils.SwigNativeConverter
 import java.io.File
 import java.io.UnsupportedEncodingException
-import java.net.SocketException
 import java.net.URLEncoder
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
@@ -89,6 +90,9 @@ class AccountService(
         PublishSubject.create()
     val activeCallsObservable: Observable<ConversationActiveCalls> =
         activeCallsSubject
+
+    private val authResultSubject: Subject<AuthResult> = PublishSubject.create()
+    val authResultObservable: Observable<AuthResult> = authResultSubject
 
     // This variable should only be used for testing purposes.
     var customNameServer: String? = null
@@ -1674,6 +1678,74 @@ class AccountService(
                     .sortedBy { it.first }
                 )
             }
+
+    /**
+     * Related to add device feature (import side).
+     * Updates the state of the account import.
+     */
+    fun deviceAuthStateChanged(accountId: String, state: Int, details: Map<String, String>) {
+        Log.i(TAG, "Device auth state changed")
+        authResultSubject.onNext(AuthResult(accountId, AuthState.fromInt(state), details))
+    }
+
+    /**
+     * Related to add device feature (import side).
+     * Confirmation that the imported account is indeed the one the user want to import.
+     * Unlocks the account if a password is required.
+     * @param password: password for the account
+     */
+    fun provideAccountAuthentication(accountId: String, password: String) {
+        Log.i(TAG, "Provide account authentication")
+        // Todo: Enable
+        // JamiService.provideAccountAuthentication(accountId, password)
+    }
+
+    /**
+     * Related to add device feature (export side).
+     * Updates the state of the account export.
+     * @param operationId Used to identify the operation if there is several at the same time.
+     * @param details Additional details about the state. Specific to the state and to the side.
+     */
+    fun addDeviceStateChanged(
+        accountId: String, operationId: Long, state: Int, details: Map<String, String>
+    ) {
+        Log.i(TAG, "Add device state changed")
+        authResultSubject.onNext(
+            AuthResult(accountId, AuthState.fromInt(state), details, operationId)
+        )
+    }
+
+    /**
+     * Related to add device feature (export side).
+     * Starts the account export process.
+     * @param token: A URI that identifies a device on the DHT to connect to.
+     */
+    fun addDevice(accountId: String, token: String): Long {
+        Log.i(TAG, "Add device")
+        return JamiService.exportToPeer(accountId, token)
+        // Todo: Enable
+        // return JamiService.addDevice(accountId, token)
+    }
+
+    /**
+     * Related to add device feature (export side).
+     * Confirm the address of the device to export the account to.
+     */
+    fun confirmAddDevice(accountId: String) {
+        Log.i(TAG, "Confirm add device")
+        // Todo: Enable
+        // mExecutor.execute { JamiService.confirmAddDevice(accountId) }
+    }
+
+    /**
+     * Related to add device feature (export side).
+     * Cancel the account exportation process.
+     */
+    fun cancelAddDevice(accountId: String) {
+        Log.i(TAG, "Cancel add device")
+        // Todo: Enable
+        // mExecutor.execute { JamiService.cancelAddDevice(accountId) }
+    }
 
     companion object {
         private val TAG = AccountService::class.java.simpleName
