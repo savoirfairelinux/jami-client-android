@@ -285,8 +285,8 @@ class JamiAccountSummaryFragment :
     }
 
     private fun showWizard(accountId: String) {
-        LinkDeviceFragment.newInstance(accountId)
-            .show(parentFragmentManager, LinkDeviceFragment.TAG)
+        LinkAccountExportFragment.newInstance(accountId)
+            .show(parentFragmentManager, LinkAccountExportFragment.TAG)
     }
 
     private fun profileContainerClicked(account: Account) {

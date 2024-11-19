@@ -57,8 +57,8 @@ class HomeAccountCreationFragment :
                             archive = file
                         }
                         replaceFragmentWithSlide(
-                            fragment = JamiLinkAccountFragment(),
-                            tag = JamiLinkAccountFragment.TAG,
+                            fragment = LinkAccountImportFragment(),
+                            tag = LinkAccountImportFragment.TAG,
                             containerID = R.id.wizard_container
                         )
                     }) { e: Throwable ->
@@ -103,7 +103,7 @@ class HomeAccountCreationFragment :
         model.model = AccountCreationModelImpl().apply {
             isLink = true
         }
-        replaceFragmentWithSlide(JamiLinkAccountFragment(), JamiLinkAccountFragment.TAG, R.id.wizard_container)
+        replaceFragmentWithSlide(LinkAccountImportFragment(), LinkAccountImportFragment.TAG, R.id.wizard_container)
     }
 
     override fun goToAccountConnect() {

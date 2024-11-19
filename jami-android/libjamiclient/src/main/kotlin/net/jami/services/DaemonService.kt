@@ -193,6 +193,11 @@ class DaemonService(
         override fun messageSend(message: String) {
             mHardwareService.logMessage(message)
         }
+
+        override fun deviceAuthStateChanged(accountId: String, state: Int, details: String) {
+            mAccountService.deviceAuthStateChanged(accountId, state, details)
+            Log.w("devdebug", "DaemonService deviceAuthStateChanged $accountId $state $details")
+        }
     }
 
     internal inner class DaemonCallAndConferenceCallback : Callback() {
