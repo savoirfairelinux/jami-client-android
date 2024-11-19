@@ -193,6 +193,19 @@ class DaemonService(
         override fun messageSend(message: String) {
             mHardwareService.logMessage(message)
         }
+
+        // State update (import side)
+//        override fun deviceAuthStateChanged(accountId: String, state: Int, details: Map<String, String>) {
+        override fun deviceAuthStateChanged(accountId: String, state: Int, details: String) {
+//            mAccountService.deviceAuthStateChanged(accountId, state, details)
+            mAccountService.deviceAuthStateChanged(accountId, state, emptyMap())
+            Log.w("devdebug", "DaemonService deviceAuthStateChanged $accountId $state $details")
+        }
+
+        // State update (export side)
+        override fun addDeviceStateChanged(accountId: String, operationId: Long, state: Int, details: String) {
+            mAccountService.addDeviceStateChanged(accountId, operationId, state, emptyMap())
+        }
     }
 
     internal inner class DaemonCallAndConferenceCallback : Callback() {

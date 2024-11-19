@@ -27,6 +27,8 @@ import io.reactivex.rxjava3.subjects.PublishSubject
 import io.reactivex.rxjava3.subjects.SingleSubject
 import io.reactivex.rxjava3.subjects.Subject
 import net.jami.daemon.*
+import net.jami.linkdevice.presenter.AuthState
+import net.jami.linkdevice.presenter.AuthResult
 import net.jami.model.*
 import net.jami.model.Interaction.TransferStatus
 import net.jami.services.ConversationFacade.SearchResult
@@ -34,7 +36,6 @@ import net.jami.utils.Log
 import net.jami.utils.SwigNativeConverter
 import java.io.File
 import java.io.UnsupportedEncodingException
-import java.net.SocketException
 import java.net.URLEncoder
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
@@ -89,6 +90,9 @@ class AccountService(
         PublishSubject.create()
     val activeCallsObservable: Observable<ConversationActiveCalls> =
         activeCallsSubject
+
+    private val authResultSubject: Subject<AuthResult> = PublishSubject.create()
+    val authResultObservable: Observable<AuthResult> = authResultSubject
 
     // This variable should only be used for testing purposes.
     var customNameServer: String? = null
@@ -1674,6 +1678,36 @@ class AccountService(
                     .sortedBy { it.first }
                 )
             }
+
+    fun deviceAuthStateChanged(accountId: String, state: Int, details: Map<String, String>) {
+        Log.d("devdebug", "accountService deviceAuthStateChanged: accountId=$accountId, state=${AuthState.fromInt(state)}, details=$details")
+        authResultSubject.onNext(AuthResult(accountId, AuthState.fromInt(state), details))
+    }
+
+    fun provideAccountAuthentication(accountId: String, password: String) {
+//        JamiService.provideAccountAuthentication(accountId, password)
+    }
+
+    fun addDeviceStateChanged(accountId: String, operationId: Long, state: Int, details: Map<String, String>) {
+        Log.d("devdebug", "accountService addDeviceStateChanged: accountId=$accountId, state=${AuthState.fromInt(state)}, details=$details")
+        authResultSubject.onNext(AuthResult(accountId, AuthState.fromInt(state), details, operationId))
+    }
+
+    fun addDevice(accountId: String, token: String): Long {
+        Log.d("devdebug", "accountService exportToPeer: accountId=$accountId, token=$token")
+        return JamiService.exportToPeer(accountId, token)
+//        return JamiService.addDevice(accountId, token)
+    }
+
+    fun confirmAddDevice(accountId: String) {
+        Log.d("devdebug", "accountService confirmAddDevice: accountId=$accountId")
+//        mExecutor.execute { JamiService.confirmAddDevice(accountId) }
+    }
+
+    fun cancelAddDevice(accountId: String) {
+        Log.d("devdebug", "accountService cancelAddDevice: accountId=$accountId")
+//        mExecutor.execute { JamiService.cancelAddDevice(accountId) }
+    }
 
     companion object {
         private val TAG = AccountService::class.java.simpleName
