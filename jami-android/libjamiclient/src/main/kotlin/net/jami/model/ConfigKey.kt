@@ -66,6 +66,7 @@ enum class ConfigKey(val key: String, val isBool: Boolean = false) {
     ARCHIVE_HAS_PASSWORD("Account.archiveHasPassword", true),
     ARCHIVE_PIN("Account.archivePIN"),
     ARCHIVE_PATH("Account.archivePath"),
+    ARCHIVE_URL("Account.archiveURL"),
     DISPLAY_NAME("Account.displayName"),
     ETH_ACCOUNT("ETH.account"),
     TLS_LISTENER_PORT("TLS.listenerPort"),
