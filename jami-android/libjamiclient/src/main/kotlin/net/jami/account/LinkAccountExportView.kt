@@ -16,4 +16,4 @@
  */
 package net.jami.account
 
-interface LinkDeviceView
+interface LinkAccountExportView: UpdateDeviceAuthState

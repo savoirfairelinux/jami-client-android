@@ -151,7 +151,7 @@ class AccountWizardActivity : BaseActivity<AccountWizardPresenter>(), AccountWiz
         val fragments = supportFragmentManager.fragments
         if (fragments.size > 0) {
             val fragment = fragments[0]
-            if (fragment is JamiLinkAccountFragment || fragment is JamiAccountConnectFragment) {
+            if (fragment is LinkAccountImportFragment || fragment is JamiAccountConnectFragment) {
                 profileCreated(false)
             }
         }

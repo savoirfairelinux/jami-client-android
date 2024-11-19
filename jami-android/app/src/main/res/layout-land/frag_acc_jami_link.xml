@@ -8,7 +8,7 @@
     android:gravity="center"
     android:orientation="horizontal"
     android:paddingVertical="16dp">
-
+<!--TODo: modify landscape ui too-->
     <Space
         android:layout_width="1dp"
         android:layout_height="0dp"

@@ -16,11 +16,21 @@
  */
 package net.jami.account
 
-import net.jami.model.AccountCreationModel
+import net.jami.services.AccountService
 
-interface JamiLinkAccountView {
+interface LinkAccountImportView: UpdateDeviceAuthState {
     fun enableLinkButton(enable: Boolean)
-    fun showPin(show: Boolean)
+//    fun showPin(show: Boolean)
     fun createAccount()
     fun cancel()
+
+}
+
+interface UpdateDeviceAuthState {
+    fun showLoadingToken()
+    fun showTokenAvailable(token: String) // Todo: what is the exact format of the Token? jami-auth://[a-z0-9]{40}:[a-z0-9]{6} regex = jami-auth:\/\/[a-z0-9]{40}\/[a-z0-9]{6}
+    fun showConnecting()
+    fun showAuthenticating()
+    fun showDone()
+    fun showError(linkDeviceError: AccountService.DeviceAuthStateError)
 }

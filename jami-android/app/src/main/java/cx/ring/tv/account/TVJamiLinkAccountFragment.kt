@@ -25,13 +25,14 @@ import androidx.leanback.widget.GuidedAction
 import cx.ring.R
 import cx.ring.account.AccountCreationViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import net.jami.account.JamiLinkAccountPresenter
-import net.jami.account.JamiLinkAccountView
+import net.jami.account.LinkAccountImportPresenter
+import net.jami.account.LinkAccountImportView
+import net.jami.services.AccountService
 import net.jami.utils.StringUtils.toPassword
 
 @AndroidEntryPoint
-class TVJamiLinkAccountFragment : JamiGuidedStepFragment<JamiLinkAccountPresenter, JamiLinkAccountView>(),
-    JamiLinkAccountView {
+class TVJamiLinkAccountFragment : JamiGuidedStepFragment<LinkAccountImportPresenter, LinkAccountImportView>(),
+    LinkAccountImportView {
     private val model: AccountCreationViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -76,9 +77,9 @@ class TVJamiLinkAccountFragment : JamiGuidedStepFragment<JamiLinkAccountPresente
         }
     }
 
-    override fun showPin(show: Boolean) {
-        // TODO
-    }
+//    override fun showPin(show: Boolean) {
+//         TODO
+//    }
 
     override fun createAccount() {
         (activity as TVAccountWizard?)?.createAccount()
@@ -102,6 +103,30 @@ class TVJamiLinkAccountFragment : JamiGuidedStepFragment<JamiLinkAccountPresente
 
     override fun cancel() {
         activity?.onBackPressedDispatcher?.onBackPressed()
+    }
+
+    override fun showLoadingToken() {
+        TODO("Not yet implemented")
+    }
+
+    override fun showTokenAvailable(token: String) {
+        TODO("Not yet implemented")
+    }
+
+    override fun showConnecting() {
+        TODO("Not yet implemented")
+    }
+
+    override fun showAuthenticating() {
+        TODO("Not yet implemented")
+    }
+
+    override fun showDone() {
+        TODO("Not yet implemented")
+    }
+
+    override fun showError(linkDeviceError: AccountService.DeviceAuthStateError) {
+        TODO("Not yet implemented")
     }
 
     companion object {

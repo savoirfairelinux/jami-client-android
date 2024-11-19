@@ -19,14 +19,17 @@ package net.jami.account
 import io.reactivex.rxjava3.core.Scheduler
 import net.jami.mvp.RootPresenter
 import net.jami.services.AccountService
+import net.jami.utils.Log
 import javax.inject.Inject
 import javax.inject.Named
 
-class LinkDevicePresenter @Inject constructor(
+/**
+ * This this the old device side.
+ */
+class LinkAccountExportPresenter @Inject constructor(
     private val accountService: AccountService,
-    @Named("UiScheduler")
-    private val uiScheduler: Scheduler
-) : RootPresenter<LinkDeviceView>() {
+    @Named("UiScheduler") private val uiScheduler: Scheduler
+) : RootPresenter<LinkAccountExportView>() {
     private var mAccountID: String? = null
 
     fun setAccountId(accountID: String) {
@@ -34,7 +37,21 @@ class LinkDevicePresenter @Inject constructor(
         mAccountID = accountID
     }
 
+    fun exportToPeer(token: String) {
+        Log.w("devdebug", "LinkDevicePresenter exportToPeer token: $token")
+        accountService.exportToPeer(mAccountID!!, token)
+        accountService.deviceAuthStateObservable
+            .filter { it.accountId == mAccountID }
+            .subscribe {
+                updateDeviceAuthState(it)
+            }.apply { mCompositeDisposable.add(this) }
+    }
+
+    private fun updateDeviceAuthState(deviceAuthResult: AccountService.DeviceAuthResult) {
+        Log.w("devdebug", "LinkDevicePresenter deviceAuthStateObservable: ${deviceAuthResult.state}")
+    }
+
     companion object {
-        private val TAG = LinkDevicePresenter::class.simpleName!!
+        private val TAG = LinkAccountExportPresenter::class.simpleName!!
     }
 }
