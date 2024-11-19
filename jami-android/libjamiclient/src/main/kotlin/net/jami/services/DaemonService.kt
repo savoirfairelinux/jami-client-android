@@ -197,6 +197,24 @@ class DaemonService(
         override fun messageSend(message: String) {
             mHardwareService.logMessage(message)
         }
+
+        /**
+         * Related to add device feature (import side).
+         */
+        override fun deviceAuthStateChanged(accountId: String, state: Int, details: StringMap) {
+            val detailsMap: Map<String, String> = details.toNativeFromUtf8()
+            mAccountService.deviceAuthStateChanged(accountId, state, detailsMap)
+        }
+
+        /**
+         * Related to add device feature (export side).
+         */
+        override fun addDeviceStateChanged(
+            accountId: String, operationId: Long, state: Int, details: StringMap
+        ) {
+            val detailsMap: Map<String, String> = details.toNativeFromUtf8()
+            mAccountService.addDeviceStateChanged(accountId, operationId, state, detailsMap)
+        }
     }
 
     internal inner class DaemonCallAndConferenceCallback : Callback() {
