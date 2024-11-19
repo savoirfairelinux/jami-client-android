@@ -193,6 +193,28 @@ class DaemonService(
         override fun messageSend(message: String) {
             mHardwareService.logMessage(message)
         }
+
+        /**
+         * Related to add device feature (import side).
+         */
+        // Todo: Binding SWIG
+        // override fun deviceAuthStateChanged(accountId: String, state: Int, details: Map<String, String>) {
+        override fun deviceAuthStateChanged(accountId: String, state: Int, details: String) {
+            // Todo: Enable
+            // mAccountService.deviceAuthStateChanged(accountId, state, details)
+            mAccountService.deviceAuthStateChanged(accountId, state, emptyMap())
+        }
+
+        /**
+         * Related to add device feature (export side).
+         */
+        // Todo: Binding SWIG
+        // override fun addDeviceStateChanged(accountId: String, operationId: Long, state: Int, details: Map<String, String>) {
+        override fun addDeviceStateChanged(accountId: String, operationId: Long, state: Int, details: String) {
+            // Todo: Enable
+            // mAccountService.addDeviceStateChanged(accountId, operationId, state, details)
+            mAccountService.addDeviceStateChanged(accountId, operationId, state, emptyMap())
+        }
     }
 
     internal inner class DaemonCallAndConferenceCallback : Callback() {
