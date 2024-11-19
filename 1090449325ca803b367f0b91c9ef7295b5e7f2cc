@@ -16,6 +16,184 @@
       "message": "!build",
       "revId": "1090449325ca803b367f0b91c9ef7295b5e7f2cc",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "31f065a1_5c4e4736",
+        "filename": "jami-android/app/src/main/java/cx/ring/settings/SettingsFragment.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-11-19T16:34:35Z",
+      "side": 1,
+      "message": "enum",
+      "revId": "1090449325ca803b367f0b91c9ef7295b5e7f2cc",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "737a0401_b93f6d9b",
+        "filename": "jami-android/app/src/main/java/cx/ring/settings/SettingsFragment.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-11-19T16:34:35Z",
+      "side": 1,
+      "message": "CONNECTIVITY_CUSTOM",
+      "range": {
+        "startLine": 473,
+        "startChar": 31,
+        "endLine": 473,
+        "endChar": 48
+      },
+      "revId": "1090449325ca803b367f0b91c9ef7295b5e7f2cc",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "58168afc_db95ed82",
+        "filename": "jami-android/app/src/main/res/values/strings_preferences.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-11-19T16:34:35Z",
+      "side": 1,
+      "message": "Chose how to connect Jami to the distributed system to receive calls and messages.",
+      "range": {
+        "startLine": 50,
+        "startChar": 45,
+        "endLine": 51,
+        "endChar": 21
+      },
+      "revId": "1090449325ca803b367f0b91c9ef7295b5e7f2cc",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "155754c3_45bb8859",
+        "filename": "jami-android/app/src/main/res/values/strings_preferences.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-11-19T16:34:35Z",
+      "side": 1,
+      "message": "Google services",
+      "range": {
+        "startLine": 91,
+        "startChar": 54,
+        "endLine": 91,
+        "endChar": 67
+      },
+      "revId": "1090449325ca803b367f0b91c9ef7295b5e7f2cc",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b4fa227_b3706250",
+        "filename": "jami-android/app/src/main/res/values/strings_preferences.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-11-19T16:34:35Z",
+      "side": 1,
+      "message": "Use Google Firebase and a DHT proxy to receive push notifications.",
+      "range": {
+        "startLine": 92,
+        "startChar": 60,
+        "endLine": 93,
+        "endChar": 34
+      },
+      "revId": "1090449325ca803b367f0b91c9ef7295b5e7f2cc",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2dd3a779_c876e6fa",
+        "filename": "jami-android/app/src/main/res/values/strings_preferences.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-11-19T16:34:35Z",
+      "side": 1,
+      "message": "Use a local DHT node to connect with other Jami devices and contacts.",
+      "range": {
+        "startLine": 95,
+        "startChar": 55,
+        "endLine": 96,
+        "endChar": 21
+      },
+      "revId": "1090449325ca803b367f0b91c9ef7295b5e7f2cc",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e0a7f782_d36d711d",
+        "filename": "jami-android/app/src/main/res/values/strings_preferences.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-11-19T16:34:35Z",
+      "side": 1,
+      "message": "Custom",
+      "range": {
+        "startLine": 100,
+        "startChar": 51,
+        "endLine": 100,
+        "endChar": 68
+      },
+      "revId": "1090449325ca803b367f0b91c9ef7295b5e7f2cc",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "556d4379_e818d659",
+        "filename": "jami-android/app/src/main/res/values/strings_preferences.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-11-19T16:34:35Z",
+      "side": 1,
+      "message": "Currently not using any of the available configuration presets.",
+      "range": {
+        "startLine": 101,
+        "startChar": 57,
+        "endLine": 102,
+        "endChar": 46
+      },
+      "revId": "1090449325ca803b367f0b91c9ef7295b5e7f2cc",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
