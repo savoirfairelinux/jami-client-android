@@ -34,7 +34,6 @@ import net.jami.utils.Log
 import net.jami.utils.SwigNativeConverter
 import java.io.File
 import java.io.UnsupportedEncodingException
-import java.net.SocketException
 import java.net.URLEncoder
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
@@ -89,6 +88,9 @@ class AccountService(
         PublishSubject.create()
     val activeCallsObservable: Observable<ConversationActiveCalls> =
         activeCallsSubject
+
+    private val deviceAuthStateSubject: Subject<DeviceAuthResult> = PublishSubject.create()
+    val deviceAuthStateObservable: Observable<DeviceAuthResult> = deviceAuthStateSubject
 
     // This variable should only be used for testing purposes.
     var customNameServer: String? = null
@@ -1674,6 +1676,45 @@ class AccountService(
                     .sortedBy { it.first }
                 )
             }
+
+    enum class DeviceAuthState(val value: Int) {
+        NONE(0),
+        TOKEN_AVAILABLE(1),
+        CONNECTING(2),
+        AUTHENTICATING(3),
+        DONE(4),
+        ERROR(5);
+
+        companion object {
+            fun fromInt(value: Int) = DeviceAuthState.entries[value]
+        }
+    }
+
+    enum class DeviceAuthStateError {
+        TIMEOUT,
+        WRONG_PASSWORD;
+
+        companion object {
+            fun fromString(value: String) = when (value) {
+                "timeout" -> TIMEOUT
+                "wrong_password" -> WRONG_PASSWORD
+                else -> throw IllegalArgumentException("Unknown error: $value")
+            }
+        }
+    }
+
+    // Todo: make this in Account class
+    data class DeviceAuthResult(val accountId: String, val state: DeviceAuthState, val details: String)
+
+    fun deviceAuthStateChanged(accountId: String, state: Int, details: String) {
+        Log.d("devdebug", "accountService deviceAuthStateChanged: accountId=$accountId, state=${DeviceAuthState.fromInt(state)}, details=$details")
+        deviceAuthStateSubject.onNext(DeviceAuthResult(accountId, DeviceAuthState.fromInt(state), details))
+    }
+
+    fun exportToPeer(accountId: String, uri: String) {
+        Log.d("devdebug", "accountService exportToPeer: accountId=$accountId, uri=$uri")
+        mExecutor.execute { JamiService.exportToPeer(accountId, uri) }
+    }
 
     companion object {
         private val TAG = AccountService::class.java.simpleName
