@@ -1,0 +1,188 @@
+/*
+ *  Copyright (C) 2004-2024 Savoir-faire Linux Inc.
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+package cx.ring.linkdevice.view
+
+import android.app.Activity
+import android.os.Bundle
+import android.util.Log
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.tabs.TabLayoutMediator
+import cx.ring.databinding.ActivityLinkDeviceExportSideBinding
+import cx.ring.linkdevice.viewmodel.AddDeviceExportState
+import dagger.hilt.android.AndroidEntryPoint
+import cx.ring.linkdevice.viewmodel.ExportSideViewModel
+import kotlinx.coroutines.launch
+
+
+@AndroidEntryPoint
+class LinkDeviceExportSideActivity : AppCompatActivity(),
+    ExportSideStep1Fragment.OnInputCallback,
+    ExportSideStep2Fragment.OnReviewCallback,
+    ExportSideStep3Fragment.OnResultCallback {
+
+    private val exportSideViewModel by lazy { ViewModelProvider(this)[ExportSideViewModel::class.java] }
+    private lateinit var binding: ActivityLinkDeviceExportSideBinding
+    private var exitDialog: AlertDialog? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityLinkDeviceExportSideBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setupViewPager()
+        setupToolbar()
+
+        lifecycleScope.launch {
+            exportSideViewModel.uiState.collect {
+                when (it) {
+                    is AddDeviceExportState.Init -> {
+                        binding.viewPager.apply {
+                            currentItem = 0
+                            if (it.error != null) {
+                                post { // Post is used to let the fragment inflate its views.
+                                    (adapter as ViewPagerAdapter).exportSideStep1.showError(it.error)
+                                }
+                            }
+                        }
+                    }
+
+                    is AddDeviceExportState.TokenAvailable -> throw UnsupportedOperationException()
+                    is AddDeviceExportState.Connecting -> {}
+                    is AddDeviceExportState.Authenticating -> {
+                        binding.viewPager.apply {
+                            currentItem = 1
+                            post { // Post is used to let the fragment inflate its views.
+                                if (!it.peerAddress.isNullOrEmpty())
+                                    (adapter as ViewPagerAdapter).exportSideStep2.showIP(it.peerAddress)
+                                else
+                                    (adapter as ViewPagerAdapter).exportSideStep2.showPasswordProtection()
+                            }
+                        }
+                    }
+
+                    is AddDeviceExportState.InProgress -> {
+                        binding.viewPager.apply {
+                            currentItem = 2
+                            post { // Post is used to let the fragment inflate its views.
+                                (adapter as ViewPagerAdapter).exportSideStep3.showLoading()
+                            }
+                        }
+                    }
+
+                    is AddDeviceExportState.Done -> {
+                        binding.viewPager.apply {
+                            currentItem = 2
+                            post { // Post is used to let the fragment inflate its views.
+                                if (it.error != null) {
+                                    (adapter as ViewPagerAdapter).exportSideStep3.showError(it.error)
+                                } else {
+                                    (adapter as ViewPagerAdapter).exportSideStep3.showDone()
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun setupViewPager() {
+        binding.viewPager.adapter = ViewPagerAdapter(this)
+        binding.viewPager.isUserInputEnabled = false // Disable swipe
+
+        TabLayoutMediator(binding.tabLayout, binding.viewPager) { _, _ -> }.attach()
+        binding.tabLayout.touchables.forEach { it.isEnabled = false }
+    }
+
+    private fun setupToolbar() {
+        binding.toolbar.setNavigationOnClickListener {
+            Log.i(TAG, "Back button clicked.")
+            launchExitAction()
+        }
+    }
+
+    private inner class ViewPagerAdapter(activity: AppCompatActivity) :
+        FragmentStateAdapter(activity) {
+        // Dynamic access since fragments can be recreated on configuration change (ex: rotation).
+        val exportSideStep1
+            get() = supportFragmentManager.findFragmentByTag("f0") as ExportSideStep1Fragment
+        val exportSideStep2
+            get() = supportFragmentManager.findFragmentByTag("f1") as ExportSideStep2Fragment
+        val exportSideStep3
+            get() = supportFragmentManager.findFragmentByTag("f2") as ExportSideStep3Fragment
+
+        override fun getItemCount(): Int = 3
+
+        override fun createFragment(position: Int): Fragment {
+            return when (position) {
+                0 -> ExportSideStep1Fragment()
+                1 -> ExportSideStep2Fragment()
+                2 -> ExportSideStep3Fragment()
+                else -> throw IllegalStateException()
+            }
+        }
+    }
+
+    override fun onAuthenticationUri(authenticationUri: String) =
+        exportSideViewModel.onAuthenticationUri(authenticationUri)
+
+    override fun onIdentityConfirmation(confirm: Boolean) =  // Todo: Implement false case
+        exportSideViewModel.onIdentityConfirmation()
+
+    override fun onExit(returnCode: Int) {
+        finish(returnCode)
+    }
+
+    private fun finish(returnCode: Int = 0) {
+        setResult(if (returnCode == 0) Activity.RESULT_OK else Activity.RESULT_CANCELED)
+        finish()
+    }
+
+    private fun launchExitAction() {
+        val state = exportSideViewModel.uiState.value
+
+        if (state is AddDeviceExportState.Init) {
+            finish(1)
+            return
+        } else if (state is AddDeviceExportState.Done) {
+            finish(0)
+            return
+        }
+
+        val message = when (state) { // Todo: Put string in resources
+            is AddDeviceExportState.Connecting, is AddDeviceExportState.Authenticating -> "Exiting now will cancel the account exportation process."
+            AddDeviceExportState.InProgress -> "If not too late, exiting now will cancel the account exportation process."
+            else -> throw UnsupportedOperationException()
+        }
+
+        exitDialog = MaterialAlertDialogBuilder(this)
+            .setTitle("Are you sure you want to exit?")
+            .setMessage(message)
+            .setPositiveButton(android.R.string.ok) { _, _ -> finish(1) }
+            .setNegativeButton(android.R.string.cancel) { _, _ -> }
+            .show()
+    }
+
+    companion object {
+        private val TAG = LinkDeviceExportSideActivity::class.java.simpleName
+    }
+}
