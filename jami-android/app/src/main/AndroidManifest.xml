@@ -477,6 +477,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:theme="@style/AppTheme.Dialog"
             android:windowSoftInputMode="adjustResize"/>
 
+        <activity android:name=".linkdevice.view.LinkDeviceExportSideActivity"
+            android:theme="@style/AppTheme"
+            android:exported="false"/>
+
     </application>
 
 </manifest>

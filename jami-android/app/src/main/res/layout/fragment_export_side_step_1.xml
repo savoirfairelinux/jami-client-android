@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/advice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:lineSpacingExtra="8dp"
+        android:paddingHorizontal="8dp"
+        android:text="@string/export_side_step1_advice_qr"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/inputContainer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <FrameLayout
+        android:id="@+id/inputContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/switchMode"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/advice">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/inputQr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="visible">
+
+            <com.journeyapps.barcodescanner.DecoratedBarcodeView
+                android:id="@+id/barcodeScanner"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="10dp"
+                app:layout_constraintBottom_toTopOf="@+id/errorQr"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ProgressBar
+                android:id="@+id/loadingQr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:indeterminate="true"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@id/barcodeScanner"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/barcodeScanner" />
+
+            <TextView
+                android:id="@+id/errorQr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="20dp"
+                android:minLines="2"
+                android:textAlignment="center"
+                android:textColor="@android:color/holo_red_dark"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/barcodeScanner"
+                tools:text="@string/export_side_step1_error_network" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/inputCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="invisible">
+
+            <TextView
+                android:id="@+id/errorCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:minLines="2"
+                android:textAlignment="center"
+                android:textColor="@android:color/holo_red_dark"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@string/export_side_step1_error_malformed" />
+
+            <ProgressBar
+                android:id="@+id/loadingCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:indeterminate="true"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@id/errorCode"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/errorCode" />
+
+
+            <EditText
+                android:id="@+id/code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:autofillHints="@null"
+                android:hint="@null"
+                android:inputType="textUri"
+                android:labelFor="@id/advice"
+                android:maxLength="59"
+                android:minWidth="250dp"
+                android:minHeight="48dp"
+                android:text="@string/export_side_step1_code_prefix"
+                android:textAlignment="center"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/errorCode"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <Button
+                android:id="@+id/connect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:text="@string/export_side_step1_code_connect"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/code"
+                app:layout_constraintVertical_chainStyle="packed" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </FrameLayout>
+
+    <Button
+        android:id="@+id/switchMode"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:text="@string/export_side_step1_switch_to_code"
+        android:textAlignment="center"
+        android:textColor="?attr/colorPrimary"
+        android:textSize="11sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inputContainer" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
