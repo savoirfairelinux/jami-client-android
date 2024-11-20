@@ -76,7 +76,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:lineSpacingExtra="8dp"
-            android:text="@string/import_side_step2_password_error"
+            android:text="@string/link_device_error_bad_password"
             android:textAlignment="center"
             android:textColor="@android:color/holo_red_dark"
             app:layout_constraintBottom_toTopOf="@id/password"
