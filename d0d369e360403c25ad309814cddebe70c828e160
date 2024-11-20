@@ -22,6 +22,30 @@
       },
       "revId": "d0d369e360403c25ad309814cddebe70c828e160",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d6a4611c_b7ddbe3a",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-11-20T00:23:48Z",
+      "side": 1,
+      "message": "Acknowledged. This patch can be merged without this change, if required a new patch can be done.",
+      "parentUuid": "5f4d9c88_771f0783",
+      "range": {
+        "startLine": 583,
+        "startChar": 38,
+        "endLine": 583,
+        "endChar": 51
+      },
+      "revId": "d0d369e360403c25ad309814cddebe70c828e160",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
