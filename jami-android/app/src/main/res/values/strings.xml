@@ -672,4 +672,5 @@ along with this program; if not, write to the Free Software
     <string name="link_device_error_network">A network error occurred.\nPlease verify your connection.</string>
     <string name="link_device_error_authentication">An authentication error occurred.\nPlease verify your password.</string>
     <string name="link_device_error_unknown">An error occurred.</string>
+    <string name="link_device_error_bad_password">Incorrect password. Please try again.</string>
 </resources>
