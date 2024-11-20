@@ -17,6 +17,14 @@ class ImportSidePresenter @Inject constructor(
     val currentState: LinkDeviceState
         get() = _currentState
 
+    init {
+        mAccountService.deviceAuthStateObservable
+            .filter { it.accountId == mAccountService.currentAccount?.accountId }
+            .subscribe { it: AccountService.DeviceAuthResult ->
+                updateDeviceAuthState(it)
+            }.apply { mCompositeDisposable.add(this) }
+    }
+
     fun onAuthentication(password: String) {
         // Todo: Send the password to Jami-daemon.
     }
@@ -61,6 +69,22 @@ class ImportSidePresenter @Inject constructor(
 
     override fun onErrorSignal() {
         throw UnsupportedOperationException()
+    }
+
+    private fun updateDeviceAuthState(result: AccountService.DeviceAuthResult) {
+        when (result.state) {
+            AccountService.DeviceAuthState.NONE -> onNoneSignal()
+            AccountService.DeviceAuthState.TOKEN_AVAILABLE -> onTokenAvailableSignal("")
+            AccountService.DeviceAuthState.CONNECTING -> onConnectingSignal("" /* Todo: ip */)
+            AccountService.DeviceAuthState.AUTHENTICATING -> onAuthenticatingSignal(
+                needPassword = false /* Todo: needPassword */,
+                jamiId = "" /* Todo: jamiId */,
+                registeredName = null /* Todo: registeredName */
+            )
+            // Todo: AccountService.DeviceAuthState.IMPORTING -> onImportingSignal()
+            AccountService.DeviceAuthState.DONE -> onDoneSignal()
+            AccountService.DeviceAuthState.ERROR -> throw UnsupportedOperationException()
+        }
     }
 
 }
