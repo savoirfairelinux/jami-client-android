@@ -22,6 +22,30 @@
       },
       "revId": "99acfaed320648440b45e45d8af98f5f7e70ff5f",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2e1ba134_9f0882a7",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-11-20T20:40:12Z",
+      "side": 1,
+      "message": "Qt done at https://review.jami.net/c/jami-client-qt/+/29449",
+      "parentUuid": "9d005971_ac067c92",
+      "range": {
+        "startLine": 607,
+        "startChar": 18,
+        "endLine": 607,
+        "endChar": 47
+      },
+      "revId": "99acfaed320648440b45e45d8af98f5f7e70ff5f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ],
   "submitRequirementResults": []
