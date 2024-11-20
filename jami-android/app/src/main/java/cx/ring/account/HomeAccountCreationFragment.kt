@@ -37,6 +37,7 @@ import net.jami.account.HomeAccountCreationPresenter
 import net.jami.account.HomeAccountCreationView
 import net.jami.utils.Log
 import java.io.File
+import cx.ring.linkdevice.view.LinkDeviceImportSideActivity
 
 @AndroidEntryPoint
 class HomeAccountCreationFragment :
@@ -73,9 +74,14 @@ class HomeAccountCreationFragment :
             }
         }
 
+    private val linkDeviceActivityLauncher =
+        registerForActivityResult(StartActivityForResult()) { result ->
+            android.util.Log.w(JamiAccountSummaryFragment.TAG, "linkDeviceActivityLauncher: ${result.resultCode}")
+        }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         FragAccHomeCreateBinding.inflate(inflater, container, false).apply {
-            ringAddAccount.setOnClickListener { goToAccountLink() }
+            linkDevice.setOnClickListener { showLinkNewDevice() }
             ringCreateBtn.setOnClickListener { goToAccountCreation() }
             accountConnectServer.setOnClickListener { goToAccountConnect() }
             ringImportAccount.setOnClickListener { performFileSearch() }
@@ -122,6 +128,11 @@ class HomeAccountCreationFragment :
             view?.let { v ->
                 Snackbar.make(v, getString(R.string.browser_error), Snackbar.LENGTH_SHORT).show() }
         }
+    }
+
+    private fun showLinkNewDevice() {
+        linkDeviceActivityLauncher
+            .launch(Intent(requireContext(), LinkDeviceImportSideActivity::class.java))
     }
 
     companion object {
