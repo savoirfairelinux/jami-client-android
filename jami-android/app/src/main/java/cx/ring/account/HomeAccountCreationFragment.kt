@@ -16,6 +16,7 @@
  */
 package cx.ring.account
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -26,6 +27,7 @@ import androidx.activity.result.contract.ActivityResultContracts.StartActivityFo
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.snackbar.Snackbar
 import cx.ring.R
+import cx.ring.client.HomeActivity
 import cx.ring.databinding.FragAccHomeCreateBinding
 import cx.ring.fragments.SIPAccountCreationFragment
 import cx.ring.mvp.BaseSupportFragment
@@ -38,6 +40,7 @@ import net.jami.account.HomeAccountCreationView
 import net.jami.model.AccountCreationModel
 import net.jami.utils.Log
 import java.io.File
+import cx.ring.linkdevice.view.LinkDeviceImportSideActivity
 
 @AndroidEntryPoint
 class HomeAccountCreationFragment :
@@ -74,9 +77,19 @@ class HomeAccountCreationFragment :
             }
         }
 
+    private val linkDeviceActivityLauncher =
+        registerForActivityResult(StartActivityForResult()) { result ->
+            Log.i(JamiAccountSummaryFragment.TAG, "linkDeviceActivityLauncher: ${result.resultCode}")
+            if (result.resultCode == Activity.RESULT_OK) {
+                val accountId = result.data // Todo: How to use it ? Need to change currentAccount.
+                    ?.getStringExtra(LinkDeviceImportSideActivity.EXTRA_ACCOUNT_ID_KEY)
+                startActivity(Intent(requireContext(), HomeActivity::class.java))
+            }
+        }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         FragAccHomeCreateBinding.inflate(inflater, container, false).apply {
-            ringAddAccount.setOnClickListener { goToAccountLink() }
+            linkDevice.setOnClickListener { goToAccountLink() }
             ringCreateBtn.setOnClickListener { goToAccountCreation() }
             accountConnectServer.setOnClickListener { goToAccountConnect() }
             ringImportAccount.setOnClickListener { performFileSearch() }
@@ -98,7 +111,8 @@ class HomeAccountCreationFragment :
         model.model = AccountCreationModel().apply {
             isLink = true
         }
-        replaceFragmentWithSlide(JamiLinkAccountFragment(), JamiLinkAccountFragment.TAG, R.id.wizard_container)
+        linkDeviceActivityLauncher
+            .launch(Intent(requireContext(), LinkDeviceImportSideActivity::class.java))
     }
 
     override fun goToAccountConnect() {
