@@ -1,3 +1,19 @@
+/*
+ *  Copyright (C) 2004-2024 Savoir-faire Linux Inc.
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
 package cx.ring.linkdevice.view
 
 import android.app.Activity
@@ -10,21 +26,20 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.tabs.TabLayoutMediator
 import cx.ring.databinding.ActivityLinkDeviceExportSideBinding
+import cx.ring.mvp.BaseActivity
+import dagger.hilt.android.AndroidEntryPoint
 import net.jami.linkdevice.presenter.AuthState
 import net.jami.linkdevice.presenter.AuthError
 import net.jami.linkdevice.presenter.ExportSidePresenter
 import net.jami.linkdevice.view.ExportSideInputError
 import net.jami.linkdevice.view.ExportSideResult
 import net.jami.linkdevice.view.ExportSideView
-import javax.inject.Inject
 
-class LinkDeviceExportSideActivity : AppCompatActivity(), ExportSideView,
+@AndroidEntryPoint
+class LinkDeviceExportSideActivity : BaseActivity<ExportSidePresenter>(), ExportSideView,
     ExportSideStep1Fragment.OnInputCallback,
     ExportSideStep2Fragment.OnReviewCallback,
     ExportSideStep3Fragment.OnResultCallback {
-
-    @Inject
-    lateinit var presenter: ExportSidePresenter
 
     private lateinit var binding: ActivityLinkDeviceExportSideBinding
     private var exitDialog: AlertDialog? = null
@@ -33,7 +48,6 @@ class LinkDeviceExportSideActivity : AppCompatActivity(), ExportSideView,
         super.onCreate(savedInstanceState)
         binding = ActivityLinkDeviceExportSideBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         setupViewPager()
         setupToolbar()
     }
