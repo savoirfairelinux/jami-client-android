@@ -30,6 +30,14 @@ class ExportSidePresenter @Inject constructor(
     val currentState: LinkDeviceState
         get() = _currentState
 
+    init {
+        mAccountService.deviceAuthStateObservable
+            .filter { it.accountId == mAccountService.currentAccount?.accountId }
+            .subscribe { it: AccountService.DeviceAuthResult ->
+                updateDeviceAuthState(it)
+            }.apply { mCompositeDisposable.add(this) }
+    }
+
     fun onAuthenticationUri(jamiAuthentication: String) {
         // Verify the input.
         if (jamiAuthentication.isEmpty()
@@ -40,7 +48,7 @@ class ExportSidePresenter @Inject constructor(
             return
         }
 
-        // Todo: Send the URI to Jami-daemon.
+        mAccountService.exportToPeer(mAccountService.currentAccount!!.accountId, jamiAuthentication)
     }
 
     fun onIdentityConfirmation() {
@@ -86,6 +94,22 @@ class ExportSidePresenter @Inject constructor(
 
     override fun onErrorSignal() {
         throw UnsupportedOperationException()
+    }
+
+    private fun updateDeviceAuthState(authenticationResult: AccountService.DeviceAuthResult) {
+        when (authenticationResult.state) {
+            AccountService.DeviceAuthState.NONE -> onNoneSignal()
+            AccountService.DeviceAuthState.TOKEN_AVAILABLE -> throw UnsupportedOperationException()
+            AccountService.DeviceAuthState.CONNECTING -> onConnectingSignal("" /* Todo: ip */)
+            AccountService.DeviceAuthState.AUTHENTICATING -> onAuthenticatingSignal(
+                needPassword = false /* Todo: needPassword */,
+                jamiId = "" /* Todo: jamiId */,
+                registeredName = null /* Todo: registeredName */
+            )
+            // Todo: AccountService.DeviceAuthState.IMPORTING -> onImportingSignal()
+            AccountService.DeviceAuthState.DONE -> onDoneSignal()
+            AccountService.DeviceAuthState.ERROR -> throw UnsupportedOperationException()
+        }
     }
 
     companion object {
