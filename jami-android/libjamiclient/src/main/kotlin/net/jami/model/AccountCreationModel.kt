@@ -28,7 +28,7 @@ abstract class AccountCreationModel {
     var username = ""
     var password = ""
     var archive: File? = null
-    var isLink = false
+    var isLink = false // Todo: Legacy code
     var isPush = true
 
     var newAccount: Account? = null
