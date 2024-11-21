@@ -56,10 +56,11 @@ class HomeAccountCreationFragment :
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ file: File ->
                         model.model = AccountCreationModel().apply {
-                            isLink = true
+                            isLink = true // Todo: Legacy code
                             archive = file
                         }
                         replaceFragmentWithSlide(
+                            // Todo: Legacy
                             fragment = JamiLinkAccountFragment(),
                             tag = JamiLinkAccountFragment.TAG,
                             containerID = R.id.wizard_container
@@ -107,6 +108,7 @@ class HomeAccountCreationFragment :
         replaceFragmentWithSlide(JamiAccountCreationFragment(), JamiAccountCreationFragment.TAG, R.id.wizard_container)
     }
 
+    // Todo: Legacy
     override fun goToAccountLink() {
         model.model = AccountCreationModel().apply {
             isLink = true
@@ -117,7 +119,7 @@ class HomeAccountCreationFragment :
 
     override fun goToAccountConnect() {
         model.model = AccountCreationModel().apply {
-            isLink = true
+            isLink = true // Todo: Legacy code
         }
         replaceFragmentWithSlide(JamiAccountConnectFragment(), JamiAccountConnectFragment.TAG, R.id.wizard_container)
     }

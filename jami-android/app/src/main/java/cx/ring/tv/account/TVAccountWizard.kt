@@ -91,7 +91,7 @@ class TVAccountWizard : BaseActivity<AccountWizardPresenter>(), AccountWizardVie
         if (!model.managementServer.isNullOrEmpty()) {
             presenter.initJamiAccountConnect(model, defaultAccountName)
             mJamsAccount = true
-        } else if (model.isLink) {
+        } else if (model.isLink) { // Todo: Legacy code
             presenter.initJamiAccountLink(model, defaultAccountName)
             mJamsAccount = false
         } else {

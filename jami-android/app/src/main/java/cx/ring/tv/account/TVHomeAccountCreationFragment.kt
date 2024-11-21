@@ -34,12 +34,12 @@ class TVHomeAccountCreationFragment : JamiGuidedStepFragment<HomeAccountCreation
 
     override fun goToAccountCreation() {
         model.model = AccountCreationModel().apply {
-            isLink = false
+            isLink = false // Todo: Legacy code
         }
         add(parentFragmentManager, TVJamiAccountCreationFragment())
     }
 
-    override fun goToAccountLink() {
+    override fun goToAccountLink() { // Todo: Legacy code
         model.model = AccountCreationModel().apply {
             isLink = true
         }
@@ -48,7 +48,7 @@ class TVHomeAccountCreationFragment : JamiGuidedStepFragment<HomeAccountCreation
 
     override fun goToAccountConnect() {
         model.model = AccountCreationModel().apply {
-            isLink = true
+            isLink = true // Todo: Legacy code
         }
         add(parentFragmentManager, TVJamiAccountConnectFragment())
     }

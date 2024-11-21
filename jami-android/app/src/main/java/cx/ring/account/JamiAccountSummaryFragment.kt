@@ -286,6 +286,7 @@ class JamiAccountSummaryFragment :
     }
 
     private fun showWizard(accountId: String) {
+        // Todo: Legacy
         LinkDeviceFragment.newInstance(accountId)
             .show(parentFragmentManager, LinkDeviceFragment.TAG)
     }
