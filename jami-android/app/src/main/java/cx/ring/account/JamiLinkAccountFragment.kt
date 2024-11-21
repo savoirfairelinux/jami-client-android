@@ -42,6 +42,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import net.jami.account.JamiLinkAccountPresenter
 import net.jami.account.JamiLinkAccountView
 
+// Todo: Legacy
 @AndroidEntryPoint
 class JamiLinkAccountFragment :
     BaseSupportFragment<JamiLinkAccountPresenter, JamiLinkAccountView>(),

@@ -30,6 +30,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import net.jami.account.LinkDevicePresenter
 import net.jami.account.LinkDeviceView
 
+// Todo: Legacy
 @AndroidEntryPoint
 class LinkDeviceFragment : BaseBottomSheetFragment<LinkDevicePresenter>(), LinkDeviceView {
     private var mBinding: FragLinkDeviceBinding? = null
