@@ -151,6 +151,7 @@ class AccountWizardActivity : BaseActivity<AccountWizardPresenter>(), AccountWiz
         val fragments = supportFragmentManager.fragments
         if (fragments.size > 0) {
             val fragment = fragments[0]
+            // Todo: Legacy
             if (fragment is JamiLinkAccountFragment || fragment is JamiAccountConnectFragment) {
                 profileCreated(false)
             }
