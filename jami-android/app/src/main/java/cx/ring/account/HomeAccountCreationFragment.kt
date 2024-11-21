@@ -57,6 +57,7 @@ class HomeAccountCreationFragment :
                             archive = file
                         }
                         replaceFragmentWithSlide(
+                            // Todo: Legacy
                             fragment = JamiLinkAccountFragment(),
                             tag = JamiLinkAccountFragment.TAG,
                             containerID = R.id.wizard_container
@@ -99,6 +100,7 @@ class HomeAccountCreationFragment :
         replaceFragmentWithSlide(JamiAccountCreationFragment(), JamiAccountCreationFragment.TAG, R.id.wizard_container)
     }
 
+    // Todo: Legacy
     override fun goToAccountLink() {
         model.model = AccountCreationModelImpl().apply {
             isLink = true

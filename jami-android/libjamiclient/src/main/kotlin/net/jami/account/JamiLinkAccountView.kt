@@ -18,6 +18,7 @@ package net.jami.account
 
 import net.jami.model.AccountCreationModel
 
+// Todo: Legacy
 interface JamiLinkAccountView {
     fun enableLinkButton(enable: Boolean)
     fun showPin(show: Boolean)

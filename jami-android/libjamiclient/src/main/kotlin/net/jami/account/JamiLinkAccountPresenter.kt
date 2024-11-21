@@ -20,6 +20,7 @@ import net.jami.model.AccountCreationModel
 import net.jami.mvp.RootPresenter
 import javax.inject.Inject
 
+// Todo: Legacy
 class JamiLinkAccountPresenter @Inject constructor() : RootPresenter<JamiLinkAccountView>() {
     private var mAccountCreationModel: AccountCreationModel? = null
 
