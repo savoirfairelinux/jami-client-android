@@ -127,7 +127,7 @@ class AccountWizardPresenter @Inject constructor(
             .observeOn(mUiScheduler)
             .subscribe({ account: Account -> accountCreationModel.newAccount = account })
             { e -> Log.e(TAG, "Can't create account", e) })
-        if (accountCreationModel.isLink) {
+        if (accountCreationModel.isLink) { // Todo: Legacy code
             view!!.displayProgress(true)
             mCompositeDisposable.add(newAccount
                 .filter { a: Account -> a.registrationState != AccountConfig.RegistrationState.INITIALIZING }
