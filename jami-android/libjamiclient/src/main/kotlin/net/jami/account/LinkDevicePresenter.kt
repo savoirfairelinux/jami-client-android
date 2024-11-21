@@ -22,6 +22,7 @@ import net.jami.services.AccountService
 import javax.inject.Inject
 import javax.inject.Named
 
+// Todo: Legacy
 class LinkDevicePresenter @Inject constructor(
     private val accountService: AccountService,
     @Named("UiScheduler")
