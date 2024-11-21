@@ -29,6 +29,7 @@ import net.jami.account.JamiLinkAccountPresenter
 import net.jami.account.JamiLinkAccountView
 import net.jami.utils.StringUtils.toPassword
 
+// Todo: Legacy
 @AndroidEntryPoint
 class TVJamiLinkAccountFragment : JamiGuidedStepFragment<JamiLinkAccountPresenter, JamiLinkAccountView>(),
     JamiLinkAccountView {

@@ -16,4 +16,5 @@
  */
 package net.jami.account
 
+// Todo: Legacy
 interface LinkDeviceView
