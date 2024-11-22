@@ -35,6 +35,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.account.HomeAccountCreationPresenter
 import net.jami.account.HomeAccountCreationView
+import net.jami.model.AccountCreationModel
 import net.jami.utils.Log
 import java.io.File
 
@@ -51,7 +52,7 @@ class HomeAccountCreationFragment :
                 getCacheFile(requireContext(), uri)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ file: File ->
-                        model.model = AccountCreationModelImpl().apply {
+                        model.model = AccountCreationModel().apply {
                             isLink = true
                             archive = file
                         }
@@ -89,19 +90,19 @@ class HomeAccountCreationFragment :
     }
 
     override fun goToAccountCreation() {
-        model.model = AccountCreationModelImpl()
+        model.model = AccountCreationModel()
         replaceFragmentWithSlide(JamiAccountCreationFragment(), JamiAccountCreationFragment.TAG, R.id.wizard_container)
     }
 
     override fun goToAccountLink() {
-        model.model = AccountCreationModelImpl().apply {
+        model.model = AccountCreationModel().apply {
             isLink = true
         }
         replaceFragmentWithSlide(JamiLinkAccountFragment(), JamiLinkAccountFragment.TAG, R.id.wizard_container)
     }
 
     override fun goToAccountConnect() {
-        model.model = AccountCreationModelImpl().apply {
+        model.model = AccountCreationModel().apply {
             isLink = true
         }
         replaceFragmentWithSlide(JamiAccountConnectFragment(), JamiAccountConnectFragment.TAG, R.id.wizard_container)

@@ -23,7 +23,7 @@ import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.Subject
 import java.io.File
 
-abstract class AccountCreationModel {
+class AccountCreationModel {
     var managementServer: String? = null
     var username = ""
     var password = ""
@@ -56,8 +56,6 @@ abstract class AccountCreationModel {
         set(pin) {
             field = pin.uppercase()
         }
-
-    abstract fun toVCard(): Single<VCard>
 
     val profileUpdates: Observable<AccountCreationModel>
         get() = profile
