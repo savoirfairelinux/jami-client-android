@@ -271,7 +271,7 @@ class JamiAccountSummaryFragment :
             binding.username.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus: Boolean ->
                 val name = binding.username.text
                 if (!hasFocus) {
-                    presenter.saveVCardFormattedName(name.toString())
+                    presenter.updateProfile(name.toString(), "","", 1)
                 }
             }
         }
@@ -343,9 +343,16 @@ class JamiAccountSummaryFragment :
             .setNegativeButton(android.R.string.cancel) { dialog, _ -> dialog.cancel() }
             .setPositiveButton(android.R.string.ok) { dialog, which ->
                 mSourcePhoto?.let { source ->
-                    presenter.saveVCard(mBinding!!.username.text.toString(),
-                        Single.just(source).map { obj -> BitmapUtils.bitmapToPhoto(obj) })
-                } ?: presenter.saveVCard(mBinding!!.username.text.toString(), null)
+                    val base64Image: String? = BitmapUtils.bitmapToBase64(source)
+                    if (base64Image != null) {
+                        presenter.updateProfile(mBinding!!.username.text.toString(), base64Image,
+                            "PNG", 1)
+                    } else {
+                        presenter.updateProfile(mBinding!!.username.text.toString(), "",
+                            "", 2)
+                    }
+                } ?: presenter.updateProfile(mBinding!!.username.text.toString(), "",
+                    "", 2)
             }
             .setOnDismissListener {
                 dialogDisposableBag.dispose()
