@@ -24,6 +24,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "afc629aa_222f33f6",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/HardwareServiceImpl.kt",
+        "patchSetId": 13
+      },
+      "lineNbr": 714,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-11-22T17:02:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "846ddc5d_03d5400f",
+      "range": {
+        "startLine": 714,
+        "startChar": 40,
+        "endLine": 714,
+        "endChar": 64
+      },
+      "revId": "d8d6ba99eba4cb038435bc3f9d78cbe3800284ab",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d999587d_44461a98",
@@ -37,6 +61,30 @@
       "writtenOn": "2024-11-22T16:50:28Z",
       "side": 1,
       "message": "not used/redundant with hardwareService.startTime",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 2
+      },
+      "revId": "d8d6ba99eba4cb038435bc3f9d78cbe3800284ab",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e61541f6_d87ee9dd",
+        "filename": "jami-android/app/src/withFirebase/java/cx/ring/application/JamiApplicationFirebase.kt",
+        "patchSetId": 13
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-11-22T17:02:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d999587d_44461a98",
       "range": {
         "startLine": 31,
         "startChar": 0,
