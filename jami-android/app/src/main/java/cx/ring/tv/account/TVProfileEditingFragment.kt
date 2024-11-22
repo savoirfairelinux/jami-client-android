@@ -52,7 +52,7 @@ class TVProfileEditingFragment : JamiGuidedStepFragment<HomeNavigationPresenter,
                         val base64Image: String? = BitmapUtils.bitmapToBase64(bitmap)
                         if (base64Image != null) {
                             presenter.updateProfile(getCurrentDisplayname(),
-                                base64Image, "PNG", 1)
+                                base64Image, "JPEG", 1)
                         } else {
                             presenter.updateProfile(getCurrentDisplayname(), "",
                                 "", 2)
@@ -87,7 +87,7 @@ class TVProfileEditingFragment : JamiGuidedStepFragment<HomeNavigationPresenter,
                         val base64Image: String? = BitmapUtils.bitmapToBase64(source)
                         if (base64Image != null) {
                             presenter.updateProfile(getCurrentDisplayname(), base64Image,
-                                "PNG", 1)
+                                "JPEG", 1)
                         } else {
                             presenter.updateProfile(getCurrentDisplayname(), "",
                                 "", 2)
