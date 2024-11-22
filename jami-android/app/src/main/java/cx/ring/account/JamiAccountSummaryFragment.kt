@@ -346,7 +346,7 @@ class JamiAccountSummaryFragment :
                     val base64Image: String? = BitmapUtils.bitmapToBase64(source)
                     if (base64Image != null) {
                         presenter.updateProfile(mBinding!!.username.text.toString(), base64Image,
-                            "PNG", 1)
+                            "JPEG", 1)
                     } else {
                         presenter.updateProfile(mBinding!!.username.text.toString(), "",
                             "", 2)
