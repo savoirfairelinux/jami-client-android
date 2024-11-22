@@ -57,7 +57,7 @@ abstract class AccountCreationModel {
             field = pin.uppercase()
         }
 
-    abstract fun toVCard(): Single<VCard>
+    abstract fun convertProfileImageToBase64(photo: Any?): String?
 
     val profileUpdates: Observable<AccountCreationModel>
         get() = profile

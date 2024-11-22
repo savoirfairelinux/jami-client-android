@@ -29,16 +29,11 @@ import cx.ring.account.AccountCreationViewModel
 import cx.ring.application.JamiApplication
 import cx.ring.databinding.ItemProgressDialogBinding
 import cx.ring.mvp.BaseActivity
-import cx.ring.services.VCardServiceImpl
 import dagger.hilt.android.AndroidEntryPoint
-import ezvcard.VCard
-import io.reactivex.rxjava3.core.Single
-import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.account.AccountWizardPresenter
 import net.jami.account.AccountWizardView
 import net.jami.model.Account
 import net.jami.model.AccountConfig
-import net.jami.utils.VCardUtils
 
 @AndroidEntryPoint
 class TVAccountWizard : BaseActivity<AccountWizardPresenter>(), AccountWizardView {
@@ -165,16 +160,16 @@ class TVAccountWizard : BaseActivity<AccountWizardPresenter>(), AccountWizardVie
         }
     }
 
-    override fun saveProfile(account: Account): Single<VCard> {
-        val filedir = filesDir
+    override fun saveProfile(account: Account){
         val model: AccountCreationViewModel by viewModels()
-        return model.model.toVCard()
-            .flatMap { vcard ->
-                account.loadedProfile =
-                    Single.fromCallable { VCardServiceImpl.readData(vcard) }.cache()
-                VCardUtils.saveLocalProfileToDisk(vcard, account.accountId, filedir)
-            }
-            .subscribeOn(Schedulers.io())
+        val base64img = model.model.convertProfileImageToBase64(model.model.photo)
+        if (base64img != null) {
+            presenter.updateProfile(account.accountId, model.model.fullName.toString(),
+                base64img, "image", 1)
+        } else {
+            presenter.updateProfile(account.accountId, model.model.fullName.toString(),
+                "", "", 2)
+        }
     }
 
     override fun displayGenericError() {
