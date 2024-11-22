@@ -31,6 +31,7 @@ import net.jami.model.Call
 import net.jami.model.Conference
 import net.jami.utils.Log
 import java.io.File
+import java.nio.file.Files
 import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.TimeUnit
 import kotlin.jvm.Synchronized
@@ -213,7 +214,7 @@ abstract class HardwareService(
         pushLogEnabled = true
         saveLoggingState(true)
         return pushLogs ?: Observable.concat(
-            Observable.fromIterable(pushLogFile.readLines()),
+            Observable.fromStream(Files.lines(pushLogFile.toPath())),
             Observable.create { emitter: ObservableEmitter<String> ->
                 pushLogEmitter = emitter
                 emitter.setCancellable {
