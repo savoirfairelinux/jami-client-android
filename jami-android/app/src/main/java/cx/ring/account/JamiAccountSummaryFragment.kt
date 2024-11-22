@@ -368,7 +368,7 @@ class JamiAccountSummaryFragment :
         if (bitmap == null) return null
         return try {
             val byteArrayOutputStream = ByteArrayOutputStream()
-            bitmap.compress(Bitmap.CompressFormat.PNG, 90, byteArrayOutputStream)
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, byteArrayOutputStream)
             val byteArray = byteArrayOutputStream.toByteArray()
             Base64.encodeToString(byteArray, Base64.NO_WRAP)
         } catch (e: Exception) {
