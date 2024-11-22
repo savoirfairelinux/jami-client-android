@@ -28,6 +28,7 @@ import android.graphics.Bitmap
 import net.jami.model.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Base64
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -65,7 +66,6 @@ import cx.ring.mvp.BaseSupportFragment
 import cx.ring.settings.AccountFragment
 import cx.ring.utils.AndroidFileUtils
 import cx.ring.utils.BiometricHelper
-import cx.ring.utils.BitmapUtils
 import cx.ring.utils.ContentUri
 import cx.ring.utils.ContentUri.getBitmap
 import cx.ring.utils.DeviceUtils
@@ -80,6 +80,7 @@ import net.jami.model.Account
 import net.jami.model.Contact
 import net.jami.model.Profile
 import net.jami.services.AccountService
+import java.io.ByteArrayOutputStream
 import java.io.File
 import javax.inject.Inject
 
@@ -271,7 +272,7 @@ class JamiAccountSummaryFragment :
             binding.username.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus: Boolean ->
                 val name = binding.username.text
                 if (!hasFocus) {
-                    presenter.saveVCardFormattedName(name.toString())
+                    presenter.updateProfile(name.toString(), "","", 1)
                 }
             }
         }
@@ -343,9 +344,16 @@ class JamiAccountSummaryFragment :
             .setNegativeButton(android.R.string.cancel) { dialog, _ -> dialog.cancel() }
             .setPositiveButton(android.R.string.ok) { dialog, which ->
                 mSourcePhoto?.let { source ->
-                    presenter.saveVCard(mBinding!!.username.text.toString(),
-                        Single.just(source).map { obj -> BitmapUtils.bitmapToPhoto(obj) })
-                } ?: presenter.saveVCard(mBinding!!.username.text.toString(), null)
+                    val base64Image: String? = convertProfileImageToBase64(source)
+                    if (base64Image != null) {
+                        presenter.updateProfile(mBinding!!.username.text.toString(), base64Image,
+                            "image", 1)
+                    } else {
+                        presenter.updateProfile(mBinding!!.username.text.toString(), "",
+                            "", 2)
+                    }
+                } ?: presenter.updateProfile(mBinding!!.username.text.toString(), "",
+                    "", 2)
             }
             .setOnDismissListener {
                 dialogDisposableBag.dispose()
@@ -354,6 +362,19 @@ class JamiAccountSummaryFragment :
                 mSourcePhoto = null
             }
             .show()
+    }
+
+    private fun convertProfileImageToBase64(bitmap: Bitmap?): String? {
+        if (bitmap == null) return null
+        return try {
+            val byteArrayOutputStream = ByteArrayOutputStream()
+            bitmap.compress(Bitmap.CompressFormat.PNG, 90, byteArrayOutputStream)
+            val byteArray = byteArrayOutputStream.toByteArray()
+            Base64.encodeToString(byteArray, Base64.NO_WRAP)
+        } catch (e: Exception) {
+            Log.e(TAG, "Error converting Bitmap to Base64", e)
+            null
+        }
     }
 
     fun onClickExport() {

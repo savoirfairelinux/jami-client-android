@@ -16,27 +16,28 @@
  */
 package cx.ring.account
 
-import net.jami.model.AccountCreationModel
-import ezvcard.VCard
-import ezvcard.property.FormattedName
-import ezvcard.property.Uid
 import android.graphics.Bitmap
-import cx.ring.utils.BitmapUtils
-import ezvcard.property.Photo
-import ezvcard.property.RawProperty
-import io.reactivex.rxjava3.core.Single
+import android.util.Base64
+import java.io.ByteArrayOutputStream
+import net.jami.model.AccountCreationModel
+import net.jami.utils.Log
 
 class AccountCreationModelImpl : AccountCreationModel() {
-    override fun toVCard(): Single<VCard> = Single.fromCallable {
-        val vcard = VCard()
-        vcard.formattedName = FormattedName(fullName)
-        vcard.uid = Uid(username)
-        val bmp = photo as Bitmap?
-        if (bmp != null) {
-            vcard.removeProperties(Photo::class.java)
-            vcard.addPhoto(BitmapUtils.bitmapToPhoto(bmp))
+    override fun convertProfileImageToBase64(photo: Any?): String? {
+        val bitmap = photo as? Bitmap
+        if (bitmap == null) return null
+        return try {
+            val byteArrayOutputStream = ByteArrayOutputStream()
+            bitmap.compress(Bitmap.CompressFormat.PNG, 90, byteArrayOutputStream)
+            val byteArray = byteArrayOutputStream.toByteArray()
+            Base64.encodeToString(byteArray, Base64.NO_WRAP)
+        } catch (e: Exception) {
+            Log.e(TAG, "Error converting Bitmap to Base64", e)
+            null
         }
-        vcard.removeProperties(RawProperty::class.java)
-        vcard
+    }
+
+    companion object {
+        private val TAG = AccountCreationModelImpl::class.simpleName!!
     }
 }
