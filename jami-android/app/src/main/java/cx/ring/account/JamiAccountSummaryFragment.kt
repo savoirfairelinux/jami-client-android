@@ -346,7 +346,8 @@ class JamiAccountSummaryFragment :
                 mSourcePhoto?.let { source ->
                     Single.just(source).map { BitmapUtils.bitmapToBase64(it)!! }
                         .observeOn(Schedulers.computation())
-                        .subscribe({ presenter.updateProfile(mBinding!!.username.text.toString(), it, "PNG") })
+                        .subscribe({ presenter.updateProfile(mBinding!!.username
+                            .text.toString(), it, "JPEG") })
                         { e -> Log.e(TAG, "Error updating profile", e) }
                 } ?: presenter.updateProfile(mBinding!!.username.text.toString(), "", "")
             }
