@@ -450,6 +450,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:exported="false"
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
+
+        <service
+            android:name="cx.ring.service.RemoteControl"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="cx.ring.service.REMOTE_CONTROL" />
+            </intent-filter>
+        </service>
+
         <activity
             android:name=".client.ConversationDetailsActivity"
             android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"

@@ -43,7 +43,6 @@ import java.util.concurrent.ScheduledFuture
 import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
-
 /**
  * This service handles the accounts
  * - Load and manage the accounts stored in the daemon
@@ -366,16 +365,21 @@ class AccountService(
      * @param map the account details
      * @return the created Account
      */
-    fun addAccount(map: Map<String, String>): Observable<Account> =
-        Single.fromCallable {
+    fun addAccount(map: Map<String, String>): Observable<Account>  {
+        for ((key, value) in map) {
+            Log.d("TEST", "addAccount, map: $key $value")
+        }
+        return Single.fromCallable {
             JamiService.addAccount(StringMap.toSwig(map)).apply {
-            if (isEmpty()) throw RuntimeException("Can't create account.") }
+                if (isEmpty()) throw RuntimeException("Can't create account.") }
         }
-        .flatMapObservable { accountId ->
-            Observable.merge(observableAccountList.mapOptional { Optional.ofNullable(it.firstOrNull { a -> a.accountId == accountId }) },
-                observableAccounts.filter { account: Account -> account.accountId == accountId })
-        }
-        .subscribeOn(scheduler)
+            .flatMapObservable { accountId ->
+                Observable.merge(observableAccountList.mapOptional { Optional.ofNullable(it.firstOrNull { a -> a.accountId == accountId }) },
+                    observableAccounts.filter { account: Account -> account.accountId == accountId })
+            }
+            .subscribeOn(scheduler)
+    }
+
 
     /**
      * @return the Account from the local cache that matches the accountId
@@ -1721,3 +1725,4 @@ class AccountService(
         const val ACCOUNT_SCHEME_KEY = "key"
     }
 }
+
