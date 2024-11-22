@@ -98,7 +98,7 @@ class AccountWizardActivity : BaseActivity<AccountWizardPresenter>(), AccountWiz
         if (photo != null) {
             Single.just(photo).map { BitmapUtils.bitmapToBase64(it)!! }
                 .observeOn(Schedulers.computation())
-                .subscribe({ presenter.updateProfile(account.accountId, name, it, "PNG") })
+                .subscribe({ presenter.updateProfile(account.accountId, name, it, "JPEG") })
                 { e -> Log.e(TAG, "Error updating profile", e) }
         } else {
             presenter.updateProfile(account.accountId, model.model.fullName, "", "")
