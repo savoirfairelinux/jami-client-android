@@ -94,7 +94,7 @@ class AccountWizardActivity : BaseActivity<AccountWizardPresenter>(), AccountWiz
         val base64img = BitmapUtils.bitmapToBase64(model.model.photo as? Bitmap)
         if (base64img != null) {
             presenter.updateProfile(account.accountId, model.model.fullName,
-                base64img, "PNG", 1)
+                base64img, "JPEG", 1)
         } else {
             presenter.updateProfile(account.accountId, model.model.fullName,
                 "", "", 2)
