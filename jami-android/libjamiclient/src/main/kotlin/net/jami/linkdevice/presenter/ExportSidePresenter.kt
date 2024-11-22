@@ -100,14 +100,17 @@ class ExportSidePresenter @Inject constructor(
 
     override fun onDoneSignal(details: Map<String, String>) {
         _currentState = AuthState.DONE
-        val error = details[EXPORT_ERROR_KEY]?.let {
-            AuthError.fromString(it)
-        }
+        val error = details[EXPORT_ERROR_KEY]
+            ?.let { if (it.isEmpty() || it == "none") null else AuthError.fromString(it) }
         view?.showResult(error = error)
     }
 
     private fun updateAuthState(authenticationResult: AuthResult) {
         Log.d(TAG, "Processing signal: ${authenticationResult.accountId}:${authenticationResult.operationId}:${authenticationResult.state} ${authenticationResult.details}")
+        if (!checkNewStateValidity(authenticationResult.state)) {
+            Log.e(TAG, "Invalid state transition: $_currentState->${authenticationResult.state}")
+            throw IllegalStateException("Invalid state transition")
+        }
         val details = authenticationResult.details
         when (authenticationResult.state) {
             AuthState.INIT -> onInitSignal()
@@ -116,6 +119,20 @@ class ExportSidePresenter @Inject constructor(
             AuthState.AUTHENTICATING -> onAuthenticatingSignal(details)
             AuthState.IN_PROGRESS -> onInProgressSignal()
             AuthState.DONE -> onDoneSignal(details)
+        }
+    }
+
+    /**
+     * Check if the new state is valid from the current state.
+     */
+    private fun checkNewStateValidity(newState: AuthState): Boolean {
+        return newState in when (_currentState) {
+            AuthState.INIT -> listOf(AuthState.CONNECTING, AuthState.DONE)
+            AuthState.TOKEN_AVAILABLE -> emptyList()
+            AuthState.CONNECTING -> listOf(AuthState.AUTHENTICATING, AuthState.DONE)
+            AuthState.AUTHENTICATING -> listOf(AuthState.IN_PROGRESS, AuthState.DONE)
+            AuthState.IN_PROGRESS -> listOf(AuthState.DONE, AuthState.DONE)
+            AuthState.DONE -> listOf(AuthState.DONE)
         }
     }
 
