@@ -19,7 +19,6 @@ package cx.ring.tv.account
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
@@ -37,7 +36,6 @@ import cx.ring.utils.AndroidFileUtils
 import cx.ring.utils.BitmapUtils
 import cx.ring.views.AvatarDrawable
 import dagger.hilt.android.AndroidEntryPoint
-import io.reactivex.rxjava3.core.Single
 import net.jami.navigation.HomeNavigationPresenter
 import net.jami.navigation.HomeNavigationView
 import net.jami.navigation.HomeNavigationViewModel
@@ -48,9 +46,22 @@ class TVProfileEditingFragment : JamiGuidedStepFragment<HomeNavigationPresenter,
 
     private val pickProfilePicture =
         registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
-            if (uri != null)
-                presenter.saveVCardPhoto(AndroidFileUtils.loadBitmap(requireContext(), uri)
-                    .map { BitmapUtils.bitmapToPhoto(it) })
+            if (uri != null) {
+                AndroidFileUtils.loadBitmap(requireContext(), uri)
+                    .subscribe({ bitmap ->
+                        val base64Image: String? = BitmapUtils.bitmapToBase64(bitmap)
+                        if (base64Image != null) {
+                            presenter.updateProfile(getCurrentDisplayname(),
+                                base64Image, "PNG", 1)
+                        } else {
+                            presenter.updateProfile(getCurrentDisplayname(), "",
+                                "", 2)
+                        }
+                    }, { error ->
+                        presenter.updateProfile(getCurrentDisplayname(), "",
+                            "", 2)
+                    })
+            }
         }
 
     private val requestCameraPermission =
@@ -71,15 +82,32 @@ class TVProfileEditingFragment : JamiGuidedStepFragment<HomeNavigationPresenter,
                 val uri = extras[MediaStore.EXTRA_OUTPUT] as Uri?
                 if (uri != null) {
                     val cr = requireContext().contentResolver
-                    presenter.saveVCardPhoto(Single.fromCallable {
-                        cr.openInputStream(uri).use { BitmapFactory.decodeStream(it) }
-                    }.map { obj: Bitmap -> BitmapUtils.bitmapToPhoto(obj) })
+                    val bitmap = cr.openInputStream(uri).use { BitmapFactory.decodeStream(it) }
+                    bitmap?.let { source ->
+                        val base64Image: String? = BitmapUtils.bitmapToBase64(source)
+                        if (base64Image != null) {
+                            presenter.updateProfile(getCurrentDisplayname(), base64Image,
+                                "PNG", 1)
+                        } else {
+                            presenter.updateProfile(getCurrentDisplayname(), "",
+                                "", 2)
+                        }
+                    } ?: run {
+                        presenter.updateProfile(getCurrentDisplayname(), "",
+                            "", 2)
+                    }
                 }
             }
             else -> {
             }
         }
     }
+
+    private fun getCurrentDisplayname(): String? {
+        val usernameAction = actions.find { it.id == USER_NAME }
+        return usernameAction?.editTitle?.toString()
+    }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -104,7 +132,8 @@ class TVProfileEditingFragment : JamiGuidedStepFragment<HomeNavigationPresenter,
 
     override fun onGuidedActionEditedAndProceed(action: GuidedAction): Long {
         when (action.id) {
-            USER_NAME -> presenter.saveVCardFormattedName(action.editTitle.toString())
+            USER_NAME -> presenter.updateProfile(action.editTitle.toString(), "",
+                "", 1)
             CAMERA -> presenter.cameraClicked()
             GALLERY -> presenter.galleryClicked()
         }
