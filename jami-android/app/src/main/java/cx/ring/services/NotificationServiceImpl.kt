@@ -301,7 +301,8 @@ class NotificationServiceImpl(
     private fun manageCallNotification(conference: Conference, remove: Boolean, startScreenshare: Boolean) {
         if (DeviceUtils.isTv(mContext)) {
             if (!remove) startCallActivity(conference.id)
-            return
+            //TODO: this is why there is no notifications
+//            return
         }
         var notification: Notification? = null
 

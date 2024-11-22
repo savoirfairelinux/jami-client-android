@@ -875,6 +875,14 @@ class AccountService(
     }
 
     /**
+     * Sends a new trust request
+     */
+    fun sendTrustRequest(accountId: String, newContactId: String, message: Blob = Blob()) {
+        Log.i(TAG, "sendTrustRequest() " + accountId + " " + newContactId)
+        mExecutor.execute { JamiService.sendTrustRequest(accountId, newContactId, message) }
+    }
+
+    /**
      * Add a new contact for the account Id on the Daemon
      */
     fun addContact(accountId: String, uri: String) {
