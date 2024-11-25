@@ -2,7 +2,9 @@ package cx.ring.service
 
 import android.app.Service
 import android.content.Intent
+import android.graphics.Bitmap
 import android.os.IBinder
+import android.os.RemoteException
 import cx.ring.IRemoteService
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -76,6 +78,25 @@ class RemoteControl : Service() {
             }
         }
 
+        override fun addContact(accountId: String, contactId: String) {
+            try {
+                accountService.addContact(accountId, contactId)
+                Log.d(tag, "Successfully added contact: $contactId to account: $accountId")
+            } catch (e: Exception) {
+                Log.e(tag, "Failed to add contact: $contactId to account: $accountId", e)
+                throw RemoteException("Failed to add contact: ${e.message}")
+            }
+        }
+
+        override fun sendTrustRequest(accountId: String, contactId: String) {
+            try {
+                accountService.sendTrustRequest(accountId, contactId)
+                Log.i(tag, "Trust request sent to: $contactId from account: $accountId")
+            } catch (e: Exception) {
+                Log.e(tag, "Failed to send trust request to: $contactId from account: $accountId", e)
+                throw RemoteException("Failed to send trust request: ${e.message}")
+            }
+        }
 
         override fun initiateCall(userId: String, callback: IRemoteService.ICallback) {
             Log.d(tag, "Initiating call to user: $userId")
@@ -155,10 +176,23 @@ class RemoteControl : Service() {
             }
         }
 
-        override fun getUserImage(): ByteArray {
-            Log.d(tag, "Fetching user image")
-            // Add actual implementation
-            throw NotImplementedError("getUserImage not implemented yet")
+        override fun getCallerImage(userId: String): Bitmap? {
+            val currentAccount = accountService.currentAccount
+            if (currentAccount == null || userId.isBlank()) {
+                return null
+            }
+
+            val contact = currentAccount.getContactFromCache(Uri.fromString(userId))
+
+            return try {
+                contact.profile
+                    .firstElement()
+                    .blockingGet()
+                    ?.avatar as? Bitmap
+            } catch (e: Exception) {
+                Log.e(tag, "Error fetching caller image for $userId: ${e.message}", e)
+                null
+            }
         }
     }
 

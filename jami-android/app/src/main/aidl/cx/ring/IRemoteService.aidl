@@ -2,6 +2,8 @@ package cx.ring;
 
 interface IRemoteService {
     String createAccount(String registeredName);
+    void addContact(String accountId, String contactId);
+    void sendTrustRequest(String accountId, String contactId);
     String getAccountId();
     void initiateCall(String userId, ICallback callback);
     interface ICallback {
@@ -11,5 +13,5 @@ interface IRemoteService {
     void hangUpCall();
     void acceptCall();
     void rejectCall();
-    byte[] getUserImage();
+    Bitmap getCallerImage(String userId);
 }
