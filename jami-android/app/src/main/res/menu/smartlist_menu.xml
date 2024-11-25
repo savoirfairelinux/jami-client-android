@@ -23,7 +23,7 @@
             <item
                 android:id="@+id/menu_advanced_settings"
                 android:icon="@drawable/baseline_advanced_settings_24dp"
-                android:title="@string/menu_item_advanced_settings"
+                android:title="@string/menu_item_app_settings"
                 app:iconTint="@color/icon_color"
                 app:showAsAction="ifRoom" />
 
