@@ -6,6 +6,10 @@
     <string name="pref_category_system">System</string>
     <string name="pref_category_privacy">Privacy</string>
     <string name="pref_category_diagnostic">Diagnostics</string>
+    <string name="pref_category_appearance">Appearance</string>
+    <string name="pref_category_connectivity">Connectivity</string>
+    <string name="pref_category_extensions">Extensions</string>
+    <string name="pref_category_video_settings">Advanced video settings</string>
 
     <string name="pref_mobileData_title">Mobile data</string>
     <string name="pref_mobileData_summary">Allow Jami on 3G/LTE networks additionally to Wi-Fi</string>
@@ -102,8 +106,12 @@
         available configuration presets.</string>
 
     <!-- Extension -->
-    <string name="pref_extensions_title">Extensions</string>
-    <string name="pref_extensions_summary">Enable extensions and set their parameters</string>
+    <string name="pref_enable_extensions_title">Enable extensions</string>
+    <string name="pref_enable_extensions_summary">Enable extensions and set their
+        parameters</string>
+    <string name="pref_available_extensions_title">Available extensions</string>
+    <string name="pref_available_extensions_summary">Installed extensions and add new
+        extensions</string>
     <string name="fab_extensions_add">Add new extension</string>
     <string name="extension_uninstall_title">Uninstall extension?</string>
     <string name="extension_reset_preferences">Reset extension preferences</string>

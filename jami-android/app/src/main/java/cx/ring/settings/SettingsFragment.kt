@@ -135,6 +135,11 @@ class SettingsFragment :
             }
             settingsExtensionsSwitch.setOnCheckedChangeListener { _, isChecked: Boolean ->
                 JamiService.setPluginsEnabled(isChecked)
+                if (isChecked) {
+                    settingsExtensionsLayout.visibility = View.VISIBLE
+                } else {
+                    settingsExtensionsLayout.visibility = View.GONE
+                }
             }
             val save = CompoundButton.OnCheckedChangeListener { _, isChecked: Boolean ->
                 if (!mIsRefreshingViewFromPresenter) saveSettings(this)
@@ -196,6 +201,9 @@ class SettingsFragment :
             settingsExtensionsSwitch.isChecked = JamiService.getPluginsEnabled()
             if (TextUtils.isEmpty(JamiApplication.instance?.pushToken)) {
                 settingsPushNotificationsLayout.visibility = View.GONE
+            }
+            if (!JamiService.getPluginsEnabled()) {
+                settingsExtensionsLayout.visibility = View.GONE
             }
             binding = this
         }.root
@@ -371,7 +379,7 @@ class SettingsFragment :
             val binding = binding ?: return
             binding.donateButton.isVisible = DonationUtils.isDonationPeriod()
             onAppBarScrollTargetViewChanged(binding.scrollview)
-            onToolbarTitleChanged(getString(R.string.menu_item_advanced_settings))
+            onToolbarTitleChanged(getString(R.string.menu_item_app_settings))
             backPressedCallback.isEnabled = false
             binding.fragmentContainer.isVisible = false
         }
