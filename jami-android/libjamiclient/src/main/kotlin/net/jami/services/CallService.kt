@@ -224,7 +224,7 @@ abstract class CallService(
                         .doOnError { result.setCall(null) }
             }
 
-    private fun placeCall(
+    fun placeCall(
         account: String, conversationUri: Uri?, numberUri: Uri, hasVideo: Boolean
     ): Single<Call> =
         Single.fromCallable<Call> {
@@ -783,6 +783,14 @@ abstract class CallService(
             else
                 hangUp(accountId, callId)
         }
+    }
+
+    fun getActiveCall(): Call? {
+        return calls.values.firstOrNull { it.callStatus == Call.CallStatus.CURRENT }
+    }
+
+    fun getIncomingCall(): Call? {
+        return calls.values.firstOrNull { it.callStatus == Call.CallStatus.RINGING }
     }
 
     companion object {

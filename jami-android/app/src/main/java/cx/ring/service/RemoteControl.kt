@@ -5,7 +5,12 @@ import android.content.Intent
 import android.os.IBinder
 import cx.ring.IRemoteService
 import dagger.hilt.android.AndroidEntryPoint
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.schedulers.Schedulers
+import net.jami.model.Uri
 import net.jami.services.AccountService
+import net.jami.services.CallService
 import net.jami.utils.Log
 import javax.inject.Inject
 
@@ -15,12 +20,21 @@ class RemoteControl : Service() {
     @Inject
     lateinit var accountService: AccountService
 
+    @Inject
+    lateinit var callService: CallService
+
     private val tag = "JamiRemoteControlService"
+    private val compositeDisposable = CompositeDisposable()
 
     override fun onCreate() {
         super.onCreate()
         Log.d(tag, "Service created")
         Log.d(tag, "AccountService injected: ${this::accountService.isInitialized}")
+    }
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d(tag, "Service destroyed")
+        compositeDisposable.clear()
     }
 
     // Inner Binder class implementing the AIDL interface
@@ -62,28 +76,83 @@ class RemoteControl : Service() {
             }
         }
 
-        override fun initiateCall(userId: String?) {
+
+        override fun initiateCall(userId: String, callback: IRemoteService.ICallback) {
             Log.d(tag, "Initiating call to user: $userId")
-            // Add actual implementation
-            throw NotImplementedError("initiateCall not implemented yet")
+            try {
+                val disposable = callService.placeCall(
+                    account = getAccountId(),
+                    conversationUri = null,
+                    numberUri = Uri.fromString(userId),
+                    hasVideo = true
+                )
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({ call ->
+                        Log.d(tag, "Call initiated successfully: $call")
+                        callback.onSuccess()
+                    }, { error ->
+                        Log.e(tag, "Failed to initiate call: ${error.message}", error)
+                        callback.onError(error.message)
+                    })
+
+                compositeDisposable.add(disposable)
+            } catch (e: Exception) {
+                Log.e(tag, "Error initiating call", e)
+                callback.onError(e.message)
+            }
         }
 
         override fun hangUpCall() {
             Log.d(tag, "Hanging up the current call")
-            // Add actual implementation
-            throw NotImplementedError("hangUpCall not implemented yet")
+            try {
+                val activeCall = callService.getActiveCall()
+                    ?: throw IllegalStateException("No active call to hang up")
+
+                callService.hangUp(
+                    accountId = activeCall.account!!,
+                    callId = activeCall.daemonIdString!!
+                )
+                Log.d(tag, "Call hung up successfully")
+            } catch (e: Exception) {
+                Log.e(tag, "Error hanging up call: ${e.message}", e)
+                throw RuntimeException("Failed to hang up call", e)
+            }
         }
 
         override fun acceptCall() {
             Log.d(tag, "Accepting an incoming call")
-            // Add actual implementation
-            throw NotImplementedError("acceptCall not implemented yet")
+            try {
+                val incomingCall = callService.getIncomingCall()
+                    ?: throw IllegalStateException("No incoming call to accept")
+
+                callService.accept(
+                    accountId = incomingCall.account!!,
+                    callId = incomingCall.daemonIdString!!,
+                    hasVideo = true
+                )
+                Log.d(tag, "Call accepted successfully")
+            } catch (e: Exception) {
+                Log.e(tag, "Error accepting call: ${e.message}", e)
+                throw RuntimeException("Failed to accept call", e)
+            }
         }
 
         override fun rejectCall() {
             Log.d(tag, "Rejecting an incoming call")
-            // Add actual implementation
-            throw NotImplementedError("rejectCall not implemented yet")
+            try {
+                val incomingCall = callService.getIncomingCall()
+                    ?: throw IllegalStateException("No incoming call to reject")
+
+                callService.refuse(
+                    accountId = incomingCall.account!!,
+                    callId = incomingCall.daemonIdString!!
+                )
+                Log.d(tag, "Call rejected successfully")
+            } catch (e: Exception) {
+                Log.e(tag, "Error rejecting call: ${e.message}", e)
+                throw RuntimeException("Failed to reject call", e)
+            }
         }
 
         override fun getUserImage(): ByteArray {
