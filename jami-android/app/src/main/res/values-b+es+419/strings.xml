@@ -173,15 +173,13 @@
   <string name="tab_files">Archivos</string>
   <string name="tab_settings">Configuraciones</string>
   <string name="not_admin_toast">Solo los administradores pueden editar la información de este grupo</string>
-  <string name="dialogtitle_title">Editar el título de la colección</string>
-  <string name="dialogtitle_description">Editar Descripción de la colección</string>
   <string name="dialog_hint_title">Título</string>
   <string name="dialog_hint_description">Descripción</string>
   <string name="picker_title">Elegir contactos</string>
   <string name="picker_btn">Elegir contactos</string>
   <string name="no_contact_to_add">No tiene contacto para agregar</string>
   <string name="bottomsheet_contact">Contacta con Jami\n%1$s</string>
-  <string name="bottomsheet_remove">Retirada del enjambre</string>
+  <string name="bottomsheet_remove">Eliminar miembro</string>
   <string name="error_open_no_app_found">No se ha encontrado una aplicación para manejar este archivo: %1$s</string>
   <string name="swarm_detail_no_document">Aún no tiene documentos.</string>
   <string name="group_admin">Administración</string>
@@ -202,12 +200,11 @@
   <!--Conversation details-->
   <string name="details">Detalles</string>
   <string name="secure_p2p_connection">Conexión segura de igual a igual (de pares)</string>
-  <string name="swarm_type">Tipo de conversación</string>
   <string name="Private">Privado</string>
   <string name="swarm_id">ID de enjambre</string>
   <string name="show_qr_code">Mostrar el código QR</string>
   <string name="show_certificate">Mostrar el certificado</string>
-  <string name="mute_conversation">Silenciar la Conversación</string>
+  <string name="mute_conversation">Silenciar conversación</string>
   <!--Donation-->
   <string name="donation_card_description">Si disfruta usando Jami y cree en nuestra misión, ¿le gustaría hacer una donación?</string>
   <string name="donation_card_not_now">Ahora no</string>

@@ -52,6 +52,7 @@
   <string name="account_upnp_label">Įjungti UPnP</string>
   <string name="account_proxy_field">Įgaliotasis serveris</string>
   <!--Extension Details-->
+  <string name="account_preferences_extension_tab">Plėtiniai</string>
   <!--Audio Details-->
   <string name="account_audio_label">Garsas</string>
   <string name="account_preferences_media_tab">Medija</string>

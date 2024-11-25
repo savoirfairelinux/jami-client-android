@@ -42,6 +42,8 @@
   <string name="pref_logs_summary">Abrir preferencias de registro de diagnóstico</string>
   <string name="pref_logs_start">Iniciar registro</string>
   <string name="pref_logs_stop">Detener registro</string>
+  <string name="pref_connection_monitor">Monitor de conexión</string>
+  <string name="pref_connection_monitor_summary">Supervisar las conexiones punto a punto</string>
   <string name="pref_typing_title">Habilitar indicadores de tipeo</string>
   <string name="pref_typing_summary">Enviar y recibir indicadores de tipeo mostrando que un mensaje se está escribiendo.</string>
   <string name="pref_block_record_title">Bloquear capturas de pantalla y grabaciones</string>

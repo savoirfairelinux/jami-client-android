@@ -29,22 +29,48 @@
   <string name="account_chat_settings_title">聊天设置</string>
   <string name="account_read_receipts_label">启用已读回执</string>
   <string name="account_read_receipts_summary">接收并发送显示一个消息已读的回执。</string>
+  <string name="account_proxy_list_enable_label">使用DHT代理列表</string>
+  <string name="account_proxy_server_used">使用：%1$s</string>
   <!--Security Details-->
   <!--SRTP Details-->
   <!--SIP-->
   <!--TLS Details-->
   <!--restore/backup-->
   <string name="account_export_file">备份账户</string>
+  <string name="account_export_end_decryption_message">使用该密码无法解锁您的账户。</string>
+  <string name="account_export_end_network_message">无法进行账户在线导出。请检查您的网络连接。</string>
+  <string name="account_export_end_error_message">无法导出账户，发生未知错误。</string>
+  <string name="account_share_body">用 \"%1$s\" 在 Jami 分布式通信平台上与我联系：%2$s</string>
+  <string name="account_share_body_with_username">使用 \"%1$s\"或我的公开用户名 \"%2$s\" 在 Jami 分布式通讯平台上联系我：%3$s</string>
   <string name="account_contact_me">在 Jami 上联系我！</string>
   <string name="sip_account">SIP 账户</string>
+  <string name="account_migration_message_dialog">您的账户需要被更新。您想前往账户管理界面进行该操作吗？</string>
+  <string name="account_cannot_be_found_title">无法找到账户</string>
+  <string name="account_cannot_be_found_message">在 Jami 网络上找不到账户。请确保它是从现有设备上的 Jami 导出的，并且提供的凭据是正确的。</string>
+  <string name="jams_account_cannot_be_found_message">连接帐户时出错。请检查凭据，然后重试。</string>
   <string name="account_no_network_title">网络错误</string>
+  <string name="account_no_network_message">无法添加账户，因为 Jami 无法连接到分布式网络。检查您设备的连接。</string>
+  <string name="account_device_added_message">您已在此设备上成功设置了 Jami 账户。</string>
+  <string name="account_device_updated_message">您的 Jami 账户已成功更新。</string>
+  <string name="account_cannot_be_updated_message">无法更新账户设备。请检查您的密码。</string>
+  <string name="account_sip_success_title">SIP 账户已注册</string>
+  <string name="account_sip_success_message">您已成功注册了您的 SIP 账户。</string>
   <!--TV-->
+  <string name="account_link_export_info">要在其他设备上使用此账户，您必须先在 Jami 上公开它。这将生成一个 PIN 码，您必须在新设备上输入该 PIN 码才能设置此账户。PIN 码有效期为 10 分钟。</string>
+  <string name="account_end_export_infos">我们的PIN是：\n\n%%\n\n要完成此过程，您需要在新设备上打开Jami。使用“将此设备链接到帐户”创建新帐户。PIN将在10分钟后过期。</string>
+  <string name="account_link_export_info_light">要在其他设备上使用此账户，您必须先在 Jami 上公开它。这将生成一个 PIN 码，您必须在新设备上输入该 PIN 码才能设置此账户。PIN 码有效期为 10 分钟。</string>
+  <string name="account_connect_server">连接到JAMS服务器</string>
   <string name="account_enter_username">输入用户名</string>
+  <string name="account_enter_servername">输入服务器</string>
   <!--Name registration-->
   <!--Create account-->
   <string name="account_creation_home">欢迎使用 Jami</string>
+  <string name="account_sip_cannot_be_registered">无法注册账户</string>
   <!--Edit profile-->
+  <string name="account_edit_profile">修改您的账户资料</string>
   <!--Devices-->
+  <string name="revoke_device_message">您确定要注销设备%1$s吗？</string>
+  <string name="account_device_name_empty">设备名不可为空</string>
   <!--Link a new device-->
   <string name="account_link_prompt_pin_manually">手动输入PIN</string>
   <string name="qr_invalid">不是Jami的身份验证二维码</string>
@@ -55,8 +81,12 @@
   <string name="account_link_password">此帐户是密码加密的，请输入密码以生成PIN码</string>
   <string name="account_link_generate_button">生成</string>
   <string name="account_link_time_valid">PIN码将失效：%1$s</string>
+  <string name="account_link_device_info">从其他Jami应用程序中选择“链接新设备”以显示QR码或PIN</string>
   <string name="account_generate_export_device">在其他设备上</string>
+  <string name="account_generate_export_info">安装并启动Jami，选择“从其他设备导入”并扫描QR码</string>
   <string name="content_description_qr_generated">你的二维码</string>
+  <string name="account_generate_export_invalid">PIN不再有效。\n输入密码并生成新的密码以链接新设备。</string>
+  <string name="account_generate_export_invalid_two">PIN不再有效。\n生成新PIN以链接新设备。</string>
   <string name="help_pin_info">如果帐户是密码加密的，请输入</string>
   <string name="connect_device_scanqr">扫描二维码</string>
   <string name="connect_device_enterPIN">或输入PIN</string>

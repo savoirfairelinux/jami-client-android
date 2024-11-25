@@ -189,6 +189,7 @@
   <string name="tab_settings">Cài đặt</string>
   <string name="dialog_hint_title">Tiêu đề</string>
   <string name="dialog_hint_description">Mô tả</string>
+  <string name="bottomsheet_remove">Xóa thành viên</string>
   <!--JamiId-->
   <string name="jami_id_validate">Đăng ký tên người dùng</string>
   <string name="jami_id_looking_for_availability">Tìm kiếm tên người dùng sẵn có...</string>
@@ -198,6 +199,7 @@
   <!--Conversation details-->
   <string name="details">Chi tiết</string>
   <string name="Private">Tự riêng</string>
+  <string name="mute_conversation">Cuộc trò chuyện câm lặng</string>
   <!--Donation-->
   <string name="donation_card_not_now">Lúc khác</string>
   <!--Extension-->

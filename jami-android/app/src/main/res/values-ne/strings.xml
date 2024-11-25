@@ -316,14 +316,12 @@
   <string name="tab_members">सदस्यहरू</string>
   <string name="tab_files">फाइलहरू</string>
   <string name="tab_settings">सेटिंग्स</string>
-  <string name="dialogtitle_title">सम्पादन गर्नुहोस् Swarm शीर्षक</string>
-  <string name="dialogtitle_description">सम्पादन गर्नुहोस् Swarm वर्णन</string>
   <string name="dialog_hint_title">शीर्षक</string>
   <string name="dialog_hint_description">विवरण</string>
   <string name="picker_title">सम्पर्कहरू चयन गर्नुहोस्</string>
   <string name="picker_btn">सम्पर्कहरू चयन गर्नुहोस्</string>
   <string name="bottomsheet_contact">सम्पर्क गर्नुहोस् Jami\n%1$s</string>
-  <string name="bottomsheet_remove">झुण्डबाट हटाइयो</string>
+  <string name="bottomsheet_remove">सदस्य हटाउनु</string>
   <!--JamiId-->
   <string name="jami_id_validate">प्रयोगकर्ता नाम दर्ता गर्नुहोस्</string>
   <string name="jami_id_looking_for_availability">प्रयोगकर्ता नाम उपलब्धता खोज्दै...</string>
@@ -333,6 +331,7 @@
   <!--Conversation details-->
   <string name="details">विवरणहरू</string>
   <string name="Private">निजी</string>
+  <string name="mute_conversation">मौन कुराकानी</string>
   <!--Donation-->
   <string name="donation_card_not_now">अहिले होइन</string>
   <!--Extension-->

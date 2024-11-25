@@ -411,15 +411,13 @@
   <string name="tab_files">Fájlok</string>
   <string name="tab_settings">Beállítások</string>
   <string name="not_admin_toast">Csak a rendszergazdák szerkeszthetik a csoport adatait.</string>
-  <string name="dialogtitle_title">Csoportcím szerkesztése</string>
-  <string name="dialogtitle_description">Csoportleírás szerkesztése</string>
   <string name="dialog_hint_title">Cím</string>
   <string name="dialog_hint_description">Leírás</string>
   <string name="picker_title">Kapcsolattartók kijelölése</string>
   <string name="picker_btn">Kapcsolattartók kijelölése</string>
   <string name="no_contact_to_add">Nincsenek hozzáadható kapcsolattartók.</string>
   <string name="bottomsheet_contact">Forduljon a Jamihez\n%1$s</string>
-  <string name="bottomsheet_remove">Eltávolítás a csoportból</string>
+  <string name="bottomsheet_remove">Tag eltávolítása</string>
   <string name="error_open_no_app_found">Nem található alkalmazás a fájl kezelésére: %1$s</string>
   <string name="swarm_detail_no_document">Még nincsenek dokumentumai.</string>
   <string name="group_admin">Rendszergazda</string>
@@ -440,7 +438,6 @@
   <!--Conversation details-->
   <string name="details">Részletek</string>
   <string name="secure_p2p_connection">Biztonságos egyenrangú kapcsolat</string>
-  <string name="swarm_type">Beszélgetés típusa</string>
   <string name="Private">Magánjellegű</string>
   <string name="swarm_id">Csoportazonosító</string>
   <string name="show_qr_code">QR-kód megjelenítése</string>

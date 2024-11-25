@@ -322,14 +322,11 @@
   <string name="tab_members">الأعضاء</string>
   <string name="tab_files">الملفات</string>
   <string name="tab_settings">الإعدادات</string>
-  <string name="dialogtitle_title">تحرير عنوان السحابة</string>
-  <string name="dialogtitle_description">تحرير وصف السحلة</string>
   <string name="dialog_hint_title">العنوان</string>
   <string name="dialog_hint_description">وصف</string>
   <string name="picker_title">إختيار جهات الاتصال</string>
   <string name="picker_btn">إختيار جهات الاتصال</string>
   <string name="bottomsheet_contact">الاتصال مع Jami\n%1$s</string>
-  <string name="bottomsheet_remove">إبتعد عن السحابة</string>
   <!--JamiId-->
   <string name="jami_id_validate">تسجيل اسم المستخدم</string>
   <string name="jami_id_looking_for_availability">جاري البحث عن توفر اسم المستخدم…</string>

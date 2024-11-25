@@ -170,6 +170,7 @@
   <string name="tab_settings">הגדרות</string>
   <string name="dialog_hint_title">כותרת</string>
   <string name="dialog_hint_description">תיאור</string>
+  <string name="bottomsheet_remove">הסיר חבר</string>
   <!--JamiId-->
   <string name="jami_id_validate">רשום שם משתמש</string>
   <string name="jami_id_looking_for_availability">מחפש זמינות שם המשתמש...</string>
@@ -179,6 +180,7 @@
   <!--Conversation details-->
   <string name="details">פרטים</string>
   <string name="Private">פרטי</string>
+  <string name="mute_conversation">שיחה שקטה</string>
   <!--Donation-->
   <string name="donation_card_not_now">לא עכשיו</string>
   <!--Extension-->

@@ -171,11 +171,17 @@ Voit muokata tiliäsi myöhemmin</string>
   <string name="account_update_needed">Päivitys tarvitaan</string>
   <string name="account_cannot_be_found_title">Tilivirhe</string>
   <string name="account_cannot_be_found_message">Tiliä ei löydy Jami-verkosta. Varmista, että se vietiin Jamiin olemassa olevasta laitteesta ja annetut kirjautumistiedot ovat oikein.</string>
+  <string name="jams_account_cannot_be_found_message">Tilin yhdistämisen aikana tapahtui virhe. Tarkista kirjautumistiedot ja yritä uudelleen.</string>
   <string name="account_sip_cannot_be_registered_message">Voit jatkaa tilin luontia tai muokata tietojasi täällä. Muokkaus on mahdollista tehdä tiliasetuksissa myöhemmin.</string>
   <string name="account_no_network_title">Verkkovirhe</string>
+  <string name="account_no_network_message">Tapahtui virhe lisättäessä Jami-tiliä hajautettuun verkkoon. Tarkista laitteesi yhteys.</string>
   <string name="account_device_added_title">Tili lisätty laitteelle</string>
+  <string name="account_device_added_message">Jami-tilin luominen onnistui tällä laitteella.</string>
   <string name="account_device_updated_title">Tili päivitetty laitteelle</string>
+  <string name="account_device_updated_message">Jami-tilin päivitys onnistui.</string>
+  <string name="account_cannot_be_updated_message">Tiliä päivitettäessä tapahtui virhe. Tarkista salasana.</string>
   <string name="account_sip_success_title">SIP-tili rekisteröity</string>
+  <string name="account_sip_success_message">SIP-tilin rekisteröinti onnistui.</string>
   <string name="account_sip_register_anyway">Rekisteröidy kuitenkin</string>
   <!--TV-->
   <string name="account_tv_settings_header">Tiliasetukset</string>
@@ -234,12 +240,14 @@ Voit muokata tiliäsi myöhemmin</string>
   <string name="account_creation_profile">Luo sinun profiili</string>
   <string name="account_creation_ring">Luo sinun Jami-tili</string>
   <string name="account_link_title">Linkitä tämä laite</string>
+  <string name="account_sip_cannot_be_registered">SIP-tilin rekisteröinnin aikana tapahtui virhe.</string>
   <!--Edit profile-->
   <string name="account_edit_profile">Muokkaa profiilia</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Vahvista antamalla salasana</string>
   <string name="enter_password">Anna salasana</string>
   <string name="revoke_device_title">Peruuta laite</string>
+  <string name="revoke_device_message">Haluatko todella poistaa %1$s?</string>
   <string name="revoke_device_wait_title">Odota hetki...</string>
   <string name="revoke_device_wait_message">Laitetta peruutetaan</string>
   <string name="rename_device_title">Nimeä tämä laite</string>

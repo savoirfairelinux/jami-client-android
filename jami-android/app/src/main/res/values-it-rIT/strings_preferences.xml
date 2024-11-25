@@ -42,6 +42,8 @@
   <string name="pref_logs_summary">Apri le impostazioni di diagnostica</string>
   <string name="pref_logs_start">Inizia la diagnostica</string>
   <string name="pref_logs_stop">Ferma la diagnostica</string>
+  <string name="pref_connection_monitor">Monitoraggio connessione</string>
+  <string name="pref_connection_monitor_summary">Monitoraggio delle connessioni peer to peer</string>
   <string name="pref_typing_title">Abilita gli indicatori di digitazione</string>
   <string name="pref_typing_summary">Invia e ricevi indicatori di digitazione quando si sta scrivendo un messagio.</string>
   <string name="pref_block_record_title">Blocca schermata e registrazione</string>

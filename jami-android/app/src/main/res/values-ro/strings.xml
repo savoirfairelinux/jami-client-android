@@ -412,15 +412,13 @@
   <string name="tab_files">Fișiere</string>
   <string name="tab_settings">Reglări</string>
   <string name="not_admin_toast">Numai administratorii pot modifica informațiile acestui grup</string>
-  <string name="dialogtitle_title">Modifică titlul grupului</string>
-  <string name="dialogtitle_description">Modifică descrierea grupului</string>
   <string name="dialog_hint_title">Titlu</string>
   <string name="dialog_hint_description">Descriere</string>
   <string name="picker_title">Alege contacte</string>
   <string name="picker_btn">Alege contacte</string>
   <string name="no_contact_to_add">Nu ai niciun contact de adăugat</string>
   <string name="bottomsheet_contact">Contactează Jami\n%1$s</string>
-  <string name="bottomsheet_remove">Scoate din grup</string>
+  <string name="bottomsheet_remove">Elimină membrul</string>
   <string name="error_open_no_app_found">Nu s-a găsit nicio aplicație care să gestioneze acest fișier: %1$s</string>
   <string name="swarm_detail_no_document">Încă nu ai documente.</string>
   <string name="group_admin">Administrator</string>
@@ -441,7 +439,6 @@
   <!--Conversation details-->
   <string name="details">Detalii</string>
   <string name="secure_p2p_connection">Conexiune sigură</string>
-  <string name="swarm_type">Tipul conversației</string>
   <string name="Private">Privat</string>
   <string name="swarm_id">ID-ul grupului</string>
   <string name="show_qr_code">Arată codul QR</string>

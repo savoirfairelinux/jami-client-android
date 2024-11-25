@@ -6,6 +6,8 @@
   <string name="pref_delete_account_summary">Eliminar cuenta de este dispositivo</string>
   <string name="pref_persistNotification_title">Ejecutar en segundo plano</string>
   <string name="pref_persistNotification_summary">Permitir que se ejecute en segundo plano para recibir llamadas y mensajes.</string>
+  <string name="pref_connection_monitor">Monitor de conexión</string>
+  <string name="pref_connection_monitor_summary">Supervisar las conexiones punto a punto</string>
   <!--Notifications Visibility-->
   <string name="notification_public">Públic\n(mostrar notificaciones y su contenido en la pantalla de bloqueo)\n</string>
   <string name="notification_private">Private\n(mostrar notificaciones pero ocultar su contenido en la pantalla de bloqueo)\n</string>

@@ -155,6 +155,7 @@
   <string name="tab_settings">Cinntí</string>
   <string name="dialog_hint_title">Teideal</string>
   <string name="dialog_hint_description">Tuairisc</string>
+  <string name="bottomsheet_remove">Cúlghairm a bhaint</string>
   <!--JamiId-->
   <string name="jami_id_validate">Ainm úsáideora a chlárú</string>
   <string name="jami_id_looking_for_availability">Ag lorg ar fáil ainm úsáideora...</string>
@@ -164,6 +165,7 @@
   <!--Conversation details-->
   <string name="details">Níos mó</string>
   <string name="Private">Priontáil</string>
+  <string name="mute_conversation">Cainteas muice</string>
   <!--Donation-->
   <string name="donation_card_not_now">Níos déanaí</string>
   <!--Extension-->

@@ -125,6 +125,7 @@
   <string name="tab_settings">Einstellungen</string>
   <string name="not_admin_toast">Nur Administratoren können die Informationen dieser Gruppe bearbeiten</string>
   <string name="no_contact_to_add">Sie haben keinen Kontakt zum Hinzufügen</string>
+  <string name="bottomsheet_remove">Mitglied entfernen</string>
   <string name="group_admin">Administrator</string>
   <string name="share_contact_intent_title">Diesen Kontakt zu Jami hinzufügen!</string>
   <string name="share_contact_intent_body">Sie können diesen Kontakt „%1$s“ auf der verteilten Kommunikationsplattform Jami hinzufügen: %2$s</string>
@@ -133,7 +134,6 @@
   <!--Conversation details-->
   <string name="details">Details</string>
   <string name="secure_p2p_connection">Sichere Peer-to-Peer-Verbindung</string>
-  <string name="swarm_type">Art des Unterhaltung</string>
   <string name="Private">Privat</string>
   <string name="swarm_id">Schwarm-ID</string>
   <string name="show_qr_code">QR-Code anzeigen</string>

@@ -155,6 +155,7 @@
   <string name="tab_settings">Ntọala</string>
   <string name="dialog_hint_title">Isiokwu</string>
   <string name="dialog_hint_description">Nkọwa</string>
+  <string name="bottomsheet_remove">Wepụ onye so</string>
   <!--JamiId-->
   <string name="jami_id_validate">Debanye aha njirimara</string>
   <string name="jami_id_looking_for_availability">Na-achọ maka aha njirimara dịnụ...</string>
@@ -164,6 +165,7 @@
   <!--Conversation details-->
   <string name="details">Ihe ndị ọzọ</string>
   <string name="Private">Ndị mmadụ n\'onwe ha</string>
+  <string name="mute_conversation">Mkparịta ụka nkịtị</string>
   <!--Donation-->
   <string name="donation_card_not_now">Ọbụghị ugbu a</string>
   <!--Extension-->

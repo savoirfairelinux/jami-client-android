@@ -412,15 +412,13 @@
   <string name="tab_files">File</string>
   <string name="tab_settings">Impostazioni</string>
   <string name="not_admin_toast">Solo gli amministratori possono modificare le informazioni di questo gruppo</string>
-  <string name="dialogtitle_title">Modifica il titolo del gruppo</string>
-  <string name="dialogtitle_description">Modifica la descrizione del gruppo</string>
   <string name="dialog_hint_title">Titolo</string>
   <string name="dialog_hint_description">Descrizione</string>
   <string name="picker_title">Seleziona contatti</string>
   <string name="picker_btn">Seleziona contatti</string>
   <string name="no_contact_to_add">Non hai contatti da aggiungere</string>
   <string name="bottomsheet_contact">Contatta Jami\n%1$s</string>
-  <string name="bottomsheet_remove">Rimuovi dal gruppo</string>
+  <string name="bottomsheet_remove">Rimuovi membro</string>
   <string name="error_open_no_app_found">Nessuna applicazione trovata per gestire questo file: %1$s</string>
   <string name="swarm_detail_no_document">Non hai ancora documenti.</string>
   <string name="group_admin">Amministratore</string>
@@ -441,7 +439,6 @@
   <!--Conversation details-->
   <string name="details">Dettagli</string>
   <string name="secure_p2p_connection">Connessione peer-to-peer sicura</string>
-  <string name="swarm_type">Tipo di conversazione</string>
   <string name="Private">Privato</string>
   <string name="swarm_id">ID gruppo</string>
   <string name="show_qr_code">Mostra codice QR</string>
