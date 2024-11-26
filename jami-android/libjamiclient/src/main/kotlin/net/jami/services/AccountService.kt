@@ -27,8 +27,6 @@ import io.reactivex.rxjava3.subjects.PublishSubject
 import io.reactivex.rxjava3.subjects.SingleSubject
 import io.reactivex.rxjava3.subjects.Subject
 import net.jami.daemon.*
-import net.jami.linkdevice.presenter.AuthState
-import net.jami.linkdevice.presenter.AuthResult
 import net.jami.model.*
 import net.jami.model.Interaction.TransferStatus
 import net.jami.services.ConversationFacade.SearchResult
@@ -1678,6 +1676,26 @@ class AccountService(
                     .sortedBy { it.first }
                 )
             }
+
+    enum class AuthState(val value: Int) {
+        INIT(0),
+        TOKEN_AVAILABLE(1),
+        CONNECTING(2),
+        AUTHENTICATING(3),
+        IN_PROGRESS(4),
+        DONE(5);
+
+        companion object {
+            fun fromInt(value: Int) = AuthState.entries[value]
+        }
+    }
+
+    data class AuthResult(
+        val accountId: String,
+        val state: AuthState,
+        val details: Map<String, String> = emptyMap(),
+        val operationId: Long? = null
+    )
 
     /**
      * Related to add device feature (import side).
