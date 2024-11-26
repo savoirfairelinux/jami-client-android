@@ -480,6 +480,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <activity android:name=".linkdevice.view.LinkDeviceExportSideActivity"
             android:theme="@style/AppTheme"
             android:exported="false"/>
+        <activity android:name=".linkdevice.view.LinkDeviceImportSideActivity"
+            android:theme="@style/AppTheme"
+            android:exported="false"/>
 
     </application>
 
