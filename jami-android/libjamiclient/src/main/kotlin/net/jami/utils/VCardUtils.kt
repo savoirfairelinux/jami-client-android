@@ -37,10 +37,7 @@ import java.util.HashMap
 
 object VCardUtils {
     val TAG = VCardUtils::class.simpleName!!
-    const val MIME_PROFILE_VCARD = "x-ring/ring.profile.vcard"
     const val VCARD_KEY_MIME_TYPE = "mimeType"
-    const val VCARD_KEY_PART = "part"
-    const val VCARD_KEY_OF = "of"
     const val LOCAL_USER_VCARD_NAME = "profile.vcf"
     private const val VCARD_MAX_SIZE = 1024L * 1024L * 8
 
@@ -130,6 +127,14 @@ object VCardUtils {
             Log.e(TAG, "Error while saving VCard to disk", e)
         }
     }
+
+    fun pictureTypeFromMime(mimeType: String?): String =
+        when (mimeType?.lowercase()) {
+            null -> ""
+            "image/jpeg" -> "JPEG"
+            "image/png" -> "PNG"
+            else -> "JPEG"
+        }
 
     @Throws(IOException::class)
     fun loadPeerProfileFromDisk(filesDir: File, cacheDir: File, filename: String, accountId: String): Pair<String?, ByteArray?> {

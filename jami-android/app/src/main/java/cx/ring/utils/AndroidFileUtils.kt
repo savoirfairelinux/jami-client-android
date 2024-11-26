@@ -478,7 +478,7 @@ object AndroidFileUtils {
             val matrix = Matrix()
             matrix.postRotate(orientation.toFloat())
             srcBitmap = Bitmap.createBitmap(srcBitmap!!, 0, 0, srcBitmap!!.width,
-                    srcBitmap!!.height, matrix, true)
+                srcBitmap!!.height, matrix, true)
         }
         srcBitmap!!
     }.subscribeOn(Schedulers.io())
