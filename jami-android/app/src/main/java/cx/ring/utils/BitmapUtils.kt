@@ -58,6 +58,19 @@ object BitmapUtils {
         null
     }
 
+    fun bitmapToBase64(bitmap: Bitmap?): String? {
+        if (bitmap == null) return null
+        return try {
+            val byteArrayOutputStream = ByteArrayOutputStream()
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
+            val byteArray = byteArrayOutputStream.toByteArray()
+            Base64.encodeToString(byteArray, Base64.NO_WRAP)
+        } catch (e: Exception) {
+            Log.e(TAG, "Error converting Bitmap to Base64", e)
+            null
+        }
+    }
+
     fun bytesToBitmap(imageData: ByteArray?): Bitmap? = if (imageData != null && imageData.isNotEmpty()) {
         BitmapFactory.decodeByteArray(imageData, 0, imageData.size)
     } else null
