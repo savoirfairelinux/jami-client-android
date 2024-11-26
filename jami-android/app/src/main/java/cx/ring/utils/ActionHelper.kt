@@ -257,4 +257,23 @@ object ActionHelper {
         }
         imageView.startAnimation(fadeOutAnimation)
     }
+
+    fun shareAuthenticationToken(context: Context, authenticationToken: String) {
+        if (authenticationToken.isEmpty()) {
+            Log.e("ShareUtils", "authenticationToken is null or empty")
+            return
+        }
+
+        val sharingIntent =
+            Intent(Intent.ACTION_SEND).apply {
+                type = "text/plain"
+                putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.link_device_share_title))
+                putExtra(Intent.EXTRA_TEXT, authenticationToken)
+            }
+        context.startActivity(
+            Intent.createChooser(
+                sharingIntent, context.getString(R.string.share_via)
+            )
+        )
+    }
 }
