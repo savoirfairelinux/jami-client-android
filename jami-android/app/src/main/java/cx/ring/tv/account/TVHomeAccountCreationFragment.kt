@@ -21,11 +21,11 @@ import androidx.fragment.app.activityViewModels
 import androidx.leanback.widget.GuidanceStylist.Guidance
 import androidx.leanback.widget.GuidedAction
 import cx.ring.R
-import cx.ring.account.AccountCreationModelImpl
 import cx.ring.account.AccountCreationViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import net.jami.account.HomeAccountCreationPresenter
 import net.jami.account.HomeAccountCreationView
+import net.jami.model.AccountCreationModel
 
 @AndroidEntryPoint
 class TVHomeAccountCreationFragment : JamiGuidedStepFragment<HomeAccountCreationPresenter, HomeAccountCreationView>(),
@@ -33,21 +33,21 @@ class TVHomeAccountCreationFragment : JamiGuidedStepFragment<HomeAccountCreation
     private val model: AccountCreationViewModel by activityViewModels()
 
     override fun goToAccountCreation() {
-        model.model = AccountCreationModelImpl().apply {
+        model.model = AccountCreationModel().apply {
             isLink = false
         }
         add(parentFragmentManager, TVJamiAccountCreationFragment())
     }
 
     override fun goToAccountLink() {
-        model.model = AccountCreationModelImpl().apply {
+        model.model = AccountCreationModel().apply {
             isLink = true
         }
         add(parentFragmentManager, TVJamiLinkAccountFragment())
     }
 
     override fun goToAccountConnect() {
-        model.model = AccountCreationModelImpl().apply {
+        model.model = AccountCreationModel().apply {
             isLink = true
         }
         add(parentFragmentManager, TVJamiAccountConnectFragment())

@@ -19,9 +19,11 @@ package cx.ring.account
 import android.Manifest
 import android.content.Intent
 import android.content.pm.ActivityInfo
+import android.graphics.Bitmap
 import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -34,17 +36,15 @@ import cx.ring.databinding.ItemProgressDialogBinding
 import cx.ring.fragments.AccountMigrationFragment
 import cx.ring.fragments.SIPAccountCreationFragment
 import cx.ring.mvp.BaseActivity
-import cx.ring.services.VCardServiceImpl
 import cx.ring.utils.BiometricHelper
+import cx.ring.utils.BitmapUtils
 import dagger.hilt.android.AndroidEntryPoint
-import ezvcard.VCard
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.account.AccountWizardPresenter
 import net.jami.account.AccountWizardView
 import net.jami.model.Account
 import net.jami.model.AccountConfig
-import net.jami.utils.VCardUtils
 
 @AndroidEntryPoint
 class AccountWizardActivity : BaseActivity<AccountWizardPresenter>(), AccountWizardView {
@@ -91,15 +91,18 @@ class AccountWizardActivity : BaseActivity<AccountWizardPresenter>(), AccountWiz
         super.onDestroy()
     }
 
-    override fun saveProfile(account: Account): Single<VCard> {
-        val filedir = filesDir
+    override fun saveProfile(account: Account) {
         val model: AccountCreationViewModel by viewModels()
-        return model.model.toVCard()
-            .flatMap { vcard: VCard ->
-                account.loadedProfile = Single.fromCallable { VCardServiceImpl.readData(vcard) }.cache()
-                VCardUtils.saveLocalProfileToDisk(vcard, account.accountId, filedir)
-            }
-            .subscribeOn(Schedulers.io())
+        val name = model.model.fullName
+        val photo = model.model.photo as? Bitmap?
+        if (photo != null) {
+            Single.just(photo).map { BitmapUtils.bitmapToBase64(it)!! }
+                .observeOn(Schedulers.computation())
+                .subscribe({ presenter.updateProfile(account.accountId, name, it, "PNG") })
+                { e -> Log.e(TAG, "Error updating profile", e) }
+        } else {
+            presenter.updateProfile(account.accountId, model.model.fullName, "", "")
+        }
     }
 
     fun createAccount() {
