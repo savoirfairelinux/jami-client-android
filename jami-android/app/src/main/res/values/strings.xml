@@ -627,10 +627,14 @@ along with this program; if not, write to the Free Software
     <string name="install_error">An error occurred while importing the extension.</string>
 
     <string name="export_side_main_title">Export account</string>
+    <string name="import_side_main_title">Import account</string>
 
     <string name="link_device_dialog_exit_title">Are you sure you want to exit?</string>
     <string name="link_device_dialog_exit_export_body_1">Exiting now will cancel the account exportation process.</string>
     <string name="link_device_dialog_exit_export_body_2">If not too late, exiting now will cancel the account exportation process.</string>
+    <string name="link_device_dialog_exit_import_body_1">Exiting now will cancel the account importation process.</string>
+    <string name="link_device_dialog_exit_import_body_2">If not too late, exiting now will cancel the account importation process.</string>
+
     <string name="export_side_step1_advice_qr">On the new device, initiate a new account.\nSelect <b>Account > Add Account > Connect from another device</b>\nWhen ready, scan the QR Code</string>
     <string name="export_side_step1_switch_to_code">Alternatively, click here to enter the code manually</string>
     <string name="export_side_step1_switch_to_qr">Alternatively, click here to show the Qr Code scanner</string>
@@ -650,7 +654,28 @@ along with this program; if not, write to the Free Software
     <string name="export_side_step3_body_done">Your account is successfully imported on the new device!</string>
     <string name="export_side_step3_exit">Exit</string>
 
+    <string name="import_side_step1_advice_qr">On the old device, initiate the exportation.\n<b>Select Account > Account Settings > Link a new device</b>\nWhen ready, scan the QR Code below.</string>
+    <string name="import_side_step1_advice_code">On the old device, initiate the exportation.\n<b>Select Account > Account Settings > Link a new device</b>\nWhen ready, enter the code below.</string>
+    <string name="import_side_step1_share">Share</string>
+    <string name="import_side_step1_switch_to_code">Alternatively, click here to show the code</string>
+    <string name="import_side_step1_switch_to_qr">Alternatively, click here to show the QR Code</string>
+    <string name="import_side_step1_connecting">Connecting to your old device…</string>
+    <string name="import_side_step1_preparing_device">Preparing device for account importation…</string>
+
+    <string name="import_side_step2_password_prompt">Your account is locked with a password.\nUnlock it to continue.</string>
+    <string name="import_side_step2_password_connect">Connect</string>
+    <string name="import_side_step2_password_unlocking">Unlocking your account…</string>
+    <string name="import_side_step2_action_required">Action required.\nPlease confirm account on your old device.</string>
+
+    <string name="import_side_step3_body_loading">Your account is being imported to your new device.\nPlease wait during the transfer.</string>
+    <string name="import_side_step3_body_done">You\'re all set!\nYour account is successfully imported on the new device!</string>
+    <string name="import_side_step3_go_to_account">Go to my new account</string>
+    <string name="import_side_step3_exit">Exit</string>
+
+    <string name="link_device_share_title">Share Jami Authentication Code</string>
+
     <string name="link_device_error_network">A network error occurred.\nPlease verify your connection.</string>
     <string name="link_device_error_authentication">An authentication error occurred.\nPlease verify your password.</string>
     <string name="link_device_error_unknown">An error occurred.</string>
+    <string name="link_device_error_bad_password">Incorrect password. Please try again.</string>
 </resources>
