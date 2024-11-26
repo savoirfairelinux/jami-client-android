@@ -610,6 +610,16 @@ class AccountService(
         mHistoryService.clearHistory(accountId).subscribe()
     }
 
+    fun updateProfile(accountId: String, displayName: String, avatarBase64: String, fileType: String) {
+        JamiService.updateProfile(accountId, displayName, avatarBase64, fileType, if (avatarBase64.isEmpty()) 2 else 1)
+    }
+    fun updateProfile(accountId: String, displayName: String, avatarPath: File, fileType: String) {
+        JamiService.updateProfile(accountId, displayName, avatarPath.absolutePath, fileType, 0)
+    }
+    fun updateProfile(accountId: String, displayName: String) {
+        JamiService.updateProfile(accountId, displayName, "", "", 0)
+    }
+
     /**
      * Exports the account on the DHT (used for multi-devices feature)
      */
