@@ -49,7 +49,7 @@
                 android:drawableRight="@drawable/baseline_arrow_forward_white_18"/>
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/ring_add_account"
+                android:id="@+id/link_device"
                 style="@style/WizardButton"
                 android:layout_width="@dimen/wizard_button_width"
                 android:layout_height="wrap_content"
