@@ -81,16 +81,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:layout_marginStart="64dp"
+                android:layout_marginStart="8dp"
                 android:text="@string/pref_category_appearance"
-                android:textColor="?attr/colorPrimary"
-                android:textSize="18sp" />
+                style="@style/SettingsHeader" />
 
             <RelativeLayout
                 android:id="@+id/settings_dark_theme_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/padding_large">
+                android:padding="@dimen/padding_large"
+                style="@style/CustomRelativeLayout">
 
                 <ImageView
                     android:id="@+id/theme_image"
@@ -101,7 +101,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_gravity="start"
                     android:contentDescription="@string/pref_darkTheme_summary"
                     android:src="@drawable/baseline_invert_colors_24"
-                    android:layout_marginEnd="32dp"/>
+                    android:layout_marginEnd="16dp"/>
 
                 <TextView
                     android:id="@+id/theme_title"
@@ -247,215 +247,220 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:layout_marginStart="64dp"
+                android:layout_marginStart="8dp"
                 android:text="@string/pref_category_privacy"
-                android:textColor="?attr/colorPrimary"
-                android:textSize="18sp" />
+                style="@style/SettingsHeader"/>
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="@dimen/padding_large">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:showDividers="middle"
+                android:divider="@drawable/layout_divider"
+                style="@style/CustomRelativeLayout">
 
-                <ImageView
-                    android:id="@+id/system_typing_image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="32dp"
-                    android:contentDescription="@string/pref_typing_summary"
-                    android:src="@drawable/baseline_keyboard_24" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toStartOf="@+id/settings_typing"
-                    android:layout_toEndOf="@+id/system_typing_image"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/ListPrimary"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:lines="1"
-                        android:text="@string/pref_typing_title" />
-
-                    <TextView
-                        style="@style/ListSecondary"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/pref_typing_summary" />
-
-                </LinearLayout>
-
-                <com.google.android.material.materialswitch.MaterialSwitch
-                    android:id="@+id/settings_typing"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="16dp"
-                    android:checked="true" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="@dimen/padding_large">
-
-                <ImageView
-                    android:id="@+id/system_block_record_image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/baseline_stop_screen_share_24dp"
-                    android:layout_alignParentStart="true"
-                    app:tint="?attr/colorControlNormal"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="32dp"/>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toStartOf="@+id/settings_block_record"
-                    android:layout_toEndOf="@+id/system_block_record_image"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/ListPrimary"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:lines="1"
-                        android:text="@string/pref_block_record_title" />
-
-                    <TextView
-                        style="@style/ListSecondary"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/pref_block_record_summary" />
-
-                </LinearLayout>
-
-                <com.google.android.material.materialswitch.MaterialSwitch
-                    android:id="@+id/settings_block_record"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="16dp"
-                    android:checked="false" />
-
-            </RelativeLayout>
-
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="@dimen/padding_large">
-
-                <ImageView
-                    android:id="@+id/enable_link_preview_image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="32dp"
-                    android:src="@drawable/baseline_preview_24"
-                    app:tint="?attr/colorControlNormal" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toStartOf="@id/settings_link_preview"
-                    android:layout_toEndOf="@id/enable_link_preview_image"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/ListPrimary"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:lines="1"
-                        android:text="@string/pref_link_preview_title" />
-
-                    <TextView
-                        style="@style/ListSecondary"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/pref_link_preview_summary" />
-
-                </LinearLayout>
-
-                <com.google.android.material.materialswitch.MaterialSwitch
-                    android:id="@+id/settings_link_preview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="16dp"
-                    android:checked="true" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/settings_notification"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="?attr/selectableItemBackground"
-                android:padding="@dimen/padding_large">
-
-                <ImageView
-                    android:id="@+id/system_notification_image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:contentDescription="@string/pref_notification_summary"
-                    android:src="@drawable/baseline_notifications_24dp"
-                    app:tint="?attr/colorControlNormal"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="32dp" />
-
-                <TextView
-                    style="@style/ListPrimary"
-                    android:id="@+id/system_notification_title"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:lines="1"
-                    android:text="@string/pref_notification_title"
-                    android:layout_toEndOf="@+id/system_notification_image"/>
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/padding_large">
 
-                <TextView
-                    style="@style/ListSecondary"
+                    <ImageView
+                        android:id="@+id/system_typing_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="16dp"
+                        android:contentDescription="@string/pref_typing_summary"
+                        android:src="@drawable/baseline_keyboard_24" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toStartOf="@+id/settings_typing"
+                        android:layout_toEndOf="@+id/system_typing_image"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/ListPrimary"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:lines="1"
+                            android:text="@string/pref_typing_title" />
+
+                        <TextView
+                            style="@style/ListSecondary"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/pref_typing_summary" />
+
+                    </LinearLayout>
+
+                    <com.google.android.material.materialswitch.MaterialSwitch
+                        android:id="@+id/settings_typing"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="16dp"
+                        android:checked="true" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/pref_notification_summary"
-                    android:layout_toEndOf="@+id/system_notification_image"
-                    android:layout_below="@id/system_notification_title"/>
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/padding_large">
 
-            </RelativeLayout>
+                    <ImageView
+                        android:id="@+id/system_block_record_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/baseline_stop_screen_share_24dp"
+                        android:layout_alignParentStart="true"
+                        app:tint="?attr/colorControlNormal"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="16dp"/>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toStartOf="@+id/settings_block_record"
+                        android:layout_toEndOf="@+id/system_block_record_image"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/ListPrimary"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:lines="1"
+                            android:text="@string/pref_block_record_title" />
+
+                        <TextView
+                            style="@style/ListSecondary"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/pref_block_record_summary" />
+
+                    </LinearLayout>
+
+                    <com.google.android.material.materialswitch.MaterialSwitch
+                        android:id="@+id/settings_block_record"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="16dp"
+                        android:checked="false" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/padding_large">
+
+                    <ImageView
+                        android:id="@+id/enable_link_preview_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/baseline_preview_24"
+                        app:tint="?attr/colorControlNormal" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toStartOf="@id/settings_link_preview"
+                        android:layout_toEndOf="@id/enable_link_preview_image"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/ListPrimary"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:lines="1"
+                            android:text="@string/pref_link_preview_title" />
+
+                        <TextView
+                            style="@style/ListSecondary"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/pref_link_preview_summary" />
+
+                    </LinearLayout>
+
+                    <com.google.android.material.materialswitch.MaterialSwitch
+                        android:id="@+id/settings_link_preview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="16dp"
+                        android:checked="true" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/settings_notification"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/padding_large">
+
+                    <ImageView
+                        android:id="@+id/system_notification_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:contentDescription="@string/pref_notification_summary"
+                        android:src="@drawable/baseline_notifications_24dp"
+                        app:tint="?attr/colorControlNormal"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="16dp" />
+
+                    <TextView
+                        style="@style/ListPrimary"
+                        android:id="@+id/system_notification_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:text="@string/pref_notification_title"
+                        android:layout_toEndOf="@+id/system_notification_image"/>
+
+                    <TextView
+                        style="@style/ListSecondary"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/pref_notification_summary"
+                        android:layout_toEndOf="@+id/system_notification_image"
+                        android:layout_below="@id/system_notification_title"/>
+
+                </RelativeLayout>
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
                 android:text="@string/pref_category_connectivity"
-                android:textColor="?attr/colorPrimary"
-                android:textSize="18sp"
-                android:layout_marginStart="64dp" />
+                style="@style/SettingsHeader"
+                android:layout_marginStart="8dp" />
 
             <RelativeLayout
                 android:id="@+id/settings_connectivity_mode"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="?attr/selectableItemBackground"
+                style="@style/CustomRelativeLayout"
                 android:padding="@dimen/padding_large">
 
                 <ImageView
@@ -468,7 +473,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     app:tint="?attr/colorControlNormal"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginEnd="32dp" />
+                    android:layout_marginEnd="16dp" />
 
                 <TextView
                     style="@style/ListPrimary"
@@ -497,325 +502,341 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:layout_height="wrap_content"
                 android:padding="8dp"
                 android:text="@string/pref_category_system"
-                android:textColor="?attr/colorPrimary"
-                android:textSize="18sp"
-                android:layout_marginStart="64dp" />
+                style="@style/SettingsHeader"
+                android:layout_marginStart="8dp" />
 
-            <RelativeLayout
-                android:id="@+id/settings_push_notifications_layout"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/padding_large">
+                android:orientation="vertical"
+                android:showDividers="middle"
+                android:divider="@drawable/layout_divider"
+                style="@style/CustomRelativeLayout">
 
-                <ImageView
-                    android:id="@+id/push_image"
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:id="@+id/settings_push_notifications_layout"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:contentDescription="@string/pref_pushNotifications_summary"
-                    android:src="@drawable/baseline_notification_important_24"
-                    android:layout_marginEnd="32dp"/>
+                    android:padding="@dimen/padding_large">
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toStartOf="@id/settings_push_notifications"
-                    android:layout_toEndOf="@id/push_image"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/ListPrimary"
-                        android:layout_width="match_parent"
+                    <ImageView
+                        android:id="@+id/push_image"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:lines="1"
-                        android:text="@string/pref_pushNotifications_title" />
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:contentDescription="@string/pref_pushNotifications_summary"
+                        android:src="@drawable/baseline_notification_important_24"
+                        android:layout_marginEnd="16dp"/>
 
-                    <TextView
-                        style="@style/ListSecondary"
-                        android:layout_width="match_parent"
+                    <LinearLayout
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/pref_pushNotif_summary" />
+                        android:layout_centerVertical="true"
+                        android:layout_toStartOf="@id/settings_push_notifications"
+                        android:layout_toEndOf="@id/push_image"
+                        android:orientation="vertical">
 
-                </LinearLayout>
+                        <TextView
+                            style="@style/ListPrimary"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:lines="1"
+                            android:text="@string/pref_pushNotifications_title" />
 
-                <com.google.android.material.materialswitch.MaterialSwitch
-                    android:id="@+id/settings_push_notifications"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:checked="false"
-                    android:layout_marginStart="16dp"
-                    android:layout_centerVertical="true"/>
+                        <TextView
+                            style="@style/ListSecondary"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/pref_pushNotif_summary" />
 
-            </RelativeLayout>
+                    </LinearLayout>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/padding_large">
-
-                <ImageView
-                    android:id="@+id/system_dialer_image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="@string/pref_systemDialer_summary"
-                    app:srcCompat="@drawable/baseline_dialpad_24"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="32dp" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toStartOf="@+id/settings_place_call"
-                    android:layout_toEndOf="@+id/system_dialer_image"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/ListPrimary"
-                        android:layout_width="match_parent"
+                    <com.google.android.material.materialswitch.MaterialSwitch
+                        android:id="@+id/settings_push_notifications"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:lines="1"
-                        android:text="@string/pref_systemDialer_title" />
+                        android:layout_alignParentEnd="true"
+                        android:checked="false"
+                        android:layout_marginStart="16dp"
+                        android:layout_centerVertical="true"/>
 
-                    <TextView
-                        style="@style/ListSecondary"
-                        android:layout_width="match_parent"
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_large">
+
+                    <ImageView
+                        android:id="@+id/system_dialer_image"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/pref_systemDialer_summary" />
+                        android:contentDescription="@string/pref_systemDialer_summary"
+                        app:srcCompat="@drawable/baseline_dialpad_24"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="16dp" />
 
-                </LinearLayout>
-
-                <com.google.android.material.materialswitch.MaterialSwitch
-                    android:id="@+id/settings_place_call"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:checked="false"
-                    android:layout_marginStart="16dp"
-                    android:layout_centerVertical="true"/>
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/padding_large">
-
-                <ImageView
-                    android:id="@+id/system_startOnBoot_image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="@string/pref_startOnBoot_summary"
-                    app:srcCompat="@drawable/baseline_android_24"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="32dp"/>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toStartOf="@+id/settings_startup"
-                    android:layout_toEndOf="@+id/system_startOnBoot_image"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/ListPrimary"
-                        android:layout_width="match_parent"
+                    <LinearLayout
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:lines="1"
-                        android:text="@string/pref_startOnBoot_title" />
+                        android:layout_centerVertical="true"
+                        android:layout_toStartOf="@+id/settings_place_call"
+                        android:layout_toEndOf="@+id/system_dialer_image"
+                        android:orientation="vertical">
 
-                    <TextView
-                        style="@style/ListSecondary"
-                        android:layout_width="match_parent"
+                        <TextView
+                            style="@style/ListPrimary"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:lines="1"
+                            android:text="@string/pref_systemDialer_title" />
+
+                        <TextView
+                            style="@style/ListSecondary"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/pref_systemDialer_summary" />
+
+                    </LinearLayout>
+
+                    <com.google.android.material.materialswitch.MaterialSwitch
+                        android:id="@+id/settings_place_call"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/pref_startOnBoot_summary" />
+                        android:layout_alignParentEnd="true"
+                        android:checked="false"
+                        android:layout_marginStart="16dp"
+                        android:layout_centerVertical="true"/>
 
-                </LinearLayout>
+                </RelativeLayout>
 
-                <com.google.android.material.materialswitch.MaterialSwitch
-                    android:id="@+id/settings_startup"
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:checked="false"
-                    android:layout_marginStart="16dp"
-                    android:layout_centerVertical="true"/>
+                    android:padding="@dimen/padding_large">
 
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="@dimen/padding_large">
-
-                <ImageView
-                    android:id="@+id/system_persistNotification_image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="@string/pref_persistNotification_summary"
-                    android:src="@drawable/baseline_dns_24"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="32dp"/>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toStartOf="@+id/settings_persistNotification"
-                    android:layout_toEndOf="@+id/system_persistNotification_image"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/ListPrimary"
-                        android:layout_width="match_parent"
+                    <ImageView
+                        android:id="@+id/system_startOnBoot_image"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:lines="1"
-                        android:text="@string/pref_persistNotification_title" />
+                        android:contentDescription="@string/pref_startOnBoot_summary"
+                        app:srcCompat="@drawable/baseline_android_24"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="16dp"/>
 
-                    <TextView
-                        style="@style/ListSecondary"
-                        android:layout_width="match_parent"
+                    <LinearLayout
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/pref_persistNotification_summary" />
+                        android:layout_centerVertical="true"
+                        android:layout_toStartOf="@+id/settings_startup"
+                        android:layout_toEndOf="@+id/system_startOnBoot_image"
+                        android:orientation="vertical">
 
-                </LinearLayout>
+                        <TextView
+                            style="@style/ListPrimary"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:lines="1"
+                            android:text="@string/pref_startOnBoot_title" />
 
-                <com.google.android.material.materialswitch.MaterialSwitch
-                    android:id="@+id/settings_persistNotification"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:checked="false"
-                    android:layout_marginStart="16dp"
-                    android:layout_centerVertical="true"/>
+                        <TextView
+                            style="@style/ListSecondary"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/pref_startOnBoot_summary" />
 
-            </RelativeLayout>
+                    </LinearLayout>
+
+                    <com.google.android.material.materialswitch.MaterialSwitch
+                        android:id="@+id/settings_startup"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:checked="false"
+                        android:layout_marginStart="16dp"
+                        android:layout_centerVertical="true"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/padding_large">
+
+                    <ImageView
+                        android:id="@+id/system_persistNotification_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/pref_persistNotification_summary"
+                        android:src="@drawable/baseline_dns_24"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="16dp"/>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toStartOf="@+id/settings_persistNotification"
+                        android:layout_toEndOf="@+id/system_persistNotification_image"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/ListPrimary"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:lines="1"
+                            android:text="@string/pref_persistNotification_title" />
+
+                        <TextView
+                            style="@style/ListSecondary"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/pref_persistNotification_summary" />
+
+                    </LinearLayout>
+
+                    <com.google.android.material.materialswitch.MaterialSwitch
+                        android:id="@+id/settings_persistNotification"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:checked="false"
+                        android:layout_marginStart="16dp"
+                        android:layout_centerVertical="true"/>
+
+                </RelativeLayout>
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
                 android:text="@string/pref_category_extensions"
-                android:textColor="?attr/colorPrimary"
-                android:textSize="18sp"
-                android:layout_marginStart="64dp" />
+                style="@style/SettingsHeader"
+                android:layout_marginStart="8dp" />
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/padding_large">
+                android:orientation="vertical"
+                android:showDividers="middle"
+                android:divider="@drawable/layout_divider"
+                style="@style/CustomRelativeLayout">
 
-                <ImageView
-                    android:id="@+id/extensions_image"
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:contentDescription="@string/pref_enable_extensions_summary"
-                    app:srcCompat="@drawable/ic_extension_24"
-                    android:layout_marginEnd="32dp"/>
+                    android:padding="@dimen/padding_large">
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
+                    <ImageView
+                        android:id="@+id/extensions_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:contentDescription="@string/pref_enable_extensions_summary"
+                        app:srcCompat="@drawable/ic_extension_24"
+                        android:layout_marginEnd="16dp"/>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toStartOf="@+id/settings_extensions_switch"
+                        android:layout_toEndOf="@+id/extensions_image"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/extensions_title"
+                            style="@style/ListPrimary"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:maxLines="3"
+                            android:singleLine="false"
+                            android:text="@string/pref_enable_extensions_title"
+                            android:layout_toEndOf="@id/extensions_image"
+                            android:layout_marginEnd="16dp" />
+
+                        <TextView
+                            style="@style/ListSecondary"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/pref_enable_extensions_summary"
+                            android:layout_toEndOf="@id/extensions_image"
+                            android:layout_marginEnd="16dp"
+                            android:layout_below="@id/extensions_title"/>
+
+                    </LinearLayout>
+
+                    <com.google.android.material.materialswitch.MaterialSwitch
+                        android:id="@+id/settings_extensions_switch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:checked="false"
+                        android:layout_marginStart="16dp"
+                        android:layout_centerVertical="true"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/settings_extensions_layout"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toStartOf="@+id/settings_extensions_switch"
-                    android:layout_toEndOf="@+id/extensions_image"
-                    android:orientation="vertical">
+                    android:padding="@dimen/padding_large">
+
+                    <ImageView
+                        android:id="@+id/manage_extensions_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        app:srcCompat="@drawable/ic_manage_extension_24"
+                        android:layout_marginEnd="16dp"/>
 
                     <TextView
-                        android:id="@+id/extensions_title"
+                        android:id="@+id/available_extensions_title"
                         style="@style/ListPrimary"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:maxLines="3"
                         android:singleLine="false"
-                        android:text="@string/pref_enable_extensions_title"
-                        android:layout_toEndOf="@id/extensions_image"
+                        android:text="@string/pref_available_extensions_title"
+                        android:layout_toEndOf="@id/manage_extensions_image"
                         android:layout_marginEnd="16dp" />
 
                     <TextView
                         style="@style/ListSecondary"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/pref_enable_extensions_summary"
-                        android:layout_toEndOf="@id/extensions_image"
+                        android:text="@string/pref_available_extensions_summary"
+                        android:layout_toEndOf="@id/manage_extensions_image"
                         android:layout_marginEnd="16dp"
-                        android:layout_below="@id/extensions_title"/>
+                        android:layout_below="@id/available_extensions_title"/>
 
-                </LinearLayout>
-
-                <com.google.android.material.materialswitch.MaterialSwitch
-                    android:id="@+id/settings_extensions_switch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:checked="false"
-                    android:layout_marginStart="16dp"
-                    android:layout_centerVertical="true"/>
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/settings_extensions_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/padding_large">
-
-                <ImageView
-                    android:id="@+id/manage_extensions_image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    app:srcCompat="@drawable/ic_manage_extension_24"
-                    android:layout_marginEnd="32dp"/>
-
-                <TextView
-                    android:id="@+id/available_extensions_title"
-                    style="@style/ListPrimary"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:maxLines="3"
-                    android:singleLine="false"
-                    android:text="@string/pref_available_extensions_title"
-                    android:layout_toEndOf="@id/manage_extensions_image"
-                    android:layout_marginEnd="16dp" />
-
-                <TextView
-                    style="@style/ListSecondary"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/pref_available_extensions_summary"
-                    android:layout_toEndOf="@id/manage_extensions_image"
-                    android:layout_marginEnd="16dp"
-                    android:layout_below="@id/available_extensions_title"/>
-
-            </RelativeLayout>
+                </RelativeLayout>
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
                 android:text="@string/pref_category_video_settings"
-                android:textColor="?attr/colorPrimary"
-                android:textSize="18sp"
-                android:layout_marginStart="64dp" />
+                style="@style/SettingsHeader"
+                android:layout_marginStart="8dp" />
 
             <RelativeLayout
                 android:id="@+id/settings_video_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                style="@style/CustomRelativeLayout"
                 android:padding="@dimen/padding_large">
 
                 <ImageView
@@ -825,7 +846,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     app:srcCompat="@drawable/baseline_memory_24"
-                    android:layout_marginEnd="32dp"/>
+                    android:layout_marginEnd="16dp"/>
 
                 <TextView
                     android:id="@+id/hwenc_title"
@@ -854,133 +875,139 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:layout_height="wrap_content"
                 android:padding="8dp"
                 android:text="@string/pref_category_diagnostic"
-                android:textColor="?attr/colorPrimary"
-                android:textSize="18sp"
-                android:layout_marginStart="64dp" />
+                style="@style/SettingsHeader"
+                android:layout_marginStart="8dp" />
 
-            <RelativeLayout
-                android:id="@+id/settings_logs"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="@dimen/padding_large">
-
-                <ImageView
-                    android:id="@+id/system_diagnostics_image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="@string/pref_logs_title"
-                    android:src="@drawable/baseline_article_24"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="32dp"/>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toEndOf="@+id/system_diagnostics_image"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/ListPrimary"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:lines="1"
-                        android:text="@string/pref_logs_title" />
-
-                    <TextView
-                        style="@style/ListSecondary"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/pref_logs_summary" />
-
-                </LinearLayout>
-
-            </RelativeLayout>
-
-
-            <RelativeLayout
-                android:id="@+id/connection_monitor"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="@dimen/padding_large">
-
-                <ImageView
-                    android:id="@+id/connection_monitor_image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="@string/pref_connection_monitor_summary"
-                    android:src="@drawable/baseline_settings_ethernet_24"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="32dp"/>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toEndOf="@+id/connection_monitor_image"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/ListPrimary"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:lines="1"
-                        android:text="@string/pref_connection_monitor" />
-
-                    <TextView
-                        style="@style/ListSecondary"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/pref_logs_summary" />
-
-                </LinearLayout>
-
-            </RelativeLayout>
-
-
-            <RelativeLayout
-                android:id="@+id/settings_pushnotificationslogs"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/padding_large">
+                android:orientation="vertical"
+                android:showDividers="middle"
+                android:divider="@drawable/layout_divider"
+                style="@style/CustomRelativeLayout">
 
-                <ImageView
-                    android:id="@+id/push_notifications_logs_image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="@string/pref_push_notifications_logs_summary"
-                    android:src="@drawable/baseline_cloud_24"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="32dp"/>
+                <RelativeLayout
+                    android:id="@+id/settings_logs"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/padding_large">
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toEndOf="@+id/push_notifications_logs_image"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/ListPrimary"
-                        android:layout_width="match_parent"
+                    <ImageView
+                        android:id="@+id/system_diagnostics_image"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:lines="1"
-                        android:text="@string/pref_push_notifications_logs_title" />
+                        android:contentDescription="@string/pref_logs_title"
+                        android:src="@drawable/baseline_article_24"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="16dp"/>
 
-                    <TextView
-                        style="@style/ListSecondary"
-                        android:layout_width="match_parent"
+                    <LinearLayout
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/pref_push_notifications_logs_summary" />
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@+id/system_diagnostics_image"
+                        android:orientation="vertical">
 
-                </LinearLayout>
-            </RelativeLayout>
+                        <TextView
+                            style="@style/ListPrimary"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:lines="1"
+                            android:text="@string/pref_logs_title" />
+
+                        <TextView
+                            style="@style/ListSecondary"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/pref_logs_summary" />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/connection_monitor"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/padding_large">
+
+                    <ImageView
+                        android:id="@+id/connection_monitor_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/pref_connection_monitor_summary"
+                        android:src="@drawable/baseline_settings_ethernet_24"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="16dp"/>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@+id/connection_monitor_image"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/ListPrimary"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:lines="1"
+                            android:text="@string/pref_connection_monitor" />
+
+                        <TextView
+                            style="@style/ListSecondary"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/pref_logs_summary" />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/settings_pushnotificationslogs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_large">
+
+                    <ImageView
+                        android:id="@+id/push_notifications_logs_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/pref_push_notifications_logs_summary"
+                        android:src="@drawable/baseline_cloud_24"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="16dp"/>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@+id/push_notifications_logs_image"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/ListPrimary"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:lines="1"
+                            android:text="@string/pref_push_notifications_logs_title" />
+
+                        <TextView
+                            style="@style/ListSecondary"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/pref_push_notifications_logs_summary" />
+
+                    </LinearLayout>
+                </RelativeLayout>
+            </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
