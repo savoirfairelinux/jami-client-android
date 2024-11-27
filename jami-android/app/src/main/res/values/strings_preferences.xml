@@ -3,13 +3,13 @@
     <string name="pref_category_network">Network</string>
     <string name="pref_category_contacts">Contacts</string>
     <string name="pref_category_video">Video</string>
-    <string name="pref_category_system">System</string>
-    <string name="pref_category_privacy">Privacy</string>
-    <string name="pref_category_diagnostic">Diagnostics</string>
-    <string name="pref_category_appearance">Appearance</string>
-    <string name="pref_category_connectivity">Connectivity</string>
-    <string name="pref_category_extensions">Extensions</string>
-    <string name="pref_category_video_settings">Advanced video settings</string>
+    <string name="pref_category_system">SYSTEM</string>
+    <string name="pref_category_privacy">PRIVACY</string>
+    <string name="pref_category_diagnostic">DIAGNOSTICS</string>
+    <string name="pref_category_appearance">APPEARANCE</string>
+    <string name="pref_category_connectivity">CONNECTIVITY</string>
+    <string name="pref_category_extensions">EXTENSIONS</string>
+    <string name="pref_category_video_settings">ADVANCED VIDEO SETTINGS</string>
 
     <string name="pref_mobileData_title">Mobile data</string>
     <string name="pref_mobileData_summary">Allow Jami on 3G/LTE networks additionally to Wi-Fi</string>
