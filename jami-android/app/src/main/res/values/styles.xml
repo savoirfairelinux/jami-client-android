@@ -49,6 +49,7 @@
 
         <item name="preferenceTheme">@style/JamiPreferenceThemeOverlay</item>
         <item name="popupMenuBackground">@drawable/custom_popup_background</item>
+        <item name="materialSwitchStyle">@style/CustomMaterialSwitch</item>
 
     </style>
 
@@ -206,6 +207,13 @@
         <item name="android:textColor">@color/textColorSecondary</item>
     </style>
 
+    <style name="SettingsHeader">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/settings_submenu_header</item>
+    </style>
+
     <style name="ListPrimary">
         <item name="android:textSize">16sp</item>
         <item name="android:typeface">normal</item>
@@ -216,6 +224,13 @@
         <item name="android:textSize">12sp</item>
         <item name="android:typeface">normal</item>
         <item name="android:textColor">@color/textColorSecondary</item>
+    </style>
+
+    <style name="CustomRelativeLayout">
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_marginEnd">16dp</item>
+        <item name="android:layout_marginBottom">24dp</item>
+        <item name="android:background">@drawable/rounded_background</item>
     </style>
 
     <!-- Buttons styles -->
@@ -263,6 +278,10 @@
         <item name="android:backgroundTint">@drawable/wizard_button_background_selector</item>-->
     </style>
 
+    <style name="CustomMaterialSwitch" parent="Widget.Material3.CompoundButton.MaterialSwitch">
+        <item name="thumbTint">@color/material_switch_thumb_tint</item>
+        <item name="trackTint">@color/material_switch_track_tint</item>
+    </style>
 
     <!-- AndroidTV Style -->
     <style name="Theme.Ring.Leanback.GuidedStep" parent="Theme.Leanback.GuidedStep" />
