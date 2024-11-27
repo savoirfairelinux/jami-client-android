@@ -21,6 +21,14 @@
     <color name="icon_color">#A6A6A6</color>
     <color name="qr_background">@color/white</color>
 
+    <color name="settings_option_background">#303030</color>
+    <color name="settings_submenu_header">@color/grey_600</color>
+
+    <color name="material_switch_thumb_checked">@color/black</color>
+    <color name="material_switch_thumb_unchecked">@color/icon_color</color>
+    <color name="material_switch_track_checked">@color/color_primary_light</color>
+    <color name="material_switch_track_unchecked">@color/settings_option_background</color>
+
     <!--  TwoButton EditText  -->
     <color name="edit_text_background">#2e2e2e</color>
     <color name="text_color">@color/colorPrimary</color>
