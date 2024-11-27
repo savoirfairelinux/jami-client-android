@@ -24,14 +24,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.bumptech.glide.Glide
 import cx.ring.R
 import cx.ring.databinding.WelcomeJamiLayoutBinding
 import cx.ring.utils.BackgroundType
-import cx.ring.viewmodel.JamiIdViewModel
 import cx.ring.viewmodel.WelcomeJamiViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -43,7 +41,6 @@ class WelcomeJamiFragment : Fragment() {
 
     private lateinit var binding: WelcomeJamiLayoutBinding
     private val welcomeJamiViewModel: WelcomeJamiViewModel by viewModels({ requireActivity() })
-    private val jamiIdViewModel by lazy { ViewModelProvider(this)[JamiIdViewModel::class.java] }
 
     companion object {
         private val TAG = WelcomeJamiFragment::class.simpleName!!
@@ -62,7 +59,6 @@ class WelcomeJamiFragment : Fragment() {
                 return@apply
             }
 
-            welcomeJamiViewModel.initJamiIdViewModel(jamiIdViewModel)
             // Create the JamiIdFragment
             childFragmentManager.beginTransaction()
                 .replace(R.id.jamiIdFragmentContainerView, JamiIdFragment())
