@@ -92,7 +92,7 @@
             android:ellipsize="end"
             android:lines="1"
             android:paddingHorizontal="2dp"
-            android:text="@string/action_call_decline"
+            android:text="@string/action_call_decline_call"
             android:textColor="@color/colorPrimary"
             android:textSize="13sp" />
 

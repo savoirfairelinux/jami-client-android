@@ -453,8 +453,8 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                     .setAspectRatio(Rational(1, 1))
                     .setActions(listOf(RemoteAction(
                         Icon.createWithResource(context, R.drawable.baseline_call_end_24),
-                        getString(R.string.action_call_hangup),
-                        getString(R.string.action_call_hangup),
+                        getString(R.string.action_call_end),
+                        getString(R.string.action_call_end),
                         PendingIntent.getService(
                             context,
                             Random().nextInt(),
