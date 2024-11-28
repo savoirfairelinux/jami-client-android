@@ -17,38 +17,62 @@
 package cx.ring.viewmodel
 
 import androidx.lifecycle.ViewModel
+import cx.ring.utils.DeviceUtils
 import cx.ring.utils.UiCustomization
+import cx.ring.utils.getUiCustomizationFromConfigJson
+import dagger.hilt.android.lifecycle.HiltViewModel
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import net.jami.model.ConfigKey
+import net.jami.services.AccountService
+import org.json.JSONObject
+import javax.inject.Inject
 
 
 data class WelcomeJamiUiState(
-    val isJamiAccount: Boolean = false,
+    val isJamiAccount: Boolean = false, // if the account is a Jami account or not (SIP account).
     val uiCustomization: UiCustomization? = null,
 )
 
-class WelcomeJamiViewModel : ViewModel() {
+@HiltViewModel
+class WelcomeJamiViewModel @Inject constructor(
+    val accountService: AccountService,
+) : ViewModel() {
 
     // Expose screen UI state
     private val _uiState = MutableStateFlow(WelcomeJamiUiState())
     val uiState: StateFlow<WelcomeJamiUiState> = _uiState.asStateFlow()
 
+    private val disposable: CompositeDisposable = CompositeDisposable()
+
     /**
      * Initialize the JamiIdViewModel.
-     * @param isJamiAccount Tells if the account is a Jami account or not (SIP account).
      */
-    fun init(
-        isJamiAccount: Boolean,
-        uiCustomization: UiCustomization? = null,
-    ) {
-        _uiState.update { currentState ->
-            currentState.copy(
-                isJamiAccount = isJamiAccount,
-                uiCustomization = uiCustomization,
-            )
-        }
+    init {
+        disposable.add(
+            accountService.currentAccountSubject
+                .observeOn(DeviceUtils.uiScheduler)
+                .subscribe { account ->
+                    // Can be null if the account doesn't have a config
+                    val uiCustomization = try {
+                        getUiCustomizationFromConfigJson(
+                            configurationJson = JSONObject(account.config[ConfigKey.UI_CUSTOMIZATION]),
+                            managerUri = account.config[ConfigKey.MANAGER_URI],
+                        )
+                    } catch (e: org.json.JSONException) {
+                        null // If the JSON is invalid, we don't display the customization
+                    }
+                    _uiState.update { currentState ->
+                        currentState.copy(
+                            isJamiAccount = account.isJami,
+                            uiCustomization = uiCustomization,
+                        )
+                    }
+                }
+        )
     }
 
     companion object {
