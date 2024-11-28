@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "819fd82c_a613a041",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-11-28T19:26:20Z",
+      "side": 1,
+      "message": "`End call`",
+      "range": {
+        "startLine": 228,
+        "startChar": 38,
+        "endLine": 228,
+        "endChar": 45
+      },
+      "revId": "4b7a9572028baa4f994ac963f56a1b9cda3a7ae4",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ce03f5c2_83927f36",
         "filename": "jami-android/app/src/main/res/values/strings.xml",
         "patchSetId": 3
