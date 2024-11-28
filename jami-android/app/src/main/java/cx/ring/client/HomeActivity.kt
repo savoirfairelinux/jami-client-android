@@ -35,7 +35,6 @@ import androidx.core.view.doOnNextLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
-import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.R
 import cx.ring.about.AboutFragment
@@ -55,8 +54,6 @@ import cx.ring.utils.ContentUri.isJamiLink
 import cx.ring.utils.ContentUri.toJamiLink
 import cx.ring.utils.ConversationPath
 import cx.ring.utils.DeviceUtils
-import cx.ring.utils.getUiCustomizationFromConfigJson
-import cx.ring.viewmodel.WelcomeJamiViewModel
 import cx.ring.views.AvatarDrawable
 import cx.ring.views.AvatarFactory.toAdaptiveIcon
 import cx.ring.views.twopane.TwoPaneLayout
@@ -65,7 +62,6 @@ import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.model.Account
-import net.jami.model.ConfigKey
 import net.jami.model.Contact
 import net.jami.model.Conversation
 import net.jami.model.Uri
@@ -75,14 +71,12 @@ import net.jami.services.ConversationFacade
 import net.jami.services.NotificationService
 import net.jami.smartlist.ConversationItemViewModel
 import net.jami.utils.takeFirstWhile
-import org.json.JSONObject
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import kotlin.math.max
 
 @AndroidEntryPoint
 class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicked {
-    private val welcomeJamiViewModel by lazy { ViewModelProvider(this)[WelcomeJamiViewModel::class.java] }
     private var frameContent: Fragment? = null
     private var fConversation: ConversationFragment? = null
     private var fWelcomeJami: WelcomeJamiFragment? = null
@@ -335,21 +329,6 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
             mAccountService.currentAccountSubject
                 .observeOn(DeviceUtils.uiScheduler)
                 .subscribe { account ->
-                    // Can be null if the account doesn't have a config
-                    val uiCustomization = try {
-                        getUiCustomizationFromConfigJson(
-                            configurationJson = JSONObject(account.config[ConfigKey.UI_CUSTOMIZATION]),
-                            managerUri = account.config[ConfigKey.MANAGER_URI],
-                        )
-                    } catch (e: org.json.JSONException) {
-                        null // If the JSON is invalid, we don't display the customization
-                    }
-
-                    welcomeJamiViewModel.init(
-                        isJamiAccount = account.isJami,
-                        uiCustomization = uiCustomization,
-                    )
-
                     val currentConversationAccountId =
                         ConversationPath.fromBundle(fConversation?.arguments)?.accountId
                     if (account.accountId != currentConversationAccountId) {

@@ -22,8 +22,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.bumptech.glide.Glide
@@ -40,7 +40,9 @@ import net.jami.utils.Log
 class WelcomeJamiFragment : Fragment() {
 
     private lateinit var binding: WelcomeJamiLayoutBinding
-    private val welcomeJamiViewModel: WelcomeJamiViewModel by viewModels({ requireActivity() })
+    private val welcomeJamiViewModel: WelcomeJamiViewModel by lazy {
+        ViewModelProvider(requireActivity())[WelcomeJamiViewModel::class.java]
+    }
 
     companion object {
         private val TAG = WelcomeJamiFragment::class.simpleName!!
