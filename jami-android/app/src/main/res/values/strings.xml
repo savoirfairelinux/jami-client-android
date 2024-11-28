@@ -224,7 +224,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
     <!-- Call Fragment -->
     <string name="you_txt_prefix">You:</string>
-    <string name="action_call_hangup">Hang up</string>
+    <string name="action_call_end">End call</string>
     <string name="action_call_maximize">Maximize</string>
     <string name="action_call_minimize">Reduce</string>
     <string name="action_call_mute">Mute</string>
@@ -240,7 +240,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="action_call_hold_accept">Accept incoming call with audio only and hold current call</string>
     <string name="action_call_hold_accept_video">Accept incoming call with video and hold current call</string>
     <string name="action_call_end_accept">Accept incoming call and end current call</string>
-    <string name="action_call_decline">Decline</string>
+    <string name="action_call_decline">Decline call</string>
     <string name="action_call_mic_mute">Mute microphone</string>
     <string name="action_load_extension">Load extension</string>
     <string name="ab_action_speakerphone">Enable speaker</string>
@@ -558,7 +558,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="bottomSheet_add_participants_btn">Add</string>
     <string name="bottomSheet_change_camera_btn">Change</string>
     <string name="bottomSheet_camera_onoff_switch_btn">Camera</string>
-    <string name="bottomSheet_hangup_btn">End call</string>
+    <string name="bottomSheet_end_call_btn">End call</string>
     <string name="bottomSheet_mute_microphone_btn">Micro</string>
     <string name="bottomSheet_sound_output_btn">Sounds</string>
     <string name="bottomSheet_raiseHand_btn">Raise hand</string>
