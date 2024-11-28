@@ -22,6 +22,30 @@
       },
       "revId": "2efefc60e6ff098840db89178d95997eeae929a4",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ccfaedc5_5856b0d1",
+        "filename": "jami-android/app/src/main/res/values/strings_preferences.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2024-11-28T20:19:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48b6f19b_d1beaa12",
+      "range": {
+        "startLine": 5,
+        "startChar": 53,
+        "endLine": 12,
+        "endChar": 80
+      },
+      "revId": "2efefc60e6ff098840db89178d95997eeae929a4",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
