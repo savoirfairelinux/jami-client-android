@@ -1,0 +1,16 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="@color/background" />
+            <size
+                android:width="40dp"
+                android:height="40dp" />
+        </shape>
+    </item>
+
+    <item
+        android:id="@+id/icon_layer"
+        android:drawable="@drawable/baseline_edit_twoton_24dp"
+        android:gravity="center" />
+</layer-list>

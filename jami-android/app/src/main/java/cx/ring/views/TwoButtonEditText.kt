@@ -54,13 +54,17 @@ class TwoButtonEditText @JvmOverloads constructor(
     private fun init(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) {
         mContext = context
         orientation = HORIZONTAL
-        background = context.getDrawable(R.drawable.background_jami_edittext)
+        background = context.getDrawable(R.drawable.rounded_background)
         LayoutInflater.from(context).inflate(R.layout.item_two_button_edittext, this, true)
         editTextLayout = findViewById(R.id.edit_text_layout)
         editText = findViewById(R.id.edit_text)
         mButtonRight = findViewById(R.id.btn_right)
         mButtonLeft = findViewById(R.id.btn_left)
-        setPadding(0, 0, context.resources.getDimension(R.dimen.padding_small).toInt(), 0)
+        setPadding(0, 0, 0, 0)
+
+        editTextLayout?.defaultHintTextColor =
+            ContextCompat.getColorStateList(context, R.color.settings_submenu_header)
+
         val a =
             context.obtainStyledAttributes(attrs, R.styleable.TwoButtonEditText, defStyleAttr, 0)
         for (i in 0 until a.indexCount) {
