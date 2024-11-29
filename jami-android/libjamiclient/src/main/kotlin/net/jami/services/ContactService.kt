@@ -131,7 +131,10 @@ abstract class ContactService(
 
     fun getLoadedContact(accountId: String, contactId: String, withPresence: Boolean = false): Single<ContactViewModel> =
         mAccountService.getAccountSingle(accountId)
-            .flatMap { getLoadedContact(accountId, it.getContactFromCache(contactId), withPresence) }
+            .flatMap { getLoadedContact(it, contactId, withPresence) }
+
+    fun getLoadedContact(account: Account, contactId: String, withPresence: Boolean = false): Single<ContactViewModel> =
+        getLoadedContact(account.accountId, account.getContactFromCache(contactId), withPresence)
 
     fun getLoadedContact(accountId: String, contact: Contact, withPresence: Boolean = false): Single<ContactViewModel> =
         observeContact(accountId, contact, withPresence)
