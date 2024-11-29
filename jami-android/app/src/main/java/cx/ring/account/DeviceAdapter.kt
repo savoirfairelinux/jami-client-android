@@ -62,7 +62,7 @@ class DeviceAdapter(
         devId.setHint(hint)
         if (isCurrentDevice) {
             thisDevice.visibility = View.VISIBLE
-            devId.setLeftDrawable(R.drawable.baseline_edit_twoton_24dp)
+            devId.setLeftDrawable(R.drawable.baseline_edit_rounded_24)
             devId.setLeftDrawableOnClickListener { mListener.onDeviceRename() }
         } else {
             thisDevice.visibility = View.GONE
