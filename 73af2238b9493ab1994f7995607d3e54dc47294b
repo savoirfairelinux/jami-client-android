@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5dd03e36_7fd3b168",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-11-29T20:56:03Z",
+      "side": 1,
+      "message": "If it is an incoming call, should the button be `Decline call` (not `Hang up` nor `End call`)?\n\nIf in a call, should the button say `End call`?\n\nFor screenshots, cf. https://git.jami.net/savoirfairelinux/jami-client-android/-/issues/1786#note_53975\n\nThank you",
+      "revId": "73af2238b9493ab1994f7995607d3e54dc47294b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
