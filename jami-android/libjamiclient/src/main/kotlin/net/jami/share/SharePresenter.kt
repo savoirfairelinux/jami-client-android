@@ -41,8 +41,8 @@ class SharePresenter @Inject constructor(
         onContactLoaded: (ContactViewModel) -> Unit
     ) {
         mCompositeDisposable.add(
-            mContactService
-                .getLoadedContact(mAccountService.currentAccount!!.accountId, contact.uri)
+            mAccountService.currentAccountSubject.firstOrError()
+                .flatMap { mContactService.getLoadedContact(it, contact.uri) }
                 .observeOn(mUiScheduler)
                 .subscribe(
                     { loadedContact -> onContactLoaded(loadedContact) },
