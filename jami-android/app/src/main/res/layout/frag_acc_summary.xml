@@ -37,7 +37,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:navigationIcon="@drawable/abc_ic_ab_back_material"
-        app:title="@string/menu_item_account_settings"/>
+        app:title="@string/menu_item_account_settings">
+
+        <cx.ring.views.SwitchButton
+            android:id="@+id/account_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginEnd="16dp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_small"
+            app:showText="true"
+            app:status="@string/account_status_offline" />
+    </com.google.android.material.appbar.MaterialToolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -62,25 +74,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:id="@+id/account_alias_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/title_margin"
-                    android:layout_marginBottom="16dp"
+                    android:layout_marginBottom="12dp"
                     android:layout_alignParentStart="true"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/text_size_xlarge"
-                    android:textStyle="bold"
+                    style="@style/SettingsHeader"
                     tools:text="@string/profile" />
-
-                <cx.ring.views.SwitchButton
-                    android:id="@+id/account_switch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_gravity="end"
-                    android:layout_marginEnd="12dp"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/text_size_small"
-                    app:showText="true"
-                    app:status="@string/account_status_offline" />
 
             </RelativeLayout>
 
@@ -88,6 +85,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
+                android:layout_marginBottom="24dp"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -104,17 +102,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
                     android:hint="@string/profile_name"
-                    android:textColorHint="@color/text_hint"
-                    app:endIconDrawable="@drawable/baseline_edit_twoton_24dp"
+                    android:textColorHint="@color/settings_submenu_header"
+                    app:endIconDrawable="@drawable/baseline_edit_rounded_24"
                     app:endIconMode="custom"
                     app:hintEnabled="true"
-                    app:hintTextColor="@color/text_hint">
+                    app:hintTextColor="@color/settings_submenu_header"
+                    app:endIconTint="@null">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/username"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textPersonName"
+                        android:background="@drawable/rounded_background"
                         android:maxLines="1"
                         android:imeOptions="actionDone"
                         android:singleLine="true"
@@ -135,239 +135,297 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
-                    android:layout_toStartOf="@id/btn_share"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="12dp"
                     android:layout_centerVertical="true"
-                    android:layout_marginStart="@dimen/title_margin"
                     android:text="@string/navigation_item_account"
                     android:singleLine="true"
                     android:maxLines="1"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/text_size_xlarge"
-                    android:textStyle="bold" />
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/btn_share"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginEnd="4dp"
-                    android:layout_toStartOf="@+id/btn_qr"
-                    android:text="@string/share_label"
-                    android:textColor="@color/colorOnPrimary"
-                    app:chipBackgroundColor="@color/colorPrimary"
-                    app:chipIcon="@drawable/baseline_share_twoton_24dp"
-                    app:chipIconSize="18dp"
-                    app:chipIconTint="@color/colorOnPrimary"
-                    app:iconStartPadding="6dp" />
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/btn_qr"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerHorizontal="true"
-                    android:text="@string/qr_code"
-                    android:textColor="@color/colorOnPrimary"
-                    app:chipBackgroundColor="@color/colorPrimary"
-                    app:chipIcon="@drawable/baseline_qr_code_2_black_24dp"
-                    app:chipIconSize="18dp"
-                    app:chipIconTint="@color/colorOnPrimary"
-                    app:iconStartPadding="6dp" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/registered_username"
-                    android:textColorHint="@color/text_hint"
-                    app:hintEnabled="true"
-                    app:hintTextColor="@color/text_hint"
-                    android:enabled="false">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/registered_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="textPersonName"
-                        android:maxLines="1"
-                        android:singleLine="true"
-                        android:textColor="@color/text_color"
-                        android:textStyle="bold"
-                        android:textIsSelectable="true"/>
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/register_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="8dp"
-                    android:text="@string/register_name"
-                    android:textColor="@color/colorPrimary"
-                    android:visibility="gone"
-                    app:chipBackgroundColor="@color/chip_background"
-                    tools:visibility="visible" />
+                    style="@style/SettingsHeader" />
 
             </RelativeLayout>
 
             <LinearLayout
-                android:id="@+id/group_registering_name"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                tools:visibility="gone">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:showDividers="middle"
+                android:divider="@drawable/layout_divider"
+                android:layout_marginStart="0dp"
+                android:layout_marginEnd="0dp"
+                style="@style/CustomRelativeLayout">
 
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="0dp"
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/registered_username"
+                        android:textColorHint="@color/settings_submenu_header"
+                        app:hintEnabled="true"
+                        app:hintTextColor="@color/settings_submenu_header"
+                        android:enabled="false">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/registered_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rounded_background"
+                            android:inputType="textPersonName"
+                            android:maxLines="1"
+                            android:singleLine="true"
+                            android:textColor="@color/text_color"
+                            android:textStyle="bold"
+                            android:textIsSelectable="true" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/register_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="8dp"
+                        android:text="@string/register_name"
+                        android:textColor="@color/text_color"
+                        android:visibility="gone"
+                        app:chipBackgroundColor="@color/settings_option_background"
+                        tools:visibility="visible" />
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/group_registering_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    tools:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/trying_to_register_name" />
+
+                    <ProgressBar
+                        style="?android:attr/progressBarStyleSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/trying_to_register_name" />
+                    android:hint="@string/ring_account_identity"
+                    android:textColorHint="@color/settings_submenu_header"
+                    app:hintEnabled="true"
+                    app:hintTextColor="@color/settings_submenu_header">
 
-                <ProgressBar
-                    style="?android:attr/progressBarStyleSmall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/identity"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/settings_option_background"
+                        android:inputType="none"
+                        android:editable="false"
+                        android:singleLine="true"
+                        android:textColor="@color/text_color"
+                        android:textStyle="bold"
+                        android:textIsSelectable="true"
+                        android:ellipsize="end" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:minHeight="60dp"
+                    android:background="@drawable/rounded_background"
+                    android:gravity="center">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_share"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="@string/share_label"
+                        android:textColor="@color/colorOnSurface"
+                        android:gravity="center"
+                        app:backgroundTint="@color/settings_option_background"
+                        app:icon="@drawable/baseline_share_twoton_24dp"
+                        app:iconSize="24dp"
+                        app:iconTint="@color/icon_color"
+                        app:iconGravity="textStart" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/background" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_qr"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="@string/qr_code"
+                        android:textColor="@color/colorOnSurface"
+                        android:gravity="center"
+                        app:backgroundTint="@color/settings_option_background"
+                        app:icon="@drawable/baseline_qr_code_2_black_24dp"
+                        app:iconSize="24dp"
+                        app:iconTint="@color/icon_color"
+                        app:iconGravity="textStart" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/ring_account_identity"
-                android:textColorHint="@color/text_hint"
-                app:hintEnabled="true"
-                app:hintTextColor="@color/text_hint"
-                android:layout_marginTop="12dp">
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="6dp">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/identity"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginBottom="12dp"
+                    android:text="@string/devices_header"
+                    android:singleLine="true"
+                    android:maxLines="1"
+                    style="@style/SettingsHeader" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:showDividers="middle"
+                android:divider="@drawable/layout_divider"
+                android:layout_marginStart="0dp"
+                android:layout_marginEnd="0dp"
+                style="@style/CustomRelativeLayout">
+
+                <cx.ring.views.TwoButtonEditText
+                    android:id="@+id/linked_devices"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="none"
-                    android:editable="false"
-                    android:singleLine="true"
-                    android:textColor="@color/text_color"
+                    android:background="@drawable/rounded_background"
+                    android:enabled="false"
+                    android:hint="@string/account_device_this_indicator"
+                    app:drawable_right="@drawable/baseline_edit_rounded_24" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/chip_more"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textColor="@color/colorOnSurface"
+                    app:backgroundTint="@color/settings_option_background" />
+
+                <ListView
+                    android:id="@+id/devices_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:divider="@null"
+                    android:nestedScrollingEnabled="true"
+                    android:visibility="gone" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/link_new_device"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textColor="@color/colorOnSurface"
+                    android:gravity="center"
+                    app:backgroundTint="@color/settings_option_background"
+                    android:text="@string/link_new_device"
+                    app:icon="@drawable/link_new_device_24"
+                    app:iconSize="24dp"
+                    app:iconTint="@color/icon_color"
+                    app:iconGravity="textStart" />/>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="6dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/menu_item_settings"
+                    style="@style/SettingsHeader" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:showDividers="middle"
+                android:divider="@drawable/layout_divider"
+                android:layout_marginStart="0dp"
+                android:layout_marginEnd="0dp"
+                style="@style/CustomRelativeLayout">
+
+                <TextView
+                    android:id="@+id/settings_account"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:padding="12dp"
                     android:textStyle="bold"
-                    android:textIsSelectable="true"
-                    android:ellipsize="end" />
+                    android:textSize="18sp"
+                    android:drawablePadding="12dp"
+                    android:text="@string/account"
+                    app:drawableLeftCompat="@drawable/account_circle_24" />
 
-            </com.google.android.material.textfield.TextInputLayout>
+                <TextView
+                    android:id="@+id/settings_media"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:padding="12dp"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:drawablePadding="12dp"
+                    android:text="@string/account_preferences_media_tab"
+                    app:drawableLeftCompat="@drawable/perm_media_24" />
 
-            <cx.ring.views.TwoButtonEditText
-                android:id="@+id/linked_devices"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:enabled="false"
-                android:hint="@string/account_device_this_indicator"
-                app:drawable_right="@drawable/baseline_edit_twoton_24dp" />
+                <TextView
+                    android:id="@+id/settings_messages"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:padding="12dp"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:drawablePadding="12dp"
+                    android:text="@string/notif_channel_messages"
+                    app:drawableLeftCompat="@drawable/chat_bubble_24" />
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip_more"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_margin="6dp"
-                app:chipBackgroundColor="@color/edit_text_background" />
-
-            <ListView
-                android:id="@+id/devices_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:divider="@null"
-                android:nestedScrollingEnabled="true"
-                android:visibility="gone" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/link_new_device"
-                style="@style/ButtonColored"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:drawableStart="@drawable/baseline_add_24"
-                android:drawableTint="@color/colorOnPrimary"
-                android:text="@string/link_new_device" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/title_margin"
-                android:layout_marginVertical="4dp"
-                android:gravity="center_vertical"
-                android:text="@string/menu_item_settings"
-                android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/text_size_xlarge"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/settings_account"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:padding="12dp"
-                android:textStyle="bold"
-                android:textSize="18sp"
-                android:drawablePadding="12dp"
-                android:text="@string/account"
-                app:drawableLeftCompat="@drawable/account_circle_24" />
-
-            <com.google.android.material.divider.MaterialDivider
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:id="@+id/settings_media"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:padding="12dp"
-                android:textStyle="bold"
-                android:textSize="18sp"
-                android:drawablePadding="12dp"
-                android:text="@string/account_preferences_media_tab"
-                app:drawableLeftCompat="@drawable/perm_media_24" />
-
-            <com.google.android.material.divider.MaterialDivider
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:id="@+id/settings_messages"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:padding="12dp"
-                android:textStyle="bold"
-                android:textSize="18sp"
-                android:drawablePadding="12dp"
-                android:text="@string/notif_channel_messages"
-                app:drawableLeftCompat="@drawable/chat_bubble_24" />
-
-            <com.google.android.material.divider.MaterialDivider
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:id="@+id/settings_advanced"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:padding="12dp"
-                android:textStyle="bold"
-                android:textSize="18sp"
-                android:drawablePadding="12dp"
-                android:text="@string/account_preferences_advanced_tab"
-                app:drawableLeftCompat="@drawable/settings_account_24" />
-
+                <TextView
+                    android:id="@+id/settings_advanced"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:padding="12dp"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:drawablePadding="12dp"
+                    android:text="@string/account_preferences_advanced_tab"
+                    app:drawableLeftCompat="@drawable/settings_account_24" />
+            </LinearLayout>
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
