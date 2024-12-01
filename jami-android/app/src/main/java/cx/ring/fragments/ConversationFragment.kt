@@ -553,7 +553,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         val c = context ?: return
         try {
             val photoFile = AndroidFileUtils.createImageFile(c)
-            Log.i(TAG, "takePicture: trying to save to $photoFile")
+            Log.i(TAG, "takePicture: attempting to save to $photoFile")
             val photoURI = ContentUri.getUriForFile(c, photoFile)
             val takePictureIntent =
                 Intent(MediaStore.ACTION_IMAGE_CAPTURE).putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
@@ -589,7 +589,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         return op.observeOn(DeviceUtils.uiScheduler)
             .doFinally { setLoading(false) }
             .subscribe({}) { e ->
-                Log.e(TAG, "startFileSend: not able to create cache file", e)
+                Log.e(TAG, "startFileSend: unable to create cache file", e)
                 displayErrorToast(Error.INVALID_FILE)
             }
     }
@@ -828,7 +828,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                 sharedPreferences.edit().remove(KEY_PREFERENCE_CONVERSATION_LAST_READ).apply()
             }
         } catch (e: Exception) {
-            Log.e(TAG, "Can't load conversation preferences")
+            Log.e(TAG, "Unable to load conversation preferences")
         }
 
         var connection = locationServiceConnection
