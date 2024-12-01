@@ -77,7 +77,7 @@ cd jami-client-android/jami-android
 
 ### Troubleshoot
 
-Jami Android doesn't use the system's `pkg-config`; it builds its own version with custom parameters to support cross-compilation. However, after cleaning the project, `pkg-config` may not be rebuilt, which could result in falling back to the system's version, leading to errors when trying to locate shared libraries.
+Jami Android doesn't use the system's `pkg-config`; it builds its own version with custom parameters to support cross-compilation. However, after cleaning the project, `pkg-config` may not be rebuilt, which could result in falling back to the system's version, leading to errors when attempting to locate shared libraries.
 
 ```sh
 cd jami-client-android/daemon/extras/tools
