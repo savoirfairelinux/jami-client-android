@@ -24,6 +24,6 @@
         android:paddingRight="17dp"
         android:paddingLeft="17dp"
         android:fontFamily="@font/ubuntu_regular"
-        tools:text="Start Audio Call" />
+        tools:text="Start audio call" />
 
 </RelativeLayout>
