@@ -373,7 +373,7 @@ class AccountService(
     fun addAccount(map: Map<String, String>): Observable<Account> =
         Single.fromCallable {
             JamiService.addAccount(StringMap.toSwig(map)).apply {
-            if (isEmpty()) throw RuntimeException("Can't create account.") }
+            if (isEmpty()) throw RuntimeException("Unable to create account.") }
         }
         .flatMapObservable { accountId ->
             Observable.merge(observableAccountList.mapOptional { Optional.ofNullable(it.firstOrNull { a -> a.accountId == accountId }) },
@@ -569,7 +569,7 @@ class AccountService(
      */
     fun setAccountsActive(active: Boolean) {
         mExecutor.execute {
-            Log.i(TAG, "setAccountsActive() running... $active")
+            Log.i(TAG, "setAccountsActive() running… $active")
             for (a in mAccountList) {
                 // If the proxy is enabled we can considered the account
                 // as always active
@@ -683,7 +683,7 @@ class AccountService(
     fun renameDevice(accountId: String, newName: String) {
         val account = getAccount(accountId)
         mExecutor.execute {
-            Log.i(TAG, "renameDevice() thread running... $newName")
+            Log.i(TAG, "renameDevice() thread running… $newName")
             val details = JamiService.getAccountDetails(accountId)
             details[ConfigKey.ACCOUNT_DEVICE_NAME.key] = newName
             JamiService.setAccountDetails(accountId, details)
@@ -695,7 +695,7 @@ class AccountService(
     fun exportToFile(accountId: String, absolutePath: String, scheme: String, password: String): Completable =
         Completable.fromAction {
             Log.w(TAG, "exportToFile() $accountId $absolutePath $scheme")
-            require(JamiService.exportToFile(accountId, absolutePath, scheme, password)) { "Can't export archive" }
+            require(JamiService.exportToFile(accountId, absolutePath, scheme, password)) { "Unable to export archive" }
         }.subscribeOn(scheduler)
 
     /**
@@ -704,7 +704,7 @@ class AccountService(
      */
     fun setAccountPassword(accountId: String, oldPassword: String, newPassword: String): Completable =
         Completable.fromAction {
-            require(JamiService.changeAccountPassword(accountId, oldPassword, newPassword)) { "Can't change password" }
+            require(JamiService.changeAccountPassword(accountId, oldPassword, newPassword)) { "Unable to change password" }
         }.subscribeOn(scheduler)
 
     fun getAccountPasswordKey(accountId: String, password: String): Single<ByteArray> =
@@ -741,7 +741,7 @@ class AccountService(
     ): Map<String, String>? {
         try {
             return mExecutor.submit<HashMap<String, String>> {
-                Log.i(TAG, "validateCertificatePath() running...")
+                Log.i(TAG, "validateCertificatePath() running…")
                 JamiService.validateCertificatePath(accountID, certificatePath, privateKeyPath, privateKeyPass, "").toNative()
             }.get()
         } catch (e: Exception) {
@@ -753,7 +753,7 @@ class AccountService(
     fun validateCertificate(accountId: String, certificate: String): Map<String, String>? {
         try {
             return mExecutor.submit<HashMap<String, String>> {
-                Log.i(TAG, "validateCertificate() running...")
+                Log.i(TAG, "validateCertificate() running…")
                 JamiService.validateCertificate(accountId, certificate).toNative()
             }.get()
         } catch (e: Exception) {
@@ -765,7 +765,7 @@ class AccountService(
     fun getCertificateDetailsPath(accountId: String, certificatePath: String): Map<String, String>? {
         try {
             return mExecutor.submit<HashMap<String, String>> {
-                Log.i(TAG, "getCertificateDetailsPath() running...")
+                Log.i(TAG, "getCertificateDetailsPath() running…")
                 JamiService.getCertificateDetails(accountId, certificatePath).toNative()
             }.get()
         } catch (e: Exception) {
@@ -777,7 +777,7 @@ class AccountService(
     fun getCertificateDetails(accountId: String, certificateRaw: String): Map<String, String>? {
         try {
             return mExecutor.submit<HashMap<String, String>> {
-                Log.i(TAG, "getCertificateDetails() running...")
+                Log.i(TAG, "getCertificateDetails() running…")
                 JamiService.getCertificateDetails(accountId, certificateRaw).toNative()
             }.get()
         } catch (e: Exception) {
@@ -801,7 +801,7 @@ class AccountService(
     fun getCredentials(accountId: String): List<Map<String, String>>? {
         try {
             return mExecutor.submit<ArrayList<Map<String, String>>> {
-                Log.i(TAG, "getCredentials() running...")
+                Log.i(TAG, "getCredentials() running…")
                 JamiService.getCredentials(accountId).toNative()
             }.get()
         } catch (e: Exception) {
@@ -831,7 +831,7 @@ class AccountService(
      */
     fun registerName(account: Account, name: String, scheme: String, password: String) {
         if (account.registeringUsername) {
-            Log.w(TAG, "Already trying to register username")
+            Log.w(TAG, "Already attempting to register username")
             return
         }
         account.registeringUsername = true
@@ -1164,7 +1164,7 @@ class AccountService(
         Log.d(TAG, "nameRegistrationEnded: $accountId, $state, $name")
         val acc = getAccount(accountId)
         if (acc == null) {
-            Log.w(TAG, "Can't find account for name registration callback")
+            Log.w(TAG, "Unable to find account for name registration callback")
             return
         }
         acc.registeringUsername = false
@@ -1458,7 +1458,7 @@ class AccountService(
         Log.w(TAG, "ConversationCallback: conversationReady $accountId/$conversationId")
         val account = getAccount(accountId)
         if (account == null) {
-            Log.w(TAG, "conversationReady: can't find account")
+            Log.w(TAG, "conversationReady: unable to find account")
             return
         }
         val info = JamiService.conversationInfos(accountId, conversationId).toNativeFromUtf8()
@@ -1500,7 +1500,7 @@ class AccountService(
     fun conversationRemoved(accountId: String, conversationId: String) {
         val account = getAccount(accountId)
         if (account == null) {
-            Log.w(TAG, "conversationRemoved: can't find account")
+            Log.w(TAG, "conversationRemoved: unable to find account")
             return
         }
         account.removeSwarm(conversationId)
@@ -1515,7 +1515,7 @@ class AccountService(
         Log.w(TAG, "ConversationCallback: conversationRequestReceived $accountId/$conversationId ${metadata.size}")
         val account = getAccount(accountId)
         if (account == null || conversationId.isEmpty()) {
-            Log.w(TAG, "conversationRequestReceived: can't find account")
+            Log.w(TAG, "conversationRequestReceived: unable to find account")
             return
         }
         val from = Uri.fromId(metadata["from"]!!)
