@@ -303,7 +303,7 @@ class Conversation : ConversationHistory {
         if (interaction.contact == null) {
             if (contacts.size == 1) interaction.contact = contacts[0] else {
                 if (interaction.author == null) {
-                    Log.e(TAG, "Can't set interaction properties: no author for type:" + interaction.type + " id:" + interaction.id + " status:" + interaction.status)
+                    Log.e(TAG, "Unable to set interaction properties: no author for type:" + interaction.type + " id:" + interaction.id + " status:" + interaction.status)
                 } else {
                     interaction.contact = findContact(Uri.fromString(interaction.author!!))
                 }
@@ -443,7 +443,7 @@ class Conversation : ConversationHistory {
                 e.status = element.status
                 updatedElementSubject.onNext(Pair(e, ElementStatus.UPDATE))
             } else {
-                Log.e(TAG, "Can't find swarm message to update: ${element.messageId}")
+                Log.e(TAG, "Unable to find swarm message to update: ${element.messageId}")
             }
         } else {
             setInteractionProperties(element)
@@ -456,7 +456,7 @@ class Conversation : ConversationHistory {
                     return
                 }
             }
-            Log.e(TAG, "Can't find message to update: ${element.id}")
+            Log.e(TAG, "Unable to find message to update: ${element.id}")
         }
     }
 
@@ -676,7 +676,7 @@ class Conversation : ConversationHistory {
                 lastEvent = interaction
         }
         if (!added) {
-            Log.e(TAG, "Can't attach interaction $id with parent ${interaction.parentId}")
+            Log.e(TAG, "Unable to attach interaction $id with parent ${interaction.parentId}")
         }
         mPendingMessages.remove(id)?.onSuccess(interaction)
     }
@@ -742,7 +742,7 @@ class Conversation : ConversationHistory {
     /** Legacy means that user is consulting a contact */
     fun isLegacy() = mode.blockingFirst() == Mode.Legacy
 
-    /** Syncing means that Jami is trying to download conversation from peer */
+    /** Syncing means that Jami is attempting to download conversation from peer */
     fun isSyncing() = mode.blockingFirst() == Mode.Syncing
 
     /** Tells if the conversation is a swarm:group. No matter how many participants. */
