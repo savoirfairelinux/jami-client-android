@@ -82,7 +82,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <!-- Basic Details -->
     <string name="account_preferences_basic_tab">General</string>
     <string name="account_basic_category">Basic Settings</string>
-    <string name="account_alias_label">Account name</string>
+    <string name="account_alias_label">Display name</string>
     <string name="account_hostname_label">Hostname</string>
     <string name="account_bootstrap_label">Bootstrap</string>
     <string name="account_name_server_label">Name server</string>
@@ -123,8 +123,8 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="account_registration_exp_label">Registration Expire</string>
     <string name="account_local_interface_label">Local Interface</string>
     <string name="account_local_port_label">Local Port</string>
-    <string name="account_stun_enable_label">Use Stun</string>
-    <string name="account_stun_server_label">Stun Server</string>
+    <string name="account_stun_enable_label">Use STUN</string>
+    <string name="account_stun_server_label">STUN server</string>
     <string name="account_accept_files">Accept incoming files automatically</string>
     <string name="account_conversation_settings_title">Conversation settings</string>
     <string name="account_accept_files_max_size">Maximum file size to accept automatically</string>
@@ -173,21 +173,21 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
     <!-- TLS Details -->
     <string name="account_tls_transport_switch_label">Use TLS Transport</string>
-    <string name="account_tls_port_label">TLS Listener Port</string>
-    <string name="account_tls_certificate_list_label">Certification Authorities</string>
-    <string name="account_tls_certificate_file_label">Certificate File</string>
-    <string name="account_tls_private_key_file_label">Private Key File</string>
-    <string name="account_tls_password_label">Private Key Password</string>
-    <string name="account_tls_method_label">TLS Method</string>
-    <string name="account_tls_ciphers_label">TLS Ciphers</string>
-    <string name="account_tls_server_name_label">Server Name</string>
-    <string name="account_tls_verify_server_label">Verify Server</string>
-    <string name="account_tls_verify_client_label">Verify Client</string>
-    <string name="account_require_client_certificate_label">TLS Require Client Certificate</string>
-    <string name="account_tls_negotiation_timeout_sec">Negotiation Timeout (sec)</string>
+    <string name="account_tls_port_label">TLS listener port</string>
+    <string name="account_tls_certificate_list_label">Certification authorities</string>
+    <string name="account_tls_certificate_file_label">Certificate file</string>
+    <string name="account_tls_private_key_file_label">Private key file</string>
+    <string name="account_tls_password_label">Private key password</string>
+    <string name="account_tls_method_label">TLS method</string>
+    <string name="account_tls_ciphers_label">TLS ciphers</string>
+    <string name="account_tls_server_name_label">Server name</string>
+    <string name="account_tls_verify_server_label">Verify server</string>
+    <string name="account_tls_verify_client_label">Verify client</string>
+    <string name="account_require_client_certificate_label">TLS require client certificate</string>
+    <string name="account_tls_negotiation_timeout_sec">Negotiation timeout (sec)</string>
     <string name="account_rtp_max_port">Maximum</string>
     <string name="account_rtp_min_port">Minimum</string>
-    <string name="account_rtp_port_range">Audio RTP Port Range</string>
+    <string name="account_rtp_port_range">Audio RTP port range</string>
 
     <!-- restore/backup -->
     <string name="account_new_device_password">Enter main password to unlock account</string>
@@ -243,16 +243,16 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="account_link_device">Connect from another device</string>
     <string name="account_link_button">Connect from network</string>
     <string name="account_link_archive_button">Connect from backup</string>
-    <string name="account_link_prompt_pin">Enter PIN</string>
+    <string name="account_link_prompt_pin">Enter PIN code</string>
     <string name="account_new_button">Create a Jami account</string>
     <string name="account_link_export_button">Link a new device</string>
     <string name="account_link_show_button">Show %d more linked device</string>
     <string name="account_link_hide_button">Hide linked device</string>
-    <string name="account_link_export_info">To use this account on other devices, you must first expose it on Jami. This will generate a PIN code that you must enter on the new device to set up the account. The PIN will expire in 10 minutes.</string>
-    <string name="account_start_export_button">Generate PIN</string>
+    <string name="account_link_export_info">To use this account on other devices, you must first expose it on Jami. This will generate a PIN code that you must enter on the new device to set up the account. The PIN code will expire in 10 minutes.</string>
+    <string name="account_start_export_button">Generate PIN code</string>
     <string name="account_end_export_button">close</string>
-    <string name="account_end_export_infos">Your PIN is:\n\n%%\n\nTo complete the process, you need to open Jami on the new device. Create a new account with “Link this device to an account”. The PIN will expire in 10 minutes.</string>
-    <string name="account_link_export_info_light">To use this account on other devices, you must first expose it on Jami. This will generate a PIN code that you must enter on the new device to set up the account. The PIN will expire in 10 minutes.</string>
+    <string name="account_end_export_infos">Your PIN code is:\n\n%%\n\nTo complete the process, you need to open Jami on the new device. Create a new account with “Link this device to an account”. The PIN code will expire in 10 minutes.</string>
+    <string name="account_link_export_info_light">To use this account on other devices, you must first expose it on Jami. This will generate a PIN code that you must enter on the new device to set up the account. The PIN code will expire in 10 minutes.</string>
     <string name="account_export_title">Link account to other devices</string>
     <string name="account_connect_server_button">Connect to management server</string>
     <string name="account_connect_button">Connect</string>
@@ -266,10 +266,10 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
     <!-- Name registration -->
     <string name="error_username_empty">Enter a username</string>
-    <string name="no_registered_name_for_account">No registered name</string>
-    <string name="username_available">Username available !</string>
-    <string name="register_name">Register Name</string>
-    <string name="trying_to_register_name">Trying to register name</string>
+    <string name="no_registered_name_for_account">No registered username</string>
+    <string name="username_available">Username available!</string>
+    <string name="register_name">Register username</string>
+    <string name="trying_to_register_name">Attempting to register username</string>
     <string name="registered_username">Registered username</string>
     <string name="register_username">Register public username</string>
     <string name="register_recommended">Recommended</string>
@@ -298,11 +298,11 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="account_revoke_device_hint">Enter password to confirm</string>
     <string name="enter_password">Enter password</string>
     <string name="revoke_device_title">Revoke device</string>
-    <string name="revoke_device_message">Do you really want to revoke %1$s?</string>
+    <string name="revoke_device_message">Do you want to revoke %1$s?</string>
     <string name="revoke_device_wait_title">Please wait…</string>
     <string name="revoke_device_wait_message">Revoking device</string>
     <string name="rename_device_title">Rename this device</string>
-    <string name="rename_device_message">Choose a new name to identify this device in your Jami account</string>
+    <string name="rename_device_message">Enter device name to identify this device in your Jami account</string>
     <string name="rename_device_button">Rename device</string>
     <string name="account_rename_device_hint">Choose new device name</string>
     <string name="account_device_name_empty">Device name cannot be empty.</string>
@@ -310,24 +310,24 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="account_disabled_indicator">disabled</string>
 
     <!-- Link a new device -->
-    <string name="account_link_prompt_pin_manually">Enter PIN manually</string>
+    <string name="account_link_prompt_pin_manually">Enter PIN code manually</string>
     <string name="qr_invalid">Not a Jami Authentication QR code</string>
-    <string name="content_description_checkbox">Your Qr Code is valid</string>
+    <string name="content_description_checkbox">Your QR code is valid</string>
     <string name="error_format_not_supported">This format is not supported.</string>
-    <string name="account_link_info">On the new Jami app, scan the QR code or enter manually the PIN.</string>
+    <string name="account_link_info">On the new Jami app, scan the QR code or enter manually the PIN code.</string>
     <string name="account_link_device_title">Link a new device</string>
     <string name="account_link_password">This account is password-encrypted, enter the password to generate the PIN code.</string>
     <string name="account_link_generate_button">Generate</string>
     <string name="account_link_time_valid">The PIN code will be invalid: %1$s.</string>
-    <string name="account_link_device_info">Choose “Link a new device” from the other Jami app to show the QR code or PIN</string>
+    <string name="account_link_device_info">Choose “Link a new device” from the other Jami app to show the QR code or PIN code.</string>
     <string name="account_generate_export_device">On the other device</string>
     <string name="account_generate_export_info">Install and launch Jami, select “Import from an other device” and scan the QR code.</string>
-    <string name="content_description_qr_generated">Your Qr Code</string>
-    <string name="account_generate_export_invalid">The PIN is no longer valid.\nEnter the password and generate another one to link the new device.</string>
-    <string name="account_generate_export_invalid_two">The PIN is no longer valid.\nGenerate another one to link the new device.</string>
+    <string name="content_description_qr_generated">Account QR code</string>
+    <string name="account_generate_export_invalid">The PIN code is no longer valid.\nEnter the password and generate another one to link the new device.</string>
+    <string name="account_generate_export_invalid_two">The PIN code is no longer valid.\nGenerate another one to link the new device.</string>
     <string name="help_pin_info">Fill if the account is password-encrypted</string>
-    <string name="connect_device_scanqr">Scan QR</string>
-    <string name="connect_device_enterPIN">Or enter PIN</string>
+    <string name="connect_device_scanqr">Scan QR code</string>
+    <string name="connect_device_enterPIN">Or enter PIN code</string>
     <string name="account_link_device_button">Connect</string>
 
     <!-- Biometry -->
