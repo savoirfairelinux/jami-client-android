@@ -43,7 +43,7 @@ enum class JamiIdStatus {
     EDITING_USERNAME_LOADING, // Looking if the typed username is available / while registering.
     EDITING_USERNAME_NOT_AVAILABLE, // The typed username is not available
     EDITING_USERNAME_AVAILABLE, // The typed username is available
-    USERNAME_DEFINED, // The username is defined (and can't be edited anymore)
+    USERNAME_DEFINED, // The username is defined (and is unable to be edited anymore)
 }
 
 data class JamiIdUiState(
@@ -76,7 +76,7 @@ class JamiIdViewModel @Inject constructor(
                 .switchMap { account -> usernameAvailabilitySubject.map { Pair(account, it) } }
                 .debounce(500, TimeUnit.MILLISECONDS)
                 .switchMapSingle { (account, username) ->
-                    Log.i(TAG, "Checking if '$username' is available as new username...")
+                    Log.i(TAG, "Checking if '$username' is available as new username…")
                     accountService.findRegistrationByName(
                         account.accountId, "", username
                     )

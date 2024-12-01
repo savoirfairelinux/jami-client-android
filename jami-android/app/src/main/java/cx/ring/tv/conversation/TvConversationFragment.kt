@@ -469,7 +469,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
         }
     }
 
-    // Try to start the recorder with a given encoder and output format.
+    // Attempt to start the recorder with a given encoder and output format.
     private fun startRecorder(encoder: Int, outputFormat: Int): Boolean {
         try {
             val mediaRecorder =
@@ -528,7 +528,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
     private fun startFileSend(op: Completable) {
         op.observeOn(AndroidSchedulers.mainThread())
             .subscribe({}) { e: Throwable? ->
-                Log.e(TAG, "startFileSend: not able to create cache file", e)
+                Log.e(TAG, "startFileSend: unable to create cache file", e)
                 displayErrorToast(Error.INVALID_FILE)
             }
     }
@@ -690,7 +690,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
         contactUri: net.jami.model.Uri,
         hasVideo: Boolean
     ) {
-        // Try to find an existing call
+        // Attempt to find an existing call
         val conf = conversation.currentCall
 
         // If there is an existing call, go to it
@@ -810,7 +810,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
     private fun startRecognizer() {
 
         if (!SpeechRecognizer.isRecognitionAvailable(requireContext())) {
-            Log.w(TAG, "Speech recognition not available.")
+            Log.w(TAG, "Speech recognition unavailable.")
             Toast.makeText(
                 requireContext(),
                 R.string.speech_recogniton_unavailable,
