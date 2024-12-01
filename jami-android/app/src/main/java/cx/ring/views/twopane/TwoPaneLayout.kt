@@ -72,7 +72,7 @@ class TwoPaneLayout @JvmOverloads constructor(
      * is not taken into account in this method. This method is typically used to determine
      * whether the layout is showing two-pane or single-pane.
      *
-     * @return true if both panes cannot fit side-by-side, and detail pane in this layout has
+     * @return true if both panes are unable to fit side-by-side, and detail pane in this layout has
      * the capability to slide back and forth.
      */
     /**
@@ -279,9 +279,9 @@ class TwoPaneLayout @JvmOverloads constructor(
             }
         }
         // Second pass. Resolve weight.
-        // Child views overlap when the combined width of child views cannot fit into the
-        // available width. Each of child views is sized to fill all available space. If there is
-        // no overlap, distribute the extra width proportionally to weight.
+        // Child views overlap when the combined width of child views are unable to fit into
+        // the available width. Each of child views is sized to fill all available space. If
+        // there is no overlap, distribute the extra width proportionally to weight.
         if (canSlide || weightSum > 0) {
             for (i in 0 until childCount) {
                 val child = getChildAt(i)
@@ -294,8 +294,8 @@ class TwoPaneLayout @JvmOverloads constructor(
                 var newWidth = measuredWidth
                 var childWidthSpec = 0
                 if (canSlide) {
-                    // Child view consumes available space if the combined width cannot fit into
-                    // the layout available width.
+                    // Child view consumes available space if the combined width is unable to
+                    // fit into the layout available width.
                     val horizontalMargin = lp.leftMargin + lp.rightMargin
                     newWidth = widthAvailable - horizontalMargin
                     childWidthSpec = MeasureSpec.makeMeasureSpec(newWidth, MeasureSpec.EXACTLY)
@@ -338,7 +338,7 @@ class TwoPaneLayout @JvmOverloads constructor(
                 val splitView = if (i == 0) leftSplitBounds else rightSplitBounds
                 val lp = child.layoutParams as LayoutParams
 
-                // If child view cannot fit in the separating view, expand the child view to fill
+                // If child view is unable to fit in the separating view, expand the child view to fill
                 // available space.
                 val horizontalMargin = lp.leftMargin + lp.rightMargin
                 val childHeightSpec = MeasureSpec.makeMeasureSpec(child.measuredHeight, MeasureSpec.EXACTLY)
@@ -616,7 +616,7 @@ class TwoPaneLayout @JvmOverloads constructor(
             for (i in 0 until childCount) {
                 val child = getChildAt(i)
                 if (child.visibility == VISIBLE) {
-                    // Force importance to "yes" since we can't read the value.
+                    // Force importance to "yes" since the value is unable to be read.
                     child.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES)
                     info.addChild(child)
                 }
