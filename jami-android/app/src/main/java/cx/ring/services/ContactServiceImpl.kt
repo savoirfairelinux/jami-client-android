@@ -140,7 +140,7 @@ class ContactServiceImpl(val mContext: Context, preferenceService: PreferencesSe
             while (it.moveToNext()) {
                 val contactId = it.getLong(indexId)
                 val contact = cache[contactId]
-                if (contact == null) Log.w(TAG, "Can't find contact with ID $contactId") else {
+                if (contact == null) Log.w(TAG, "Unable to find contact with ID $contactId") else {
                     contact.setSystemContactInfo(
                         contactId,
                         it.getString(indexKey),
@@ -198,7 +198,7 @@ class ContactServiceImpl(val mContext: Context, preferenceService: PreferencesSe
             Log.d(TAG, "findContactByIdFromSystem: Error while searching for contact id=$contactId", e)
         }
         if (contact == null) {
-            Log.d(TAG, "findContactByIdFromSystem: findById $contactId can't find contact.")
+            Log.d(TAG, "findContactByIdFromSystem: findById $contactId is unable to find contact.")
         }
         return contact
     }
@@ -280,7 +280,7 @@ class ContactServiceImpl(val mContext: Context, preferenceService: PreferencesSe
                 null
             )
             if (result == null) {
-                Log.d(TAG, "findContactBySipNumberFromSystem: $number can't find contact.")
+                Log.d(TAG, "findContactBySipNumberFromSystem: $number is unable to find contact.")
                 return Contact.buildSIP(net.jami.model.Uri.fromString(number))
             }
             val indexId = result.getColumnIndex(ContactsContract.RawContacts.CONTACT_ID)
@@ -319,7 +319,7 @@ class ContactServiceImpl(val mContext: Context, preferenceService: PreferencesSe
             val uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(number))
             val result = contentResolver.query(uri, PHONELOOKUP_PROJECTION, null, null, null)
             if (result == null) {
-                Log.d(TAG, "findContactByNumberFromSystem: $number can't find contact.")
+                Log.d(TAG, "findContactByNumberFromSystem: $number is unable to find contact.")
                 return findContactBySipNumberFromSystem(number)
             }
             if (result.moveToFirst()) {
@@ -342,7 +342,7 @@ class ContactServiceImpl(val mContext: Context, preferenceService: PreferencesSe
             Log.d(TAG, "findContactByNumber: Error while searching for contact number=$number", e)
         }
         if (contact == null) {
-            Log.d(TAG, "findContactByNumberFromSystem: $number can't find contact.")
+            Log.d(TAG, "findContactByNumberFromSystem: $number is unable to find contact.")
             contact = findContactBySipNumberFromSystem(number)
         }
         if (contact != null) contact.isFromSystem = true

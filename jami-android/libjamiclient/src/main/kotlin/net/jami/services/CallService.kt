@@ -118,7 +118,7 @@ abstract class CallService(
             conference.isModerator = isModerator
             conference.setInfo(newInfo)
         } else {
-            Log.w(TAG, "onConferenceInfoUpdated can't find conference $confId")
+            Log.w(TAG, "onConferenceInfoUpdated is unable to find conference $confId")
         }
     }
 
@@ -618,8 +618,8 @@ abstract class CallService(
      * Replaces the current video media with a given source.
      * Creates the video media if none exists.
      * @param conf The conference to request a video media change on.
-     * @param uri The uri for the source.
-     * @param mute Whether to mute or un-mute the source.
+     * @param uri The URI for the source.
+     * @param mute Whether to mute or unmute the source.
      */
     fun replaceVideoMedia(conf: Conference, uri: String, mute: Boolean) {
         val call = conf.firstCall ?: return
@@ -660,12 +660,12 @@ abstract class CallService(
     }
 
     fun recordPlaybackFilepath(id: String, filename: String) {
-        Log.d(TAG, "record playback filepath: $id, $filename")
+        Log.d(TAG, "recordPlaybackFilepath: $id, $filename")
         // todo needs more explanations on that
     }
 
     fun onRtcpReportReceived(callId: String) {
-        Log.i(TAG, "on RTCP report received: $callId")
+        Log.i(TAG, "onRtcpReportReceived: $callId")
     }
 
     fun joinParticipant(accountId: String, selCallId: String, account2Id: String, dragCallId: String): Single<Boolean> {
@@ -707,7 +707,7 @@ abstract class CallService(
     fun getConference(id: String): Conference? = conferences[id]
 
     fun conferenceCreated(accountId: String, conversationId: String, confId: String) {
-        Log.d(TAG, "conference created: $confId")
+        Log.d(TAG, "conferenceCreated: $confId")
         val conf = conferences.getOrPut(confId) { Conference(accountId, confId) }
         val participants = JamiService.getParticipantList(accountId, confId)
         val map = JamiService.getConferenceDetails(accountId, confId)
@@ -724,7 +724,7 @@ abstract class CallService(
     }
 
     fun conferenceRemoved(accountId: String, confId: String) {
-        Log.d(TAG, "conference removed: $confId")
+        Log.d(TAG, "conferenceRemoved: $confId")
         conferences.remove(confId)?.let { conf ->
             for (call in conf.participants) {
                 call.confId = null
@@ -735,7 +735,7 @@ abstract class CallService(
     }
 
     fun conferenceChanged(accountId: String, confId: String, state: String) {
-        Log.d(TAG, "conference changed: $confId, $state")
+        Log.d(TAG, "conferenceChanged: $confId, $state")
         try {
             val participants: Set<String> = JamiService.getParticipantList(accountId, confId).toHashSet()
 
@@ -745,7 +745,7 @@ abstract class CallService(
             for (callId in participants) {
                 if (!conf.contains(callId)) {
                     calls[callId]?.let { call ->
-                        Log.d(TAG, "conference changed: adding participant " + callId + " " + call.contact)
+                        Log.d(TAG, "conferenceChanged: adding participant " + callId + " " + call.contact)
                         call.confId = confId
                         conf.addParticipant(call)
                     }
@@ -760,7 +760,7 @@ abstract class CallService(
             while (i.hasNext()) {
                 val call = i.next()
                 if (!participants.contains(call.daemonIdString)) {
-                    Log.d(TAG, "conference changed: removing participant " + call.daemonIdString + " " + call.contact)
+                    Log.d(TAG, "conferenceChanged: removing participant " + call.daemonIdString + " " + call.contact)
                     call.confId = null
                     i.remove()
                     removed = true

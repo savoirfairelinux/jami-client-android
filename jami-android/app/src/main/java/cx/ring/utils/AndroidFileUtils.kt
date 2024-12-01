@@ -63,7 +63,7 @@ object AndroidFileUtils {
     }
 
     /**
-     * Copy assets from a folder recursively ( files and subfolder)
+     * Copy assets from a folder recursively (files and subfolders)
      * @param assetManager Asset Manager ( you can get it from Context.getAssets() )
      * @param fromAssetPath path to the assets folder we want to copy
      * @param toPath a directory in internal storage
@@ -111,7 +111,7 @@ object AndroidFileUtils {
                 return true
             }
         } catch (e: IOException) {
-            Log.e(TAG, "Error while reading an asset ", e)
+            Log.e(TAG, "Error while reading asset ", e)
         }
         return false
     }
@@ -152,7 +152,7 @@ object AndroidFileUtils {
             }
         }
     } catch (e: IOException) {
-        Log.e(TAG, "Error while copying asset", e)
+        Log.e(TAG, "Error while copying asset ", e)
         false
     }
 
@@ -327,11 +327,11 @@ object AndroidFileUtils {
     }.subscribeOn(Schedulers.io())
 
     /**
-     * Copies a file to a predefined Uri destination
+     * Copies a file to a predefined URI destination
      * Uses the underlying copyFile(InputStream,OutputStream)
      * @param cr content resolver
      * @param input the file we want to copy
-     * @param outUri the uri destination
+     * @param outUri the URI destination
      * @return success value
      */
     fun copyFileToUri(cr: ContentResolver, input: File?, outUri: Uri): Completable = Completable.fromAction {
@@ -440,7 +440,7 @@ object AndroidFileUtils {
         return try {
             StatFs(path).availableBytes
         } catch (e: IllegalArgumentException) {
-            Log.e(TAG, "getSpaceLeft: not able to access path on $path")
+            Log.e(TAG, "getSpaceLeft: unable to access path on $path")
             -1L
         }
     }
@@ -518,7 +518,7 @@ object AndroidFileUtils {
         val fileUri: Uri = try {
             ContentUri.getUriForFile(c, path, displayName)
         } catch (e: IllegalArgumentException) {
-            Log.e("File Selector", "The selected file can't be shared: " + path.name)
+            Log.e("File Selector", "Unable to share the selected file: " + path.name)
             null
         } ?: return
         shareFile(c, fileUri, displayName)
@@ -542,7 +542,7 @@ object AndroidFileUtils {
         try {
             fileUri = ContentUri.getUriForFile(c, path, displayName)
         } catch (e: IllegalArgumentException) {
-            Log.e(TAG, "The selected file can't be shared: " + path.name)
+            Log.e(TAG, "Unable to share the selected file: " + path.name)
         }
         if (fileUri != null)
             openFile(c, fileUri, displayName)
