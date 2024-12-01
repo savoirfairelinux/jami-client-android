@@ -226,7 +226,7 @@ make_archive() {
 
 	for file in $release_files; do
 		if [ ! -e $file ]; then
-			die "Cannot release: can't find $file"
+			die "Unable to release: unable to find $file"
 		fi
 	done
 

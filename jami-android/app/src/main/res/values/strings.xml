@@ -359,11 +359,11 @@ along with this program; if not, write to the Free Software
     <string name="conversation_type_contact">Jami contact</string>
     <string name="conversation_type_private">Private</string>
     <string name="conversation_type_group">Group</string>
-    <string name="conversation_contact_invited">%1$s was invited</string>
-    <string name="conversation_contact_added">%1$s joined</string>
-    <string name="conversation_contact_left">%1$s left</string>
-    <string name="conversation_contact_blocked">%1$s was blocked</string>
-    <string name="conversation_contact_unblocked">%1$s was unblocked</string>
+    <string name="conversation_contact_invited">%1$s was invited to join the conversation.</string>
+    <string name="conversation_contact_added">%1$s has joined the conversation.</string>
+    <string name="conversation_contact_left">%1$s has left the conversation.</string>
+    <string name="conversation_contact_blocked">%1$s was blocked from the conversation.</string>
+    <string name="conversation_contact_unblocked">%1$s was unblocked from the conversation.</string>
     <string name="conversation_search_hint">Search conversation</string>
 
     <string name="audio_recorder_error">Audio recorder app was not found.</string>
