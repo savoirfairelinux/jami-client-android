@@ -29,7 +29,7 @@ export RELEASE
 
 if [ -z "$DAEMON_DIR" ]; then
     DAEMON_DIR="$(pwd)/daemon"
-    echo "DAEMON_DIR not provided trying to find it in $DAEMON_DIR"
+    echo "DAEMON_DIR not provided attempting to find it in $DAEMON_DIR"
 fi
 if [ ! -d "$DAEMON_DIR" ]; then
     echo 'Daemon not found.'
