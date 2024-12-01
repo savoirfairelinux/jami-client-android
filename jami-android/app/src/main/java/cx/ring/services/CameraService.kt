@@ -168,7 +168,7 @@ class CameraService internal constructor(c: Context) {
         Log.w(TAG, "setParameters() $camId $format $width $height $rate $rotation")
         val deviceParams = mNativeParams[camId]
         if (deviceParams == null) {
-            Log.w(TAG, "setParameters() can't find device")
+            Log.w(TAG, "setParameters() is unable to find device")
             return
         }
         var params = mParams[camId]
@@ -307,7 +307,7 @@ class CameraService internal constructor(c: Context) {
     fun init(): Completable {
         val resetCamera = false
         return if (manager == null)
-            Completable.error(IllegalStateException("Video manager not available"))
+            Completable.error(IllegalStateException("Video manager is unavailable"))
         else loadDevices(manager)
             .map { devs: VideoDevices ->
                 synchronized(addedDevices) {
@@ -427,7 +427,7 @@ class CameraService internal constructor(c: Context) {
                                         put(outputBuffer)
                                         rewind()
                                     }
-                                    Log.i(TAG, "Cache new codec data (SPS/PPS, ...)")
+                                    Log.i(TAG, "Cache new codec data (SPS/PPS, …)")
                                 }
                             } else {
                                 val isKeyFrame = info.flags and MediaCodec.BUFFER_FLAG_KEY_FRAME != 0
@@ -461,7 +461,7 @@ class CameraService internal constructor(c: Context) {
                             codec.releaseOutputBuffer(index, false)
                         }
                     } catch (e: IllegalStateException) {
-                        Log.e(TAG, "MediaCodec can't process buffer", e)
+                        Log.e(TAG, "MediaCodec is unable to process buffer", e)
                     }
                 }
 
@@ -475,7 +475,7 @@ class CameraService internal constructor(c: Context) {
             }
             codec.setCallback(callback, handler)
         } catch (e: Exception) {
-            Log.e(TAG, "Can't open codec", e)
+            Log.e(TAG, "Unable to open codec", e)
             if (codec != null) {
                 codec.release()
                 codec = null
@@ -495,7 +495,7 @@ class CameraService internal constructor(c: Context) {
                 putInt(MediaCodec.PARAMETER_KEY_REQUEST_SYNC_FRAME, 0)
             })
         } catch (e: IllegalStateException) {
-            Log.w(TAG, "Can't send keyframe request", e)
+            Log.w(TAG, "Unable to send keyframe request", e)
         }
     }
 
@@ -506,7 +506,7 @@ class CameraService internal constructor(c: Context) {
                 putInt(MediaCodec.PARAMETER_KEY_VIDEO_BITRATE, bitrate * 1024)
             })
         } catch (e: IllegalStateException) {
-            Log.w(TAG, "Can't set bitrate", e)
+            Log.w(TAG, "Unable to set bitrate", e)
         }
     }
 
@@ -544,7 +544,7 @@ class CameraService internal constructor(c: Context) {
                 if (r.first != null) break
             }
             if (r == null ) {
-                Log.e(TAG, "createVirtualDisplay failed, can't open encoder")
+                Log.e(TAG, "createVirtualDisplay failed, unable to open encoder")
                 return null
             }
         }
@@ -829,7 +829,7 @@ class CameraService internal constructor(c: Context) {
             p.orientation = cc.get(CameraCharacteristics.SENSOR_ORIENTATION)!!
             p.facing = cc.get(CameraCharacteristics.LENS_FACING)!!
         } catch (e: Exception) {
-            Log.e(TAG, "An error occurred getting camera info", e)
+            Log.e(TAG, "Error while getting the camera info", e)
         }
         return p
     }
@@ -917,12 +917,12 @@ class CameraService internal constructor(c: Context) {
                                 Log.w(TAG, "FEATURE_IntraRefresh: " + codecCaps.isFeatureSupported(CodecCapabilities.FEATURE_IntraRefresh))
                             }
                         } catch (e: Exception) {
-                            Log.w(TAG, "Can't query codec info", e)
+                            Log.w(TAG, "Unable to query codec info", e)
                         }
                     }
                 }
             } catch (e: Exception) {
-                Log.w(TAG, "Can't query codec info", e)
+                Log.w(TAG, "Unable to query codec info", e)
             }
         }
 
@@ -958,7 +958,7 @@ class CameraService internal constructor(c: Context) {
                 bigEnough.size > 0 -> Collections.min(bigEnough, CompareSizesByArea())
                 notBigEnough.size > 0 -> Collections.max(notBigEnough, CompareSizesByArea())
                 else -> {
-                    Log.e(TAG, "Couldn't find any suitable preview size")
+                    Log.e(TAG, "Unable to find any suitable preview size")
                     choices[0]
                 }
             }
