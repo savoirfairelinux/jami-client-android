@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "08d43eec_8c2fc10c",
+        "filename": "cqfd",
+        "patchSetId": 13
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-12-02T16:52:37Z",
+      "side": 1,
+      "message": "upstream project, you can submit changes here:\nhttps://github.com/savoirfairelinux/cqfd",
+      "range": {
+        "startLine": 228,
+        "startChar": 5,
+        "endLine": 231,
+        "endChar": 5
+      },
+      "revId": "83294c16a78245c75b7b6f6b887eea9ae1487bf3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "dc4c4431_d14ae434",
         "filename": "jami-android/app/src/main/res/values/strings.xml",
         "patchSetId": 13
