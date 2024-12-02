@@ -24,6 +24,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7bec960a_7d334dcf",
+        "filename": "cqfd",
+        "patchSetId": 13
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-12-02T18:40:15Z",
+      "side": 1,
+      "message": "Done at https://github.com/savoirfairelinux/cqfd/pull/131",
+      "parentUuid": "08d43eec_8c2fc10c",
+      "range": {
+        "startLine": 228,
+        "startChar": 5,
+        "endLine": 231,
+        "endChar": 5
+      },
+      "revId": "83294c16a78245c75b7b6f6b887eea9ae1487bf3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dc4c4431_d14ae434",
