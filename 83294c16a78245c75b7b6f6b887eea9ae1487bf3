@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc4c4431_d14ae434",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 13
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-12-02T15:18:24Z",
+      "side": 1,
+      "message": "These strings are displayed in the conversation flow. They (normally) have a special layout to distinguish them as conversation events.\n\nThe precision should normally not be required as the context is intended to be enough (do you think it\u0027s not the case ?).",
+      "range": {
+        "startLine": 362,
+        "startChar": 0,
+        "endLine": 366,
+        "endChar": 2
+      },
+      "revId": "83294c16a78245c75b7b6f6b887eea9ae1487bf3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
