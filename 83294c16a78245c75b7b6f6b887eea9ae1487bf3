@@ -48,6 +48,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c5a4abda_e5ecec12",
+        "filename": "cqfd",
+        "patchSetId": 13
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-12-02T21:59:28Z",
+      "side": 1,
+      "message": "Thanks, also note the other comment:\nhttps://review.jami.net/c/jami-client-android/+/29693/comment/dc4c4431_d14ae434/",
+      "parentUuid": "7bec960a_7d334dcf",
+      "range": {
+        "startLine": 228,
+        "startChar": 5,
+        "endLine": 231,
+        "endChar": 5
+      },
+      "revId": "83294c16a78245c75b7b6f6b887eea9ae1487bf3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dc4c4431_d14ae434",
