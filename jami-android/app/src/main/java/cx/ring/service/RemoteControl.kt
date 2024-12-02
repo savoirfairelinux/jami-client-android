@@ -1,10 +1,16 @@
 package cx.ring.service
 
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.app.Service
 import android.content.Intent
 import android.graphics.Bitmap
+import android.os.Build
 import android.os.IBinder
 import android.os.RemoteException
+import androidx.annotation.RequiresApi
+import androidx.core.app.NotificationCompat
 import cx.ring.IRemoteService
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -29,11 +35,39 @@ class RemoteControl : Service() {
     private val tag = "JamiRemoteControlService"
     private val compositeDisposable = CompositeDisposable()
 
+    companion object {
+        private const val NOTIFICATION_CHANNEL_ID = "RemoteControlChannel"
+        private const val NOTIFICATION_ID = 101
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate() {
         super.onCreate()
         Log.d(tag, "Service created")
-        Log.d(tag, "AccountService injected: ${this::accountService.isInitialized}")
+        startForegroundServiceWithNotification()
     }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun startForegroundServiceWithNotification() {
+            val channel = NotificationChannel(
+                NOTIFICATION_CHANNEL_ID,
+                "Remote Control Service",
+                NotificationManager.IMPORTANCE_LOW
+            )
+            val manager = getSystemService(NotificationManager::class.java)
+            manager?.createNotificationChannel(channel)
+
+        val notification: Notification = NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
+            .setContentTitle("Remote Control Service")
+            .setContentText("Managing Jami calls and contacts")
+            .setSmallIcon(android.R.drawable.ic_menu_info_details)
+            .setPriority(NotificationCompat.PRIORITY_LOW)
+            .setOngoing(true)
+            .build()
+
+        startForeground(NOTIFICATION_ID, notification)
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         Log.d(tag, "Service destroyed")
@@ -65,14 +99,7 @@ class RemoteControl : Service() {
         override fun getAccountId(): String {
             Log.d(tag, "Fetching account ID")
             return try {
-                val accountId = accountService.currentAccount?.accountId
-                if (accountId.isNullOrEmpty()) {
-                    Log.e(tag, "Account ID is null or empty")
-                    ""
-                } else {
-                    Log.d(tag, "Account ID: $accountId")
-                    accountId
-                }
+                accountService.currentAccount?.accountId ?: ""
             } catch (e: Exception) {
                 Log.e(tag, "Failed to fetch account ID: ${e.message}", e)
                 ""
@@ -142,16 +169,11 @@ class RemoteControl : Service() {
         override fun hangUpCall() {
             Log.d(tag, "Hanging up the current call")
             try {
-                val activeCall = callService.getActiveCall()
-                    ?: throw IllegalStateException("No active call to hang up")
-
-                callService.hangUp(
-                    accountId = activeCall.account!!,
-                    callId = activeCall.daemonIdString!!
-                )
+                val activeCall = callService.getActiveCall() ?: return
+                callService.hangUp(activeCall.account!!, activeCall.daemonIdString!!)
                 Log.d(tag, "Call hung up successfully")
             } catch (e: Exception) {
-                Log.e(tag, "Error hanging up call: ${e.message}", e)
+                Log.e(tag, "Error hanging up call", e)
                 throw RuntimeException("Failed to hang up call", e)
             }
         }
@@ -159,17 +181,15 @@ class RemoteControl : Service() {
         override fun acceptCall() {
             Log.d(tag, "Accepting an incoming call")
             try {
-                val incomingCall = callService.getIncomingCall()
-                    ?: throw IllegalStateException("No incoming call to accept")
-
+                val incomingCall = callService.getIncomingCall() ?: return
                 callService.accept(
-                    accountId = incomingCall.account!!,
-                    callId = incomingCall.daemonIdString!!,
+                    incomingCall.account!!,
+                    incomingCall.daemonIdString!!,
                     hasVideo = true
                 )
                 Log.d(tag, "Call accepted successfully")
             } catch (e: Exception) {
-                Log.e(tag, "Error accepting call: ${e.message}", e)
+                Log.e(tag, "Error accepting call", e)
                 throw RuntimeException("Failed to accept call", e)
             }
         }
@@ -177,33 +197,19 @@ class RemoteControl : Service() {
         override fun rejectCall() {
             Log.d(tag, "Rejecting an incoming call")
             try {
-                val incomingCall = callService.getIncomingCall()
-                    ?: throw IllegalStateException("No incoming call to reject")
-
-                callService.refuse(
-                    accountId = incomingCall.account!!,
-                    callId = incomingCall.daemonIdString!!
-                )
+                val incomingCall = callService.getIncomingCall() ?: return
+                callService.refuse(incomingCall.account!!, incomingCall.daemonIdString!!)
                 Log.d(tag, "Call rejected successfully")
             } catch (e: Exception) {
-                Log.e(tag, "Error rejecting call: ${e.message}", e)
+                Log.e(tag, "Error rejecting call", e)
                 throw RuntimeException("Failed to reject call", e)
             }
         }
 
         override fun getCallerImage(userId: String): Bitmap? {
-            val currentAccount = accountService.currentAccount
-            if (currentAccount == null || userId.isBlank()) {
-                return null
-            }
-
-            val contact = currentAccount.getContactFromCache(Uri.fromString(userId))
-
             return try {
-                contact.profile
-                    .firstElement()
-                    .blockingGet()
-                    ?.avatar as? Bitmap
+                val contact = accountService.currentAccount?.getContactFromCache(Uri.fromString(userId))
+                contact?.profile?.firstElement()?.blockingGet()?.avatar as? Bitmap
             } catch (e: Exception) {
                 Log.e(tag, "Error fetching caller image for $userId: ${e.message}", e)
                 null
