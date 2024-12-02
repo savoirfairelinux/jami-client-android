@@ -51,8 +51,7 @@
     <string name="pref_notification_summary">Set application notifications visibility on lock screen.</string>
 
     <string name="pref_connectivity_title">Connectivity mode</string>
-    <string name="pref_connectivity_summary">Chose how to connect Jami to the distributed system to
-        receive calls and messages.</string>
+    <string name="pref_connectivity_summary">Chose how to connect Jami to the distributed system to receive calls and messages.</string>
 
     <string name="pref_blackList_title">Block list</string>
     <string name="pref_blackList_summary">Check your block list.</string>
@@ -93,25 +92,19 @@
     <string name="notification_secret">Secret\n(do not show notifications on lock screen)</string>
 
     <string name="connectivity_google_services_title">Google services</string>
-    <string name="connectivity_google_services_description">Use Google Firebase and a DHT proxy to
-        receive push notifications.</string>
+    <string name="connectivity_google_services_description">Use Google Firebase and a DHT proxy to receive push notifications.</string>
     <string name="connectivity_local_node_title">Local DHT node</string>
-    <string name="connectivity_local_node_description">Use a local DHT node to connect with other
-        Jami devices and contacts.</string>
-    <string name="connectivity_unified_push_title">Unified push</string>
-    <string name="connectivity_unified_push_description">Use a custom unified Push server to
-        receive push notifications.</string>
+    <string name="connectivity_local_node_description">Use a local DHT node to connect with other Jami devices and contacts.</string>
+    <string name="connectivity_unified_push_title" translatable="false">UnifiedPush</string>
+    <string name="connectivity_unified_push_description">Use a custom UnifiedPush server to receive push notifications.</string>
     <string name="connectivity_custom_title">Custom</string>
-    <string name="connectivity_custom_description">Currently not using any of the
-        available configuration presets.</string>
+    <string name="connectivity_custom_description">Currently not using any of the available configuration presets.</string>
 
     <!-- Extension -->
     <string name="pref_enable_extensions_title">Enable extensions</string>
-    <string name="pref_enable_extensions_summary">Enable extensions and set their
-        parameters</string>
+    <string name="pref_enable_extensions_summary">Enable extensions and set their parameters</string>
     <string name="pref_available_extensions_title">Available extensions</string>
-    <string name="pref_available_extensions_summary">Installed extensions and add new
-        extensions</string>
+    <string name="pref_available_extensions_summary">Installed extensions and add new extensions</string>
     <string name="fab_extensions_add">Add new extension</string>
     <string name="extension_uninstall_title">Uninstall extension?</string>
     <string name="extension_reset_preferences">Reset extension preferences</string>
