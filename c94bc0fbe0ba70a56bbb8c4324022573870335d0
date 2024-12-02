@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d40e5daa_8ac6c478",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-12-02T19:48:53Z",
+      "side": 1,
+      "message": "https://review.jami.net/c/jami-client-android/+/29640",
+      "revId": "c94bc0fbe0ba70a56bbb8c4324022573870335d0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
