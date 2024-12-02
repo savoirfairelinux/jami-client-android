@@ -10,6 +10,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
+import net.jami.model.Contact
 import net.jami.model.Uri
 import net.jami.services.AccountService
 import net.jami.services.CallService
@@ -78,8 +79,10 @@ class RemoteControl : Service() {
             }
         }
 
-        override fun addContact(accountId: String, contactId: String) {
+        override fun addContact(contactId: String) {
             try {
+                val accountId = accountService.currentAccount?.accountId
+                    ?: throw IllegalStateException("No account found")
                 accountService.addContact(accountId, contactId)
                 Log.d(tag, "Successfully added contact: $contactId to account: $accountId")
             } catch (e: Exception) {
@@ -88,8 +91,20 @@ class RemoteControl : Service() {
             }
         }
 
-        override fun sendTrustRequest(accountId: String, contactId: String) {
+        override fun isContactExist(contactId: String): Boolean {
             try {
+                val contacts : Map<String, Contact>? = accountService.currentAccount?.contacts
+                return contacts?.containsKey(contactId) ?: false
+            } catch (e: Exception) {
+                Log.e(tag, "Failed to check contact: $contactId", e)
+                throw RemoteException("Failed to check contact: ${e.message}")
+            }
+        }
+
+        override fun sendTrustRequest(contactId: String) {
+            try {
+                val accountId = accountService.currentAccount?.accountId
+                    ?: throw IllegalStateException("No account found")
                 accountService.sendTrustRequest(accountId, contactId)
                 Log.i(tag, "Trust request sent to: $contactId from account: $accountId")
             } catch (e: Exception) {
