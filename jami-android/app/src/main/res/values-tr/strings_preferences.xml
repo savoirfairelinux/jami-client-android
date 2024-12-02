@@ -6,6 +6,10 @@
   <string name="pref_category_system">Sistem</string>
   <string name="pref_category_privacy">Gizlilik</string>
   <string name="pref_category_diagnostic">Tanılama</string>
+  <string name="pref_category_appearance">Görünüş</string>
+  <string name="pref_category_connectivity">Bağlanabilirlik</string>
+  <string name="pref_category_extensions">Uzantılar</string>
+  <string name="pref_category_video_settings">Gelişmiş görüntü ayarları</string>
   <string name="pref_mobileData_title">Hücresel veri</string>
   <string name="pref_mobileData_summary">Jami uygulamasına Wi-Fi bağlantınına ek olarak 3G/LTE ağlarında izin ver</string>
   <string name="pref_pushNotifications_title">Anlık bildirimler</string>
@@ -45,7 +49,7 @@
   <string name="pref_link_preview_title">Görüşmelerde bağlantı ön izlemelerini göster</string>
   <string name="pref_link_preview_summary">Ön izlemeler üçüncü taraf sunuculardan içerik indirmeyi gerektirir</string>
   <!--Notifications Visibility-->
+  <string name="connectivity_custom_title">Özel</string>
   <!--Extension-->
-  <string name="pref_extensions_title">Uzantılar</string>
   <string name="extension_invalid_signature"><b>%1$s</b> geçersiz bir imza içeriyor.</string>
 </resources>

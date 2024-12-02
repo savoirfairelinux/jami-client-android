@@ -30,7 +30,6 @@
   <string name="menu_item_accounts">Upravljaj račune</string>
   <string name="menu_item_account">Upravljaj račun</string>
   <string name="menu_item_settings">Nastavitve</string>
-  <string name="menu_item_advanced_settings">Napredne nastavitve</string>
   <string name="menu_item_account_settings">Nastavitve računa</string>
   <string name="menu_item_extension_list">Nastavitve razširitev</string>
   <string name="menu_item_share">Deli moj račun</string>
@@ -102,8 +101,6 @@
   <string name="call_duration">Trajanje: %s</string>
   <string name="start_error_title">Jami ni možno zagnati</string>
   <string name="action_call_accept">Sprejmi klic</string>
-  <string name="action_call_accept_audio">Sprejmi dohodni klic samo z zvokom</string>
-  <string name="action_call_accept_video">Sprejmi dohodni klic z videom</string>
   <string name="action_call_hold_accept">Sprejmi dohodni klic samo z zvokom in zadrži trenutni klic</string>
   <string name="action_call_hold_accept_video">Sprejmi dohodni klic z videom in zadrži trenutni klic</string>
   <string name="action_call_end_accept">Sprejmi dohodni klic in končaj trenutni klic</string>

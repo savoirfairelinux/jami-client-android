@@ -33,7 +33,6 @@
   <string name="menu_item_accounts">Gestisci account</string>
   <string name="menu_item_account">Gestisci account</string>
   <string name="menu_item_settings">Impostazioni</string>
-  <string name="menu_item_advanced_settings">Impostazioni avanzate</string>
   <string name="menu_item_account_settings">Impostazioni dell\'account</string>
   <string name="menu_item_extension_list">Impostazioni estensioni</string>
   <string name="menu_item_share">Condividi il mio account</string>
@@ -104,8 +103,6 @@
   <string name="call_duration">Durata %s</string>
   <string name="start_error_title">Impossibile avviare Jami</string>
   <string name="action_call_accept">Accetta la chiamata</string>
-  <string name="action_call_accept_audio">Rispondi solo con l\'audio</string>
-  <string name="action_call_accept_video">Rispondi con video</string>
   <string name="action_call_hold_accept">Metti in attesa e rispondi solo con l\'audio</string>
   <string name="action_call_hold_accept_video">Metti in attesa e rispondi solo con video</string>
   <string name="action_call_end_accept">Rispondi e termina la chiamata in corso</string>
@@ -412,6 +409,8 @@
   <string name="tab_files">File</string>
   <string name="tab_settings">Impostazioni</string>
   <string name="not_admin_toast">Solo gli amministratori possono modificare le informazioni di questo gruppo</string>
+  <string name="dialogtitle_title">Modifica il titolo del gruppo</string>
+  <string name="dialogtitle_description">Modifica la descrizione del gruppo</string>
   <string name="dialog_hint_title">Titolo</string>
   <string name="dialog_hint_description">Descrizione</string>
   <string name="picker_title">Seleziona contatti</string>
@@ -439,6 +438,7 @@
   <!--Conversation details-->
   <string name="details">Dettagli</string>
   <string name="secure_p2p_connection">Connessione peer-to-peer sicura</string>
+  <string name="swarm_type">Tipo di conversazione</string>
   <string name="Private">Privato</string>
   <string name="swarm_id">ID gruppo</string>
   <string name="show_qr_code">Mostra codice QR</string>

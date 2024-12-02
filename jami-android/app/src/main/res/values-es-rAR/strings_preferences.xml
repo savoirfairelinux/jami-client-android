@@ -6,6 +6,10 @@
   <string name="pref_category_system">Sistema</string>
   <string name="pref_category_privacy">Privacidad</string>
   <string name="pref_category_diagnostic">Diagnósticos</string>
+  <string name="pref_category_appearance">Apariencia</string>
+  <string name="pref_category_connectivity">Conectividad</string>
+  <string name="pref_category_extensions">Extensions</string>
+  <string name="pref_category_video_settings">Configuraciones de video avanzadas</string>
   <string name="pref_mobileData_title">Datos móviles</string>
   <string name="pref_mobileData_summary">Habilitar Jami incluso en redes móviles 3G/LTE, además de WiFi</string>
   <string name="pref_pushNotifications_title">Notificaciones push</string>
@@ -44,6 +48,9 @@
   <string name="pref_logs_stop">Detener registro</string>
   <string name="pref_connection_monitor">Monitor de conexión</string>
   <string name="pref_connection_monitor_summary">Supervisar las conexiones punto a punto</string>
+  <string name="pref_push_notifications_logs_title">Pulsar los registros de notificaciones</string>
+  <string name="pref_push_notifications_logs_summary">Ver registros capturados desde las
+notificaciones pulsadas.</string>
   <string name="pref_typing_title">Habilitar indicadores de tipeo</string>
   <string name="pref_typing_summary">Enviar y recibir indicadores de tipeo mostrando que un mensaje se está escribiendo.</string>
   <string name="pref_block_record_title">Bloquear capturas de pantalla y grabaciones</string>
@@ -54,9 +61,8 @@
   <string name="notification_public">Públic\n(mostrar notificaciones y su contenido en la pantalla de bloqueo)\n</string>
   <string name="notification_private">Private\n(mostrar notificaciones pero ocultar su contenido en la pantalla de bloqueo)\n</string>
   <string name="notification_secret">Secret\n(no mostrar notificaciones en la pantalla de bloqueo)</string>
+  <string name="connectivity_custom_title">Personalizado</string>
   <!--Extension-->
-  <string name="pref_extensions_title">Extensions</string>
-  <string name="pref_extensions_summary">Habilitar extensiones y establecer sus parámetros</string>
   <string name="fab_extensions_add">Agregar nueva extensión</string>
   <string name="extension_uninstall_title">¿Desinstalar la extensión?</string>
   <string name="extension_reset_preferences">Restablecer preferencias de extensión</string>

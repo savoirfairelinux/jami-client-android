@@ -33,7 +33,6 @@
   <string name="menu_item_accounts">Administración de Cuentas</string>
   <string name="menu_item_account">Administración de Cuenta</string>
   <string name="menu_item_settings">Configuración</string>
-  <string name="menu_item_advanced_settings">Ajustes Avanzados</string>
   <string name="menu_item_account_settings">Configuración de la cuenta</string>
   <string name="menu_item_extension_list">Configuración de Extensiones</string>
   <string name="menu_item_share">Compartir mi cuenta</string>
@@ -99,8 +98,6 @@
   <string name="call_duration">Último %s</string>
   <string name="start_error_title">No se puede iniciar Jami</string>
   <string name="action_call_accept">Aceptar llamada</string>
-  <string name="action_call_accept_audio">Aceptar llamadas entrantes solo de audio</string>
-  <string name="action_call_accept_video">Aceptar llamada entrante con vídeo</string>
   <string name="action_call_hold_accept">Aceptar llamadas entrantes solo con audio y mantener presionada la llamada actual</string>
   <string name="action_call_hold_accept_video">Aceptar llamadas entrantes con vídeo y mantener presionada la llamada actual</string>
   <string name="action_call_end_accept">Aceptar llamada entrante y finalizar la llamada actual</string>
@@ -407,6 +404,8 @@
   <string name="tab_files">Archivos</string>
   <string name="tab_settings">Configuración</string>
   <string name="not_admin_toast">Solo los administradores pueden editar la información de este grupo</string>
+  <string name="dialogtitle_title">Editar título de grupo</string>
+  <string name="dialogtitle_description">Editar la descripción del grupo</string>
   <string name="dialog_hint_title">Título</string>
   <string name="dialog_hint_description">Descripción</string>
   <string name="picker_title">Elegir contactocs</string>
@@ -434,6 +433,7 @@
   <!--Conversation details-->
   <string name="details">Detalles</string>
   <string name="secure_p2p_connection">Conexión segura de igual a igual (de pares)</string>
+  <string name="swarm_type">Tipo de conversación</string>
   <string name="Private">Privado</string>
   <string name="swarm_id">ID de enjambre</string>
   <string name="show_qr_code">Mostrar el código QR</string>

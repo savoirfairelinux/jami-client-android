@@ -33,7 +33,6 @@
   <string name="menu_item_accounts">Hallinnoi tilejä</string>
   <string name="menu_item_account">Hallinnoi tiliä</string>
   <string name="menu_item_settings">Asetukset</string>
-  <string name="menu_item_advanced_settings">Lisäasetukset</string>
   <string name="menu_item_account_settings">Tiliasetukset</string>
   <string name="menu_item_extension_list">Laajennusten asetukset</string>
   <string name="menu_item_share">Jaa tunnukseni</string>
@@ -103,8 +102,6 @@
   <string name="call_duration">Kesto %s</string>
   <string name="start_error_title">Jamia ei voi käynnistää</string>
   <string name="action_call_accept">Hyväksy puhelu</string>
-  <string name="action_call_accept_audio">Hyväksy saapuva puhelu vain äänellä</string>
-  <string name="action_call_accept_video">Hyväksy saapuva puhelu videolla</string>
   <string name="action_call_hold_accept">Hyväksy saapuva puhelu äänellä ja pidä nykyinen puhelu</string>
   <string name="action_call_hold_accept_video">Hyväksy saapuva puhelu videolla ja pidä nykyinen puhelu</string>
   <string name="action_call_end_accept">Hyväksy saapuva puhelu ja lopeta nykyinen puhelu</string>

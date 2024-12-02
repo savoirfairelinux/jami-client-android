@@ -6,6 +6,9 @@
   <string name="pref_category_system">سیستم</string>
   <string name="pref_category_privacy">حریم خصوصی</string>
   <string name="pref_category_diagnostic">عیب‌یابی</string>
+  <string name="pref_category_appearance">ظاهر</string>
+  <string name="pref_category_connectivity">اتصال</string>
+  <string name="pref_category_video_settings">تنظیمات پیشرفته ویدیو</string>
   <string name="pref_mobileData_title">داده همراه</string>
   <string name="pref_mobileData_summary">اجازه فعالیت جمی روی شبکه‌های 3G و LTE، علاوه بر وای‌فای</string>
   <string name="pref_pushNotifications_title">اعلان‌های پرتابی</string>
@@ -45,5 +48,6 @@
   <string name="pref_link_preview_title">نشان دادن پیش نمایش پیوندها در مکالمات</string>
   <string name="pref_link_preview_summary">پیش نمایش ها نیاز به دانلود محتوا از سرورهای شخص ثالث دارند.</string>
   <!--Notifications Visibility-->
+  <string name="connectivity_custom_title">سفارشی</string>
   <!--Extension-->
 </resources>

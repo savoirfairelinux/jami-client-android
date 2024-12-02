@@ -6,6 +6,9 @@
   <string name="pref_category_system">Система</string>
   <string name="pref_category_privacy">Прывптнасць</string>
   <string name="pref_category_diagnostic">Дыягностыка</string>
+  <string name="pref_category_appearance">Знешні выгляд</string>
+  <string name="pref_category_connectivity">Злучнасць</string>
+  <string name="pref_category_video_settings">Пашыранныя налады відэа</string>
   <string name="pref_mobileData_title">Мабільная сетка</string>
   <string name="pref_mobileData_summary">Дазволіць Jami працаваць на сетках 3G/LTE і так сама праз Wi-Fi</string>
   <string name="pref_pushNotifications_title">Push-Паведамленні</string>

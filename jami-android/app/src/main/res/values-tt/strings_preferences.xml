@@ -6,6 +6,9 @@
   <string name="pref_category_system">Система</string>
   <string name="pref_category_privacy">Шәхси мәгълүмат</string>
   <string name="pref_category_diagnostic">Диагностика</string>
+  <string name="pref_category_appearance">Күренеш</string>
+  <string name="pref_category_connectivity">Бәйләнеш</string>
+  <string name="pref_category_video_settings">Алга таба видео көйләүләр</string>
   <string name="pref_mobileData_title">Мобиль мәгълүматлар</string>
   <string name="pref_mobileData_summary">Җәмигә Wi-Fi белән өстәмә рәвештә 3G/LTE челтәрләрендә эшләргә рөхсәт итү</string>
   <string name="pref_pushNotifications_title">Элементлар</string>

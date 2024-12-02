@@ -31,7 +31,6 @@
   <string name="menu_item_accounts">Gerir contas</string>
   <string name="menu_item_account">Gerir conta</string>
   <string name="menu_item_settings">Configurações</string>
-  <string name="menu_item_advanced_settings">Configurações avançadas</string>
   <string name="menu_item_account_settings">Configurações da conta</string>
   <string name="menu_item_extension_list">Configurações de extensões</string>
   <string name="menu_item_share">Partilhar a minha conta</string>
@@ -99,8 +98,6 @@
   <string name="hist_out_call">Chamada feita de %1$s</string>
   <string name="call_duration">Durou %s</string>
   <string name="action_call_accept">Aceitar chamada</string>
-  <string name="action_call_accept_audio">Aceitar chamada recebida apenas com áudio</string>
-  <string name="action_call_accept_video">Aceitar chamada recebida com vídeo</string>
   <string name="action_call_hold_accept">Aceitar a chamada recebida apenas com áudio e colocar a chamada atual em espera
 </string>
   <string name="action_call_hold_accept_video">Aceitar a chamada recebida com vídeo e colocar a chamada atual em espera</string>

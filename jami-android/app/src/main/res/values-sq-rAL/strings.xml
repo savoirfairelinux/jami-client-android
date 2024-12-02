@@ -33,7 +33,6 @@
   <string name="menu_item_accounts">Administroni llogari</string>
   <string name="menu_item_account">Administroni llogari</string>
   <string name="menu_item_settings">Rregullime</string>
-  <string name="menu_item_advanced_settings">Rregullime të Mëtejshme</string>
   <string name="menu_item_account_settings">Rregullime Llogarie</string>
   <string name="menu_item_extension_list">Rregullime Zgjerimesh</string>
   <string name="menu_item_share">Ndaje llogarinë time</string>
@@ -103,8 +102,6 @@
   <string name="call_duration">Zgjati %s</string>
   <string name="start_error_title">S’niset dot Jami!</string>
   <string name="action_call_accept">Pranoje thirrjen</string>
-  <string name="action_call_accept_audio">Prano thirrje ardhëse vetëm me audio </string>
-  <string name="action_call_accept_video">Prano thirrje ardhëse vetëm me video </string>
   <string name="action_call_hold_accept">Prano thirrje ardhëse vetëm me audio dhe mbaj në pritje thirrjen e tanishme</string>
   <string name="action_call_hold_accept_video">Prano thirrje ardhëse me audio dhe mbaj në pritje thirrjen e tanishme</string>
   <string name="action_call_end_accept">Prano thirrje ardhëse dhe përfundo thirrjen e tanishme</string>
@@ -410,6 +407,8 @@
   <string name="tab_files">Kartela</string>
   <string name="tab_settings">Rregullime</string>
   <string name="not_admin_toast">Hollësitë e këtij grupi mund t’i përpunojnë vetëm përgjegjësit</string>
+  <string name="dialogtitle_title">Përpunoni titull grupi</string>
+  <string name="dialogtitle_description">Përpunoni përshkrim grupi</string>
   <string name="dialog_hint_title">Titull</string>
   <string name="dialog_hint_description">Përshkrim</string>
   <string name="picker_title">Përzgjidhni Kontakte</string>
@@ -437,6 +436,7 @@
   <!--Conversation details-->
   <string name="details">Hollësi</string>
   <string name="secure_p2p_connection">Lidhje tek-për-tek e siguruar</string>
+  <string name="swarm_type">Lloj bisede</string>
   <string name="Private">Privat</string>
   <string name="swarm_id">ID zgjoi</string>
   <string name="show_qr_code">Shfaq kod QR</string>

@@ -6,6 +6,10 @@
   <string name="pref_category_system">System</string>
   <string name="pref_category_privacy">Privatsphäre</string>
   <string name="pref_category_diagnostic">Diagnose</string>
+  <string name="pref_category_appearance">Aussehen</string>
+  <string name="pref_category_connectivity">Verbindung</string>
+  <string name="pref_category_extensions">Erweiterungen</string>
+  <string name="pref_category_video_settings">Erweiterte Videoeinstellungen</string>
   <string name="pref_mobileData_title">Mobildaten</string>
   <string name="pref_mobileData_summary">Jami die Nutzung von 3G/LTE zusätzlich zum WLAN erlauben</string>
   <string name="pref_pushNotifications_title">Push-Benachrichtigungen</string>
@@ -54,9 +58,8 @@
   <string name="notification_public">Öffentlich\n(Benachrichtigungen und deren Inhalt auf dem Sperrbildschirm anzeigen)\n</string>
   <string name="notification_private">Privat\n(Benachrichtigungen anzeigen, aber deren Inhalt auf dem Sperrbildschirm ausblenden)\n</string>
   <string name="notification_secret">Geheim\n(Benachrichtigungen nicht auf Sperrbildschirm anzeigen)</string>
+  <string name="connectivity_custom_title">Benutzerdefiniert</string>
   <!--Extension-->
-  <string name="pref_extensions_title">Erweiterungen</string>
-  <string name="pref_extensions_summary">Erweiterungen aktivieren und deren Parameter festlegen</string>
   <string name="fab_extensions_add">Neue Erweiterung hinzufügen</string>
   <string name="extension_uninstall_title">Erweiterung deinstallieren?</string>
   <string name="extension_reset_preferences">Erweiterungseinstellungen zurücksetzen</string>

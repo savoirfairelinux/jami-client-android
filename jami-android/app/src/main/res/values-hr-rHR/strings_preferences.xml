@@ -2,6 +2,9 @@
 <resources>
   <string name="pref_category_contacts">Kontaktni</string>
   <string name="pref_category_diagnostic">Diagnostika</string>
+  <string name="pref_category_appearance">Izgled</string>
+  <string name="pref_category_connectivity">Spojivost</string>
+  <string name="pref_category_video_settings">Napredne video postavke</string>
   <string name="pref_mobileData_summary">Dozvolite Jamiju na 3G/LTE mrežama osim Wi-Fi-a</string>
   <string name="pref_pushNotifications_title">Uložite obavijesti</string>
   <string name="pref_pushNotifications_summary">Koristite Google servere kako biste mogli primati pozive/poruke u pozadini</string>
@@ -37,5 +40,6 @@
   <string name="pref_link_preview_title">Pokaži preview linkova u razgovorima</string>
   <string name="pref_link_preview_summary">Preview zahtijeva preuzimanje sadržaja sa trećih strana servera.</string>
   <!--Notifications Visibility-->
+  <string name="connectivity_custom_title">Prilagođeno</string>
   <!--Extension-->
 </resources>

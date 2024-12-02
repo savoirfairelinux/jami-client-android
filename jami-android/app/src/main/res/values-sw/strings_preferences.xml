@@ -6,6 +6,9 @@
   <string name="pref_category_system">Mfumo</string>
   <string name="pref_category_privacy">Faragha</string>
   <string name="pref_category_diagnostic">Utambuzi</string>
+  <string name="pref_category_appearance">Kuonekana</string>
+  <string name="pref_category_connectivity">Uunganisho</string>
+  <string name="pref_category_video_settings">Mipangilio ya video ya juu</string>
   <string name="pref_mobileData_title">Data za simu</string>
   <string name="pref_mobileData_summary">Ruhusu Jami kwenye mitandao ya 3G / LTE pamoja na Wi-Fi</string>
   <string name="pref_pushNotifications_title">Kutuma taarifa</string>
@@ -45,5 +48,6 @@
   <string name="pref_link_preview_title">Onyesha viungo vya kutafakari katika mazungumzo</string>
   <string name="pref_link_preview_summary">Kuangalia awali inahitaji kupakua maudhui kutoka kwa seva za mtu wa tatu.</string>
   <!--Notifications Visibility-->
+  <string name="connectivity_custom_title">Desturi</string>
   <!--Extension-->
 </resources>

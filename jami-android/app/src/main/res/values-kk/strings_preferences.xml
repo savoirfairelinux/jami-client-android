@@ -6,6 +6,9 @@
   <string name="pref_category_system">жүйе</string>
   <string name="pref_category_privacy">Жекешелік</string>
   <string name="pref_category_diagnostic">Диагностика</string>
+  <string name="pref_category_appearance">Көрініс</string>
+  <string name="pref_category_connectivity">Қосылым</string>
+  <string name="pref_category_video_settings">Жедел бейне параметрлері</string>
   <string name="pref_mobileData_title">Мобильді деректер</string>
   <string name="pref_mobileData_summary">Jami-ге Wi-Fi-ге қосымша 3G/LTE желілерінде рұқсат беру</string>
   <string name="pref_pushNotifications_title">Көшіру хабарламалары</string>
@@ -45,5 +48,6 @@
   <string name="pref_link_preview_title">Әңгімелерде сілтемелерді алдын ала қарау</string>
   <string name="pref_link_preview_summary">Алдын ала қарау үшін үшінші тараптың серверлерінен мазмұн жүгірту қажет.</string>
   <!--Notifications Visibility-->
+  <string name="connectivity_custom_title">Әдеттегі</string>
   <!--Extension-->
 </resources>

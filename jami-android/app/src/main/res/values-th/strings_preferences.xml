@@ -6,6 +6,9 @@
   <string name="pref_category_system">ระบบ</string>
   <string name="pref_category_privacy">ความเป็นส่วนตัว</string>
   <string name="pref_category_diagnostic">การวินิจฉัย</string>
+  <string name="pref_category_appearance">หน้าตา</string>
+  <string name="pref_category_connectivity">การเชื่อมต่อ</string>
+  <string name="pref_category_video_settings">การตั้งค่าวิดีโอขั้นสูง</string>
   <string name="pref_mobileData_title">ข้อมูลมือถือ</string>
   <string name="pref_mobileData_summary">อนุญาต Jami บนเครือข่าย 3G/LTE เพิ่มเติมกับ Wi-Fi</string>
   <string name="pref_pushNotifications_title">การแจ้งเตือนแบบพุช</string>
@@ -45,5 +48,6 @@
   <string name="pref_link_preview_title">แสดงตัวอย่างลิงก์ในการสนทนา</string>
   <string name="pref_link_preview_summary">การแสดงตัวอย่างจำเป็นต้องดาวน์โหลดเนื้อหาจากเซิร์ฟเวอร์บุคคลที่สาม</string>
   <!--Notifications Visibility-->
+  <string name="connectivity_custom_title">กำหนดเอง</string>
   <!--Extension-->
 </resources>

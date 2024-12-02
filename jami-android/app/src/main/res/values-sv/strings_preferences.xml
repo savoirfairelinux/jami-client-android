@@ -6,6 +6,9 @@
   <string name="pref_category_system">System</string>
   <string name="pref_category_privacy">Sekretess</string>
   <string name="pref_category_diagnostic">Diagnostik</string>
+  <string name="pref_category_appearance">Utseende</string>
+  <string name="pref_category_connectivity">Anslutningsbarhet</string>
+  <string name="pref_category_video_settings">Avancerade video inställningar</string>
   <string name="pref_mobileData_title">Mobildata</string>
   <string name="pref_mobileData_summary">Tillåt Jami på 3G/LTE-nätverk, som tillägg till WiFi</string>
   <string name="pref_pushNotifications_title">Använd aviseringar</string>
@@ -45,5 +48,6 @@
   <string name="pref_link_preview_title">Visa länk till förhandsvisning i konversationer </string>
   <string name="pref_link_preview_summary">Förhandsvisning kräver nedladdning av innehåll från tredje-part server.  </string>
   <!--Notifications Visibility-->
+  <string name="connectivity_custom_title">Anpassad</string>
   <!--Extension-->
 </resources>

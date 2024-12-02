@@ -33,7 +33,6 @@
   <string name="menu_item_accounts">管理账户</string>
   <string name="menu_item_account">管理账户</string>
   <string name="menu_item_settings">设置</string>
-  <string name="menu_item_advanced_settings">高级设置</string>
   <string name="menu_item_account_settings">账户设置</string>
   <string name="menu_item_extension_list">扩展设置</string>
   <string name="menu_item_share">分享我的账户</string>
@@ -102,8 +101,6 @@
   <string name="call_duration">持续%s</string>
   <string name="start_error_title">无法启动Jami</string>
   <string name="action_call_accept">接听通话</string>
-  <string name="action_call_accept_audio">仅接受音频来电</string>
-  <string name="action_call_accept_video">接受视频来电</string>
   <string name="action_call_hold_accept">接受仅带音频的来电并保持当前通话</string>
   <string name="action_call_hold_accept_video">接受视频来电并保持当前通话</string>
   <string name="action_call_end_accept">接听来电并结束当前通话</string>
@@ -410,6 +407,8 @@
   <string name="tab_files">文件</string>
   <string name="tab_settings">设置</string>
   <string name="not_admin_toast">只有管理员可以编辑此群组的信息</string>
+  <string name="dialogtitle_title">编辑群名称</string>
+  <string name="dialogtitle_description">编辑群简介</string>
   <string name="dialog_hint_title">标题</string>
   <string name="dialog_hint_description">描述</string>
   <string name="picker_title">选择联系人</string>
@@ -437,6 +436,7 @@
   <!--Conversation details-->
   <string name="details">详细</string>
   <string name="secure_p2p_connection">安全的对等连接</string>
+  <string name="swarm_type">对话类型</string>
   <string name="Private">私人</string>
   <string name="swarm_id">群ID</string>
   <string name="show_qr_code">显示二维码</string>

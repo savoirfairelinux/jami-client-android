@@ -13,7 +13,6 @@
   <!--AB menus-->
   <!--Sections-->
   <string name="menu_item_contact_request">Zahtjevi za kontakt</string>
-  <string name="menu_item_advanced_settings">Napredne postavke</string>
   <string name="menu_item_account_settings">Nastavke računa</string>
   <string name="video_setting_title">Nastavke video</string>
   <!--Dialing Fragment-->

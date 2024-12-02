@@ -24,7 +24,6 @@
   <string name="menu_item_accounts">จัดการบัญชี</string>
   <string name="menu_item_account">จัดการบัญชี</string>
   <string name="menu_item_settings">การตั้งค่า</string>
-  <string name="menu_item_advanced_settings">การตั้งค่าที่ทันสมัย</string>
   <string name="menu_item_account_settings">การตั้งค่าบัญชี</string>
   <string name="menu_item_share">แบ่งปันบัญชีของฉัน</string>
   <string name="menu_item_about">เกี่ยวกับ Jami</string>

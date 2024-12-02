@@ -6,6 +6,9 @@
   <string name="pref_category_system">Sistema</string>
   <string name="pref_category_privacy">Pribatutasuna</string>
   <string name="pref_category_diagnostic">Diagnostikoak</string>
+  <string name="pref_category_appearance">Itxura</string>
+  <string name="pref_category_connectivity">Lotura</string>
+  <string name="pref_category_video_settings">Bideo ezarpen aurreratuak</string>
   <string name="pref_mobileData_title">Datu mugikorrak</string>
   <string name="pref_mobileData_summary">Baimendu Jami  3G/LTE sareetan, wifi sareetan gain</string>
   <string name="pref_pushNotifications_title">Push jakinarazpenak</string>
@@ -45,5 +48,6 @@
   <string name="pref_link_preview_title">Elkarrizketetan esteka aurreikuspenak erakutsi</string>
   <string name="pref_link_preview_summary">Aurrez ikusi behar da hirugarrenen zerbitzarietatik edukiak deskargatzea.</string>
   <!--Notifications Visibility-->
+  <string name="connectivity_custom_title">Pertsonala</string>
   <!--Extension-->
 </resources>

@@ -29,7 +29,6 @@
   <string name="menu_item_accounts">Управление аккаунтами</string>
   <string name="menu_item_account">Управление аккаунтом</string>
   <string name="menu_item_settings">Настройки</string>
-  <string name="menu_item_advanced_settings">Расширенные настройки</string>
   <string name="menu_item_account_settings">Настройки аккаунта</string>
   <string name="menu_item_extension_list">Настройки расширений</string>
   <string name="menu_item_share">Поделиться своим контактом</string>
@@ -98,8 +97,6 @@
   <string name="hist_out_call">Исходящий вызов %1$s</string>
   <string name="call_duration">Длилось %s</string>
   <string name="action_call_accept">Принять звонок</string>
-  <string name="action_call_accept_audio">Принять входящий звонок, только аудио</string>
-  <string name="action_call_accept_video">Принять входящий звонок с видео</string>
   <string name="action_call_hold_accept">Принять входящий звонок, только аудио и поставить текущий вызов на удержание</string>
   <string name="action_call_hold_accept_video">Принять входящий звонок с видео и поставить текущий вызов на удержание</string>
   <string name="action_call_end_accept">Принять входящий звонок и завершить текущий вызов</string>

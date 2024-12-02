@@ -6,6 +6,9 @@
   <string name="pref_category_system">Sistema</string>
   <string name="pref_category_privacy">Privadesa</string>
   <string name="pref_category_diagnostic">Diagnòstics</string>
+  <string name="pref_category_appearance">Aspecte</string>
+  <string name="pref_category_connectivity">Connectivitat</string>
+  <string name="pref_category_video_settings">Preferències de vídeo avançades</string>
   <string name="pref_mobileData_title">Dades mòbils</string>
   <string name="pref_mobileData_summary">Permet Jami en xarxes 3G/LTE a més de Wi-Fi</string>
   <string name="pref_pushNotifications_title">Notificacions Push</string>
@@ -45,6 +48,7 @@
   <string name="pref_link_preview_title">Mostra previsualitzacions dels enllaços en les converses</string>
   <string name="pref_link_preview_summary">Les previsualitzacions requereixen descarregar contingut de llocs de tercers</string>
   <!--Notifications Visibility-->
+  <string name="connectivity_custom_title">Personalitzat</string>
   <!--Extension-->
   <string name="extension_invalid_signature"><b>%1$s</b> té una firma invàlida</string>
 </resources>

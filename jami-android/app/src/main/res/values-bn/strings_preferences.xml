@@ -6,6 +6,9 @@
   <string name="pref_category_system">পদ্ধতি</string>
   <string name="pref_category_privacy">গোপনীয়তা</string>
   <string name="pref_category_diagnostic">রোগ নির্ণয়</string>
+  <string name="pref_category_appearance">চেহারা</string>
+  <string name="pref_category_connectivity">সংযোগ</string>
+  <string name="pref_category_video_settings">উন্নত ভিডিও সেটিংস</string>
   <string name="pref_mobileData_title">মোবাইল ডেটা</string>
   <string name="pref_mobileData_summary">উই-ফাই ছাড়াও 3G/LTE নেটওয়ার্কে জামিকে অনুমতি দিন</string>
   <string name="pref_pushNotifications_title">ধাক্কা বিজ্ঞপ্তি</string>
@@ -45,5 +48,6 @@
   <string name="pref_link_preview_title">কথোপকথনে লিঙ্ক প্রিভিউ দেখান</string>
   <string name="pref_link_preview_summary">প্রিভিউতে তৃতীয় পক্ষের সার্ভার থেকে সামগ্রী ডাউনলোড করা প্রয়োজন।</string>
   <!--Notifications Visibility-->
+  <string name="connectivity_custom_title">কাস্টম</string>
   <!--Extension-->
 </resources>

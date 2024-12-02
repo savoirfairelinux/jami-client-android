@@ -6,6 +6,10 @@
   <string name="pref_category_system">Järjestelmä</string>
   <string name="pref_category_privacy">Yksityisyys</string>
   <string name="pref_category_diagnostic">Diagnostiikka</string>
+  <string name="pref_category_appearance">Ulkonäkö</string>
+  <string name="pref_category_connectivity">Yhteydet</string>
+  <string name="pref_category_extensions">Laajennukset</string>
+  <string name="pref_category_video_settings">Videon lisäasetukset</string>
   <string name="pref_mobileData_title">Mobiilidata</string>
   <string name="pref_mobileData_summary">Salli Jamin käyttää 3G/LTE-verkkoa wifi-yhteyden lisäksi</string>
   <string name="pref_pushNotifications_title">Ilmoitukset</string>
@@ -54,9 +58,8 @@
   <string name="notification_public">Julkinen\n(näytä ilmoitukset ja sisältö lukitusnäytöllä)\n</string>
   <string name="notification_private">Yksityinen\n(näytä ilmoitukset, piilota sisältö lukitusnäytöllä)\n</string>
   <string name="notification_secret">Salainen\n(ei ilmoituksia lukitusnäytöllä)</string>
+  <string name="connectivity_custom_title">Oma</string>
   <!--Extension-->
-  <string name="pref_extensions_title">Laajennukset</string>
-  <string name="pref_extensions_summary">Laajennukset käyttöön ja aseta niiden parametrit</string>
   <string name="fab_extensions_add">Lisää uusi laajennus</string>
   <string name="extension_uninstall_title">Poistetaanko laajennus?</string>
   <string name="extension_reset_preferences">Nollaa laajennuksen asetukset</string>

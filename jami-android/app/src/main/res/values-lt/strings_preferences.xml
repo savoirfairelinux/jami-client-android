@@ -6,6 +6,10 @@
   <string name="pref_category_system">Sistema</string>
   <string name="pref_category_privacy">Privatumas</string>
   <string name="pref_category_diagnostic">Diagnostika</string>
+  <string name="pref_category_appearance">Išvaizda</string>
+  <string name="pref_category_connectivity">Jungiamumas</string>
+  <string name="pref_category_extensions">Plėtiniai</string>
+  <string name="pref_category_video_settings">Išplėstiniai vaizdo nustatymai</string>
   <string name="pref_mobileData_title">Mobilūs duomenys</string>
   <string name="pref_mobileData_summary">Leisti Jami 3G/LTE tinkluose, papildomai prie belaidžio tinklo (Wi-Fi)</string>
   <string name="pref_pushNotifications_title">\"Push\" pranešimai</string>
@@ -30,7 +34,6 @@
   <string name="pref_link_preview_title">Rodyti pokalbiuose nuorodų peržiūras</string>
   <!--Notifications Visibility-->
   <!--Extension-->
-  <string name="pref_extensions_title">Plėtiniai</string>
   <string name="fab_extensions_add">Pridėti naują plėtinį</string>
   <string name="extension_uninstall_title">Pašalinti plėtinį?</string>
   <string name="extension_reset_preferences">Atstatyti plėtinio nuostatas</string>

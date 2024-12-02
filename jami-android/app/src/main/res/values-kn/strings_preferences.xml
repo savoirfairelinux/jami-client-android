@@ -6,6 +6,9 @@
   <string name="pref_category_system">ಸಿಸ್ಟಮ್</string>
   <string name="pref_category_privacy">ಗೌಪ್ಯತೆ</string>
   <string name="pref_category_diagnostic">ರೋಗನಿರ್ಣಯ</string>
+  <string name="pref_category_appearance">ನೋಟ</string>
+  <string name="pref_category_connectivity">ಸಂಪರ್ಕ</string>
+  <string name="pref_category_video_settings">ಸುಧಾರಿತ ವೀಡಿಯೊ ಸೆಟ್ಟಿಂಗ್ಗಳು</string>
   <string name="pref_mobileData_title">ಮೊಬೈಲ್ ಡೇಟಾ</string>
   <string name="pref_mobileData_summary">ವೈ-ಫೈ ಜೊತೆಗೆ 3ಜಿ/ಎಲ್ಟಿಇ ನೆಟ್ವರ್ಕ್ಗಳಲ್ಲಿ ಜಾಮಿಗೆ ಅವಕಾಶ</string>
   <string name="pref_pushNotifications_title">ಪುಶ್ ಅಧಿಸೂಚನೆಗಳು</string>
@@ -45,5 +48,6 @@
   <string name="pref_link_preview_title">ಸಂಭಾಷಣೆಗಳಲ್ಲಿ ಲಿಂಕ್ ಪೂರ್ವವೀಕ್ಷಣೆಗಳನ್ನು ತೋರಿಸಿ</string>
   <string name="pref_link_preview_summary">ಪೂರ್ವವೀಕ್ಷಣೆಗಾಗಿ ಮೂರನೇ ವ್ಯಕ್ತಿಯ ಸರ್ವರ್ಗಳಿಂದ ವಿಷಯವನ್ನು ಡೌನ್ಲೋಡ್ ಮಾಡಬೇಕಾಗುತ್ತದೆ.</string>
   <!--Notifications Visibility-->
+  <string name="connectivity_custom_title">ಕಸ್ಟಮ್</string>
   <!--Extension-->
 </resources>

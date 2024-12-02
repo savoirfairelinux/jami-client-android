@@ -6,6 +6,9 @@
   <string name="pref_category_system">Córas</string>
   <string name="pref_category_privacy">Priobháideacht</string>
   <string name="pref_category_diagnostic">Diagnóstaí</string>
+  <string name="pref_category_appearance">Breathnaíonn</string>
+  <string name="pref_category_connectivity">Conactivity</string>
+  <string name="pref_category_video_settings">Agasú físeáin ard</string>
   <string name="pref_mobileData_title">sonraí soghluaiste</string>
   <string name="pref_mobileData_summary">Ceadaigh Jami ar líonraí 3G/LTE chomh maith le Wi-Fi</string>
   <string name="pref_pushNotifications_title">Cuir fógraí brú</string>

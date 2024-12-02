@@ -6,6 +6,10 @@
   <string name="pref_category_system">系统</string>
   <string name="pref_category_privacy">隐私</string>
   <string name="pref_category_diagnostic">诊断</string>
+  <string name="pref_category_appearance">外观</string>
+  <string name="pref_category_connectivity">连接性</string>
+  <string name="pref_category_extensions">扩展</string>
+  <string name="pref_category_video_settings">高级视频设置</string>
   <string name="pref_mobileData_title">移动数据</string>
   <string name="pref_mobileData_summary">允许 Jami 使用 3G/LTE 网络作为 Wi-Fi 的补充</string>
   <string name="pref_pushNotifications_title">推送通知</string>
@@ -44,6 +48,8 @@
   <string name="pref_logs_stop">停止记录</string>
   <string name="pref_connection_monitor">连接监视器</string>
   <string name="pref_connection_monitor_summary">监控对等连接</string>
+  <string name="pref_push_notifications_logs_title">推送通知日志</string>
+  <string name="pref_push_notifications_logs_summary">查看从推送通知中捕获的日志。</string>
   <string name="pref_typing_title">启用输入状态显示</string>
   <string name="pref_typing_summary">发送和接收表示正在编写消息的输入状态。</string>
   <string name="pref_block_record_title">阻止截屏和录屏</string>
@@ -54,9 +60,8 @@
   <string name="notification_public">公开\n（在锁屏上显示通知及其内容）\n</string>
   <string name="notification_private">隐私\n（在锁屏上显示通知但隐藏其内容）\n</string>
   <string name="notification_secret">机密\n（不在锁屏上显示通知）</string>
+  <string name="connectivity_custom_title">自定义</string>
   <!--Extension-->
-  <string name="pref_extensions_title">扩展</string>
-  <string name="pref_extensions_summary">启用扩展并设置其参数</string>
   <string name="fab_extensions_add">添加新扩展</string>
   <string name="extension_uninstall_title">卸载扩展？</string>
   <string name="extension_reset_preferences">重置扩展首选项</string>

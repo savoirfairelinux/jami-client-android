@@ -33,7 +33,6 @@
   <string name="menu_item_accounts">Gestionează conturile</string>
   <string name="menu_item_account">Gestionează contul</string>
   <string name="menu_item_settings">Reglări</string>
-  <string name="menu_item_advanced_settings">Reglări avansate</string>
   <string name="menu_item_account_settings">Reglările contului</string>
   <string name="menu_item_extension_list">Reglări Extensii</string>
   <string name="menu_item_share">Distribuie contul meu</string>
@@ -104,8 +103,6 @@
   <string name="call_duration">Durata %s</string>
   <string name="start_error_title">Jami nu pornește</string>
   <string name="action_call_accept">Acceptă apelul</string>
-  <string name="action_call_accept_audio">Răspunde doar vocal</string>
-  <string name="action_call_accept_video">Răspunde cu video</string>
   <string name="action_call_hold_accept">Răspunde doar vocal și pune în pauză apelul actual</string>
   <string name="action_call_hold_accept_video">Răspunde cu video și pune în pauză apelul actual</string>
   <string name="action_call_end_accept">Răspunde și termină apelul actual</string>
@@ -412,6 +409,8 @@
   <string name="tab_files">Fișiere</string>
   <string name="tab_settings">Reglări</string>
   <string name="not_admin_toast">Numai administratorii pot modifica informațiile acestui grup</string>
+  <string name="dialogtitle_title">Modifică titlul grupului</string>
+  <string name="dialogtitle_description">Modifică descrierea grupului</string>
   <string name="dialog_hint_title">Titlu</string>
   <string name="dialog_hint_description">Descriere</string>
   <string name="picker_title">Alege contacte</string>
@@ -439,6 +438,7 @@
   <!--Conversation details-->
   <string name="details">Detalii</string>
   <string name="secure_p2p_connection">Conexiune sigură</string>
+  <string name="swarm_type">Tipul conversației</string>
   <string name="Private">Privat</string>
   <string name="swarm_id">ID-ul grupului</string>
   <string name="show_qr_code">Arată codul QR</string>

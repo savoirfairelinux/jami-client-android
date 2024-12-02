@@ -24,7 +24,6 @@
   <string name="menu_item_accounts">إدارة الحسابات</string>
   <string name="menu_item_account">إدارة الحساب</string>
   <string name="menu_item_settings">الإعدادات</string>
-  <string name="menu_item_advanced_settings">إعدادات متقدمة</string>
   <string name="menu_item_account_settings">إعدادت الحساب</string>
   <string name="menu_item_share">مشاركة حسابي</string>
   <string name="menu_item_about">حول جامي</string>
@@ -319,6 +318,7 @@
   <string name="picker_title">إختيار جهات الاتصال</string>
   <string name="picker_btn">إختيار جهات الاتصال</string>
   <string name="bottomsheet_contact">الاتصال مع Jami\n%1$s</string>
+  <string name="bottomsheet_remove">إزالة عضو</string>
   <!--JamiId-->
   <string name="jami_id_validate">تسجيل اسم المستخدم</string>
   <string name="jami_id_looking_for_availability">جاري البحث عن توفر اسم المستخدم…</string>
@@ -328,6 +328,7 @@
   <!--Conversation details-->
   <string name="details">التفاصيل</string>
   <string name="Private">خاص</string>
+  <string name="mute_conversation">محادثة صامتة</string>
   <!--Donation-->
   <string name="donation_card_not_now">ليس الآن</string>
   <!--Extension-->

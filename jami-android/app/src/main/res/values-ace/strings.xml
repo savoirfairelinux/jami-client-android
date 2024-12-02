@@ -24,7 +24,6 @@
   <string name="menu_item_accounts">مڠمبيل ڤڠاجرن</string>
   <string name="menu_item_account">مڠڬوناكن حساب</string>
   <string name="menu_item_settings">سيٽنگون</string>
-  <string name="menu_item_advanced_settings">ڤڠاجرن ڤڠاجرن</string>
   <string name="menu_item_account_settings">ڤڠاجرن حساب</string>
   <string name="menu_item_share">مڠمبيل ڤڠاجرن ساي</string>
   <string name="menu_item_about">دري جامي</string>
@@ -152,6 +151,7 @@
   <string name="tab_settings">سيٽنگون</string>
   <string name="dialog_hint_title">عنوان</string>
   <string name="dialog_hint_description">ڤرسمباڬان</string>
+  <string name="bottomsheet_remove">ممبلي ممبلي</string>
   <!--JamiId-->
   <string name="jami_id_validate">نام ڤڠڬونا</string>
   <string name="jami_id_looking_for_availability">دالم مڠمبيل نام ڤڠڬونا...</string>
@@ -161,6 +161,7 @@
   <!--Conversation details-->
   <string name="details">ڤڠاجرن</string>
   <string name="Private">ڤريڤوت</string>
+  <string name="mute_conversation">مکالمن ساكيت</string>
   <!--Donation-->
   <!--Extension-->
 </resources>

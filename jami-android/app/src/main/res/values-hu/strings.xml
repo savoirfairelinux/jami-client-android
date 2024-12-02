@@ -33,7 +33,6 @@
   <string name="menu_item_accounts">Fiókok kezelése</string>
   <string name="menu_item_account">Fiók kezelése</string>
   <string name="menu_item_settings">Beállítások</string>
-  <string name="menu_item_advanced_settings">Haladó beállítások</string>
   <string name="menu_item_account_settings">Fiókbeállítások</string>
   <string name="menu_item_extension_list">Bővítmények beállításai</string>
   <string name="menu_item_share">Fiók megosztása</string>
@@ -103,8 +102,6 @@
   <string name="call_duration">%s tartott</string>
   <string name="start_error_title">Nem sikerült elindítani a Jamit</string>
   <string name="action_call_accept">Hívás fogadása</string>
-  <string name="action_call_accept_audio">Bejövő hívás fogadása csak hanggal</string>
-  <string name="action_call_accept_video">Bejövő hívás fogadása videóval</string>
   <string name="action_call_hold_accept">Bejövő hívás fogadása csak hanggal és a jelenlegi hívás tartása</string>
   <string name="action_call_hold_accept_video">Bejövő hívás fogadása videóval és a jelenlegi hívás tartása</string>
   <string name="action_call_end_accept">Bejövő hívás fogadása és a jelenlegi hívás befejezése</string>
@@ -411,6 +408,8 @@
   <string name="tab_files">Fájlok</string>
   <string name="tab_settings">Beállítások</string>
   <string name="not_admin_toast">Csak a rendszergazdák szerkeszthetik a csoport adatait.</string>
+  <string name="dialogtitle_title">Csoport címének szerkesztése</string>
+  <string name="dialogtitle_description">Csoport leírásának szerkesztése</string>
   <string name="dialog_hint_title">Cím</string>
   <string name="dialog_hint_description">Leírás</string>
   <string name="picker_title">Kapcsolattartók kijelölése</string>
@@ -438,6 +437,7 @@
   <!--Conversation details-->
   <string name="details">Részletek</string>
   <string name="secure_p2p_connection">Biztonságos egyenrangú kapcsolat</string>
+  <string name="swarm_type">Beszélgetés típusa</string>
   <string name="Private">Magánjellegű</string>
   <string name="swarm_id">Csoportazonosító</string>
   <string name="show_qr_code">QR-kód megjelenítése</string>

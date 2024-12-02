@@ -6,6 +6,9 @@
   <string name="pref_category_system">سيستم</string>
   <string name="pref_category_privacy">ڤريڤيسي</string>
   <string name="pref_category_diagnostic">ڤڠاجرن</string>
+  <string name="pref_category_appearance">ڤرلو</string>
+  <string name="pref_category_connectivity">ڤڠاجين</string>
+  <string name="pref_category_video_settings">ڤڠاجرن ڤيديو ڤرنه</string>
   <string name="pref_mobileData_title">داتا موبايل</string>
   <string name="pref_mobileData_summary">ممبريكن Jami دڠن 3G/LTE نيتر برساتو Wi-Fi</string>
   <string name="pref_pushNotifications_title">ڤمبلاجر ڤڠاجرن</string>

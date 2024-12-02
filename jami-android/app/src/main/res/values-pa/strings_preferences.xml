@@ -6,6 +6,7 @@
   <string name="pref_category_system">ਸਿਸਟਮ</string>
   <string name="pref_category_privacy">ਪਰਦੇਦਾਰੀ</string>
   <string name="pref_category_diagnostic">ਜਾਂਚ-ਪੜਤਾਲ</string>
+  <string name="pref_category_video_settings">ਉੱਨਤ ਵੀਡੀਓ ਸੈਟਿੰਗਾਂ</string>
   <string name="pref_mobileData_title">ਮੋਬਾਈਲ ਡਾਟਾ</string>
   <string name="pref_mobileData_summary">Jami ਨੂੰ ਵਾਈ-ਫਾਈ ਦੀ ਥਾਂ 3G/LTE ਨੈੱਟਵਰਕ ਵਰਤਣ ਦਿਓ</string>
   <string name="pref_pushNotifications_title">ਪੁਸ਼ ਸੂਚਨਾਵਾਂ</string>
@@ -25,5 +26,6 @@
   <string name="pref_blackList_summary">ਆਪਣੀ ਬੰਦਸ਼ ਸੂਚੀ ਵੇਖੋ।</string>
   <string name="pref_delete_account_title">ਖਾਤਾ ਮਿਟਾਓ</string>
   <!--Notifications Visibility-->
+  <string name="connectivity_custom_title">ਮਨਮਰਜ਼ੀ</string>
   <!--Extension-->
 </resources>

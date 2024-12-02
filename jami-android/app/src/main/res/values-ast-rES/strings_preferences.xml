@@ -6,6 +6,9 @@
   <string name="pref_category_system">Sistema</string>
   <string name="pref_category_privacy">La privacidá</string>
   <string name="pref_category_diagnostic">Los diagnósticos</string>
+  <string name="pref_category_appearance">El so aspeutu</string>
+  <string name="pref_category_connectivity">La conectividá</string>
+  <string name="pref_category_video_settings">La configuración avanzada de video</string>
   <string name="pref_mobileData_title">Datu de movilidá</string>
   <string name="pref_mobileData_summary">Permitir Jami en redes 3G/LTE amás de Wi-Fi</string>
   <string name="pref_pushNotifications_title">Notificaciones de empuxa</string>
@@ -45,5 +48,6 @@
   <string name="pref_link_preview_title">Mostrar previews de enllaces en conversaciones</string>
   <string name="pref_link_preview_summary">Les previsiones requieren descargar conteníos de servidores de terceros.</string>
   <!--Notifications Visibility-->
+  <string name="connectivity_custom_title">La personalidá</string>
   <!--Extension-->
 </resources>

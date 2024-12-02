@@ -1,6 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <string name="pref_category_contacts">Contactos</string>
+  <string name="pref_category_appearance">Apariencia</string>
+  <string name="pref_category_connectivity">Conectividad</string>
+  <string name="pref_category_extensions">Extensions</string>
+  <string name="pref_category_video_settings">Configuración avanzada de video</string>
   <string name="pref_unifiedPush_summary">Utilice un servicio UnifiedPush para permitir la recepción de llamadas/mensajes en segundo plano</string>
   <string name="pref_clearHistory_summary">Borra el historial de todas las conversaciones. Esta acción no se puede deshacer.</string>
   <string name="pref_delete_account_summary">Eliminar cuenta de este dispositivo</string>
@@ -8,13 +12,15 @@
   <string name="pref_persistNotification_summary">Permitir que se ejecute en segundo plano para recibir llamadas y mensajes.</string>
   <string name="pref_connection_monitor">Monitor de conexión</string>
   <string name="pref_connection_monitor_summary">Supervisar las conexiones punto a punto</string>
+  <string name="pref_push_notifications_logs_title">Pulsar los registros de notificaciones</string>
+  <string name="pref_push_notifications_logs_summary">Ver registros capturados desde las
+notificaciones pulsadas.</string>
   <!--Notifications Visibility-->
   <string name="notification_public">Públic\n(mostrar notificaciones y su contenido en la pantalla de bloqueo)\n</string>
   <string name="notification_private">Private\n(mostrar notificaciones pero ocultar su contenido en la pantalla de bloqueo)\n</string>
   <string name="notification_secret">Secret\n(no mostrar notificaciones en la pantalla de bloqueo)</string>
+  <string name="connectivity_custom_title">Personalizado</string>
   <!--Extension-->
-  <string name="pref_extensions_title">Extensions</string>
-  <string name="pref_extensions_summary">Habilitar extensiones y establecer sus parámetros</string>
   <string name="fab_extensions_add">Agregar nueva extensión</string>
   <string name="extension_uninstall_title">¿Desinstalar la extensión?</string>
   <string name="extension_reset_preferences">Restablecer preferencias de extensión</string>
