@@ -98,8 +98,8 @@
     <string name="connectivity_local_node_title">Local DHT node</string>
     <string name="connectivity_local_node_description">Use a local DHT node to connect with other
         Jami devices and contacts.</string>
-    <string name="connectivity_unified_push_title">Unified push</string>
-    <string name="connectivity_unified_push_description">Use a custom unified Push server to
+    <string name="connectivity_unified_push_title" translatable="false">UnifiedPush</string>
+    <string name="connectivity_unified_push_description">Use a custom UnifiedPush server to
         receive push notifications.</string>
     <string name="connectivity_custom_title">Custom</string>
     <string name="connectivity_custom_description">Currently not using any of the
