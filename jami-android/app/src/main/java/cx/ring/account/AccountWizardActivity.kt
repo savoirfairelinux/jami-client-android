@@ -110,8 +110,8 @@ class AccountWizardActivity : BaseActivity<AccountWizardPresenter>(), AccountWiz
         val model = viewModel.model
         if (!TextUtils.isEmpty(model.managementServer)) {
             presenter.initJamiAccountConnect(model, getText(R.string.ring_account_default_name).toString())
-        } else if (model.isLink) {
-            presenter.initJamiAccountLink(model, getText(R.string.ring_account_default_name).toString())
+        } else if (model.archive != null) {
+            presenter.initJamiAccountBackup(model, getText(R.string.ring_account_default_name).toString())
         } else {
             presenter.initJamiAccountCreation(model, getText(R.string.ring_account_default_name).toString())
         }
@@ -154,7 +154,7 @@ class AccountWizardActivity : BaseActivity<AccountWizardPresenter>(), AccountWiz
         val fragments = supportFragmentManager.fragments
         if (fragments.size > 0) {
             val fragment = fragments[0]
-            if (fragment is JamiLinkAccountFragment || fragment is JamiAccountConnectFragment) {
+            if (fragment is JamiAccountConnectFragment || fragment is JamiImportBackupFragment) {
                 profileCreated(false)
             }
         }
