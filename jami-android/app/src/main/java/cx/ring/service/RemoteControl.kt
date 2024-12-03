@@ -92,7 +92,7 @@ class RemoteControl : Service() {
                 accountId
             } catch (e: Exception) {
                 Log.e(tag, "Failed to create account: ${e.message}", e)
-                throw RuntimeException("Account creation failed", e)
+                throw RemoteException("Account creation failed: ${e.message}")
             }
         }
 
