@@ -127,7 +127,8 @@ class AccountWizardPresenter @Inject constructor(
             .observeOn(mUiScheduler)
             .subscribe({ account: Account -> accountCreationModel.newAccount = account })
             { e -> Log.e(TAG, "Can't create account", e) })
-        if (accountCreationModel.isLink) {
+
+        if (accountCreationModel.archive != null) {
             view!!.displayProgress(true)
             mCompositeDisposable.add(newAccount
                 .filter { a: Account -> a.registrationState != AccountConfig.RegistrationState.INITIALIZING }
@@ -189,7 +190,7 @@ class AccountWizardPresenter @Inject constructor(
             .filter { a: Account -> a.registrationState != AccountConfig.RegistrationState.INITIALIZING }
             .firstElement()
             .subscribe { a: Account ->
-                if (!model.isLink && a.isJami && model.username.isNotEmpty())
+                if (model.archive == null && a.isJami && model.username.isNotEmpty())
                     mAccountService.registerName(a, model.username, AccountService.ACCOUNT_SCHEME_PASSWORD, model.password)
                 mAccountService.currentAccount = a
                 if (model.isPush) {
