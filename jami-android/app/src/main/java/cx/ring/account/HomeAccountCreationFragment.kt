@@ -60,8 +60,8 @@ class HomeAccountCreationFragment :
                             archive = file
                         }
                         replaceFragmentWithSlide(
-                            fragment = JamiLinkAccountFragment(),
-                            tag = JamiLinkAccountFragment.TAG,
+                            fragment = JamiImportBackupFragment(),
+                            tag = JamiImportBackupFragment.TAG,
                             containerID = R.id.wizard_container
                         )
                     }) { e: Throwable ->
