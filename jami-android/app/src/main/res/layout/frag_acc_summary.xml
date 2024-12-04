@@ -107,6 +107,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:textColorHint="@color/text_hint"
                     app:endIconDrawable="@drawable/baseline_edit_twoton_24dp"
                     app:endIconMode="custom"
+                    style="?attr/textInputFilledStyle"
                     app:hintEnabled="true"
                     app:hintTextColor="@color/text_hint">
 
@@ -186,6 +187,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_height="wrap_content"
                     android:hint="@string/registered_username"
                     android:textColorHint="@color/text_hint"
+                    style="?attr/textInputFilledStyle"
                     app:hintEnabled="true"
                     app:hintTextColor="@color/text_hint"
                     android:enabled="false">
@@ -243,6 +245,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/ring_account_identity"
+                style="?attr/textInputFilledStyle"
                 android:textColorHint="@color/text_hint"
                 app:hintEnabled="true"
                 app:hintTextColor="@color/text_hint"
