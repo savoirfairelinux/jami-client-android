@@ -20,6 +20,7 @@ import android.content.Context
 import android.graphics.ImageFormat
 import android.hardware.camera2.*
 import android.hardware.camera2.CameraCaptureSession.CaptureCallback
+import android.hardware.camera2.CameraDevice.StateCallback
 import android.hardware.camera2.CameraManager.AvailabilityCallback
 import android.hardware.camera2.params.OutputConfiguration
 import android.hardware.camera2.params.SessionConfiguration
@@ -59,7 +60,7 @@ import java.util.concurrent.TimeUnit
 import kotlin.math.abs
 
 class CameraService internal constructor(c: Context) {
-    private val manager = c.getSystemService(Context.CAMERA_SERVICE) as CameraManager?
+    private val manager = c.getSystemService(CameraManager::class.java)
     private val mParams = HashMap<String, VideoParams>()
     private val mNativeParams: MutableMap<String, DeviceParams> = HashMap()
     private val t = HandlerThread("videoHandler")
@@ -75,7 +76,7 @@ class CameraService internal constructor(c: Context) {
         override fun onCameraAvailable(cameraId: String) {
             Log.w(TAG, "onCameraAvailable $cameraId")
             try {
-                filterCompatibleCamera(arrayOf(cameraId), manager!!).forEach { camera ->
+                filterCompatibleCamera(arrayOf(cameraId), manager).forEach { camera ->
                     val devices = devices ?: return
                     synchronized(addedDevices) {
                         if (!devices.cameras.contains(camera.first)) {
@@ -127,6 +128,7 @@ class CameraService internal constructor(c: Context) {
         var currentIndex = 0
         var cameraFront: String? = null
         var cameraBack: String? = null
+        var externalCameras: List<String> = listOf()
         fun switchInput(setDefaultCamera: Boolean): String? {
             if (setDefaultCamera && cameras.isNotEmpty()) {
                 currentId = cameras[0]
@@ -291,17 +293,14 @@ class CameraService internal constructor(c: Context) {
             val cameras = filterCompatibleCamera(manager.cameraIdList, manager)
             val backCamera = filterCameraIdsFacing(cameras, CameraCharacteristics.LENS_FACING_BACK).firstOrNull()
             val frontCamera = filterCameraIdsFacing(cameras, CameraCharacteristics.LENS_FACING_FRONT).firstOrNull()
-            val externalCameras: List<String> = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                filterCameraIdsFacing(cameras, CameraCharacteristics.LENS_FACING_EXTERNAL)
-            } else {
-                emptyList()
-            }
+            val externalCameras: List<String> = filterCameraIdsFacing(cameras, CameraCharacteristics.LENS_FACING_EXTERNAL)
             if (frontCamera != null) devices.cameras.add(frontCamera)
             if (backCamera != null) devices.cameras.add(backCamera)
             devices.cameras.addAll(externalCameras)
             if (devices.cameras.isNotEmpty()) devices.currentId = devices.cameras[0]
             devices.cameraFront = frontCamera
             devices.cameraBack = backCamera
+            devices.externalCameras = externalCameras
             Log.w(TAG, "Loading video devices: found " + devices.cameras.size)
             devices
         }.subscribeOn(AndroidSchedulers.from(videoLooper))
@@ -309,9 +308,7 @@ class CameraService internal constructor(c: Context) {
 
     fun init(): Completable {
         val resetCamera = false
-        return if (manager == null)
-            Completable.error(IllegalStateException("Video manager is unavailable"))
-        else loadDevices(manager)
+        return loadDevices(manager)
             .map { devs: VideoDevices ->
                 synchronized(addedDevices) {
                     val old = devices
@@ -355,7 +352,7 @@ class CameraService internal constructor(c: Context) {
 
     interface CameraListener {
         fun onOpened()
-        fun onError()
+        fun onError(errorCode: Int? = null)
     }
 
     fun closeCamera(camId: String) {
@@ -636,7 +633,7 @@ class CameraService internal constructor(c: Context) {
         try {
             val view = surface as AutoFitTextureView
             val flip = videoParams.rotation % 180 != 0
-            val cc = manager!!.getCameraCharacteristics(videoParams.id)
+            val cc = manager.getCameraCharacteristics(videoParams.id)
             val fpsRange = chooseOptimalFpsRange(cc.get(CameraCharacteristics.CONTROL_AE_AVAILABLE_TARGET_FPS_RANGES))
             val streamConfigs = cc.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP)
             val previewSize = chooseOptimalSize(
@@ -758,7 +755,7 @@ class CameraService internal constructor(c: Context) {
                 override fun onError(camera: CameraDevice, error: Int) {
                     Log.w(TAG, "onError: $error")
                     camera.close()
-                    listener.onError()
+                    listener.onError(errorCode = error)
                 }
 
                 override fun onClosed(camera: CameraDevice) {
@@ -781,6 +778,13 @@ class CameraService internal constructor(c: Context) {
             }, handler)
         } catch (e: SecurityException) {
             Log.e(TAG, "Security exception while settings preview parameters", e)
+        } catch (e: IllegalArgumentException) {
+            if (devices?.externalCameras?.contains(videoParams.id) == true) {
+                // Error opening external camera, the code should try again.
+                listener.onError(StateCallback.ERROR_CAMERA_DEVICE)
+            } else {
+                Log.e(TAG, "Exception while settings preview parameters", e)
+            }
         } catch (e: Exception) {
             Log.e(TAG, "Exception while settings preview parameters", e)
         }
@@ -788,14 +792,13 @@ class CameraService internal constructor(c: Context) {
 
     fun cameraIds(): List<String> = devices?.cameras ?: ArrayList()
     fun getCameraCount(): Int = try {
-        devices?.cameras?.size ?: manager?.cameraIdList?.size ?: 0
+        devices?.cameras?.size ?: manager.cameraIdList.size
     } catch (e: CameraAccessException) {
         0
     }
 
     private fun getCameraInfo(camId: String, minVideoSize: Size, context: Context): DeviceParams {
         val p = DeviceParams()
-        if (manager == null) return p
         try {
             if (camId == VideoDevices.SCREEN_SHARING) {
                 val metrics = context.resources.displayMetrics
@@ -848,7 +851,7 @@ class CameraService internal constructor(c: Context) {
     }
 
     fun unregisterCameraDetectionCallback() {
-        manager?.unregisterAvailabilityCallback(availabilityCallback)
+        manager.unregisterAvailabilityCallback(availabilityCallback)
     }
 
     companion object {

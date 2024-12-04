@@ -21,6 +21,7 @@ import android.bluetooth.BluetoothHeadset
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
+import android.hardware.camera2.CameraDevice.StateCallback
 import android.media.AudioDeviceInfo
 import android.media.AudioManager
 import android.media.AudioManager.OnAudioFocusChangeListener
@@ -533,8 +534,19 @@ class HardwareServiceImpl(
                             toggleMediaHandler(currentCall)
                         }
                     }
-                    override fun onError() {
+                    override fun onError(errorCode: Int?) {
                         stopCapture(videoParams.id)
+                        when(errorCode) {
+                            StateCallback.ERROR_CAMERA_IN_USE -> {}
+                            StateCallback.ERROR_CAMERA_DISABLED -> {}
+                            StateCallback.ERROR_CAMERA_DEVICE -> {
+                                Log.w(TAG, "Camera device error, trying to reopen camera")
+                                startCapture(camId)
+                            }
+                            StateCallback.ERROR_CAMERA_SERVICE -> {
+                                // TODO reopen everything
+                            }
+                        }
                     }
                 },
                 useHardwareCodec,
