@@ -25,7 +25,7 @@ OF SUCH DAMAGE.
 */
 
 interface IRemoteService {
-    String createAccount(String registeredName);
+    String createAccount(in Map<String, String> accountData);
     void addContact(String contactId);
     boolean isContactExist(String contactId);
     void sendTrustRequest(String contactId);

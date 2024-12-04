@@ -77,10 +77,10 @@ class RemoteControl : Service() {
     // Inner Binder class implementing the AIDL interface
     private val binder = object : IRemoteService.Stub() {
 
-        override fun createAccount(input: String): String {
-            Log.d(tag, "Creating account with login: $input")
+        override fun createAccount(map: Map<String, String>): String {
+            Log.d(tag, "Creating account with data: $map")
             return try {
-                val map = fillMap(AccountData.data, input)
+//                val map = fillMap(AccountData.data, input)
                 Log.d(tag, "Generated account data map: $map")
 
                 val accountId = accountService.addAccount(map)
