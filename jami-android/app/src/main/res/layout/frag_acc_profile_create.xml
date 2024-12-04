@@ -124,8 +124,7 @@
                 android:id="@+id/username_box"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
+                android:layout_marginTop="4dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/username"
