@@ -105,6 +105,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:textColorHint="@color/settings_submenu_header"
                     app:endIconDrawable="@drawable/baseline_edit_rounded_24"
                     app:endIconMode="custom"
+                    style="?attr/textInputFilledStyle"
                     app:hintEnabled="true"
                     app:hintTextColor="@color/settings_submenu_header"
                     app:endIconTint="@null">
