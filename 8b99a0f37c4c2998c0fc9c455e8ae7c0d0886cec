@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6a40efc5_15e84d85",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-12-05T02:00:37Z",
+      "side": 1,
+      "message": "- refuse (internal) → decline (UX/UI)",
+      "revId": "8b99a0f37c4c2998c0fc9c455e8ae7c0d0886cec",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3fb286cf_00850ce9",
         "filename": "jami-android/app/src/main/res/layout/frag_call.xml",
         "patchSetId": 2
