@@ -16,6 +16,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
+import io.reactivex.rxjava3.subjects.BehaviorSubject
+import net.jami.model.Account
 import net.jami.model.Contact
 import net.jami.model.Uri
 import net.jami.services.AccountService
@@ -40,9 +42,12 @@ class RemoteControl : Service() {
         private const val NOTIFICATION_ID = 101
     }
 
+    var accounts = listOf<Account>()
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate() {
         super.onCreate()
+        compositeDisposable.add(accountService.observableAccountList.subscribe { accounts = it })
         Log.d(tag, "Service created")
         startForegroundServiceWithNotification()
     }
@@ -80,7 +85,6 @@ class RemoteControl : Service() {
         override fun createAccount(map: Map<String, String>): String {
             Log.d(tag, "Creating account with data: $map")
             return try {
-//                val map = fillMap(AccountData.data, input)
                 Log.d(tag, "Generated account data map: $map")
 
                 val accountId = accountService.addAccount(map)
@@ -94,6 +98,14 @@ class RemoteControl : Service() {
                 Log.e(tag, "Failed to create account: ${e.message}", e)
                 throw RemoteException("Account creation failed: ${e.message}")
             }
+        }
+
+        override fun listAccounts(): List<String> {
+            return accounts.map { it.accountId }
+        }
+
+        override fun getJamiUri(account: String?): String? {
+            return accounts.find { it.accountId == account }?.displayUri
         }
 
         override fun getAccountId(): String {
@@ -215,6 +227,7 @@ class RemoteControl : Service() {
                 null
             }
         }
+
     }
 
     override fun onBind(intent: Intent?): IBinder {
