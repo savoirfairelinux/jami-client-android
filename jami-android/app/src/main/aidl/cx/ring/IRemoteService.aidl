@@ -32,7 +32,12 @@ interface IRemoteService {
     boolean isContactExist(String contactId);
     void sendTrustRequest(String contactId);
     String getAccountId();
-    void initiateCall(String userId, ICallback callback);
+    void initiateCall(String fromAccount, String userId, ICallback callback);
+    void registerCallStateCallback(StateCallback callback);
+    void unregisterCallStateCallback(StateCallback callback);
+    interface StateCallback {
+        void newCallState(String state);
+    }
     interface ICallback {
         void onSuccess();
         void onError(String error);

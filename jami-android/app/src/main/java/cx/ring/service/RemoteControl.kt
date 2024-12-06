@@ -81,6 +81,7 @@ class RemoteControl : Service() {
 
     // Inner Binder class implementing the AIDL interface
     private val binder = object : IRemoteService.Stub() {
+        val callbacks = mutableListOf<IRemoteService.StateCallback>()
 
         override fun createAccount(map: Map<String, String>): String {
             Log.d(tag, "Creating account with data: $map")
@@ -152,11 +153,11 @@ class RemoteControl : Service() {
             }
         }
 
-        override fun initiateCall(userId: String, callback: IRemoteService.ICallback) {
+        override fun initiateCall(fromAccount: String, userId: String, callback: IRemoteService.ICallback) {
             Log.d(tag, "Initiating call to user: $userId")
             try {
                 val disposable = callService.placeCall(
-                    account = getAccountId(),
+                    account = fromAccount,
                     conversationUri = null,
                     numberUri = Uri.fromString(userId),
                     hasVideo = true
@@ -176,6 +177,14 @@ class RemoteControl : Service() {
                 Log.e(tag, "Error initiating call", e)
                 callback.onError(e.message)
             }
+        }
+
+        override fun registerCallStateCallback(callback: IRemoteService.StateCallback) {
+            callbacks.add(callback)
+        }
+
+        override fun unregisterCallStateCallback(callback: IRemoteService.StateCallback?) {
+            callbacks.remove(callback)
         }
 
         override fun hangUpCall() {
@@ -232,6 +241,14 @@ class RemoteControl : Service() {
 
     override fun onBind(intent: Intent?): IBinder {
         Log.d(tag, "Service bound")
+        val disposable = callService.callsUpdates.subscribe { call ->
+            Log.i("RemoteControl", "Call state changed: ${call.callStatus}")
+            binder.callbacks.forEach { callback ->
+                Log.i("RemoteControl", "Notifying callback: $callback")
+                callback.newCallState(call.callStatus.toString())
+            }
+        }
+        compositeDisposable.add(disposable)
         return binder
     }
 }
