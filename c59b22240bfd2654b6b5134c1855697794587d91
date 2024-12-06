@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "06f3a037_0deb8255",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-12-06T21:07:58Z",
+      "side": 1,
+      "message": "I didn\u0027t verify but I think it changes some stuff that were supposed to be clicked by the automated tests.",
+      "revId": "c59b22240bfd2654b6b5134c1855697794587d91",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
