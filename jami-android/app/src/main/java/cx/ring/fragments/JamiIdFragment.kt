@@ -90,6 +90,10 @@ class JamiIdFragment : Fragment() {
 
                 jamiIdViewModel.uiState.collect { uiState ->
 
+                    // Hide component before the account is loaded.
+                    if (uiState.jamiIdStatus == null) binding.root.visibility = View.INVISIBLE
+                    else binding.root.visibility = View.VISIBLE
+
                     if (uiState.jamiIdStatus == prevState?.jamiIdStatus) return@collect
                     prevState = uiState
 
@@ -129,7 +133,7 @@ class JamiIdFragment : Fragment() {
                         }
 
                         else -> {
-                            Log.w(TAG, "Unknown JamiIdStatus: ${uiState.jamiIdStatus}")
+                            Log.e(TAG, "Unknown JamiIdStatus: ${uiState.jamiIdStatus}")
                             setUsernameDefinedUiState(
                                 username = uiState.username
                             )
