@@ -80,7 +80,6 @@ import net.jami.model.Account
 import net.jami.model.Contact
 import net.jami.model.Profile
 import net.jami.services.AccountService
-import net.jami.utils.VCardUtils
 import java.io.File
 import javax.inject.Inject
 
@@ -225,14 +224,10 @@ class JamiAccountSummaryFragment :
     }
     //=============== AppBar management end ===================
 
-    fun setAccount(accountId: String) {
-        presenter.setAccountId(accountId)
-    }
-
     override fun accountChanged(account: Account, profile: Profile) {
         mAccount = account
-        mBestName = account.registeredName.ifEmpty { account.displayUsername ?: account.username!! }
-        mBestName = "$mBestName.gz"
+        val bestName = account.registeredName.ifEmpty { account.displayUsername ?: account.username!! }
+        mBestName = "$bestName.jac"
         mBinding?.let { binding ->
             binding.userPhoto.setImageDrawable(AvatarDrawable.build(binding.root.context, account, profile, true))
             binding.username.setText(profile.displayName)
@@ -255,7 +250,7 @@ class JamiAccountSummaryFragment :
                 QRCodeFragment.newInstance(
                     QRCodeFragment.MODE_SCAN or QRCodeFragment.MODE_SHARE,
                     QRCodeFragment.MODE_SHARE,
-                    net.jami.model.Uri.fromString(account.uri!!)
+                    Uri.fromString(account.uri!!)
                 ).show(parentFragmentManager, QRCodeFragment.TAG)
             }
             binding.username.setOnEditorActionListener { _, actionId, _ ->
@@ -808,7 +803,6 @@ class JamiAccountSummaryFragment :
         val TAG = JamiAccountSummaryFragment::class.simpleName!!
         private val FRAGMENT_DIALOG_RENAME = "$TAG.dialog.deviceRename"
         private val FRAGMENT_DIALOG_PASSWORD = "$TAG.dialog.changePassword"
-        private val FRAGMENT_DIALOG_BACKUP = "$TAG.dialog.backup"
 
         private fun slideAnimator(start: Int, end: Int, summary: View) = ValueAnimator.ofInt(start, end).apply {
              addUpdateListener { valueAnimator: ValueAnimator ->

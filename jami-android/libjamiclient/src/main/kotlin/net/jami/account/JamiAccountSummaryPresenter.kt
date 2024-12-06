@@ -89,11 +89,11 @@ class JamiAccountSummaryPresenter @Inject constructor(
     val deviceName: String?
         get() = mAccountService.getAccount(mAccountID)?.deviceName
 
-    fun downloadAccountsArchive(dest: File, scheme: String, password: String?) {
+    fun downloadAccountsArchive(dest: File, scheme: String, password: String) {
         val accountId = mAccountID ?: return
         view?.showExportingProgressDialog()
         mCompositeDisposable.add(
-            mAccountService.exportToFile(accountId, dest.absolutePath, scheme, password!!)
+            mAccountService.exportToFile(accountId, dest.absolutePath, scheme, password)
                 .observeOn(mUiScheduler)
                 .subscribe({ view?.displayCompleteArchive(dest) })
                 { view?.passwordChangeEnded(accountId, false) })
