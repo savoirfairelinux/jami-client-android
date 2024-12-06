@@ -22,6 +22,30 @@
       },
       "revId": "e1f082d527a041c3aedde49f5a5958230827a0f2",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2c0bd8bb_299ca8ac",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/call/CallPresenter.kt",
+        "patchSetId": 10
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2024-12-06T16:39:38Z",
+      "side": 1,
+      "message": "Hi, don\u0027t worry, `wip` means `work in progress` and those are logs used for debuging purpose. It won\u0027t be merged in the final code. At least it shouldn\u0027t! 😊",
+      "parentUuid": "9ceb6c6a_c8f18655",
+      "range": {
+        "startLine": 126,
+        "startChar": 35,
+        "endLine": 126,
+        "endChar": 36
+      },
+      "revId": "e1f082d527a041c3aedde49f5a5958230827a0f2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
