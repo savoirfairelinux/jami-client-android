@@ -92,7 +92,16 @@ class JamiIdFragment : Fragment() {
 
                     // Hide component before the account is loaded.
                     if (uiState.jamiIdStatus == null) binding.root.visibility = View.INVISIBLE
-                    else binding.root.visibility = View.VISIBLE
+                    else {
+                        binding.root.apply { // Animate the view apparition
+                            visibility = View.VISIBLE
+                            alpha = 0f
+                            animate()
+                                .alpha(1f)
+                                .setDuration(300)
+                                .start()
+                        }
+                    }
 
                     if (uiState.jamiIdStatus == prevState?.jamiIdStatus) return@collect
                     prevState = uiState
@@ -394,10 +403,10 @@ class JamiIdFragment : Fragment() {
         // Equivalent to setEnabled(false) but allows to trick a bug and get ellipsize to work .
         binding.jamiIdEditText.keyListener = null
 
-        binding.jamiIdEditTextInfo.visibility = View.GONE
-        binding.jamiIdEditTextStatus.visibility = View.GONE
+        binding.jamiIdEditTextInfo.visibility = View.INVISIBLE
+        binding.jamiIdEditTextStatus.visibility = View.INVISIBLE
         binding.jamiIdProgressBar.visibility = View.GONE
-        binding.jamiIdChooseUsernameButton.visibility = View.GONE
+        binding.jamiIdChooseUsernameButton.visibility = View.INVISIBLE
         binding.jamiIdValidateButtonWrapper.visibility = View.GONE
         binding.jamiIdShareButtonWrapper.visibility = View.VISIBLE
         binding.jamiIdCopyButtonWrapper.visibility = View.VISIBLE

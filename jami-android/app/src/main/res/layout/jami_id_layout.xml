@@ -191,6 +191,7 @@
         android:text="@string/jami_id_choose_username"
         android:textAllCaps="false"
         android:textColor="@color/jami_id_surface_color"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:visibility="invisible" />
 
 </RelativeLayout>
