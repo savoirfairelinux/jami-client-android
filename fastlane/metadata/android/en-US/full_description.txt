@@ -1,30 +1,47 @@
-Jami (a GNU package) is a universal and distributed communication platform which respects the freedoms and privacy of users.
-It is 100% Free software. Available on all platforms.
+Jami, a GNU package, is software for universal and distributed peer-to-peer communication that respects the freedom and privacy of its users.
 
-★ Communicate freely with Jami:
-  - send text messages
-  - make audio calls
-  - make video calls
-  - share pictures and files
+Jami is the simplest and easiest way to connect with people (and devices) with instant messaging, audio and video calls over the Internet and LAN/WAN intranets.
 
-★ Reach your peers directly in peer to peer !
+Jami is a free/libre, end-to-end encrypted, and private communication platform.
 
-★ Use your Jami account on multiple devices !
+Jami – which used to be known as Ring – is also an open-source alternative (to Facebook Messenger, Signal, Skype, Teams, Telegram, TikTok, Viber, WhatsApp, Zoom) that prioritizes the privacy of its users.
 
-★ Available on Windows, macOS, iOS, GNU/Linux, Android and Android TV !
+Jami has a professional-looking design and is available for a wide range of platforms. Unlike the alternatives, calls using Jami are directly between users as it does not use servers to handle calls.
 
-★ SIP account support available !
+This gives the greatest privacy as the distributed nature of Jami means your calls are only between participants.
 
-★ Next additions: audio/video call recording (Android), group chat...
+One-to-one and group conversations with Jami are enhanced with: instant messaging; audio and video calling; recording and sending audio and video messages; file transfers; screen sharing; and, location sharing.
 
-Build with Jami on your IoT project: re-use the universal communications technology of Jami with its portable library on your system of choice. 
+Jami can also function as a SIP client.
+
+Jami has multiple extensions available: Audio Filter; Auto Answer; Green Screen; Watermark; and, Whisper Transcript.
+
+Jami can be easily deployed in organizations with the “Jami Account Management Server” (JAMS), allowing users to connect with their corporate credentials or create local accounts. JAMS allows you to manage your own Jami community while taking advantage of Jami’s distributed network architecture.
+
+Jami is available for GNU/Linux, Windows, macOS, iOS, Android, and Android TV, making Jami an interoperable and cross-platform communication framework.
+
+Manage multiple SIP accounts, Jami accounts and JAMS accounts with the Jami client installed on one or multiple devices.
+
+Jami is free, unlimited, private, advertising free, compatible, fast, autonomous, and anonymous.
+
+Learn more about:
+Jami: https://jami.net/
+Jami extensions: https://jami.net/extensions/
+“Jami Account Management Server” (JAMS): https://jami.biz/
+Jami documentation: https://docs.jami.net/
+
+Follow us for more:
+Mastodon: https://mstdn.io/@Jami
+X: https://x.com/jami_social
+YouTube: https://www.youtube.com/@jami9311
+
+We’d love to hear from you! Join the Jami community:
+Contribute: https://jami.net/contribute/
+Forum: https://forum.jami.net/
+
+Build with Jami on your IoT project: re-use the universal communications technology of Jami with its portable library on your system of choice.
 
 Jami for Android TV is tested on NVIDIA SHIELD TV with Logitech cameras.
 
-There are plenty of ways to help us, check out: https://jami.net/contribute ,
-Contact us on Twitter: @jami_social , or Mastodon: @Jami
-
-For more information, visit https://jami.net 
-
 Jami is published under the GPL license, version 3 or higher.
-Copyright © Savoir-faire Linux
+Copyright © Savoir-faire Linux Inc.
