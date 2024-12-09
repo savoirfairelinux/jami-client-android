@@ -241,7 +241,10 @@ class RemoteControl : Service() {
 
     override fun onBind(intent: Intent?): IBinder {
         Log.d(tag, "Service bound")
-        val disposable = callService.callsUpdates.subscribe { call ->
+        val disposable = callService.callsUpdates.onErrorComplete({
+            Log.e(tag, "Error observing call updates", it)
+            true
+        }).subscribe { call ->
             Log.i("RemoteControl", "Call state changed: ${call.callStatus}")
             binder.callbacks.forEach { callback ->
                 Log.i("RemoteControl", "Notifying callback: $callback")
