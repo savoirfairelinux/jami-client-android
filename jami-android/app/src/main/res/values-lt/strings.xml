@@ -23,6 +23,7 @@
   <string name="menu_item_account">Tvarkyti paskyrą</string>
   <string name="menu_item_settings">Nustatymai</string>
   <string name="menu_item_account_settings">Paskyros nustatymai</string>
+  <string name="menu_item_extension_list">Plėtinių nustatymai</string>
   <string name="menu_item_share">Bendrinti mano paskyrą</string>
   <string name="menu_item_about">Apie Jami</string>
   <string name="video_setting_title">Vaizdo nustatymai</string>
@@ -36,6 +37,7 @@
     <item quantity="other">%d pokalbių</item>
   </plurals>
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">Ieškoti vardo ar pokalbio…</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
@@ -68,9 +70,11 @@
   <string name="action_call_hangup">Padėti ragelį</string>
   <string name="hist_in_call">%1$s gaunamasis skambutis</string>
   <string name="hist_out_call">%1$s išsiunčiamasis skambutis</string>
+  <string name="start_error_title">Nepavyko paleisti Jami</string>
   <string name="action_call_accept">Atsiliepti</string>
   <string name="action_call_decline">Atmesti</string>
   <string name="action_call_mic_mute">Išjungti mikrofoną</string>
+  <string name="action_load_extension">Įkelti plėtinį</string>
   <string name="ab_action_speakerphone">Įjungti garsiakalbį</string>
   <string name="ab_action_contact_add">Pridėti prie adresatų</string>
   <string name="ab_action_contact_add_question">Pridėti prie adresatų?</string>
@@ -80,6 +84,7 @@
   <string name="share_via">Bendrinti per</string>
   <string name="scan_qr">Skenuoti QR kodą</string>
   <string name="qr_code">QR kodas</string>
+  <string name="qr_code_not_contact">Ne Jami adresato QR kodas</string>
   <string name="new_group">Sukurti naują grupę</string>
   <string name="ab_action_flipcamera">Apversti kamerą</string>
   <string name="ab_action_hidepreview">Slėpti peržiūrą</string>
@@ -205,6 +210,7 @@
   <string name="accept_invitation">Priimti pakvietimą</string>
   <!--Blacklist-->
   <!--Smartlist-->
+  <string name="conversation_placeholder">Kol kas neturite jokių pokalbių</string>
   <string name="contact_request_sent">Adresato užklausa išsiųsta</string>
   <string name="start_conversation">Pradėti pokalbį</string>
   <string name="search_results">Paieškos rezultatai</string>
@@ -259,7 +265,11 @@
   <!--Wizard-->
   <string name="wizard_status_recommended">Rekomenduojama</string>
   <string name="wizard_status_optional">Nebūtina</string>
+  <string name="wizard_username_info">Pasirinkite paskyrai naudotojo vardą</string>
+  <string name="wizard_username_button">Pasirinkti naudotojo vardą</string>
+  <string name="wizard_username_skip">Praleisti naudotojo vardo pasirinkimą</string>
   <string name="wizard_password_info">Paskyros slaptažodis</string>
+  <string name="wizard_password_placeholder">Pasirinkite slaptažodį, skirtą šifruoti paskyros raktą šiame įrenginyje</string>
   <string name="wizard_password_skip">Sukurti paskyrą</string>
   <string name="wizard_password_switch">Šifruoti paskyrą slaptažodžiu</string>
   <string name="wizard_password_warning">Atkreipkite dėmesį, kad slaptažodis negali būti atkurtas</string>
@@ -285,7 +295,7 @@
   <string name="not_admin_toast">Tik administratoriai gali taisyti šios grupės informaciją</string>
   <string name="dialog_hint_description">Aprašas</string>
   <string name="bottomsheet_contact">Susisiekite su Jami\n%1$s</string>
-  <string name="bottomsheet_remove">Ištrinkite narį</string>
+  <string name="bottomsheet_remove">Ištrinti narį</string>
   <!--JamiId-->
   <string name="jami_id_validate">Registruoti naudotojo vardą</string>
   <string name="jami_id_available">Naudotojo vardas yra prieinamas</string>
@@ -298,7 +308,6 @@
   <string name="Private">Privatus</string>
   <string name="show_qr_code">Rodyti QR kodą</string>
   <string name="show_certificate">Rodyti liudijimą</string>
-  <string name="mute_conversation">Mutu pokalbis</string>
   <!--Donation-->
   <string name="donation_card_not_now">Ne dabar</string>
   <!--Extension-->

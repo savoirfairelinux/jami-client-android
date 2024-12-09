@@ -33,6 +33,7 @@
   <string name="menu_item_accounts">Gestionează conturile</string>
   <string name="menu_item_account">Gestionează contul</string>
   <string name="menu_item_settings">Reglări</string>
+  <string name="menu_item_app_settings">Reglări generale</string>
   <string name="menu_item_account_settings">Reglările contului</string>
   <string name="menu_item_extension_list">Reglări Extensii</string>
   <string name="menu_item_share">Distribuie contul meu</string>
@@ -103,6 +104,8 @@
   <string name="call_duration">Durata %s</string>
   <string name="start_error_title">Jami nu pornește</string>
   <string name="action_call_accept">Acceptă apelul</string>
+  <string name="action_call_accept_audio">Răspunde vocal</string>
+  <string name="action_call_accept_video">Răspunde video</string>
   <string name="action_call_hold_accept">Răspunde doar vocal și pune în pauză apelul actual</string>
   <string name="action_call_hold_accept_video">Răspunde cu video și pune în pauză apelul actual</string>
   <string name="action_call_end_accept">Răspunde și termină apelul actual</string>

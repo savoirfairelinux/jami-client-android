@@ -33,6 +33,7 @@
   <string name="menu_item_accounts">Gestisci account</string>
   <string name="menu_item_account">Gestisci account</string>
   <string name="menu_item_settings">Impostazioni</string>
+  <string name="menu_item_app_settings">Impostazioni generali</string>
   <string name="menu_item_account_settings">Impostazioni account</string>
   <string name="menu_item_extension_list">Impostazioni estensioni</string>
   <string name="menu_item_share">Condividi il mio contatto</string>
@@ -103,6 +104,8 @@
   <string name="call_duration">Durata %s</string>
   <string name="start_error_title">Impossibile avviare Jami</string>
   <string name="action_call_accept">Accetta la chiamata</string>
+  <string name="action_call_accept_audio">Rispondi con audio</string>
+  <string name="action_call_accept_video">Rispondi con video</string>
   <string name="action_call_hold_accept">Metti in attesa e rispondi solo con l\'audio</string>
   <string name="action_call_hold_accept_video">Metti in attesa e rispondi solo con video</string>
   <string name="action_call_end_accept">Rispondi e termina la chiamata in corso</string>

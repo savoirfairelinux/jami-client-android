@@ -19,21 +19,29 @@
   <string name="pref_hd_summary">Įjungti aukštos raiškos (HD) vaizdo siuntimą</string>
   <string name="pref_hwEncode_title">Įjungti paspartintą kodavimą</string>
   <string name="pref_hwEncode_summary">Eksperimentinė ypatybė</string>
+  <string name="pref_videoBitrate_title">Vaizdo pralaidumas</string>
+  <string name="pref_videoResolution_title">Vaizdo raiška</string>
   <string name="pref_systemContacts_title">Naudoti sistemos adresatus</string>
   <string name="pref_systemContacts_summary">Naudoti sistemos adresatus, kad būtų rodoma skambinančio asmens informacija.</string>
   <string name="pref_systemDialer_title">Inicijuoti sistemos skambučius, naudojant Jami</string>
   <string name="pref_systemDialer_summary">Kai įmanoma, naudoti Ring, norint inicijuoti sistemos skambučius.</string>
   <string name="pref_startOnBoot_title">Paleisti Jami paleisties metu</string>
-  <string name="pref_startOnBoot_summary">Sistemos paleidimo metu, paleisti Jami fone.</string>
+  <string name="pref_startOnBoot_summary">Sistemos paleidimo metu paleisti Jami fone.</string>
   <string name="pref_clearHistory_title">Išvalyti istoriją</string>
   <string name="pref_notification_title">Pranešimų matomumas</string>
+  <string name="pref_notification_summary">Nustatyti programėlės pranešimų matomumą užrakintame ekrane.</string>
   <string name="pref_delete_account_title">Ištrinti paskyrą</string>
   <string name="pref_delete_account_summary">Ištrinti paskyrą iš šio įrenginio</string>
   <string name="pref_logs_title">Diagnostikos žurnalai</string>
   <string name="pref_logs_summary">Atverti diagnostikos žurnalo nustatymus</string>
+  <string name="pref_connection_monitor">Ryšio prižiūryklė</string>
   <string name="pref_link_preview_title">Rodyti pokalbiuose nuorodų peržiūras</string>
   <!--Notifications Visibility-->
   <!--Extension-->
+  <string name="pref_enable_extensions_title">Įjungti plėtinius</string>
+  <string name="pref_enable_extensions_summary">Įjungti plėtinius ir nustatyti jų
+        parametrus</string>
+  <string name="pref_available_extensions_title">Prieinami plėtiniai</string>
   <string name="fab_extensions_add">Pridėti naują plėtinį</string>
   <string name="extension_uninstall_title">Pašalinti plėtinį?</string>
   <string name="extension_reset_preferences">Atstatyti plėtinio nuostatas</string>

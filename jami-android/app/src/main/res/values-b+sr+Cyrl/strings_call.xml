@@ -17,10 +17,10 @@ along with this program; if not, write to the Free Software
 -->
 <resources>
     <!-- Call error -->
-    <string name="call_error">Došlo je do greške pri pokretanju poziva.</string>
+    <string name="call_error">Дошло је до грешке при покретању позива.</string>
     <string name="call_error_no_microphone">Позив је отказан. Није откривен микрофон.</string>
     <string name="call_error_no_camera_no_microphone">Позив је отказан. Није откривена камера или микрофон.</string>
-    <string name="screen_sharing_error">Desila se greška prilikom pokretanja deljenja ekrana.</string>
+    <string name="screen_sharing_error">Дошло је до грешке при покретању дељења екрана.</string>
 
     <!-- SipCalls -->
     <string name="call_human_state_searching">Претрага</string>

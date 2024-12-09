@@ -1,10 +1,14 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
+  <string name="submit_issue_title">Pošaljite problem</string>
+  <string name="submit_issue_action_description"><u>Napravite novi izveštaj o problemu</u></string>
   <string name="section_license">Licenca</string>
+  <string name="sponsor_section">Jami je besplatni softver koji je razvio i podržava</string>
   <string name="copyright_section">Autorska prava</string>
   <string name="contribute_section">Doprinesi</string>
   <string name="version_section">Verzija</string>
+  <string name="no_browser_app_installed">Nije pronađena nijedna aplikacija za veb pregledač, instalirajte je da biste videli ovu stranicu.</string>
   <string name="website_chooser_title">Pogledajte veb lokaciju koristeći…</string>
   <string name="license">Ovaj softver se pruža „takav kakav je“, bez bilo kakvih garancija. Za detalje pogledajte<u> GNU General Public License verzija 3 ili novija</u></string>
   <string name="description">Jami je besplatan softver za univerzalnu komunikaciju koji poštuje slobode i privatnost svojih korisnika.</string>
@@ -13,7 +17,12 @@
   <string name="call_service_description">Ova usluga je neophodna da bi vaši pozivi bili u prvom planu. Aktivna je samo tokom poziva.</string>
   <string name="data_transfer_service_description">Ova usluga je neophodna za prikazivanje upornih obaveštenja tokom prenosa datoteka. Pokreće se samo tokom prenosa datoteka.</string>
   <!--About dialog-->
+  <string name="thank_note">Želeli bismo da se zahvalimo našim saradnicima, čiji su napori tokom mnogo godina učinili ovaj softver onim što jeste.</string>
+  <string name="developers">Programeri</string>
   <string name="media">Mediji</string>
+  <string name="community_management">Upravljanje zajednicama</string>
+  <string name="special_thanks">Posebno hvala</string>
+  <string name="end_note">Ovo je spisak ljudi koji su značajno uložili vreme, uz korisne rezultate, u Jamija. Svi takvi saradnici koji žele da budu dodati na listu treba da kontaktiraju Jami tim na contact@jami.net.</string>
   <!--RingActivity-->
   <string name="error_no_network">Nema internet konekcije</string>
   <string name="error_account_offline">Nalog je van mreže</string>
@@ -24,11 +33,14 @@
   <string name="menu_item_accounts">Upravljajte nalozima</string>
   <string name="menu_item_account">Upravljajte nalogom</string>
   <string name="menu_item_settings">Podešavanja</string>
+  <string name="menu_item_app_settings">Podešavanja aplikacije</string>
   <string name="menu_item_account_settings">Podešavanja naloga</string>
+  <string name="menu_item_extension_list">Podešavanje ekstenzija</string>
   <string name="menu_item_share">Podeli moj nalog</string>
   <string name="menu_item_about">O Jamiju</string>
   <string name="video_setting_title">Podešavanja video zapisa</string>
   <!--Dialing Fragment-->
+  <string name="dial_number">Pozovi broj</string>
   <!--History Fragment-->
   <!--Home Fragment-->
   <string name="invitation_card_title">Pozivnice primljene</string>
@@ -63,6 +75,7 @@
   <string name="notif_channel_background_service_descr">Omogućava primanje poziva i poruka u bilo kom trenutku.</string>
   <string name="notif_group_calls">Pozivi</string>
   <string name="notif_inprogress_group_call">Poziv u toku</string>
+  <string name="notif_background_service">Jami trenutno radi u pozadini</string>
   <string name="notif_mark_as_read">Označi kao pročitano</string>
   <string name="notif_dismiss">Odbaci</string>
   <string name="notif_reply">Odgovori</string>
@@ -89,6 +102,9 @@
   <string name="hist_in_call">Dolazni poziv od %1$s</string>
   <string name="hist_out_call">Odlazni poziv za %1$s</string>
   <string name="call_duration">Trajalo %s</string>
+  <string name="start_error_title">Nije moguće pokrenuti Jami</string>
+  <string name="action_call_accept">Prihvati poziv</string>
+  <string name="action_call_accept_audio">Prihvati sa zvukom</string>
   <string name="action_call_decline">Odbij</string>
   <string name="action_call_mic_mute">Isključi mikrofon</string>
   <string name="ab_action_speakerphone">Omogući zvučnik</string>
@@ -98,8 +114,11 @@
   <string name="ab_action_video_call">Почне видео позив</string>
   <string name="ab_action_change_screen_orientation">Promeni orijentaciju ekrana</string>
   <string name="share_via">Deli preko</string>
+  <string name="write_a_message">Napiši poruku</string>
   <string name="scan_qr">Skeniraj QR kod</string>
   <string name="qr_code">QR kod</string>
+  <string name="qr_code_not_contact">Nije QR kod za kontakt sa Jami</string>
+  <string name="new_group">Kreiraj novu grupu</string>
   <string name="ab_action_flipcamera">Obrni kameru</string>
   <string name="ab_action_hidepreview">Sakrij pregled</string>
   <string name="remote_recording">%s snima...</string>
@@ -141,6 +160,7 @@
   <string name="conversation_details">Детаљи разговора</string>
   <string name="contact_details">Detalji o kontaktu</string>
   <string name="conversation_action_delete_this">Izbrišite ovu konverzaciju</string>
+  <string name="conversation_action_delete_this_title">Izbrisati ovu konverzaciju?</string>
   <string name="leave_conversation">Оставите разговор</string>
   <string name="conversation_action_delete_this_message">Ova radnja se ne može opozvati.</string>
   <string name="conversation_action_history_clear">Očisti istoriju</string>
@@ -192,6 +212,7 @@
   <string name="help_password_choose">Izaberite jaku lozinku koju ćete zapamtiti da biste zaštitili svoj Jami nalog.</string>
   <string name="help_password_enter">Unesite svoju glavnu lozinku za Jami nalog.</string>
   <string name="help_server_enter">Unesite URL servera za upravljanje.</string>
+  <string name="help_pin_enter">Unesite PIN sa drugog konfigurisanog Jami naloga. Koristite funkciju „Izvoz Jami naloga“ da biste dobili PIN.</string>
   <string name="wizard_next">Napred</string>
   <string name="wizard_back">Nazad</string>
   <string name="wizard_skip">Preskoči</string>
@@ -201,6 +222,7 @@
   <string name="hist_invitation_received">Pozivnica je primljena</string>
   <!--Account summary-->
   <string name="profile">Profil</string>
+  <string name="profile_name">Ime profila</string>
   <string name="profile_message_warning">Vaš profil se deli samo sa vašim kontaktima</string>
   <string name="open_the_gallery">Otvori galeriju</string>
   <string name="take_a_photo">Snimite fotografiju</string>
@@ -219,6 +241,7 @@
   <string name="share_your_account_information">Podeli moje kontakt informacije</string>
   <string name="share_label">Podeli</string>
   <string name="generic_error_migration">Greška</string>
+  <string name="generic_error_migration_message">Došlo je do greške prilikom migracije naloga.</string>
   <string name="title_share_with">Podeli sa...</string>
   <!--Pending invitations-->
   <string name="accept">Prihvati</string>
@@ -321,10 +344,12 @@
   <string name="bottomSheet_mute_microphone_btn">Mikro</string>
   <string name="bottomSheet_sound_output_btn">Zvuci</string>
   <string name="bottomSheet_raiseHand_btn">Podigni ruku</string>
+  <string name="open_account_extension_settings">Otvorite podešavanja proširenja naloga</string>
   <string name="uninstall">Deinstaliraj</string>
   <string name="reset">Resetuj</string>
   <!--Swarm Details-->
   <string name="rename_btn">Potvrdi</string>
+  <string name="swarm_description">Dodaj opis</string>
   <string name="tab_members">Članovi</string>
   <string name="tab_files">Файлови</string>
   <string name="tab_settings">Podešavanja</string>
@@ -332,9 +357,11 @@
   <string name="dialog_hint_description">Opis</string>
   <string name="picker_title">Izaberi kontakte</string>
   <string name="picker_btn">Izaberi kontakte</string>
+  <string name="no_contact_to_add">Nemate kontakt za dodavanje</string>
   <string name="bottomsheet_contact">Kontaktiraj Jami\n%1$s</string>
   <string name="bottomsheet_remove">Уваљивање члана</string>
   <string name="error_open_no_app_found">Nije pronađena nijedna aplikacija za obradu ove datoteke: %1$s</string>
+  <string name="swarm_detail_no_document">Još nemate dokumenta.</string>
   <!--JamiId-->
   <string name="jami_id_copy">Kopiraj JamiId</string>
   <string name="jami_id_share">Podeli JamiId</string>
@@ -349,6 +376,7 @@
   <string name="welcome_jami_description">Podelite svoj Jami identifikator kako biste lakše kontaktirali sa drugima!</string>
   <!--Conversation details-->
   <string name="details">Детали</string>
+  <string name="swarm_type">Vrsta razgovora</string>
   <string name="Private">Приватни</string>
   <string name="mute_conversation">Умоли разговор</string>
   <!--Donation-->

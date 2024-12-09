@@ -17,6 +17,7 @@
   <!--RingActivity-->
   <!--AB menus-->
   <!--Sections-->
+  <string name="menu_item_app_settings">App-Einstellungen</string>
   <string name="menu_item_extension_list">Erweiterungseinstellungen</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Nummer wählen</string>
@@ -31,6 +32,8 @@
   <!--Call Fragment-->
   <string name="start_error_title">Jami kann nicht gestartet werden</string>
   <string name="action_call_accept">Anruf annehmen</string>
+  <string name="action_call_accept_audio">Mit Audio antworten</string>
+  <string name="action_call_accept_video">Mit Video antworten</string>
   <string name="action_call_hold_accept">Eingehende Anrufe nur mit Audio annehmen und aktuellen Anruf halten</string>
   <string name="action_call_hold_accept_video">Eingehenden Anrufen mit Video annehmen und aktuellen Anruf halten</string>
   <string name="action_call_end_accept">Eingehenden Anruf annehmen und aktuellen Anruf beenden</string>

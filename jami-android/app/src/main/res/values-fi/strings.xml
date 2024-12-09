@@ -33,6 +33,7 @@
   <string name="menu_item_accounts">Hallinnoi tilejä</string>
   <string name="menu_item_account">Hallinnoi tiliä</string>
   <string name="menu_item_settings">Asetukset</string>
+  <string name="menu_item_app_settings">Sovelluksen asetukset</string>
   <string name="menu_item_account_settings">Tiliasetukset</string>
   <string name="menu_item_extension_list">Laajennusten asetukset</string>
   <string name="menu_item_share">Jaa tunnukseni</string>
@@ -102,6 +103,8 @@
   <string name="call_duration">Kesto %s</string>
   <string name="start_error_title">Jamia ei voi käynnistää</string>
   <string name="action_call_accept">Hyväksy puhelu</string>
+  <string name="action_call_accept_audio">Hyväksy äänellä</string>
+  <string name="action_call_accept_video">Hyväksy videolla</string>
   <string name="action_call_hold_accept">Hyväksy saapuva puhelu äänellä ja pidä nykyinen puhelu</string>
   <string name="action_call_hold_accept_video">Hyväksy saapuva puhelu videolla ja pidä nykyinen puhelu</string>
   <string name="action_call_end_accept">Hyväksy saapuva puhelu ja lopeta nykyinen puhelu</string>
@@ -118,7 +121,7 @@
   <string name="write_a_message">Kirjoita viesti</string>
   <string name="scan_qr">Skannaa QR-koodi</string>
   <string name="qr_code">QR-koodi</string>
-  <string name="qr_code_not_contact">Ei Jami-yhteystiedon QR-koodi</string>
+  <string name="qr_code_not_contact">Ei Jamissa - henkilön QR-koodi</string>
   <string name="new_group">Luo uusi ryhmä</string>
   <string name="ab_action_flipcamera">Käännä kamera</string>
   <string name="ab_action_hidepreview">Piilota esikatselu</string>
@@ -294,9 +297,9 @@
   <!--Blacklist-->
   <string name="no_blocked_contact">EI estettyjä henkilöitä</string>
   <!--Smartlist-->
-  <string name="no_contact_request">Yhteyspyyntöä ei ole lähetetty</string>
+  <string name="no_contact_request">Pyyntöä ei ole lähetetty</string>
   <string name="conversation_placeholder">Sinulla ei ole vielä keskusteluja</string>
-  <string name="contact_request_sent">Yhteyspyyntö lähetetty</string>
+  <string name="contact_request_sent">Pyyntö lähetetty</string>
   <string name="start_conversation">Aloita keskustelu</string>
   <string name="search_results">Hakutulokset</string>
   <string name="tv_contact_row_header">Yhteystiedot</string>
@@ -408,6 +411,8 @@
   <string name="tab_files">Tiedostoja</string>
   <string name="tab_settings">Asetukset</string>
   <string name="not_admin_toast">Ainoastaan ylläpitäjät voivat muokata ryhmän tietoja</string>
+  <string name="dialogtitle_title">Muokkaa ryhmän nimeä</string>
+  <string name="dialogtitle_description">Muokkaa ryhmän kuvausta</string>
   <string name="dialog_hint_title">Otsikko</string>
   <string name="dialog_hint_description">Kuvaus</string>
   <string name="picker_title">Valitse henkilöt</string>
@@ -419,7 +424,7 @@
   <string name="swarm_detail_no_document">Sinulla ei ole vielä asiakirjoja.</string>
   <string name="group_admin">Ylläpitäjät</string>
   <string name="share_contact_intent_title">Lisää tämä henkilö Jamiin!</string>
-  <string name="share_contact_intent_body">Voit lisätä tämän henkilön \"%1$s\" Jamin hajautettuun viestintäalustaan: %2$s</string>
+  <string name="share_contact_intent_body">Voit lisätä tämän henkilön \"%1$s\" Jamin viestintäalustaan: %2$s</string>
   <!--JamiId-->
   <string name="jami_id_copy">Kopioi Jami-id</string>
   <string name="jami_id_share">Jaa Jami-id</string>
@@ -435,6 +440,7 @@
   <!--Conversation details-->
   <string name="details">Tiedot</string>
   <string name="secure_p2p_connection">Suojattu peer-to-peer-yhteys</string>
+  <string name="swarm_type">Keskustelun tyyppi</string>
   <string name="Private">Yksityinen</string>
   <string name="swarm_id">Swarm ID</string>
   <string name="show_qr_code">Näytä QR-koodi</string>

@@ -33,6 +33,7 @@
   <string name="menu_item_accounts">Administroni llogari</string>
   <string name="menu_item_account">Administroni llogari</string>
   <string name="menu_item_settings">Rregullime</string>
+  <string name="menu_item_app_settings">Rregullime Aplikacioni</string>
   <string name="menu_item_account_settings">Rregullime Llogarie</string>
   <string name="menu_item_extension_list">Rregullime Zgjerimesh</string>
   <string name="menu_item_share">Ndaje llogarinë time</string>
@@ -102,6 +103,8 @@
   <string name="call_duration">Zgjati %s</string>
   <string name="start_error_title">S’niset dot Jami!</string>
   <string name="action_call_accept">Pranoje thirrjen</string>
+  <string name="action_call_accept_audio">Pranoje me audio</string>
+  <string name="action_call_accept_video">Pranoje me video</string>
   <string name="action_call_hold_accept">Prano thirrje ardhëse vetëm me audio dhe mbaj në pritje thirrjen e tanishme</string>
   <string name="action_call_hold_accept_video">Prano thirrje ardhëse me audio dhe mbaj në pritje thirrjen e tanishme</string>
   <string name="action_call_end_accept">Prano thirrje ardhëse dhe përfundo thirrjen e tanishme</string>

@@ -33,6 +33,7 @@
   <string name="menu_item_accounts">管理帳號</string>
   <string name="menu_item_account">管理帳號</string>
   <string name="menu_item_settings">設定</string>
+  <string name="menu_item_app_settings">APP设置</string>
   <string name="menu_item_account_settings">帳號設定</string>
   <string name="menu_item_extension_list">扩展设置</string>
   <string name="menu_item_share">分享我的帳號</string>
@@ -101,6 +102,8 @@
   <string name="call_duration">最后的%s</string>
   <string name="start_error_title">无法启动Jami</string>
   <string name="action_call_accept">接聽通話</string>
+  <string name="action_call_accept_audio">接受音频</string>
+  <string name="action_call_accept_video">接受视频</string>
   <string name="action_call_hold_accept">接受仅带音频的来电并保持当前通话</string>
   <string name="action_call_hold_accept_video">接受视频来电并保持当前通话</string>
   <string name="action_call_end_accept">接听来电并结束当前通话</string>

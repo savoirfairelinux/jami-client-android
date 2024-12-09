@@ -33,6 +33,7 @@
   <string name="menu_item_accounts">Administrar cuentas</string>
   <string name="menu_item_account">Administrar cuenta</string>
   <string name="menu_item_settings">Configuración</string>
+  <string name="menu_item_app_settings">Configuración de la Aplicación</string>
   <string name="menu_item_account_settings">Configuración de la cuenta</string>
   <string name="menu_item_extension_list">Configuración de Extensiones</string>
   <string name="menu_item_share">Compartir mi cuenta</string>
@@ -103,6 +104,8 @@
   <string name="call_duration">Último %s</string>
   <string name="start_error_title">No se puede iniciar Jami</string>
   <string name="action_call_accept">Aceptar llamada</string>
+  <string name="action_call_accept_audio">Aceptar con audio</string>
+  <string name="action_call_accept_video">Aceptar con vídeo</string>
   <string name="action_call_hold_accept">Aceptar llamadas entrantes solo con audio y mantener presionada la llamada actual</string>
   <string name="action_call_hold_accept_video">Aceptar llamadas entrantes con vídeo y mantener presionada la llamada actual</string>
   <string name="action_call_end_accept">Aceptar llamada entrante y finalizar la llamada actual</string>

@@ -23,11 +23,15 @@
   <string name="dialog_wait_create_details">Sačekaj dok se dodaje tvoj novi nalog...</string>
   <string name="dialog_wait_update">Ažuriranje naloga</string>
   <string name="dialog_wait_update_details">Sačekaj dok se ažurira tvoj nalog...</string>
+  <string name="dialog_warn_ip2ip_account_title">Napravite prazan SIP nalog?</string>
+  <string name="dialog_warn_ip2ip_account_message">Upravo ćete kreirati SIP nalog bez važećeg imena hosta. Moći ćete samo da upućujete i primate direktne IP pozive. Kasnije možete da izmenite svoj nalog</string>
   <string name="account_type_ip2ip">IP nalog</string>
   <string name="help_ring">Jami nalog ti omogućava da bezbedno dođeš do ljudi peer to peer preko potpuno distribuirane mreže.</string>
   <string name="help_sip_title">Dodaj SIP nalog</string>
   <string name="help_sip">Podesi postojeći SIP nalog</string>
+  <string name="create_sip_account">Конфигуришите SIP  налог</string>
   <!--Strings related to account deletion-->
+  <string name="account_delete_dialog_title">Izbrisati nalog?</string>
   <string name="account_delete_dialog_message">Ova radnja se ne može opozvati.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Nema registrovanog naloga</string>
@@ -36,6 +40,8 @@
   <string name="account_device_revoke">Opozvati uređaj</string>
   <string name="account_device_revocation_success_title">Uspešno</string>
   <string name="account_device_revocation_success">Uređaj je opozvan!</string>
+  <string name="account_device_revocation_error_title">Opozovi grešku uređaja</string>
+  <string name="account_device_revocation_wrong_password">Netačna lozinka.</string>
   <string name="account_device_revocation_unknown_device">Nepoznat uređaj.</string>
   <string name="account_device_revocation_error_unknown">Nepoznata greška.</string>
   <string name="account_password_change">Promeni lozinku</string>
@@ -101,11 +107,13 @@
   <string name="account_published_address_label">Objavljena adresa</string>
   <string name="disabled">Onemogućeno</string>
   <string name="enabled">Omogućeno</string>
-  <string name="account_proxy_label">DHT proxy</string>
-  <string name="account_proxy_enable_label">Koristi DHT proxy</string>
-  <string name="account_proxy_server_label">DHT proxy adresa</string>
-  <string name="account_proxy_server_list_label">URL DHT proxy liste</string>
-  <string name="account_sip_proxy_label">Proxy</string>
+  <string name="account_proxy_label">DHT proksi</string>
+  <string name="account_proxy_enable_label">Koristi DHT proksi</string>
+  <string name="account_proxy_list_enable_label">Koristite DHT proksi listu</string>
+  <string name="account_proxy_server_label">DHT proksi adresa</string>
+  <string name="account_proxy_server_list_label">URL DHT proksi liste</string>
+  <string name="account_proxy_server_used">Koristi: %1$s</string>
+  <string name="account_sip_proxy_label">Proksi</string>
   <string name="account_peer_discovery_label">Otkrivanje lokalnih parnjaka</string>
   <string name="account_peer_discovery_enable_label">Omogući otkrivanje lokalnih parnjaka</string>
   <string name="account_peer_discovery_enable_summary">Poveži se sa drugim DHT čvorovima koji se oglašavaju na našoj lokalnoj mreži</string>
@@ -142,21 +150,36 @@
   <string name="export_account_wait_message">Izvoz informacija o nalogu</string>
   <string name="account_export_file">Nalog za rezervnu kopiju</string>
   <string name="account_export_file_summary">Napravite rezervnu kopiju naloga na uređaju da biste ga kasnije vratili.</string>
+  <string name="account_export_end_decryption_message">Netačna lozinka. Pokušajte ponovo sa tačnom lozinkom.</string>
   <string name="account_export_end_network_title">Greška na mreži</string>
+  <string name="account_export_end_network_message">Došlo je do mrežne greške pri izvozu naloga. Proverite svoju povezanost.</string>
   <string name="account_export_end_error_title">Greška</string>
+  <string name="account_export_end_error_message">Došlo je do nepoznate greške prilikom izvoza naloga.</string>
   <string name="account_enter_password">Unesi lozinku</string>
-  <string name="account_contact_me">Контактирај ме на Џами!</string>
+  <string name="account_share_body">Kontaktirajte me koristeći „%1$s“ na Jami distribuiranoj komunikacionoj platformi: %2$s</string>
+  <string name="account_share_body_with_username">Kontaktirajte me koristeći „%1$s“ ili moje javno korisničko ime „%2$s“ na Jami distribuiranoj komunikacionoj platformi: %3$s</string>
+  <string name="account_contact_me">Kontaktiraj me na Jami!</string>
   <string name="update_account">Ažuriraj nalog</string>
   <string name="account_migration">Vaš Jami nalog može biti ažuriran.\nMolim Vas unesite lozinku.</string>
   <string name="ring_account">Jami nalog</string>
   <string name="sip_account">SIP nalog</string>
   <string name="ring_account_identity">Identitet</string>
   <string name="account_migration_title_dialog">Migracija naloga</string>
+  <string name="account_migration_message_dialog">Vaše naloge treba ažurirati. Da li želite da odete na ekran za upravljanje nalogom da biste izvršili ovu operaciju?</string>
   <string name="account_update_needed">Potrebno je ažuriranje</string>
+  <string name="account_cannot_be_found_title">Greška naloga</string>
+  <string name="account_cannot_be_found_message">Nije moguće pronaći nalog na Jami mreži. Uverite se da je izvezeno na Jami sa postojećeg uređaja i da su obezbeđeni akreditivi tačni.</string>
+  <string name="jams_account_cannot_be_found_message">Došlo je do greške pri povezivanju naloga. Proverite akreditive i pokušajte ponovo.</string>
   <string name="account_sip_cannot_be_registered_message">Možete nastaviti sa procesom pravljenja naloga ili možete uređivati svoje informacije ovde. Uređivanje će biti moguće i kasnije u podešavanju naloga.</string>
   <string name="account_no_network_title">Greška na mreži</string>
+  <string name="account_no_network_message">Došlo je do greške pri povezivanju prilikom dodavanja Jami naloga u distribuiranu mrežu. Proverite povezanost uređaja.</string>
   <string name="account_device_added_title">Uređaj naloga je dodat</string>
+  <string name="account_device_added_message">Jami nalog je uspešno podešen na ovom uređaju.</string>
   <string name="account_device_updated_title">Uređaj naloga je ažuriran</string>
+  <string name="account_device_updated_message">Jami nalog je uspešno ažuriran.</string>
+  <string name="account_cannot_be_updated_message">Došlo je do greške pri ažuriranju naloga. Proverite lozinku naloga.</string>
+  <string name="account_sip_success_title">SIP nalog je registrovan</string>
+  <string name="account_sip_success_message">SIP nalog je uspešno registrovan.</string>
   <string name="account_sip_register_anyway">Registruj se u svakom slučaju.</string>
   <!--TV-->
   <string name="account_tv_settings_header">Podešavanja za nalog</string>
@@ -176,8 +199,11 @@
   <string name="account_link_export_button">Povežite novi uređaj</string>
   <string name="account_link_show_button">Prikaži %d više povezanih uređaja</string>
   <string name="account_link_hide_button">Sakri povezane uređaje</string>
+  <string name="account_link_export_info">Da biste koristili ovaj nalog na drugim uređajima, prvo ga morate izložiti na Jami. Ovo će generisati PIN kod koji morate da unesete na novom uređaju da biste podesili nalog. PIN ističe za 10 minuta.</string>
   <string name="account_start_export_button">Generiši PIN</string>
   <string name="account_end_export_button">zatvori</string>
+  <string name="account_end_export_infos">Vaš PIN je:\n\n%%\n\nDa biste dovršili proces, morate da otvorite Jami na novom uređaju. Napravite novi nalog sa „Poveži ovaj uređaj sa nalogom“. PIN ističe za 10 minuta.</string>
+  <string name="account_link_export_info_light">Da biste koristili ovaj nalog na drugim uređajima, prvo ga morate izložiti na Jami. Ovo će generisati PIN kod koji morate da unesete na novom uređaju da biste podesili nalog. PIN ističe za 10 minuta.</string>
   <string name="account_export_title">Poveži nalog sa drugim uređajima</string>
   <string name="account_connect_server_button">Povežite se sa serverom za upravljanje</string>
   <string name="account_connect_button">Poveži</string>
@@ -185,6 +211,9 @@
   <string name="help_credentials_enter">Unesite akreditive svoje organizacije</string>
   <string name="help_connect_password_enter">Unesi lozinku za vašu organizaciju</string>
   <string name="account_connect_prompt_username">Korisničko ime</string>
+  <string name="account_connect_server">Povežite se sa JAMS serverom</string>
+  <string name="account_enter_username">Unesi korisničko ime</string>
+  <string name="account_enter_servername">Unesite server</string>
   <!--Name registration-->
   <string name="error_username_empty">Unesi korisničko ime</string>
   <string name="no_registered_name_for_account">Nema registrovanog imena</string>
@@ -209,17 +238,21 @@
   <string name="account_creation_profile">Napravi svoj profil</string>
   <string name="account_creation_ring">Napravi svoj Jami nalog</string>
   <string name="account_link_title">Povežite ovaj uređaj</string>
+  <string name="account_sip_cannot_be_registered">Došlo je do greške pri registraciji SIP naloga.</string>
   <!--Edit profile-->
+  <string name="account_edit_profile">Uredi profil</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Unesi lozinku da bi potvrdio</string>
   <string name="enter_password">Unesi lozinku</string>
   <string name="revoke_device_title">Opozvati uređaj</string>
+  <string name="revoke_device_message">Da li zaista želite da opozovete %1$s?</string>
   <string name="revoke_device_wait_title">Molim sačekajte...</string>
   <string name="revoke_device_wait_message">Opozovi uređaj</string>
   <string name="rename_device_title">Preimenuj ovaj uređaj</string>
   <string name="rename_device_message">Odaberite novo ime za identifikaciju ovog uređaja na Vašem Jami nalogu</string>
   <string name="rename_device_button">Preimenuj uređaj</string>
   <string name="account_rename_device_hint">Odaberi novo ime za uređaj</string>
+  <string name="account_device_name_empty">Ime uređaja ne može biti prazno.</string>
   <string name="account_device_this_indicator">Ovaj uređaj</string>
   <string name="account_disabled_indicator">onesposobljen</string>
   <!--Link a new device-->
@@ -232,8 +265,12 @@
   <string name="account_link_password">Ovaj nalog je šifrovan lozinkom, unesite lozinku da biste generisali PIN kod.</string>
   <string name="account_link_generate_button">Generiši</string>
   <string name="account_link_time_valid">PIN kod će biti nevažeći: %1$s.</string>
+  <string name="account_link_device_info">Izaberite „Poveži novi uređaj“ iz druge Jami aplikacije da biste prikazali KR kod ili PIN</string>
   <string name="account_generate_export_device">Na drugom uređaju</string>
+  <string name="account_generate_export_info">Instalirajte i pokrenite Jami, izaberite „Uvezi sa drugog uređaja“ i skenirajte QR kod.</string>
   <string name="content_description_qr_generated">Tvoj QR kod</string>
+  <string name="account_generate_export_invalid">PIN više nije važeći.\nUnesite lozinku i generišite drugu da biste povezali novi uređaj.</string>
+  <string name="account_generate_export_invalid_two">PIN više nije važeći.\nGenerišite još jedan da biste povezali novi uređaj.</string>
   <string name="help_pin_info">Popunite ako je nalog šifrovan lozinkom</string>
   <string name="connect_device_scanqr">Skeniraj QR kod</string>
   <string name="connect_device_enterPIN">Ili unesi PIN</string>

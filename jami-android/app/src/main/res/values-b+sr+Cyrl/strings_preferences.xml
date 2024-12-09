@@ -36,6 +36,7 @@
   <string name="pref_blackList_title">Блок листа</string>
   <string name="pref_blackList_summary">Провери своју листу блокираних.</string>
   <string name="pref_delete_account_title">Обрисати налог</string>
+  <string name="pref_delete_account_summary">Izbrišite nalog sa ovog uređaja</string>
   <string name="pref_newGroup_title">Омогући групно ћаскање</string>
   <string name="pref_newGroup_summary">Омогући креирање група у Јами.</string>
   <string name="pref_logs_title">Дијагностичке евиденције</string>

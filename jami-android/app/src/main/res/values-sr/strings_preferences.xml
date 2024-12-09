@@ -36,6 +36,7 @@
   <string name="pref_blackList_title">Blok lista</string>
   <string name="pref_blackList_summary">Proverite svoju listu blokiranih.</string>
   <string name="pref_delete_account_title">Obrisati nalog</string>
+  <string name="pref_delete_account_summary">Izbrišite nalog sa ovog uređaja</string>
   <string name="pref_newGroup_title">Omogući grupno ćaskanje</string>
   <string name="pref_newGroup_summary">Omogući kreiranje grupa u Jamiju.</string>
   <string name="pref_logs_title">Dijagnostičke evidencije</string>

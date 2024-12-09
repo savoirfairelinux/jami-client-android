@@ -34,6 +34,9 @@
   <string name="pref_clearHistory_summary">Cancella la cronologia di tutte le conversazioni. Questa azione non può essere annullata.</string>
   <string name="pref_notification_title">Visibilità delle notifiche</string>
   <string name="pref_notification_summary">Imposta la visibilità delle notifiche dell\'applicazione sulla schermata di blocco.</string>
+  <string name="pref_connectivity_title">Modalità di connessione</string>
+  <string name="pref_connectivity_summary">Scegliere come collegare Jami al sistema distribuito
+     per ricevere chiamate e messaggi.</string>
   <string name="pref_blackList_title">Contatti bloccati</string>
   <string name="pref_blackList_summary">Controlla l\'elenco dei contatti bloccati.</string>
   <string name="pref_delete_account_title">Elimina l\'account</string>
@@ -61,8 +64,24 @@
   <string name="notification_public">Pubblico\n(mostra le notifiche e il relativo contenuto nella schermata di blocco)\n</string>
   <string name="notification_private">Privato\n(mostra le notifiche ma nascondi il loro contenuto nella schermata di blocco)\n</string>
   <string name="notification_secret">Segreto\n(non mostrare le notifiche nella schermata di blocco)</string>
+  <string name="connectivity_google_services_title">Servizi Google</string>
+  <string name="connectivity_google_services_description">Utilizzare Google Firebase e un proxy DHT
+       per ricevere le notifiche.</string>
+  <string name="connectivity_local_node_title">Nodo DHT locale</string>
+  <string name="connectivity_local_node_description">Utilizzare un nodo DHT locale per connettersi
+      con altri dispositivi e contatti Jami.</string>
+  <string name="connectivity_unified_push_title">Unified Push</string>
+  <string name="connectivity_unified_push_description">Utilizzare un server Unified Push
+personalizzato per ricevere le notifiche.</string>
   <string name="connectivity_custom_title">Personalizzata</string>
+  <string name="connectivity_custom_description">Attualmente non si utilizza nessuna
+    delle preimpostazioni disponibili.</string>
   <!--Extension-->
+  <string name="pref_enable_extensions_title">Attiva le estensioni</string>
+  <string name="pref_enable_extensions_summary">Attiva le estensioni e imposta i loro parametri</string>
+  <string name="pref_available_extensions_title">Estensioni disponibili</string>
+  <string name="pref_available_extensions_summary">Estensioni installate e aggiunta
+ di nuove estensioni</string>
   <string name="fab_extensions_add">Aggiungi nuova estensione</string>
   <string name="extension_uninstall_title">Disinstallare l\'estensione?</string>
   <string name="extension_reset_preferences">Ripristina le preferenze dell\'estensione</string>

@@ -158,8 +158,8 @@ Voit muokata tiliäsi myöhemmin</string>
   <string name="account_export_end_error_title">Virhe</string>
   <string name="account_export_end_error_message">Tiliä vietäessä tapahtui tuntematon virhe.</string>
   <string name="account_enter_password">Anna salasana</string>
-  <string name="account_share_body">Ota minuun yhteyttä käyttämällä \"%1$s\" Jamin hajautettua viestintäalustaa: %2$s</string>
-  <string name="account_share_body_with_username">Ota minuun yhteyttä käyttämällä \"%1$s\" tai julkista käyttäjänimeä \"%2$s\" Jamin hajautetulla viestintäalustalla: %3$s</string>
+  <string name="account_share_body">Ota minuun yhteyttä käyttämällä \"%1$s\" Jami viestintäalustalla: %2$s</string>
+  <string name="account_share_body_with_username">Ota minuun yhteyttä käyttämällä \"%1$s\" tai julkista käyttäjänimeä \"%2$s\" Jami viestintäalustalla: %3$s</string>
   <string name="account_contact_me">Ota minuun yhteyttä Jamilla!</string>
   <string name="update_account">Päivitä tili</string>
   <string name="account_migration">Jami-tilisi voidaan päivittää.\nAnna salasanasi.</string>
