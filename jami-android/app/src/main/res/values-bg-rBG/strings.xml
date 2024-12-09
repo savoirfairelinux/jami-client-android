@@ -24,7 +24,6 @@
   <string name="menu_item_accounts">Управление на профилите</string>
   <string name="menu_item_account">Управление на профила</string>
   <string name="menu_item_settings">Настройки</string>
-  <string name="menu_item_advanced_settings">Разширени настройки</string>
   <string name="menu_item_account_settings">Настройки на сметката</string>
   <string name="menu_item_share">Споделете ми профила.</string>
   <string name="menu_item_about">Относно Jami</string>
@@ -318,14 +317,12 @@
   <string name="tab_members">Членове</string>
   <string name="tab_files">Файлове</string>
   <string name="tab_settings">Настройки</string>
-  <string name="dialogtitle_title">Изменение на заглавието на \"Свара\"</string>
-  <string name="dialogtitle_description">Редактиране Описание на скоп</string>
   <string name="dialog_hint_title">Заглавие</string>
   <string name="dialog_hint_description">Описание</string>
   <string name="picker_title">Изберете контакти</string>
   <string name="picker_btn">Изберете контакти</string>
   <string name="bottomsheet_contact">Свържете се с Jami\n%1$s</string>
-  <string name="bottomsheet_remove">Отдръпнете се от роя.</string>
+  <string name="bottomsheet_remove">Извадете член</string>
   <!--JamiId-->
   <string name="jami_id_validate">Регистрирайте потребителско име</string>
   <string name="jami_id_looking_for_availability">Проверяване дали потребителското име е свободно…</string>
@@ -335,6 +332,7 @@
   <!--Conversation details-->
   <string name="details">Подробности</string>
   <string name="Private">Приватна</string>
+  <string name="mute_conversation">Мълчави разговори</string>
   <!--Donation-->
   <!--Extension-->
 </resources>

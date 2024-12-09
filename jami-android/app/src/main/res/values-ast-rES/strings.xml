@@ -24,7 +24,6 @@
   <string name="menu_item_accounts">Gestionar cuentas</string>
   <string name="menu_item_account">Gestionar cuenta</string>
   <string name="menu_item_settings">Configuración</string>
-  <string name="menu_item_advanced_settings">La configuración avanzada</string>
   <string name="menu_item_account_settings">Configuración de cuenta</string>
   <string name="menu_item_share">Compartir la mio cuenta</string>
   <string name="menu_item_about">Sobre Jami</string>
@@ -316,14 +315,12 @@
   <string name="tab_members">Los miembros</string>
   <string name="tab_files">Archivos</string>
   <string name="tab_settings">Configuración</string>
-  <string name="dialogtitle_title">Editáu Títulu de la colección</string>
-  <string name="dialogtitle_description">Edit Descripción de la cúmulu</string>
   <string name="dialog_hint_title">Títulu</string>
   <string name="dialog_hint_description">Descripción</string>
   <string name="picker_title">Seleccionar contactos</string>
   <string name="picker_btn">Seleccionar contactos</string>
   <string name="bottomsheet_contact">Contactar con Jami\n%1$s</string>
-  <string name="bottomsheet_remove">La so familia ye una familia de trés fíos.</string>
+  <string name="bottomsheet_remove">Remover miembru</string>
   <!--JamiId-->
   <string name="jami_id_validate">Registrar nome d\' usuariu</string>
   <string name="jami_id_looking_for_availability">Buscando la disponibilidá del nome d\'usuariu...</string>
@@ -333,6 +330,7 @@
   <!--Conversation details-->
   <string name="details">Detalles</string>
   <string name="Private">Privada</string>
+  <string name="mute_conversation">La conversación silenciosa</string>
   <!--Donation-->
   <!--Extension-->
 </resources>

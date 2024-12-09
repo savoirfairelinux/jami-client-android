@@ -6,6 +6,10 @@
   <string name="pref_category_system">Система</string>
   <string name="pref_category_privacy">Конфиденциальность</string>
   <string name="pref_category_diagnostic">Диагностика</string>
+  <string name="pref_category_appearance">Внешний вид</string>
+  <string name="pref_category_connectivity">Связь</string>
+  <string name="pref_category_extensions">Расширения</string>
+  <string name="pref_category_video_settings">Дополнительные настройки видео</string>
   <string name="pref_mobileData_title">Мобильные данные</string>
   <string name="pref_mobileData_summary">Разрешить Jami использовать 3G/LTE сети в дополнение к Wi-Fi</string>
   <string name="pref_pushNotifications_title">Push-уведомления</string>
@@ -46,9 +50,8 @@
   <string name="pref_link_preview_title">Показывать предварительный просмотр ссылок в разговорах</string>
   <string name="pref_link_preview_summary">Предварительный просмотр требует загрузки контента со сторонних серверов.</string>
   <!--Notifications Visibility-->
+  <string name="connectivity_custom_title">Настраиваемый</string>
   <!--Extension-->
-  <string name="pref_extensions_title">Расширения</string>
-  <string name="pref_extensions_summary">Включить расширения и настроить их параметры</string>
   <string name="fab_extensions_add">Добавить новое расширение</string>
   <string name="extension_uninstall_title">Удалить расширение?</string>
   <string name="extension_reset_preferences">Сбросить настройки расширения</string>

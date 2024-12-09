@@ -24,7 +24,6 @@
   <string name="menu_item_accounts">Управљајте налозима</string>
   <string name="menu_item_account">Управљајте налогом</string>
   <string name="menu_item_settings">Подешавања</string>
-  <string name="menu_item_advanced_settings">Напредна подешавања</string>
   <string name="menu_item_account_settings">Подешавања налога</string>
   <string name="menu_item_share">Подели мој налог</string>
   <string name="menu_item_about">О Јамију</string>
@@ -329,14 +328,12 @@
   <string name="tab_members">Чланови</string>
   <string name="tab_files">Датотеке</string>
   <string name="tab_settings">Подешавања</string>
-  <string name="dialogtitle_title">Уреди назив групе</string>
-  <string name="dialogtitle_description">Уреди опис групе</string>
   <string name="dialog_hint_title">Наслов</string>
   <string name="dialog_hint_description">Опис</string>
   <string name="picker_title">Изабери контакте</string>
   <string name="picker_btn">Изабери контакте</string>
   <string name="bottomsheet_contact">Контактирај Јами\n%1$s</string>
-  <string name="bottomsheet_remove">Уклони из групе</string>
+  <string name="bottomsheet_remove">Уваљивање члана</string>
   <string name="error_open_no_app_found">Није пронађена ниједна апликација за обраду ове датотеке: %1$s</string>
   <!--JamiId-->
   <string name="jami_id_copy">Копирај JamiId</string>
@@ -353,6 +350,7 @@
   <!--Conversation details-->
   <string name="details">Детали</string>
   <string name="Private">Приватно</string>
+  <string name="mute_conversation">Умоли разговор</string>
   <!--Donation-->
   <string name="donation_card_description">Ако уживате у коришћењу Јамија и верујете у нашу мисију, да ли бисте дали донацију?</string>
   <string name="donation_card_not_now">Не сада</string>

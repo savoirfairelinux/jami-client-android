@@ -6,6 +6,9 @@
   <string name="pref_category_system">Систем</string>
   <string name="pref_category_privacy">Хувийн байдал</string>
   <string name="pref_category_diagnostic">Хэвлэл</string>
+  <string name="pref_category_appearance">Харааны байдал</string>
+  <string name="pref_category_connectivity">Холбоотой байдал</string>
+  <string name="pref_category_video_settings">Видеоны дэвшилтэт тохируулалт</string>
   <string name="pref_mobileData_title">Гар утасны мэдээлэл</string>
   <string name="pref_mobileData_summary">Jami-г Wi-Fi-ээс гадна 3G/LTE сүлжээний хэрэгслийн ашиглалтанд оруулаарай</string>
   <string name="pref_pushNotifications_title">Дашрамдсан мэдэгдэл</string>
@@ -45,5 +48,6 @@
   <string name="pref_link_preview_title">Хэлэлцүүлэгт холболтны урьдчилсан үзлэг үзүүлнэ</string>
   <string name="pref_link_preview_summary">Анхны үзлэгт гуравдагч этгээдийн серверээс контентыг татаж авах шаардлагатай.</string>
   <!--Notifications Visibility-->
+  <string name="connectivity_custom_title">Хувьцааны</string>
   <!--Extension-->
 </resources>

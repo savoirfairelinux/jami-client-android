@@ -24,7 +24,6 @@
   <string name="menu_item_accounts">Հաշվետքերի կառավարում</string>
   <string name="menu_item_account">Հաշիվի կառավարում</string>
   <string name="menu_item_settings">Կարգավորումներ</string>
-  <string name="menu_item_advanced_settings">Հրագաթնակետային կարգավորումներ</string>
   <string name="menu_item_account_settings">Հաշվեի կարգավորումները</string>
   <string name="menu_item_share">Կիսվեք իմ հաշիվով</string>
   <string name="menu_item_about">Ջամիի մասին</string>
@@ -317,14 +316,12 @@
   <string name="tab_members">Անդամներ</string>
   <string name="tab_files">Ֆայլեր</string>
   <string name="tab_settings">Կարգավորումներ</string>
-  <string name="dialogtitle_title">Դրսում Swarm անվանումը</string>
-  <string name="dialogtitle_description">Դրսում Սավիրի նկարագրությունը</string>
   <string name="dialog_hint_title">Գլուխ</string>
   <string name="dialog_hint_description">Բացատրություն</string>
   <string name="picker_title">Ընտրեք կոնտակտները</string>
   <string name="picker_btn">Ընտրեք կոնտակտները</string>
   <string name="bottomsheet_contact">Հաղորդակցիր Jami\n%1$s</string>
-  <string name="bottomsheet_remove">Բեռնել զավակից</string>
+  <string name="bottomsheet_remove">Հեռացնել անդամ</string>
   <!--JamiId-->
   <string name="jami_id_validate">Գրանցել օգտվողի անունը</string>
   <string name="jami_id_looking_for_availability">Փնտրում եմ օգտատերերի անունների հասանելիությունը...</string>
@@ -334,6 +331,7 @@
   <!--Conversation details-->
   <string name="details">Մասնավորապես</string>
   <string name="Private">Անձնական</string>
+  <string name="mute_conversation">Լռական զրույց</string>
   <!--Donation-->
   <string name="donation_card_not_now">Ոչ հիմա</string>
   <!--Extension-->

@@ -24,7 +24,6 @@
   <string name="menu_item_accounts">Spravovat účty</string>
   <string name="menu_item_account">Spravovat účet</string>
   <string name="menu_item_settings">Nastavení</string>
-  <string name="menu_item_advanced_settings">Pokročilá nastavení</string>
   <string name="menu_item_account_settings">Nastavení účtu</string>
   <string name="menu_item_share">Sdílet můj účet</string>
   <string name="menu_item_about">O Jami</string>
@@ -322,14 +321,12 @@
   <string name="tab_members">Členové</string>
   <string name="tab_files">Soubory</string>
   <string name="tab_settings">Nastavení</string>
-  <string name="dialogtitle_title">Upravit název swarmu</string>
-  <string name="dialogtitle_description">Upravit popis swarm</string>
   <string name="dialog_hint_title">Název</string>
   <string name="dialog_hint_description">Popis</string>
   <string name="picker_title">Vybrat kontakt</string>
   <string name="picker_btn">Vybrat kontakt</string>
   <string name="bottomsheet_contact">Kontaktovat Jami\n %1$s</string>
-  <string name="bottomsheet_remove">Odstranit ze swarmu</string>
+  <string name="bottomsheet_remove">Odstranit člena</string>
   <!--JamiId-->
   <string name="jami_id_validate">Zaregistrovat uživatelské jméno</string>
   <string name="jami_id_looking_for_availability">Zjišťuje se dostupnost uživatelského jména…</string>
@@ -339,6 +336,7 @@
   <!--Conversation details-->
   <string name="details">Detaily</string>
   <string name="Private">Soukromý</string>
+  <string name="mute_conversation">Ztlumit konverzaci</string>
   <!--Donation-->
   <string name="donation_card_not_now">Teď ne</string>
   <!--Extension-->

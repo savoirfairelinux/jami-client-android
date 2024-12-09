@@ -24,7 +24,6 @@
   <string name="menu_item_accounts">Хисапларны идарә итү</string>
   <string name="menu_item_account">Хисапны идарә итү</string>
   <string name="menu_item_settings">Калыплар</string>
-  <string name="menu_item_advanced_settings">Алга таба урнаштырулар</string>
   <string name="menu_item_account_settings">Хисапны урнаштыру</string>
   <string name="menu_item_share">Минем хисабымны уртаклашыгыз</string>
   <string name="menu_item_about">Җәми турында</string>
@@ -154,6 +153,7 @@
   <string name="tab_settings">Калыплар</string>
   <string name="dialog_hint_title">Исем</string>
   <string name="dialog_hint_description">Тәрҗемәсе</string>
+  <string name="bottomsheet_remove">Алып баручыны алып ташлау</string>
   <!--JamiId-->
   <string name="jami_id_validate">Кулланучы исемен теркәгез</string>
   <string name="jami_id_looking_for_availability">Исемнәр эзлибез...</string>
@@ -163,6 +163,7 @@
   <!--Conversation details-->
   <string name="details">Мәгълүматлар</string>
   <string name="Private">Шәхси</string>
+  <string name="mute_conversation">Тыныч сөйләшү</string>
   <!--Donation-->
   <string name="donation_card_not_now">Хәзер түгел</string>
   <!--Extension-->

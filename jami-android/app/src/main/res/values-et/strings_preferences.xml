@@ -6,6 +6,10 @@
   <string name="pref_category_system">Süsteem</string>
   <string name="pref_category_privacy">Privaatsus</string>
   <string name="pref_category_diagnostic">Diagnostika</string>
+  <string name="pref_category_appearance">Välimus</string>
+  <string name="pref_category_connectivity">Ühenduvus</string>
+  <string name="pref_category_extensions">Lisamoodulid</string>
+  <string name="pref_category_video_settings">Täiendavad videoseadistused</string>
   <string name="pref_mobileData_title">Mobiilne andmeside</string>
   <string name="pref_mobileData_summary">Lisaks WiFi võrkudel luba, et Jami kasutab 3G/LTE võrke</string>
   <string name="pref_pushNotifications_title">Tõuketeavitused</string>
@@ -45,7 +49,7 @@
   <string name="pref_link_preview_title">Näita vestlustes linkide eelvaateid</string>
   <string name="pref_link_preview_summary">Eelvaadete näitamine eeldab sisu laadimist kolmandate osapoolte serveritest.</string>
   <!--Notifications Visibility-->
+  <string name="connectivity_custom_title">Kohandatud</string>
   <!--Extension-->
-  <string name="pref_extensions_title">Lisamoodulid</string>
   <string name="extension_invalid_signature">Plugina <b>%1$s</b> allkiri on vigane</string>
 </resources>

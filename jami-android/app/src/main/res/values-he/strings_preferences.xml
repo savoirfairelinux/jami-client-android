@@ -6,6 +6,9 @@
   <string name="pref_category_system">מערכת</string>
   <string name="pref_category_privacy">פרטיות</string>
   <string name="pref_category_diagnostic">אבחון</string>
+  <string name="pref_category_appearance">מראה</string>
+  <string name="pref_category_connectivity">קישור</string>
+  <string name="pref_category_video_settings">הגדרות וידאו מתקדמות</string>
   <string name="pref_mobileData_title">נתונים ניידים</string>
   <string name="pref_mobileData_summary">אפשרות לג\'מי ברשתות 3G/LTE בנוסף ל-Wi-Fi</string>
   <string name="pref_pushNotifications_title">הודעות דחפה</string>
@@ -45,5 +48,6 @@
   <string name="pref_link_preview_title">הראה ראיות ראיות של קישורים בשיחות</string>
   <string name="pref_link_preview_summary">ראיות ראיות דורשות הורדה של תוכן משרתים של צד שלישי.</string>
   <!--Notifications Visibility-->
+  <string name="connectivity_custom_title">התאמה אישית</string>
   <!--Extension-->
 </resources>

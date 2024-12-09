@@ -24,7 +24,6 @@
   <string name="menu_item_accounts">ניהול חשבונות</string>
   <string name="menu_item_account">מנהל חשבון</string>
   <string name="menu_item_settings">הגדרות</string>
-  <string name="menu_item_advanced_settings">הגדרות מתקדמות</string>
   <string name="menu_item_account_settings">הגדרות החשבון</string>
   <string name="menu_item_share">לחלוק את החשבון שלי</string>
   <string name="menu_item_about">על אודות Jami</string>
@@ -170,6 +169,7 @@
   <string name="tab_settings">הגדרות</string>
   <string name="dialog_hint_title">כותרת</string>
   <string name="dialog_hint_description">תיאור</string>
+  <string name="bottomsheet_remove">הסיר חבר</string>
   <!--JamiId-->
   <string name="jami_id_validate">רשום שם משתמש</string>
   <string name="jami_id_looking_for_availability">מחפש זמינות שם המשתמש...</string>
@@ -179,6 +179,7 @@
   <!--Conversation details-->
   <string name="details">פרטים</string>
   <string name="Private">פרטי</string>
+  <string name="mute_conversation">שיחה שקטה</string>
   <!--Donation-->
   <string name="donation_card_not_now">לא עכשיו</string>
   <!--Extension-->

@@ -80,6 +80,7 @@ import net.jami.model.Account
 import net.jami.model.Contact
 import net.jami.model.Profile
 import net.jami.services.AccountService
+import net.jami.utils.VCardUtils
 import java.io.File
 import javax.inject.Inject
 
@@ -271,7 +272,7 @@ class JamiAccountSummaryFragment :
             binding.username.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus: Boolean ->
                 val name = binding.username.text
                 if (!hasFocus) {
-                    presenter.saveVCardFormattedName(name.toString())
+                    presenter.updateProfile(name.toString())
                 }
             }
         }
@@ -343,9 +344,11 @@ class JamiAccountSummaryFragment :
             .setNegativeButton(android.R.string.cancel) { dialog, _ -> dialog.cancel() }
             .setPositiveButton(android.R.string.ok) { dialog, which ->
                 mSourcePhoto?.let { source ->
-                    presenter.saveVCard(mBinding!!.username.text.toString(),
-                        Single.just(source).map { obj -> BitmapUtils.bitmapToPhoto(obj) })
-                } ?: presenter.saveVCard(mBinding!!.username.text.toString(), null)
+                    Single.just(source).map { BitmapUtils.bitmapToBase64(it)!! }
+                        .observeOn(Schedulers.computation())
+                        .subscribe({ presenter.updateProfile(mBinding!!.username.text.toString(), it, "PNG") })
+                        { e -> Log.e(TAG, "Error updating profile", e) }
+                } ?: presenter.updateProfile(mBinding!!.username.text.toString(), "", "")
             }
             .setOnDismissListener {
                 dialogDisposableBag.dispose()

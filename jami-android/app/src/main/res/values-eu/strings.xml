@@ -24,7 +24,6 @@
   <string name="menu_item_accounts">Kudeatu kontuak</string>
   <string name="menu_item_account">Kudeatu kontua</string>
   <string name="menu_item_settings">Ezarpenak</string>
-  <string name="menu_item_advanced_settings">Jarriera aurreratuak</string>
   <string name="menu_item_account_settings">Kontuaren ezarpenak</string>
   <string name="menu_item_share">partekatu nire kontua</string>
   <string name="menu_item_about">Jamiri buruz</string>
@@ -317,14 +316,12 @@
   <string name="tab_members">Kideak</string>
   <string name="tab_files">Fitxategiak</string>
   <string name="tab_settings">Ezarpenak</string>
-  <string name="dialogtitle_title">Editatu izpiaren izenburua</string>
-  <string name="dialogtitle_description">Editatu multzoaren deskribapena</string>
   <string name="dialog_hint_title">Izenburua</string>
   <string name="dialog_hint_description">Deskripzioa</string>
   <string name="picker_title">Kontaktua hautatu</string>
   <string name="picker_btn">Kontaktua hautatu</string>
   <string name="bottomsheet_contact">Jarri harremanetan Jami\n%1$s</string>
-  <string name="bottomsheet_remove">Kendu zabortegitik.</string>
+  <string name="bottomsheet_remove">Kendu kideak</string>
   <!--JamiId-->
   <string name="jami_id_validate">Erabiltzaile izena erregistratzea</string>
   <string name="jami_id_looking_for_availability">Erabiltzaileen izenen eskuragarritasunaren bila...</string>
@@ -334,6 +331,7 @@
   <!--Conversation details-->
   <string name="details">Xehetasunak</string>
   <string name="Private">Pribatua</string>
+  <string name="mute_conversation">Hitz egin isilduta.</string>
   <!--Donation-->
   <string name="donation_card_not_now">Orain ez</string>
   <!--Extension-->

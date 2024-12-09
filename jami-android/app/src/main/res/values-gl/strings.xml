@@ -24,7 +24,6 @@
   <string name="menu_item_accounts">Xestionar contas</string>
   <string name="menu_item_account">Xestionar conta</string>
   <string name="menu_item_settings">Axustes</string>
-  <string name="menu_item_advanced_settings">Axustes Avanzados</string>
   <string name="menu_item_account_settings">Axustes da Conta</string>
   <string name="menu_item_share">Compartir a miña conta</string>
   <string name="menu_item_about">Acerca de Jami</string>
@@ -322,14 +321,12 @@
   <string name="tab_members">Membresía</string>
   <string name="tab_files">Arquivos</string>
   <string name="tab_settings">Axustes</string>
-  <string name="dialogtitle_title">Editar título do Swarm</string>
-  <string name="dialogtitle_description">Editar descrición do Swarm</string>
   <string name="dialog_hint_title">Título</string>
   <string name="dialog_hint_description">Descrición</string>
   <string name="picker_title">Elexir contactos</string>
   <string name="picker_btn">Elexir conctactos</string>
   <string name="bottomsheet_contact">Contacta con Jami\n %1$s</string>
-  <string name="bottomsheet_remove">Retira-los do enjambre</string>
+  <string name="bottomsheet_remove">Remover membro</string>
   <string name="error_open_no_app_found">Non atopamos unha aplicación para abrir o ficheiro: %1$s</string>
   <!--JamiId-->
   <string name="jami_id_copy">Copiar Jamild</string>
@@ -346,6 +343,7 @@
   <!--Conversation details-->
   <string name="details">Detalles</string>
   <string name="Private">Privado</string>
+  <string name="mute_conversation">Acalar conversa</string>
   <!--Donation-->
   <string name="donation_card_description">Se desfrutas usando Jami e cres nos nosos obxectivos, farías unha doazón?</string>
   <string name="donation_card_not_now">Agora non</string>

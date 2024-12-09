@@ -6,6 +6,10 @@
   <string name="pref_category_system">Sistema</string>
   <string name="pref_category_privacy">Privacy</string>
   <string name="pref_category_diagnostic">Diagnostica</string>
+  <string name="pref_category_appearance">Aspetto</string>
+  <string name="pref_category_connectivity">Connessione</string>
+  <string name="pref_category_extensions">Estensioni</string>
+  <string name="pref_category_video_settings">Impostazioni video avanzate</string>
   <string name="pref_mobileData_title">Dati mobili</string>
   <string name="pref_mobileData_summary">Permetti Jami su reti 3G/LTE in aggiunta al Wi-Fi</string>
   <string name="pref_pushNotifications_title">Notifiche</string>
@@ -42,6 +46,11 @@
   <string name="pref_logs_summary">Apri le impostazioni di diagnostica</string>
   <string name="pref_logs_start">Inizia la diagnostica</string>
   <string name="pref_logs_stop">Ferma la diagnostica</string>
+  <string name="pref_connection_monitor">Monitoraggio connessione</string>
+  <string name="pref_connection_monitor_summary">Monitoraggio delle connessioni peer to peer</string>
+  <string name="pref_push_notifications_logs_title">Registri dalle notifiche</string>
+  <string name="pref_push_notifications_logs_summary">Mostra i registri acquisiti dalle
+        notifiche.</string>
   <string name="pref_typing_title">Abilita gli indicatori di digitazione</string>
   <string name="pref_typing_summary">Invia e ricevi indicatori di digitazione quando si sta scrivendo un messagio.</string>
   <string name="pref_block_record_title">Blocca schermata e registrazione</string>
@@ -52,9 +61,8 @@
   <string name="notification_public">Pubblico\n(mostra le notifiche e il relativo contenuto nella schermata di blocco)\n</string>
   <string name="notification_private">Privato\n(mostra le notifiche ma nascondi il loro contenuto nella schermata di blocco)\n</string>
   <string name="notification_secret">Segreto\n(non mostrare le notifiche nella schermata di blocco)</string>
+  <string name="connectivity_custom_title">Personalizzata</string>
   <!--Extension-->
-  <string name="pref_extensions_title">Estensioni</string>
-  <string name="pref_extensions_summary">Attiva le estensioni e imposta i loro parametri</string>
   <string name="fab_extensions_add">Aggiungi nuova estensione</string>
   <string name="extension_uninstall_title">Disinstallare l\'estensione?</string>
   <string name="extension_reset_preferences">Ripristina le preferenze dell\'estensione</string>

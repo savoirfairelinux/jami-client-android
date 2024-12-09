@@ -24,7 +24,6 @@
   <string name="menu_item_accounts">Spravovať účty</string>
   <string name="menu_item_account">Spravovať účet</string>
   <string name="menu_item_settings">Nastavenia</string>
-  <string name="menu_item_advanced_settings">Pokročilé nastavenia</string>
   <string name="menu_item_account_settings">Nastavenia účtu</string>
   <string name="menu_item_share">Zdieľať môj účet</string>
   <string name="menu_item_about">O programe Jami</string>
@@ -316,14 +315,12 @@
   <string name="tab_members">Členovia</string>
   <string name="tab_files">Súbory</string>
   <string name="tab_settings">Nastavenia</string>
-  <string name="dialogtitle_title">Upravovať názov Swarm</string>
-  <string name="dialogtitle_description">Upravovať popis hromady</string>
   <string name="dialog_hint_title">Nadpis</string>
   <string name="dialog_hint_description">Opis</string>
   <string name="picker_title">Vyberte kontakty</string>
   <string name="picker_btn">Vyberte kontakty</string>
   <string name="bottomsheet_contact">Kontaktujte Jami\n%1$s</string>
-  <string name="bottomsheet_remove">Odveďte z hŕňa</string>
+  <string name="bottomsheet_remove">Odstránenie člena</string>
   <!--JamiId-->
   <string name="jami_id_validate">Registrovať používateľské meno</string>
   <string name="jami_id_looking_for_availability">Kontrolujeme dostupnosť používateľského mena...</string>
@@ -333,6 +330,7 @@
   <!--Conversation details-->
   <string name="details">Detaily</string>
   <string name="Private">Privátny</string>
+  <string name="mute_conversation">Mlčité rozhovory</string>
   <!--Donation-->
   <string name="donation_card_description">Ak radi používate Jami a veríte v naše poslanie, prispeli by ste nám?</string>
   <string name="donation_card_not_now">Teraz nie</string>

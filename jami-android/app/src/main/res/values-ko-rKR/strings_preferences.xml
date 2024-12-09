@@ -6,6 +6,9 @@
   <string name="pref_category_system">시스템</string>
   <string name="pref_category_privacy">개인 정보 보호</string>
   <string name="pref_category_diagnostic">진단</string>
+  <string name="pref_category_appearance">외모</string>
+  <string name="pref_category_connectivity">연결성</string>
+  <string name="pref_category_video_settings">고급 비디오 설정</string>
   <string name="pref_mobileData_title">모바일 데이터</string>
   <string name="pref_mobileData_summary">자미를 Wi-Fi 이외에 3G/LTE 네트워크에 사용할 수 있도록 허용</string>
   <string name="pref_pushNotifications_title">푸시 알림</string>
@@ -45,5 +48,6 @@
   <string name="pref_link_preview_title">대화에서 링크 미리보기 표시</string>
   <string name="pref_link_preview_summary">미리보기에는 타사 서버에서 콘텐츠를 다운로드해야 합니다.</string>
   <!--Notifications Visibility-->
+  <string name="connectivity_custom_title">관습</string>
   <!--Extension-->
 </resources>

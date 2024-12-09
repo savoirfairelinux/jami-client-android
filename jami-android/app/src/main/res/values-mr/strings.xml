@@ -24,7 +24,6 @@
   <string name="menu_item_accounts">खात्यांची व्यवस्थापित करा</string>
   <string name="menu_item_account">खाते व्यवस्थापित करा</string>
   <string name="menu_item_settings">सेटिंग्ज</string>
-  <string name="menu_item_advanced_settings">प्रगत सेटिंग्ज</string>
   <string name="menu_item_account_settings">खाते सेटिंग्ज</string>
   <string name="menu_item_share">माझे खाते सामायिक करा</string>
   <string name="menu_item_about">जेमी बद्दल</string>
@@ -316,14 +315,12 @@
   <string name="tab_members">सदस्य</string>
   <string name="tab_files">फाईल</string>
   <string name="tab_settings">सेटिंग्ज</string>
-  <string name="dialogtitle_title">Swarm शीर्षक संपादित करा</string>
-  <string name="dialogtitle_description">Swarm वर्णन संपादित करा</string>
   <string name="dialog_hint_title">शीर्षक</string>
   <string name="dialog_hint_description">वर्णन</string>
   <string name="picker_title">संपर्क निवडा</string>
   <string name="picker_btn">संपर्क निवडा</string>
   <string name="bottomsheet_contact">Jami\n%1$s शी संपर्क साधा</string>
-  <string name="bottomsheet_remove">गटातून काढा</string>
+  <string name="bottomsheet_remove">सदस्य काढा</string>
   <!--JamiId-->
   <string name="jami_id_validate">नोंदणी वापरकर्तानाव</string>
   <string name="jami_id_looking_for_availability">वापरकर्त्याच्या नावाची उपलब्धता शोधत आहे.</string>
@@ -333,6 +330,7 @@
   <!--Conversation details-->
   <string name="details">तपशील</string>
   <string name="Private">खासगी</string>
+  <string name="mute_conversation">गप्प बोलणे</string>
   <!--Donation-->
   <string name="donation_card_not_now">आता नाही</string>
   <!--Extension-->

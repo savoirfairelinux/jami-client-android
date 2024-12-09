@@ -6,6 +6,9 @@
   <string name="pref_category_system">Σύστημα</string>
   <string name="pref_category_privacy">Απόρρητο</string>
   <string name="pref_category_diagnostic">Διαγνωστικά</string>
+  <string name="pref_category_appearance">Εμφάνιση</string>
+  <string name="pref_category_connectivity">Συνδεσιμότητα</string>
+  <string name="pref_category_video_settings">Ρυθμίσεις βίντεο για προχωρημένους</string>
   <string name="pref_mobileData_title">Δεδομένα κινητού</string>
   <string name="pref_mobileData_summary">Επιτρέψτε στο Jami να χρησιμοποίει 3G/LTE σε συνδυασμό με το Wi-Fi</string>
   <string name="pref_pushNotifications_title">Ειδοποιήσεις</string>
@@ -45,5 +48,6 @@
   <string name="pref_link_preview_title">Δείξτε προεπισκόπηση συνδέσμων στις συνομιλίες</string>
   <string name="pref_link_preview_summary">Οι προβολές απαιτούν να κατεβάσετε περιεχόμενο από διακομιστές τρίτων.</string>
   <!--Notifications Visibility-->
+  <string name="connectivity_custom_title">Προμηθευτές</string>
   <!--Extension-->
 </resources>

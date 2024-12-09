@@ -6,6 +6,9 @@
   <string name="pref_category_system">Համակարգ</string>
   <string name="pref_category_privacy">Անձնական գաղտնիություն</string>
   <string name="pref_category_diagnostic">Վիրահատականներ</string>
+  <string name="pref_category_appearance">Արտաքին տեսք</string>
+  <string name="pref_category_connectivity">Կապակցվածություն</string>
+  <string name="pref_category_video_settings">Հրատարակված տեսանյութի կարգավորումները</string>
   <string name="pref_mobileData_title">Մոբիլի տվյալներ</string>
   <string name="pref_mobileData_summary">Թույլ տվեք Jami- ին 3G / LTE ցանցերում Wi-Fi- ի հետ միասին</string>
   <string name="pref_pushNotifications_title">Հուշումներ</string>
@@ -45,5 +48,6 @@
   <string name="pref_link_preview_title">Կապի նախադասություն ցուցադրեք զրույցներում</string>
   <string name="pref_link_preview_summary">Նախագահական դիտումները պահանջում են բովանդակություն ներբեռնել երրորդ կողմի սերվերներից:</string>
   <!--Notifications Visibility-->
+  <string name="connectivity_custom_title">Պարբերական</string>
   <!--Extension-->
 </resources>

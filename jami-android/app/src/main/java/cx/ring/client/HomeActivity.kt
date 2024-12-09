@@ -64,7 +64,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
-import io.reactivex.rxjava3.subjects.PublishSubject
 import net.jami.model.Account
 import net.jami.model.ConfigKey
 import net.jami.model.Contact
@@ -321,17 +320,6 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
             .subscribe(this::setShareShortcuts)
             { e -> Log.e(TAG, "Error generating conversation shortcuts", e) })
 
-        // Subject to check if a username is available
-        val usernameAvailabilitySubject = PublishSubject.create<String>()
-        mDisposable.add(
-            mAccountService.currentAccountSubject
-                .switchMap { account -> usernameAvailabilitySubject.map { Pair(account, it) } }
-                .debounce(500, TimeUnit.MILLISECONDS)
-                .switchMapSingle { (account, username) -> mAccountService.findRegistrationByName(account.accountId, "", username) }
-                .observeOn(DeviceUtils.uiScheduler)
-                .subscribe { welcomeJamiViewModel.checkIfUsernameIsAvailableResult(it) }
-        )
-
         // Subscribe on account to display correct welcome fragment
         mDisposable.add(
             mAccountService.currentAccountSubject
@@ -349,10 +337,6 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
 
                     welcomeJamiViewModel.init(
                         isJamiAccount = account.isJami,
-                        jamiId = account.registeredName,
-                        jamiHash = account.username ?: "",
-                        onRegisterName = { mAccountService.registerName(account, it, "", "") },
-                        onCheckUsernameAvailability = { usernameAvailabilitySubject.onNext(it) },
                         uiCustomization = uiCustomization,
                     )
 

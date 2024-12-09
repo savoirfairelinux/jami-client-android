@@ -6,6 +6,9 @@
   <string name="pref_category_system">Hệ thống</string>
   <string name="pref_category_privacy">Sự riêng tư</string>
   <string name="pref_category_diagnostic">Chẩn đoán</string>
+  <string name="pref_category_appearance">Nhìn hình</string>
+  <string name="pref_category_connectivity">Kết nối</string>
+  <string name="pref_category_video_settings">Thiết lập video nâng cao</string>
   <string name="pref_mobileData_title">Dữ liệu di động</string>
   <string name="pref_mobileData_summary">Cho phép Jami trên mạng 3G / LTE ngoài Wi-Fi</string>
   <string name="pref_pushNotifications_title">Thông báo đẩy</string>

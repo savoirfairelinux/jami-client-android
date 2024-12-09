@@ -6,6 +6,9 @@
   <string name="pref_category_system">سیستم</string>
   <string name="pref_category_privacy">حریم خصوصی</string>
   <string name="pref_category_diagnostic">دیآگنوستکس</string>
+  <string name="pref_category_appearance">گؤرونوش</string>
+  <string name="pref_category_connectivity">ارتباط</string>
+  <string name="pref_category_video_settings">گئنیش ویدئو تنظیماتلاری</string>
   <string name="pref_mobileData_title">موبایل دیتاسی</string>
   <string name="pref_mobileData_summary">جمی نین Wi-Fi-دن علاوه 3G/LTE شبکه لرینده یئرلشمه سینی ائجازه ور</string>
   <string name="pref_pushNotifications_title">ایشلتمه خبرلری</string>
@@ -45,5 +48,6 @@
   <string name="pref_link_preview_title">دانیشیقلاردا لینک لرین اؤرنک لرینی گؤستریر</string>
   <string name="pref_link_preview_summary">اؤتنلر اوچونجو طرفین سرورلاریندان محتوا آلینماسی لازیمدیر.</string>
   <!--Notifications Visibility-->
+  <string name="connectivity_custom_title">آدامی</string>
   <!--Extension-->
 </resources>

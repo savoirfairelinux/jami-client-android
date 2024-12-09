@@ -6,6 +6,10 @@
   <string name="pref_category_system">Système</string>
   <string name="pref_category_privacy">Vie privée</string>
   <string name="pref_category_diagnostic">Diagnostics</string>
+  <string name="pref_category_appearance">Apparence</string>
+  <string name="pref_category_connectivity">Connectivité</string>
+  <string name="pref_category_extensions">Extensions</string>
+  <string name="pref_category_video_settings">Paramètres vidéos avancés</string>
   <string name="pref_mobileData_title">Données mobiles</string>
   <string name="pref_mobileData_summary">Autoriser Jami sur les réseaux 3G/4G en plus du Wi-Fi</string>
   <string name="pref_pushNotifications_title">Notifications poussées</string>
@@ -33,12 +37,19 @@
   <string name="pref_blackList_title">Liste  des comptes bloqués</string>
   <string name="pref_blackList_summary">Vérifier votre liste des comptes bloqués</string>
   <string name="pref_delete_account_title">Supprimer le compte</string>
+  <string name="pref_delete_account_summary">Supprimer ce compte de cet appareil</string>
+  <string name="pref_persistNotification_title">Exécuter en arrière-plan</string>
+  <string name="pref_persistNotification_summary">Autoriser l\'exécution en arrière plan pour recevoir des appels ou des messages.</string>
   <string name="pref_newGroup_title">Activer le clavardage de groupe</string>
   <string name="pref_newGroup_summary">Activer la création de groupe dans Jami.</string>
   <string name="pref_logs_title">Journaux de diagnostics</string>
   <string name="pref_logs_summary">Ouvrir les paramètres des journaux de diagnostics</string>
   <string name="pref_logs_start">Démarrer la journalisation</string>
   <string name="pref_logs_stop">Arrêter la journalisation</string>
+  <string name="pref_connection_monitor">Supervision des connexions</string>
+  <string name="pref_connection_monitor_summary">Supervision des connexions pair à pair</string>
+  <string name="pref_push_notifications_logs_title">Journal des notifications poussées</string>
+  <string name="pref_push_notifications_logs_summary">Voir le journal des notifications poussées</string>
   <string name="pref_typing_title">Activer les indicateurs de frappe</string>
   <string name="pref_typing_summary">Envoyer et recevoir les indicateurs de frappe montrant qu\'un message est cours de rédaction.</string>
   <string name="pref_block_record_title">Bloquer la capture d\'écran et l\'enregistrement</string>
@@ -46,19 +57,24 @@
   <string name="pref_link_preview_title">Charger la prévisualisation des liens dans les conversations</string>
   <string name="pref_link_preview_summary">Les prévisualisations requièrent le téléchargement de contenu provenant serveurs tiers.</string>
   <!--Notifications Visibility-->
+  <string name="notification_public">Public \n(affiche les notifications et leur contenu sur l\'écran verrouillé)\n</string>
+  <string name="notification_private">Privé \n(affiche les notifications mais cache leur contenu sur l\'écran verrouillé)\n</string>
+  <string name="notification_secret">Secret \n(n\'affiche pas les notifications sur l\'écran verrouillé)</string>
+  <string name="connectivity_custom_title">Personnaliser</string>
   <!--Extension-->
-  <string name="pref_extensions_title">Extensions</string>
-  <string name="pref_extensions_summary">Activer les modules d\'extension et les paramétrer</string>
   <string name="fab_extensions_add">Ajouter un nouveau module d\'extension</string>
   <string name="extension_uninstall_title">Désinstaller le module d\'extension ?</string>
   <string name="extension_reset_preferences">Réinitialiser les paramètres du module d\'extension</string>
   <string name="extension_reset_preferences_summary">Les paramètres  des extensions ont été réinitialisés à leur valeur par défaut.</string>
   <string name="extension_reset_preferences_ask">Voulez-vous réinitialiser les paramètres généraux du module d\'extension ?</string>
   <string name="extension_reset_account_preferences_ask">Voulez-vous réinitialiser les paramètres généraux du module d\'extension ?</string>
+  <string name="extension_successfully_installed">Le module d\'extension <b>%1$s</b> a été correctement installé.</string>
   <string name="extension_install_failure">Une erreur s\'est produite pendant l\'installation du module d\'extension : <b>%1$s</b></string>
   <string name="extension_recent_version_exception">Une version plus récente de <b>%1$s</b> est déjà installée</string>
   <string name="extension_same_version_exception">La même version de <b>%1$s</b> est déjà installée</string>
   <string name="extension_invalid_signature"><b>%1$s</b> a une signature invalide</string>
+  <string name="extension_invalid_authority">Une erreur s\'est produite pendant l\'installation du module d\'extension : <b>%1$s</b></string>
   <string name="extension_invalid_format">Format du module d\'extension invalide : <b>%1$s</b></string>
+  <string name="extension_force_install">Forcer l\'installation</string>
   <string name="extension_path_image_add">Ajouter une nouvelle image</string>
 </resources>

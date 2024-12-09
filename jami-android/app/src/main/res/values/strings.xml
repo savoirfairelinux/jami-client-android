@@ -154,7 +154,7 @@ along with this program; if not, write to the Free Software
     <string name="menu_item_accounts">Manage accounts</string>
     <string name="menu_item_account">Manage account</string>
     <string name="menu_item_settings">Settings</string>
-    <string name="menu_item_advanced_settings">Advanced Settings</string>
+    <string name="menu_item_app_settings">App Settings</string>
     <string name="menu_item_account_settings">Account Settings</string>
     <string name="menu_item_extension_list">Extensions Settings</string>
     <string name="menu_item_share">Share my account</string>
@@ -236,8 +236,8 @@ along with this program; if not, write to the Free Software
     <string name="call_duration">Lasted %s</string>
     <string name="start_error_title">Unable to start Jami</string>
     <string name="action_call_accept">Accept call</string>
-    <string name="action_call_accept_audio">Accept incoming call with audio only</string>
-    <string name="action_call_accept_video">Accept incoming call with video</string>
+    <string name="action_call_accept_audio">Accept with audio</string>
+    <string name="action_call_accept_video">Accept with video</string>
     <string name="action_call_hold_accept">Accept incoming call with audio only and hold current call</string>
     <string name="action_call_hold_accept_video">Accept incoming call with video and hold current call</string>
     <string name="action_call_end_accept">Accept incoming call and end current call</string>

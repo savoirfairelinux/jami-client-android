@@ -24,7 +24,6 @@
   <string name="menu_item_accounts">Διαχείριση Λογαριασμών</string>
   <string name="menu_item_account">Διαχείριση Λογαριασμού</string>
   <string name="menu_item_settings">Ρυθμίσεις</string>
-  <string name="menu_item_advanced_settings">Προχωρημένες ρυθμίσεις</string>
   <string name="menu_item_account_settings">Ρυθμίσεις λογαριασμού</string>
   <string name="menu_item_share">Κοινοποίηση λογαριασμού</string>
   <string name="menu_item_about">Σχετικά με το Jami</string>
@@ -319,14 +318,12 @@
   <string name="tab_members">Μέλη</string>
   <string name="tab_files">Αρχεία</string>
   <string name="tab_settings">Ρυθμίσεις</string>
-  <string name="dialogtitle_title">Επεξεργασία τίτλου σμήνους</string>
-  <string name="dialogtitle_description">Επεξεργασία περιγραφής σμήνους</string>
   <string name="dialog_hint_title">Τίτλος</string>
   <string name="dialog_hint_description">Περιγραφή</string>
   <string name="picker_title">Επιλέξτε επαφές</string>
   <string name="picker_btn">Επιλέξτε επαφές</string>
   <string name="bottomsheet_contact">Επικοινωνήστε με Jami\n%1$s</string>
-  <string name="bottomsheet_remove">Αφαίρεση από το σμήνος</string>
+  <string name="bottomsheet_remove">Αφαίρεση μέλος</string>
   <!--JamiId-->
   <string name="jami_id_validate">Καταχωρίστε το όνομα χρήστη</string>
   <string name="jami_id_looking_for_availability">Ψάχνω για τη διαθεσιμότητα του ονόματος χρήστη...</string>
@@ -336,6 +333,7 @@
   <!--Conversation details-->
   <string name="details">Λεπτομέρειες</string>
   <string name="Private">Ιδιωτικό</string>
+  <string name="mute_conversation">Μείνε αθόρυβα.</string>
   <!--Donation-->
   <string name="donation_card_not_now">Όχι τώρα</string>
   <string name="donation_donate">Δωρεά</string>

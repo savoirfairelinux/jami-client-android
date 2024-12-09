@@ -6,6 +6,9 @@
   <string name="pref_category_system">सिस्टम</string>
   <string name="pref_category_privacy">गोपनीयता</string>
   <string name="pref_category_diagnostic">निदान</string>
+  <string name="pref_category_appearance">उपस्थिति</string>
+  <string name="pref_category_connectivity">कनेक्टिविटी</string>
+  <string name="pref_category_video_settings">उन्नत वीडियो सेटिंग्स</string>
   <string name="pref_mobileData_title">मोबाइल डेटा</string>
   <string name="pref_mobileData_summary">वाई-फाई के अतिरिक्त 3जी/एलटीई नेटवर्क पर जामी को अनुमति दें</string>
   <string name="pref_pushNotifications_title">पुश सूचनाएं</string>
@@ -45,5 +48,6 @@
   <string name="pref_link_preview_title">वार्तालापों में लिंक पूर्वावलोकन दिखाएं</string>
   <string name="pref_link_preview_summary">पूर्वावलोकन के लिए तृतीय पक्ष सर्वर से सामग्री डाउनलोड करना आवश्यक है।</string>
   <!--Notifications Visibility-->
+  <string name="connectivity_custom_title">कस्टम</string>
   <!--Extension-->
 </resources>

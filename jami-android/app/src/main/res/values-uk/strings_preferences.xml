@@ -6,6 +6,10 @@
   <string name="pref_category_system">Система</string>
   <string name="pref_category_privacy">Приватність</string>
   <string name="pref_category_diagnostic">Діагностика</string>
+  <string name="pref_category_appearance">Вигляд</string>
+  <string name="pref_category_connectivity">З\'єднання</string>
+  <string name="pref_category_extensions">Розширення</string>
+  <string name="pref_category_video_settings">Розширені налаштування відео</string>
   <string name="pref_mobileData_title">Мобільний інтернет</string>
   <string name="pref_mobileData_summary">Дозволити працювати Jami у мережах 3G/LTE, на додачу до до Wi-Fi.</string>
   <string name="pref_pushNotifications_title">Push сповіщення</string>
@@ -45,7 +49,7 @@
   <string name="pref_link_preview_title">Показувати попередній перегляд посилань у розмовах</string>
   <string name="pref_link_preview_summary">Попередній перегляд працює шляхом завантаження вмісту зі сторонніх серверів.</string>
   <!--Notifications Visibility-->
+  <string name="connectivity_custom_title">Кастомізація</string>
   <!--Extension-->
-  <string name="pref_extensions_title">Розширення</string>
   <string name="extension_invalid_signature"><b>%1$s</b> має недійсний підпис</string>
 </resources>

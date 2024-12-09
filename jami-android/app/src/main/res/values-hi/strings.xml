@@ -24,7 +24,6 @@
   <string name="menu_item_accounts">खातों का संचालन करे</string>
   <string name="menu_item_account">खाते का संचालन करे</string>
   <string name="menu_item_settings">सेटिंग्स</string>
-  <string name="menu_item_advanced_settings">उन्नत सेटिंग</string>
   <string name="menu_item_account_settings">खाता सेटिंग</string>
   <string name="menu_item_share">मेरा खाता साझा करें</string>
   <string name="menu_item_about">जामी के बारे में</string>
@@ -343,15 +342,13 @@
   <string name="tab_files">फ़ाइलें</string>
   <string name="tab_settings">सेटिंग्स</string>
   <string name="not_admin_toast">केवल व्यवस्थापक ही इस समूह की जानकारी संपादित कर सकते हैं</string>
-  <string name="dialogtitle_title">संपादित करें Swarm शीर्षक</string>
-  <string name="dialogtitle_description">संपादित करें समूह विवरण</string>
   <string name="dialog_hint_title">शीर्षक</string>
   <string name="dialog_hint_description">विवरण</string>
   <string name="picker_title">संपर्क चुनें</string>
   <string name="picker_btn">संपर्क चुनें</string>
   <string name="no_contact_to_add">आपके पास जोड़ने के लिए कोई संपर्क नहीं है</string>
   <string name="bottomsheet_contact">Jami\n%1$s से संपर्क करें</string>
-  <string name="bottomsheet_remove">झुंड से दूर</string>
+  <string name="bottomsheet_remove">सदस्य हटाएँ</string>
   <string name="error_open_no_app_found">%1$s :इस फ़ाइल को संभालने के लिए कोई अनुप्रयोग नहीं मिला</string>
   <string name="swarm_detail_no_document">आपके पास अभी तक कोई दस्तावेज़ नहीं है</string>
   <string name="group_admin">व्यवस्थापक</string>
@@ -370,6 +367,7 @@
   <!--Conversation details-->
   <string name="details">विवरण</string>
   <string name="Private">निजी</string>
+  <string name="mute_conversation">मूक बातचीत</string>
   <!--Donation-->
   <string name="donation_card_description">यदि आपको जैमी का उपयोग करना अच्छा लगता है और आप हमारे मिशन में विश्वास करते हैं, तो क्या आप दान देंगे?</string>
   <string name="donation_card_not_now">अभी नहीं</string>

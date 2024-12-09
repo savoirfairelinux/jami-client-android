@@ -24,7 +24,6 @@
   <string name="menu_item_accounts">Кіраванне рахункамі</string>
   <string name="menu_item_account">Кіраванне рахункам</string>
   <string name="menu_item_settings">Налады</string>
-  <string name="menu_item_advanced_settings">Дасканалыя налады</string>
   <string name="menu_item_account_settings">Налады ўліковых запісаў</string>
   <string name="menu_item_share">Падзяліцца маім рахункам</string>
   <string name="menu_item_about">Пра Джані</string>
@@ -156,6 +155,7 @@
   <string name="tab_settings">Налады</string>
   <string name="dialog_hint_title">Назва</string>
   <string name="dialog_hint_description">Апісанне</string>
+  <string name="bottomsheet_remove">Выключыць члена</string>
   <!--JamiId-->
   <string name="jami_id_validate">Запіс імя карыстальніка</string>
   <string name="jami_id_looking_for_availability">Шукаю даступнасць імя карыстальніка...</string>
@@ -165,6 +165,7 @@
   <!--Conversation details-->
   <string name="details">Падрабязнасці</string>
   <string name="Private">Прыватныя</string>
+  <string name="mute_conversation">Маўчаная размова</string>
   <!--Donation-->
   <string name="donation_card_not_now">Не зараз</string>
   <!--Extension-->

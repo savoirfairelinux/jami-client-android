@@ -29,7 +29,6 @@
   <string name="menu_item_accounts">Учетные записи</string>
   <string name="menu_item_account">Учетные записи</string>
   <string name="menu_item_settings">Настройки</string>
-  <string name="menu_item_advanced_settings">Расширенные настройки</string>
   <string name="menu_item_account_settings">Настройки аккаунта</string>
   <string name="menu_item_extension_list">Настройки расширений</string>
   <string name="menu_item_share">Поделиться своей контактной информацией</string>
@@ -98,8 +97,6 @@
   <string name="hist_out_call">Исходящий вызов от %1$s</string>
   <string name="call_duration">Длилось %s</string>
   <string name="action_call_accept">Принять звонок</string>
-  <string name="action_call_accept_audio">Принять входящий звонок, только аудио</string>
-  <string name="action_call_accept_video">Принять входящий звонок с видео</string>
   <string name="action_call_hold_accept">Принять входящий звонок, только аудио и поставить текущий вызов на удержание</string>
   <string name="action_call_hold_accept_video">Принять входящий звонок с видео и поставить текущий вызов на удержание</string>
   <string name="action_call_end_accept">Принять входящий звонок и завершить текущий вызов</string>
@@ -379,15 +376,13 @@
   <string name="tab_files">Файлы</string>
   <string name="tab_settings">Настройки</string>
   <string name="not_admin_toast">Только администраторы могут редактировать информацию этой группы</string>
-  <string name="dialogtitle_title">Изменить заголовок беседы</string>
-  <string name="dialogtitle_description">Изменить описание беседы</string>
   <string name="dialog_hint_title">Заголовок</string>
   <string name="dialog_hint_description">Описание</string>
   <string name="picker_title">Выбрать контакты</string>
   <string name="picker_btn">Выбрать контакты</string>
   <string name="no_contact_to_add">У вас нет контактов для добавления</string>
   <string name="bottomsheet_contact">Контакт Jami\n%1$s</string>
-  <string name="bottomsheet_remove">Удалить из беседы</string>
+  <string name="bottomsheet_remove">Удалить участника</string>
   <string name="error_open_no_app_found">Не найдено приложения для обработки этого файла: %1$s</string>
   <string name="swarm_detail_no_document">У вас еще нет документов.</string>
   <string name="group_admin">Админ</string>
@@ -406,6 +401,7 @@
   <!--Conversation details-->
   <string name="details">Детали</string>
   <string name="Private">Приватная</string>
+  <string name="mute_conversation">Отключить звук в беседе</string>
   <!--Donation-->
   <string name="donation_card_description">Если Вам нравится использовать Jami и Вы верите в нашу миссию, Вы бы сделали пожертвование?</string>
   <string name="donation_card_not_now">Не сейчас</string>

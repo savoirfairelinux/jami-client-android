@@ -24,7 +24,6 @@
   <string name="menu_item_accounts">Есепшоттарды басқару</string>
   <string name="menu_item_account">Тіркелгілерді басқару</string>
   <string name="menu_item_settings">Параметрлері</string>
-  <string name="menu_item_advanced_settings">Жетілген параметрлер</string>
   <string name="menu_item_account_settings">Тіркелгі параметрлері</string>
   <string name="menu_item_share">Менің тіркелгімді бөліңіз</string>
   <string name="menu_item_about">Жами туралы</string>
@@ -316,14 +315,12 @@
   <string name="tab_members">Қауым мүшелері</string>
   <string name="tab_files">Файлдар</string>
   <string name="tab_settings">Параметрлері</string>
-  <string name="dialogtitle_title">Санақты атауын өңдеу</string>
-  <string name="dialogtitle_description">Сабақ сипаттамасын өңдеу</string>
   <string name="dialog_hint_title">Атауы</string>
   <string name="dialog_hint_description">Тасуирлау</string>
   <string name="picker_title">Байланыстарды таңдау</string>
   <string name="picker_btn">Байланыстарды таңдау</string>
   <string name="bottomsheet_contact">Jami\n%1$s-мен байланыс</string>
-  <string name="bottomsheet_remove">Қалыңдықтан алыңыз</string>
+  <string name="bottomsheet_remove">Қатысушыны алып тастау</string>
   <!--JamiId-->
   <string name="jami_id_validate">Пайдаланушы атауын тіркеу</string>
   <string name="jami_id_looking_for_availability">Пайдаланушының аты-жөнінің қолжетімділігін іздеймін...</string>
@@ -333,6 +330,7 @@
   <!--Conversation details-->
   <string name="details">Толығырақ</string>
   <string name="Private">Жеке</string>
+  <string name="mute_conversation">Тілсіз әңгіме</string>
   <!--Donation-->
   <string name="donation_card_not_now">Қазір емес</string>
   <!--Extension-->

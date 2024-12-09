@@ -24,7 +24,6 @@
   <string name="menu_item_accounts">Ustawienia kont</string>
   <string name="menu_item_account">Zarządzaj kontem</string>
   <string name="menu_item_settings">Ustawienia</string>
-  <string name="menu_item_advanced_settings">Ustawienia Zaawansowane</string>
   <string name="menu_item_account_settings">Ustawienia Konta</string>
   <string name="menu_item_share">Udostępnij moje konto</string>
   <string name="menu_item_about">O Jami</string>
@@ -348,14 +347,12 @@
   <string name="tab_members">Użytkownicy</string>
   <string name="tab_files">Pliki</string>
   <string name="tab_settings">Ustawienia</string>
-  <string name="dialogtitle_title">Zedytuj tytuł Grupy</string>
-  <string name="dialogtitle_description">Zedytuj opis Grupy</string>
   <string name="dialog_hint_title">Tytuł</string>
   <string name="dialog_hint_description">Opis</string>
   <string name="picker_title">Wybierz kontakty</string>
   <string name="picker_btn">Wybierz kontakty</string>
   <string name="bottomsheet_contact">Skontaktuj się z Jami\n%1$s</string>
-  <string name="bottomsheet_remove">Usuń z Grupy</string>
+  <string name="bottomsheet_remove">Usunięcie członka</string>
   <string name="error_open_no_app_found">Nie znaleziono aplikacji zdolnej do obsługi tego typu pliku %1$s</string>
   <string name="swarm_detail_no_document">Nie masz jeszcze żadnych dokumentów.</string>
   <!--JamiId-->
@@ -373,6 +370,7 @@
   <!--Conversation details-->
   <string name="details">Szczegóły</string>
   <string name="Private">Prywatne</string>
+  <string name="mute_conversation">Wycisz konwersację</string>
   <!--Donation-->
   <string name="donation_card_description">Jeśli lubisz korzystać z Jami i wierzysz w naszą misję, czy mógłbyś przekazać darowiznę?</string>
   <string name="donation_card_not_now">Nie w tej chwili</string>

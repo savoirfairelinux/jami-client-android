@@ -24,7 +24,6 @@
   <string name="menu_item_accounts">Нягтлан бодох бүртгэл</string>
   <string name="menu_item_account">Хэтгэлээ удирдах</string>
   <string name="menu_item_settings">Байгууллага</string>
-  <string name="menu_item_advanced_settings">Алга зэргийн тохируулалт</string>
   <string name="menu_item_account_settings">Нягтлан бодох бүртгэлийн тохируулалт</string>
   <string name="menu_item_share">Миний хуудас хуваалцаарай</string>
   <string name="menu_item_about">Жэмигийн тухай</string>
@@ -317,14 +316,12 @@
   <string name="tab_members">Улсчдын гишүүд</string>
   <string name="tab_files">Файл</string>
   <string name="tab_settings">Байгууллага</string>
-  <string name="dialogtitle_title">Сварм нэрсийг зохицуу</string>
-  <string name="dialogtitle_description">Свартын тодорхойлолт</string>
   <string name="dialog_hint_title">Үргэлт</string>
   <string name="dialog_hint_description">Тодруулбал</string>
   <string name="picker_title">Байрлагуудыг сонго</string>
   <string name="picker_btn">Байрлагуудыг сонго</string>
   <string name="bottomsheet_contact">Jami\n%1$s-тай холбоо барих</string>
-  <string name="bottomsheet_remove">Хүрсээс гарга</string>
+  <string name="bottomsheet_remove">Хөгжлийн гишүүн</string>
   <!--JamiId-->
   <string name="jami_id_validate">Хэрэглэгчийн нэрийг бүртгүүлэх</string>
   <string name="jami_id_looking_for_availability">Хэрэглэгчийн нэртэй байхын тулд хайж байна...</string>
@@ -334,6 +331,7 @@
   <!--Conversation details-->
   <string name="details">Тодруулбал</string>
   <string name="Private">Хувь хүн</string>
+  <string name="mute_conversation">Үгүй яриа</string>
   <!--Donation-->
   <string name="donation_card_not_now">Одоо биш</string>
   <!--Extension-->

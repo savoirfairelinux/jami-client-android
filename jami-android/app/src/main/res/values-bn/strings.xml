@@ -24,7 +24,6 @@
   <string name="menu_item_accounts">অ্যাকাউন্ট পরিচালনা</string>
   <string name="menu_item_account">অ্যাকাউন্ট পরিচালনা</string>
   <string name="menu_item_settings">সেটিং</string>
-  <string name="menu_item_advanced_settings">উন্নত সেটিংস</string>
   <string name="menu_item_account_settings">অ্যাকাউন্ট সেটিংস</string>
   <string name="menu_item_share">আমার অ্যাকাউন্ট শেয়ার করুন</string>
   <string name="menu_item_about">জামি সম্পর্কে</string>
@@ -317,14 +316,12 @@
   <string name="tab_members">সদস্য</string>
   <string name="tab_files">ফাইল</string>
   <string name="tab_settings">সেটিং</string>
-  <string name="dialogtitle_title">সম্পাদনা করুন Swarm শিরোনাম</string>
-  <string name="dialogtitle_description">Swarm বর্ণনা সম্পাদনা করুন</string>
   <string name="dialog_hint_title">শিরোনাম</string>
   <string name="dialog_hint_description">বর্ণনা</string>
   <string name="picker_title">পরিচিতি নির্বাচন করুন</string>
   <string name="picker_btn">পরিচিতি নির্বাচন করুন</string>
   <string name="bottomsheet_contact">জ্যামি %1$s এর সাথে যোগাযোগ করুন</string>
-  <string name="bottomsheet_remove">ঘোড়ার থেকে সরিয়ে ফেলুন</string>
+  <string name="bottomsheet_remove">সদস্য অপসারণ</string>
   <string name="error_open_no_app_found">এই ফাইলটি সামলানোর জন্য কোন আপ্লিকেশন পাওয়া যাইনি: 1%1$s</string>
   <!--JamiId-->
   <string name="jami_id_validate">ব্যবহারকারীর নাম নিবন্ধন</string>
@@ -335,6 +332,7 @@
   <!--Conversation details-->
   <string name="details">বিস্তারিত</string>
   <string name="Private">ব্যক্তিগত</string>
+  <string name="mute_conversation">নিঃশব্দ কথোপকথন</string>
   <!--Donation-->
   <string name="donation_card_not_now">এখন না</string>
   <!--Extension-->

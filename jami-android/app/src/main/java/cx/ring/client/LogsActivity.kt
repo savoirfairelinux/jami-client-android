@@ -324,4 +324,9 @@ class LogAdapter :
         logList.addAll(logs)
         notifyItemRangeInserted(logList.size - logs.size, logs.size)
     }
+
+    fun clearLogs() {
+        logList.clear()
+        notifyDataSetChanged()
+    }
 }

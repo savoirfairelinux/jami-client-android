@@ -6,6 +6,9 @@
   <string name="pref_category_system">Sistem</string>
   <string name="pref_category_privacy">Privasi</string>
   <string name="pref_category_diagnostic">രോഗനിർണയം</string>
+  <string name="pref_category_appearance">രൂപം</string>
+  <string name="pref_category_connectivity">കണക്റ്റിവിറ്റി</string>
+  <string name="pref_category_video_settings">വിപുലമായ വീഡിയോ ക്രമീകരണങ്ങൾ</string>
   <string name="pref_mobileData_title">Jaringan data</string>
   <string name="pref_mobileData_summary">വൈഫൈ കൂടാതെ 3 ജി/എൽടിഇ നെറ്റ്വർക്കുകളിൽ ജാമിക്ക് പ്രവേശനം അനുവദിക്കുക</string>
   <string name="pref_pushNotifications_title">പുഷ് അറിയിപ്പുകൾ</string>
@@ -45,5 +48,6 @@
   <string name="pref_link_preview_title">സംഭാഷണങ്ങളിൽ ലിങ്ക് പ്രിവ്യൂ കാണിക്കുക</string>
   <string name="pref_link_preview_summary">മുൻകൂർ കാണലുകൾക്ക് മൂന്നാം കക്ഷി സെർവറുകളിൽ നിന്നും ഉള്ളടക്കം ഡൌൺലോഡ് ചെയ്യണം.</string>
   <!--Notifications Visibility-->
+  <string name="connectivity_custom_title">Tidak lalai</string>
   <!--Extension-->
 </resources>

@@ -6,6 +6,9 @@
   <string name="pref_category_system">نظام</string>
   <string name="pref_category_privacy">خصوصية</string>
   <string name="pref_category_diagnostic">التشخيص</string>
+  <string name="pref_category_appearance">المظهر</string>
+  <string name="pref_category_connectivity">الاتصال</string>
+  <string name="pref_category_video_settings">إعدادات فيديو متقدمة</string>
   <string name="pref_mobileData_title">بيانات هاتف</string>
   <string name="pref_mobileData_summary">السماح لـ جامي باستخدام شبكات 3G/LTE بالإضافة لـ Wi-Fi</string>
   <string name="pref_pushNotifications_title">الإشعارات المنبثقة</string>
@@ -45,5 +48,6 @@
   <string name="pref_link_preview_title">أظهر مشاهد المراسلة في المحادثات</string>
   <string name="pref_link_preview_summary">تطلب المشاهدة المسبقة تنزيل المحتوى من خوادم طرف ثالث.</string>
   <!--Notifications Visibility-->
+  <string name="connectivity_custom_title">تخصيص</string>
   <!--Extension-->
 </resources>

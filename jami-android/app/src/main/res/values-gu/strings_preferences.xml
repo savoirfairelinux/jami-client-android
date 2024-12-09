@@ -6,6 +6,9 @@
   <string name="pref_category_system">સિસ્ટમ</string>
   <string name="pref_category_privacy">ગોપનીયતા</string>
   <string name="pref_category_diagnostic">નિદાન</string>
+  <string name="pref_category_appearance">દેખાવ</string>
+  <string name="pref_category_connectivity">કનેક્ટિવિટી</string>
+  <string name="pref_category_video_settings">અદ્યતન વિડિઓ સેટિંગ્સ</string>
   <string name="pref_mobileData_title">મોબાઇલ ડેટા</string>
   <string name="pref_mobileData_summary">Wi-Fi ઉપરાંત 3G/LTE નેટવર્ક્સ પર જમીને પરવાનગી આપો</string>
   <string name="pref_pushNotifications_title">દબાણ સૂચનાઓ</string>
@@ -45,5 +48,6 @@
   <string name="pref_link_preview_title">વાતચીતમાં લિંક પૂર્વાવલોકન બતાવો</string>
   <string name="pref_link_preview_summary">પૂર્વાવલોકન માટે તૃતીય-પક્ષ સર્વર્સમાંથી સામગ્રી ડાઉનલોડ કરવાની જરૂર છે.</string>
   <!--Notifications Visibility-->
+  <string name="connectivity_custom_title">કસ્ટમ</string>
   <!--Extension-->
 </resources>

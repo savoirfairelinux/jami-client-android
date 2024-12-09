@@ -6,6 +6,9 @@
   <string name="pref_category_system">System</string>
   <string name="pref_category_privacy">Personvernd</string>
   <string name="pref_category_diagnostic">Diagnostik</string>
+  <string name="pref_category_appearance">Utseendet</string>
+  <string name="pref_category_connectivity">Konektivitet</string>
+  <string name="pref_category_video_settings">Forteljande videoinnstillingar</string>
   <string name="pref_mobileData_title">Mobildata</string>
   <string name="pref_mobileData_summary">Lat Jami ha 3G/LTE-nettverk i tillegg til Wi-Fi</string>
   <string name="pref_pushNotifications_title">Skriv med på nytt</string>
@@ -45,5 +48,6 @@
   <string name="pref_link_preview_title">Visa linkpreviews i samtal</string>
   <string name="pref_link_preview_summary">Forhandsvisningar krev å laste ned innhald frå tredjepartsserver.</string>
   <!--Notifications Visibility-->
+  <string name="connectivity_custom_title">Kastum</string>
   <!--Extension-->
 </resources>

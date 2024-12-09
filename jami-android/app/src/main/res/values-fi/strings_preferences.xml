@@ -6,6 +6,10 @@
   <string name="pref_category_system">Järjestelmä</string>
   <string name="pref_category_privacy">Yksityisyys</string>
   <string name="pref_category_diagnostic">Diagnostiikka</string>
+  <string name="pref_category_appearance">Ulkonäkö</string>
+  <string name="pref_category_connectivity">Yhteydet</string>
+  <string name="pref_category_extensions">Laajennukset</string>
+  <string name="pref_category_video_settings">Videon lisäasetukset</string>
   <string name="pref_mobileData_title">Mobiilidata</string>
   <string name="pref_mobileData_summary">Salli Jamin käyttää 3G/LTE-verkkoa wifi-yhteyden lisäksi</string>
   <string name="pref_pushNotifications_title">Ilmoitukset</string>
@@ -33,12 +37,17 @@
   <string name="pref_blackList_title">Estolista</string>
   <string name="pref_blackList_summary">Tarkista sinun estolista.</string>
   <string name="pref_delete_account_title">Poista tili</string>
+  <string name="pref_delete_account_summary">Poista tili tältä laitteelta</string>
+  <string name="pref_persistNotification_title">Suorita taustalla</string>
+  <string name="pref_persistNotification_summary">Salli taustalla vastaanottaa puheluita ja viestejä.</string>
   <string name="pref_newGroup_title">Ryhmäkeskustelu käyttöön</string>
   <string name="pref_newGroup_summary">Ryhmien luominen käyttöön Jamissa.</string>
   <string name="pref_logs_title">Diagnostiikkaloki</string>
   <string name="pref_logs_summary">Avaa diagnostiikkalokin asetukset</string>
   <string name="pref_logs_start">Aloita kirjaaminen</string>
   <string name="pref_logs_stop">Lopeta kirjaaminen</string>
+  <string name="pref_connection_monitor">Yhteysmonitori</string>
+  <string name="pref_connection_monitor_summary">Tarkkaile vertaisyhteyksiä</string>
   <string name="pref_typing_title">Kirjoittamisen ilmaisin käyttöön</string>
   <string name="pref_typing_summary">Kirjoittamisen ilmaisin, joka näyttää, että viestiä kirjoitetaan.</string>
   <string name="pref_block_record_title">Estä ruudunkaappaus ja tallennus</string>
@@ -46,19 +55,24 @@
   <string name="pref_link_preview_title">Näytä linkkien esikatselu keskusteluissa</string>
   <string name="pref_link_preview_summary">Esikatselu vaatii sisällön lataamista kolmannen osapuolen palvelimelta.</string>
   <!--Notifications Visibility-->
+  <string name="notification_public">Julkinen\n(näytä ilmoitukset ja sisältö lukitusnäytöllä)\n</string>
+  <string name="notification_private">Yksityinen\n(näytä ilmoitukset, piilota sisältö lukitusnäytöllä)\n</string>
+  <string name="notification_secret">Salainen\n(ei ilmoituksia lukitusnäytöllä)</string>
+  <string name="connectivity_custom_title">Oma</string>
   <!--Extension-->
-  <string name="pref_extensions_title">Laajennukset</string>
-  <string name="pref_extensions_summary">Laajennukset käyttöön ja aseta niiden parametrit</string>
   <string name="fab_extensions_add">Lisää uusi laajennus</string>
   <string name="extension_uninstall_title">Poistetaanko laajennus?</string>
   <string name="extension_reset_preferences">Nollaa laajennuksen asetukset</string>
   <string name="extension_reset_preferences_summary">Laajennus palautettu oletuksiin</string>
   <string name="extension_reset_preferences_ask">Haluatko nollata laajennusten yleiset asetukset?</string>
   <string name="extension_reset_account_preferences_ask">Haluatko nollata tililaajennuksen asetukset?</string>
+  <string name="extension_successfully_installed">Laajennus <b>%1$s</b> asennettiin.</string>
   <string name="extension_install_failure">Tapahtui virhe asennettaessa laajennusta: <b>%1$s</b></string>
   <string name="extension_recent_version_exception">Uudempi versio <b>%1$s</b> on asennettu.</string>
   <string name="extension_same_version_exception">Sama versio <b>%1$s</b> asennettu.</string>
   <string name="extension_invalid_signature"><b>%1$s</b> on virheellinen allekirjoitus</string>
+  <string name="extension_invalid_authority">Laajennuksen valtuuksia vahvistettaessa tapahtui virhe: <b>%1$s</b></string>
   <string name="extension_invalid_format">Virheellinen laajennus: <b>%1$s</b></string>
+  <string name="extension_force_install">pakota\nasennus</string>
   <string name="extension_path_image_add">Lisää uusi kuva</string>
 </resources>

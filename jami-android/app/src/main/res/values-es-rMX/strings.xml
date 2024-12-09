@@ -33,7 +33,6 @@
   <string name="menu_item_accounts">Administración de Cuentas</string>
   <string name="menu_item_account">Administración de Cuenta</string>
   <string name="menu_item_settings">Configuraciones</string>
-  <string name="menu_item_advanced_settings">Ajustes Avanzados</string>
   <string name="menu_item_account_settings">Configuración de la cuenta</string>
   <string name="menu_item_extension_list">Configuración de Extensiones</string>
   <string name="menu_item_share">Compartir mi cuenta</string>
@@ -99,8 +98,6 @@
   <string name="call_duration">Último %s</string>
   <string name="start_error_title">No se puede iniciar Jami</string>
   <string name="action_call_accept">Aceptar llamada</string>
-  <string name="action_call_accept_audio">Aceptar llamadas entrantes solo de audio</string>
-  <string name="action_call_accept_video">Aceptar llamada entrante con vídeo</string>
   <string name="action_call_hold_accept">Aceptar llamadas entrantes solo con audio y mantener presionada la llamada actual</string>
   <string name="action_call_hold_accept_video">Aceptar llamadas entrantes con vídeo y mantener presionada la llamada actual</string>
   <string name="action_call_end_accept">Aceptar llamada entrante y finalizar la llamada actual</string>
@@ -407,15 +404,15 @@
   <string name="tab_files">Archivos</string>
   <string name="tab_settings">Configuraciones</string>
   <string name="not_admin_toast">Solo los administradores pueden editar la información de este grupo</string>
-  <string name="dialogtitle_title">Editar el título de la colección</string>
-  <string name="dialogtitle_description">Editar Descripción de la colección</string>
+  <string name="dialogtitle_title">Editar título de grupo</string>
+  <string name="dialogtitle_description">Editar la descripción del grupo</string>
   <string name="dialog_hint_title">Título</string>
   <string name="dialog_hint_description">Descripción</string>
   <string name="picker_title">Elegir contactos</string>
   <string name="picker_btn">Elegir contactos</string>
   <string name="no_contact_to_add">No tiene contacto para agregar</string>
   <string name="bottomsheet_contact">Contacta con Jami\n%1$s</string>
-  <string name="bottomsheet_remove">Retirada del enjambre</string>
+  <string name="bottomsheet_remove">Eliminar miembro</string>
   <string name="error_open_no_app_found">No se ha encontrado una aplicación para manejar este archivo: %1$s</string>
   <string name="swarm_detail_no_document">Aún no tiene documentos.</string>
   <string name="group_admin">Administración</string>
@@ -441,7 +438,7 @@
   <string name="swarm_id">ID de enjambre</string>
   <string name="show_qr_code">Mostrar el código QR</string>
   <string name="show_certificate">Mostrar el certificado</string>
-  <string name="mute_conversation">Silenciar la Conversación</string>
+  <string name="mute_conversation">Silenciar conversación</string>
   <!--Donation-->
   <string name="donation_card_description">Si disfruta usando Jami y cree en nuestra misión, ¿le gustaría hacer una donación?</string>
   <string name="donation_card_not_now">Ahora no</string>

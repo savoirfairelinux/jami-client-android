@@ -6,6 +6,10 @@
   <string name="pref_category_system">Sistem</string>
   <string name="pref_category_privacy">Privatësi</string>
   <string name="pref_category_diagnostic">Diagnostikime</string>
+  <string name="pref_category_appearance">Dukje</string>
+  <string name="pref_category_connectivity">Aftësi lidhjeje</string>
+  <string name="pref_category_extensions">Zgjerime</string>
+  <string name="pref_category_video_settings">Rregullime të mëtejshme për video</string>
   <string name="pref_mobileData_title">Të dhëna celulare</string>
   <string name="pref_mobileData_summary">Lejoni Jami në rrjete 3G/LTE, si shtesë ndaj atyre Wi-Fi</string>
   <string name="pref_pushNotifications_title">Njoftime push</string>
@@ -42,6 +46,11 @@
   <string name="pref_logs_summary">Hapni rregullime regjistrash diagnostikimi</string>
   <string name="pref_logs_start">Fillo Regjistrim</string>
   <string name="pref_logs_stop">Ndale regjistrimin</string>
+  <string name="pref_connection_monitor">Mbikëqyrës lidhjesh</string>
+  <string name="pref_connection_monitor_summary">Mbikëqyr lidhje tek për tek</string>
+  <string name="pref_push_notifications_logs_title">Regjistra njoftimesh push</string>
+  <string name="pref_push_notifications_logs_summary">Shihni regjistra të marrë prej
+        njoftimeve push.</string>
   <string name="pref_typing_title">Aktivizo tregues shtypjeje</string>
   <string name="pref_typing_summary">Dërgoni dhe merrni shenja shtypjeje që tregojnë se po shtypet një mesazh.</string>
   <string name="pref_block_record_title">Bllokoni foto ekrani dhe regjistrim</string>
@@ -52,9 +61,8 @@
   <string name="notification_public">Publike\n(shfaq njoftime dhe lëndën e tyre nën ekran të kyçur)\n</string>
   <string name="notification_private">Private\n(shfaq njoftime, por fshihe lëndën e tyre, kur ekrani është i kyçur)\n</string>
   <string name="notification_secret">Të fshehta\n(mos shfaq njoftime nën ekran të kyçur)</string>
+  <string name="connectivity_custom_title">Vetjake</string>
   <!--Extension-->
-  <string name="pref_extensions_title">Zgjerime</string>
-  <string name="pref_extensions_summary">Aktivizoni zgjerime dhe ujdisni parametrat e tyre</string>
   <string name="fab_extensions_add">Shtoni zgjerim të ri</string>
   <string name="extension_uninstall_title">Të çinstalohet zgjerimi?</string>
   <string name="extension_reset_preferences">Rikthe te parazgjedhjet parapëlqimet për zgjerime</string>

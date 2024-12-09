@@ -24,7 +24,6 @@
   <string name="menu_item_accounts">ఖాతాల నిర్వహణ</string>
   <string name="menu_item_account">ఖాతాను నిర్వహించండి</string>
   <string name="menu_item_settings">సెట్టింగులు</string>
-  <string name="menu_item_advanced_settings">అధునాతన సెట్టింగులు</string>
   <string name="menu_item_account_settings">ఖాతా సెట్టింగులు</string>
   <string name="menu_item_share">నా ఖాతాను పంచుకోండి</string>
   <string name="menu_item_about">జామి గురించి</string>
@@ -316,14 +315,12 @@
   <string name="tab_members">సభ్యులు</string>
   <string name="tab_files">ఫైళ్లు</string>
   <string name="tab_settings">సెట్టింగులు</string>
-  <string name="dialogtitle_title">సవరణ Swarm శీర్షిక</string>
-  <string name="dialogtitle_description">సవరణ స్కార్మ్ వివరణ</string>
   <string name="dialog_hint_title">పేరు</string>
   <string name="dialog_hint_description">వివరణ</string>
   <string name="picker_title">పరిచయాలను ఎంచుకోండి</string>
   <string name="picker_btn">పరిచయాలను ఎంచుకోండి</string>
   <string name="bottomsheet_contact">జామి\n%1$s తో సంప్రదించండి</string>
-  <string name="bottomsheet_remove">గుంపు నుండి తొలగించు</string>
+  <string name="bottomsheet_remove">సభ్యుడిని తొలగించు</string>
   <!--JamiId-->
   <string name="jami_id_validate">వినియోగదారు పేరును నమోదు చేయండి</string>
   <string name="jami_id_looking_for_availability">వాడుకరి పేరు లభ్యత కోసం చూస్తున్న.</string>
@@ -333,6 +330,7 @@
   <!--Conversation details-->
   <string name="details">వివరాలు</string>
   <string name="Private">ప్రైవేటు</string>
+  <string name="mute_conversation">నిశ్శబ్ద సంభాషణ</string>
   <!--Donation-->
   <string name="donation_card_not_now">ఇప్పుడు కాదు</string>
   <!--Extension-->

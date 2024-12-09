@@ -24,7 +24,6 @@
   <string name="menu_item_accounts">Accounts beheren</string>
   <string name="menu_item_account">Account beheren</string>
   <string name="menu_item_settings">Instellingen</string>
-  <string name="menu_item_advanced_settings">Geavanceerde instellingen</string>
   <string name="menu_item_account_settings">Accountinstellingen</string>
   <string name="menu_item_share">Mijn account delen</string>
   <string name="menu_item_about">Over Jami</string>
@@ -331,14 +330,12 @@
   <string name="tab_members">Lid-Staten</string>
   <string name="tab_files">Dossiers</string>
   <string name="tab_settings">Instellingen</string>
-  <string name="dialogtitle_title">Bewerken van de titel</string>
-  <string name="dialogtitle_description">Bewerken van beschrijving</string>
   <string name="dialog_hint_title">Titel</string>
   <string name="dialog_hint_description">Beschrijving</string>
   <string name="picker_title">Selecteer contacten</string>
   <string name="picker_btn">Selecteer contacten</string>
   <string name="bottomsheet_contact">Neem contact op met Jami\n%1$s</string>
-  <string name="bottomsheet_remove">Verwijder uit de zwerm.</string>
+  <string name="bottomsheet_remove">Afschaffen van lid</string>
   <string name="error_open_no_app_found">Geen applicatie gevonden om dit bestand te verwerken: %1$s</string>
   <!--JamiId-->
   <string name="jami_id_copy">Jami-ID Kopiëren</string>
@@ -355,6 +352,7 @@
   <!--Conversation details-->
   <string name="details">Details</string>
   <string name="Private">Privé</string>
+  <string name="mute_conversation">Zwijg gesprek</string>
   <!--Donation-->
   <string name="donation_card_description">Als u van Jami geniet en in onze missie gelooft, zou u een donatie wilen doen?</string>
   <string name="donation_card_not_now">Niet nu</string>

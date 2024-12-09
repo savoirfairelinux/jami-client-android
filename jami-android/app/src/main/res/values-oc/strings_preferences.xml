@@ -6,6 +6,9 @@
   <string name="pref_category_system">Sistèma</string>
   <string name="pref_category_privacy">Privatetat</string>
   <string name="pref_category_diagnostic">Diagnostics</string>
+  <string name="pref_category_appearance">Aparicion</string>
+  <string name="pref_category_connectivity">Connectivitat</string>
+  <string name="pref_category_video_settings">Ajustaments de vidèo avançats</string>
   <string name="pref_mobileData_title">D\'informacions mòblas</string>
   <string name="pref_mobileData_summary">Permetre Jami sus de retes 3G/LTE en mai de Wi-Fi</string>
   <string name="pref_pushNotifications_title">Notificacions de emplegar</string>
@@ -45,5 +48,6 @@
   <string name="pref_link_preview_title">Mostrar las previatges de ligams dins las conversas</string>
   <string name="pref_link_preview_summary">Las previradas necessitan de descargar de contengut de servidors de tèrces.</string>
   <!--Notifications Visibility-->
+  <string name="connectivity_custom_title">Personalitat</string>
   <!--Extension-->
 </resources>

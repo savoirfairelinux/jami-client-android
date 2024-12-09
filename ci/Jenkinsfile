@@ -32,8 +32,8 @@ pipeline {
              pattern: 'jami-client-android']],
         triggerOnEvents: [
             commentAddedContains('!build'),
-            patchsetCreated(excludeDrafts: true, excludeNoCodeChange: true,
-                excludeTrivialRebase: true)]
+            patchsetCreated(excludeDrafts: true)
+            ]
     }
 
     options {
@@ -120,6 +120,8 @@ pipeline {
                     } catch (Exception e) {
                         errorOccurred = true
                     }
+
+                    sh 'cd /jami-client-android/ci && ./download_screenshots.sh'
 
                     // Archive tests output save it as Jenkins artifact
                     sh 'cd /jami-client-android/ci/spoon-output && zip -r ../ui-test-output.zip *'

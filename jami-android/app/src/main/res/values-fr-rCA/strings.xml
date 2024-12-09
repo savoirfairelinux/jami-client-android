@@ -33,7 +33,6 @@
   <string name="menu_item_accounts">Gérer les comptes</string>
   <string name="menu_item_account">Gérer le compte</string>
   <string name="menu_item_settings">Paramètres</string>
-  <string name="menu_item_advanced_settings">Paramètres avancés</string>
   <string name="menu_item_account_settings">Paramètres du compte</string>
   <string name="menu_item_extension_list">Paramètres des extensions</string>
   <string name="menu_item_share">Partager mon compte</string>
@@ -104,8 +103,6 @@
   <string name="call_duration">Dernier %s</string>
   <string name="start_error_title">Impossible de démarrer Jami !</string>
   <string name="action_call_accept">Prendre l\'appel</string>
-  <string name="action_call_accept_audio">Répondre en audio seulement</string>
-  <string name="action_call_accept_video">Répondre en vidéo</string>
   <string name="action_call_hold_accept">Accepter l\'appel en audio et mettre l\'appel en cours sur pause.</string>
   <string name="action_call_hold_accept_video">Accepter l\'appel vidéo et mettre l\'appel en cours sur pause.</string>
   <string name="action_call_end_accept">Accepter l\'appel entrant et raccrocher l\'appel courant</string>
@@ -412,15 +409,15 @@
   <string name="tab_files">Fichiers</string>
   <string name="tab_settings">Paramètres</string>
   <string name="not_admin_toast">Seuls les administrateurs peuvent modifier les information de ce groupe</string>
-  <string name="dialogtitle_title">Modifier le titre du swarm</string>
-  <string name="dialogtitle_description">Modifier la description du swarm</string>
+  <string name="dialogtitle_title">Modifier le titre du groupe</string>
+  <string name="dialogtitle_description">Modifier la description du groupe</string>
   <string name="dialog_hint_title">Titre</string>
   <string name="dialog_hint_description">Description</string>
   <string name="picker_title">Choisir les contacts</string>
   <string name="picker_btn">Choisir les contacts</string>
   <string name="no_contact_to_add">Vous n\'avez pas de contact à ajouter</string>
   <string name="bottomsheet_contact">Contact Jami\n%1$s</string>
-  <string name="bottomsheet_remove">Retirer du swarm</string>
+  <string name="bottomsheet_remove">Supprimer un membre</string>
   <string name="error_open_no_app_found">Aucune application trouvée pour gérer le fichier %1$s</string>
   <string name="swarm_detail_no_document">Vous n\'avez pas encore de documents.</string>
   <string name="group_admin">Administrateur</string>
@@ -446,7 +443,7 @@
   <string name="swarm_id">Swarm ID</string>
   <string name="show_qr_code">Afficher le code QR</string>
   <string name="show_certificate">Montrer le certificat</string>
-  <string name="mute_conversation">Amuïr la conversation</string>
+  <string name="mute_conversation">Mettre en sourdine</string>
   <!--Donation-->
   <string name="donation_card_description">Si vous appréciez Jami et que vous croyez à notre mission, feriez-vous une donation ?</string>
   <string name="donation_card_not_now">Pas maintenant</string>

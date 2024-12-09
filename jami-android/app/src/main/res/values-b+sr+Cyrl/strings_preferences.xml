@@ -6,6 +6,10 @@
   <string name="pref_category_system">Систем</string>
   <string name="pref_category_privacy">Приватност</string>
   <string name="pref_category_diagnostic">Дијагностика</string>
+  <string name="pref_category_appearance">Углед</string>
+  <string name="pref_category_connectivity">Спрема</string>
+  <string name="pref_category_extensions">Proširenja</string>
+  <string name="pref_category_video_settings">Напредне видео поставке</string>
   <string name="pref_mobileData_title">Мобилни подаци</string>
   <string name="pref_mobileData_summary">Дозволи Јами-у 3G/LTE мреже додатно поред Wi-Fi мреже</string>
   <string name="pref_pushNotifications_title">Пуш обавештења</string>
@@ -45,7 +49,7 @@
   <string name="pref_link_preview_title">Прикажи прегледе веза у разговорима</string>
   <string name="pref_link_preview_summary">Прегледи захтевају преузимање садржаја са сервера трећих страна.</string>
   <!--Notifications Visibility-->
+  <string name="connectivity_custom_title">Прилагођено</string>
   <!--Extension-->
-  <string name="pref_extensions_title">Proširenja</string>
   <string name="extension_invalid_signature"><b>%1$s</b> има неважећи потпис</string>
 </resources>

@@ -22,7 +22,6 @@
   <string name="menu_item_accounts">Tvarkyti paskyras</string>
   <string name="menu_item_account">Tvarkyti paskyrą</string>
   <string name="menu_item_settings">Nustatymai</string>
-  <string name="menu_item_advanced_settings">Išplėstiniai nustatymai</string>
   <string name="menu_item_account_settings">Paskyros nustatymai</string>
   <string name="menu_item_share">Bendrinti mano paskyrą</string>
   <string name="menu_item_about">Apie Jami</string>
@@ -256,6 +255,7 @@
   <string name="tv_send_video">Siųsti mediją</string>
   <string name="tv_action_more">Daugiau</string>
   <string name="conversation_input_speech_hint">Ką nors sakykite…</string>
+  <string name="error_sharing_file">Bendrinant failą įvyko klaida.</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Rekomenduojama</string>
   <string name="wizard_status_optional">Nebūtina</string>
@@ -268,6 +268,7 @@
   <string name="wizard_profile_skip">Praleisti ir atlikti tai vėliau</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Bendrinti</string>
+  <string name="bottomSheet_extensions_btn">Plėtiniai</string>
   <string name="bottomSheet_add_participants_btn">Pridėti</string>
   <string name="bottomSheet_change_camera_btn">Keisti</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>
@@ -284,6 +285,7 @@
   <string name="not_admin_toast">Tik administratoriai gali taisyti šios grupės informaciją</string>
   <string name="dialog_hint_description">Aprašas</string>
   <string name="bottomsheet_contact">Susisiekite su Jami\n%1$s</string>
+  <string name="bottomsheet_remove">Ištrinkite narį</string>
   <!--JamiId-->
   <string name="jami_id_validate">Registruoti naudotojo vardą</string>
   <string name="jami_id_available">Naudotojo vardas yra prieinamas</string>
@@ -296,6 +298,7 @@
   <string name="Private">Privatus</string>
   <string name="show_qr_code">Rodyti QR kodą</string>
   <string name="show_certificate">Rodyti liudijimą</string>
+  <string name="mute_conversation">Mutu pokalbis</string>
   <!--Donation-->
   <string name="donation_card_not_now">Ne dabar</string>
   <!--Extension-->

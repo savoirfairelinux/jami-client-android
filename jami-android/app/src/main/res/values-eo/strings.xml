@@ -24,7 +24,6 @@
   <string name="menu_item_accounts">Administri kontojn</string>
   <string name="menu_item_account">Administri Konton</string>
   <string name="menu_item_settings">Agordoj</string>
-  <string name="menu_item_advanced_settings">Antaŭaj agordoj</string>
   <string name="menu_item_account_settings">Konto-sekcioj</string>
   <string name="menu_item_share">Dividi mian konton</string>
   <string name="menu_item_about">Pri Jami</string>
@@ -317,14 +316,12 @@
   <string name="tab_members">Anoj</string>
   <string name="tab_files">Fiŝoj</string>
   <string name="tab_settings">Agordoj</string>
-  <string name="dialogtitle_title">Redakti Swarm titolon</string>
-  <string name="dialogtitle_description">Redakti Swarm priskribo</string>
   <string name="dialog_hint_title">Titolo</string>
   <string name="dialog_hint_description">Desegno</string>
   <string name="picker_title">Elektu kontaktojn</string>
   <string name="picker_btn">Elektu kontaktojn</string>
   <string name="bottomsheet_contact">Kontaktu Jami\n%1$s</string>
-  <string name="bottomsheet_remove">Forigu ĝin el la sorbo</string>
+  <string name="bottomsheet_remove">Forigu la membro</string>
   <!--JamiId-->
   <string name="jami_id_validate">Registru uzantnomon</string>
   <string name="jami_id_looking_for_availability">Serĉante uzantnomon disponeblan...</string>
@@ -334,6 +331,7 @@
   <!--Conversation details-->
   <string name="details">Detaloj</string>
   <string name="Private">Privata</string>
+  <string name="mute_conversation">Silenta konversacio</string>
   <!--Donation-->
   <!--Extension-->
 </resources>

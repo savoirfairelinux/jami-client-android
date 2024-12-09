@@ -210,8 +210,8 @@ class AccountWizardPresenter @Inject constructor(
         }
             .firstOrError()
         if (saveProfile) {
-            newAccount = newAccount.flatMap { a: Account ->
-                view!!.saveProfile(a).map { a }
+            newAccount = newAccount.doOnSuccess { account ->
+                view!!.saveProfile(account)
             }
         }
         mCompositeDisposable.add(newAccount
@@ -236,6 +236,10 @@ class AccountWizardPresenter @Inject constructor(
                 view?.displayProgress(false)
                 view?.displayGenericError()
             })
+    }
+
+    fun updateProfile(accountId:String, displayName: String, avatar: String, fileType: String) {
+        mAccountService.updateProfile(accountId, displayName, avatar, fileType)
     }
 
     fun errorDialogClosed() {

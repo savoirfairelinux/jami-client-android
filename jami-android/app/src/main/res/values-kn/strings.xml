@@ -24,7 +24,6 @@
   <string name="menu_item_accounts">ಖಾತೆಗಳನ್ನು ನಿರ್ವಹಿಸುವುದು</string>
   <string name="menu_item_account">ಖಾತೆಯನ್ನು ನಿರ್ವಹಿಸಿ</string>
   <string name="menu_item_settings">ಸೆಟ್ಟಿಂಗ್ಗಳು</string>
-  <string name="menu_item_advanced_settings">ಸುಧಾರಿತ ಸೆಟ್ಟಿಂಗ್ಗಳು</string>
   <string name="menu_item_account_settings">ಖಾತೆ ಸೆಟ್ಟಿಂಗ್ಗಳು</string>
   <string name="menu_item_share">ನನ್ನ ಖಾತೆಯನ್ನು ಹಂಚಿಕೊಳ್ಳಿ</string>
   <string name="menu_item_about">ಜಾಮಿ ಬಗ್ಗೆ</string>
@@ -316,14 +315,12 @@
   <string name="tab_members">ಸದಸ್ಯರು</string>
   <string name="tab_files">ಫೈಲ್ಗಳು</string>
   <string name="tab_settings">ಸೆಟ್ಟಿಂಗ್ಗಳು</string>
-  <string name="dialogtitle_title">Swarm ಶೀರ್ಷಿಕೆ ಸಂಪಾದಿಸಿ</string>
-  <string name="dialogtitle_description">Swarm ವಿವರಣೆ ಸಂಪಾದಿಸಿ</string>
   <string name="dialog_hint_title">ಶೀರ್ಷಿಕೆ</string>
   <string name="dialog_hint_description">ವಿವರಣೆ</string>
   <string name="picker_title">ಸಂಪರ್ಕಗಳನ್ನು ಆಯ್ಕೆಮಾಡಿ</string>
   <string name="picker_btn">ಸಂಪರ್ಕಗಳನ್ನು ಆಯ್ಕೆಮಾಡಿ</string>
   <string name="bottomsheet_contact">ಜಾಮಿ %1$s ಗಳನ್ನು ಸಂಪರ್ಕಿಸಿ</string>
-  <string name="bottomsheet_remove">ದಣಿದಿಂದ ಹೊರಹಾಕಿ</string>
+  <string name="bottomsheet_remove">ಸದಸ್ಯರನ್ನು ತೆಗೆದುಹಾಕಿ</string>
   <!--JamiId-->
   <string name="jami_id_validate">ಬಳಕೆದಾರ ಹೆಸರನ್ನು ನೋಂದಾಯಿಸಿ</string>
   <string name="jami_id_looking_for_availability">ಬಳಕೆದಾರ ಹೆಸರು ಲಭ್ಯತೆಗಾಗಿ ಹುಡುಕುತ್ತಿದ್ದೇನೆ.</string>
@@ -333,6 +330,7 @@
   <!--Conversation details-->
   <string name="details">ವಿವರಗಳು</string>
   <string name="Private">ಖಾಸಗಿ</string>
+  <string name="mute_conversation">ಮೂಕ ಸಂಭಾಷಣೆ</string>
   <!--Donation-->
   <string name="donation_card_not_now">ಈಗ ಬೇಡ</string>
   <!--Extension-->

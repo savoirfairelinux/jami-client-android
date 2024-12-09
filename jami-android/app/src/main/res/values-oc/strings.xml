@@ -24,7 +24,6 @@
   <string name="menu_item_accounts">Gerir los comptes</string>
   <string name="menu_item_account">Gestion de compte</string>
   <string name="menu_item_settings">Paramètres</string>
-  <string name="menu_item_advanced_settings">Ajustaments avançats</string>
   <string name="menu_item_account_settings">Configuracion de compte</string>
   <string name="menu_item_share">Comparta mon compte</string>
   <string name="menu_item_about">A prepaus de Jami</string>
@@ -318,14 +317,12 @@
   <string name="tab_members">Membres</string>
   <string name="tab_files">Dossièrs</string>
   <string name="tab_settings">Paramètres</string>
-  <string name="dialogtitle_title">Modificar lo títol de l\'enregistrament</string>
-  <string name="dialogtitle_description">Modificar Descripcion de l\'escarpa</string>
   <string name="dialog_hint_title">Titulacion</string>
   <string name="dialog_hint_description">Descripcion</string>
   <string name="picker_title">Seleccionar los contactes</string>
   <string name="picker_btn">Seleccionar los contactes</string>
   <string name="bottomsheet_contact">Contactar Jami\n%1$s</string>
-  <string name="bottomsheet_remove">Retirar de l\'esvair</string>
+  <string name="bottomsheet_remove">Retirar membre</string>
   <!--JamiId-->
   <string name="jami_id_validate">Registrar nom d\' utilizaire</string>
   <string name="jami_id_looking_for_availability">Cercant la disponibilitat del nom d\'utilizaire...</string>
@@ -335,6 +332,7 @@
   <!--Conversation details-->
   <string name="details">Detalhs</string>
   <string name="Private">Privat</string>
+  <string name="mute_conversation">Conversacion mut</string>
   <!--Donation-->
   <!--Extension-->
 </resources>

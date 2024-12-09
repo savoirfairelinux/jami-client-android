@@ -13,7 +13,6 @@
   <!--AB menus-->
   <!--Sections-->
   <string name="menu_item_contact_request">Zahtjevi za kontakt</string>
-  <string name="menu_item_advanced_settings">Napredne postavke</string>
   <string name="menu_item_account_settings">Nastavke računa</string>
   <string name="video_setting_title">Nastavke video</string>
   <!--Dialing Fragment-->
@@ -180,14 +179,12 @@
   <string name="tab_members">Članovi</string>
   <string name="tab_files">Dosje</string>
   <string name="tab_settings">Postavke</string>
-  <string name="dialogtitle_title">Izmijenite naslov Swarm</string>
-  <string name="dialogtitle_description">Predavanje opisa skupa</string>
   <string name="dialog_hint_title">Naslov</string>
   <string name="dialog_hint_description">Opisivanje</string>
   <string name="picker_title">Izbor kontaktova</string>
   <string name="picker_btn">Izbor kontaktova</string>
   <string name="bottomsheet_contact">Kontakt s Jami\n%1$s</string>
-  <string name="bottomsheet_remove">Odvedite iz skupa</string>
+  <string name="bottomsheet_remove">Uklonite član</string>
   <!--JamiId-->
   <string name="jami_id_validate">Upis korisničkog imena</string>
   <string name="jami_id_looking_for_availability">Tražim dostupnost korisničkog imena...</string>
@@ -197,6 +194,7 @@
   <!--Conversation details-->
   <string name="details">Pojedinosti</string>
   <string name="Private">Privredni</string>
+  <string name="mute_conversation">Tiho razgovor</string>
   <!--Donation-->
   <string name="donation_card_not_now">Ne sada</string>
   <!--Extension-->

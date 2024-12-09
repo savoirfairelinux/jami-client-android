@@ -1,7 +1,36 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <string name="pref_category_appearance">外观</string>
+  <string name="pref_category_connectivity">连接性</string>
+  <string name="pref_category_extensions">扩展</string>
+  <string name="pref_category_video_settings">高级视频设置</string>
+  <string name="pref_clearHistory_summary">清除所有对话的历史记录。此操作无法撤消。</string>
+  <string name="pref_delete_account_summary">从此设备中删除帐户</string>
+  <string name="pref_persistNotification_title">在后台运行</string>
+  <string name="pref_persistNotification_summary">允许在后台运行以接收呼叫和消息。</string>
+  <string name="pref_connection_monitor">连接监视器</string>
+  <string name="pref_connection_monitor_summary">监控对等连接</string>
+  <string name="pref_push_notifications_logs_title">推送通知日志</string>
+  <string name="pref_push_notifications_logs_summary">查看从推送通知中捕获的日志。</string>
   <!--Notifications Visibility-->
+  <string name="notification_public">公开\n（在锁屏上显示通知及其内容）\n</string>
+  <string name="notification_private">隐私\n（在锁屏上显示通知但隐藏其内容）\n</string>
+  <string name="notification_secret">机密\n（不在锁屏上显示通知）</string>
+  <string name="connectivity_custom_title">自訂</string>
   <!--Extension-->
-  <string name="pref_extensions_title">扩展</string>
+  <string name="fab_extensions_add">添加新扩展</string>
+  <string name="extension_uninstall_title">卸载扩展？</string>
+  <string name="extension_reset_preferences">重置扩展首选项</string>
+  <string name="extension_reset_preferences_summary">扩展已恢复为默认设置</string>
+  <string name="extension_reset_preferences_ask">您想重置通用扩展设置吗？</string>
+  <string name="extension_reset_account_preferences_ask">您想重置帐户扩展设置吗？</string>
+  <string name="extension_successfully_installed">扩展<b>%1$s</b>已成功安装。</string>
+  <string name="extension_install_failure">安装以下扩展时出错：<b>%1$s</b></string>
+  <string name="extension_recent_version_exception">已安装<b>%1$s</b>的较新版本。</string>
+  <string name="extension_same_version_exception">已安装<b>%1$s</b>的相同版本。</string>
   <string name="extension_invalid_signature"><b>%1$s</b>具有无效的签名</string>
+  <string name="extension_invalid_authority">验证以下扩展的权限时出错：<b>%1$s</b></string>
+  <string name="extension_invalid_format">扩展格式无效：<b>%1$s</b></string>
+  <string name="extension_force_install">强制安装</string>
+  <string name="extension_path_image_add">添加新图像</string>
 </resources>

@@ -6,6 +6,9 @@
   <string name="pref_category_system">システム</string>
   <string name="pref_category_privacy">プライバシー</string>
   <string name="pref_category_diagnostic">診断</string>
+  <string name="pref_category_appearance">着せかえ</string>
+  <string name="pref_category_connectivity">接続性</string>
+  <string name="pref_category_video_settings">ビデオの高度な設定</string>
   <string name="pref_mobileData_title">モバイル通信</string>
   <string name="pref_mobileData_summary">Wi-Fiに加えて3G / LTEでの使用をJamiに許可する</string>
   <string name="pref_pushNotifications_title">プッシュ通知</string>
@@ -45,5 +48,6 @@
   <string name="pref_link_preview_title">リンクプレビューの表示</string>
   <string name="pref_link_preview_summary">プレビューの取得にはサードパーティーサーバーを経由します</string>
   <!--Notifications Visibility-->
+  <string name="connectivity_custom_title">カスタム</string>
   <!--Extension-->
 </resources>

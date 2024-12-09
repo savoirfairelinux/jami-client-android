@@ -6,6 +6,10 @@
   <string name="pref_category_system">Rendszer</string>
   <string name="pref_category_privacy">Adatvédelem</string>
   <string name="pref_category_diagnostic">Diagnosztika</string>
+  <string name="pref_category_appearance">Megjelenés</string>
+  <string name="pref_category_connectivity">Kapcsolódás</string>
+  <string name="pref_category_extensions">Bővítmények</string>
+  <string name="pref_category_video_settings">Haladó videóbeállítások</string>
   <string name="pref_mobileData_title">Adathasználat</string>
   <string name="pref_mobileData_summary">A Jami engedélyezése 3G/LTE és Wi-Fi hálózatokon</string>
   <string name="pref_pushNotifications_title">Push-értesítések</string>
@@ -42,6 +46,11 @@
   <string name="pref_logs_summary">Diagnosztikai naplóbeállítások megnyitása</string>
   <string name="pref_logs_start">Naplózás indítása</string>
   <string name="pref_logs_stop">Naplózás leállítása</string>
+  <string name="pref_connection_monitor">Csatlakozásfigyelő</string>
+  <string name="pref_connection_monitor_summary">Egyenrangú kapcsolatok figyelése</string>
+  <string name="pref_push_notifications_logs_title">Push-értesítések naplói</string>
+  <string name="pref_push_notifications_logs_summary">Push-értesítésekből rögzített
+       naplók megtekintése.</string>
   <string name="pref_typing_title">Gépelésjelző megjelenítése</string>
   <string name="pref_typing_summary">Küldjön és fogadjon gépelési mutatókat, amelyek azt mutatják, hogy egy üzenetet gépel.</string>
   <string name="pref_block_record_title">Képernyőkép és felvétel letiltása</string>
@@ -52,9 +61,8 @@
   <string name="notification_public">Nyilvános\n(az értesítések és azok tartalmának megjelenítése a zárolási képernyőn)\n</string>
   <string name="notification_private">Magán\n(értesítések megjelenítése, de tartalmuk elrejtése a zárolási képernyőn)\n</string>
   <string name="notification_secret">Titkos\n(ne jelenítsen meg értesítéseket a zárolási képernyőn) </string>
+  <string name="connectivity_custom_title">Szokás</string>
   <!--Extension-->
-  <string name="pref_extensions_title">Bővítmények</string>
-  <string name="pref_extensions_summary">Bővítmények engedélyezése és paramétereik beállítása</string>
   <string name="fab_extensions_add">Új bővítmény hozzáadása</string>
   <string name="extension_uninstall_title">Bővítmény eltávolítása?</string>
   <string name="extension_reset_preferences">Bővítmény beállításainak visszaállítása</string>

@@ -6,6 +6,9 @@
   <string name="pref_category_system">సిస్టమ్</string>
   <string name="pref_category_privacy">గోప్యత</string>
   <string name="pref_category_diagnostic">రోగ నిర్ధారణ</string>
+  <string name="pref_category_appearance">రూపాన్ని</string>
+  <string name="pref_category_connectivity">కనెక్టివిటీ</string>
+  <string name="pref_category_video_settings">ఆధునిక వీడియో సెట్టింగులు</string>
   <string name="pref_mobileData_title">మొబైల్ డేటా</string>
   <string name="pref_mobileData_summary">వై-ఫైతో పాటు 3జీ/ఎల్టీఇ నెట్వర్క్లలో జమీని అనుమతించండి</string>
   <string name="pref_pushNotifications_title">పుష్ నోటిఫికేషన్లు</string>
@@ -45,5 +48,6 @@
   <string name="pref_link_preview_title">సంభాషణలలో లింక్ ప్రివ్యూలను చూపించు</string>
   <string name="pref_link_preview_summary">ముందస్తు వీక్షణలు మూడవ పార్టీ సర్వర్ల నుండి కంటెంట్ను డౌన్లోడ్ చేసుకోవలసి ఉంటుంది.</string>
   <!--Notifications Visibility-->
+  <string name="connectivity_custom_title">కస్టమ్</string>
   <!--Extension-->
 </resources>

@@ -28,13 +28,14 @@ import android.view.ViewGroup
 import androidx.annotation.DrawableRes
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import cx.ring.R
 import cx.ring.databinding.JamiIdLayoutBinding
 import cx.ring.utils.ActionHelper.shareAccount
+import cx.ring.utils.BiometricHelper
 import cx.ring.utils.KeyboardVisibilityManager.showKeyboard
 import cx.ring.utils.RegisteredNameFilter
 import cx.ring.utils.TextUtils.copyAndShow
@@ -49,7 +50,9 @@ import net.jami.utils.Log
 class JamiIdFragment : Fragment() {
 
     private lateinit var binding: JamiIdLayoutBinding
-    private val jamiIdViewModel: JamiIdViewModel by viewModels({ requireParentFragment() })
+    private val jamiIdViewModel: JamiIdViewModel by lazy {
+        ViewModelProvider(requireActivity())[JamiIdViewModel::class.java]
+    }
 
     private val textWatcher = object : TextWatcher {
         override fun afterTextChanged(s: Editable?) {}
@@ -86,6 +89,10 @@ class JamiIdFragment : Fragment() {
                 var prevState: JamiIdUiState? = null
 
                 jamiIdViewModel.uiState.collect { uiState ->
+
+                    // Hide component before the account is loaded.
+                    if (uiState.jamiIdStatus == null) binding.root.visibility = View.INVISIBLE
+                    else binding.root.visibility = View.VISIBLE
 
                     if (uiState.jamiIdStatus == prevState?.jamiIdStatus) return@collect
                     prevState = uiState
@@ -126,7 +133,7 @@ class JamiIdFragment : Fragment() {
                         }
 
                         else -> {
-                            Log.w(TAG, "Unknown JamiIdStatus: ${uiState.jamiIdStatus}")
+                            Log.e(TAG, "Unknown JamiIdStatus: ${uiState.jamiIdStatus}")
                             setUsernameDefinedUiState(
                                 username = uiState.username
                             )
@@ -288,7 +295,13 @@ class JamiIdFragment : Fragment() {
             jamiIdViewModel.onChooseUsernameClicked()
         }
         binding.jamiIdValidateButton.setOnClickListener {
-            jamiIdViewModel.onValidateClicked()
+            BiometricHelper.startAccountAuthentication(
+                fragment = this,
+                account = jamiIdViewModel.account,
+                reason = getString(R.string.register_username)
+            ) { scheme: String, password: String ->
+                jamiIdViewModel.onValidateClicked(scheme, password)
+            }
         }
 
         // Equivalent to setEnabled(false) but allows to trick a bug and get ellipsize to work.

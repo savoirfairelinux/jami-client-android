@@ -24,7 +24,6 @@
   <string name="menu_item_accounts">Kusimamia akaunti</string>
   <string name="menu_item_account">Kusimamia akaunti</string>
   <string name="menu_item_settings">Mipangilio</string>
-  <string name="menu_item_advanced_settings">Mipangilio ya Juu</string>
   <string name="menu_item_account_settings">Mipangilio ya Akaunti</string>
   <string name="menu_item_share">Shiriki akaunti yangu</string>
   <string name="menu_item_about">Kuhusu Jami</string>
@@ -316,14 +315,12 @@
   <string name="tab_members">Wajumbe</string>
   <string name="tab_files">Faili</string>
   <string name="tab_settings">Mipangilio</string>
-  <string name="dialogtitle_title">Hariri kichwa cha Swarm</string>
-  <string name="dialogtitle_description">Hariri maelezo ya kundi</string>
   <string name="dialog_hint_title">Kichwa</string>
   <string name="dialog_hint_description">Maelezo</string>
   <string name="picker_title">Chagua mawasiliano</string>
   <string name="picker_btn">Chagua mawasiliano</string>
   <string name="bottomsheet_contact">Wasiliana Jami\n%1$s</string>
-  <string name="bottomsheet_remove">Ondoa kwenye kundi</string>
+  <string name="bottomsheet_remove">Ondoa mshiriki</string>
   <!--JamiId-->
   <string name="jami_id_validate">Kujiandikisha jina la mtumiaji</string>
   <string name="jami_id_looking_for_availability">Kutafuta upatikanaji wa jina la mtumiaji...</string>
@@ -333,6 +330,7 @@
   <!--Conversation details-->
   <string name="details">Maelezo</string>
   <string name="Private">Private</string>
+  <string name="mute_conversation">Mazungumzo ya kimya</string>
   <!--Donation-->
   <!--Extension-->
 </resources>

@@ -287,6 +287,10 @@ class AccountService(
                 val mode = if ("true" == info["syncing"]) Conversation.Mode.Syncing else Conversation.Mode.entries[info["mode"]?.toInt() ?: Conversation.Mode.Syncing.ordinal]
                 val conversation = account.newSwarm(conversationId, mode)
                 conversation.setProfile(mVCardService.loadConversationProfile(info))
+                if (mode == Conversation.Mode.Syncing) {
+                    val created = (info["created"]?.toLong() ?: 0) * 1000L
+                    conversation.lastEvent = ContactEvent(created)
+                }
                 JamiService.getActiveCalls(account.accountId, conversationId)
                     .map { Conversation.ActiveCall(it) }
                     .let { conversation.setActiveCalls(it) }
@@ -410,6 +414,7 @@ class AccountService(
         Observable.just(account)
             .concatWith(observableAccounts.filter { acc -> acc === account })
 
+    // Todo: Doubt on this working correctly. No updates on `account.username` on account created.
     val currentProfileAccountSubject: Observable<Pair<Account, Profile>>
         get() = currentAccountSubject.flatMap { a: Account ->
             mVCardService.loadProfile(a).map { profile -> Pair(a, profile) }
@@ -612,6 +617,16 @@ class AccountService(
         Log.i(TAG, "removeAccount() $accountId")
         mExecutor.execute { JamiService.removeAccount(accountId) }
         mHistoryService.clearHistory(accountId).subscribe()
+    }
+
+    fun updateProfile(accountId: String, displayName: String, avatarBase64: String, fileType: String) {
+        JamiService.updateProfile(accountId, displayName, avatarBase64, fileType, if (avatarBase64.isEmpty()) 2 else 1)
+    }
+    fun updateProfile(accountId: String, displayName: String, avatarPath: File, fileType: String) {
+        JamiService.updateProfile(accountId, displayName, avatarPath.absolutePath, fileType, 0)
+    }
+    fun updateProfile(accountId: String, displayName: String) {
+        JamiService.updateProfile(accountId, displayName, "", "", 0)
     }
 
     /**

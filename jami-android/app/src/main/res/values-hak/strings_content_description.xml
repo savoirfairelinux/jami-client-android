@@ -1,9 +1,14 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--Strings for xml content description of images-->
+  <string name="contact_quick_call_description">快速呼叫</string>
+  <string name="contact_picture_description">联系人图片</string>
+  <string name="video_extensions">视频扩展</string>
   <string name="file_download_button">下载</string>
   <string name="control_play">播放</string>
   <string name="control_replay">重放</string>
   <string name="control_pause">暫停</string>
   <string name="searchbar_navigation_account">选择帐户</string>
+  <string name="add_conversation_member">添加对话成员</string>
+  <string name="qrcode_to_scan">扫描二维码</string>
 </resources>

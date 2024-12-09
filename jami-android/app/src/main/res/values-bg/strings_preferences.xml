@@ -6,6 +6,9 @@
   <string name="pref_category_system">Система</string>
   <string name="pref_category_privacy">Поверителност</string>
   <string name="pref_category_diagnostic">Диагностика</string>
+  <string name="pref_category_appearance">Изглед</string>
+  <string name="pref_category_connectivity">Свързаност</string>
+  <string name="pref_category_video_settings">Разширен видео настройка</string>
   <string name="pref_mobileData_title">Мобилни данни</string>
   <string name="pref_mobileData_summary">Позволете Jami на 3G/LTE мрежи допълнително към Wi-Fi</string>
   <string name="pref_pushNotifications_title">Push известия</string>
@@ -45,5 +48,6 @@
   <string name="pref_link_preview_title">Покажете прегледи на връзките в разговорите</string>
   <string name="pref_link_preview_summary">Превизиите изискват изтегляне на съдържание от сървъри на трети страни.</string>
   <!--Notifications Visibility-->
+  <string name="connectivity_custom_title">Персонализиран</string>
   <!--Extension-->
 </resources>

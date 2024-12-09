@@ -33,7 +33,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
-            app:title="@string/menu_item_advanced_settings"
+            app:title="@string/menu_item_app_settings"
             app:navigationIcon="@drawable/abc_ic_ab_back_material"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"/>
@@ -77,6 +77,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:paddingTop="8dp"
             android:paddingBottom="8dp">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:layout_marginStart="64dp"
+                android:text="@string/pref_category_appearance"
+                android:textColor="?attr/colorPrimary"
+                android:textSize="18sp" />
+
             <RelativeLayout
                 android:id="@+id/settings_dark_theme_layout"
                 android:layout_width="match_parent"
@@ -115,100 +124,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                 <com.google.android.material.materialswitch.MaterialSwitch
                     android:id="@+id/settings_dark_theme"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:checked="false"
-                    android:layout_marginStart="16dp"
-                    android:layout_centerVertical="true"/>
-
-            </RelativeLayout>
-
-            <!-- Network settings -->
-
-            <RelativeLayout
-                android:id="@+id/settings_video_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/padding_large">
-
-                <ImageView
-                    android:id="@+id/hwenc_image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    app:srcCompat="@drawable/baseline_memory_24"
-                    android:layout_marginEnd="32dp"/>
-
-                <TextView
-                    android:id="@+id/hwenc_title"
-                    style="@style/ListPrimary"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:maxLines="3"
-                    android:singleLine="false"
-                    android:text="@string/pref_video_advanced_title"
-                    android:layout_toEndOf="@id/hwenc_image"
-                    android:layout_marginEnd="16dp" />
-
-                <TextView
-                    style="@style/ListSecondary"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/pref_video_advanced_summary"
-                    android:layout_toEndOf="@id/hwenc_image"
-                    android:layout_marginEnd="16dp"
-                    android:layout_below="@id/hwenc_title"/>
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/settings_extensions_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/padding_large">
-
-                <ImageView
-                    android:id="@+id/extensions_image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:contentDescription="@string/pref_extensions_summary"
-                    app:srcCompat="@drawable/ic_extension"
-                    android:layout_marginEnd="32dp"/>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toStartOf="@+id/settings_extensions_switch"
-                    android:layout_toEndOf="@+id/extensions_image"
-                    android:orientation="vertical">
-                    <TextView
-                        android:id="@+id/extensions_title"
-                        style="@style/ListPrimary"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:maxLines="3"
-                        android:singleLine="false"
-                        android:text="@string/pref_extensions_title"
-                        android:layout_toEndOf="@id/extensions_image"
-                        android:layout_marginEnd="16dp" />
-
-                    <TextView
-                        style="@style/ListSecondary"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/pref_extensions_summary"
-                        android:layout_toEndOf="@id/extensions_image"
-                        android:layout_marginEnd="16dp"
-                        android:layout_below="@id/extensions_title"/>
-
-                </LinearLayout>
-
-                <com.google.android.material.materialswitch.MaterialSwitch
-                    android:id="@+id/settings_extensions_switch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
@@ -527,6 +442,54 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
             </RelativeLayout>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="@string/pref_category_connectivity"
+                android:textColor="?attr/colorPrimary"
+                android:textSize="18sp"
+                android:layout_marginStart="64dp" />
+
+            <RelativeLayout
+                android:id="@+id/settings_connectivity_mode"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?attr/selectableItemBackground"
+                android:padding="@dimen/padding_large">
+
+                <ImageView
+                    android:id="@+id/system_connectivity_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:contentDescription="@string/pref_connectivity_summary"
+                    android:src="@drawable/connectivity_mode_24"
+                    app:tint="?attr/colorControlNormal"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="32dp" />
+
+                <TextView
+                    style="@style/ListPrimary"
+                    android:id="@+id/system_connectivity_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:text="@string/pref_connectivity_title"
+                    android:layout_toEndOf="@+id/system_connectivity_image"/>
+
+                <TextView
+                    style="@style/ListSecondary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pref_connectivity_summary"
+                    android:layout_toEndOf="@+id/system_connectivity_image"
+                    android:layout_below="@id/system_connectivity_title"/>
+
+            </RelativeLayout>
+
             <!-- System settings -->
 
             <TextView
@@ -742,6 +705,154 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
+                android:text="@string/pref_category_extensions"
+                android:textColor="?attr/colorPrimary"
+                android:textSize="18sp"
+                android:layout_marginStart="64dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_large">
+
+                <ImageView
+                    android:id="@+id/extensions_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:contentDescription="@string/pref_enable_extensions_summary"
+                    app:srcCompat="@drawable/ic_extension_24"
+                    android:layout_marginEnd="32dp"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@+id/settings_extensions_switch"
+                    android:layout_toEndOf="@+id/extensions_image"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/extensions_title"
+                        style="@style/ListPrimary"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLines="3"
+                        android:singleLine="false"
+                        android:text="@string/pref_enable_extensions_title"
+                        android:layout_toEndOf="@id/extensions_image"
+                        android:layout_marginEnd="16dp" />
+
+                    <TextView
+                        style="@style/ListSecondary"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/pref_enable_extensions_summary"
+                        android:layout_toEndOf="@id/extensions_image"
+                        android:layout_marginEnd="16dp"
+                        android:layout_below="@id/extensions_title"/>
+
+                </LinearLayout>
+
+                <com.google.android.material.materialswitch.MaterialSwitch
+                    android:id="@+id/settings_extensions_switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:checked="false"
+                    android:layout_marginStart="16dp"
+                    android:layout_centerVertical="true"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/settings_extensions_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_large">
+
+                <ImageView
+                    android:id="@+id/manage_extensions_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    app:srcCompat="@drawable/ic_manage_extension_24"
+                    android:layout_marginEnd="32dp"/>
+
+                <TextView
+                    android:id="@+id/available_extensions_title"
+                    style="@style/ListPrimary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="3"
+                    android:singleLine="false"
+                    android:text="@string/pref_available_extensions_title"
+                    android:layout_toEndOf="@id/manage_extensions_image"
+                    android:layout_marginEnd="16dp" />
+
+                <TextView
+                    style="@style/ListSecondary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pref_available_extensions_summary"
+                    android:layout_toEndOf="@id/manage_extensions_image"
+                    android:layout_marginEnd="16dp"
+                    android:layout_below="@id/available_extensions_title"/>
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="@string/pref_category_video_settings"
+                android:textColor="?attr/colorPrimary"
+                android:textSize="18sp"
+                android:layout_marginStart="64dp" />
+
+            <RelativeLayout
+                android:id="@+id/settings_video_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_large">
+
+                <ImageView
+                    android:id="@+id/hwenc_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    app:srcCompat="@drawable/baseline_memory_24"
+                    android:layout_marginEnd="32dp"/>
+
+                <TextView
+                    android:id="@+id/hwenc_title"
+                    style="@style/ListPrimary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="3"
+                    android:singleLine="false"
+                    android:text="@string/pref_video_advanced_title"
+                    android:layout_toEndOf="@id/hwenc_image"
+                    android:layout_marginEnd="16dp" />
+
+                <TextView
+                    style="@style/ListSecondary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pref_video_advanced_summary"
+                    android:layout_toEndOf="@id/hwenc_image"
+                    android:layout_marginEnd="16dp"
+                    android:layout_below="@id/hwenc_title"/>
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
                 android:text="@string/pref_category_diagnostic"
                 android:textColor="?attr/colorPrimary"
                 android:textSize="18sp"
@@ -831,6 +942,45 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             </RelativeLayout>
 
 
+            <RelativeLayout
+                android:id="@+id/settings_pushnotificationslogs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_large">
+
+                <ImageView
+                    android:id="@+id/push_notifications_logs_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/pref_push_notifications_logs_summary"
+                    android:src="@drawable/baseline_cloud_24"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="32dp"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@+id/push_notifications_logs_image"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/ListPrimary"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:text="@string/pref_push_notifications_logs_title" />
+
+                    <TextView
+                        style="@style/ListSecondary"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/pref_push_notifications_logs_summary" />
+
+                </LinearLayout>
+            </RelativeLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

@@ -125,6 +125,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:label="@string/pref_logs_title"
             android:theme="@style/AppTheme.Navigation" />
         <activity
+            android:name=".client.PushNotificationLogsActivity"
+            android:exported="false"
+            android:label="@string/pref_push_notifications_logs_title"
+            android:theme="@style/AppTheme.Navigation" />
+        <activity
             android:name=".client.HomeActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize|orientation"
             android:exported="true"

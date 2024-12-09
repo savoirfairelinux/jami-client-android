@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+Copyright (C) 2004-2024 Savoir-faire Linux Inc.
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+-->
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".client.HomeActivity">
+    <item
+        android:id="@+id/menu_clear"
+        android:icon="@drawable/baseline_delete_24"
+        android:title="ClearAll"
+        app:iconTint="@color/icon_color"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/menu_share"
+        android:icon="@drawable/baseline_share_24"
+        android:title="@string/share_label"
+        app:iconTint="@color/icon_color"
+        app:showAsAction="collapseActionView|always" />
+
+    <item
+        android:id="@+id/menu_save"
+        android:icon="@drawable/baseline_file_download_24"
+        android:title="@string/menu_file_save"
+        app:iconTint="@color/icon_color"
+        app:showAsAction="always" />
+
+</menu>

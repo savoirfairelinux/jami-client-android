@@ -23,16 +23,22 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.*
+import android.widget.ArrayAdapter
 import android.widget.CompoundButton
+import android.widget.ImageView
+import android.widget.RadioButton
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import cx.ring.BuildConfig
 import cx.ring.R
 import cx.ring.application.JamiApplication
 import cx.ring.client.LogsActivity
+import cx.ring.client.PushNotificationLogsActivity
 import cx.ring.databinding.FragSettingsBinding
 import cx.ring.fragments.ConnectionMonitorFragment
 import cx.ring.interfaces.AppBarStateListener
@@ -43,10 +49,12 @@ import cx.ring.settings.extensionssettings.ExtensionSettingsFragment
 import cx.ring.settings.extensionssettings.ExtensionsListSettingsFragment
 import cx.ring.utils.ActionHelper.openJamiDonateWebPage
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 import net.jami.daemon.JamiService
 import net.jami.model.DonationSettings
 import net.jami.model.Settings
 import net.jami.mvp.GenericView
+import net.jami.services.PreferencesService
 import net.jami.settings.SettingsPresenter
 import net.jami.settings.SettingsViewModel
 import net.jami.utils.DonationUtils
@@ -56,11 +64,18 @@ class SettingsFragment :
     BaseSupportFragment<SettingsPresenter, GenericView<SettingsViewModel>>(),
     GenericView<SettingsViewModel>,
     AppBarStateListener {
+    enum class ConnectivityType {
+        LOCAL_NODE, GOOGLE_SERVICES, UNIFIED_PUSH, CUSTOM
+    }
     private var binding: FragSettingsBinding? = null
     private var currentSettings: Settings? = null
     private var currentDonationSettings: DonationSettings? = null
     private var mIsRefreshingViewFromPresenter = true
     private var mNotificationVisibility = NOTIFICATION_PRIVATE
+    private var mConnectivityMode: ConnectivityType = ConnectivityType.CUSTOM
+    private lateinit var connectivityOptions: List<ConnectivityOption>
+    @Inject
+    lateinit var mPreferencesService: PreferencesService
 
     private val backPressedCallback = object : OnBackPressedCallback(false) {
         override fun handleOnBackPressed() { popBackStack() }
@@ -85,6 +100,31 @@ class SettingsFragment :
                 }
             }
 
+            updateConnectionMode()
+            settingsConnectivityMode.setOnClickListener {
+                connectivityOptions = getConnectivityOptions(
+                    mPreferencesService.settings.enablePushNotifications,
+                    mPreferencesService.settings.enablePermanentService
+                )
+                val currentSelectionIndex = connectivityOptions.indexOfFirst {
+                    it.mode == mConnectivityMode
+                }
+                val adapter = ConnectivityOptionsAdapter(requireContext(),
+                    connectivityOptions, currentSelectionIndex)
+
+                MaterialAlertDialogBuilder(requireContext())
+                    .setTitle(getString(R.string.pref_connectivity_title))
+                    .setAdapter(adapter, null)
+                    .setPositiveButton(android.R.string.ok) { dialog, _ ->
+                        mConnectivityMode = connectivityOptions[adapter.selectedPosition].mode
+                        adjustSettingsForConnectivityMode()
+                        dialog.dismiss()
+                    }
+                    .setNegativeButton(android.R.string.cancel) { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                    .show()
+            }
             settingsExtensionsLayout.setOnClickListener {
                 if (JamiService.getPluginsEnabled()) {
                     goToExtensionsListSettings()
@@ -95,6 +135,11 @@ class SettingsFragment :
             }
             settingsExtensionsSwitch.setOnCheckedChangeListener { _, isChecked: Boolean ->
                 JamiService.setPluginsEnabled(isChecked)
+                if (isChecked) {
+                    settingsExtensionsLayout.visibility = View.VISIBLE
+                } else {
+                    settingsExtensionsLayout.visibility = View.GONE
+                }
             }
             val save = CompoundButton.OnCheckedChangeListener { _, isChecked: Boolean ->
                 if (!mIsRefreshingViewFromPresenter) saveSettings(this)
@@ -140,6 +185,15 @@ class SettingsFragment :
                 donateButton.isVisible = false
                 backPressedCallback.isEnabled = true
             }
+
+            if (TextUtils.isEmpty(JamiApplication.instance?.pushToken)) {
+                settingsPushnotificationslogs.visibility = View.GONE
+            } else {
+                settingsPushnotificationslogs.setOnClickListener { v: View ->
+                    startActivity(Intent(v.context, PushNotificationLogsActivity::class.java))
+                }
+            }
+
             toolbar.setNavigationOnClickListener {
                 activity?.onBackPressedDispatcher?.onBackPressed()
             }
@@ -148,8 +202,122 @@ class SettingsFragment :
             if (TextUtils.isEmpty(JamiApplication.instance?.pushToken)) {
                 settingsPushNotificationsLayout.visibility = View.GONE
             }
+            if (!JamiService.getPluginsEnabled()) {
+                settingsExtensionsLayout.visibility = View.GONE
+            }
             binding = this
         }.root
+
+    private fun getConnectivityOptions(
+        enablePushNotifications: Boolean,
+        enablePermanentService: Boolean
+    ) : List<ConnectivityOption> {
+        val baseOptions = when (BuildConfig.FLAVOR) {
+            "noPush" -> listOf(
+                ConnectivityOption(
+                    mode = ConnectivityType.LOCAL_NODE,
+                    iconResId = R.drawable.connectivity_mode_dht_24,
+                    title = getString(R.string.connectivity_local_node_title),
+                    description = getString(R.string.connectivity_local_node_description)
+                )
+            )
+            "withFirebase" -> listOf(
+                ConnectivityOption(
+                    mode = ConnectivityType.LOCAL_NODE,
+                    iconResId = R.drawable.connectivity_mode_dht_24,
+                    title = getString(R.string.connectivity_local_node_title),
+                    description = getString(R.string.connectivity_local_node_description)
+                ),
+                ConnectivityOption(
+                    mode = ConnectivityType.GOOGLE_SERVICES,
+                    iconResId = R.drawable.connectivity_mode_firebase_24,
+                    title = getString(R.string.connectivity_google_services_title),
+                    description = getString(R.string.connectivity_google_services_description)
+                )
+            )
+            "withUnifiedPush" -> listOf(
+                ConnectivityOption(
+                    mode = ConnectivityType.LOCAL_NODE,
+                    iconResId = R.drawable.connectivity_mode_dht_24,
+                    title = getString(R.string.connectivity_local_node_title),
+                    description = getString(R.string.connectivity_local_node_description)
+                ),
+                ConnectivityOption(
+                    mode = ConnectivityType.UNIFIED_PUSH,
+                    iconResId = R.drawable.connectivity_mode_firebase_24,
+                    title = getString(R.string.connectivity_unified_push_title),
+                    description = getString(R.string.connectivity_unified_push_description)
+                )
+            )
+            else -> emptyList()
+        }
+        return if (((enablePushNotifications && !enablePermanentService) && (BuildConfig.FLAVOR
+                   == "withFirebase")) || (!enablePushNotifications && enablePermanentService)) {
+                   baseOptions
+        } else if (enablePushNotifications && enablePermanentService
+            && BuildConfig.FLAVOR == "noPush") {
+            baseOptions
+        } else {
+            baseOptions + ConnectivityOption(
+                mode = ConnectivityType.CUSTOM,
+                iconResId = R.drawable.connectivity_mode_custom_24,
+                title = getString(R.string.connectivity_custom_title),
+                description = getString(R.string.connectivity_custom_description)
+            )
+        }
+    }
+
+    private fun adjustSettingsForConnectivityMode() {
+        if(currentSettings != null) {
+            currentSettings = when (mConnectivityMode) {
+                ConnectivityType.GOOGLE_SERVICES -> currentSettings?.copy(
+                    enablePushNotifications = true,
+                    enablePermanentService = false
+                )
+
+                ConnectivityType.LOCAL_NODE -> currentSettings?.copy(
+                    enablePushNotifications = false,
+                    enablePermanentService = true
+                )
+
+                ConnectivityType.UNIFIED_PUSH -> currentSettings?.copy(
+                    enablePushNotifications = true,
+                    enablePermanentService = false
+                )
+
+                else -> currentSettings
+            }
+            presenter.saveSettings(currentSettings!!)
+        }
+    }
+
+    private fun updateConnectionMode() {
+        mConnectivityMode = when {
+            !mPreferencesService.settings.enablePushNotifications &&
+                mPreferencesService.settings.enablePermanentService -> {
+                ConnectivityType.LOCAL_NODE
+            }
+
+            mPreferencesService.settings.enablePushNotifications &&
+                mPreferencesService.settings.enablePermanentService -> {
+                when (BuildConfig.FLAVOR) {
+                    "noPush" -> ConnectivityType.LOCAL_NODE
+                    else -> ConnectivityType.CUSTOM
+                }
+            }
+
+            mPreferencesService.settings.enablePushNotifications &&
+                !mPreferencesService.settings.enablePermanentService -> {
+                when (BuildConfig.FLAVOR) {
+                    "withFirebase" -> ConnectivityType.GOOGLE_SERVICES
+                    "withUnifiedPush" -> ConnectivityType.UNIFIED_PUSH
+                    else -> ConnectivityType.CUSTOM
+                }
+            }
+
+            else -> ConnectivityType.CUSTOM
+        }
+    }
 
     private fun goToVideoSettings() {
         val binding = binding ?: return
@@ -211,7 +379,7 @@ class SettingsFragment :
             val binding = binding ?: return
             binding.donateButton.isVisible = DonationUtils.isDonationPeriod()
             onAppBarScrollTargetViewChanged(binding.scrollview)
-            onToolbarTitleChanged(getString(R.string.menu_item_advanced_settings))
+            onToolbarTitleChanged(getString(R.string.menu_item_app_settings))
             backPressedCallback.isEnabled = false
             binding.fragmentContainer.isVisible = false
         }
@@ -279,6 +447,7 @@ class SettingsFragment :
     }
 
     override fun showViewModel(viewModel: SettingsViewModel) {
+        updateConnectionMode()
         val settings = viewModel.settings
         val donationSettings = viewModel.donationSettings
         currentDonationSettings = donationSettings
@@ -317,5 +486,46 @@ class SettingsFragment :
         const val EXTENSIONS_LIST_SETTINGS_TAG = "ExtensionsListSettings"
         const val EXTENSION_SETTINGS_TAG = "ExtensionSettings"
         const val EXTENSION_PATH_PREFERENCE_TAG = "ExtensionPathPreference"
+    }
+}
+
+data class ConnectivityOption (
+    val mode: SettingsFragment.ConnectivityType,
+    val iconResId: Int,
+    val title: String,
+    val description: String
+)
+
+class ConnectivityOptionsAdapter(
+    context: Context,
+    private val options: List<ConnectivityOption>,
+    var selectedPosition: Int
+) : ArrayAdapter<ConnectivityOption>(context, 0, options) {
+
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+        val view = convertView ?: LayoutInflater.from(context).inflate(R.layout
+            .dialog_option_item, parent, false)
+
+        val option = getItem(position)
+        val imageView = view.findViewById<ImageView>(R.id.item_image)
+        val titleView = view.findViewById<TextView>(R.id.item_title)
+        val descriptionView = view.findViewById<TextView>(R.id.item_description)
+        val radioButton = view.findViewById<RadioButton>(R.id.item_radio_button)
+
+        option?.let {
+            imageView.setImageResource(it.iconResId)
+            titleView.text = it.title
+            descriptionView.text = it.description
+            radioButton.isChecked = position == selectedPosition
+        }
+        view.setOnClickListener {
+            selectedPosition = position
+            notifyDataSetChanged()
+        }
+        radioButton.setOnClickListener {
+            selectedPosition = position
+            notifyDataSetChanged()
+        }
+        return view
     }
 }

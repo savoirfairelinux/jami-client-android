@@ -24,7 +24,6 @@
   <string name="menu_item_accounts">એકાઉન્ટ્સનું સંચાલન</string>
   <string name="menu_item_account">એકાઉન્ટ મેનેજ કરો</string>
   <string name="menu_item_settings">સેટિંગ્સ</string>
-  <string name="menu_item_advanced_settings">અદ્યતન સેટિંગ્સ</string>
   <string name="menu_item_account_settings">એકાઉન્ટ સેટિંગ્સ</string>
   <string name="menu_item_share">મારા એકાઉન્ટ શેર કરો</string>
   <string name="menu_item_about">જમી વિશે</string>
@@ -316,14 +315,12 @@
   <string name="tab_members">સભ્યો</string>
   <string name="tab_files">ફાઇલો</string>
   <string name="tab_settings">સેટિંગ્સ</string>
-  <string name="dialogtitle_title">સ્વેર્મ શીર્ષક સંપાદિત કરો</string>
-  <string name="dialogtitle_description">સ્કેમ વર્ણન સંપાદિત કરો</string>
   <string name="dialog_hint_title">શીર્ષક</string>
   <string name="dialog_hint_description">વર્ણન</string>
   <string name="picker_title">સંપર્કો પસંદ કરો</string>
   <string name="picker_btn">સંપર્કો પસંદ કરો</string>
   <string name="bottomsheet_contact">જમી\n%1$s સાથે સંપર્ક કરો</string>
-  <string name="bottomsheet_remove">સમૂહમાંથી દૂર કરો</string>
+  <string name="bottomsheet_remove">સભ્ય દૂર કરો</string>
   <!--JamiId-->
   <string name="jami_id_validate">વપરાશકર્તા નામ નોંધણી</string>
   <string name="jami_id_looking_for_availability">વપરાશકર્તા નામ ઉપલબ્ધતા શોધી રહ્યા છીએ...</string>
@@ -333,6 +330,7 @@
   <!--Conversation details-->
   <string name="details">વિગતો</string>
   <string name="Private">ખાનગી</string>
+  <string name="mute_conversation">મૌન વાતચીત</string>
   <!--Donation-->
   <string name="donation_card_not_now">હમણાં નહીં</string>
   <!--Extension-->

@@ -30,7 +30,6 @@
   <string name="menu_item_accounts">Upravljaj račune</string>
   <string name="menu_item_account">Upravljaj račun</string>
   <string name="menu_item_settings">Nastavitve</string>
-  <string name="menu_item_advanced_settings">Napredne nastavitve</string>
   <string name="menu_item_account_settings">Nastavitve računa</string>
   <string name="menu_item_extension_list">Nastavitve razširitev</string>
   <string name="menu_item_share">Deli moj račun</string>
@@ -102,8 +101,6 @@
   <string name="call_duration">Trajanje: %s</string>
   <string name="start_error_title">Jami ni možno zagnati</string>
   <string name="action_call_accept">Sprejmi klic</string>
-  <string name="action_call_accept_audio">Sprejmi dohodni klic samo z zvokom</string>
-  <string name="action_call_accept_video">Sprejmi dohodni klic z videom</string>
   <string name="action_call_hold_accept">Sprejmi dohodni klic samo z zvokom in zadrži trenutni klic</string>
   <string name="action_call_hold_accept_video">Sprejmi dohodni klic z videom in zadrži trenutni klic</string>
   <string name="action_call_end_accept">Sprejmi dohodni klic in končaj trenutni klic</string>
@@ -392,15 +389,13 @@
   <string name="tab_files">Datoteke</string>
   <string name="tab_settings">Nastavitve</string>
   <string name="not_admin_toast">Samo skrbniki lahko urejajo podatke te skupine</string>
-  <string name="dialogtitle_title">Uredi naslov roja</string>
-  <string name="dialogtitle_description">Uredite opis roja</string>
   <string name="dialog_hint_title">Naslov</string>
   <string name="dialog_hint_description">Opis</string>
   <string name="picker_title">Izberite stike</string>
   <string name="picker_btn">Izberite stike</string>
   <string name="no_contact_to_add">Nimate stikov, ki bi jih lahko dodali</string>
   <string name="bottomsheet_contact">Stop v stik z Jamijem\n%1$s</string>
-  <string name="bottomsheet_remove">Odstrani iz roja</string>
+  <string name="bottomsheet_remove">Odstrani člana</string>
   <string name="error_open_no_app_found">Ni programa, ki bi znal ravnati z datoteko: %1$s</string>
   <string name="swarm_detail_no_document">Trenutno še nimate dokumentov.</string>
   <string name="group_admin">Skrbnik</string>
@@ -419,7 +414,6 @@
   <string name="welcome_jami_description">Delite svoj identifikator Jami, da vas lažje najdejo!</string>
   <!--Conversation details-->
   <string name="details">Detajli</string>
-  <string name="swarm_type">Vrsta pogovora</string>
   <string name="Private">Zasebno</string>
   <string name="swarm_id">ID roja</string>
   <string name="show_qr_code">Pokaži QR-kodo</string>

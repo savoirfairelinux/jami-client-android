@@ -33,7 +33,6 @@
   <string name="menu_item_accounts">Administroni llogari</string>
   <string name="menu_item_account">Administroni llogari</string>
   <string name="menu_item_settings">Rregullime</string>
-  <string name="menu_item_advanced_settings">Rregullime të Mëtejshme</string>
   <string name="menu_item_account_settings">Rregullime Llogarie</string>
   <string name="menu_item_extension_list">Rregullime Zgjerimesh</string>
   <string name="menu_item_share">Ndaje llogarinë time</string>
@@ -103,8 +102,6 @@
   <string name="call_duration">Zgjati %s</string>
   <string name="start_error_title">S’niset dot Jami!</string>
   <string name="action_call_accept">Pranoje thirrjen</string>
-  <string name="action_call_accept_audio">Prano thirrje ardhëse vetëm me audio </string>
-  <string name="action_call_accept_video">Prano thirrje ardhëse vetëm me video </string>
   <string name="action_call_hold_accept">Prano thirrje ardhëse vetëm me audio dhe mbaj në pritje thirrjen e tanishme</string>
   <string name="action_call_hold_accept_video">Prano thirrje ardhëse me audio dhe mbaj në pritje thirrjen e tanishme</string>
   <string name="action_call_end_accept">Prano thirrje ardhëse dhe përfundo thirrjen e tanishme</string>
@@ -410,15 +407,15 @@
   <string name="tab_files">Kartela</string>
   <string name="tab_settings">Rregullime</string>
   <string name="not_admin_toast">Hollësitë e këtij grupi mund t’i përpunojnë vetëm përgjegjësit</string>
-  <string name="dialogtitle_title">Përpunoni titull Zgjoi</string>
-  <string name="dialogtitle_description">Përpunoni përshkrim Zgjoi</string>
+  <string name="dialogtitle_title">Përpunoni titull grupi</string>
+  <string name="dialogtitle_description">Përpunoni përshkrim grupi</string>
   <string name="dialog_hint_title">Titull</string>
   <string name="dialog_hint_description">Përshkrim</string>
   <string name="picker_title">Përzgjidhni Kontakte</string>
   <string name="picker_btn">Përzgjidhni kontake</string>
   <string name="no_contact_to_add">S’keni kontakt për shtim</string>
   <string name="bottomsheet_contact">Lidhuni me Jami-n\n%1$s</string>
-  <string name="bottomsheet_remove">Hiqe prej zgjoi</string>
+  <string name="bottomsheet_remove">Hiqni anëtar</string>
   <string name="error_open_no_app_found">S’u gjet aplikacion për trajtim të kësaj kartele: %1$s</string>
   <string name="swarm_detail_no_document">Ende s’keni dokumente.</string>
   <string name="group_admin">Përgjegjës</string>
@@ -444,7 +441,7 @@
   <string name="swarm_id">ID zgjoi</string>
   <string name="show_qr_code">Shfaq kod QR</string>
   <string name="show_certificate">Shfaq dëshmi</string>
-  <string name="mute_conversation">Heshtoje Bisedëb</string>
+  <string name="mute_conversation">Heshtoje bisedën</string>
   <!--Donation-->
   <string name="donation_card_description">Nëse ju shijon të përdorni Jami-n dhe besoni në misionin tonë, a do të bënit një dhurim?</string>
   <string name="donation_card_not_now">Jo tani</string>

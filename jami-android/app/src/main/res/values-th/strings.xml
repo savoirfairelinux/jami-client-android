@@ -24,7 +24,6 @@
   <string name="menu_item_accounts">จัดการบัญชี</string>
   <string name="menu_item_account">จัดการบัญชี</string>
   <string name="menu_item_settings">การตั้งค่า</string>
-  <string name="menu_item_advanced_settings">การตั้งค่าที่ทันสมัย</string>
   <string name="menu_item_account_settings">การตั้งค่าบัญชี</string>
   <string name="menu_item_share">แบ่งปันบัญชีของฉัน</string>
   <string name="menu_item_about">เกี่ยวกับ Jami</string>
@@ -316,14 +315,12 @@
   <string name="tab_members">สมาชิก</string>
   <string name="tab_files">ไฟล์</string>
   <string name="tab_settings">การตั้งค่า</string>
-  <string name="dialogtitle_title">ปรับเปลี่ยนหัวข้อ Swarm</string>
-  <string name="dialogtitle_description">ปรับเปลี่ยนการอธิบายของ Swarm</string>
   <string name="dialog_hint_title">ชื่อ</string>
   <string name="dialog_hint_description">คําอธิบาย</string>
   <string name="picker_title">เลือกติดต่อ</string>
   <string name="picker_btn">เลือกติดต่อ</string>
   <string name="bottomsheet_contact">ติดต่อ Jami\n%1$s</string>
-  <string name="bottomsheet_remove">ออกจากกลุ่ม</string>
+  <string name="bottomsheet_remove">ยกสมาชิก</string>
   <!--JamiId-->
   <string name="jami_id_validate">จดทะเบียนชื่อผู้ใช้</string>
   <string name="jami_id_looking_for_availability">กําลังค้นหาชื่อผู้ใช้ได้</string>
@@ -333,6 +330,7 @@
   <!--Conversation details-->
   <string name="details">รายละเอียด</string>
   <string name="Private">เอกชน</string>
+  <string name="mute_conversation">การพูดคุยเงียบ</string>
   <!--Donation-->
   <string name="donation_card_not_now">ไม่ใช่ตอนนี้</string>
   <!--Extension-->

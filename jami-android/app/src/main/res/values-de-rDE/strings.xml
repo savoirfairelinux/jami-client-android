@@ -31,8 +31,6 @@
   <!--Call Fragment-->
   <string name="start_error_title">Jami kann nicht gestartet werden</string>
   <string name="action_call_accept">Anruf annehmen</string>
-  <string name="action_call_accept_audio">Eingehende Anrufe nur mit Audio annehmen</string>
-  <string name="action_call_accept_video">Eingehende Anrufe mit Video annehmen</string>
   <string name="action_call_hold_accept">Eingehende Anrufe nur mit Audio annehmen und aktuellen Anruf halten</string>
   <string name="action_call_hold_accept_video">Eingehenden Anrufen mit Video annehmen und aktuellen Anruf halten</string>
   <string name="action_call_end_accept">Eingehenden Anruf annehmen und aktuellen Anruf beenden</string>
@@ -124,7 +122,10 @@
   <string name="tab_files">Dateien</string>
   <string name="tab_settings">Einstellungen</string>
   <string name="not_admin_toast">Nur Administratoren können die Informationen dieser Gruppe bearbeiten</string>
+  <string name="dialogtitle_title">Gruppentitel bearbeiten</string>
+  <string name="dialogtitle_description">Gruppenbeschreibung bearbeiten</string>
   <string name="no_contact_to_add">Sie haben keinen Kontakt zum Hinzufügen</string>
+  <string name="bottomsheet_remove">Mitglied entfernen</string>
   <string name="group_admin">Administrator</string>
   <string name="share_contact_intent_title">Diesen Kontakt zu Jami hinzufügen!</string>
   <string name="share_contact_intent_body">Sie können diesen Kontakt „%1$s“ auf der verteilten Kommunikationsplattform Jami hinzufügen: %2$s</string>
@@ -133,7 +134,7 @@
   <!--Conversation details-->
   <string name="details">Details</string>
   <string name="secure_p2p_connection">Sichere Peer-to-Peer-Verbindung</string>
-  <string name="swarm_type">Art des Unterhaltung</string>
+  <string name="swarm_type">Unterhaltungstyp</string>
   <string name="Private">Privat</string>
   <string name="swarm_id">Schwarm-ID</string>
   <string name="show_qr_code">QR-Code anzeigen</string>

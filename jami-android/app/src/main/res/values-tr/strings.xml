@@ -24,7 +24,6 @@
   <string name="menu_item_accounts">Hesapları yönet</string>
   <string name="menu_item_account">Hesabı yönet</string>
   <string name="menu_item_settings">Ayarlar</string>
-  <string name="menu_item_advanced_settings">Gelişmiş Ayarlar</string>
   <string name="menu_item_account_settings">Hesap Ayarları</string>
   <string name="menu_item_share">Jami Hesabı </string>
   <string name="menu_item_about">Jami Hakkında</string>
@@ -325,14 +324,12 @@
   <string name="tab_members">Üyeler</string>
   <string name="tab_files">Dosyalar</string>
   <string name="tab_settings">Ayarlar</string>
-  <string name="dialogtitle_title">Swarm başlığını düzenle</string>
-  <string name="dialogtitle_description">Swarm açıklamasını düzenle</string>
   <string name="dialog_hint_title">Başlık</string>
   <string name="dialog_hint_description">Açıklama</string>
   <string name="picker_title">Kişi seç</string>
   <string name="picker_btn">Kişi seç</string>
   <string name="bottomsheet_contact">Jami ile iletişime geç\n%1$s</string>
-  <string name="bottomsheet_remove">Swarm\'dan uzaklaştır</string>
+  <string name="bottomsheet_remove">Üyeyi kaldır</string>
   <string name="error_open_no_app_found">Bu dosyayı işleyecek uygulama bulunamadı: %1$s</string>
   <!--JamiId-->
   <string name="jami_id_copy">JamiId kopyala</string>
@@ -349,6 +346,7 @@
   <!--Conversation details-->
   <string name="details">Ayrıntılar</string>
   <string name="Private">Özel</string>
+  <string name="mute_conversation">Görüşmeyi sessize al</string>
   <!--Donation-->
   <string name="donation_card_description">Jami\'yi kullanmaktan hoşlanıyor ve misyonumuza inanıyorsan bağış yapmak ister misin?</string>
   <string name="donation_card_not_now">Şimdi değil</string>

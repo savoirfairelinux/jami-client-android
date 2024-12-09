@@ -6,6 +6,9 @@
   <string name="pref_category_system">Sịstèm</string>
   <string name="pref_category_privacy">Ihe Ndị Na-eme Ka Mmadụ Nwee Onwe Ya</string>
   <string name="pref_category_diagnostic">Ihe ndị e ji amata ọrịa</string>
+  <string name="pref_category_appearance">Otú Ọ Dị</string>
+  <string name="pref_category_connectivity">Njikọ</string>
+  <string name="pref_category_video_settings">Ntọala vidiyo dị elu</string>
   <string name="pref_mobileData_title">Data mkpanaka</string>
   <string name="pref_mobileData_summary">Hapụ Jami na netwọk 3G / LTE na mgbakwunye na Wi-Fi</string>
   <string name="pref_pushNotifications_title">Nkwupụta ịkwanye</string>

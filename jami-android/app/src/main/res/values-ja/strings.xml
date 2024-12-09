@@ -24,7 +24,6 @@
   <string name="menu_item_accounts">アカウント管理</string>
   <string name="menu_item_account">アカウント管理</string>
   <string name="menu_item_settings">設定</string>
-  <string name="menu_item_advanced_settings">詳細設定</string>
   <string name="menu_item_account_settings">アカウント設定</string>
   <string name="menu_item_share">アカウントの共有</string>
   <string name="menu_item_about">Jamiについて</string>
@@ -322,14 +321,12 @@
   <string name="tab_members">要員</string>
   <string name="tab_files">ファイル</string>
   <string name="tab_settings">設定</string>
-  <string name="dialogtitle_title">Swarmタイトル編集</string>
-  <string name="dialogtitle_description">Swarm記述を編集する</string>
   <string name="dialog_hint_title">タイトル</string>
   <string name="dialog_hint_description">記述</string>
   <string name="picker_title">連絡先を選択</string>
   <string name="picker_btn">連絡先を選択</string>
   <string name="bottomsheet_contact">Jamiに連絡をする\n%1$s</string>
-  <string name="bottomsheet_remove">Swarmから外す</string>
+  <string name="bottomsheet_remove">メンバーを削除</string>
   <!--JamiId-->
   <string name="jami_id_validate">ユーザー名を登録</string>
   <string name="jami_id_looking_for_availability">利用可能なユーザー名を検索中…</string>
@@ -339,6 +336,7 @@
   <!--Conversation details-->
   <string name="details">詳細</string>
   <string name="Private">プライベート</string>
+  <string name="mute_conversation">会話をミュートする</string>
   <!--Donation-->
   <string name="donation_card_not_now">後で</string>
   <!--Extension-->

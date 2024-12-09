@@ -6,6 +6,9 @@
   <string name="pref_category_system">Systeem</string>
   <string name="pref_category_privacy">Privacy</string>
   <string name="pref_category_diagnostic">Diagnostiek</string>
+  <string name="pref_category_appearance">Uiterlijk</string>
+  <string name="pref_category_connectivity">Connectiviteit</string>
+  <string name="pref_category_video_settings">Geavanceerde video-instellingen</string>
   <string name="pref_mobileData_title">Mobiele data</string>
   <string name="pref_mobileData_summary">Sta Jami toe om 3G/LTE-netwerken te gebruiken naast wifi</string>
   <string name="pref_pushNotifications_title">Pushmeldingen</string>
@@ -45,5 +48,6 @@
   <string name="pref_link_preview_title">Vertoon linkvoorziening in gesprekken</string>
   <string name="pref_link_preview_summary">Voorbeelden vereisen het downloaden van inhoud van servers van derden.</string>
   <!--Notifications Visibility-->
+  <string name="connectivity_custom_title">Aangepast</string>
   <!--Extension-->
 </resources>

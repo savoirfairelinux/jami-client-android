@@ -24,7 +24,6 @@
   <string name="menu_item_accounts">Hantera kontoar</string>
   <string name="menu_item_account">Ta styr på kontoen</string>
   <string name="menu_item_settings">Innstillingar</string>
-  <string name="menu_item_advanced_settings">Forfråte innstillingar</string>
   <string name="menu_item_account_settings">Settingar på konto</string>
   <string name="menu_item_share">Deila kontoen min</string>
   <string name="menu_item_about">Om Jami</string>
@@ -316,14 +315,12 @@
   <string name="tab_members">Medlemmar</string>
   <string name="tab_files">Dateiar</string>
   <string name="tab_settings">Innstillingar</string>
-  <string name="dialogtitle_title">Redigera Swarm-tittel</string>
-  <string name="dialogtitle_description">Redigera beskriving av swarm</string>
   <string name="dialog_hint_title">Tittel</string>
   <string name="dialog_hint_description">Beskriving</string>
   <string name="picker_title">Velg kontakt</string>
   <string name="picker_btn">Velg kontakt</string>
   <string name="bottomsheet_contact">Kontakt Jami\n%1$s</string>
-  <string name="bottomsheet_remove">Ta bort dei frå sjarmen</string>
+  <string name="bottomsheet_remove">Ta bort medlem</string>
   <!--JamiId-->
   <string name="jami_id_validate">Registrer brukernavn</string>
   <string name="jami_id_looking_for_availability">Eg leitar etter brukernavn...</string>
@@ -333,6 +330,7 @@
   <!--Conversation details-->
   <string name="details">Detaljer</string>
   <string name="Private">Privat</string>
+  <string name="mute_conversation">Taus samtale</string>
   <!--Donation-->
   <string name="donation_card_not_now">Ikkje no</string>
   <!--Extension-->

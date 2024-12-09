@@ -24,7 +24,6 @@
   <string name="menu_item_accounts">Urus akaun</string>
   <string name="menu_item_account">അക്കൌണ്ട് മാനേജുചെയ്യുക</string>
   <string name="menu_item_settings">Tetapan</string>
-  <string name="menu_item_advanced_settings">വിപുലമായ ക്രമീകരണങ്ങൾ</string>
   <string name="menu_item_account_settings">അക്കൌണ്ട് ക്രമീകരണങ്ങൾ</string>
   <string name="menu_item_share">എന്റെ അക്കൌണ്ട് പങ്കുവെക്കുക</string>
   <string name="menu_item_about">ജാമിയെ കുറിച്ച്</string>
@@ -316,14 +315,12 @@
   <string name="tab_members">അംഗങ്ങള്</string>
   <string name="tab_files">ഫയലുകൾ</string>
   <string name="tab_settings">Tetapan</string>
-  <string name="dialogtitle_title">Swarm തലക്കെട്ട് തിരുത്തുക</string>
-  <string name="dialogtitle_description">സ്കാർം വിവരണം തിരുത്തുക</string>
   <string name="dialog_hint_title">തലക്കെട്ട്</string>
   <string name="dialog_hint_description">വിവരണം</string>
   <string name="picker_title">കോൺടാക്റ്റുകൾ തിരഞ്ഞെടുക്കുക</string>
   <string name="picker_btn">കോൺടാക്റ്റുകൾ തിരഞ്ഞെടുക്കുക</string>
   <string name="bottomsheet_contact">ജാമി %1$s നെ ബന്ധപ്പെടുക</string>
-  <string name="bottomsheet_remove">കൂട്ടത്തിൽ നിന്ന് അകറ്റുക</string>
+  <string name="bottomsheet_remove">അംഗം നീക്കം ചെയ്യുക</string>
   <!--JamiId-->
   <string name="jami_id_validate">ഉപയോക്തൃനാമം രജിസ്റ്റർ ചെയ്യുക</string>
   <string name="jami_id_looking_for_availability">ഉപയോക്തൃനാമം ലഭ്യമാക്കാൻ നോക്കുന്നത്...</string>
@@ -333,6 +330,7 @@
   <!--Conversation details-->
   <string name="details">Maklumat</string>
   <string name="Private">സ്വകാര്യ</string>
+  <string name="mute_conversation">നിശബ്ദ സംഭാഷണം</string>
   <!--Donation-->
   <string name="donation_card_not_now">Bukan sekarang</string>
   <!--Extension-->

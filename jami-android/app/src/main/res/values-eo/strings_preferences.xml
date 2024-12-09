@@ -6,6 +6,9 @@
   <string name="pref_category_system">Sistemo</string>
   <string name="pref_category_privacy">Privateco</string>
   <string name="pref_category_diagnostic">Diagnostikoj</string>
+  <string name="pref_category_appearance">Aparicio</string>
+  <string name="pref_category_connectivity">Konektiveco</string>
+  <string name="pref_category_video_settings">Avancitaj videaj agordoj</string>
   <string name="pref_mobileData_title">Porteblaj datumoj</string>
   <string name="pref_mobileData_summary">Permesu al Jami uzi 3G/LTE-retojn krom Wi-Fi</string>
   <string name="pref_pushNotifications_title">Poŝnotifikoj</string>
@@ -45,5 +48,6 @@
   <string name="pref_link_preview_title">Montru antaŭrigardojn de ligiloj en konversacioj</string>
   <string name="pref_link_preview_summary">Antaŭvidoj postulas elŝuti enhavon de triaj serviloj.</string>
   <!--Notifications Visibility-->
+  <string name="connectivity_custom_title">Propra</string>
   <!--Extension-->
 </resources>

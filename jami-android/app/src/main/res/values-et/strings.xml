@@ -24,7 +24,6 @@
   <string name="menu_item_accounts">Halda kasutajakontosid</string>
   <string name="menu_item_account">Halda kasutajakontot</string>
   <string name="menu_item_settings">Seadistused</string>
-  <string name="menu_item_advanced_settings">Seaded edasijõudnutele</string>
   <string name="menu_item_account_settings">Kontode seaded</string>
   <string name="menu_item_share">Jaga minu kontot</string>
   <string name="menu_item_about">Teave Jami kohta</string>
@@ -329,14 +328,12 @@
   <string name="tab_members">Liikmed</string>
   <string name="tab_files">Failid</string>
   <string name="tab_settings">Seadistused</string>
-  <string name="dialogtitle_title">Muuda rühma pealkirja</string>
-  <string name="dialogtitle_description">Muuda rühma kirjeldust</string>
   <string name="dialog_hint_title">Pealkiri</string>
   <string name="dialog_hint_description">Kirjeldus</string>
   <string name="picker_title">Vali kontaktid</string>
   <string name="picker_btn">Vali kontaktid</string>
   <string name="bottomsheet_contact">Võta ühendust Jami arendajatega\n%1$s</string>
-  <string name="bottomsheet_remove">Eemalda rühmast</string>
+  <string name="bottomsheet_remove">Eemalda osaleja</string>
   <string name="error_open_no_app_found">Selle faili avamiseks ei leidu rakendust: %1$s</string>
   <!--JamiId-->
   <string name="jami_id_copy">Kopeeri JamiId</string>
@@ -353,6 +350,7 @@
   <!--Conversation details-->
   <string name="details">Üksikasjalikud andmed</string>
   <string name="Private">Isiklik</string>
+  <string name="mute_conversation">Summuta vestlus</string>
   <!--Donation-->
   <string name="donation_card_description">Kui sulle Jami meeldib ja sa usud meie visiooni, siis kas sa oleksid nõus meid rahaliselt toetama?</string>
   <string name="donation_card_not_now">Mitte praegu</string>

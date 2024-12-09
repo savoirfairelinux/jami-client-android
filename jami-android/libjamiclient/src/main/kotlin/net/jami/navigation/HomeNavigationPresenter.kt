@@ -16,21 +16,14 @@
  */
 package net.jami.navigation
 
-import ezvcard.VCard
-import ezvcard.property.Photo
-import ezvcard.property.RawProperty
-import ezvcard.property.Uid
 import io.reactivex.rxjava3.core.Scheduler
-import io.reactivex.rxjava3.core.Single
-import io.reactivex.rxjava3.schedulers.Schedulers
-import net.jami.model.Account
 import net.jami.mvp.RootPresenter
 import net.jami.services.AccountService
 import net.jami.services.DeviceRuntimeService
 import net.jami.services.HardwareService
 import net.jami.services.VCardService
 import net.jami.utils.Log
-import net.jami.utils.VCardUtils
+import java.io.File
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -52,75 +45,6 @@ class HomeNavigationPresenter @Inject constructor(
             }) { e: Throwable -> Log.e(TAG, "Error loading account list !", e) })
     }
 
-    fun saveVCardPhoto(photo: Single<Photo>) {
-        val account = mAccountService.currentAccount!!
-        val accountId = account.accountId
-        val ringId = account.username
-        val filesDir = mDeviceRuntimeService.provideFilesDir()
-        mCompositeDisposable.add(Single.zip(
-            VCardUtils.loadLocalProfileFromDiskWithDefault(filesDir, accountId).subscribeOn(Schedulers.io()),
-            photo.subscribeOn(Schedulers.io())
-        ) { vcard: VCard, pic: Photo ->
-            vcard.apply {
-                uid = Uid(ringId)
-                removeProperties(Photo::class.java)
-                addPhoto(pic)
-                removeProperties(RawProperty::class.java)
-            }
-        }
-            .subscribeOn(Schedulers.io())
-            .subscribe({ vcard ->
-                account.loadedProfile = mVCardService.loadVCardProfile(vcard).cache()
-                VCardUtils.saveLocalProfileToDisk(vcard, accountId, filesDir)
-                    .subscribeOn(Schedulers.io())
-                    .subscribe()
-            }) { e: Throwable -> Log.e(TAG, "Error saving vCard !", e) })
-    }
-
-    fun saveVCardFormattedName(username: String?) {
-        val account = mAccountService.currentAccount!!
-        val accountId = account.accountId
-        val filesDir = mDeviceRuntimeService.provideFilesDir()
-        mCompositeDisposable.add(VCardUtils.loadLocalProfileFromDiskWithDefault(filesDir, accountId)
-            .doOnSuccess { vcard: VCard ->
-                vcard.setFormattedName(username)
-                vcard.removeProperties(RawProperty::class.java)
-            }
-            .subscribeOn(Schedulers.io())
-            .subscribe({ vcard ->
-                account.loadedProfile = mVCardService.loadVCardProfile(vcard).cache()
-                VCardUtils.saveLocalProfileToDisk(vcard, accountId, filesDir)
-                    .subscribeOn(Schedulers.io())
-                    .subscribe()
-            }) { e: Throwable -> Log.e(TAG, "Error saving vCard !", e) })
-    }
-
-    fun saveVCard(account: Account, username: String?, photo: Single<Photo>) {
-        val accountId = account.accountId
-        val ringId = account.username
-        val filesDir = mDeviceRuntimeService.provideFilesDir()
-        mCompositeDisposable.add(Single.zip(
-            VCardUtils.loadLocalProfileFromDiskWithDefault(filesDir, accountId).subscribeOn(Schedulers.io()),
-            photo
-        ) { vcard: VCard, pic: Photo ->
-            vcard.uid = Uid(ringId)
-            if (!username.isNullOrEmpty()) {
-                vcard.setFormattedName(username)
-            }
-            vcard.removeProperties(Photo::class.java)
-            vcard.addPhoto(pic)
-            vcard.removeProperties(RawProperty::class.java)
-            account.loadedProfile = mVCardService.loadVCardProfile(vcard).cache()
-            vcard
-        }
-            .flatMap { vcard -> VCardUtils.saveLocalProfileToDisk(vcard, accountId, filesDir) }
-            .subscribeOn(Schedulers.io())
-            .subscribe({}) { e: Throwable -> Log.e(TAG, "Error saving vCard !", e) })
-    }
-
-    fun getUri(account: Account, defaultNameSip: CharSequence): String? =
-        if (account.isIP2IP) defaultNameSip.toString() else account.displayUri
-
     fun cameraClicked() {
         if (mDeviceRuntimeService.hasVideoPermission())
             view?.gotToImageCapture()
@@ -130,6 +54,18 @@ class HomeNavigationPresenter @Inject constructor(
 
     fun galleryClicked() {
         view?.goToGallery()
+    }
+
+    fun updateProfile(displayName: String, avatar: String? = null, fileType: String = "") {
+        val account = mAccountService.currentAccount ?: return
+        if (avatar == null)
+            mAccountService.updateProfile(account.accountId, displayName, "", "")
+        else
+            mAccountService.updateProfile(account.accountId, displayName, avatar, fileType)
+    }
+    fun updateProfile(displayName: String, avatar: File, fileType: String) {
+        val account = mAccountService.currentAccount ?: return
+        mAccountService.updateProfile(account.accountId, displayName, avatar, fileType)
     }
 
     fun cameraPermissionChanged(isGranted: Boolean) {

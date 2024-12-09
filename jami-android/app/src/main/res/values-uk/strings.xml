@@ -24,7 +24,6 @@
   <string name="menu_item_accounts">Керувати обліковими записами</string>
   <string name="menu_item_account">Керувати акаунтом</string>
   <string name="menu_item_settings">Налаштування</string>
-  <string name="menu_item_advanced_settings">Розширені налаштування</string>
   <string name="menu_item_account_settings">Налаштування облікового запису</string>
   <string name="menu_item_share">Поділитися моїм обліковим записом</string>
   <string name="menu_item_about">Про Jami</string>
@@ -325,14 +324,12 @@
   <string name="tab_members">Учасники</string>
   <string name="tab_files">Файли</string>
   <string name="tab_settings">Налаштування</string>
-  <string name="dialogtitle_title">Редагуйте заголовок</string>
-  <string name="dialogtitle_description">Редагуйте опис натовпу</string>
   <string name="dialog_hint_title">Заголовок</string>
   <string name="dialog_hint_description">Описание</string>
   <string name="picker_title">Виберіть контакти</string>
   <string name="picker_btn">Виберіть контакти</string>
   <string name="bottomsheet_contact">Зверніться до Jami\n%1$s</string>
-  <string name="bottomsheet_remove">Знесіть з рога</string>
+  <string name="bottomsheet_remove">Вилучити члена</string>
   <string name="error_open_no_app_found">Не знайдено жодного додатку для обробки цього файлу: %1$s</string>
   <!--JamiId-->
   <string name="jami_id_copy">Копіювати JamiId</string>
@@ -349,6 +346,7 @@
   <!--Conversation details-->
   <string name="details">Подробиці</string>
   <string name="Private">Приватне</string>
+  <string name="mute_conversation">Немовний розмову</string>
   <!--Donation-->
   <string name="donation_card_description">Якщо вам подобається Jami і ви вірите в нашу місію, чи не зробили б ви пожертву?</string>
   <string name="donation_card_not_now">Не зараз</string>

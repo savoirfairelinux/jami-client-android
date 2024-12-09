@@ -28,7 +28,7 @@ interface AccountWizardView {
     fun displayCreationError()
     fun blockOrientation()
     fun finish(affinity: Boolean)
-    fun saveProfile(account: Account): Single<VCard>
+    fun saveProfile(account: Account)
     fun displayGenericError()
     fun displayNetworkError()
     fun displayCannotBeFoundError()

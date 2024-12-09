@@ -24,7 +24,6 @@
   <string name="menu_item_accounts">Gestionar els comptes</string>
   <string name="menu_item_account">Administració del compte</string>
   <string name="menu_item_settings">Opcions</string>
-  <string name="menu_item_advanced_settings">Configuracions avançades</string>
   <string name="menu_item_account_settings">Configuracions de comptes</string>
   <string name="menu_item_share">Comparteix el meu compte</string>
   <string name="menu_item_about">Sobre Jami...</string>
@@ -328,14 +327,12 @@
   <string name="tab_members">Membres</string>
   <string name="tab_files">Arxius</string>
   <string name="tab_settings">Opcions</string>
-  <string name="dialogtitle_title">Modificar títol de col·loqui</string>
-  <string name="dialogtitle_description">Modificar Descripció de col·loc</string>
   <string name="dialog_hint_title">Titulat</string>
   <string name="dialog_hint_description">Descripció</string>
   <string name="picker_title">Seleccionar els contactes</string>
   <string name="picker_btn">Seleccionar els contactes</string>
   <string name="bottomsheet_contact">Contacte amb Jami\n%1$s</string>
-  <string name="bottomsheet_remove">Retirar de l\'esgarre</string>
+  <string name="bottomsheet_remove">Eliminar membre</string>
   <!--JamiId-->
   <string name="jami_id_copy">Copia el JamiId</string>
   <string name="jami_id_share">Comparteix el JamiId</string>
@@ -351,6 +348,7 @@
   <!--Conversation details-->
   <string name="details">Detalls</string>
   <string name="Private">Privat</string>
+  <string name="mute_conversation">Conversació mudada</string>
   <!--Donation-->
   <string name="donation_card_description">Si gaudeixes utilitzant el Jami i creus en la nostre missió, faries una donació?</string>
   <string name="donation_card_not_now">Ara no</string>

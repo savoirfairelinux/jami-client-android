@@ -6,6 +6,10 @@
     <string name="pref_category_system">System</string>
     <string name="pref_category_privacy">Privacy</string>
     <string name="pref_category_diagnostic">Diagnostics</string>
+    <string name="pref_category_appearance">Appearance</string>
+    <string name="pref_category_connectivity">Connectivity</string>
+    <string name="pref_category_extensions">Extensions</string>
+    <string name="pref_category_video_settings">Advanced video settings</string>
 
     <string name="pref_mobileData_title">Mobile data</string>
     <string name="pref_mobileData_summary">Allow Jami on 3G/LTE networks additionally to Wi-Fi</string>
@@ -46,6 +50,10 @@
     <string name="pref_notification_title">Notification visibility</string>
     <string name="pref_notification_summary">Set application notifications visibility on lock screen.</string>
 
+    <string name="pref_connectivity_title">Connectivity mode</string>
+    <string name="pref_connectivity_summary">Chose how to connect Jami to the distributed system to
+        receive calls and messages.</string>
+
     <string name="pref_blackList_title">Block list</string>
     <string name="pref_blackList_summary">Check your block list.</string>
 
@@ -66,6 +74,10 @@
     <string name="pref_connection_monitor">Connection monitor</string>
     <string name="pref_connection_monitor_summary">Monitor peer to peer connections</string>
 
+    <string name="pref_push_notifications_logs_title">Push notifications logs</string>
+    <string name="pref_push_notifications_logs_summary">View logs captured from push
+        notifications.</string>
+
     <string name="pref_typing_title">Enable typing indicators</string>
     <string name="pref_typing_summary">Send and receive typing indicators showing that a message is being typed.</string>
 
@@ -80,9 +92,26 @@
     <string name="notification_private">Private\n(show notifications but hide their content on lock screen)\n</string>
     <string name="notification_secret">Secret\n(do not show notifications on lock screen)</string>
 
+    <string name="connectivity_google_services_title">Google services</string>
+    <string name="connectivity_google_services_description">Use Google Firebase and a DHT proxy to
+        receive push notifications.</string>
+    <string name="connectivity_local_node_title">Local DHT node</string>
+    <string name="connectivity_local_node_description">Use a local DHT node to connect with other
+        Jami devices and contacts.</string>
+    <string name="connectivity_unified_push_title">Unified push</string>
+    <string name="connectivity_unified_push_description">Use a custom unified Push server to
+        receive push notifications.</string>
+    <string name="connectivity_custom_title">Custom</string>
+    <string name="connectivity_custom_description">Currently not using any of the
+        available configuration presets.</string>
+
     <!-- Extension -->
-    <string name="pref_extensions_title">Extensions</string>
-    <string name="pref_extensions_summary">Enable extensions and set their parameters</string>
+    <string name="pref_enable_extensions_title">Enable extensions</string>
+    <string name="pref_enable_extensions_summary">Enable extensions and set their
+        parameters</string>
+    <string name="pref_available_extensions_title">Available extensions</string>
+    <string name="pref_available_extensions_summary">Installed extensions and add new
+        extensions</string>
     <string name="fab_extensions_add">Add new extension</string>
     <string name="extension_uninstall_title">Uninstall extension?</string>
     <string name="extension_reset_preferences">Reset extension preferences</string>

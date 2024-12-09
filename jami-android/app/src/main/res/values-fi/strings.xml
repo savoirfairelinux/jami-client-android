@@ -4,9 +4,11 @@
   <string name="submit_issue_title">Ilmoita ongelma</string>
   <string name="submit_issue_action_description"><u>Ilmoita uusi ongelma</u></string>
   <string name="section_license">Lisenssi</string>
+  <string name="sponsor_section">Jami on vapaa ohjelmisto, jota kehittää ja tukee</string>
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Osallistu</string>
   <string name="version_section">Versio</string>
+  <string name="no_browser_app_installed">Selainta ei löytynyt. Asenna selain ja katso tämä sivu uudelleen.</string>
   <string name="website_chooser_title">Katso verkkosivu käyttäen...</string>
   <string name="license">Tämä ohjelmisto toimitetaan \"sellaisenaan\" ilman minkäänlaista takuuta. Katso lisätietoja <u>GNU General Public License versio 3 tai uudempi</u></string>
   <string name="description">Jami on ilmainen viestintäalusta, joka kunnioittaa käyttäjiensä vapauksia ja yksityisyyttä.</string>
@@ -31,13 +33,13 @@
   <string name="menu_item_accounts">Hallinnoi tilejä</string>
   <string name="menu_item_account">Hallinnoi tiliä</string>
   <string name="menu_item_settings">Asetukset</string>
-  <string name="menu_item_advanced_settings">Lisäasetukset</string>
   <string name="menu_item_account_settings">Tiliasetukset</string>
   <string name="menu_item_extension_list">Laajennusten asetukset</string>
   <string name="menu_item_share">Jaa tunnukseni</string>
   <string name="menu_item_about">Tietoja Jami\'sta</string>
   <string name="video_setting_title">Videoasetukset</string>
   <!--Dialing Fragment-->
+  <string name="dial_number">Valitse numero</string>
   <!--History Fragment-->
   <!--Home Fragment-->
   <string name="invitation_card_title">Kutsut vastaanotettu</string>
@@ -71,6 +73,7 @@
   <string name="notif_channel_background_service_descr">Sallii puheluiden ja viestien vastaanotto milloin tahansa.</string>
   <string name="notif_group_calls">Puhelut</string>
   <string name="notif_inprogress_group_call">Puhelu käynnissä</string>
+  <string name="notif_background_service">Jami toimii taustalla</string>
   <string name="notif_mark_as_read">Merkitse luetuksi</string>
   <string name="notif_dismiss">Hylkää</string>
   <string name="notif_reply">Vastaa</string>
@@ -97,9 +100,8 @@
   <string name="hist_in_call">Saapuva puhelu %1$s</string>
   <string name="hist_out_call">Lähtevä puhelu %1$s</string>
   <string name="call_duration">Kesto %s</string>
+  <string name="start_error_title">Jamia ei voi käynnistää</string>
   <string name="action_call_accept">Hyväksy puhelu</string>
-  <string name="action_call_accept_audio">Hyväksy saapuva puhelu vain äänellä</string>
-  <string name="action_call_accept_video">Hyväksy saapuva puhelu videolla</string>
   <string name="action_call_hold_accept">Hyväksy saapuva puhelu äänellä ja pidä nykyinen puhelu</string>
   <string name="action_call_hold_accept_video">Hyväksy saapuva puhelu videolla ja pidä nykyinen puhelu</string>
   <string name="action_call_end_accept">Hyväksy saapuva puhelu ja lopeta nykyinen puhelu</string>
@@ -113,6 +115,7 @@
   <string name="ab_action_video_call">Aloita videopuhelu</string>
   <string name="ab_action_change_screen_orientation">Muuta näytön suuntaa</string>
   <string name="share_via">Jaa</string>
+  <string name="write_a_message">Kirjoita viesti</string>
   <string name="scan_qr">Skannaa QR-koodi</string>
   <string name="qr_code">QR-koodi</string>
   <string name="qr_code_not_contact">Ei Jami-yhteystiedon QR-koodi</string>
@@ -133,9 +136,11 @@
   <string name="conversation_send_video">Tallenna videoviesti</string>
   <string name="conversation_share_location">Jaa sijainti</string>
   <string name="ongoing_group_call">Meneillään puhelu</string>
+  <string name="started_call">Puhelu alkoi</string>
   <string name="in_reply_to">Vastauksena</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kameran käyttöoikeus</string>
+  <string name="permission_dialog_camera_message">Videopuhelu vaatii toimiakseen oikeuden kameraan. Ota käyttöön laitteen asetuksissa, jotta voit käyttää ominaisuutta.</string>
   <string name="camera_error">Virhe kameran käynnistyksessä.</string>
   <!--Ringtone activity-->
   <string name="ringtone_error_title">Virhe</string>
@@ -145,10 +150,13 @@
   <string name="ringtone_custom_label">Oma</string>
   <string name="ringtone_jami_tones">Jami soittoäänet</string>
   <!--Read contacts permission-->
+  <string name="permission_dialog_read_contacts_message">Jami vaatii toimiakseen oikeuden “Lukea yhteystietoja”. Ota käyttöön laitteen asetuksissa, jotta voit käyttää ominaisuutta.</string>
   <!--Write call log permission-->
+  <string name="permission_dialog_write_call_log_message">Jami vaatii toimiakseen oikeudet “Kirjoittaa puhelulokia”. Ota käyttöön laitteen asetuksissa, jotta voit käyttää ominaisuutta.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Skannaa lisättävän tilin QR-koodi.</string>
   <string name="title_activity_qrcode">Jaa minun tili</string>
+  <string name="error_scan_no_camera_permissions">QR-koodin lukija vaatii luvan kameralta. Ota käyttöön laitteen asetuksissa, jotta voit käyttää ominaisuutta.</string>
   <string name="tab_code">Minun koodi</string>
   <string name="tab_scan">Skannaa koodi</string>
   <!--Settings-->
@@ -211,12 +219,16 @@
   <string name="conversation_search_hint">Hae keskustelua</string>
   <string name="audio_recorder_error">Audion tallennussovellusta ei löytynyt.</string>
   <string name="video_recorder_error">Videon tallennussovellusta ei löytynyt.</string>
+  <string name="taking_picture_error">Kuvaa otettaessa tapahtui virhe.</string>
+  <string name="find_picture_error">Kuvan etsimisessä tapahtui virhe.</string>
   <string name="open_camera_error">Kameraa avattaessa tapahtui virhe.</string>
   <string name="starting_recorder_error">Tallenninta käynnistettäessä tapahtui virhe.</string>
   <string name="starting_camera_error">Virhe kameran käynnistyksessä.</string>
   <string name="browser_error">Tällä laitteella ei ole tiedostoselainta.</string>
   <string name="import_archive_error">Arkiston tuonnissa tapahtui virhe.</string>
   <string name="export_archive_error">Arkiston viennissä tapahtui virhe.</string>
+  <string name="load_ringtone_error">Virhe soittoäänen latauksessa.</string>
+  <string name="sharing_log_error">Lokien jakamisessa tapahtui virhe.</string>
   <string name="no_native_crash">Ei viimeaikaista kaatumista</string>
   <string name="today">Tänään</string>
   <string name="yesterday">Eilen</string>
@@ -248,6 +260,7 @@
   <string name="profile_message_warning">Profiilisi jaetaan vain sinun yhteystietojen kanssa</string>
   <string name="open_the_gallery">Avaa valokuvat</string>
   <string name="take_a_photo">Ota valokuva</string>
+  <string name="remove_photo">Poista valokuva</string>
   <string name="profile_name_hint">Kirjoita nimesi</string>
   <string name="registered_name">Rekisteröity nimi</string>
   <string name="no_registered_name">Nimeä ei ole rekisteröity</string>
@@ -264,6 +277,7 @@
   <string name="share_contact_information">Jaa yhteystiedot</string>
   <string name="share_label">Jako</string>
   <string name="generic_error_migration">Virhe</string>
+  <string name="generic_error_migration_message">Tilin siirron aikana tapahtui virhe.</string>
   <string name="title_share_with">Jaa...</string>
   <!--Pending invitations-->
   <string name="accept">Hyväksy</string>
@@ -271,8 +285,11 @@
   <string name="block">Estä</string>
   <string name="decline_invitation">Hylkää kutsu</string>
   <string name="accept_invitation">Hyväksy kutsu</string>
+  <string name="accept_invitation_body">Kutsu vastaanotettu %s:lta.</string>
   <string name="new_invitation_request_title">Uusi kutsu</string>
   <string name="invitation_message">Sinulla on %1$d pyyntöä</string>
+  <string name="no_invitations">Näytettäviä kutsuja ei ole.</string>
+  <string name="invitation_received_message">Kutsu vastaanotettu %s:lta.\nHyväksytkö kutsu?</string>
   <string name="outgoing_contact_invitation_message">Tämä henkilö ei ole luettelossasi.\nLähetä yhteyspyyntö.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">EI estettyjä henkilöitä</string>
@@ -340,8 +357,11 @@
   <string name="tv_send_video">Lähetä media</string>
   <string name="tv_action_more">Lisää</string>
   <string name="conversation_input_speech_hint">Sano jotakin...</string>
+  <string name="audio_permission_denied">Mikrofonin käyttö on estetty. Ota käyttöön laitteen asetuksissa, jotta voit käyttää ominaisuutta.</string>
+  <string name="camera_permission_denied">Kameran käyttö on estetty. Ota käyttöön laitteen asetuksissa, jotta voit käyttää ominaisuutta.</string>
   <string name="speech_recogniton_unavailable">Puheentunnistus ei ole käytettävissä.</string>
   <string name="audio_permission_rationale_title">Audion käyttöoikeus vaaditaan</string>
+  <string name="camera_permission_rationale_title">Kameran käyttöoikeus vaaditaan</string>
   <string name="audio_permission_rationale_message">Jami vaatii mikrofonin käyttöoikeuden puhetta tekstiksi ja äänen äänitysominaisuuksia varten. Sitä kysytään seuraavassa vaiheessa.</string>
   <string name="camera_permission_rationale_message">Jami vaatii kameran käyttöoikeuden tallentaakseen videota ja videopuheluiden soittamiseen. Sitä kysytään seuraavassa vaiheessa.</string>
   <string name="unable_to_start_recorder">Äänen tallennusta ei voi aloittaa.</string>
@@ -388,15 +408,13 @@
   <string name="tab_files">Tiedostoja</string>
   <string name="tab_settings">Asetukset</string>
   <string name="not_admin_toast">Ainoastaan ylläpitäjät voivat muokata ryhmän tietoja</string>
-  <string name="dialogtitle_title">Muokkaa keskusteluryhmän otsikkoa</string>
-  <string name="dialogtitle_description">Muokkaa keskusteluryhmän kuvausta</string>
   <string name="dialog_hint_title">Otsikko</string>
   <string name="dialog_hint_description">Kuvaus</string>
   <string name="picker_title">Valitse henkilöt</string>
   <string name="picker_btn">Valitse henkilöt</string>
   <string name="no_contact_to_add">Sinulla ei ole henkilöä lisättävänä</string>
   <string name="bottomsheet_contact">Jami yhteystiedot\n%1$s</string>
-  <string name="bottomsheet_remove">Poista keskusteluryhmästä</string>
+  <string name="bottomsheet_remove">Poista jäsen</string>
   <string name="error_open_no_app_found">Ei löytynyt sopivaa sovellusta tiedostolle: %1$s</string>
   <string name="swarm_detail_no_document">Sinulla ei ole vielä asiakirjoja.</string>
   <string name="group_admin">Ylläpitäjät</string>
@@ -417,7 +435,6 @@
   <!--Conversation details-->
   <string name="details">Tiedot</string>
   <string name="secure_p2p_connection">Suojattu peer-to-peer-yhteys</string>
-  <string name="swarm_type">Keskustelun tyyppi</string>
   <string name="Private">Yksityinen</string>
   <string name="swarm_id">Swarm ID</string>
   <string name="show_qr_code">Näytä QR-koodi</string>

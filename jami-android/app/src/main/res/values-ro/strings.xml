@@ -33,7 +33,6 @@
   <string name="menu_item_accounts">Gestionează conturile</string>
   <string name="menu_item_account">Gestionează contul</string>
   <string name="menu_item_settings">Reglări</string>
-  <string name="menu_item_advanced_settings">Reglări avansate</string>
   <string name="menu_item_account_settings">Reglările contului</string>
   <string name="menu_item_extension_list">Reglări Extensii</string>
   <string name="menu_item_share">Distribuie contul meu</string>
@@ -104,8 +103,6 @@
   <string name="call_duration">Durata %s</string>
   <string name="start_error_title">Jami nu pornește</string>
   <string name="action_call_accept">Acceptă apelul</string>
-  <string name="action_call_accept_audio">Răspunde doar vocal</string>
-  <string name="action_call_accept_video">Răspunde cu video</string>
   <string name="action_call_hold_accept">Răspunde doar vocal și pune în pauză apelul actual</string>
   <string name="action_call_hold_accept_video">Răspunde cu video și pune în pauză apelul actual</string>
   <string name="action_call_end_accept">Răspunde și termină apelul actual</string>
@@ -420,7 +417,7 @@
   <string name="picker_btn">Alege contacte</string>
   <string name="no_contact_to_add">Nu ai niciun contact de adăugat</string>
   <string name="bottomsheet_contact">Contactează Jami\n%1$s</string>
-  <string name="bottomsheet_remove">Scoate din grup</string>
+  <string name="bottomsheet_remove">Elimină membrul</string>
   <string name="error_open_no_app_found">Nu s-a găsit nicio aplicație care să gestioneze acest fișier: %1$s</string>
   <string name="swarm_detail_no_document">Încă nu ai documente.</string>
   <string name="group_admin">Administrator</string>

@@ -26,7 +26,6 @@
   <string name="menu_item_accounts">مدیریت حساب ها</string>
   <string name="menu_item_account">مدیرت حساب</string>
   <string name="menu_item_settings">تنظیمات</string>
-  <string name="menu_item_advanced_settings">تنظیمات پیشرفته</string>
   <string name="menu_item_account_settings">تنظیمات حساب</string>
   <string name="menu_item_share">به اشتراک گذاری حساب من</string>
   <string name="menu_item_about">درباره جمی</string>
@@ -325,14 +324,12 @@
   <string name="tab_members">اعضا</string>
   <string name="tab_files">فایل ها</string>
   <string name="tab_settings">تنظیمات</string>
-  <string name="dialogtitle_title">ویرایش نام گروه</string>
-  <string name="dialogtitle_description">ویرایش توضیحات گروه</string>
   <string name="dialog_hint_title">عنوان</string>
   <string name="dialog_hint_description">توضیحات</string>
   <string name="picker_title">انتخاب مخاطبین</string>
   <string name="picker_btn">انتخاب مخاطبین</string>
   <string name="bottomsheet_contact">با Jami\n%1$s تماس بگیرید</string>
-  <string name="bottomsheet_remove">اخراج از گروه</string>
+  <string name="bottomsheet_remove">عضو را حذف کنید</string>
   <!--JamiId-->
   <string name="jami_id_validate">ثبت نام کاربری</string>
   <string name="jami_id_available">نام کاربری دردسترس است</string>
@@ -343,6 +340,7 @@
   <!--Conversation details-->
   <string name="details">جزییات</string>
   <string name="Private">خصوصی</string>
+  <string name="mute_conversation">مکالمه ای خاموش</string>
   <!--Donation-->
   <string name="donation_card_not_now">الان نه</string>
   <string name="donation_donate">اهدا کنید</string>

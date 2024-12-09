@@ -39,7 +39,7 @@ hw_accel_flag=$(check_hardware_acceleration)
 
 function launch_emulator () {
     adb devices | grep emulator | cut -f1 | xargs -I {} adb -s "{}" emu kill
-    options="@${emulator_name} -no-window -no-snapshot -noaudio -no-boot-anim -memory 2048 ${hw_accel_flag} -camera-back none"
+    options="@${emulator_name} -no-window -no-snapshot -noaudio -no-boot-anim -memory 2048 ${hw_accel_flag} -camera-back none -no-metrics"
     if [[ "$OSTYPE" == *linux* ]]; then
         echo "${OSTYPE}: emulator ${options} -gpu off"
         nohup emulator $options -gpu off &

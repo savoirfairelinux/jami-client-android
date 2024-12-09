@@ -60,7 +60,7 @@ class TwoButtonEditText @JvmOverloads constructor(
         editText = findViewById(R.id.edit_text)
         mButtonRight = findViewById(R.id.btn_right)
         mButtonLeft = findViewById(R.id.btn_left)
-        setPadding(16, 0, 16, 0)
+        setPadding(0, 0, context.resources.getDimension(R.dimen.padding_small).toInt(), 0)
         val a =
             context.obtainStyledAttributes(attrs, R.styleable.TwoButtonEditText, defStyleAttr, 0)
         for (i in 0 until a.indexCount) {

@@ -1,16 +1,21 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <string name="pref_category_appearance">Aussehen</string>
+  <string name="pref_category_connectivity">Verbindung</string>
+  <string name="pref_category_extensions">Erweiterungen</string>
+  <string name="pref_category_video_settings">Erweiterte Videoeinstellungen</string>
   <string name="pref_clearHistory_summary">Verlauf aller Unterhaltungen löschen. Diese Aktion kann nicht rückgängig gemacht werden.</string>
   <string name="pref_delete_account_summary">Delete account from this device</string>
   <string name="pref_persistNotification_title">Im Hintergrund ausführen</string>
   <string name="pref_persistNotification_summary">Ausführung im Hintergrund erlauben, um Anrufe und Nachrichten zu empfangen.</string>
+  <string name="pref_connection_monitor">Verbindungsmonitor</string>
+  <string name="pref_connection_monitor_summary">Peer-to-Peer-Verbindungen überwachen</string>
   <!--Notifications Visibility-->
   <string name="notification_public">Öffentlich\n(Benachrichtigungen und deren Inhalt auf dem Sperrbildschirm anzeigen)\n</string>
   <string name="notification_private">Privat\n(Benachrichtigungen anzeigen, aber deren Inhalt auf dem Sperrbildschirm ausblenden)\n</string>
   <string name="notification_secret">Geheim\n(Benachrichtigungen nicht auf Sperrbildschirm anzeigen)</string>
+  <string name="connectivity_custom_title">Individuell</string>
   <!--Extension-->
-  <string name="pref_extensions_title">Erweiterungen</string>
-  <string name="pref_extensions_summary">Erweiterungen aktivieren und deren Parameter festlegen</string>
   <string name="fab_extensions_add">Neue Erweiterung hinzufügen</string>
   <string name="extension_uninstall_title">Erweiterung deinstallieren?</string>
   <string name="extension_reset_preferences">Erweiterungseinstellungen zurücksetzen</string>

@@ -6,6 +6,9 @@
   <string name="pref_category_system">सिस्टम</string>
   <string name="pref_category_privacy">गोपनीयता</string>
   <string name="pref_category_diagnostic">निदान</string>
+  <string name="pref_category_appearance">देखावा</string>
+  <string name="pref_category_connectivity">कनेक्टिव्हिटी</string>
+  <string name="pref_category_video_settings">प्रगत व्हिडिओ सेटिंग्ज</string>
   <string name="pref_mobileData_title">मोबाईल डेटा</string>
   <string name="pref_mobileData_summary">जामीला वाय-फाय व्यतिरिक्त 3G/LTE नेटवर्कवर परवानगी द्या</string>
   <string name="pref_pushNotifications_title">पुश सूचना</string>
@@ -45,5 +48,6 @@
   <string name="pref_link_preview_title">संभाषणात लिंक पूर्वावलोकन दाखवा</string>
   <string name="pref_link_preview_summary">पूर्वावलोकन तृतीय पक्षाच्या सर्व्हरवरून सामग्री डाउनलोड करणे आवश्यक आहे.</string>
   <!--Notifications Visibility-->
+  <string name="connectivity_custom_title">कस्टम</string>
   <!--Extension-->
 </resources>

@@ -6,6 +6,10 @@
   <string name="pref_category_system">Sistem</string>
   <string name="pref_category_privacy">Zasebnost</string>
   <string name="pref_category_diagnostic">Diagnostika</string>
+  <string name="pref_category_appearance">Videz</string>
+  <string name="pref_category_connectivity">Povezljivost</string>
+  <string name="pref_category_extensions">Razširitve</string>
+  <string name="pref_category_video_settings">Napredne nastavitve videa</string>
   <string name="pref_mobileData_title">Mobilni podatki</string>
   <string name="pref_mobileData_summary">Dovoli, da Jami poleg Wifi uporablja tudi omrežja 3G/LTE</string>
   <string name="pref_pushNotifications_title">Potisna sporočila</string>
@@ -47,8 +51,8 @@
   <string name="pref_link_preview_title">Pokaži predogled povezav v pogovorih</string>
   <string name="pref_link_preview_summary">Za predoglede je potrebno prenesti vsebino s strežnikov tretjih strani.</string>
   <!--Notifications Visibility-->
+  <string name="connectivity_custom_title">Po meri</string>
   <!--Extension-->
-  <string name="pref_extensions_title">Razširitve</string>
   <string name="fab_extensions_add">Dodaj novo razširitev</string>
   <string name="extension_invalid_signature"><b>%1$s</b> ima neveljaven podpis</string>
   <string name="extension_path_image_add">Dodaj novo sliko</string>

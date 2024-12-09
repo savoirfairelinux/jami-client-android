@@ -24,7 +24,6 @@
   <string name="menu_item_accounts">Mengelola akun</string>
   <string name="menu_item_account">Mengelola akun</string>
   <string name="menu_item_settings">Setelan</string>
-  <string name="menu_item_advanced_settings">Pengaturan Lanjutan</string>
   <string name="menu_item_account_settings">Pengaturan Akun</string>
   <string name="menu_item_share">Bagikan akun saya</string>
   <string name="menu_item_about">Tentang Jami</string>
@@ -317,14 +316,12 @@
   <string name="tab_members">Anggota</string>
   <string name="tab_files">Berkas</string>
   <string name="tab_settings">Setelan</string>
-  <string name="dialogtitle_title">Ubah judul Swarm</string>
-  <string name="dialogtitle_description">Ubah deskripsi Swarm</string>
   <string name="dialog_hint_title">Judul</string>
   <string name="dialog_hint_description">Deskripsi</string>
   <string name="picker_title">Pilih kontak</string>
   <string name="picker_btn">Pilih kontak</string>
   <string name="bottomsheet_contact">Hubungi Jami\n%1$s</string>
-  <string name="bottomsheet_remove">Jauhkan dari gerombolan</string>
+  <string name="bottomsheet_remove">Hapus anggota</string>
   <!--JamiId-->
   <string name="jami_id_validate">Daftarkan nama pengguna</string>
   <string name="jami_id_looking_for_availability">Memeriksa ketersediaan nama pengguna...</string>
@@ -334,6 +331,7 @@
   <!--Conversation details-->
   <string name="details">Detail</string>
   <string name="Private">Privat</string>
+  <string name="mute_conversation">Bisukan obrolan</string>
   <!--Donation-->
   <string name="donation_card_not_now">Tidak sekarang</string>
   <!--Extension-->

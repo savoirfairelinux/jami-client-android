@@ -24,7 +24,6 @@
   <string name="menu_item_accounts">계정을 관리</string>
   <string name="menu_item_account">계정을 관리</string>
   <string name="menu_item_settings">설정</string>
-  <string name="menu_item_advanced_settings">고급 설정</string>
   <string name="menu_item_account_settings">계정 설정</string>
   <string name="menu_item_share">내 계정을 공유</string>
   <string name="menu_item_about">자미 에 관한 것</string>
@@ -326,14 +325,12 @@
   <string name="tab_members">의원</string>
   <string name="tab_files">파일</string>
   <string name="tab_settings">설정</string>
-  <string name="dialogtitle_title">Swarm 제목을 편집</string>
-  <string name="dialogtitle_description">스 swarm 설명 편집</string>
   <string name="dialog_hint_title">제목</string>
   <string name="dialog_hint_description">설명</string>
   <string name="picker_title">연락처를 선택</string>
   <string name="picker_btn">연락처를 선택</string>
   <string name="bottomsheet_contact">Jami\n%1$s에 연락하세요</string>
-  <string name="bottomsheet_remove">무더기에서 제거</string>
+  <string name="bottomsheet_remove">멤버를 제거</string>
   <!--JamiId-->
   <string name="jami_id_validate">사용자 이름을 등록</string>
   <string name="jami_id_looking_for_availability">사용자 이름 사용 가능성에 대해 찾고 있습니다.</string>
@@ -343,6 +340,7 @@
   <!--Conversation details-->
   <string name="details">세부 사항</string>
   <string name="Private">개인</string>
+  <string name="mute_conversation">침묵의 대화</string>
   <!--Donation-->
   <string name="donation_card_not_now">나중에</string>
   <!--Extension-->

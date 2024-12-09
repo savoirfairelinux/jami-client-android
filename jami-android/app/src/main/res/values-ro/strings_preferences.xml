@@ -6,6 +6,10 @@
   <string name="pref_category_system">Sistem</string>
   <string name="pref_category_privacy">Confidențialitate</string>
   <string name="pref_category_diagnostic">Diagnoză</string>
+  <string name="pref_category_appearance">Aspect</string>
+  <string name="pref_category_connectivity">Conectare</string>
+  <string name="pref_category_extensions">Extensii</string>
+  <string name="pref_category_video_settings">Reglări video avansate</string>
   <string name="pref_mobileData_title">Date mobile</string>
   <string name="pref_mobileData_summary">Permite Jami pe rețelele 3G/LTE în plus față de Wi-Fi</string>
   <string name="pref_pushNotifications_title">Notificări</string>
@@ -42,6 +46,11 @@
   <string name="pref_logs_summary">Deschide reglările diagnozei</string>
   <string name="pref_logs_start">Pornește diagnoza</string>
   <string name="pref_logs_stop">Oprește diagnoza</string>
+  <string name="pref_connection_monitor">Monitorizarea conexiunii</string>
+  <string name="pref_connection_monitor_summary">Monitorizarea conexiunilor directe</string>
+  <string name="pref_push_notifications_logs_title">Jurnale de la notificări</string>
+  <string name="pref_push_notifications_logs_summary">Arată  jurnalele obținute de la
+        notificări.</string>
   <string name="pref_typing_title">Arată indicatoare de scriere</string>
   <string name="pref_typing_summary">Trimite și primește indicatoare de scriere care arată că se scrie un mesaj.</string>
   <string name="pref_block_record_title">Blochează captura de ecran și înregistrarea</string>
@@ -52,9 +61,8 @@
   <string name="notification_public">Public\n(arată notificările și conținutul lor pe ecranul blocat)\n</string>
   <string name="notification_private">Privat\n(arată notificările, dar ascunde conținutul lor pe ecranul blocat)\n</string>
   <string name="notification_secret">Secret\n(nu arăta notificările pe ecranul blocat)</string>
+  <string name="connectivity_custom_title">Personalizată</string>
   <!--Extension-->
-  <string name="pref_extensions_title">Extensii</string>
-  <string name="pref_extensions_summary">Activează extensiile și reglează-le parametrii</string>
   <string name="fab_extensions_add">Adaugă o extensie nouă</string>
   <string name="extension_uninstall_title">Dezinstalezi extensia?</string>
   <string name="extension_reset_preferences">Restabilește reglările inițiale ale extensiei</string>

@@ -24,7 +24,6 @@
   <string name="menu_item_accounts">حسابلارین ایداره سی</string>
   <string name="menu_item_account">حسابین ایداره سی</string>
   <string name="menu_item_settings">تنظیمات</string>
-  <string name="menu_item_advanced_settings">آلنین آلنین آلنین آلنین آلنین آلنین آلنین آلنین آلنین آلنین آلنین آلنین آلنین آلنین آلنین آلنین آلنین آلنین آلنین آلنین آلنین آلنین آلنین آلنین آلنین</string>
   <string name="menu_item_account_settings">حسابلارین تنظیماتلاری</string>
   <string name="menu_item_share">حسابيمي بؤلوشدور</string>
   <string name="menu_item_about">جامی حاقّيندا</string>
@@ -316,14 +315,12 @@
   <string name="tab_members">عضولری</string>
   <string name="tab_files">فایللار</string>
   <string name="tab_settings">تنظیمات</string>
-  <string name="dialogtitle_title">ساواد آدینی یئنیله</string>
-  <string name="dialogtitle_description">Swarm description-ی دَییشدیر</string>
   <string name="dialog_hint_title">آد</string>
   <string name="dialog_hint_description">شرح</string>
   <string name="picker_title">تماس لارین سئچیلماسی</string>
   <string name="picker_btn">تماس لارین سئچیلماسی</string>
   <string name="bottomsheet_contact">Jami\n%1$s ایله تماس</string>
-  <string name="bottomsheet_remove">سورومدن گؤتور</string>
+  <string name="bottomsheet_remove">عضوی گؤتور</string>
   <!--JamiId-->
   <string name="jami_id_validate">آدی یازی</string>
   <string name="jami_id_looking_for_availability">آدی یئرلشمه لییینی آختاریرام...</string>
@@ -333,6 +330,7 @@
   <!--Conversation details-->
   <string name="details">جزئیات</string>
   <string name="Private">خصوصی</string>
+  <string name="mute_conversation">ساکئت مکالمات</string>
   <!--Donation-->
   <!--Extension-->
 </resources>

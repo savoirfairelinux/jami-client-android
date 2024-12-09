@@ -33,7 +33,6 @@
   <string name="menu_item_accounts">Konten verwalten</string>
   <string name="menu_item_account">Konto verwalten</string>
   <string name="menu_item_settings">Einstellungen</string>
-  <string name="menu_item_advanced_settings">Erweiterte Einstellungen</string>
   <string name="menu_item_account_settings">Kontoeinstellungen</string>
   <string name="menu_item_extension_list">Erweiterungseinstellungen</string>
   <string name="menu_item_share">Mein Konto teilen</string>
@@ -103,8 +102,6 @@
   <string name="call_duration">Dauerte %s</string>
   <string name="start_error_title">Jami kann nicht gestartet werden</string>
   <string name="action_call_accept">Anruf annehmen</string>
-  <string name="action_call_accept_audio">Eingehenden Anruf nur mit Audio annehmen</string>
-  <string name="action_call_accept_video">Eingehenden Anruf mit Video annehmen</string>
   <string name="action_call_hold_accept">Eingehenden Anruf nur mit Audio annehmen und aktuellen Anruf halten</string>
   <string name="action_call_hold_accept_video">Eingehenden Anruf mit Video annehmen und aktuellen Anruf halten</string>
   <string name="action_call_end_accept">Eingehenden Anruf annehmen und aktuellen Anruf beenden</string>
@@ -411,15 +408,15 @@
   <string name="tab_files">Dateien</string>
   <string name="tab_settings">Einstellungen</string>
   <string name="not_admin_toast">Nur Administratoren können die Informationen dieser Gruppe bearbeiten</string>
-  <string name="dialogtitle_title">Schwarmtitel bearbeiten</string>
-  <string name="dialogtitle_description">Schwarmbeschreibung bearbeiten</string>
+  <string name="dialogtitle_title">Gruppentitel bearbeiten</string>
+  <string name="dialogtitle_description">Gruppenbeschreibung bearbeiten</string>
   <string name="dialog_hint_title">Titel</string>
   <string name="dialog_hint_description">Beschreibung</string>
   <string name="picker_title">Kontakte auswählen</string>
   <string name="picker_btn">Kontakte auswählen</string>
   <string name="no_contact_to_add">Sie haben keinen Kontakt zum Hinzufügen</string>
   <string name="bottomsheet_contact">Kontakt Jami\n%1$s</string>
-  <string name="bottomsheet_remove">Aus dem Schwarm entfernen</string>
+  <string name="bottomsheet_remove">Mitglied entfernen</string>
   <string name="error_open_no_app_found">Keine Anwendung zur Verarbeitung dieser Datei gefunden:%1$s</string>
   <string name="swarm_detail_no_document">Sie haben noch keine Dokumente.</string>
   <string name="group_admin">Administrator</string>
@@ -440,7 +437,7 @@
   <!--Conversation details-->
   <string name="details">Details</string>
   <string name="secure_p2p_connection">Sichere Peer-to-Peer-Verbindung</string>
-  <string name="swarm_type">Art der Unterhaltung</string>
+  <string name="swarm_type">Unterhaltungstyp</string>
   <string name="Private">Privat</string>
   <string name="swarm_id">Schwarm-ID</string>
   <string name="show_qr_code">QR-Code anzeigen</string>

@@ -24,7 +24,6 @@
   <string name="menu_item_accounts">கணக்குகளை நிர்வகித்தல்</string>
   <string name="menu_item_account">கணக்கை நிர்வகிக்கவும்</string>
   <string name="menu_item_settings">அமைப்புகள்</string>
-  <string name="menu_item_advanced_settings">மேம்பட்ட அமைப்புகள்</string>
   <string name="menu_item_account_settings">கணக்கு அமைப்புகள்</string>
   <string name="menu_item_share">எனது கணக்கை பகிர்ந்து கொள்ளுங்கள்</string>
   <string name="menu_item_about">ஜாமி பற்றி</string>
@@ -316,14 +315,12 @@
   <string name="tab_members">உறுப்பினர்</string>
   <string name="tab_files">கோப்புகள்</string>
   <string name="tab_settings">அமைப்புகள்</string>
-  <string name="dialogtitle_title">திருத்தங்கள் Swarm தலைப்பு</string>
-  <string name="dialogtitle_description">தொகுப்பு விவரம்</string>
   <string name="dialog_hint_title">தலைப்பு</string>
   <string name="dialog_hint_description">விவரக்குறிப்பு</string>
   <string name="picker_title">தொடர்புகளைத் தேர்ந்தெடுக்கவும்</string>
   <string name="picker_btn">தொடர்புகளைத் தேர்ந்தெடுக்கவும்</string>
   <string name="bottomsheet_contact">Jami\n%1$s உடன் தொடர்பு கொள்ளவும்</string>
-  <string name="bottomsheet_remove">கும்பலில் இருந்து அகற்றவும்</string>
+  <string name="bottomsheet_remove">உறுப்பினர் நீக்க</string>
   <!--JamiId-->
   <string name="jami_id_validate">பயனர்பெயரை பதிவு செய்யவும்</string>
   <string name="jami_id_looking_for_availability">பயனர் பெயர் கிடைக்கும் தேடும்...</string>
@@ -333,6 +330,7 @@
   <!--Conversation details-->
   <string name="details">விவரங்கள்</string>
   <string name="Private">தனியார்</string>
+  <string name="mute_conversation">மௌனமான உரையாடல்</string>
   <!--Donation-->
   <string name="donation_card_not_now">இப்போது வேண்டாம்</string>
   <!--Extension-->
