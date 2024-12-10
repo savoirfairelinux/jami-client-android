@@ -600,6 +600,8 @@ class Conversation : ConversationHistory {
                 }
                 else conferenceEnded[interaction.confId!!] = interaction
 
+                // That is the end of the call.
+                // Need to be attached to the start of the call.
                 val invalidInteraction = // Replacement element
                     Interaction(this, Interaction.InteractionType.INVALID).apply {
                         setSwarmInfo(uri.rawRingId, interaction.messageId!!, interaction.parentId)
@@ -650,8 +652,10 @@ class Conversation : ConversationHistory {
                     aggregateHistory.add(i, interaction)
                     updatedElementSubject.onNext(Pair(interaction, ElementStatus.ADD))
                     added = true
-                    newLeaf = (i == 0 // True if it is the last non-invalid message.
-                            && aggregateHistory.last().type == Interaction.InteractionType.INVALID)
+                    // Checks if the new interaction is the last non-invalid message.
+                    // E.g. could be the case for Call where end call is marked as Invalid.
+                    newLeaf = !aggregateHistory.drop(i + 1)
+                        .any { it.type != Interaction.InteractionType.INVALID }
                     break
                 }
             }
