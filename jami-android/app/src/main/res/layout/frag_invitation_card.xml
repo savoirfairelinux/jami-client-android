@@ -64,7 +64,7 @@
             android:layout_marginBottom="4dp"
             android:layout_toStartOf="@id/invitation_badge"
             android:layout_toEndOf="@id/invitation_icon"
-            android:ellipsize="end"
+            android:ellipsize="middle"
             android:maxLines="1"
             android:singleLine="true"
             android:textColor="?attr/colorOnPrimary"
