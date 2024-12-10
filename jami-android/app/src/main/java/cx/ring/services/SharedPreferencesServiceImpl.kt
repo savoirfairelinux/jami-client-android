@@ -75,7 +75,7 @@ class SharedPreferencesServiceImpl(private val context: Context, accountService:
             allowPlaceSystemCalls = appPrefs.getBoolean(PREF_PLACE_CALLS, false),
             runOnStartup = appPrefs.getBoolean(PREF_ON_STARTUP, true),
             enablePushNotifications = appPrefs.getBoolean(PREF_PUSH_NOTIFICATIONS, false),
-            enablePermanentService = appPrefs.getBoolean(PREF_PERSISTENT_NOTIFICATION, false),
+            enablePermanentService = appPrefs.getBoolean(PREF_PERSISTENT_NOTIFICATION, true),
             enableAddGroup = appPrefs.getBoolean(PREF_ADD_GROUP, false),
             enableTypingIndicator = appPrefs.getBoolean(PREF_SHOW_TYPING, true),
             isRecordingBlocked = appPrefs.getBoolean(PREF_BLOCK_RECORD, false),
