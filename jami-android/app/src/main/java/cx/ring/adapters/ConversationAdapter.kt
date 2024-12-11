@@ -359,8 +359,11 @@ class ConversationAdapter(
             .map { it.key }
 
         // Case 1: Message is sending
-        if(!isDisplayed && !isReceived){
-            statusIcon.updateSending()
+        if (!isDisplayed && !isReceived) {
+            if (interaction.isIncoming) { // Security for bug Daemon#1087.
+                Log.e(TAG, "Invalid interaction state: `sending`. Message is incoming.")
+                statusIcon.updateNone()
+            } else statusIcon.updateSending()
         }
         // Case 2: Message is received by at least one contact
         else if(!isDisplayed) {
