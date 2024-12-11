@@ -457,8 +457,15 @@ class AccountService(
             conversation.loading?.let { return it }
             val ret = SingleSubject.create<Conversation>()
             conversation.loading = ret
+
             // load n messages before the oldest one in the history
-            loadConversationHistory(conversation.accountId, conversation.uri, "", n.toLong())
+            val lastInteraction = conversation.aggregateHistory.firstOrNull()
+            loadConversationHistory(
+                conversation.accountId,
+                conversation.uri,
+                lastInteraction?.messageId ?: "", // Empty for root.
+                n.toLong()
+            )
             return ret
         }
     }
