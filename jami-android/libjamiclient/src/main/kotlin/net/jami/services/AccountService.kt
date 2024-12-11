@@ -454,20 +454,33 @@ class AccountService(
             conversation.loading?.let { return it }
             val ret = SingleSubject.create<Conversation>()
             conversation.loading = ret
+
             // load n messages before the oldest one in the history
-            loadConversationHistory(conversation.accountId, conversation.uri, "", n.toLong())
+            val lastInteraction = conversation.aggregateHistory.lastOrNull()
+            loadConversationHistory(
+                conversation.accountId,
+                conversation.uri,
+                lastInteraction?.messageId ?: "", // Empty for root.
+                n.toLong()
+            )
             return ret
         }
     }
 
-    fun loadUntil(conversation: Conversation, from: String = "", until: String = ""): Single<List<Interaction>> {
+    fun loadUntil(conversation: Conversation, until: String = ""): Single<List<Interaction>> {
         val mode = conversation.mode.blockingFirst()
         if (mode == Conversation.Mode.Syncing || mode == Conversation.Mode.Request) {
             Log.w(TAG, "loadUntil: conversation is syncing")
             return Single.just(emptyList())
         }
         return SingleSubject.create<List<Interaction>>().apply {
-            loadingTasks[JamiService.loadSwarmUntil(conversation.accountId, conversation.uri.rawRingId, from, until)] = this
+            val lastInteraction = conversation.aggregateHistory.lastOrNull()
+            loadingTasks[JamiService.loadSwarmUntil(
+                conversation.accountId,
+                conversation.uri.rawRingId,
+                lastInteraction?.messageId ?: "", // Empty for root.
+                until
+            )] = this
         }
     }
 
@@ -1356,7 +1369,13 @@ class AccountService(
         interaction.edit = edit
         if (replyTo != null) {
             interaction.replyTo = conversation.loadMessage(replyTo) {
-                JamiService.loadSwarmUntil(account.accountId, conversation.uri.rawRingId, "", replyTo)
+                val lastInteraction = conversation.aggregateHistory.lastOrNull()
+                JamiService.loadSwarmUntil(
+                    account.accountId,
+                    conversation.uri.rawRingId,
+                    lastInteraction?.messageId ?: "", // Empty for root.
+                    replyTo
+                )
             }
         }
         if (interaction.contact == null)
