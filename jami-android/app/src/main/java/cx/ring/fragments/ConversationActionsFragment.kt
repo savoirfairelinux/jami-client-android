@@ -23,7 +23,6 @@ import android.view.*
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.core.view.isVisible
-import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.R
@@ -204,10 +203,6 @@ class ConversationActionsFragment : Fragment() {
                         userNamePanel.isVisible = registeredName.isNotEmpty()
                         userName.text = registeredName
                         this.identifier.text = identifier.uri
-                        identifierPanel.setBackgroundResource(
-                            if (registeredName.isEmpty()) R.drawable.background_rounded_16_top
-                            else R.drawable.background_clickable
-                        )
                         shareButton.setOnClickListener {
                             shareContact(registeredName.ifEmpty { identifier.uri })
                         }
@@ -254,8 +249,6 @@ class ConversationActionsFragment : Fragment() {
             }
 
             descriptionPanel.isVisible = false  // Disable description edit for 1-to-1 conversation
-            // Description being hidden, we put the rounded background on the secureP2pConnection.
-            secureP2pConnection.setBackgroundResource(R.drawable.background_rounded_16_top)
             blockContact.setOnClickListener {
                 if(conversation.mode.blockingFirst()==Conversation.Mode.Request)
                     ActionHelper.launchBlockContactAction(
@@ -299,11 +292,7 @@ class ConversationActionsFragment : Fragment() {
             // Hide details not useful for blocked contact
             if (conversation.contact!!.isBlocked) {
                 conversationDelete.isVisible = false
-                blockContact.setBackgroundResource(R.drawable.background_rounded_16)
                 blockContact.text = resources.getString(R.string.conversation_action_unblock_this)
-                blockContact.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                    topMargin = resources.getDimension(R.dimen.account_details_group_margin).toInt()
-                }
                 conversationDetailsPanel.visibility = View.GONE
                 conversationActionsPanel.visibility = View.GONE
             }
@@ -311,7 +300,6 @@ class ConversationActionsFragment : Fragment() {
             // Also going there for SIP account
             if (conversation.isLegacy()) {
                 blockContact.isVisible = false
-                conversationDelete.setBackgroundResource(R.drawable.background_rounded_16)
                 conversationActionsPanel.visibility = View.GONE
                 conversationDetailsPanel.visibility = View.GONE
                 conversationDelete.isVisible = !mAccountService.currentAccount!!.isSip
@@ -358,7 +346,6 @@ class ConversationActionsFragment : Fragment() {
                 conversationActionsPanel.visibility = View.GONE
             }
 
-            conversationDelete.setBackgroundResource(R.drawable.background_rounded_16)
             blockContact.isVisible = false
         }
 
