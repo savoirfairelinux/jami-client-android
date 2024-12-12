@@ -33,17 +33,17 @@ along with this program; if not, write to the Free Software
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/account_details_group_margin"
-            android:background="@drawable/background_rounded_16_top"
+            android:background="@drawable/background_rounded_16"
+            android:backgroundTint="@color/background_secondary"
             android:clickable="false"
-            android:orientation="vertical">
+            android:divider="@drawable/layout_divider"
+            android:orientation="vertical"
+            android:showDividers="middle">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/user_name_panel"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginVertical="1dp"
-                android:background="@drawable/background_rounded_16_top"
-                android:backgroundTint="@color/background_secondary"
                 android:gravity="center_vertical"
                 android:paddingHorizontal="12dp">
 
@@ -84,9 +84,6 @@ along with this program; if not, write to the Free Software
                 android:id="@+id/identifier_panel"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginVertical="1dp"
-                android:background="@drawable/background_clickable"
-                android:backgroundTint="@color/background_secondary"
                 android:gravity="center_vertical"
                 android:paddingHorizontal="12dp">
 
@@ -126,17 +123,17 @@ along with this program; if not, write to the Free Software
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginVertical="1dp"
+                android:background="@drawable/background_rounded_16"
+                android:divider="@drawable/layout_divider"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:showDividers="middle">
 
                 <ImageView
                     android:id="@+id/qr_code"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/background_rounded_16_bottom_left"
-                    android:backgroundTint="@color/background_secondary"
                     android:contentDescription="@string/show_qr_code"
                     android:padding="12dp"
                     android:src="@drawable/baseline_qr_code_2_black_24dp" />
@@ -145,10 +142,7 @@ along with this program; if not, write to the Free Software
                     android:id="@+id/share_button"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="2dp"
                     android:layout_weight="1"
-                    android:background="@drawable/background_rounded_16_bottom_right"
-                    android:backgroundTint="@color/background_secondary"
                     android:contentDescription="@string/jami_id_share"
                     android:padding="12dp"
                     android:src="@drawable/outline_share_24" />
@@ -157,7 +151,6 @@ along with this program; if not, write to the Free Software
                     android:id="@+id/certificate_button"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="2dp"
                     android:layout_weight="1"
                     android:background="@drawable/background_clickable"
                     android:backgroundTint="@color/background_secondary"
@@ -175,17 +168,17 @@ along with this program; if not, write to the Free Software
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/account_details_group_margin"
-            android:background="@drawable/background_rounded_16_top"
+            android:background="@drawable/background_rounded_16"
+            android:backgroundTint="@color/background_secondary"
             android:clickable="false"
-            android:orientation="vertical">
+            android:divider="@drawable/layout_divider"
+            android:orientation="vertical"
+            android:showDividers="middle">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/description_panel"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginVertical="1dp"
-                android:background="@drawable/background_rounded_16_top"
-                android:backgroundTint="@color/background_secondary"
                 android:gravity="center_vertical"
                 android:paddingHorizontal="12dp">
 
@@ -226,9 +219,6 @@ along with this program; if not, write to the Free Software
                 android:id="@+id/secure_p2p_connection"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginVertical="1dp"
-                android:background="@color/background_secondary"
-                android:backgroundTint="@color/background_secondary"
                 android:drawablePadding="12dp"
                 android:gravity="center_vertical"
                 android:paddingHorizontal="12dp"
@@ -241,8 +231,6 @@ along with this program; if not, write to the Free Software
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginVertical="1dp"
-                android:background="@color/background_secondary"
                 android:gravity="center_vertical"
                 android:paddingHorizontal="12dp">
 
@@ -282,9 +270,6 @@ along with this program; if not, write to the Free Software
                 android:id="@+id/conversation_id_panel"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginVertical="1dp"
-                android:background="@drawable/background_rounded_16_bottom"
-                android:backgroundTint="@color/background_secondary"
                 android:gravity="center_vertical"
                 android:paddingHorizontal="12dp">
 
@@ -329,17 +314,17 @@ along with this program; if not, write to the Free Software
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/account_details_group_margin"
-            android:background="@drawable/background_rounded_16_top"
+            android:background="@drawable/background_rounded_16"
+            android:backgroundTint="@color/background_secondary"
             android:clickable="false"
-            android:orientation="vertical">
+            android:divider="@drawable/layout_divider"
+            android:orientation="vertical"
+            android:showDividers="middle">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/color_pick_panel"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginVertical="1dp"
-                android:background="@drawable/background_rounded_16_top"
-                android:backgroundTint="@color/background_secondary"
                 android:paddingHorizontal="12dp">
 
                 <TextView
@@ -373,9 +358,6 @@ along with this program; if not, write to the Free Software
                 android:id="@+id/emoji_pick_panel"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginVertical="1dp"
-                android:background="@drawable/background_clickable"
-                android:backgroundTint="@color/background_secondary"
                 android:paddingHorizontal="12dp">
 
                 <TextView
@@ -408,9 +390,6 @@ along with this program; if not, write to the Free Software
                 android:id="@+id/mute_switch"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginVertical="1dp"
-                android:background="@drawable/background_rounded_16_bottom"
-                android:backgroundTint="@color/background_secondary"
                 android:paddingHorizontal="12dp"
                 android:text="@string/mute_conversation"
                 android:textAlignment="textStart"
@@ -419,36 +398,40 @@ along with this program; if not, write to the Free Software
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/conversation_delete"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/account_details_group_margin"
-            android:layout_marginBottom="1dp"
-            android:background="@drawable/background_rounded_16_top"
+            android:background="@drawable/background_rounded_16"
             android:backgroundTint="@color/background_secondary"
-            android:drawablePadding="12dp"
-            android:gravity="center_vertical"
-            android:paddingHorizontal="12dp"
-            android:paddingVertical="14dp"
-            android:textColor="@color/red_600"
-            android:textSize="14sp"
-            tools:text="@string/delete_contact" />
+            android:clickable="false"
+            android:divider="@drawable/layout_divider"
+            android:orientation="vertical"
+            android:showDividers="middle">
 
-        <TextView
-            android:id="@+id/block_contact"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="1dp"
-            android:background="@drawable/background_rounded_16_bottom"
-            android:backgroundTint="@color/background_secondary"
-            android:drawablePadding="12dp"
-            android:gravity="center_vertical"
-            android:paddingHorizontal="12dp"
-            android:paddingVertical="14dp"
-            android:text="@string/conversation_action_block_this"
-            android:textColor="@color/red_600"
-            android:textSize="14sp" />
+            <TextView
+                android:id="@+id/conversation_delete"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:drawablePadding="12dp"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="12dp"
+                android:textColor="@color/red_600"
+                android:textSize="14sp"
+                tools:text="@string/delete_contact" />
+
+            <TextView
+                android:id="@+id/block_contact"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:drawablePadding="12dp"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="12dp"
+                android:text="@string/conversation_action_block_this"
+                android:textColor="@color/red_600"
+                android:textSize="14sp" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
