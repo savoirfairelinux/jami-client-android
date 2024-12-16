@@ -308,10 +308,12 @@ abstract class CallService(
         }
     }
 
-    fun muteParticipant(accountId:String, confId: String, peerId: String, mute: Boolean) {
+    fun muteStream(
+        accountId: String, confId: String, peerId: String, deviceId: String, mute: Boolean
+    ) {
         mExecutor.execute {
-            Log.i(TAG, "mute participant… $peerId")
-            JamiService.muteParticipant(accountId, confId, peerId, mute)
+            Log.i(TAG, "mute stream… peerId:$peerId deviceId:$deviceId")
+            JamiService.muteStream(accountId, confId, peerId, deviceId, "", mute)
         }
     }
 

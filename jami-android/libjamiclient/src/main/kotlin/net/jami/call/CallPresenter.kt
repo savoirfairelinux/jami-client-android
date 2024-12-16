@@ -645,11 +645,17 @@ class CallPresenter @Inject constructor(
 
     /**
     * Mute a participant when in conference mode
-     * this fonction is used by the recycler view for each participant
+     * this function is used by the recycler view for each participant
      * it allow user to mute when they are moderator
     * */
     fun muteParticipant(info: ParticipantInfo, mute: Boolean) {
-        mCallService.muteParticipant(mConference!!.accountId, mConference!!.id, info.contact.contact.primaryNumber, mute)
+        mCallService.muteStream(
+            accountId = mConference!!.accountId,
+            confId = mConference!!.id,
+            peerId = info.contact.contact.primaryNumber,
+            deviceId = info.device!!,
+            mute = mute
+        )
     }
 
     fun openParticipantContact(info: ParticipantInfo) {
