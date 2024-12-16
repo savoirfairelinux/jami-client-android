@@ -6,7 +6,7 @@
   <string name="pref_category_system">Sistem</string>
   <string name="pref_category_privacy">Privatnost</string>
   <string name="pref_category_diagnostic">Dijagnostika</string>
-  <string name="pref_category_appearance">Углед</string>
+  <string name="pref_category_appearance">Izgled</string>
   <string name="pref_category_connectivity">Povezivanje</string>
   <string name="pref_category_extensions">Proširenja</string>
   <string name="pref_category_video_settings">Napredne video postavke</string>
@@ -31,18 +31,29 @@
   <string name="pref_startOnBoot_title">Pokrenite Jami pri pokretanju</string>
   <string name="pref_startOnBoot_summary">Pokrenite Jami u pozadini kada se sistem pokrene.</string>
   <string name="pref_clearHistory_title">Izbriši istoriju</string>
+  <string name="pref_clearHistory_summary">Obrišite istoriju svih razgovora. Ova radnja se ne može opozvati.</string>
   <string name="pref_notification_title">Vidljivost obaveštenja</string>
   <string name="pref_notification_summary">Podesite vidljivost obaveštenja aplikacija na zaključanom ekranu.</string>
+  <string name="pref_connectivity_title">Režim povezivanja</string>
+  <string name="pref_connectivity_summary">Odaberite kako da povežete Jami sa distribuiranim sistemom da biste
+primali pozive i poruke.</string>
   <string name="pref_blackList_title">Blok lista</string>
   <string name="pref_blackList_summary">Proverite svoju listu blokiranih.</string>
   <string name="pref_delete_account_title">Obrisati nalog</string>
   <string name="pref_delete_account_summary">Izbrišite nalog sa ovog uređaja</string>
+  <string name="pref_persistNotification_title">Pokreni u pozadini</string>
+  <string name="pref_persistNotification_summary">Dozvolite rad u pozadini za primanje poziva i poruka.</string>
   <string name="pref_newGroup_title">Omogući grupno ćaskanje</string>
   <string name="pref_newGroup_summary">Omogući kreiranje grupa u Jamiju.</string>
   <string name="pref_logs_title">Dijagnostičke evidencije</string>
   <string name="pref_logs_summary">Otvorite podešavanja dijagnostičkog dnevnika</string>
   <string name="pref_logs_start">Započnite evidentiranje</string>
   <string name="pref_logs_stop">Zaustavite evidentiranje</string>
+  <string name="pref_connection_monitor">Monitor veze</string>
+  <string name="pref_connection_monitor_summary">Pratite peer to peer veze</string>
+  <string name="pref_push_notifications_logs_title">Dnevnici push obaveštenja</string>
+  <string name="pref_push_notifications_logs_summary">Прегледајте евиденције снимљене из push
+обавештења.</string>
   <string name="pref_typing_title">Omogući indikatore kucanja</string>
   <string name="pref_typing_summary">Šaljite i primajte indikatore kucanja koji pokazuju da se poruka kuca.</string>
   <string name="pref_block_record_title">Blokirajte snimak ekrana i snimanje</string>
@@ -50,7 +61,41 @@
   <string name="pref_link_preview_title">Prikaži preglede veza u razgovorima</string>
   <string name="pref_link_preview_summary">Pregledi zahtevaju preuzimanje sadržaja sa servera trećih strana.</string>
   <!--Notifications Visibility-->
+  <string name="notification_public">Јавно\n(прикажи обавештења и њихов садржај на закључаном екрану)\n</string>
+  <string name="notification_private">Приватно\n(прикажите обавештења, али сакријте њихов садржај на закључаном екрану)\n</string>
+  <string name="notification_secret">Тајно\n(не приказуј обавештења на закључаном екрану)</string>
+  <string name="connectivity_google_services_title">Google сервиси</string>
+  <string name="connectivity_google_services_description">Користите Google Firebase и DHT прокси за
+примати push обавештења.</string>
+  <string name="connectivity_local_node_title">Локални DHT node</string>
+  <string name="connectivity_local_node_description">Користите локални DHT чвор за повезивање са другим
+Јами уређајима и контактима.</string>
+  <string name="connectivity_unified_push_title">Уједињени push</string>
+  <string name="connectivity_unified_push_description">Користите прилагођени обједињени Push сервер за
+примати push обавештења.</string>
   <string name="connectivity_custom_title">Prilagođeno</string>
+  <string name="connectivity_custom_description">Тренутно се не користи ниједно од
+доступних подешавања конфигурације.</string>
   <!--Extension-->
+  <string name="pref_enable_extensions_title">Омогући екстензије</string>
+  <string name="pref_enable_extensions_summary">Омогућите екстензије и подесите им
+параметре</string>
+  <string name="pref_available_extensions_title">Доступна проширења</string>
+  <string name="pref_available_extensions_summary">Инсталиране екстензије и додавање
+нових екстензија</string>
+  <string name="fab_extensions_add">Додајте нову екстензију</string>
+  <string name="extension_uninstall_title">Деинсталирати проширење?</string>
+  <string name="extension_reset_preferences">Ресетујте подешавања екстензија</string>
+  <string name="extension_reset_preferences_summary">Екстензија је враћена на подразумевана подешавања</string>
+  <string name="extension_reset_preferences_ask">Да ли желите да ресетујете општа подешавања екстензија?</string>
+  <string name="extension_reset_account_preferences_ask">Да ли желите да ресетујете подешавања проширења налога?</string>
+  <string name="extension_successfully_installed">Додатак <b>%1$s</b> је инсталиран успешно.</string>
+  <string name="extension_install_failure">Дошло је до грешке приликом инсталирања следећег додатка: <b>%1$s</b></string>
+  <string name="extension_recent_version_exception">Новија верзија <b>%1$s</b> је инсталирана.</string>
+  <string name="extension_same_version_exception">Иста верзија од <b>%1$s</b> је инсталирана.</string>
   <string name="extension_invalid_signature"><b>%1$s</b> ima nevažeći potpis</string>
+  <string name="extension_invalid_authority">Došlo je do greške pri verifikaciji ovlašćenja za sledeće proširenje: <b>%1$s</b></string>
+  <string name="extension_invalid_format">Nevažeći format ekstenzije: <b>%1$s</b></string>
+  <string name="extension_force_install">prisilno\ninstalirati</string>
+  <string name="extension_path_image_add">Dodajte novu sliku</string>
 </resources>

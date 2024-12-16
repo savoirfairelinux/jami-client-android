@@ -34,6 +34,9 @@
   <string name="pref_clearHistory_summary">Verlauf aller Unterhaltungen löschen. Diese Aktion kann nicht rückgängig gemacht werden.</string>
   <string name="pref_notification_title">Sichtbarkeit der Benachrichtigung</string>
   <string name="pref_notification_summary">Sichtbarkeit von Anwendungsbenachrichtigungen auf dem Sperrbildschirm einstellen.</string>
+  <string name="pref_connectivity_title">Konnektivitätsmodus</string>
+  <string name="pref_connectivity_summary">Auswählen wie Jami mit dem verteilten System verbunden werden soll um
+Anrufe und Nachrichten empfangen.</string>
   <string name="pref_blackList_title">Blockierte Kontakte</string>
   <string name="pref_blackList_summary">Überprüfen Sie Ihre Blockliste.</string>
   <string name="pref_delete_account_title">Konto löschen</string>
@@ -48,6 +51,8 @@
   <string name="pref_logs_stop">Protokollierung beenden</string>
   <string name="pref_connection_monitor">Verbindungsmonitor</string>
   <string name="pref_connection_monitor_summary">Peer-to-Peer-Verbindungen überwachen</string>
+  <string name="pref_push_notifications_logs_title">Push-Benachrichtigungsprotokolle</string>
+  <string name="pref_push_notifications_logs_summary">Von Push-Benachrichtigung erfassten Protokolle anzeigen</string>
   <string name="pref_typing_title">Tipp-Indikatoren aktivieren</string>
   <string name="pref_typing_summary">Senden und Empfangen von Tipp-Benachrichtungen, die das Tippen einer Nachricht anzeigen.</string>
   <string name="pref_block_record_title">Screenshot und Aufzeichnung blockieren</string>
@@ -58,8 +63,25 @@
   <string name="notification_public">Öffentlich\n(Benachrichtigungen und deren Inhalt auf dem Sperrbildschirm anzeigen)\n</string>
   <string name="notification_private">Privat\n(Benachrichtigungen anzeigen, aber deren Inhalt auf dem Sperrbildschirm ausblenden)\n</string>
   <string name="notification_secret">Geheim\n(Benachrichtigungen nicht auf Sperrbildschirm anzeigen)</string>
+  <string name="connectivity_google_services_title">Google-Dienste</string>
+  <string name="connectivity_google_services_description">Google Firebase und einen DHT-Proxy dazu verwenden um
+Push-Benachrichtigungen erhalten.</string>
+  <string name="connectivity_local_node_title">Lokaler DHT-Knoten</string>
+  <string name="connectivity_local_node_description">Einen lokalen DHT-Knoten verwenden um eine Verbindung zu anderen
+Jami-Geräten und Kontakten herzustellen.</string>
+  <string name="connectivity_unified_push_title">UnifiedPush</string>
+  <string name="connectivity_unified_push_description">Einen benutzerdefinierten einheitlichen Push-Server verwenden um
+Push-Benachrichtigungen erhalten.</string>
   <string name="connectivity_custom_title">Benutzerdefiniert</string>
+  <string name="connectivity_custom_description">Derzeit keine von den
+verfügbaren Konfigurationsvoreinstellungen verwendet.</string>
   <!--Extension-->
+  <string name="pref_enable_extensions_title">Erweiterungen aktivieren</string>
+  <string name="pref_enable_extensions_summary">Erweiterungen aktivieren und die
+Parameter festlegen</string>
+  <string name="pref_available_extensions_title">Verfügbare Erweiterungen</string>
+  <string name="pref_available_extensions_summary">Installierte Erweiterungen und neue 
+Erweiterungen hinzufügen</string>
   <string name="fab_extensions_add">Neue Erweiterung hinzufügen</string>
   <string name="extension_uninstall_title">Erweiterung deinstallieren?</string>
   <string name="extension_reset_preferences">Erweiterungseinstellungen zurücksetzen</string>

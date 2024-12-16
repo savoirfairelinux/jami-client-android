@@ -1,11 +1,16 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--Strings for xml content description of images-->
+  <string name="contact_quick_call_description">Брзи позив</string>
+  <string name="contact_picture_description">Слика контакта</string>
   <string name="dial_numeric_pad">Нумеричка тастатура</string>
   <string name="contact_unblock">Одблокирај</string>
-  <string name="file_download_button">Преузимање</string>
+  <string name="video_extensions">Видео екстензије</string>
+  <string name="file_download_button">Преузми</string>
   <string name="control_play">Пусти</string>
-  <string name="control_replay">Ponovi</string>
+  <string name="control_replay">Понови</string>
   <string name="control_pause">Паузирај</string>
-  <string name="searchbar_navigation_account">Izaberi nalog</string>
+  <string name="searchbar_navigation_account">Изабери налог</string>
+  <string name="add_conversation_member">Додајте члана конверзације</string>
+  <string name="qrcode_to_scan">QR код за скенирање</string>
 </resources>

@@ -6,13 +6,13 @@
   <string name="pref_category_system">Систем</string>
   <string name="pref_category_privacy">Приватност</string>
   <string name="pref_category_diagnostic">Дијагностика</string>
-  <string name="pref_category_appearance">Углед</string>
-  <string name="pref_category_connectivity">Спрема</string>
-  <string name="pref_category_extensions">Proširenja</string>
+  <string name="pref_category_appearance">Изглед</string>
+  <string name="pref_category_connectivity">Повезивање</string>
+  <string name="pref_category_extensions">Проширења</string>
   <string name="pref_category_video_settings">Напредне видео поставке</string>
   <string name="pref_mobileData_title">Мобилни подаци</string>
   <string name="pref_mobileData_summary">Дозволи Јами-у 3G/LTE мреже додатно поред Wi-Fi мреже</string>
-  <string name="pref_pushNotifications_title">Пуш обавештења</string>
+  <string name="pref_pushNotifications_title">Push обавештења</string>
   <string name="pref_pushNotifications_summary">Користите Google сервере да бисте дозволили примање позива/порука у позадини</string>
   <string name="pref_unifiedPush_summary">Користите UnifiedPush услугу да бисте дозволили примање позива/порука у позадини</string>
   <string name="pref_video_advanced_title">Напредне видео поставке</string>
@@ -22,27 +22,38 @@
   <string name="pref_hwEncode_summary">Експериментална карактеристика</string>
   <string name="pref_videoBitrate_title">Брзина преноса видео записа</string>
   <string name="pref_videoBitrate_summary">Изабери подразумевану брзину одлазног видео записа (KB/s)</string>
-  <string name="pref_videoResolution_title">Video rezolucija</string>
+  <string name="pref_videoResolution_title">Видео резолуција</string>
   <string name="pref_videoResolution_summary">Изабери подразумевану резолуцију одлазног видеа</string>
   <string name="pref_systemContacts_title">Користи системске контакте</string>
   <string name="pref_systemContacts_summary">Користи системске контакте да бисте приказали детаље позиваоца.</string>
-  <string name="pref_systemDialer_title">Uputite sistemske pozive koristeći Jami</string>
+  <string name="pref_systemDialer_title">Упутите системске позиве користећи Јами</string>
   <string name="pref_systemDialer_summary">Користи Јами за упућивање системских позива када је то могуће.</string>
   <string name="pref_startOnBoot_title">Покрени Јами при покретању</string>
   <string name="pref_startOnBoot_summary">Покрени Јами у позадини када се систем покрене.</string>
   <string name="pref_clearHistory_title">Очисти историју</string>
+  <string name="pref_clearHistory_summary">Обришите историју свих разговора. Ова радња се не може опозвати.</string>
   <string name="pref_notification_title">Видљивост обавештења</string>
   <string name="pref_notification_summary">Подеси видљивост обавештења апликација на закључаном екрану.</string>
+  <string name="pref_connectivity_title">Режим повезивања</string>
+  <string name="pref_connectivity_summary">Одаберите како да повежете Јами са дистрибуираним системом да бисте 
+примали позиве и поруке.</string>
   <string name="pref_blackList_title">Блок листа</string>
   <string name="pref_blackList_summary">Провери своју листу блокираних.</string>
   <string name="pref_delete_account_title">Обрисати налог</string>
-  <string name="pref_delete_account_summary">Izbrišite nalog sa ovog uređaja</string>
+  <string name="pref_delete_account_summary">Избришите налог са овог уређаја</string>
+  <string name="pref_persistNotification_title">Покрени у позадини</string>
+  <string name="pref_persistNotification_summary">Дозволите рад у позадини за примање позива и порука.</string>
   <string name="pref_newGroup_title">Омогући групно ћаскање</string>
   <string name="pref_newGroup_summary">Омогући креирање група у Јами.</string>
   <string name="pref_logs_title">Дијагностичке евиденције</string>
   <string name="pref_logs_summary">Отвори подешавања дијагностичког дневника</string>
   <string name="pref_logs_start">Започни евидентирање</string>
   <string name="pref_logs_stop">Заустави логовање</string>
+  <string name="pref_connection_monitor">Монитор везе</string>
+  <string name="pref_connection_monitor_summary">Пратите пеер то пеер везе</string>
+  <string name="pref_push_notifications_logs_title">Дневници Push обавештења</string>
+  <string name="pref_push_notifications_logs_summary">Прегледајте евиденције снимљене из push
+обавештења.</string>
   <string name="pref_typing_title">Омогући индикаторе куцања</string>
   <string name="pref_typing_summary">Шаљи и примај индикаторе куцања који показују да се порука куца.</string>
   <string name="pref_block_record_title">Блокирај снимак екрана и снимање</string>
@@ -50,7 +61,41 @@
   <string name="pref_link_preview_title">Прикажи прегледе веза у разговорима</string>
   <string name="pref_link_preview_summary">Прегледи захтевају преузимање садржаја са сервера трећих страна.</string>
   <!--Notifications Visibility-->
+  <string name="notification_public">Јавно\n(прикажи обавештења и њихов садржај на закључаном екрану)\n</string>
+  <string name="notification_private">Приватно\n(прикажите обавештења, али сакријте њихов садржај на закључаном екрану)\n</string>
+  <string name="notification_secret">Тајно\n(не приказуј обавештења на закључаном екрану)</string>
+  <string name="connectivity_google_services_title">Google сервиси</string>
+  <string name="connectivity_google_services_description">Користите Google Firebase и DHT прокси за
+примање push обавештења.</string>
+  <string name="connectivity_local_node_title">Локални DHT чвор</string>
+  <string name="connectivity_local_node_description">Користите локални DHT чвор за повезивање са другим
+Јами уређајима и контактима.</string>
+  <string name="connectivity_unified_push_title">Обједињени push</string>
+  <string name="connectivity_unified_push_description">Користите прилагођени обједињени Push сервер за
+примати push обавештења.</string>
   <string name="connectivity_custom_title">Прилагођено</string>
+  <string name="connectivity_custom_description">Тренутно се не користи ниједно од
+доступних подешавања конфигурације.</string>
   <!--Extension-->
+  <string name="pref_enable_extensions_title">Омогући додатке</string>
+  <string name="pref_enable_extensions_summary">Омогућите додатке и подесите им
+параметре</string>
+  <string name="pref_available_extensions_title">Доступни додаци</string>
+  <string name="pref_available_extensions_summary">Инсталирани додаци и додавање
+нових додатака</string>
+  <string name="fab_extensions_add">Додајте нови додатак</string>
+  <string name="extension_uninstall_title">Деинсталирати додатак?</string>
+  <string name="extension_reset_preferences">Ресетујте подешавања додатака</string>
+  <string name="extension_reset_preferences_summary">Додатак је враћен на подразумевана подешавања</string>
+  <string name="extension_reset_preferences_ask">Да ли желите да ресетујете општа подешавања додатка?</string>
+  <string name="extension_reset_account_preferences_ask">Да ли желите да ресетујете подешавања додатака налога?</string>
+  <string name="extension_successfully_installed">Додатак <b>%1$s</b> је инсталиран успешно.</string>
+  <string name="extension_install_failure">Дошло је до грешке приликом инсталирања следећег додатка: <b>%1$s</b></string>
+  <string name="extension_recent_version_exception">Новија верзија <b>%1$s</b> је инсталирана.</string>
+  <string name="extension_same_version_exception">Иста верзија од <b>%1$s</b> је инсталирана.</string>
   <string name="extension_invalid_signature"><b>%1$s</b> има неважећи потпис</string>
+  <string name="extension_invalid_authority">Дошло је до грешке при верификацији овлашћења за следеће проширење: <b>%1$s</b></string>
+  <string name="extension_invalid_format">Неважећи формат екстензије: <b>%1$s</b></string>
+  <string name="extension_force_install">присилно\nинсталирај</string>
+  <string name="extension_path_image_add">Додајте нову слику</string>
 </resources>

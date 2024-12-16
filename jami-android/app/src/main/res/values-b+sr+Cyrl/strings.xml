@@ -145,6 +145,7 @@
   <string name="ringtone_custom_prompt">Подесите прилагођену мелодију звона</string>
   <string name="ringtone_custom_label">Прилагођено</string>
   <!--Read contacts permission-->
+  <string name="permission_dialog_read_contacts_message">Jamiju je potrebna dozvola „Čitanje kontakata“. Omogućite ga u podešavanjima uređaja da biste koristili ovu funkciju.</string>
   <!--Write call log permission-->
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Скенирајте QR код налога који желите да додате.</string>
@@ -248,6 +249,7 @@
   <string name="decline">Одбиј</string>
   <string name="block">Блокирај</string>
   <string name="invitation_message">Имате %1$d захтевa за контакт</string>
+  <string name="outgoing_contact_invitation_message">Ovaj kontakt nije na vašoj listi kontakata.\nPošaljite zahtev za povezivanje.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Нема блокираних контаката</string>
   <!--Smartlist-->
@@ -272,7 +274,7 @@
   <string name="file_transfer_status_closed_by_peer">Затворен од стране peer-a</string>
   <string name="file_transfer_status_invalid_pathname">неважеће име путање</string>
   <string name="file_transfer_status_unjoinable_peer">непридружив peer</string>
-  <string name="file_transfer_status_cancelled">отказано</string>
+  <string name="file_transfer_status_cancelled">отказан</string>
   <string name="file_transfer_status_error">није успело због грешке</string>
   <string name="file_transfer_status_timed_out">Истекло је време</string>
   <string name="file_saved_in">Датотека је сачувана у %s</string>
@@ -362,6 +364,8 @@
   <string name="bottomsheet_remove">Уваљивање члана</string>
   <string name="error_open_no_app_found">Није пронађена ниједна апликација за обраду ове датотеке: %1$s</string>
   <string name="swarm_detail_no_document">Još nemate dokumenta.</string>
+  <string name="share_contact_intent_title">Dodajte ovaj kontakt na Jami!</string>
+  <string name="share_contact_intent_body">Možete dodati ovaj kontakt „%1$s“ na Jami distribuiranoj komunikacijskoj platformi: %2$s</string>
   <!--JamiId-->
   <string name="jami_id_copy">Копирај JamiId</string>
   <string name="jami_id_share">Подели JamiId</string>

@@ -29,7 +29,7 @@
   <string name="help_ring">Jami nalog ti omogućava da bezbedno dođeš do ljudi peer to peer preko potpuno distribuirane mreže.</string>
   <string name="help_sip_title">Dodaj SIP nalog</string>
   <string name="help_sip">Podesi postojeći SIP nalog</string>
-  <string name="create_sip_account">Конфигуришите SIP  налог</string>
+  <string name="create_sip_account">Konfigurišite SIP nalog</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_title">Izbrisati nalog?</string>
   <string name="account_delete_dialog_message">Ova radnja se ne može opozvati.</string>
@@ -65,7 +65,7 @@
   <string name="account_rendezvous_label">Režim sastanka</string>
   <string name="account_rendezvous_summary">U režimu sastanka, dolazni pozivi će se dodavati u konferencijsku sobu.</string>
   <string name="account_upnp_label">Omogući UPnP</string>
-  <string name="account_proxy_field">Proxy</string>
+  <string name="account_proxy_field">Proksi</string>
   <!--Extension Details-->
   <string name="account_preferences_extension_tab">Proširenja</string>
   <!--Audio Details-->

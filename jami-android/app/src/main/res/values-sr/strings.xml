@@ -145,6 +145,7 @@
   <string name="ringtone_custom_prompt">Podesite prilagođenu melodiju zvona</string>
   <string name="ringtone_custom_label">Prilagođeno</string>
   <!--Read contacts permission-->
+  <string name="permission_dialog_read_contacts_message">Jamiju je potrebna dozvola „Čitanje kontakata“. Omogućite ga u podešavanjima uređaja da biste koristili ovu funkciju.</string>
   <!--Write call log permission-->
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Skeniraj QR kod naloga koji želite da dodate.</string>
@@ -248,6 +249,7 @@
   <string name="decline">Odbij</string>
   <string name="block">Blokiraj</string>
   <string name="invitation_message">Imaš %1$d zahteva za kontakt</string>
+  <string name="outgoing_contact_invitation_message">Ovaj kontakt nije na vašoj listi kontakata.\nPošaljite zahtev za povezivanje.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Nema blokiranih kontakаta</string>
   <!--Smartlist-->
@@ -362,6 +364,8 @@
   <string name="bottomsheet_remove">Уваљивање члана</string>
   <string name="error_open_no_app_found">Nije pronađena nijedna aplikacija za obradu ove datoteke: %1$s</string>
   <string name="swarm_detail_no_document">Još nemate dokumenta.</string>
+  <string name="share_contact_intent_title">Dodajte ovaj kontakt na Jami!</string>
+  <string name="share_contact_intent_body">Možete dodati ovaj kontakt „%1$s“ na Jami distribuiranoj komunikacijskoj platformi: %2$s</string>
   <!--JamiId-->
   <string name="jami_id_copy">Kopiraj JamiId</string>
   <string name="jami_id_share">Podeli JamiId</string>
