@@ -96,7 +96,9 @@ class HardwareServiceImpl(
     override fun hasMicrophone(): Boolean {
         if (context.packageManager.hasSystemFeature(PackageManager.FEATURE_MICROPHONE))
             return true
-        val recorder = MediaRecorder()
+        val recorder =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) MediaRecorder(context)
+            else MediaRecorder()
         val testFile = File(context.cacheDir, "MediaUtil#micAvailTestFile")
         return try {
             with(recorder) {
