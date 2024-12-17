@@ -29,6 +29,7 @@ import android.media.MediaRecorder
 import android.media.MediaRecorder.AudioSource
 import android.media.MediaRecorder.AudioEncoder
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
@@ -472,8 +473,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
     private fun startRecorder(encoder: Int, outputFormat: Int): Boolean {
         try {
             val mediaRecorder =
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S)
-                    MediaRecorder(requireContext())
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) MediaRecorder(requireContext())
                 else MediaRecorder()
 
             AndroidFileUtils.createAudioFile(requireContext()).let {
