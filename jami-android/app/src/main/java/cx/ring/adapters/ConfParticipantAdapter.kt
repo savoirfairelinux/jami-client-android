@@ -57,7 +57,6 @@ class ConfParticipantAdapter(private var calls: List<ParticipantInfo>, private v
         }
 
         val isConference = calls.filterNot { it.pending }.size > 1
-        participantBinding.muteParticipant.isVisible = isConference
         participantBinding.extendParticipant.isVisible = isConference
         participantBinding.kickParticipant.isVisible = isConference
 
@@ -68,14 +67,19 @@ class ConfParticipantAdapter(private var calls: List<ParticipantInfo>, private v
             .withPresence(false)
             .build(context))
 
-        participantBinding.muteParticipant.let {
-            it.setImageResource(if (info.audioModeratorMuted || info.audioLocalMuted) R.drawable.baseline_mic_off_24 else R.drawable.baseline_mic_on_24)
-        }
-
-        participantBinding.muteParticipant.setOnClickListener {
-            onSelectedCallback.onParticipantSelected(info, ParticipantAction.Mute)
-            participantBinding.muteParticipant.let {
-                it.setImageResource(if (info.audioModeratorMuted || info.audioLocalMuted) R.drawable.baseline_mic_off_24 else R.drawable.baseline_mic_on_24)
+        participantBinding.muteParticipant.apply {
+            fun updateMuteIcon() {
+                setImageResource(
+                    if (info.audioModeratorMuted || info.audioLocalMuted)
+                        R.drawable.baseline_mic_off_24
+                    else R.drawable.baseline_mic_on_24
+                )
+            }
+            isVisible = isConference
+            updateMuteIcon()
+            setOnClickListener {
+                onSelectedCallback.onParticipantSelected(info, ParticipantAction.Mute)
+                updateMuteIcon()
             }
         }
 

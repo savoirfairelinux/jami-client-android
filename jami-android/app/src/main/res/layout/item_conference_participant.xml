@@ -61,7 +61,6 @@ along with this program; if not, write to the Free Software
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_weight="0"
-        app:tint="@color/call_button"
         android:background="?actionBarItemBackground"
         android:padding="12dp"
         app:srcCompat="@drawable/baseline_mic_on_24"/>
