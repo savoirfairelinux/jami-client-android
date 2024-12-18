@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "810c75b3_55e688c3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 19
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 943
+      },
+      "writtenOn": "2024-12-18T11:22:33Z",
+      "side": 1,
+      "message": "Is this just a UI adaption or will bugs like these also be fixed with this patch: https://git.jami.net/savoirfairelinux/jami-client-android/-/issues/1129#note_44488 ?",
+      "revId": "fd3fd04bb749c95d1d7925caf22909f93b8354a7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6572254e_160c82d7",
         "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/call/CallPresenter.kt",
         "patchSetId": 19
