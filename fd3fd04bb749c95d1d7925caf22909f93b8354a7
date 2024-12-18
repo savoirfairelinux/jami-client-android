@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6572254e_160c82d7",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/call/CallPresenter.kt",
+        "patchSetId": 19
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2024-12-18T08:28:12Z",
+      "side": 1,
+      "message": "Should `define` be `defines`? Thank you",
+      "range": {
+        "startLine": 410,
+        "startChar": 21,
+        "endLine": 410,
+        "endChar": 27
+      },
+      "revId": "fd3fd04bb749c95d1d7925caf22909f93b8354a7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
