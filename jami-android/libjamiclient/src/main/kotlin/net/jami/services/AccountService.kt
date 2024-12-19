@@ -461,6 +461,7 @@ class AccountService(
     }
 
     fun loadUntil(conversation: Conversation, from: String = "", until: String = ""): Single<List<Interaction>> {
+        Log.w("devdebug", "loadUntil $from $until")
         val mode = conversation.mode.blockingFirst()
         if (mode == Conversation.Mode.Syncing || mode == Conversation.Mode.Request) {
             Log.w(TAG, "loadUntil: conversation is syncing")
@@ -1356,6 +1357,7 @@ class AccountService(
         interaction.edit = edit
         if (replyTo != null) {
             interaction.replyTo = conversation.loadMessage(replyTo) {
+                Log.w("devdebug", "loadSwarmUntil replyTo")
                 JamiService.loadSwarmUntil(account.accountId, conversation.uri.rawRingId, "", replyTo)
             }
         }
@@ -1394,6 +1396,7 @@ class AccountService(
     private fun addMessage(account: Account, conversation: Conversation, message: SwarmMessage, newMessage: Boolean): Interaction {
         val interaction = getInteractionFromSwarmMessage(account, conversation, message)
         conversation.addSwarmElement(interaction, newMessage)
+//        Log.w("devdebug", "conversation id: ${conversation.uri.rawRingId} aggregatehistory = ${conversation.aggregateHistory.map { it.type }}")
         return interaction
     }
 
