@@ -1,30 +1,47 @@
-Jami (ein GNU-Paket) ist eine universelle und dezentrale Plattform für Kommunikation, die die Privatsphäre und Freiheit der Benutzer respektiert.
-100% freie Software, verfügbar für alle Plattformen.
+Jami, ein GNU-Paket, ist eine Software für universelle und verteilte Peer-to-Peer-Kommunikation, die die Freiheit und Privatsphäre ihrer Benutzer respektiert.
 
-★ Freie Kommunikation mit Jami:
-- Textnachrichten senden
-- Audioanrufe tätigen
-- Videoanrufe tätigen
-- Bilder und Dateien teilen
+Jami ist die einfachste und leichteste Möglichkeit, mit Personen (und Geräten) über Instant Messaging, Audio- und Videoanrufe über das Internet und LAN/WAN-Intranets in Kontakt zu treten.
 
-★ Erreichen Sie Ihre Gesprächspartner direkt per Peer-to-Peer !
+Jami ist eine kostenlose, durchgängig verschlüsselte und private Kommunikationsplattform.
 
-★ Verwenden Sie Ihr Jami-Konto auf mehreren Geräten !
+Jami – früher bekannt als Ring – ist auch eine Open-Source-Alternative (zu Facebook Messenger, Signal, Skype, Teams, Telegram, TikTok, Viber, WhatsApp, Zoom), die die Privatsphäre ihrer Benutzer in den Vordergrund stellt.
 
-★ Verfügbar für Windows, macOS, iOS, GNU/Linux, Android und Android TV !
+Jami hat ein professionell aussehendes Design und ist für eine Vielzahl von Plattformen verfügbar. Im Gegensatz zu den Alternativen finden Anrufe mit Jami direkt zwischen Benutzern statt, da keine Server zur Anrufabwicklung verwendet werden.
 
-★ SIP-Konto Unterstützung verfügbar !
+Dies bietet die größte Privatsphäre, da die verteilte Natur von Jami bedeutet, dass Ihre Anrufe nur zwischen Teilnehmern stattfinden.
 
-★ Nächste Features: Audio/Video Anrufaufzeichnung (Android), Gruppen Chats, ...
+Einzel- und Gruppengespräche mit Jami werden durch Folgendes verbessert: Instant Messaging; Audio- und Videoanrufe; Aufzeichnen und Senden von Audio- und Videonachrichten; Dateiübertragungen, Bildschirmfreigabe und Standortfreigabe.
 
-Baue mit Jami deine IoT Projekte: Die universelle Kommunikationstechnologie von Jami inklusive Library läuft auf dem System deiner Wahl.
+Jami kann auch als SIP-Client fungieren.
+
+Für Jami sind mehrere Erweiterungen verfügbar: Audiofilter, automatische Antwort, grüner Bildschirm, Wasserzeichen und Flüstertranskript.
+
+Jami kann in Organisationen mit dem „Jami Account Management Server“ (JAMS) problemlos bereitgestellt werden, sodass Benutzer sich mit ihren Unternehmensanmeldeinformationen verbinden oder lokale Konten erstellen können. JAMS ermöglicht es Ihnen, Ihre eigene Jami-Community zu verwalten und gleichzeitig die verteilte Netzwerkarchitektur von Jami zu nutzen.
+
+Jami ist für GNU/Linux, Windows, macOS, iOS, Android und Android TV verfügbar, was Jami zu einem interoperablen und plattformübergreifenden Kommunikationsframework macht.
+
+Verwalten Sie mehrere SIP-Konten, Jami-Konten und JAMS-Konten mit dem Jami-Client, der auf einem oder mehreren Geräten installiert ist.
+
+Jami ist kostenlos, unbegrenzt, privat, werbefrei, kompatibel, schnell, autonom und anonym.
+
+Erfahren Sie mehr über:
+Jami: https://jami.net/
+Jami-Erweiterungen: https://jami.net/extensions/
+„Jami Account Management Server“ (JAMS): https://jami.biz/
+Jami-Dokumentation: https://docs.jami.net/
+
+Folgen Sie uns für mehr:
+Mastodon: https://mstdn.io/@Jami
+X: https://x.com/jami_social
+YouTube: https://www.youtube.com/@jami9311
+
+Wir freuen uns, von Ihnen zu hören! Treten Sie der Jami-Community bei:
+Beitragen: https://jami.net/contribute/
+Forum: https://forum.jami.net/
+
+Bauen Sie mit Jami an Ihrem IoT-Projekt: Verwenden Sie die universelle Kommunikationstechnologie von Jami mit seiner portablen Bibliothek auf dem System Ihrer Wahl erneut.
 
 Jami für Android TV wurde auf NVIDIA SHIELD TV mit Logitech-Kameras getestet.
 
-Es gibt viele Möglichkeiten, uns zu helfen, schau vorbei: https://jami.net/contribute ,
-Kontaktieren Sie uns auf Twitter: @jami_social oder Mastodon: @Jami
-
-Für mehr Informationen besuche https://jami.net
-
-Jami ist unter der GPL-Lizenz (Version 3 oder höher) veröffentlicht.
-Copyright © Savoir-faire Linux
+Jami wird unter der GPL-Lizenz, Version 3 oder höher, veröffentlicht.
+Urheberrechtlich © Savoir-faire Linux Inc.

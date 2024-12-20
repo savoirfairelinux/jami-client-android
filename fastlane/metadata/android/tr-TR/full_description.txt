@@ -1,30 +1,47 @@
-Jami (a GNU package) is a universal and distributed communication platform which respects the freedoms and privacy of users.
-It is 100% Free software. Available on all platforms.
+Jami, bir GNU paketidir ve kullanıcılarının özgürlüğüne ve mahremiyetine saygı duyan evrensel ve dağıtılmış eşler arası iletişim için bir yazılımdır.
 
-★ Communicate freely with Jami:
-  - send text messages
-  - make audio calls
-  - make video calls
-  - share pictures and files
+Jami, İnternet ve LAN/WAN intranetleri üzerinden anlık mesajlaşma, sesli ve görüntülü aramalar ile insanlarla (ve cihazlarla) bağlantı kurmanın en basit ve kolay yoludur.
 
-★ Reach your peers directly in peer to peer !
+Jami, ücretsiz/özgür, uçtan uca şifreli ve özel bir iletişim platformudur.
 
-★ Use your Jami account on multiple devices !
+Jami – eskiden Ring olarak bilinirdi – aynı zamanda kullanıcılarının mahremiyetine öncelik veren açık kaynaklı bir alternatiftir (Facebook Messenger, Signal, Skype, Teams, Telegram, TikTok, Viber, WhatsApp, Zoom'a).
 
-★ Available on Windows, macOS, iOS, GNU/Linux, Android and Android TV !
+Jami profesyonel görünümlü bir tasarıma sahiptir ve çok çeşitli platformlar için kullanılabilir. Alternatiflerin aksine, Jami kullanılarak yapılan aramalar doğrudan kullanıcılar arasındadır çünkü aramaları yönetmek için sunucular kullanmaz.
 
-★ SIP account support available !
+Bu, Jami'nin dağıtılmış yapısı sayesinde aramalarınızın yalnızca katılımcılar arasında olması anlamına geldiğinden en büyük gizliliği sağlar.
 
-★ Next additions: audio/video call recording (Android), group chat...
+Jami ile yapılan bire bir ve grup görüşmeleri şunlarla geliştirilmiştir: anlık mesajlaşma; sesli ve görüntülü arama; ses ve video mesajlarını kaydetme ve gönderme; dosya transferleri; ekran paylaşımı; ve konum paylaşımı.
 
-Build with Jami on your IoT project: re-use the universal communications technology of Jami with its portable library on your system of choice. 
+Jami ayrıca bir SIP istemcisi olarak da işlev görebilir.
 
-Jami for Android TV is tested on NVIDIA SHIELD TV with Logitech cameras.
+Jami'nin birden fazla uzantısı mevcuttur: Ses Filtresi; Otomatik Cevap; Yeşil Ekran; Filigran; ve Fısıltı Transkripti.
 
-There are plenty of ways to help us, check out: https://jami.net/contribute ,
-Contact us on Twitter: @jami_social , or Mastodon: @Jami
+Jami, kullanıcıların kurumsal kimlik bilgileriyle bağlanmalarına veya yerel hesaplar oluşturmalarına olanak tanıyan "Jami Hesap Yönetim Sunucusu" (JAMS) ile kuruluşlara kolayca dağıtılabilir. JAMS, Jami'nin dağıtılmış ağ mimarisinden yararlanırken kendi Jami topluluğunuzu yönetmenizi sağlar.
 
-Daha çok bilgi için https://jami.net adresini ziyaret edin
+Jami, GNU/Linux, Windows, macOS, iOS, Android ve Android TV için kullanılabilir ve Jami'yi birlikte çalışabilir ve platformlar arası bir iletişim çerçevesi haline getirir.
 
-Jami is published under the GPL license, version 3 or higher.
-Copyright © Savoir-faire Linux
+Bir veya birden fazla cihaza yüklenen Jami istemcisiyle birden fazla SIP hesabını, Jami hesabını ve JAMS hesabını yönetin.
+
+Jami ücretsiz, sınırsız, özel, reklamsız, uyumlu, hızlı, özerk ve anonimdir.
+
+Daha fazla bilgi edinin:
+Jami: https://jami.net/
+Jami uzantıları: https://jami.net/extensions/
+“Jami Hesap Yönetim Sunucusu” (JAMS): https://jami.biz/
+Jami belgeleri: https://docs.jami.net/
+
+Daha fazlası için bizi takip edin:
+Mastodon: https://mstdn.io/@Jami
+X: https://x.com/jami_social
+YouTube: https://www.youtube.com/@jami9311
+
+Sizden haber almak isteriz! Jami topluluğuna katılın:
+Katkıda bulunun: https://jami.net/contribute/
+Forum: https://forum.jami.net/
+
+IoT projenizde Jami ile oluşturun: Jami'nin taşınabilir kütüphanesiyle evrensel iletişim teknolojisini seçtiğiniz sistemde yeniden kullanın.
+
+Android TV için Jami, Logitech kameralarla NVIDIA SHIELD TV'de test edilmiştir.
+
+Jami, GPL lisansı, sürüm 3 veya üzeri altında yayınlanmıştır.
+Telif Hakkı © Savoir-faire Linux Inc.

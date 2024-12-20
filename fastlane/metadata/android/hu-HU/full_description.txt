@@ -1,30 +1,47 @@
-A Jami (GNU csomag) egy univerzális és elosztott közlés emelvény, amely tiszteletben tartja a felhasználók szabadságait és magánéletét.
-Szabad szoftver. Minden emelvényhez elérhető.
+A Jami, egy GNU-csomag, az univerzális és elosztott társ-társ kommunikációt szolgáló szoftver, amely tiszteletben tartja a felhasználók szabadságát és magánéletét.
 
-★ Közlékaljon ingyenesen a Jami-el:
-- üzenetek küldése
-- hívások kezdeményezése
-- video hívások kezdeményezése
-- képek és fájlok megosztása
+A Jami a legegyszerűbb és legegyszerűbb módja annak, hogy azonnali üzenetküldéssel, hang- és videohívásokkal kapcsolódjon az emberekhez (és eszközökhöz) az interneten és a LAN/WAN intraneteken keresztül.
 
-★ Érje el a társait közvetlenül egyenrangú félként!
+A Jami egy ingyenes, teljes körűen titkosított és privát kommunikációs platform.
 
-★ A Jami fiókot több eszközön is használhatja!
+A Jami – amelyet korábban Ring néven ismertek – egy nyílt forráskódú alternatíva is (a Facebook Messenger, a Signal, a Skype, a Teams, a Telegram, a TikTok, a Viber, a WhatsApp, a Zoom számára), amely előtérbe helyezi a felhasználók magánéletét.
 
-★ Rendelkezésre áll  Windows, macOS, iOS, GNU/Linux, Android és Android TV-en!
+A Jami professzionális megjelenésű, és platformok széles skálájához elérhető. Az alternatívákkal ellentétben a Jami-t használó hívások közvetlenül a felhasználók között zajlanak, mivel nem használ szervereket a hívások kezelésére.
 
-★ SIP támogatás elérhető!
+Ez biztosítja a legnagyobb magánéletet, mivel a Jami elosztott jellege azt jelenti, hogy a hívások csak a résztvevők között zajlanak.
 
-★ Következő kiegészítések: hanghívás rögzítése és videohívás rögzítése (Android), csoportos csevegés…
+A Jamival folytatott személyes és csoportos beszélgetéseket a következők javítják: azonnali üzenetküldés; hang- és videohívások; hang- és videoüzenetek rögzítése és küldése; fájlátvitel; képernyőmegosztás; és helymegosztás.
 
-A Jami univerzális közlés technológiájának újrahasznosítása az IoT (Internet of Things – tárgyak internete) feladatokbe, mivel a Jami rendelkezik egy hordozható könyvtárral, amely bármilyen tetszőleges rendszerbe integrálható.
+A Jami SIP-kliensként is működhet.
 
-A Jami-et Android TV-hez a NVIDIA SHIELD TV-n teszteltük a Logitech kamerával.
+A Jami több bővítményt is kínál: Hangszűrő; Automatikus válasz; Zöld képernyő; Vízjel; és, Suttogó átirat.
 
-Rengeteg mód van arra, hogy segítsen nekünk, nézze meg: https://jami.net/contribute
-Lépjen velünk kapcsolatba a Twitteren: @jami_social vagy Mastodon: @Jami
+A Jami könnyen telepíthető a szervezetekben a JAMS (Jami Account Management Server – Jami-fiókkezelő kiszolgáló) segítségével, amely lehetővé teszi a felhasználók számára, hogy csatlakozzanak vállalati hitelesítő adataikhoz, vagy helyi fiókokat hozzanak létre. A JAMS lehetővé teszi saját Jami közösségének kezelését, miközben kihasználja a Jami elosztott hálózati architektúráját.
 
-További információért látogasson el a https://jami.net oldalra
+A Jami elérhető GNU/Linux, Windows, macOS, iOS, Android és Android TV rendszereken, így a Jami interoperábilis és platformok közötti kommunikációs keretrendszerré válik.
 
-A Jami-t közzéteszik a GNU általános nyilvános engedélyével, a 3-as vagy újabb verziókkal.
-Szerzői jog © Savoir-faire Linux
+Kezeljen több SIP-fiókot, Jami-fiókot és JAMS-fiókot az egy vagy több eszközre telepített Jami-klienssel.
+
+A Jami ingyenes, korlátlan, privát, reklámmentes, kompatibilis, gyors, autonóm és névtelen.
+
+További tájékoztatás:
+Jami: https://jami.net/
+Jami bővítmények: https://jami.net/extensions/
+JAMS (Jami Account Management Server – Jami-fiókkezelő kiszolgáló): https://jami.biz/
+Jami dokumentáció: https://docs.jami.net/
+
+Kövess minket a továbbiakért:
+Mastodon: https://mstdn.io/@Jami
+X: https://x.com/jami_social
+YouTube: https://www.youtube.com/@jami9311
+
+Szeretnénk hallani rólad! Csatlakozz a Jami közösséghez:
+Hozzájárulás: https://jami.net/contribute/
+Fórum: https://forum.jami.net/
+
+Építsen a Jamival IoT-projektjére: használja újra a Jami univerzális kommunikációs technológiáját a hordozható könyvtárával a választott rendszerén.
+
+A Jami Android TV számára Logitech kamerákkal ellátott NVIDIA SHIELD TV-eszközön tesztelték.
+
+A Jami a GPL licenc 3-as vagy újabb verziója alatt jelent meg.
+Szerzői jog © Savoir-faire Linux Inc.

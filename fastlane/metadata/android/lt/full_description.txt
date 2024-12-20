@@ -1,30 +1,47 @@
-Jami (GNU paketas) yra universali ir paskirstytoji bendravimo platforma, kuri gerbia naudotojų laisves ir privatumą.
-Tai yra 100% laisvoji programinė įranga. Prieinama visose platformose.
+Jami, GNU paketas, yra universaliam ir paskirstytam lygiaverčiui ryšiui skirta programinė įranga, kuri gerbia vartotojų laisvę ir privatumą.
 
-★ Laisvai bendraukite, naudodami Jami:
-  - siųskite tekstines žinutes
-  - atlikite garso skambučius
-  - atlikite vaizdo skambučius
-  - dalinkitės paveikslais ir failais
+Jami yra paprasčiausias ir lengviausias būdas susisiekti su žmonėmis (ir įrenginiais) naudojant momentinius pranešimus, garso ir vaizdo skambučius internetu ir LAN/WAN intranetais.
 
-★ Reach your peers directly in peer to peer !
+„Jami“ yra nemokama / nemokama, nuo galo užšifruota ir privati ​​komunikacijos platforma.
 
-★ Naudokite Jami paskyrą daugelyje įrenginių!
+„Jami“, kuris anksčiau buvo žinomas kaip „Ring“, taip pat yra atvirojo kodo alternatyva („Facebook Messenger“, „Signal“, „Skype“, „Teams“, „Telegram“, „TikTok“, „Viber“, „WhatsApp“, „Zoom“), kuri teikia pirmenybę savo vartotojų privatumui.
 
-★ Prieinama Windows, macOS, iOS, GNU/Linux, Android bei Android televizoriams!
+Jami yra profesionaliai atrodančio dizaino ir yra prieinamas įvairioms platformoms. Skirtingai nuo alternatyvų, skambučiai naudojant Jami yra tiesiogiai tarp vartotojų, nes skambučiams tvarkyti nenaudojami serveriai.
 
-★ Yra prieinamas SIP paskyros palaikymas!
+Tai suteikia didžiausią privatumą, nes paskirstytas Jami pobūdis reiškia, kad jūsų skambučiai vyksta tik tarp dalyvių.
 
-★ Next additions: audio/video call recording (Android), group chat...
+Asmeniniai ir grupiniai pokalbiai su Jami yra patobulinti naudojant: momentinius pranešimus; garso ir vaizdo skambučiai; garso ir vaizdo pranešimų įrašymas ir siuntimas; Failų perkėlimas; ekrano bendrinimas; ir vietos bendrinimas.
 
-Build with Jami on your IoT project: re-use the universal communications technology of Jami with its portable library on your system of choice. 
+Jami taip pat gali veikti kaip SIP klientas.
 
-Jami, skirta Android televizoriams yra išbandyta naudojant NVIDIA SHIELD televizorių bei Logitech kameras.
+Jami galimi keli plėtiniai: garso filtras; Automatinis atsakymas; žalias ekranas; Vandens ženklas; ir šnabždesio stenograma.
 
-Yra daugybė būdų kaip galite mums padėti, pasižvalgykite: https://jami.net/contribute ,
-Susisiekite su mumis naudodami Twitter: @jami_social , ar Mastodon: @Jami
+„Jami“ gali būti lengvai įdiegtas organizacijose su „Jami Account Management Server“ (JAMS), todėl vartotojai gali prisijungti naudodami savo įmonės kredencialus arba susikurti vietines paskyras. JAMS leidžia valdyti savo Jami bendruomenę, tuo pačiu pasinaudojant Jami paskirstytojo tinklo architektūra.
 
-Išsamesnei informacijai, apsilankykite https://jami.net 
+Jami galima naudoti GNU / Linux, Windows, macOS, iOS, Android ir Android TV, todėl Jami yra sąveiki ir kelių platformų komunikacijos sistema.
 
-Jami yra skelbiama pagal GPL licencijos 3 arba naujesnę versiją.
-Autorių teisės © Savoir-faire Linux
+Tvarkykite kelias SIP paskyras, Jami paskyras ir JAMS paskyras naudodami Jami klientą, įdiegtą viename ar keliuose įrenginiuose.
+
+Jami yra nemokama, neribota, privati, be reklamos, suderinama, greita, savarankiška ir anoniminė.
+
+Sužinokite daugiau apie:
+Jami: https://jami.net/
+Jami plėtiniai: https://jami.net/extensions/
+„Jami paskyros valdymo serveris“ (JAMS): https://jami.biz/
+Jami dokumentacija: https://docs.jami.net/
+
+Sekite mus ir sužinokite daugiau:
+Mastodon: https://mstdn.io/@Jami
+X: https://x.com/jami_social
+„YouTube“: https://www.youtube.com/@jami9311
+
+Mes norėtume išgirsti iš jūsų! Prisijunkite prie Jami bendruomenės:
+Prisidėkite: https://jami.net/contribute/
+Forumas: https://forum.jami.net/
+
+Kurkite su Jami savo daiktų interneto projekte: iš naujo naudokite universalią Jami ryšių technologiją su nešiojama biblioteka pasirinktoje sistemoje.
+
+„Jami“, skirta „Android TV“, išbandyta naudojant „NVIDIA SHIELD“ televizorių su „Logitech“ kameromis.
+
+Jami išleista pagal GPL licenciją, 3 ar naujesnę versiją.
+Autorių teisės © Savoir-faire Linux Inc.

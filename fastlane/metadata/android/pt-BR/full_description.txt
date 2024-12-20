@@ -1,30 +1,47 @@
-Jami (um pacote GNU) é uma plataforma universal e distribuída que respeita as liberdades e privacidade dos seus utilizadores.
-É um programa 100% Livre. Disponível em todas as plataformas.
+Jami, um pacote GNU, é um software para comunicação peer-to-peer universal e distribuída que respeita a liberdade e a privacidade de seus usuários.
 
-★ Comunique livremente com o Jami:
-- enviar mensagens de texto
-- fazer chamadas de áudio
-- fazer chamadas de vídeo
-- partilhar fotos e ficheiros
+Jami é a maneira mais simples e fácil de se conectar com pessoas (e dispositivos) com mensagens instantâneas, chamadas de áudio e vídeo pela Internet e intranets LAN/WAN.
 
-★ Contacte os seus amigos diretamente numa rede "ponto-a-ponto"!
+Jami é uma plataforma de comunicação privada, criptografada de ponta a ponta e gratuita.
 
-★ Use a sua conta Jami em vários dispositivos!
+Jami — que costumava ser conhecido como Ring — também é uma alternativa de código aberto (ao Facebook Messenger, Signal, Skype, Teams, Telegram, TikTok, Viber, WhatsApp, Zoom) que prioriza a privacidade de seus usuários.
 
-★ Disponível para Windows, macOS, iOS, GNU/Linux, Android e Android TV!
+Jami tem um design de aparência profissional e está disponível para uma ampla variedade de plataformas. Ao contrário das alternativas, as chamadas usando Jami são diretamente entre usuários, pois ele não usa servidores para lidar com chamadas.
 
-★ Suporta contas SIP!
+Isso oferece a maior privacidade, pois a natureza distribuída do Jami significa que suas chamadas são apenas entre participantes.
 
-★ Próximas funcionalidades: gravação de chamada áudio/vídeo  (Android), conversas em grupo...
+Conversas individuais e em grupo com Jami são aprimoradas com: mensagens instantâneas; chamadas de áudio e vídeo; gravação e envio de mensagens de áudio e vídeo; transferências de arquivos; compartilhamento de tela; e compartilhamento de localização.
 
-Compile com o Jami no seu projeto IoT: reutilize a tecnologia universal de comunicações do Jami com a sua biblioteca portátil no sistema à sua escolha.
+O Jami também pode funcionar como um cliente SIP.
 
-O Jami para Android TV é testado em NVIDIA SHIELD TV com câmaras Logitech.
+O Jami tem várias extensões disponíveis: Filtro de áudio; Resposta automática; Tela verde; Marca d'água; e Transcrição sussurrada.
 
-Há várias formas de nos ajudar, veja em: https://jami.net/contribute ,
-Contacte-nos no Twitter: @jami_social ou no Mastodon: @Jami
+O Jami pode ser facilmente implantado em organizações com o "Jami Account Management Server" (JAMS), permitindo que os usuários se conectem com suas credenciais corporativas ou criem contas locais. O JAMS permite que você gerencie sua própria comunidade Jami enquanto aproveita a arquitetura de rede distribuída do Jami.
 
-Para mais informações visite https://jami.net 
+O Jami está disponível para GNU/Linux, Windows, macOS, iOS, Android e Android TV, tornando o Jami uma estrutura de comunicação interoperável e multiplataforma.
+
+Gerencie várias contas SIP, contas Jami e contas JAMS com o cliente Jami instalado em um ou vários dispositivos.
+
+O Jami é gratuito, ilimitado, privado, sem publicidade, compatível, rápido, autônomo e anônimo.
+
+Saiba mais sobre:
+Jami: https://jami.net/
+Extensões Jami: https://jami.net/extensions/
+“Jami Account Management Server” (JAMS): https://jami.biz/
+Documentação Jami: https://docs.jami.net/
+
+Siga-nos para mais:
+Mastodon: https://mstdn.io/@Jami
+X: https://x.com/jami_social
+YouTube: https://www.youtube.com/@jami9311
+
+Gostaríamos de ouvir de você! Junte-se à comunidade Jami:
+Contribua: https://jami.net/contribute/
+Fórum: https://forum.jami.net/
+
+Construa com Jami em seu projeto de IoT: reutilize a tecnologia de comunicações universais do Jami com sua biblioteca portátil em seu sistema de escolha.
+
+O Jami para Android TV é testado em NVIDIA SHIELD TV com câmeras Logitech.
 
 O Jami é publicado sob a licença GPL, versão 3 ou superior.
-Direitos de autor © Savoir-faire Linux
+Copyright © Savoirfaire Linux Inc.

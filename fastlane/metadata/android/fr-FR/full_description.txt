@@ -1,30 +1,47 @@
-Jami est une plateforme de communication universelle qui respecte les libertés et la vie privés de ses utilisateurs.
-C'est un logiciel 100% libre. Disponible sur toutes les plateformes.
+Jami, un package GNU, est un logiciel de communication pair à pair universelle et distribuée qui respecte la liberté et la vie privée de ses utilisateurs.
 
-★ Communiquer librement et gratuitement avec Jami
--   envoyer des messages textes,
-- faire des appels audio
-- faire des appels vidéo
-- partager des photos et fichiers
+Jami est le moyen le plus simple et le plus facile de se connecter avec des personnes (et des appareils) grâce à la messagerie instantanée, aux appels audio et vidéo sur Internet et aux intranets LAN/WAN.
 
-★ Connexion point à point 
+Jami est une plateforme de communication gratuite, chiffrée de bout en bout et privée.
 
-★ Utiliser votre compte Jami sur plusieurs appareils !
+Jami – qui s'appelait auparavant Ring – est également une alternative open source (à Facebook Messenger, Signal, Skype, Teams, Telegram, TikTok, Viber, WhatsApp, Zoom) qui donne la priorité à la confidentialité de ses utilisateurs.
 
-Disponible sur Windows 10 Store, Windows 7+, macOS, iOS, GNU/Linux, Android et Android TV
+Jami a un design d'aspect professionnel et est disponible pour une large gamme de plateformes. Contrairement aux alternatives, les appels utilisant Jami se font directement entre les utilisateurs car il n'utilise pas de serveurs pour gérer les appels.
 
-★ Support SIP
+Cela offre la plus grande confidentialité car la nature distribuée de Jami signifie que vos appels se font uniquement entre les participants.
 
-★ Prochaines fonctionnalités: enregistrement d'appel (Android), Discussion de groupe...
+Les conversations individuelles et de groupe avec Jami sont améliorées avec : la messagerie instantanée, les appels audio et vidéo ; enregistrement et envoi de messages audio et vidéo ; transferts de fichiers ; partage d'écran ; et partage de localisation.
 
-Construisez votre propre projet IOT en réutilisant Jami et ses librairies portables sur le système de votre choix. 
+Jami peut également fonctionner comme un client SIP.
 
-Jami pour Android TV a été testé sur la NVIDIA SHIELD TV avec des caméras Logitech.
+Jami dispose de plusieurs extensions disponibles : filtre audio ; réponse automatique ; écran vert ; filigrane ; et transcription chuchotée.
 
-Il existe de nombreuses manières  pour nous aider. Allez consulter: https://jami.net/contribute
-Contactez nous sur Twitter: @jami_social ou Mastodon: @Jami
+Jami peut être facilement déployé dans les organisations avec le « Jami Account Management Server » (JAMS), permettant aux utilisateurs de se connecter avec leurs identifiants d'entreprise ou de créer des comptes locaux. JAMS vous permet de gérer votre propre communauté Jami tout en profitant de l'architecture réseau distribuée de Jami.
 
-Pour obtenir plus d'informations, veuillez consulter https://jami.net
+Jami est disponible pour GNU/Linux, Windows, macOS, iOS, Android et Android TV, ce qui fait de Jami un cadre de communication interopérable et multiplateforme.
 
-Jami est publié sous licence GPL, version 3 ou supérieure.
-Copyright © Savoir-faire Linux
+Gérez plusieurs comptes SIP, comptes Jami et comptes JAMS avec le client Jami installé sur un ou plusieurs appareils.
+
+Jami est gratuit, illimité, privé, sans publicité, compatible, rapide, autonome et anonyme.
+
+En savoir plus sur :
+Jami : https://jami.net/
+Extensions Jami : https://jami.net/extensions/
+« Jami Account Management Server » (JAMS) : https://jami.biz/
+Documentation Jami : https://docs.jami.net/
+
+Suivez-nous pour en savoir plus :
+Mastodon : https://mstdn.io/@Jami
+X : https://x.com/jami_social
+YouTube : https://www.youtube.com/@jami9311
+
+Nous aimerions avoir de vos nouvelles ! Rejoignez la communauté Jami :
+Contribuez : https://jami.net/contribute/
+Forum : https://forum.jami.net/
+
+Développez avec Jami sur votre projet IoT : réutilisez la technologie de communication universelle de Jami avec sa bibliothèque portable sur le système de votre choix.
+
+Jami pour Android TV est testé sur NVIDIA SHIELD TV avec des caméras Logitech.
+
+Jami est publié sous la licence GPL, version 3 ou supérieure.
+Droit d'auteur © Savoir-faire Linux Inc.

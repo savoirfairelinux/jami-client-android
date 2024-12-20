@@ -1,30 +1,47 @@
-Jami (a GNU package) is a universal and distributed communication platform which respects the freedoms and privacy of users.
-It is 100% Free software. Available on all platforms.
+جامی، یک بسته گنو، نرم افزاری برای ارتباطات همتا به همتای جهانی و توزیع شده است که به آزادی و حریم خصوصی کاربران خود احترام می گذارد.
 
-★ Communicate freely with Jami:
-- فرستادن پیام های متنی
-- ایجاد تماس های صوتی
-ایجاد تماس های ویدیویی
-- به اشتراک گذاری فایل ها و تصاویر
+Jami ساده‌ترین و آسان‌ترین راه برای ارتباط با افراد (و دستگاه‌ها) از طریق پیام‌رسانی فوری، تماس‌های صوتی و تصویری از طریق اینترنت و شبکه‌های LAN/WAN است.
 
-★ دسترسی به سایر اعضا به صورت مستقیم به صورت P2P
+Jami یک پلت فرم ارتباطی رایگان/آزاد، رمزگذاری شده سرتاسر و خصوصی است.
 
-★ Use your Jami account on multiple devices !
+جامی - که قبلاً با نام Ring شناخته می شد - همچنین یک جایگزین متن باز (برای فیس بوک مسنجر، سیگنال، اسکایپ، تیم ها، تلگرام، تیک تاک، وایبر، واتس اپ، زوم) است که حریم خصوصی کاربران خود را در اولویت قرار می دهد.
 
-★ در دسترس برای ویندوز، مکینتاش، iOS ، لینوکس، اندروید، و Android TV !
+جامی طراحی حرفه ای دارد و برای طیف وسیعی از پلتفرم ها در دسترس است. برخلاف گزینه‌های جایگزین، تماس‌های با استفاده از Jami مستقیماً بین کاربران است زیرا از سرورها برای رسیدگی به تماس‌ها استفاده نمی‌کند.
 
-★ پشتیبانی حساب SIP موجود می باشد!
+این بیشترین حریم خصوصی را می دهد زیرا ماهیت توزیع شده جامی به این معنی است که تماس های شما فقط بین شرکت کنندگان است.
 
-★ Next additions: audio/video call recording (Android), group chat...
+مکالمات یک به یک و گروهی با جامی با موارد زیر تقویت می شود: پیام رسانی فوری. تماس صوتی و تصویری؛ ضبط و ارسال پیام های صوتی و تصویری؛ انتقال فایل؛ اشتراک گذاری صفحه نمایش؛ و به اشتراک گذاری مکان
 
-Build with Jami on your IoT project: re-use the universal communications technology of Jami with its portable library on your system of choice. 
+Jami همچنین می تواند به عنوان یک سرویس گیرنده SIP عمل کند.
 
-Jami for Android TV is tested on NVIDIA SHIELD TV with Logitech cameras.
+Jami چندین پسوند در دسترس دارد: فیلتر صوتی. پاسخ خودکار؛ صفحه سبز؛ واترمارک؛ و، رونوشت Whisper.
 
-There are plenty of ways to help us, check out: https://jami.net/contribute ,
-Contact us on Twitter: @jami_social , or Mastodon: @Jami
+Jami را می توان به راحتی در سازمان ها با "سرور مدیریت حساب جامی" (JAMS) مستقر کرد و به کاربران این امکان را می دهد تا با اعتبار شرکت خود ارتباط برقرار کنند یا حساب های محلی ایجاد کنند. JAMS به شما امکان می دهد تا جامعه Jami خود را مدیریت کنید و در عین حال از معماری شبکه توزیع شده Jami استفاده کنید.
 
-For more information, visit https://jami.net 
+Jami برای GNU/Linux، Windows، macOS، iOS، Android و Android TV در دسترس است، و Jami را به یک چارچوب ارتباطی متقابل و بین پلتفرمی تبدیل می‌کند.
 
-Jami is published under the GPL license, version 3 or higher.
- Copyright © Savoir-faire Linux
+چندین حساب SIP، حساب Jami و حساب JAMS را با سرویس گیرنده Jami که در یک یا چند دستگاه نصب شده است، مدیریت کنید.
+
+جامی رایگان، نامحدود، خصوصی، تبلیغات رایگان، سازگار، سریع، مستقل و ناشناس است.
+
+بیشتر بدانید در مورد:
+جامی: https://jami.net/
+پسوند جامی: https://jami.net/extensions/
+"سرور مدیریت حساب جامی" (JAMS): https://jami.biz/
+مستندات جامی: https://docs.jami.net/
+
+برای اطلاعات بیشتر ما را دنبال کنید:
+Mastodon: https://mstdn.io/@Jami
+X: https://x.com/jami_social
+یوتیوب: https://www.youtube.com/@jami9311
+
+ما دوست داریم از شما بشنویم! به انجمن جامی بپیوندید:
+مشارکت: https://jami.net/contribute/
+انجمن: https://forum.jami.net/
+
+با Jami در پروژه اینترنت اشیا خود بسازید: از فناوری ارتباطات جهانی Jami با کتابخانه قابل حمل آن در سیستم انتخابی خود دوباره استفاده کنید.
+
+Jami برای Android TV روی تلویزیون NVIDIA SHIELD با دوربین های لاجیتک آزمایش شده است.
+
+Jami تحت مجوز GPL نسخه 3 یا بالاتر منتشر شده است.
+حق چاپ © Savoir-faire Linux Inc.

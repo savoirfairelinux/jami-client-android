@@ -1,30 +1,47 @@
-Jami (a GNU package) is a universal and distributed communication platform which respects the freedoms and privacy of users.
-It is 100% Free software. Available on all platforms.
+Jami, pakiet GNU, to oprogramowanie do uniwersalnej i rozproszonej komunikacji peer-to-peer, która szanuje wolność i prywatność swoich użytkowników.
 
-★ Communicate freely with Jami:
-- wysyłaj wiadomości tekstowe
-- wykonuj rozmowy głosowe
-- wykonuj rozmowy wideo
-- dziel się plikami i obrazkami
+Jami to najprostszy i najłatwiejszy sposób na łączenie się z ludźmi (i urządzeniami) za pomocą wiadomości błyskawicznych, połączeń audio i wideo przez Internet oraz intranety LAN/WAN.
 
-★ Rozmawiaj bezpośrednio, dzięki architekturze klient-klient !
+Jami to darmowa, szyfrowana od początku do końca i prywatna platforma komunikacyjna.
 
-★ Use your Jami account on multiple devices !
+Jami – dawniej znana jako Ring – jest również alternatywą typu open source (dla Facebook Messenger, Signal, Skype, Teams, Telegram, TikTok, Viber, WhatsApp, Zoom), która stawia na pierwszym miejscu prywatność swoich użytkowników.
 
-★ Dostępne na Windows, macOS, iOS, GNU/Linux, Android i Android TV !
+Jami ma profesjonalnie wyglądający design i jest dostępny na szerokiej gamie platform. W przeciwieństwie do alternatyw, połączenia za pomocą Jami są wykonywane bezpośrednio między użytkownikami, ponieważ nie używa serwerów do obsługi połączeń.
 
-★ Dostępne wsparcie dla SIP !
+Zapewnia to największą prywatność, ponieważ rozproszona natura Jami oznacza, że ​​połączenia są wykonywane tylko między uczestnikami.
 
-★ Next additions: audio/video call recording (Android), group chat...
+Rozmowy indywidualne i grupowe z Jami są wzbogacone o: wiadomości błyskawiczne, połączenia audio i wideo, nagrywanie i wysyłanie wiadomości audio i wideo, przesyłanie plików, udostępnianie ekranu i udostępnianie lokalizacji.
 
-Build with Jami on your IoT project: re-use the universal communications technology of Jami with its portable library on your system of choice. 
+Jami może również działać jako klient SIP.
 
-Jami for Android TV is tested on NVIDIA SHIELD TV with Logitech cameras.
+Jami ma wiele dostępnych rozszerzeń: Filtr audio, Automatyczna odpowiedź, Zielony ekran, Znak wodny i Transkrypcja szeptana.
 
-There are plenty of ways to help us, check out: https://jami.net/contribute ,
-Contact us on Twitter: @jami_social , or Mastodon: @Jami
+Jami można łatwo wdrożyć w organizacjach za pomocą „Jami Account Management Server” (JAMS), umożliwiając użytkownikom łączenie się za pomocą ich korporacyjnych danych uwierzytelniających lub tworzenie kont lokalnych. JAMS umożliwia zarządzanie własną społecznością Jami przy jednoczesnym korzystaniu z rozproszonej architektury sieciowej Jami.
 
-For more information, visit https://jami.net 
+Jami jest dostępny dla systemów GNU/Linux, Windows, macOS, iOS, Android i Android TV, co czyni Jami interoperacyjnym i wieloplatformowym frameworkiem komunikacyjnym.
 
-Jami is published under the GPL license, version 3 or higher.
-Copyright © Savoir-faire Linux
+Zarządzaj wieloma kontami SIP, kontami Jami i kontami JAMS za pomocą klienta Jami zainstalowanego na jednym lub wielu urządzeniach.
+
+Jami jest bezpłatny, nieograniczony, prywatny, bez reklam, kompatybilny, szybki, autonomiczny i anonimowy.
+
+Dowiedz się więcej o:
+Jami: https://jami.net/
+Rozszerzenia Jami: https://jami.net/extensions/
+„Jami Account Management Server” (JAMS): https://jami.biz/
+Dokumentacja Jami: https://docs.jami.net/
+
+Obserwuj nas, aby dowiedzieć się więcej:
+Mastodon: https://mstdn.io/@Jami
+X: https://x.com/jami_social
+YouTube: https://www.youtube.com/@jami9311
+
+Chętnie Cię poznamy! Dołącz do społeczności Jami:
+Współpracuj: https://jami.net/contribute/
+Forum: https://forum.jami.net/
+
+Twórz z Jami w swoim projekcie IoT: ponownie wykorzystaj uniwersalną technologię komunikacyjną Jami z jej przenośną biblioteką w wybranym systemie.
+
+Jami dla Android TV jest testowane na telewizorach NVIDIA SHIELD TV z kamerami Logitech.
+
+Jami jest publikowane na licencji GPL, wersja 3 lub nowsza.
+Prawa autorskie © Savoir-faire Linux Inc.

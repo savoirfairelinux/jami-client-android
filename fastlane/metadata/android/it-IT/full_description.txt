@@ -1,30 +1,47 @@
-Jami (un pacchetto GNU) è una piattaforma di comunicazione universale e distribuita che rispetta le libertà e la privacy degli utenti.
-È un software gratuito al 100%. Disponibile su tutte le piattaforme.
+Jami, un pacchetto GNU, è un software per la comunicazione peer-to-peer universale e distribuita che rispetta la libertà e la privacy dei suoi utenti.
 
-★ Comunica liberamente con Jami:
-- inviare messaggi di testo
-- Effettua chiamate audio
-- Effettua videochiamate
-- condividere foto e file
+Jami è il modo più semplice e facile per connettersi con persone (e dispositivi) tramite messaggistica istantanea, chiamate audio e video tramite Internet e intranet LAN/WAN.
 
-★ Raggiungi i tuoi coetanei direttamente in peer to peer!
+Jami è una piattaforma di comunicazione privata, end-to-end crittografata e gratuita.
 
-★ Usa il tuo account Jami su più dispositivi!
+Jami, che in passato era nota come Ring, è anche un'alternativa open source (a Facebook Messenger, Signal, Skype, Teams, Telegram, TikTok, Viber, WhatsApp, Zoom) che dà priorità alla privacy dei suoi utenti.
 
-★ Disponibile su Windows, macOS, iOS, GNU / Linux, Android e Android TV!
+Jami ha un design dall'aspetto professionale ed è disponibile per un'ampia gamma di piattaforme. A differenza delle alternative, le chiamate tramite Jami sono direttamente tra utenti poiché non utilizza server per gestire le chiamate.
 
-★ Supporto account SIP disponibile!
+Ciò garantisce la massima privacy poiché la natura distribuita di Jami implica che le chiamate siano solo tra partecipanti.
 
-★ Prossime aggiunte: registrazione chiamate audio / video (Android), chat di gruppo ...
+Le conversazioni individuali e di gruppo con Jami sono migliorate con: messaggistica istantanea; chiamate audio e video; registrazione e invio di messaggi audio e video; trasferimenti di file; condivisione dello schermo; e condivisione della posizione.
 
-Costruisci con Jami sul tuo progetto IoT: riutilizza la tecnologia di comunicazione universale di Jami con la sua libreria portatile sul tuo sistema preferito.
+Jami può anche funzionare come client SIP.
 
-Jami per Android TV è testato su NVIDIA SHIELD TV con videocamere Logitech.
+Jami ha più estensioni disponibili: Filtro audio; Risposta automatica; Schermo verde; Filigrana; e Trascrizione sussurrata.
 
-Ci sono molti modi per aiutarci, controlla: https://jami.net/contribute,
-Contattaci su Twitter: @jami_social o Mastodon: @Jami
+Jami può essere facilmente distribuito nelle organizzazioni con "Jami Account Management Server" (JAMS), che consente agli utenti di connettersi con le proprie credenziali aziendali o creare account locali. JAMS consente di gestire la propria comunità Jami sfruttando al contempo l'architettura di rete distribuita di Jami.
 
-Per ulteriori informazioni, visitare https://jami.net
+Jami è disponibile per GNU/Linux, Windows, macOS, iOS, Android e Android TV, rendendo Jami un framework di comunicazione interoperabile e multipiattaforma.
 
-Jami è pubblicato sotto licenza GPL, versione 3 o successiva.
-Copyright © Savoir-faire Linux
+Gestisci più account SIP, account Jami e account JAMS con il client Jami installato su uno o più dispositivi.
+
+Jami è gratuito, illimitato, privato, senza pubblicità, compatibile, veloce, autonomo e anonimo.
+
+Scopri di più su:
+Jami: https://jami.net/
+Estensioni Jami: https://jami.net/extensions/
+“Jami Account Management Server” (JAMS): https://jami.biz/
+Documentazione Jami: https://docs.jami.net/
+
+Seguici per saperne di più:
+Mastodon: https://mstdn.io/@Jami
+X: https://x.com/jami_social
+YouTube: https://www.youtube.com/@jami9311
+
+Ci piacerebbe sentire la tua opinione! Unisciti alla community Jami:
+Contribuisci: https://jami.net/contribute/
+Forum: https://forum.jami.net/
+
+Costruisci con Jami sul tuo progetto IoT: riutilizza la tecnologia di comunicazione universale di Jami con la sua libreria portatile sul sistema che preferisci.
+
+Jami per Android TV è stato testato su NVIDIA SHIELD TV con telecamere Logitech.
+
+Jami è pubblicato sotto licenza GPL, versione 3 o superiore.
+Copyright © Savoir-faire Linux Inc.

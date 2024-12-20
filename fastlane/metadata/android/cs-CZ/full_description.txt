@@ -1,30 +1,47 @@
-Jami (balíček GNU) je univerzální a rozptýlený komunikační program, který si váží svobod a práv uživatelů.
-Je to 100 % svobodný software. Dostupný pro všechny systémy.
+Jami, balík GNU, je software pro univerzální a distribuovanou komunikaci peer-to-peer, který respektuje svobodu a soukromí svých uživatelů.
 
-★ Hovořte volně s Jami:
-  - posílejte textové zprávy
-  - dělejte zvukové hovory
- - dělejte obrazové hovory
-  - sdílejte obrázky a soubory
+Jami je nejjednodušší a nejsnadnější způsob, jak se spojit s lidmi (a zařízeními) pomocí rychlých zpráv, audio a video hovorů přes internet a intranet LAN/WAN.
 
-★ Dosáhněte ke svým protějškům přímo a rovně!
+Jami je bezplatná/libre, end-to-end šifrovaná a soukromá komunikační platforma.
 
-★ Použijte svůj účet Jami na více zařízeních!
+Jami – který býval známý jako Ring – je také open-source alternativou (k Facebook Messenger, Signal, Skype, Teams, Telegram, TikTok, Viber, WhatsApp, Zoom), která upřednostňuje soukromí svých uživatelů.
 
-★ Dostupné na Windows, macOS, iOS, GNU/Linux, Android a Android TV !
+Jami má profesionálně vypadající design a je k dispozici pro širokou škálu platforem. Na rozdíl od alternativ jsou hovory pomocí Jami přímo mezi uživateli, protože nevyužívá k vyřizování hovorů servery.
 
-★ Je dostupná podpora pro účet SIP!
+To poskytuje největší soukromí, protože distribuovaná povaha Jami znamená, že vaše hovory jsou pouze mezi účastníky.
 
-★ Další přídavky: nahrávání zvukových/obrazových hovorů (Android), skupinové hovory...
+Individuální a skupinové konverzace s Jami jsou vylepšeny o: instant messaging; audio a video hovory; nahrávání a odesílání zvukových a video zpráv; přenosy souborů; sdílení obrazovky; a sdílení polohy.
 
-Build with Jami on your IoT project: re-use the universal communications technology of Jami with its portable library on your system of choice. 
+Jami může fungovat i jako SIP klient.
 
-Jami pro Android TV je zkoušen na NVIDIA SHIELD TV s kamerami Logitech.
+Jami má k dispozici několik rozšíření: Audio Filter; Automatická odpověď; Zelená obrazovka; Vodoznak; a Whisper Transscript.
 
-Je spousta způsobů, jak nám pomoci. Podívejte se na: https://jami.net/contribute ,
-Spojte se s námi přes Twitter: @jami_social , or Mastodon: @Jami
+Jami lze snadno nasadit v organizacích pomocí „Jami Account Management Server“ (JAMS), což uživatelům umožňuje připojit se k jejich firemním přihlašovacím údajům nebo vytvářet místní účty. JAMS vám umožňuje spravovat svou vlastní komunitu Jami a zároveň využívat výhod distribuované síťové architektury Jami.
 
-Další informace najdete na https://jami.net 
+Jami je k dispozici pro GNU/Linux, Windows, macOS, iOS, Android a Android TV, díky čemuž je Jami interoperabilní a meziplatformní komunikační rámec.
 
-Jami je zveřejněno pod licencí GPL, verze 3 a novější.
-Kopírovací právo © Savoir-faire Linux
+Spravujte více účtů SIP, účtů Jami a účtů JAMS pomocí klienta Jami nainstalovaného na jednom nebo více zařízeních.
+
+Jami je zdarma, neomezený, soukromý, bez reklamy, kompatibilní, rychlý, autonomní a anonymní.
+
+Další informace o:
+Jami: https://jami.net/
+Jami rozšíření: https://jami.net/extensions/
+“Jami Account Management Server” (JAMS): https://jami.biz/
+Dokumentace Jami: https://docs.jami.net/
+
+Sledujte nás pro více:
+Mastodon: https://mstdn.io/@Jami
+X: https://x.com/jami_social
+YouTube: https://www.youtube.com/@jami9311
+
+Rádi bychom od vás slyšeli! Připojte se ke komunitě Jami:
+Přispějte: https://jami.net/contribute/
+Fórum: https://forum.jami.net/
+
+Stavte s Jami na svém projektu IoT: znovu použijte univerzální komunikační technologii Jami s její přenosnou knihovnou ve vašem systému, který si vyberete.
+
+Jami pro Android TV je testován na NVIDIA SHIELD TV s kamerami Logitech.
+
+Jami je publikován pod licencí GPL, verze 3 nebo vyšší.
+Autorská práva © Savoir-faire Linux Inc.
