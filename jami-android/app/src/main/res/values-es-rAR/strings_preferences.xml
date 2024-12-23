@@ -35,8 +35,6 @@
   <string name="pref_notification_title">Visibilidad de notificaciones</string>
   <string name="pref_notification_summary">Establecer la visibilidad de las notificaciones en la pantalla de bloqueo.</string>
   <string name="pref_connectivity_title">Modo de conectividad</string>
-  <string name="pref_connectivity_summary">Eligir cómo conectar Jami al sistema distribuido para
-       recibir llamadas y mensajes.</string>
   <string name="pref_blackList_title">Lista de bloqueos</string>
   <string name="pref_blackList_summary">Revisar tu lista de bloqueos</string>
   <string name="pref_delete_account_title">Eliminar cuenta</string>
@@ -65,24 +63,12 @@ notificaciones pulsadas.</string>
   <string name="notification_private">Private\n(mostrar notificaciones pero ocultar su contenido en la pantalla de bloqueo)\n</string>
   <string name="notification_secret">Secret\n(no mostrar notificaciones en la pantalla de bloqueo)</string>
   <string name="connectivity_google_services_title">Servicios de Google</string>
-  <string name="connectivity_google_services_description">Usar Google Firebase y un proxy DHT para
-recibir notificaciones push.</string>
   <string name="connectivity_local_node_title">Nodo local DHT</string>
-  <string name="connectivity_local_node_description">Usar un nodo DHT local para conectarse con otros
-dispositivos y contactos Jami.</string>
-  <string name="connectivity_unified_push_title">Empuje unificado</string>
-  <string name="connectivity_unified_push_description">Usar un servidor Push unificado personalizado para
-         recibe notificaciones push.</string>
   <string name="connectivity_custom_title">Personalizado</string>
-  <string name="connectivity_custom_description">Actualmente no usa ninguna de las
-      configuraciones preestablecidas disponibles.</string>
   <!--Extension-->
   <string name="pref_enable_extensions_title">Habilitar extensiones</string>
-  <string name="pref_enable_extensions_summary">Habilite las extensiones y configure sus
-       parámetros</string>
+  <string name="pref_enable_extensions_summary">Habilitar extensiones y establecer sus parámetros</string>
   <string name="pref_available_extensions_title">Extensiones disponibles</string>
-  <string name="pref_available_extensions_summary">Extensiones instaladas y agregar nuevas
-        extensiones</string>
   <string name="fab_extensions_add">Agregar nueva extensión</string>
   <string name="extension_uninstall_title">¿Desinstalar la extensión?</string>
   <string name="extension_reset_preferences">Restablecer preferencias de extensión</string>

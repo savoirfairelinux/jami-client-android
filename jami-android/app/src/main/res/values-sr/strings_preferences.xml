@@ -35,8 +35,6 @@
   <string name="pref_notification_title">Vidljivost obaveštenja</string>
   <string name="pref_notification_summary">Podesite vidljivost obaveštenja aplikacija na zaključanom ekranu.</string>
   <string name="pref_connectivity_title">Režim povezivanja</string>
-  <string name="pref_connectivity_summary">Odaberite kako da povežete Jami sa distribuiranim sistemom da biste
-primali pozive i poruke.</string>
   <string name="pref_blackList_title">Blok lista</string>
   <string name="pref_blackList_summary">Proverite svoju listu blokiranih.</string>
   <string name="pref_delete_account_title">Obrisati nalog</string>
@@ -65,24 +63,11 @@ primali pozive i poruke.</string>
   <string name="notification_private">Приватно\n(прикажите обавештења, али сакријте њихов садржај на закључаном екрану)\n</string>
   <string name="notification_secret">Тајно\n(не приказуј обавештења на закључаном екрану)</string>
   <string name="connectivity_google_services_title">Google сервиси</string>
-  <string name="connectivity_google_services_description">Користите Google Firebase и DHT прокси за
-примати push обавештења.</string>
   <string name="connectivity_local_node_title">Локални DHT node</string>
-  <string name="connectivity_local_node_description">Користите локални DHT чвор за повезивање са другим
-Јами уређајима и контактима.</string>
-  <string name="connectivity_unified_push_title">Уједињени push</string>
-  <string name="connectivity_unified_push_description">Користите прилагођени обједињени Push сервер за
-примати push обавештења.</string>
   <string name="connectivity_custom_title">Prilagođeno</string>
-  <string name="connectivity_custom_description">Тренутно се не користи ниједно од
-доступних подешавања конфигурације.</string>
   <!--Extension-->
   <string name="pref_enable_extensions_title">Омогући екстензије</string>
-  <string name="pref_enable_extensions_summary">Омогућите екстензије и подесите им
-параметре</string>
   <string name="pref_available_extensions_title">Доступна проширења</string>
-  <string name="pref_available_extensions_summary">Инсталиране екстензије и додавање
-нових екстензија</string>
   <string name="fab_extensions_add">Додајте нову екстензију</string>
   <string name="extension_uninstall_title">Деинсталирати проширење?</string>
   <string name="extension_reset_preferences">Ресетујте подешавања екстензија</string>

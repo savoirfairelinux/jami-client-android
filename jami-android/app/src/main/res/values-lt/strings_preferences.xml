@@ -39,8 +39,6 @@
   <!--Notifications Visibility-->
   <!--Extension-->
   <string name="pref_enable_extensions_title">Įjungti plėtinius</string>
-  <string name="pref_enable_extensions_summary">Įjungti plėtinius ir nustatyti jų
-        parametrus</string>
   <string name="pref_available_extensions_title">Prieinami plėtiniai</string>
   <string name="fab_extensions_add">Pridėti naują plėtinį</string>
   <string name="extension_uninstall_title">Pašalinti plėtinį?</string>

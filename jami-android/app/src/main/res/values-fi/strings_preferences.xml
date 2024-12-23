@@ -58,10 +58,9 @@
   <string name="notification_public">Julkinen\n(näytä ilmoitukset ja sisältö lukitusnäytöllä)\n</string>
   <string name="notification_private">Yksityinen\n(näytä ilmoitukset, piilota sisältö lukitusnäytöllä)\n</string>
   <string name="notification_secret">Salainen\n(ei ilmoituksia lukitusnäytöllä)</string>
-  <string name="connectivity_local_node_description">Käytä paikallista DHT-solmua yhteyksiin
-        Jami laitteet ja henkilöt.</string>
   <string name="connectivity_custom_title">Oma</string>
   <!--Extension-->
+  <string name="pref_enable_extensions_summary">Laajennukset käyttöön ja aseta niiden parametrit</string>
   <string name="fab_extensions_add">Lisää uusi laajennus</string>
   <string name="extension_uninstall_title">Poistetaanko laajennus?</string>
   <string name="extension_reset_preferences">Nollaa laajennuksen asetukset</string>

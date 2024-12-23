@@ -35,7 +35,6 @@
   <string name="pref_notification_title">Az értesítés láthatósága </string>
   <string name="pref_notification_summary">Állítsa be az alkalmazás értesítéseinek láthatóságát a zárolási képernyőn.</string>
   <string name="pref_connectivity_title">Kapcsolódási mód</string>
-  <string name="pref_connectivity_summary">Jami-kapcsolat kijelölése az elosztott rendszerhez hívások és üzenetek fogadásához.</string>
   <string name="pref_blackList_title">Tiltólista</string>
   <string name="pref_blackList_summary">Letiltási lista ellenőrzése</string>
   <string name="pref_delete_account_title">Fiók törlése</string>
@@ -64,18 +63,12 @@
   <string name="notification_private">Magán\n(értesítések megjelenítése, de tartalmuk elrejtése a zárolási képernyőn)\n</string>
   <string name="notification_secret">Titkos\n(ne jelenítsen meg értesítéseket a zárolási képernyőn) </string>
   <string name="connectivity_google_services_title">Google szolgáltatások</string>
-  <string name="connectivity_google_services_description">A Google Firebase és egy DHT-proxy használatával push-értesítések fogadására.</string>
   <string name="connectivity_local_node_title">Helyi DHT-csomópont</string>
-  <string name="connectivity_local_node_description">Helyi DHT-csomópont használatával kapcsolatozhat más Jami eszközökhöz és kapcsolattartókhoz.</string>
-  <string name="connectivity_unified_push_title">UnifiedPush</string>
-  <string name="connectivity_unified_push_description">Egyéni UnifiedPush-kiszolgáló használata a push-értesítések fogadására.</string>
   <string name="connectivity_custom_title">Szokás</string>
-  <string name="connectivity_custom_description">Jelenleg nem használja a rendelkezésre álló előre beállított konfigurációs beállításokat.</string>
   <!--Extension-->
   <string name="pref_enable_extensions_title">Bővítmények engedélyezése</string>
-  <string name="pref_enable_extensions_summary">Bővítmények engedélyezése és paraméterek beállítása</string>
+  <string name="pref_enable_extensions_summary">Bővítmények engedélyezése és paramétereik beállítása</string>
   <string name="pref_available_extensions_title">Rendelkezésre álló bővítmények</string>
-  <string name="pref_available_extensions_summary">Telepített bővítmények és új bővítmények hozzáadása</string>
   <string name="fab_extensions_add">Új bővítmény hozzáadása</string>
   <string name="extension_uninstall_title">Bővítmény eltávolítása?</string>
   <string name="extension_reset_preferences">Bővítmény beállításainak visszaállítása</string>

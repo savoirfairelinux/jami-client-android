@@ -52,6 +52,7 @@
   <!--Notifications Visibility-->
   <string name="connectivity_custom_title">Настраиваемый</string>
   <!--Extension-->
+  <string name="pref_enable_extensions_summary">Включить расширения и настроить их параметры</string>
   <string name="fab_extensions_add">Добавить новое расширение</string>
   <string name="extension_uninstall_title">Удалить расширение?</string>
   <string name="extension_reset_preferences">Сбросить настройки расширения</string>
