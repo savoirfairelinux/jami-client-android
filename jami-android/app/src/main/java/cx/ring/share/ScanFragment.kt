@@ -91,16 +91,17 @@ class ScanFragment : BaseSupportFragment<ScanPresenter, ScanView>(), ScanView {
         savedInstanceState: Bundle?
     ): View {
         super.onCreateView(inflater, container, savedInstanceState)
+        return FragScanBinding.inflate(inflater, container, false).apply {
+            mBinding = this
+        }.root
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         if (hasCameraPermission()) {
             hideErrorPanel()
             initializeBarcode()
         }
-
-        return FragScanBinding.inflate(inflater, container, false).apply {
-
-            mBinding = this
-        }.root
     }
 
     override fun onPause() {
