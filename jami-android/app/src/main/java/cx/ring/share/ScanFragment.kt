@@ -119,6 +119,7 @@ class ScanFragment : BaseSupportFragment<ScanPresenter, ScanView>(), ScanView {
     override fun moveToConversation(conversation: String) {
         try {
             (requireActivity() as HomeActivity).startConversation(conversation)
+            (requireParentFragment() as BottomSheetDialogFragment).dismiss()
         } catch (e: Exception) {
             Log.w(TAG, "Error while starting conversation", e)
         }

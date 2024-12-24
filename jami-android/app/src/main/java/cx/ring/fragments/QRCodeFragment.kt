@@ -62,7 +62,7 @@ class QRCodeFragment : BottomSheetDialogFragment() {
                 else -> throw IllegalArgumentException("Unknown mode: $mode")
             }
 
-            SectionsPagerAdapter(requireActivity()).apply {
+            SectionsPagerAdapter(this@QRCodeFragment).apply {
                 // Add fragments based on mode
                 if (mode and MODE_SHARE != 0) {
                     ShareFragment.newInstance(contactUri).apply {
@@ -134,13 +134,13 @@ class QRCodeFragment : BottomSheetDialogFragment() {
             } else null
         }
 
-    internal class SectionsPagerAdapter(val activity: FragmentActivity) :
-        FragmentStateAdapter(activity) {
+    internal class SectionsPagerAdapter(val fragment:  Fragment) :
+        FragmentStateAdapter(fragment) {
         private val mFragmentList: MutableList<Fragment> = ArrayList()
         private val mFragmentTitleList: MutableList<String> = ArrayList()
 
         fun getTabTitle(position: Int): String =
-            activity.resources.getString(TAB_TITLES[position])
+            fragment.resources.getString(TAB_TITLES[position])
 
         fun addFragment(fragment: Fragment, title: String) {
             mFragmentList.add(fragment)
