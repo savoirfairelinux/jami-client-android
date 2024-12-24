@@ -33,6 +33,7 @@ import com.google.zxing.ResultPoint
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import cx.ring.client.HomeActivity
 import cx.ring.databinding.FragScanBinding
 import cx.ring.mvp.BaseSupportFragment
@@ -119,6 +120,7 @@ class ScanFragment : BaseSupportFragment<ScanPresenter, ScanView>(), ScanView {
     override fun moveToConversation(conversation: String) {
         try {
             (requireActivity() as HomeActivity).startConversation(conversation)
+            (requireParentFragment() as BottomSheetDialogFragment).dismiss()
         } catch (e: Exception) {
             Log.w(TAG, "Error while starting conversation", e)
         }
