@@ -35,8 +35,7 @@
   <string name="pref_notification_title">Vizibilitatea notificărilor</string>
   <string name="pref_notification_summary">Decide vizibilitatea notificărilor aplicației pe ecranul blocat.</string>
   <string name="pref_connectivity_title">Mod de conectare</string>
-  <string name="pref_connectivity_summary">Alege cum să se conecteze Jami la sistemul distribuit
-        pentru a primi apeluri și mesaje.</string>
+  <string name="pref_connectivity_summary">Alege cum să se conecteze Jami la sistemul distribuit pentru a primi apeluri și mesaje.</string>
   <string name="pref_blackList_title">Contacte blocate</string>
   <string name="pref_blackList_summary">Verifică lista de contacte blocate.</string>
   <string name="pref_delete_account_title">Șterge contul</string>
@@ -65,24 +64,17 @@
   <string name="notification_private">Privat\n(arată notificările, dar ascunde conținutul lor pe ecranul blocat)\n</string>
   <string name="notification_secret">Secret\n(nu arăta notificările pe ecranul blocat)</string>
   <string name="connectivity_google_services_title">Servicii Google</string>
-  <string name="connectivity_google_services_description">Folosește Google Firebase și un proxy DHT
-         pentru a primi notificări.</string>
+  <string name="connectivity_google_services_description">Folosește Google Firebase și un proxy DHT pentru a primi notificări.</string>
   <string name="connectivity_local_node_title">Nod DHT local</string>
-  <string name="connectivity_local_node_description">Foloseste un nod DHT local pentru a te conecta
-        cu alte aparate și contacte Jami.</string>
-  <string name="connectivity_unified_push_title">Unified Push</string>
-  <string name="connectivity_unified_push_description">Folosește un server Unified Push personalizat
-         pentru a primi notificări.</string>
+  <string name="connectivity_local_node_description">Foloseste un nod DHT local pentru a te conecta cu alte aparate și contacte Jami.</string>
+  <string name="connectivity_unified_push_description">Folosește un server Unified Push personalizat pentru a primi notificări.</string>
   <string name="connectivity_custom_title">Personalizată</string>
-  <string name="connectivity_custom_description">În prezent, nu este utilizată niciuna dintre
-        opțiunile disponibile.</string>
+  <string name="connectivity_custom_description">În prezent, nu este utilizată niciuna dintre opțiunile disponibile.</string>
   <!--Extension-->
   <string name="pref_enable_extensions_title">Activează extensiile</string>
-  <string name="pref_enable_extensions_summary">Activează extensiile și reglează-le
-         parametrii</string>
+  <string name="pref_enable_extensions_summary">Activează extensiile și reglează-le parametrii</string>
   <string name="pref_available_extensions_title">Extensii disponibile</string>
-  <string name="pref_available_extensions_summary">Extensii instalate și adăugarea
-      de extensii noi</string>
+  <string name="pref_available_extensions_summary">Extensii instalate și adăugarea de extensii noi</string>
   <string name="fab_extensions_add">Adaugă o extensie nouă</string>
   <string name="extension_uninstall_title">Dezinstalezi extensia?</string>
   <string name="extension_reset_preferences">Restabilește reglările inițiale ale extensiei</string>

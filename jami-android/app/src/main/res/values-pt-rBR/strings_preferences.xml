@@ -52,6 +52,7 @@
   <!--Notifications Visibility-->
   <string name="connectivity_custom_title">Personalizado</string>
   <!--Extension-->
+  <string name="pref_enable_extensions_summary">Ativar as extensões e definir os seus parâmetros</string>
   <string name="fab_extensions_add">Adicionar uma nova extensão</string>
   <string name="extension_uninstall_title">Desinstalar a extensão?</string>
   <string name="extension_reset_preferences">Repor as preferências da extensão</string>

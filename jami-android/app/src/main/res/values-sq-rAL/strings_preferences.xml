@@ -35,8 +35,7 @@
   <string name="pref_notification_title">Dukshmëri njoftimesh</string>
   <string name="pref_notification_summary">Caktoni dukshmëri njoftimesh nën ekran të kyçur.</string>
   <string name="pref_connectivity_title">Mënyrë lidhjeje</string>
-  <string name="pref_connectivity_summary">Zgjidhni si të lidhet Jami te sistemi i shpërndarë
-       për të marrë thirrje dhe mesazhe.</string>
+  <string name="pref_connectivity_summary">Përzgjidhni si lidhet Jami te rrjeti i shpërndarë për të marrë thirrje dhe mesazhe.</string>
   <string name="pref_blackList_title">Listë bllokimesh</string>
   <string name="pref_blackList_summary">Kontrolloni listën tuaj të bllokimeve.</string>
   <string name="pref_delete_account_title">Fshije llogarinë</string>
@@ -65,21 +64,17 @@
   <string name="notification_private">Private\n(shfaq njoftime, por fshihe lëndën e tyre, kur ekrani është i kyçur)\n</string>
   <string name="notification_secret">Të fshehta\n(mos shfaq njoftime nën ekran të kyçur)</string>
   <string name="connectivity_google_services_title">Shërbime Google</string>
-  <string name="connectivity_google_services_description">Përdor Google Firebase dhe një ndërmjetës DHT
-        për të marrë njoftime push.</string>
+  <string name="connectivity_google_services_description">Përdor Google Firebase dhe një ndërmjetës DHT për të marrë njoftime push.</string>
   <string name="connectivity_local_node_title">Nyjë DHT vendore</string>
-  <string name="connectivity_local_node_description">Përdor një nyjë DHT vendore për t’u lidhur me
-        pajisje dhe kontakte Jami të tjerë.</string>
-  <string name="connectivity_unified_push_description">Përdor një shërbyes të unifikuar Push për
-        të marrë njoftime push.</string>
+  <string name="connectivity_local_node_description">Përdorni një nyjë vendore DHT për t’u lidhur me pajisje dhe kontakte të tjera Jami.</string>
+  <string name="connectivity_unified_push_description">Për të marrë njoftime push, përdor një shërbyes vetjak UnifiedPush.</string>
   <string name="connectivity_custom_title">Vetjake</string>
-  <string name="connectivity_custom_description">Aktualisht s’përdoret ndonjë nga
-        paracaktime të gatshëm formësimi.</string>
+  <string name="connectivity_custom_description">Aktualisht s’përdoret ndonjë nga paracaktimet e gatshme të formësimit.</string>
   <!--Extension-->
   <string name="pref_enable_extensions_title">Aktivizo zgjerime</string>
-  <string name="pref_enable_extensions_summary">Aktivizoni zgjerime dhe caktoni
-        parametrat e tyre</string>
+  <string name="pref_enable_extensions_summary">Aktivizoni zgjerime dhe ujdisni parametrat e tyre</string>
   <string name="pref_available_extensions_title">Zgjerime të gatshme</string>
+  <string name="pref_available_extensions_summary">Zgjerime të instaluara dhe shtoni zgjerime të reja</string>
   <string name="fab_extensions_add">Shtoni zgjerim të ri</string>
   <string name="extension_uninstall_title">Të çinstalohet zgjerimi?</string>
   <string name="extension_reset_preferences">Rikthe te parazgjedhjet parapëlqimet për zgjerime</string>

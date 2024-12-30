@@ -201,11 +201,11 @@
   <string name="account_link_export_button">Új eszköz összekapcsolása</string>
   <string name="account_link_show_button">További %d összekapcsolt eszköz megjelenítése</string>
   <string name="account_link_hide_button">Összekapcsolt eszköz elrejtése</string>
-  <string name="account_link_export_info">Ha ezt a fiókot más eszközökön szeretné használni, először meg kell jeleníteni a Jamin. Ez létrehoz egy PIN-kódot, amelyet meg kell adnia az új eszközön a fiók beállításához. A PIN-kód 10 perc múlva lejár.</string>
+  <string name="account_link_export_info">Ha ezt a fiókot más eszközökön szeretne használni, először meg kell jeleníteni a Jamin. Ez létrehoz egy PIN-kódot, amelyet meg kell adnia az új eszközön a fiók beállításához. A PIN-kód 10 perc múlva lejár.</string>
   <string name="account_start_export_button">PIN-kód létrehozása</string>
   <string name="account_end_export_button">bezárás</string>
   <string name="account_end_export_infos">A PIN-kódja:\n\n%%\n\nA folyamat befejezéséhez meg kell nyitnia a Jamit az új eszközön. Hozzon létre egy új fiókot az „Új eszköz összekapcsolása” lehetőséggel. A PIN-kód 10 perc múlva lejár.</string>
-  <string name="account_link_export_info_light">Ha ezt a fiókot más eszközökön szeretné használni, először meg kell jeleníteni a Jamin. Ez létrehoz egy PIN-kódot, amelyet meg kell adnia az új eszközön a fiók beállításához. A PIN-kód 10 perc múlva lejár.</string>
+  <string name="account_link_export_info_light">Ha ezt a fiókot más eszközökön szeretne használni, először meg kell jeleníteni a Jamin. Ez létrehoz egy PIN-kódot, amelyet meg kell adnia az új eszközön a fiók beállításához. A PIN-kód 10 perc múlva lejár.</string>
   <string name="account_export_title">Fiók összekapcsolása más eszközökkel</string>
   <string name="account_connect_server_button">Csatlakozás a felügyeleti kiszolgálóhoz</string>
   <string name="account_connect_button">Kapcsolódás</string>
@@ -247,7 +247,7 @@
   <string name="account_revoke_device_hint">Jelszó megadása megerősítéshez</string>
   <string name="enter_password">Jelszó megadása</string>
   <string name="revoke_device_title">Eszköz visszavonása</string>
-  <string name="revoke_device_message">Biztosan meg szeretné visszavonni a(z) %1$s eszközt?</string>
+  <string name="revoke_device_message">Biztosan meg szeretne visszavonni a(z) %1$s eszközt?</string>
   <string name="revoke_device_wait_title">Kérjük, várjon…</string>
   <string name="revoke_device_wait_message">Eszköz visszavonása</string>
   <string name="rename_device_title">Eszköz átnevezése</string>

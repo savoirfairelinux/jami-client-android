@@ -34,6 +34,8 @@
   <string name="pref_clearHistory_summary">Tyhjennä kaikki keskusteluhistoria. Tätä toimintoa ei voi perua.</string>
   <string name="pref_notification_title">Ilmoituksen näkyvyys</string>
   <string name="pref_notification_summary">Aseta ilmoitusten näkyvyys lukitusnäytöllä.</string>
+  <string name="pref_connectivity_title">Yhdistäminen</string>
+  <string name="pref_connectivity_summary">Valitse, kuinka Jami yhdistetään hajautettuun verkkoon puhelujen sekä viestien vastaanottamista varten.</string>
   <string name="pref_blackList_title">Estolista</string>
   <string name="pref_blackList_summary">Tarkista sinun estolista.</string>
   <string name="pref_delete_account_title">Poista tili</string>
@@ -48,6 +50,9 @@
   <string name="pref_logs_stop">Lopeta kirjaaminen</string>
   <string name="pref_connection_monitor">Yhteysmonitori</string>
   <string name="pref_connection_monitor_summary">Tarkkaile vertaisyhteyksiä</string>
+  <string name="pref_push_notifications_logs_title">Push ilmoituslokit</string>
+  <string name="pref_push_notifications_logs_summary">Tarkastele push-toiminnolla kerättyjä lokeja
+        ilmoitukset.</string>
   <string name="pref_typing_title">Kirjoittamisen ilmaisin käyttöön</string>
   <string name="pref_typing_summary">Kirjoittamisen ilmaisin, joka näyttää, että viestiä kirjoitetaan.</string>
   <string name="pref_block_record_title">Estä ruudunkaappaus ja tallennus</string>
@@ -58,10 +63,18 @@
   <string name="notification_public">Julkinen\n(näytä ilmoitukset ja sisältö lukitusnäytöllä)\n</string>
   <string name="notification_private">Yksityinen\n(näytä ilmoitukset, piilota sisältö lukitusnäytöllä)\n</string>
   <string name="notification_secret">Salainen\n(ei ilmoituksia lukitusnäytöllä)</string>
-  <string name="connectivity_local_node_description">Käytä paikallista DHT-solmua yhteyksiin
-        Jami laitteet ja henkilöt.</string>
+  <string name="connectivity_google_services_title">Googlen palvelut</string>
+  <string name="connectivity_google_services_description">Käytä Google Firebase ja DHT-välityspalvelinta ilmoitusten vastaanottamiseen.</string>
+  <string name="connectivity_local_node_title">Paikallinen DHT-solmu</string>
+  <string name="connectivity_local_node_description">Käytä paikallista DHT-solmua hoitamaan Jamin tietoliikennettä.</string>
+  <string name="connectivity_unified_push_description">Käytä mukautettua UnifiedPush-palvelinta ilmoitusten vastaanottamiseen.</string>
   <string name="connectivity_custom_title">Oma</string>
+  <string name="connectivity_custom_description">Saatavilla olevista määrityksistä ei ole mitään tällä hetkellä käytössä.</string>
   <!--Extension-->
+  <string name="pref_enable_extensions_title">Laajennukset käyttöön</string>
+  <string name="pref_enable_extensions_summary">Laajennukset käyttöön ja aseta niiden parametrit</string>
+  <string name="pref_available_extensions_title">Saatavilla olevat laajennukset</string>
+  <string name="pref_available_extensions_summary">Asennetut laajennukset ja uusia laajennuksia</string>
   <string name="fab_extensions_add">Lisää uusi laajennus</string>
   <string name="extension_uninstall_title">Poistetaanko laajennus?</string>
   <string name="extension_reset_preferences">Nollaa laajennuksen asetukset</string>
