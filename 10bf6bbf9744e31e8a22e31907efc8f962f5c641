@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b967d281_c14eb384",
+        "filename": "jami-android/app/src/main/res/values/strings_account.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-01-06T21:12:42Z",
+      "side": 1,
+      "message": "Should this be two words?\n\n`Name server`\n\nCf. https://en.wikipedia.org/wiki/Name_server\n\nThank you",
+      "range": {
+        "startLine": 89,
+        "startChar": 44,
+        "endLine": 89,
+        "endChar": 54
+      },
+      "revId": "10bf6bbf9744e31e8a22e31907efc8f962f5c641",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "004951c7_41de6a9c",
+        "filename": "jami-android/app/src/main/res/values/strings_account.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-01-06T21:12:42Z",
+      "side": 1,
+      "message": "Should this be changed to:\n`account_name_server_label`\n\nThank you",
+      "range": {
+        "startLine": 89,
+        "startChar": 18,
+        "endLine": 89,
+        "endChar": 42
+      },
+      "revId": "10bf6bbf9744e31e8a22e31907efc8f962f5c641",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fcb07e1e_0a0c6fe6",
+        "filename": "jami-android/app/src/main/res/values/strings_account.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-01-06T21:12:42Z",
+      "side": 1,
+      "message": "Should hyphens be added to show `peer-to-peer`?\n\nhttps://en.wikipedia.org/wiki/Peer-to-peer\n\nThank you",
+      "range": {
+        "startLine": 144,
+        "startChar": 46,
+        "endLine": 144,
+        "endChar": 58
+      },
+      "revId": "10bf6bbf9744e31e8a22e31907efc8f962f5c641",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
