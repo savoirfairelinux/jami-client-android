@@ -149,7 +149,7 @@ class AdvancedAccountFragment : BasePreferenceFragment<AdvancedAccountPresenter>
             }
             is PasswordPreference -> {
                 presenter.passwordPreferenceChanged(key, newValue)
-                preference.setSummary(if (TextUtils.isEmpty(newValue.toString())) "" else "******")
+                preference.setSummary(if (TextUtils.isEmpty(newValue.toString())) "" else "••••••")
             }
             else -> {
                 presenter.preferenceChanged(key, newValue)
