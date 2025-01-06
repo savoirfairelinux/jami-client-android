@@ -47,6 +47,54 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fdb80a03_fc431755",
+        "filename": "jami-android/app/src/main/res/values/strings_account.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2025-01-06T21:33:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b967d281_c14eb384",
+      "range": {
+        "startLine": 89,
+        "startChar": 44,
+        "endLine": 89,
+        "endChar": 54
+      },
+      "revId": "10bf6bbf9744e31e8a22e31907efc8f962f5c641",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e077d57c_f7fd88dd",
+        "filename": "jami-android/app/src/main/res/values/strings_account.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2025-01-06T21:33:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "004951c7_41de6a9c",
+      "range": {
+        "startLine": 89,
+        "startChar": 18,
+        "endLine": 89,
+        "endChar": 42
+      },
+      "revId": "10bf6bbf9744e31e8a22e31907efc8f962f5c641",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fcb07e1e_0a0c6fe6",
@@ -60,6 +108,30 @@
       "writtenOn": "2025-01-06T21:12:42Z",
       "side": 1,
       "message": "Should hyphens be added to show `peer-to-peer`?\n\nhttps://en.wikipedia.org/wiki/Peer-to-peer\n\nThank you",
+      "range": {
+        "startLine": 144,
+        "startChar": 46,
+        "endLine": 144,
+        "endChar": 58
+      },
+      "revId": "10bf6bbf9744e31e8a22e31907efc8f962f5c641",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1aa8b3aa_84c60257",
+        "filename": "jami-android/app/src/main/res/values/strings_account.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2025-01-06T21:33:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fcb07e1e_0a0c6fe6",
       "range": {
         "startLine": 144,
         "startChar": 46,
