@@ -50,18 +50,12 @@ class GeneralAccountFragment : BasePreferenceFragment<GeneralAccountPresenter>()
         false
     }
     private val changeBasicPreferenceListener = Preference.OnPreferenceChangeListener { preference: Preference, newValue: Any ->
-        Log.i(TAG, "Changing preference " + preference.key + " to value:" + newValue)
+        Log.i(TAG, "Changing preference ${preference.key} type ${preference.javaClass.simpleName} to value:$newValue")
         val key = fromString(preference.key) ?: return@OnPreferenceChangeListener false
         if (preference is TwoStatePreference) {
             presenter.twoStatePreferenceChanged(key, newValue)
         } else if (preference is PasswordPreference) {
-            val tmp = StringBuilder()
-            var i = 0
-            while (i < (newValue as String).length) {
-                tmp.append("*")
-                ++i
-            }
-            preference.setSummary(tmp.toString())
+            preference.setSummary((newValue as CharSequence).map { "•" }.joinToString(""))
             presenter.passwordPreferenceChanged(key, newValue)
         } else if (key === ConfigKey.ACCOUNT_USERNAME) {
             presenter.userNameChanged(key, newValue)
@@ -173,11 +167,7 @@ class GeneralAccountFragment : BasePreferenceFragment<GeneralAccountPresenter>()
                 val value = details[confKey]
                 (pref as EditTextPreference).text = value
                 if (pref is PasswordPreference) {
-                    val tmp = StringBuilder()
-                    for (i in value.indices) {
-                        tmp.append("*")
-                    }
-                    pref.setSummary(tmp.toString())
+                    pref.setSummary(value.map { "•" }.joinToString(""))
                 } else {
                     pref.setSummary(value)
                 }
@@ -222,12 +212,8 @@ class GeneralAccountFragment : BasePreferenceFragment<GeneralAccountPresenter>()
     companion object {
         val TAG = GeneralAccountFragment::class.simpleName!!
         private const val DIALOG_FRAGMENT_TAG = "androidx.preference.PreferenceFragment.DIALOG"
-        fun newInstance(accountId: String): GeneralAccountFragment {
-            val bundle = Bundle()
-            bundle.putString(AccountEditionFragment.ACCOUNT_ID_KEY, accountId)
-            val generalAccountFragment = GeneralAccountFragment()
-            generalAccountFragment.arguments = bundle
-            return generalAccountFragment
+        fun newInstance(accountId: String) = GeneralAccountFragment().apply {
+            arguments = Bundle().apply { putString(AccountEditionFragment.ACCOUNT_ID_KEY, accountId) }
         }
     }
 }
