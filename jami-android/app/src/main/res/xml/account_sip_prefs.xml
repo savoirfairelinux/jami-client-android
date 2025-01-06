@@ -16,69 +16,51 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <PreferenceCategory android:title="@string/account_nameserver_label">
 
-        <EditTextPreference
-            android:key="RingNS.uri"
-            android:persistent="false"
-            android:summary=""
-            android:title="@string/account_nameserver_label" />
-    </PreferenceCategory>
+    <cx.ring.views.EditTextIntegerPreference
+        android:defaultValue="60"
+        android:key="Account.registrationExpire"
+        android:persistent="false"
+        android:title="@string/account_registration_exp_label" />
 
-    <PreferenceCategory android:title="@string/account_dht_label">
-        <EditTextPreference
-            android:key="Account.hostname"
-            android:persistent="false"
-            android:summary=""
-            android:title="@string/account_bootstrap_label" />
+    <EditTextPreference
+        android:key="Account.hostname"
+        android:persistent="false"
+        android:summary=""
+        android:title="@string/account_bootstrap_label" />
 
-        <SwitchPreferenceCompat
-            android:icon="@drawable/baseline_cloud_24"
-            android:key="Account.proxyEnabled"
-            android:persistent="false"
-            android:summaryOff="@string/disabled"
-            android:summaryOn="@string/enabled"
-            android:title="@string/account_proxy_enable_label" />
-
-        <EditTextPreference
-            android:defaultValue=""
-            android:dependency="Account.proxyEnabled"
-            android:key="Account.proxyServer"
-            android:persistent="false"
-            android:summary=""
-            android:title="@string/account_proxy_server_label" />
-
-        <SwitchPreferenceCompat
-            android:icon="@drawable/baseline_article_24"
-            android:dependency="Account.proxyEnabled"
-            android:key="Account.proxyListEnabled"
-            android:persistent="false"
-            android:summaryOff="@string/disabled"
-            android:summaryOn="@string/enabled"
-            android:title="@string/account_proxy_list_enable_label" />
-
-        <EditTextPreference
-            android:defaultValue=""
-            android:dependency="Account.proxyListEnabled"
-            android:key="Account.dhtProxyListUrl"
-            android:persistent="false"
-            android:summary=""
-            android:title="@string/account_proxy_server_list_label"/>
-        <SwitchPreferenceCompat
-            android:icon="@drawable/baseline_grain_24"
-            android:key="Account.peerDiscovery"
-            android:persistent="false"
-            android:summary="@string/account_peer_discovery_enable_summary"
-            android:title="@string/account_peer_discovery_enable_label" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory android:title="@string/account_connectivity_label">
+    <PreferenceCategory android:title="@string/account_published_address_label">
 
         <SwitchPreferenceCompat
             android:key="Account.upnpEnabled"
             android:persistent="false"
             android:title="@string/account_upnp_label" />
+
+        <ListPreference
+            android:key="Account.localInterface"
+            android:persistent="false"
+            android:title="@string/account_local_interface_label" />
+
+        <cx.ring.views.EditTextIntegerPreference
+            android:defaultValue="5060"
+            android:key="Account.localPort"
+            android:persistent="false"
+            android:title="@string/account_local_port_label" />
+
+        <SwitchPreferenceCompat
+            android:key="STUN.enable"
+            android:persistent="false"
+            android:summaryOff="@string/disabled"
+            android:summaryOn="@string/enabled"
+            android:title="@string/account_stun_enable_label" />
+
+        <EditTextPreference
+            android:defaultValue=""
+            android:dependency="STUN.enable"
+            android:key="STUN.server"
+            android:persistent="false"
+            android:summary=""
+            android:title="@string/account_stun_server_label" />
 
         <SwitchPreferenceCompat
             android:key="TURN.enable"
@@ -111,6 +93,24 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:summary=""
             android:title="@string/account_turn_password_label" />
 
+        <CheckBoxPreference
+            android:disableDependentsState="true"
+            android:key="Account.publishedSameAsLocal"
+            android:persistent="false"
+            android:title="@string/account_published_same_as_local_label" />
+
+        <cx.ring.views.EditTextIntegerPreference
+            android:defaultValue="5060"
+            android:dependency="Account.publishedSameAsLocal"
+            android:key="Account.publishedPort"
+            android:persistent="false"
+            android:title="@string/account_published_port_label" />
+
+        <EditTextPreference
+            android:dependency="Account.publishedSameAsLocal"
+            android:key="Account.publishedAddress"
+            android:persistent="false"
+            android:title="@string/account_published_address_label" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/account_rtp_port_range">
