@@ -35,6 +35,7 @@
   <string name="pref_notification_title">Mode d\'affichage des notifications</string>
   <string name="pref_notification_summary">Options d\'affichage des notifications sur les écrans verrouillés.</string>
   <string name="pref_connectivity_title">Mode de connectivité</string>
+  <string name="pref_connectivity_summary">Choisir comment connecter Jami au système distribué pour recevoir des appels et des messages.</string>
   <string name="pref_blackList_title">Liste  des comptes bloqués</string>
   <string name="pref_blackList_summary">Vérifier votre liste des comptes bloqués</string>
   <string name="pref_delete_account_title">Supprimer le compte</string>
@@ -62,12 +63,17 @@
   <string name="notification_private">Privé \n(affiche les notifications mais cache leur contenu sur l\'écran verrouillé)\n</string>
   <string name="notification_secret">Secret \n(n\'affiche pas les notifications sur l\'écran verrouillé)</string>
   <string name="connectivity_google_services_title">Services Google</string>
+  <string name="connectivity_google_services_description">Utiliser Google Firebase et un DHT proxy pour recevoir les notifications poussées.</string>
   <string name="connectivity_local_node_title">Noeud DHT local</string>
+  <string name="connectivity_local_node_description">Utiliser un nœud DHT local pour se connecter aux autres appareils Jami et aux contacts.   </string>
+  <string name="connectivity_unified_push_description">Utiliser un serveur de notification poussée unifiée personnalisé pour recevoir des notifications.</string>
   <string name="connectivity_custom_title">Personnaliser</string>
+  <string name="connectivity_custom_description">N\'utilise actuellement aucun des préréglages de configuration disponibles.</string>
   <!--Extension-->
   <string name="pref_enable_extensions_title">Activer les extensions</string>
   <string name="pref_enable_extensions_summary">Activer les modules d\'extension et les paramétrer</string>
   <string name="pref_available_extensions_title">Extensions disponibles</string>
+  <string name="pref_available_extensions_summary">Extensions installées et ajouter de nouvelles extensions</string>
   <string name="fab_extensions_add">Ajouter un nouveau module d\'extension</string>
   <string name="extension_uninstall_title">Désinstaller le module d\'extension ?</string>
   <string name="extension_reset_preferences">Réinitialiser les paramètres du module d\'extension</string>

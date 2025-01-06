@@ -35,6 +35,7 @@
   <string name="pref_notification_title">通知可見性</string>
   <string name="pref_notification_summary">設定鎖定畫面上的應用程式通知可見性。</string>
   <string name="pref_connectivity_title">连接模式</string>
+  <string name="pref_connectivity_summary">选择如何将Jami连接到分布式系统以接收呼叫和消息。</string>
   <string name="pref_blackList_title">封鎖清單</string>
   <string name="pref_blackList_summary">檢查您的封鎖清單。</string>
   <string name="pref_delete_account_title">刪除帳號</string>
@@ -62,12 +63,17 @@
   <string name="notification_private">隐私\n（在锁屏上显示通知但隐藏其内容）\n</string>
   <string name="notification_secret">机密\n（不在锁屏上显示通知）</string>
   <string name="connectivity_google_services_title">谷歌服务</string>
+  <string name="connectivity_google_services_description">使用Google Firebase和DHT代理接收推送通知。</string>
   <string name="connectivity_local_node_title">本地DHT节点</string>
+  <string name="connectivity_local_node_description">使用本地DHT节点与其他Jami设备和联系人连接。</string>
+  <string name="connectivity_unified_push_description">使用自定义UnifiedPush服务器接收推送通知。</string>
   <string name="connectivity_custom_title">自訂</string>
+  <string name="connectivity_custom_description">当前未使用任何可用的配置预设。</string>
   <!--Extension-->
   <string name="pref_enable_extensions_title">启用扩展</string>
   <string name="pref_enable_extensions_summary">启用扩展并设置其参数</string>
   <string name="pref_available_extensions_title">可用扩展</string>
+  <string name="pref_available_extensions_summary">已安装扩展并添加新扩展</string>
   <string name="fab_extensions_add">添加新扩展</string>
   <string name="extension_uninstall_title">卸载扩展？</string>
   <string name="extension_reset_preferences">重置扩展首选项</string>
