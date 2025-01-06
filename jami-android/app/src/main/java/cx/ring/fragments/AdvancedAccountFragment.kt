@@ -48,9 +48,6 @@ class AdvancedAccountFragment : BasePreferenceFragment<AdvancedAccountPresenter>
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         super.onCreatePreferences(savedInstanceState, rootKey)
-
-        // Load the preferences from an XML resource
-        addPreferencesFromResource(R.xml.account_advanced_prefs)
         presenter.init(requireArguments().getString(AccountEditionFragment.ACCOUNT_ID_KEY)!!)
     }
 
@@ -85,6 +82,13 @@ class AdvancedAccountFragment : BasePreferenceFragment<AdvancedAccountPresenter>
     }
 
     override fun initView(config: AccountConfig, networkInterfaces: ArrayList<CharSequence>) {
+        val isJamiAccount = config[ConfigKey.ACCOUNT_TYPE] == AccountConfig.ACCOUNT_TYPE_JAMI
+
+        if (isJamiAccount)
+            addPreferencesFromResource(R.xml.account_advanced_prefs)
+        else
+            addPreferencesFromResource(R.xml.account_sip_prefs)
+
         for (confKey in config.keys) {
             val pref = findPreference<Preference>(confKey.key)
             if (pref != null) {
@@ -108,7 +112,6 @@ class AdvancedAccountFragment : BasePreferenceFragment<AdvancedAccountPresenter>
                 }
             }
         }
-        val isJamiAccount = config[ConfigKey.ACCOUNT_TYPE] == AccountConfig.ACCOUNT_TYPE_JAMI
         val bootstrap = findPreference<Preference>(ConfigKey.ACCOUNT_HOSTNAME.key)
         bootstrap?.isVisible = isJamiAccount
         val sipLocalPort = findPreference<Preference>(ConfigKey.LOCAL_PORT.key)
