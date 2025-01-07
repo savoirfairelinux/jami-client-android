@@ -44,10 +44,13 @@ class ConfParticipantAdapter(private var calls: List<ParticipantInfo>, private v
         val context = holder.itemView.context
         val call = info.call
         val participantBinding = holder.participantBinding
-        val displayName = TextUtils.ellipsize(contact.displayName,
+        val displayName = TextUtils.ellipsize(
+            if (contact.contact.isUser) context.getString(R.string.conversation_info_contact_you)
+            else contact.displayName,
             participantBinding.displayName.paint,
             participantBinding.displayName.maxWidth.toFloat(),
-            TextUtils.TruncateAt.MIDDLE)
+            TextUtils.TruncateAt.MIDDLE
+        )
         if (call != null && info.pending) {
             participantBinding.displayName.text = String.format("%s\n%s", displayName, context.getText(CallFragment.callStateToHumanState(call.callStatus)))
             participantBinding.photo.alpha = .5f
