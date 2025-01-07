@@ -86,6 +86,7 @@ along with this program; if not, write to the Free Software
     <string name="account_alias_label">Account name</string>
     <string name="account_hostname_label">Hostname</string>
     <string name="account_bootstrap_label">Bootstrap</string>
+    <string name="account_name_server_label">Name server</string>
     <string name="account_username_label">Username</string>
     <string name="account_password_label">Password</string>
     <string name="account_optionnal_category">Optional Settings</string>
@@ -140,9 +141,12 @@ along with this program; if not, write to the Free Software
     <string name="account_published_same_as_local_label">Published same as local</string>
     <string name="account_published_port_label">Published Port</string>
     <string name="account_published_address_label">Published Address</string>
+    <string name="account_connectivity_label">Peer-to-peer connectivity</string>
 
     <string name="disabled">Disabled</string>
     <string name="enabled">Enabled</string>
+    <string name="default_value">Default</string>
+    <string name="account_dht_label" translatable="false">OpenDHT</string>
     <string name="account_proxy_label">DHT proxy</string>
     <string name="account_proxy_enable_label">Use DHT proxy</string>
     <string name="account_proxy_list_enable_label">Use DHT proxy list</string>
