@@ -16,6 +16,24 @@
       "message": "Would prefer:\n- to have `default` under nameserver parameter instead of blank.\n- to have a warning if entering a wrong namerserver url.\n- to have the option blocked if username is already entered.",
       "revId": "c174d55d3211be1d3f617096ac01cbb1fb0b00ef",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33bfaadf_9ad442e3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2025-01-07T20:48:59Z",
+      "side": 1,
+      "message": "Would prefer:\n- ~~to have `default` under nameserver parameter instead of blank.~~ DONE\n- to have a warning if entering a wrong namerserver url.\n- to have the option blocked if username is already entered.",
+      "parentUuid": "e697cbf0_e10cc5aa",
+      "revId": "c174d55d3211be1d3f617096ac01cbb1fb0b00ef",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
