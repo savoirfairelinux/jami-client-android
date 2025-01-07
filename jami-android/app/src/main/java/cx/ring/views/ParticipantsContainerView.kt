@@ -153,7 +153,10 @@ class ParticipantsContainerView// adding name, mic etc..
             }
             participantInfoOverlay.sink.setSinkId(i.sinkId)
 
-            participantInfoOverlay.participantName.text = i.contact.displayName
+            participantInfoOverlay.participantName.text =
+                if (i.contact.contact.isUser)
+                    context.getString(R.string.conversation_info_contact_you)
+                else i.contact.displayName
             participantInfoOverlay.mute.isVisible = i.audioModeratorMuted || i.audioLocalMuted
             participantInfoOverlay.handRaised.isVisible = i.isHandRaised
             participantInfoOverlay.moderator.isVisible = i.isModerator
