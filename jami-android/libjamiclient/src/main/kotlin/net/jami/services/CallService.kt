@@ -707,8 +707,10 @@ abstract class CallService(
     fun getConference(id: String): Conference? = conferences[id]
 
     fun conferenceCreated(accountId: String, conversationId: String, confId: String) {
-        Log.d(TAG, "conferenceCreated: $confId")
-        val conf = conferences.getOrPut(confId) { Conference(accountId, confId) }
+        Log.d(TAG, "conference created: $confId $conversationId")
+        val conf = conferences.getOrPut(confId) { Conference(accountId, confId).apply {
+            this.conversationId = conversationId
+        } }
         val participants = JamiService.getParticipantList(accountId, confId)
         val map = JamiService.getConferenceDetails(accountId, confId)
         conf.setState(map["STATE"]!!)
