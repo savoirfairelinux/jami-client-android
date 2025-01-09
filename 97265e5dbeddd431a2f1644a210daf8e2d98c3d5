@@ -34,6 +34,24 @@
       "parentUuid": "7a3ef7e9_fdf54734",
       "revId": "97265e5dbeddd431a2f1644a210daf8e2d98c3d5",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "49b078eb_2ad223c3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1006
+      },
+      "writtenOn": "2025-01-09T17:36:14Z",
+      "side": 1,
+      "message": "\u003e Our process is to work with assignees on GitLab. Do you have access to this feature?\n\nNo, I don\u0027t.\n\nNow I want to write a different `TlsSession` class because current `TlsSession` class in DHTNet can\u0027t be used with those crypto helper functions of ngtcp2. How can I contact François-Simon Fauteux-Chapleau and Adrien Béraud to discuss? My matrix account is `@lanius_collaris:matrix.org`.",
+      "parentUuid": "34218002_70a621a2",
+      "revId": "97265e5dbeddd431a2f1644a210daf8e2d98c3d5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ],
   "submitRequirementResults": []
