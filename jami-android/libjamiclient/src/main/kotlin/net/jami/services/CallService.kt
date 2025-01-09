@@ -154,10 +154,25 @@ abstract class CallService(
 
     private class ConferenceEntity(var conference: Conference)
 
-    fun getConfUpdates(call: Call): Observable<Conference> = getConfUpdates(getConference(call))
+    private fun getConferenceHost(call: Call): Single<Conference> =
+        if (call.conversationId == null) {
+            Single.just(getConference(call))
+        } else {
+            Log.w(TAG, "getConfUpdates ${call.conversationId}")
+            val conference = conferences.values.firstOrNull { it.conversationId == call.conversationId }
+            if (conference != null) {
+                Single.just(conference)
+            } else {
+                Single.error(IllegalArgumentException())
+            }
+        }
+
+    fun getConfUpdates(call: Call): Observable<Conference> = if (call.daemonIdString == null && !call.conversationId.isNullOrEmpty())
+        getConferenceHost(call).flatMapObservable(this::getConfUpdates)
+        else getConfUpdates(getConference(call))
 
     private fun getConfUpdates(conference: Conference): Observable<Conference> {
-        Log.w(TAG, "getConfUpdates " + conference.id)
+        Log.w(TAG, "getConfUpdates ${conference.id}")
         val conferenceEntity = ConferenceEntity(conference)
         return conferenceSubject
             .startWithItem(conference)
@@ -243,17 +258,21 @@ abstract class CallService(
 
             val callId = JamiService.placeCallWithMedia(account, numberUri.uri, mediaMap)
 
-            // Todo: Wrong logic here since callId can be null in a normal case (host conference).
-            if (callId == null || callId.isEmpty()) throw RuntimeException()
+            if (callId.isEmpty()) {
+                if (numberUri.isSwarm && conversationUri?.isSwarm == true) {
+                    return@fromCallable Call(null, numberUri.rawRingId, account, null, null, Call.Direction.OUTGOING).apply {
+                        setSwarmInfo(conversationUri.rawRingId)
+                    }
+                } else {
+                    throw IllegalStateException("Call ID is empty")
+                }
+            }
 
             // Add the call to the list.
-            val call =
-                addCall(account, callId, numberUri, Call.Direction.OUTGOING, mediaList).apply {
+            addCall(account, callId, numberUri, Call.Direction.OUTGOING, mediaList).apply {
                     if (conversationUri != null && conversationUri.isSwarm)
                         this.setSwarmInfo(conversationUri.rawRingId)
                 }
-
-            return@fromCallable call
         }.subscribeOn(Schedulers.from(mExecutor))
 
     fun refuse(accountId:String, callId: String) {
@@ -500,7 +519,7 @@ abstract class CallService(
                 return null
             }
             call.setCallState(callState)
-            val account = mAccountService.getAccount(call.account!!)!!
+            val account = mAccountService.getAccount(call.account!!) ?: return null
             val contact = mContactService.findContact(account, Uri.fromString(call.contactNumber!!))
             /*val registeredName = callDetails[Call.KEY_REGISTERED_NAME]
             if (registeredName != null && registeredName.isNotEmpty()) {

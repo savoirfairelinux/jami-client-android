@@ -90,7 +90,7 @@ class CallPresenter @Inject constructor(
     fun initOutGoing(
         accountId: String, conversationUri: Uri?, contactUri: String?, hasVideo: Boolean
     ) {
-        Log.i(TAG, "initOutGoing")
+        Log.i(TAG, "initOutGoing conversation:$conversationUri contact:$contactUri")
         if (accountId.isEmpty() || contactUri == null) {
             Log.e(TAG, "initOutGoing: null account or contact")
             hangupCall()
@@ -98,7 +98,7 @@ class CallPresenter @Inject constructor(
         }
         val pHasVideo = hasVideo && mHardwareService.hasCamera()
         val callObservable = mCallService
-            .placeCallIfAllowed(accountId, conversationUri, fromString(toNumber(contactUri)!!), pHasVideo)
+            .placeCallIfAllowed(accountId, conversationUri, fromString(toNumber(contactUri)), pHasVideo)
             .flatMapObservable { call: Call -> mCallService.getConfUpdates(call) }
             .share()
         mCompositeDisposable.add(callObservable
@@ -392,14 +392,17 @@ class CallPresenter @Inject constructor(
     }
 
     /**
-     * This fonctions define some global var and the UI screen/elements to show based on the Call/Conference properties.
+     * This function defines some global var and the UI screen/elements to show based on the Call/Conference properties.
      * @example: it will update the bottomSheet elements based on the conference data.
      * */
     private fun confUpdate(call: Conference) {
         mConference = call
         val status = call.state
         if (status === CallStatus.HOLD) {
-            if (call.isSimpleCall) mCallService.unhold(call.accountId, call.id) else JamiService.addMainParticipant(call.accountId, call.id)
+            if (call.isSimpleCall)
+                mCallService.unhold(call.accountId, call.id)
+            else
+                JamiService.addMainParticipant(call.accountId, call.id)
         }
         val hasVideo = call.hasVideo()
         val hasActiveCameraVideo = call.hasActiveNonScreenShareVideo()
