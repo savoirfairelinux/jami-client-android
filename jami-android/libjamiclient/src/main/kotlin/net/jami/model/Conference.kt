@@ -49,6 +49,10 @@ class Conference(val accountId: String, val id: String) {
         override fun hashCode(): Int = Objects.hash(contact.contact.uri, device, call?.daemonIdString, pending)
     }
 
+    constructor(call: Call) : this(call.account!!, call.daemonIdString!!) {
+        mParticipants.add(call)
+    }
+
     private val mParticipantInfo: Subject<List<ParticipantInfo>> = BehaviorSubject.createDefault(emptyList())
     private val mPendingCalls: MutableList<ParticipantInfo> = ArrayList()
     private val mPendingSubject: Subject<List<ParticipantInfo>> = BehaviorSubject.createDefault(mPendingCalls)
@@ -70,10 +74,6 @@ class Conference(val accountId: String, val id: String) {
         get() = call?.isAudioMuted ?: field
     var isVideoMuted = false
         get() = call?.isVideoMuted ?: field
-
-    constructor(call: Call) : this(call.account!!, call.daemonIdString!!) {
-        mParticipants.add(call)
-    }
 
     val isRinging: Boolean
         get() = mParticipants.isNotEmpty() && mParticipants[0].isRinging
@@ -103,6 +103,8 @@ class Conference(val accountId: String, val id: String) {
 
     val isSimpleCall: Boolean
         get() = mParticipants.size == 1 && id == mParticipants[0].daemonIdString
+
+    var conversationId: String? = null
 
     fun setState(state: String) {
         mConfState = fromConferenceString(state)
