@@ -1672,21 +1672,24 @@ class ConversationAdapter(
         if (call.isGroupCall) {
             val callAcceptLayout = convViewHolder.mCallAcceptLayout ?: return
             val callInfoText = convViewHolder.mCallInfoText ?: return
-            val acceptCallAudioButton =
-                convViewHolder.mAcceptCallAudioButton ?: return
-            val acceptCallVideoButton =
-                convViewHolder.mAcceptCallVideoButton ?: return
+            val callIcon = convViewHolder.mCallIcon // Not implemented in android TV
 
-            callAcceptLayout.apply {
-                // Accept with audio only
-                convViewHolder.mAcceptCallAudioButton?.setOnClickListener {
-                    call.confId?.let { presenter.goToGroupCall(false) }
-                }
-                // Accept call with video
-                convViewHolder.mAcceptCallVideoButton?.setOnClickListener {
-                    call.confId?.let { presenter.goToGroupCall(true) }
-                }
-            }
+            val acceptCallAudioButton =
+                convViewHolder.mAcceptCallAudioButton // Android TV only
+            val acceptCallVideoButton =
+                convViewHolder.mAcceptCallVideoButton // Android TV only
+            val callTime = convViewHolder.mCallTime ?: return
+
+            // Set the call time.
+            callTime.text = TextUtils.timestampToTime(context, formatter, call.timestamp)
+
+            // Todo: Should redirect to a screen where user can choose video or audio call.
+            convViewHolder.mAcceptCallButton // Not implemented in android TV
+                ?.setOnClickListener {call.confId?.let { presenter.goToGroupCall(false) } }
+            acceptCallAudioButton // Android TV only
+                ?.setOnClickListener { call.confId?.let { presenter.goToGroupCall(false) } }
+            acceptCallVideoButton // Android TV only
+                ?.setOnClickListener { call.confId?.let { presenter.goToGroupCall(true) } }
 
             // Set the background to the call started message.
             callAcceptLayout.background = ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
@@ -1713,8 +1716,14 @@ class ConversationAdapter(
                 }
                 // Use the original color of the icons.
                 callInfoText.setTextColor(context.getColor(R.color.colorOnSurface))
-                acceptCallAudioButton.setColorFilter(context.getColor(R.color.accept_call_button))
-                acceptCallVideoButton.setColorFilter(context.getColor(R.color.accept_call_button))
+
+                // Not implemented in android TV
+                callIcon?.setColorFilter(context.getColor(R.color.colorOnSurface))
+
+                // Android TV only
+                acceptCallAudioButton?.setColorFilter(context.getColor(R.color.accept_call_button))
+                acceptCallVideoButton?.setColorFilter(context.getColor(R.color.accept_call_button))
+
                 callAcceptLayout.background.setTint(
                     context.getColor(R.color.conversation_secondary_background)
                 )
@@ -1729,16 +1738,14 @@ class ConversationAdapter(
                     callInfoText.setTextColor(
                         context.getColor(R.color.text_color_primary_dark)
                     )
-                    acceptCallAudioButton.setColorFilter(
-                        context.getColor(R.color.white)
-                    )
-                    acceptCallVideoButton.setColorFilter(
-                        context.getColor(R.color.white)
-                    )
-                    callAcceptLayout.background.setTint(convColor)
+                    // Not implemented in android TV
+                    callIcon?.setColorFilter(context.getColor(R.color.text_color_primary_dark))
+
+                    // Android TV only
+                    acceptCallAudioButton?.setColorFilter(context.getColor(R.color.white))
+                    acceptCallVideoButton?.setColorFilter(context.getColor(R.color.white))
                 }
             }
-            callAcceptLayout.setPadding(callPadding)
         } else {
             val typeCall = convViewHolder.mHistTxt ?: return
             val callInfoLayout = convViewHolder.mCallInfoLayout ?: return

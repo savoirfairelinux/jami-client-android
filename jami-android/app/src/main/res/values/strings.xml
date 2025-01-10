@@ -625,4 +625,5 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="install_success">Extension %1$s has been successfully installed.</string>
     <string name="install_error">An error occurred while importing the extension.</string>
 
+    <string name="join_conference">Join</string>
 </resources>

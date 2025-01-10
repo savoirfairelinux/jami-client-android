@@ -28,6 +28,7 @@ import android.animation.ValueAnimator
 import android.media.MediaPlayer
 import android.view.Surface
 import android.view.View
+import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -128,6 +129,7 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
     var mCallInfoLayout: LinearLayout? = null
     var mAcceptCallVideoButton: ImageButton? = null
     var mAcceptCallAudioButton: ImageButton? = null
+    var mAcceptCallButton: Button? = null
 
     var btnAccept: View? = null
     var btnRefuse: View? = null
@@ -138,6 +140,7 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
         else -> null
     }
     var mCallInfoText: TextView? = null
+    var mCallIcon: ImageView? = null
     var mCallTime : TextView? = null
     var mCallAcceptLayout: LinearLayout? = null
     var mFileInfoLayout: ConstraintLayout? = null
@@ -187,13 +190,16 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
                 primaryClickableView = mCallInfoLayout
             }
             MessageType.ONGOING_GROUP_CALL -> {
+                mCallTime = v.findViewById(R.id.call_time)
                 mMsgDetailTxtPerm = v.findViewById(R.id.msg_details_txt_perm)
                 mCallLayout = v.findViewById(R.id.callLayout)
                 mGroupCallLayout = v.findViewById(R.id.groupCallLayout)
                 mCallInfoText = v.findViewById(R.id.call_info_text)
+                mCallIcon = v.findViewById(R.id.call_icon)
                 mCallAcceptLayout = v.findViewById(R.id.callAcceptLayout)
                 mAcceptCallAudioButton = v.findViewById(R.id.acceptCallAudioButton)
                 mAcceptCallVideoButton = v.findViewById(R.id.acceptCallVideoButton)
+                mAcceptCallButton = v.findViewById(R.id.join)
             }
             MessageType.INCOMING_TEXT_MESSAGE,
             MessageType.OUTGOING_TEXT_MESSAGE -> {

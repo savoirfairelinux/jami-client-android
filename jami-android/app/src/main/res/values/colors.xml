@@ -137,4 +137,7 @@
     <color name="donation_card_button_color">#005699</color>
     <color name="donation_card_favorite_color">#FF0045</color>
 
+    <!--  Join conference Button  -->
+    <color name="join_conference_button_color">#20C68D</color>
+
 </resources>
