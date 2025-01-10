@@ -78,7 +78,7 @@ class Conference(val accountId: String, val id: String) {
     val isRinging: Boolean
         get() = mParticipants.isNotEmpty() && mParticipants[0].isRinging
     val isConference: Boolean
-        get() = mParticipants.size > 1
+        get() = mParticipants.size > 1 || conversationId != null || (mParticipants.size == 1 && mParticipants[0].daemonIdString != id)
     val call: Call?
         get() = if (!isConference) {
             firstCall
@@ -104,6 +104,7 @@ class Conference(val accountId: String, val id: String) {
     val isSimpleCall: Boolean
         get() = mParticipants.size == 1 && id == mParticipants[0].daemonIdString
 
+    /** If not null, this conference is a swarm call */
     var conversationId: String? = null
 
     fun setState(state: String) {
