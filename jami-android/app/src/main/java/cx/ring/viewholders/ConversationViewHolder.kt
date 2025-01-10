@@ -44,7 +44,8 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
     val mItem: View? = when (type) {
         MessageType.OUTGOING_CALL_INFORMATION,
         MessageType.INCOMING_CALL_INFORMATION -> v.findViewById(R.id.callLayout)
-        MessageType.ONGOING_GROUP_CALL -> v.findViewById(R.id.groupCallLayout)
+        MessageType.OUTGOING_ONGOING_GROUP_CALL, MessageType.INCOMING_ONGOING_GROUP_CALL ->
+            v.findViewById(R.id.groupCallLayout)
         MessageType.INCOMING_TEXT_MESSAGE,
         MessageType.OUTGOING_TEXT_MESSAGE -> v.findViewById(R.id.txt_entry)
         else -> null
@@ -55,7 +56,7 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
     val mAvatar: AvatarView? = when (type) {
         MessageType.INCOMING_CALL_INFORMATION,
         MessageType.INCOMING_TEXT_MESSAGE,
-        MessageType.ONGOING_GROUP_CALL,
+        MessageType.INCOMING_ONGOING_GROUP_CALL,
         MessageType.INCOMING_FILE,
         MessageType.INCOMING_IMAGE,
         MessageType.INCOMING_AUDIO,
@@ -77,13 +78,13 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
         MessageType.OUTGOING_IMAGE, MessageType.INCOMING_IMAGE,
         MessageType.OUTGOING_AUDIO, MessageType.INCOMING_AUDIO,
         MessageType.OUTGOING_VIDEO, MessageType.INCOMING_VIDEO,
-        MessageType.ONGOING_GROUP_CALL -> v.findViewById(R.id.status_icon)
+        MessageType.OUTGOING_ONGOING_GROUP_CALL -> v.findViewById(R.id.status_icon)
         else -> null
     }
     val mTypingIndicatorLayout: FrameLayout? = v.findViewById(R.id.typing_indicator_layout)
-    var mPeerDisplayName: TextView? = when (type){
+    var mPeerDisplayName: TextView? = when (type) {
         MessageType.INCOMING_CALL_INFORMATION,
-        MessageType.ONGOING_GROUP_CALL -> v.findViewById(R.id.msg_display_name)
+        MessageType.INCOMING_ONGOING_GROUP_CALL -> v.findViewById(R.id.msg_display_name)
         MessageType.INCOMING_AUDIO,
         MessageType.INCOMING_FILE,
         MessageType.INCOMING_IMAGE,
@@ -161,7 +162,7 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
             v.findViewById(R.id.audioInfoLayout)
         MessageType.OUTGOING_VIDEO, MessageType.INCOMING_VIDEO ->
             v.findViewById(R.id.video_frame)
-        MessageType.ONGOING_GROUP_CALL -> v.findViewById(R.id.callAcceptLayout)
+        MessageType.OUTGOING_ONGOING_GROUP_CALL -> v.findViewById(R.id.callAcceptLayout)
         else -> null
     }
 
@@ -189,7 +190,8 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
                 mMsgDetailTxtPerm = v.findViewById(R.id.msg_details_txt_perm)
                 primaryClickableView = mCallInfoLayout
             }
-            MessageType.ONGOING_GROUP_CALL -> {
+            MessageType.INCOMING_ONGOING_GROUP_CALL,
+            MessageType.OUTGOING_ONGOING_GROUP_CALL -> {
                 mCallTime = v.findViewById(R.id.call_time)
                 mMsgDetailTxtPerm = v.findViewById(R.id.msg_details_txt_perm)
                 mCallLayout = v.findViewById(R.id.callLayout)

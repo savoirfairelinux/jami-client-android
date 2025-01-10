@@ -31,7 +31,11 @@ enum class MessageType(@LayoutRes val layout: Int, @LayoutRes val tvLayout: Int 
     CONTACT_EVENT(R.layout.item_conv_contact, R.layout.item_conv_contact_tv),
     INCOMING_CALL_INFORMATION(R.layout.item_conv_call_peer, R.layout.item_conv_call_peer_tv),
     OUTGOING_CALL_INFORMATION(R.layout.item_conv_call_me, R.layout.item_conv_call_me_tv),
-    ONGOING_GROUP_CALL(R.layout.item_conv_group_call, R.layout.item_conv_group_call_tv),
+    OUTGOING_ONGOING_GROUP_CALL(R.layout.item_conv_group_call_me, R.layout.item_conv_group_call_tv),
+    INCOMING_ONGOING_GROUP_CALL(
+        R.layout.item_conv_group_call_peer,
+        R.layout.item_conv_group_call_tv
+    ),
     INCOMING_TEXT_MESSAGE(R.layout.item_conv_msg_peer, R.layout.item_conv_msg_peer_tv),
     OUTGOING_TEXT_MESSAGE(R.layout.item_conv_msg_me, R.layout.item_conv_msg_me_tv),
     COMPOSING_INDICATION(R.layout.item_conv_composing),

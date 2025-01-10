@@ -198,9 +198,8 @@ class TvConversationAdapter(
             Interaction.InteractionType.CONTACT -> return MessageType.CONTACT_EVENT.ordinal
             Interaction.InteractionType.CALL ->
                 if ((interaction as Call).isGroupCall) {
-                    MessageType.ONGOING_GROUP_CALL.ordinal
-                } else if (interaction.isIncoming) {
-                    MessageType.INCOMING_CALL_INFORMATION.ordinal
+                    if (interaction.isIncoming) MessageType.INCOMING_ONGOING_GROUP_CALL.ordinal
+                    else MessageType.OUTGOING_ONGOING_GROUP_CALL.ordinal
                 } else MessageType.OUTGOING_CALL_INFORMATION.ordinal
             Interaction.InteractionType.TEXT ->
                 if (interaction.isIncoming) {

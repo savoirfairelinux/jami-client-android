@@ -51,8 +51,11 @@ import androidx.vectordrawable.graphics.drawable.Animatable2Compat
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.shape.CornerFamily
+import com.google.android.material.shape.ShapeAppearanceModel
 import cx.ring.R
 import cx.ring.client.MediaViewerActivity
 import cx.ring.client.MessageEditActivity
@@ -277,7 +280,8 @@ class ConversationAdapter(
 
             Interaction.InteractionType.CALL -> {
                 if ((interaction as Call).isGroupCall) {
-                    MessageType.ONGOING_GROUP_CALL.ordinal
+                    if (interaction.isIncoming) MessageType.INCOMING_ONGOING_GROUP_CALL.ordinal
+                    else MessageType.OUTGOING_ONGOING_GROUP_CALL.ordinal
                 } else if (interaction.isIncoming) {
                     MessageType.INCOMING_CALL_INFORMATION.ordinal
                 } else MessageType.OUTGOING_CALL_INFORMATION.ordinal
@@ -1685,7 +1689,7 @@ class ConversationAdapter(
 
             // Todo: Should redirect to a screen where user can choose video or audio call.
             convViewHolder.mAcceptCallButton // Not implemented in android TV
-                ?.setOnClickListener {call.confId?.let { presenter.goToGroupCall(false) } }
+                ?.setOnClickListener { call.confId?.let { presenter.goToGroupCall(false) } }
             acceptCallAudioButton // Android TV only
                 ?.setOnClickListener { call.confId?.let { presenter.goToGroupCall(false) } }
             acceptCallVideoButton // Android TV only
@@ -1698,8 +1702,6 @@ class ConversationAdapter(
                 // Show the avatar of the caller if last or single.
 
                 // We can call ourselves in a group call with different devices.
-                // Set the message to the left when it is incoming.
-                convViewHolder.mGroupCallLayout?.gravity = Gravity.START
                 // Show the name of the contact.
                 peerDisplayName?.apply {
                     if (startOfSeq) {
@@ -1728,10 +1730,30 @@ class ConversationAdapter(
                     context.getColor(R.color.conversation_secondary_background)
                 )
             } else {
-                // Set the message to the right because it is outgoing.
-                convViewHolder.mGroupCallLayout?.gravity = Gravity.END
-                // Hide the name of the contact.
-                peerDisplayName?.visibility = View.GONE
+                // Also update the shape of the button.
+                (convViewHolder.mAcceptCallButton as MaterialButton).shapeAppearanceModel =
+                    ShapeAppearanceModel
+                        .builder()
+                        .setTopLeftCorner(CornerFamily.ROUNDED, 0f)
+                        .setBottomLeftCorner(CornerFamily.ROUNDED, 0f)
+                        .setTopRightCorner(
+                            CornerFamily.ROUNDED, res.getDimension(
+                                when (resIndex) {
+                                    1, 2 -> R.dimen.conversation_message_minor_radius
+                                    else -> R.dimen.conversation_message_radius
+                                }
+                            )
+                        )
+                        .setBottomRightCorner(
+                            CornerFamily.ROUNDED, res.getDimension(
+                                when (resIndex) {
+                                    0, 1 -> R.dimen.conversation_message_minor_radius
+                                    else -> R.dimen.conversation_message_radius
+                                }
+                            )
+                        )
+                        .build()
+
                 // Set the color to the call started message.
                 if (convColor != 0) {
                     callAcceptLayout.background.setTint(convColor)

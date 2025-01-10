@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+Copyright (C) 2004-2025 Savoir-faire Linux Inc.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <https://www.gnu.org/licenses/>.
+-->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/callLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/padding_xsmall">
+
+    <TextView
+        android:id="@+id/msg_details_txt_perm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingVertical="@dimen/conversation_date_padding"
+        android:textColor="@color/textColorSecondary"
+        android:textSize="@dimen/conversation_timestamp_textsize"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/time_just_now"
+        tools:visibility="visible" />
+
+
+    <LinearLayout
+        android:id="@+id/callAcceptLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/conditional_left_conversation_margin"
+        android:layout_marginEnd="@dimen/conversation_me_margin_end"
+        android:background="@drawable/textmsg_bg_out"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/msg_details_txt_perm">
+
+        <ImageView
+            android:id="@+id/call_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="8dp"
+            android:contentDescription="@null"
+            android:src="@drawable/outline_call_24" />
+
+        <TextView
+            android:id="@+id/call_info_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/started_call" />
+
+        <TextView
+            android:id="@+id/call_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:textColor="@color/file_time_text_out"
+            android:textSize="@dimen/conversation_timestamp_textsize"
+            tools:text="11:36am" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/join"
+            style="@style/customJoinConferenceButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:maxWidth="48dp"
+            android:minHeight="48dp"
+            android:text="@string/join_conference"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <cx.ring.views.MessageStatusView
+        android:id="@+id/status_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        app:layout_constraintBottom_toBottomOf="@id/callAcceptLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:background="@color/pink_200"
+        tools:layout_height="@dimen/conversation_avatar_size_small"
+        tools:layout_width="@dimen/conversation_avatar_size_small"
+        tools:visibility="visible" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
