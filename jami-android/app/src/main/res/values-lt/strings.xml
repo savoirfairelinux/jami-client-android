@@ -305,6 +305,7 @@
   <string name="welcome_jami_title">Sveiki atvykę į Jami</string>
   <!--Conversation details-->
   <string name="details">Išsamiau</string>
+  <string name="swarm_type">Pokalbio tipas</string>
   <string name="Private">Privatus</string>
   <string name="show_qr_code">Rodyti QR kodą</string>
   <string name="show_certificate">Rodyti liudijimą</string>

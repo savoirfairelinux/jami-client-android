@@ -11,4 +11,6 @@
   <string name="control_replay">Ответ</string>
   <string name="control_pause">Пауза</string>
   <string name="searchbar_navigation_account">Выберите аккаунт</string>
+  <string name="add_conversation_member">Добавить участника беседы</string>
+  <string name="qrcode_to_scan">QR-код для сканирования</string>
 </resources>

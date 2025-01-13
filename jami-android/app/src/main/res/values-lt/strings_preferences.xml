@@ -34,9 +34,12 @@
   <string name="pref_delete_account_summary">Ištrinti paskyrą iš šio įrenginio</string>
   <string name="pref_logs_title">Diagnostikos žurnalai</string>
   <string name="pref_logs_summary">Atverti diagnostikos žurnalo nustatymus</string>
+  <string name="pref_logs_start">Pradėti registravimą</string>
+  <string name="pref_logs_stop">Stabdyti registravimą</string>
   <string name="pref_connection_monitor">Ryšio prižiūryklė</string>
   <string name="pref_link_preview_title">Rodyti pokalbiuose nuorodų peržiūras</string>
   <!--Notifications Visibility-->
+  <string name="connectivity_local_node_title">Vietinis DHT mazgas</string>
   <!--Extension-->
   <string name="pref_enable_extensions_title">Įjungti plėtinius</string>
   <string name="pref_available_extensions_title">Prieinami plėtiniai</string>
