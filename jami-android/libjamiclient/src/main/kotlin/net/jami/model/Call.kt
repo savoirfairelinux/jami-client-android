@@ -73,6 +73,8 @@ class Call : Interaction {
         private set
 
     var confId: String? = null
+    var hostDevice: String? = null
+    var hostUri: String? = null
 
     val mediaList = ArrayList<Media>()
     private val mediaListSubject: Subject<List<Media>> = BehaviorSubject.createDefault(mediaList)
