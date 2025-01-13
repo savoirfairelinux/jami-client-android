@@ -42,7 +42,7 @@ object StringUtils {
         return String(CharArray(s.length).apply { Arrays.fill(this, '*') })
     }
 
-    fun toNumber(s: String?): String? = s?.replace("(", "")?.replace(")", "")?.replace("-", "")?.replace(" ", "")
+    fun toNumber(s: String): String = s.replace("(", "").replace(")", "").replace("-", "").replace(" ", "")
 
     fun getFileExtension(filename: String): String {
         val dot = filename.lastIndexOf('.')
