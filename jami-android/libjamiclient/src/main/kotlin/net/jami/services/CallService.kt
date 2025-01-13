@@ -161,6 +161,9 @@ abstract class CallService(
             val conference = conferences.values.firstOrNull { it.conversationId == call.conversationId } ?: throw IllegalArgumentException()
             Log.w(TAG, "getConferenceHost ${call.conversationId} confId:${conference.id}")
             call.confId = conference.id
+            conference.apply {
+                hostCall = call
+            }
         }
 
     fun getConfUpdates(call: Call): Observable<Conference> = if (call.daemonIdString == null && !call.conversationId.isNullOrEmpty())
@@ -747,6 +750,11 @@ abstract class CallService(
                 call.confId = null
             }
             conf.removeParticipants()
+            conf.hostCall?.let {
+                it.setCallState(CallStatus.OVER)
+                callSubject.onNext(it)
+                conf.hostCall = null
+            }
             conferenceSubject.onNext(conf)
         }
     }
@@ -783,6 +791,12 @@ abstract class CallService(
                     removed = true
                 }
             }
+
+            conf.hostCall?.let {
+                it.setCallState(conf.hostConfState)
+                callSubject.onNext(it)
+            }
+
             conferenceSubject.onNext(conf)
             if (removed && conf.participants.size == 1) {
                 val call = conf.participants[0]
