@@ -316,6 +316,15 @@ class ConversationPresenter @Inject constructor(
         view?.goToGroupCall(mConversation!!, mConversation!!.uri, media)
     }
 
+    fun goToSwarmCall(call: Call, withVideo: Boolean) {
+        Log.w(TAG, "goToSwarmCall $call")
+        val conversation = mConversation ?: return
+        if (call.confId == null || call.hostUri == null || call.hostDevice == null)
+            goToGroupCall(withVideo)
+        else
+            view?.goToGroupCall(conversation, Uri.fromString("rdv:${conversation.uri.host}/${call.hostUri}/${call.hostDevice}/${call.confId}"), withVideo)
+    }
+
     fun deleteConversationItem(element: Interaction) {
         conversationFacade.deleteConversationItem(mConversation!!, element)
     }
