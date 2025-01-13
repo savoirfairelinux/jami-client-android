@@ -590,6 +590,9 @@ class ConversationFacade(
     }
 
     private fun onCallStateChange(call: Call) {
+        /* Ignore updates to host call connection (null callId) */
+        if (call.daemonIdString == null)
+            return
         val newState = call.callStatus
         val incomingCall = newState === CallStatus.RINGING && call.isIncoming
         val account = mAccountService.getAccount(call.account!!) ?: return

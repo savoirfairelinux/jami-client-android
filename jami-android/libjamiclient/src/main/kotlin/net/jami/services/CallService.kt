@@ -154,21 +154,20 @@ abstract class CallService(
 
     private class ConferenceEntity(var conference: Conference)
 
-    private fun getConferenceHost(call: Call): Single<Conference> =
+    private fun getConferenceHost(call: Call): Conference =
         if (call.conversationId == null) {
-            Single.just(getConference(call))
+            getConference(call)
         } else {
             Log.w(TAG, "getConfUpdates ${call.conversationId}")
-            val conference = conferences.values.firstOrNull { it.conversationId == call.conversationId }
-            if (conference != null) {
-                Single.just(conference)
-            } else {
-                Single.error(IllegalArgumentException())
+            val conference = conferences.values.firstOrNull { it.conversationId == call.conversationId } ?: throw IllegalArgumentException()
+            call.confId = conference.id
+            conference.apply {
+                hostCall = call
             }
         }
 
     fun getConfUpdates(call: Call): Observable<Conference> = if (call.daemonIdString == null && !call.conversationId.isNullOrEmpty())
-        getConferenceHost(call).flatMapObservable(this::getConfUpdates)
+        getConfUpdates(getConferenceHost(call))
         else getConfUpdates(getConference(call))
 
     private fun getConfUpdates(conference: Conference): Observable<Conference> {
@@ -751,6 +750,11 @@ abstract class CallService(
                 call.confId = null
             }
             conf.removeParticipants()
+            conf.hostCall?.let {
+                it.setCallState(CallStatus.OVER)
+                callSubject.onNext(it)
+                conf.hostCall = null
+            }
             conferenceSubject.onNext(conf)
         }
     }
@@ -787,6 +791,12 @@ abstract class CallService(
                     removed = true
                 }
             }
+
+            conf.hostCall?.let {
+                it.setCallState(conf.hostConfState)
+                callSubject.onNext(it)
+            }
+
             conferenceSubject.onNext(conf)
             if (removed && conf.participants.size == 1) {
                 val call = conf.participants[0]

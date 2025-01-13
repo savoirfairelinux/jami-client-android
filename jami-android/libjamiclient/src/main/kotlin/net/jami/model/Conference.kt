@@ -63,6 +63,9 @@ class Conference(val accountId: String, val id: String) {
     private val mParticipants: ArrayList<Call> = ArrayList()
     private val mParticipantsSubject: Subject<List<Call>> = BehaviorSubject.createDefault(mParticipants)
 
+    /** virtual call with null ID to represent the "call" between this device and the local hosted conference */
+    var hostCall: Call? = null
+
     val participantsObservable: Observable<List<Call>>
         get() = mParticipantsSubject
 
@@ -100,6 +103,9 @@ class Conference(val accountId: String, val id: String) {
         get() = if (mParticipants.size == 1) {
             mParticipants[0].callStatus
         } else mConfState
+
+    val hostConfState: CallStatus
+        get() = mConfState!!
 
     val isSimpleCall: Boolean
         get() = mParticipants.size == 1 && id == mParticipants[0].daemonIdString
