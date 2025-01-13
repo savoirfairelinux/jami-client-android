@@ -1684,11 +1684,11 @@ class ConversationAdapter(
             callAcceptLayout.apply {
                 // Accept with audio only
                 convViewHolder.mAcceptCallAudioButton?.setOnClickListener {
-                    call.confId?.let { presenter.goToGroupCall(false) }
+                    call.confId?.let { presenter.goToSwarmCall(call, false) }
                 }
                 // Accept call with video
                 convViewHolder.mAcceptCallVideoButton?.setOnClickListener {
-                    call.confId?.let { presenter.goToGroupCall(true) }
+                    call.confId?.let { presenter.goToSwarmCall(call, true) }
                 }
             }
 
