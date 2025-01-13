@@ -1315,6 +1315,8 @@ class AccountService(
                     .apply {
                         message["duration"]?.let { d -> duration = d.toLong() }
                         message["confId"]?.let { c -> confId = c }
+                        message["device"]?.let { d -> hostDevice = d }
+                        message["uri"]?.let { u -> hostUri = u }
                     }
             }
             "application/update-profile" -> Interaction(conversation, Interaction.InteractionType.INVALID)
