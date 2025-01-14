@@ -51,6 +51,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
             android:gravity="start"
             android:paddingBottom="3dp"
             android:singleLine="true"
+            android:maxLines="1"
             android:textAlignment="viewStart"
             android:textColor="?attr/colorOnSurface"
             android:textSize="@dimen/text_size_medium"
@@ -82,6 +83,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
             android:textColor="?attr/colorOnSurface"
             android:textSize="@dimen/text_size_small"
             android:textStyle="bold"
+            android:maxLines="1"
             tools:text="2 days ago" />
 
     </RelativeLayout>
