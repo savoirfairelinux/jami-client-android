@@ -24,7 +24,7 @@ import android.text.TextUtils
 import android.text.format.DateUtils
 import android.widget.Toast
 import cx.ring.R
-import net.jami.model.Interaction.TransferStatus
+import net.jami.model.interaction.Interaction.TransferStatus
 import java.util.*
 
 object TextUtils {
