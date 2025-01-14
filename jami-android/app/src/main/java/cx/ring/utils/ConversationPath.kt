@@ -21,8 +21,8 @@ import android.os.Bundle
 import androidx.core.content.pm.ShortcutManagerCompat
 import cx.ring.BuildConfig
 import net.jami.model.Conversation
-import net.jami.model.Interaction
 import net.jami.model.Uri
+import net.jami.model.interaction.Interaction
 import net.jami.smartlist.ConversationItemViewModel
 
 data class ConversationPath(
