@@ -22,7 +22,8 @@ import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.CompletableSubject
 import io.reactivex.rxjava3.subjects.PublishSubject
 import io.reactivex.rxjava3.subjects.Subject
-import net.jami.model.Interaction.TransferStatus
+import net.jami.model.interaction.*
+import net.jami.model.interaction.Interaction.TransferStatus
 import net.jami.services.AccountService
 import net.jami.utils.Log
 import java.util.Collections
