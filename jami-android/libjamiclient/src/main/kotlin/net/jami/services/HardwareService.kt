@@ -17,17 +17,14 @@
 package net.jami.services
 
 import io.reactivex.rxjava3.core.*
-import io.reactivex.rxjava3.core.ObservableOnSubscribe
-import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.PublishSubject
 import io.reactivex.rxjava3.subjects.Subject
-import net.jami.model.Call.CallStatus
 import net.jami.daemon.IntVect
 import net.jami.daemon.UintVect
 import net.jami.daemon.JamiService
 import net.jami.daemon.StringMap
-import net.jami.model.Call
+import net.jami.model.interaction.Call
 import net.jami.model.Conference
 import net.jami.utils.Log
 import java.io.File

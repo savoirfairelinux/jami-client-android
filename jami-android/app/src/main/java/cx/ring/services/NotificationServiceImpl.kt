@@ -64,7 +64,10 @@ import cx.ring.views.AvatarFactory.toBitmap
 import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.call.CallPresenter
 import net.jami.model.*
-import net.jami.model.Interaction.TransferStatus
+import net.jami.model.interaction.Interaction.TransferStatus
+import net.jami.model.interaction.Call
+import net.jami.model.interaction.DataTransfer
+import net.jami.model.interaction.TextMessage
 import net.jami.services.*
 import net.jami.smartlist.ConversationItemViewModel
 import java.io.BufferedInputStream

@@ -23,7 +23,7 @@ import io.reactivex.rxjava3.core.Scheduler
 import net.jami.daemon.Blob
 import net.jami.model.Account
 import net.jami.services.ConversationFacade
-import net.jami.model.Call
+import net.jami.model.interaction.Call
 import net.jami.model.Conversation
 import net.jami.model.Uri
 import net.jami.mvp.RootPresenter
