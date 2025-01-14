@@ -32,7 +32,7 @@ import cx.ring.utils.ConversationPath
 import cx.ring.utils.DeviceUtils
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.subjects.SingleSubject
-import net.jami.model.Call
+import net.jami.model.interaction.Call
 import net.jami.model.Media
 import net.jami.model.Uri
 import net.jami.services.AccountService

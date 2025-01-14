@@ -78,7 +78,7 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.call.CallPresenter
 import net.jami.call.CallView
 import net.jami.daemon.JamiService
-import net.jami.model.Call.CallStatus
+import net.jami.model.interaction.Call.CallStatus
 import net.jami.model.Conference
 import net.jami.model.Conference.ParticipantInfo
 import net.jami.model.Contact

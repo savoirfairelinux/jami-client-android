@@ -23,10 +23,10 @@ import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.PublishSubject
 import io.reactivex.rxjava3.subjects.SingleSubject
 import io.reactivex.rxjava3.subjects.Subject
+import net.jami.model.interaction.*
 import net.jami.utils.Log
 import net.jami.utils.StringUtils
 import java.util.*
-import kotlin.collections.ArrayList
 
 class Conversation : ConversationHistory {
     val accountId: String
