@@ -17,7 +17,7 @@
 package net.jami.services
 
 import net.jami.services.DaemonService.SystemInfoCallbacks
-import net.jami.model.DataTransfer
+import net.jami.model.interaction.DataTransfer
 import java.io.File
 
 abstract class DeviceRuntimeService : SystemInfoCallbacks {

@@ -14,7 +14,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-package net.jami.model
+package net.jami.model.interaction
 
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
@@ -24,6 +24,9 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.Subject
+import net.jami.model.Contact
+import net.jami.model.Conversation
+import net.jami.model.ConversationHistory
 
 @DatabaseTable(tableName = Interaction.TABLE_NAME)
 open class Interaction {
