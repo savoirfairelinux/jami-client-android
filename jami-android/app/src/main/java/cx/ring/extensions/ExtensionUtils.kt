@@ -86,13 +86,11 @@ object ExtensionUtils {
         val handlersList: MutableList<ExtensionDetails> = ArrayList(chatHandlersId.size)
         for (handlerId in chatHandlersId) {
             val handlerDetails = JamiService.getChatHandlerDetails(handlerId)
-            var extensionPath = handlerDetails["extensionId"]
-            extensionPath = extensionPath!!.substring(0, extensionPath.lastIndexOf("/data"))
-            var enabled = false
-            if (chatHandlerStatus.contains(handlerId)) {
-                enabled = true
-            }
-            handlersList.add(ExtensionDetails(handlerDetails["name"]!!, extensionPath, enabled, handlerId))
+            val extensionPath = handlerDetails["extensionId"] ?: continue
+            val name = handlerDetails["name"] ?: continue
+            val extensionRoot = extensionPath.substring(0, extensionPath.lastIndexOf("/data"))
+            val enabled = chatHandlerStatus.contains(handlerId)
+            handlersList.add(ExtensionDetails(name, extensionRoot, enabled, handlerId))
         }
         return handlersList
     }
