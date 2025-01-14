@@ -24,8 +24,8 @@ import io.reactivex.rxjava3.subjects.PublishSubject
 import net.jami.daemon.JamiService
 import net.jami.daemon.StringMap
 import net.jami.daemon.VectMap
-import net.jami.model.Call
-import net.jami.model.Call.CallStatus
+import net.jami.model.interaction.Call
+import net.jami.model.interaction.Call.CallStatus
 import net.jami.model.Conference
 import net.jami.model.Conference.ParticipantInfo
 import net.jami.model.Media

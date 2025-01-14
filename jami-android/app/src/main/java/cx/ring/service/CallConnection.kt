@@ -28,7 +28,7 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.Subject
-import net.jami.model.Call
+import net.jami.model.interaction.Call
 
 enum class CallRequestResult {
     ACCEPTED,

@@ -36,6 +36,7 @@ import cx.ring.fragments.ConversationGalleryFragment
 import cx.ring.utils.*
 import cx.ring.viewholders.ConversationMediaViewHolder
 import net.jami.model.*
+import net.jami.model.interaction.DataTransfer
 import net.jami.services.DeviceRuntimeService
 import java.io.File
 import java.util.*

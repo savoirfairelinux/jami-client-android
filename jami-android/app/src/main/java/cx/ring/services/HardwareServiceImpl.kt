@@ -51,9 +51,9 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.daemon.IntVect
 import net.jami.daemon.JamiService
 import net.jami.daemon.UintVect
-import net.jami.model.Call
-import net.jami.model.Call.CallStatus
 import net.jami.model.Conference
+import net.jami.model.interaction.Call
+import net.jami.model.interaction.Call.CallStatus
 import net.jami.services.HardwareService
 import net.jami.services.PreferencesService
 import java.io.File

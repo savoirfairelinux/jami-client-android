@@ -17,6 +17,8 @@
 package net.jami.services
 
 import net.jami.model.*
+import net.jami.model.interaction.Call
+import net.jami.model.interaction.DataTransfer
 
 interface NotificationService {
     fun showCallNotification(notifId: Int): Any?
