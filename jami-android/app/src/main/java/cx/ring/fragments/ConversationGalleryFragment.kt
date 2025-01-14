@@ -28,7 +28,7 @@ import cx.ring.utils.ConversationPath
 import cx.ring.utils.DeviceUtils
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import net.jami.model.DataTransfer
+import net.jami.model.interaction.DataTransfer
 import net.jami.model.Uri
 import net.jami.services.AccountService
 import net.jami.services.DeviceRuntimeService

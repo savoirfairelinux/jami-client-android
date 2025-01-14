@@ -28,7 +28,8 @@ import io.reactivex.rxjava3.subjects.SingleSubject
 import io.reactivex.rxjava3.subjects.Subject
 import net.jami.daemon.*
 import net.jami.model.*
-import net.jami.model.Interaction.TransferStatus
+import net.jami.model.interaction.*
+import net.jami.model.interaction.Interaction.TransferStatus
 import net.jami.services.ConversationFacade.SearchResult
 import net.jami.utils.Log
 import net.jami.utils.SwigNativeConverter

@@ -24,9 +24,10 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.daemon.JamiService
 import net.jami.services.ConversationFacade
 import net.jami.model.*
-import net.jami.model.Call.CallStatus
 import net.jami.model.Conference.ParticipantInfo
 import net.jami.model.Uri.Companion.fromString
+import net.jami.model.interaction.Call
+import net.jami.model.interaction.Call.CallStatus
 import net.jami.mvp.RootPresenter
 import net.jami.services.*
 import net.jami.services.HardwareService.AudioState
@@ -99,7 +100,7 @@ class CallPresenter @Inject constructor(
         val pHasVideo = hasVideo && mHardwareService.hasCamera()
         val callObservable = mCallService
             .placeCallIfAllowed(accountId, conversationUri, fromString(toNumber(contactUri)), pHasVideo)
-            .flatMapObservable { call: Call -> mCallService.getConfUpdates(call) }
+            .flatMapObservable { mCallService.getConfUpdates(it) }
             .share()
         mCompositeDisposable.add(callObservable
             .observeOn(mUiScheduler)
