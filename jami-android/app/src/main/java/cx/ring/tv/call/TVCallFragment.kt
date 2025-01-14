@@ -55,7 +55,7 @@ import cx.ring.views.AvatarDrawable
 import dagger.hilt.android.AndroidEntryPoint
 import net.jami.call.CallPresenter
 import net.jami.call.CallView
-import net.jami.model.Call.CallStatus
+import net.jami.model.interaction.Call.CallStatus
 import net.jami.model.Conference
 import net.jami.model.Conference.ParticipantInfo
 import net.jami.model.Contact

@@ -32,6 +32,9 @@ import cx.ring.utils.TextUtils
 import cx.ring.views.AvatarDrawable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.model.*
+import net.jami.model.interaction.Call
+import net.jami.model.interaction.ContactEvent
+import net.jami.model.interaction.Interaction
 import net.jami.services.ConversationFacade
 import net.jami.smartlist.ConversationItemViewModel
 

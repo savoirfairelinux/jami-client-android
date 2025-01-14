@@ -18,6 +18,8 @@ package net.jami.conversation
 
 import net.jami.model.*
 import net.jami.model.Account.ComposingStatus
+import net.jami.model.interaction.DataTransfer
+import net.jami.model.interaction.Interaction
 import net.jami.smartlist.ConversationItemViewModel
 import java.io.File
 

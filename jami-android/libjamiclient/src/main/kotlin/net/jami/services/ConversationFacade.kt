@@ -24,14 +24,15 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.model.*
 import net.jami.model.Account.ContactLocationEntry
-import net.jami.model.Call.CallStatus
-import net.jami.model.Interaction.TransferStatus
+import net.jami.model.interaction.Call.CallStatus
+import net.jami.model.interaction.Interaction
+import net.jami.model.interaction.Interaction.TransferStatus
+import net.jami.model.interaction.*
 import net.jami.smartlist.ConversationItemViewModel
 import net.jami.utils.FileUtils.moveFile
 import net.jami.utils.Log
 import java.io.File
 import java.util.concurrent.TimeUnit
-import kotlin.collections.ArrayList
 
 class ConversationFacade(
     private val mHistoryService: HistoryService,

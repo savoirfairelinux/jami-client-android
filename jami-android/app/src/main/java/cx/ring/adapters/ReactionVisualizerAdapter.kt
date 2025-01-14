@@ -26,7 +26,7 @@ import cx.ring.R
 import cx.ring.databinding.ItemReactionVisualizerBinding
 import cx.ring.views.AvatarDrawable
 import net.jami.model.ContactViewModel
-import net.jami.model.Interaction
+import net.jami.model.interaction.Interaction
 
 /**
  * Reaction visualizer (to know who put which reaction)

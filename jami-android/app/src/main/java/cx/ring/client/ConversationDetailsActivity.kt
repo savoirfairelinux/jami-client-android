@@ -58,7 +58,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
-import net.jami.model.Call
+import net.jami.model.interaction.Call
 import net.jami.model.Contact
 import net.jami.model.Conversation
 import net.jami.model.Profile
