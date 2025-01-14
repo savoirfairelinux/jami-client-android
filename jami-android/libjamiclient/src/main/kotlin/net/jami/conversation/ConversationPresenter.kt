@@ -491,7 +491,7 @@ class ConversationPresenter @Inject constructor(
     }
 
     fun shareText(interaction: TextMessage) {
-        view!!.shareText(interaction.body ?: return)
+        view?.shareText(interaction.body ?: return)
     }
 
     /**
