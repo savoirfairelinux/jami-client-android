@@ -19,8 +19,8 @@ package net.jami.model
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.Subject
-import net.jami.model.Call.CallStatus
-import net.jami.model.Call.CallStatus.Companion.fromConferenceString
+import net.jami.model.interaction.Call.CallStatus
+import net.jami.model.interaction.Call
 import java.util.*
 import kotlin.math.min
 
@@ -114,7 +114,7 @@ class Conference(val accountId: String, val id: String) {
     var conversationId: String? = null
 
     fun setState(state: String) {
-        mConfState = fromConferenceString(state)
+        mConfState = CallStatus.fromConferenceString(state)
     }
 
     val participants: MutableList<Call>

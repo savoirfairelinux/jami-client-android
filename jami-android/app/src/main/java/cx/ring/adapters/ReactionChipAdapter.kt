@@ -21,7 +21,7 @@ import androidx.recyclerview.widget.RecyclerView
 import cx.ring.databinding.ItemReactionChipBinding
 import cx.ring.viewholders.ReactionChipViewHolder
 import net.jami.model.ContactViewModel
-import net.jami.model.Interaction
+import net.jami.model.interaction.Interaction
 
 class ReactionChipAdapter(
     private val context: Context,
