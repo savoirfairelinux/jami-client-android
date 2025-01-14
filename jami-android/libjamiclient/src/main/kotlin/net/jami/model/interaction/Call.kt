@@ -14,18 +14,19 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-package net.jami.model
+package net.jami.model.interaction
 
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.SingleSubject
 import io.reactivex.rxjava3.subjects.Subject
+import net.jami.model.Contact
+import net.jami.model.ConversationHistory
+import net.jami.model.Media
 import net.jami.services.CallService
 import net.jami.utils.Log
-import java.lang.UnsupportedOperationException
 import java.util.*
-import kotlin.collections.ArrayList
 
 class Call : Interaction {
     override val daemonIdString: String?
