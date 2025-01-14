@@ -22,7 +22,7 @@ import com.j256.ormlite.support.ConnectionSource
 import cx.ring.fragments.ConversationFragment
 import cx.ring.history.DatabaseHelper
 import net.jami.model.ConversationHistory
-import net.jami.model.Interaction
+import net.jami.model.interaction.Interaction
 import net.jami.model.Uri
 import net.jami.services.HistoryService
 import java.io.File

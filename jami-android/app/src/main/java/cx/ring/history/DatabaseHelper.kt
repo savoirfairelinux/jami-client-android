@@ -25,8 +25,8 @@ import com.j256.ormlite.dao.Dao
 import com.j256.ormlite.support.ConnectionSource
 import com.j256.ormlite.table.TableUtils
 import net.jami.model.ConversationHistory
-import net.jami.model.DataTransfer
-import net.jami.model.Interaction
+import net.jami.model.interaction.DataTransfer
+import net.jami.model.interaction.Interaction
 import java.sql.SQLException
 import java.util.*
 

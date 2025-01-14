@@ -23,7 +23,9 @@ import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.model.*
-import net.jami.model.Interaction.InteractionStatus
+import net.jami.model.interaction.Interaction
+import net.jami.model.interaction.Interaction.InteractionStatus
+import net.jami.model.interaction.TextMessage
 import net.jami.utils.Log
 import java.util.*
 

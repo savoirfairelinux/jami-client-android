@@ -76,6 +76,10 @@ import net.jami.conversation.ConversationView
 import net.jami.daemon.JamiService
 import net.jami.model.*
 import net.jami.model.Account.ComposingStatus
+import net.jami.model.interaction.Call
+import net.jami.model.interaction.DataTransfer
+import net.jami.model.interaction.Interaction
+import net.jami.model.interaction.TextMessage
 import net.jami.services.NotificationService
 import net.jami.smartlist.ConversationItemViewModel
 import java.io.File
