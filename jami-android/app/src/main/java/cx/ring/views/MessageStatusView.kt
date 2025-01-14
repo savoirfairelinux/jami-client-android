@@ -29,7 +29,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.widget.ImageViewCompat
 import cx.ring.R
 import net.jami.model.ContactViewModel
-import net.jami.model.Interaction
 import net.jami.utils.Log
 
 /**

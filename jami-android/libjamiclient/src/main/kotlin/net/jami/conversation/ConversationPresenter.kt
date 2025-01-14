@@ -28,6 +28,10 @@ import net.jami.services.ConversationFacade
 import net.jami.model.*
 import net.jami.model.Account.ComposingStatus
 import net.jami.model.Conversation.ElementStatus
+import net.jami.model.interaction.Call
+import net.jami.model.interaction.DataTransfer
+import net.jami.model.interaction.Interaction
+import net.jami.model.interaction.TextMessage
 import net.jami.mvp.RootPresenter
 import net.jami.services.*
 import net.jami.smartlist.ConversationItemViewModel
