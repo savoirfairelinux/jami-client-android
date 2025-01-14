@@ -80,7 +80,12 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.conversation.ConversationPresenter
 import net.jami.model.*
 import net.jami.model.Account.ComposingStatus
-import net.jami.model.Interaction.TransferStatus
+import net.jami.model.interaction.Call
+import net.jami.model.interaction.ContactEvent
+import net.jami.model.interaction.DataTransfer
+import net.jami.model.interaction.Interaction
+import net.jami.model.interaction.Interaction.TransferStatus
+import net.jami.model.interaction.TextMessage
 import net.jami.utils.Log
 import net.jami.utils.StringUtils
 import org.commonmark.node.SoftLineBreak
