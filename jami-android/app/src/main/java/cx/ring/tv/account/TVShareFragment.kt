@@ -25,6 +25,7 @@ import cx.ring.R
 import cx.ring.databinding.TvFragShareBinding
 import cx.ring.mvp.BaseSupportFragment
 import cx.ring.utils.DeviceUtils
+import cx.ring.views.AvatarDrawable
 import cx.ring.views.AvatarFactory
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -34,78 +35,52 @@ import net.jami.services.ContactService
 import net.jami.share.SharePresenter
 import net.jami.share.ShareView
 import javax.inject.Inject
+import androidx.core.graphics.createBitmap
 
 @AndroidEntryPoint
 class TVShareFragment : BaseSupportFragment<SharePresenter, ShareView>() {
-    private var binding: TvFragShareBinding? = null
-    private val disposable = CompositeDisposable()
-
-    @Inject
-    lateinit var mAccountService: AccountService
-
-    @Inject
-    lateinit var mContactService: ContactService
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View = TvFragShareBinding.inflate(inflater, container, false).apply {
         val contactUri = Uri.fromString(arguments?.getString(ARG_CONTACT_URI) ?: "")
+        if (contactUri.uri.isEmpty()) return@apply
 
-        binding = TvFragShareBinding.inflate(inflater, container, false).apply {
-            if (contactUri.uri.isEmpty()) return@apply
-
-            presenter.loadQRCodeData(
-                contactUri,
-                foregroundColor = 0x00000000,
-                backgroundColor = -0x1
-            ) { qrCodeData ->
-                val pad = 56
-                val bitmap = Bitmap.createBitmap(
-                    qrCodeData.width + 2 * pad, // width
-                    qrCodeData.height + 2 * pad, // height
-                    Bitmap.Config.ARGB_8888
-                )
-                bitmap.setPixels(
-                    qrCodeData.data, 0, qrCodeData.width,
-                    pad, pad, qrCodeData.width, qrCodeData.height
-                )
-                qrImage.setImageBitmap(bitmap)
-                shareQrInstruction.setText(R.string.share_message)
-                qrImage.visibility = View.VISIBLE
-            }
-
-            presenter.loadContact(contactUri) { contact ->
-                disposable.add(
-                    mContactService
-                        .getLoadedContact(mAccountService.currentAccount!!.accountId, contact)
-                        .flatMap { contactViewModel ->
-                            AvatarFactory.getAvatar(requireContext(), contactViewModel).map {
-                                Pair(it, contactViewModel.profile)
-                            }
-                        }.observeOn(DeviceUtils.uiScheduler)
-                        .subscribe { (avatar, profile) ->
-                            qrUserPhoto?.visibility = View.VISIBLE
-                            qrUserPhoto?.setImageDrawable(avatar)
-                            shareUri?.visibility = View.VISIBLE
-                            shareUri?.text = profile.displayName ?: contactUri.uri
-                        }
-                )
-            }
+        presenter.loadQRCodeData(
+            contactUri,
+            foregroundColor = 0x00000000,
+            backgroundColor = -0x1
+        ) { qrCodeData ->
+            val pad = 56
+            val bitmap = createBitmap(qrCodeData.width + 2 * pad, qrCodeData.height + 2 * pad)
+            bitmap.setPixels(
+                qrCodeData.data, 0, qrCodeData.width,
+                pad, pad, qrCodeData.width, qrCodeData.height
+            )
+            qrImage.setImageBitmap(bitmap)
+            shareQrInstruction.setText(R.string.share_message)
+            qrImage.visibility = View.VISIBLE
         }
-        return binding!!.root
-    }
+
+        presenter.loadContact(contactUri) { contact ->
+            qrUserPhoto?.setImageDrawable(AvatarDrawable.Builder()
+                .withContact(contact)
+                .withCircleCrop(true)
+                .build(requireContext()))
+            qrUserPhoto?.visibility = View.VISIBLE
+            shareUri?.text = contact.displayUri
+            shareUri?.visibility = View.VISIBLE
+        }
+    }.root
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding = null
-        disposable.clear()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        disposable.dispose()
     }
 
     companion object {

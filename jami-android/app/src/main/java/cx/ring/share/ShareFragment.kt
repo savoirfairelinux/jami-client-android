@@ -30,6 +30,8 @@ import net.jami.model.Contact
 import net.jami.model.Uri
 import net.jami.share.SharePresenter
 import net.jami.share.ShareView
+import androidx.core.graphics.createBitmap
+import net.jami.model.ContactViewModel
 
 @AndroidEntryPoint
 class ShareFragment : BaseSupportFragment<SharePresenter, ShareView>() {
@@ -52,9 +54,7 @@ class ShareFragment : BaseSupportFragment<SharePresenter, ShareView>() {
                 requireContext().getColor(R.color.transparent)
             ) { qrCodeData ->
                 qrImage.setImageBitmap(
-                    Bitmap.createBitmap(
-                        qrCodeData.width, qrCodeData.height, Bitmap.Config.ARGB_8888
-                    ).apply {
+                    createBitmap(qrCodeData.width, qrCodeData.height).apply {
                         setPixels(
                             qrCodeData.data, 0, qrCodeData.width,
                             0, 0, qrCodeData.width, qrCodeData.height
@@ -65,7 +65,7 @@ class ShareFragment : BaseSupportFragment<SharePresenter, ShareView>() {
 
             shareButton.isEnabled = false
             presenter.loadContact(contactUri) { contact ->
-                if (!contact.isUser)
+                if (!contact.contact.isUser)
                     shareButton.text = getText(R.string.share_contact_information)
                 shareButton.setOnClickListener { shareContact(contact) }
                 shareButton.isEnabled = true
@@ -80,24 +80,23 @@ class ShareFragment : BaseSupportFragment<SharePresenter, ShareView>() {
         mBinding = null
     }
 
-    private fun shareContact(contact: Contact) {
+    private fun shareContact(contact: ContactViewModel) {
         val sharingIntent = Intent(Intent.ACTION_SEND)
         sharingIntent.type = "text/plain"
         sharingIntent.putExtra(
             Intent.EXTRA_SUBJECT,
             getText(
-                if (contact.isUser) R.string.account_contact_me
+                if (contact.contact.isUser) R.string.account_contact_me
                 else R.string.share_contact_intent_title
             )
         )
-        val displayName = contact.username?.blockingGet()
-            .let { if (it.isNullOrEmpty()) contact.uri.uri else it }
+        val displayUri = contact.displayUri
         sharingIntent.putExtra(
             Intent.EXTRA_TEXT,
             getString(
-                if (contact.isUser) R.string.account_share_body
+                if (contact.contact.isUser) R.string.account_share_body
                 else R.string.share_contact_intent_body,
-                displayName, getText(R.string.app_website)
+                displayUri, getText(R.string.app_website)
             )
         )
 

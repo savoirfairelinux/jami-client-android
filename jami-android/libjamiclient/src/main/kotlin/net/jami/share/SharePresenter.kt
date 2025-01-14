@@ -19,6 +19,7 @@ package net.jami.share
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Scheduler
 import net.jami.model.Contact
+import net.jami.model.ContactViewModel
 import net.jami.model.Uri
 import net.jami.mvp.RootPresenter
 import net.jami.services.AccountService
@@ -37,12 +38,11 @@ class SharePresenter @Inject constructor(
 
     fun loadContact(
         contact: Uri,
-        onContactLoaded: (Contact) -> Unit
+        onContactLoaded: (ContactViewModel) -> Unit
     ) {
         mCompositeDisposable.add(
             mContactService
                 .getLoadedContact(mAccountService.currentAccount!!.accountId, contact.uri)
-                .map { it.contact }
                 .observeOn(mUiScheduler)
                 .subscribe(
                     { loadedContact -> onContactLoaded(loadedContact) },
