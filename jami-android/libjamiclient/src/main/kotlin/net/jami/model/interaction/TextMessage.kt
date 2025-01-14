@@ -14,8 +14,9 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-package net.jami.model
+package net.jami.model.interaction
 
+import net.jami.model.ConversationHistory
 import java.lang.NumberFormatException
 
 class TextMessage : Interaction {

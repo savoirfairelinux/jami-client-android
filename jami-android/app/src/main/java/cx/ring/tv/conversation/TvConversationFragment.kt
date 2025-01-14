@@ -82,6 +82,9 @@ import java.io.File
 import java.io.IOException
 import java.util.*
 import com.google.android.material.R.style.Theme_MaterialComponents_Dialog
+import net.jami.model.interaction.Call
+import net.jami.model.interaction.DataTransfer
+import net.jami.model.interaction.Interaction
 
 @AndroidEntryPoint
 class TvConversationFragment : BaseSupportFragment<ConversationPresenter, ConversationView>(),
