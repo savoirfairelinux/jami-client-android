@@ -28,7 +28,8 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.Subject
-import net.jami.model.interaction.Call
+import net.jami.model.Call.CallStatus
+import net.jami.model.Call
 
 enum class CallRequestResult {
     ACCEPTED,
@@ -59,29 +60,29 @@ class CallConnection(
             field = value
             disposable.clear()
             if (value != null) {
-                if (value.callStatus == Call.CallStatus.RINGING)
+                if (value.callStatus == CallStatus.RINGING)
                     setRinging()
                 disposable.add(service.callService.callsUpdates
                     .filter { it === value }
                     .subscribe { call ->
                         val status = call.callStatus
                         // Set the HOLD capability if the call is current
-                        connectionCapabilities = if (status == Call.CallStatus.CURRENT) {
+                        connectionCapabilities = if (status == CallStatus.CURRENT) {
                             connectionCapabilities or CAPABILITY_HOLD
                         } else {
                             connectionCapabilities and CAPABILITY_HOLD.inv()
                         }
-                        if (status == Call.CallStatus.CURRENT)
+                        if (status == CallStatus.CURRENT)
                             callAudioState?.let { audioStateSubject.onNext(it) }
                         // Update call status
                         when (status) {
-                            Call.CallStatus.RINGING -> if (call.isIncoming) setRinging() else setDialing()
-                            Call.CallStatus.CURRENT -> setActive()
-                            Call.CallStatus.HOLD -> setOnHold()
-                            Call.CallStatus.INACTIVE -> setDisconnected(DisconnectCause(DisconnectCause.LOCAL))
-                            Call.CallStatus.FAILURE -> setDisconnected(DisconnectCause(DisconnectCause.ERROR))
-                            Call.CallStatus.HUNGUP -> setDisconnected(DisconnectCause(DisconnectCause.REMOTE))
-                            Call.CallStatus.OVER -> dispose()
+                            CallStatus.RINGING -> if (call.isIncoming) setRinging() else setDialing()
+                            CallStatus.CURRENT -> setActive()
+                            CallStatus.HOLD -> setOnHold()
+                            CallStatus.INACTIVE -> setDisconnected(DisconnectCause(DisconnectCause.LOCAL))
+                            CallStatus.FAILURE -> setDisconnected(DisconnectCause(DisconnectCause.ERROR))
+                            CallStatus.HUNGUP -> setDisconnected(DisconnectCause(DisconnectCause.REMOTE))
+                            CallStatus.OVER -> dispose()
                             else -> {}
                         }
                     })
@@ -105,7 +106,7 @@ class CallConnection(
     override fun onAbort() {
         Log.w(TAG, "onAbort")
         val call = call ?: return
-        service.callService.hangUp(call.account!!, call.daemonIdString!!)
+        service.callService.hangUp(call.account, call.id!!)
     }
 
     override fun onAnswer(videoState: Int) {
@@ -121,13 +122,13 @@ class CallConnection(
     override fun onHold() {
         Log.w(TAG, "onHold")
         val call = call ?: return
-        service.callService.hold(call.account!!, call.daemonIdString!!)
+        service.callService.hold(call.account, call.id!!)
     }
 
     override fun onUnhold() {
         Log.w(TAG, "onUnhold")
         val call = call ?: return
-        service.callService.unhold(call.account!!, call.daemonIdString!!)
+        service.callService.unhold(call.account, call.id!!)
     }
 
     override fun onSilence() {
@@ -137,8 +138,8 @@ class CallConnection(
     override fun onDisconnect() {
         Log.w(TAG, "onDisconnect")
         val call = call ?: return
-        val callId = call.daemonIdString ?: return
-        service.callService.hangUp(call.account!!, callId)
+        val callId = call.id ?: return
+        service.callService.hangUp(call.account, callId)
     }
 
     override fun onPlayDtmfTone(c: Char) {
