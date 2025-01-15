@@ -64,7 +64,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.conversation.ConversationPresenter
-import net.jami.model.interaction.Call
+import net.jami.model.interaction.CallHistory
 import net.jami.model.interaction.ContactEvent
 import net.jami.model.interaction.DataTransfer
 import net.jami.model.interaction.Interaction
@@ -197,7 +197,7 @@ class TvConversationAdapter(
         return when (interaction.type) {
             Interaction.InteractionType.CONTACT -> return MessageType.CONTACT_EVENT.ordinal
             Interaction.InteractionType.CALL ->
-                if ((interaction as Call).isGroupCall) {
+                if ((interaction as CallHistory).isGroupCall) {
                     MessageType.ONGOING_GROUP_CALL.ordinal
                 } else if (interaction.isIncoming) {
                     MessageType.INCOMING_CALL_INFORMATION.ordinal
@@ -853,7 +853,7 @@ class TvConversationAdapter(
     ) {
         val recycle: StringBuilder = StringBuilder()
         val context = convViewHolder.itemView.context
-        val call = interaction as Call
+        val callHistory = interaction as CallHistory
 
         // Reset the scale of the icon
         convViewHolder.mIcon?.scaleX = 1f
@@ -869,13 +869,13 @@ class TvConversationAdapter(
         }
         // When a call is occurring (between members) but you are not in it, a message is
         // displayed in conversation to inform the user about the call and invite him to join.
-        if (call.isGroupCall) {
-            val callStartedMsg = interaction as Call
-            val isTimeShown = hasPermanentTimeString(callStartedMsg, position)
+        if (callHistory.isGroupCall) {
+            val callHistoryStartedMsg = interaction as CallHistory
+            val isTimeShown = hasPermanentTimeString(callHistoryStartedMsg, position)
             val msgSequenceType = getMsgSequencing(position, isTimeShown)
             val peerDisplayName = convViewHolder.mPeerDisplayName
             val account = interaction.account ?: return
-            val contact = callStartedMsg.contact ?: return
+            val contact = callHistoryStartedMsg.contact ?: return
             val callAcceptLayout = convViewHolder.mCallAcceptLayout ?: return
             val avatar = convViewHolder.mAvatar
             val callInfoText = convViewHolder.mCallInfoText ?: return
@@ -884,7 +884,7 @@ class TvConversationAdapter(
             val acceptCallVideoButton =
                 convViewHolder.mAcceptCallVideoButton ?: return
 
-            if (callStartedMsg.isIncoming) {
+            if (callHistoryStartedMsg.isIncoming) {
                 // Show the avatar of the caller
                 // depending on the position of the message.
                 val endOfSeq = msgSequenceType == SequenceType.LAST
@@ -963,11 +963,11 @@ class TvConversationAdapter(
             callAcceptLayout.apply {
                 // Accept with audio only
                 acceptCallAudioButton.setOnClickListener {
-                    call.confId?.let { presenter.goToGroupCall(false) }
+                    callHistory.confId?.let { presenter.goToGroupCall(false) }
                 }
                 // Accept call with video
                 acceptCallVideoButton.setOnClickListener {
-                    call.confId?.let { presenter.goToGroupCall(true) }
+                    callHistory.confId?.let { presenter.goToGroupCall(true) }
                 }
             }
             // Apply a bottom margin to the global layout if end of sequence needed.
@@ -980,8 +980,8 @@ class TvConversationAdapter(
             // Remove the tint
             convViewHolder.mCallInfoLayout?.background?.setTintList(null)
 
-                val callMessage = interaction as Call
-                val isTimeShown = hasPermanentTimeString(callMessage, position)
+                val callHistoryMessage = interaction as CallHistory
+                val isTimeShown = hasPermanentTimeString(callHistoryMessage, position)
                 val msgSequenceType = getMsgSequencing(position, isTimeShown)
                 val callInfoLayout = convViewHolder.mCallInfoLayout ?: return
                 callInfoLayout.background?.setTintList(null)
@@ -993,14 +993,14 @@ class TvConversationAdapter(
                 val typeCallTxt: String
                 val peerDisplayName = convViewHolder.mPeerDisplayName
                 val account = interaction.account ?: return
-                val contact = callMessage.contact ?: return
+                val contact = callHistoryMessage.contact ?: return
 
                 // Manage the update of the timestamp
                 if (isTimeShown) {
                     convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
                         convViewHolder.mMsgDetailTxtPerm?.text =
                             TextUtils.timestampToDetailString(
-                                context, formatter, call.timestamp
+                                context, formatter, callHistory.timestamp
                             )
                     })
                     convViewHolder.mMsgDetailTxtPerm?.visibility = View.VISIBLE
@@ -1008,7 +1008,7 @@ class TvConversationAdapter(
 
                 // After a call, a message is displayed with call information.
                 // Manage the call message layout.
-                if (callMessage.isIncoming) {
+                if (callHistoryMessage.isIncoming) {
                     // Same background for incoming calls.
                     resIndex = msgSequenceType.ordinal + 4
                     // Set the color of the time duration.
@@ -1019,7 +1019,7 @@ class TvConversationAdapter(
                     typeCall.setTextColor(
                         convViewHolder.itemView.context.getColor(R.color.colorOnSurface)
                     )
-                    if (callMessage.isMissed) { // Call incoming missed.
+                    if (callHistoryMessage.isMissed) { // Call incoming missed.
                         callIcon.setImageResource(R.drawable.baseline_missed_call_16)
                         // Set the drawable color to red because it is missed.
                         callIcon.drawable.setTint(context.getColor(R.color.call_missed))
@@ -1061,7 +1061,7 @@ class TvConversationAdapter(
                             R.color.call_text_outgoing_message
                         )
                     )
-                    if (callMessage.isMissed) { // Outgoing call missed.
+                    if (callHistoryMessage.isMissed) { // Outgoing call missed.
                         callIcon.setImageResource(R.drawable.baseline_missed_call_16)
                         // Set the drawable color to red because it is missed.
                         callIcon.drawable.setTint(context.getColor(R.color.call_missed))
@@ -1082,17 +1082,17 @@ class TvConversationAdapter(
                     ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
                 callInfoLayout.setPadding(callPadding)
                 // Manage background to convColor if it is outgoing.
-                if (convColor != 0 && !callMessage.isIncoming) {
+                if (convColor != 0 && !callHistoryMessage.isIncoming) {
                     callInfoLayout.background.setTint(convColor)
                 }
                 typeCall.text = typeCallTxt
                 // Add the call duration if not null.
                 detailCall.text =
-                    if (callMessage.duration != 0L) {
+                    if (callHistoryMessage.duration != 0L) {
                         String.format(
                             context.getString(R.string.call_duration),
                             DateUtils.formatElapsedTime(
-                                recycle, callMessage.duration!! / 1000
+                                recycle, callHistoryMessage.duration!! / 1000
                             )
                         ).let { " - $it" }
                     } else null

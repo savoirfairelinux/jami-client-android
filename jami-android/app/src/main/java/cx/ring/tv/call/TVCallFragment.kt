@@ -55,7 +55,7 @@ import cx.ring.views.AvatarDrawable
 import dagger.hilt.android.AndroidEntryPoint
 import net.jami.call.CallPresenter
 import net.jami.call.CallView
-import net.jami.model.interaction.Call.CallStatus
+import net.jami.model.Call.CallStatus
 import net.jami.model.Conference
 import net.jami.model.Conference.ParticipantInfo
 import net.jami.model.Contact
@@ -450,17 +450,15 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
             val hasProfileName = displayName != null && !displayName.contentEquals(username)
             val call = participantInfo[0].call
             if (call != null) {
-                val conversationUri = if (call.conversationId != null)
-                    Uri(Uri.SWARM_SCHEME, call.conversationId!!)
-                else call.contact!!.conversationUri.blockingFirst()
+                val conversationUri = call.conversationUri ?: call.contact!!.conversationUri.blockingFirst()
                 activity?.let { activity ->
                     activity.intent = Intent(Intent.ACTION_VIEW,
                         ConversationPath.toUri(call.account!!, conversationUri), context, TVCallActivity::class.java)
-                        .apply { putExtra(NotificationService.KEY_CALL_ID, call.confId ?: call.daemonIdString) }
+                        .apply { putExtra(NotificationService.KEY_CALL_ID, call.confId ?: call.id) }
                 }
                 arguments = Bundle().apply {
                     putString(CallFragment.KEY_ACTION, Intent.ACTION_VIEW)
-                    putString(NotificationService.KEY_CALL_ID, call.confId ?: call.daemonIdString)
+                    putString(NotificationService.KEY_CALL_ID, call.confId ?: call.id)
                 }
             }
             if (hasProfileName) {

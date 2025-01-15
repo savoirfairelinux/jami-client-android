@@ -30,7 +30,8 @@ import net.jami.services.ConversationFacade
 import net.jami.model.*
 import net.jami.model.Account.ComposingStatus
 import net.jami.model.Conversation.ElementStatus
-import net.jami.model.interaction.Call
+import net.jami.model.Call.CallStatus
+import net.jami.model.interaction.CallHistory
 import net.jami.model.interaction.DataTransfer
 import net.jami.model.interaction.Interaction
 import net.jami.model.interaction.TextMessage
@@ -326,13 +327,13 @@ class ConversationPresenter @Inject constructor(
         view?.goToGroupCall(mConversation!!, mConversation!!.uri, media)
     }
 
-    fun goToSwarmCall(call: Call, withVideo: Boolean) {
-        Log.w(TAG, "goToSwarmCall $call")
+    fun goToSwarmCall(callHistory: CallHistory, withVideo: Boolean) {
+        Log.w(TAG, "goToSwarmCall $callHistory")
         val conversation = mConversation ?: return
-        if (call.confId == null || call.hostUri == null || call.hostDevice == null)
+        if (callHistory.confId == null || callHistory.hostUri == null || callHistory.hostDevice == null)
             goToGroupCall(withVideo)
         else
-            view?.goToGroupCall(conversation, Uri.fromString("rdv:${conversation.uri.host}/${call.hostUri}/${call.hostDevice}/${call.confId}"), withVideo)
+            view?.goToGroupCall(conversation, Uri.fromString("rdv:${conversation.uri.host}/${callHistory.hostUri}/${callHistory.hostDevice}/${callHistory.confId}"), withVideo)
     }
 
     fun deleteConversationItem(element: Interaction) {
@@ -398,8 +399,8 @@ class ConversationPresenter @Inject constructor(
                 if (view != null) {
                     val conf = conversation.currentCall
                     if (conf != null && conf.participants.isNotEmpty()
-                        && conf.participants[0].callStatus !== Call.CallStatus.INACTIVE
-                        && conf.participants[0].callStatus !== Call.CallStatus.FAILURE) {
+                        && conf.participants[0].callStatus !== CallStatus.INACTIVE
+                        && conf.participants[0].callStatus !== CallStatus.FAILURE) {
                         // Navigate to the call activity with the existing call
                         view.goToCallActivity(conf.id, conf.hasActiveVideo())
                     } else {

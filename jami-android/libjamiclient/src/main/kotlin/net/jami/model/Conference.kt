@@ -19,8 +19,7 @@ package net.jami.model
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.Subject
-import net.jami.model.interaction.Call.CallStatus
-import net.jami.model.interaction.Call
+import net.jami.model.Call.CallStatus
 import java.util.*
 import kotlin.math.min
 
@@ -46,10 +45,10 @@ class Conference(val accountId: String, val id: String) {
         val tag: String
             get() = sinkId ?: contact.contact.uri.uri
 
-        override fun hashCode(): Int = Objects.hash(contact.contact.uri, device, call?.daemonIdString, pending)
+        override fun hashCode(): Int = Objects.hash(contact.contact.uri, device, call?.id, pending)
     }
 
-    constructor(call: Call) : this(call.account!!, call.confId ?: call.daemonIdString!!) {
+    constructor(call: Call) : this(call.account, call.confId ?: call.id!!) {
         mParticipants.add(call)
     }
 
@@ -81,7 +80,7 @@ class Conference(val accountId: String, val id: String) {
     val isRinging: Boolean
         get() = mParticipants.isNotEmpty() && mParticipants[0].isRinging
     val isConference: Boolean
-        get() = mParticipants.size > 1 || conversationId != null || (mParticipants.size == 1 && mParticipants[0].daemonIdString != id)
+        get() = mParticipants.size > 1 || conversationId != null || (mParticipants.size == 1 && mParticipants[0].id != id)
     val call: Call?
         get() = if (!isConference) {
             firstCall
@@ -108,7 +107,7 @@ class Conference(val accountId: String, val id: String) {
         get() = mConfState!!
 
     val isSimpleCall: Boolean
-        get() = mParticipants.size == 1 && id == mParticipants[0].daemonIdString
+        get() = mParticipants.size == 1 && id == mParticipants[0].id
 
     /** If not null, this conference is a swarm call */
     var conversationId: String? = null
@@ -144,13 +143,13 @@ class Conference(val accountId: String, val id: String) {
 
     operator fun contains(callID: String): Boolean {
         for (participant in mParticipants)
-            if (participant.daemonIdString == callID) return true
+            if (participant.id == callID) return true
         return false
     }
 
     fun getCallById(callID: String): Call? {
         for (participant in mParticipants)
-            if (participant.daemonIdString == callID) return participant
+            if (participant.id == callID) return participant
         return null
     }
 
