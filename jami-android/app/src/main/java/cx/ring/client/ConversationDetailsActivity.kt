@@ -58,7 +58,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
-import net.jami.model.interaction.Call
+import net.jami.model.Call.CallStatus
 import net.jami.model.Contact
 import net.jami.model.Conversation
 import net.jami.model.Profile
@@ -468,8 +468,8 @@ class ConversationDetailsActivity : AppCompatActivity(), ContactPickerFragment.O
     fun goToCallActivity(conversation: Conversation, contactUri: Uri, hasVideo: Boolean) {
         val conf = conversation.currentCall
         if (conf != null && conf.participants.isNotEmpty()
-            && conf.participants[0].callStatus != Call.CallStatus.INACTIVE
-            && conf.participants[0].callStatus != Call.CallStatus.FAILURE) {
+            && conf.participants[0].callStatus != CallStatus.INACTIVE
+            && conf.participants[0].callStatus != CallStatus.FAILURE) {
             startActivity(Intent(Intent.ACTION_VIEW)
                 .setClass(applicationContext, CallActivity::class.java)
                 .putExtra(NotificationService.KEY_CALL_ID, conf.id))
