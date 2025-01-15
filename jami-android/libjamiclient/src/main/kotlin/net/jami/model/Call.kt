@@ -14,7 +14,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-package net.jami.model.interaction
+package net.jami.model
 
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
@@ -24,24 +24,36 @@ import io.reactivex.rxjava3.subjects.Subject
 import net.jami.model.Contact
 import net.jami.model.ConversationHistory
 import net.jami.model.Media
+import net.jami.model.interaction.Interaction
 import net.jami.services.CallService
 import net.jami.utils.Log
 import java.util.*
 
-class Call : Interaction {
-    override val daemonIdString: String?
+class Call(
+    val account: String,
+    val id: String?,
+    val peerUri: Uri,
+    val isIncoming: Boolean,
+    val conversationUri: Uri? = null
+) {
     private var isPeerHolding = false
     var isAudioMuted = false
     var isVideoMuted = false
     private val isRecording = false
     var callStatus = CallStatus.NONE
         private set
+
+    var timestamp: Long = 0
     var timestampEnd: Long = 0
         set(timestampEnd) {
             field = timestampEnd
-            if (timestampEnd != 0L && !isMissed) duration = timestampEnd - timestamp
+            //if (timestampEnd != 0L && !isMissed) duration = timestampEnd - timestamp
         }
-    var duration: Long? = null
+
+    var contact: Contact? = null
+    var conversation: Conversation? = null
+
+    /*var duration: Long? = null
         get() {
             if (field == null) {
                 val element = toJson(mExtraFlag)[KEY_DURATION]
@@ -60,7 +72,7 @@ class Call : Interaction {
                 mExtraFlag = fromJson(jsonObject)
                 isMissed = false
             }
-        }
+        }*/
     var isMissed = true
         private set
 
@@ -70,12 +82,12 @@ class Call : Interaction {
     var videoCodec: String? = null
         private set
 
-    var contactNumber: String? = null
-        private set
+    /*var contactNumber: String? = null
+        private set*/
 
     var confId: String? = null
-    var hostDevice: String? = null
-    var hostUri: String? = null
+    /*var hostDevice: String? = null
+    var hostUri: String? = null*/
 
     val mediaList = ArrayList<Media>()
     private val mediaListSubject: Subject<List<Media>> = BehaviorSubject.createDefault(mediaList)
@@ -101,72 +113,30 @@ class Call : Interaction {
     constructor(
         daemonId: String?,
         author: String?,
-        account: String?,
-        conversation: ConversationHistory?,
-        contact: Contact?,
+        account: String,
+        conversation: Conversation?,
+        contact: Contact,
         direction: Direction,
-        //mediaList: List<Media>,
-    ) {
-        daemonIdString = daemonId
-        try {
-            this.daemonId = daemonId?.toLong()
-        } catch (e: Exception) {
-            Log.e(TAG, "Can't parse CallId $daemonId")
-        }
-        this.author = if (direction == Direction.INCOMING) author else null
-        this.account = account
+    ) : this(account, daemonId, contact.uri, direction == Direction.INCOMING, conversation?.uri) {
         this.conversation = conversation
-        isIncoming = direction == Direction.INCOMING
         timestamp = System.currentTimeMillis()
-        type = InteractionType.CALL
         this.contact = contact
-        mIsRead = 1
-        //this.mediaList = mediaList
     }
 
-    constructor(interaction: Interaction) {
-        id = interaction.id
-        author = interaction.author
-        conversation = interaction.conversation
-        isIncoming = author != null
-        timestamp = interaction.timestamp
-        type = InteractionType.CALL
-        status = interaction.status
-        daemonId = interaction.daemonId
-        daemonIdString = super.daemonIdString
-        mIsRead = if (interaction.isRead) 1 else 0
-        account = interaction.account
-        mExtraFlag = fromJson(interaction.extraFlag)
-        isMissed = duration == 0L
-        mIsRead = 1
-        contact = interaction.contact
-    }
-
-    constructor(daemonId: String?, account: String?, contactNumber: String?, direction: Direction, timestamp: Long) {
-        daemonIdString = daemonId
-        try {
-            this.daemonId = daemonId?.toLong()
-        } catch (e: Exception) {
-            Log.e(TAG, "Can't parse CallId $daemonId")
-        }
-        isIncoming = direction == Direction.INCOMING
-        this.account = account
-        author = if (direction == Direction.INCOMING) contactNumber else null
-        this.contactNumber = contactNumber
+    constructor(daemonId: String?, account: String, contactNumber: String, direction: Direction, timestamp: Long)
+            : this(account, daemonId, Uri.fromString(contactNumber), direction == Direction.INCOMING) {
         this.timestamp = timestamp
-        type = InteractionType.CALL
-        mIsRead = 1
     }
 
-    constructor(daemonId: String?, call_details: Map<String, String>) : this(
+    constructor(daemonId: String?, callDetails: Map<String, String>) : this(
         daemonId,
-        call_details[KEY_ACCOUNT_ID],
-        call_details[KEY_PEER_NUMBER],
-        Direction.fromInt(call_details[KEY_CALL_TYPE]!!.toInt()),
+        callDetails[KEY_ACCOUNT_ID]!!,
+        callDetails[KEY_PEER_NUMBER]!!,
+        Direction.fromInt(callDetails[KEY_CALL_TYPE]!!.toInt()),
         System.currentTimeMillis())
     {
-        setCallState(CallStatus.fromString(call_details[KEY_CALL_STATE]!!))
-        setDetails(call_details)
+        setCallState(CallStatus.fromString(callDetails[KEY_CALL_STATE]!!))
+        setDetails(callDetails)
     }
 
     fun setDetails(details: Map<String, String>) {
@@ -181,9 +151,9 @@ class Call : Interaction {
         get() = confId != null
 
     val isGroupCall: Boolean
-        get() = isConferenceParticipant && duration == 0L
+        get() = isConferenceParticipant// && duration == 0L
 
-    val durationString: String
+    /*val durationString: String
         get() {
             val mDuration = duration!! / 1000
             if (mDuration < 60) {
@@ -193,18 +163,17 @@ class Call : Interaction {
                 String.format(Locale.getDefault(), "%02d mins %02d secs", mDuration % 3600 / 60, mDuration % 60)
             else
                 String.format(Locale.getDefault(), "%d h %02d mins %02d secs", mDuration / 3600, mDuration % 3600 / 60, mDuration % 60)
-        }
+        }*/
 
     fun setCallState(callStatus: CallStatus) {
         this.callStatus = callStatus
         if (callStatus == CallStatus.CURRENT) {
             isMissed = false
-            status = InteractionStatus.SUCCESS
-        } else if (isRinging || isOnGoing) {
+        }/* else if (isRinging || isOnGoing) {
             status = InteractionStatus.SUCCESS
         } else if (this.callStatus == CallStatus.FAILURE) {
             status = InteractionStatus.FAILURE
-        }
+        }*/
     }
 
     /*override var timestamp: Long
@@ -248,9 +217,9 @@ class Call : Interaction {
         return false
     }
 
-    fun setEnded(end: Call) {
+    /*fun setEnded(end: Call) {
         duration = end.duration
-    }
+    }*/
 
     enum class CallStatus {
         NONE, SEARCHING, CONNECTING, RINGING, CURRENT, HUNGUP, BUSY, FAILURE, HOLD, UNHOLD, INACTIVE, OVER;

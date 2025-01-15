@@ -24,7 +24,7 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.model.*
 import net.jami.model.Account.ContactLocationEntry
-import net.jami.model.interaction.Call.CallStatus
+import net.jami.model.Call.CallStatus
 import net.jami.model.interaction.Interaction
 import net.jami.model.interaction.Interaction.TransferStatus
 import net.jami.model.interaction.*
@@ -592,22 +592,22 @@ class ConversationFacade(
 
     private fun onCallStateChange(call: Call) {
         /* Ignore updates to host call connection (null callId) */
-        if (call.daemonIdString == null && call.confId == null)
+        if (call.id == null && call.confId == null)
             return
         val newState = call.callStatus
         val incomingCall = newState === CallStatus.RINGING && call.isIncoming
-        val account = mAccountService.getAccount(call.account!!) ?: return
+        val account = mAccountService.getAccount(call.account) ?: return
         val contact = call.contact
-        val conversationId = call.conversationId
-        Log.w(TAG, "CallStateChange ${call.daemonIdString}->$newState conversationId:$conversationId contact:$contact ${contact?.conversationUri?.blockingFirst()}")
-        val conversation = if (conversationId == null)
+        val conversationUri = call.conversationUri
+        Log.w(TAG, "CallStateChange ${call.id}->$newState conversationId:$conversationUri contact:$contact ${contact?.conversationUri?.blockingFirst()}")
+        val conversation = if (conversationUri == null)
             if (contact == null)
                 null
             else
                 account.getByUri(contact.conversationUri.blockingFirst()) ?: account.getByUri(contact.uri)
         else
-            account.getByUri(Uri(Uri.SWARM_SCHEME, conversationId))
-        val conference = if (conversation != null) (conversation.getConference(call.confId ?: call.daemonIdString) ?: Conference(call).apply {
+            account.getByUri(conversationUri)
+        val conference = if (conversation != null) (conversation.getConference(call.confId ?: call.id) ?: Conference(call).apply {
             if (newState === CallStatus.OVER) return@onCallStateChange
             conversation.addConference(this)
             account.updated(conversation)
@@ -627,7 +627,7 @@ class ConversationFacade(
             if (conference != null)
                 mNotificationService.handleCallNotification(conference, true)
             else {
-                mNotificationService.removeCallNotification(call.id)
+                mNotificationService.removeCallNotification()
             }
             mHardwareService.closeAudioState()
             val now = System.currentTimeMillis()
@@ -639,8 +639,9 @@ class ConversationFacade(
             }
             if (conference != null && conference.removeParticipant(call) && conversation != null && !conversation.isSwarm) {
                 Log.w(TAG, "Adding call history for conversation " + conversation.uri)
-                mHistoryService.insertInteraction(account.accountId, conversation, call).subscribe()
-                conversation.addCall(call)
+                val callHistory = CallHistory(call)
+                mHistoryService.insertInteraction(account.accountId, conversation, callHistory).subscribe()
+                conversation.addCall(callHistory)
                 if (call.isIncoming && call.isMissed) {
                     mNotificationService.showMissedCallNotification(call)
                 }

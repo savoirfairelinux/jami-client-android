@@ -289,13 +289,13 @@ class Conversation : ConversationHistory {
         }
 
     @Synchronized
-    fun addCall(call: Call) {
-        if (!isSwarm && callHistory.contains(call)) {
+    fun addCall(callHistory: net.jami.model.interaction.CallHistory) {
+        if (!isSwarm && this@Conversation.callHistory.contains(callHistory)) {
             return
         }
         mDirty = true
-        aggregateHistory.add(call)
-        updatedElementSubject.onNext(Pair(call, ElementStatus.ADD))
+        aggregateHistory.add(callHistory)
+        updatedElementSubject.onNext(Pair(callHistory, ElementStatus.ADD))
     }
 
     private fun setInteractionProperties(interaction: Interaction) {
@@ -474,12 +474,12 @@ class Conversation : ConversationHistory {
     val currentCall: Conference?
         get() = if (currentCalls.isEmpty()) null else currentCalls[0]
 
-    private val callHistory: Collection<Call>
+    private val callHistory: Collection<net.jami.model.interaction.CallHistory>
         get() {
-            val result: MutableList<Call> = ArrayList()
+            val result: MutableList<net.jami.model.interaction.CallHistory> = ArrayList()
             for (interaction in aggregateHistory) {
                 if (interaction.type == Interaction.InteractionType.CALL) {
-                    result.add(interaction as Call)
+                    result.add(interaction as net.jami.model.interaction.CallHistory)
                 }
             }
             return result
@@ -573,7 +573,7 @@ class Conversation : ConversationHistory {
         setInteractionProperties(interaction)
         when (interaction.type) {
             Interaction.InteractionType.TEXT -> addTextMessage(TextMessage(interaction))
-            Interaction.InteractionType.CALL -> addCall(Call(interaction))
+            Interaction.InteractionType.CALL -> addCall(CallHistory(interaction))
             Interaction.InteractionType.CONTACT -> addContactEvent(ContactEvent(interaction))
             Interaction.InteractionType.DATA_TRANSFER -> addFileTransfer(DataTransfer(interaction))
             else -> {}
@@ -589,7 +589,7 @@ class Conversation : ConversationHistory {
     @Synchronized
     fun addSwarmElement(interaction: Interaction, newMessage: Boolean) {
         // Handle call interaction
-        if (interaction is Call && interaction.confId != null) {
+        if (interaction is net.jami.model.interaction.CallHistory && interaction.confId != null) {
             // interaction.duration is changed when the call is ended.
             // It means duration=0 when the call is started and duration>0 when the call is ended.
             if (interaction.duration != 0L) {
@@ -825,8 +825,8 @@ class Conversation : ConversationHistory {
     fun setActiveCalls(activeCalls: List<ActiveCall>) =
         activeCallsSubject.onNext(activeCalls)
 
-    private val conferenceStarted: MutableMap<String, Call> = HashMap()
-    private val conferenceEnded: MutableMap<String, Call> = HashMap()
+    private val conferenceStarted: MutableMap<String, net.jami.model.interaction.CallHistory> = HashMap()
+    private val conferenceEnded: MutableMap<String, net.jami.model.interaction.CallHistory> = HashMap()
 
     enum class Mode {
         OneToOne, AdminInvitesOnly, InvitesOnly,  // Non-daemon modes
@@ -853,7 +853,7 @@ class Conversation : ConversationHistory {
 
         private fun getTypedInteraction(interaction: Interaction) = when (interaction.type) {
             Interaction.InteractionType.TEXT -> TextMessage(interaction)
-            Interaction.InteractionType.CALL -> Call(interaction)
+            Interaction.InteractionType.CALL -> CallHistory(interaction)
             Interaction.InteractionType.CONTACT -> ContactEvent(interaction)
             Interaction.InteractionType.DATA_TRANSFER -> DataTransfer(interaction)
             else -> interaction

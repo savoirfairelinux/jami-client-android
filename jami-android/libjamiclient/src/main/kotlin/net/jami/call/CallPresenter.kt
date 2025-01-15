@@ -26,8 +26,8 @@ import net.jami.services.ConversationFacade
 import net.jami.model.*
 import net.jami.model.Conference.ParticipantInfo
 import net.jami.model.Uri.Companion.fromString
-import net.jami.model.interaction.Call
-import net.jami.model.interaction.Call.CallStatus
+import net.jami.model.Call
+import net.jami.model.Call.CallStatus
 import net.jami.mvp.RootPresenter
 import net.jami.services.*
 import net.jami.services.HardwareService.AudioState
@@ -183,7 +183,7 @@ class CallPresenter @Inject constructor(
             { participants, pending, callContact ->
                 val p = if (participants.isEmpty() && !obj.isConference)
                     listOf(ParticipantInfo(obj.call, callContact, mapOf(
-                        "sinkId" to (obj.call?.daemonIdString ?: ""),
+                        "sinkId" to (obj.call?.id ?: ""),
                         "active" to "true"
                     )))
                 else
@@ -240,7 +240,7 @@ class CallPresenter @Inject constructor(
      * */
     fun muteMicrophoneToggled(checked: Boolean) {
         val conference = mConference ?: return
-        val callId = conference.call?.daemonIdString
+        val callId = conference.call?.id
         if(callId != null) {
             mCallService.setLocalMediaMuted(
                 conference.accountId,
@@ -294,7 +294,7 @@ class CallPresenter @Inject constructor(
             // Hang up pending calls.
             for (participant in conference.pendingCalls.blockingFirst()) {
                 val call = participant.call ?: continue
-                mCallService.hangUp(call.account!!, call.daemonIdString!!)
+                mCallService.hangUp(call.account, call.id!!)
             }
         }
         finish(hangupReason)
@@ -437,7 +437,7 @@ class CallPresenter @Inject constructor(
             if (scall.isIncoming) {
                 if (mAccountService.getAccount(scall.account)?.isAutoanswerEnabled == true) {
                     Log.w(TAG, "Accept because of autoanswer")
-                    mCallService.accept(scall.account!!, scall.daemonIdString!!, wantVideo)
+                    mCallService.accept(scall.account, scall.id!!, wantVideo)
                     // only display the incoming call screen if the notification is a full screen intent
                 } else if (incomingIsFullIntent) {
                     view.initIncomingCallDisplay(hasVideo)
@@ -542,7 +542,7 @@ class CallPresenter @Inject constructor(
     fun requestPipMode() {
         val conference = mConference ?: return
         if (conference.isOnGoing && conference.hasVideo()) {
-            view?.enterPipMode(conference.accountId, conference.firstCall?.daemonIdString)
+            view?.enterPipMode(conference.accountId, conference.firstCall?.id)
         }
     }
 
@@ -571,7 +571,7 @@ class CallPresenter @Inject constructor(
                         override fun onNext(sipCall: Call) {
                             if (call == null) {
                                 val contact = sipCall.contact ?: conversation.contact!!
-                                call = ParticipantInfo(sipCall, ContactViewModel(contact, contact.profile.blockingFirst()), mapOf("sinkId" to (sipCall.daemonIdString ?: "")), pending = true)
+                                call = ParticipantInfo(sipCall, ContactViewModel(contact, contact.profile.blockingFirst()), mapOf("sinkId" to (sipCall.id ?: "")), pending = true)
                                     .apply { conference.addPending(this) }
                             }
                         }
@@ -605,9 +605,9 @@ class CallPresenter @Inject constructor(
                     mCompositeDisposable.add(newCall.subscribe { call: Call ->
                         val id = conference.id
                         if (conference.isConference) {
-                            mCallService.addParticipant(call.account!!, call.daemonIdString!!, conference.accountId, id)
+                            mCallService.addParticipant(call.account, call.id!!, conference.accountId, id)
                         } else {
-                            mCallService.joinParticipant(conference.accountId, id, call.account!!, call.daemonIdString!!).subscribe()
+                            mCallService.joinParticipant(conference.accountId, id, call.account, call.id!!).subscribe()
                         }
                     })
                 } else if (conf !== conference) {
@@ -632,7 +632,7 @@ class CallPresenter @Inject constructor(
 
     fun hangupParticipant(info: ParticipantInfo) {
         if (info.call != null)
-            mCallService.hangUp(info.call.account!!, info.call.daemonIdString!!)
+            mCallService.hangUp(info.call.account, info.call.id!!)
         else
             mCallService.hangupParticipant(mConference!!.accountId, mConference!!.id, info.contact.contact.primaryNumber)
     }
