@@ -69,7 +69,7 @@ abstract class CallService(
 
     fun getConfUpdates(confId: String): Observable<Conference> =
         calls[confId]?.let { getConfUpdates(it) }
-            ?: Observable.error(IllegalArgumentException())
+            ?: conferences[confId]?.let { getConfUpdates(it) } ?: Observable.error(IllegalArgumentException())
 
     /*public Observable<Boolean> getConnectionUpdates() {
         return connectionSubject
