@@ -81,7 +81,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.conversation.ConversationPresenter
 import net.jami.model.*
 import net.jami.model.Account.ComposingStatus
-import net.jami.model.interaction.Call
+import net.jami.model.interaction.CallHistory
 import net.jami.model.interaction.ContactEvent
 import net.jami.model.interaction.DataTransfer
 import net.jami.model.interaction.Interaction
@@ -286,7 +286,7 @@ class ConversationAdapter(
             Interaction.InteractionType.CONTACT -> MessageType.CONTACT_EVENT.ordinal
 
             Interaction.InteractionType.CALL -> {
-                if ((interaction as Call).isGroupCall) {
+                if ((interaction as CallHistory).isGroupCall) {
                     MessageType.ONGOING_GROUP_CALL.ordinal
                 } else if (interaction.isIncoming) {
                     MessageType.INCOMING_CALL_INFORMATION.ordinal
@@ -1565,22 +1565,22 @@ class ConversationAdapter(
             }
         }
 
-        val call = interaction as Call
+        val callHistory = interaction as CallHistory
 
         val peerDisplayName = convViewHolder.mPeerDisplayName
         val avatar = convViewHolder.mAvatar
         val timePermanent = convViewHolder.mMsgDetailTxtPerm
 
         val account = interaction.account ?: return
-        val contact = call.contact ?: return
-        val isDateShown = hasPermanentDateString(call, position)
+        val contact = callHistory.contact ?: return
+        val isDateShown = hasPermanentDateString(callHistory, position)
         val msgSequenceType = getMsgSequencing(position, isDateShown)
 
         val endOfSeq = msgSequenceType == SequenceType.LAST
                 || msgSequenceType == SequenceType.SINGLE
         val startOfSeq = msgSequenceType == SequenceType.FIRST
                 || msgSequenceType == SequenceType.SINGLE
-        val resIndex = msgSequenceType.ordinal + (if (call.isIncoming) 1 else 0) * 4
+        val resIndex = msgSequenceType.ordinal + (if (callHistory.isIncoming) 1 else 0) * 4
 
         // Add margin if message need to be separated.
         val isMessageSeparationNeeded = isMessageSeparationNeeded(isDateShown, position)
@@ -1623,19 +1623,19 @@ class ConversationAdapter(
         if (isDateShown) {
             convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
                 timePermanent?.text = TextUtils
-                    .timestampToDate(context, formatter, call.timestamp)
+                    .timestampToDate(context, formatter, callHistory.timestamp)
             })
             convViewHolder.mMsgDetailTxtPerm?.visibility = View.VISIBLE
         } else convViewHolder.mMsgDetailTxtPerm?.visibility = View.GONE
 
         convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
             val timeString =
-                TextUtils.timestampToTime(context, formatter, call.timestamp)
+                TextUtils.timestampToTime(context, formatter, callHistory.timestamp)
             convViewHolder.mCallTime?.text = timeString
         })
         // When a group call is occurring but you are not in it, a message is displayed
         // in conversation to inform the user about the call and invite him to join.
-        if (call.isGroupCall) {
+        if (callHistory.isGroupCall) {
             val callAcceptLayout = convViewHolder.mCallAcceptLayout ?: return
             val callInfoText = convViewHolder.mCallInfoText ?: return
             val acceptCallAudioButton =
@@ -1646,18 +1646,18 @@ class ConversationAdapter(
             callAcceptLayout.apply {
                 // Accept with audio only
                 convViewHolder.mAcceptCallAudioButton?.setOnClickListener {
-                    call.confId?.let { presenter.goToSwarmCall(call, false) }
+                    callHistory.confId?.let { presenter.goToSwarmCall(callHistory, false) }
                 }
                 // Accept call with video
                 convViewHolder.mAcceptCallVideoButton?.setOnClickListener {
-                    call.confId?.let { presenter.goToSwarmCall(call, true) }
+                    callHistory.confId?.let { presenter.goToSwarmCall(callHistory, true) }
                 }
             }
 
             // Set the background to the call started message.
             callAcceptLayout.background = ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
 
-            if (call.isIncoming) {
+            if (callHistory.isIncoming) {
                 // Show the avatar of the caller if last or single.
 
                 // We can call ourselves in a group call with different devices.
@@ -1716,29 +1716,29 @@ class ConversationAdapter(
             callInfoLayout.background = ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
             callInfoLayout.setPadding(callPadding)
             // Manage background to convColor if it is outgoing and not missed.
-            if (convColor != 0 && !call.isIncoming) {
+            if (convColor != 0 && !callHistory.isIncoming) {
                 callInfoLayout.background.setTint(convColor)
             } else {
                 callInfoLayout.background.setTintList(null)
             }
             // Add the call duration if not null.
-            detailCall.text = if (call.duration != 0L) {
+            detailCall.text = if (callHistory.duration != 0L) {
                 String.format(
                         context.getString(R.string.call_duration),
-                        DateUtils.formatElapsedTime(null, call.duration!! / 1000)
+                        DateUtils.formatElapsedTime(null, callHistory.duration!! / 1000)
                 ).let { " - $it" }
             } else null
 
             // After a call, a message is displayed with call information.
             // Manage the call message layout.
-            if (call.isIncoming) {
+            if (callHistory.isIncoming) {
                 // Set the color of the time duration.
                 detailCall.setTextColor(context.getColor(R.color.colorOnSurface))
 
                 // Set the call message color.
                 typeCall.setTextColor(context.getColor(R.color.colorOnSurface))
 
-                if (call.isMissed) { // Call incoming missed.
+                if (callHistory.isMissed) { // Call incoming missed.
                     callIcon.setImageResource(R.drawable.baseline_missed_call_16)
                     // Set the drawable color to red because it is missed.
                     callIcon.drawable.setTint(context.getColor(R.color.call_missed))
@@ -1755,7 +1755,7 @@ class ConversationAdapter(
                 // Set the color of the time duration.
                 detailCall.setTextColor(context.getColor(R.color.call_text_outgoing_message))
 
-                if (call.isMissed) { // Outgoing call missed.
+                if (callHistory.isMissed) { // Outgoing call missed.
                     callIcon.setImageResource(R.drawable.baseline_missed_call_16)
                     // Set the drawable color to red because it is missed.
                     callIcon.drawable.setTint(context.getColor(R.color.call_missed))
