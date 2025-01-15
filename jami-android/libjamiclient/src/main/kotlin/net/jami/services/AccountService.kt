@@ -28,6 +28,7 @@ import io.reactivex.rxjava3.subjects.SingleSubject
 import io.reactivex.rxjava3.subjects.Subject
 import net.jami.daemon.*
 import net.jami.model.*
+import net.jami.model.Call.Direction
 import net.jami.model.interaction.*
 import net.jami.model.interaction.Interaction.TransferStatus
 import net.jami.services.ConversationFacade.SearchResult
@@ -1342,8 +1343,8 @@ class AccountService(
             }
             "application/call-history+json" -> {
                 val callDirection =
-                    if (contact.isUser) Call.Direction.OUTGOING else Call.Direction.INCOMING
-                Call(null, account.accountId, authorUri.rawUriString, callDirection, timestamp)
+                    if (contact.isUser) Direction.OUTGOING else Direction.INCOMING
+                CallHistory(null, account.accountId, authorUri.rawUriString, callDirection, timestamp)
                     .apply {
                         message["duration"]?.let { d -> duration = d.toLong() }
                         message["confId"]?.let { c -> confId = c }
