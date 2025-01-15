@@ -76,7 +76,7 @@ import net.jami.conversation.ConversationView
 import net.jami.daemon.JamiService
 import net.jami.model.*
 import net.jami.model.Account.ComposingStatus
-import net.jami.model.interaction.Call
+import net.jami.model.Call.CallStatus
 import net.jami.model.interaction.DataTransfer
 import net.jami.model.interaction.Interaction
 import net.jami.model.interaction.TextMessage
@@ -989,8 +989,8 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         // If there is an existing call, go to it
         if (conf != null
             && conf.participants.isNotEmpty()
-            && conf.participants[0].callStatus != Call.CallStatus.INACTIVE
-            && conf.participants[0].callStatus != Call.CallStatus.FAILURE
+            && conf.participants[0].callStatus != CallStatus.INACTIVE
+            && conf.participants[0].callStatus != CallStatus.FAILURE
         ) {
             startActivity(
                 Intent(Intent.ACTION_VIEW)
