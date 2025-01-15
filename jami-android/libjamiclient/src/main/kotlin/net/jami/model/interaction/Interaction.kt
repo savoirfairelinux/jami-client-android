@@ -147,13 +147,10 @@ open class Interaction {
     val extraFlag: JsonObject
         get() = toJson(mExtraFlag)
 
-    fun toJson(value: String?): JsonObject {
-        return JsonParser.parseString(value).asJsonObject
-    }
+    fun toJson(value: String?): JsonObject =
+        JsonParser.parseString(value).asJsonObject
 
-    fun fromJson(json: JsonObject): String {
-        return json.toString()
-    }
+    fun fromJson(json: JsonObject): String = json.toString()
 
     open val daemonIdString: String?
         get() = daemonId?.toString()
