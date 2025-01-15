@@ -97,6 +97,19 @@ class CallPresenter @Inject constructor(
             hangupCall()
             return
         }
+        if (contactUri.startsWith(Uri.RDV_SCHEME)) {
+            // expected rdv uri format is
+            // rdv:<conversationId>/<contactId>/<deviceId>/<confId>
+            val parts = contactUri.split("/")
+            if (parts.size != 4) {
+                Log.e(TAG, "initOutGoing: invalid rdv uri")
+                hangupCall()
+                return
+            }
+            val confId = parts[3]
+            initIncomingCall(confId, true)
+            return
+        }
         val pHasVideo = hasVideo && mHardwareService.hasCamera()
         val callObservable = mCallService
             .placeCallIfAllowed(accountId, conversationUri, fromString(toNumber(contactUri)), pHasVideo)
@@ -221,7 +234,8 @@ class CallPresenter @Inject constructor(
         val conference = mConference ?: return
         if (conference.participants.isEmpty()) return
         val firstCall = conference.participants[0]
-        val c = firstCall.conversationUri ?: firstCall.contact!!.conversationUri.blockingFirst()
+        val c = if (conference.conversationId != null) Uri(Uri.SWARM_SCHEME, conference.conversationId!!)
+        else firstCall.conversationUri ?: firstCall.contact!!.conversationUri.blockingFirst()
         view?.goToConversation(firstCall.account, c)
     }
 
