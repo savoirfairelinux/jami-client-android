@@ -65,7 +65,6 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.call.CallPresenter
 import net.jami.model.*
 import net.jami.model.interaction.Interaction.TransferStatus
-import net.jami.model.interaction.Call
 import net.jami.model.interaction.DataTransfer
 import net.jami.model.interaction.TextMessage
 import net.jami.services.*
@@ -118,12 +117,12 @@ class NotificationServiceImpl(
     private fun buildCallNotification(conference: Conference): Notification? {
         val ongoingConference = currentCalls.values.firstOrNull { it !== conference && it.state == Call.CallStatus.CURRENT }
         val call = conference.firstCall!!
-        val accountId = call.account!!
+        val accountId = call.account
         val callClass = if (DeviceUtils.isTv(mContext)) TVCallActivity::class.java else CallActivity::class.java
         val viewIntent = PendingIntent.getActivity(mContext, random.nextInt(), Intent(Intent.ACTION_VIEW)
             .setClass(mContext, callClass)
             .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            .putExtra(NotificationService.KEY_CALL_ID, call.daemonIdString), ContentUri.immutable())
+            .putExtra(NotificationService.KEY_CALL_ID, call.id), ContentUri.immutable())
 
         val contact = getProfile(accountId, call.contact!!)
         val caller = Person.Builder()
@@ -152,7 +151,7 @@ class NotificationServiceImpl(
                     NotificationCompat.CallStyle.forOngoingCall(caller, PendingIntent.getService(mContext, random.nextInt(),
                         Intent(DRingService.ACTION_CALL_END)
                             .setClass(mContext, DRingService::class.java)
-                            .putExtra(NotificationService.KEY_CALL_ID, call.daemonIdString)
+                            .putExtra(NotificationService.KEY_CALL_ID, call.id)
                             .putExtra(ConversationPath.KEY_ACCOUNT_ID, accountId),
                         ContentUri.immutable(PendingIntent.FLAG_ONE_SHOT)))
                     .setIsVideo(hasVideo))
@@ -172,11 +171,11 @@ class NotificationServiceImpl(
                             PendingIntent.getService(mContext, random.nextInt(), Intent(DRingService.ACTION_CALL_REFUSE)
                                 .setClass(mContext, DRingService::class.java)
                                 .putExtra(ConversationPath.KEY_ACCOUNT_ID, accountId)
-                                .putExtra(NotificationService.KEY_CALL_ID, call.daemonIdString), ContentUri.immutable(PendingIntent.FLAG_ONE_SHOT)),
+                                .putExtra(NotificationService.KEY_CALL_ID, call.id), ContentUri.immutable(PendingIntent.FLAG_ONE_SHOT)),
                             PendingIntent.getActivity(mContext, random.nextInt(), Intent(DRingService.ACTION_CALL_ACCEPT)
                                 .setClass(mContext, callClass)
                                 .putExtra(ConversationPath.KEY_ACCOUNT_ID, accountId)
-                                .putExtra(NotificationService.KEY_CALL_ID, call.daemonIdString)
+                                .putExtra(NotificationService.KEY_CALL_ID, call.id)
                                 .putExtra(CallPresenter.KEY_ACCEPT_OPTION, CallPresenter.ACCEPT_HOLD)
                                 .putExtra(CallFragment.KEY_HAS_VIDEO, hasVideo), ContentUri.immutable(PendingIntent.FLAG_ONE_SHOT)))
                             .setIsVideo(hasVideo))
@@ -193,7 +192,7 @@ class NotificationServiceImpl(
                         NotificationCompat.CallStyle.forOngoingCall(caller, PendingIntent.getService(mContext, random.nextInt(),
                             Intent(DRingService.ACTION_CALL_END)
                                 .setClass(mContext, DRingService::class.java)
-                                .putExtra(NotificationService.KEY_CALL_ID, call.daemonIdString)
+                                .putExtra(NotificationService.KEY_CALL_ID, call.id)
                                 .putExtra(ConversationPath.KEY_ACCOUNT_ID, accountId),
                             ContentUri.immutable(PendingIntent.FLAG_ONE_SHOT)))
                         .setIsVideo(hasVideo))
@@ -268,10 +267,10 @@ class NotificationServiceImpl(
      */
     override fun handleCallNotification(conference: Conference, remove: Boolean, startScreenshare: Boolean) {
         val contact = conference.call?.contact
-        val conversationId = conference.call?.conversationId
+        val conversationUri = conference.call?.conversationUri
         val account = mAccountService.getAccount(conference.accountId)!!
         val conversation =
-            if (conversationId == null)
+            if (conversationUri == null)
                 if (contact == null) {
                     Log.e(TAG, "Unable to show notification. contact and conversationId are null")
                     return
@@ -279,7 +278,7 @@ class NotificationServiceImpl(
                     account.getByUri(contact.conversationUri.blockingFirst())
                         ?: account.getByUri(contact.uri)
             else
-                account.getByUri(Uri(net.jami.model.Uri.SWARM_SCHEME, conversationId))
+                account.getByUri(conversationUri)
 
         // Ignore new notification if conversation is muted.
         // Always try to remove notification (case where conversation is muted during a call).
@@ -349,7 +348,7 @@ class NotificationServiceImpl(
                 }
             }
         } else {
-            removeCallNotification(0)
+            removeCallNotification()
         }
     }
 
@@ -423,7 +422,7 @@ class NotificationServiceImpl(
         }
     }
 
-    override fun removeCallNotification(notifId: Int) {
+    override fun removeCallNotification() {
         try {
             mContext.startService(Intent(CallNotificationService.ACTION_STOP, null, mContext, CallNotificationService::class.java))
         } catch (e: Exception) {
@@ -914,11 +913,11 @@ class NotificationServiceImpl(
     }
 
     override fun showMissedCallNotification(call: Call) {
-        val conversationId = call.conversationId
+        val conversationUri = call.conversationUri
         val contact = call.contact
         val account = mAccountService.getAccount(call.account)!!
         val conversation =
-            if (conversationId == null)
+            if (conversationUri == null)
                 if (contact == null) {
                     Log.e(TAG, "Unable to show missed call notification. contact and conversationId are null")
                     return
@@ -926,18 +925,18 @@ class NotificationServiceImpl(
                     account.getByUri(contact.conversationUri.blockingFirst())
                         ?: account.getByUri(contact.uri)
             else
-                account.getByUri(Uri(net.jami.model.Uri.SWARM_SCHEME, conversationId))
+                account.getByUri(conversationUri)
 
         // Ignore new notification if conversation is muted.
         if (!conversation!!.isNotificationEnabled) return
 
-        val notificationId = call.daemonIdString.hashCode()
+        val notificationId = call.id.hashCode()
         val messageNotificationBuilder = mNotificationBuilders[notificationId]
             ?: NotificationCompat.Builder(mContext, NOTIF_CHANNEL_MISSED_CALL)
-        val path = ConversationPath.toUri(call)
+        val path = ConversationPath.toUri(call.account, call.conversationUri ?: call.contact?.conversationUri?.blockingFirst()!!)
         val intentConversation = Intent(Intent.ACTION_VIEW, path, mContext, HomeActivity::class.java)
             .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        val contactViewModel = getProfile(call.account!!, call.contact!!)
+        val contactViewModel = getProfile(call.account, call.contact!!)
 
         messageNotificationBuilder.setContentTitle(mContext.getText(R.string.notif_missed_incoming_call))
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
