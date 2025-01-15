@@ -78,7 +78,7 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.call.CallPresenter
 import net.jami.call.CallView
 import net.jami.daemon.JamiService
-import net.jami.model.interaction.Call.CallStatus
+import net.jami.model.Call.CallStatus
 import net.jami.model.Conference
 import net.jami.model.Conference.ParticipantInfo
 import net.jami.model.Contact
@@ -812,10 +812,9 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             val activity = activity
             if (activity != null) {
                 val call = participantInfo[0].call
-                val convId = conf.conversationId ?: call?.conversationId
-                val conversationUri = if (convId != null)
-                    Uri(Uri.SWARM_SCHEME, convId)
-                else call?.contact?.conversationUri?.blockingFirst()
+                val conversationUri = if (conf.conversationId != null)
+                    Uri(Uri.SWARM_SCHEME, conf.conversationId!!)
+                else call?.conversationUri ?: call?.contact?.conversationUri?.blockingFirst()
                 val confId = conf.id
                 if (conversationUri != null) {
                 activity.intent = Intent(

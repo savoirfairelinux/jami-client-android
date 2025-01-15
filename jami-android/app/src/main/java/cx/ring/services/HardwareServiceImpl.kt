@@ -52,8 +52,8 @@ import net.jami.daemon.IntVect
 import net.jami.daemon.JamiService
 import net.jami.daemon.UintVect
 import net.jami.model.Conference
-import net.jami.model.interaction.Call
-import net.jami.model.interaction.Call.CallStatus
+import net.jami.model.Call
+import net.jami.model.Call.CallStatus
 import net.jami.services.HardwareService
 import net.jami.services.PreferencesService
 import java.io.File
@@ -495,7 +495,7 @@ class HardwareServiceImpl(
         if (conf != null && useHardwareCodec) {
             val call = conf.call
             if (call != null) {
-                call.setDetails(JamiService.getCallDetails(call.account!!, call.daemonIdString!!).toNative())
+                call.setDetails(JamiService.getCallDetails(call.account, call.id!!).toNative())
                 videoParams.codec = call.videoCodec
             } else {
                 videoParams.codec = null

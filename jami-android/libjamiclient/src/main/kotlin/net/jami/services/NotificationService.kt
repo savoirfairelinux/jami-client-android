@@ -17,13 +17,12 @@
 package net.jami.services
 
 import net.jami.model.*
-import net.jami.model.interaction.Call
 import net.jami.model.interaction.DataTransfer
 
 interface NotificationService {
     fun showCallNotification(notifId: Int): Any?
     fun cancelCallNotification()
-    fun removeCallNotification(notifId: Int)
+    fun removeCallNotification()
     fun handleCallNotification(conference: Conference, remove: Boolean, startScreenshare: Boolean = false)
     fun preparePendingScreenshare(conference: Conference, callback: () -> Unit)
     fun startPendingScreenshare(confId: String)
