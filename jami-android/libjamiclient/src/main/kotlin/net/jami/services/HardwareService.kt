@@ -24,7 +24,7 @@ import net.jami.daemon.IntVect
 import net.jami.daemon.UintVect
 import net.jami.daemon.JamiService
 import net.jami.daemon.StringMap
-import net.jami.model.interaction.Call
+import net.jami.model.Call
 import net.jami.model.Conference
 import net.jami.utils.Log
 import java.io.File

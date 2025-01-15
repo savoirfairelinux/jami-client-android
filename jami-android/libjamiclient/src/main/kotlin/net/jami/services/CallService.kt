@@ -24,8 +24,9 @@ import io.reactivex.rxjava3.subjects.PublishSubject
 import net.jami.daemon.JamiService
 import net.jami.daemon.StringMap
 import net.jami.daemon.VectMap
-import net.jami.model.interaction.Call
-import net.jami.model.interaction.Call.CallStatus
+import net.jami.model.Call
+import net.jami.model.Call.CallStatus
+import net.jami.model.Call.Direction
 import net.jami.model.Conference
 import net.jami.model.Conference.ParticipantInfo
 import net.jami.model.Media
@@ -100,7 +101,7 @@ abstract class CallService(
                     val contactUri = Uri.fromString(uri)
                     val call = conference.findCallByContact(contactUri)
                     if (call != null) {
-                        ParticipantInfo(call, mContactService.getLoadedContact(call.account!!, call.contact!!).blockingGet(), i)
+                        ParticipantInfo(call, mContactService.getLoadedContact(call.account, call.contact!!).blockingGet(), i)
                     } else {
                         ParticipantInfo(null, mContactService.getLoadedContact(account.accountId, account.getContactFromCache(contactUri)).blockingGet(), i)
                     }
@@ -145,7 +146,7 @@ abstract class CallService(
         } else {
             call = conference.firstCall
         }
-        val account = if (call == null) null else mAccountService.getAccount(call.account!!)
+        val account = if (call == null) null else mAccountService.getAccount(call.account)
         val contact = account?.getContactFromCache(peerNumber)
         if (conference != null && contact != null) {
             conference.setParticipantRecording(contact, state)
@@ -155,18 +156,18 @@ abstract class CallService(
     private class ConferenceEntity(var conference: Conference)
 
     private fun getConferenceHost(call: Call): Conference =
-        if (call.conversationId == null) {
+        if (call.conversationUri == null) {
             getConference(call)
         } else {
-            val conference = conferences.values.firstOrNull { it.conversationId == call.conversationId } ?: throw IllegalArgumentException()
-            Log.w(TAG, "getConferenceHost ${call.conversationId} confId:${conference.id}")
+            val conference = conferences.values.firstOrNull { it.conversationId == call.conversationUri.rawRingId } ?: throw IllegalArgumentException()
+            Log.w(TAG, "getConferenceHost ${call.conversationUri} confId:${conference.id}")
             call.confId = conference.id
             conference.hostCall = call
             callSubject.onNext(call)
             conference
         }
 
-    fun getConfUpdates(call: Call): Observable<Conference> = if (call.daemonIdString == null && !call.conversationId.isNullOrEmpty())
+    fun getConfUpdates(call: Call): Observable<Conference> = if (call.id == null && call.conversationUri != null)
         getConfUpdates(getConferenceHost(call))
         else getConfUpdates(getConference(call))
 
@@ -185,7 +186,7 @@ abstract class CallService(
                     conferenceEntity.conference = conf
                     return@filter true
                 }
-                if (conferenceEntity.conference.participants.size == 1 && conf.participants.size == 1 && conferenceEntity.conference.call == conf.call && conf.call!!.daemonIdString == conf.id) {
+                if (conferenceEntity.conference.participants.size == 1 && conf.participants.size == 1 && conferenceEntity.conference.call == conf.call && conf.call!!.id == conf.id) {
                     Log.w(TAG, "Switching tracked conference (down) to " + conf.id)
                     conferenceEntity.conference = conf
                     return@filter true
@@ -259,19 +260,14 @@ abstract class CallService(
 
             if (callId.isEmpty()) {
                 if (numberUri.isSwarm && conversationUri?.isSwarm == true) {
-                    return@fromCallable Call(null, numberUri.rawRingId, account, null, null, Call.Direction.OUTGOING).apply {
-                        setSwarmInfo(conversationUri.rawRingId)
-                    }
+                    return@fromCallable Call(account, null, numberUri, false, conversationUri)
                 } else {
                     throw IllegalStateException("Call ID is empty")
                 }
             }
 
             // Add the call to the list.
-            addCall(account, callId, numberUri, Call.Direction.OUTGOING, mediaList).apply {
-                    if (conversationUri != null && conversationUri.isSwarm)
-                        this.setSwarmInfo(conversationUri.rawRingId)
-                }
+            addCall(account, callId, numberUri, Direction.OUTGOING, mediaList, if (conversationUri?.isSwarm == true) conversationUri else null)
         }.subscribeOn(Schedulers.from(mExecutor))
 
     fun refuse(accountId:String, callId: String) {
@@ -482,12 +478,12 @@ abstract class CallService(
             JamiService.cancelMessage(accountId, messageID)
         }.subscribeOn(Schedulers.from(mExecutor))
 
-    private fun addCall(accountId: String, callId: String, from: Uri, direction: Call.Direction, media: List<Media>): Call =
+    private fun addCall(accountId: String, callId: String, from: Uri, direction: Direction, media: List<Media>, conversationUri: Uri? = null): Call =
         synchronized(calls) {
             calls.getOrPut(callId) {
                 val account = mAccountService.getAccount(accountId)!!
                 val contact = mContactService.findContact(account, from)
-                val conversationUri = contact.conversationUri.blockingFirst()
+                val conversationUri = conversationUri ?: contact.conversationUri.blockingFirst()
                 val conversation =
                     if (conversationUri == from) account.getByUri(from) else account.getSwarm(conversationUri.rawRingId)
                 Call(callId, from.uri, accountId, conversation, contact, direction)
@@ -495,7 +491,7 @@ abstract class CallService(
         }
 
     private fun addConference(call: Call): Conference {
-        val confId = call.confId ?: call.daemonIdString!!
+        val confId = call.confId ?: call.id!!
         var conference = conferences[confId]
         if (conference == null) {
             conference = Conference(call)
@@ -507,31 +503,23 @@ abstract class CallService(
 
     private fun parseCallState(accountId: String, callId: String, newState: String, callDetails: Map<String, String>): Call? {
         val callState = CallStatus.fromString(newState)
-        var call = calls[callId]
+        val call = calls[callId]
         if (call != null) {
             call.setCallState(callState)
             call.setDetails(callDetails)
+            return call
         } else if (callState !== CallStatus.OVER && callState !== CallStatus.FAILURE) {
-            call = Call(callId, callDetails)
-            if (call.contactNumber.isNullOrEmpty()) {
-                Log.w(TAG, "No number")
-                return null
-            }
+            val call = Call(callId, callDetails)
             call.setCallState(callState)
-            val account = mAccountService.getAccount(call.account!!) ?: return null
-            val contact = mContactService.findContact(account, Uri.fromString(call.contactNumber!!))
-            /*val registeredName = callDetails[Call.KEY_REGISTERED_NAME]
-            if (registeredName != null && registeredName.isNotEmpty()) {
-                contact.setUsername(registeredName)
-            }*/
-            val conversation = account.getByUri(contact.conversationUri.blockingFirst())
+            val account = mAccountService.getAccount(call.account) ?: return null
+            val contact = mContactService.findContact(account, call.peerUri)
             call.contact = contact
-            call.conversation = conversation
-            Log.w(TAG, "parseCallState " + contact + " " + contact.conversationUri.blockingFirst() + " " + conversation + " " + conversation?.participant)
+            Log.w(TAG, "parseCallState " + contact + " " + contact.conversationUri.blockingFirst())
             calls[callId] = call
             updateConnectionCount()
+            return call
         }
-        return call
+        return null
     }
 
     fun connectionUpdate(id: String?, state: Int) {
@@ -560,8 +548,8 @@ abstract class CallService(
                     }
                     callSubject.onNext(call)
                     if (call.callStatus === CallStatus.OVER) {
-                        calls.remove(call.daemonIdString)
-                        conferences.remove(call.daemonIdString)
+                        calls.remove(call.id)
+                        conferences.remove(call.id)
                         updateConnectionCount()
                     }
                 }
@@ -601,7 +589,7 @@ abstract class CallService(
         Log.d(TAG, "incoming call: $accountId, $callId, $from")
         val nMediaList = mediaList ?: emptyList()
         val medias = nMediaList.mapTo(ArrayList(nMediaList.size)) { mediaMap -> Media(mediaMap) }
-        val call = addCall(accountId, callId, Uri.fromStringWithName(from).first, Call.Direction.INCOMING, medias)
+        val call = addCall(accountId, callId, Uri.fromStringWithName(from).first, Direction.INCOMING, medias)
         callSubject.onNext(call)
         updateConnectionCount()
     }
@@ -658,7 +646,7 @@ abstract class CallService(
         mExecutor.execute {
             JamiService.requestMediaChange(
                 call.account,
-                call.daemonIdString,
+                call.id,
                 proposedMediaList.mapTo(VectMap().apply {
                     reserve(proposedMediaList.size)
                 }) { it.toMap() }
@@ -727,7 +715,8 @@ abstract class CallService(
     fun conferenceCreated(accountId: String, conversationId: String, confId: String) {
         Log.d(TAG, "conference created: $confId $conversationId")
         val conf = conferences.getOrPut(confId) { Conference(accountId, confId).apply {
-            this.conversationId = conversationId
+            if (conversationId.isNotEmpty())
+                this.conversationId = conversationId
         } }
         val participants = JamiService.getParticipantList(accountId, confId)
         val map = JamiService.getConferenceDetails(accountId, confId)
@@ -740,6 +729,12 @@ abstract class CallService(
             }
             conferences.remove(callId)
         }
+        if (conversationId.isNotEmpty())
+            mAccountService.getAccount(accountId)?.let { account ->
+                val conversation = account.getSwarm(conversationId)
+                //call.conversation = conversation
+                conversation?.addConference(conf)
+            }
         conferenceSubject.onNext(conf)
     }
 
@@ -754,6 +749,11 @@ abstract class CallService(
                 it.setCallState(CallStatus.OVER)
                 callSubject.onNext(it)
                 conf.hostCall = null
+            }
+            conf.conversationId?.let { conversationId ->
+                mAccountService.getAccount(accountId)
+                    ?.getSwarm(conversationId)
+                    ?.removeConference(conf)
             }
             conferenceSubject.onNext(conf)
         }
@@ -784,8 +784,8 @@ abstract class CallService(
             val i = calls.iterator()
             while (i.hasNext()) {
                 val call = i.next()
-                if (!participants.contains(call.daemonIdString)) {
-                    Log.d(TAG, "conferenceChanged: removing participant " + call.daemonIdString + " " + call.contact)
+                if (!participants.contains(call.id)) {
+                    Log.d(TAG, "conference changed: removing participant " + call.id + " " + call.contact)
                     call.confId = null
                     i.remove()
                     removed = true
@@ -809,7 +809,7 @@ abstract class CallService(
     }
 
     fun hangUpAny(accountId: String, callId: String) {
-        calls.filterValues { it.daemonIdString == callId }.forEach {
+        calls.filterValues { it.id == callId }.forEach {
             val confId = it.value.confId
             if(confId != null)
                 hangUpConference(accountId, confId)
