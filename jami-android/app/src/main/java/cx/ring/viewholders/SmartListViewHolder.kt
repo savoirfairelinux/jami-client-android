@@ -32,7 +32,7 @@ import cx.ring.utils.TextUtils
 import cx.ring.views.AvatarDrawable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.model.*
-import net.jami.model.interaction.Call
+import net.jami.model.interaction.CallHistory
 import net.jami.model.interaction.ContactEvent
 import net.jami.model.interaction.Interaction
 import net.jami.services.ConversationFacade
@@ -149,13 +149,13 @@ class SmartListViewHolder : RecyclerView.ViewHolder {
                 context.getText(R.string.you_txt_prefix).toString() + " " + e.body
             }
         } else if (e.type == Interaction.InteractionType.CALL) {
-            val call = e as Call
-            return if (call.isMissed) if (call.isIncoming) context.getString(R.string.notif_missed_incoming_call) else context.getString(
+            val callHistory = e as CallHistory
+            return if (callHistory.isMissed) if (callHistory.isIncoming) context.getString(R.string.notif_missed_incoming_call) else context.getString(
                 R.string.notif_missed_outgoing_call
-            ) else if (call.isIncoming) String.format(
+            ) else if (callHistory.isIncoming) String.format(
                 context.getString(R.string.hist_in_call),
-                call.durationString
-            ) else String.format(context.getString(R.string.hist_out_call), call.durationString)
+                callHistory.durationString
+            ) else String.format(context.getString(R.string.hist_out_call), callHistory.durationString)
         } else if (e.type == Interaction.InteractionType.CONTACT) {
             val contactEvent = e as ContactEvent
             if (contactEvent.event == ContactEvent.Event.ADDED) {
