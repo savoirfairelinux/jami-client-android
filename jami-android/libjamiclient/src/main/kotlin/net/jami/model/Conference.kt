@@ -173,8 +173,9 @@ class Conference(val accountId: String, val id: String) {
     }
 
     val hasVideo: Observable<Boolean> =
-        mParticipantsSubject.switchMap { participants -> Observable.combineLatest(participants.map { it.mediaListObservable })
-            { mediaLists ->
+        if (mParticipants.isEmpty()) Observable.just(false)
+        else mParticipantsSubject.switchMap { participants ->
+            Observable.combineLatest(participants.map { it.mediaListObservable }) { mediaLists ->
                 for (mediaList in mediaLists) {
                     for (media in mediaList as List<Media>) {
                         if (media.mediaType == Media.MediaType.MEDIA_TYPE_VIDEO)
