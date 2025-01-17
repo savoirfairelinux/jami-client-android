@@ -137,7 +137,8 @@ class CallConnection(
     override fun onDisconnect() {
         Log.w(TAG, "onDisconnect")
         val call = call ?: return
-        service.callService.hangUp(call.account!!, call.daemonIdString!!)
+        val callId = call.daemonIdString ?: return
+        service.callService.hangUp(call.account!!, callId)
     }
 
     override fun onPlayDtmfTone(c: Char) {
