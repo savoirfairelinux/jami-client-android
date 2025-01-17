@@ -148,7 +148,7 @@ class CallConnection(
     }
 
     override fun onCallAudioStateChanged(state: CallAudioState) {
-        Log.w(TAG, "onCallAudioStateChanged: $state")
+        Log.w("devdebug", "onCallAudioStateChanged: $state")
         audioStateSubject.onNext(state)
     }
 

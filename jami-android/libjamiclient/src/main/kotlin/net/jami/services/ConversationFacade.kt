@@ -591,6 +591,7 @@ class ConversationFacade(
     }
 
     private fun onCallStateChange(call: Call) {
+        Log.w("devdebug", "onCallStateChange ${call.id} ${call.callStatus}")
         /* Ignore updates to host call connection (null callId) */
         if (call.id == null && call.confId == null)
             return

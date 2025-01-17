@@ -75,7 +75,9 @@ class Call(
     val systemConnection: Single<CallService.SystemCall> get() = systemConnectionSubject
 
     fun setSystemConnection(value: CallService.SystemCall?) {
-        Log.i(TAG, "Telecom API: setSystemConnection $value")
+
+//        (value as CallServiceImpl.AndroidCall).connection!!.audioState
+        Log.i("devdebug", "Telecom API: setSystemConnection $value")
         if (value != null) systemConnectionSubject.onSuccess(value);
         else systemConnectionSubject.onError(UnsupportedOperationException())
     }

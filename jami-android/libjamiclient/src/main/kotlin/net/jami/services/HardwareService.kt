@@ -67,6 +67,8 @@ abstract class HardwareService(
     fun getBluetoothEvents(): Observable<BluetoothEvent> = bluetoothEvents
 
     abstract fun getAudioState(conf: Conference): Observable<AudioState>
+
+//    val audioState2: Observable<CallAudioState>
     val audioState: Observable<AudioState>
         get() = audioStateSubject
     val connectivityState: Observable<Boolean>
