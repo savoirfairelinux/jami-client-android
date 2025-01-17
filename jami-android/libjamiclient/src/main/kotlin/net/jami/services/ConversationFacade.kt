@@ -590,6 +590,9 @@ class ConversationFacade(
     }
 
     private fun onCallStateChange(call: Call) {
+        /* Ignore updates to host call connection (null callId) */
+        if (call.daemonIdString == null && call.confId == null)
+            return
         val newState = call.callStatus
         val incomingCall = newState === CallStatus.RINGING && call.isIncoming
         val account = mAccountService.getAccount(call.account!!) ?: return
@@ -603,7 +606,7 @@ class ConversationFacade(
                 account.getByUri(contact.conversationUri.blockingFirst()) ?: account.getByUri(contact.uri)
         else
             account.getByUri(Uri(Uri.SWARM_SCHEME, conversationId))
-        val conference = if (conversation != null) (conversation.getConference(call.daemonIdString) ?: Conference(call).apply {
+        val conference = if (conversation != null) (conversation.getConference(call.confId ?: call.daemonIdString) ?: Conference(call).apply {
             if (newState === CallStatus.OVER) return@onCallStateChange
             conversation.addConference(this)
             account.updated(conversation)
