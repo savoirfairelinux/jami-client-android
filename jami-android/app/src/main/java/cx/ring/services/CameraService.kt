@@ -65,7 +65,7 @@ class CameraService internal constructor(c: Context) {
     private val t = HandlerThread("videoHandler")
     private val videoLooper: Looper
         get() = t.apply { if (state == Thread.State.NEW) start() }.looper
-    private val videoHandler: Handler by lazy { Handler(videoLooper) }
+    val videoHandler: Handler by lazy { Handler(videoLooper) }
     private val videoExecutor: Executor = Executor { command -> videoHandler.post(command) }
 
     private val maxResolutionSubject: Subject<Pair<Int?, Int?>> = BehaviorSubject.createDefault(RESOLUTION_NONE)
