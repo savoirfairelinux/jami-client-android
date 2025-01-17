@@ -56,6 +56,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import net.jami.call.CallPresenter
 import net.jami.call.CallView
 import net.jami.model.Call.CallStatus
+import net.jami.model.Conference
 import net.jami.model.Conference.ParticipantInfo
 import net.jami.model.Contact
 import net.jami.model.ContactViewModel
@@ -438,7 +439,7 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
     }
 
     @SuppressLint("RestrictedApi")
-    override fun updateConfInfo(participantInfo: List<ParticipantInfo>) {
+    override fun updateConfInfo(conf: Conference, participantInfo: List<ParticipantInfo>) {
         val binding = binding ?: return
         mConferenceMode = participantInfo.size > 1
         if (participantInfo.isNotEmpty()) {
