@@ -79,6 +79,7 @@ import net.jami.call.CallPresenter
 import net.jami.call.CallView
 import net.jami.daemon.JamiService
 import net.jami.model.Call.CallStatus
+import net.jami.model.Conference
 import net.jami.model.Conference.ParticipantInfo
 import net.jami.model.Contact
 import net.jami.model.ContactViewModel
@@ -796,7 +797,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     }
 
     @SuppressLint("RestrictedApi")
-    override fun updateConfInfo(participantInfo: List<ParticipantInfo>) {
+    override fun updateConfInfo(conf: Conference, participantInfo: List<ParticipantInfo>) {
         Log.w(TAG, "updateConfInfo -> $participantInfo")
 
         val binding = binding ?: return
@@ -811,22 +812,24 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             val activity = activity
             if (activity != null) {
                 val call = participantInfo[0].call
-                if (call != null) {
-                    val conversationUri = if (call.conversationId != null)
-                        Uri(Uri.SWARM_SCHEME, call.conversationId!!)
-                    else call.contact!!.conversationUri.blockingFirst()
-                    activity.intent = Intent(
-                        Intent.ACTION_VIEW,
-                        ConversationPath.toUri(call.account!!, conversationUri), context, CallActivity::class.java
-                    )
-                        .apply { putExtra(NotificationService.KEY_CALL_ID, call.confId ?: call.daemonIdString) }
+                val convId = conf.conversationId ?: call?.conversationId
+                val conversationUri = if (convId != null)
+                    Uri(Uri.SWARM_SCHEME, convId)
+                else call?.contact?.conversationUri?.blockingFirst()
+                val confId = conf.id
+                if (conversationUri != null) {
+                activity.intent = Intent(
+                    Intent.ACTION_VIEW,
+                    ConversationPath.toUri(conf.accountId, conversationUri), context, CallActivity::class.java
+                )
+                    .apply { putExtra(NotificationService.KEY_CALL_ID, confId) }
 
-                    arguments = Bundle().apply {
-                        putString(KEY_ACTION, Intent.ACTION_VIEW)
-                        putString(NotificationService.KEY_CALL_ID, call.confId ?: call.daemonIdString)
-                    }
+                arguments = Bundle().apply {
+                    putString(KEY_ACTION, Intent.ACTION_VIEW)
+                    putString(NotificationService.KEY_CALL_ID, confId)
+                }
                 } else {
-                    Log.w(TAG, "DEBUG null call")
+                    Log.w(TAG, "DEBUG null conversationUri")
                 }
             } else {
                 Log.w(TAG, "DEBUG null activity")

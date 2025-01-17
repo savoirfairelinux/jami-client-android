@@ -17,6 +17,7 @@
 package net.jami.call
 
 import net.jami.model.Call.CallStatus
+import net.jami.model.Conference
 import net.jami.model.Conference.ParticipantInfo
 import net.jami.model.Contact
 import net.jami.model.ContactViewModel
@@ -47,7 +48,7 @@ interface CallView {
     fun handleCallWakelock(isAudioOnly: Boolean)
     fun goToContact(accountId: String, contact: Contact)
     fun displayExtensionsButton(): Boolean
-    fun updateConfInfo(info: List<ParticipantInfo>)
+    fun updateConfInfo(conf: Conference, info: List<ParticipantInfo>)
     fun updateParticipantRecording(contacts: List<ContactViewModel>)
     fun getMediaProjection(resultCode: Int, data: Any): Any
 }
