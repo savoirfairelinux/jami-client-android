@@ -607,7 +607,8 @@ class HardwareServiceImpl(
             if (mCameraPreviewSurface.get() === holder) return
             mCameraPreviewSurface = WeakReference(holder)
             mCameraPreviewCall = WeakReference(conference)
-            for (c in shouldCapture) startCapture(c)
+            for (c in shouldCapture)
+                cameraService.videoHandler.post { startCapture(c) }
         }
     }
 
