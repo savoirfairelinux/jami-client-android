@@ -175,8 +175,10 @@ class CallPresenter @Inject constructor(
                 Observable.combineLatest(obj.participantInfo, obj.pendingCalls,
                 if (obj.isConference)
                     ContactViewModel.EMPTY_VM
+                else if (obj.call?.contact != null)
+                    mContactService.observeContact(obj.accountId, obj.call!!.contact!!, false)
                 else
-                    mContactService.observeContact(obj.accountId, obj.call!!.contact!!, false))
+                    ContactViewModel.EMPTY_VM)
             { participants, pending, callContact ->
                 val p = if (participants.isEmpty() && !obj.isConference)
                     listOf(ParticipantInfo(obj.call, callContact, mapOf(
@@ -186,9 +188,9 @@ class CallPresenter @Inject constructor(
                 else
                     participants
                 if (p.isEmpty()) p else p + pending
-            }}
+            }.map { obj to it } }
             .observeOn(mUiScheduler)
-            .subscribe({ info: List<ParticipantInfo> -> view?.updateConfInfo(info) })
+            .subscribe({ (c, info) -> view?.updateConfInfo(c, info) })
             { e: Throwable -> Log.e(TAG, "Error with initIncoming, action view flow: ", e) })
 
         mCompositeDisposable.add(conference
@@ -444,6 +446,11 @@ class CallPresenter @Inject constructor(
                 view.updateCallStatus(scall.callStatus)
                 view.initOutGoingCallDisplay()
             }
+        } else if (call.conversationId != null) {
+            Log.w(TAG, "confUpdate swarm host")
+            mOnGoingCall = true
+            view.initNormalStateDisplay()
+            prepareBottomSheetButtonsStatus()
         } else {
             finish()
         }
