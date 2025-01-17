@@ -75,7 +75,9 @@ import cx.ring.databinding.FragHomeBinding
 import cx.ring.utils.ActionHelper.openJamiDonateWebPage
 import io.reactivex.rxjava3.disposables.Disposable
 import net.jami.model.Uri
+import net.jami.services.HardwareService
 import net.jami.services.NotificationService
+import javax.inject.Singleton
 
 @AndroidEntryPoint
 class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
@@ -96,6 +98,10 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
 
     @Inject
     lateinit var mAccountService: AccountService
+
+    @Inject
+    @Singleton
+    lateinit var mHardwareService: HardwareService
 
     @Inject
     lateinit var mConversationFacade: ConversationFacade
@@ -234,7 +240,9 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
         }
 
         // Setup floating button.
-        newSwarmFab.setOnClickListener { expandSearchActionView() }
+        newSwarmFab.setOnClickListener {
+            mHardwareService.isSpeakerphoneOn()
+        /* expandSearchActionView() */ }
 
         // Setup donation card
         donationCard.donationCard.visibility = View.GONE

@@ -782,6 +782,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     }
 
     override fun updateAudioState(state: AudioState) {
+        if (state.availableOutputs.size == 1) binding!!.callSpeakerBtn.isEnabled = false
         binding!!.callSpeakerBtn.isChecked = state.output.type == HardwareService.AudioOutputType.SPEAKERS
     }
 

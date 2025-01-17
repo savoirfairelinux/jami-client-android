@@ -121,7 +121,14 @@ class HardwareServiceImpl(
         }
     }
 
-    override fun isSpeakerphoneOn(): Boolean = mAudioManager.isSpeakerphoneOn
+    override fun isSpeakerphoneOn(): Boolean {
+        Log.w("devdebug", "isSpeakerphoneOn listOfDevices=${mAudioManager.getDevices(AudioManager.GET_DEVICES_OUTPUTS).toList().map { it.type
+        }}")
+
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
+            mAudioManager.communicationDevice?.type == AudioDeviceInfo.TYPE_BUILTIN_SPEAKER
+        else mAudioManager.isSpeakerphoneOn
+    }
 
     private val RINGTONE_REQUEST = AudioFocusRequestCompat.Builder(AudioManagerCompat.AUDIOFOCUS_GAIN_TRANSIENT)
         .setAudioAttributes(AudioAttributesCompat.Builder()
@@ -153,7 +160,7 @@ class HardwareServiceImpl(
 
     @SuppressLint("NewApi")
     override fun getAudioState(conf: Conference): Observable<AudioState> =
-        conf.call!!.systemConnection
+        (conf.call ?: conf.hostCall)!!.systemConnection
             .flatMapObservable { a -> (a as CallServiceImpl.AndroidCall).connection!!.audioState }
             .map { a -> AudioState(routeToType(a.route), maskToList(a.supportedRouteMask)) }
             .onErrorResumeWith { audioState }
@@ -179,7 +186,7 @@ class HardwareServiceImpl(
 
     @RequiresApi(CONNECTION_SERVICE_TELECOM_API_SDK_COMPATIBILITY)
     fun setAudioState(call: CallConnection, wantSpeaker: Boolean) {
-        Log.w(TAG, "setAudioState Telecom API $wantSpeaker ${call.callAudioState}")
+        Log.w("devdebug", "setWantedAudioState Telecom API $wantSpeaker ${call.callAudioState}")
         call.setWantedAudioState(if (wantSpeaker) CallConnection.ROUTE_LIST_SPEAKER_IMPLICIT else CallConnection.ROUTE_LIST_DEFAULT)
     }
 
@@ -188,7 +195,7 @@ class HardwareServiceImpl(
     @SuppressLint("NewApi")
     @Synchronized
     override fun updateAudioState(conf: Conference?, call: Call, incomingCall: Boolean, isOngoingVideo: Boolean) {
-        Log.d(TAG, "updateAudioState $conf: Call state updated to ${call.callStatus} Call is incoming: $incomingCall Call is video: $isOngoingVideo")
+        Log.d("devdebug", "updateAudioStateZ $conf: Call $call state updated to ${call.callStatus} Call is incoming: $incomingCall Call is video: $isOngoingVideo")
         disposables.add(call.systemConnection.map {
                 (it as CallServiceImpl.AndroidCall).connection!!
             }
@@ -343,6 +350,8 @@ class HardwareServiceImpl(
                         (it as CallServiceImpl.AndroidCall).connection!!
                     }
                     .subscribe({
+                        Log.w("devdebug", "toggleSpeakerphone subscribe")
+
                         // Using the Telecom API
                         it.setWantedAudioState(
                             if (checked) CallConnection.ROUTE_LIST_SPEAKER_EXPLICIT
@@ -350,6 +359,7 @@ class HardwareServiceImpl(
                             else CallConnection.ROUTE_LIST_DEFAULT
                         )
                     }) {
+                        Log.w("devdebug", "toggleSpeakerphone fallback")
                         // Fallback to the AudioManager API
                         JamiService.setAudioPlugin(JamiService.getCurrentAudioOutputPlugin())
                         mShouldSpeakerphone = checked

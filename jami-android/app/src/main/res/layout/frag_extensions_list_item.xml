@@ -26,18 +26,15 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     android:orientation="horizontal"
     android:padding="10dp">
 
-    <ImageView
+    <cx.ring.views.AvatarView
         android:id="@+id/extension_item_icon"
         android:layout_width="56dp"
         android:layout_height="56dp"
         android:layout_weight="0"
-        android:backgroundTint="@color/transparent"
         android:contentDescription="@string/contact_picture_description"
         android:enabled="false"
-        android:tintMode="multiply"
-        app:maxImageSize="72dp"
-        app:useCompatPadding="true"
-        tools:src="@tools:sample/avatars"/>
+        tools:uri="@tools:sample/us_phones"
+        tools:avatar="@tools:sample/avatars"/>
 
     <TextView
         android:id="@+id/extension_item_name"

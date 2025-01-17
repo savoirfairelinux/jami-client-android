@@ -79,6 +79,7 @@ class CallPresenter @Inject constructor(
     }
 
     override fun bindView(view: CallView) {
+        Log.i("devdebug", "bindView")
         super.bindView(view)
         mCompositeDisposable.add(mHardwareService.getCameraEvents()
             .observeOn(mUiScheduler)
@@ -183,7 +184,25 @@ class CallPresenter @Inject constructor(
      * @param conference: conference whose value have been updated
      */
     private fun showConference(conference: Observable<Conference>){
+
+//        conference.switchMap { mHardwareService.getAudioState(it) }.subscribe {
+//                state: AudioState -> Log.w("devdebug", "audioState2: $state")
+//        }.apply { mCompositeDisposable.add(this) }
+
+
+
+        Log.w("devdebug", "showConference")
         val conference = conference.distinctUntilChanged()
+//        conference.subscribe{
+//            Log.w("devdebug", "conference update ${it.hostCall?.systemConnection?.blockingGet()}")
+//        }.apply { mCompositeDisposable.add(this) }
+        conference.switchMap { mHardwareService.getAudioState(it) }
+            .observeOn(mUiScheduler)
+            .subscribe { it: AudioState ->
+                view?.updateAudioState(it)
+                Log.w("devdebug", "audioState updated: $it")
+            }.apply { mCompositeDisposable.add(this) }
+
         mCompositeDisposable.add(conference
             .switchMap { obj: Conference ->
                 Observable.combineLatest(obj.participantInfo, obj.pendingCalls,
@@ -213,6 +232,14 @@ class CallPresenter @Inject constructor(
             .observeOn(mUiScheduler)
             .subscribe({ contacts -> view?.updateParticipantRecording(contacts) })
             { e: Throwable -> Log.e(TAG, "Error with initIncoming, action view flow: ", e) })
+
+
+
+//        mCompositeDisposable.add(
+//            mHardwareService.getAudioState(conference.blockingFirst())
+//                .observeOn(mUiScheduler)
+//                .subscribe { state: AudioState -> Log.w("devdebug", "audioState: $state") }
+//        )
     }
 
     /**
