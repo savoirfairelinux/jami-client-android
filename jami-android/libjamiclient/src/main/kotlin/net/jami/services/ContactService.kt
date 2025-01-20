@@ -79,6 +79,7 @@ abstract class ContactService(
                         contact.setPresenceEmitter(null)
                     }
                 }
+                    .startWithItem(Contact.PresenceStatus.OFFLINE)
                     .replay(1)
                     .refCount(5, TimeUnit.SECONDS)
                     .apply { contact.presenceUpdates = this }
