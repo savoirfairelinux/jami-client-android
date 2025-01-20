@@ -251,13 +251,21 @@ class SettingsFragment :
             )
             else -> emptyList()
         }
-        return if (((enablePushNotifications && !enablePermanentService) && (BuildConfig.FLAVOR
-                   == "withFirebase")) || (!enablePushNotifications && enablePermanentService)) {
-                   baseOptions
-        } else if (enablePushNotifications && enablePermanentService
-            && BuildConfig.FLAVOR == "noPush") {
+
+        val isPushCompatible = BuildConfig.FLAVOR == "withFirebase"
+                || BuildConfig.FLAVOR == "withUnifiedPush"
+        // Verify if the user has selected a valid combination of settings:
+        // - If the user wants to enable push notifications, the build must support it (Firebase or
+        //   Unified Push), or the 'enablePermanentService' option must be enabled.
+        // - If the user wants to act as a local DHT node, push notifications are not required, but
+        //   the 'enablePermanentService' option must be enabled.
+        return if ((enablePushNotifications && !enablePermanentService && isPushCompatible)
+            || (!enablePushNotifications && enablePermanentService)
+            || (enablePushNotifications && enablePermanentService && !isPushCompatible)
+        ) {
             baseOptions
         } else {
+            // Show `custom` option if the user has selected a combination that is not predefined.
             baseOptions + ConnectivityOption(
                 mode = ConnectivityType.CUSTOM,
                 iconResId = R.drawable.connectivity_mode_custom_24,
