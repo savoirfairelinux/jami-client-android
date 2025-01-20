@@ -42,9 +42,9 @@
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Coimisinéir</string>
   <string name="account_basic_category">Bunreacht</string>
-  <string name="account_alias_label">Ainm cuntas</string>
   <string name="account_hostname_label">Ainm óstála</string>
   <string name="account_bootstrap_label">Bootstrap</string>
+  <string name="account_name_server_label">Seirbheáil ainm</string>
   <string name="account_username_label">Ainm úsáideora</string>
   <string name="account_password_label">Pasfhocal</string>
   <string name="account_optionnal_category">Cinntí roghnacha</string>
@@ -76,8 +76,7 @@
   <string name="account_registration_exp_label">Críochnaíonn clárú</string>
   <string name="account_local_interface_label">Idirghníomhaíocht Áitiúil</string>
   <string name="account_local_port_label">Port Áitiúil</string>
-  <string name="account_stun_enable_label">Úsáid Stun</string>
-  <string name="account_stun_server_label">Seirbhís Stun</string>
+  <string name="account_stun_enable_label">Úsáid STUN</string>
   <string name="account_accept_files">Glac comhaid iontrála go huathoibríoch</string>
   <string name="account_conversation_settings_title">Cluiche comhrá</string>
   <string name="account_accept_files_max_size">Grád uasta comhaid a ghlacfar le h-aonad</string>
@@ -93,6 +92,7 @@
   <string name="account_published_address_label">Seoladh Foilsithe</string>
   <string name="disabled">An duine atá faoi mhíchumas</string>
   <string name="enabled">Aibíodh</string>
+  <string name="default_value">Réamhshocrú</string>
   <string name="account_proxy_label">DHT proxy</string>
   <string name="account_proxy_enable_label">Úsáid DHT proxy</string>
   <string name="account_proxy_server_label">Seoladh DHT proxy</string>
@@ -111,21 +111,9 @@
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Úsáid TLS Transport</string>
-  <string name="account_tls_port_label">Port éisteachta TLS</string>
-  <string name="account_tls_certificate_list_label">Údaráis Chláraithe</string>
-  <string name="account_tls_certificate_file_label">Fail Círteachta</string>
-  <string name="account_tls_private_key_file_label">D\'fhoilsiú an t-aisc phríobháideach</string>
-  <string name="account_tls_password_label">Pasfhocal Clé Priobháideach</string>
-  <string name="account_tls_method_label">Modh TLS</string>
-  <string name="account_tls_ciphers_label">Cifers TLS</string>
-  <string name="account_tls_server_name_label">Ainm an fhostóir</string>
-  <string name="account_tls_verify_server_label">Déan seiceáil ar an Seirbhís</string>
-  <string name="account_tls_verify_client_label">Déan cinnte go bhfuil an Client</string>
-  <string name="account_require_client_certificate_label">TLS Éilíonn Sertifíc Choiste</string>
-  <string name="account_tls_negotiation_timeout_sec">Tuairiscí ar an gcaoi a bheidh an t-am-aistriú ar an margadh</string>
+  <string name="account_tls_password_label">Pasfhocal le do phríobháideach</string>
   <string name="account_rtp_max_port">Céad-chuid</string>
   <string name="account_rtp_min_port">Níos lú</string>
-  <string name="account_rtp_port_range">Ábhar RTP Port Audio</string>
   <!--restore/backup-->
   <string name="account_new_device_password">Cuir isteach an príomhphasfhocal chun cuntas a oscailt</string>
   <string name="error_password_char_count">6 carachtair ar a laghad</string>
@@ -163,12 +151,10 @@
   <string name="account_link_device">Déan nasc ó ghléas eile</string>
   <string name="account_link_button">Déan nasc ó líonra</string>
   <string name="account_link_archive_button">Déan nasc ó ghnóthach</string>
-  <string name="account_link_prompt_pin">Cuir PIN isteach</string>
   <string name="account_new_button">Déan cuntas Jami</string>
   <string name="account_link_export_button">Déan nasc a dhéanamh ar ghléas nua</string>
   <string name="account_link_show_button">Taispeánadh %d níos mó feiste ceangailte</string>
   <string name="account_link_hide_button">Iarrann an t-ionad ceangailte le críocha an Rialacháin seo</string>
-  <string name="account_start_export_button">Pin a ghiniúint</string>
   <string name="account_end_export_button">go dlúth</string>
   <string name="account_export_title">Contae nasc chuig feistí eile</string>
   <string name="account_connect_server_button">Déan nasc chuig an tseirbhís bainistíochta</string>
@@ -179,10 +165,7 @@
   <string name="account_connect_prompt_username">Ainm úsáideora</string>
   <!--Name registration-->
   <string name="error_username_empty">Cuir ainm úsáideora isteach</string>
-  <string name="no_registered_name_for_account">Ní ainm cláraithe</string>
-  <string name="username_available">Ainm úsáideora ar fáil!</string>
-  <string name="register_name">Ainm an chláir</string>
-  <string name="trying_to_register_name">Ag iarraidh ainm a chlárú</string>
+  <string name="register_name">Ainm úsáideora a chlárú</string>
   <string name="registered_username">Ainm úsáideora cláraithe</string>
   <string name="register_username">Ainm úsáideora poiblí a chlárú</string>
   <string name="register_recommended">Moltar</string>
@@ -209,13 +192,13 @@
   <string name="revoke_device_wait_title">Fan ar fad, le do thoil...</string>
   <string name="revoke_device_wait_message">Seánán a tharraingt siar</string>
   <string name="rename_device_title">Ath-ainmniú an fheiste seo</string>
-  <string name="rename_device_message">Roghnaigh ainm nua chun an gléas seo a aithint i do chuntas Jami</string>
   <string name="rename_device_button">Ionstraimí athchóirithe</string>
   <string name="account_rename_device_hint">Roghnaigh ainm an t-inneal nua</string>
   <string name="account_device_this_indicator">An t-ordú seo</string>
   <string name="account_disabled_indicator">mí-úsáidte</string>
   <!--Link a new device-->
   <string name="account_link_device_title">Déan nasc a dhéanamh ar ghléas nua</string>
+  <string name="connect_device_scanqr">Cód QR scánaithe</string>
   <string name="account_link_device_button">Déan nasc</string>
   <!--Biometry-->
 </resources>

@@ -215,11 +215,6 @@
   <string name="conversation_type_contact">Contact Jami</string>
   <string name="conversation_type_private">Privé</string>
   <string name="conversation_type_group">Groupe</string>
-  <string name="conversation_contact_invited">%1$s a été invité</string>
-  <string name="conversation_contact_added">%1$s a rejoint la discussion</string>
-  <string name="conversation_contact_left">%1$s restant</string>
-  <string name="conversation_contact_blocked">%1$s a été bloqué</string>
-  <string name="conversation_contact_unblocked">%1$s a été débloqué</string>
   <string name="conversation_search_hint">Rechercher dans la conversation</string>
   <string name="audio_recorder_error">L\'application d\'enregistrement audio n\'est pas trouvée.</string>
   <string name="video_recorder_error">L\'application d\'enregistrement vidéo n\'est pas trouvée.</string>

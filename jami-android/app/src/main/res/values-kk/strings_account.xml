@@ -43,9 +43,9 @@
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Бас</string>
   <string name="account_basic_category">Негізгі параметрлер</string>
-  <string name="account_alias_label">Есепшоттың атауы</string>
   <string name="account_hostname_label">Үйлестіруші аты</string>
   <string name="account_bootstrap_label">Бастау шегі</string>
+  <string name="account_name_server_label">Атау сервері</string>
   <string name="account_username_label">Пайдаланушы аты</string>
   <string name="account_password_label">Пароль</string>
   <string name="account_optionnal_category">Қалай орнату керек</string>
@@ -77,8 +77,7 @@
   <string name="account_registration_exp_label">Тіркеу мерзімі аяқталады</string>
   <string name="account_local_interface_label">Жергілікті интерфейс</string>
   <string name="account_local_port_label">Жергілікті порт</string>
-  <string name="account_stun_enable_label">Stun- ды қолдану</string>
-  <string name="account_stun_server_label">Стан сервері</string>
+  <string name="account_stun_enable_label">STUN қолданылсын</string>
   <string name="account_accept_files">Кіріс файлдарды автоматты түрде қабылдау</string>
   <string name="account_conversation_settings_title">Әңгімелеудің параметрлері</string>
   <string name="account_accept_files_max_size">Автоматты қабылдау үшін ең жоғары файл мөлшері</string>
@@ -94,6 +93,7 @@
   <string name="account_published_address_label">Жарияланған мекенжай</string>
   <string name="disabled">Мүгедектер</string>
   <string name="enabled">Қолданылған</string>
+  <string name="default_value">Әдепкі</string>
   <string name="account_proxy_label">DHT прокси</string>
   <string name="account_proxy_enable_label">DHT проксисін қолдану</string>
   <string name="account_proxy_server_label">DHT прокси мекенжайы</string>
@@ -112,21 +112,9 @@
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">TLS көлігімен</string>
-  <string name="account_tls_port_label">TLS тыңдаушы порт</string>
-  <string name="account_tls_certificate_list_label">Куәліктік органдар</string>
-  <string name="account_tls_certificate_file_label">Куәлікті файл</string>
-  <string name="account_tls_private_key_file_label">Жеке кілті файлы</string>
-  <string name="account_tls_password_label">Жеке кілт паролі</string>
-  <string name="account_tls_method_label">TLS әдісі</string>
-  <string name="account_tls_ciphers_label">TLS шифрлары</string>
-  <string name="account_tls_server_name_label">Сервер атауы</string>
-  <string name="account_tls_verify_server_label">Серверді тексеру</string>
-  <string name="account_tls_verify_client_label">Клиентті тексеру</string>
-  <string name="account_require_client_certificate_label">TLS Клиенттің куәлігін талап етеді</string>
-  <string name="account_tls_negotiation_timeout_sec">Келіссөздер уақыты (сек)</string>
+  <string name="account_tls_password_label">Жеке кілттің паролі</string>
   <string name="account_rtp_max_port">Ең жоғары</string>
   <string name="account_rtp_min_port">Минималды</string>
-  <string name="account_rtp_port_range">Аудио RTP порт диапазоны</string>
   <!--restore/backup-->
   <string name="account_new_device_password">Тіркелгілерді ашу үшін негізгі парольді келтіріңіз</string>
   <string name="error_password_char_count">6 таңбадан кем емес</string>
@@ -164,12 +152,10 @@
   <string name="account_link_device">Басқа құрылғыдан қосылу</string>
   <string name="account_link_button">Желіден қосылу</string>
   <string name="account_link_archive_button">Қосымшадан қосылу</string>
-  <string name="account_link_prompt_pin">PIN- ні келтіріңіз</string>
   <string name="account_new_button">Jami тіркелгісін құру</string>
   <string name="account_link_export_button">Жаңа құрылғыны қосу</string>
   <string name="account_link_show_button">%d қосылған құрылғыны көрсету</string>
   <string name="account_link_hide_button">Қосылған құрылғыны жасыру</string>
-  <string name="account_start_export_button">PIN кодын шығару</string>
   <string name="account_end_export_button">жақындау</string>
   <string name="account_export_title">Басқа құрылғыларға сілтеме беру</string>
   <string name="account_connect_server_button">Басқару серверіне қосылу</string>
@@ -180,10 +166,7 @@
   <string name="account_connect_prompt_username">Пайдаланушы аты</string>
   <!--Name registration-->
   <string name="error_username_empty">Пайдаланушы атауын келтіріңіз</string>
-  <string name="no_registered_name_for_account">Тіркелген атауы жоқ</string>
-  <string name="username_available">Пайдаланушы аты қолжетімді!</string>
-  <string name="register_name">Тіркеу атауы</string>
-  <string name="trying_to_register_name">Аты-жөніне тіркеуге тырысу</string>
+  <string name="register_name">Пайдаланушы атауын тіркеу</string>
   <string name="registered_username">Тіркелген пайдаланушы аты</string>
   <string name="register_username">Қоғамдық пайдаланушы атауын тіркеу</string>
   <string name="register_recommended">Ұсынылған</string>
@@ -210,7 +193,6 @@
   <string name="revoke_device_wait_title">Күте көріңіз...</string>
   <string name="revoke_device_wait_message">Қайтарып алу құрылғысы</string>
   <string name="rename_device_title">Құрылғының атын өзгерту</string>
-  <string name="rename_device_message">Jami тіркелгіңізде осы құрылғыны анықтау үшін жаңа атауды таңдаңыз</string>
   <string name="rename_device_button">Атауын өзгерту құрылғысы</string>
   <string name="account_rename_device_hint">Жаңа құрылғыны таңдау</string>
   <string name="account_device_this_indicator">Бұл құрылғы</string>
@@ -218,6 +200,7 @@
   <!--Link a new device-->
   <string name="error_format_not_supported">Бұл форматты қолдамайды.</string>
   <string name="account_link_device_title">Жаңа құрылғыны қосу</string>
+  <string name="connect_device_scanqr">QR кодын сканерлеу</string>
   <string name="account_link_device_button">Қосылыңыз</string>
   <!--Biometry-->
 </resources>

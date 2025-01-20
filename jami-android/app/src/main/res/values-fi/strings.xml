@@ -214,11 +214,6 @@
   <string name="conversation_type_contact">Jami yhteystieto</string>
   <string name="conversation_type_private">Yksityinen</string>
   <string name="conversation_type_group">Ryhmä</string>
-  <string name="conversation_contact_invited">%1$s kutsuttiin</string>
-  <string name="conversation_contact_added">%1$s liittyi</string>
-  <string name="conversation_contact_left">%1$s jäljellä</string>
-  <string name="conversation_contact_blocked">%1$s estettiin</string>
-  <string name="conversation_contact_unblocked">%1$s esto vapautettiin</string>
   <string name="conversation_search_hint">Hae keskustelua</string>
   <string name="audio_recorder_error">Audion tallennussovellusta ei löytynyt.</string>
   <string name="video_recorder_error">Videon tallennussovellusta ei löytynyt.</string>

@@ -214,11 +214,6 @@
   <string name="conversation_type_contact">Jami kontakt</string>
   <string name="conversation_type_private">Isiklik</string>
   <string name="conversation_type_group">Grupp</string>
-  <string name="conversation_contact_invited">%1$s sai kutse</string>
-  <string name="conversation_contact_added">%1$s liitus</string>
-  <string name="conversation_contact_left">%1$s lahkus</string>
-  <string name="conversation_contact_blocked">%1$s on blokeeritud</string>
-  <string name="conversation_contact_unblocked">%1$s blokeering on eemaldatud</string>
   <string name="conversation_search_hint">Otsi vestlust</string>
   <string name="audio_recorder_error">Helisalvestuse rakendust ei leidu.</string>
   <string name="video_recorder_error">Videosalvestuse rakendust ei leidu.</string>

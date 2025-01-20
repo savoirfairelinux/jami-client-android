@@ -171,9 +171,6 @@
   <string name="conversation_type_contact">Επαφή Jami</string>
   <string name="conversation_type_private">Ιδιωτικό</string>
   <string name="conversation_type_group">Ομάδα</string>
-  <string name="conversation_contact_invited">%1$s προσκλήθηκε</string>
-  <string name="conversation_contact_added">%1$s μπήκε</string>
-  <string name="conversation_contact_left">%1$s έφυγε</string>
   <string name="conversation_search_hint">Ψάξτε για συζήτηση</string>
   <string name="today">Σήμερα</string>
   <string name="yesterday">Χθες</string>

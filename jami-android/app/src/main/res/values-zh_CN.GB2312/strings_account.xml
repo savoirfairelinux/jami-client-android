@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--Strings related to account edition screen-->
+  <!--Strings related to account creation-->
+  <!--Strings related to account deletion-->
+  <!--AccountManagementFragment-->
+  <!--Basic Details-->
+  <string name="account_name_server_label">名称服务器</string>
+  <!--Extension Details-->
+  <!--Audio Details-->
+  <!--Video Details-->
+  <!--Advanced Details-->
+  <string name="account_stun_enable_label">使用 STUN</string>
+  <string name="account_connectivity_label">点到点连接</string>
+  <string name="default_value">默认</string>
+  <!--Security Details-->
+  <!--SRTP Details-->
+  <!--SIP-->
+  <!--TLS Details-->
+  <string name="account_tls_password_label">私鑰保護密碼</string>
+  <!--restore/backup-->
+  <!--TV-->
+  <!--Name registration-->
+  <string name="register_name">注册用户名</string>
+  <!--Create account-->
+  <!--Edit profile-->
+  <!--Devices-->
+  <!--Link a new device-->
+  <string name="connect_device_scanqr">扫描 QR 码</string>
+  <!--Biometry-->
+</resources>

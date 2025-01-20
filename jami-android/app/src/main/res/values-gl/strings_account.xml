@@ -43,9 +43,9 @@
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Xeral</string>
   <string name="account_basic_category">Axustes básicos</string>
-  <string name="account_alias_label">Nome da conta</string>
   <string name="account_hostname_label">Servidor</string>
   <string name="account_bootstrap_label">Bootstrap</string>
+  <string name="account_name_server_label">Nome servidor</string>
   <string name="account_username_label">Nome de usuaria</string>
   <string name="account_password_label">Contrasinal</string>
   <string name="account_optionnal_category">Axustes optativos</string>
@@ -79,8 +79,7 @@
   <string name="account_registration_exp_label">Caducidade do rexistro</string>
   <string name="account_local_interface_label">Interface local</string>
   <string name="account_local_port_label">Porto local</string>
-  <string name="account_stun_enable_label">Utilizar Stun</string>
-  <string name="account_stun_server_label">Servidor Stun</string>
+  <string name="account_stun_enable_label">Usar STUN</string>
   <string name="account_accept_files">Aceptar ficheiros entrantes automáticamente</string>
   <string name="account_conversation_settings_title">Axustes da conversa</string>
   <string name="account_accept_files_max_size">Tamaño máximo para aceptar ficheiros de xeito automático</string>
@@ -96,6 +95,7 @@
   <string name="account_published_address_label">Enderezo publicado</string>
   <string name="disabled">Desactivada</string>
   <string name="enabled">Activada</string>
+  <string name="default_value">Por defecto</string>
   <string name="account_proxy_label">Proxy DHT</string>
   <string name="account_proxy_enable_label">Utilizar proxy DHT</string>
   <string name="account_proxy_server_label">Enderezo proxy DHT</string>
@@ -114,21 +114,9 @@
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Utilizar transporte TLS</string>
-  <string name="account_tls_port_label">Porto de escoita TLS</string>
-  <string name="account_tls_certificate_list_label">Autoridades Certificadoras</string>
-  <string name="account_tls_certificate_file_label">Ficheiro de certificado</string>
-  <string name="account_tls_private_key_file_label">Ficheiro de chave privada</string>
   <string name="account_tls_password_label">Contrasinal da chave privada</string>
-  <string name="account_tls_method_label">Método TLS</string>
-  <string name="account_tls_ciphers_label">Cifrados TLS</string>
-  <string name="account_tls_server_name_label">Nome de servidor</string>
-  <string name="account_tls_verify_server_label">Verificar servidor</string>
-  <string name="account_tls_verify_client_label">Verificar cliente</string>
-  <string name="account_require_client_certificate_label">TLS require Certificado Cliente</string>
-  <string name="account_tls_negotiation_timeout_sec">Caducidade da negociación (seg)</string>
   <string name="account_rtp_max_port">Máximo</string>
   <string name="account_rtp_min_port">Mínimo</string>
-  <string name="account_rtp_port_range">Intervalo de portos Son RTP</string>
   <!--restore/backup-->
   <string name="account_new_device_password">Escribe o contrasinal para desbloquear a conta</string>
   <string name="error_password_char_count">Mínimo 6 caracteres</string>
@@ -166,12 +154,10 @@
   <string name="account_link_device">Conectar desde outro dispositivo</string>
   <string name="account_link_button">Conectar desde a rede</string>
   <string name="account_link_archive_button">Conectar desde copia de apoio</string>
-  <string name="account_link_prompt_pin">Escribe o PIN</string>
   <string name="account_new_button">Crear conta Jami</string>
   <string name="account_link_export_button">Ligar un novo dispositio</string>
   <string name="account_link_show_button">Mostar %d dispositivo ligado</string>
   <string name="account_link_hide_button">Agochar dispositivo ligado</string>
-  <string name="account_start_export_button">Crear PIN</string>
   <string name="account_end_export_button">pechar</string>
   <string name="account_export_title">Ligar conta a outros dispositivos</string>
   <string name="account_connect_server_button">Conectar a servidor de xestión</string>
@@ -183,10 +169,7 @@
   <string name="account_enter_username">Escribir nome de usuaria</string>
   <!--Name registration-->
   <string name="error_username_empty">Escribe nome de usuaria</string>
-  <string name="no_registered_name_for_account">Sen nome rexistrado</string>
-  <string name="username_available">Nome de usuaria dispoñible!</string>
-  <string name="register_name">Rexistrar nome</string>
-  <string name="trying_to_register_name">Intentando rexistrar nome</string>
+  <string name="register_name">Rexistrar o nome de usuario/a</string>
   <string name="registered_username">Nome de usuaria rexistrado</string>
   <string name="register_username">Rexistrar o nome público de usuaria</string>
   <string name="register_recommended">Recomendado</string>
@@ -213,27 +196,20 @@
   <string name="revoke_device_wait_title">Agarda por favor...</string>
   <string name="revoke_device_wait_message">Revogando dispositivo</string>
   <string name="rename_device_title">Cambiar nome ao dispositivo</string>
-  <string name="rename_device_message">Escolle un novo nome para identificar este dispositivo na túa conta Jami</string>
   <string name="rename_device_button">Cambiar nome</string>
   <string name="account_rename_device_hint">Escolle un novo nome</string>
   <string name="account_device_this_indicator">Este dispositivo</string>
   <string name="account_disabled_indicator">desactivado</string>
   <!--Link a new device-->
-  <string name="account_link_prompt_pin_manually">Escribir PIN manualmente</string>
   <string name="qr_invalid">Non é un código QR de Autenticación de Jami</string>
-  <string name="content_description_checkbox">O Código QR é válido</string>
   <string name="error_format_not_supported">Este formato non está soportado.</string>
-  <string name="account_link_info">Na nova app Jami, escanea o código QR ou escribe á man o PIN.</string>
   <string name="account_link_device_title">Ligar un novo dispositio</string>
   <string name="account_link_password">Esta conta está protexida con contrasinal, escribe o contrasinal para crear un código PIN.</string>
   <string name="account_link_generate_button">Crear</string>
   <string name="account_link_time_valid">O código PIN xa non será válido en: %1$s.</string>
-  <string name="account_link_device_info">Escolle \"Ligar un novo dispositivo\" na outra app Jami para mostrar o código QR ou PIN</string>
   <string name="account_generate_export_device">No outro dispositivo</string>
-  <string name="content_description_qr_generated">O teu Código QR</string>
   <string name="help_pin_info">Completar se a conta está cifrada con contrasinal</string>
-  <string name="connect_device_scanqr">Escanea o QR</string>
-  <string name="connect_device_enterPIN">Ou escribe o PIN</string>
+  <string name="connect_device_scanqr">Escanar código QR</string>
   <string name="account_link_device_button">Conectar</string>
   <!--Biometry-->
 </resources>

@@ -168,9 +168,6 @@
   <string name="conversation_preference_emoji">ಸಂಭಾಷಣೆ ಎಮೋಜಿ</string>
   <string name="conversation_type_contact">ಜಾಮಿ ಸಂಪರ್ಕ</string>
   <string name="conversation_type_private">ಖಾಸಗಿ</string>
-  <string name="conversation_contact_invited">%1$s ಅನ್ನು ಆಹ್ವಾನಿಸಲಾಗಿದೆ</string>
-  <string name="conversation_contact_added">%1$s ಸೇರಿಕೊಂಡಿದೆ</string>
-  <string name="conversation_contact_left">%1$s ಎಡಕ್ಕೆ</string>
   <string name="conversation_search_hint">ಹುಡುಕಾಟ ಸಂಭಾಷಣೆ</string>
   <string name="today">ಇಂದು</string>
   <string name="yesterday">ನಿನ್ನೆ</string>

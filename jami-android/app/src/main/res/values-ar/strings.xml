@@ -174,9 +174,6 @@
   <string name="conversation_type_contact">جهة اتصال جامي</string>
   <string name="conversation_type_private">خاص</string>
   <string name="conversation_type_group">مجموعة</string>
-  <string name="conversation_contact_invited">%1$s تم دعوته</string>
-  <string name="conversation_contact_added">%1$s متضمن</string>
-  <string name="conversation_contact_left">%1$s يسار</string>
   <string name="conversation_search_hint">بحث عن المحادثة</string>
   <string name="today">اليوم</string>
   <string name="yesterday">البارحة</string>

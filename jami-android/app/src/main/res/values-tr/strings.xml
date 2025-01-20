@@ -175,9 +175,6 @@
   <string name="conversation_type_contact">Jami kişisi</string>
   <string name="conversation_type_private">Özel</string>
   <string name="conversation_type_group">Küme</string>
-  <string name="conversation_contact_invited">%1$s davet edildi</string>
-  <string name="conversation_contact_added">%1$s katıldı</string>
-  <string name="conversation_contact_left">%1$s ayrıldı</string>
   <string name="conversation_search_hint">Görüşmede ara</string>
   <string name="today">Bugün</string>
   <string name="yesterday">Dün</string>

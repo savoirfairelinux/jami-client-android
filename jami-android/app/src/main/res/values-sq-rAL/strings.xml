@@ -214,11 +214,6 @@
   <string name="conversation_type_contact">Kontakt Jami</string>
   <string name="conversation_type_private">Privat</string>
   <string name="conversation_type_group">Grup</string>
-  <string name="conversation_contact_invited">U ftua %1$s</string>
-  <string name="conversation_contact_added">%1$s erdhi</string>
-  <string name="conversation_contact_left">%1$s iku</string>
-  <string name="conversation_contact_blocked">%1$s u bllokua</string>
-  <string name="conversation_contact_unblocked">%1$s u zhbllokua</string>
   <string name="conversation_search_hint">Kërkoni bisedë</string>
   <string name="audio_recorder_error">S’u gjet aplikacion incizimi audio.</string>
   <string name="video_recorder_error">S’u gjet aplikacion regjistrimi video.</string>

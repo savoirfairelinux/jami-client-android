@@ -173,9 +173,6 @@
   <string name="conversation_type_contact">Kontakt na Jami</string>
   <string name="conversation_type_private">Soukromý</string>
   <string name="conversation_type_group">Skupina</string>
-  <string name="conversation_contact_invited">%1$sbyl pozván</string>
-  <string name="conversation_contact_added">%1$sse připojil</string>
-  <string name="conversation_contact_left">%1$sodešel</string>
   <string name="conversation_search_hint">Najít konverzaci</string>
   <string name="today">Dnes</string>
   <string name="yesterday">Včera</string>

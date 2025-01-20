@@ -182,9 +182,6 @@
   <string name="conversation_type_contact">Kontakty Jami</string>
   <string name="conversation_type_private">Prywatne</string>
   <string name="conversation_type_group">Grupa</string>
-  <string name="conversation_contact_invited">Zaproszono %1$s</string>
-  <string name="conversation_contact_added">%1$s dołączony</string>
-  <string name="conversation_contact_left">%1$s opuścił rozmowę</string>
   <string name="conversation_search_hint">Przeszukaj konwersację</string>
   <string name="audio_recorder_error">Nie znaleziono aplikacji rejestratora dźwięku.</string>
   <string name="video_recorder_error">Nie znaleziono aplikacji do nagrywania wideo.</string>

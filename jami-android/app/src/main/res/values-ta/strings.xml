@@ -168,9 +168,6 @@
   <string name="conversation_preference_emoji">உரையாடல் ஈமோஜி</string>
   <string name="conversation_type_contact">ஜாமி தொடர்பு</string>
   <string name="conversation_type_private">தனியார்</string>
-  <string name="conversation_contact_invited">%1$s அழைக்கப்பட்டார்</string>
-  <string name="conversation_contact_added">%1$s சேர்க்கப்பட்டது</string>
-  <string name="conversation_contact_left">%1$s இடது</string>
   <string name="conversation_search_hint">தேடல் உரையாடல்</string>
   <string name="today">இன்று</string>
   <string name="yesterday">நேற்று</string>

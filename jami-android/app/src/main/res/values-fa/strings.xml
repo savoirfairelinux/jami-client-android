@@ -175,9 +175,6 @@
   <string name="conversation_type_contact">مخاطب جامی</string>
   <string name="conversation_type_private">خصوصی</string>
   <string name="conversation_type_group">گروه</string>
-  <string name="conversation_contact_invited">%1$s دعوت شده است.</string>
-  <string name="conversation_contact_added">%1$sپیوست</string>
-  <string name="conversation_contact_left">%1$s ترک کرد</string>
   <string name="conversation_search_hint">جستجو در گفتگو‌ها</string>
   <string name="today">امروز</string>
   <string name="yesterday">دیروز</string>

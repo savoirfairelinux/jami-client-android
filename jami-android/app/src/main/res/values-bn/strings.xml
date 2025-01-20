@@ -169,9 +169,6 @@
   <string name="conversation_preference_emoji">কথোপকথন ইমোজি</string>
   <string name="conversation_type_contact">জামি যোগাযোগ</string>
   <string name="conversation_type_private">ব্যক্তিগত</string>
-  <string name="conversation_contact_invited">%1$s আমন্ত্রিত হয়েছে</string>
-  <string name="conversation_contact_added">%1$s যোগ করা হয়েছে</string>
-  <string name="conversation_contact_left">%1$s বাম</string>
   <string name="conversation_search_hint">অনুসন্ধান কথোপকথন</string>
   <string name="today">আজ</string>
   <string name="yesterday">গতকাল</string>

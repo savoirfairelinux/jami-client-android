@@ -43,9 +43,9 @@
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Γενικά</string>
   <string name="account_basic_category">Βασικές Ρυθμίσεις</string>
-  <string name="account_alias_label">Όνομα λογαριασμού</string>
   <string name="account_hostname_label">Hostname</string>
   <string name="account_bootstrap_label">Πυροσκόπηση</string>
+  <string name="account_name_server_label">Διοικητής ονόματος</string>
   <string name="account_username_label">Όνομα χρήστη</string>
   <string name="account_password_label">Κωδικός</string>
   <string name="account_optionnal_category">Προαιρετικές ρυθμίσεις</string>
@@ -78,7 +78,6 @@
   <string name="account_local_interface_label">Τοπική διεπαφή</string>
   <string name="account_local_port_label">Τοπική θύρα</string>
   <string name="account_stun_enable_label">Χρήση STUN</string>
-  <string name="account_stun_server_label">Διακομιστής STUN</string>
   <string name="account_accept_files">Αυτόματη αποδοχή εισερχομένων αρχείων</string>
   <string name="account_conversation_settings_title">Ρυθμίσεις συνομιλίας</string>
   <string name="account_accept_files_max_size">Μέγιστο μέγεθος αρχείου για να γίνει αυτόματα αποδεκτή</string>
@@ -94,6 +93,7 @@
   <string name="account_published_address_label">Δημοσιευμένη διεύθυνση</string>
   <string name="disabled">Αναπηρία</string>
   <string name="enabled">Ενεργοποιημένο</string>
+  <string name="default_value">Προεπιλογή</string>
   <string name="account_proxy_label">Διαμεσολαβητής DHT</string>
   <string name="account_proxy_enable_label">Χρησιμοποιήστε DHT proxy</string>
   <string name="account_proxy_server_label">Δικτυακή διεύθυνση DHT</string>
@@ -112,21 +112,9 @@
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Χρησιμοποιήστε TLS Transport</string>
-  <string name="account_tls_port_label">Λημείο ακροατή TLS</string>
-  <string name="account_tls_certificate_list_label">Αρχές πιστοποίησης</string>
-  <string name="account_tls_certificate_file_label">Φάιλ πιστοποιητικού</string>
-  <string name="account_tls_private_key_file_label">Φάιλ ιδιωτικού κλειδιού</string>
-  <string name="account_tls_password_label">Κλειδί του ιδιωτικού κωδικού πρόσβασης</string>
-  <string name="account_tls_method_label">Μέθοδος TLS</string>
-  <string name="account_tls_ciphers_label">Κύπρες TLS</string>
-  <string name="account_tls_server_name_label">Όνομα του διακομιστή</string>
-  <string name="account_tls_verify_server_label">Επιστολή του Server</string>
-  <string name="account_tls_verify_client_label">Ελέγχοντας τον πελάτη</string>
-  <string name="account_require_client_certificate_label">TLS απαιτεί πιστοποιητικό πελάτη</string>
-  <string name="account_tls_negotiation_timeout_sec">Επαναλήψεις για διαπραγματεύσεις (sec)</string>
+  <string name="account_tls_password_label">Συνθηματικό ιδιωτικού κλειδιού</string>
   <string name="account_rtp_max_port">Μέγιστη</string>
   <string name="account_rtp_min_port">Λεπτομέτρου</string>
-  <string name="account_rtp_port_range">Εύρος θυρών RTP ήχου</string>
   <!--restore/backup-->
   <string name="account_new_device_password">Εισάγετε κύριο κωδικό πρόσβασης για να ξεκλειδώσετε λογαριασμό</string>
   <string name="error_password_char_count">το ελάχιστο 6 χαρακτήρες</string>
@@ -164,12 +152,10 @@
   <string name="account_link_device">Συνδέστε από άλλη συσκευή</string>
   <string name="account_link_button">Συνδέστε από το δίκτυο</string>
   <string name="account_link_archive_button">Συνδέστε από την υποστήριξη</string>
-  <string name="account_link_prompt_pin">Εισάγετε PIN</string>
   <string name="account_new_button">Δημιουργία λογαριασμού Jami</string>
   <string name="account_link_export_button">Σύνδεση νέας συσκευής</string>
   <string name="account_link_show_button">Δείξτε %d περισσότερες συνδεδεμένες συσκευές</string>
   <string name="account_link_hide_button">Κρύψτε το συνδεδεμένο όργανο</string>
-  <string name="account_start_export_button">Γεννήσετε PIN</string>
   <string name="account_end_export_button">Κοντά</string>
   <string name="account_export_title">Λογαριασμός σύνδεσης με άλλες συσκευές</string>
   <string name="account_connect_server_button">Συνδέστε τον διακομιστή διαχείρισης</string>
@@ -180,10 +166,7 @@
   <string name="account_connect_prompt_username">Όνομα χρήστη</string>
   <!--Name registration-->
   <string name="error_username_empty">Εισάγετε όνομα χρήστη</string>
-  <string name="no_registered_name_for_account">Καμία εγγεγραμμένη ονομασία</string>
-  <string name="username_available">Χρήστη διαθέσιμο!</string>
-  <string name="register_name">Πληροφορική ονομασία</string>
-  <string name="trying_to_register_name">Προσπαθώ να καταχωρήσω το όνομα</string>
+  <string name="register_name">Καταχωρίστε το όνομα χρήστη</string>
   <string name="registered_username">Καταχωρισμένο όνομα χρήστη</string>
   <string name="register_username">Καταχώρηση δημόσιου ονόματος χρήστη</string>
   <string name="register_recommended">Προτεινόμενα</string>
@@ -210,7 +193,6 @@
   <string name="revoke_device_wait_title">Σε παρακαλώ, περίμενε...</string>
   <string name="revoke_device_wait_message">Συσκευή ανάκλησης</string>
   <string name="rename_device_title">Μετανόμευση αυτής της συσκευής</string>
-  <string name="rename_device_message">Επιλέξτε ένα νέο όνομα για να αναγνωρίσετε αυτή τη συσκευή στον λογαριασμό σας Jami</string>
   <string name="rename_device_button">Επανακατακατηγορία</string>
   <string name="account_rename_device_hint">Επιλέξτε νέο όνομα συσκευής</string>
   <string name="account_device_this_indicator">Αυτή η συσκευή</string>
@@ -218,6 +200,7 @@
   <!--Link a new device-->
   <string name="error_format_not_supported">Η μορφή δεν υποστιρίζεται.</string>
   <string name="account_link_device_title">Σύνδεση νέας συσκευής</string>
+  <string name="connect_device_scanqr">Σκάρετε τον κωδικό QR</string>
   <string name="account_link_device_button">Σύνδεση</string>
   <!--Biometry-->
 </resources>

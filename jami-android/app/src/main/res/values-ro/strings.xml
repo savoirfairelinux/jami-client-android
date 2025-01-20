@@ -215,11 +215,6 @@
   <string name="conversation_type_contact">Contact Jami</string>
   <string name="conversation_type_private">Privat</string>
   <string name="conversation_type_group">Grup</string>
-  <string name="conversation_contact_invited">%1$s a fost invitat</string>
-  <string name="conversation_contact_added">%1$s s-a alăturat</string>
-  <string name="conversation_contact_left">%1$s a ieșit</string>
-  <string name="conversation_contact_blocked">%1$s a fost blocat</string>
-  <string name="conversation_contact_unblocked">%1$s a fost deblocat</string>
   <string name="conversation_search_hint">Caută conversația</string>
   <string name="audio_recorder_error">Aplicația de înregistrare audio nu a fost găsită.</string>
   <string name="video_recorder_error">Aplicația de înregistrare video nu a fost găsită.</string>
@@ -440,7 +435,7 @@
   <string name="welcome_jami_description">Împărtășește identificatorul tău Jami pentru a fi contactat mai ușor!</string>
   <!--Conversation details-->
   <string name="details">Detalii</string>
-  <string name="secure_p2p_connection">Conexiune sigură</string>
+  <string name="secure_p2p_connection">Conexiune sigură P2P</string>
   <string name="swarm_type">Tipul conversației</string>
   <string name="Private">Privat</string>
   <string name="swarm_id">ID-ul grupului</string>

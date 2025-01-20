@@ -210,11 +210,6 @@
   <string name="conversation_type_contact">Jami 联系人</string>
   <string name="conversation_type_private">私人</string>
   <string name="conversation_type_group">群組</string>
-  <string name="conversation_contact_invited">已邀请 %1$s</string>
-  <string name="conversation_contact_added">%1$s 已加入</string>
-  <string name="conversation_contact_left">%1$s 已離開</string>
-  <string name="conversation_contact_blocked">%1$s被封锁了</string>
-  <string name="conversation_contact_unblocked">%1$s已解除封锁</string>
   <string name="conversation_search_hint">在会话中搜索</string>
   <string name="audio_recorder_error">找不到录音应用</string>
   <string name="video_recorder_error">找不到相机</string>

@@ -43,9 +43,9 @@
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Generelt</string>
   <string name="account_basic_category">Almindelige Indstillinger</string>
-  <string name="account_alias_label">Kontonavn</string>
   <string name="account_hostname_label">Værtsnavn</string>
   <string name="account_bootstrap_label">Bootstrap</string>
+  <string name="account_name_server_label">Navneserver</string>
   <string name="account_username_label">Brugernavn</string>
   <string name="account_password_label">Adgangskode</string>
   <string name="account_optionnal_category">Valgfrie Indstillinger</string>
@@ -78,7 +78,6 @@
   <string name="account_local_interface_label">Lokal grænseflade</string>
   <string name="account_local_port_label">Lokal port</string>
   <string name="account_stun_enable_label">Brug STUN</string>
-  <string name="account_stun_server_label">STUN-server</string>
   <string name="account_accept_files">Acceptér filer automatisk</string>
   <string name="account_conversation_settings_title">Samtaleindstillinger</string>
   <string name="account_accept_files_max_size">Maksimal filstørrelse til automatisk accept</string>
@@ -94,6 +93,7 @@
   <string name="account_published_address_label">Publiceret Adresse</string>
   <string name="disabled">Behindret</string>
   <string name="enabled">Aktiveret</string>
+  <string name="default_value">Standard</string>
   <string name="account_proxy_label">DHT-proxy</string>
   <string name="account_proxy_enable_label">Brug DHT-proxy</string>
   <string name="account_proxy_server_label">Adresse til DHT-proxy</string>
@@ -112,21 +112,9 @@
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Brug TLS-transport</string>
-  <string name="account_tls_port_label">TLS-lytteport</string>
-  <string name="account_tls_certificate_list_label">Certificeringsautoriteter</string>
-  <string name="account_tls_certificate_file_label">Certifikatfil</string>
-  <string name="account_tls_private_key_file_label">Privat-nøglefil</string>
-  <string name="account_tls_password_label">Adgangskode for Privatnøgle</string>
-  <string name="account_tls_method_label">TLS-metode</string>
-  <string name="account_tls_ciphers_label">TLS- cifre </string>
-  <string name="account_tls_server_name_label">Servernavn</string>
-  <string name="account_tls_verify_server_label">Verificer Server</string>
-  <string name="account_tls_verify_client_label">Verificer Klient</string>
-  <string name="account_require_client_certificate_label">TLS kræver kundesertifikaat</string>
-  <string name="account_tls_negotiation_timeout_sec">Tidsgrænse for Forhandling</string>
+  <string name="account_tls_password_label">Adgangskode til privat nøgle</string>
   <string name="account_rtp_max_port">Maksimum</string>
   <string name="account_rtp_min_port">Minimum</string>
-  <string name="account_rtp_port_range">Område for lyd RTP-port</string>
   <!--restore/backup-->
   <string name="account_new_device_password">Indtast primære adgangskode for at oplåse konto</string>
   <string name="error_password_char_count">Mindst 6 tegn</string>
@@ -164,12 +152,10 @@
   <string name="account_link_device">Forbindelse fra et andet udstyr</string>
   <string name="account_link_button">Opret forbindelse</string>
   <string name="account_link_archive_button">Forbindelse fra backup</string>
-  <string name="account_link_prompt_pin">Indtast PIN-kode</string>
   <string name="account_new_button">Opret en Jami-konto</string>
   <string name="account_link_export_button">Tilknyt en ny enhed</string>
   <string name="account_link_show_button">Vis %d flere tilknyttede enheder</string>
   <string name="account_link_hide_button">Skjul det tilkoblede anordning</string>
-  <string name="account_start_export_button">Generer PIN</string>
   <string name="account_end_export_button">luk</string>
   <string name="account_export_title">Link konto til andre enheder</string>
   <string name="account_connect_server_button">Forbindelse til administrationsserveren</string>
@@ -181,10 +167,7 @@
   <string name="account_enter_username">Indtast brugernavn</string>
   <!--Name registration-->
   <string name="error_username_empty">Indtast et brugernavn</string>
-  <string name="no_registered_name_for_account">Intet registreret navn</string>
-  <string name="username_available">Brugernavn tilgængeligt!</string>
-  <string name="register_name">Registrer navn</string>
-  <string name="trying_to_register_name">Forsøger at registrere navn</string>
+  <string name="register_name">Registrer brugernavn</string>
   <string name="registered_username">Registreret brugernavn</string>
   <string name="register_username">Registrer offentligt brugernavn</string>
   <string name="register_recommended">Anbefalet</string>
@@ -211,7 +194,6 @@
   <string name="revoke_device_wait_title">Vent venligt...</string>
   <string name="revoke_device_wait_message">Tilbagetrækker enhed</string>
   <string name="rename_device_title">Omdøb denne enhed</string>
-  <string name="rename_device_message">Vælg et nyt navn til denne enhed på din Jami-konto</string>
   <string name="rename_device_button">Omdøb enhed</string>
   <string name="account_rename_device_hint">Vælg nyt enhedsnavn</string>
   <string name="account_device_this_indicator">Denne enhed</string>
@@ -219,6 +201,7 @@
   <!--Link a new device-->
   <string name="error_format_not_supported">Dette format understøttes ikke.</string>
   <string name="account_link_device_title">Tilknyt en ny enhed</string>
+  <string name="connect_device_scanqr">Scan QR-koder</string>
   <string name="account_link_device_button">Køb</string>
   <!--Biometry-->
 </resources>

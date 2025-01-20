@@ -168,9 +168,6 @@
   <string name="conversation_preference_emoji">مکالمات ایموجی</string>
   <string name="conversation_type_contact">جمی تماس</string>
   <string name="conversation_type_private">خصوصی</string>
-  <string name="conversation_contact_invited">%1$s دعوت ائدیلدی</string>
-  <string name="conversation_contact_added">%1$s قوشولدو</string>
-  <string name="conversation_contact_left">%1$s سولدو</string>
   <string name="conversation_search_hint">بحث آختارماق</string>
   <string name="today">بو گون</string>
   <string name="yesterday">دونن</string>

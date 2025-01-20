@@ -178,9 +178,6 @@
   <string name="conversation_preference_emoji">वार्तालाप इमोजी</string>
   <string name="conversation_type_contact">जमी संपर्क</string>
   <string name="conversation_type_private">निजी</string>
-  <string name="conversation_contact_invited">%1$s को आमंत्रित किया गया था</string>
-  <string name="conversation_contact_added">%1$s जोड़ा गया</string>
-  <string name="conversation_contact_left">%1$s बाएं</string>
   <string name="conversation_search_hint">खोज वार्तालाप</string>
   <string name="audio_recorder_error">ऑडियो रिकॉर्डर ऐप नहीं मिला.</string>
   <string name="video_recorder_error">वीडियो रिकॉर्डर ऐप नहीं मिला.</string>

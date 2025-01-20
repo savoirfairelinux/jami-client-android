@@ -43,9 +43,9 @@
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">જનરલ</string>
   <string name="account_basic_category">મૂળભૂત સેટિંગ્સ</string>
-  <string name="account_alias_label">એકાઉન્ટનું નામ</string>
   <string name="account_hostname_label">હોસ્ટનામ</string>
   <string name="account_bootstrap_label">બુટસ્ટ્રેપ</string>
+  <string name="account_name_server_label">નામ સર્વર</string>
   <string name="account_username_label">વપરાશકર્તા નામ</string>
   <string name="account_password_label">પાસવર્ડ</string>
   <string name="account_optionnal_category">વૈકલ્પિક સેટિંગ્સ</string>
@@ -77,8 +77,7 @@
   <string name="account_registration_exp_label">નોંધણી સમાપ્ત થાય છે</string>
   <string name="account_local_interface_label">સ્થાનિક ઇન્ટરફેસ</string>
   <string name="account_local_port_label">સ્થાનિક બંદર</string>
-  <string name="account_stun_enable_label">સ્ટનનો ઉપયોગ કરો</string>
-  <string name="account_stun_server_label">સ્ટન સર્વર</string>
+  <string name="account_stun_enable_label">STUN નો ઉપયોગ કરો</string>
   <string name="account_accept_files">આપમેળે ઇનકમિંગ ફાઇલો સ્વીકારો</string>
   <string name="account_conversation_settings_title">વાતચીત સેટિંગ્સ</string>
   <string name="account_accept_files_max_size">આપમેળે સ્વીકારવા માટે મહત્તમ ફાઇલ કદ</string>
@@ -94,6 +93,7 @@
   <string name="account_published_address_label">પ્રકાશિત સરનામું</string>
   <string name="disabled">અપંગ</string>
   <string name="enabled">સક્ષમ</string>
+  <string name="default_value">ડિફૉલ્ટ</string>
   <string name="account_proxy_label">ડીએચટી પ્રોક્સી</string>
   <string name="account_proxy_enable_label">DHT પ્રોક્સીનો ઉપયોગ કરો</string>
   <string name="account_proxy_server_label">DHT પ્રોક્સી સરનામું</string>
@@ -112,21 +112,9 @@
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">TLS પરિવહનનો ઉપયોગ કરો</string>
-  <string name="account_tls_port_label">TLS શ્રોતા પોર્ટ</string>
-  <string name="account_tls_certificate_list_label">પ્રમાણપત્ર સત્તાવાળાઓ</string>
-  <string name="account_tls_certificate_file_label">પ્રમાણપત્ર ફાઇલ</string>
-  <string name="account_tls_private_key_file_label">ખાનગી કી ફાઇલ</string>
   <string name="account_tls_password_label">ખાનગી કી પાસવર્ડ</string>
-  <string name="account_tls_method_label">TLS પદ્ધતિ</string>
-  <string name="account_tls_ciphers_label">TLS સિફર્સ</string>
-  <string name="account_tls_server_name_label">સર્વર નામ</string>
-  <string name="account_tls_verify_server_label">સર્વર ચકાસો</string>
-  <string name="account_tls_verify_client_label">ક્લાઈન્ટ ચકાસો</string>
-  <string name="account_require_client_certificate_label">TLS ક્લાઈન્ટ પ્રમાણપત્ર જરૂરી</string>
-  <string name="account_tls_negotiation_timeout_sec">વાટાઘાટ સમય (સેક)</string>
   <string name="account_rtp_max_port">મહત્તમ</string>
   <string name="account_rtp_min_port">ન્યૂનતમ</string>
-  <string name="account_rtp_port_range">ઑડિઓ આરટીપી પોર્ટ રેન્જ</string>
   <!--restore/backup-->
   <string name="account_new_device_password">એકાઉન્ટ અનલૉક કરવા માટે મુખ્ય પાસવર્ડ દાખલ કરો</string>
   <string name="error_password_char_count">6 અક્ષરો ઓછામાં ઓછા</string>
@@ -164,12 +152,10 @@
   <string name="account_link_device">અન્ય ઉપકરણથી કનેક્ટ કરો</string>
   <string name="account_link_button">નેટવર્કથી કનેક્ટ</string>
   <string name="account_link_archive_button">બેકઅપ થી કનેક્ટ</string>
-  <string name="account_link_prompt_pin">PIN દાખલ કરો</string>
   <string name="account_new_button">એક Jami એકાઉન્ટ બનાવો</string>
   <string name="account_link_export_button">નવી ઉપકરણને લિંક કરો</string>
   <string name="account_link_show_button">%d વધુ જોડાયેલ ઉપકરણ બતાવો</string>
   <string name="account_link_hide_button">જોડાયેલ ઉપકરણ છુપાવો</string>
-  <string name="account_start_export_button">PIN જનરેટ કરો</string>
   <string name="account_end_export_button">નજીક</string>
   <string name="account_export_title">અન્ય ઉપકરણો સાથે લિંક એકાઉન્ટ</string>
   <string name="account_connect_server_button">મેનેજમેન્ટ સર્વર સાથે કનેક્ટ</string>
@@ -180,10 +166,7 @@
   <string name="account_connect_prompt_username">વપરાશકર્તા નામ</string>
   <!--Name registration-->
   <string name="error_username_empty">વપરાશકર્તા નામ દાખલ કરો</string>
-  <string name="no_registered_name_for_account">નોંધાયેલ નામ નથી</string>
-  <string name="username_available">વપરાશકર્તા નામ ઉપલબ્ધ!</string>
-  <string name="register_name">રજિસ્ટર નામ</string>
-  <string name="trying_to_register_name">નામ નોંધણી કરવાનો પ્રયાસ</string>
+  <string name="register_name">વપરાશકર્તા નામ નોંધણી</string>
   <string name="registered_username">રજિસ્ટર્ડ વપરાશકર્તા નામ</string>
   <string name="register_username">જાહેર વપરાશકર્તાનામ નોંધણી</string>
   <string name="register_recommended">ભલામણ</string>
@@ -210,7 +193,6 @@
   <string name="revoke_device_wait_title">કૃપા કરીને રાહ જુઓ.</string>
   <string name="revoke_device_wait_message">રિવોકિંગ ડિવાઇસ</string>
   <string name="rename_device_title">આ ઉપકરણનું નામ બદલવું</string>
-  <string name="rename_device_message">તમારા Jami એકાઉન્ટમાં આ ઉપકરણને ઓળખવા માટે નવું નામ પસંદ કરો</string>
   <string name="rename_device_button">નામકરણ ઉપકરણ</string>
   <string name="account_rename_device_hint">ઉપકરણનું નવું નામ પસંદ કરો</string>
   <string name="account_device_this_indicator">આ ઉપકરણ</string>
@@ -218,6 +200,7 @@
   <!--Link a new device-->
   <string name="error_format_not_supported">આ ફોર્મેટને સપોર્ટેડ નથી.</string>
   <string name="account_link_device_title">નવી ઉપકરણને લિંક કરો</string>
+  <string name="connect_device_scanqr">QR કોડ સ્કેન કરો</string>
   <string name="account_link_device_button">કનેક્ટ કરો</string>
   <!--Biometry-->
 </resources>
