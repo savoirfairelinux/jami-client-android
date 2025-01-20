@@ -214,11 +214,6 @@
   <string name="conversation_type_contact">Jami-kapcsolattartó</string>
   <string name="conversation_type_private">Magánjellegű</string>
   <string name="conversation_type_group">Csoport</string>
-  <string name="conversation_contact_invited">%1$s meghívva lett</string>
-  <string name="conversation_contact_added">%1$s csatlakozott</string>
-  <string name="conversation_contact_left">%1$s kilépett</string>
-  <string name="conversation_contact_blocked">%1$s letiltva lett</string>
-  <string name="conversation_contact_unblocked">%1$s letiltása feloldva</string>
   <string name="conversation_search_hint">Beszélgetés keresése</string>
   <string name="audio_recorder_error">A hangfelvevő alkalmazás nem található.</string>
   <string name="video_recorder_error">A videófelvevő alkalmazás nem található.</string>

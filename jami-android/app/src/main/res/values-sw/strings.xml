@@ -168,9 +168,6 @@
   <string name="conversation_preference_emoji">Emoji ya mazungumzo</string>
   <string name="conversation_type_contact">Wasiliana na Jami</string>
   <string name="conversation_type_private">Private</string>
-  <string name="conversation_contact_invited">%1$s aliitwa</string>
-  <string name="conversation_contact_added">%1$s imeunganishwa</string>
-  <string name="conversation_contact_left">%1$s ni kushoto</string>
   <string name="conversation_search_hint">Tafuta mazungumzo</string>
   <string name="today">Leo</string>
   <string name="yesterday">Jana</string>

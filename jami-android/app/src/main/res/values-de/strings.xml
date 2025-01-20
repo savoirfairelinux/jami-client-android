@@ -214,11 +214,6 @@
   <string name="conversation_type_contact">Jami-Kontakt</string>
   <string name="conversation_type_private">Privat</string>
   <string name="conversation_type_group">Gruppe</string>
-  <string name="conversation_contact_invited">%1$s wurde eingeladen</string>
-  <string name="conversation_contact_added">%1$s ist beigetreten</string>
-  <string name="conversation_contact_left">%1$s hat die Unterhaltung verlassen</string>
-  <string name="conversation_contact_blocked">%1$s wurde blockiert</string>
-  <string name="conversation_contact_unblocked">Blockierung von %1$swurde aufgehoben</string>
   <string name="conversation_search_hint">Unterhaltung durchsuchen</string>
   <string name="audio_recorder_error">Die Audiorecorder-App wurde nicht gefunden.</string>
   <string name="video_recorder_error">Die Videorecorder-App wurde nicht gefunden.</string>

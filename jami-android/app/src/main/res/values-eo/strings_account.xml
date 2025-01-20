@@ -43,9 +43,9 @@
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Ĝenerala</string>
   <string name="account_basic_category">Bazaj Agordoj</string>
-  <string name="account_alias_label">Nomo de konto</string>
   <string name="account_hostname_label">Nomo de gastiga komputilo</string>
   <string name="account_bootstrap_label">Praŝarĝo</string>
+  <string name="account_name_server_label">Nomo servilo</string>
   <string name="account_username_label">Uzantnomo</string>
   <string name="account_password_label">Pasvorto</string>
   <string name="account_optionnal_category">Malnepraj Agordoj</string>
@@ -77,8 +77,7 @@
   <string name="account_registration_exp_label">Datlimo de registrado</string>
   <string name="account_local_interface_label">Loka Interfaco</string>
   <string name="account_local_port_label">Loka Pordo</string>
-  <string name="account_stun_enable_label">Uzi Stun</string>
-  <string name="account_stun_server_label">Stun Servilo</string>
+  <string name="account_stun_enable_label">Uzi STUN</string>
   <string name="account_accept_files">Akceptu alvenantajn dosierojn aŭtomate</string>
   <string name="account_conversation_settings_title">Parolmanieroj</string>
   <string name="account_accept_files_max_size">Maksimuma dosier grandeco por aŭtomate akcepti</string>
@@ -94,6 +93,7 @@
   <string name="account_published_address_label">Publikita Adreso</string>
   <string name="disabled">Malsanaj</string>
   <string name="enabled">Ŝaltita</string>
+  <string name="default_value">Defaŭlta</string>
   <string name="account_proxy_label">DHT-prezentanto</string>
   <string name="account_proxy_enable_label">Uzu DHT-n anstataŭanto</string>
   <string name="account_proxy_server_label">DHT-proxy-adreso</string>
@@ -112,21 +112,9 @@
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Uzi TLS Transporton</string>
-  <string name="account_tls_port_label">TLS Aŭdanta Pordo</string>
-  <string name="account_tls_certificate_list_label">Aŭtoritatoj de Atestado</string>
-  <string name="account_tls_certificate_file_label">Dosiero de Atestilo</string>
-  <string name="account_tls_private_key_file_label">Dosiero de Privata Ŝlosilo</string>
-  <string name="account_tls_password_label">Pasvorto de Privata Ŝlosilo</string>
-  <string name="account_tls_method_label">TLS Metodo</string>
-  <string name="account_tls_ciphers_label">TLS Ĉifroj</string>
-  <string name="account_tls_server_name_label">Nomo de Servilo</string>
-  <string name="account_tls_verify_server_label">Kontroli Servilon</string>
-  <string name="account_tls_verify_client_label">Kontroli Klienton</string>
-  <string name="account_require_client_certificate_label">TLS postulas kliento atestilo</string>
-  <string name="account_tls_negotiation_timeout_sec">Tempolimo de Intertraktado (sek)</string>
+  <string name="account_tls_password_label">Pasvorto de privata ŝlosilo</string>
   <string name="account_rtp_max_port">Maksimumo</string>
   <string name="account_rtp_min_port">Minimumo</string>
-  <string name="account_rtp_port_range">Intervalo de Aŭdia RTP</string>
   <!--restore/backup-->
   <string name="account_new_device_password">Enigu la ĉefan pasvorton por malŝlosi konton</string>
   <string name="error_password_char_count">6 signoj minimume</string>
@@ -164,12 +152,10 @@
   <string name="account_link_device">Konektiĝi de alia aparato</string>
   <string name="account_link_button">Konektiĝu de reto</string>
   <string name="account_link_archive_button">Konektiĝi de rezervo</string>
-  <string name="account_link_prompt_pin">Entajpu PIN</string>
   <string name="account_new_button">Krei konto en Jami</string>
   <string name="account_link_export_button">Ligigu novan aparaton</string>
   <string name="account_link_show_button">Montru %d pli ligitan aparaton</string>
   <string name="account_link_hide_button">Kaŝu ligitan aparaton</string>
-  <string name="account_start_export_button">Generas PIN-n</string>
   <string name="account_end_export_button">proksima</string>
   <string name="account_export_title">Rilata konto al aliaj aparatoj</string>
   <string name="account_connect_server_button">Konekti al administradservilo</string>
@@ -180,10 +166,7 @@
   <string name="account_connect_prompt_username">Uzantnomo</string>
   <!--Name registration-->
   <string name="error_username_empty">Enigu uzantnomon</string>
-  <string name="no_registered_name_for_account">Neniu registrita nomo</string>
-  <string name="username_available">Uzan nomon disponebla!</string>
-  <string name="register_name">Nomo de la registro</string>
-  <string name="trying_to_register_name">Mi provas registri nomon</string>
+  <string name="register_name">Registru uzantnomon</string>
   <string name="registered_username">Registrita uzantnomo</string>
   <string name="register_username">Registri publikan uzantnomon</string>
   <string name="register_recommended">Recomandita</string>
@@ -210,7 +193,6 @@
   <string name="revoke_device_wait_title">Bonvole atendu…</string>
   <string name="revoke_device_wait_message">Revokadaparato</string>
   <string name="rename_device_title">Renomi ĉi tiun aparaton</string>
-  <string name="rename_device_message">Elektu novan nomon por identigi ĉi tiun aparaton en via konto Jami</string>
   <string name="rename_device_button">Re-nomigilo</string>
   <string name="account_rename_device_hint">Elektu novan aparaton</string>
   <string name="account_device_this_indicator">Tiu aparato</string>
@@ -218,6 +200,7 @@
   <!--Link a new device-->
   <string name="error_format_not_supported">Tiu formato ne estas subtenata.</string>
   <string name="account_link_device_title">Ligigu novan aparaton</string>
+  <string name="connect_device_scanqr">Skanu QR-kodojn</string>
   <string name="account_link_device_button">Konekti</string>
   <!--Biometry-->
 </resources>

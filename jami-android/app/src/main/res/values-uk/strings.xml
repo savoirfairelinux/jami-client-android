@@ -176,9 +176,6 @@
   <string name="conversation_type_contact">Контакт Jami</string>
   <string name="conversation_type_private">Приватне</string>
   <string name="conversation_type_group">Група</string>
-  <string name="conversation_contact_invited">%1$s запрошений</string>
-  <string name="conversation_contact_added">%1$s приєднаний</string>
-  <string name="conversation_contact_left">%1$s залишився</string>
   <string name="conversation_search_hint">Пошук розмов</string>
   <string name="today">Сьогодні</string>
   <string name="yesterday">Учора</string>

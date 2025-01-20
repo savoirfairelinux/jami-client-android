@@ -168,9 +168,6 @@
   <string name="conversation_preference_emoji">సంభాషణ ఎమోజీ</string>
   <string name="conversation_type_contact">జామి పరిచయం</string>
   <string name="conversation_type_private">ప్రైవేటు</string>
-  <string name="conversation_contact_invited">%1$s ఆహ్వానించబడింది</string>
-  <string name="conversation_contact_added">%1$s చేరింది</string>
-  <string name="conversation_contact_left">%1$s ఎడమవైపు</string>
   <string name="conversation_search_hint">శోధన సంభాషణ</string>
   <string name="today">నేడు</string>
   <string name="yesterday">నిన్న</string>

@@ -169,9 +169,6 @@
   <string name="conversation_type_contact">Jami kontakt</string>
   <string name="conversation_type_private">Privat</string>
   <string name="conversation_type_group">Gruppe</string>
-  <string name="conversation_contact_invited">%1$s blev inviteret</string>
-  <string name="conversation_contact_added">%1$s er blevet tilsluttet</string>
-  <string name="conversation_contact_left">%1$s er venstre</string>
   <string name="conversation_search_hint">Søg samtale</string>
   <string name="today">I dag</string>
   <string name="yesterday">I går</string>

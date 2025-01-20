@@ -173,9 +173,6 @@
   <string name="conversation_preference_emoji">대화 에모지</string>
   <string name="conversation_type_contact">자미 연락처</string>
   <string name="conversation_type_private">개인</string>
-  <string name="conversation_contact_invited">%1$s가 초청되었습니다</string>
-  <string name="conversation_contact_added">%1$s가 합류</string>
-  <string name="conversation_contact_left">%1$s는 왼쪽</string>
   <string name="conversation_search_hint">검색 대화</string>
   <string name="audio_recorder_error">녹음 앱을 찾을 수 없음</string>
   <string name="video_recorder_error">녹화 앱을 찾을 수 없음</string>

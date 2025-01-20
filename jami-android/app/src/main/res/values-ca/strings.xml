@@ -176,9 +176,6 @@
   <string name="conversation_preference_emoji">Emoticona de conversa</string>
   <string name="conversation_type_contact">Contacte de Jami</string>
   <string name="conversation_type_private">Privat</string>
-  <string name="conversation_contact_invited">%1$s ha estat convidat</string>
-  <string name="conversation_contact_added">%1$s s\'ha unit</string>
-  <string name="conversation_contact_left">%1$s ha sortit</string>
   <string name="conversation_search_hint">Conversació de cerca</string>
   <string name="starting_camera_error">Ha succeït un error iniciant la càmera</string>
   <string name="today">Avui</string>

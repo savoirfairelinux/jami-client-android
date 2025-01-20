@@ -169,9 +169,6 @@
   <string name="conversation_preference_emoji">Emoji de conversacion</string>
   <string name="conversation_type_contact">Contacte Jami</string>
   <string name="conversation_type_private">Privat</string>
-  <string name="conversation_contact_invited">%1$s foguèt convidat</string>
-  <string name="conversation_contact_added">%1$s unit</string>
-  <string name="conversation_contact_left">%1$s a esquèrra</string>
   <string name="conversation_search_hint">Conversacion de cercaire</string>
   <string name="today">Uèi</string>
   <string name="yesterday">Ièr</string>

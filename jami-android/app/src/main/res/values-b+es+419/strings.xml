@@ -95,8 +95,6 @@
   <string name="conversation_reply_you">Tú</string>
   <string name="conversation_type_private">Privado</string>
   <string name="conversation_type_group">Grupo</string>
-  <string name="conversation_contact_blocked">Se bloqueó a %1$s</string>
-  <string name="conversation_contact_unblocked">Se desbloqueó a %1$s</string>
   <string name="conversation_search_hint">Buscar conversación</string>
   <string name="audio_recorder_error">No se encontró la aplicación Grabadora de audio.</string>
   <string name="video_recorder_error">No se encontró la aplicación Grabadora de vídeo.</string>

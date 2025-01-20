@@ -169,9 +169,6 @@
   <string name="conversation_preference_emoji">Emoji percakapan</string>
   <string name="conversation_type_contact">Kontak jami</string>
   <string name="conversation_type_private">Privat</string>
-  <string name="conversation_contact_invited"> %1$sdiundang</string>
-  <string name="conversation_contact_added">%1$s bergabung</string>
-  <string name="conversation_contact_left">%1$s keluar</string>
   <string name="conversation_search_hint">Cari percakapan</string>
   <string name="today">Hari ini</string>
   <string name="yesterday">Kemarin</string>

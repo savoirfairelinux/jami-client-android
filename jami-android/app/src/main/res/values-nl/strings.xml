@@ -177,9 +177,6 @@
   <string name="conversation_type_contact">Jami contact</string>
   <string name="conversation_type_private">Privé</string>
   <string name="conversation_type_group">Groep</string>
-  <string name="conversation_contact_invited">%1$s is uitgenodigd</string>
-  <string name="conversation_contact_added">%1$s is aangesloten</string>
-  <string name="conversation_contact_left">%1$s is links</string>
   <string name="conversation_search_hint">Zoek gesprek</string>
   <string name="today">Vandaag</string>
   <string name="yesterday">Gisteren</string>

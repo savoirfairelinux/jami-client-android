@@ -43,9 +43,9 @@
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">全般</string>
   <string name="account_basic_category">基本設定</string>
-  <string name="account_alias_label">アカウント名</string>
   <string name="account_hostname_label">ホスト名</string>
   <string name="account_bootstrap_label">ブートストラップ</string>
+  <string name="account_name_server_label">ネームサーバー</string>
   <string name="account_username_label">ユーザー名</string>
   <string name="account_password_label">パスワード</string>
   <string name="account_optionnal_category">任意の設定</string>
@@ -77,8 +77,7 @@
   <string name="account_registration_exp_label">登録の有効期限切れ</string>
   <string name="account_local_interface_label">ローカルインターフェイス</string>
   <string name="account_local_port_label">ローカルポート</string>
-  <string name="account_stun_enable_label">Stunを使用</string>
-  <string name="account_stun_server_label">Stunサーバー</string>
+  <string name="account_stun_enable_label">STUNを使用</string>
   <string name="account_accept_files">ファイルの受信を自動で許可する</string>
   <string name="account_conversation_settings_title">会話の設定</string>
   <string name="account_accept_files_max_size">自動で許可する最大ファイルサイズ</string>
@@ -94,6 +93,7 @@
   <string name="account_published_address_label">発行されたアドレス</string>
   <string name="disabled">無効化</string>
   <string name="enabled">有効</string>
+  <string name="default_value">既定</string>
   <string name="account_proxy_label">DHTプロキシ</string>
   <string name="account_proxy_enable_label">DHTプロキシを使う</string>
   <string name="account_proxy_server_label">DHTプロキシアドレス</string>
@@ -112,21 +112,9 @@
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">TLS Transportを使用</string>
-  <string name="account_tls_port_label">TLSリスナーポート</string>
-  <string name="account_tls_certificate_list_label">認証局</string>
-  <string name="account_tls_certificate_file_label">証明書ファイル</string>
-  <string name="account_tls_private_key_file_label">秘密鍵ファイル</string>
-  <string name="account_tls_password_label">秘密鍵のパスワード</string>
-  <string name="account_tls_method_label">TLS方式</string>
-  <string name="account_tls_ciphers_label">TLS暗号</string>
-  <string name="account_tls_server_name_label">サーバー名</string>
-  <string name="account_tls_verify_server_label">検証サーバー</string>
-  <string name="account_tls_verify_client_label">検証クライアント</string>
-  <string name="account_require_client_certificate_label">TLSにはクライアント証明書が必要です</string>
-  <string name="account_tls_negotiation_timeout_sec">ネゴシエーションタイムアウト (秒)</string>
+  <string name="account_tls_password_label">秘密鍵の暗証語</string>
   <string name="account_rtp_max_port">最大</string>
   <string name="account_rtp_min_port">最小</string>
-  <string name="account_rtp_port_range">音声 RTP ポートの範囲</string>
   <!--restore/backup-->
   <string name="account_new_device_password">アカウントのロックを解除するメインパスワードを入力してください</string>
   <string name="error_password_char_count">6文字以上</string>
@@ -164,12 +152,10 @@
   <string name="account_link_device">他のデバイスから接続する</string>
   <string name="account_link_button">ネットワークから接続</string>
   <string name="account_link_archive_button">バックアップから接続</string>
-  <string name="account_link_prompt_pin">PINを入力してください</string>
   <string name="account_new_button">Jamiアカウントを作成</string>
   <string name="account_link_export_button">新しいデバイスをリンク</string>
   <string name="account_link_show_button">さらに%d個のデバイスを表示</string>
   <string name="account_link_hide_button">リンクされたデバイスを隠す</string>
-  <string name="account_start_export_button">PINを生成</string>
   <string name="account_end_export_button">閉じる</string>
   <string name="account_export_title">アカウントを他のデバイスとリンク</string>
   <string name="account_connect_server_button">管理サーバーに接続</string>
@@ -181,10 +167,7 @@
   <string name="account_enter_username">ユーザー名を入力</string>
   <!--Name registration-->
   <string name="error_username_empty">ユーザー名を入力してください</string>
-  <string name="no_registered_name_for_account">登録された名前がありません</string>
-  <string name="username_available">使用可能なユーザー名です</string>
-  <string name="register_name">登録名</string>
-  <string name="trying_to_register_name">名前を登録しようとしています</string>
+  <string name="register_name">ユーザー名を登録</string>
   <string name="registered_username">登録ユーザー名</string>
   <string name="register_username">公開ユーザー名を登録</string>
   <string name="register_recommended">推奨</string>
@@ -211,7 +194,6 @@
   <string name="revoke_device_wait_title">しばらくお待ちください…</string>
   <string name="revoke_device_wait_message">機器を破棄しています</string>
   <string name="rename_device_title">この機器の名前を変更</string>
-  <string name="rename_device_message">Jamiアカウントでこのデバイスだとわかる名前を設定しましょう</string>
   <string name="rename_device_button">機器の名前を変更</string>
   <string name="account_rename_device_hint">新しい機器名</string>
   <string name="account_device_this_indicator">この機器</string>
@@ -219,6 +201,7 @@
   <!--Link a new device-->
   <string name="error_format_not_supported">この形式はサポートされていません。</string>
   <string name="account_link_device_title">新しいデバイスをリンク</string>
+  <string name="connect_device_scanqr">QRコードをスキャン</string>
   <string name="account_link_device_button">接続</string>
   <!--Biometry-->
 </resources>

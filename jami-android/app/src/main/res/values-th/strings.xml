@@ -168,9 +168,6 @@
   <string name="conversation_preference_emoji">อิโมจิการสนทนา</string>
   <string name="conversation_type_contact">๋ติดต่อ Jami</string>
   <string name="conversation_type_private">เอกชน</string>
-  <string name="conversation_contact_invited">%1$sได้รับเชิญ</string>
-  <string name="conversation_contact_added">%1$sเข้าร่วม</string>
-  <string name="conversation_contact_left">%1$s อยู่ซ้าย</string>
   <string name="conversation_search_hint">ค้นหาบทสนทนา</string>
   <string name="today">วัน นี้</string>
   <string name="yesterday">เมื่อวาน</string>

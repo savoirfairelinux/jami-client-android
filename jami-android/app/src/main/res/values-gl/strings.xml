@@ -173,9 +173,6 @@
   <string name="conversation_preference_emoji">Emojis da conversa</string>
   <string name="conversation_type_contact">Contacto Jami</string>
   <string name="conversation_type_private">Privado</string>
-  <string name="conversation_contact_invited">Convidouse a %1$s</string>
-  <string name="conversation_contact_added">%1$s uníuse</string>
-  <string name="conversation_contact_left">%1$s saíu</string>
   <string name="conversation_search_hint">Buscar conversa</string>
   <string name="today">Hoxe</string>
   <string name="yesterday">Onte</string>

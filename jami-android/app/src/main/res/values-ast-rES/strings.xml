@@ -168,9 +168,6 @@
   <string name="conversation_preference_emoji">Emoji de conversación</string>
   <string name="conversation_type_contact">El contautu Jami</string>
   <string name="conversation_type_private">Privada</string>
-  <string name="conversation_contact_invited">%1$s foi convidáu</string>
-  <string name="conversation_contact_added">%1$s xuníu</string>
-  <string name="conversation_contact_left">%1$s ye izquierdu</string>
   <string name="conversation_search_hint">La conversación de busca</string>
   <string name="today">El so nome ye \"El pueblu de Dios\".</string>
   <string name="yesterday">En xineru de 2011</string>

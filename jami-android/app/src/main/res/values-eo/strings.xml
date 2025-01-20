@@ -169,9 +169,6 @@
   <string name="conversation_type_contact">Jam kontakto</string>
   <string name="conversation_type_private">Privata</string>
   <string name="conversation_type_group">Grupo</string>
-  <string name="conversation_contact_invited">%1$s estis invitita</string>
-  <string name="conversation_contact_added">%1$s aliĝis</string>
-  <string name="conversation_contact_left">%1$s estas maldekstre</string>
   <string name="conversation_search_hint">Serĉu konversacion</string>
   <string name="today">Hodiaŭ</string>
   <string name="yesterday">Hieraŭ</string>
