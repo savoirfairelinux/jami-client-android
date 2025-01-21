@@ -1,0 +1,47 @@
+Jami, sebuah paket GNU, adalah perangkat lunak untuk komunikasi peer-to-peer yang universal dan terdistribusi yang menghormati kebebasan dan privasi penggunanya.
+
+Jami adalah cara paling sederhana dan termudah untuk terhubung dengan orang (dan perangkat) dengan pesan instan, panggilan audio dan video melalui Internet dan intranet LAN/WAN.
+
+Jami adalah platform komunikasi pribadi yang gratis/bebas, terenkripsi ujung ke ujung.
+
+Jami – yang dulunya dikenal sebagai Ring – juga merupakan alternatif sumber terbuka (untuk Facebook Messenger, Signal, Skype, Teams, Telegram, TikTok, Viber, WhatsApp, Zoom) yang memprioritaskan privasi penggunanya.
+
+Jami memiliki desain yang tampak profesional dan tersedia untuk berbagai platform. Tidak seperti alternatifnya, panggilan menggunakan Jami dilakukan langsung antara pengguna karena tidak menggunakan server untuk menangani panggilan.
+
+Ini memberikan privasi terbesar karena sifat Jami yang terdistribusi berarti panggilan Anda hanya antara peserta.
+
+Percakapan satu lawan satu dan grup dengan Jami ditingkatkan dengan: pesan instan; panggilan audio dan video; merekam dan mengirim pesan audio dan video; transfer file; berbagi layar; dan, berbagi lokasi.
+
+Jami juga dapat berfungsi sebagai klien SIP.
+
+Jami memiliki beberapa ekstensi yang tersedia: Filter Audio; Jawab Otomatis; Layar Hijau; Tanda Air; dan, Transkrip Bisikan.
+
+Jami dapat dengan mudah digunakan dalam organisasi dengan "Jami Account Management Server" (JAMS), yang memungkinkan pengguna untuk terhubung dengan kredensial perusahaan mereka atau membuat akun lokal. JAMS memungkinkan Anda untuk mengelola komunitas Jami Anda sendiri sambil memanfaatkan arsitektur jaringan terdistribusi Jami.
+
+Jami tersedia untuk GNU/Linux, Windows, macOS, iOS, Android, dan Android TV, menjadikan Jami sebagai kerangka kerja komunikasi yang dapat dioperasikan dan lintas platform.
+
+Kelola beberapa akun SIP, akun Jami, dan akun JAMS dengan klien Jami yang terpasang pada satu atau beberapa perangkat.
+
+Jami gratis, tidak terbatas, pribadi, bebas iklan, kompatibel, cepat, otonom, dan anonim.
+
+Pelajari selengkapnya tentang:
+Jami: https://jami.net/
+Ekstensi Jami: https://jami.net/extensions/
+“Jami Account Management Server” (JAMS): https://jami.biz/
+Dokumentasi Jami: https://docs.jami.net/
+
+Ikuti kami untuk informasi selengkapnya:
+Mastodon: https://mstdn.io/@Jami
+X: https://x.com/jami_social
+YouTube: https://www.youtube.com/@jami9311
+
+Kami ingin mendengar dari Anda! Bergabunglah dengan komunitas Jami:
+Berkontribusi: https://jami.net/contribute/
+Forum: https://forum.jami.net/
+
+Bangun dengan Jami pada proyek IoT Anda: gunakan kembali teknologi komunikasi universal Jami dengan pustaka portabelnya pada sistem pilihan Anda.
+
+Jami untuk Android TV diuji pada NVIDIA SHIELD TV dengan kamera Logitech.
+
+Jami diterbitkan di bawah lisensi GPL, versi 3 atau lebih tinggi.
+Hak Cipta © Savoir-faire Linux Inc.

@@ -1,0 +1,47 @@
+Ang Jami, isang pakete ng GNU, ay software para sa pangkalahatan at distributed na peer-to-peer na komunikasyon na gumagalang sa kalayaan at privacy ng mga gumagamit nito.
+
+Ang Jami ay ang pinakasimple at pinakamadaling paraan upang kumonekta sa mga tao (at mga device) gamit ang instant messaging, audio at video call sa Internet at LAN/WAN intranets.
+
+Ang Jami ay isang libre/libre, end-to-end na naka-encrypt, at pribadong platform ng komunikasyon.
+
+Ang Jami – na dating kilala bilang Ring – ay isa ring open-source na alternatibo (sa Facebook Messenger, Signal, Skype, Teams, Telegram, TikTok, Viber, WhatsApp, Zoom) na inuuna ang privacy ng mga user nito.
+
+Ang Jami ay may mukhang propesyonal na disenyo at available para sa malawak na hanay ng mga platform. Hindi tulad ng mga alternatibo, ang mga tawag gamit ang Jami ay direkta sa pagitan ng mga user dahil hindi ito gumagamit ng mga server para pangasiwaan ang mga tawag.
+
+Nagbibigay ito ng pinakamalaking privacy dahil ang ipinamamahaging katangian ng Jami ay nangangahulugan na ang iyong mga tawag ay nasa pagitan lamang ng mga kalahok.
+
+Ang isa-sa-isa at panggrupong pag-uusap kay Jami ay pinahusay ng: instant messaging; audio at video calling; pag-record at pagpapadala ng mga mensaheng audio at video; paglilipat ng file; pagbabahagi ng screen; at, pagbabahagi ng lokasyon.
+
+Maaari ding gumana si Jami bilang isang SIP client.
+
+Maraming available na extension ang Jami: Audio Filter; Auto Sagot; Berdeng Screen; Watermark; at, Whisper Transcript.
+
+Madaling ma-deploy ang Jami sa mga organisasyong may "Jami Account Management Server" (JAMS), na nagpapahintulot sa mga user na kumonekta sa kanilang mga corporate credential o gumawa ng mga lokal na account. Binibigyang-daan ka ng JAMS na pamahalaan ang sarili mong komunidad ng Jami habang sinasamantala ang distributed network architecture ng Jami.
+
+Available ang Jami para sa GNU/Linux, Windows, macOS, iOS, Android, at Android TV, na ginagawang interoperable at cross-platform na balangkas ng komunikasyon ang Jami.
+
+Pamahalaan ang maraming SIP account, Jami account at JAMS account gamit ang Jami client na naka-install sa isa o maraming device.
+
+Ang Jami ay libre, walang limitasyon, pribado, libre sa advertising, tugma, mabilis, nagsasarili, at hindi nagpapakilala.
+
+Matuto pa tungkol sa:
+Jami: https://jami.net/
+Mga extension ng Jami: https://jami.net/extensions/
+“Jami Account Management Server” (JAMS): https://jami.biz/
+Dokumentasyon ng Jami: https://docs.jami.net/
+
+Sundan kami para sa higit pa:
+Mastodon: https://mstdn.io/@Jami
+X: https://x.com/jami_social
+YouTube: https://www.youtube.com/@jami9311
+
+Gusto naming marinig mula sa iyo! Sumali sa komunidad ng Jami:
+Mag-ambag: https://jami.net/contribute/
+Forum: https://forum.jami.net/
+
+Bumuo kasama si Jami sa iyong proyekto sa IoT: muling gamitin ang unibersal na teknolohiya ng komunikasyon ng Jami kasama ang portable library nito sa iyong napiling system.
+
+Ang Jami para sa Android TV ay sinubukan sa NVIDIA SHIELD TV na may mga Logitech camera.
+
+Na-publish ang Jami sa ilalim ng lisensya ng GPL, bersyon 3 o mas mataas.
+Copyright © Savoir-faire Linux Inc.
