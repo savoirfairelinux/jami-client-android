@@ -1,0 +1,47 @@
+Jami, balík GNU, je softvér pre univerzálnu a distribuovanú komunikáciu typu peer-to-peer, ktorý rešpektuje slobodu a súkromie svojich používateľov.
+
+Jami je najjednoduchší a najjednoduchší spôsob, ako sa spojiť s ľuďmi (a zariadeniami) pomocou okamžitých správ, audio a video hovorov cez internet a intranet LAN/WAN.
+
+Jami je bezplatná/libre, end-to-end šifrovaná a súkromná komunikačná platforma.
+
+Jami – ktorý bol predtým známy ako Ring – je tiež open-source alternatívou (k Facebook Messenger, Signal, Skype, Teams, Telegram, TikTok, Viber, WhatsApp, Zoom), ktorá uprednostňuje súkromie svojich používateľov.
+
+Jami má profesionálne vyzerajúci dizajn a je k dispozícii pre širokú škálu platforiem. Na rozdiel od alternatív sú hovory pomocou Jami priamo medzi používateľmi, pretože na spracovanie hovorov nepoužíva servery.
+
+To poskytuje najväčšie súkromie, pretože distribuovaný charakter Jami znamená, že vaše hovory prebiehajú iba medzi účastníkmi.
+
+Osobné a skupinové konverzácie s Jami sú vylepšené o: okamžité správy; audio a video hovory; nahrávanie a odosielanie zvukových a video správ; prenos súborov; zdieľanie obrazovky; a zdieľanie polohy.
+
+Jami môže fungovať aj ako SIP klient.
+
+Jami má k dispozícii viacero rozšírení: Audio Filter; Automatická odpoveď; Zelená obrazovka; vodoznak; a Whisper Transscript.
+
+Jami je možné jednoducho nasadiť v organizáciách pomocou “Jami Account Management Server” (JAMS), čo umožňuje používateľom pripojiť sa k ich firemným povereniam alebo vytvárať lokálne účty. JAMS vám umožňuje spravovať svoju vlastnú komunitu Jami a zároveň využívať výhody distribuovanej sieťovej architektúry Jami.
+
+Jami je k dispozícii pre GNU/Linux, Windows, macOS, iOS, Android a Android TV, vďaka čomu je Jami interoperabilný a medziplatformový komunikačný rámec.
+
+Spravujte viacero účtov SIP, účtov Jami a účtov JAMS pomocou klienta Jami nainštalovaného na jednom alebo viacerých zariadeniach.
+
+Jami je bezplatný, neobmedzený, súkromný, bez reklamy, kompatibilný, rýchly, autonómny a anonymný.
+
+Ďalšie informácie o:
+Jami: https://jami.net/
+Rozšírenia Jami: https://jami.net/extensions/
+“Jami Account Management Server” (JAMS): https://jami.biz/
+Dokumentácia Jami: https://docs.jami.net/
+
+Sledujte nás pre viac:
+Mastodon: https://mstdn.io/@Jami
+X: https://x.com/jami_social
+YouTube: https://www.youtube.com/@jami9311
+
+Radi by sme od vás počuli! Pripojte sa ku komunite Jami:
+Prispejte: https://jami.net/contribute/
+Fórum: https://forum.jami.net/
+
+Stavte s Jami na svojom projekte IoT: znovu použite univerzálnu komunikačnú technológiu Jami s jej prenosnou knižnicou vo vašom systéme.
+
+Jami pre Android TV je testovaný na NVIDIA SHIELD TV s kamerami Logitech.
+
+Jami je publikovaný pod licenciou GPL, verzia 3 alebo vyššia.
+Copyright © Savoir-faire Linux Inc.

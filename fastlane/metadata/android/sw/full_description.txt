@@ -1,0 +1,47 @@
+Jami, kifurushi cha GNU, ni programu ya mawasiliano ya kila mtu na iliyosambazwa kutoka kwa rika ambayo inaheshimu uhuru na faragha ya watumiaji wake.
+
+Jami ndiyo njia rahisi na rahisi zaidi ya kuwasiliana na watu (na vifaa) kwa kutuma ujumbe wa papo hapo, simu za sauti na video kupitia Mtandao na intraneti za LAN/WAN.
+
+Jami ni jukwaa lisilolipishwa, lisilolipishwa, lililosimbwa kutoka mwisho hadi mwisho na la mawasiliano ya kibinafsi.
+
+Jami - ambayo ilikuwa ikijulikana kama Gonga - pia ni mbadala wa chanzo-wazi (kwa Facebook Messenger, Signal, Skype, Timu, Telegraph, TikTok, Viber, WhatsApp, Zoom) ambayo inatanguliza ufaragha wa watumiaji wake.
+
+Jami ina muundo unaoonekana kitaalamu na inapatikana kwa majukwaa mbalimbali. Tofauti na njia mbadala, simu zinazotumia Jami ni moja kwa moja kati ya watumiaji kwani haitumii seva kushughulikia simu.
+
+Hii inatoa ufaragha mkuu zaidi kwani hali ya kusambazwa ya Jami inamaanisha kuwa simu zako ni kati ya washiriki pekee.
+
+Mazungumzo ya mtu kwa mmoja na ya kikundi na Jami yanaimarishwa kwa: ujumbe wa papo hapo; wito wa sauti na video; kurekodi na kutuma ujumbe wa sauti na video; uhamishaji wa faili; kushiriki skrini; na, kushiriki eneo.
+
+Jami pia inaweza kufanya kazi kama mteja wa SIP.
+
+Jami ina viendelezi vingi vinavyopatikana: Kichujio cha Sauti; Jibu otomatiki; Skrini ya Kijani; Alama ya maji; na, Nakala ya Whisper.
+
+Jami inaweza kutumwa kwa urahisi katika mashirika yenye "Seva ya Kudhibiti Akaunti ya Jami" (JAMS), kuruhusu watumiaji kuunganishwa na vitambulisho vyao vya shirika au kuunda akaunti za ndani. JAMS hukuruhusu kudhibiti jumuiya yako ya Jami huku ukichukua fursa ya usanifu wa mtandao unaosambazwa wa Jami.
+
+Jami inapatikana kwa GNU/Linux, Windows, macOS, iOS, Android, na Android TV, na hivyo kufanya Jami kuwa mfumo wa mawasiliano unaoweza kushirikiana na wa majukwaa mbalimbali.
+
+Dhibiti akaunti nyingi za SIP, akaunti za Jami na akaunti za JAMS ukitumia kiteja cha Jami kilichosakinishwa kwenye kifaa kimoja au vingi.
+
+Jami ni ya bure, haina kikomo, ya faragha, haina utangazaji, inaoana, haraka, inajitegemea na haitambuliki.
+
+Jifunze zaidi kuhusu:
+Jami: https://jami.net/
+Viendelezi vya Jami: https://jami.net/extensions/
+"Seva ya Usimamizi wa Akaunti ya Jami" (JAMS): https://jami.biz/
+Nyaraka za Jami: https://docs.jami.net/
+
+Tufuate kwa zaidi:
+Mastodoni: https://mstdn.io/@Jami
+X: https://x.com/jami_social
+YouTube: https://www.youtube.com/@jami9311
+
+Tungependa kusikia kutoka kwako! Jiunge na jumuiya ya Jami:
+Changia: https://jami.net/contribute/
+Jukwaa: https://forum.jami.net/
+
+Jenga na Jami kwenye mradi wako wa IoT: tumia tena teknolojia ya mawasiliano ya wote ya Jami na maktaba yake inayobebeka kwenye mfumo wako unaoupenda.
+
+Jami ya Android TV inajaribiwa kwenye NVIDIA SHIELD TV kwa kutumia kamera za Logitech.
+
+Jami imechapishwa chini ya leseni ya GPL, toleo la 3 au la juu zaidi.
+Hakimiliki © Savoir-faire Linux Inc.
