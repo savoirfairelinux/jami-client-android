@@ -52,6 +52,24 @@
       "parentUuid": "038e59a2_e86c6176",
       "revId": "9a09d46a83cb535217f8799399f4038bbb29600c",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae2c94bb_c0a3bed3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-01-21T19:05:57Z",
+      "side": 1,
+      "message": "Done following the language codes at https://support.google.com/googleplay/android-developer/table/4419860?hl\u003den.",
+      "parentUuid": "d91e2da0_42845a8a",
+      "revId": "9a09d46a83cb535217f8799399f4038bbb29600c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
