@@ -30,6 +30,9 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import cx.ring.R
+import cx.ring.client.LogsActivity.FadeInItemAnimator
+import cx.ring.client.LogsActivity.LogAdapter
+import cx.ring.client.LogsActivity.LogMessage
 import cx.ring.databinding.ActivityPushNotificationLogsBinding
 import cx.ring.utils.AndroidFileUtils
 import cx.ring.utils.ContentUri
@@ -52,8 +55,13 @@ class PushNotificationLogsActivity : AppCompatActivity() {
     private val compositeDisposable = CompositeDisposable()
     private var disposable: Disposable? = null
     private lateinit var logAdapter: LogAdapter
-    private lateinit var fileSaver: ActivityResultLauncher<String>
     private lateinit var logFile: File
+    private var fileSaver: ActivityResultLauncher<String> = registerForActivityResult(ActivityResultContracts
+        .CreateDocument("text/plain")) { result: Uri? ->
+        if (result != null) {
+            copyFileToUri(logFile, result)
+        }
+    }
 
     @Inject
     @Singleton
@@ -65,7 +73,10 @@ class PushNotificationLogsActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        logAdapter = LogAdapter()
+        val highlightColor = getColor(R.color.colorSecondaryTranslucent)
+        val bgColor = getColor(R.color.transparent)
+        logAdapter = LogAdapter(highlightColor, bgColor)
+        binding.logRecyclerView.itemAnimator = FadeInItemAnimator(highlightColor, bgColor)
         binding.logRecyclerView.adapter = logAdapter
         binding.logRecyclerView.layoutManager = LinearLayoutManager(this)
         val pushSummaryTextView = findViewById<TextView>(R.id.pushSummaryTextView)
@@ -81,15 +92,7 @@ class PushNotificationLogsActivity : AppCompatActivity() {
             if (disposable == null) startLogging() else stopLogging()
         }
 
-        fileSaver = registerForActivityResult(ActivityResultContracts
-            .CreateDocument("text/plain")) { result: Uri? ->
-            if (result != null) {
-                copyFileToUri(logFile, result)
-            }
-        }
-
         if (mHardwareService.loggingStatus) startLogging()
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

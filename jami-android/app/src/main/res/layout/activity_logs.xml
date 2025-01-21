@@ -15,10 +15,8 @@
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
-            style="@style/Widget.Material3.Toolbar.Surface"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/background"
             tools:menu="@menu/logs_menu"
             tools:title="Logs" />
 
@@ -34,14 +32,19 @@
             android:id="@+id/log_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:orientation="vertical"
+            app:stackFromEnd="true"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_log"/>
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center_horizontal"
-            android:layout_margin="@dimen/fab_margin"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="@dimen/fab_margin"
             android:gravity="center"
             android:text="@string/pref_logs_start"
             app:icon="@drawable/baseline_article_24" />

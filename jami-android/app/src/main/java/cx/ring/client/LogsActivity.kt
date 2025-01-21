@@ -16,9 +16,11 @@
  */
 package cx.ring.client
 
+import android.animation.ValueAnimator
 import android.app.ActivityManager
 import android.app.ApplicationExitInfo
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -31,11 +33,12 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.SimpleItemAnimator
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
 import cx.ring.R
@@ -91,8 +94,16 @@ class LogsActivity : AppCompatActivity() {
         }
         binding.fab.setOnClickListener { if (disposable == null) startLogging() else stopLogging() }
 
-        binding.logRecyclerView.adapter = LogAdapter()
-        binding.logRecyclerView.layoutManager = LinearLayoutManager(this)
+        val highlightColor = getColor(R.color.colorSecondaryTranslucent)
+        val bgColor = getColor(R.color.transparent)
+
+        binding.logRecyclerView.apply {
+            setHasFixedSize(true)
+            itemAnimator = FadeInItemAnimator(highlightColor, bgColor)
+            adapter = LogAdapter(highlightColor, bgColor).apply {
+                stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+            }
+        }
 
         // Check for previous crash reasons, if any.
         if (savedInstanceState == null)
@@ -260,7 +271,7 @@ class LogsActivity : AppCompatActivity() {
             .subscribe({ messages: List<String> ->
                 val adapter = binding.logRecyclerView.adapter as LogAdapter
                 adapter.addLogs(messages.map { LogMessage(it) })
-                binding.logRecyclerView.smoothScrollToPosition(adapter.itemCount - 1)
+                binding.logRecyclerView.scrollToPosition(adapter.itemCount - 1)
             }) { e -> Log.w(TAG, "Error in logger", e) }
             .apply { disposable = this })
         setButtonState(true)
@@ -291,42 +302,102 @@ class LogsActivity : AppCompatActivity() {
         super.onDestroy()
     }
 
+    data class LogMessage(val message: String)
+
+    class FadeInItemAnimator(@ColorInt val highlightColor: Int, @ColorInt val bgColor: Int): SimpleItemAnimator() {
+        init {
+            supportsChangeAnimations = false
+            addDuration = 1000
+        }
+
+        override fun animateAdd(holder: RecyclerView.ViewHolder): Boolean {
+            val logHolder = holder as LogAdapter.LogViewHolder
+            val pos = holder.adapterPosition
+            Log.w(TAG, "animateAdd ${pos}")
+            val view = holder.itemView
+            view.setBackgroundColor(highlightColor)
+            logHolder.animation.setDuration(addDuration)
+            logHolder.animation.addUpdateListener { animation ->
+                view.setBackgroundColor(animation.getAnimatedValue() as Int)
+            }
+            logHolder.animation.start()
+            return false
+        }
+
+        override fun animateRemove(holder: RecyclerView.ViewHolder): Boolean {
+            //dispatchRemoveFinished(holder)
+            return false;
+        }
+
+        override fun animateMove(holder: RecyclerView.ViewHolder, fromX: Int, fromY: Int, toX: Int, toY: Int): Boolean {
+            // Implement if you need move animations
+            //dispatchMoveFinished(holder)
+            return false;
+        }
+
+        override fun animateChange(oldHolder: RecyclerView.ViewHolder, newHolder: RecyclerView.ViewHolder,
+                                   fromLeft: Int, fromTop: Int, toLeft: Int, toTop: Int): Boolean {
+            // Implement if you need change animations
+            return false;
+        }
+
+        override fun runPendingAnimations() {
+            // No-op for this example
+        }
+
+        override fun endAnimation(item: RecyclerView.ViewHolder) {
+            Log.w(TAG, "endAnimation ${item.adapterPosition}")
+            val logHolder = item as LogAdapter.LogViewHolder
+            logHolder.animation.cancel()
+            item.itemView.setBackgroundColor(bgColor)
+            dispatchAnimationFinished(item)
+        }
+
+        override fun endAnimations() {
+            // No-op for this example
+        }
+
+        override fun isRunning(): Boolean {
+            return false; // Return true if animations are running
+        }
+    }
+
+    class LogAdapter(@ColorInt val highlightColor: Int, @ColorInt val bgColor: Int) :
+        RecyclerView.Adapter<LogAdapter.LogViewHolder>() {
+
+        private val logList = mutableListOf<LogMessage>()
+
+        fun getLogs(): String = logList.joinToString(separator = "\n") { it.message }
+
+        class LogViewHolder(itemView: View, @ColorInt highlightColor: Int, @ColorInt bgColor: Int) : RecyclerView.ViewHolder(itemView) {
+            val messageTextView: TextView = itemView.findViewById(R.id.log_item_text)
+            val animation: ValueAnimator = ValueAnimator.ofArgb(highlightColor, bgColor)
+        }
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LogViewHolder =
+            LogViewHolder(
+                LayoutInflater.from(parent.context).inflate(R.layout.item_log, parent, false),
+                highlightColor,
+                bgColor
+            )
+
+        override fun onBindViewHolder(holder: LogViewHolder, position: Int) {
+            holder.messageTextView.text = logList[position].message
+        }
+
+        override fun getItemCount(): Int = logList.size
+
+        fun addLogs(logs: List<LogMessage>) {
+            logList.addAll(logs)
+            notifyItemRangeInserted(logList.size - logs.size, logs.size)
+        }
+
+        fun clearLogs() {
+            logList.clear()
+            notifyDataSetChanged()
+        }
+    }
     companion object {
         private val TAG = LogsActivity::class.simpleName!!
-    }
-}
-
-data class LogMessage(val message: String)
-
-class LogAdapter :
-    RecyclerView.Adapter<LogAdapter.LogViewHolder>() {
-
-    private val logList = mutableListOf<LogMessage>()
-
-    fun getLogs(): String = logList.joinToString(separator = "\n") { it.message }
-
-    class LogViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val messageTextView: TextView = itemView.findViewById(R.id.log_item_text)
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LogViewHolder =
-        LogViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.item_log, parent, false)
-        )
-
-    override fun onBindViewHolder(holder: LogViewHolder, position: Int) {
-        holder.messageTextView.text = logList[position].message
-    }
-
-    override fun getItemCount(): Int = logList.size
-
-    fun addLogs(logs: List<LogMessage>) {
-        logList.addAll(logs)
-        notifyItemRangeInserted(logList.size - logs.size, logs.size)
-    }
-
-    fun clearLogs() {
-        logList.clear()
-        notifyDataSetChanged()
     }
 }
