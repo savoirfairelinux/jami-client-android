@@ -1,0 +1,47 @@
+Jami, GNU pakotne, ir programmatūra universālai un izplatītai peer-to-peer saziņai, kas respektē lietotāju brīvību un privātumu.
+
+Jami ir vienkāršākais un vienkāršākais veids, kā sazināties ar cilvēkiem (un ierīcēm), izmantojot tūlītējo ziņojumapmaiņu, audio un videozvanus, izmantojot internetu un LAN/WAN iekštīklus.
+
+Jami ir bezmaksas/bezmaksas, pilnībā šifrēta un privāta saziņas platforma.
+
+Jami, kas agrāk bija pazīstams kā Ring, ir arī atvērtā pirmkoda alternatīva (Facebook Messenger, Signal, Skype, Teams, Telegram, TikTok, Viber, WhatsApp, Zoom), kas par prioritāti piešķir savu lietotāju privātumu.
+
+Jami ir profesionāla izskata dizains, un tas ir pieejams plašam platformu klāstam. Atšķirībā no alternatīvām, zvani, izmantojot Jami, notiek tieši starp lietotājiem, jo ​​zvanu apstrādei netiek izmantoti serveri.
+
+Tas nodrošina vislielāko privātumu, jo Jami izplatītais raksturs nozīmē, ka jūsu zvani notiek tikai starp dalībniekiem.
+
+Personiskās un grupu sarunas ar Jami tiek uzlabotas ar: tūlītējo ziņojumapmaiņu; audio un video zvani; audio un video ziņojumu ierakstīšana un nosūtīšana; failu pārsūtīšana; ekrāna koplietošana; un atrašanās vietas kopīgošana.
+
+Jami var darboties arī kā SIP klients.
+
+Jami ir pieejami vairāki paplašinājumi: Audio filtrs; Automātiskā atbilde; Zaļais ekrāns; Ūdenszīme; un čukstu atšifrējums.
+
+Jami var viegli izvietot organizācijās, izmantojot “Jami Account Management Server” (JAMS), ļaujot lietotājiem izveidot savienojumu ar saviem korporatīvajiem akreditācijas datiem vai izveidot vietējos kontus. JAMS ļauj pārvaldīt savu Jami kopienu, vienlaikus izmantojot Jami izplatītās tīkla arhitektūras priekšrocības.
+
+Jami ir pieejams GNU/Linux, Windows, macOS, iOS, Android un Android TV, padarot Jami par sadarbspējīgu un starpplatformu saziņas sistēmu.
+
+Pārvaldiet vairākus SIP kontus, Jami kontus un JAMS kontus, izmantojot Jami klientu, kas instalēts vienā vai vairākās ierīcēs.
+
+Jami ir bezmaksas, neierobežots, privāts, bez reklāmām, saderīgs, ātrs, autonoms un anonīms.
+
+Uzziniet vairāk par:
+Jami: https://jami.net/
+Jami paplašinājumi: https://jami.net/extensions/
+“Jami konta pārvaldības serveris” (JAMS): https://jami.biz/
+Jami dokumentācija: https://docs.jami.net/
+
+Sekojiet mums, lai uzzinātu vairāk:
+Mastodon: https://mstdn.io/@Jami
+X: https://x.com/jami_social
+YouTube: https://www.youtube.com/@jami9311
+
+Mēs labprāt dzirdētu no jums! Pievienojieties Jami kopienai:
+Piedalieties: https://jami.net/contribute/
+Forums: https://forum.jami.net/
+
+Veidojiet savu IoT projektu kopā ar Jami: atkārtoti izmantojiet Jami universālo sakaru tehnoloģiju ar tās pārnēsājamo bibliotēku savā izvēlētajā sistēmā.
+
+Jami for Android TV ir testēts NVIDIA SHIELD televizorā ar Logitech kamerām.
+
+Jami ir publicēts saskaņā ar GPL licenci, 3. vai jaunāku versiju.
+Autortiesības © Savoir-faire Linux Inc.
