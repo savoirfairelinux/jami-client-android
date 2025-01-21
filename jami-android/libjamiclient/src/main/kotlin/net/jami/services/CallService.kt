@@ -261,6 +261,7 @@ abstract class CallService(
             if (callId.isEmpty()) {
                 if (numberUri.isSwarm && conversationUri?.isSwarm == true) {
                     return@fromCallable Call(account, null, numberUri, false, conversationUri)
+                        .apply { setMediaList(mediaList) }
                 } else {
                     throw IllegalStateException("Call ID is empty")
                 }
@@ -628,9 +629,8 @@ abstract class CallService(
      * @param mute Whether to mute or unmute the source.
      */
     fun replaceVideoMedia(conf: Conference, uri: String, mute: Boolean) {
-        val call = conf.firstCall ?: return
+        val call = conf.firstCall ?: conf.hostCall ?: return
         val mediaList = call.mediaList
-
         var videoExists = false
         val proposedMediaList = mediaList.map {
             if(it.mediaType == Media.MediaType.MEDIA_TYPE_VIDEO) {
@@ -646,11 +646,15 @@ abstract class CallService(
         mExecutor.execute {
             JamiService.requestMediaChange(
                 call.account,
-                call.id,
+                conf.id,
                 proposedMediaList.mapTo(VectMap().apply {
                     reserve(proposedMediaList.size)
                 }) { it.toMap() }
             )
+
+            if (call == conf.hostCall) {
+                call.setMediaList(proposedMediaList)
+            }
         }
     }
 
