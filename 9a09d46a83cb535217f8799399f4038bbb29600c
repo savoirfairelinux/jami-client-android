@@ -16,6 +16,24 @@
       "message": "Why adding regional specifiers to all translations?\nIn my understanding, in most cases, the generic non-regional language name is preferred.\nIt allows other regions using the same language to use the translation,\nand avoids duplicating translations for the most common case where the translation would be the same for other regions.",
       "revId": "9a09d46a83cb535217f8799399f4038bbb29600c",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "038e59a2_e86c6176",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-01-21T18:20:59Z",
+      "side": 1,
+      "message": "Thank you for your review. Will change as you suggested to generic non-regional language names.\n\nTL;DR\n\n### Scenario A\n\n1. Visit https://play.google.com/store/apps/details?id\u003dcx.ring\u0026hl\u003dca\nThis is `ca` language code.\n2. Click the right-arrow `→` to the right of `Sobre l\u0027aplicació`\n3. The blurb is in English, not Catalan. This seems strange as the `ca` language is in the Jami file.\n\n### Scenario B\n\n1. Visit https://play.google.com/store/apps/details?id\u003dcx.ring\u0026hl\u003des\nThis is the `es` language code.\n2. Click the right-arrow `→` to the right of `Información de la aplicación`\n3. The blurb is in Spanish; however, the blurb is an old translation.",
+      "parentUuid": "f0246b78_b25b3c0c",
+      "revId": "9a09d46a83cb535217f8799399f4038bbb29600c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
