@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0246b78_b25b3c0c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2025-01-21T16:15:56Z",
+      "side": 1,
+      "message": "Why adding regional specifiers to all translations?\nIn my understanding, in most cases, the generic non-regional language name is preferred.\nIt allows other regions using the same language to use the translation,\nand avoids duplicating translations for the most common case where the translation would be the same for other regions.",
+      "revId": "9a09d46a83cb535217f8799399f4038bbb29600c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
