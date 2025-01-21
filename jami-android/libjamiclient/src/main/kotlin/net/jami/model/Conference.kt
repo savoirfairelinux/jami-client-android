@@ -183,6 +183,8 @@ class Conference(val accountId: String, val id: String) {
                 }
                 false
             }
+        }.map {
+            it || hostCall?.hasMedia(Media.MediaType.MEDIA_TYPE_VIDEO) == true
         }
 
     fun hasAudioMedia(): Boolean {
@@ -191,7 +193,7 @@ class Conference(val accountId: String, val id: String) {
 
     fun hasVideo(): Boolean {
         for (call in mParticipants) if (call.hasMedia(Media.MediaType.MEDIA_TYPE_VIDEO)) return true
-        return false
+        return hostCall?.hasMedia(Media.MediaType.MEDIA_TYPE_VIDEO) == true
     }
 
     fun hasActiveScreenSharing(): Boolean {
@@ -204,27 +206,21 @@ class Conference(val accountId: String, val id: String) {
         for (call in mParticipants)
             if (call.hasActiveMedia(Media.MediaType.MEDIA_TYPE_VIDEO))
                 return true
-        return false
+        return hostCall?.hasActiveMedia(Media.MediaType.MEDIA_TYPE_VIDEO) == true
     }
 
-    fun hasActiveNonScreenShareVideo(): Boolean {
-        return mParticipants.any { call ->
-            val mediaList = call.mediaList
-            mediaList.any { media ->
+    fun hasActiveNonScreenShareVideo(): Boolean =
+        (if (hostCall != null) mParticipants + hostCall!! else mParticipants).any { call ->
+            call.mediaList.any { media ->
                 media.isEnabled &&
-                !media.isMuted &&
-                media.mediaType == Media.MediaType.MEDIA_TYPE_VIDEO &&
-                media.source != "camera://desktop"
+                        !media.isMuted &&
+                        media.mediaType == Media.MediaType.MEDIA_TYPE_VIDEO &&
+                        media.source != "camera://desktop"
             }
         }
-    }
 
     val timestampStart: Long
-        get() {
-            var t = Long.MAX_VALUE
-            for (call in mParticipants) t = min(call.timestamp, t)
-            return t
-        }
+        get() = mParticipants.minOfOrNull { it.timestamp } ?: Long.MAX_VALUE
 
     fun setInfo(info: List<ParticipantInfo>) {
         mParticipantInfo.onNext(info)
