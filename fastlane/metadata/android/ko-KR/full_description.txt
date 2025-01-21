@@ -1,0 +1,47 @@
+GNU 패키지인 Jami는 사용자의 자유와 프라이버시를 존중하는 범용 분산 피어투피어 커뮤니케이션 소프트웨어입니다.
+
+Jami는 인터넷과 LAN/WAN 인트라넷을 통해 인스턴트 메시징, 오디오 및 비디오 통화를 통해 사람(및 기기)과 연결하는 가장 간단하고 쉬운 방법입니다.
+
+Jami는 무료/자유, 엔드투엔드 암호화 및 비공개 커뮤니케이션 플랫폼입니다.
+
+Ring으로 알려졌던 Jami는 사용자의 프라이버시를 우선시하는 오픈소스 대안(Facebook Messenger, Signal, Skype, Teams, Telegram, TikTok, Viber, WhatsApp, Zoom)이기도 합니다.
+
+Jami는 전문적인 디자인을 갖추고 있으며 다양한 플랫폼에서 사용할 수 있습니다. 다른 대안과 달리 Jami를 사용한 통화는 서버를 사용하지 않고 사용자 간에 직접 이루어집니다.
+
+Jami의 분산된 특성으로 인해 통화가 참가자 간에만 이루어지므로 가장 큰 프라이버시를 제공합니다.
+
+Jami와의 일대일 및 그룹 대화는 인스턴트 메시징을 통해 향상됩니다. 오디오 및 비디오 통화; 오디오 및 비디오 메시지 녹음 및 전송; 파일 전송; 화면 공유; 위치 공유.
+
+Jami는 SIP 클라이언트로도 기능할 수 있습니다.
+
+Jami에는 오디오 필터, 자동 응답, 그린 스크린, 워터마크, 속삭임 대본 등 여러 확장 기능이 있습니다.
+
+Jami는 "Jami 계정 관리 서버"(JAMS)를 통해 조직에 쉽게 배포할 수 있으며, 사용자는 회사 자격 증명으로 연결하거나 로컬 계정을 만들 수 있습니다. JAMS를 사용하면 Jami의 분산 네트워크 아키텍처를 활용하면서 자체 Jami 커뮤니티를 관리할 수 있습니다.
+
+Jami는 GNU/Linux, Windows, macOS, iOS, Android 및 Android TV에서 사용할 수 있어 Jami를 상호 운용 가능한 크로스 플랫폼 커뮤니케이션 프레임워크로 만듭니다.
+
+하나 이상의 장치에 설치된 Jami 클라이언트로 여러 SIP 계정, Jami 계정 및 JAMS 계정을 관리합니다.
+
+Jami는 무료, 무제한, 비공개, 광고 없음, 호환, 속도, 자율성 및 익명성을 제공합니다.
+
+자세히 알아보기:
+Jami: https://jami.net/
+Jami 확장 프로그램: https://jami.net/extensions/
+“Jami Account Management Server”(JAMS): https://jami.biz/
+Jami 설명서: https://docs.jami.net/
+
+자세한 내용은 저희를 팔로우하세요:
+Mastodon: https://mstdn.io/@Jami
+X: https://x.com/jami_social
+YouTube: https://www.youtube.com/@jami9311
+
+여러분의 의견을 듣고 싶습니다! Jami 커뮤니티에 가입하세요:
+기여: https://jami.net/contribute/
+포럼: https://forum.jami.net/
+
+IoT 프로젝트에서 Jami로 빌드하세요: 선택한 시스템에서 휴대용 라이브러리와 함께 Jami의 범용 통신 기술을 재사용하세요.
+
+Android TV용 Jami는 Logitech 카메라가 있는 NVIDIA SHIELD TV에서 테스트되었습니다.
+
+Jami는 GPL 라이선스 버전 3 이상에 따라 게시됩니다.
+저작권 © Savoir-faire Linux Inc.
