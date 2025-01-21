@@ -1,0 +1,47 @@
+Jami, GNU pakki, er hugbúnaður fyrir alhliða og dreifð jafningjasamskipti sem virða frelsi og friðhelgi notenda sinna.
+
+Jami er einfaldasta og auðveldasta leiðin til að tengjast fólki (og tækjum) með spjallskilaboðum, hljóð- og myndsímtölum yfir internetið og LAN/WAN innra neti.
+
+Jami er ókeypis/frjáls, dulkóðaður frá enda til enda og einkasamskiptavettvangur.
+
+Jami – sem áður var þekktur sem Ring – er einnig opinn valkostur (við Facebook Messenger, Signal, Skype, Teams, Telegram, TikTok, Viber, WhatsApp, Zoom) sem setur friðhelgi notenda sinna í forgang.
+
+Jami er með fagmannlega útlitshönnun og er fáanlegur fyrir fjölbreytt úrval af kerfum. Ólíkt valkostunum eru símtöl sem nota Jami beint á milli notenda þar sem það notar ekki netþjóna til að sinna símtölum.
+
+Þetta veitir mesta næði þar sem dreifð eðli Jami þýðir að símtölin þín eru aðeins á milli þátttakenda.
+
+Einn á einn og hópsamtöl við Jami eru bætt með: spjallskilaboðum; hljóð- og myndsímtöl; upptaka og senda hljóð- og myndskilaboð; skráaflutningur; skjáhlutdeild; og staðsetningardeilingu.
+
+Jami getur líka virkað sem SIP viðskiptavinur.
+
+Jami hefur margar viðbætur í boði: Hljóðsía; Sjálfvirkt svar; Grænn skjár; Vatnsmerki; og, Whisper Transcript.
+
+Auðvelt er að nota Jami í fyrirtækjum með „Jami Account Management Server“ (JAMS), sem gerir notendum kleift að tengjast fyrirtækjaskilríkjum sínum eða búa til staðbundna reikninga. JAMS gerir þér kleift að stjórna þínu eigin Jami samfélagi á meðan þú nýtir þér dreifðan netarkitektúr Jami.
+
+Jami er fáanlegt fyrir GNU/Linux, Windows, macOS, iOS, Android og Android TV, sem gerir Jami að gagnvirkum og þvert á vettvang samskiptaramma.
+
+Hafðu umsjón með mörgum SIP reikningum, Jami reikningum og JAMS reikningum með Jami viðskiptavininum uppsettum á einu eða mörgum tækjum.
+
+Jami er ókeypis, ótakmarkað, einkamál, auglýsingalaust, samhæft, hratt, sjálfstætt og nafnlaust.
+
+Frekari upplýsingar um:
+Jami: https://jami.net/
+Jami viðbætur: https://jami.net/extensions/
+„Jami Account Management Server“ (JAMS): https://jami.biz/
+Jami skjöl: https://docs.jami.net/
+
+Fylgdu okkur fyrir meira:
+Mastodon: https://mstdn.io/@Jami
+X: https://x.com/jami_social
+YouTube: https://www.youtube.com/@jami9311
+
+Við viljum gjarnan heyra frá þér! Skráðu þig í Jami samfélagið:
+Leggðu til: https://jami.net/contribute/
+Spjallborð: https://forum.jami.net/
+
+Byggðu með Jami á IoT verkefninu þínu: endurnýttu alhliða samskiptatækni Jami með færanlega bókasafni þess á kerfi sem þú velur.
+
+Jami fyrir Android TV er prófaður á NVIDIA SHIELD TV með Logitech myndavélum.
+
+Jami er gefið út undir GPL leyfinu, útgáfu 3 eða nýrri.
+Höfundarréttur © Savoir-faire Linux Inc.

@@ -1,0 +1,47 @@
+Jami, GNU-paketti, on ohjelmisto yleiseen ja hajautettuun peer-to-peer-viestintään, joka kunnioittaa käyttäjiensä vapautta ja yksityisyyttä.
+
+Jami on yksinkertaisin ja helpoin tapa olla yhteydessä ihmisiin (ja laitteisiin) pikaviestinnällä, ääni- ja videopuheluilla Internetin ja LAN/WAN-intranetien kautta.
+
+Jami on ilmainen / ilmainen, päästä päähän salattu ja yksityinen viestintäalusta.
+
+Jami – joka tunnettiin aiemmin nimellä Ring – on myös avoimen lähdekoodin vaihtoehto (Facebook Messengerille, Signalille, Skypelle, Teamsille, Telegramille, TikTokille, Viberille, WhatsAppille, Zoomille), joka asettaa etusijalle käyttäjiensä yksityisyyden.
+
+Jamilla on ammattimaisen näköinen muotoilu ja se on saatavana useille alustoille. Toisin kuin vaihtoehdot, Jamia käyttävät puhelut ovat suoraan käyttäjien välillä, koska se ei käytä palvelimia puheluiden käsittelemiseen.
+
+Tämä tarjoaa suurimman yksityisyyden, koska Jamin hajautettu luonne tarkoittaa, että puhelusi ovat vain osallistujien välillä.
+
+Henkilökohtaisia ​​ja ryhmäkeskusteluja Jamin kanssa tehostetaan: pikaviestit; ääni- ja videopuhelut; ääni- ja videoviestien tallennus ja lähettäminen; tiedostojen siirrot; näytön jakaminen; ja sijainnin jakaminen.
+
+Jami voi toimia myös SIP-asiakkaana.
+
+Jamilla on saatavilla useita laajennuksia: Audio Filter; Automaattinen vastaus; Vihreä näyttö; Vesileima; ja Whisper Transcript.
+
+Jami voidaan ottaa helposti käyttöön organisaatioissa "Jami Account Management Server":n (JAMS) avulla, jolloin käyttäjät voivat muodostaa yhteyden yrityksen tunnistetietoihinsa tai luoda paikallisia tilejä. JAMSin avulla voit hallita omaa Jami-yhteisöäsi hyödyntäen samalla Jamin hajautettua verkkoarkkitehtuuria.
+
+Jami on saatavilla GNU/Linuxille, Windowsille, macOS:lle, iOS:lle, Androidille ja Android TV:lle, mikä tekee Jamista yhteentoimivan ja monialustaisen viestintäkehyksen.
+
+Hallitse useita SIP-tilejä, Jami-tilejä ja JAMS-tilejä Jami-asiakassovelluksella, joka on asennettu yhdelle tai usealle laitteelle.
+
+Jami on ilmainen, rajoittamaton, yksityinen, mainontavapaa, yhteensopiva, nopea, itsenäinen ja anonyymi.
+
+Lisätietoja:
+Jami: https://jami.net/
+Jami-laajennukset: https://jami.net/extensions/
+"Jami Account Management Server" (JAMS): https://jami.biz/
+Jamin dokumentaatio: https://docs.jami.net/
+
+Seuraa meitä saadaksesi lisää:
+Mastodon: https://mstdn.io/@Jami
+X: https://x.com/jami_social
+YouTube: https://www.youtube.com/@jami9311
+
+Haluaisimme kuulla sinusta! Liity Jami-yhteisöön:
+Osallistu: https://jami.net/contribute/
+Foorumi: https://forum.jami.net/
+
+Rakenna Jamin kanssa IoT-projektissasi: käytä uudelleen Jamin universaalia viestintätekniikkaa sen kannettavan kirjaston kanssa valitsemassasi järjestelmässä.
+
+Jami for Android TV on testattu NVIDIA SHIELD TV:ssä Logitech-kameroilla.
+
+Jami on julkaistu GPL-lisenssillä, versiolla 3 tai uudemmalla.
+Tekijänoikeus © Savoir-faire Linux Inc.
