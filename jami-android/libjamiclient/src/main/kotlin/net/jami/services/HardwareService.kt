@@ -166,7 +166,6 @@ abstract class HardwareService(
     var unknownPriorityPushCount = 0
     var startTime: String? = null
 
-
     @get:Synchronized
     val isLogging: Boolean
         get() = logs != null
@@ -186,6 +185,7 @@ abstract class HardwareService(
             }
         }
             .buffer(500, TimeUnit.MILLISECONDS)
+            .filter { it.isNotEmpty() }
             .replay()
             .autoConnect()
             .apply { logs = this }

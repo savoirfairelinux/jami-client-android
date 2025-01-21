@@ -30,6 +30,8 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import cx.ring.R
+import cx.ring.client.LogsActivity.LogAdapter
+import cx.ring.client.LogsActivity.LogMessage
 import cx.ring.databinding.ActivityPushNotificationLogsBinding
 import cx.ring.utils.AndroidFileUtils
 import cx.ring.utils.ContentUri
