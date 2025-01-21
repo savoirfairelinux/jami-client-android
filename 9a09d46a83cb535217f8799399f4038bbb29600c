@@ -34,6 +34,24 @@
       "parentUuid": "f0246b78_b25b3c0c",
       "revId": "9a09d46a83cb535217f8799399f4038bbb29600c",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d91e2da0_42845a8a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-01-21T18:25:31Z",
+      "side": 1,
+      "message": "1. Visit https://play.google.com/store/apps/details?id\u003dcx.ring\u0026hl\u003dfr-CA\nThis is the `fr-CA` language-country code.\n2. Click the right-arrow `→` to the right of `À propos de cette appli`\n3. The blurb is in French; however, the blurb is the old translation.",
+      "parentUuid": "038e59a2_e86c6176",
+      "revId": "9a09d46a83cb535217f8799399f4038bbb29600c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
