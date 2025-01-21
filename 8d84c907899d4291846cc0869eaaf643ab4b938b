@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "76018da6_0d1cba75",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-01-21T19:18:48Z",
+      "side": 1,
+      "message": "Please wait until https://review.jami.net/c/jami-client-android/+/30033 is merged. Thank you",
+      "revId": "8d84c907899d4291846cc0869eaaf643ab4b938b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
