@@ -9,6 +9,9 @@
     <color name="colorPrimary">@color/white</color>
     <color name="colorPrimaryTranslucent">#C0FFFFFF</color>
     <color name="colorOnPrimary">@color/color_primary_dark</color>
+    <color name="colorSecondaryTranslucent">@color/color_primary_dark_translucent</color>
+
+    <color name="transparent">#00000000</color>
 
     <!--  Text color  -->
     <color name="colorOnSurface">@color/abc_primary_text_material_dark</color>

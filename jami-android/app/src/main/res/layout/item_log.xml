@@ -13,7 +13,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/log_item_text"
@@ -22,6 +21,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     android:breakStrategy="simple"
     android:hyphenationFrequency="none"
     android:paddingHorizontal="@dimen/padding_medium"
-    android:paddingTop="@dimen/padding_small"
+    android:paddingVertical="@dimen/padding_xsmall"
     android:textIsSelectable="true"
-    tools:text="@tools:sample/lorem/random" />
+    tools:text="@tools:sample/first_names"/>

@@ -9,6 +9,7 @@
     <color name="colorPrimary">@color/color_primary_dark</color>
     <color name="colorPrimaryTranslucent">@color/color_primary_dark_translucent</color>
     <color name="colorOnPrimary">@color/white</color>
+    <color name="colorSecondaryTranslucent">@color/color_primary_light_translucent</color>
 
     <color name="colorSecondary">@color/color_primary_light</color>
     <color name="colorSecondaryContainer">@color/color_primary_light_container</color>
@@ -32,7 +33,7 @@
     <color name="darker_gray">#c4c4c4</color>
     <color name="lighter_gray">#d3d3d3</color>
     <color name="light">#eee</color>
-    <color name="transparent">#00000000</color>
+    <color name="transparent">#00FFFFFF</color>
 
     <color name="white">#FFF</color>
     <color name="black">#000000</color>
