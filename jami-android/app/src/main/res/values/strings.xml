@@ -327,7 +327,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="swarm_group_action_leave_title">Leave this group?</string>
     <string name="swarm_group_action_leave_message">This will remove the conversation from your conversations list</string>
     <string name="conversation_action_copy_peer_number">Copy contact identifier</string>
-    <string name="copied_to_clipboard">%1$s copied to clipboard</string>
+    <string name="copied_to_clipboard">%1$s copied to clipboard.</string>
     <string name="conversation_action_select_peer_number">Select a number</string>
     <string name="conversation_action_block_this">Block contact</string>
     <string name="conversation_action_unblock_this">Unblock contact</string>
@@ -479,7 +479,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="file_transfer_status_error">failed due to error</string>
     <string name="file_transfer_status_timed_out">timed out</string>
     <string name="file_saved_in">File saved in %s</string>
-    <string name="file_saved_successfully">File saved successfully</string>
+    <string name="file_saved_successfully">File saved successfully.</string>
     <string name="file_download">Download</string>
     <string name="no_space_left_on_device">No storage space available on the device</string>
     <string name="title_media_viewer">Media viewer</string>
