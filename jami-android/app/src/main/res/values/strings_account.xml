@@ -192,7 +192,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <!-- restore/backup -->
     <string name="account_new_device_password">Enter main password to unlock account</string>
     <string name="error_password_char_count">6 characters minimum</string>
-    <string name="error_passwords_not_equals">Passwords do not match</string>
+    <string name="error_passwords_not_equals">Passwords do not match.</string>
     <string name="export_account_wait_title">Please wait…</string>
     <string name="export_account_wait_message">Exporting account information</string>
     <string name="account_export_file">Backup account</string>
