@@ -267,7 +267,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <!-- Name registration -->
     <string name="error_username_empty">Enter a username</string>
     <string name="no_registered_name_for_account">No registered username</string>
-    <string name="username_available">Username available!</string>
+    <string name="username_available">Username is available.</string>
     <string name="register_name">Register username</string>
     <string name="trying_to_register_name">Attempting to register username</string>
     <string name="registered_username">Registered username</string>
