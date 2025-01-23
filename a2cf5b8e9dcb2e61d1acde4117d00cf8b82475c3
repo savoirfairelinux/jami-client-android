@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fbb3ce32_3361f3fb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-01-23T18:26:44Z",
+      "side": 1,
+      "message": "@leopold.chappuis@savoirfairelinux.com\nDoes jami-web terminology need to be updated? i.e.\nNeed an account? → Create %1$s account",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 43
+      },
+      "revId": "a2cf5b8e9dcb2e61d1acde4117d00cf8b82475c3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
