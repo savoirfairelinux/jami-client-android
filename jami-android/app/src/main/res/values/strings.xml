@@ -387,7 +387,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="prompt_new_password">New password</string>
     <string name="prompt_new_password_optional">New password (optional)</string>
     <string name="prompt_new_password_repeat">Repeat new password</string>
-    <string name="account_create_title">Create a Jami account</string>
+    <string name="account_create_title">Create %1$s account</string>
     <string name="prompt_new_username">Enter new username</string>
     <string name="prompt_hint_username">Username</string>
     <string name="help_password_choose">Choose a strong password you will remember to protect your Jami account.</string>
