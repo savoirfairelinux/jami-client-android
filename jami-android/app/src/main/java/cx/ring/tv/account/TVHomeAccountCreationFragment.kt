@@ -70,7 +70,7 @@ class TVHomeAccountCreationFragment : JamiGuidedStepFragment<HomeAccountCreation
     override fun onCreateActions(actions: MutableList<GuidedAction>, savedInstanceState: Bundle?) {
         val context = requireContext()
         addAction(context, actions, LINK_ACCOUNT, getString(R.string.account_link_button), "", true)
-        addAction(context, actions, CREATE_ACCOUNT, getString(R.string.account_create_title), "", true)
+        addAction(context, actions, CREATE_ACCOUNT, getString(R.string.account_create_title,R.string.app_name), "", true)
         addAction(
             context, actions, CREATE_JAMS_ACCOUNT,
             getString(R.string.account_connect_server_button), "", true

@@ -88,7 +88,7 @@ class TVProfileCreationFragment : JamiGuidedStepFragment<ProfileCreationPresente
     }
 
     override fun onCreateGuidance(savedInstanceState: Bundle?): Guidance {
-        val title = getString(R.string.account_create_title)
+        val title = getString(R.string.account_create_title, R.string.app_name)
         val breadcrumb = ""
         val description = getString(R.string.profile_message_warning)
         val m = model.model
