@@ -6,6 +6,7 @@ import android.app.NotificationManager
 import android.app.Service
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.IBinder
 import android.os.RemoteException
@@ -16,12 +17,13 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
-import io.reactivex.rxjava3.subjects.BehaviorSubject
 import net.jami.model.Account
 import net.jami.model.Contact
+import net.jami.model.Profile
 import net.jami.model.Uri
 import net.jami.services.AccountService
 import net.jami.services.CallService
+import net.jami.services.ContactService
 import net.jami.utils.Log
 import javax.inject.Inject
 
@@ -30,6 +32,9 @@ class RemoteControl : Service() {
 
     @Inject
     lateinit var accountService: AccountService
+
+    @Inject
+    lateinit var contactService: ContactService
 
     @Inject
     lateinit var callService: CallService
@@ -237,6 +242,30 @@ class RemoteControl : Service() {
             }
         }
 
+        override fun setProfileData(
+            peerId: String,
+            name: String?,
+            imageUri: String?,
+            fileType: String?
+        ) {
+            val account = accountService.currentAccount
+            if (account != null) {
+                val contact = account.getContactFromCache(Uri.fromString(peerId))
+                Log.d(tag, "Setting profile data for user: $peerId")
+                if (imageUri != null && fileType != null && name != null) {
+                    val image: Bitmap = contentResolver.openInputStream(android.net.Uri.parse(imageUri)).use {
+                        BitmapFactory.decodeStream(it)
+                    }
+                    val newProfile = Profile(name, image)
+                    Log.d(tag, "Storing picture of height ${image.height}")
+                    contactService.storeContactData(contact, newProfile, account.accountId)
+                } else if (name != null && imageUri == null) {
+                    val profile = contact.profile.firstElement().blockingGet()
+                    val newProfile = Profile(name, profile?.avatar)
+                    contactService.storeContactData(contact, newProfile, account.accountId)
+                }
+            }
+        }
     }
 
     override fun onBind(intent: Intent?): IBinder {

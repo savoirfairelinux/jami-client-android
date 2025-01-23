@@ -16,6 +16,7 @@
  */
 package cx.ring.services
 
+import android.R.attr.bitmap
 import android.content.ContentProviderOperation
 import android.content.ContentResolver
 import android.content.ContentUris
@@ -33,7 +34,7 @@ import android.util.LongSparseArray
 import androidx.core.util.getOrElse
 import cx.ring.utils.AndroidFileUtils
 import cx.ring.views.AvatarFactory
-import ezvcard.VCard
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.model.Contact
@@ -45,6 +46,7 @@ import net.jami.services.ContactService
 import net.jami.services.PreferencesService
 import net.jami.utils.VCardUtils
 import java.io.ByteArrayOutputStream
+
 
 class ContactServiceImpl(val mContext: Context, preferenceService: PreferencesService,
                          accountService: AccountService
@@ -431,6 +433,21 @@ class ContactServiceImpl(val mContext: Context, preferenceService: PreferencesSe
             if (contact.isFromSystem) loadSystemContactData(contact)
             else loadVCardContactData(contact, accountId)
         return profile.onErrorReturn { Profile.EMPTY_PROFILE }
+    }
+
+    override fun storeContactData(contact: Contact, profile: Profile, accountId: String) {
+        val filename = Base64.encodeToString(contact.primaryNumber.toByteArray(), Base64.NO_WRAP)
+
+        ByteArrayOutputStream().use { stream ->
+            val bitmap = (profile.avatar as? Bitmap)
+            if (bitmap != null) {
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+                val avatar = stream.toByteArray()
+                VCardUtils.writePictureToDisk(avatar, accountId, filename, mContext.cacheDir)
+            }
+        }
+
+        VCardUtils.savePeerProfileToDisk(VCardUtils.writeData(contact.uri.uri, profile.displayName, null), accountId, filename + ".vcf", mContext.filesDir)
     }
 
     private fun loadVCardContactData(contact: Contact, accountId: String): Single<Profile> =

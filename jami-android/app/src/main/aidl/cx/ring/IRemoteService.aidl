@@ -46,4 +46,5 @@ interface IRemoteService {
     void acceptCall();
     void rejectCall();
     Bitmap getCallerImage(String userId);
+    void setProfileData(String peerId, @nullable String name, @nullable String imageUri, @nullable String fileType);
 }

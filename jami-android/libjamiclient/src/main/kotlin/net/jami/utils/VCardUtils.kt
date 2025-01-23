@@ -16,24 +16,20 @@
  */
 package net.jami.utils
 
-import net.jami.utils.FileUtils.moveFile
-import ezvcard.VCard
-import ezvcard.property.FormattedName
-import ezvcard.property.Uid
-import ezvcard.property.RawProperty
-import ezvcard.io.text.VCardWriter
-import ezvcard.VCardVersion
-import kotlin.Throws
 import ezvcard.Ezvcard
+import ezvcard.VCard
+import ezvcard.VCardVersion
+import ezvcard.io.text.VCardWriter
 import ezvcard.parameter.ImageType
+import ezvcard.property.FormattedName
 import ezvcard.property.Photo
+import ezvcard.property.RawProperty
+import ezvcard.property.Uid
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import java.io.File
 import java.io.IOException
 import java.io.StringWriter
-import java.lang.Exception
-import java.util.HashMap
 
 object VCardUtils {
     val TAG = VCardUtils::class.simpleName!!
@@ -136,6 +132,12 @@ object VCardUtils {
             else -> "JPEG"
         }
 
+    fun writePictureToDisk(picture: ByteArray, accountId: String, filename: String, cacheDir: File) {
+        val cacheFolder = peerProfileCachePath(cacheDir, accountId)
+        val cachePicture = File(cacheFolder, filename)
+        cachePicture.writeBytes(picture)
+    }
+
     @Throws(IOException::class)
     fun loadPeerProfileFromDisk(filesDir: File, cacheDir: File, filename: String, accountId: String): Pair<String?, ByteArray?> {
         val cacheFolder = peerProfileCachePath(cacheDir, accountId)
@@ -160,10 +162,13 @@ object VCardUtils {
         val data = readData(loadFromDisk(profileFile))
         val (name, picture) = data
         cacheName.writeText(name ?: "")
-        if (picture != null) {
+        return if (picture != null) {
             cachePicture.writeBytes(picture)
+            data
+        } else {
+            // maybe we've got something in the cache
+            Pair(name, cachePicture.readBytes())
         }
-        return data
     }
 
     fun loadLocalProfileFromDisk(filesDir: File, accountId: String): Single<VCard> =

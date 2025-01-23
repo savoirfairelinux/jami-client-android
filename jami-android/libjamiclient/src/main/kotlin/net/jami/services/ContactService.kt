@@ -42,6 +42,7 @@ abstract class ContactService(
     protected abstract fun findContactBySipNumberFromSystem(number: String): Contact?
     protected abstract fun findContactByNumberFromSystem(number: String): Contact?
     abstract fun loadContactData(contact: Contact, accountId: String): Single<Profile>
+    abstract fun storeContactData(contact: Contact, profile: Profile, accountId: String)
 
     abstract fun saveContact(uri: String, profile: Profile)
     abstract fun deleteContact(uri: String)
