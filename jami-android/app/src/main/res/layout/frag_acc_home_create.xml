@@ -44,7 +44,7 @@
                 android:layout_width="@dimen/wizard_button_width"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="@string/account_new_button"
+                android:text=getString(R.string.account_new_button, R.string.app_name)
                 android:drawableLeft="@drawable/baseline_account_circle_white_36"
                 android:drawableRight="@drawable/baseline_arrow_forward_white_18"/>
 
