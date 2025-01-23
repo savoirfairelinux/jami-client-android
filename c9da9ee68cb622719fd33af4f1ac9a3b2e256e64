@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "404fc8d8_979bb58c",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2025-01-23T16:56:25Z",
+      "side": 1,
+      "message": "Should be: \"Create a %1$s account\", which would be transformed to \"Create a Jami account\", allowing to customize the product name.\n\n* This makes the action of the button explicit, which is important for main action buttons like this one.\n* People have many different accounts, so it\u0027s important to explicitly say which type of account is going to be created.",
+      "range": {
+        "startLine": 390,
+        "startChar": 40,
+        "endLine": 390,
+        "endChar": 56
+      },
+      "revId": "c9da9ee68cb622719fd33af4f1ac9a3b2e256e64",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
