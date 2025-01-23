@@ -244,7 +244,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="account_link_button">Connect from network</string>
     <string name="account_link_archive_button">Connect from backup</string>
     <string name="account_link_prompt_pin">Enter PIN code</string>
-    <string name="account_new_button">Create a Jami account</string>
+    <string name="account_new_button">Join Jami</string>
     <string name="account_link_export_button">Link a new device</string>
     <string name="account_link_show_button">Show %d more linked device</string>
     <string name="account_link_hide_button">Hide linked device</string>
