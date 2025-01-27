@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c3db983_050e65bf",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-01-27T20:46:44Z",
+      "side": 0,
+      "message": "Should \"Create a Jami account\" be changed to \"Join Jami\" to unify across clients?\n\nhttps://review.jami.net/c/jami-client-qt/+/30068\nhttps://review.jami.net/c/jami-client-android/+/30069\nhttps://review.jami.net/c/jami-client-ios/+/30067",
+      "range": {
+        "startLine": 390,
+        "startChar": 40,
+        "endLine": 390,
+        "endChar": 61
+      },
+      "revId": "a726677e1d00274ad031d947709b1df7c402db94",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
