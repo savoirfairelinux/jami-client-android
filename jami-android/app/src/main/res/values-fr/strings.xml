@@ -17,7 +17,7 @@
   <string name="call_service_description">Ce service est nécessaire pour garder vos appels actifs en avant-plan. Il ne fonctionne que durant les appels.</string>
   <string name="data_transfer_service_description">Ce service est nécessaire pour afficher des notifications persistantes lors des transferts de fichiers. Il ne s\'exécute que lors des transferts de fichiers.</string>
   <!--About dialog-->
-  <string name="thank_note">Nous aimerions remercier l\'ensemble des contributeurs dont les efforts ont permis à travers les années de faire ce logiciel ce qu\'il est.</string>
+  <string name="thank_note">Nous aimerions remercier l\'ensemble des contributeurs dont les efforts ont permis à travers les années de faire de ce logiciel ce qu\'il est.</string>
   <string name="developers">Développeurs</string>
   <string name="media">Médias</string>
   <string name="community_management">Gestion de la communauté</string>
@@ -215,11 +215,11 @@
   <string name="conversation_type_contact">Contact Jami</string>
   <string name="conversation_type_private">Privé</string>
   <string name="conversation_type_group">Groupe</string>
-  <string name="conversation_contact_invited">%1$s a été invité</string>
-  <string name="conversation_contact_added">%1$s a rejoint la discussion</string>
-  <string name="conversation_contact_left">%1$s restant(s)</string>
-  <string name="conversation_contact_blocked">%1$s a été bloqué</string>
-  <string name="conversation_contact_unblocked">%1$s a été débloqué</string>
+  <string name="conversation_contact_invited">%1$s est invité à rejoindre la conversation.</string>
+  <string name="conversation_contact_added">%1$s a rejoint la conversation.</string>
+  <string name="conversation_contact_left">%1$s a quitté la conversation.</string>
+  <string name="conversation_contact_blocked">%1$s a été bloqué dans la conversation.</string>
+  <string name="conversation_contact_unblocked">%1$s a été débloqué de la conversation.</string>
   <string name="conversation_search_hint">Rechercher des conversations</string>
   <string name="audio_recorder_error">L\'application d\'enregistrement audio n\'est pas trouvée.</string>
   <string name="video_recorder_error">L\'application d\'enregistrement vidéo n\'est pas trouvée.</string>
@@ -249,6 +249,7 @@
   <string name="help_server_enter">Entrez l\'URL du serveur de gestion</string>
   <string name="help_pin_enter">Entrer le NIP de votre compte sur l\'autre appareil. Utiliser pour cela la fonction \"Exporter votre compte\" pour obtenir le NIP.</string>
   <string name="pin_copied">Le NIP a été copié dans le presse-papier.</string>
+  <string name="copied_clipboard">Copié dans le presse-papier</string>
   <string name="wizard_next">Suivant</string>
   <string name="wizard_back">Précédent</string>
   <string name="wizard_skip">Passer</string>

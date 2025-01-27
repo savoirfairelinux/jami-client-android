@@ -173,9 +173,6 @@
   <string name="conversation_type_contact">Jamiの連絡先</string>
   <string name="conversation_type_private">プライベート</string>
   <string name="conversation_type_group">グループ</string>
-  <string name="conversation_contact_invited">%1$s が招待されました</string>
-  <string name="conversation_contact_added">%1$s が加入</string>
-  <string name="conversation_contact_left">残り%1$s</string>
   <string name="conversation_search_hint">会話を検索</string>
   <string name="today">今日</string>
   <string name="yesterday">昨日</string>

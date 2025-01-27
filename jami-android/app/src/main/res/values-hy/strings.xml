@@ -169,9 +169,6 @@
   <string name="conversation_preference_emoji">Զրույցի էմոգի</string>
   <string name="conversation_type_contact">Ջամիի շփումը</string>
   <string name="conversation_type_private">Անձնական</string>
-  <string name="conversation_contact_invited">%1$s-ը հրավիրվել է</string>
-  <string name="conversation_contact_added">%1$s-ը միացել է</string>
-  <string name="conversation_contact_left">%1$s-ը ձախ է</string>
   <string name="conversation_search_hint">Հետազոտական զրույց</string>
   <string name="today">Այսօր</string>
   <string name="yesterday">Երեկ</string>

@@ -43,9 +43,9 @@
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Orokorra</string>
   <string name="account_basic_category">Oinarrizko ezarpenak</string>
-  <string name="account_alias_label">Kontuaren izena</string>
   <string name="account_hostname_label">Ostalari-izena</string>
   <string name="account_bootstrap_label">Errematxu bat</string>
+  <string name="account_name_server_label">Izen zerbitzaria</string>
   <string name="account_username_label">Erabiltzaile-izena</string>
   <string name="account_password_label">Pasahitza</string>
   <string name="account_optionnal_category">Aukerazko ezarpenak</string>
@@ -77,8 +77,7 @@
   <string name="account_registration_exp_label">Erregistroa amaitu da</string>
   <string name="account_local_interface_label">Interfaze lokala</string>
   <string name="account_local_port_label">Ataka lokala</string>
-  <string name="account_stun_enable_label">Erabili Stun</string>
-  <string name="account_stun_server_label">Zerbitzari harrigarria</string>
+  <string name="account_stun_enable_label">STUN erabili</string>
   <string name="account_accept_files">Sarrera jasotzen ari diren fitxategiak automatikoki onartzen dira</string>
   <string name="account_conversation_settings_title">Elkarrizketa-errendapenak</string>
   <string name="account_accept_files_max_size">Fitxategi-tamainaren gehienezkoak automatikoki onartzeko</string>
@@ -94,6 +93,7 @@
   <string name="account_published_address_label">Argitaratutako helbidea</string>
   <string name="disabled">Desgaituta</string>
   <string name="enabled">Ahaltu</string>
+  <string name="default_value">Lehenetsia</string>
   <string name="account_proxy_label">DHT proxya</string>
   <string name="account_proxy_enable_label">Erabili DHT proxya</string>
   <string name="account_proxy_server_label">DHT proxyaren helbidea</string>
@@ -112,21 +112,9 @@
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">TLS garraioaren erabilera</string>
-  <string name="account_tls_port_label">TLS entzulearen portua</string>
-  <string name="account_tls_certificate_list_label">Zerbitzuak</string>
-  <string name="account_tls_certificate_file_label">Ziurtagiri fitxategia</string>
-  <string name="account_tls_private_key_file_label">Gako pribatuaren fitxategia</string>
   <string name="account_tls_password_label">Gako pribatuaren pasahitza</string>
-  <string name="account_tls_method_label">TLS metodoa</string>
-  <string name="account_tls_ciphers_label">TLS-ko zifrak</string>
-  <string name="account_tls_server_name_label">Zerbitzari-izena</string>
-  <string name="account_tls_verify_server_label">Egiaztatu zerbitzaria</string>
-  <string name="account_tls_verify_client_label">Egiaztatu bezeroa</string>
-  <string name="account_require_client_certificate_label">TLS-ek bezeroaren ziurtagiria behar du</string>
-  <string name="account_tls_negotiation_timeout_sec">Negoziazioen epe-aldaketa (sec)</string>
   <string name="account_rtp_max_port">Maximoa</string>
   <string name="account_rtp_min_port">Minimoa</string>
-  <string name="account_rtp_port_range">Audio RTP portuaren eremua</string>
   <!--restore/backup-->
   <string name="account_new_device_password">Sartu pasahitza nagusia kontuaren irekitzeko</string>
   <string name="error_password_char_count">6 karaktere gutxienez</string>
@@ -164,12 +152,10 @@
   <string name="account_link_device">Beste gailu batetik konektatu</string>
   <string name="account_link_button">Konektatu saretik</string>
   <string name="account_link_archive_button">Konektatu babes-kopiatik</string>
-  <string name="account_link_prompt_pin">Sartu PIN-a</string>
   <string name="account_new_button">Sortu Jami kontua</string>
   <string name="account_link_export_button">Estekatu gailu berria</string>
   <string name="account_link_show_button">%d gehiagoren konektatutako gailua erakutsi</string>
   <string name="account_link_hide_button">Ezkutatu lotutako gailua</string>
-  <string name="account_start_export_button">Sortu PIN-a</string>
   <string name="account_end_export_button">itxi</string>
   <string name="account_export_title">Beste gailu batzuekin lotutako kontuak</string>
   <string name="account_connect_server_button">Administrazio zerbitzariarekin konektatu</string>
@@ -180,10 +166,7 @@
   <string name="account_connect_prompt_username">Erabiltzaile-izena</string>
   <!--Name registration-->
   <string name="error_username_empty">Sartu erabiltzaile-izen bat</string>
-  <string name="no_registered_name_for_account">Ez dago izen erregistraturik.</string>
-  <string name="username_available">Erabiltzaile-izena eskuragarri dago!</string>
-  <string name="register_name">Izen-zerrenda</string>
-  <string name="trying_to_register_name">Izena erregistratzen saiatzen</string>
+  <string name="register_name">Erabiltzaile izena erregistratzea</string>
   <string name="registered_username">Erregistratutako erabiltzaile-izena</string>
   <string name="register_username">Erregistratu izen publikoa</string>
   <string name="register_recommended">gomendatzen da</string>
@@ -210,7 +193,6 @@
   <string name="revoke_device_wait_title">Itxaron mesedez...</string>
   <string name="revoke_device_wait_message">Deuseztatzeko gailua</string>
   <string name="rename_device_title">Aldatu izena gailu honi</string>
-  <string name="rename_device_message">Aukeratu izen berria zure Jami kontuan.</string>
   <string name="rename_device_button">Aldatu izena gailuari</string>
   <string name="account_rename_device_hint">Aukeratu gailuaren izen berria</string>
   <string name="account_device_this_indicator">Gailu hau</string>
@@ -218,6 +200,7 @@
   <!--Link a new device-->
   <string name="error_format_not_supported">Formatu hau ez da onartzen.</string>
   <string name="account_link_device_title">Estekatu gailu berria</string>
+  <string name="connect_device_scanqr">QR kodea eskaneatu</string>
   <string name="account_link_device_button">Konektatu</string>
   <!--Biometry-->
 </resources>

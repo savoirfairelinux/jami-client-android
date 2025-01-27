@@ -86,6 +86,8 @@
   <string name="hist_in_call">Příchozí hovor %1$s</string>
   <string name="hist_out_call">Odchozí hovor %1$s</string>
   <string name="action_call_accept">Přijmout hovor</string>
+  <string name="action_call_accept_audio">Přijmout se zvukem</string>
+  <string name="action_call_accept_video">Přijmout s obrazem</string>
   <string name="action_call_decline">Odmítnout</string>
   <string name="action_call_mic_mute">Ztlumit mikrofon</string>
   <string name="ab_action_speakerphone">Zapnout reproduktor</string>
@@ -173,9 +175,6 @@
   <string name="conversation_type_contact">Kontakt na Jami</string>
   <string name="conversation_type_private">Soukromý</string>
   <string name="conversation_type_group">Skupina</string>
-  <string name="conversation_contact_invited">%1$sbyl pozván</string>
-  <string name="conversation_contact_added">%1$sse připojil</string>
-  <string name="conversation_contact_left">%1$sodešel</string>
   <string name="conversation_search_hint">Najít konverzaci</string>
   <string name="today">Dnes</string>
   <string name="yesterday">Včera</string>

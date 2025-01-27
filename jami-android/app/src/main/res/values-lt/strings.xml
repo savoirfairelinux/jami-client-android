@@ -156,9 +156,6 @@
   <string name="conversation_type_contact">Jami adresatas</string>
   <string name="conversation_type_private">Privatus</string>
   <string name="conversation_type_group">Grupė</string>
-  <string name="conversation_contact_invited">%1$s buvo pakviesta(s)</string>
-  <string name="conversation_contact_added">%1$s prisijungė</string>
-  <string name="conversation_contact_left">%1$s išėjo</string>
   <string name="today">Šiandien</string>
   <string name="yesterday">Vakar</string>
   <!--Contacts-->

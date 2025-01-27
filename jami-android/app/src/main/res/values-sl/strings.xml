@@ -205,11 +205,6 @@
   <string name="conversation_type_contact">Stik Jami</string>
   <string name="conversation_type_private">Zasebno</string>
   <string name="conversation_type_group">Skupina</string>
-  <string name="conversation_contact_invited">%1$s je povabljen/a</string>
-  <string name="conversation_contact_added">%1$s se je pridružil/a</string>
-  <string name="conversation_contact_left">%1$s je odšel/a</string>
-  <string name="conversation_contact_blocked">%1$s je blokiran/a</string>
-  <string name="conversation_contact_unblocked">%1$s je odblokiran/a</string>
   <string name="conversation_search_hint">Poišči pogovor</string>
   <string name="audio_recorder_error">Programa za snemanje zvoka ni možno najti.</string>
   <string name="video_recorder_error">Programa za snemanje videa ni možno najti.</string>

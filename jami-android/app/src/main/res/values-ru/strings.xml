@@ -216,11 +216,11 @@
   <string name="conversation_type_contact">Контакт Jami</string>
   <string name="conversation_type_private">Приватная</string>
   <string name="conversation_type_group">Группа</string>
-  <string name="conversation_contact_invited">%1$s приглашен(а)</string>
-  <string name="conversation_contact_added">%1$s присоединяется</string>
-  <string name="conversation_contact_left">%1$s выходит</string>
-  <string name="conversation_contact_blocked">%1$s заблокирован(а)</string>
-  <string name="conversation_contact_unblocked">%1$s разблокирован(а)</string>
+  <string name="conversation_contact_invited">%1$sбыл(а) приглашен(а) присоединиться к беседе.</string>
+  <string name="conversation_contact_added">%1$sприсоединяется к беседе.</string>
+  <string name="conversation_contact_left">%1$sпокидает беседу.</string>
+  <string name="conversation_contact_blocked">%1$sбыл(а) заблокирован(а) для участия в беседе.</string>
+  <string name="conversation_contact_unblocked">%1$sбыл(а) разблокирован(а) для участия в беседе.</string>
   <string name="conversation_search_hint">Найти беседу</string>
   <string name="audio_recorder_error">Приложение для записи звука не найдено.</string>
   <string name="video_recorder_error">Приложение для записи видео не найдено.</string>

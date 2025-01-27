@@ -169,9 +169,6 @@
   <string name="conversation_preference_emoji">Elkarrizketaren emojia</string>
   <string name="conversation_type_contact">Jami kontaktua</string>
   <string name="conversation_type_private">Pribatua</string>
-  <string name="conversation_contact_invited">%1$s gonbidatu dute</string>
-  <string name="conversation_contact_added">%1$s bat egin da</string>
-  <string name="conversation_contact_left">%1$s ezkerrera</string>
   <string name="conversation_search_hint">Bilaketa elkarrizketa</string>
   <string name="today">Gaur egun</string>
   <string name="yesterday">Atzo</string>

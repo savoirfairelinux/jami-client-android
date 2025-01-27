@@ -214,11 +214,11 @@
   <string name="conversation_type_contact">Jami kontakt</string>
   <string name="conversation_type_private">Isiklik</string>
   <string name="conversation_type_group">Grupp</string>
-  <string name="conversation_contact_invited">%1$s sai kutse</string>
-  <string name="conversation_contact_added">%1$s liitus</string>
-  <string name="conversation_contact_left">%1$s lahkus</string>
-  <string name="conversation_contact_blocked">%1$s on blokeeritud</string>
-  <string name="conversation_contact_unblocked">%1$s blokeering on eemaldatud</string>
+  <string name="conversation_contact_invited">%1$s sai liitumiskutse selle vestlusega.</string>
+  <string name="conversation_contact_added">%1$s on liitunud vestlusega.</string>
+  <string name="conversation_contact_left">%1$s on lahkunud vestlusest.</string>
+  <string name="conversation_contact_blocked">%1$s osalemine siin vestluses on blokeeritud.</string>
+  <string name="conversation_contact_unblocked">%1$s blokeerimine on eemaldatud.</string>
   <string name="conversation_search_hint">Otsi vestlust</string>
   <string name="audio_recorder_error">Helisalvestuse rakendust ei leidu.</string>
   <string name="video_recorder_error">Videosalvestuse rakendust ei leidu.</string>
@@ -248,6 +248,7 @@
   <string name="help_server_enter">Sisesta haldusserveri URL.</string>
   <string name="help_pin_enter">Sisesta teise seadistatud Jami konto PIN-kood. Selle leiad, kui kasutad „Ekspordi Jami konto“ valikut.</string>
   <string name="pin_copied">PIN-kood on kopeeritud lõikelauale.</string>
+  <string name="copied_clipboard">Kopeeritud lõikelauale.</string>
   <string name="wizard_next">Järgmine</string>
   <string name="wizard_back">Tagasi</string>
   <string name="wizard_skip">Jäta vahele</string>

@@ -168,9 +168,6 @@
   <string name="conversation_preference_emoji">વાતચીત ઇમોજી</string>
   <string name="conversation_type_contact">જમી સંપર્ક</string>
   <string name="conversation_type_private">ખાનગી</string>
-  <string name="conversation_contact_invited">%1$s આમંત્રિત કરવામાં આવી હતી</string>
-  <string name="conversation_contact_added">%1$s જોડાયા</string>
-  <string name="conversation_contact_left">%1$s ડાબી</string>
   <string name="conversation_search_hint">શોધ વાતચીત</string>
   <string name="today">આજે</string>
   <string name="yesterday">ગઈકાલે</string>

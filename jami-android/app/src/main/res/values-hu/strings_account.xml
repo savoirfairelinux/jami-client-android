@@ -3,7 +3,7 @@
   <!--Strings related to account edition screen-->
   <string name="ic_delete_menu">Törlés</string>
   <string name="ic_advanced_menu">Haladó beállítások</string>
-  <string name="ic_blacklist_menu">Letiltott kapcsolattartók</string>
+  <string name="ic_blacklist_menu">Letiltott névjegyek</string>
   <!--Strings related to account creation-->
   <string name="account_selection">Fiók kijelölése</string>
   <string name="add_ring_account_title">Fiók hozzáadása</string>
@@ -11,7 +11,7 @@
   <string name="ring_account_default_name">Jami-fiók: %1$s</string>
   <string name="account_creation_error">Hiba történt a fiók létrehozásakor.</string>
   <string name="prompt_alias">Álnév</string>
-  <string name="prompt_hostname">Állomásnév</string>
+  <string name="prompt_hostname">Hosztnév</string>
   <string name="prompt_username">Felhasználónév</string>
   <string name="prompt_password">Jelszó</string>
   <string name="action_create">Fiók létrehozása</string>
@@ -24,7 +24,7 @@
   <string name="dialog_wait_update">Fiók frissítése</string>
   <string name="dialog_wait_update_details">Kérjük, várjon, amíg az új fiók frissít…</string>
   <string name="dialog_warn_ip2ip_account_title">Üres SIP-fiók létrehozása?</string>
-  <string name="dialog_warn_ip2ip_account_message">Egy üres SIP-fiók készítésére készül, érvényes állomásnév nélkül.
+  <string name="dialog_warn_ip2ip_account_message">Egy üres SIP-fiók készítésére készül, érvényes hosztnév nélkül.
         Csak közvetlen IP-hívásokat tud majd indítani és fogadni.
         A fiókját később is módosíthatja.</string>
   <string name="account_type_ip2ip">IP-fiók</string>
@@ -36,19 +36,19 @@
   <string name="account_delete_dialog_title">Fiók törlése?</string>
   <string name="account_delete_dialog_message">Ez a művelet nem vonható vissza.</string>
   <!--AccountManagementFragment-->
-  <string name="empty_account_list">Fiók nincs bejegyezve</string>
+  <string name="empty_account_list">Nincs fiók regisztrálva</string>
   <string name="normal_accounts_titles">Fiókok</string>
   <string name="normal_devices_titles">Összekapcsolt eszközök</string>
   <string name="account_device_revoke">Eszköz visszavonása</string>
   <string name="account_device_revocation_success_title">Sikeres</string>
-  <string name="account_device_revocation_success">Az eszköz most visszavonásra került.</string>
-  <string name="account_device_revocation_error_title">Eszköz visszavonásának hiba</string>
+  <string name="account_device_revocation_success">Az eszköz most visszavonásra került!</string>
+  <string name="account_device_revocation_error_title">Eszköz visszavonási hiba</string>
   <string name="account_device_revocation_wrong_password">Hibás jelszó.</string>
   <string name="account_device_revocation_unknown_device">Ismeretlen eszköz.</string>
   <string name="account_device_revocation_error_unknown">Ismeretlen hiba.</string>
   <string name="account_password_change">Jelszó megváltoztatása</string>
   <string name="account_password_set">Jelszó beállítása</string>
-  <string name="account_password_summary">Fiók jelszava kezelése.</string>
+  <string name="account_password_summary">Fiók jelszavának kezelése.</string>
   <string name="account_password_change_wait_message">Fiókjelszó megváltoztatása</string>
   <string name="account_biometric_disable">Biometrikus hitelesítés letiltása</string>
   <string name="account_biometric_set">Biometrikus hitelesítés engedélyezése</string>
@@ -56,18 +56,19 @@
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Általános</string>
   <string name="account_basic_category">Alapbeállítások</string>
-  <string name="account_alias_label">Fióknév</string>
-  <string name="account_hostname_label">Állomásnév</string>
+  <string name="account_alias_label">Megjelenítendő név</string>
+  <string name="account_hostname_label">Hosztnév</string>
   <string name="account_bootstrap_label">Rendszerindítás</string>
+  <string name="account_name_server_label">Kiszolgálói névszerver</string>
   <string name="account_username_label">Felhasználónév</string>
   <string name="account_password_label">Jelszó</string>
   <string name="account_optionnal_category">Választható beállítások</string>
   <string name="account_useragent_label">Felhasználói ügynök</string>
-  <string name="account_autoanswer_label">Önműködő hívásfogadása</string>
+  <string name="account_autoanswer_label">Automatikus hívásfogadás</string>
   <string name="account_rendezvous_label">Találkozási pont mód</string>
   <string name="account_rendezvous_summary">A találkozási pont módban a bejövő hívások hozzáadódnak egy konferenciaterembe.</string>
   <string name="account_upnp_label">UPnP engedélyezése</string>
-  <string name="account_proxy_field">Meghatalmazás</string>
+  <string name="account_proxy_field">Proxy</string>
   <!--Extension Details-->
   <string name="account_preferences_extension_tab">Bővítmények</string>
   <!--Audio Details-->
@@ -78,7 +79,7 @@
   <string name="account_ringtone_path_label">Csengőhang útvonal</string>
   <string name="account_ringtone_custom_label">Egyéni csengőhang használata</string>
   <string name="account_ringtone_title">Csengőhang kiválasztása</string>
-  <string name="account_ringtone_summary">Csengőhang kijelölése vagy saját kikeresse</string>
+  <string name="account_ringtone_summary">Csengőhang kijelölése vagy saját választása</string>
   <!--Video Details-->
   <string name="account_video_label">Videó</string>
   <string name="account_video_enable">Videó engedélyezése</string>
@@ -88,16 +89,16 @@
   <string name="account_read_receipts_label">Olvasási visszaigazolások küldése</string>
   <string name="account_read_receipts_summary">Küldjön és fogadjon nyugtákat, jelezve, hogy üzenet jelenik meg.</string>
   <string name="account_call_settings_title">Hívás beállítások</string>
-  <string name="account_dht_public_in_calls_label">Az ismeretlen kapcsolattartóktól érkező bejövő hívások engedélyezése</string>
-  <string name="account_registration_exp_label">Bejegyeztetés lejárata</string>
+  <string name="account_dht_public_in_calls_label">Az ismeretlen névjegyektől érkező bejövő hívások engedélyezése</string>
+  <string name="account_registration_exp_label">Regisztráció lejárata</string>
   <string name="account_local_interface_label">Helyi csatoló</string>
-  <string name="account_local_port_label">Helyi kikötő</string>
+  <string name="account_local_port_label">Helyi portszám</string>
   <string name="account_stun_enable_label">STUN használata</string>
   <string name="account_stun_server_label">STUN-kiszolgáló</string>
   <string name="account_accept_files">A bejövő fájlok automatikus elfogadása</string>
   <string name="account_conversation_settings_title">Beszélgetés beállításai</string>
   <string name="account_accept_files_max_size">Az automatikus elfogadás legnagyobb fájlmérete</string>
-  <string name="account_accept_files_never">Soha sem fogadja el automatikusan</string>
+  <string name="account_accept_files_never">Soha ne fogadja el automatikusan</string>
   <string name="account_accept_files_always">Mindig fogadja el automatikusan</string>
   <string name="size_mb">%1$d MB</string>
   <string name="account_turn_enable_label">TURN használata</string>
@@ -107,15 +108,17 @@
   <string name="account_published_same_as_local_label">Helyiként közzétéve</string>
   <string name="account_published_port_label">Közzétett kikötő</string>
   <string name="account_published_address_label">Nyilvános cím</string>
+  <string name="account_connectivity_label">Közvetlen egyenrangú kapcsolódás </string>
   <string name="disabled">Letiltva</string>
   <string name="enabled">Engedélyezve</string>
+  <string name="default_value">Alapértelmezett</string>
   <string name="account_proxy_label">DHT-meghatalmazás</string>
   <string name="account_proxy_enable_label">DHT-meghatalmazás használata</string>
   <string name="account_proxy_list_enable_label">DHT-meghatalmazás listának használata</string>
   <string name="account_proxy_server_label">DHT-meghatalmazás-cím</string>
   <string name="account_proxy_server_list_label">DHT-meghatalmazáslista URL-címe</string>
   <string name="account_proxy_server_used">Használata: %1$s</string>
-  <string name="account_sip_proxy_label">Meghatalmazás</string>
+  <string name="account_sip_proxy_label">Proxy</string>
   <string name="account_peer_discovery_label">Helyi partner felderítése</string>
   <string name="account_peer_discovery_enable_label">Helyi partner felderítése engedélyezése</string>
   <string name="account_peer_discovery_enable_summary">Csatlakozás más DHT-csomópontokhoz, amelyek a helyi hálózaton hirdetnek</string>
@@ -135,7 +138,7 @@
   <string name="account_tls_private_key_file_label">Titkos kulcs fájlja</string>
   <string name="account_tls_password_label">Titkos kulcs jelszava</string>
   <string name="account_tls_method_label">TLS eljárás</string>
-  <string name="account_tls_ciphers_label">TLS kódolások</string>
+  <string name="account_tls_ciphers_label">TLS-kódolások</string>
   <string name="account_tls_server_name_label">Kiszolgálónév</string>
   <string name="account_tls_verify_server_label">Kiszolgáló ellenőrzése</string>
   <string name="account_tls_verify_client_label">Ügyfél ellenőrzése</string>
@@ -143,7 +146,7 @@
   <string name="account_tls_negotiation_timeout_sec">Időtúllépés az egyeztetésnél (másodperc)</string>
   <string name="account_rtp_max_port">Legfeljebb</string>
   <string name="account_rtp_min_port">Legalább</string>
-  <string name="account_rtp_port_range">Hang RTP-kikötőtartomány</string>
+  <string name="account_rtp_port_range">Hang RTP-kikötő tartomány</string>
   <!--restore/backup-->
   <string name="account_new_device_password">Adja meg a főjelszót a fiók feloldásához</string>
   <string name="error_password_char_count">Legalább 6 karakter</string>
@@ -167,7 +170,7 @@
   <string name="sip_account">SIP-fiók</string>
   <string name="ring_account_identity">Személyazonosság</string>
   <string name="account_migration_title_dialog">Fiók áttelepítése</string>
-  <string name="account_migration_message_dialog">A fiókjait frissíteni kell. Szeretne a fiókkezelési lapra ugrani a művelet elvégzéséhez?</string>
+  <string name="account_migration_message_dialog">A fiókjait frissíteni kell. Szeretne a Fiókkezelési lapra ugrani a művelet elvégzéséhez?</string>
   <string name="account_update_needed">Frissítés szükséges</string>
   <string name="account_cannot_be_found_title">Fiókhiba</string>
   <string name="account_cannot_be_found_message">Nem található fiók a Jami hálózaton. Győződjön meg arról, hogy a Jami-re exportálták egy meglévő eszközről, és hogy a megadott hitelesítő adatok helyesek.</string>
@@ -176,12 +179,12 @@
   <string name="account_no_network_title">Hálózati hiba</string>
   <string name="account_no_network_message">Kapcsolódási hiba történt a Jami-fióknak az elosztott hálózathoz való hozzáadása közben. Ellenőrizze az eszköz csatlakoztatását.</string>
   <string name="account_device_added_title">Fiókeszköz hozzáadva</string>
-  <string name="account_device_added_message">Jami-fiók sikeresen beállítva ezen az eszközön.</string>
+  <string name="account_device_added_message">A Jami-fiók beállítása sikerült az eszközön.</string>
   <string name="account_device_updated_title">A fiókeszköz frissítve</string>
-  <string name="account_device_updated_message">Jami-fiók sikeresen frissítve.</string>
+  <string name="account_device_updated_message">A Jami-fiók frissítése sikerült.</string>
   <string name="account_cannot_be_updated_message">Hiba történt a fiók frissítése közben. Kérjük, ellenőrizze a fiók jelszavát.</string>
   <string name="account_sip_success_title">SIP-fiók regisztrálva</string>
-  <string name="account_sip_success_message">SIP-fiók sikeresen regisztrálva.</string>
+  <string name="account_sip_success_message">A SIP-fiók regisztrációja sikerült.</string>
   <string name="account_sip_register_anyway">Regisztráció mindenképp</string>
   <!--TV-->
   <string name="account_tv_settings_header">Fiókbeállítások</string>
@@ -218,11 +221,11 @@
   <string name="account_enter_servername">Kiszolgáló megadása</string>
   <!--Name registration-->
   <string name="error_username_empty">Felhasználónév megadása</string>
-  <string name="no_registered_name_for_account">Nincs bejegyzett név</string>
+  <string name="no_registered_name_for_account">Nincs bejegyzett felhasználónév</string>
   <string name="username_available">A felhasználónév elérhető.</string>
-  <string name="register_name">Név bejegyzése</string>
-  <string name="trying_to_register_name">A név regisztrációjának megkísérlése</string>
-  <string name="registered_username">Felhasználónév regisztrálva</string>
+  <string name="register_name">Felhasználónév bejegyeztetése</string>
+  <string name="trying_to_register_name">Felhasználónév bejegyzésének kísérlete</string>
+  <string name="registered_username">Bejegyzett felhasználónév</string>
   <string name="register_username">Nyilvános felhasználónév bejegyeztetése</string>
   <string name="register_recommended">Ajánlott</string>
   <string name="username_already_taken">A felhasználónév már foglalt</string>
@@ -247,11 +250,11 @@
   <string name="account_revoke_device_hint">Jelszó megadása megerősítéshez</string>
   <string name="enter_password">Jelszó megadása</string>
   <string name="revoke_device_title">Eszköz visszavonása</string>
-  <string name="revoke_device_message">Biztosan meg szeretne visszavonni a(z) %1$s eszközt?</string>
+  <string name="revoke_device_message">Szeretne visszavonni a(z) %1$s-eszközt?</string>
   <string name="revoke_device_wait_title">Kérjük, várjon…</string>
   <string name="revoke_device_wait_message">Eszköz visszavonása</string>
   <string name="rename_device_title">Eszköz átnevezése</string>
-  <string name="rename_device_message">Válasszon egy új nevet, amely azonosítja ezt az eszközt a Jami-fiókjában</string>
+  <string name="rename_device_message">Írja be az eszköz nevét az eszköz azonosításához a Jami-fiókjában</string>
   <string name="rename_device_button">Eszköz átnevezése</string>
   <string name="account_rename_device_hint">Új eszköznév kiválasztása</string>
   <string name="account_device_name_empty">Az eszköznév nem lehet üres.</string>
@@ -270,12 +273,12 @@
   <string name="account_link_device_info">Válassza az „Új eszköz összekapcsolása” lehetőséget a másik Jami alkalmazásban a QR- vagy PIN-kód megjelenítéséhez</string>
   <string name="account_generate_export_device">A másik eszközön</string>
   <string name="account_generate_export_info">Telepítse és indítsa el a Jami alkalmazást, válassza az „Importálás másik eszközről” lehetőséget, és olvassa be a QR-kódot.</string>
-  <string name="content_description_qr_generated">QR-kód</string>
+  <string name="content_description_qr_generated">Fiók QR-kódja</string>
   <string name="account_generate_export_invalid">A PIN-kód már nem érvényes.\nAdja meg a jelszót, és hozzon létre egy másikat az új eszköz összekapcsolásához.</string>
   <string name="account_generate_export_invalid_two">A PIN-kód már nem érvényes.\nAz új eszköz összekapcsolásához hozzon létre egy másikat.</string>
   <string name="help_pin_info">Adja meg, ha a fiók jelszóval titkosított</string>
   <string name="connect_device_scanqr">QR-kód beolvasása</string>
-  <string name="connect_device_enterPIN">Vagy PIN-kód megadása</string>
+  <string name="connect_device_enterPIN">vagy PIN-kód megadása</string>
   <string name="account_link_device_button">Kapcsolódás</string>
   <!--Biometry-->
   <string name="account_biometry_auth_title">Jami-fiók feloldása</string>

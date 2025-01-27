@@ -214,11 +214,11 @@
   <string name="conversation_type_contact">Kontakt Jami</string>
   <string name="conversation_type_private">Privat</string>
   <string name="conversation_type_group">Grup</string>
-  <string name="conversation_contact_invited">U ftua %1$s</string>
-  <string name="conversation_contact_added">%1$s erdhi</string>
-  <string name="conversation_contact_left">%1$s iku</string>
-  <string name="conversation_contact_blocked">%1$s u bllokua</string>
-  <string name="conversation_contact_unblocked">%1$s u zhbllokua</string>
+  <string name="conversation_contact_invited">%1$s u ftua të marrë pjesë në bisedë.</string>
+  <string name="conversation_contact_added">%1$s erdhi te biseda.</string>
+  <string name="conversation_contact_left">%1$s e braktisi bisedën.</string>
+  <string name="conversation_contact_blocked">%1$s u bllokua prej bisede.</string>
+  <string name="conversation_contact_unblocked">%1$s u zhbllokua prej bisede.</string>
   <string name="conversation_search_hint">Kërkoni bisedë</string>
   <string name="audio_recorder_error">S’u gjet aplikacion incizimi audio.</string>
   <string name="video_recorder_error">S’u gjet aplikacion regjistrimi video.</string>
@@ -248,6 +248,7 @@
   <string name="help_server_enter">Jepni URL-në e shërbyesit të administrimeve.</string>
   <string name="help_pin_enter">Jepni PIN-in prej një tjetër llogarie Jami të formësuar. Që të keni PIN-in, përdorni veçorinë “Eksportoni llogari Jami”.</string>
   <string name="pin_copied">Kodi PIN u kopjua në të papastër.</string>
+  <string name="copied_clipboard">U kopjua në të papastër.</string>
   <string name="wizard_next">Pasuesi</string>
   <string name="wizard_back">Mbrapsht</string>
   <string name="wizard_skip">Anashkaloje</string>

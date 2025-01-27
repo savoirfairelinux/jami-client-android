@@ -168,9 +168,6 @@
   <string name="conversation_preference_emoji">Samtal emoji</string>
   <string name="conversation_type_contact">Jami kontakt</string>
   <string name="conversation_type_private">Privat</string>
-  <string name="conversation_contact_invited">%1$s vart invitert</string>
-  <string name="conversation_contact_added">%1$s er tilslutte</string>
-  <string name="conversation_contact_left">%1$s er til venstre</string>
   <string name="conversation_search_hint">Søk samtale</string>
   <string name="today">I dag</string>
   <string name="yesterday">I går</string>

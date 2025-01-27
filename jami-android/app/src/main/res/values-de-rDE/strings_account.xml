@@ -16,17 +16,22 @@ Sie können Ihr Konto später bearbeiten</string>
   <string name="account_device_revocation_error_title">Gerätefehler rückgängig machen</string>
   <string name="account_device_revocation_wrong_password">Falsches Passwort.</string>
   <!--Basic Details-->
+  <string name="account_name_server_label">Name-Server</string>
   <!--Extension Details-->
   <string name="account_preferences_extension_tab">Erweiterungen</string>
   <!--Audio Details-->
   <!--Video Details-->
   <!--Advanced Details-->
+  <string name="account_stun_enable_label">STUN benutzen</string>
+  <string name="account_connectivity_label">Peer-to-Peer-Konnektivität</string>
+  <string name="default_value">Standard</string>
   <string name="account_proxy_list_enable_label">DHT-Proxyliste verwenden</string>
   <string name="account_proxy_server_used">Verwendet: %1$s</string>
   <!--Security Details-->
   <!--SRTP Details-->
   <!--SIP-->
   <!--TLS Details-->
+  <string name="account_tls_password_label">Kennwort für privaten Schlüssel</string>
   <!--restore/backup-->
   <string name="account_export_end_decryption_message">Falsches Passwort. Bitte versuchen Sie es erneut mit dem richtigen Passwort.</string>
   <string name="account_export_end_network_message">Beim Exportieren des Kontos ist ein Netzwerkfehler aufgetreten. Überprüfen Sie Ihre Konnektivität.</string>
@@ -46,24 +51,20 @@ Sie können Ihr Konto später bearbeiten</string>
   <string name="account_sip_success_title">SIP-Konto registriert</string>
   <string name="account_sip_success_message">SIP-Konto erfolgreich registriert.</string>
   <!--TV-->
-  <string name="account_link_export_info">Um dieses Konto auf anderen Geräten verwenden zu können, müssen Sie es zunächst auf Jami verfügbar machen. Dadurch wird ein PIN-Code generiert, den Sie auf dem neuen Gerät eingeben müssen, um das Konto einzurichten. Die PIN läuft in 10 Minuten ab.</string>
-  <string name="account_end_export_infos">Ihre PIN lautet:\n\n%%\n\nUm den Vorgang abzuschließen, müssen Sie Jami auf dem neuen Gerät öffnen. Erstellen Sie ein neues Konto mit „Dieses Gerät mit einem Konto verknüpfen“. Die PIN läuft in 10 Minuten ab.</string>
-  <string name="account_link_export_info_light">Um dieses Konto auf anderen Geräten verwenden zu können, müssen Sie es zunächst auf Jami verfügbar machen. Dadurch wird ein PIN-Code generiert, den Sie auf dem neuen Gerät eingeben müssen, um das Konto einzurichten. Die PIN läuft in 10 Minuten ab.</string>
+  <string name="account_link_prompt_pin">PIN-Code eingeben</string>
   <string name="account_connect_server">Verbindung zum JAMS-Server herstellen</string>
   <string name="account_enter_username">Benutzernamen eingeben</string>
   <string name="account_enter_servername">Server eingeben</string>
   <!--Name registration-->
+  <string name="register_name">Benutzernamen registrieren</string>
   <!--Create account-->
   <string name="account_sip_cannot_be_registered">Beim Registrieren des SIP-Kontos ist ein Fehler aufgetreten.</string>
   <!--Edit profile-->
   <string name="account_edit_profile">Profil bearbeiten</string>
   <!--Devices-->
-  <string name="revoke_device_message">Möchten Sie wirklich %1$s widerrufen?</string>
   <string name="account_device_name_empty">Der Gerätename darf nicht leer sein.</string>
   <!--Link a new device-->
-  <string name="account_link_device_info">Wählen Sie in der anderen Jami-App „Neues Gerät verknüpfen“, um den QR-Code oder die PIN anzuzeigen</string>
   <string name="account_generate_export_info">Installieren und starten Sie Jami, wählen Sie „Von einem anderen Gerät importieren“ und scannen Sie den QR-Code.</string>
-  <string name="account_generate_export_invalid">Die PIN ist nicht mehr gültig.\nGeben Sie das Passwort ein und generieren Sie ein neues, um das neue Gerät zu verknüpfen.</string>
-  <string name="account_generate_export_invalid_two">Die PIN ist nicht mehr gültig.\nGenerieren Sie eine andere, um das neue Gerät zu verknüpfen.</string>
+  <string name="connect_device_scanqr">QR-Code scannen</string>
   <!--Biometry-->
 </resources>

@@ -214,11 +214,11 @@
   <string name="conversation_type_contact">Jami yhteystieto</string>
   <string name="conversation_type_private">Yksityinen</string>
   <string name="conversation_type_group">Ryhmä</string>
-  <string name="conversation_contact_invited">%1$s kutsuttiin</string>
-  <string name="conversation_contact_added">%1$s liittyi</string>
-  <string name="conversation_contact_left">%1$s jäljellä</string>
-  <string name="conversation_contact_blocked">%1$s estettiin</string>
-  <string name="conversation_contact_unblocked">%1$s esto vapautettiin</string>
+  <string name="conversation_contact_invited">%1$s kutsuttiin keskusteluun.</string>
+  <string name="conversation_contact_added">%1$s liittyi keskusteluun.</string>
+  <string name="conversation_contact_left">%1$s poistui keskustelusta.</string>
+  <string name="conversation_contact_blocked">%1$s estettiin keskustelusta.</string>
+  <string name="conversation_contact_unblocked">%1$s keskustelun esto poistettiin.</string>
   <string name="conversation_search_hint">Hae keskustelua</string>
   <string name="audio_recorder_error">Audion tallennussovellusta ei löytynyt.</string>
   <string name="video_recorder_error">Videon tallennussovellusta ei löytynyt.</string>
@@ -248,6 +248,7 @@
   <string name="help_server_enter">Anna hallintapalvelimen URL.</string>
   <string name="help_pin_enter">Anna määritetyn Jami-tilin PIN-koodi. Käytä \"Vie Jami-tili\" ominaisuutta saadaksesi PIN-koodin.</string>
   <string name="pin_copied">PIN-koodi kopioitu leikepöydälle.</string>
+  <string name="copied_clipboard">Kopioitu leikepöydälle</string>
   <string name="wizard_next">Seuraava</string>
   <string name="wizard_back">Takaisin</string>
   <string name="wizard_skip">Ohita</string>

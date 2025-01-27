@@ -2,9 +2,11 @@
 <resources>
   <!--About-->
   <string name="section_license">Ліцензія</string>
+  <string name="sponsor_section">Jami — це вільне програмне забезпечення, яке розроблене й підтримується</string>
   <string name="copyright_section">Авторське право</string>
   <string name="contribute_section">Зробити внесок</string>
   <string name="version_section">Версія</string>
+  <string name="no_browser_app_installed">Не знайдено жодного браузера. Будь ласка, встановіть браузер, щоб переглянути цю сторінку.</string>
   <string name="website_chooser_title">Переглянути сайт за допомогою...</string>
   <string name="license">Це програмне забезпечення надається \"як є\", без будь-яких гарантій. Більш детально дивіться<u>GNU General Public License версію 3 чи новішу</u></string>
   <string name="description">Jami — це вільне програмне забезпечення для будь-якого звʼязку з повагою до свобод і приватності користувачів.</string>
@@ -176,9 +178,6 @@
   <string name="conversation_type_contact">Контакт Jami</string>
   <string name="conversation_type_private">Приватне</string>
   <string name="conversation_type_group">Група</string>
-  <string name="conversation_contact_invited">%1$s запрошений</string>
-  <string name="conversation_contact_added">%1$s приєднаний</string>
-  <string name="conversation_contact_left">%1$s залишився</string>
   <string name="conversation_search_hint">Пошук розмов</string>
   <string name="today">Сьогодні</string>
   <string name="yesterday">Учора</string>

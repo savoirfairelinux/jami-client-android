@@ -43,9 +43,9 @@
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Allmänt</string>
   <string name="account_basic_category">Grundläggande inställningar</string>
-  <string name="account_alias_label">Kontonamn</string>
   <string name="account_hostname_label">Värdnamn</string>
   <string name="account_bootstrap_label">Bootstrap</string>
+  <string name="account_name_server_label">Namnserver</string>
   <string name="account_username_label">Användarnamn</string>
   <string name="account_password_label">Lösenord</string>
   <string name="account_optionnal_category">Extra inställningar</string>
@@ -78,7 +78,6 @@
   <string name="account_local_interface_label">Lokalt gränssnitt</string>
   <string name="account_local_port_label">Lokal port</string>
   <string name="account_stun_enable_label">Använd STUN</string>
-  <string name="account_stun_server_label">STUN-server</string>
   <string name="account_accept_files">Acceptera inkommande filer automatiskt</string>
   <string name="account_conversation_settings_title">Konversations inställningar</string>
   <string name="account_accept_files_max_size">Maximal filstorlek att acceptera automatiskt</string>
@@ -94,6 +93,7 @@
   <string name="account_published_address_label">Publiserad adress</string>
   <string name="disabled">Behindrade</string>
   <string name="enabled">Aktiverad</string>
+  <string name="default_value">Standard</string>
   <string name="account_proxy_label">DHT proxy</string>
   <string name="account_proxy_enable_label">Använd DHT proxy</string>
   <string name="account_proxy_server_label">DHT proxyadress</string>
@@ -112,21 +112,9 @@
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Använd TLS-transport</string>
-  <string name="account_tls_port_label">TLS lyssningsport</string>
-  <string name="account_tls_certificate_list_label">Certifikatutfärdare</string>
-  <string name="account_tls_certificate_file_label">Certifikatfil</string>
-  <string name="account_tls_private_key_file_label">Privat nyckelfil</string>
-  <string name="account_tls_password_label">Privat nyckellösenord</string>
-  <string name="account_tls_method_label">TLS-metod</string>
-  <string name="account_tls_ciphers_label">TLS-chiffer</string>
-  <string name="account_tls_server_name_label">Servernamn</string>
-  <string name="account_tls_verify_server_label">Verifiera server</string>
-  <string name="account_tls_verify_client_label">Verifiera klient</string>
-  <string name="account_require_client_certificate_label">TLS kräver klientcertifikat</string>
-  <string name="account_tls_negotiation_timeout_sec">Tidsgräns för förhandling (sek)</string>
+  <string name="account_tls_password_label">Lösenord för privat nyckel</string>
   <string name="account_rtp_max_port">Maximum</string>
   <string name="account_rtp_min_port">Minimum</string>
-  <string name="account_rtp_port_range">Audio RTP portintervall</string>
   <!--restore/backup-->
   <string name="account_new_device_password">Ange huvudlösenordet för att låsa upp kontot</string>
   <string name="error_password_char_count">6 tecken minimum</string>
@@ -164,12 +152,10 @@
   <string name="account_link_device">Anslut från en annan enhet</string>
   <string name="account_link_button">Anslut från nätverk</string>
   <string name="account_link_archive_button">Anslut från säkerhetskopia</string>
-  <string name="account_link_prompt_pin">Ange PIN-kod</string>
   <string name="account_new_button">Skapa ett Jami-konto</string>
   <string name="account_link_export_button">Koppla en ny enhet</string>
   <string name="account_link_show_button">Visa %d fler anslutna enheter</string>
   <string name="account_link_hide_button">Dölj ansluten enhet</string>
-  <string name="account_start_export_button">Generera PIN-kod</string>
   <string name="account_end_export_button">stäng</string>
   <string name="account_export_title">Anslut konto till andra enheter </string>
   <string name="account_connect_server_button">Anslut till administrations server </string>
@@ -181,10 +167,7 @@
   <string name="account_enter_username">Ange användarnamn</string>
   <!--Name registration-->
   <string name="error_username_empty">Ange ett användarnamn</string>
-  <string name="no_registered_name_for_account">Inget registrerat namn</string>
-  <string name="username_available">Användarnamnet tillgängligt!</string>
-  <string name="register_name">Registrera namn</string>
-  <string name="trying_to_register_name">Försöker registrera namnet</string>
+  <string name="register_name">Registrera användarnamn</string>
   <string name="registered_username">Registrerat namn</string>
   <string name="register_username">Registrera offentligt användarnamn</string>
   <string name="register_recommended">Rekommendera</string>
@@ -211,7 +194,6 @@
   <string name="revoke_device_wait_title">Vänta...</string>
   <string name="revoke_device_wait_message">Återkallar enheten</string>
   <string name="rename_device_title">Byt namn på enheten</string>
-  <string name="rename_device_message">Välj ett nytt namn för att identifiera denna enhet på ditt Jami-konto</string>
   <string name="rename_device_button">Byt namn på enhet</string>
   <string name="account_rename_device_hint">Välj nytt enhetsnamn</string>
   <string name="account_device_this_indicator">Denna enhet</string>
@@ -219,6 +201,7 @@
   <!--Link a new device-->
   <string name="error_format_not_supported">Detta format saknar stöd.</string>
   <string name="account_link_device_title">Koppla en ny enhet</string>
+  <string name="connect_device_scanqr">Skanna QR-kod</string>
   <string name="account_link_device_button">Anslut</string>
   <!--Biometry-->
 </resources>

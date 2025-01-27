@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--Strings related to account edition screen-->
+  <!--Strings related to account creation-->
+  <string name="action_settings">සැකසුම්</string>
+  <!--Strings related to account deletion-->
+  <!--AccountManagementFragment-->
+  <!--Basic Details-->
+  <!--Extension Details-->
+  <!--Audio Details-->
+  <!--Video Details-->
+  <!--Advanced Details-->
+  <string name="default_value">පෙරනිමිය</string>
+  <!--Security Details-->
+  <!--SRTP Details-->
+  <!--SIP-->
+  <!--TLS Details-->
+  <!--restore/backup-->
+  <!--TV-->
+  <string name="tv_about_version">අනුවාදය</string>
+  <!--Name registration-->
+  <!--Create account-->
+  <!--Edit profile-->
+  <!--Devices-->
+  <!--Link a new device-->
+  <!--Biometry-->
+</resources>

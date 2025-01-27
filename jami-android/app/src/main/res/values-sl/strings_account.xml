@@ -48,9 +48,9 @@
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Splošno</string>
   <string name="account_basic_category">Osnovne nastavitve</string>
-  <string name="account_alias_label">Ime računa</string>
   <string name="account_hostname_label">Ime strežnika gostitelja</string>
   <string name="account_bootstrap_label">Začetni nalagalnik</string>
+  <string name="account_name_server_label">Imenski strežnik</string>
   <string name="account_username_label">Uporabniško ime</string>
   <string name="account_password_label">Geslo</string>
   <string name="account_optionnal_category">Izbirne nastavitve</string>
@@ -85,7 +85,6 @@
   <string name="account_local_interface_label">Lokalni vmesnik</string>
   <string name="account_local_port_label">Lokalna vrata</string>
   <string name="account_stun_enable_label">Uporabi STUN</string>
-  <string name="account_stun_server_label">Strežnik STUN</string>
   <string name="account_accept_files">Samodejni prejem dohodnih datotek</string>
   <string name="account_conversation_settings_title">Nastavitve pogovorov</string>
   <string name="account_accept_files_max_size">Največja dovoljena velikost za samodejno prejemanje</string>
@@ -101,6 +100,7 @@
   <string name="account_published_address_label">Objavljeni naslov</string>
   <string name="disabled">Onemogočeno</string>
   <string name="enabled">Omogočeno</string>
+  <string name="default_value">Privzeto</string>
   <string name="account_proxy_label">Posredniški strežnik DHT</string>
   <string name="account_proxy_enable_label">Uporabi posredniški strežnik DHT</string>
   <string name="account_proxy_list_enable_label">Uporabi seznam posredniških strežnikov DHT</string>
@@ -121,21 +121,9 @@
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Uporabi prenos TLS</string>
-  <string name="account_tls_port_label">Vrata poslušalnika TLS</string>
-  <string name="account_tls_certificate_list_label">Izdajatelji potrdila</string>
-  <string name="account_tls_certificate_file_label">Datoteka certifikata</string>
-  <string name="account_tls_private_key_file_label">Datoteka zasebnega ključa</string>
   <string name="account_tls_password_label">Geslo zasebnega ključa</string>
-  <string name="account_tls_method_label">Metoda TLS</string>
-  <string name="account_tls_ciphers_label">Šifrirniki TLS</string>
-  <string name="account_tls_server_name_label">Ime strežnika</string>
-  <string name="account_tls_verify_server_label">Preveri strežnik</string>
-  <string name="account_tls_verify_client_label">Preveri odjemalca</string>
-  <string name="account_require_client_certificate_label">TLS potrebuje certifikat odjemalca</string>
-  <string name="account_tls_negotiation_timeout_sec">Čas usklajevanja (v sekundah)</string>
   <string name="account_rtp_max_port">Največ</string>
   <string name="account_rtp_min_port">Najmanj</string>
-  <string name="account_rtp_port_range">Obseg vrat RTP</string>
   <!--restore/backup-->
   <string name="account_new_device_password">Za odklep računa, vnesite glavno geslo</string>
   <string name="error_password_char_count">potrebnih je vsaj 6 znakov</string>
@@ -176,12 +164,11 @@
   <string name="account_link_device">Poveži se z druge naprave</string>
   <string name="account_link_button">Poveži se iz omrežja</string>
   <string name="account_link_archive_button">Poveži se se iz varnostne kopije</string>
-  <string name="account_link_prompt_pin">Vnesite PIN</string>
+  <string name="account_link_prompt_pin">Vnesite kodo PIN</string>
   <string name="account_new_button">Ustvari račun Jami</string>
   <string name="account_link_export_button">Poveži novo napravo</string>
   <string name="account_link_show_button">Prikaži %d več povezanih naprav</string>
   <string name="account_link_hide_button">Skrij povezano napravo</string>
-  <string name="account_start_export_button">Ustvari PIN</string>
   <string name="account_end_export_button">zapri</string>
   <string name="account_export_title">Poveži račun z drugimi napravami</string>
   <string name="account_connect_server_button">Povezava na upravljalni strežnik</string>
@@ -193,10 +180,7 @@
   <string name="account_enter_username">Vnesite uporabniško ime</string>
   <!--Name registration-->
   <string name="error_username_empty">Vnesite uporabniško ime</string>
-  <string name="no_registered_name_for_account">Ni registriranega imena</string>
-  <string name="username_available">Uporabniško ime je na voljo!</string>
-  <string name="register_name">Registriraj ime</string>
-  <string name="trying_to_register_name">Poskus registracije imena</string>
+  <string name="register_name">Registriraj uporabniško ime</string>
   <string name="registered_username">Registrirano uporabniško ime</string>
   <string name="register_username">Registriraj javno uporabniško ime</string>
   <string name="register_recommended">Priporočeno</string>
@@ -223,27 +207,20 @@
   <string name="revoke_device_wait_title">Počakajte ...</string>
   <string name="revoke_device_wait_message">Odstranitev naprave</string>
   <string name="rename_device_title">Preimenuj to napravo</string>
-  <string name="rename_device_message">Izberite novo ime za identifikacijo te naprave v vašem računu Jami</string>
   <string name="rename_device_button">Preimenuj napravo</string>
   <string name="account_rename_device_hint">Izberite novo ime naprave</string>
   <string name="account_device_this_indicator">Ta naprava</string>
   <string name="account_disabled_indicator">onemogočeno</string>
   <!--Link a new device-->
-  <string name="account_link_prompt_pin_manually">Ročno vnesite PIN</string>
   <string name="qr_invalid">Ni overitvena koda QR Jami</string>
-  <string name="content_description_checkbox">Vaša koda QR je veljavna</string>
   <string name="error_format_not_supported">Format ni podprt.</string>
-  <string name="account_link_info">V novem programu Jami optično preberite QR-kodo ali ročno vnesite PIN.</string>
   <string name="account_link_device_title">Poveži novo napravo</string>
   <string name="account_link_password">Ta račun je šifriran z geslom, vnesite geslo, da tvorite kodo PIN.</string>
   <string name="account_link_generate_button">Tvori</string>
   <string name="account_link_time_valid">Koda PIN bo neveljavna: %1$s.</string>
-  <string name="account_link_device_info">Izberite \"Poveži novo napravo\" v drugem programu Jami, da prikažete QR-kodo ali PIN</string>
   <string name="account_generate_export_device">Na drugi napravi</string>
-  <string name="content_description_qr_generated">Vaša koda QR</string>
   <string name="help_pin_info">Izpolnite, če je račun zaščiten z geslom</string>
-  <string name="connect_device_scanqr">Optično preberi QR</string>
-  <string name="connect_device_enterPIN">Ali vnesite PIN</string>
+  <string name="connect_device_scanqr">Preberi QR-kodo</string>
   <string name="account_link_device_button">Poveži</string>
   <!--Biometry-->
   <string name="account_biometry_auth_title">Odkleni račun Jami</string>

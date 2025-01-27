@@ -213,11 +213,11 @@
   <string name="conversation_type_contact">Jami 联系人</string>
   <string name="conversation_type_private">私人</string>
   <string name="conversation_type_group">组</string>
-  <string name="conversation_contact_invited">%1$s 已被邀请</string>
-  <string name="conversation_contact_added">%1$s 已加入</string>
-  <string name="conversation_contact_left">%1$s 已离开</string>
-  <string name="conversation_contact_blocked">%1$s被封锁了</string>
-  <string name="conversation_contact_unblocked">%1$s已解除封锁</string>
+  <string name="conversation_contact_invited">%1$s被邀请加入对话。</string>
+  <string name="conversation_contact_added">%1$s已加入对话。</string>
+  <string name="conversation_contact_left">%1$s已退出对话。</string>
+  <string name="conversation_contact_blocked">%1$s被这个群组屏蔽。</string>
+  <string name="conversation_contact_unblocked">%1$s被这个群组解除屏蔽。</string>
   <string name="conversation_search_hint">搜索对话记录</string>
   <string name="audio_recorder_error">找不到录音机</string>
   <string name="video_recorder_error">找不到相机</string>
@@ -247,6 +247,7 @@
   <string name="help_server_enter">输入管理服务器的 URL。</string>
   <string name="help_pin_enter">从另一个配置的Jami帐户输入PIN。使用“导出Jami帐户”功能获取PIN。</string>
   <string name="pin_copied">PIN码已复制到剪贴板</string>
+  <string name="copied_clipboard">已复制到剪贴板。</string>
   <string name="wizard_next">下一步</string>
   <string name="wizard_back">上一步</string>
   <string name="wizard_skip">跳过</string>

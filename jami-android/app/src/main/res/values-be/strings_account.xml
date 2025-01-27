@@ -42,9 +42,9 @@
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Генеральны</string>
   <string name="account_basic_category">Асноўныя налады</string>
-  <string name="account_alias_label">Назва рахунку</string>
   <string name="account_hostname_label">Гасцінічнае імя</string>
   <string name="account_bootstrap_label">Падпрыемства</string>
+  <string name="account_name_server_label">Назва сервера</string>
   <string name="account_username_label">Назва карыстальніка</string>
   <string name="account_password_label">Пароль</string>
   <string name="account_optionnal_category">Варыянты налады</string>
@@ -76,8 +76,7 @@
   <string name="account_registration_exp_label">Рэгістрацыя заканчваецца</string>
   <string name="account_local_interface_label">Мясцовы інтэрфейс</string>
   <string name="account_local_port_label">Мясцовы порт</string>
-  <string name="account_stun_enable_label">Выкарыстоўвайце Stun</string>
-  <string name="account_stun_server_label">Стан сервер</string>
+  <string name="account_stun_enable_label">Выкарыстоўвайце STUN</string>
   <string name="account_accept_files">Адпраўляйце паступаючыя файлы аўтаматычна</string>
   <string name="account_conversation_settings_title">Налады размовы</string>
   <string name="account_accept_files_max_size">Максімальны памер файла для аўтаматычнага прыняцця</string>
@@ -93,6 +92,7 @@
   <string name="account_published_address_label">Адрас, выдадзены</string>
   <string name="disabled">З інваліднасцю</string>
   <string name="enabled">Уключана</string>
+  <string name="default_value">Па змаўчанні</string>
   <string name="account_proxy_label">DHT праксі</string>
   <string name="account_proxy_enable_label">Выкарыстоўвайце DHT пракси</string>
   <string name="account_proxy_server_label">Адрас DHT праксі</string>
@@ -111,21 +111,9 @@
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Выкарыстоўвайце TLS Transport</string>
-  <string name="account_tls_port_label">Падключэнне TLS</string>
-  <string name="account_tls_certificate_list_label">Улады па сертыфікацыі</string>
-  <string name="account_tls_certificate_file_label">Файл сертыфікатаў</string>
-  <string name="account_tls_private_key_file_label">Прыватны ключ файл</string>
   <string name="account_tls_password_label">Пароль прыватнага ключа</string>
-  <string name="account_tls_method_label">Метад TLS</string>
-  <string name="account_tls_ciphers_label">Цыфры TLS</string>
-  <string name="account_tls_server_name_label">Назва сервера</string>
-  <string name="account_tls_verify_server_label">Праверка сервера</string>
-  <string name="account_tls_verify_client_label">Праверка кліента</string>
-  <string name="account_require_client_certificate_label">TLS патрабуе сертыфіката кліента</string>
-  <string name="account_tls_negotiation_timeout_sec">Перамоўны тэрмін (сек)</string>
   <string name="account_rtp_max_port">Максімальная</string>
   <string name="account_rtp_min_port">Мінімальная</string>
-  <string name="account_rtp_port_range">Аўдыё RTP порт дыяпазон</string>
   <!--restore/backup-->
   <string name="account_new_device_password">Увядзіце галоўны пароль для адключэння рахунку</string>
   <string name="error_password_char_count">Мінімум 6 знакаў</string>
@@ -163,12 +151,10 @@
   <string name="account_link_device">Падключыць з іншага прылады</string>
   <string name="account_link_button">Палучайцеся з сеткі</string>
   <string name="account_link_archive_button">Падключыце з рэзервовай сістэмы</string>
-  <string name="account_link_prompt_pin">Увядзіце PIN</string>
   <string name="account_new_button">Стварэнне ўліковага запісу Jami</string>
   <string name="account_link_export_button">Злучыць новае прылада</string>
   <string name="account_link_show_button">Паказаць %d больш звязаных прылад</string>
   <string name="account_link_hide_button">Схаваць злучанае прылада</string>
-  <string name="account_start_export_button">Падключыць PIN</string>
   <string name="account_end_export_button">блізка</string>
   <string name="account_export_title">Уліковы запіс да іншых прылад</string>
   <string name="account_connect_server_button">Падключэнне да сервера кіравання</string>
@@ -179,10 +165,7 @@
   <string name="account_connect_prompt_username">Назва карыстальніка</string>
   <!--Name registration-->
   <string name="error_username_empty">Увядзіце імя карыстальніка</string>
-  <string name="no_registered_name_for_account">Ніводнага рэгістраванага імя</string>
-  <string name="username_available">Назва карыстальніка даступная!</string>
-  <string name="register_name">Назва рэгістра</string>
-  <string name="trying_to_register_name">Спрабую зарэгістраваць імя</string>
+  <string name="register_name">Запіс імя карыстальніка</string>
   <string name="registered_username">Рэгістраваная імя карыстальніка</string>
   <string name="register_username">Запіс публічнага карыстальніка</string>
   <string name="register_recommended">Рэкамендуецца</string>
@@ -209,13 +192,13 @@
   <string name="revoke_device_wait_title">Калі ласка, пачакайце...</string>
   <string name="revoke_device_wait_message">Прылада адклікання</string>
   <string name="rename_device_title">Перайменне гэтага прылады</string>
-  <string name="rename_device_message">Выберыце новае імя для ідэнтыфікацыі гэтага прылады ў вашым рахунку Jami</string>
   <string name="rename_device_button">Пераназванае прылада</string>
   <string name="account_rename_device_hint">Выберыце імя прылады</string>
   <string name="account_device_this_indicator">Гэта прылада</string>
   <string name="account_disabled_indicator">інвалід</string>
   <!--Link a new device-->
   <string name="account_link_device_title">Злучыць новае прылада</string>
+  <string name="connect_device_scanqr">Сканаваць QR-код</string>
   <string name="account_link_device_button">Злучэнне</string>
   <!--Biometry-->
 </resources>

@@ -72,8 +72,6 @@
   <string name="clip_message">Nachrichteninhalt</string>
   <string name="conversation_type_private">Privat</string>
   <string name="conversation_type_group">Gruppe</string>
-  <string name="conversation_contact_blocked">%1$s wurde blockiert</string>
-  <string name="conversation_contact_unblocked">Blockierung von %1$swurde aufgehoben</string>
   <string name="taking_picture_error">Beim Aufnehmen des Bildes ist ein Fehler aufgetreten.</string>
   <string name="find_picture_error">Beim Suchen des Bildes ist ein Fehler aufgetreten.</string>
   <string name="load_ringtone_error">Beim Laden des Klingeltons ist ein Fehler aufgetreten.</string>
