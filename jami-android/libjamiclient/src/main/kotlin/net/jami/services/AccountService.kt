@@ -178,6 +178,7 @@ class AccountService(
     }
     data class RegisteredName(
         val accountId: String,
+        val query: String,
         val name: String,
         val address: String? = null,
         val state: LookupState = LookupState.Success
@@ -918,9 +919,9 @@ class AccountService(
 
     fun findRegistrationByName(account: String, nameserver: String, name: String): Single<RegisteredName> =
         if (name.isEmpty())
-            Single.just(RegisteredName(account, name))
+            Single.just(RegisteredName(account, name, name))
         else registeredNames
-            .filter { r: RegisteredName -> account == r.accountId && name == r.name }
+            .filter { r: RegisteredName -> account == r.accountId && name == r.query }
             .firstOrError()
             .doOnSubscribe {
                 mExecutor.execute { JamiService.lookupName(account, nameserver, name) }
@@ -931,7 +932,7 @@ class AccountService(
         if (address.isEmpty())
             Single.error(IllegalArgumentException())
         else registeredNames
-            .filter { r: RegisteredName -> account == r.accountId && address == r.address }
+            .filter { r: RegisteredName -> account == r.accountId && address == r.query }
             .firstOrError()
             .doOnSubscribe {
                 mExecutor.execute { JamiService.lookupAddress(account, nameserver, address) }
@@ -1246,9 +1247,9 @@ class AccountService(
         }
     }
 
-    fun registeredNameFound(accountId: String, state: Int, address: String, name: String) {
+    fun registeredNameFound(accountId: String, query: String, state: Int, address: String, name: String) {
         try {
-            registeredNameSubject.onNext(RegisteredName(accountId, name, address, LookupState.fromInt(state)))
+            registeredNameSubject.onNext(RegisteredName(accountId, query, name, address, LookupState.fromInt(state)))
         } catch (e: Exception) {
             Log.w(TAG, "registeredNameFound exception", e)
         }

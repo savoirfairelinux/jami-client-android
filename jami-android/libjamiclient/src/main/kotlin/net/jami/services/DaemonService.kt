@@ -167,8 +167,8 @@ class DaemonService(
             mAccountService.nameRegistrationEnded(accountId, state, name)
         }
 
-        override fun registeredNameFound(accountId: String, state: Int, address: String, name: String) {
-            mAccountService.registeredNameFound(accountId, state, address, name)
+        override fun registeredNameFound(accountId: String, query: String, state: Int, address: String, name: String) {
+            mAccountService.registeredNameFound(accountId, query, state, address, name)
         }
 
         override fun userSearchEnded(accountId: String, state: Int, query: String, results: VectMap) {
