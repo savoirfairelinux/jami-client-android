@@ -23,6 +23,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Base64
@@ -61,6 +62,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.model.Call
 import net.jami.model.Contact
 import net.jami.model.Conversation
+import net.jami.model.Profile
 import net.jami.model.Uri
 import net.jami.services.AccountService
 import net.jami.services.ContactService
@@ -68,6 +70,7 @@ import net.jami.services.ConversationFacade
 import net.jami.services.DeviceRuntimeService
 import net.jami.services.HardwareService
 import net.jami.services.NotificationService
+import net.jami.utils.VCardUtils
 import java.io.ByteArrayOutputStream
 import java.io.IOException
 import javax.inject.Inject
@@ -179,10 +182,66 @@ class ConversationDetailsActivity : AppCompatActivity(), ContactPickerFragment.O
                 } else if (vm.mode == Conversation.Mode.OneToOne
                     || vm.mode == Conversation.Mode.Legacy
                 ) {
-                    if(conversation.contact!!.isBlocked || conversation.isLegacy())
+                    if(conversation.contact!!.isBlocked || conversation.isLegacy()) {
                         binding.btnPanel.isVisible = false
-                    binding.conversationTitle.setOnClickListener(null)
-                    binding.conversationAvatar.setOnClickListener(null)
+                    } else {
+                        binding.conversationTitle.setOnClickListener {
+                            val dialogBinding = DialogSwarmTitleBinding
+                                    .inflate(LayoutInflater.from(this)).apply {
+                                titleTxt.setText(vm.conversationProfile.displayName)
+                                titleTxtBox.hint = getString(R.string.dialog_hint_title)
+                            }
+                            MaterialAlertDialogBuilder(this)
+                                .setView(dialogBinding.root)
+                                .setTitle(getString(R.string.dialog_title_contact))
+                                .setPositiveButton(R.string.rename_btn) { d, _ ->
+                                    val newName = dialogBinding.titleTxt.text.toString().trim()
+                                    if (newName.isNotEmpty()) {
+                                        conversation.contact?.let { contact ->
+                                            val id = Base64.encodeToString(contact.primaryNumber
+                                                .toByteArray(), Base64.NO_WRAP)
+                                            VCardUtils.saveToCustomProfiles(newName, null,
+                                                path!!.accountId, id, applicationContext.filesDir)
+                                            VCardUtils.getCustomProfile(path!!.accountId, id,
+                                                applicationContext.filesDir)
+                                                .let { (name, picture) ->
+                                                    val bitmapPicture = picture?.let {
+                                                        BitmapFactory.decodeByteArray(it, 0, it.size)
+                                                    }
+                                                    contact.customProfile = Single.just(Profile(name, bitmapPicture))
+                                                }
+                                        }
+                                    }
+                                    d.dismiss()
+                                }
+                                .setNegativeButton(android.R.string.cancel, null)
+                                .setNeutralButton(R.string.reset) { d, _ ->
+                                    conversation.contact?.let { contact ->
+                                        val id = Base64.encodeToString(contact.primaryNumber
+                                            .toByteArray(), Base64.NO_WRAP)
+                                        VCardUtils.resetCustomProfileName(path!!.accountId, id,
+                                            applicationContext.filesDir)
+                                        VCardUtils.getCustomProfile(path!!.accountId, id,
+                                            applicationContext.filesDir)
+                                            .let { (name, picture) ->
+                                                val bitmapPicture = picture?.let {
+                                                    BitmapFactory.decodeByteArray(it, 0, it.size)
+                                                }
+                                                contact.customProfile = Single.just(Profile(name, bitmapPicture))
+                                            }
+                                    }
+                                    d.dismiss()
+                                }
+                                .show()
+                        }
+
+                        binding.conversationAvatar.setOnClickListener {
+                            conversation.contact?.let { contact ->
+                                profileImageClicked(contact, false)
+                            }
+                        }
+                    }
+
                     binding.addMember.isVisible = false
                     val callUri = conversation.contact!!.uri
                     binding.audioCall.setOnClickListener { goToCallActivity(conversation, callUri, false) }
@@ -198,7 +257,11 @@ class ConversationDetailsActivity : AppCompatActivity(), ContactPickerFragment.O
                     binding.audioCall.setOnClickListener { goToCallActivity(conversation, conversation.uri, false) }
                     binding.videoCall.setOnClickListener { goToCallActivity(conversation, conversation.uri, true) }
 
-                    binding.conversationAvatar.setOnClickListener { profileImageClicked() }
+                    binding.conversationAvatar.setOnClickListener {
+                        conversation.contact?.let { contact ->
+                            profileImageClicked(contact, true)
+                        }
+                    }
                     binding.conversationTitle.setOnClickListener {
                         val dialogBinding = DialogSwarmTitleBinding.inflate(LayoutInflater.from(this)).apply {
                             titleTxt.setText(vm.conversationProfile.displayName)
@@ -249,7 +312,7 @@ class ConversationDetailsActivity : AppCompatActivity(), ContactPickerFragment.O
         binding.addMember.setOnClickListener { ContactPickerFragment(conversation.contacts).show(supportFragmentManager, ContactPickerFragment.TAG) }
     }
 
-    private fun profileImageClicked() {
+    private fun profileImageClicked(contact: Contact, isGroup: Boolean) {
         val view = DialogProfileBinding.inflate(LayoutInflater.from(this)).apply {
             camera.setOnClickListener {
                 if (mDeviceRuntimeService.hasVideoPermission())
@@ -290,11 +353,40 @@ class ConversationDetailsActivity : AppCompatActivity(), ContactPickerFragment.O
                     val os = ByteArrayOutputStream()
                     BitmapUtils.createScaledBitmap(source, 512)
                         .compress(Bitmap.CompressFormat.JPEG, 90, os)
-                    val map: MutableMap<String, String> = HashMap()
-                    map["avatar"] = Base64.encodeToString(os.toByteArray(), Base64.NO_WRAP)
-                    mAccountService.updateConversationInfo(path!!.accountId, path!!.conversationUri.host, map)
+                    val avatarBitmap = BitmapFactory.decodeByteArray(os.toByteArray(), 0, os.size())
+                    val avatarByteArray = os.toByteArray()
+                    val avatarBase64 = Base64.encodeToString(avatarByteArray, Base64.NO_WRAP)
+
+                    if (!isGroup) {
+                        val id = Base64.encodeToString(contact.primaryNumber.toByteArray(), Base64.NO_WRAP)
+                        VCardUtils.saveToCustomProfiles(null, avatarByteArray, path!!.accountId, id, applicationContext.filesDir)
+                        VCardUtils.getCustomProfile(path!!.accountId, id, applicationContext.filesDir)
+                            .let { (name, picture) ->
+                                val bitmapPicture = picture?.let { BitmapFactory.decodeByteArray(it, 0, it.size) }
+                                contact.customProfile = Single.just(Profile(name, bitmapPicture))
+                            }
+                    } else {
+                        // For group conversations, update the conversation info with Base64
+                        val map: MutableMap<String, String> = HashMap()
+                        map["avatar"] = avatarBase64
+                        mAccountService.updateConversationInfo(path!!.accountId, path!!.conversationUri.host, map)
+                    }
                 }
             }
+        .apply {
+            if (!isGroup) {
+                setNeutralButton(R.string.reset) { dialog, _ ->
+                    val id = Base64.encodeToString(contact.primaryNumber.toByteArray(), Base64.NO_WRAP)
+                    VCardUtils.resetCustomProfilePicture(path!!.accountId, id, applicationContext.filesDir)
+                    VCardUtils.getCustomProfile(path!!.accountId, id, applicationContext.filesDir)
+                        .let { (name, picture) ->
+                            val bitmapPicture = picture?.let { BitmapFactory.decodeByteArray(it, 0, it.size) }
+                            contact.customProfile = Single.just(Profile(name, bitmapPicture))
+                        }
+                    dialog.dismiss()
+                }
+            }
+        }
             .setOnDismissListener {
                 dialogDisposableBag.dispose()
                 mProfilePhoto = null

@@ -42,6 +42,7 @@ abstract class ContactService(
     protected abstract fun findContactBySipNumberFromSystem(number: String): Contact?
     protected abstract fun findContactByNumberFromSystem(number: String): Contact?
     abstract fun loadContactData(contact: Contact, accountId: String): Single<Profile>
+    abstract fun loadCustomProfileData(contact: Contact, accountId: String): Single<Profile>
 
     abstract fun saveContact(uri: String, profile: Profile)
     abstract fun deleteContact(uri: String)
@@ -67,7 +68,6 @@ abstract class ContactService(
     }
 
     fun observeContact(accountId: String, contact: Contact, withPresence: Boolean): Observable<ContactViewModel> {
-        // Log.w(TAG, "observeContact $accountId ${contact.uri} ${contact.isUser}")
         val uriString = contact.uri.rawRingId
         synchronized(contact) {
             val presenceUpdates = contact.presenceUpdates ?: run {
@@ -104,6 +104,10 @@ abstract class ContactService(
             } else {
                 if (contact.loadedProfile == null) {
                     contact.loadedProfile = loadContactData(contact, accountId).cache()
+                }
+
+                if (contact.customProfile == null) {
+                    contact.customProfile = loadCustomProfileData(contact, accountId).cache()
                 }
 
                 if (withPresence)

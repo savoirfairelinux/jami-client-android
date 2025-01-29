@@ -31,14 +31,31 @@ class Contact constructor(val uri: Uri, val isUser: Boolean = false) {
     var username: Single<String>? = null
     var presenceUpdates: Observable<PresenceStatus>? = null
     private var mContactPresenceEmitter: Emitter<PresenceStatus>? = null
-    private val profileSubject: Subject<Single<Profile>> = BehaviorSubject.create()
-    val profile: Observable<Profile> = profileSubject.switchMapSingle { single -> single }
+
+    private val loadedProfileSubject: BehaviorSubject<Single<Profile>> = BehaviorSubject.create()
+    private val customProfileSubject: BehaviorSubject<Single<Profile>> = BehaviorSubject.create()
+    private val profileSubject: BehaviorSubject<Profile> = BehaviorSubject.create()
+    val profile: Observable<Profile> = profileSubject
+
     var loadedProfile: Single<Profile>? = null
         set(profile) {
             field = profile
-            if  (profile != null)
-                profileSubject.onNext(profile)
+            profile?.let {loadedProfileSubject.onNext(it)}
         }
+
+    var customProfile: Single<Profile>? = null
+        set(profile) {
+            field = profile
+            profile?.let{customProfileSubject.onNext(it)}
+        }
+
+    init {
+        Observable.combineLatest(
+            loadedProfileSubject.switchMapSingle {it},
+            customProfileSubject.switchMapSingle {it},
+            ::mergeProfile
+        ).subscribe(profileSubject)
+    }
 
     var photoId: Long = 0
         private set
@@ -93,7 +110,8 @@ class Contact constructor(val uri: Uri, val isUser: Boolean = false) {
         mLookupKey = k
         loadedProfile = Single.just(Profile(displayName, null))
         photoId = photo_id
-        if (username == null && displayName.startsWith(Uri.RING_URI_SCHEME) || displayName.startsWith(Uri.JAMI_URI_SCHEME)) {
+        if (username == null && displayName.startsWith(Uri.RING_URI_SCHEME)
+            || displayName.startsWith(Uri.JAMI_URI_SCHEME)) {
             username = Single.just(displayName)
         }
     }
@@ -132,12 +150,10 @@ class Contact constructor(val uri: Uri, val isUser: Boolean = false) {
     val isBlocked: Boolean
         get() = status == Status.BLOCKED
 
-    fun setProfile(profile: Single<Profile>) {
-        loadedProfile = profile
-    }
-    fun setProfile(profile: Profile?) {
-        if (profile != null)
-            loadedProfile = Single.just(profile)
+    private fun mergeProfile(primary: Profile, custom: Profile): Profile {
+        val mergedName = custom.displayName ?: primary.displayName
+        val mergedPicture = custom.avatar ?: primary.avatar
+        return Profile(mergedName, mergedPicture)
     }
 
     companion object {
