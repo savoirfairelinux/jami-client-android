@@ -22,6 +22,7 @@ import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.Subject
 import java.util.*
+import net.jami.utils.Log
 
 class Contact constructor(val uri: Uri, val isUser: Boolean = false) {
     enum class Status {
@@ -31,14 +32,37 @@ class Contact constructor(val uri: Uri, val isUser: Boolean = false) {
     var username: Single<String>? = null
     var presenceUpdates: Observable<PresenceStatus>? = null
     private var mContactPresenceEmitter: Emitter<PresenceStatus>? = null
-    private val profileSubject: Subject<Single<Profile>> = BehaviorSubject.create()
-    val profile: Observable<Profile> = profileSubject.switchMapSingle { single -> single }
-    var loadedProfile: Single<Profile>? = null
+
+    private val loadedProfileSubject: BehaviorSubject<Profile> = BehaviorSubject.create()
+    private val customProfileSubject: BehaviorSubject<Profile> = BehaviorSubject.create()
+    private val profileSubject: BehaviorSubject<Profile> = BehaviorSubject.create()
+    val profile: Observable<Profile> = profileSubject
+
+    var loadedProfile: Single<Profile>?
+        get() = loadedProfileSubject.value?.let {Single.just(it)}
         set(profile) {
-            field = profile
-            if  (profile != null)
-                profileSubject.onNext(profile)
+            profile?.subscribe(
+                {loadedProfileSubject.onNext(it)},
+                {error -> Log.e(TAG,"Error setting loaded profile: ${error.message}")}
+            )
         }
+
+    var customProfile: Single<Profile>?
+        get() = customProfileSubject.value?.let {Single.just(it)}
+        set(profile) {
+            profile?.subscribe(
+                {customProfileSubject.onNext(it)},
+                {error -> Log.e(TAG,"Error setting custom profile: ${error.message}")}
+            )
+        }
+
+    init {
+        Observable.combineLatest(
+            loadedProfileSubject.distinctUntilChanged(),
+            customProfileSubject.distinctUntilChanged(),
+            ::mergeProfile
+        ).subscribe(profileSubject)
+    }
 
     var photoId: Long = 0
         private set
@@ -93,7 +117,8 @@ class Contact constructor(val uri: Uri, val isUser: Boolean = false) {
         mLookupKey = k
         loadedProfile = Single.just(Profile(displayName, null))
         photoId = photo_id
-        if (username == null && displayName.startsWith(Uri.RING_URI_SCHEME) || displayName.startsWith(Uri.JAMI_URI_SCHEME)) {
+        if (username == null && displayName.startsWith(Uri.RING_URI_SCHEME)
+            || displayName.startsWith(Uri.JAMI_URI_SCHEME)) {
             username = Single.just(displayName)
         }
     }
@@ -132,12 +157,25 @@ class Contact constructor(val uri: Uri, val isUser: Boolean = false) {
     val isBlocked: Boolean
         get() = status == Status.BLOCKED
 
-    fun setProfile(profile: Single<Profile>) {
-        loadedProfile = profile
+    private fun mergeProfile(primary: Profile, custom: Profile): Profile {
+        val mergedName = custom.displayName ?: primary.displayName
+        val mergedPicture = custom.avatar ?: primary.avatar
+        return Profile(mergedName, mergedPicture)
     }
-    fun setProfile(profile: Profile?) {
-        if (profile != null)
-            loadedProfile = Single.just(profile)
+
+    fun setProfile(profile: Single<Profile>) {
+        profile.subscribe(
+            { loadedProfileSubject.onNext(it) },
+            { error -> Log.e(TAG,"Error setting loaded profile: ${error.message}") }
+        )
+    }
+
+    fun setProfile(profile: Profile) {
+        loadedProfileSubject.onNext(profile)
+    }
+
+    fun setCustomProfile(profile: Profile) {
+        customProfileSubject.onNext(profile)
     }
 
     companion object {

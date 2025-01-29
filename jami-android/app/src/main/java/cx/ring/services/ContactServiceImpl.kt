@@ -23,6 +23,7 @@ import android.content.Context
 import android.content.OperationApplicationException
 import android.database.Cursor
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.RemoteException
@@ -431,6 +432,16 @@ class ContactServiceImpl(val mContext: Context, preferenceService: PreferencesSe
             if (contact.isFromSystem) loadSystemContactData(contact)
             else loadVCardContactData(contact, accountId)
         return profile.onErrorReturn { Profile.EMPTY_PROFILE }
+    }
+
+    override fun loadCustomProfileData(contact: Contact, accountId: String): Single<Profile> {
+        val id = Base64.encodeToString(contact.primaryNumber.toByteArray(), Base64.NO_WRAP)
+
+        return Single.fromCallable {
+            val (name, avatarByteArray) = VCardUtils.getCustomProfile(accountId, id, mContext.filesDir)
+            val avatarBitmap = avatarByteArray?.let { BitmapFactory.decodeByteArray(it, 0, it.size) }
+            Profile(name, avatarBitmap)
+        }.onErrorReturn { Profile.EMPTY_PROFILE }
     }
 
     private fun loadVCardContactData(contact: Contact, accountId: String): Single<Profile> =
