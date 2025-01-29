@@ -1103,7 +1103,7 @@ class AccountService(
         if (contact.isUser) {
             account.loadedProfile = vcard
         } else {
-            contact.setProfile(vcard)
+            contact.loadedProfile = vcard
         }
     }
 
@@ -1264,12 +1264,12 @@ class AccountService(
                         if (this.username == null)
                             this.username = Single.just(name)
                     }
-                    setProfile(Single.fromCallable {
+                    loadedProfile = Single.fromCallable {
                         val firstName = m["firstName"]
                         val lastName = m["lastName"]
                         val profilePicture = m["profilePicture"]
                         Profile("$firstName $lastName", mVCardService.base64ToBitmap(profilePicture))
-                    }.cache())
+                    }.cache()
                 }
             }
         })
