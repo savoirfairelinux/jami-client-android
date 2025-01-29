@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c35e8e9_334101c4",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/model/Contact.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2025-01-29T16:03:00Z",
+      "side": 1,
+      "message": "Single\u003cProfile\u003e",
+      "range": {
+        "startLine": 36,
+        "startChar": 54,
+        "endLine": 36,
+        "endChar": 61
+      },
+      "revId": "9e213cabc9db8f09b1425b6042151cc32050f871",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ea7d1e12_11146dc6",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/model/Contact.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2025-01-29T16:03:00Z",
+      "side": 1,
+      "message": "Single\u003cProfile\u003e",
+      "range": {
+        "startLine": 37,
+        "startChar": 54,
+        "endLine": 37,
+        "endChar": 61
+      },
+      "revId": "9e213cabc9db8f09b1425b6042151cc32050f871",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4e4d9d05_019203eb",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/model/Contact.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2025-01-29T16:03:00Z",
+      "side": 1,
+      "message": "avoid subscribing there",
+      "range": {
+        "startLine": 44,
+        "startChar": 12,
+        "endLine": 47,
+        "endChar": 13
+      },
+      "revId": "9e213cabc9db8f09b1425b6042151cc32050f871",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e522eb4c_52a4c996",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/model/Contact.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2025-01-29T16:03:00Z",
+      "side": 1,
+      "message": "avoid subscribing there",
+      "range": {
+        "startLine": 53,
+        "startChar": 12,
+        "endLine": 56,
+        "endChar": 13
+      },
+      "revId": "9e213cabc9db8f09b1425b6042151cc32050f871",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "18b1bc81_b4114a45",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/model/Contact.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2025-01-29T16:03:00Z",
+      "side": 1,
+      "message": ".switchMapSingle { single -\u003e single }",
+      "range": {
+        "startLine": 61,
+        "startChar": 33,
+        "endLine": 61,
+        "endChar": 55
+      },
+      "revId": "9e213cabc9db8f09b1425b6042151cc32050f871",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4de3a349_054465ad",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/model/Contact.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2025-01-29T16:03:00Z",
+      "side": 1,
+      "message": ".switchMapSingle { single -\u003e single }",
+      "range": {
+        "startLine": 62,
+        "startChar": 33,
+        "endLine": 62,
+        "endChar": 55
+      },
+      "revId": "9e213cabc9db8f09b1425b6042151cc32050f871",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db8f3216_b2c63ee6",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/model/Contact.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2025-01-29T16:03:00Z",
+      "side": 1,
+      "message": "avoid subscribing there",
+      "range": {
+        "startLine": 167,
+        "startChar": 8,
+        "endLine": 170,
+        "endChar": 9
+      },
+      "revId": "9e213cabc9db8f09b1425b6042151cc32050f871",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fd9fcabf_00f608e6",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/model/Contact.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2025-01-29T16:03:00Z",
+      "side": 1,
+      "message": "prevent setting the profile directly to avoid loading the profile when not needed",
+      "range": {
+        "startLine": 173,
+        "startChar": 4,
+        "endLine": 179,
+        "endChar": 5
+      },
+      "revId": "9e213cabc9db8f09b1425b6042151cc32050f871",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1651b630_46ba44e0",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/ContactService.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2025-01-29T16:03:00Z",
+      "side": 1,
+      "message": "cleanup",
+      "range": {
+        "startLine": 71,
+        "startChar": 16,
+        "endLine": 71,
+        "endChar": 22
+      },
+      "revId": "9e213cabc9db8f09b1425b6042151cc32050f871",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
