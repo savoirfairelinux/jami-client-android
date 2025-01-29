@@ -166,6 +166,33 @@ object VCardUtils {
         return data
     }
 
+    fun resetCustomProfileName(accountId: String, filename: String, filesDir: File) {
+        if (filename.isEmpty()) {
+            return
+        }
+
+        val customProfileDir = customPeerProfilePath(filesDir, accountId)
+        val customprofileName = File(customProfileDir, "$filename.txt")
+
+        if (customprofileName.exists()) {
+            customprofileName.delete()
+        }
+    }
+
+    fun resetCustomProfilePicture(accountId: String, filename: String, filesDir: File) {
+        if (filename.isEmpty()) {
+            return
+        }
+
+        val customProfileDir = customPeerProfilePath(filesDir, accountId)
+        val customprofilePicture = File(customProfileDir, filename)
+
+        if (customprofilePicture.exists()) {
+            customprofilePicture.delete()
+        }
+    }
+
+
     fun loadLocalProfileFromDisk(filesDir: File, accountId: String): Single<VCard> =
         Single.fromCallable {
             val path = localProfilePath(filesDir, accountId).absolutePath
@@ -213,9 +240,47 @@ object VCardUtils {
         return stringVCard
     }
 
+    fun saveToCustomProfiles(name: String?, picture: ByteArray?, accountId: String,
+                             filename: String, filesDir: File) {
+        if (filename.isEmpty()) {
+            return
+        }
+        val customProfileDir = customPeerProfilePath(filesDir, accountId)
+
+        if (!customProfileDir.exists()) {
+            customProfileDir.mkdirs()
+        }
+
+        val customprofileName = File(customProfileDir, "$filename.txt")
+        val customprofilePicture = File(customProfileDir, filename)
+
+        name?.let {customprofileName.writeText(it)}
+        picture?.let {customprofilePicture.writeBytes(it)}
+    }
+
+    fun getCustomProfile(accountId: String, filename: String, filesDir: File):
+            Pair<String?, ByteArray?> {
+        if (filename.isEmpty()) {
+            return Pair(null, null)
+        }
+
+        val customProfileDir = customPeerProfilePath(filesDir, accountId)
+        val customprofileName = File(customProfileDir, "$filename.txt")
+        val customprofilePicture = File(customProfileDir, filename)
+
+        val finalName = customprofileName.takeIf { it.exists() }?.readText()
+        val finalPicture = customprofilePicture.takeIf { it.exists() }?.readBytes()
+        return Pair(finalName, finalPicture)
+    }
+
     fun isEmpty(vCard: VCard): Boolean {
         val name = vCard.formattedName
         return (name == null || name.value.isEmpty()) && vCard.photos.isEmpty()
+    }
+
+    fun customPeerProfilePath(filesDir: File, accountId: String): File {
+        val accountDir = File(filesDir, accountId)
+        return File(accountDir, "CustomPeerProfiles").apply { mkdirs() }
     }
 
     private fun peerProfilePath(filesDir: File, accountId: String): File {
