@@ -42,6 +42,7 @@ abstract class ContactService(
     protected abstract fun findContactBySipNumberFromSystem(number: String): Contact?
     protected abstract fun findContactByNumberFromSystem(number: String): Contact?
     abstract fun loadContactData(contact: Contact, accountId: String): Single<Profile>
+    abstract fun loadCustomProfileData(contact: Contact, accountId: String): Single<Profile>
 
     abstract fun saveContact(uri: String, profile: Profile)
     abstract fun deleteContact(uri: String)
@@ -104,6 +105,10 @@ abstract class ContactService(
             } else {
                 if (contact.loadedProfile == null) {
                     contact.loadedProfile = loadContactData(contact, accountId).cache()
+                }
+
+                if (contact.customProfile == null) {
+                    contact.customProfile = loadCustomProfileData(contact, accountId).cache()
                 }
 
                 if (withPresence)
