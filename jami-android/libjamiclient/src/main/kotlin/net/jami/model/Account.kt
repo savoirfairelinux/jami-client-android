@@ -652,7 +652,7 @@ class Account(
                 request.profile?.let { p ->
                     // Apply request profile to contact
                     if (request.mode == Conversation.Mode.OneToOne) {
-                        conversation.contact?.setProfile(p)
+                        conversation.contact?.loadedProfile = p
                     }
                     conversation.setProfile(p)
                 }

@@ -410,6 +410,8 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="profile">Profile</string>
     <string name="profile_name">Profile name</string>
     <string name="profile_message_warning">Your profile is only shared with your contacts</string>
+    <string name="custom_profile_message_warning">Your custom profile is only visible to this
+        account on this device</string>
     <string name="open_the_gallery">Open the gallery</string>
     <string name="take_a_photo">Take photo</string>
     <string name="remove_photo">Remove photo</string>
@@ -573,6 +575,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="tab_files">Files</string>
     <string name="tab_settings">Settings</string>
     <string name="not_admin_toast">Only admins can edit the information of this group</string>
+    <string name="dialog_title_contact">Edit display name</string>
     <string name="dialogtitle_title">Edit group title</string>
     <string name="dialogtitle_description">Edit group description</string>
     <string name="dialog_hint_title">Title</string>

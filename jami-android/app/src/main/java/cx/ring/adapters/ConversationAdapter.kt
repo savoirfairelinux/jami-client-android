@@ -253,7 +253,11 @@ class ConversationAdapter(
      * Updates the contact photo to use for this conversation
      */
     fun setPhoto() {
-        notifyDataSetChanged()
+        try {
+            notifyDataSetChanged()
+        } catch (e: IllegalStateException) {
+            Log.e(TAG, "Error updating photo now", e)
+        }
     }
 
     override fun getItemCount(): Int = mInteractions.size + if (isComposing) 1 else 0
