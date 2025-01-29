@@ -573,6 +573,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="tab_files">Files</string>
     <string name="tab_settings">Settings</string>
     <string name="not_admin_toast">Only admins can edit the information of this group</string>
+    <string name="dialog_title_contact">Edit display name</string>
     <string name="dialogtitle_title">Edit group title</string>
     <string name="dialogtitle_description">Edit group description</string>
     <string name="dialog_hint_title">Title</string>
