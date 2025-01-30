@@ -13,6 +13,7 @@ import android.os.RemoteException
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import cx.ring.IRemoteService
+import cx.ring.application.JamiApplication
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -74,6 +75,8 @@ class RemoteControl : Service() {
             .setPriority(NotificationCompat.PRIORITY_LOW)
             .setOngoing(true)
             .build()
+
+        JamiApplication.instance?.startDaemon(this)
 
         startForeground(NOTIFICATION_ID, notification)
     }
