@@ -20,6 +20,7 @@ import org.hamcrest.Matchers.allOf
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.Espresso.pressBack
 import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.action.ViewActions.scrollTo
 import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -376,7 +377,8 @@ class AddContact {
         // Click on account settings
         // Don't know why but doesn't work to select by ID.
         onView(allOf(withText(R.string.menu_item_account_settings), isDisplayed())).perform(click())
-        onView(allOf(withId(R.id.settings_account), isDisplayed())).perform(click())
+        onView(allOf(withId(R.id.settings_account), isDisplayed()))
+            .perform(scrollTo(), click())
 
         // Click on the block list
         onView(withId(R.id.system_black_list_title)).perform(click())

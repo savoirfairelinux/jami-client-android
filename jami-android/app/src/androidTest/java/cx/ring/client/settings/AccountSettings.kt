@@ -26,6 +26,7 @@ import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.closeSoftKeyboard
 import androidx.test.espresso.action.ViewActions.pressImeActionButton
 import androidx.test.espresso.action.ViewActions.replaceText
+import androidx.test.espresso.action.ViewActions.scrollTo
 import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
@@ -380,7 +381,8 @@ class AccountSettings {
     @Test
     fun i1_noPassword_CantEnableBiometrics() {
         // Click on the `Account` button.
-        onView(allOf(withId(R.id.settings_account), isDisplayed())).perform(click())
+        onView(allOf(withId(R.id.settings_account), isDisplayed()))
+            .perform(scrollTo(), click())
 
         // Cant see the biometric switch.
         onView(withId(R.id.system_biometric_title)).check(matches(not(isDisplayed())))
@@ -392,7 +394,8 @@ class AccountSettings {
     @Test
     fun j1_setPassword_LessThan6Characters_InvalidPassword() {
         // Click on the `Account` button.
-        onView(allOf(withId(R.id.settings_account), isDisplayed())).perform(click())
+        onView(allOf(withId(R.id.settings_account), isDisplayed()))
+            .perform(scrollTo(), click())
 
         // Click on `Set password` button.
         onView(withId(R.id.system_change_password_title)).perform(click())
@@ -417,7 +420,8 @@ class AccountSettings {
     @Test
     fun k1_setPassword_WrongRecopy() {
         // Click on the `Account` button.
-        onView(allOf(withId(R.id.settings_account), isDisplayed())).perform(click())
+        onView(allOf(withId(R.id.settings_account), isDisplayed()))
+            .perform(scrollTo(), click())
 
         // Click on `Set password` button.
         onView(withId(R.id.system_change_password_title)).perform(click())
@@ -442,7 +446,8 @@ class AccountSettings {
     @Test
     fun l1_setPassword_ValidPassword() {
         // Click on the `Account` button.
-        onView(allOf(withId(R.id.settings_account), isDisplayed())).perform(click())
+        onView(allOf(withId(R.id.settings_account), isDisplayed()))
+            .perform(scrollTo(), click())
 
         // Click on `Set password` button.
         onView(withId(R.id.system_change_password_title)).perform(click())
@@ -471,7 +476,8 @@ class AccountSettings {
     @Test
     fun l2_passwordSet_CanEnableBiometrics() {
         // Click on the `Account` button.
-        onView(allOf(withId(R.id.settings_account), isDisplayed())).perform(click())
+        onView(allOf(withId(R.id.settings_account), isDisplayed()))
+            .perform(scrollTo(), click())
 
         // Can see the biometric switch.
         onView(withId(R.id.system_biometric_title)).check(matches(isDisplayed()))
@@ -483,7 +489,8 @@ class AccountSettings {
     @Test
     fun l3_exportBackup_Password() {
         // Click on the `Account` button.
-        onView(allOf(withId(R.id.settings_account), isDisplayed())).perform(click())
+        onView(allOf(withId(R.id.settings_account), isDisplayed()))
+            .perform(scrollTo(), click())
 
         // Click on `Backup account` button.
         onView(withId(R.id.system_export_title)).perform(click())
@@ -530,7 +537,8 @@ class AccountSettings {
     @Test
     fun l4_setPassword_Remove() {
         // Click on the `Account` button.
-        onView(allOf(withId(R.id.settings_account), isDisplayed())).perform(click())
+        onView(allOf(withId(R.id.settings_account), isDisplayed()))
+            .perform(scrollTo(), click())
 
         // Click on `Set password` button.
         onView(withId(R.id.system_change_password_title)).perform(click())
@@ -549,7 +557,8 @@ class AccountSettings {
     @Test
     fun m1_exportBackup_NoPassword() {
         // Click on the `Account` button.
-        onView(allOf(withId(R.id.settings_account), isDisplayed())).perform(click())
+        onView(allOf(withId(R.id.settings_account), isDisplayed()))
+            .perform(scrollTo(), click())
 
         // Start recording intents
         Intents.init()
@@ -579,7 +588,8 @@ class AccountSettings {
     @Test
     fun m2_removeAccount() {
         // Click on the `Account` button.
-        onView(allOf(withId(R.id.settings_account), isDisplayed())).perform(click())
+        onView(allOf(withId(R.id.settings_account), isDisplayed()))
+            .perform(scrollTo(), click())
 
         // Click on `Delete Account`.
         onView(withId(R.id.system_delete_account_title)).perform(click())
