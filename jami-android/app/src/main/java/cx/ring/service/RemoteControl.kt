@@ -14,6 +14,9 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import cx.ring.IRemoteService
 import cx.ring.application.JamiApplication
+import cx.ring.fragments.CallFragment
+import cx.ring.tv.call.TVCallActivity
+import cx.ring.utils.ConversationPath
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -164,23 +167,30 @@ class RemoteControl : Service() {
         override fun initiateCall(fromAccount: String, userId: String, callback: IRemoteService.ICallback) {
             Log.d(tag, "Initiating call to user: $userId")
             try {
-                val disposable = callService.placeCall(
-                    account = fromAccount,
-                    conversationUri = null,
-                    numberUri = Uri.fromString(userId),
-                    hasVideo = true
-                )
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({ call ->
-                        Log.d(tag, "Call initiated successfully: $call")
-                        callback.onSuccess()
-                    }, { error ->
-                        Log.e(tag, "Failed to initiate call: ${error.message}", error)
-                        callback.onError(error.message)
-                    })
+                val account = accountService.getAccount(fromAccount)
+                if (account != null) {
+                    val contact = account.getContact(userId)
+                    val conversation = contact?.conversationUri?.firstElement()?.blockingGet()
 
-                compositeDisposable.add(disposable)
+                    if (contact != null && conversation != null) {
+                        val uri = if (conversation.isSwarm)  contact.uri.uri else conversation.uri
+                        startActivity(
+                            Intent(Intent.ACTION_CALL)
+                                .setClass(this@RemoteControl, TVCallActivity::class.java)
+                                .putExtras(ConversationPath.toBundle(accountId, conversation.uri))
+                                .putExtra(Intent.EXTRA_PHONE_NUMBER, uri)
+                                .putExtra(CallFragment.KEY_HAS_VIDEO, true)
+                                .apply {
+                                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                }
+                        )
+                    } else {
+                        Log.e(tag, "Failed to initiate call to user: $userId")
+                        callback.onError("Failed to initiate call, contact: $contact, conversation not found")
+                    }
+                } else {
+                    callback.onError("Failed to initiate call, account not found")
+                }
             } catch (e: Exception) {
                 Log.e(tag, "Error initiating call", e)
                 callback.onError(e.message)
