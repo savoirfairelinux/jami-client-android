@@ -17,6 +17,9 @@
 package cx.ring.dependencyinjection
 
 import android.content.Context
+import android.os.Build
+import androidx.annotation.RequiresApi
+import cx.ring.service.ConnectionService
 import cx.ring.services.*
 import cx.ring.utils.DeviceUtils
 import dagger.Module
@@ -164,5 +167,11 @@ object ServiceInjectionModule {
     @Singleton
     fun provideUiScheduler(): Scheduler {
         return DeviceUtils.uiScheduler
+    }
+
+    @Provides
+    @RequiresApi(Build.VERSION_CODES.P)
+    fun provideConnectionService(): ConnectionService {
+        return ConnectionService()
     }
 }

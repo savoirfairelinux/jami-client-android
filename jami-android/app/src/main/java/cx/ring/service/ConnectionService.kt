@@ -24,6 +24,9 @@ import android.telecom.PhoneAccountHandle
 import android.telecom.TelecomManager
 import android.util.Log
 import androidx.annotation.RequiresApi
+import cx.ring.IRemoteService
+import cx.ring.service.RemoteControl.Companion.INCOMING_CALL_RECEIVED_EVENT
+import cx.ring.service.RemoteControl.Companion.OUTGOING_CALL_REJECTED_EVENT
 import cx.ring.services.CallServiceImpl
 import cx.ring.services.CallServiceImpl.Companion.CONNECTION_SERVICE_TELECOM_API_SDK_COMPATIBILITY
 import cx.ring.utils.ConversationPath
@@ -49,6 +52,8 @@ class ConnectionService : ConnectionService() {
     lateinit var notificationService: NotificationService
     @Inject
     lateinit var deviceRuntimeService: DeviceRuntimeService
+
+    private val eventListenerList = mutableListOf<IRemoteService.IEventListener>()
 
     private fun buildConnection(request: ConnectionRequest, showIncomingCallUi: ((CallConnection, CallRequestResult) -> Unit)? = null): CallConnection =
         CallConnection(this, request, showIncomingCallUi).apply {
@@ -82,12 +87,14 @@ class ConnectionService : ConnectionService() {
         account: PhoneAccountHandle?, request: ConnectionRequest
     ) {
         Log.w(TAG, "onCreateOutgoingConnectionFailed $request")
+        notifyEventListeners(OUTGOING_CALL_REJECTED_EVENT)
         (callService as CallServiceImpl).onPlaceCallResult(request.address, request.extras, null)
     }
 
     override fun onCreateIncomingConnection(account: PhoneAccountHandle?, request: ConnectionRequest): Connection {
         Log.w(TAG, "onCreateIncomingConnection $request")
         return buildConnection(request) { connection, result ->
+            notifyEventListeners(INCOMING_CALL_RECEIVED_EVENT)
             (callService as CallServiceImpl).onIncomingCallResult(request.extras, connection, result)
         }
     }
@@ -98,6 +105,21 @@ class ConnectionService : ConnectionService() {
             (callService as CallServiceImpl).onIncomingCallResult(request.extras, null)
         }
     }
+
+    fun registerEventListener(listener: IRemoteService.IEventListener){
+        eventListenerList.add(listener)
+    }
+
+    fun unregisterEventListener(listener: IRemoteService.IEventListener){
+        eventListenerList.remove(listener)
+    }
+
+    private fun notifyEventListeners(name: String, data: Map<String, String>? = null) {
+        eventListenerList.forEach { listener ->
+            listener.onEventReceived(name, data)
+        }
+    }
+
 
     companion object {
         private val TAG: String = ConnectionService::class.java.simpleName

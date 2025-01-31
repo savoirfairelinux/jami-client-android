@@ -39,12 +39,24 @@ class RemoteControl : Service() {
     @Inject
     lateinit var callService: CallService
 
+    @Inject
+    lateinit var connectionService: ConnectionService
+
+    private val eventListenerList = mutableListOf<IRemoteService.IEventListener>()
+
     private val tag = "JamiRemoteControlService"
     private val compositeDisposable = CompositeDisposable()
 
     companion object {
         private const val NOTIFICATION_CHANNEL_ID = "RemoteControlChannel"
         private const val NOTIFICATION_ID = 101
+        internal const val INCOMING_CALL_RECEIVED_EVENT = "INCOMING_CALL_RECEIVED"
+        internal const val INCOMING_CALL_ACCEPTED_EVENT = "INCOMING_CALL_ACCEPTED"
+        internal const val INCOMING_CALL_REJECT_EVENT = "INCOMING_CALL_REJECTED"
+        internal const val OUTGOING_CALL_REQUESTED_EVENT = "OUTGOING_CALL_REQUESTED"
+        internal const val OUTGOING_CALL_ESTABLISHED_EVENT = "OUTGOING_CALL_ESTABLISHED"
+        internal const val OUTGOING_CALL_REJECTED_EVENT = "OUTGOING_CALL_REJECTED"
+        internal const val CALL_HUNG_UP_EVENT = "CALL_HANGED_UP"
     }
 
     var accounts = listOf<Account>()
@@ -159,7 +171,8 @@ class RemoteControl : Service() {
         }
 
         override fun initiateCall(fromAccount: String, userId: String, callback: IRemoteService.ICallback) {
-            Log.d(tag, "Initiating call to user: $userId")
+            Log.d(tag, "Initiating call")
+            notifyEventListeners(OUTGOING_CALL_REQUESTED_EVENT)
             try {
                 val disposable = callService.placeCall(
                     account = fromAccount,
@@ -171,6 +184,7 @@ class RemoteControl : Service() {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ call ->
                         Log.d(tag, "Call initiated successfully: $call")
+                        notifyEventListeners(OUTGOING_CALL_ESTABLISHED_EVENT)
                         callback.onSuccess()
                     }, { error ->
                         Log.e(tag, "Failed to initiate call: ${error.message}", error)
@@ -194,6 +208,7 @@ class RemoteControl : Service() {
 
         override fun hangUpCall() {
             Log.d(tag, "Hanging up the current call")
+            notifyEventListeners(CALL_HUNG_UP_EVENT)
             try {
                 val activeCall = callService.getActiveCall() ?: return
                 callService.hangUp(activeCall.account!!, activeCall.daemonIdString!!)
@@ -206,6 +221,7 @@ class RemoteControl : Service() {
 
         override fun acceptCall() {
             Log.d(tag, "Accepting an incoming call")
+            notifyEventListeners(INCOMING_CALL_ACCEPTED_EVENT)
             try {
                 val incomingCall = callService.getIncomingCall() ?: return
                 callService.accept(
@@ -221,6 +237,7 @@ class RemoteControl : Service() {
         }
 
         override fun rejectCall() {
+            notifyEventListeners(INCOMING_CALL_REJECT_EVENT)
             Log.d(tag, "Rejecting an incoming call")
             try {
                 val incomingCall = callService.getIncomingCall() ?: return
@@ -263,6 +280,26 @@ class RemoteControl : Service() {
                     val profile = contact.profile.firstElement().blockingGet()
                     val newProfile = Profile(name, profile?.avatar)
                     contactService.storeContactData(contact, newProfile, account.accountId)
+                }
+            }
+        }
+
+        override fun registerEventListener(listener: IRemoteService.IEventListener) {
+            eventListenerList.add(listener)
+            connectionService.registerEventListener(listener)
+        }
+
+        override fun unregisterEventListener(listener: IRemoteService.IEventListener) {
+            eventListenerList.remove(listener)
+            connectionService.unregisterEventListener(listener)
+        }
+
+        private fun notifyEventListeners(name: String, data: Map<String, String>? = null) {
+            eventListenerList.forEach { listener ->
+                try {
+                    listener.onEventReceived(name, data)
+                } catch (e: RemoteException) {
+                    Log.e(tag, "Error notifying event listener", e)
                 }
             }
         }
