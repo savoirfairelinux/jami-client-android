@@ -86,6 +86,8 @@
   <string name="hist_in_call">Příchozí hovor %1$s</string>
   <string name="hist_out_call">Odchozí hovor %1$s</string>
   <string name="action_call_accept">Přijmout hovor</string>
+  <string name="action_call_accept_audio">Přijmout se zvukem</string>
+  <string name="action_call_accept_video">Přijmout s obrazem</string>
   <string name="action_call_decline">Odmítnout</string>
   <string name="action_call_mic_mute">Ztlumit mikrofon</string>
   <string name="ab_action_speakerphone">Zapnout reproduktor</string>
@@ -147,7 +149,6 @@
   <string name="delete_contact">Smazat kontakt</string>
   <string name="conversation_action_remove_this_title">Smazat toto spojení?</string>
   <string name="conversation_action_remove_this_message">Toto smaže kontakt a s konečnou platností vymaže konverzační historii.</string>
-  <string name="copied_to_clipboard">%1$s zkopírováno do schránky</string>
   <string name="conversation_action_select_peer_number">Vyberte číslo</string>
   <string name="conversation_action_block_this">Blokovat spojení</string>
   <string name="conversation_action_unblock_this">Odblokovat kontakt</string>
@@ -173,9 +174,6 @@
   <string name="conversation_type_contact">Kontakt na Jami</string>
   <string name="conversation_type_private">Soukromý</string>
   <string name="conversation_type_group">Skupina</string>
-  <string name="conversation_contact_invited">%1$sbyl pozván</string>
-  <string name="conversation_contact_added">%1$sse připojil</string>
-  <string name="conversation_contact_left">%1$sodešel</string>
   <string name="conversation_search_hint">Najít konverzaci</string>
   <string name="today">Dnes</string>
   <string name="yesterday">Včera</string>
@@ -252,7 +250,6 @@
   <string name="file_transfer_status_error">selhalo kvůli chybě</string>
   <string name="file_transfer_status_timed_out">vypršel časový limit</string>
   <string name="file_saved_in">Soubor uložen do %s</string>
-  <string name="file_saved_successfully">Soubor byl úspěšně uložen</string>
   <string name="file_download">Stáhnout</string>
   <string name="title_media_viewer">Prohlížeč záznamů</string>
   <string name="menu_file_open">Otevřít soubor</string>

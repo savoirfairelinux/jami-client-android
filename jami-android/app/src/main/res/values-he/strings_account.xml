@@ -42,9 +42,9 @@
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">כלליות</string>
   <string name="account_basic_category">הגדרות בסיסיות</string>
-  <string name="account_alias_label">שם החשבון</string>
   <string name="account_hostname_label">שם מארח</string>
   <string name="account_bootstrap_label">קישור תחיל</string>
+  <string name="account_name_server_label">שרת שמות</string>
   <string name="account_username_label">שם משתמש</string>
   <string name="account_password_label">סיסמה</string>
   <string name="account_optionnal_category">הגדרות רשות</string>
@@ -76,8 +76,7 @@
   <string name="account_registration_exp_label">רישום פוקע</string>
   <string name="account_local_interface_label">ממשק מקומי</string>
   <string name="account_local_port_label">פורט מקומי</string>
-  <string name="account_stun_enable_label">השתמש ב-</string>
-  <string name="account_stun_server_label">שרת Stun</string>
+  <string name="account_stun_enable_label">השתמש ב- STUN</string>
   <string name="account_accept_files">לקבל קבצים נכנסים באופן אוטומטי</string>
   <string name="account_conversation_settings_title">הגדרות שיחה</string>
   <string name="account_accept_files_max_size">גודל הקובץ המקסימלי לקבל באופן אוטומטי</string>
@@ -93,6 +92,7 @@
   <string name="account_published_address_label">כתובת פורסמה</string>
   <string name="disabled">איכותי</string>
   <string name="enabled">מאופשר</string>
+  <string name="default_value">שגרתי</string>
   <string name="account_proxy_label">דה\"ט פרוקסי</string>
   <string name="account_proxy_enable_label">השתמש ב- DHT proxy</string>
   <string name="account_proxy_server_label">כתובת ד\"ט</string>
@@ -111,21 +111,9 @@
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">השתמש בטרנספורט TLS</string>
-  <string name="account_tls_port_label">נמל הקשב TLS</string>
-  <string name="account_tls_certificate_list_label">רשויות אישור</string>
-  <string name="account_tls_certificate_file_label">קובץ תעודה</string>
-  <string name="account_tls_private_key_file_label">קובץ מפתח פרטי</string>
-  <string name="account_tls_password_label">סיסמת מפתח פרטי</string>
-  <string name="account_tls_method_label">שיטת TLS</string>
-  <string name="account_tls_ciphers_label">סיפורים TLS</string>
-  <string name="account_tls_server_name_label">שם שרת</string>
-  <string name="account_tls_verify_server_label">אמת שרת</string>
-  <string name="account_tls_verify_client_label">אמת לקוח</string>
-  <string name="account_require_client_certificate_label">TLS דורש תעודת הלקוח</string>
-  <string name="account_tls_negotiation_timeout_sec">זמן הפסקת המשא ומתן (ס\"ג)</string>
+  <string name="account_tls_password_label">סיסמה מפתח פרטי</string>
   <string name="account_rtp_max_port">מרבי</string>
   <string name="account_rtp_min_port">נומינלי</string>
-  <string name="account_rtp_port_range">טווח הנמל RTP</string>
   <!--restore/backup-->
   <string name="account_new_device_password">הכניסו סיסמה העיקרית כדי לפתוח חשבון</string>
   <string name="error_password_char_count">6 אותיות לפחות</string>
@@ -163,12 +151,10 @@
   <string name="account_link_device">חיבור ממכשיר אחר</string>
   <string name="account_link_button">חיבור ממערכת</string>
   <string name="account_link_archive_button">חיבור ממחזקה</string>
-  <string name="account_link_prompt_pin">הכניס את סימן PIN</string>
   <string name="account_new_button">יצירת חשבון Jami</string>
   <string name="account_link_export_button">קישור מכשיר חדש</string>
   <string name="account_link_show_button">הראה %d יותר מכשיר מקושר</string>
   <string name="account_link_hide_button">חבוי מכשיר מחובר</string>
-  <string name="account_start_export_button">ליצור PIN</string>
   <string name="account_end_export_button">קרוב</string>
   <string name="account_export_title">חשבון חיבור למכשירים אחרים</string>
   <string name="account_connect_server_button">חיבור למשרת ניהול</string>
@@ -179,10 +165,6 @@
   <string name="account_connect_prompt_username">שם משתמש</string>
   <!--Name registration-->
   <string name="error_username_empty">הכניסו שם משתמש</string>
-  <string name="no_registered_name_for_account">אין שם רשום</string>
-  <string name="username_available">שם המשתמש זמין!</string>
-  <string name="register_name">שם רישום</string>
-  <string name="trying_to_register_name">מנסה להירשם שם</string>
   <string name="registered_username">שם משתמש רשום</string>
   <string name="register_username">רשום שם משתמש ציבורי</string>
   <string name="register_recommended">מומלץ</string>
@@ -209,13 +191,13 @@
   <string name="revoke_device_wait_title">בבקשה חכה...</string>
   <string name="revoke_device_wait_message">מכשיר ביטול</string>
   <string name="rename_device_title">שמה מחדש של המכשיר</string>
-  <string name="rename_device_message">בחר שם חדש כדי לזהות את המכשיר הזה בחשבון ג\'מי שלך.</string>
   <string name="rename_device_button">מכשיר שינוי</string>
   <string name="account_rename_device_hint">בחר שם מכשיר חדש</string>
   <string name="account_device_this_indicator">המכשיר הזה</string>
   <string name="account_disabled_indicator">פצועים</string>
   <!--Link a new device-->
   <string name="account_link_device_title">קישור מכשיר חדש</string>
+  <string name="connect_device_scanqr">סריק קוד QR</string>
   <string name="account_link_device_button">חיבור</string>
   <!--Biometry-->
 </resources>

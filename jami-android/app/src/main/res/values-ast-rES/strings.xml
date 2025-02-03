@@ -143,7 +143,6 @@
   <string name="delete_contact">La so direición de la páxina web</string>
   <string name="conversation_action_remove_this_title">¿Borrear esti contautu?</string>
   <string name="conversation_action_remove_this_message">Esto borrará\'l contautu y definitivamente borrará\'l historial de conversaciones.</string>
-  <string name="copied_to_clipboard">%1$s copiáu na taquilla</string>
   <string name="conversation_action_select_peer_number">Seleccione un númberu</string>
   <string name="conversation_action_block_this">Bloquear el contacto</string>
   <string name="conversation_action_unblock_this">Desbloquear el contacto</string>
@@ -168,9 +167,6 @@
   <string name="conversation_preference_emoji">Emoji de conversación</string>
   <string name="conversation_type_contact">El contautu Jami</string>
   <string name="conversation_type_private">Privada</string>
-  <string name="conversation_contact_invited">%1$s foi convidáu</string>
-  <string name="conversation_contact_added">%1$s xuníu</string>
-  <string name="conversation_contact_left">%1$s ye izquierdu</string>
   <string name="conversation_search_hint">La conversación de busca</string>
   <string name="today">El so nome ye \"El pueblu de Dios\".</string>
   <string name="yesterday">En xineru de 2011</string>
@@ -246,7 +242,6 @@
   <string name="file_transfer_status_error">Faló por error</string>
   <string name="file_transfer_status_timed_out">El tiempu de la fecha</string>
   <string name="file_saved_in">Archiváu en %s</string>
-  <string name="file_saved_successfully">Archiváu con ésitu</string>
   <string name="file_download">Descargar</string>
   <string name="title_media_viewer">Vía de medios</string>
   <string name="menu_file_open">Archivu abiertu</string>

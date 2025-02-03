@@ -186,7 +186,6 @@
   <string name="swarm_group_action_leave_title">Părăsești acest grup?</string>
   <string name="swarm_group_action_leave_message">Aceasta va elimina conversația din lista conversațiilor</string>
   <string name="conversation_action_copy_peer_number">Copiază identificatorul contactului</string>
-  <string name="copied_to_clipboard">%1$s copiat în memorie</string>
   <string name="conversation_action_select_peer_number">Alege un număr</string>
   <string name="conversation_action_block_this">Blochează contactul</string>
   <string name="conversation_action_unblock_this">Deblochează contactul</string>
@@ -215,11 +214,11 @@
   <string name="conversation_type_contact">Contact Jami</string>
   <string name="conversation_type_private">Privat</string>
   <string name="conversation_type_group">Grup</string>
-  <string name="conversation_contact_invited">%1$s a fost invitat</string>
-  <string name="conversation_contact_added">%1$s s-a alăturat</string>
-  <string name="conversation_contact_left">%1$s a ieșit</string>
-  <string name="conversation_contact_blocked">%1$s a fost blocat</string>
-  <string name="conversation_contact_unblocked">%1$s a fost deblocat</string>
+  <string name="conversation_contact_invited">%1$s a fost invitat să participe la conversație.</string>
+  <string name="conversation_contact_added">%1$s participă la conversație.</string>
+  <string name="conversation_contact_left">%1$s a părăsit conversația.</string>
+  <string name="conversation_contact_blocked">%1$s a fost blocat din conversație.</string>
+  <string name="conversation_contact_unblocked">%1$s a fost deblocat din conversație.</string>
   <string name="conversation_search_hint">Caută conversația</string>
   <string name="audio_recorder_error">Aplicația de înregistrare audio nu a fost găsită.</string>
   <string name="video_recorder_error">Aplicația de înregistrare video nu a fost găsită.</string>
@@ -249,6 +248,7 @@
   <string name="help_server_enter">Introdu URL-ul serverului de administrare</string>
   <string name="help_pin_enter">Introdu codul PIN obținut de la un cont Jami. Folosește opțiunea „Exportă contul Jami” pentru a obține codul PIN.</string>
   <string name="pin_copied">Cod PIN copiat în memorie.</string>
+  <string name="copied_clipboard">Copiat în memorie.</string>
   <string name="wizard_next">Înainte</string>
   <string name="wizard_back">Înapoi</string>
   <string name="wizard_skip">Omite</string>
@@ -324,7 +324,6 @@
   <string name="file_transfer_status_error">nereușit din cauza unei erori</string>
   <string name="file_transfer_status_timed_out">timp expirat</string>
   <string name="file_saved_in">Fișier salvat în %s</string>
-  <string name="file_saved_successfully">Fișier salvat cu succes</string>
   <string name="file_download">Descarcă</string>
   <string name="no_space_left_on_device">Spațiu de stocare insuficient</string>
   <string name="title_media_viewer">Vizualizator Media</string>
@@ -440,7 +439,7 @@
   <string name="welcome_jami_description">Împărtășește identificatorul tău Jami pentru a fi contactat mai ușor!</string>
   <!--Conversation details-->
   <string name="details">Detalii</string>
-  <string name="secure_p2p_connection">Conexiune sigură</string>
+  <string name="secure_p2p_connection">Conexiune sigură P2P</string>
   <string name="swarm_type">Tipul conversației</string>
   <string name="Private">Privat</string>
   <string name="swarm_id">ID-ul grupului</string>

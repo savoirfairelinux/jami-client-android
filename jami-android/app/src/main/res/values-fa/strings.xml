@@ -149,7 +149,6 @@
   <string name="delete_contact">مخاطب را حذف کنید</string>
   <string name="conversation_action_remove_this_title">حذف این مخاطب؟</string>
   <string name="conversation_action_remove_this_message">این باعث حذف مخاطب شده و قطعا تاریخچه گفتگو را پاک خواهد کرد.</string>
-  <string name="copied_to_clipboard">‫%1$s در حافظه رونویسی شد</string>
   <string name="conversation_action_select_peer_number">گزینش یک شماره</string>
   <string name="conversation_action_block_this">مسدودسازی مخاطب</string>
   <string name="conversation_action_unblock_this">رفع مسدودی مخاطب</string>
@@ -175,9 +174,6 @@
   <string name="conversation_type_contact">مخاطب جامی</string>
   <string name="conversation_type_private">خصوصی</string>
   <string name="conversation_type_group">گروه</string>
-  <string name="conversation_contact_invited">%1$s دعوت شده است.</string>
-  <string name="conversation_contact_added">%1$sپیوست</string>
-  <string name="conversation_contact_left">%1$s ترک کرد</string>
   <string name="conversation_search_hint">جستجو در گفتگو‌ها</string>
   <string name="today">امروز</string>
   <string name="yesterday">دیروز</string>
@@ -255,7 +251,6 @@
   <string name="file_transfer_status_error">به دلیل خطا ناموفق بود</string>
   <string name="file_transfer_status_timed_out">مهلت پایان یافت</string>
   <string name="file_saved_in">فایل در %s ذخیره شد</string>
-  <string name="file_saved_successfully">فایل با موفقیت ذخیره شد</string>
   <string name="file_download">دانلود</string>
   <string name="title_media_viewer">نمایش‌دهنده رسانه</string>
   <string name="menu_file_open">باز کردن فایل</string>

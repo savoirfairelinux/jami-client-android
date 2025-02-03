@@ -143,7 +143,6 @@
   <string name="delete_contact">સંપર્કને કાઢી નાખો</string>
   <string name="conversation_action_remove_this_title">આ સંપર્કને કાઢી નાખો?</string>
   <string name="conversation_action_remove_this_message">આ સંપર્કને કાઢી નાખશે અને વાતચીત ઇતિહાસને ચોક્કસપણે સાફ કરશે.</string>
-  <string name="copied_to_clipboard">%1$s ક્લિપબોર્ડ પર કૉપિ</string>
   <string name="conversation_action_select_peer_number">એક નંબર પસંદ કરો</string>
   <string name="conversation_action_block_this">બ્લોક સંપર્ક</string>
   <string name="conversation_action_unblock_this">સંપર્કને અનબ્લોક કરો</string>
@@ -168,9 +167,6 @@
   <string name="conversation_preference_emoji">વાતચીત ઇમોજી</string>
   <string name="conversation_type_contact">જમી સંપર્ક</string>
   <string name="conversation_type_private">ખાનગી</string>
-  <string name="conversation_contact_invited">%1$s આમંત્રિત કરવામાં આવી હતી</string>
-  <string name="conversation_contact_added">%1$s જોડાયા</string>
-  <string name="conversation_contact_left">%1$s ડાબી</string>
   <string name="conversation_search_hint">શોધ વાતચીત</string>
   <string name="today">આજે</string>
   <string name="yesterday">ગઈકાલે</string>
@@ -246,7 +242,6 @@
   <string name="file_transfer_status_error">ભૂલને કારણે નિષ્ફળ</string>
   <string name="file_transfer_status_timed_out">સમયસર</string>
   <string name="file_saved_in">%s માં સાચવેલ ફાઇલ</string>
-  <string name="file_saved_successfully">ફાઇલ સફળતાપૂર્વક સાચવવામાં</string>
   <string name="file_download">ડાઉનલોડ કરો</string>
   <string name="title_media_viewer">મીડિયા દર્શક</string>
   <string name="menu_file_open">ખુલ્લી ફાઇલ</string>

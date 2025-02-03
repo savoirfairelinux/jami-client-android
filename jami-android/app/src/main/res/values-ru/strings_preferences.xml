@@ -40,7 +40,7 @@
   <string name="pref_blackList_summary">Проверить список блокировок</string>
   <string name="pref_delete_account_title">Удалить учетную запись</string>
   <string name="pref_delete_account_summary">Удалить учетную запись с этого устройства</string>
-  <string name="pref_persistNotification_title">Запустить в фоновом режиме</string>
+  <string name="pref_persistNotification_title">Фоновый режим работы</string>
   <string name="pref_persistNotification_summary">Разрешить работать в фоновом режиме для приема звонков и сообщений.</string>
   <string name="pref_newGroup_title">Включить групповые чаты</string>
   <string name="pref_newGroup_summary">Включить создание групп в Jami.</string>

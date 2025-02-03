@@ -186,7 +186,6 @@
   <string name="swarm_group_action_leave_title">¿Dejar este grupo?</string>
   <string name="swarm_group_action_leave_message">Esto eliminará la conversación de tu lista de conversaciones.</string>
   <string name="conversation_action_copy_peer_number">Copiar identificador de contacto</string>
-  <string name="copied_to_clipboard">%1$s copiado al portapapeles</string>
   <string name="conversation_action_select_peer_number">Seleccioná un número</string>
   <string name="conversation_action_block_this">Bloquear contacto</string>
   <string name="conversation_action_unblock_this">Desbloquear contacto</string>
@@ -215,11 +214,11 @@
   <string name="conversation_type_contact">Contacto de Jami</string>
   <string name="conversation_type_private">Privado</string>
   <string name="conversation_type_group">Grupo</string>
-  <string name="conversation_contact_invited">%1$s fue invitado</string>
-  <string name="conversation_contact_added">%1$s se unió</string>
-  <string name="conversation_contact_left">%1$sse salió</string>
-  <string name="conversation_contact_blocked">Se bloqueó a %1$s</string>
-  <string name="conversation_contact_unblocked">Se desbloqueó a %1$s</string>
+  <string name="conversation_contact_invited">%1$s fue invitado a unirse a la conversación.</string>
+  <string name="conversation_contact_added">%1$s se ha unido a la conversación.</string>
+  <string name="conversation_contact_left">%1$s ha abandonado la conversación.</string>
+  <string name="conversation_contact_blocked">%1$s fue bloqueado de la conversación.</string>
+  <string name="conversation_contact_unblocked">%1$s fue desbloqueado de la conversación.</string>
   <string name="conversation_search_hint">Buscar conversación</string>
   <string name="audio_recorder_error">No se encontró la aplicación Grabadora de audio.</string>
   <string name="video_recorder_error">No se encontró la aplicación Grabadora de vídeo.</string>
@@ -249,6 +248,7 @@
   <string name="help_server_enter">Ingresá la URL del servidor de administración.</string>
   <string name="help_pin_enter">Ingrese el PIN de otra cuenta Jami configurada. Utilice la función\" Exportar cuenta Jami \" para obtener un PIN.</string>
   <string name="pin_copied">Código PIN copiado en el portapapeles.</string>
+  <string name="copied_clipboard">Copiado al portapapeles.</string>
   <string name="wizard_next">Siguiente</string>
   <string name="wizard_back">Atrás</string>
   <string name="wizard_skip">Saltar</string>
@@ -324,7 +324,6 @@
   <string name="file_transfer_status_error">Falló debido a un error</string>
   <string name="file_transfer_status_timed_out">Caducado: tiempo agotado</string>
   <string name="file_saved_in">Archivo guardado en %s</string>
-  <string name="file_saved_successfully">Archivo guardado correctamente</string>
   <string name="file_download">Descargar</string>
   <string name="no_space_left_on_device">No hay espacio de almacenamiento disponible en el dispositivo</string>
   <string name="title_media_viewer">Visor de archivos</string>

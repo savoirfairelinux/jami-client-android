@@ -43,9 +43,9 @@
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Головні</string>
   <string name="account_basic_category">Базові налаштування</string>
-  <string name="account_alias_label">Назва облікового запису</string>
   <string name="account_hostname_label">Імʼя хоста</string>
   <string name="account_bootstrap_label">Початкове завантаження</string>
+  <string name="account_name_server_label">Сервер імен</string>
   <string name="account_username_label">Ім’я користувача</string>
   <string name="account_password_label">Пароль</string>
   <string name="account_optionnal_category">Додаткові параметри</string>
@@ -80,7 +80,6 @@
   <string name="account_local_interface_label">Локальний інтерфейс</string>
   <string name="account_local_port_label">Локальний порт</string>
   <string name="account_stun_enable_label">Використовувати STUN</string>
-  <string name="account_stun_server_label">Призупинити сервер</string>
   <string name="account_accept_files">Прийміть вхідні файли автоматично</string>
   <string name="account_conversation_settings_title">Настройки розмови</string>
   <string name="account_accept_files_max_size">Максимальний розмір файлу для автоматичного прийняття</string>
@@ -96,6 +95,7 @@
   <string name="account_published_address_label">Опублікована адреса</string>
   <string name="disabled">Інваліди</string>
   <string name="enabled">Увімкнено</string>
+  <string name="default_value">За замовченням</string>
   <string name="account_proxy_label">DHT прокси</string>
   <string name="account_proxy_enable_label">Використовуйте DHT прокси</string>
   <string name="account_proxy_server_label">Адреса DHT прокси</string>
@@ -114,21 +114,9 @@
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Використовувати TLS</string>
-  <string name="account_tls_port_label">TLS слухаючий порт</string>
-  <string name="account_tls_certificate_list_label">Центри сертифікації</string>
-  <string name="account_tls_certificate_file_label">Файл сертифікату</string>
-  <string name="account_tls_private_key_file_label">Приватний ключ</string>
   <string name="account_tls_password_label">Пароль від приватного ключа</string>
-  <string name="account_tls_method_label">Метод TLS</string>
-  <string name="account_tls_ciphers_label">TLS шифрування</string>
-  <string name="account_tls_server_name_label">Ім’я сервера</string>
-  <string name="account_tls_verify_server_label">Перевірка сервера</string>
-  <string name="account_tls_verify_client_label">Перевірка клієнта</string>
-  <string name="account_require_client_certificate_label">TLS вимагає сертифікату клієнта</string>
-  <string name="account_tls_negotiation_timeout_sec">Таймаут з’єднання (в секундах)</string>
   <string name="account_rtp_max_port">Максимум</string>
   <string name="account_rtp_min_port">Мінімум</string>
-  <string name="account_rtp_port_range">Порти для передачі аудіо по RTP</string>
   <!--restore/backup-->
   <string name="account_new_device_password">Введіть ваш головний пароль, щоб розблокувати обліковий запис</string>
   <string name="error_password_char_count">мінімум 6 символів</string>
@@ -166,12 +154,10 @@
   <string name="account_link_device">Підключити з іншого пристрою</string>
   <string name="account_link_button">Підключення з мережі</string>
   <string name="account_link_archive_button">З\'єднатися з резервної системи</string>
-  <string name="account_link_prompt_pin">Ввести PIN-код</string>
   <string name="account_new_button">Створити обліковий запис Jami</string>
   <string name="account_link_export_button">Прив\'язати новий пристрій</string>
   <string name="account_link_show_button">Покажіть %d більше пов\'язаних пристроїв</string>
   <string name="account_link_hide_button">Сховати з\'єднане пристрої</string>
-  <string name="account_start_export_button">Отримати новий PIN-код</string>
   <string name="account_end_export_button">закрити</string>
   <string name="account_export_title">Спіль посилання на інші пристрої</string>
   <string name="account_connect_server_button">Підключення до сервера управління</string>
@@ -183,10 +169,7 @@
   <string name="account_enter_username">Ввести ім\'я користувача</string>
   <!--Name registration-->
   <string name="error_username_empty">Ввести ім\'я користувача</string>
-  <string name="no_registered_name_for_account">Ніщо зареєстроване ім\'я</string>
-  <string name="username_available">Назва користувача доступна!</string>
   <string name="register_name">Назва реєстру</string>
-  <string name="trying_to_register_name">Спроба реєстрації імені</string>
   <string name="registered_username">Зареєстроване ім\'я користувача</string>
   <string name="register_username">Зареєструвати публічне ум\'я користувача</string>
   <string name="register_recommended">Рекомендовано</string>
@@ -213,27 +196,20 @@
   <string name="revoke_device_wait_title">Будь ласка зачекайте</string>
   <string name="revoke_device_wait_message">Відкликаю пристрій</string>
   <string name="rename_device_title">Перейменувати цей пристрій</string>
-  <string name="rename_device_message">Виберіть нову назву для позначення цього пристрою в вашому обліковому записі Джамі.</string>
   <string name="rename_device_button">Перейменувати пристрій</string>
   <string name="account_rename_device_hint">Вибрати нову назву для пристрою</string>
   <string name="account_device_this_indicator">Цей пристрій</string>
   <string name="account_disabled_indicator">вимкнено</string>
   <!--Link a new device-->
-  <string name="account_link_prompt_pin_manually">Введіть PIN вручну</string>
   <string name="qr_invalid">Не QR код автентифікації Jami</string>
-  <string name="content_description_checkbox">Ваш QR-код є дійсним</string>
   <string name="error_format_not_supported">Цей формат не підтримується</string>
-  <string name="account_link_info">У іншому застосунку Jami, скануйте QR-код або введіть PIN вручну.</string>
   <string name="account_link_device_title">Прив\'язати новий пристрій</string>
   <string name="account_link_password">Цей обліковий запис зашифрований паролем, введіть пароль, щоб згенерувати PIN-код.</string>
   <string name="account_link_generate_button">Згенерувати</string>
   <string name="account_link_time_valid">PIN-код буде недійсним: %1$s.</string>
-  <string name="account_link_device_info">Виберіть «Підключити новий пристрій» у іншій програмі Jami, щоб показати QR-код або PIN</string>
   <string name="account_generate_export_device">На іншому пристрої</string>
-  <string name="content_description_qr_generated">Ваш QR-код</string>
   <string name="help_pin_info">Заповніть, якщо обліковий запис зашифрований паролем</string>
-  <string name="connect_device_scanqr">Сканувати QR</string>
-  <string name="connect_device_enterPIN">Або введіть PIN</string>
+  <string name="connect_device_scanqr">Скануйте QR-код</string>
   <string name="account_link_device_button">З\'єднати</string>
   <!--Biometry-->
 </resources>

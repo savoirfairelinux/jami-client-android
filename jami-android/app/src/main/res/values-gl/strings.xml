@@ -148,7 +148,6 @@
   <string name="delete_contact">Eliminar contacto</string>
   <string name="conversation_action_remove_this_title">Eliminar este contacto?</string>
   <string name="conversation_action_remove_this_message">Esto eliminará o contacto de xeito definitivo e tamén o historial da conversa.</string>
-  <string name="copied_to_clipboard">%1$s copiado ao portapapeis</string>
   <string name="conversation_action_select_peer_number">Escolle un número</string>
   <string name="conversation_action_block_this">Bloquear contacto</string>
   <string name="conversation_action_unblock_this">Desbloquear contacto</string>
@@ -173,9 +172,6 @@
   <string name="conversation_preference_emoji">Emojis da conversa</string>
   <string name="conversation_type_contact">Contacto Jami</string>
   <string name="conversation_type_private">Privado</string>
-  <string name="conversation_contact_invited">Convidouse a %1$s</string>
-  <string name="conversation_contact_added">%1$s uníuse</string>
-  <string name="conversation_contact_left">%1$s saíu</string>
   <string name="conversation_search_hint">Buscar conversa</string>
   <string name="today">Hoxe</string>
   <string name="yesterday">Onte</string>
@@ -251,7 +247,6 @@
   <string name="file_transfer_status_error">fallou debido a un erro</string>
   <string name="file_transfer_status_timed_out">caducada</string>
   <string name="file_saved_in">Ficheiro gardado en %s</string>
-  <string name="file_saved_successfully">Ficheiro gardado</string>
   <string name="file_download">Descargar</string>
   <string name="title_media_viewer">Visor de multimedia</string>
   <string name="menu_file_open">Abrir ficheiro</string>

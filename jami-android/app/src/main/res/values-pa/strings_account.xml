@@ -42,7 +42,6 @@
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">ਸਧਾਰਨ</string>
   <string name="account_basic_category">ਮੂਲ ਸੈਟਿੰਗਾਂ</string>
-  <string name="account_alias_label">ਖਾਤੇ ਦਾ ਨਾਂ</string>
   <string name="account_hostname_label">ਮੇਜ਼ਬਾਨ ਦਾ ਨਾਂ</string>
   <string name="account_bootstrap_label">ਬੂਟਸਟ੍ਰੈਪ</string>
   <string name="account_username_label">ਵਰਤੋਂਕਾਰ ਨਾਂ</string>
@@ -76,8 +75,6 @@
   <string name="account_registration_exp_label">ਦਰਜ ਹੋਣ ਦੀ ਮਿਆਦ</string>
   <string name="account_local_interface_label">ਸਥਾਨਕ ਇੰਟਰਫੇਸ</string>
   <string name="account_local_port_label">ਸਥਾਨਕ ਪੋਰਟ</string>
-  <string name="account_stun_enable_label">Stun ਵਰਤੋ</string>
-  <string name="account_stun_server_label">Stun ਸਰਵਰ</string>
   <string name="account_accept_files">ਆਉਂਦੀਆਂ ਫ਼ਾਈਲਾਂ ਆਪਣੇ-ਆਪ ਮਨਜ਼ੂਰ ਕਰੋ</string>
   <string name="account_conversation_settings_title">ਗੱਲਬਾਤ ਸੈਟਿੰਗਾਂ</string>
   <string name="account_accept_files_max_size">ਆਪਣੇ-ਆਪ ਮਨਜ਼ੂਰ ਕਰਨ ਲਈ ਫ਼ਾਈਲ ਦਾ ਵੱਧ ਤੋਂ ਵੱਧ ਆਕਾਰ</string>
@@ -91,6 +88,7 @@
   <string name="account_published_same_as_local_label">ਸਥਾਨਕ ਵਾਂਗ ਵਿਖਾਇਆ ਗਿਆ</string>
   <string name="account_published_port_label">ਵਿਖਾਇਆ ਗਿਆ ਪੋਰਟ</string>
   <string name="account_published_address_label">ਦਿਖਾਇਆ ਗਿਆ ਪਤਾ</string>
+  <string name="default_value">طے شدہ</string>
   <string name="account_proxy_label">DHT ਪ੍ਰੌਕਸੀ</string>
   <string name="account_proxy_enable_label">DHT ਪ੍ਰੌਕਸੀ ਵਰਤੋ</string>
   <string name="account_proxy_server_label">DHT ਪ੍ਰੌਕਸੀ ਪਤਾ</string>
@@ -109,21 +107,8 @@
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">TLS ਸਾਧਨ ਵਰਤੋ</string>
-  <string name="account_tls_port_label">TLS ਸਰੋਤਾ ਪੋਰਟ</string>
-  <string name="account_tls_certificate_list_label">ਪ੍ਰਮਾਣ-ਪੱਤਰ ਅਦਾਰੇ</string>
-  <string name="account_tls_certificate_file_label">ਪ੍ਰਮਾਣ-ਪੱਤਰ ਫ਼ਾਈਲ</string>
-  <string name="account_tls_private_key_file_label">ਨਿੱਜੀ ਕੁੰਜੀ ਫ਼ਾਈਲ</string>
-  <string name="account_tls_password_label">ਨਿੱਜੀ ਕੁੰਜੀ ਪਾਸਵਰਡ</string>
-  <string name="account_tls_method_label">TLS ਵਿਧੀ</string>
-  <string name="account_tls_ciphers_label">TLS ਗੁਪਤ ਕੋਡ</string>
-  <string name="account_tls_server_name_label">ਸਰਵਰ ਦਾ ਨਾਮ</string>
-  <string name="account_tls_verify_server_label">ਪੁਸ਼ਟੀਕਰਨ ਵਾਲਾ ਸਰਵਰ</string>
-  <string name="account_tls_verify_client_label">ਪੁਸ਼ਟੀਕਰਨ ਵਾਲਾ ਕਲਾਇੰਟ</string>
-  <string name="account_require_client_certificate_label">TLS ਨੂੰ ਗਾਹਕ ਪ੍ਰਮਾਣ-ਪੱਤਰ ਦੀ ਲੋੜ ਹੈ</string>
-  <string name="account_tls_negotiation_timeout_sec">ਸਮਝੌਤੇ ਦੀ ਸਮਾਂ-ਸਮਾਪਤੀ (ਸਕਿੰਟ)</string>
   <string name="account_rtp_max_port">ਵੱਧ ਤੋਂ ਵੱਧ</string>
   <string name="account_rtp_min_port">ਘੱਟ ਤੋਂ ਘੱਟ</string>
-  <string name="account_rtp_port_range">ਆਡੀਓ RTP ਪੋਰਟ ਰੇਂਜ</string>
   <!--restore/backup-->
   <string name="account_new_device_password">ਖਾਤਾ ਅਣਲਾਕ ਕਰਨ ਲਈ ਮੁੱਖ ਪਾਸਵਰਡ ਦਾਖਲ ਕਰੋ</string>
   <string name="error_password_char_count">ਘੱਟੋ-ਘੱਟ 6 ਅੱਖਰ-ਚਿੰਨ੍ਹ</string>
@@ -158,10 +143,8 @@
   <string name="account_link_device">ਕਿਸੇ ਹੋਰ ਡੀਵਾਈਸ ਤੋਂ ਜੁੜੋ</string>
   <string name="account_link_button">ਨੈੱਟਵਰਕ ਤੋਂ ਕਨੈਕਟ ਕਰੋ</string>
   <string name="account_link_archive_button">ਬੈਕਅੱਪ ਤੋਂ ਕਨੈਕਟ ਕਰੋ</string>
-  <string name="account_link_prompt_pin">ਪਿੰਨ ਦਾਖਲ ਕਰੋ</string>
   <string name="account_new_button">Jami ਖਾਤਾ ਬਣਾਓ</string>
   <string name="account_link_export_button">ਨਵਾਂ ਡੀਵਾਈਸ ਜੋੜੋ</string>
-  <string name="account_start_export_button">ਪਿੰਨ ਸਿਰਜੋ</string>
   <string name="account_end_export_button">ਬੰਦ ਕਰੋ</string>
   <string name="account_connect_server_button">ਪ੍ਰਬੰਧ ਸਰਵਰ ਨਾਲ ਜੋੜੋ</string>
   <string name="account_connect_button">ਜੋੜੋ</string>
@@ -171,9 +154,7 @@
   <string name="account_connect_prompt_username">ਵਰਤੋਂਕਾਰ ਨਾਂ</string>
   <!--Name registration-->
   <string name="error_username_empty">ਵਰਤੋਂਕਾਰ ਨਾਂ ਦਾਖਲ ਕਰੋ</string>
-  <string name="username_available">ਵਰਤੋਂਕਾਰ ਨਾਂ ਲੈ ਸਕਦੇ ਹੋ !</string>
   <string name="register_name">ਨਾਂ ਦਰਜ ਕਰੋ</string>
-  <string name="trying_to_register_name">ਨਾਂ ਦੇ ਪੰਜੀਕਰਨ ਦੀ ਕੋਸ਼ਿਸ਼ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ</string>
   <string name="registered_username">ਪੰਜੀਕਿਰਤ ਵਰਤੋਂਕਾਰ ਨਾਂ</string>
   <string name="register_username">ਜਨਤਕ ਵਰਤੋਂਕਾਰ ਨਾਂ ਦਰਜ ਕਰੋ</string>
   <string name="register_recommended">ਸਿਫ਼ਾਰਸ਼ੀ</string>
@@ -200,7 +181,6 @@
   <string name="revoke_device_wait_title">ਕਿਰਪਾ ਕਰਕੇ ਉਡੀਕ ਕਰੋ…</string>
   <string name="revoke_device_wait_message">ਡੀਵਾਈਸ ਹਟਾਇਆ ਜਾ ਰਿਹਾ ਹੈ</string>
   <string name="rename_device_title">ਇਸ ਡੀਵਾਈਸ ਦਾ ਨਾਂ ਬਦਲੋ</string>
-  <string name="rename_device_message">ਆਪਣੇ Jami ਖਾਤੇ ਵਿੱਚ ਇਸ ਡੀਵਾਈਸ ਨੂੰ ਪਛਾਣਨ ਲਈ ਨਵਾਂ ਨਾਂ ਚੁਣੋ</string>
   <string name="rename_device_button">ਡੀਵਾਈਸ ਦਾ ਨਾਂ ਬਦਲੋ</string>
   <string name="account_rename_device_hint">ਨਵਾਂ ਡੀਵਾਈਸ ਨਾਂ ਚੁਣੋ</string>
   <string name="account_disabled_indicator">ਬੰਦ ਕੀਤਾ ਗਿਆ</string>

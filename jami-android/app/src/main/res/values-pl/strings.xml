@@ -154,7 +154,6 @@
   <string name="delete_contact">Usuń kontakt</string>
   <string name="conversation_action_remove_this_title">Usunąć ten kontakt?</string>
   <string name="conversation_action_remove_this_message">To usunie kontakt i całkowicie wyczyści historię rozmowy.</string>
-  <string name="copied_to_clipboard">%1$s skopiowany do schowka</string>
   <string name="conversation_action_select_peer_number">Wybierz numer</string>
   <string name="conversation_action_block_this">Blokuj kontakt</string>
   <string name="conversation_action_unblock_this">Odblokuj kontakt</string>
@@ -182,9 +181,6 @@
   <string name="conversation_type_contact">Kontakty Jami</string>
   <string name="conversation_type_private">Prywatne</string>
   <string name="conversation_type_group">Grupa</string>
-  <string name="conversation_contact_invited">Zaproszono %1$s</string>
-  <string name="conversation_contact_added">%1$s dołączony</string>
-  <string name="conversation_contact_left">%1$s jest lewy</string>
   <string name="conversation_search_hint">Szukaj rozmowy</string>
   <string name="audio_recorder_error">Nie znaleziono aplikacji rejestratora dźwięku.</string>
   <string name="video_recorder_error">Nie znaleziono aplikacji do nagrywania wideo.</string>
@@ -271,7 +267,6 @@
   <string name="file_transfer_status_error">Nie udało się, bo wystąpił błąd</string>
   <string name="file_transfer_status_timed_out">Czas upłynął</string>
   <string name="file_saved_in">Plik zapisano w  %s</string>
-  <string name="file_saved_successfully">Plik został zapisany poprawnie</string>
   <string name="file_download">Pobierz</string>
   <string name="title_media_viewer">Przeglądarka mediów</string>
   <string name="menu_file_open">Otwórz plik</string>

@@ -143,7 +143,6 @@
   <string name="delete_contact">संपर्क हटवा</string>
   <string name="conversation_action_remove_this_title">हा संपर्क हटवा?</string>
   <string name="conversation_action_remove_this_message">यामुळे संपर्क हटवला जाईल आणि संभाषणाचा इतिहास निश्चितपणे साफ केला जाईल.</string>
-  <string name="copied_to_clipboard">%1$s क्लिपबोर्डवर कॉपी</string>
   <string name="conversation_action_select_peer_number">एक नंबर निवडा</string>
   <string name="conversation_action_block_this">ब्लॉक संपर्क</string>
   <string name="conversation_action_unblock_this">संपर्क अवरोधित करा</string>
@@ -168,9 +167,6 @@
   <string name="conversation_preference_emoji">संभाषण इमोजी</string>
   <string name="conversation_type_contact">जमी संपर्क</string>
   <string name="conversation_type_private">खासगी</string>
-  <string name="conversation_contact_invited">%1$s ला आमंत्रित केले</string>
-  <string name="conversation_contact_added">%1$s जोडले</string>
-  <string name="conversation_contact_left">%1$s बाकी आहे</string>
   <string name="conversation_search_hint">शोध संभाषण</string>
   <string name="today">आज</string>
   <string name="yesterday">काल</string>
@@ -246,7 +242,6 @@
   <string name="file_transfer_status_error">त्रुटीमुळे अपयश</string>
   <string name="file_transfer_status_timed_out">कालबाह्य</string>
   <string name="file_saved_in">%s मध्ये जतन केलेली फाईल</string>
-  <string name="file_saved_successfully">जतन केलेली फाइल यशस्वी</string>
   <string name="file_download">डाऊनलोड करा</string>
   <string name="title_media_viewer">मीडिया दर्शक</string>
   <string name="menu_file_open">फाईल उघडा</string>

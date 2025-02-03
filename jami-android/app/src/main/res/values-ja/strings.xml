@@ -147,7 +147,6 @@
   <string name="delete_contact">連絡先を削除</string>
   <string name="conversation_action_remove_this_title">この連絡先を削除しますか？</string>
   <string name="conversation_action_remove_this_message">この操作は連絡先を削除し、会話の履歴を完全に削除します。</string>
-  <string name="copied_to_clipboard">%1$s をクリップボードにコピーしました</string>
   <string name="conversation_action_select_peer_number">番号を選択</string>
   <string name="conversation_action_block_this">連絡先をブロック</string>
   <string name="conversation_action_unblock_this">連絡先の解禁</string>
@@ -173,9 +172,6 @@
   <string name="conversation_type_contact">Jamiの連絡先</string>
   <string name="conversation_type_private">プライベート</string>
   <string name="conversation_type_group">グループ</string>
-  <string name="conversation_contact_invited">%1$s が招待されました</string>
-  <string name="conversation_contact_added">%1$s が加入</string>
-  <string name="conversation_contact_left">残り%1$s</string>
   <string name="conversation_search_hint">会話を検索</string>
   <string name="today">今日</string>
   <string name="yesterday">昨日</string>
@@ -252,7 +248,6 @@
   <string name="file_transfer_status_error">エラーで失敗しました</string>
   <string name="file_transfer_status_timed_out">タイムアウトしました</string>
   <string name="file_saved_in">%sに保存しました</string>
-  <string name="file_saved_successfully">ファイルが保存されました</string>
   <string name="file_download">入手</string>
   <string name="title_media_viewer">メディアビューアー</string>
   <string name="menu_file_open">ファイルを開く</string>

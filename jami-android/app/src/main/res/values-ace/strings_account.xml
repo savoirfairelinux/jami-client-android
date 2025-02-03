@@ -42,9 +42,9 @@
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">جنرال</string>
   <string name="account_basic_category">ڤڠاجرن ڤاس</string>
-  <string name="account_alias_label">نام حساب</string>
   <string name="account_hostname_label">نام ڤڠاجين</string>
   <string name="account_bootstrap_label">بوتسترپ</string>
+  <string name="account_name_server_label">نام سڤير</string>
   <string name="account_username_label">نام ڤڠڬونا</string>
   <string name="account_password_label">ڤاسر</string>
   <string name="account_optionnal_category">ڤڠاجرن ڤرليندوڠ</string>
@@ -76,8 +76,7 @@
   <string name="account_registration_exp_label">ڤرجالنن مڠمبيل</string>
   <string name="account_local_interface_label">ڤڠاجرن لوكالي</string>
   <string name="account_local_port_label">بندر لوكالي</string>
-  <string name="account_stun_enable_label">مڠڬوناكن Stun</string>
-  <string name="account_stun_server_label">سڤير ستون</string>
+  <string name="account_stun_enable_label">ڤڠڬونا STUN</string>
   <string name="account_accept_files">مڠاتس ڤايله يڠ دڤرچايا?? ي اوتوماتيك</string>
   <string name="account_conversation_settings_title">سيٽنگون دالم ڤڠاجرن</string>
   <string name="account_accept_files_max_size">ڤڠاجرن ڤمبلاجرن</string>
@@ -93,6 +92,7 @@
   <string name="account_published_address_label">ايندريس يڠ دڤرچايا?? ي</string>
   <string name="disabled">ڤڠاجين</string>
   <string name="enabled">ممبنتو</string>
+  <string name="default_value">ڤڠاجرن</string>
   <string name="account_proxy_label">ڤروكسي DHT</string>
   <string name="account_proxy_enable_label">مڠڬوناكن DHT proxy</string>
   <string name="account_proxy_server_label">ديت ڤروكسي</string>
@@ -111,21 +111,9 @@
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">مڠڬوناكن TLS Transport</string>
-  <string name="account_tls_port_label">TLS سمڤأي ڤڠڬيلن</string>
-  <string name="account_tls_certificate_list_label">ڤڠوربان ڤرلاونن</string>
-  <string name="account_tls_certificate_file_label">ڤايلي ڤرودوک</string>
-  <string name="account_tls_private_key_file_label">ڤايلي ڤريڤاتي</string>
   <string name="account_tls_password_label">ڤاسر ڤريڤاتي</string>
-  <string name="account_tls_method_label">طرق TLS</string>
-  <string name="account_tls_ciphers_label">سيفر TLS</string>
-  <string name="account_tls_server_name_label">نام ڤڠوروسن</string>
-  <string name="account_tls_verify_server_label">ڤرچاي ڤرچاي</string>
-  <string name="account_tls_verify_client_label">ڤرچاي ڤڠاجين</string>
-  <string name="account_require_client_certificate_label">TLS مڠمبيل سرتيۏيتي ڤمبلاجرن</string>
-  <string name="account_tls_negotiation_timeout_sec">ڤڠاجرن ڤڠاجرن (sec)</string>
   <string name="account_rtp_max_port">ڤڠاجرن</string>
   <string name="account_rtp_min_port">ڤڠاجين</string>
-  <string name="account_rtp_port_range">ڤڠاجين RTP ڤرودوق</string>
   <!--restore/backup-->
   <string name="account_new_device_password">مڠهادڤي ڤرسودن ڤاسر اونتوق مڠهادڤي کاتو</string>
   <string name="error_password_char_count">6 ڤڠاجرن ڤد ڤد</string>
@@ -163,12 +151,10 @@
   <string name="account_link_device">منچاريكن دري ڤرودوک لاين</string>
   <string name="account_link_button">منچاريكن دري نيتۏرك</string>
   <string name="account_link_archive_button">منوليسكن دري ڤڠوربانن</string>
-  <string name="account_link_prompt_pin">ڤڠڬيل PIN</string>
   <string name="account_new_button">منوليسكن اکاونت Jami</string>
   <string name="account_link_export_button">منچيلكن ڤڠڬونا?? ن بارو</string>
   <string name="account_link_show_button">مڠمبيل %d ڤرودوک يڠ دتڠݢوڠ</string>
   <string name="account_link_hide_button">ڤڠڬيلن يڠ دڤرچايا?? ي</string>
-  <string name="account_start_export_button">ڤڠاجرن PIN</string>
   <string name="account_end_export_button">ڤڠڬيلن</string>
   <string name="account_export_title">حساب لينک اونتوق ڤڠڬونا يڠ لاين</string>
   <string name="account_connect_server_button">منچاريکن کڤد ڤمبلاجرن</string>
@@ -179,10 +165,6 @@
   <string name="account_connect_prompt_username">نام ڤڠڬونا</string>
   <!--Name registration-->
   <string name="error_username_empty">مڠهادڤكن نام ڤڠڬونا</string>
-  <string name="no_registered_name_for_account">تيدق اد نام يڠ دڤرجواڠ</string>
-  <string name="username_available">نام ڤڠڬونا دڤرچايا?? ي!</string>
-  <string name="register_name">نام ڤرجواڠن</string>
-  <string name="trying_to_register_name">ممڤرچايا?? ي نام</string>
   <string name="registered_username">نام ڤڠڬونا يڠ دڤرجواڠ</string>
   <string name="register_username">نام ڤڠڬونا يڠ ڤرلو دڤرچايا?? ي</string>
   <string name="register_recommended">مڠمبيل</string>
@@ -209,13 +191,13 @@
   <string name="revoke_device_wait_title">تكايه صبر كني...</string>
   <string name="revoke_device_wait_message">ڤڠڬيلن ڤڠڬيلن</string>
   <string name="rename_device_title">نامن ڤڠڬونا اين</string>
-  <string name="rename_device_message">ڤيليه نام بارو اونتوق ممڤوپا?? ي ڤرودوک اين دالم کات Jami</string>
   <string name="rename_device_button">ڤڠڬونا ڤڠڬونا</string>
   <string name="account_rename_device_hint">نام ڤڠڬيلن بارو</string>
   <string name="account_device_this_indicator">اين دستگاه</string>
   <string name="account_disabled_indicator">ڤڠاجين</string>
   <!--Link a new device-->
   <string name="account_link_device_title">منچيلكن ڤڠڬونا?? ن بارو</string>
+  <string name="connect_device_scanqr">سكين كود QR</string>
   <string name="account_link_device_button">وصلكن</string>
   <!--Biometry-->
 </resources>

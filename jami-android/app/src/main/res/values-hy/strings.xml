@@ -144,7 +144,6 @@
   <string name="delete_contact">Հեռացնել շփումը</string>
   <string name="conversation_action_remove_this_title">Սրբել այս շփումը:</string>
   <string name="conversation_action_remove_this_message">Սա կսահմանի կոնտակտը եւ հաստատ կսահմանի զրույցի պատմությունը:</string>
-  <string name="copied_to_clipboard">%1$s-ը կփոխանցվել է կլիմբորդի վրա</string>
   <string name="conversation_action_select_peer_number">Ընտրեք մի թիվ</string>
   <string name="conversation_action_block_this">Բլոկային շփումը</string>
   <string name="conversation_action_unblock_this">Բաց թողնել շփումը</string>
@@ -169,9 +168,6 @@
   <string name="conversation_preference_emoji">Զրույցի էմոգի</string>
   <string name="conversation_type_contact">Ջամիի շփումը</string>
   <string name="conversation_type_private">Անձնական</string>
-  <string name="conversation_contact_invited">%1$s-ը հրավիրվել է</string>
-  <string name="conversation_contact_added">%1$s-ը միացել է</string>
-  <string name="conversation_contact_left">%1$s-ը ձախ է</string>
   <string name="conversation_search_hint">Հետազոտական զրույց</string>
   <string name="today">Այսօր</string>
   <string name="yesterday">Երեկ</string>
@@ -247,7 +243,6 @@
   <string name="file_transfer_status_error">սխալի պատճառով չկարողացավ</string>
   <string name="file_transfer_status_timed_out">ժամանակավոր</string>
   <string name="file_saved_in">%s- ում պահպանված ֆայլ</string>
-  <string name="file_saved_successfully">Փրկված ֆայլը հաջողությամբ</string>
   <string name="file_download">Ներբեռնել</string>
   <string name="title_media_viewer">ԶԼՄ-ների դիտող</string>
   <string name="menu_file_open">Բաց ֆայլ</string>

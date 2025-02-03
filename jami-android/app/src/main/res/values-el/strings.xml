@@ -145,7 +145,6 @@
   <string name="delete_contact">Διαγραφή επαφής</string>
   <string name="conversation_action_remove_this_title">Διαγραφή αυτής της επαφής;</string>
   <string name="conversation_action_remove_this_message">Αυτό θα διαγράψει την επαφή και σίγουρα και το ιστορικό συνομιλίας.</string>
-  <string name="copied_to_clipboard">%1$s αντιγράφτηκε στο πρόχειρο</string>
   <string name="conversation_action_select_peer_number">Επιλέξτε αριθμό </string>
   <string name="conversation_action_block_this">Μπλοκάρισμα επαφής</string>
   <string name="conversation_action_unblock_this">Ανοίξτε την επαφή</string>
@@ -171,9 +170,6 @@
   <string name="conversation_type_contact">Επαφή Jami</string>
   <string name="conversation_type_private">Ιδιωτικό</string>
   <string name="conversation_type_group">Ομάδα</string>
-  <string name="conversation_contact_invited">%1$s προσκλήθηκε</string>
-  <string name="conversation_contact_added">%1$s μπήκε</string>
-  <string name="conversation_contact_left">%1$s έφυγε</string>
   <string name="conversation_search_hint">Ψάξτε για συζήτηση</string>
   <string name="today">Σήμερα</string>
   <string name="yesterday">Χθες</string>
@@ -249,7 +245,6 @@
   <string name="file_transfer_status_error">αποτυχία λόγω σφάλματος</string>
   <string name="file_transfer_status_timed_out">έληξε</string>
   <string name="file_saved_in">Το αρχείο αποθηκεύτηκε σε %s</string>
-  <string name="file_saved_successfully">Το αρχείο αποθηκεύτηκε επιτυχώς</string>
   <string name="file_download">Λήψη</string>
   <string name="title_media_viewer">Προβολέας πολυμέσων</string>
   <string name="menu_file_open">Άνοιγμα αρχείου</string>

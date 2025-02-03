@@ -143,7 +143,6 @@
   <string name="delete_contact">Forigi kontakton</string>
   <string name="conversation_action_remove_this_title">Forviŝi tiun kontakton?</string>
   <string name="conversation_action_remove_this_message">Tio forviŝos la kontakton kaj definitive forviŝos la konversacian historion.</string>
-  <string name="copied_to_clipboard">%1$s kopiita en tondejon</string>
   <string name="conversation_action_select_peer_number">Elektu numeron</string>
   <string name="conversation_action_block_this">Kontakto blokita</string>
   <string name="conversation_action_unblock_this">Malblokigu kontakton</string>
@@ -169,9 +168,6 @@
   <string name="conversation_type_contact">Jam kontakto</string>
   <string name="conversation_type_private">Privata</string>
   <string name="conversation_type_group">Grupo</string>
-  <string name="conversation_contact_invited">%1$s estis invitita</string>
-  <string name="conversation_contact_added">%1$s aliĝis</string>
-  <string name="conversation_contact_left">%1$s estas maldekstre</string>
   <string name="conversation_search_hint">Serĉu konversacion</string>
   <string name="today">Hodiaŭ</string>
   <string name="yesterday">Hieraŭ</string>
@@ -247,7 +243,6 @@
   <string name="file_transfer_status_error">ne sukcesis pro eraro</string>
   <string name="file_transfer_status_timed_out">tempo de la tempo</string>
   <string name="file_saved_in">Fiilo savita en %s</string>
-  <string name="file_saved_successfully">Fiilo sukcesis</string>
   <string name="file_download">Elŝutu</string>
   <string name="title_media_viewer">Amaskomunikila spektanto</string>
   <string name="menu_file_open">Malfermu dosieron</string>

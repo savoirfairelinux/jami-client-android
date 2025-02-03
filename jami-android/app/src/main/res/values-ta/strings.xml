@@ -143,7 +143,6 @@
   <string name="delete_contact">தொடர்புகளை நீக்கவும்</string>
   <string name="conversation_action_remove_this_title">இந்த தொடர்பு நீக்க?</string>
   <string name="conversation_action_remove_this_message">இது தொடர்பு நீக்கி உரையாடல் வரலாற்றை அழிக்கும்.</string>
-  <string name="copied_to_clipboard">%1$s கிளிப்போர்டில் நகலெடுக்கப்பட்டது</string>
   <string name="conversation_action_select_peer_number">ஒரு எண்ணைத் தேர்ந்தெடுக்கவும்</string>
   <string name="conversation_action_block_this">பிளாக் தொடர்பு</string>
   <string name="conversation_action_unblock_this">தொடர்புகளைத் திறக்கவும்</string>
@@ -168,9 +167,6 @@
   <string name="conversation_preference_emoji">உரையாடல் ஈமோஜி</string>
   <string name="conversation_type_contact">ஜாமி தொடர்பு</string>
   <string name="conversation_type_private">தனியார்</string>
-  <string name="conversation_contact_invited">%1$s அழைக்கப்பட்டார்</string>
-  <string name="conversation_contact_added">%1$s சேர்க்கப்பட்டது</string>
-  <string name="conversation_contact_left">%1$s இடது</string>
   <string name="conversation_search_hint">தேடல் உரையாடல்</string>
   <string name="today">இன்று</string>
   <string name="yesterday">நேற்று</string>
@@ -246,7 +242,6 @@
   <string name="file_transfer_status_error">தவறு காரணமாக தோல்வி</string>
   <string name="file_transfer_status_timed_out">காலக்கெடு</string>
   <string name="file_saved_in">%s இல் சேமிக்கப்பட்ட கோப்பு</string>
-  <string name="file_saved_successfully">சேமிக்கப்பட்ட கோப்பு வெற்றிகரமாக</string>
   <string name="file_download">பதிவிறக்கம்</string>
   <string name="title_media_viewer">ஊடக பார்வையாளர்</string>
   <string name="menu_file_open">திறந்த கோப்பு</string>

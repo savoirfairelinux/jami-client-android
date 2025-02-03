@@ -145,7 +145,6 @@
   <string name="delete_contact">Ta bort kontakt</string>
   <string name="conversation_action_remove_this_title">Ta bort den här kontakten?</string>
   <string name="conversation_action_remove_this_message">Detta kommer att ta bort kontakten och rensa konversationshistoriken för gott.</string>
-  <string name="copied_to_clipboard">%1$s kopierat till urklipp</string>
   <string name="conversation_action_select_peer_number">Välj ett nummer</string>
   <string name="conversation_action_block_this">Blockera kontakt</string>
   <string name="conversation_action_unblock_this">Avblockera kontakt</string>
@@ -171,9 +170,6 @@
   <string name="conversation_type_contact">Jami kontakt</string>
   <string name="conversation_type_private">Privat</string>
   <string name="conversation_type_group">Grupp</string>
-  <string name="conversation_contact_invited">%1$s har blivit inbjuden</string>
-  <string name="conversation_contact_added">%1$s ansluten</string>
-  <string name="conversation_contact_left">%1$s är vänster</string>
   <string name="conversation_search_hint">Söksamtal</string>
   <string name="today">I dag</string>
   <string name="yesterday">I går</string>
@@ -249,7 +245,6 @@
   <string name="file_transfer_status_error">misslyckades på grund av fel</string>
   <string name="file_transfer_status_timed_out">avbrott</string>
   <string name="file_saved_in">Fil sparad i %s</string>
-  <string name="file_saved_successfully">Filen sparade korrekt</string>
   <string name="file_download">Ladda ner</string>
   <string name="title_media_viewer">Mediaspelare</string>
   <string name="menu_file_open">Öppna fil</string>

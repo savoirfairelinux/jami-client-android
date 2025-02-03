@@ -141,7 +141,6 @@
   <string name="delete_contact">Odstrániť kontakt</string>
   <string name="conversation_action_remove_this_title">Odstrániť tento kontakt?</string>
   <string name="conversation_action_remove_this_message">Kontakt i história konverzácie bude natrvalo vymazaná. </string>
-  <string name="copied_to_clipboard">%1$s skopírované do schránky</string>
   <string name="conversation_action_select_peer_number">Zvoliť číslo</string>
   <string name="conversation_action_block_this">Zablokovať kontakt</string>
   <string name="conversation_action_unblock_this">Odblokovať kontakt</string>
@@ -167,9 +166,6 @@
   <string name="conversation_type_contact">Kontakt s Jami</string>
   <string name="conversation_type_private">Privátny</string>
   <string name="conversation_type_group">Skupina</string>
-  <string name="conversation_contact_invited">%1$s bol pozvaný</string>
-  <string name="conversation_contact_added">Pridaný %1$s</string>
-  <string name="conversation_contact_left">%1$s je ľavý</string>
   <string name="conversation_search_hint">Vyhľadávacie rozhovor</string>
   <string name="today">Dnes</string>
   <string name="yesterday">Včera</string>
@@ -246,7 +242,6 @@
   <string name="file_transfer_status_error">zlyhalo kvôli chybe</string>
   <string name="file_transfer_status_timed_out">vypršal čas</string>
   <string name="file_saved_in">Súbor uložený v %s</string>
-  <string name="file_saved_successfully">Súbor úspešne uložený</string>
   <string name="file_download">Stiahnite</string>
   <string name="title_media_viewer">Zobrazovač médií</string>
   <string name="menu_file_open">Otvoriť súbor</string>

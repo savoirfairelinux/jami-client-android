@@ -80,7 +80,6 @@
   <string name="swarm_group_action_leave_title">¿Dejar este grupo?</string>
   <string name="swarm_group_action_leave_message">Esto eliminará la conversación de tu lista de conversaciones.</string>
   <string name="conversation_action_copy_peer_number">Copiar identificador de contacto</string>
-  <string name="copied_to_clipboard">%1$s copiado al portapapeles</string>
   <string name="conversation_action_unblock_this">Desbloquear contacto</string>
   <string name="conversation_action_go_to_call">Volver a llamar</string>
   <string name="conversation_action_incoming_call">Llamada entrante</string>
@@ -95,8 +94,11 @@
   <string name="conversation_reply_you">Tú</string>
   <string name="conversation_type_private">Privado</string>
   <string name="conversation_type_group">Grupo</string>
-  <string name="conversation_contact_blocked">Se bloqueó a %1$s</string>
-  <string name="conversation_contact_unblocked">Se desbloqueó a %1$s</string>
+  <string name="conversation_contact_invited">%1$s fue invitado a unirse a la conversación.</string>
+  <string name="conversation_contact_added">%1$s se ha unido a la conversación.</string>
+  <string name="conversation_contact_left">%1$s ha abandonado la conversación.</string>
+  <string name="conversation_contact_blocked">%1$s fue bloqueado de la conversación.</string>
+  <string name="conversation_contact_unblocked">%1$s fue desbloqueado de la conversación.</string>
   <string name="conversation_search_hint">Buscar conversación</string>
   <string name="audio_recorder_error">No se encontró la aplicación Grabadora de audio.</string>
   <string name="video_recorder_error">No se encontró la aplicación Grabadora de vídeo.</string>
@@ -116,6 +118,7 @@
   <!--Contacts-->
   <string name="help_pin_enter">Ingrese el PIN de otra cuenta Jami configurada. Utilice la función\" Exportar cuenta Jami \" para obtener un PIN.</string>
   <string name="pin_copied">Código PIN copiado en el portapapeles.</string>
+  <string name="copied_clipboard">Copiado al portapapeles.</string>
   <string name="hist_contact_blocked">Contacto bloqueado</string>
   <string name="hist_contact_unblocked">Contacto desbloqueado</string>
   <!--Account summary-->

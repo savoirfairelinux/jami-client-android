@@ -143,7 +143,6 @@
   <string name="delete_contact">పరిచయాన్ని తొలగించు</string>
   <string name="conversation_action_remove_this_title">ఈ పరిచయం తొలగించడానికి?</string>
   <string name="conversation_action_remove_this_message">ఇది పరిచయాన్ని తొలగిస్తుంది మరియు సంభాషణ చరిత్రను ఖచ్చితంగా క్లియర్ చేస్తుంది.</string>
-  <string name="copied_to_clipboard">%1$s ను క్లిప్బోర్డ్ కు కాపీ చేయబడింది</string>
   <string name="conversation_action_select_peer_number">ఒక సంఖ్యను ఎంచుకోండి</string>
   <string name="conversation_action_block_this">బ్లాక్ కాంటాక్ట్</string>
   <string name="conversation_action_unblock_this">పరిచయాలను అన్బ్లాక్ చేయండి</string>
@@ -168,9 +167,6 @@
   <string name="conversation_preference_emoji">సంభాషణ ఎమోజీ</string>
   <string name="conversation_type_contact">జామి పరిచయం</string>
   <string name="conversation_type_private">ప్రైవేటు</string>
-  <string name="conversation_contact_invited">%1$s ఆహ్వానించబడింది</string>
-  <string name="conversation_contact_added">%1$s చేరింది</string>
-  <string name="conversation_contact_left">%1$s ఎడమవైపు</string>
   <string name="conversation_search_hint">శోధన సంభాషణ</string>
   <string name="today">నేడు</string>
   <string name="yesterday">నిన్న</string>
@@ -246,7 +242,6 @@
   <string name="file_transfer_status_error">తప్పు కారణంగా విఫలమైంది</string>
   <string name="file_transfer_status_timed_out">కాలపరిమితి</string>
   <string name="file_saved_in">%s లో సేవ్ చేయబడిన ఫైల్</string>
-  <string name="file_saved_successfully">విజయవంతంగా సేవ్ చేయబడిన ఫైల్</string>
   <string name="file_download">డౌన్లోడ్</string>
   <string name="title_media_viewer">మీడియా వీక్షకుడు</string>
   <string name="menu_file_open">ఫైల్ తెరిచి</string>

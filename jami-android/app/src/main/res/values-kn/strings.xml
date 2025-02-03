@@ -143,7 +143,6 @@
   <string name="delete_contact">ಸಂಪರ್ಕವನ್ನು ಅಳಿಸಿ</string>
   <string name="conversation_action_remove_this_title">ಈ ಸಂಪರ್ಕವನ್ನು ಅಳಿಸಲು?</string>
   <string name="conversation_action_remove_this_message">ಇದು ಸಂಪರ್ಕವನ್ನು ಅಳಿಸುತ್ತದೆ ಮತ್ತು ಸಂಭಾಷಣೆ ಇತಿಹಾಸವನ್ನು ಖಂಡಿತವಾಗಿಯೂ ತೆರವುಗೊಳಿಸುತ್ತದೆ.</string>
-  <string name="copied_to_clipboard">%1$s ಅನ್ನು ಕ್ಲಿಪ್ಬೋರ್ಡ್ಗೆ ನಕಲಿಸಲಾಗಿದೆ</string>
   <string name="conversation_action_select_peer_number">ಒಂದು ಸಂಖ್ಯೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ</string>
   <string name="conversation_action_block_this">ಬ್ಲಾಕ್ ಸಂಪರ್ಕ</string>
   <string name="conversation_action_unblock_this">ಸಂಪರ್ಕವನ್ನು ನಿರ್ಬಂಧಿಸಲು</string>
@@ -168,9 +167,6 @@
   <string name="conversation_preference_emoji">ಸಂಭಾಷಣೆ ಎಮೋಜಿ</string>
   <string name="conversation_type_contact">ಜಾಮಿ ಸಂಪರ್ಕ</string>
   <string name="conversation_type_private">ಖಾಸಗಿ</string>
-  <string name="conversation_contact_invited">%1$s ಅನ್ನು ಆಹ್ವಾನಿಸಲಾಗಿದೆ</string>
-  <string name="conversation_contact_added">%1$s ಸೇರಿಕೊಂಡಿದೆ</string>
-  <string name="conversation_contact_left">%1$s ಎಡಕ್ಕೆ</string>
   <string name="conversation_search_hint">ಹುಡುಕಾಟ ಸಂಭಾಷಣೆ</string>
   <string name="today">ಇಂದು</string>
   <string name="yesterday">ನಿನ್ನೆ</string>
@@ -246,7 +242,6 @@
   <string name="file_transfer_status_error">ದೋಷದಿಂದಾಗಿ ವಿಫಲವಾಗಿದೆ</string>
   <string name="file_transfer_status_timed_out">ಸಮಯ</string>
   <string name="file_saved_in">%s ನಲ್ಲಿ ಉಳಿಸಲಾದ ಫೈಲ್</string>
-  <string name="file_saved_successfully">ಯಶಸ್ವಿಯಾಗಿ ಉಳಿಸಿದ ಫೈಲ್</string>
   <string name="file_download">ಡೌನ್ಲೋಡ್ ಮಾಡಿ</string>
   <string name="title_media_viewer">ಮಾಧ್ಯಮ ವೀಕ್ಷಕ</string>
   <string name="menu_file_open">ತೆರೆದ ಕಡತ</string>

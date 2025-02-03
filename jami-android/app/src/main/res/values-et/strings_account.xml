@@ -56,9 +56,10 @@ Saad oma kontot hiljem muuta</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Üldist</string>
   <string name="account_basic_category">Põhiseadistused</string>
-  <string name="account_alias_label">Kasutajakonto nimi</string>
+  <string name="account_alias_label">Kuvatav nimi</string>
   <string name="account_hostname_label">Serveri nimi</string>
   <string name="account_bootstrap_label">Laadi mällu</string>
+  <string name="account_name_server_label">Nimeserver</string>
   <string name="account_username_label">Kasutajanimi</string>
   <string name="account_password_label">Salasõna</string>
   <string name="account_optionnal_category">Täiendavad seadistused</string>
@@ -92,7 +93,7 @@ Saad oma kontot hiljem muuta</string>
   <string name="account_registration_exp_label">Registreerumise aegumine</string>
   <string name="account_local_interface_label">Kohalik võrguliides</string>
   <string name="account_local_port_label">Kohalik port</string>
-  <string name="account_stun_enable_label">Kasuta STUN\'i</string>
+  <string name="account_stun_enable_label">Kasuta STUN-serverit</string>
   <string name="account_stun_server_label">STUN\'i server</string>
   <string name="account_accept_files">Automaatselt nõustu saadetavate failide vastuvõtmisega</string>
   <string name="account_conversation_settings_title">Vestluste seadistused</string>
@@ -107,8 +108,10 @@ Saad oma kontot hiljem muuta</string>
   <string name="account_published_same_as_local_label">Kohalikuga sama avaldatud</string>
   <string name="account_published_port_label">Avaldatav port</string>
   <string name="account_published_address_label">Avaldatav aadress</string>
+  <string name="account_connectivity_label">Võrdõigusvõrgu ühenduvus</string>
   <string name="disabled">Väljalülitatud</string>
   <string name="enabled">Sisselülitatud</string>
+  <string name="default_value">Vaikesäte</string>
   <string name="account_proxy_label">DHT proksiserver</string>
   <string name="account_proxy_enable_label">Kasuta DHT proksiserverit</string>
   <string name="account_proxy_list_enable_label">Kasuta DHT proksiserverite loendit</string>
@@ -130,8 +133,8 @@ Saad oma kontot hiljem muuta</string>
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Kasuta TLS-protokolli</string>
   <string name="account_tls_port_label">Sissetulevate ühenduste TLS port</string>
-  <string name="account_tls_certificate_list_label">Sertifitseerimisasutused</string>
-  <string name="account_tls_certificate_file_label">Sertifikaatide fail</string>
+  <string name="account_tls_certificate_list_label">Sertifitseerimiskeskused</string>
+  <string name="account_tls_certificate_file_label">Sertifikaadifail</string>
   <string name="account_tls_private_key_file_label">Privaatvõtme fail</string>
   <string name="account_tls_password_label">Privaatvõtme salasõna</string>
   <string name="account_tls_method_label">TLS\'i meetod</string>
@@ -140,7 +143,7 @@ Saad oma kontot hiljem muuta</string>
   <string name="account_tls_verify_server_label">Verifitseeri server</string>
   <string name="account_tls_verify_client_label">Verifitseeri klient</string>
   <string name="account_require_client_certificate_label">TLS eeldab kliendi sertifikaati</string>
-  <string name="account_tls_negotiation_timeout_sec">Päringu aegumine (sekundites)</string>
+  <string name="account_tls_negotiation_timeout_sec">Aegumine ühenduse loomisel (sekundites)</string>
   <string name="account_rtp_max_port">Maksimaalselt</string>
   <string name="account_rtp_min_port">Minimaalselt</string>
   <string name="account_rtp_port_range">RTP audio kasutatav portide vahemik</string>
@@ -220,8 +223,7 @@ Saad oma kontot hiljem muuta</string>
   <string name="error_username_empty">Sisesta kasutajanimi</string>
   <string name="no_registered_name_for_account">Registreeritud kasutajanimi puudub</string>
   <string name="username_available">Kasutajanimi on saadaval!</string>
-  <string name="register_name">Registreeri nimi</string>
-  <string name="trying_to_register_name">Püüan nime registreerida</string>
+  <string name="trying_to_register_name">Püüan kasutajanime registreerida</string>
   <string name="registered_username">Registreeritud kasutajanimi</string>
   <string name="register_username">Registreerige avalik kasutajanimi</string>
   <string name="register_recommended">Soovitatav</string>
@@ -260,21 +262,21 @@ Saad oma kontot hiljem muuta</string>
   <!--Link a new device-->
   <string name="account_link_prompt_pin_manually">Sisesta PIN-kood käsitsi</string>
   <string name="qr_invalid">See pole Jami autentimiseks mõeldud QR-kood</string>
-  <string name="content_description_checkbox">Sinu näidatud QR-kood on vigane</string>
+  <string name="content_description_checkbox">Sinu näidatud QR-kood on korrektne</string>
   <string name="error_format_not_supported">See vorming pole toetatud</string>
   <string name="account_link_info">Uues Jami rakenduses kas skaneeri seda QR-koodi või sisesta PIN-kood käsitsi.</string>
   <string name="account_link_device_title">Seo uus seade</string>
   <string name="account_link_password">Selle kasutajakonto andmed on krüptitud salasõnaga. PIN-koodi loomiseks palun sisesta oma salasõna.</string>
   <string name="account_link_generate_button">Loo</string>
   <string name="account_link_time_valid">See PIN-kood saab olema vigane: %1$s.</string>
-  <string name="account_link_device_info">Oma teisest Jami rakendusest vali „Seo uus seade“ ning kuva QR-koodi või sisesta PIN-kood</string>
+  <string name="account_link_device_info">Oma teisest Jami rakendusest vali „Seo uus seade“ ning kuva QR-koodi või sisesta PIN-kood.</string>
   <string name="account_generate_export_device">Teises seadmes</string>
   <string name="account_generate_export_info">Paigalda ja käivita Jami ning vali „Impordi teisest seadmest“ ning skaneeri QR-koodi.</string>
-  <string name="content_description_qr_generated">Sinu QR-kood</string>
+  <string name="content_description_qr_generated">Kasutajakonto QR-kood</string>
   <string name="account_generate_export_invalid">See PIN-kood enam ei kehti.\nUue seadme sidumiseks sisesta salasõna ja loo uus PIN-kood.</string>
   <string name="account_generate_export_invalid_two">See PIN-kood enam ei kehti.\nUue seadme sidumiseks loo uus PIN-kood.</string>
   <string name="help_pin_info">Täida, kui konto on salasõnaga krüptitud</string>
-  <string name="connect_device_scanqr">Skaneeri QR-koodi</string>
+  <string name="connect_device_scanqr">QR-koodi skanneerimine</string>
   <string name="connect_device_enterPIN">või sisesta PIN-kood</string>
   <string name="account_link_device_button">Ühenda</string>
   <!--Biometry-->

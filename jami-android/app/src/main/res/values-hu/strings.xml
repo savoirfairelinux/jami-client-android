@@ -185,7 +185,6 @@
   <string name="swarm_group_action_leave_title">Kilép ebből a csoportból?</string>
   <string name="swarm_group_action_leave_message">Ez eltávolít a beszélgetést a beszélgetéslistájáról.</string>
   <string name="conversation_action_copy_peer_number">Kapcsolattartó-azonosító másolása</string>
-  <string name="copied_to_clipboard">%1$s kimásolva a vágólapra</string>
   <string name="conversation_action_select_peer_number">Válasszon egy számot</string>
   <string name="conversation_action_block_this">Kapcsolattartó letiltása</string>
   <string name="conversation_action_unblock_this">Kapcsolattartó letiltás feloldása</string>
@@ -214,11 +213,11 @@
   <string name="conversation_type_contact">Jami-kapcsolattartó</string>
   <string name="conversation_type_private">Magánjellegű</string>
   <string name="conversation_type_group">Csoport</string>
-  <string name="conversation_contact_invited">%1$s meghívva lett</string>
-  <string name="conversation_contact_added">%1$s csatlakozott</string>
-  <string name="conversation_contact_left">%1$s kilépett</string>
-  <string name="conversation_contact_blocked">%1$s letiltva lett</string>
-  <string name="conversation_contact_unblocked">%1$s letiltása feloldva</string>
+  <string name="conversation_contact_invited">%1$s meghívást kapott, hogy csatlakozzon a beszélgetéshez.</string>
+  <string name="conversation_contact_added">%1$s csatlakozott a beszélgetéshez.</string>
+  <string name="conversation_contact_left">%1$s kilépett a beszélgetésből.</string>
+  <string name="conversation_contact_blocked">%1$s le lett tiltva a beszélgetésből.</string>
+  <string name="conversation_contact_unblocked">%1$s beszélgetés letiltása fel lett oldva.</string>
   <string name="conversation_search_hint">Beszélgetés keresése</string>
   <string name="audio_recorder_error">A hangfelvevő alkalmazás nem található.</string>
   <string name="video_recorder_error">A videófelvevő alkalmazás nem található.</string>
@@ -247,7 +246,8 @@
   <string name="help_password_enter">Fő Jami-fiók jelszavának megadása.</string>
   <string name="help_server_enter">Adja meg a felügyeleti kiszolgáló URL-jét.</string>
   <string name="help_pin_enter">Adja meg egy másik beállított Jami fiók PIN-kodját. Használja a „Jami-fiók exportálása” működést a PIN-kod eléréséhez.</string>
-  <string name="pin_copied">PIN-kód kimásolva a vágólapra.</string>
+  <string name="pin_copied">A PIN-kód kimásolva a vágólapra.</string>
+  <string name="copied_clipboard">A vágólapra másolva.</string>
   <string name="wizard_next">Tovább</string>
   <string name="wizard_back">Vissza</string>
   <string name="wizard_skip">Átugrani</string>
@@ -323,7 +323,6 @@
   <string name="file_transfer_status_error">Ismeretlen hiba történt.</string>
   <string name="file_transfer_status_timed_out">időtúllépés</string>
   <string name="file_saved_in">Fájl mentve ide: %s</string>
-  <string name="file_saved_successfully">Fájl sikeresen mentve.</string>
   <string name="file_download">Letöltés</string>
   <string name="no_space_left_on_device">Nincs szabad tárhely az eszközön.</string>
   <string name="title_media_viewer">Média lejátszó</string>
@@ -429,7 +428,7 @@
   <string name="jami_id_copy">Jami-azonosító másolása</string>
   <string name="jami_id_share">Jami-azonosító megosztása</string>
   <string name="jami_id_validate">Felhasználónév bejegyeztetése</string>
-  <string name="jami_id_available">A felhasználónév nem elérhető</string>
+  <string name="jami_id_available">A felhasználónév elérhető.</string>
   <string name="jami_id_not_available">A felhasználónév nem elérhető\n• Legfeljebb 32 karakter\n• Megengedett speciális karakterek: kötőjel (-), aláhúzás (_)</string>
   <string name="jami_id_info">• Legfeljebb 32 karakter\n• Megengedett speciális karakterek: kötőjel (-), aláhúzás (_)</string>
   <string name="jami_id_looking_for_availability">A felhasználónév rendelkezésre állásának keresése…</string>
@@ -456,6 +455,6 @@
   <string name="unable_to_load">Nem sikerült betölteni: %1$s</string>
   <string name="load_success">%1$s: engedélyezve</string>
   <string name="unload_success">%1$s: letiltva</string>
-  <string name="install_success">A(z) %1$s bővítmény sikeresen telepítve.</string>
+  <string name="install_success">A(z) %1$s bővítmény telepítése sikerült.</string>
   <string name="install_error">Hiba történt a bővítmény importálása közben.</string>
 </resources>

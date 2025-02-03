@@ -43,9 +43,9 @@
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">பொது</string>
   <string name="account_basic_category">அடிப்படை அமைப்புகள்</string>
-  <string name="account_alias_label">கணக்கு பெயர்</string>
   <string name="account_hostname_label">ஹோஸ்ட் பெயர்</string>
   <string name="account_bootstrap_label">துவக்கப் பட்டியல்</string>
+  <string name="account_name_server_label">பெயர் சேவையகம்</string>
   <string name="account_username_label">பயனர் பெயர்</string>
   <string name="account_password_label">கடவுச்சொல்</string>
   <string name="account_optionnal_category">விருப்ப அமைப்புகள்</string>
@@ -77,8 +77,7 @@
   <string name="account_registration_exp_label">பதிவு காலம் முடிவடைகிறது</string>
   <string name="account_local_interface_label">உள்ளூர் இடைமுகம்</string>
   <string name="account_local_port_label">உள்ளூர் துறைமுகம்</string>
-  <string name="account_stun_enable_label">Stun ஐப் பயன்படுத்துக</string>
-  <string name="account_stun_server_label">Stun சர்வர்</string>
+  <string name="account_stun_enable_label">STUN ஐ பயன்படுத்தவும்</string>
   <string name="account_accept_files">உள்வரும் கோப்புகளை தானாக ஏற்றுக்கொள்ளவும்</string>
   <string name="account_conversation_settings_title">உரையாடல் அமைப்புகள்</string>
   <string name="account_accept_files_max_size">தானாக ஏற்றுக்கொள்ளக்கூடிய அதிகபட்ச கோப்பு அளவு</string>
@@ -94,6 +93,7 @@
   <string name="account_published_address_label">வெளியிடப்பட்ட முகவரி</string>
   <string name="disabled">இயலாமை</string>
   <string name="enabled">இயக்கப்பட்ட</string>
+  <string name="default_value">இயல்புநிலை</string>
   <string name="account_proxy_label">DHT ப்ராக்ஸி</string>
   <string name="account_proxy_enable_label">DHT ப்ராக்ஸி பயன்படுத்தவும்</string>
   <string name="account_proxy_server_label">DHT ப்ராக்ஸி முகவரி</string>
@@ -112,21 +112,9 @@
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">TLS போக்குவரத்தை பயன்படுத்தவும்</string>
-  <string name="account_tls_port_label">TLS செவிப்புலன்கள் துறைமுகம்</string>
-  <string name="account_tls_certificate_list_label">சான்றிதழ் வழங்கும் அதிகாரிகள்</string>
-  <string name="account_tls_certificate_file_label">சான்றிதழ் கோப்பு</string>
-  <string name="account_tls_private_key_file_label">தனியார் விசை கோப்பு</string>
-  <string name="account_tls_password_label">தனியார் விசை கடவுச்சொல்</string>
-  <string name="account_tls_method_label">TLS முறை</string>
-  <string name="account_tls_ciphers_label">TLS சிஃப்பர்கள்</string>
-  <string name="account_tls_server_name_label">சேவையக பெயர்</string>
-  <string name="account_tls_verify_server_label">சேவையகத்தை சரிபார்க்கவும்</string>
-  <string name="account_tls_verify_client_label">வாடிக்கையாளர் சரிபார்க்கவும்</string>
-  <string name="account_require_client_certificate_label">TLS வாடிக்கையாளர் சான்றிதழைக் கோருகிறது</string>
-  <string name="account_tls_negotiation_timeout_sec">பேச்சுவார்த்தை கால அவகாசம் (sec)</string>
+  <string name="account_tls_password_label">தனியார் திறவுகோல் கடவுச்சொல்</string>
   <string name="account_rtp_max_port">அதிகபட்ச</string>
   <string name="account_rtp_min_port">குறைந்தபட்ச</string>
-  <string name="account_rtp_port_range">ஆடியோ RTP போர்ட் வரம்பு</string>
   <!--restore/backup-->
   <string name="account_new_device_password">கணக்கை திறக்க முக்கிய கடவுச்சொல்லை உள்ளிடவும்</string>
   <string name="error_password_char_count">குறைந்தபட்சம் 6 எழுத்துக்கள்</string>
@@ -164,12 +152,10 @@
   <string name="account_link_device">மற்றொரு சாதனத்திலிருந்து இணைக்கவும்</string>
   <string name="account_link_button">நெட்வொர்க்கிலிருந்து இணைப்பு</string>
   <string name="account_link_archive_button">காப்பு இருந்து இணைக்கவும்</string>
-  <string name="account_link_prompt_pin">PIN ஐ உள்ளிடவும்</string>
   <string name="account_new_button">ஜாமி கணக்கை உருவாக்கவும்</string>
   <string name="account_link_export_button">புதிய சாதனத்தை இணைக்கவும்</string>
   <string name="account_link_show_button">%d இணைக்கப்பட்ட சாதனத்தை காட்டவும்</string>
   <string name="account_link_hide_button">இணைக்கப்பட்ட சாதனத்தை மறைக்கவும்</string>
-  <string name="account_start_export_button">PIN ஐ உருவாக்கவும்</string>
   <string name="account_end_export_button">நெருக்கமான</string>
   <string name="account_export_title">மற்ற சாதனங்களுடன் இணைப்பு கணக்கு</string>
   <string name="account_connect_server_button">நிர்வாக சேவையகத்துடன் இணைக்கவும்</string>
@@ -180,10 +166,7 @@
   <string name="account_connect_prompt_username">பயனர் பெயர்</string>
   <!--Name registration-->
   <string name="error_username_empty">பயனர்பெயரை உள்ளிடவும்</string>
-  <string name="no_registered_name_for_account">பதிவு செய்யப்பட்ட பெயர் இல்லை</string>
-  <string name="username_available">பயனர் பெயர் கிடைக்கிறது!</string>
   <string name="register_name">பதிவு பெயர்</string>
-  <string name="trying_to_register_name">பெயர் பதிவு செய்ய முயற்சி</string>
   <string name="registered_username">பதிவு செய்யப்பட்ட பயனர் பெயர்</string>
   <string name="register_username">பொது பயனர்பெயரை பதிவு செய்யவும்</string>
   <string name="register_recommended">பரிந்துரைக்கப்படுகிறது</string>
@@ -210,7 +193,6 @@
   <string name="revoke_device_wait_title">தயவு செய்து காத்திருங்கள்.</string>
   <string name="revoke_device_wait_message">மீளுருவாக்கம் செய்யும் சாதனம்</string>
   <string name="rename_device_title">இந்த சாதனத்தின் பெயரை மாற்றவும்</string>
-  <string name="rename_device_message">இந்த சாதனத்தை அடையாளம் காண உங்கள் ஜாமி கணக்கில் ஒரு புதிய பெயரைத் தேர்ந்தெடுக்கவும்</string>
   <string name="rename_device_button">பெயர் மாற்றம் செய்யும் சாதனம்</string>
   <string name="account_rename_device_hint">புதிய சாதன பெயரைத் தேர்ந்தெடுக்கவும்</string>
   <string name="account_device_this_indicator">இந்த சாதனம்</string>
@@ -218,6 +200,7 @@
   <!--Link a new device-->
   <string name="error_format_not_supported">இந்த வடிவம் ஆதரிக்கப்படவில்லை.</string>
   <string name="account_link_device_title">புதிய சாதனத்தை இணைக்கவும்</string>
+  <string name="connect_device_scanqr">QR குறியீட்டை ஸ்கேன் செய்யவும்</string>
   <string name="account_link_device_button">இணைக்கவும்</string>
   <!--Biometry-->
 </resources>

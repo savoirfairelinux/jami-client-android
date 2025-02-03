@@ -143,7 +143,6 @@
   <string name="delete_contact">ลบผู้ติดต่อ</string>
   <string name="conversation_action_remove_this_title">ลบรายชื่อติดต่อนี้ไหม</string>
   <string name="conversation_action_remove_this_message">การดำเนินการนี้จะลบผู้ติดต่อและล้างประวัติการสนทนาอย่างแน่นอน</string>
-  <string name="copied_to_clipboard">%1$s ถูกสําเนาไปยังกระดานตัด</string>
   <string name="conversation_action_select_peer_number">เลือกหมายเลข</string>
   <string name="conversation_action_block_this">บล็อคการติดต่อ</string>
   <string name="conversation_action_unblock_this">กดติดต่อ</string>
@@ -168,9 +167,6 @@
   <string name="conversation_preference_emoji">อิโมจิการสนทนา</string>
   <string name="conversation_type_contact">๋ติดต่อ Jami</string>
   <string name="conversation_type_private">เอกชน</string>
-  <string name="conversation_contact_invited">%1$sได้รับเชิญ</string>
-  <string name="conversation_contact_added">%1$sเข้าร่วม</string>
-  <string name="conversation_contact_left">%1$s อยู่ซ้าย</string>
   <string name="conversation_search_hint">ค้นหาบทสนทนา</string>
   <string name="today">วัน นี้</string>
   <string name="yesterday">เมื่อวาน</string>
@@ -246,7 +242,6 @@
   <string name="file_transfer_status_error">ล้มเหลวเนื่องจากข้อผิดพลาด</string>
   <string name="file_transfer_status_timed_out">หมดเวลา</string>
   <string name="file_saved_in">ไฟล์ที่บันทึกไว้ใน%s</string>
-  <string name="file_saved_successfully">บันทึกไฟล์เรียบร้อยแล้ว</string>
   <string name="file_download">ดาวน์โหลด</string>
   <string name="title_media_viewer">โปรแกรมดูสื่อ</string>
   <string name="menu_file_open">เปิดไฟล์</string>

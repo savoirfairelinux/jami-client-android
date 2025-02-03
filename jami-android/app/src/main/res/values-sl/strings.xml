@@ -176,7 +176,6 @@
   <string name="conversation_action_remove_this_message">To bo izbrisalo stik in dokončno počistilo zgodovino pogovora.</string>
   <string name="swarm_group_action_leave">Zapusti skupino</string>
   <string name="swarm_group_action_leave_title">Ali želite zapustiti to skupino?</string>
-  <string name="copied_to_clipboard">%1$s kopirano na odložišče</string>
   <string name="conversation_action_select_peer_number">Izberi številko</string>
   <string name="conversation_action_block_this">Blokiraj stik</string>
   <string name="conversation_action_unblock_this">Odblokiraj stik</string>
@@ -205,11 +204,6 @@
   <string name="conversation_type_contact">Stik Jami</string>
   <string name="conversation_type_private">Zasebno</string>
   <string name="conversation_type_group">Skupina</string>
-  <string name="conversation_contact_invited">%1$s je povabljen/a</string>
-  <string name="conversation_contact_added">%1$s se je pridružil/a</string>
-  <string name="conversation_contact_left">%1$s je odšel/a</string>
-  <string name="conversation_contact_blocked">%1$s je blokiran/a</string>
-  <string name="conversation_contact_unblocked">%1$s je odblokiran/a</string>
   <string name="conversation_search_hint">Poišči pogovor</string>
   <string name="audio_recorder_error">Programa za snemanje zvoka ni možno najti.</string>
   <string name="video_recorder_error">Programa za snemanje videa ni možno najti.</string>
@@ -307,7 +301,6 @@
   <string name="file_transfer_status_error">ni uspelo zaradi napake</string>
   <string name="file_transfer_status_timed_out">poteklo</string>
   <string name="file_saved_in">Datoteka je shranjena v %s</string>
-  <string name="file_saved_successfully">Datoteka je bila uspešno shranjena</string>
   <string name="file_download">Prenesi</string>
   <string name="no_space_left_on_device">Na tej napravi ni več prostora za hrambo.</string>
   <string name="title_media_viewer">Prikazovalnik vsebin</string>

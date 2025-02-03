@@ -144,7 +144,6 @@
   <string name="delete_contact">Ezabatu kontaktua</string>
   <string name="conversation_action_remove_this_title">Ezabatu kontaktu hau?</string>
   <string name="conversation_action_remove_this_message">Honek kontaktu hau ezabatuko du eta behin betiko garbituko du elkarrizketa-historiala.</string>
-  <string name="copied_to_clipboard">%1$s arbelera kopiatuta</string>
   <string name="conversation_action_select_peer_number">Hautatu zenbaki bat</string>
   <string name="conversation_action_block_this">Blokeatu kontaktua</string>
   <string name="conversation_action_unblock_this">Kontaktuak desblokeatu</string>
@@ -169,9 +168,6 @@
   <string name="conversation_preference_emoji">Elkarrizketaren emojia</string>
   <string name="conversation_type_contact">Jami kontaktua</string>
   <string name="conversation_type_private">Pribatua</string>
-  <string name="conversation_contact_invited">%1$s gonbidatu dute</string>
-  <string name="conversation_contact_added">%1$s bat egin da</string>
-  <string name="conversation_contact_left">%1$s ezkerrera</string>
   <string name="conversation_search_hint">Bilaketa elkarrizketa</string>
   <string name="today">Gaur egun</string>
   <string name="yesterday">Atzo</string>
@@ -247,7 +243,6 @@
   <string name="file_transfer_status_error">errorea</string>
   <string name="file_transfer_status_timed_out">denbora-muga gaindituta</string>
   <string name="file_saved_in">Fitxategi gordetuta</string>
-  <string name="file_saved_successfully">Fitxategia ongi gorde da</string>
   <string name="file_download">Deskargatu </string>
   <string name="title_media_viewer">Titulu-euskarriko ikusle</string>
   <string name="menu_file_open">Ireki fitxategia</string>

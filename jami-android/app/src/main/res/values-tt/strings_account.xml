@@ -42,9 +42,9 @@
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Генераль</string>
   <string name="account_basic_category">Төп көйләүләр</string>
-  <string name="account_alias_label">Хисап исемнәре</string>
   <string name="account_hostname_label">Кунак исеме</string>
   <string name="account_bootstrap_label">Бутстрап</string>
+  <string name="account_name_server_label">Исем серверы</string>
   <string name="account_username_label">Исем кулланучы</string>
   <string name="account_password_label">Пароль</string>
   <string name="account_optionnal_category">Сайлаулар</string>
@@ -76,8 +76,7 @@
   <string name="account_registration_exp_label">Теркәлү вакыты тәмамлана</string>
   <string name="account_local_interface_label">Җирле интерфейс</string>
   <string name="account_local_port_label">Җирле порт</string>
-  <string name="account_stun_enable_label">Stun куллан</string>
-  <string name="account_stun_server_label">Стан сервер</string>
+  <string name="account_stun_enable_label">STUN куллан</string>
   <string name="account_accept_files">Килүче файлларны автомат рәвештә кабул итү</string>
   <string name="account_conversation_settings_title">Сөйләшү көйләүләре</string>
   <string name="account_accept_files_max_size">Автоматлы рәвештә кабул итү өчен максималь файл зурлыгы</string>
@@ -93,6 +92,7 @@
   <string name="account_published_address_label">Бастырылган адрес</string>
   <string name="disabled">Авырлык</string>
   <string name="enabled">Яздырылган</string>
+  <string name="default_value">Килешенгәнчә</string>
   <string name="account_proxy_label">DHT проксисы</string>
   <string name="account_proxy_enable_label">DHT проксисын куллан</string>
   <string name="account_proxy_server_label">DHT прокси адресы</string>
@@ -111,21 +111,9 @@
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">TLS транспортын куллан</string>
-  <string name="account_tls_port_label">TLS тыңлагыч порты</string>
-  <string name="account_tls_certificate_list_label">Сертификация органнары</string>
-  <string name="account_tls_certificate_file_label">Сертификатлар файлы</string>
-  <string name="account_tls_private_key_file_label">Шәхси ачкыч файлы</string>
   <string name="account_tls_password_label">Шәхси ачкычлы пароль</string>
-  <string name="account_tls_method_label">ТЛС ысулы</string>
-  <string name="account_tls_ciphers_label">TLS шифрлары</string>
-  <string name="account_tls_server_name_label">Сервер исеме</string>
-  <string name="account_tls_verify_server_label">Серверны тикшерү</string>
-  <string name="account_tls_verify_client_label">Клиентны тикшереп чыгу</string>
-  <string name="account_require_client_certificate_label">TLS клиент сертификатын таләп итә</string>
-  <string name="account_tls_negotiation_timeout_sec">Киңәшләү вакыты (сек)</string>
   <string name="account_rtp_max_port">Максималь</string>
   <string name="account_rtp_min_port">Минималь</string>
-  <string name="account_rtp_port_range">Аудио RTP портлар диапазоны</string>
   <!--restore/backup-->
   <string name="account_new_device_password">Аккаунтны кулга алу өчен төп шифрен кертегез</string>
   <string name="error_password_char_count">6 тамгадан ким</string>
@@ -163,12 +151,10 @@
   <string name="account_link_device">Башка җайланмадан тоташтыру</string>
   <string name="account_link_button">Авырулар</string>
   <string name="account_link_archive_button">Ярдәмдән тоташтыру</string>
-  <string name="account_link_prompt_pin">ПИНны кертү</string>
   <string name="account_new_button">Jami хисабы булдыру</string>
   <string name="account_link_export_button">Яңа җайланманы тоташтыру</string>
   <string name="account_link_show_button">%d күбрәк бәйләнгән җайланманы күрсәтү</string>
   <string name="account_link_hide_button">Яшереп куелган җайланма</string>
-  <string name="account_start_export_button">ПИНны булдыру</string>
   <string name="account_end_export_button">якын</string>
   <string name="account_export_title">Башка җайланмалар белән бәйләнеш хисабы</string>
   <string name="account_connect_server_button">Идарә серверына тоташтыру</string>
@@ -179,10 +165,7 @@
   <string name="account_connect_prompt_username">Исем кулланучы</string>
   <!--Name registration-->
   <string name="error_username_empty">Кулланучы исемен кертегез</string>
-  <string name="no_registered_name_for_account">Исемнәр юк</string>
-  <string name="username_available">Исемнәр ачык!</string>
   <string name="register_name">Исем исемлеге</string>
-  <string name="trying_to_register_name">Исемне теркәп барырга тырышам</string>
   <string name="registered_username">Теркәлгән кулланучы исеме</string>
   <string name="register_username">Халык исемен теркәгез</string>
   <string name="register_recommended">Тәрбияләү</string>
@@ -209,13 +192,13 @@
   <string name="revoke_device_wait_title">Сөйләмнәр.</string>
   <string name="revoke_device_wait_message">Искәртү аппараты</string>
   <string name="rename_device_title">Бу җайланманы үзгәртеп атагыз</string>
-  <string name="rename_device_message">Бу җайланманы Jami хисабында танып белер өчен яңа исем сайлагыз</string>
   <string name="rename_device_button">Исем кую җайланмасы</string>
   <string name="account_rename_device_hint">Яңа җайланма исемен сайлагыз</string>
   <string name="account_device_this_indicator">Бу корал</string>
   <string name="account_disabled_indicator">инвалид</string>
   <!--Link a new device-->
   <string name="account_link_device_title">Яңа җайланманы тоташтыру</string>
+  <string name="connect_device_scanqr">QR-кодны сканерлау</string>
   <string name="account_link_device_button">Бәйләнешкә кертү</string>
   <!--Biometry-->
 </resources>

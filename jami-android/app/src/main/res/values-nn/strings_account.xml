@@ -43,9 +43,9 @@
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Generell</string>
   <string name="account_basic_category">Grundleg innstilling</string>
-  <string name="account_alias_label">Namn på kontoen</string>
   <string name="account_hostname_label">Namn på vert</string>
   <string name="account_bootstrap_label">Bootstrap</string>
+  <string name="account_name_server_label">Namnsserver</string>
   <string name="account_username_label">Bruksnamn</string>
   <string name="account_password_label">Passord</string>
   <string name="account_optionnal_category">Velgleg innstilling</string>
@@ -77,8 +77,7 @@
   <string name="account_registration_exp_label">Registrering går ut</string>
   <string name="account_local_interface_label">Lokal grensesnitt</string>
   <string name="account_local_port_label">Lokal havn</string>
-  <string name="account_stun_enable_label">Bruk Stun</string>
-  <string name="account_stun_server_label">Stun Server</string>
+  <string name="account_stun_enable_label">Bruk STUN</string>
   <string name="account_accept_files">Ta imot innkommende filer automatisk</string>
   <string name="account_conversation_settings_title">Innstillingar for samtal</string>
   <string name="account_accept_files_max_size">Maksimal filstørrelse for å akseptera automatisk</string>
@@ -94,6 +93,7 @@
   <string name="account_published_address_label">Adress publisert</string>
   <string name="disabled">Dei funksjonshemma</string>
   <string name="enabled">Tilgjengeleg</string>
+  <string name="default_value">Misligholde</string>
   <string name="account_proxy_label">DHT-proksie</string>
   <string name="account_proxy_enable_label">Bruk DHT- proxy</string>
   <string name="account_proxy_server_label">DHT-prosektoradress</string>
@@ -112,21 +112,9 @@
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Bruk TLS Transport</string>
-  <string name="account_tls_port_label">TLS Lyttarport</string>
-  <string name="account_tls_certificate_list_label">Sertifiseringsmyndigheter</string>
-  <string name="account_tls_certificate_file_label">Dokumentarfil</string>
-  <string name="account_tls_private_key_file_label">Privat nøkkelfil</string>
-  <string name="account_tls_password_label">Privat nøkkelpassord</string>
-  <string name="account_tls_method_label">TLS-metode</string>
-  <string name="account_tls_ciphers_label">TLS-cipher</string>
-  <string name="account_tls_server_name_label">Namn på serveren</string>
-  <string name="account_tls_verify_server_label">Verify Server</string>
-  <string name="account_tls_verify_client_label">Verify Client</string>
-  <string name="account_require_client_certificate_label">TLS krev kundesertifika</string>
-  <string name="account_tls_negotiation_timeout_sec">Forhandlingar tidsavgang (sec)</string>
+  <string name="account_tls_password_label">Passord med privatnøkkel</string>
   <string name="account_rtp_max_port">Maksimal</string>
   <string name="account_rtp_min_port">Minimum</string>
-  <string name="account_rtp_port_range">Audio RTP Port Range</string>
   <!--restore/backup-->
   <string name="account_new_device_password">Skriv inn hovudpassord for å låsa opp konto</string>
   <string name="error_password_char_count">Minst 6 teikn</string>
@@ -164,12 +152,10 @@
   <string name="account_link_device">Knytte frå ein annan enhet</string>
   <string name="account_link_button">Knytte frå nettverket</string>
   <string name="account_link_archive_button">Knytte frå backup</string>
-  <string name="account_link_prompt_pin">Skriv inn PIN</string>
   <string name="account_new_button">Skapa ein Jami-konto</string>
   <string name="account_link_export_button">Legg ein ny enhet til</string>
   <string name="account_link_show_button">Visa %d meir knytt til einheten</string>
   <string name="account_link_hide_button">Skjulde tilkobla tilleg</string>
-  <string name="account_start_export_button">Generera PIN</string>
   <string name="account_end_export_button">nær</string>
   <string name="account_export_title">Link konto til andre enheter</string>
   <string name="account_connect_server_button">Knytte til styringsservern</string>
@@ -180,10 +166,7 @@
   <string name="account_connect_prompt_username">Bruksnamn</string>
   <!--Name registration-->
   <string name="error_username_empty">Skriv inn eit brukernavn</string>
-  <string name="no_registered_name_for_account">Ingen registrert namn</string>
-  <string name="username_available">Nøvn til brukaren!</string>
   <string name="register_name">Namn på register</string>
-  <string name="trying_to_register_name">Eg prøver å registrera namn</string>
   <string name="registered_username">Registrert brukernavn</string>
   <string name="register_username">Registrer offentleg brukernavn</string>
   <string name="register_recommended">Tilrådeleg</string>
@@ -210,7 +193,6 @@
   <string name="revoke_device_wait_title">Vennligst vent...</string>
   <string name="revoke_device_wait_message">Avkallingsapparat</string>
   <string name="rename_device_title">Namn på denne einheten</string>
-  <string name="rename_device_message">Velg eit nytt namn for å identifisera denne enheten i kontoen din Jami</string>
   <string name="rename_device_button">Namneapparat</string>
   <string name="account_rename_device_hint">Velg nytt enhetnamn</string>
   <string name="account_device_this_indicator">Denne einheten</string>
@@ -218,6 +200,7 @@
   <!--Link a new device-->
   <string name="error_format_not_supported">Dette formatet er ikkje støtta.</string>
   <string name="account_link_device_title">Legg ein ny enhet til</string>
+  <string name="connect_device_scanqr">Skanna QR-kode</string>
   <string name="account_link_device_button">Knytta</string>
   <!--Biometry-->
 </resources>

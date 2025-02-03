@@ -134,7 +134,6 @@
   <string name="delete_contact">ਸੰਪਰਕ ਮਿਟਾਓ</string>
   <string name="conversation_action_remove_this_title">ਇਹ ਸੰਪਰਕ ਮਿਟਾਈਏ?</string>
   <string name="conversation_action_remove_this_message">ਇੰਝ ਕਰਨ ਨਾਲ ਸੰਪਰਕ ਅਤੇ ਗੱਲਬਾਤ ਦਾ ਇਤਿਹਾਸ ਮਿਟ ਜਾਵੇਗਾ।</string>
-  <string name="copied_to_clipboard">%1$s ਨੂੰ ਚੂੰਢੀ-ਤਖਤੀ \'ਤੇ ਕਾਪੀ ਕੀਤਾ ਗਿਆ</string>
   <string name="conversation_action_select_peer_number">ਕੋਈ ਨੰਬਰ ਚੁਣੋ</string>
   <string name="conversation_action_block_this">ਸੰਪਰਕ \'ਤੇ ਬੰਦਸ਼ ਲਗਾਓ</string>
   <string name="conversation_action_incoming_call">ਆਉਂਦੀ ਕਾਲ</string>
@@ -216,7 +215,6 @@
   <string name="file_transfer_status_error">ਗੜਬੜ ਕਾਰਨ ਤਬਾਦਲਾ ਨਹੀਂ ਹੋਇਆ</string>
   <string name="file_transfer_status_timed_out">ਸਮਾਂ ਖਤਮ ਹੋਇਆ</string>
   <string name="file_saved_in">ਫ਼ਾਈਲ %s ਵਿੱਚ ਸਾਂਭੀ ਗਈ</string>
-  <string name="file_saved_successfully">ਫ਼ਾਈਲ ਸਾਂਭੀ ਗਈ</string>
   <string name="title_media_viewer">ਮੀਡੀਆ ਵਿਊਅਰ</string>
   <string name="menu_file_open">ਫ਼ਾਈਲ ਖੋਲ੍ਹੋ</string>
   <string name="menu_file_download">ਫ਼ਾਈਲ ਡਾਊਨਲੋਡ ਕਰੋ</string>

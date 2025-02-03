@@ -68,12 +68,9 @@
   <string name="swarm_group_action_leave_title">Diese Gruppe verlassen?</string>
   <string name="swarm_group_action_leave_message">Dadurch wird die Unterhaltung aus Ihrer Unterhaltungsliste entfernt</string>
   <string name="conversation_action_copy_peer_number">Kontakt-ID kopieren</string>
-  <string name="copied_to_clipboard">%1$s wurde in die Zwischenablage kopiert.</string>
   <string name="clip_message">Nachrichteninhalt</string>
   <string name="conversation_type_private">Privat</string>
   <string name="conversation_type_group">Gruppe</string>
-  <string name="conversation_contact_blocked">%1$s wurde blockiert</string>
-  <string name="conversation_contact_unblocked">Blockierung von %1$swurde aufgehoben</string>
   <string name="taking_picture_error">Beim Aufnehmen des Bildes ist ein Fehler aufgetreten.</string>
   <string name="find_picture_error">Beim Suchen des Bildes ist ein Fehler aufgetreten.</string>
   <string name="load_ringtone_error">Beim Laden des Klingeltons ist ein Fehler aufgetreten.</string>

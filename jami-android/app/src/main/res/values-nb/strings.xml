@@ -145,7 +145,6 @@
   <string name="delete_contact">Slett kontakt</string>
   <string name="conversation_action_remove_this_title">Slett denne kontakten?</string>
   <string name="conversation_action_remove_this_message">Dette vil slette denne kontakten og permanent nullstille samtalehistorikken.</string>
-  <string name="copied_to_clipboard">%1$s kopiert til utklippstavle</string>
   <string name="conversation_action_select_peer_number">Velg et nummer</string>
   <string name="conversation_action_block_this">Blokker kontakt</string>
   <string name="conversation_action_unblock_this">Fjern kontaktblokkering</string>
@@ -171,9 +170,6 @@
   <string name="conversation_type_contact">Jami-kontakt</string>
   <string name="conversation_type_private">Privat</string>
   <string name="conversation_type_group">Gruppe</string>
-  <string name="conversation_contact_invited">%1$s ble invitert</string>
-  <string name="conversation_contact_added">%1$s er blitt lagt til</string>
-  <string name="conversation_contact_left">%1$s er venstre</string>
   <string name="conversation_search_hint">Søk samtale</string>
   <string name="today">I dag</string>
   <string name="yesterday">Igår</string>
@@ -249,7 +245,6 @@
   <string name="file_transfer_status_error">mislyktes på grunn av feil</string>
   <string name="file_transfer_status_timed_out">tidsavbrudd</string>
   <string name="file_saved_in">Fil lagret i %s</string>
-  <string name="file_saved_successfully">Filen er lagret</string>
   <string name="file_download">Last ned</string>
   <string name="title_media_viewer">Mediaviser</string>
   <string name="menu_file_open">Åpne fil</string>

@@ -143,7 +143,6 @@
   <string name="delete_contact">Kufuta mawasiliano</string>
   <string name="conversation_action_remove_this_title">Kufuta mawasiliano haya?</string>
   <string name="conversation_action_remove_this_message">Hii itafuta mawasiliano na dhahiri kufuta historia ya mazungumzo.</string>
-  <string name="copied_to_clipboard">%1$s imerekodiwa kwenye clipboard</string>
   <string name="conversation_action_select_peer_number">Chagua namba</string>
   <string name="conversation_action_block_this">Kuzuia mawasiliano</string>
   <string name="conversation_action_unblock_this">Kufungua mawasiliano</string>
@@ -168,9 +167,6 @@
   <string name="conversation_preference_emoji">Emoji ya mazungumzo</string>
   <string name="conversation_type_contact">Wasiliana na Jami</string>
   <string name="conversation_type_private">Private</string>
-  <string name="conversation_contact_invited">%1$s aliitwa</string>
-  <string name="conversation_contact_added">%1$s imeunganishwa</string>
-  <string name="conversation_contact_left">%1$s ni kushoto</string>
   <string name="conversation_search_hint">Tafuta mazungumzo</string>
   <string name="today">Leo</string>
   <string name="yesterday">Jana</string>
@@ -246,7 +242,6 @@
   <string name="file_transfer_status_error">kushindwa kwa sababu ya kosa</string>
   <string name="file_transfer_status_timed_out">muda wa mwisho</string>
   <string name="file_saved_in">Faili iliyohifadhiwa katika %s</string>
-  <string name="file_saved_successfully">Faili iliyohifadhiwa kwa mafanikio</string>
   <string name="file_download">Pakua</string>
   <string name="title_media_viewer">Kiangaliaji cha media</string>
   <string name="menu_file_open">Open faili</string>

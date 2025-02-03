@@ -2,9 +2,11 @@
 <resources>
   <!--About-->
   <string name="section_license">Ліцензія</string>
+  <string name="sponsor_section">Jami — це вільне програмне забезпечення, яке розроблене й підтримується</string>
   <string name="copyright_section">Авторське право</string>
   <string name="contribute_section">Зробити внесок</string>
   <string name="version_section">Версія</string>
+  <string name="no_browser_app_installed">Не знайдено жодного браузера. Будь ласка, встановіть браузер, щоб переглянути цю сторінку.</string>
   <string name="website_chooser_title">Переглянути сайт за допомогою...</string>
   <string name="license">Це програмне забезпечення надається \"як є\", без будь-яких гарантій. Більш детально дивіться<u>GNU General Public License версію 3 чи новішу</u></string>
   <string name="description">Jami — це вільне програмне забезпечення для будь-якого звʼязку з повагою до свобод і приватності користувачів.</string>
@@ -150,7 +152,6 @@
   <string name="delete_contact">Видалити контакт</string>
   <string name="conversation_action_remove_this_title">Видалити цей контакт?</string>
   <string name="conversation_action_remove_this_message">Це видалить контакт і остаточно очистить історію розмов.</string>
-  <string name="copied_to_clipboard">%1$s збережено у буфер</string>
   <string name="conversation_action_select_peer_number">Виберіть номер</string>
   <string name="conversation_action_block_this">Заблокувати контакт</string>
   <string name="conversation_action_unblock_this">Відблокувати контакт</string>
@@ -176,9 +177,6 @@
   <string name="conversation_type_contact">Контакт Jami</string>
   <string name="conversation_type_private">Приватне</string>
   <string name="conversation_type_group">Група</string>
-  <string name="conversation_contact_invited">%1$s запрошений</string>
-  <string name="conversation_contact_added">%1$s приєднаний</string>
-  <string name="conversation_contact_left">%1$s залишився</string>
   <string name="conversation_search_hint">Пошук розмов</string>
   <string name="today">Сьогодні</string>
   <string name="yesterday">Учора</string>
@@ -254,7 +252,6 @@
   <string name="file_transfer_status_error">не вдалося через помилку</string>
   <string name="file_transfer_status_timed_out">час вичерпано</string>
   <string name="file_saved_in">Файл збережено у %s</string>
-  <string name="file_saved_successfully">Файл успішно збережено</string>
   <string name="file_download">Завантажити</string>
   <string name="title_media_viewer">Медіа переглядач</string>
   <string name="menu_file_open">Відкрити файл</string>

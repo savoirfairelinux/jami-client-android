@@ -132,7 +132,6 @@
   <string name="swarm_group_action_leave_title">Išeiti iš šios grupės?</string>
   <string name="swarm_group_action_leave_message">Tai pašalins pokalbį iš jūsų pokalbių sąrašo</string>
   <string name="conversation_action_copy_peer_number">Kopijuoti adreso identifikatorių</string>
-  <string name="copied_to_clipboard">%1$s nukopijuota į iškarpinę</string>
   <string name="conversation_action_select_peer_number">Pasirinkite numerį</string>
   <string name="conversation_action_block_this">Užblokuoti adresatą</string>
   <string name="conversation_action_unblock_this">Atblokuoti adresatą</string>
@@ -156,9 +155,6 @@
   <string name="conversation_type_contact">Jami adresatas</string>
   <string name="conversation_type_private">Privatus</string>
   <string name="conversation_type_group">Grupė</string>
-  <string name="conversation_contact_invited">%1$s buvo pakviesta(s)</string>
-  <string name="conversation_contact_added">%1$s prisijungė</string>
-  <string name="conversation_contact_left">%1$s išėjo</string>
   <string name="today">Šiandien</string>
   <string name="yesterday">Vakar</string>
   <!--Contacts-->
@@ -227,7 +223,6 @@
   <string name="file_transfer_status_cancelled">atsisakyta</string>
   <string name="file_transfer_status_error">nepavyko dėl klaidos</string>
   <string name="file_saved_in">Failas įrašytas į %s</string>
-  <string name="file_saved_successfully">Failas sėkmingai įrašytas</string>
   <string name="file_download">Atsisiųsti</string>
   <string name="title_media_viewer">Medijos žiūryklė</string>
   <string name="menu_file_open">Atverti failą</string>

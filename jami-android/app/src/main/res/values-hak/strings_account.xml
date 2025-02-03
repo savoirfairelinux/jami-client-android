@@ -21,6 +21,8 @@
   <string name="account_biometric_set">启用生物特征身份验证</string>
   <string name="account_biometric_summary">管理帐户的生物特征身份验证</string>
   <!--Basic Details-->
+  <string name="account_alias_label">账户名称</string>
+  <string name="account_name_server_label">名称服务器</string>
   <!--Extension Details-->
   <string name="account_preferences_extension_tab">扩展</string>
   <!--Audio Details-->
@@ -29,12 +31,29 @@
   <string name="account_chat_settings_title">聊天设置</string>
   <string name="account_read_receipts_label">启用已读回执</string>
   <string name="account_read_receipts_summary">接收并发送显示一个消息已读的回执。</string>
+  <string name="account_stun_enable_label">使用 STUN</string>
+  <string name="account_stun_server_label">Stun服务器</string>
+  <string name="account_connectivity_label">点到点连接</string>
+  <string name="default_value">默认</string>
   <string name="account_proxy_list_enable_label">使用DHT代理列表</string>
   <string name="account_proxy_server_used">使用：%1$s</string>
   <!--Security Details-->
   <!--SRTP Details-->
   <!--SIP-->
   <!--TLS Details-->
+  <string name="account_tls_port_label">TLS监听端口</string>
+  <string name="account_tls_certificate_list_label">证书颁发机构</string>
+  <string name="account_tls_certificate_file_label">证书文件</string>
+  <string name="account_tls_private_key_file_label">私钥文件</string>
+  <string name="account_tls_password_label">私鑰保護密碼</string>
+  <string name="account_tls_method_label">TLS方法</string>
+  <string name="account_tls_ciphers_label">TLS加密</string>
+  <string name="account_tls_server_name_label">服务器名称</string>
+  <string name="account_tls_verify_server_label">TLS验证服务器</string>
+  <string name="account_tls_verify_client_label">验证客户端</string>
+  <string name="account_require_client_certificate_label">TLS需要客户端证书</string>
+  <string name="account_tls_negotiation_timeout_sec">握手超时（秒）</string>
+  <string name="account_rtp_port_range">音频RTP端口范围</string>
   <!--restore/backup-->
   <string name="account_export_file">备份账户</string>
   <string name="account_export_end_decryption_message">使用该密码无法解锁您的账户。</string>
@@ -56,13 +75,18 @@
   <string name="account_sip_success_title">SIP 账户已注册</string>
   <string name="account_sip_success_message">您已成功注册了您的 SIP 账户。</string>
   <!--TV-->
-  <string name="account_link_export_info">要在其他设备上使用此账户，您必须先在 Jami 上公开它。这将生成一个 PIN 码，您必须在新设备上输入该 PIN 码才能设置此账户。PIN 码有效期为 10 分钟。</string>
+  <string name="account_link_prompt_pin">输入PIN码</string>
+  <string name="account_link_export_info">要在其他设备上使用此账户，您必须先在Jami上公开它。这将生成一个PIN码，您必须在新设备上输入该PIN码才能设置此账户。PIN码有效期为 10 分钟。</string>
+  <string name="account_start_export_button">生成PIN码</string>
   <string name="account_end_export_infos">我们的PIN是：\n\n%%\n\n要完成此过程，您需要在新设备上打开Jami。使用“将此设备链接到帐户”创建新帐户。PIN将在10分钟后过期。</string>
-  <string name="account_link_export_info_light">要在其他设备上使用此账户，您必须先在 Jami 上公开它。这将生成一个 PIN 码，您必须在新设备上输入该 PIN 码才能设置此账户。PIN 码有效期为 10 分钟。</string>
+  <string name="account_link_export_info_light">要在其他设备上使用此账户，您必须先在Jami上公开它。这将生成一个PIN码，您必须在新设备上输入该PIN码才能设置此账户。PIN码有效期为 10 分钟。</string>
   <string name="account_connect_server">连接到JAMS服务器</string>
   <string name="account_enter_username">输入用户名</string>
   <string name="account_enter_servername">输入服务器</string>
   <!--Name registration-->
+  <string name="no_registered_name_for_account">没有注册名称</string>
+  <string name="username_available">用户名可用！</string>
+  <string name="trying_to_register_name">正在尝试注册用户名</string>
   <!--Create account-->
   <string name="account_creation_home">欢迎使用 Jami</string>
   <string name="account_sip_cannot_be_registered">无法注册账户</string>
@@ -70,25 +94,26 @@
   <string name="account_edit_profile">修改您的账户资料</string>
   <!--Devices-->
   <string name="revoke_device_message">您确定要注销设备%1$s吗？</string>
+  <string name="rename_device_message">输入设备名称以在Jami帐户中标识此设备</string>
   <string name="account_device_name_empty">设备名不可为空</string>
   <!--Link a new device-->
   <string name="account_link_prompt_pin_manually">手动输入PIN</string>
   <string name="qr_invalid">不是Jami的身份验证二维码</string>
-  <string name="content_description_checkbox">您的Qr代码有效</string>
+  <string name="content_description_checkbox">您的二维码有效</string>
   <string name="error_format_not_supported">不支援此格式。</string>
   <string name="account_link_info">在新的Jami应用程序上，扫描二维码或手动输入PIN</string>
   <string name="account_link_device_title">关联新设备</string>
   <string name="account_link_password">此帐户是密码加密的，请输入密码以生成PIN码</string>
   <string name="account_link_generate_button">生成</string>
   <string name="account_link_time_valid">PIN码将失效：%1$s</string>
-  <string name="account_link_device_info">从其他Jami应用程序中选择“链接新设备”以显示QR码或PIN</string>
+  <string name="account_link_device_info">从其他Jami应用程序中选择“链接新设备”以显示二维码或PIN</string>
   <string name="account_generate_export_device">在其他设备上</string>
   <string name="account_generate_export_info">安装并启动Jami，选择“从其他设备导入”并扫描QR码</string>
-  <string name="content_description_qr_generated">你的二维码</string>
+  <string name="content_description_qr_generated">此账户二维码</string>
   <string name="account_generate_export_invalid">PIN不再有效。\n输入密码并生成新的密码以链接新设备。</string>
   <string name="account_generate_export_invalid_two">PIN不再有效。\n生成新PIN以链接新设备。</string>
   <string name="help_pin_info">如果帐户是密码加密的，请输入</string>
-  <string name="connect_device_scanqr">扫描二维码</string>
+  <string name="connect_device_scanqr">扫描 QR 码</string>
   <string name="connect_device_enterPIN">或输入PIN</string>
   <string name="account_link_device_button">连接</string>
   <!--Biometry-->

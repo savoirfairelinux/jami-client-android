@@ -149,7 +149,6 @@
   <string name="delete_contact">Kişiyi sil</string>
   <string name="conversation_action_remove_this_title">Bu kişi silinsin mi?</string>
   <string name="conversation_action_remove_this_message">Bu, kişiyi silecek ve görüşme geçmişini tümüyle temizleyecek.</string>
-  <string name="copied_to_clipboard">%1$s panoya kopyalandı</string>
   <string name="conversation_action_select_peer_number">Numara seç</string>
   <string name="conversation_action_block_this">Kişiyi engelle</string>
   <string name="conversation_action_unblock_this">Kişinin engelini kaldır</string>
@@ -175,9 +174,6 @@
   <string name="conversation_type_contact">Jami kişisi</string>
   <string name="conversation_type_private">Özel</string>
   <string name="conversation_type_group">Küme</string>
-  <string name="conversation_contact_invited">%1$s davet edildi</string>
-  <string name="conversation_contact_added">%1$s katıldı</string>
-  <string name="conversation_contact_left">%1$s ayrıldı</string>
   <string name="conversation_search_hint">Görüşmede ara</string>
   <string name="today">Bugün</string>
   <string name="yesterday">Dün</string>
@@ -254,7 +250,6 @@
   <string name="file_transfer_status_error">hata nedeniyle başarısız </string>
   <string name="file_transfer_status_timed_out">zaman aşımı</string>
   <string name="file_saved_in">Dosya %s içine kaydedildi</string>
-  <string name="file_saved_successfully">Dosya başarıyla kaydedildi</string>
   <string name="file_download">İndir</string>
   <string name="title_media_viewer">Ortam Galerisi</string>
   <string name="menu_file_open">Dosyayı Aç</string>

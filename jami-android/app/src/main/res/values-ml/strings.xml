@@ -143,7 +143,6 @@
   <string name="delete_contact">ബന്ധം ഇല്ലാതാക്കുക</string>
   <string name="conversation_action_remove_this_title">ഈ കോൺടാക്റ്റ് ഇല്ലാതാക്കണോ?</string>
   <string name="conversation_action_remove_this_message">ഇത് ബന്ധം ഇല്ലാതാക്കുകയും സംഭാഷണ ചരിത്രം മായ്ക്കുകയും ചെയ്യും.</string>
-  <string name="copied_to_clipboard">%1$s ക്ലിപ്പ്ബോർഡിൽ പകർത്തി</string>
   <string name="conversation_action_select_peer_number">ഒരു നമ്പര് തിരഞ്ഞെടുക്കുക</string>
   <string name="conversation_action_block_this">തടയൽ കോൺടാക്റ്റ്</string>
   <string name="conversation_action_unblock_this">കോൺടാക്റ്റ് തടയുക</string>
@@ -168,9 +167,6 @@
   <string name="conversation_preference_emoji">സംഭാഷണ ഇമോജി</string>
   <string name="conversation_type_contact">ജാമി കോൺടാക്ട്</string>
   <string name="conversation_type_private">സ്വകാര്യ</string>
-  <string name="conversation_contact_invited">%1$s ക്ഷണിച്ചു</string>
-  <string name="conversation_contact_added">%1$s ചേർന്നു</string>
-  <string name="conversation_contact_left">%1$s ഇടതുവശത്ത്</string>
   <string name="conversation_search_hint">തിരയൽ സംഭാഷണം</string>
   <string name="today">ഇന്ന്</string>
   <string name="yesterday">ഇന്നലെ</string>
@@ -246,7 +242,6 @@
   <string name="file_transfer_status_error">പിശകിന് കാരണം പരാജയപ്പെട്ടു</string>
   <string name="file_transfer_status_timed_out">കാലികമായി</string>
   <string name="file_saved_in">%s ൽ സംരക്ഷിച്ച ഫയൽ</string>
-  <string name="file_saved_successfully">വിജയകരമായി സംരക്ഷിച്ച ഫയൽ</string>
   <string name="file_download">ഡൌൺലോഡ് ചെയ്യുക</string>
   <string name="title_media_viewer">മാധ്യമ കാഴ്ചക്കാരൻ</string>
   <string name="menu_file_open">തുറന്ന ഫയൽ</string>

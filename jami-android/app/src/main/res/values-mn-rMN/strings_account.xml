@@ -43,9 +43,9 @@
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Ерөнхий сайд</string>
   <string name="account_basic_category">Барилгалалтын тоног төхөөрөмж</string>
-  <string name="account_alias_label">Нягтлан бодох бүртгэлийн нэр</string>
   <string name="account_hostname_label">Үйлчлүүлэгч</string>
   <string name="account_bootstrap_label">Багасан шугам</string>
+  <string name="account_name_server_label">Нэрний сервер</string>
   <string name="account_username_label">Хэрэглэгчийн нэр</string>
   <string name="account_password_label">Хууль нууц үг</string>
   <string name="account_optionnal_category">Сайн сонгох тохируулалт</string>
@@ -77,8 +77,7 @@
   <string name="account_registration_exp_label">бүртгэл дуусч байна</string>
   <string name="account_local_interface_label">Орон нутгийн интерфейс</string>
   <string name="account_local_port_label">Орон нутгийн боомт</string>
-  <string name="account_stun_enable_label">Stun ашиглах</string>
-  <string name="account_stun_server_label">Хэвтэр сэрвер</string>
+  <string name="account_stun_enable_label">STUN ашиглах</string>
   <string name="account_accept_files">Дотоод файлуудыг автомат хүлээн ав</string>
   <string name="account_conversation_settings_title">Хэлэлцүүлгийн тохируулалт</string>
   <string name="account_accept_files_max_size">Автомат хүлээн авах хамгийн их файлын хэмжээ</string>
@@ -94,6 +93,7 @@
   <string name="account_published_address_label">Өргөн мэдүүлсэн хаяг</string>
   <string name="disabled">Хөгжлийн бэрхшээлтэй</string>
   <string name="enabled">Хөгжилтэй</string>
+  <string name="default_value">Өгөгдмөл</string>
   <string name="account_proxy_label">DHT-ийн төлөөлөгч</string>
   <string name="account_proxy_enable_label">DHT-ийн төлөөлөгч ашигла</string>
   <string name="account_proxy_server_label">DHT-ийн төлөөлөгчийн хаяг</string>
@@ -112,21 +112,9 @@
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">TLS тээврийн хэрэгсэл</string>
-  <string name="account_tls_port_label">TLS сонсогч портын</string>
-  <string name="account_tls_certificate_list_label">Ашиглалтын байгууллага</string>
-  <string name="account_tls_certificate_file_label">Гэрчилгээний файл</string>
-  <string name="account_tls_private_key_file_label">Хувийн түлхүүр файл</string>
   <string name="account_tls_password_label">Хувийн нууц товч</string>
-  <string name="account_tls_method_label">TLS арга</string>
-  <string name="account_tls_ciphers_label">TLS шифрлагч</string>
-  <string name="account_tls_server_name_label">Серверний нэр</string>
-  <string name="account_tls_verify_server_label">Серверг шалгах</string>
-  <string name="account_tls_verify_client_label">Клиент шалгах</string>
-  <string name="account_require_client_certificate_label">TLS Хэрэглэгчийн гэрчилгээ шаарддаг</string>
-  <string name="account_tls_negotiation_timeout_sec">хэлэлцээрийн хугацаа (sec)</string>
   <string name="account_rtp_max_port">Хамгийн их хэмжээ</string>
   <string name="account_rtp_min_port">Хамгийн бага</string>
-  <string name="account_rtp_port_range">Audio RTP галт тэрэг</string>
   <!--restore/backup-->
   <string name="account_new_device_password">Эдгээрийн нууц үгсийг бүртгүүлэх</string>
   <string name="error_password_char_count">6 тэмдэг хамгийн бага</string>
@@ -164,12 +152,10 @@
   <string name="account_link_device">Өөр төхөөрөмжээс холбох</string>
   <string name="account_link_button">Сүлжээээс холбох</string>
   <string name="account_link_archive_button">Дахин хангах</string>
-  <string name="account_link_prompt_pin">PIN-ийг оруул</string>
   <string name="account_new_button">Jami-ийн дансыг бий болгох</string>
   <string name="account_link_export_button">Шинэ төхөөрөмжийг холбох</string>
   <string name="account_link_show_button">%d-ийг холбогдсон төхөөрөмжээр нь харуулна</string>
   <string name="account_link_hide_button">Хаалсан холбогдсон төхөөрөмж</string>
-  <string name="account_start_export_button">PIN-ийг үүсгэх</string>
   <string name="account_end_export_button">ойрхон</string>
   <string name="account_export_title">Бусад төхөөрөмжүүдтэй холбогдсон данс</string>
   <string name="account_connect_server_button">Захиргааны сервертэй холбох</string>
@@ -180,10 +166,6 @@
   <string name="account_connect_prompt_username">Хэрэглэгчийн нэр</string>
   <!--Name registration-->
   <string name="error_username_empty">Хэрэглэгчийн нэрийг оруул</string>
-  <string name="no_registered_name_for_account">бүртгэлтэй нэр байхгүй</string>
-  <string name="username_available">Хэрэглэгчийн нэр ашиглах боломжтой!</string>
-  <string name="register_name">Төлөөлөгчдийн нэр</string>
-  <string name="trying_to_register_name">Нэр бүртгэх оролдлого</string>
   <string name="registered_username">Бүртгэлтэй хэрэглэгчдийн нэр</string>
   <string name="register_username">Олон нийтийн хэрэглэгчийн нэрийг бүртгүүлэх</string>
   <string name="register_recommended">Зөвлөмж</string>
@@ -210,7 +192,6 @@
   <string name="revoke_device_wait_title">Та нар хүлээгээд...</string>
   <string name="revoke_device_wait_message">Хуцалтгүй болгох төхөөрөмж</string>
   <string name="rename_device_title">Энэ төхөөрөмжийг өөрчлөх</string>
-  <string name="rename_device_message">Jami-ийн дансанд энэ төхөөрөмжийг тодорхойлох шинэ нэрийг сонгох</string>
   <string name="rename_device_button">Уул уурхайн тоног төхөөрөмж</string>
   <string name="account_rename_device_hint">Шинэ төхөөрөмжийн нэрийг сонгох</string>
   <string name="account_device_this_indicator">Энэ төхөөрөмж</string>
@@ -218,6 +199,7 @@
   <!--Link a new device-->
   <string name="error_format_not_supported">Энэ форматг дэмжихгүй.</string>
   <string name="account_link_device_title">Шинэ төхөөрөмжийг холбох</string>
+  <string name="connect_device_scanqr">QR код сканируулна</string>
   <string name="account_link_device_button">Харилцаа холбоо</string>
   <!--Biometry-->
 </resources>
