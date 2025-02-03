@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c40ac14_2c417c59",
+        "filename": "jami-android/app/src/main/java/cx/ring/client/ConversationDetailsActivity.kt",
+        "patchSetId": 8
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2025-02-03T16:51:49Z",
+      "side": 1,
+      "message": "make async, avoid duplicate code",
+      "range": {
+        "startLine": 203,
+        "startChar": 45,
+        "endLine": 214,
+        "endChar": 49
+      },
+      "revId": "f2809dc609a95671b3993105aed31f7ec2fa2ffc",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "714d71aa_2237c7e9",
+        "filename": "jami-android/app/src/main/java/cx/ring/client/ConversationDetailsActivity.kt",
+        "patchSetId": 8
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2025-02-03T16:51:49Z",
+      "side": 1,
+      "message": "make async, avoid duplicate code",
+      "range": {
+        "startLine": 226,
+        "startChar": 40,
+        "endLine": 234,
+        "endChar": 45
+      },
+      "revId": "f2809dc609a95671b3993105aed31f7ec2fa2ffc",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9396bdce_0271a346",
+        "filename": "jami-android/app/src/main/java/cx/ring/client/ConversationDetailsActivity.kt",
+        "patchSetId": 8
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2025-02-03T16:51:49Z",
+      "side": 1,
+      "message": "make async, avoid duplicate code",
+      "range": {
+        "startLine": 367,
+        "startChar": 24,
+        "endLine": 373,
+        "endChar": 29
+      },
+      "revId": "f2809dc609a95671b3993105aed31f7ec2fa2ffc",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6456f536_49a6631c",
+        "filename": "jami-android/app/src/main/java/cx/ring/client/ConversationDetailsActivity.kt",
+        "patchSetId": 8
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2025-02-03T16:51:49Z",
+      "side": 1,
+      "message": "make async, avoid duplicate code",
+      "range": {
+        "startLine": 390,
+        "startChar": 24,
+        "endLine": 397,
+        "endChar": 29
+      },
+      "revId": "f2809dc609a95671b3993105aed31f7ec2fa2ffc",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
