@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be9e9c5d_80afc6a8",
+        "filename": "jami-android/app/src/main/java/cx/ring/client/ConversationDetailsActivity.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2025-02-03T19:00:51Z",
+      "side": 1,
+      "message": "* subscribe should not be needed here. Subscription is performed by contact observers\n* observeOn should not be needed here. Subscription details are handled by contact observers\n\n```kotlin\n   contact.customProfile \u003d Single.fromCallable {\n        VCardUtils.getCustomProfile(accountId, id, applicationContext.filesDir)\n   }.map {...}\n```",
+      "range": {
+        "startLine": 387,
+        "startChar": 13,
+        "endLine": 387,
+        "endChar": 22
+      },
+      "revId": "c0990c612d5c77d05caff23644fabd951bd11f1a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
