@@ -47,6 +47,14 @@ android {
             }
         }
     }
+    signingConfigs {
+        create("config") {
+            keyAlias = "app-release"
+            storeFile = file("../app.keystore")
+            storePassword = findProperty("jamiAppSigningKey") as? String?
+            keyPassword = findProperty("jamiAppSigningKey") as? String?
+        }
+    }
     buildTypes {
         debug {
             isDebuggable = true
@@ -55,6 +63,7 @@ android {
         release {
             isMinifyEnabled = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            signingConfig = signingConfigs.getByName("config")
         }
     }
     buildFeatures {
@@ -72,12 +81,6 @@ android {
         }
         create("withUnifiedPush") {
             dimension = "push"
-        }
-    }
-    signingConfigs {
-        create("config") {
-            keyAlias = "ring"
-            storeFile = file("../keystore.bin")
         }
     }
     compileOptions {

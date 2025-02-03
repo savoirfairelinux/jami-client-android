@@ -25,8 +25,6 @@ import android.telecom.TelecomManager
 import android.util.Log
 import androidx.annotation.RequiresApi
 import cx.ring.IRemoteService
-import cx.ring.service.RemoteControl.Companion.INCOMING_CALL_RECEIVED_EVENT
-import cx.ring.service.RemoteControl.Companion.OUTGOING_CALL_REJECTED_EVENT
 import cx.ring.services.CallServiceImpl
 import cx.ring.services.CallServiceImpl.Companion.CONNECTION_SERVICE_TELECOM_API_SDK_COMPATIBILITY
 import cx.ring.utils.ConversationPath
@@ -57,6 +55,7 @@ class ConnectionService : ConnectionService() {
 
     private fun buildConnection(request: ConnectionRequest, showIncomingCallUi: ((CallConnection, CallRequestResult) -> Unit)? = null): CallConnection =
         CallConnection(this, request, showIncomingCallUi).apply {
+            Log.w(TAG, "buildConnection $request")
             val account = request.extras.getString(ConversationPath.KEY_ACCOUNT_ID)
             val contactId = request.extras.getString(ConversationPath.KEY_CONVERSATION_URI)
             if (account != null && contactId != null) {
@@ -87,14 +86,12 @@ class ConnectionService : ConnectionService() {
         account: PhoneAccountHandle?, request: ConnectionRequest
     ) {
         Log.w(TAG, "onCreateOutgoingConnectionFailed $request")
-        notifyEventListeners(OUTGOING_CALL_REJECTED_EVENT)
         (callService as CallServiceImpl).onPlaceCallResult(request.address, request.extras, null)
     }
 
     override fun onCreateIncomingConnection(account: PhoneAccountHandle?, request: ConnectionRequest): Connection {
         Log.w(TAG, "onCreateIncomingConnection $request")
         return buildConnection(request) { connection, result ->
-            notifyEventListeners(INCOMING_CALL_RECEIVED_EVENT)
             (callService as CallServiceImpl).onIncomingCallResult(request.extras, connection, result)
         }
     }

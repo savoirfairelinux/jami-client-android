@@ -13,10 +13,12 @@ import android.os.RemoteException
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import cx.ring.IRemoteService
+import cx.ring.application.JamiApplication
+import cx.ring.fragments.CallFragment
+import cx.ring.tv.call.TVCallActivity
+import cx.ring.utils.ConversationPath
 import dagger.hilt.android.AndroidEntryPoint
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.model.Account
 import net.jami.model.Contact
 import net.jami.model.Profile
@@ -24,6 +26,8 @@ import net.jami.model.Uri
 import net.jami.services.AccountService
 import net.jami.services.CallService
 import net.jami.services.ContactService
+import net.jami.services.IEventListener
+import net.jami.services.NotificationService
 import net.jami.utils.Log
 import javax.inject.Inject
 
@@ -40,12 +44,20 @@ class RemoteControl : Service() {
     lateinit var callService: CallService
 
     @Inject
-    lateinit var connectionService: ConnectionService
+    lateinit var notificationService: NotificationService
 
     private val eventListenerList = mutableListOf<IRemoteService.IEventListener>()
 
-    private val tag = "JamiRemoteControlService"
+    private val tag = "JamiRemoteControl"
     private val compositeDisposable = CompositeDisposable()
+
+    val eventListener = object : IEventListener {
+        override fun onEventReceived(name: String, data: Map<String, String>?) {
+            eventListenerList.forEach {
+                it.onEventReceived(name, data)
+            }
+        }
+    }
 
     companion object {
         private const val NOTIFICATION_CHANNEL_ID = "RemoteControlChannel"
@@ -54,9 +66,9 @@ class RemoteControl : Service() {
         internal const val INCOMING_CALL_ACCEPTED_EVENT = "INCOMING_CALL_ACCEPTED"
         internal const val INCOMING_CALL_REJECT_EVENT = "INCOMING_CALL_REJECTED"
         internal const val OUTGOING_CALL_REQUESTED_EVENT = "OUTGOING_CALL_REQUESTED"
+        //Not sure were to call them yet!
         internal const val OUTGOING_CALL_ESTABLISHED_EVENT = "OUTGOING_CALL_ESTABLISHED"
         internal const val OUTGOING_CALL_REJECTED_EVENT = "OUTGOING_CALL_REJECTED"
-        internal const val CALL_HUNG_UP_EVENT = "CALL_HANGED_UP"
     }
 
     var accounts = listOf<Account>()
@@ -71,13 +83,13 @@ class RemoteControl : Service() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun startForegroundServiceWithNotification() {
-            val channel = NotificationChannel(
-                NOTIFICATION_CHANNEL_ID,
-                "Remote Control Service",
-                NotificationManager.IMPORTANCE_LOW
-            )
-            val manager = getSystemService(NotificationManager::class.java)
-            manager?.createNotificationChannel(channel)
+        val channel = NotificationChannel(
+            NOTIFICATION_CHANNEL_ID,
+            "Remote Control Service",
+            NotificationManager.IMPORTANCE_LOW
+        )
+        val manager = getSystemService(NotificationManager::class.java)
+        manager?.createNotificationChannel(channel)
 
         val notification: Notification = NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
             .setContentTitle("Remote Control Service")
@@ -86,6 +98,8 @@ class RemoteControl : Service() {
             .setPriority(NotificationCompat.PRIORITY_LOW)
             .setOngoing(true)
             .build()
+
+        JamiApplication.instance?.startDaemon(this)
 
         startForeground(NOTIFICATION_ID, notification)
     }
@@ -150,7 +164,7 @@ class RemoteControl : Service() {
 
         override fun isContactExist(contactId: String): Boolean {
             try {
-                val contacts : Map<String, Contact>? = accountService.currentAccount?.contacts
+                val contacts: Map<String, Contact>? = accountService.currentAccount?.contacts
                 return contacts?.containsKey(contactId) ?: false
             } catch (e: Exception) {
                 Log.e(tag, "Failed to check contact: $contactId", e)
@@ -165,33 +179,48 @@ class RemoteControl : Service() {
                 accountService.sendTrustRequest(accountId, contactId)
                 Log.i(tag, "Trust request sent to: $contactId from account: $accountId")
             } catch (e: Exception) {
-                Log.e(tag, "Failed to send trust request to: $contactId from account: $accountId", e)
+                Log.e(
+                    tag,
+                    "Failed to send trust request to: $contactId from account: $accountId",
+                    e
+                )
                 throw RemoteException("Failed to send trust request: ${e.message}")
             }
         }
 
-        override fun initiateCall(fromAccount: String, userId: String, callback: IRemoteService.ICallback) {
+        override fun initiateCall(
+            fromAccount: String,
+            userId: String,
+            callback: IRemoteService.ICallback
+        ) {
             Log.d(tag, "Initiating call")
             notifyEventListeners(OUTGOING_CALL_REQUESTED_EVENT)
             try {
-                val disposable = callService.placeCall(
-                    account = fromAccount,
-                    conversationUri = null,
-                    numberUri = Uri.fromString(userId),
-                    hasVideo = true
-                )
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({ call ->
-                        Log.d(tag, "Call initiated successfully: $call")
-                        notifyEventListeners(OUTGOING_CALL_ESTABLISHED_EVENT)
-                        callback.onSuccess()
-                    }, { error ->
-                        Log.e(tag, "Failed to initiate call: ${error.message}", error)
-                        callback.onError(error.message)
-                    })
+                val account = accountService.getAccount(fromAccount)
+                if (account != null) {
+                    val contact = account.getContact(userId)
+                    val conversation = contact?.conversationUri?.firstElement()?.blockingGet()
 
-                compositeDisposable.add(disposable)
+                    if (contact != null && conversation != null) {
+                        val uri = if (conversation.isSwarm) contact.uri.uri else conversation.uri
+                        startActivity(
+                            Intent(Intent.ACTION_CALL)
+                                .setClass(this@RemoteControl, TVCallActivity::class.java)
+                                .putExtras(ConversationPath.toBundle(accountId, conversation.uri))
+                                .putExtra(Intent.EXTRA_PHONE_NUMBER, uri)
+                                .putExtra(CallFragment.KEY_HAS_VIDEO, true)
+                                .apply {
+                                    flags =
+                                        Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                }
+                        )
+                    } else {
+                        Log.e(tag, "Failed to initiate call to user: $userId")
+                        callback.onError("Failed to initiate call, contact: $contact, conversation not found")
+                    }
+                } else {
+                    callback.onError("Failed to initiate call, account not found")
+                }
             } catch (e: Exception) {
                 Log.e(tag, "Error initiating call", e)
                 callback.onError(e.message)
@@ -208,7 +237,6 @@ class RemoteControl : Service() {
 
         override fun hangUpCall() {
             Log.d(tag, "Hanging up the current call")
-            notifyEventListeners(CALL_HUNG_UP_EVENT)
             try {
                 val activeCall = callService.getActiveCall() ?: return
                 callService.hangUp(activeCall.account!!, activeCall.daemonIdString!!)
@@ -251,7 +279,8 @@ class RemoteControl : Service() {
 
         override fun getCallerImage(userId: String): Bitmap? {
             return try {
-                val contact = accountService.currentAccount?.getContactFromCache(Uri.fromString(userId))
+                val contact =
+                    accountService.currentAccount?.getContactFromCache(Uri.fromString(userId))
                 contact?.profile?.firstElement()?.blockingGet()?.avatar as? Bitmap
             } catch (e: Exception) {
                 Log.e(tag, "Error fetching caller image for $userId: ${e.message}", e)
@@ -270,9 +299,10 @@ class RemoteControl : Service() {
                 val contact = account.getContactFromCache(Uri.fromString(peerId))
                 Log.d(tag, "Setting profile data for user: $peerId")
                 if (imageUri != null && fileType != null && name != null) {
-                    val image: Bitmap = contentResolver.openInputStream(android.net.Uri.parse(imageUri)).use {
-                        BitmapFactory.decodeStream(it)
-                    }
+                    val image: Bitmap =
+                        contentResolver.openInputStream(android.net.Uri.parse(imageUri)).use {
+                            BitmapFactory.decodeStream(it)
+                        }
                     val newProfile = Profile(name, image)
                     Log.d(tag, "Storing picture of height ${image.height}")
                     contactService.storeContactData(contact, newProfile, account.accountId)
@@ -284,18 +314,23 @@ class RemoteControl : Service() {
             }
         }
 
+        @RequiresApi(Build.VERSION_CODES.P)
         override fun registerEventListener(listener: IRemoteService.IEventListener) {
+            Log.d(tag, "Registering event listener: $listener")
             eventListenerList.add(listener)
-            connectionService.registerEventListener(listener)
+            notificationService.registerEventListener(eventListener)
         }
 
+        @RequiresApi(Build.VERSION_CODES.P)
         override fun unregisterEventListener(listener: IRemoteService.IEventListener) {
+            Log.d(tag, "Unregistering event listener: $listener")
             eventListenerList.remove(listener)
-            connectionService.unregisterEventListener(listener)
+            notificationService.unregisterEventListener(eventListener)
         }
 
         private fun notifyEventListeners(name: String, data: Map<String, String>? = null) {
             eventListenerList.forEach { listener ->
+                Log.d(tag, "try to notify listener: $listener")
                 try {
                     listener.onEventReceived(name, data)
                 } catch (e: RemoteException) {

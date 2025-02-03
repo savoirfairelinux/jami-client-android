@@ -22,7 +22,12 @@ interface NotificationService {
     fun showCallNotification(notifId: Int): Any?
     fun cancelCallNotification()
     fun removeCallNotification(notifId: Int)
-    fun handleCallNotification(conference: Conference, remove: Boolean, startScreenshare: Boolean = false)
+    fun handleCallNotification(
+        conference: Conference,
+        remove: Boolean,
+        startScreenshare: Boolean = false
+    )
+
     fun preparePendingScreenshare(conference: Conference, callback: () -> Unit)
     fun startPendingScreenshare(confId: String)
     fun showMissedCallNotification(call: Call)
@@ -33,7 +38,12 @@ interface NotificationService {
     fun showIncomingTrustRequestNotification(account: Account)
     fun cancelTrustRequestNotification(accountID: String)
     fun showFileTransferNotification(conversation: Conversation, info: DataTransfer)
-    fun handleDataTransferNotification(transfer: DataTransfer, conversation: Conversation, remove: Boolean)
+    fun handleDataTransferNotification(
+        transfer: DataTransfer,
+        conversation: Conversation,
+        remove: Boolean
+    )
+
     fun removeTransferNotification(accountId: String, conversationUri: Uri, fileId: String)
     fun getDataTransferNotification(notificationId: Int): Any?
     fun cancelFileNotification(notificationId: Int)
@@ -45,6 +55,9 @@ interface NotificationService {
     fun cancelLocationNotification(first: Account, contact: Contact)
     fun processPush()
 
+    fun registerEventListener(listener: IEventListener)
+    fun unregisterEventListener(listener: IEventListener)
+
     companion object {
         const val NOTIF_TRUST_REQUEST_ACCOUNT_ID = "NOTIF_TRUST_REQUEST_ACCOUNT_ID"
         const val NOTIF_TRUST_REQUEST_MULTIPLE = "NOTIFICATION_TRUST_REQUEST_MULTIPLE"
@@ -54,4 +67,8 @@ interface NotificationService {
         const val KEY_NOTIFICATION_ID = "notificationId"
         const val KEY_SCREENSHARE = "screenshare"
     }
+}
+
+interface IEventListener {
+    fun onEventReceived(name: String, data: Map<String, String>? = null)
 }
