@@ -19,7 +19,6 @@ package cx.ring.utils
 import android.text.InputFilter
 import android.text.Spanned
 import android.text.SpannableString
-import java.lang.StringBuilder
 import java.util.regex.Pattern
 
 class RegisteredNameFilter : InputFilter {
@@ -36,23 +35,18 @@ class RegisteredNameFilter : InputFilter {
                 keepOriginal = false
             }
         }
-        return if (keepOriginal) {
-            null
-        } else {
-            if (source is Spanned) {
-                SpannableString(sb)
-            } else {
-                sb
+        return if (keepOriginal) null
+            else when (source) {
+                is Spanned -> SpannableString(sb)
+                else -> sb
             }
-        }
     }
 
-    private fun isCharAllowed(c: Char): Boolean {
-        return nameCharMatcher.reset(c.toString()).matches()
-    }
+    private fun isCharAllowed(c: Char): Boolean =
+        nameCharMatcher.reset(c.toString()).matches()
 
     companion object {
         private val REGISTERED_NAME_CHAR_PATTERN =
-            Pattern.compile("[a-z0-9_\\-]", Pattern.CASE_INSENSITIVE)
+            Pattern.compile("[\\p{L}\\p{N}_-]", Pattern.CASE_INSENSITIVE)
     }
 }
