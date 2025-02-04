@@ -65,6 +65,7 @@ class Call(
         get() = mediaListSubject
 
     fun setMediaList(media: List<Media>) {
+        Log.w("devdebug", "setMediaList: $media")
         mediaList.clear()
         mediaList.addAll(media)
         mediaListSubject.onNext(mediaList)
