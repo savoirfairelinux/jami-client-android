@@ -20,6 +20,7 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.Subject
 import net.jami.model.Call.CallStatus
+import net.jami.utils.Log
 import java.util.*
 import kotlin.math.min
 
@@ -64,6 +65,13 @@ class Conference(val accountId: String, val id: String) {
 
     /** virtual call with null ID to represent the "call" between this device and the local hosted conference */
     var hostCall: Call? = null
+        set(value) {
+            field = value
+            hostCallSubject.onNext(value)
+        }
+    private val hostCallSubject = BehaviorSubject.create<Call>()
+    val hostCallObservable: Observable<Call>
+        get() = hostCallSubject
 
     val participantsObservable: Observable<List<Call>>
         get() = mParticipantsSubject
@@ -187,6 +195,34 @@ class Conference(val accountId: String, val id: String) {
             it || hostCall?.hasMedia(Media.MediaType.MEDIA_TYPE_VIDEO) == true
         }
 
+    val hasActiveNonScreenShareVideo: Observable<Boolean> = run{
+        Log.e("devdebug", "hasActiveNonScreenShareVideo hostCall: $hostCall")
+
+        hostCallObservable.switchMap { it.mediaListObservable}.map { mediaList ->
+            mediaList.any { media ->
+                media.isEnabled &&
+                        !media.isMuted &&
+                        media.mediaType == Media.MediaType.MEDIA_TYPE_VIDEO &&
+                        media.source != "camera://desktop"
+            }
+        } ?: mParticipantsSubject.switchMap { participants ->
+            Observable.combineLatest(participants.map { it.mediaListObservable })
+            { mediaLists ->
+                for (mediaList in mediaLists) {
+                    for (media in mediaList as List<Media>) {
+                        if (media.mediaType == Media.MediaType.MEDIA_TYPE_VIDEO
+                            && media.isEnabled
+                            && media.isMuted
+                            && media.source != "camera://desktop"
+                        )
+                            return@combineLatest true
+                    }
+                }
+                false
+            }
+        }
+    }
+
     fun hasAudioMedia(): Boolean {
         return mParticipants.size == 1  && mParticipants[0].hasMedia(Media.MediaType.MEDIA_TYPE_AUDIO)
     }
@@ -209,6 +245,9 @@ class Conference(val accountId: String, val id: String) {
         return hostCall?.hasActiveMedia(Media.MediaType.MEDIA_TYPE_VIDEO) == true
     }
 
+    /**
+     * Check if the conference has an active camera.
+     */
     fun hasActiveNonScreenShareVideo(): Boolean =
         (if (hostCall != null) mParticipants + hostCall!! else mParticipants).any { call ->
             call.mediaList.any { media ->
@@ -218,6 +257,13 @@ class Conference(val accountId: String, val id: String) {
                         media.source != "camera://desktop"
             }
         }
+
+//    fun hasUserCamera(): Boolean {
+//        for (call in mParticipants)
+//            if (call.hasMedia(Media.MediaType.MEDIA_TYPE_VIDEO) && call.mediaList.any { it.source == "camera://user" })
+//                return true
+//        return hostCall?.hasMedia(Media.MediaType.MEDIA_TYPE_VIDEO) == true && hostCall?.mediaList?.any { it.source == "camera://user" } == true
+//    }
 
     val timestampStart: Long
         get() = mParticipants.minOfOrNull { it.timestamp } ?: Long.MAX_VALUE

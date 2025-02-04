@@ -258,7 +258,7 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
     }
 
     override fun displayDialPadKeyboard() {}
-    override fun updateAudioState(state: AudioState) {}
+    override fun updateAudioState(state: AudioState, hasVideo: Boolean) {}
 
     /*
         override fun updateMenu() {}

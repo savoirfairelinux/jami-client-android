@@ -643,6 +643,9 @@ abstract class CallService(
         if(!videoExists)
             proposedMediaList.add(Media.DEFAULT_VIDEO.copy(source = uri))
 
+        Log.w("devdebug", "call.account=${call.account}, conf.id=${conf.id}}, mediaList=${proposedMediaList.mapTo(VectMap().apply {
+            reserve(proposedMediaList.size)
+        }) { it.toMap() }}")
         mExecutor.execute {
             JamiService.requestMediaChange(
                 call.account,

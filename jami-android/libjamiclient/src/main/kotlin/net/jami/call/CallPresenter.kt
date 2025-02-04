@@ -84,9 +84,9 @@ class CallPresenter @Inject constructor(
         mCompositeDisposable.add(mHardwareService.getCameraEvents()
             .observeOn(mUiScheduler)
             .subscribe { event: VideoEvent -> onCameraEvent(event) })
-        mCompositeDisposable.add(mHardwareService.audioState
-            .observeOn(mUiScheduler)
-            .subscribe { state: AudioState -> this.view?.updateAudioState(state) })
+//        mCompositeDisposable.add(mHardwareService.audioState
+//            .observeOn(mUiScheduler)
+//            .subscribe { state: AudioState -> this.view?.updateAudioState(state) })
     }
 
     fun initOutGoing(
@@ -196,12 +196,27 @@ class CallPresenter @Inject constructor(
 //        conference.subscribe{
 //            Log.w("devdebug", "conference update ${it.hostCall?.systemConnection?.blockingGet()}")
 //        }.apply { mCompositeDisposable.add(this) }
-        conference.switchMap { mHardwareService.getAudioState(it) }
-            .observeOn(mUiScheduler)
-            .subscribe { it: AudioState ->
-                view?.updateAudioState(it)
-                Log.w("devdebug", "audioState updated: $it")
-            }.apply { mCompositeDisposable.add(this) }
+        Observable.combineLatest(
+            conference.switchMap { conference: Conference -> conference.hasActiveNonScreenShareVideo }.doOnNext {
+                Log.e( "devdebug", "hasVideo: $it")
+                it },
+            conference.switchMap { conference: Conference -> mHardwareService.getAudioState(conference) }.doOnNext {
+                Log.e( "devdebug", "audioState: $it")
+                it
+            },
+        ){
+            hasVideo: Boolean, audioState: AudioState -> hasVideo to audioState
+        }.observeOn(mUiScheduler)
+            .subscribe { (hasVideo, audioState) ->
+                view?.updateAudioState(audioState, hasVideo)
+            }.apply { mCompositeDisposable.add(this)
+        }
+//        conference.switchMap { mHardwareService.getAudioState(it) }
+//            .observeOn(mUiScheduler)
+//            .subscribe { it: AudioState ->
+//                view?.updateAudioState(it)
+//                Log.w("devdebug", "audioState updated: $it")
+//            }.apply { mCompositeDisposable.add(this) }
 
         mCompositeDisposable.add(conference
             .switchMap { obj: Conference ->
@@ -304,6 +319,7 @@ class CallPresenter @Inject constructor(
 
     fun switchOnOffCamera() {
         val conference = mConference ?: return
+        Log.w("devdebug", "switchOnOffCamera ${conference.hasActiveNonScreenShareVideo()}")
         val camId = mHardwareService.changeCamera(true)
         mCallService.replaceVideoMedia(conference, "camera://$camId", conference.hasActiveNonScreenShareVideo())
     }
