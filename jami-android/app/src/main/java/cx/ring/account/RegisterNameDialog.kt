@@ -144,7 +144,7 @@ class RegisterNameDialog : DialogFragment() {
             .debounce(JamiAccountCreationPresenter.TYPING_DELAY, TimeUnit.MILLISECONDS)
             .switchMapSingle { q: String -> mAccountService.findRegistrationByName(accountId, "", q) }
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { q: RegisteredName -> onLookupResult(q.name, q.address, q.state) }
+            .subscribe { q: RegisteredName -> onLookupResult(q.query, q.address, q.state) }
         super.onStart()
     }
 

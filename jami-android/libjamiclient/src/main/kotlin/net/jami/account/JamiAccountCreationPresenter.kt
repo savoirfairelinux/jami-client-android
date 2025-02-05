@@ -43,9 +43,9 @@ class JamiAccountCreationPresenter @Inject constructor(
         super.bindView(view)
         mCompositeDisposable.add(contactQuery
             .debounce(TYPING_DELAY, TimeUnit.MILLISECONDS)
-            .switchMapSingle { q: String -> accountService.findRegistrationByName("", "", q) }
+            .switchMapSingle { query: String -> accountService.findRegistrationByName("", "", query) }
             .observeOn(uiScheduler)
-            .subscribe { q: RegisteredName -> onLookupResult(q.name, q.address, q.state) })
+            .subscribe { res: RegisteredName -> onLookupResult(res.query, res.address, res.state) })
     }
 
     fun init(model: AccountCreationModel?) {
