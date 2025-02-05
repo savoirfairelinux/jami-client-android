@@ -88,6 +88,24 @@
       "parentUuid": "ae2c94bb_c0a3bed3",
       "revId": "9a09d46a83cb535217f8799399f4038bbb29600c",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c146516_9ae49990",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-02-05T16:03:22Z",
+      "side": 1,
+      "message": "If I translate to the https://support.google.com/googleplay/android-developer/answer/9844778?visit_id\u003d638743605084629665-1079397603\u0026rd\u003d1#zippy\u003d%2Cview-list-of-available-languages list can this be merged?",
+      "parentUuid": "caabf947_b6ca77a5",
+      "revId": "9a09d46a83cb535217f8799399f4038bbb29600c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
