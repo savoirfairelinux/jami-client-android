@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ea32644_2f8937d4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2025-02-05T15:47:44Z",
+      "side": 1,
+      "message": "Trying to pass `Jami` as a parameter for `Join %1$s` feels unnecessarily complicated.\nI think we should keep it simple with `Join Jami`.\nIf we ever decide to change the app\u0027s name, we can replace `Jami` throughout the code.",
+      "revId": "e5e568f88cbf003b6c754e6805601d6844dfbfe2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a0b3206_efebf9b9",
+        "filename": "jami-android/app/src/main/java/cx/ring/tv/account/TVHomeAccountCreationFragment.kt",
+        "patchSetId": 12
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2025-02-05T15:47:44Z",
+      "side": 1,
+      "message": "Doesn\u0027t work like that.\nShould be something like `String.format(getString(R.string.a), getString(R.string.b))`",
+      "range": {
+        "startLine": 73,
+        "startChar": 52,
+        "endLine": 73,
+        "endChar": 111
+      },
+      "revId": "e5e568f88cbf003b6c754e6805601d6844dfbfe2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f76143d6_7f57e209",
+        "filename": "jami-android/app/src/main/java/cx/ring/tv/account/TVJamiAccountCreationFragment.kt",
+        "patchSetId": 12
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2025-02-05T15:47:44Z",
+      "side": 1,
+      "message": "Doesn\u0027t work like that.\nShould be something like `String.format(getString(R.string.a), getString(R.string.b))`",
+      "range": {
+        "startLine": 69,
+        "startChar": 20,
+        "endLine": 69,
+        "endChar": 79
+      },
+      "revId": "e5e568f88cbf003b6c754e6805601d6844dfbfe2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9bdf3403_37118573",
+        "filename": "jami-android/app/src/main/java/cx/ring/tv/account/TVProfileCreationFragment.kt",
+        "patchSetId": 12
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2025-02-05T15:47:44Z",
+      "side": 1,
+      "message": "Doesn\u0027t work like that.\nShould be something like `String.format(getString(R.string.a), getString(R.string.b))`",
+      "range": {
+        "startLine": 91,
+        "startChar": 20,
+        "endLine": 91,
+        "endChar": 79
+      },
+      "revId": "e5e568f88cbf003b6c754e6805601d6844dfbfe2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a9e7162c_0ff6f465",
+        "filename": "jami-android/app/src/main/res/layout/frag_acc_home_create.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2025-02-05T15:47:44Z",
+      "side": 1,
+      "message": "Doesn\u0027t work like that.\nYou can\u0027t use parameters in the view xml file.",
+      "range": {
+        "startLine": 47,
+        "startChar": 29,
+        "endLine": 47,
+        "endChar": 86
+      },
+      "revId": "e5e568f88cbf003b6c754e6805601d6844dfbfe2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "24418981_9ef57066",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2025-02-05T15:47:44Z",
+      "side": 1,
+      "message": "I think `Join Jami` would be easier.",
+      "range": {
+        "startLine": 390,
+        "startChar": 40,
+        "endLine": 390,
+        "endChar": 49
+      },
+      "revId": "e5e568f88cbf003b6c754e6805601d6844dfbfe2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a08de9c_39fe4cb4",
+        "filename": "jami-android/app/src/main/res/values/strings_account.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2025-02-05T15:47:44Z",
+      "side": 1,
+      "message": "I think `Join Jami` would be easier.",
+      "range": {
+        "startLine": 247,
+        "startChar": 38,
+        "endLine": 247,
+        "endChar": 47
+      },
+      "revId": "e5e568f88cbf003b6c754e6805601d6844dfbfe2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
