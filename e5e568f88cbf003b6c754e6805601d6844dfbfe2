@@ -41,6 +41,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a11095c3_de9e0e9e",
+        "filename": "jami-android/app/src/main/java/cx/ring/tv/account/TVHomeAccountCreationFragment.kt",
+        "patchSetId": 12
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-02-05T19:13:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a0b3206_efebf9b9",
+      "range": {
+        "startLine": 73,
+        "startChar": 52,
+        "endLine": 73,
+        "endChar": 111
+      },
+      "revId": "e5e568f88cbf003b6c754e6805601d6844dfbfe2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f76143d6_7f57e209",
@@ -64,6 +88,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d504c9fa_6c97f69e",
+        "filename": "jami-android/app/src/main/java/cx/ring/tv/account/TVJamiAccountCreationFragment.kt",
+        "patchSetId": 12
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-02-05T19:13:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f76143d6_7f57e209",
+      "range": {
+        "startLine": 69,
+        "startChar": 20,
+        "endLine": 69,
+        "endChar": 79
+      },
+      "revId": "e5e568f88cbf003b6c754e6805601d6844dfbfe2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9bdf3403_37118573",
@@ -77,6 +125,30 @@
       "writtenOn": "2025-02-05T15:47:44Z",
       "side": 1,
       "message": "Doesn\u0027t work like that.\nShould be something like `String.format(getString(R.string.a), getString(R.string.b))`",
+      "range": {
+        "startLine": 91,
+        "startChar": 20,
+        "endLine": 91,
+        "endChar": 79
+      },
+      "revId": "e5e568f88cbf003b6c754e6805601d6844dfbfe2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1cc7f491_9b1e12c6",
+        "filename": "jami-android/app/src/main/java/cx/ring/tv/account/TVProfileCreationFragment.kt",
+        "patchSetId": 12
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-02-05T19:13:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9bdf3403_37118573",
       "range": {
         "startLine": 91,
         "startChar": 20,
