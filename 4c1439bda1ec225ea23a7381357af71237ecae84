@@ -16,6 +16,24 @@
       "message": "I have a slightly different supported languages list (I got the link from the Jami admin page on Google Play): https://support.google.com/googleplay/android-developer/answer/9844778?visit_id\u003d638743605084629665-1079397603\u0026rd\u003d1#zippy\u003d%2Cview-list-of-available-languages\nFollowing this list, it will have an impact with your changes:\ncs: not in the google list; Czech? cs-CZ\nda: not in the google list; Danish? da-DK\nde: not in the google list; German? de-DE\nes: not in the google list; Spanish? es-419; es-ES, es-US\nfr: not in the google list; French? fr-CA; fr-FR\nhu: not in the google list; Hungarian? hu-HU\nit: not in the google list; Italian? it-IT\nnl: not in the google list; Dutch? nl-NL\npl: not in the google list; Polish? pl-PL\nru: not in the google list; Russian? ru-RU\nsv: not in the google list; Swedish? sv-SE\ntr: not in the google list; Turkish? tr-TR\n\nAlso, why did you delete:\nfr-FR\nes-ES",
       "revId": "4c1439bda1ec225ea23a7381357af71237ecae84",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4092c42f_83b45867",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 25
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-02-05T16:05:19Z",
+      "side": 1,
+      "message": "\u003e Also, why did you delete:\n\u003e fr-FR\n\u003e es-ES\n\nfr-FR was renamed to fr\nes-ES was renamed to es\n\nIf I translate to the https://support.google.com/googleplay/android-developer/answer/9844778?visit_id\u003d638743605084629665-1079397603\u0026rd\u003d1#zippy\u003d%2Cview-list-of-available-languages list can this be merged?",
+      "parentUuid": "0c1e7cfb_3d2ddb13",
+      "revId": "4c1439bda1ec225ea23a7381357af71237ecae84",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
