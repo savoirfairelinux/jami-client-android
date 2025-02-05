@@ -70,6 +70,24 @@
       "parentUuid": "d91e2da0_42845a8a",
       "revId": "9a09d46a83cb535217f8799399f4038bbb29600c",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "caabf947_b6ca77a5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2025-02-05T14:24:36Z",
+      "side": 1,
+      "message": "Hey,\nI have the same understanding than Ovari.\nHowever I have a slightly different supported languages list (I got the link from the Jami admin page on Google Play): https://support.google.com/googleplay/android-developer/answer/9844778?visit_id\u003d638743605084629665-1079397603\u0026rd\u003d1#zippy\u003d%2Cview-list-of-available-languages\nFollowing this list, it will have an impact with your changes:\nel: not in the google list; Greek? el-GR\nfi: not in the google list; Finnish? fi-FI\nhe: not in the google list; Hebrew? iw-IL\nhi: not in the google list; Hindi? hi-IN\nis: not in the google list; Icelandic? is-IS\nja: not in the google list; Japanese? ja-JP\nko: not in the google list; Korean? ko-KR\nno: not in the google list; Norwegian? no-NO",
+      "parentUuid": "ae2c94bb_c0a3bed3",
+      "revId": "9a09d46a83cb535217f8799399f4038bbb29600c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
