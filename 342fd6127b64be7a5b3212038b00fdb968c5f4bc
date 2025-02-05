@@ -16,6 +16,24 @@
       "message": "I don\u0027t know if it is related but `register name` feature from `account settings` is not working anymore.",
       "revId": "342fd6127b64be7a5b3212038b00fdb968c5f4bc",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f791258_6735ef8e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2025-02-05T18:16:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a47cf1f2_08ee525c",
+      "revId": "342fd6127b64be7a5b3212038b00fdb968c5f4bc",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
