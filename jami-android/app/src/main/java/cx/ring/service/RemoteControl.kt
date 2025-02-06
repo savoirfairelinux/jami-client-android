@@ -16,6 +16,7 @@ import cx.ring.IRemoteService
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import net.jami.daemon.JamiService
 import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.model.Account
 import net.jami.model.Contact
@@ -74,6 +75,8 @@ class RemoteControl : Service() {
             .setPriority(NotificationCompat.PRIORITY_LOW)
             .setOngoing(true)
             .build()
+
+        JamiService.setRingingTimeout(300)
 
         startForeground(NOTIFICATION_ID, notification)
     }
