@@ -1,47 +1,46 @@
-Jami, một gói GNU, là phần mềm giao tiếp ngang hàng phổ biến và phân tán tôn trọng quyền tự do và quyền riêng tư của người dùng.
+<b>Jami</b>, một gói GNU, là phần mềm giao tiếp ngang hàng phân tán và phổ biến, tôn trọng quyền tự do và quyền riêng tư của người dùng.
 
-Jami là cách đơn giản và dễ dàng nhất để kết nối với mọi người (và thiết bị) bằng tin nhắn tức thời, cuộc gọi âm thanh và video qua Internet và mạng nội bộ LAN/WAN.
+Jami là cách đơn giản và dễ dàng nhất để kết nối với mọi người (và thiết bị) bằng tin nhắn tức thời, cuộc gọi âm thanh và video qua <b>Internet</b> và <b>mạng nội bộ</b> LAN/WAN.
 
 Jami là nền tảng giao tiếp riêng tư, được mã hóa đầu cuối và miễn phí/tự do.
 
-Jami – trước đây được gọi là Ring – cũng là một giải pháp thay thế nguồn mở (cho Facebook Messenger, Signal, Skype, Teams, Telegram, TikTok, Viber, WhatsApp, Zoom) ưu tiên quyền riêng tư của người dùng.
+Jami là phần mềm <b>mã nguồn mở</b> <b>ưu tiên quyền riêng tư của người dùng</b>.
 
-Jami có thiết kế chuyên nghiệp và có sẵn cho nhiều nền tảng. Không giống như các giải pháp thay thế khác, các cuộc gọi sử dụng Jami được thực hiện trực tiếp giữa những người dùng vì nó không sử dụng máy chủ để xử lý các cuộc gọi.
+Jami có thiết kế chuyên nghiệp và có sẵn cho nhiều nền tảng khác nhau. Không giống như các lựa chọn thay thế, Jami <b>cuộc gọi được thực hiện trực tiếp giữa những người dùng</b> vì nó không sử dụng máy chủ để xử lý cuộc gọi.
 
-Điều này mang lại quyền riêng tư lớn nhất vì bản chất phân tán của Jami có nghĩa là các cuộc gọi của bạn chỉ diễn ra giữa những người tham gia.
+Điều này mang lại quyền riêng tư cao nhất vì bản chất <b>phân tán</b> của Jami có nghĩa là cuộc gọi của bạn chỉ diễn ra giữa những người tham gia.
 
-Các cuộc trò chuyện một-một và nhóm với Jami được cải thiện với: tin nhắn tức thời; cuộc gọi âm thanh và video; ghi âm và gửi tin nhắn âm thanh và video; chuyển tập tin; chia sẻ màn hình; và chia sẻ vị trí.
+Các cuộc trò chuyện một-một và <b>nhóm</b> với Jami được cải tiến với tính năng nhắn tin tức thời, gọi thoại và gọi video, ghi âm và gửi tin nhắn thoại và video, chuyển tệp, chia sẻ màn hình và chia sẻ vị trí.
 
-Jami cũng có thể hoạt động như một máy khách SIP.
+Jami cũng có thể hoạt động như một <b>máy khách SIP</b>.
 
-Jami có nhiều tiện ích mở rộng có sẵn: Bộ lọc âm thanh; Trả lời tự động; Màn hình xanh; Hình mờ; và Bản ghi thì thầm.
+Có nhiều <b>tiện ích mở rộng Jami</b>: Bộ lọc âm thanh, Trả lời tự động, Màn hình xanh, Phân đoạn, Hình mờ và Bản ghi thì thầm.
 
-Jami có thể dễ dàng triển khai trong các tổ chức với "Máy chủ quản lý tài khoản Jami" (JAMS), cho phép người dùng kết nối với thông tin xác thực của công ty hoặc tạo tài khoản cục bộ. JAMS cho phép bạn quản lý cộng đồng Jami của riêng mình trong khi tận dụng kiến ​​trúc mạng phân tán của Jami.
+Jami có thể dễ dàng triển khai trong các tổ chức với <b>JAMS (Máy chủ quản lý tài khoản Jami)</b>, cho phép người dùng kết nối với thông tin xác thực của công ty hoặc tạo tài khoản cục bộ. JAMS cho phép bạn <b>quản lý</b> cộng đồng Jami của riêng mình trong khi tận dụng kiến ​​trúc mạng phân tán của Jami.
 
-Jami có sẵn cho GNU/Linux, Windows, macOS, iOS, Android và Android TV, biến Jami thành một khuôn khổ giao tiếp có thể tương tác và đa nền tảng.
+Jami <b>có sẵn cho</b> GNU/Linux, Windows, macOS, iOS, Android, Android TV và trình duyệt web, biến Jami thành một khuôn khổ giao tiếp có thể tương tác và đa nền tảng.
 
-Quản lý nhiều tài khoản SIP, tài khoản Jami và tài khoản JAMS bằng máy khách Jami được cài đặt trên một hoặc nhiều thiết bị.
+<b>Quản lý nhiều</b> tài khoản SIP, tài khoản Jami và tài khoản JAMS bằng ứng dụng khách Jami được cài đặt trên một hoặc nhiều thiết bị.
 
 Jami miễn phí, không giới hạn, riêng tư, không có quảng cáo, tương thích, nhanh, tự chủ và ẩn danh.
 
-Tìm hiểu thêm về:
+<b>Tìm hiểu thêm về:</b>
 Jami: https://jami.net/
 Tiện ích mở rộng Jami: https://jami.net/extensions/
-“Jami Account Management Server” (JAMS): https://jami.biz/
+JAMS (Máy chủ quản lý tài khoản Jami): https://jami.biz/
 Tài liệu Jami: https://docs.jami.net/
 
-Theo dõi chúng tôi để biết thêm:
+<b>Theo dõi chúng tôi để biết thêm:</b>
 Mastodon: https://mstdn.io/@Jami
-X: https://x.com/jami_social
-YouTube: https://www.youtube.com/@jami9311
+Video: https://docs.jami.net/videos/
 
-Chúng tôi rất mong nhận được phản hồi từ bạn! Tham gia cộng đồng Jami:
+<b>Chúng tôi rất mong nhận được phản hồi từ bạn! Tham gia cộng đồng Jami:</b>
 Góp phần: https://jami.net/contribute/
 Diễn đàn: https://forum.jami.net/
 
-Xây dựng với Jami trên dự án IoT của bạn: tái sử dụng công nghệ truyền thông phổ biến của Jami với thư viện di động của nó trên hệ thống bạn chọn.
+Xây dựng <b>các dự án IoT</b> với Jami. Tái sử dụng công nghệ truyền thông phổ quát của Jami với thư viện di động của nó trên hệ thống bạn chọn.
 
 Jami cho Android TV được thử nghiệm trên NVIDIA SHIELD TV với camera Logitech.
 
-Jami được xuất bản theo giấy phép GPL, phiên bản 3 trở lên.
+Jami được xuất bản theo <b>giấy phép GPL</b>, phiên bản 3 trở lên.
 Bản quyền © Savoir-faire Linux Inc.

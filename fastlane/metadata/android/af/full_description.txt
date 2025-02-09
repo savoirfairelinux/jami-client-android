@@ -1,47 +1,46 @@
-Jami, 'n GNU-pakket, is sagteware vir universele en verspreide eweknie-kommunikasie wat die vryheid en privaatheid van sy gebruikers respekteer.
+<b>Jami</b>, 'n GNU-pakket, is sagteware vir universele en verspreide eweknie-kommunikasie wat die vryheid en privaatheid van sy gebruikers respekteer.
 
-Jami is die eenvoudigste en maklikste manier om met mense (en toestelle) in verbinding te tree met kitsboodskappe, oudio- en video-oproepe oor die internet en LAN/WAN-intranete.
+Jami is die eenvoudigste en maklikste manier om met mense (en toestelle) te koppel met kitsboodskappe, oudio- en video-oproepe oor die <b>Internet</b> en LAN/WAN <b>intranette</b>.
 
-Jami is 'n gratis/vrye, end-tot-end geënkripteerde en private kommunikasieplatform.
+Jami is 'n gratis/vrye, end-tot-end geënkripteerde en private <b>kommunikasieplatform</b>.
 
-Jami – wat vroeër as Ring bekend gestaan ​​het – is ook 'n oopbron-alternatief (vir Facebook Messenger, Signal, Skype, Teams, Telegram, TikTok, Viber, WhatsApp, Zoom) wat die privaatheid van sy gebruikers prioritiseer.
+Jami is <b>oopbron</b> sagteware wat <b>gebruikersprivaatheid prioritiseer</b>.
 
-Jami het 'n professionele ontwerp en is beskikbaar vir 'n wye reeks platforms. Anders as die alternatiewe, is oproepe wat Jami gebruik direk tussen gebruikers, aangesien dit nie bedieners gebruik om oproepe te hanteer nie.
+Jami het 'n professionele ontwerp en is beskikbaar vir 'n wye reeks platforms. Anders as die alternatiewe, is Jami <b>oproepe direk tussen gebruikers</b>, aangesien dit nie bedieners gebruik om oproepe te hanteer nie.
 
-Dit gee die grootste privaatheid, aangesien die verspreide aard van Jami beteken dat u oproepe slegs tussen deelnemers is.
+Dit gee die grootste privaatheid, aangesien die <b>verspreide</b> aard van Jami beteken dat jou oproepe net tussen deelnemers is.
 
-Een-tot-een en groepgesprekke met Jami word verbeter met: kitsboodskappe; oudio- en video-oproepe; opneem en stuur van oudio- en videoboodskappe; lêeroordragte; skerm deel; en liggingdeling.
+Een-tot-een en <b>groepgesprekke</b> met Jami word verbeter met kitsboodskappe, oudio- en video-oproepe, opname en stuur van oudio- en videoboodskappe, lêeroordragte, skermdeling en liggingdeling.
 
-Jami kan ook as 'n SIP-kliënt funksioneer.
+Jami kan ook as 'n <b>SIP-kliënt</b> funksioneer.
 
-Jami het verskeie uitbreidings beskikbaar: Oudiofilter; Outo-antwoord; Groen skerm; Watermerk; en, Fluister Transkripsie.
+Veelvuldige <b>Jami-uitbreidings</b> is beskikbaar: Oudiofilter, Outo-antwoord, Groenskerm, Segmentering, Watermerk en Fluister-transkripsie.
 
-Jami kan maklik in organisasies ontplooi word met die "Jami Account Management Server" (JAMS), wat gebruikers in staat stel om met hul korporatiewe geloofsbriewe te koppel of plaaslike rekeninge te skep. JAMS laat jou toe om jou eie Jami-gemeenskap te bestuur terwyl jy voordeel trek uit Jami se verspreide netwerkargitektuur.
+Jami kan maklik in organisasies ontplooi word met die <b>JAMS (Jami Account Management Server)</b>, wat gebruikers in staat stel om met hul korporatiewe geloofsbriewe te koppel of plaaslike rekeninge te skep. JAMS laat jou toe om <b>jou eie</b> Jami-gemeenskap te bestuur terwyl jy voordeel trek uit Jami se verspreide netwerkargitektuur.
 
-Jami is beskikbaar vir GNU/Linux, Windows, macOS, iOS, Android en Android TV, wat Jami 'n interoperabele en kruisplatform-kommunikasieraamwerk maak.
+Jami is <b>beskikbaar vir</b> GNU/Linux, Windows, macOS, iOS, Android, Android TV en webblaaiers, wat Jami 'n interoperabele en kruisplatform-kommunikasieraamwerk maak.
 
-Bestuur verskeie SIP-rekeninge, Jami-rekeninge en JAMS-rekeninge met die Jami-kliënt wat op een of meer toestelle geïnstalleer is.
+<b>Bestuur veelvuldige</b> SIP-rekeninge, Jami-rekeninge en JAMS-rekeninge met die Jami-kliënt wat op een of meer toestelle geïnstalleer is.
 
 Jami is gratis, onbeperk, privaat, advertensievry, versoenbaar, vinnig, outonoom en anoniem.
 
-Kom meer te wete oor:
+<b>Kom meer te wete oor:</b>
 Jami: https://jami.net/
 Jami-uitbreidings: https://jami.net/extensions/
-"Jami Account Management Server" (JAMS): https://jami.biz/
+JAMS (Jami Account Management Server): https://jami.biz/
 Jami-dokumentasie: https://docs.jami.net/
 
-Volg ons vir meer:
+<b>Volg ons vir meer:</b>
 Mastodon: https://mstdn.io/@Jami
-X: https://x.com/jami_social
-YouTube: https://www.youtube.com/@jami9311
+Video's: https://docs.jami.net/videos/
 
-Ons hoor graag van jou! Sluit aan by die Jami-gemeenskap:
+<b>Ons hoor graag van jou! Sluit aan by die Jami-gemeenskap:</b>
 Dra by: https://jami.net/contribute/
 Forum: https://forum.jami.net/
 
-Bou saam met Jami op jou IoT-projek: hergebruik die universele kommunikasietegnologie van Jami met sy draagbare biblioteek op jou stelsel van keuse.
+Bou <b>IoT-projekte</b> met Jami. Hergebruik die universele kommunikasietegnologie van Jami met sy draagbare biblioteek op u stelsel van keuse.
 
 Jami vir Android TV word op NVIDIA SHIELD TV met Logitech-kameras getoets.
 
-Jami word gepubliseer onder die GPL-lisensie, weergawe 3 of hoër.
+Jami word gepubliseer onder die <b>GPL-lisensie</b>, weergawe 3 of hoër.
 Kopiereg © Savoir-faire Linux Inc.

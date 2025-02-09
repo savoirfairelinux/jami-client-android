@@ -1,0 +1,46 @@
+Jami, in pakkett GNU, è in software per la communicaziun universala e distributiva peer-to-peer che respeta la libertà e la privatscha da sias utilisaturs.
+
+Jami è la via la pli simpla e la pli faivla da contectar cun persunas (e apparats) cun messagistica instantanea, audi e chattadas video sur l'Internet e las intranets LAN/WAN.
+
+Jami è ina plataforma da comunicaziun gratuita, encryptada da frunt a frunt e privata.
+
+Jami è in software open-source che metta en priuritad la privatscha da l'utente.
+
+Jami ha in design professiunal e es disponibla per in'ampia varietad da plataformas. In contrast a las autras, las clamadas da Jami stattan directamein tranter ils utilisaders, perquai ch'ela na dovra nagins servers per tractar las clamadas.
+
+Questa dat il pli gronda privadetg, pertutg che la natira distribuida da Jami signifitgescha ch'voss chamadas èn be tranter ils participants.
+
+Conversaziuns one-to-one e en grupp cun Jami vegnan embellidas cun messaggeria immediata, chats audio e video, enregistrar e sendar messadis audio e video, transferiment da datotecas, spargnar l'uffizi e dividir la localisaziun.
+
+Jami po er funcziunar sco in client SIP.
+
+Plirs extensiuns Jami èn d'access: Filtr da son, Resposta automata, Vardar verd, Segmentaziun, Marca d'acqua, e Transcrit da murmurs.
+
+Jami po vegnir deployà senza difficultads en organisaziuns cun il JAMS (Jami Account Management Server), permettend a l'users da s'unir cun lur credenzials corporativs u crear account locals. JAMS permetta da gestir sia propia communitad Jami e profitar dal'architettura da rete distribuida da Jami.
+
+Jami è disponibel per GNU/Linux, Windows, macOS, iOS, Android, Android TV e navigaturs web, fatschend da Jami in framework da communicaziun interoperabel e cross-platform.
+
+Gestiun d'plurals accounts SIP, comptes Jami e comptes JAMS cun il client Jami installà sin in u plirs apparatus.
+
+Jami è libr, illimità, privà, senza publicitad, compatibel, svelte, autonom e anonin.
+
+Schatta dapli sur:
+Jami: https://jami.net/
+Extensions da Jami: https://jami.net/extensions/
+JAMS (Server da Gestiun da Conts Jami): https://jami.biz/
+Documentaziun da Jami: https://docs.jami.net/
+
+Seguitan nus per dapli:
+Mastodon: https://mstdn.io/@Jami
+Videos: https://docs.jami.net/videos/
+
+Essan fitg tutt’ura da vus! Participai alla comunitad Jami:
+Contribuziun: https://jami.net/contribute/
+Forum: https://forum.jami.net/
+
+Crea projects IoT cun Jami. Reutilisez la tecnologia da comunicaziun universala da Jami cun sia biblioteca portabla sin vossa sistema preferida.
+
+Jami per Android TV è testà sin NVIDIA SHIELD TV cun cameras da Logitech.
+
+Jami è publicà sut la licenza GPL, versiun 3 u superiura.
+Dret d'autur © Savoir-faire Linux Inc.

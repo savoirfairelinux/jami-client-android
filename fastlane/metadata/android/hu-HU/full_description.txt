@@ -1,47 +1,46 @@
-A Jami, egy GNU-csomag, az univerzális és elosztott társ-társ kommunikációt szolgáló szoftver, amely tiszteletben tartja a felhasználók szabadságát és magánéletét.
+A <b>Jami</b>, egy GNU-csomag, egy univerzális és elosztott társ-társ kommunikációt szolgáló szoftver, amely tiszteletben tartja a felhasználók szabadságát és magánéletét.
 
-A Jami a legegyszerűbb és legegyszerűbb módja annak, hogy azonnali üzenetküldéssel, hang- és videohívásokkal kapcsolódjon az emberekhez (és eszközökhöz) az interneten és a LAN/WAN intraneteken keresztül.
+A Jami a legegyszerűbb és legegyszerűbb módja annak, hogy azonnali üzenetküldéssel, hang- és videohívásokkal kapcsolódjon az emberekhez (és eszközökhöz) az <b>interneten</b> és a LAN/WAN <b>intraneten</b> keresztül.
 
-A Jami egy ingyenes, teljes körűen titkosított és privát kommunikációs platform.
+A Jami egy ingyenes, teljes körűen titkosított és privát <b>kommunikációs platform</b>.
 
-A Jami – amelyet korábban Ring néven ismertek – egy nyílt forráskódú alternatíva is (a Facebook Messenger, a Signal, a Skype, a Teams, a Telegram, a TikTok, a Viber, a WhatsApp, a Zoom számára), amely előtérbe helyezi a felhasználók magánéletét.
+A Jami <b>nyílt forráskódú</b> szoftver, amely <b>előnyben részesíti a felhasználók adatvédelmét</b>.
 
-A Jami professzionális megjelenésű, és platformok széles skálájához elérhető. Az alternatívákkal ellentétben a Jami-t használó hívások közvetlenül a felhasználók között zajlanak, mivel nem használ szervereket a hívások kezelésére.
+A Jami professzionális megjelenésű, és platformok széles skálájához elérhető. Az alternatívákkal ellentétben a Jami <b>közvetlenül a felhasználók között zajlik</b>, mivel nem használ kiszolgálókat a hívások kezelésére.
 
-Ez biztosítja a legnagyobb magánéletet, mivel a Jami elosztott jellege azt jelenti, hogy a hívások csak a résztvevők között zajlanak.
+Ez biztosítja a legnagyobb magánéletet, mivel a Jami <b>elosztott</b> jellege azt jelenti, hogy a hívások csak a résztvevők között zajlanak.
 
-A Jamival folytatott személyes és csoportos beszélgetéseket a következők javítják: azonnali üzenetküldés; hang- és videohívások; hang- és videoüzenetek rögzítése és küldése; fájlátvitel; képernyőmegosztás; és helymegosztás.
+A Jamival folytatott személyes és <b>csoportos beszélgetéseket</b> az azonnali üzenetküldés, hang- és videohívások, hang- és videoüzenetek rögzítése és küldése, fájlátvitel, képernyőmegosztás és helymegosztás továbbfejlesztik.
 
-A Jami SIP-kliensként is működhet.
+A Jami <b>SIP-ügyfélként</b> is működhet.
 
-A Jami több bővítményt is kínál: Hangszűrő; Automatikus válasz; Zöld képernyő; Vízjel; és, Suttogó átirat.
+Több <b>Jami bővítmény</b> érhető el: hangszűrő, automatikus válasz, zöld képernyő, szegmentálás, vízjel és suttogó átirat.
 
-A Jami könnyen telepíthető a szervezetekben a JAMS (Jami Account Management Server – Jami-fiókkezelő kiszolgáló) segítségével, amely lehetővé teszi a felhasználók számára, hogy csatlakozzanak vállalati hitelesítő adataikhoz, vagy helyi fiókokat hozzanak létre. A JAMS lehetővé teszi saját Jami közösségének kezelését, miközben kihasználja a Jami elosztott hálózati architektúráját.
+A Jami könnyen telepíthető a szervezetekben a <b>JAMS (Jami Account Management Server)</b> segítségével, amely lehetővé teszi a felhasználók számára, hogy csatlakozzanak vállalati hitelesítő adataikhoz, vagy helyi fiókokat hozzanak létre. A JAMS lehetővé teszi a <b>saját</b> Jami közösség kezelését, miközben kihasználja a Jami elosztott hálózati architektúráját.
 
-A Jami elérhető GNU/Linux, Windows, macOS, iOS, Android és Android TV rendszereken, így a Jami interoperábilis és platformok közötti kommunikációs keretrendszerré válik.
+A Jami <b>elérhető</b> GNU/Linux, Windows, macOS, iOS, Android, Android TV és webböngészők számára, így a Jami interoperábilis és platformok közötti kommunikációs keretrendszerré válik.
 
-Kezeljen több SIP-fiókot, Jami-fiókot és JAMS-fiókot az egy vagy több eszközre telepített Jami-klienssel.
+<b>Több</b> SIP-, Jami- és JAMS-fiók kezelése az egy vagy több eszközre telepített Jami-klienssel.
 
 A Jami ingyenes, korlátlan, privát, reklámmentes, kompatibilis, gyors, autonóm és névtelen.
 
-További tájékoztatás:
+<b>További információ:</b>
 Jami: https://jami.net/
 Jami bővítmények: https://jami.net/extensions/
-JAMS (Jami Account Management Server – Jami-fiókkezelő kiszolgáló): https://jami.biz/
+JAMS (Jami fiókkezelő szerver): https://jami.biz/
 Jami dokumentáció: https://docs.jami.net/
 
-Kövess minket a továbbiakért:
+<b>Kövessen minket további információkért:</b>
 Mastodon: https://mstdn.io/@Jami
-X: https://x.com/jami_social
-YouTube: https://www.youtube.com/@jami9311
+Videók: https://docs.jami.net/videos/
 
-Szeretnénk hallani rólad! Csatlakozz a Jami közösséghez:
+<b>Szeretnénk hallani rólad! Csatlakozz a Jami közösséghez:</b>
 Hozzájárulás: https://jami.net/contribute/
 Fórum: https://forum.jami.net/
 
-Építsen a Jamival IoT-projektjére: használja újra a Jami univerzális kommunikációs technológiáját a hordozható könyvtárával a választott rendszerén.
+Építsen <b>IoT-projekteket</b> Jamival. Használja újra a Jami univerzális kommunikációs technológiáját annak hordozható könyvtárával az Ön által választott rendszeren.
 
-A Jami Android TV számára Logitech kamerákkal ellátott NVIDIA SHIELD TV-eszközön tesztelték.
+A Jami Androidra TV-t Logitech kamerákkal ellátott NVIDIA SHIELD TV-n tesztelték.
 
-A Jami a GPL licenc 3-as vagy újabb verziója alatt jelent meg.
+A Jami a <b>GPL-licenc</b> 3-as vagy újabb verziója alatt jelent meg.
 Szerzői jog © Savoir-faire Linux Inc.

@@ -1,47 +1,46 @@
-Jami, ett GNU-paket, är programvara för universell och distribuerad peer-to-peer-kommunikation som respekterar användarnas frihet och integritet.
+<b>Jami</b>, ett GNU-paket, är programvara för universell och distribuerad peer-to-peer-kommunikation som respekterar användarnas frihet och integritet.
 
-Jami är det enklaste och enklaste sättet att få kontakt med människor (och enheter) med snabbmeddelanden, ljud- och videosamtal över Internet och LAN/WAN-intranät.
+Jami är det enklaste och enklaste sättet att få kontakt med människor (och enheter) med snabbmeddelanden, ljud och videosamtal över <b>Internet</b> och LAN/WAN <b>intranät</b>.
 
-Jami är en gratis/fri, end-to-end krypterad och privat kommunikationsplattform.
+Jami är en gratis/fri, end-to-end krypterad och privat <b>kommunikationsplattform</b>.
 
-Jami – som tidigare var känt som Ring – är också ett alternativ med öppen källkod (till Facebook Messenger, Signal, Skype, Teams, Telegram, TikTok, Viber, WhatsApp, Zoom) som prioriterar användarnas integritet.
+Jami är <b>öppen källkod</b> programvara som <b>prioriterar användarnas integritet</b>.
 
-Jami har en professionell design och är tillgänglig för ett brett utbud av plattformar. Till skillnad från alternativen är samtal som använder Jami direkt mellan användare eftersom det inte använder servrar för att hantera samtal.
+Jami har en professionell design och är tillgänglig för ett brett utbud av plattformar. Till skillnad från alternativen är Jami <b>samtal direkt mellan användare</b>, eftersom den inte använder servrar för att hantera samtal.
 
-Detta ger den största integriteten eftersom Jamis distribuerade karaktär innebär att dina samtal endast är mellan deltagare.
+Detta ger största möjliga integritet, eftersom Jamis <b>distribuerade</b> karaktär innebär att dina samtal bara är mellan deltagare.
 
-En-till-en- och gruppkonversationer med Jami förbättras med: snabbmeddelanden; ljud- och videosamtal; inspelning och sändning av ljud- och videomeddelanden; filöverföringar; skärmdelning; och platsdelning.
+En-till-en- och <b>gruppkonversationer</b> med Jami förbättras med snabbmeddelanden, ljud- och videosamtal, inspelning och sändning av ljud- och videomeddelanden, filöverföringar, skärmdelning och platsdelning.
 
-Jami kan även fungera som en SIP-klient.
+Jami kan också fungera som en <b>SIP-klient</b>.
 
-Jami har flera tillägg tillgängliga: Ljudfilter; Autosvar; grön skärm; Vattenstämpel; och, Whisper Transcript.
+Flera <b>Jami-tillägg</b> är tillgängliga: Ljudfilter, Autosvar, Grön skärm, Segmentering, Vattenstämpel och Whisper Transcript.
 
-Jami kan enkelt distribueras i organisationer med "Jami Account Management Server" (JAMS), så att användare kan ansluta till sina företagsuppgifter eller skapa lokala konton. JAMS låter dig hantera din egen Jami-gemenskap samtidigt som du drar nytta av Jamis distribuerade nätverksarkitektur.
+Jami kan enkelt distribueras i organisationer med <b>JAMS (Jami Account Management Server)</b>, så att användare kan ansluta till sina företagsuppgifter eller skapa lokala konton. JAMS låter dig <b>hantera din egen</b> Jami-gemenskap samtidigt som du drar nytta av Jamis distribuerade nätverksarkitektur.
 
-Jami är tillgängligt för GNU/Linux, Windows, macOS, iOS, Android och Android TV, vilket gör Jami till en interoperabel och plattformsoberoende kommunikationsram.
+Jami är <b>tillgängligt för</b> GNU/Linux, Windows, macOS, iOS, Android, Android TV och webbläsare, vilket gör Jami till ett interoperabelt och plattformsoberoende kommunikationsramverk.
 
-Hantera flera SIP-konton, Jami-konton och JAMS-konton med Jami-klienten installerad på en eller flera enheter.
+<b>Hantera flera</b> SIP-konton, Jami-konton och JAMS-konton med Jami-klienten installerad på en eller flera enheter.
 
 Jami är gratis, obegränsat, privat, reklamfritt, kompatibelt, snabbt, autonomt och anonymt.
 
-Läs mer om:
+<b>Läs mer om:</b>
 Jami: https://jami.net/
 Jami-tillägg: https://jami.net/extensions/
-"Jami Account Management Server" (JAMS): https://jami.biz/
+JAMS (Jami Account Management Server): https://jami.biz/
 Jami-dokumentation: https://docs.jami.net/
 
-Följ oss för mer:
+<b>Följ oss för mer:</b>
 Mastodont: https://mstdn.io/@Jami
-X: https://x.com/jami_social
-YouTube: https://www.youtube.com/@jami9311
+Videor: https://docs.jami.net/videos/
 
-Vi vill gärna höra från dig! Gå med i Jami-communityt:
+<b>Vi vill gärna höra från dig! Gå med i Jami-communityt:</b>
 Bidra: https://jami.net/contribute/
 Forum: https://forum.jami.net/
 
-Bygg med Jami på ditt IoT-projekt: återanvänd Jamis universella kommunikationsteknik med dess bärbara bibliotek på ditt valfria system.
+Bygg <b>IoT-projekt</b> med Jami. Återanvänd den universella kommunikationstekniken från Jami med dess bärbara bibliotek på ditt valda system.
 
 Jami för Android TV är testad på NVIDIA SHIELD TV med Logitech-kameror.
 
-Jami publiceras under GPL-licensen, version 3 eller högre.
-Copyright © Savoir-faire Linux Inc.
+Jami publiceras under <b>GPL-licensen</b>, version 3 eller högre.
+Upphovsrätt © Savoir-faire Linux Inc.

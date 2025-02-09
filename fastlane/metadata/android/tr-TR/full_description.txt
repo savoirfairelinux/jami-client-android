@@ -1,47 +1,46 @@
-Jami, bir GNU paketidir ve kullanıcılarının özgürlüğüne ve mahremiyetine saygı duyan evrensel ve dağıtılmış eşler arası iletişim için bir yazılımdır.
+<b>Jami</b>, bir GNU paketidir ve kullanıcılarının özgürlüğüne ve mahremiyetine saygı duyan evrensel ve dağıtılmış eşler arası iletişim için bir yazılımdır.
 
-Jami, İnternet ve LAN/WAN intranetleri üzerinden anlık mesajlaşma, sesli ve görüntülü aramalar ile insanlarla (ve cihazlarla) bağlantı kurmanın en basit ve kolay yoludur.
+Jami, <b>İnternet</b> ve LAN/WAN <b>intranetleri</b> üzerinden anlık mesajlaşma, sesli ve görüntülü görüşmelerle insanlarla (ve cihazlarla) bağlantı kurmanın en basit ve kolay yoludur.
 
-Jami, ücretsiz/özgür, uçtan uca şifreli ve özel bir iletişim platformudur.
+Jami, özgür/özgür, uçtan uca şifrelenmiş ve özel bir <b>iletişim platformudur</b>.
 
-Jami – eskiden Ring olarak bilinirdi – aynı zamanda kullanıcılarının mahremiyetine öncelik veren açık kaynaklı bir alternatiftir (Facebook Messenger, Signal, Skype, Teams, Telegram, TikTok, Viber, WhatsApp, Zoom'a).
+Jami, <b>kullanıcı gizliliğine</b> öncelik veren</b> <b>açık kaynaklı</b> bir yazılımdır.
 
-Jami profesyonel görünümlü bir tasarıma sahiptir ve çok çeşitli platformlar için kullanılabilir. Alternatiflerin aksine, Jami kullanılarak yapılan aramalar doğrudan kullanıcılar arasındadır çünkü aramaları yönetmek için sunucular kullanmaz.
+Jami, profesyonel görünümlü bir tasarıma sahiptir ve çok çeşitli platformlar için kullanılabilir. Alternatiflerinin aksine, Jami <b>çağrılar doğrudan kullanıcılar arasındadır</b>, çünkü çağrıları işlemek için sunucuları kullanmaz.
 
-Bu, Jami'nin dağıtılmış yapısı sayesinde aramalarınızın yalnızca katılımcılar arasında olması anlamına geldiğinden en büyük gizliliği sağlar.
+Bu, en büyük gizliliği sağlar, çünkü Jami'nin <b>dağıtılmış</b> yapısı, çağrılarınızın yalnızca katılımcılar arasında olduğu anlamına gelir.
 
-Jami ile yapılan bire bir ve grup görüşmeleri şunlarla geliştirilmiştir: anlık mesajlaşma; sesli ve görüntülü arama; ses ve video mesajlarını kaydetme ve gönderme; dosya transferleri; ekran paylaşımı; ve konum paylaşımı.
+Jami ile bire bir ve <b>grup sohbetleri</b>, anlık mesajlaşma, sesli ve görüntülü arama, sesli ve görüntülü mesaj kaydetme ve gönderme, dosya transferleri, ekran paylaşımı ve konum paylaşımı ile geliştirilmiştir.
 
-Jami ayrıca bir SIP istemcisi olarak da işlev görebilir.
+Jami ayrıca bir <b>SIP istemcisi</b> olarak da işlev görebilir.
 
-Jami'nin birden fazla uzantısı mevcuttur: Ses Filtresi; Otomatik Cevap; Yeşil Ekran; Filigran; ve Fısıltı Transkripti.
+Birden fazla <b>Jami uzantısı</b> mevcuttur: Ses Filtresi, Otomatik Cevaplama, Yeşil Ekran, Segmentasyon, Filigran ve Fısıltı Transkripti.
 
-Jami, kullanıcıların kurumsal kimlik bilgileriyle bağlanmalarına veya yerel hesaplar oluşturmalarına olanak tanıyan "Jami Hesap Yönetim Sunucusu" (JAMS) ile kuruluşlara kolayca dağıtılabilir. JAMS, Jami'nin dağıtılmış ağ mimarisinden yararlanırken kendi Jami topluluğunuzu yönetmenizi sağlar.
+Jami, kullanıcıların kurumsal kimlik bilgileriyle bağlanmalarına veya yerel hesaplar oluşturmalarına olanak tanıyan <b>JAMS (Jami Hesap Yönetim Sunucusu)</b> ile kuruluşlara kolayca dağıtılabilir. JAMS, Jami'nin dağıtılmış ağ mimarisinden yararlanırken <b>kendi</b> Jami topluluğunuzu yönetmenize olanak tanır.
 
-Jami, GNU/Linux, Windows, macOS, iOS, Android ve Android TV için kullanılabilir ve Jami'yi birlikte çalışabilir ve platformlar arası bir iletişim çerçevesi haline getirir.
+Jami, GNU/Linux, Windows, macOS, iOS, Android, Android TV ve web tarayıcıları için <b>kullanılabilir</b> ve Jami'yi birlikte çalışabilir ve platformlar arası bir iletişim çerçevesi haline getirir.
 
-Bir veya birden fazla cihaza yüklenen Jami istemcisiyle birden fazla SIP hesabını, Jami hesabını ve JAMS hesabını yönetin.
+<b>Birden fazla</b> SIP hesabını, Jami hesabını ve JAMS hesabını, bir veya birden fazla cihaza yüklenen Jami istemcisiyle yönetin.
 
 Jami ücretsiz, sınırsız, özel, reklamsız, uyumlu, hızlı, özerk ve anonimdir.
 
-Daha fazla bilgi edinin:
+<b>Şunlar hakkında daha fazla bilgi edinin:</b>
 Jami: https://jami.net/
 Jami uzantıları: https://jami.net/extensions/
-“Jami Hesap Yönetim Sunucusu” (JAMS): https://jami.biz/
+JAMS (Jami Hesap Yönetim Sunucusu): https://jami.biz/
 Jami belgeleri: https://docs.jami.net/
 
-Daha fazlası için bizi takip edin:
+<b>Daha fazlası için bizi takip edin:</b>
 Mastodon: https://mstdn.io/@Jami
-X: https://x.com/jami_social
-YouTube: https://www.youtube.com/@jami9311
+Videolar: https://docs.jami.net/videos/
 
-Sizden haber almak isteriz! Jami topluluğuna katılın:
+<b>Sizden haber almak isteriz! Jami topluluğuna katılın:</b>
 Katkıda bulunun: https://jami.net/contribute/
 Forum: https://forum.jami.net/
 
-IoT projenizde Jami ile oluşturun: Jami'nin taşınabilir kütüphanesiyle evrensel iletişim teknolojisini seçtiğiniz sistemde yeniden kullanın.
+Jami ile <b>IoT projeleri</b> oluşturun. Jami'nin taşınabilir kütüphanesiyle evrensel iletişim teknolojisini seçtiğiniz sistemde yeniden kullanın.
 
-Android TV için Jami, Logitech kameralarla NVIDIA SHIELD TV'de test edilmiştir.
+Android TV için Jami, Logitech kameralara sahip NVIDIA SHIELD TV'de test edilmiştir.
 
-Jami, GPL lisansı, sürüm 3 veya üzeri altında yayınlanmıştır.
-Telif Hakkı © Savoir-faire Linux Inc.
+Jami, <b>GPL lisansı</b>, sürüm 3 veya üzeri altında yayınlanmıştır.
+Telif hakkı © Savoir-faire Linux Inc.

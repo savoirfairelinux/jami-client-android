@@ -1,0 +1,46 @@
+<b>Jami</b>, GNU pakete bat, bere erabiltzaileen askatasuna eta pribatutasuna errespetatzen dituen peer-to-peer komunikazio unibertsal eta banaturako softwarea da.
+
+Jami da <b>Internet</b> eta LAN/WAN <b>intranet</b> bidez berehalako mezularitza, audio eta bideo-deiak dituzten pertsonekin (eta gailuekin) konektatzeko modurik errazena eta errazena.
+
+Jami <b>komunikazio-plataforma</b> doakoa/librea, muturreko enkriptatutakoa eta pribatua da.
+
+Jami <b>kode irekiko</b> softwarea da, <b>erabiltzaileen pribatutasuna lehenesten duena</b>.
+
+Jami-k itxura profesionaleko diseinua du eta plataforma ugaritarako eskuragarri dago. Alternatibak ez bezala, Jami <b>deiak zuzenean erabiltzaileen artean</b> dira, ez baitu zerbitzaririk erabiltzen deiak kudeatzeko.
+
+Honek pribatutasun handiena ematen du, Jami-ren <b>banatua</b> izaerak zure deiak parte-hartzaileen artean baino ez direla esan nahi baitu.
+
+Jami-rekin bakarreko eta <b>taldeko elkarrizketak</b> berehalako mezularitza, audio eta bideo-deiak, audio eta bideo-mezuak grabatu eta bidaltzea, fitxategi-transferentziak, pantaila partekatzea eta kokapena partekatzearekin hobetzen dira.
+
+Jami <b>SIP bezero</b> gisa ere funtziona dezake.
+
+Hainbat <b>Jami luzapen</b> daude eskuragarri: Audio-iragazkia, Erantzun automatikoa, Pantaila berdea, Segmentazioa, Ur-marka eta Xxurla transkripzioa.
+
+Jami erraz inplementa daiteke <b>JAMS (Jami Account Management Server)</b> duten erakundeetan, erabiltzaileei beren kredentzial korporatiboekin konektatzeko edo tokiko kontuak sortzeko aukera emanez. JAMS-ek Jami-ren sare-arkitektura banatua aprobetxatuz <b>zure</b> kudeatu dezakezu Jami komunitatea.
+
+Jami <b>eskuragarri</b> GNU/Linux, Windows, macOS, iOS, Android, Android TV eta web-arakatzaileetarako, Jami elkarreragingarri eta plataforma anitzeko komunikazio-esparru bihurtuz.
+
+<b>Kudeatu hainbat</b> SIP kontu, Jami kontu eta JAMS kontu Jami bezeroa gailu batean edo hainbatetan instalatuta.
+
+Jami doakoa, mugagabea, pribatua, iragarkirik gabekoa, bateragarria, azkarra, autonomoa eta anonimoa da.
+
+<b>Lortu informazio gehiago honi buruz:</b>
+Jami: https://jami.net/
+Jami luzapenak: https://jami.net/extensions/
+JAMS (Jami kontuak kudeatzeko zerbitzaria): https://jami.biz/
+Jami dokumentazioa: https://docs.jami.net/
+
+<b>Jarraitu gaitzazu gehiago lortzeko:</b>
+Mastodon: https://mstdn.io/@Jami
+Bideoak: https://docs.jami.net/videos/
+
+<b>Gustuko genuke zure berri izatea! Sartu Jami komunitatean:</b>
+Ekarpena: https://jami.net/contribute/
+Foroa: https://forum.jami.net/
+
+Eraiki <b>IoT proiektuak</b> Jami-rekin. Berrerabili Jami-ren komunikazio-teknologia unibertsala bere liburutegi eramangarriarekin nahi duzun sisteman.
+
+Android TV-rako Jami NVIDIA SHIELD TV-n probatu da Logitech kamerekin.
+
+Jami <b>GPL lizentzia</b>rekin argitaratzen da, 3. bertsioa edo berriagoa.
+Copyright © Savoir-faire Linux Inc.

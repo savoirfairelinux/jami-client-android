@@ -1,0 +1,46 @@
+<b>Jami</b>, pakej GNU, ialah perisian untuk komunikasi peer-to-peer universal dan diedarkan yang menghormati kebebasan dan privasi penggunanya.
+
+Jami ialah cara paling mudah dan paling mudah untuk berhubung dengan orang (dan peranti) dengan pemesejan segera, audio dan panggilan video melalui <b>Internet</b> dan <b>intranet</b> LAN/WAN.
+
+Jami ialah <b>platform komunikasi</b> percuma/bebas, disulitkan hujung ke hujung dan peribadi.
+
+Jami ialah perisian <b>sumber terbuka</b> yang <b>mengutamakan privasi pengguna</b>.
+
+Jami mempunyai reka bentuk yang kelihatan profesional dan tersedia untuk pelbagai platform. Tidak seperti alternatif, Jami <b>panggilan adalah terus antara pengguna</b>, kerana ia tidak menggunakan pelayan untuk mengendalikan panggilan.
+
+Ini memberikan privasi terbaik, kerana sifat <b>teredar</b> Jami bermakna panggilan anda hanya antara peserta.
+
+Perbualan satu dengan satu dan <b>kumpulan</b> dengan Jami dipertingkatkan dengan pemesejan segera, panggilan audio dan video, merakam dan menghantar mesej audio dan video, pemindahan fail, perkongsian skrin dan perkongsian lokasi.
+
+Jami juga boleh berfungsi sebagai <b>pelanggan SIP</b>.
+
+Berbilang <b>sambungan Jami</b> tersedia: Penapis Audio, Jawapan Auto, Skrin Hijau, Segmentasi, Tera Air dan Transkrip Whisper.
+
+Jami boleh digunakan dengan mudah dalam organisasi dengan <b>JAMS (Pelayan Pengurusan Akaun Jami)</b>, yang membolehkan pengguna berhubung dengan bukti kelayakan korporat mereka atau membuat akaun setempat. JAMS membolehkan anda <b>menguruskan</b> komuniti Jami anda sendiri sambil memanfaatkan seni bina rangkaian teragih Jami.
+
+Jami <b>tersedia untuk</b> GNU/Linux, Windows, macOS, iOS, Android, Android TV dan penyemak imbas web, menjadikan Jami sebagai rangka kerja komunikasi saling kendalian dan merentas platform.
+
+<b>Urus berbilang</b> akaun SIP, akaun Jami dan akaun JAMS dengan pelanggan Jami dipasang pada satu atau berbilang peranti.
+
+Jami adalah percuma, tidak terhad, peribadi, bebas pengiklanan, serasi, pantas, autonomi dan tanpa nama.
+
+<b>Ketahui lebih lanjut tentang:</b>
+Jami: https://jami.net/
+Sambungan Jami: https://jami.net/extensions/
+JAMS (Pelayan Pengurusan Akaun Jami): https://jami.biz/
+Dokumentasi Jami: https://docs.jami.net/
+
+<b>Ikuti kami untuk mendapatkan maklumat lanjut:</b>
+Mastodon: https://mstdn.io/@Jami
+Video: https://docs.jami.net/videos/
+
+<b>Kami ingin mendengar daripada anda! Sertai komuniti Jami:</b>
+Sumbangkan: https://jami.net/contribute/
+Forum: https://forum.jami.net/
+
+Bina <b>projek IoT</b> dengan Jami. Gunakan semula teknologi komunikasi universal Jami dengan perpustakaan mudah alihnya pada sistem pilihan anda.
+
+Jami untuk Android TV diuji pada NVIDIA SHIELD TV dengan kamera Logitech.
+
+Jami diterbitkan di bawah <b>lesen GPL</b>, versi 3 atau lebih tinggi.
+Hak Cipta © Savoir-faire Linux Inc.

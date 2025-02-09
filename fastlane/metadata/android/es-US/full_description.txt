@@ -1,0 +1,46 @@
+<b>Jami</b>, un paquete GNU, es un software para comunicación entre pares universal y distribuida que respeta la libertad y privacidad de sus usuarios.
+
+Jami es la forma más sencilla y fácil de conectarse con personas (y dispositivos) con mensajería instantánea, llamadas de audio y video a través de <b>Internet</b> e intranets LAN/WAN.
+
+Jami es una plataforma de comunicación privada, cifrada de extremo a extremo y libre.
+
+Jami es un software de <b>código abierto</b> que <b>prioriza la privacidad del usuario</b>.
+
+Jami tiene un diseño de aspecto profesional y está disponible para una amplia gama de plataformas. A diferencia de las alternativas, las <b>llamadas</b> de Jami son directamente entre usuarios, ya que no utiliza servidores para manejar las llamadas.
+
+Esto brinda la mayor privacidad, ya que la naturaleza <b>distribuida</b> de Jami significa que sus llamadas son solo entre participantes.
+
+Las conversaciones individuales y grupales con Jami se mejoran con mensajería instantánea, llamadas de audio y video, grabación y envío de mensajes de audio y video, transferencias de archivos, uso compartido de pantalla y uso compartido de ubicación.
+
+Jami también puede funcionar como un cliente SIP.
+
+Hay varias extensiones de Jami disponibles: filtro de audio, respuesta automática, pantalla verde, segmentación, marca de agua y transcripción de susurros.
+
+Jami se puede implementar fácilmente en organizaciones con JAMS (Jami Account Management Server), lo que permite a los usuarios conectarse con sus credenciales corporativas o crear cuentas locales. JAMS le permite administrar su propia comunidad Jami mientras aprovecha la arquitectura de red distribuida de Jami.
+
+Jami está disponible para GNU/Linux, Windows, macOS, iOS, Android, Android TV y navegadores web, lo que convierte a Jami en un marco de comunicación interoperable y multiplataforma.
+
+<b>Administre varias</b> cuentas SIP, cuentas Jami y cuentas JAMS con el cliente Jami instalado en uno o varios dispositivos.
+
+Jami es gratuito, ilimitado, privado, sin publicidad, compatible, rápido, autónomo y anónimo.
+
+<b>Obtenga más información sobre:</b>
+Jami: https://jami.net/
+Extensiones de Jami: https://jami.net/extensions/
+JAMS (Jami Account Management Server): https://jami.biz/
+Documentación de Jami: https://docs.jami.net/
+
+<b>Síganos para obtener más información:</b>
+Mastodon: https://mstdn.io/@Jami
+Videos: https://docs.jami.net/videos/
+
+<b>¡Nos encantaría saber de usted! Únase a la comunidad Jami:
+Contribuya: https://jami.net/contribute/
+Foro: https://forum.jami.net/
+
+Cree <b>proyectos de IoT</b> con Jami. Reutilice la tecnología de comunicaciones universal de Jami con su biblioteca portátil en el sistema que elija.
+
+Jami para Android TV se ha probado en NVIDIA SHIELD TV con cámaras Logitech.
+
+Jami se publica bajo la <b>licencia GPL</b>, versión 3 o superior.
+Copyright © Savoir-faire Linux Inc.
