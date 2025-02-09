@@ -1,47 +1,46 @@
-Jami, GNU paketas, yra universaliam ir paskirstytam lygiaverčiui ryšiui skirta programinė įranga, kuri gerbia vartotojų laisvę ir privatumą.
+<b>Jami</b>, GNU paketas, yra universaliam ir paskirstytam lygiaverčiui ryšiui skirta programinė įranga, kuri gerbia vartotojų laisvę ir privatumą.
 
-Jami yra paprasčiausias ir lengviausias būdas susisiekti su žmonėmis (ir įrenginiais) naudojant momentinius pranešimus, garso ir vaizdo skambučius internetu ir LAN/WAN intranetais.
+„Jami“ yra paprasčiausias ir lengviausias būdas susisiekti su žmonėmis (ir įrenginiais) naudojant momentinius pranešimus, garso ir vaizdo skambučius per <b>internetą</b> ir LAN / WAN <b>vidinį tinklą</b>.
 
-„Jami“ yra nemokama / nemokama, nuo galo užšifruota ir privati ​​komunikacijos platforma.
+Jami yra nemokama / nemokama, visiškai užšifruota ir privati ​​<b>ryšio platforma</b>.
 
-„Jami“, kuris anksčiau buvo žinomas kaip „Ring“, taip pat yra atvirojo kodo alternatyva („Facebook Messenger“, „Signal“, „Skype“, „Teams“, „Telegram“, „TikTok“, „Viber“, „WhatsApp“, „Zoom“), kuri teikia pirmenybę savo vartotojų privatumui.
+Jami yra <b>atvirojo kodo</b> programinė įranga, <b>suteikianti pirmenybę naudotojo privatumui</b>.
 
-Jami yra profesionaliai atrodančio dizaino ir yra prieinamas įvairioms platformoms. Skirtingai nuo alternatyvų, skambučiai naudojant Jami yra tiesiogiai tarp vartotojų, nes skambučiams tvarkyti nenaudojami serveriai.
+Jami yra profesionaliai atrodančio dizaino ir yra prieinamas įvairioms platformoms. Skirtingai nuo alternatyvų, Jami <b>skambučiai vyksta tiesiogiai tarp vartotojų</b>, nes skambučiams tvarkyti nenaudojami serveriai.
 
-Tai suteikia didžiausią privatumą, nes paskirstytas Jami pobūdis reiškia, kad jūsų skambučiai vyksta tik tarp dalyvių.
+Tai suteikia didžiausią privatumą, nes Jami <b>paskirstytas</b> pobūdis reiškia, kad jūsų skambučiai vyksta tik tarp dalyvių.
 
-Asmeniniai ir grupiniai pokalbiai su Jami yra patobulinti naudojant: momentinius pranešimus; garso ir vaizdo skambučiai; garso ir vaizdo pranešimų įrašymas ir siuntimas; Failų perkėlimas; ekrano bendrinimas; ir vietos bendrinimas.
+„Vienas su vienu“ ir <b>grupiniai pokalbiai</b> su Jami yra patobulinti naudojant tiesioginius pranešimus, garso ir vaizdo skambučius, garso ir vaizdo pranešimų įrašymą ir siuntimą, failų perkėlimą, ekrano bendrinimą ir vietos bendrinimą.
 
-Jami taip pat gali veikti kaip SIP klientas.
+Jami taip pat gali veikti kaip <b>SIP klientas</b>.
 
-Jami galimi keli plėtiniai: garso filtras; Automatinis atsakymas; žalias ekranas; Vandens ženklas; ir šnabždesio stenograma.
+Galimi keli <b>Jami plėtiniai</b>: garso filtras, automatinis atsakymas, žalias ekranas, segmentavimas, vandens ženklas ir šnabždesio nuorašas.
 
-„Jami“ gali būti lengvai įdiegtas organizacijose su „Jami Account Management Server“ (JAMS), todėl vartotojai gali prisijungti naudodami savo įmonės kredencialus arba susikurti vietines paskyras. JAMS leidžia valdyti savo Jami bendruomenę, tuo pačiu pasinaudojant Jami paskirstytojo tinklo architektūra.
+„Jami“ gali būti lengvai įdiegtas organizacijose naudojant <b>JAMS („Jami“ paskyros valdymo serverį)</b>, todėl vartotojai gali prisijungti naudodami savo įmonės kredencialus arba susikurti vietines paskyras. JAMS leidžia jums <b>tvarkyti savo</b> Jami bendruomenę, tuo pačiu pasinaudojant Jami paskirstytojo tinklo architektūra.
 
-Jami galima naudoti GNU / Linux, Windows, macOS, iOS, Android ir Android TV, todėl Jami yra sąveiki ir kelių platformų komunikacijos sistema.
+„Jami“ yra <b>pasiekiama</b> GNU / Linux, Windows, macOS, iOS, Android, Android TV ir žiniatinklio naršyklėse, todėl Jami yra sąveiki ir kelių platformų komunikacijos sistema.
 
-Tvarkykite kelias SIP paskyras, Jami paskyras ir JAMS paskyras naudodami Jami klientą, įdiegtą viename ar keliuose įrenginiuose.
+<b>Tvarkykite kelias</b> SIP paskyras, Jami paskyras ir JAMS paskyras naudodami Jami klientą, įdiegtą viename ar keliuose įrenginiuose.
 
 Jami yra nemokama, neribota, privati, be reklamos, suderinama, greita, savarankiška ir anoniminė.
 
-Sužinokite daugiau apie:
+<b>Sužinokite daugiau apie:</b>
 Jami: https://jami.net/
 Jami plėtiniai: https://jami.net/extensions/
-„Jami paskyros valdymo serveris“ (JAMS): https://jami.biz/
+JAMS („Jami Account Management Server“): https://jami.biz/
 Jami dokumentacija: https://docs.jami.net/
 
-Sekite mus ir sužinokite daugiau:
+<b>Stebėkite mus ir sužinokite daugiau:</b>
 Mastodon: https://mstdn.io/@Jami
-X: https://x.com/jami_social
-„YouTube“: https://www.youtube.com/@jami9311
+Vaizdo įrašai: https://docs.jami.net/videos/
 
-Mes norėtume išgirsti iš jūsų! Prisijunkite prie Jami bendruomenės:
+<b>Norėtume išgirsti jūsų nuomonę! Prisijunkite prie Jami bendruomenės:</b>
 Prisidėkite: https://jami.net/contribute/
 Forumas: https://forum.jami.net/
 
-Kurkite su Jami savo daiktų interneto projekte: iš naujo naudokite universalią Jami ryšių technologiją su nešiojama biblioteka pasirinktoje sistemoje.
+Kurkite <b>IoT projektus</b> su Jami. Pakartotinai naudokite universalią Jami ryšių technologiją su nešiojama biblioteka pasirinktoje sistemoje.
 
 „Jami“, skirta „Android TV“, išbandyta naudojant „NVIDIA SHIELD“ televizorių su „Logitech“ kameromis.
 
-Jami išleista pagal GPL licenciją, 3 ar naujesnę versiją.
+„Jami“ išleista pagal <b>GPL licenciją</b>, 3 ar naujesnę versiją.
 Autorių teisės © Savoir-faire Linux Inc.

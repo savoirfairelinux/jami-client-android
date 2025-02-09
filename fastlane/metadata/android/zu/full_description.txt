@@ -1,47 +1,46 @@
-I-Jami, iphakheji ye-GNU, isofthiwe yokuxhumana kwamazwe ngamazwe nokusatshalaliswa kontanga ehlonipha inkululeko nobumfihlo babasebenzisi bayo.
+I-<b>Jami</b>, iphakheji ye-GNU, isofthiwe yokuxhumana kontanga kuya kontanga yomhlaba wonke nesabalalisiwe ehlonipha inkululeko nobumfihlo babasebenzisi bayo.
 
-I-Jami iyindlela elula nelula kakhulu yokuxhumana nabantu (namadivayisi) ngemiyalezo esheshayo, amakholi omsindo nevidiyo nge-inthanethi kanye nama-intranethi e-LAN/WAN.
+I-Jami iyindlela elula nelula kakhulu yokuxhumana nabantu (namadivayisi) ngemiyalezo esheshayo, umsindo, namakholi wevidiyo <b>nge-inthanethi</b> kanye ne-LAN/WAN <b>intranet</b>.
 
-I-Jami iyinkundla yamahhala/ekhululekile, ebethelwe ngasemaphethelweni, nenkundla yokuxhumana yangasese.
+I-Jami iyinhlangano yamahhala/ekhululekile, ebethelwe ngasemaphethelweni, futhi <b>inkundla yokuxhumana</b> eyimfihlo.
 
-I-Jami - ebikade yaziwa ngokuthi yiNdandatho - futhi ingenye yemithombo evulekile (ku-Facebook Messenger, Signal, Skype, Teams, Telegraph, TikTok, Viber, WhatsApp, Zoom) ebeka phambili ubumfihlo babasebenzisi bayo.
+I-Jami <b>iyisofthiwe yomthombo ovulekile</b> <b>ebeka kuqala ubumfihlo bomsebenzisi</b>.
 
-I-Jami inomklamo obukeka njengochwepheshe futhi itholakala kumapulatifomu amaningi. Ngokungafani nezinye izindlela, izingcingo ezisebenzisa i-Jami ziphakathi kwabasebenzisi ngokuqondile njengoba ingasebenzisi amaseva ukusingatha izingcingo.
+I-Jami inomklamo obukeka njengochwepheshe futhi itholakala kumapulatifomu amaningi. Ngokungafani nezinye, izingcingo ze-Jami <b>ziphakathi kwabasebenzisi ngokuqondile</b>, njengoba ingasebenzisi amaseva ukubamba amakholi.
 
-Lokhu kunikeza ubumfihlo obukhulu kakhulu njengoba imvelo esabalalisiwe ye-Jami isho ukuthi amakholi akho aphakathi kwabahlanganyeli kuphela.
+Lokhu kunikeza ubumfihlo obukhulu kakhulu, njengoba <b>imvelo</b> esabalalisiwe ye-Jami isho ukuthi amakholi akho aphakathi kwabahlanganyeli kuphela.
 
-Izingxoxo zomuntu nomuntu kanye neqembu no-Jami zithuthukiswa ngokuthi: umlayezo osheshayo; ukushaya komsindo nevidiyo; ukurekhoda nokuthumela imiyalezo yomsindo nevidiyo; ukudluliselwa kwamafayela; ukwabelana kwesikrini; futhi, ukwabelana ngendawo.
+Izingxoxo zomuntu oyedwa kanye <b>neqembu</b> no-Jami zithuthukiswa ngokuthumela umlayezo osheshayo, ukushaya kwevidiyo nomsindo, ukurekhoda nokuthumela imilayezo yomsindo nevidiyo, ukudluliselwa kwamafayela, ukwabelana kwesikrini, nokwabelana ngendawo.
 
-I-Jami ingaphinda isebenze njengeklayenti le-SIP.
+I-Jami ingaphinda isebenze <b>njengeklayenti le-SIP</b>.
 
-I-Jami inezandiso eziningi ezitholakalayo: Isihlungi Somsindo; Impendulo ezenzakalelayo; Isikrini Esiluhlaza; I-Watermark; kanye ne-Whisper Transcript.
+<b>Izandiso ze-Jami</b> eziningi ziyatholakala: Isihlungi Somsindo, Ukuphendula Okuzenzakalelayo, Isikrini Esiluhlaza, Isegimenti, I-Watermark, ne-Whisper Transcript.
 
-I-Jami ingafakwa kalula ezinhlanganweni ezine-“Jami Account Management Server” (JAMS), evumela abasebenzisi ukuthi baxhumane nemininingwane yabo yenkampani noma badale ama-akhawunti endawo. I-JAMS ikuvumela ukuthi uphathe owakho umphakathi we-Jami ngenkathi usebenzisa i-architecture yenethiwekhi esabalalisiwe ye-Jami.
+I-Jami ingatshalwa kalula ezinhlanganweni <b>ezine-JAMS (Iseva Yokuphathwa Kwe-akhawunti Ye-Jami)</b>, evumela abasebenzisi ukuthi baxhumane nemininingwane yabo yebhizinisi noma badale ama-akhawunti endawo. I-JAMS ikuvumela ukuthi <b>uphathe</b> umphakathi wakho we-Jami ngenkathi usebenzisa i-architecture yenethiwekhi esabalalisiwe ye-Jami.
 
-I-Jami iyatholakala ku-GNU/Linux, Windows, macOS, iOS, Android, ne-Android TV, okwenza i-Jami ibe uhlaka lokuxhumana olusebenzisanayo nolwezingxenyekazi ezihlukene.
+I-Jami <b>iyatholakala ku-</b> GNU/Linux, Windows, macOS, iOS, Android, Android TV, kanye neziphequluli zewebhu, okwenza i-Jami ibe uhlaka lokuxhumana olusebenzisanayo nolwezingxenyekazi ezihlukene.
 
-Phatha ama-akhawunti amaningi e-SIP, ama-akhawunti e-Jami nama-akhawunti e-JAMS ngeklayenti le-Jami efakwe kudivayisi eyodwa noma eziningi.
+<b>Phatha ama-akhawunti amaningi</b> e-SIP, ama-akhawunti e-Jami, nama-akhawunti e-JAMS ngeklayenti le-Jami efakwe kudivayisi eyodwa noma eziningi.
 
-I-Jami imahhala, ayinamkhawulo, iyimfihlo, imahhala ukukhangisa, iyahambisana, iyashesha, izimele, futhi ingaziwa.
+I-Jami imahhala, ayinamkhawulo, iyimfihlo, ayikhangisi, iyahambisana, iyashesha, izimele, futhi ingaziwa.
 
-Funda kabanzi mayelana:
+<b>Funda kabanzi mayelana:</b>
 UJami: https://jami.net/
 Izandiso ze-Jami: https://jami.net/extensions/
-I- "Jami Account Management Server" (JAMS): https://jami.biz/
+I-JAMS (Iseva Yokuphathwa Kwe-akhawunti Ye-Jami): https://jami.biz/
 Amadokhumenti e-Jami: https://docs.jami.net/
 
-Silandele ukuze uthole okwengeziwe:
+<b>Silandele ukuze uthole okwengeziwe:</b>
 I-Mastodon: https://mstdn.io/@Jami
-X: https://x.com/jami_social
-I-YouTube: https://www.youtube.com/@jami9311
+Amavidiyo: https://docs.jami.net/videos/
 
-Singathanda ukuzwa kuwe! Joyina umphakathi wama-Jami:
+<b>Singathanda ukuzwa kuwe! Joyina umphakathi we-Jami:</b>
 Nikela: https://jami.net/contribute/
 Inkundla: https://forum.jami.net/
 
-Yakha nge-Jami kuphrojekthi yakho ye-IoT: phinda usebenzise ubuchwepheshe bezokuxhumana bendawo yonke be-Jami nomtapo wezincwadi ophathekayo ohlelweni lwakho oluthandayo.
+Yakha <b>amaphrojekthi e-IoT</b> nge-Jami. Phinda usebenzise ubuchwepheshe bezokuxhumana be-Jami nomtapo wezincwadi ophathekayo ohlelweni lwakho oluthandayo.
 
 I-Jami ye-Android TV ihlolwe ku-NVIDIA SHIELD TV ngamakhamera e-Logitech.
 
-I-Jami ishicilelwe ngaphansi kwelayisensi ye-GPL, inguqulo 3 noma ngaphezulu.
-Copyright © Savoir-faire Linux Inc.
+I-Jami ishicilelwe ngaphansi <b>kwelayisense ye-GPL</b>, inguqulo 3 noma ngaphezulu.
+Ilungelo lobunikazi © Savoir-faire Linux Inc.

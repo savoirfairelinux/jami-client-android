@@ -1,47 +1,46 @@
-Jami, un pachet GNU, este un software pentru comunicare peer-to-peer universală și distribuită, care respectă libertatea și confidențialitatea utilizatorilor săi.
+<b>Jami</b>, un pachet GNU, este un software pentru comunicare peer-to-peer universală și distribuită, care respectă libertatea și confidențialitatea utilizatorilor săi.
 
-Jami este cea mai simplă și mai ușoară modalitate de a vă conecta cu persoane (și dispozitive) cu mesagerie instantanee, apeluri audio și video prin Internet și intranet LAN/WAN.
+Jami este cea mai simplă și mai ușoară modalitate de a vă conecta cu persoane (și dispozitive) prin mesagerie instantanee, apeluri audio și video prin <b>Internet</b> și <b>intranet</b> LAN/WAN.
 
-Jami este o platformă de comunicare gratuită, criptată end-to-end și privată.
+Jami este o <b>platformă de comunicare</b> gratuită/libre, criptată end-to-end și privată.
 
-Jami – cunoscută înainte ca Ring – este, de asemenea, o alternativă open-source (la Facebook Messenger, Signal, Skype, Teams, Telegram, TikTok, Viber, WhatsApp, Zoom) care acordă prioritate confidențialității utilizatorilor săi.
+Jami este un software <b>open-source</b> care <b>prioritizează confidențialitatea utilizatorului</b>.
 
-Jami are un design cu aspect profesional și este disponibil pentru o gamă largă de platforme. Spre deosebire de alternative, apelurile care folosesc Jami sunt direct între utilizatori, deoarece nu utilizează servere pentru a gestiona apelurile.
+Jami are un design cu aspect profesional și este disponibil pentru o gamă largă de platforme. Spre deosebire de alternative, Jami <b>apelurile sunt direct între utilizatori</b>, deoarece nu utilizează servere pentru a gestiona apelurile.
 
-Acest lucru oferă cea mai mare confidențialitate, deoarece natura distribuită a lui Jami înseamnă că apelurile dvs. sunt numai între participanți.
+Acest lucru oferă cea mai mare confidențialitate, deoarece natura <b>distribuită</b> a Jami înseamnă că apelurile dvs. sunt numai între participanți.
 
-Conversațiile unu-la-unu și de grup cu Jami sunt îmbunătățite cu: mesagerie instantanee; apeluri audio și video; înregistrare și trimitere de mesaje audio și video; transferuri de fișiere; partajarea ecranului; și, partajarea locației.
+Conversațiile unu-la-unu și <b>conversațiile de grup</b> cu Jami sunt îmbunătățite cu mesagerie instantanee, apeluri audio și video, înregistrare și trimitere de mesaje audio și video, transferuri de fișiere, partajarea ecranului și partajarea locației.
 
-Jami poate funcționa și ca client SIP.
+Jami poate funcționa și ca <b>client SIP</b>.
 
-Jami are mai multe extensii disponibile: Filtru audio; Răspuns automat; Ecran verde; Filigran; și, transcriere în șoaptă.
+Sunt disponibile mai multe <b>extensii Jami</b>: filtru audio, răspuns automat, ecran verde, segmentare, filigran și transcriere în șoaptă.
 
-Jami poate fi implementat cu ușurință în organizații cu „Jami Account Management Server” (JAMS), permițând utilizatorilor să se conecteze cu acreditările lor corporative sau să creeze conturi locale. JAMS vă permite să vă gestionați propria comunitate Jami, profitând în același timp de arhitectura de rețea distribuită Jami.
+Jami poate fi implementat cu ușurință în organizații cu <b>JAMS (Jami Account Management Server)</b>, permițând utilizatorilor să se conecteze cu acreditările lor corporative sau să creeze conturi locale. JAMS vă permite să vă <b>administrați propria</b> comunitate Jami, profitând în același timp de arhitectura de rețea distribuită Jami.
 
-Jami este disponibil pentru GNU/Linux, Windows, macOS, iOS, Android și Android TV, făcând din Jami un cadru de comunicare interoperabil și multiplatformă.
+Jami este <b>disponibil pentru</b> GNU/Linux, Windows, macOS, iOS, Android, Android TV și browsere web, făcând din Jami un cadru de comunicare interoperabil și multiplatformă.
 
-Gestionați mai multe conturi SIP, conturi Jami și conturi JAMS cu clientul Jami instalat pe unul sau mai multe dispozitive.
+<b>Gestionați mai multe</b> conturi SIP, conturi Jami și conturi JAMS cu clientul Jami instalat pe unul sau mai multe dispozitive.
 
 Jami este gratuit, nelimitat, privat, fără publicitate, compatibil, rapid, autonom și anonim.
 
-Aflați mai multe despre:
+<b>Aflați mai multe despre:</b>
 Jami: https://jami.net/
 Extensii Jami: https://jami.net/extensions/
-„Server de gestionare a contului Jami” (JAMS): https://jami.biz/
+JAMS (Jami Account Management Server): https://jami.biz/
 Documentația Jami: https://docs.jami.net/
 
-Urmărește-ne pentru mai multe:
+<b>Urmărește-ne pentru mai multe:</b>
 Mastodon: https://mstdn.io/@Jami
-X: https://x.com/jami_social
-YouTube: https://www.youtube.com/@jami9311
+Videoclipuri: https://docs.jami.net/videos/
 
-Ne-ar plăcea să auzim de la tine! Alăturați-vă comunității Jami:
+<b>Ne-ar plăcea să auzim de la tine! Alăturați-vă comunității Jami:</b>
 Contribuie: https://jami.net/contribute/
 Forum: https://forum.jami.net/
 
-Construiți cu Jami pe proiectul dvs. IoT: reutilizați tehnologia de comunicații universală a Jami cu biblioteca sa portabilă pe sistemul pe care îl alegeți.
+Creați <b>proiecte IoT</b> cu Jami. Reutilizați tehnologia de comunicații universală Jami cu biblioteca sa portabilă pe sistemul dorit.
 
 Jami pentru Android TV este testat pe NVIDIA SHIELD TV cu camere Logitech.
 
-Jami este publicat sub licența GPL, versiunea 3 sau mai mare.
-Copyright © Savoir-faire Linux Inc.
+Jami este publicat sub <b>licență GPL</b>, versiunea 3 sau mai mare.
+Drepturile de autor © Savoir-faire Linux Inc.

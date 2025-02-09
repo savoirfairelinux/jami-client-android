@@ -1,47 +1,46 @@
-Jami 是一個 GNU 軟體包，它是一種通用的分散式點對點通訊軟體，尊重使用者的自由和隱私。
+<b>Jami</b> 是一個 GNU 軟體包，它是一種通用的分散式點對點通訊軟體，尊重使用者的自由和隱私。
 
-Jami 是透過網路和 LAN/WAN 內部網路進行即時訊息、音訊和視訊通話與人（和裝置）連接的最簡單、最輕鬆的方式。
+Jami 是透過<b>網路</b>和 LAN/WAN <b>內部網路</b>進行即時訊息、音訊和視訊通話與人（和裝置）聯繫的最簡單、最輕鬆的方式。
 
-Jami 是一個免費、端對端加密和私密的通訊平台。
+Jami 是一個免費、端對端加密且私密的<b>通訊平台</b>。
 
-Jami（曾使用名 Ring）也是一個開源替代品（Facebook Messenger、Signal、Skype、Teams、Telegram、TikTok、Viber、WhatsApp、Zoom 的替代品），它優先考慮用戶的隱私。
+Jami 是一款<b>開源</b>軟體，它<b>優先考慮使用者隱私</b>。
 
-Jami 具有專業的設計外觀，適用於多種平台。與其他方式不同，使用 Jami 的通話直接在用戶之間進行，因為它不使用伺服器來處理通話。
+Jami 具有專業的設計外觀，適用於多種平台。與其他替代方案不同，Jami <b>通話直接在用戶之間進行</b>，因為它不使用伺服器來處理通話。
 
-這提供了最大的隱私，因為 Jami 的分散特性意味著您的通話僅限於參與者之間。
+這提供了最大的隱私，因為 Jami 的<b>分散式</b>特性意味著您的通話僅限於參與者之間。
 
-透過以下功能增強了與 Jami 的一對一和群組對話：即時訊息；音訊和視訊通話；錄製和發送音訊和視訊訊息；文件傳輸；螢幕分享；以及位置共享。
+透過即時訊息、音訊和視訊通話、錄製和發送音訊和視訊訊息、文件傳輸、螢幕共享和位置共享，可以增強與 Jami 的一對一和<b>群組對話</b>。
 
-Jami 也可以用作 SIP 用戶端。
+Jami 也可以用作 <b>SIP 用戶端</b>。
 
-Jami 有多個可用的擴充功能：音訊過濾器；自動應答；綠屏；水印；以及《耳語記錄》。
+有多個 <b>Jami 擴充</b> 可用：音訊過濾器、自動應答、綠幕、分段、浮水印和耳語轉錄。
 
-Jami 可以透過「Jami 帳戶管理伺服器」（JAMS）輕鬆部署在組織中，允許使用者連接他們的公司憑證或建立本機帳戶。 JAMS 可讓您管理自己的 Jami 社區，同時利用 Jami 的分散式網路架構。
+借助<b>JAMS（Jami 帳戶管理伺服器）</b>，Jami 可以輕鬆部署在組織中，從而允許用戶連接其公司憑證或建立本機帳戶。 JAMS 讓您<b>管理您自己的</b> Jami 社區，同時利用 Jami 的分散式網路架構。
 
-Jami 適用於 GNU/Linux、Windows、macOS、iOS、Android 和 Android TV，這使得 Jami 成為一個可互通且跨平台的通訊框架。
+Jami <b>適用於</b> GNU/Linux、Windows、macOS、iOS、Android、Android TV 和網頁瀏覽器，這使得 Jami 成為一個可互通且跨平台的通訊框架。
 
-透過在一台或多台裝置上安裝 Jami 用戶端來管理多個 SIP 帳戶、Jami 帳戶和 JAMS 帳戶。
+<b>透過在一台或多台裝置上安裝 Jami 用戶端來管理多個</b> SIP 帳戶、Jami 帳戶和 JAMS 帳戶。
 
 Jami 是免費的、無限的、私密的、無廣告的、相容的、快速的、自主的和匿名的。
 
-詳細了解：
+<b>詳細了解：</b>
 傑米（Jami）：https://jami.net/
 Jami 擴充：https://jami.net/extensions/
-「Jami 帳戶管理伺服器」（JAMS）：https://jami.biz/
+JAMS（Jami 帳戶管理伺服器）：https://jami.biz/
 Jami 文件：https://docs.jami.net/
 
-關注我們了解更多：
+<b>關注我們了解更多：</b>
 Mastodon：https://mstdn.io/@Jami
-網址：https://x.com/jami_social
-YouTube：https://www.youtube.com/@jami9311
+影片：https://docs.jami.net/videos/
 
-我們很高興收到您的來信！加入 Jami 社群：
+<b>我們很高興收到您的來信！加入 Jami 社群：</b>
 貢獻：https://jami.net/contribute/
 論壇：https://forum.jami.net/
 
-使用 Jami 建立您的 IoT 專案：在您選擇的系統上重複使用 Jami 的通用通訊技術及其便攜式程式庫。
+與 Jami 一起建構<b>IoT 專案</b>。在您選擇的系統上重新使用 Jami 的通用通訊技術及其便攜式程式庫。
 
 Android TV 版 Jami 在搭載 Logitech 相機的 NVIDIA SHIELD TV 上進行了測試。
 
-Jami 是在 GPL 許可證 3 或更高版本下發布的。
+Jami 是在 <b>GPL 授權</b> 3 或更高版本下發布的。
 版權所有 © Savoir-faire Linux Inc.

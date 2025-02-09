@@ -1,47 +1,46 @@
-Jami, GNU pakki, er hugbúnaður fyrir alhliða og dreifð jafningjasamskipti sem virða frelsi og friðhelgi notenda sinna.
+<b>Jami</b>, GNU pakki, er hugbúnaður fyrir alhliða og dreifð jafningjasamskipti sem virða frelsi og friðhelgi notenda sinna.
 
-Jami er einfaldasta og auðveldasta leiðin til að tengjast fólki (og tækjum) með spjallskilaboðum, hljóð- og myndsímtölum yfir internetið og LAN/WAN innra neti.
+Jami er einfaldasta og auðveldasta leiðin til að tengjast fólki (og tækjum) með spjallskilaboðum, hljóð- og myndsímtölum í gegnum <b>Internet</b> og LAN/WAN <b>innra net</b>.
 
-Jami er ókeypis/frjáls, dulkóðaður frá enda til enda og einkasamskiptavettvangur.
+Jami er ókeypis/frjáls, dulkóðaður frá enda til enda og einkarekinn <b>samskiptavettvangur</b>.
 
-Jami – sem áður var þekktur sem Ring – er einnig opinn valkostur (við Facebook Messenger, Signal, Skype, Teams, Telegram, TikTok, Viber, WhatsApp, Zoom) sem setur friðhelgi notenda sinna í forgang.
+Jami er <b>opinn hugbúnaður</b> sem <b>setur friðhelgi notenda í forgang</b>.
 
-Jami er með fagmannlega útlitshönnun og er fáanlegur fyrir fjölbreytt úrval af kerfum. Ólíkt valkostunum eru símtöl sem nota Jami beint á milli notenda þar sem það notar ekki netþjóna til að sinna símtölum.
+Jami er með fagmannlega útlitshönnun og er fáanlegur fyrir fjölbreytt úrval af kerfum. Ólíkt valkostunum eru Jami <b>símtöl beint á milli notenda</b>, þar sem það notar ekki netþjóna til að sinna símtölum.
 
-Þetta veitir mesta næði þar sem dreifð eðli Jami þýðir að símtölin þín eru aðeins á milli þátttakenda.
+Þetta veitir mesta næði, þar sem <b>dreift</b> eðli Jami þýðir að símtöl þín eru aðeins á milli þátttakenda.
 
-Einn á einn og hópsamtöl við Jami eru bætt með: spjallskilaboðum; hljóð- og myndsímtöl; upptaka og senda hljóð- og myndskilaboð; skráaflutningur; skjáhlutdeild; og staðsetningardeilingu.
+Einstaklingssamtöl og <b>hópsamtöl</b> við Jami eru auknar með spjallskilaboðum, hljóð- og myndsímtölum, upptöku og sendingu hljóð- og myndskilaboða, skráaflutningum, skjádeilingu og staðsetningardeilingu.
 
-Jami getur líka virkað sem SIP viðskiptavinur.
+Jami getur líka virkað sem <b>SIP viðskiptavinur</b>.
 
-Jami hefur margar viðbætur í boði: Hljóðsía; Sjálfvirkt svar; Grænn skjár; Vatnsmerki; og, Whisper Transcript.
+Margar <b>Jami viðbætur</b> eru fáanlegar: Hljóðsía, sjálfvirkt svar, grænn skjár, skipting, vatnsmerki og hvíslaafrit.
 
-Auðvelt er að nota Jami í fyrirtækjum með „Jami Account Management Server“ (JAMS), sem gerir notendum kleift að tengjast fyrirtækjaskilríkjum sínum eða búa til staðbundna reikninga. JAMS gerir þér kleift að stjórna þínu eigin Jami samfélagi á meðan þú nýtir þér dreifðan netarkitektúr Jami.
+Auðvelt er að nota Jami í fyrirtækjum með <b>JAMS (Jami Account Management Server)</b>, sem gerir notendum kleift að tengjast fyrirtækjaskilríkjum sínum eða búa til staðbundna reikninga. JAMS gerir þér kleift að <b>stjórna þínu eigin</b> Jami samfélagi á meðan þú nýtir þér dreifðan netarkitektúr Jami.
 
-Jami er fáanlegt fyrir GNU/Linux, Windows, macOS, iOS, Android og Android TV, sem gerir Jami að gagnvirkum og þvert á vettvang samskiptaramma.
+Jami er <b>fáanlegt fyrir</b> GNU/Linux, Windows, macOS, iOS, Android, Android TV og netvafra, sem gerir Jami að rekstrarsamhæfðum samskiptaramma á milli vettvanga.
 
-Hafðu umsjón með mörgum SIP reikningum, Jami reikningum og JAMS reikningum með Jami viðskiptavininum uppsettum á einu eða mörgum tækjum.
+<b>Hafa umsjón með mörgum</b> SIP reikningum, Jami reikningum og JAMS reikningum með Jami biðlaranum uppsettum á einu eða mörgum tækjum.
 
 Jami er ókeypis, ótakmarkað, einkamál, auglýsingalaust, samhæft, hratt, sjálfstætt og nafnlaust.
 
-Frekari upplýsingar um:
+<b>Frekari upplýsingar um:</b>
 Jami: https://jami.net/
 Jami viðbætur: https://jami.net/extensions/
-„Jami Account Management Server“ (JAMS): https://jami.biz/
+JAMS (Jami Account Management Server): https://jami.biz/
 Jami skjöl: https://docs.jami.net/
 
-Fylgdu okkur fyrir meira:
+<b>Fylgdu okkur til að fá meira:</b>
 Mastodon: https://mstdn.io/@Jami
-X: https://x.com/jami_social
-YouTube: https://www.youtube.com/@jami9311
+Myndbönd: https://docs.jami.net/videos/
 
-Við viljum gjarnan heyra frá þér! Skráðu þig í Jami samfélagið:
+<b>Við viljum gjarnan heyra frá þér! Vertu með í Jami samfélaginu:</b>
 Leggðu til: https://jami.net/contribute/
 Spjallborð: https://forum.jami.net/
 
-Byggðu með Jami á IoT verkefninu þínu: endurnýttu alhliða samskiptatækni Jami með færanlega bókasafni þess á kerfi sem þú velur.
+Byggðu <b>IoT verkefni</b> með Jami. Endurnotaðu alhliða fjarskiptatækni Jami með færanlegu bókasafni þess á kerfinu þínu að eigin vali.
 
 Jami fyrir Android TV er prófaður á NVIDIA SHIELD TV með Logitech myndavélum.
 
-Jami er gefið út undir GPL leyfinu, útgáfu 3 eða nýrri.
+Jami er gefið út undir <b>GPL leyfinu</b>, útgáfu 3 eða nýrri.
 Höfundarréttur © Savoir-faire Linux Inc.

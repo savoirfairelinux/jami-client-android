@@ -1,0 +1,46 @@
+<b>Jami</b>, një paketë GNU, është softuer për komunikim universal dhe të shpërndarë peer-to-peer që respekton lirinë dhe privatësinë e përdoruesve të tij.
+
+Jami është mënyra më e thjeshtë dhe më e lehtë për t'u lidhur me njerëzit (dhe pajisjet) me mesazhe të çastit, audio dhe video thirrje nëpërmjet <b>internetit</b> dhe <b>intraneteve</b> LAN/WAN.
+
+Jami është një <b>platformë komunikimi</b> falas, e koduar nga fundi në fund dhe private.
+
+Jami është softuer <b>me burim të hapur</b> që <b>i jep përparësi privatësisë së përdoruesit</b>.
+
+Jami ka një dizajn me pamje profesionale dhe është i disponueshëm për një gamë të gjerë platformash. Ndryshe nga alternativat, Jami <b>telefonatat janë drejtpërdrejt ndërmjet përdoruesve</b>, pasi nuk përdor serverë për të trajtuar telefonatat.
+
+Kjo jep privatësinë më të madhe, pasi natyra <b>shpërndarë</b> e Jami do të thotë që telefonatat tuaja janë vetëm ndërmjet pjesëmarrësve.
+
+Bisedat një-për-një dhe <b>bisedat në grup</b> me Jami përmirësohen me mesazhe të çastit, thirrje audio dhe video, regjistrimin dhe dërgimin e mesazheve audio dhe video, transferimet e skedarëve, ndarjen e ekranit dhe ndarjen e vendndodhjes.
+
+Jami mund të funksionojë gjithashtu si <b>klient SIP</b>.
+
+Ofrohen shumë <b>zgjerime Jami</b>: Filtri audio, Përgjigjja automatike, Ekrani jeshil, Segmentimi, Filigrami dhe Transkripti i Pëshpëritjes.
+
+Jami mund të vendoset lehtësisht në organizata me <b>JAMS (Jami Account Management Server)</b>, duke i lejuar përdoruesit të lidhen me kredencialet e tyre të korporatës ose të krijojnë llogari lokale. JAMS ju lejon të <b>menaxhoni komunitetin tuaj</b> Jami duke përfituar nga arkitektura e rrjetit të shpërndarë të Jami.
+
+Jami është <b>disponueshëm për</b> GNU/Linux, Windows, macOS, iOS, Android, Android TV dhe shfletuesit e uebit, duke e bërë Jami një kuadër komunikimi ndërveprues dhe ndër-platformë.
+
+<b>Menaxho shumë</b> llogari SIP, llogari Jami dhe llogari JAMS me klientin Jami të instaluar në një ose disa pajisje.
+
+Jami është falas, i pakufizuar, privat, pa reklama, i pajtueshëm, i shpejtë, autonom dhe anonim.
+
+<b>Mëso më shumë rreth:</b>
+Jami: https://jami.net/
+Zgjerimet Jami: https://jami.net/extensions/
+JAMS (Serveri i menaxhimit të llogarisë Jami): https://jami.biz/
+Dokumentacioni Jami: https://docs.jami.net/
+
+<b>Na ndiqni për më shumë:</b>
+Mastodon: https://mstdn.io/@Jami
+Videot: https://docs.jami.net/videos/
+
+<b>Do të donim të dëgjonim nga ju! Bashkohuni me komunitetin Jami:</b>
+Kontribuoni: https://jami.net/contribute/
+Forumi: https://forum.jami.net/
+
+Ndërtoni <b>projekte IoT</b> me Jami. Ripërdorni teknologjinë universale të komunikimit të Jami me bibliotekën e tij portative në sistemin tuaj të zgjedhur.
+
+Jami për Android TV është testuar në NVIDIA SHIELD TV me kamera Logitech.
+
+Jami publikohet nën <b>licencën GPL</b>, versioni 3 ose më i lartë.
+E drejta e autorit © Savoir-faire Linux Inc.
