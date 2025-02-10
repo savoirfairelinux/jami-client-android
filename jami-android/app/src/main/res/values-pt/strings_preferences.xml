@@ -34,15 +34,25 @@
   <string name="pref_clearHistory_summary">Elimina o histórico de todas as conversas. Esta ação não pode ser desfeita.</string>
   <string name="pref_notification_title">Visibilidade da notificação</string>
   <string name="pref_notification_summary">Definir a visibilidade das notificações de aplicações no ecrã de bloqueio.</string>
+  <string name="pref_connectivity_title">Modo de conexão</string>
+  <string name="pref_connectivity_summary">Selecione como conectar o Jami ao sistema distribuído para receber chamadas e mensagens.</string>
   <string name="pref_blackList_title">Lista de bloqueios</string>
   <string name="pref_blackList_summary">Verifique a sua lista de bloqueios.</string>
   <string name="pref_delete_account_title">Eliminar conta</string>
+  <string name="pref_delete_account_summary">Eliminar a conta deste dispositivo</string>
+  <string name="pref_persistNotification_title">Executar em segundo plano</string>
+  <string name="pref_persistNotification_summary">Permite ser executado em segundo plano para receber chamadas e mensagens</string>
   <string name="pref_newGroup_title">Ativar a conversação em grupo</string>
   <string name="pref_newGroup_summary">Permitir a criação de grupos no Jami.</string>
   <string name="pref_logs_title">Registos de diagnóstico</string>
   <string name="pref_logs_summary">Abrir configurações do registo de diagnóstico</string>
   <string name="pref_logs_start">Iniciar o registo</string>
   <string name="pref_logs_stop">Parar o registo</string>
+  <string name="pref_connection_monitor">Monitor de conexão</string>
+  <string name="pref_connection_monitor_summary">Monitorizar conexões ponto a ponto</string>
+  <string name="pref_push_notifications_logs_title">Registos de notificações push</string>
+  <string name="pref_push_notifications_logs_summary">Ver os registos capturados por
+        notificações push.</string>
   <string name="pref_typing_title">Ativar indicadores de digitação</string>
   <string name="pref_typing_summary">Envia e recebe indicadores de digitação que mostram que uma mensagem está a ser digitada.</string>
   <string name="pref_block_record_title">Bloquear captura de ecrã e gravação</string>
@@ -50,19 +60,34 @@
   <string name="pref_link_preview_title">Mostrar pré-visualizações de hiperligações nas conversas</string>
   <string name="pref_link_preview_summary">As pré-visualizações requerem o descarregamento de conteúdos de servidores de terceiros.</string>
   <!--Notifications Visibility-->
+  <string name="notification_public">Público\n(mostra notificações e respetivo conteúdo no ecrã de bloqueio)\n</string>
+  <string name="notification_private">Privado\n(mostra notificações mas ocultar o seu conteúdo no ecrã de bloqueio)\n</string>
+  <string name="notification_secret">Segredo\n(não mostra notificações no ecrã de bloqueio)</string>
+  <string name="connectivity_google_services_title">Serviços Google</string>
+  <string name="connectivity_google_services_description">Utilizar o Google Firebase e um proxy DHT para receber notificações push.</string>
+  <string name="connectivity_local_node_title">Nó DHT local</string>
+  <string name="connectivity_local_node_description">Utilizar um nó DHT local para se conectar a outros dispositivos e contactos Jami.</string>
+  <string name="connectivity_unified_push_description">Utilizar um servidor UnifiedPush personalizado para receber notificações push.</string>
   <string name="connectivity_custom_title">Personalizado</string>
+  <string name="connectivity_custom_description">Atualmente, não está a utilizar nenhuma das predefinições de configuração disponíveis.</string>
   <!--Extension-->
+  <string name="pref_enable_extensions_title">Ativar extensões</string>
   <string name="pref_enable_extensions_summary">Ativar as extensões e definir os seus parâmetros</string>
+  <string name="pref_available_extensions_title">Extensões disponíveis</string>
+  <string name="pref_available_extensions_summary">Extensões instaladas e adicionar novas extensões</string>
   <string name="fab_extensions_add">Adicionar uma nova extensão</string>
   <string name="extension_uninstall_title">Desinstalar a extensão?</string>
   <string name="extension_reset_preferences">Repor as preferências da extensão</string>
   <string name="extension_reset_preferences_summary">Configurações da extensão repostas para os valores de origem</string>
   <string name="extension_reset_preferences_ask">Quer repor as configurações da extensão geral para os valores de origem?</string>
   <string name="extension_reset_account_preferences_ask">Quer repor as configurações da extensão da conta para os valores de origem?</string>
+  <string name="extension_successfully_installed">A extensão <b>%1$s</b> foi instalada com sucesso.</string>
   <string name="extension_install_failure">Ocorreu um erro ao instalar a seguinte extensão: <b>%1$s</b></string>
   <string name="extension_recent_version_exception">Já está instalada uma versão mais recente de <b>%1$s</b>.</string>
   <string name="extension_same_version_exception">Já está instalada uma versão igual de <b>%1$s</b>.</string>
   <string name="extension_invalid_signature"><b>%1$s</b> tem uma assinatura inválida</string>
+  <string name="extension_invalid_authority">Ocorreu um erro ao verificar a autoridade para a seguinte extensão: <b>%1$s</b></string>
   <string name="extension_invalid_format">Formato de extensão inválido: <b>%1$s</b></string>
+  <string name="extension_force_install">forçar\ninstalação</string>
   <string name="extension_path_image_add">Adicionar uma nova imagem</string>
 </resources>

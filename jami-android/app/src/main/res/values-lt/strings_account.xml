@@ -5,6 +5,7 @@
   <string name="ic_advanced_menu">Išplėstiniai nustatymai</string>
   <string name="ic_blacklist_menu">Užblokuoti adresatai</string>
   <!--Strings related to account creation-->
+  <string name="account_selection">Pasirinkite paskyrą</string>
   <string name="add_ring_account_title">Pridėti paskyrą</string>
   <string name="add_sip_account_title">Pridėti SIP paskyrą</string>
   <string name="ring_account_default_name">Jami paskyra %1$s</string>
@@ -22,10 +23,12 @@
   <string name="dialog_wait_create_details">Prašome palaukti, kol jūsų nauja paskyra yra pridedama</string>
   <string name="dialog_wait_update">Atnaujinama paskyra</string>
   <string name="dialog_wait_update_details">Prašome palaukti, kol jūsų naujoji paskyra yra atnaujinama...</string>
+  <string name="dialog_warn_ip2ip_account_title">Sukurti tuščią SIP paskyrą?</string>
   <string name="account_type_ip2ip">IP paskyra</string>
   <string name="help_ring">Jami paskyra leidžia jums saugiai pasiekti žmones per visiškai paskirstytą tinklą.</string>
   <string name="help_sip_title">Pridėti SIP paskyrą</string>
   <string name="help_sip">Konfigūruokite esamą SIP paskyrą.</string>
+  <string name="create_sip_account">Konfigūruoti SIP paskyrą</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_title">Ištrinti paskyrą?</string>
   <string name="account_delete_dialog_message">Šio veiksmo neįmanoma bus atšaukti.</string>
@@ -45,8 +48,8 @@
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Bendra</string>
   <string name="account_basic_category">Pagrindiniai nustatymai</string>
-  <string name="account_alias_label">Paskyros pavadinimas</string>
   <string name="account_bootstrap_label">Pradinė įkeltis</string>
+  <string name="account_name_server_label">Vardų serveris</string>
   <string name="account_username_label">Naudotojo vardas</string>
   <string name="account_password_label">Slaptažodis</string>
   <string name="account_optionnal_category">Pasirinktini nustatymai</string>
@@ -73,8 +76,7 @@
   <string name="account_registration_exp_label">Registracijos galiojimo laikas</string>
   <string name="account_local_interface_label">Vietinė sąsaja</string>
   <string name="account_local_port_label">Vietinis prievadas</string>
-  <string name="account_stun_enable_label">Naudoti Stun</string>
-  <string name="account_stun_server_label">Stun serveris</string>
+  <string name="account_stun_enable_label">Naudoti STUN</string>
   <string name="account_accept_files">Automatiškai priimti gaunamuosius failus</string>
   <string name="account_conversation_settings_title">Pokalbio nustatymai</string>
   <string name="account_accept_files_max_size">Didžiausias failo, kurį automatiškai priimti, dydis</string>
@@ -90,6 +92,7 @@
   <string name="account_published_address_label">Paskelbtas adresas</string>
   <string name="disabled">Išjungta</string>
   <string name="enabled">Įjungta</string>
+  <string name="default_value">Numatytasis</string>
   <string name="account_proxy_label">DHT įgaliotasis serveris</string>
   <string name="account_proxy_enable_label">Naudoti DHT įgaliotąjį serverį</string>
   <string name="account_proxy_server_label">DHT įgaliotojo serverio adresas</string>
@@ -104,30 +107,19 @@
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Naudoti TLS perdavimą</string>
-  <string name="account_tls_port_label">TLS gavėjo prievadas</string>
-  <string name="account_tls_certificate_list_label">Liudijimų įstaiga</string>
-  <string name="account_tls_certificate_file_label">Liudijimo failas</string>
-  <string name="account_tls_private_key_file_label">Privačiojo rakto failas</string>
   <string name="account_tls_password_label">Privačiojo rakto slaptažodis</string>
-  <string name="account_tls_method_label">TLS metodas</string>
-  <string name="account_tls_ciphers_label">TLS šifrai</string>
-  <string name="account_tls_server_name_label">Serverio pavadinimas</string>
-  <string name="account_tls_verify_server_label">Tikrinti serverį</string>
-  <string name="account_tls_verify_client_label">Tikrinti klientą</string>
-  <string name="account_tls_negotiation_timeout_sec">Derėjimuisi skirtas laikas (sek.)</string>
   <string name="account_rtp_max_port">Didžiausias</string>
   <string name="account_rtp_min_port">Mažiausias</string>
-  <string name="account_rtp_port_range">Garso RTP prievadų rėžis</string>
   <!--restore/backup-->
   <string name="account_new_device_password">Norėdami atrakinti paskyrą, įveskite pagrindinį slaptažodį</string>
   <string name="error_password_char_count">Mažiausiai 6 simboliai</string>
-  <string name="error_passwords_not_equals">Slaptažodžiai nesutampa</string>
   <string name="export_account_wait_title">Prašome palaukti...</string>
   <string name="export_account_wait_message">Eksportuojama paskyros informacija</string>
   <string name="account_export_file">Padaryti paskyros atsarginę kopiją</string>
   <string name="account_export_end_decryption_message">Neteisingas slaptažodis. Bandykite dar kartą naudodami teisingą slaptažodį</string>
   <string name="account_export_end_network_title">Tinklo klaida</string>
   <string name="account_export_end_error_title">Klaida</string>
+  <string name="account_export_end_error_message">Eksportuojant paskyrą įvyko nežinoma klaida.</string>
   <string name="account_enter_password">Įveskite slaptažodį</string>
   <string name="update_account">Atnaujinti paskyrą</string>
   <string name="account_migration">Jūsų Jami paskyra gali būti atnaujinta.\nĮveskite slaptažodį.</string>
@@ -140,8 +132,10 @@
   <string name="account_sip_cannot_be_registered_message">Galite tęsti paskyros kūrimo procesą arba taisyti savo informaciją čia. Vėliau taisymas taip pat yra įmanomas paskyros nustatymuose.</string>
   <string name="account_no_network_title">Tinklo klaida</string>
   <string name="account_device_added_title">Paskyros įrenginys pridėtas</string>
+  <string name="account_device_added_message">Šiame įrenginyje sėkmingai nustatyta Jami paskyra.</string>
   <string name="account_device_updated_title">Paskyros įrenginys atnaujintas</string>
   <string name="account_device_updated_message">Jami paskyra sėkmingai atnaujinta.</string>
+  <string name="account_cannot_be_updated_message">Atnaujinant paskyrą įvyko klaida. Patikrinkite paskyros slaptažodį.</string>
   <string name="account_sip_register_anyway">Vis tiek registruoti</string>
   <!--TV-->
   <string name="account_tv_settings_header">Paskyros nustatymai</string>
@@ -156,19 +150,15 @@
   <string name="account_link_device">Prisijungti iš kito įrenginio</string>
   <string name="account_link_button">Prijungti iš tinklo</string>
   <string name="account_link_archive_button">Prijungti iš atsarginės kopijos</string>
-  <string name="account_link_prompt_pin">Įveskite PIN</string>
-  <string name="account_new_button">Susikurti Jami paskyrą</string>
+  <string name="account_new_button">Prisijunkite prie Džami.</string>
   <string name="account_link_export_button">Susieti naują įrenginį</string>
   <string name="account_link_hide_button">Slėpti susietą įrenginį</string>
-  <string name="account_start_export_button">Generuoti PIN</string>
   <string name="account_end_export_button">užverti</string>
   <string name="account_connect_button">Prisijungti</string>
   <string name="account_connect_prompt_username">Naudotojo vardas</string>
   <string name="account_enter_username">Įveskite naudotojo vardą</string>
   <!--Name registration-->
   <string name="error_username_empty">Įveskite naudotojo vardą</string>
-  <string name="username_available">Naudotojo vardas prieinamas!</string>
-  <string name="trying_to_register_name">Bandoma užregistruoti vardą</string>
   <string name="registered_username">Registruotas naudotojo vardas</string>
   <string name="register_username">Registruoti viešąjį naudotojo vardą</string>
   <string name="register_recommended">Rekomenduojama</string>
@@ -188,6 +178,7 @@
   <string name="account_creation_ring">Susikurkite Jami paskyrą</string>
   <string name="account_link_title">Susiekite šį įrenginį</string>
   <!--Edit profile-->
+  <string name="account_edit_profile">Taisyti profilį</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Norėdami patvirtinti, įveskite slaptažodį</string>
   <string name="enter_password">Įveskite slaptažodį</string>
@@ -195,14 +186,16 @@
   <string name="revoke_device_wait_title">Prašome palaukti...</string>
   <string name="revoke_device_wait_message">Panaikinamas įrenginys</string>
   <string name="rename_device_title">Pervadinti šį įrenginį</string>
-  <string name="rename_device_message">Pasirinkite naują pavadinimą, pagal kurį atpažinsite šį įrenginį savo Jami paskyroje</string>
   <string name="rename_device_button">Pervadinti įrenginį</string>
   <string name="account_rename_device_hint">Pasirinkti naują įrenginio pavadinimą</string>
+  <string name="account_device_name_empty">Įrenginio pavadinimas negali būti tuščias.</string>
   <string name="account_device_this_indicator">Šis įrenginys</string>
   <string name="account_disabled_indicator">išjungta</string>
   <!--Link a new device-->
   <string name="error_format_not_supported">Šis formatas yra nepalaikomas.</string>
   <string name="account_link_device_title">Susieti naują įrenginį</string>
+  <string name="account_link_generate_button">Generuoti</string>
+  <string name="connect_device_scanqr">Skenuokite QR kodą</string>
   <string name="account_link_device_button">Prisijungti</string>
   <!--Biometry-->
   <string name="no_thanks">Ne, ačiū</string>

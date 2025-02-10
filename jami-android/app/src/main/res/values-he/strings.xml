@@ -98,7 +98,7 @@
   <string name="today">היום</string>
   <string name="yesterday">אתמול</string>
   <!--Contacts-->
-  <string name="account_create_title">יצירת חשבון Jami</string>
+  <string name="account_create_title">הצטרף לג\'מי.</string>
   <string name="prompt_hint_username">שם משתמש</string>
   <string name="wizard_next">קדימה</string>
   <string name="wizard_back">חזרה</string>
@@ -114,6 +114,7 @@
   <string name="identifier">זיהוי</string>
   <string name="account">חשבון</string>
   <string name="link_new_device">קישור מכשיר חדש</string>
+  <string name="devices_header">התקנים</string>
   <string name="devices">מכשירים מחוברים</string>
   <!--Share fragment-->
   <string name="share_label">שיתוף</string>

@@ -43,9 +43,9 @@
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">ജനറൽ</string>
   <string name="account_basic_category">അടിസ്ഥാന ക്രമീകരണങ്ങൾ</string>
-  <string name="account_alias_label">അക്കൌണ്ട് പേര്</string>
   <string name="account_hostname_label">ഹോസ്റ്റ് നാമം</string>
   <string name="account_bootstrap_label">ബൂട്ട് സ്ട്രാപ്പ്</string>
+  <string name="account_name_server_label">പേര് സെർവർ</string>
   <string name="account_username_label">ഉപയോക്തൃനാമം</string>
   <string name="account_password_label">പാസ്വേഡ്</string>
   <string name="account_optionnal_category">ഓപ്ഷണൽ ക്രമീകരണങ്ങൾ</string>
@@ -77,8 +77,7 @@
   <string name="account_registration_exp_label">രജിസ്ട്രേഷൻ കാലാവധി</string>
   <string name="account_local_interface_label">പ്രാദേശിക ഇന്റർഫേസ്</string>
   <string name="account_local_port_label">പ്രാദേശിക തുറമുഖം</string>
-  <string name="account_stun_enable_label">സ്തന് ഉപയോഗിക്കുക</string>
-  <string name="account_stun_server_label">സ്തന് സെര് വർ</string>
+  <string name="account_stun_enable_label">STUN ഉപയോഗിക്കുക</string>
   <string name="account_accept_files">സ്വപ്രേരിതമായി വരുന്ന ഫയലുകൾ സ്വീകരിക്കുക</string>
   <string name="account_conversation_settings_title">സംഭാഷണ ക്രമീകരണങ്ങൾ</string>
   <string name="account_accept_files_max_size">സ്വപ്രേരിതമായി സ്വീകരിക്കാവുന്ന പരമാവധി ഫയൽ വലുപ്പം</string>
@@ -94,6 +93,7 @@
   <string name="account_published_address_label">പ്രസിദ്ധീകരിച്ച വിലാസം</string>
   <string name="disabled">വൈകല്യമുള്ളവർ</string>
   <string name="enabled">പ്രാപ്തമാക്കിയത്</string>
+  <string name="default_value">ഡിഫോൾട്ട്</string>
   <string name="account_proxy_label">ഡിഎച്ച്ടി പ്രോക്സി</string>
   <string name="account_proxy_enable_label">DHT പ്രോക്സി ഉപയോഗിക്കുക</string>
   <string name="account_proxy_server_label">DHT പ്രോക്സി വിലാസം</string>
@@ -112,25 +112,12 @@
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">TLS ട്രാൻസ്പോർട്ട് ഉപയോഗിക്കുക</string>
-  <string name="account_tls_port_label">TLS ശ്രവക തുറമുഖം</string>
-  <string name="account_tls_certificate_list_label">സർട്ടിഫിക്കേഷൻ അധികാരികൾ</string>
-  <string name="account_tls_certificate_file_label">സർട്ടിഫിക്കറ്റ് ഫയൽ</string>
-  <string name="account_tls_private_key_file_label">സ്വകാര്യ കീ ഫയൽ</string>
   <string name="account_tls_password_label">സ്വകാര്യ കീ പാസ്വേഡ്</string>
-  <string name="account_tls_method_label">ടി. എൽ. എസ് രീതി</string>
-  <string name="account_tls_ciphers_label">ടി. എൽ. എസ് സിഫറുകൾ</string>
-  <string name="account_tls_server_name_label">സെർവർ നാമം</string>
-  <string name="account_tls_verify_server_label">സെർവർ പരിശോധിക്കുക</string>
-  <string name="account_tls_verify_client_label">ക്ലയന്റ് പരിശോധിക്കുക</string>
-  <string name="account_require_client_certificate_label">TLS ക്ലയന്റ് സർട്ടിഫിക്കറ്റ് ആവശ്യപ്പെടുന്നു</string>
-  <string name="account_tls_negotiation_timeout_sec">ചർച്ചാ സമയപരിധി (സെക്കോഡ്)</string>
   <string name="account_rtp_max_port">പരമാവധി</string>
   <string name="account_rtp_min_port">മിനിമം</string>
-  <string name="account_rtp_port_range">ഓഡിയോ RTP പോർട്ട് ശ്രേണി</string>
   <!--restore/backup-->
   <string name="account_new_device_password">അക്കൌണ്ട് അൺലോക്കുചെയ്യുന്നതിന് പ്രധാന പാസ്വേഡ് നൽകുക</string>
   <string name="error_password_char_count">കുറഞ്ഞത് 6 പ്രതീകങ്ങൾ</string>
-  <string name="error_passwords_not_equals">പാസ്വേഡുകൾ യോജിക്കുന്നില്ല</string>
   <string name="export_account_wait_title">ദയവായി കാത്തിരിക്കൂ.</string>
   <string name="export_account_wait_message">കയറ്റുമതി അക്കൌണ്ട് വിവരങ്ങൾ</string>
   <string name="account_export_file">ബാക്കപ്പ് അക്കൌണ്ട്</string>
@@ -164,12 +151,10 @@
   <string name="account_link_device">മറ്റൊരു ഉപകരണത്തിൽ നിന്നും കണക്ട് ചെയ്യുക</string>
   <string name="account_link_button">നെറ്റ് വർക്കിൽ നിന്നും കണക്ട് ചെയ്യുക</string>
   <string name="account_link_archive_button">ബാക്കപ്പ് വഴി കണക്ട് ചെയ്യുക</string>
-  <string name="account_link_prompt_pin">പിൻ നൽകുക</string>
-  <string name="account_new_button">ജാമി അക്കൌണ്ട് സൃഷ്ടിക്കുക</string>
+  <string name="account_new_button">ജാമിയിൽ ചേരുക</string>
   <string name="account_link_export_button">പുതിയ ഉപകരണം ബന്ധിപ്പിക്കുക</string>
   <string name="account_link_show_button">%d കൂടുതൽ ലിങ്കുചെയ്ത ഉപകരണം കാണിക്കുക</string>
   <string name="account_link_hide_button">ബന്ധിപ്പിച്ചിരിക്കുന്ന ഉപകരണം മറയ്ക്കുക</string>
-  <string name="account_start_export_button">പി. എൻ. എ. സൃഷ്ടിക്കുക</string>
   <string name="account_end_export_button">അടുത്തു</string>
   <string name="account_export_title">മറ്റ് ഉപകരണങ്ങളുമായി ലിങ്ക് അക്കൌണ്ട്</string>
   <string name="account_connect_server_button">മാനേജ്മെന്റ് സെർവറുമായി ബന്ധിപ്പിക്കുക</string>
@@ -180,10 +165,7 @@
   <string name="account_connect_prompt_username">ഉപയോക്തൃനാമം</string>
   <!--Name registration-->
   <string name="error_username_empty">ഒരു ഉപയോക്തൃനാമം നൽകുക</string>
-  <string name="no_registered_name_for_account">രജിസ്റ്റർ ചെയ്തിട്ടില്ല</string>
-  <string name="username_available">ഉപയോക്തൃനാമം ലഭ്യമാണ്!</string>
   <string name="register_name">രജിസ്ട്രി നാമം</string>
-  <string name="trying_to_register_name">പേര് രജിസ്റ്റർ ചെയ്യാൻ ശ്രമിക്കുന്നു</string>
   <string name="registered_username">രജിസ്റ്റർ ചെയ്ത ഉപയോക്തൃനാമം</string>
   <string name="register_username">പൊതു ഉപയോക്തൃനാമം രജിസ്റ്റർ ചെയ്യുക</string>
   <string name="register_recommended">ശുപാർശ</string>
@@ -210,7 +192,6 @@
   <string name="revoke_device_wait_title">ദയവായി കാത്തിരിക്കൂ.</string>
   <string name="revoke_device_wait_message">പിൻവലിക്കൽ ഉപകരണം</string>
   <string name="rename_device_title">ഈ ഉപകരണം പുനർനാമകരണം ചെയ്യുക</string>
-  <string name="rename_device_message">നിങ്ങളുടെ ജാമി അക്കൌണ്ടിൽ ഈ ഉപകരണം തിരിച്ചറിയുന്നതിനായി ഒരു പുതിയ പേര് തിരഞ്ഞെടുക്കുക</string>
   <string name="rename_device_button">പേരുമാറ്റ ഉപകരണം</string>
   <string name="account_rename_device_hint">പുതിയ ഉപകരണ നാമം തിരഞ്ഞെടുക്കുക</string>
   <string name="account_device_this_indicator">ഈ ഉപകരണം</string>
@@ -218,6 +199,7 @@
   <!--Link a new device-->
   <string name="error_format_not_supported">ഈ ഫോർമാറ്റിന് പിന്തുണയില്ല.</string>
   <string name="account_link_device_title">പുതിയ ഉപകരണം ബന്ധിപ്പിക്കുക</string>
+  <string name="connect_device_scanqr">ക്യുആർ കോഡ് സ്കാൻ ചെയ്യുക</string>
   <string name="account_link_device_button">ബന്ധിപ്പിക്കുക</string>
   <!--Biometry-->
 </resources>

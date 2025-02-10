@@ -43,9 +43,9 @@
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Umum</string>
   <string name="account_basic_category">Pengaturan Dasar</string>
-  <string name="account_alias_label">Nama akun</string>
   <string name="account_hostname_label">Nama host</string>
   <string name="account_bootstrap_label">Bootstrap</string>
+  <string name="account_name_server_label">Nama peladen</string>
   <string name="account_username_label">Nama pengguna</string>
   <string name="account_password_label">Kata sandi</string>
   <string name="account_optionnal_category">Pengaturan Opsional</string>
@@ -77,8 +77,7 @@
   <string name="account_registration_exp_label">Registrasi Kedaluarsa</string>
   <string name="account_local_interface_label">Antarmuka Lokal</string>
   <string name="account_local_port_label">Port Lokal</string>
-  <string name="account_stun_enable_label">Gunakan Stun</string>
-  <string name="account_stun_server_label">Peladen Stun</string>
+  <string name="account_stun_enable_label">Gunakan TURN</string>
   <string name="account_accept_files">Terima file masuk secara otomatis</string>
   <string name="account_conversation_settings_title">Pengaturan obrolan</string>
   <string name="account_accept_files_max_size">Ukuran maksimal file yang diterima otomatis</string>
@@ -94,6 +93,7 @@
   <string name="account_published_address_label">Alamat yang dipublikasikan</string>
   <string name="disabled">Dinonaktifan</string>
   <string name="enabled">Aktifkan</string>
+  <string name="default_value">Bawaan</string>
   <string name="account_proxy_label">Proksi DHT</string>
   <string name="account_proxy_enable_label">Gunakan proksi DHT</string>
   <string name="account_proxy_server_label">Alamat proksi DHT</string>
@@ -112,25 +112,12 @@
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Gunakan TLS Transport</string>
-  <string name="account_tls_port_label">Port TLS Listener</string>
-  <string name="account_tls_certificate_list_label">Sertifikat Otoritas</string>
-  <string name="account_tls_certificate_file_label">Berkas Sertifikat</string>
-  <string name="account_tls_private_key_file_label">File Kunci Privat</string>
-  <string name="account_tls_password_label">Kata sandi Kunci Privat</string>
-  <string name="account_tls_method_label">Metode TLS</string>
-  <string name="account_tls_ciphers_label">TLS Ciphers</string>
-  <string name="account_tls_server_name_label">Nama Server</string>
-  <string name="account_tls_verify_server_label">Verifikasi Server</string>
-  <string name="account_tls_verify_client_label">Verifikasi Klien</string>
-  <string name="account_require_client_certificate_label">TLS membutuhkan Sertifikat Klien</string>
-  <string name="account_tls_negotiation_timeout_sec">Batas Waktu Negosiasi (detik)</string>
+  <string name="account_tls_password_label">Kata sandi kunci privat</string>
   <string name="account_rtp_max_port">Maksimum</string>
   <string name="account_rtp_min_port">Minimum</string>
-  <string name="account_rtp_port_range">Rentang Port Audio RTP</string>
   <!--restore/backup-->
   <string name="account_new_device_password">Masukkan kata sandi utama untuk membuka akun</string>
   <string name="error_password_char_count">Minimum 6 karakter</string>
-  <string name="error_passwords_not_equals">Kata sandi tidak cocok</string>
   <string name="export_account_wait_title">Harap tunggu...</string>
   <string name="export_account_wait_message">Mengekspor informasi akun</string>
   <string name="account_export_file">Cadangkan akun</string>
@@ -164,12 +151,10 @@
   <string name="account_link_device">Hubungkan melalui perangkat lain</string>
   <string name="account_link_button">Hubungkan melalui jaringan</string>
   <string name="account_link_archive_button">Hubungkan melalui cadangan</string>
-  <string name="account_link_prompt_pin">Masukkan PIN</string>
-  <string name="account_new_button">Buat akun Jami</string>
+  <string name="account_new_button">Gabung Jami</string>
   <string name="account_link_export_button">Hubungkan perangkat baru</string>
   <string name="account_link_show_button">Tampilkan %d lebih banyak perangkat yang ditautkan</string>
   <string name="account_link_hide_button">Sembunyikan perangkat yang tertaut</string>
-  <string name="account_start_export_button">Buat PIN</string>
   <string name="account_end_export_button">tutup</string>
   <string name="account_export_title">Tautkan akun ke perangkat lain</string>
   <string name="account_connect_server_button">Hubungkan ke peladen manajemen</string>
@@ -181,10 +166,7 @@
   <string name="account_enter_username">Masukkan nama pengguna</string>
   <!--Name registration-->
   <string name="error_username_empty">Masukkan nama pengguna</string>
-  <string name="no_registered_name_for_account">Nama tidak terdaftar</string>
-  <string name="username_available">Nama pengguna tersedia !</string>
   <string name="register_name">Nama Pendaftar</string>
-  <string name="trying_to_register_name">Mencoba mendaftarkan nama</string>
   <string name="registered_username">Nama pengguna terdaftar</string>
   <string name="register_username">Daftar nama pengguna publik</string>
   <string name="register_recommended">Rekomendasi</string>
@@ -211,7 +193,6 @@
   <string name="revoke_device_wait_title">Harap tunggu...</string>
   <string name="revoke_device_wait_message">Hapus perangkat</string>
   <string name="rename_device_title">Ubah nama perangkat ini</string>
-  <string name="rename_device_message">Pilih nama baru untuk mengidentifikasi perangkat ini pada akun Jami Anda</string>
   <string name="rename_device_button">Ubah nama perangkat</string>
   <string name="account_rename_device_hint">Pilih nama perangkat baru</string>
   <string name="account_device_this_indicator">Perangkat ini</string>
@@ -219,6 +200,7 @@
   <!--Link a new device-->
   <string name="error_format_not_supported">Format tidak didukung.</string>
   <string name="account_link_device_title">Hubungkan perangkat baru</string>
+  <string name="connect_device_scanqr">Scan kode QR</string>
   <string name="account_link_device_button">Hubungkan</string>
   <!--Biometry-->
 </resources>

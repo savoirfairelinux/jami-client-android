@@ -135,6 +135,7 @@
   <string name="conversation_send_video">Сними видео снимак</string>
   <string name="conversation_share_location">Подели локацију</string>
   <string name="ongoing_group_call">Позив у току</string>
+  <string name="started_call">Poziv je počeo</string>
   <string name="in_reply_to">У одговору на</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Дозвола за камеру</string>
@@ -150,6 +151,7 @@
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Скенирајте QR код налога који желите да додате.</string>
   <string name="title_activity_qrcode">Подели мој налог</string>
+  <string name="error_scan_no_camera_permissions">QR skener zahteva dozvolu kamere. Dozvola za kameru je onemogućena. Omogućite ga u podešavanjima uređaja da biste koristili ovu funkciju.</string>
   <string name="tab_code">Мој код</string>
   <string name="tab_scan">Скенирај код</string>
   <!--Settings-->
@@ -170,7 +172,8 @@
   <string name="delete_contact">Избриши контакт</string>
   <string name="conversation_action_remove_this_title">Желите ли да избришете овај контакт?</string>
   <string name="conversation_action_remove_this_message">Ово ће избрисати контакт и дефинитивно избрисати историју разговора.</string>
-  <string name="copied_to_clipboard">%1$s копиран у привремену меморију</string>
+  <string name="swarm_group_action_leave">Napusti grupu</string>
+  <string name="conversation_action_copy_peer_number">Kopirajte identifikator kontakta</string>
   <string name="conversation_action_select_peer_number">Изабери број</string>
   <string name="conversation_action_block_this">Блокирај контакт</string>
   <string name="conversation_action_unblock_this">Одблокирај контакт</string>
@@ -196,9 +199,6 @@
   <string name="conversation_preference_emoji">Емоџи за разговор</string>
   <string name="conversation_type_contact">Јами контакт</string>
   <string name="conversation_type_private">Приватно</string>
-  <string name="conversation_contact_invited">%1$s је позван</string>
-  <string name="conversation_contact_added">%1$s се придружио</string>
-  <string name="conversation_contact_left">%1$s је напустио</string>
   <string name="conversation_search_hint">Претражи конверзацију</string>
   <string name="today">Данас</string>
   <string name="yesterday">Јуче</string>
@@ -207,7 +207,7 @@
   <string name="prompt_new_password">Нова лозинка</string>
   <string name="prompt_new_password_optional">Нова лозинка (опционо)</string>
   <string name="prompt_new_password_repeat">Понови нову лозинку</string>
-  <string name="account_create_title">Направи Јами налог</string>
+  <string name="account_create_title">Придружи се Јамију</string>
   <string name="prompt_new_username">Унеси ново корисничко име</string>
   <string name="prompt_hint_username">Корисничко име</string>
   <string name="help_password_choose">Изаберите јаку лозинку коју ћете запамтити да бисте заштитили свој Јами налог.</string>
@@ -220,6 +220,8 @@
   <string name="hist_contact_invited">Контакт је позван</string>
   <string name="hist_contact_added">Контакт је додат</string>
   <string name="hist_contact_left">Контакт је напустио</string>
+  <string name="hist_contact_blocked">Kontakt blokiran</string>
+  <string name="hist_contact_unblocked">Kontakt odblokiran</string>
   <string name="hist_invitation_received">Позивница је примљена</string>
   <!--Account summary-->
   <string name="profile">Профил</string>
@@ -227,6 +229,7 @@
   <string name="profile_message_warning">Ваш профил се дели само са вашим контактима</string>
   <string name="open_the_gallery">Отвори галерију</string>
   <string name="take_a_photo">Снимите фотографију.</string>
+  <string name="remove_photo">Ukloni fotografiju</string>
   <string name="profile_name_hint">Унеси своје име</string>
   <string name="registered_name">Регистровано име</string>
   <string name="no_registered_name">Нема регистрованог имена</string>
@@ -234,12 +237,14 @@
   <string name="identifier">Идентификатор</string>
   <string name="account">Налог</string>
   <string name="link_new_device">Повежи нови уређај</string>
+  <string name="devices_header">Уреди</string>
   <string name="devices">Повезани уређаји</string>
   <string name="total_devices">Укупно уређаја:</string>
   <!--Share fragment-->
   <string name="share_message">Скенирај овај код са Јами апликацијом</string>
   <string name="share_message_no_account">Изабери налог за дељење.</string>
   <string name="share_your_account_information">Подели моје контакт информације</string>
+  <string name="share_contact_information">Podeli kontakt informacije</string>
   <string name="share_label">Подели</string>
   <string name="generic_error_migration">Грешка</string>
   <string name="generic_error_migration_message">Došlo je do greške prilikom migracije naloga.</string>
@@ -278,7 +283,6 @@
   <string name="file_transfer_status_error">није успело због грешке</string>
   <string name="file_transfer_status_timed_out">Истекло је време</string>
   <string name="file_saved_in">Датотека је сачувана у %s</string>
-  <string name="file_saved_successfully">Датотека је успешно сачувана</string>
   <string name="file_download">Преузимање</string>
   <string name="title_media_viewer">Прегледач медија</string>
   <string name="menu_file_open">Отвори датотеку</string>
@@ -288,6 +292,7 @@
   <string name="menu_file_share">Подели датотеку</string>
   <string name="menu_message_copy">Копирај</string>
   <string name="menu_message_edit">Уреди поруку</string>
+  <string name="menu_message_history">Istorija poruka</string>
   <string name="menu_message_delete">Избриши поруку</string>
   <string name="menu_message_cancel">Откажи поруку</string>
   <string name="menu_message_reply">Одговори</string>
@@ -313,6 +318,7 @@
   <string name="tv_send_video">Пошаљи медије</string>
   <string name="tv_action_more">Више</string>
   <string name="conversation_input_speech_hint">Реци нешто…</string>
+  <string name="audio_permission_denied">Dozvola za mikrofon je onemogućena. Omogućite ga u podešavanjima uređaja da biste koristili ovu funkciju.</string>
   <string name="speech_recogniton_unavailable">Prepoznavanje govora nije dostupno.</string>
   <string name="audio_permission_rationale_title">Potrebna je audio dozvola</string>
   <string name="audio_permission_rationale_message">Jami-ju je potrebna dozvola mikrofona za korišćenje govora u tekst i snimanje audio funkcija. To će biti postavljeno u sledećem koraku.</string>
@@ -351,10 +357,14 @@
   <string name="reset">Ресетуј</string>
   <!--Swarm Details-->
   <string name="rename_btn">Потврди</string>
+  <string name="rename_error">ne može biti prazan.</string>
   <string name="swarm_description">Dodaj opis</string>
   <string name="tab_members">Чланови</string>
   <string name="tab_files">Датотеке</string>
   <string name="tab_settings">Подешавања</string>
+  <string name="not_admin_toast">Samo administratori mogu da uređuju informacije ove grupe</string>
+  <string name="dialogtitle_title">Izmenite naslov grupe</string>
+  <string name="dialogtitle_description">Izmenite opis grupe</string>
   <string name="dialog_hint_title">Наслов</string>
   <string name="dialog_hint_description">Опис</string>
   <string name="picker_title">Изабери контакте</string>
@@ -364,6 +374,7 @@
   <string name="bottomsheet_remove">Уваљивање члана</string>
   <string name="error_open_no_app_found">Није пронађена ниједна апликација за обраду ове датотеке: %1$s</string>
   <string name="swarm_detail_no_document">Još nemate dokumenta.</string>
+  <string name="group_admin">Admin</string>
   <string name="share_contact_intent_title">Dodajte ovaj kontakt na Jami!</string>
   <string name="share_contact_intent_body">Možete dodati ovaj kontakt „%1$s“ na Jami distribuiranoj komunikacijskoj platformi: %2$s</string>
   <!--JamiId-->
@@ -380,8 +391,12 @@
   <string name="welcome_jami_description">Поделите свој Јами идентификатор како бисте лакше контактирали sa drugima!</string>
   <!--Conversation details-->
   <string name="details">Детали</string>
+  <string name="secure_p2p_connection">Sigurna peer-to-peer veza</string>
   <string name="swarm_type">Vrsta razgovora</string>
   <string name="Private">Приватно</string>
+  <string name="swarm_id">ID roja</string>
+  <string name="show_qr_code">Prikaži QR kod</string>
+  <string name="show_certificate">Prikaži sertifikat</string>
   <string name="mute_conversation">Умоли разговор</string>
   <!--Donation-->
   <string name="donation_card_description">Ако уживате у коришћењу Јамија и верујете у нашу мисију, да ли бисте дали донацију?</string>
@@ -393,4 +408,5 @@
   <string name="unable_to_load">Није могуће учитати %1$s</string>
   <string name="load_success">%1$s: укључено</string>
   <string name="unload_success">%1$s: искључено</string>
+  <string name="install_error">Došlo je do greške pri uvozu ekstenzije.</string>
 </resources>

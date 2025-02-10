@@ -143,7 +143,6 @@
   <string name="delete_contact">સંપર્કને કાઢી નાખો</string>
   <string name="conversation_action_remove_this_title">આ સંપર્કને કાઢી નાખો?</string>
   <string name="conversation_action_remove_this_message">આ સંપર્કને કાઢી નાખશે અને વાતચીત ઇતિહાસને ચોક્કસપણે સાફ કરશે.</string>
-  <string name="copied_to_clipboard">%1$s ક્લિપબોર્ડ પર કૉપિ</string>
   <string name="conversation_action_select_peer_number">એક નંબર પસંદ કરો</string>
   <string name="conversation_action_block_this">બ્લોક સંપર્ક</string>
   <string name="conversation_action_unblock_this">સંપર્કને અનબ્લોક કરો</string>
@@ -168,9 +167,6 @@
   <string name="conversation_preference_emoji">વાતચીત ઇમોજી</string>
   <string name="conversation_type_contact">જમી સંપર્ક</string>
   <string name="conversation_type_private">ખાનગી</string>
-  <string name="conversation_contact_invited">%1$s આમંત્રિત કરવામાં આવી હતી</string>
-  <string name="conversation_contact_added">%1$s જોડાયા</string>
-  <string name="conversation_contact_left">%1$s ડાબી</string>
   <string name="conversation_search_hint">શોધ વાતચીત</string>
   <string name="today">આજે</string>
   <string name="yesterday">ગઈકાલે</string>
@@ -179,7 +175,7 @@
   <string name="prompt_new_password">નવો પાસવર્ડ</string>
   <string name="prompt_new_password_optional">નવો પાસવર્ડ (વૈકલ્પિક)</string>
   <string name="prompt_new_password_repeat">નવો પાસવર્ડ પુનરાવર્તન કરો</string>
-  <string name="account_create_title">એક Jami એકાઉન્ટ બનાવો</string>
+  <string name="account_create_title">જમી સાથે જોડાઓ</string>
   <string name="prompt_new_username">નવું વપરાશકર્તાનામ દાખલ કરો</string>
   <string name="prompt_hint_username">વપરાશકર્તા નામ</string>
   <string name="help_password_choose">તમારા જેમી એકાઉન્ટને સુરક્ષિત કરવા માટે તમે યાદ રાખશો તે મજબૂત પાસવર્ડ પસંદ કરો.</string>
@@ -204,6 +200,7 @@
   <string name="identifier">ઓળખકર્તા</string>
   <string name="account">ખાતું</string>
   <string name="link_new_device">નવી ઉપકરણને લિંક કરો</string>
+  <string name="devices_header">ઉપકરણો</string>
   <string name="devices">જોડાયેલ ઉપકરણો</string>
   <string name="total_devices">કુલ ઉપકરણો: </string>
   <!--Share fragment-->
@@ -246,7 +243,6 @@
   <string name="file_transfer_status_error">ભૂલને કારણે નિષ્ફળ</string>
   <string name="file_transfer_status_timed_out">સમયસર</string>
   <string name="file_saved_in">%s માં સાચવેલ ફાઇલ</string>
-  <string name="file_saved_successfully">ફાઇલ સફળતાપૂર્વક સાચવવામાં</string>
   <string name="file_download">ડાઉનલોડ કરો</string>
   <string name="title_media_viewer">મીડિયા દર્શક</string>
   <string name="menu_file_open">ખુલ્લી ફાઇલ</string>

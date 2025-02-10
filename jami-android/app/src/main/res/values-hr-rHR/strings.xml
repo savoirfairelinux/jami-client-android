@@ -60,7 +60,6 @@
   <string name="leave_conversation">Ostavi razgovor</string>
   <string name="conversation_action_delete_this_message">Ova akcija se ne može poništiti.</string>
   <string name="delete_contact">Izbriši kontakt</string>
-  <string name="copied_to_clipboard">%1$s kopiran u međuspremnik</string>
   <string name="conversation_action_unblock_this">Otključaj kontakt</string>
   <string name="conversation_action_incoming_call">Dolazni poziv</string>
   <string name="conversation_action_latest">Pomicanje na kraj razgovora</string>
@@ -79,13 +78,11 @@
   <string name="conversation_type_contact">Kontakt s Jamijem</string>
   <string name="conversation_type_private">Privredni</string>
   <string name="conversation_type_group">Grupa</string>
-  <string name="conversation_contact_invited">%1$s je pozvan</string>
-  <string name="conversation_contact_added">%1$s se pridružio</string>
-  <string name="conversation_contact_left">%1$s je lijevo</string>
   <string name="conversation_search_hint">Razgovor za pretragu</string>
   <string name="today">Danas</string>
   <string name="yesterday">Jučer</string>
   <!--Contacts-->
+  <string name="account_create_title">Pridruži se Jamiju.</string>
   <string name="help_password_enter">Ubaci lozinku za glavni račun Jamija.</string>
   <string name="help_server_enter">Ubaci URL-a za upravljački server.</string>
   <string name="hist_contact_invited">Kontakt pozvani</string>
@@ -97,6 +94,7 @@
   <string name="identity">Identifikacija</string>
   <string name="identifier">Identifikacija</string>
   <string name="link_new_device">Povežite novi uređaj</string>
+  <string name="devices_header">Uređaji</string>
   <string name="total_devices">Ukupna količina uređaja: </string>
   <!--Share fragment-->
   <string name="share_message">Skenirajte ovaj kod sa Jamijem.</string>
@@ -128,7 +126,6 @@
   <string name="file_transfer_status_unjoinable_peer">Neprijateljski</string>
   <string name="file_transfer_status_error">Nepostignut zbog pogreške</string>
   <string name="file_transfer_status_timed_out">vrijeme</string>
-  <string name="file_saved_successfully">Dosje uspješno spisano</string>
   <string name="file_download">Snimka</string>
   <string name="title_media_viewer">Sredni gledatelj</string>
   <string name="menu_file_save">Spamiti datoteku</string>

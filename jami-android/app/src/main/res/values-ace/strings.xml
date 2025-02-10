@@ -83,7 +83,6 @@
   <string name="today">هاري اين</string>
   <string name="yesterday">ديري</string>
   <!--Contacts-->
-  <string name="account_create_title">منوليسكن اکاونت Jami</string>
   <string name="prompt_hint_username">نام ڤڠڬونا</string>
   <string name="wizard_next">ڤد ماس يڠ لاين</string>
   <string name="wizard_back">ڤرنه</string>
@@ -99,6 +98,7 @@
   <string name="identifier">ڤڠڬونا</string>
   <string name="account">حساب</string>
   <string name="link_new_device">منچيلكن ڤڠڬونا?? ن بارو</string>
+  <string name="devices_header">ڤرودوک</string>
   <string name="devices">ڤڠڬيلن يڠ دڤرچايا?? ي</string>
   <!--Share fragment-->
   <string name="share_label">ڤڠاجين</string>

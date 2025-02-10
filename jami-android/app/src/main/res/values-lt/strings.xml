@@ -28,6 +28,7 @@
   <string name="menu_item_about">Apie Jami</string>
   <string name="video_setting_title">Vaizdo nustatymai</string>
   <!--Dialing Fragment-->
+  <string name="dial_number">Rinkti numerį</string>
   <!--History Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
@@ -132,7 +133,7 @@
   <string name="swarm_group_action_leave_title">Išeiti iš šios grupės?</string>
   <string name="swarm_group_action_leave_message">Tai pašalins pokalbį iš jūsų pokalbių sąrašo</string>
   <string name="conversation_action_copy_peer_number">Kopijuoti adreso identifikatorių</string>
-  <string name="copied_to_clipboard">%1$s nukopijuota į iškarpinę</string>
+  <string name="copied_to_clipboard">%1$s nukopijuota į iškarpinę.</string>
   <string name="conversation_action_select_peer_number">Pasirinkite numerį</string>
   <string name="conversation_action_block_this">Užblokuoti adresatą</string>
   <string name="conversation_action_unblock_this">Atblokuoti adresatą</string>
@@ -156,9 +157,6 @@
   <string name="conversation_type_contact">Jami adresatas</string>
   <string name="conversation_type_private">Privatus</string>
   <string name="conversation_type_group">Grupė</string>
-  <string name="conversation_contact_invited">%1$s buvo pakviesta(s)</string>
-  <string name="conversation_contact_added">%1$s prisijungė</string>
-  <string name="conversation_contact_left">%1$s išėjo</string>
   <string name="today">Šiandien</string>
   <string name="yesterday">Vakar</string>
   <!--Contacts-->
@@ -166,10 +164,11 @@
   <string name="prompt_new_password">Naujas slaptažodis</string>
   <string name="prompt_new_password_optional">Naujas slaptažodis (nebūtina)</string>
   <string name="prompt_new_password_repeat">Pakartokite naują slaptažodį</string>
-  <string name="account_create_title">Susikurti Jami paskyrą</string>
+  <string name="account_create_title">Prisijunkite prie Džami.</string>
   <string name="prompt_new_username">Įveskite naują naudotojo vardą</string>
   <string name="prompt_hint_username">Naudotojo vardas</string>
   <string name="help_password_choose">Pasirinkite stiprų slaptažodį, kurį prisiminsite, kad apsaugotumėte savo Jami paskyrą.</string>
+  <string name="copied_clipboard">Nukopijuota į iškarpinę.</string>
   <string name="wizard_next">Kitas</string>
   <string name="wizard_back">Atgal</string>
   <string name="wizard_skip">Praleisti</string>
@@ -193,6 +192,7 @@
   <string name="identifier">Identifikatorius</string>
   <string name="account">Paskyra</string>
   <string name="link_new_device">Susieti naują įrenginį</string>
+  <string name="devices_header">Įrenginiai</string>
   <string name="devices">Susieti įrenginiai</string>
   <string name="total_devices">Iš viso įrenginių: </string>
   <!--Share fragment-->
@@ -202,12 +202,15 @@
   <string name="share_contact_information">Bendrinti kontaktinę informaciją</string>
   <string name="share_label">Bendrinti</string>
   <string name="generic_error_migration">Klaida</string>
+  <string name="title_share_with">Bendrinti su…</string>
   <!--Pending invitations-->
   <string name="accept">Priimti</string>
   <string name="decline">Atmesti</string>
   <string name="block">Užblokuoti</string>
   <string name="decline_invitation">Atmesti pakvietimą</string>
   <string name="accept_invitation">Priimti pakvietimą</string>
+  <string name="accept_invitation_body">Gautas pakvietimas iš %s.</string>
+  <string name="new_invitation_request_title">Naujas pakvietimas</string>
   <!--Blacklist-->
   <!--Smartlist-->
   <string name="conversation_placeholder">Kol kas neturite jokių pokalbių</string>
@@ -227,7 +230,6 @@
   <string name="file_transfer_status_cancelled">atsisakyta</string>
   <string name="file_transfer_status_error">nepavyko dėl klaidos</string>
   <string name="file_saved_in">Failas įrašytas į %s</string>
-  <string name="file_saved_successfully">Failas sėkmingai įrašytas</string>
   <string name="file_download">Atsisiųsti</string>
   <string name="title_media_viewer">Medijos žiūryklė</string>
   <string name="menu_file_open">Atverti failą</string>
@@ -297,6 +299,7 @@
   <string name="bottomsheet_contact">Susisiekite su Jami\n%1$s</string>
   <string name="bottomsheet_remove">Ištrinti narį</string>
   <!--JamiId-->
+  <string name="jami_id_copy">Kopijuoti JamiId</string>
   <string name="jami_id_validate">Registruoti naudotojo vardą</string>
   <string name="jami_id_available">Naudotojo vardas yra prieinamas</string>
   <string name="jami_id_looking_for_availability">Tikrinamas naudotojo vardo prieinamumas...</string>
