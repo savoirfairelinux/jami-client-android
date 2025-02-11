@@ -655,6 +655,7 @@ abstract class CallService(
             if (call == conf.hostCall) {
                 call.setMediaList(proposedMediaList)
             }
+            conferenceSubject.onNext(conf)
         }
     }
 
