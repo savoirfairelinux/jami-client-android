@@ -462,6 +462,7 @@ class CallPresenter @Inject constructor(
             mOnGoingCall = true
             view.initNormalStateDisplay()
             prepareBottomSheetButtonsStatus()
+            view.displayLocalVideo(hasActiveCameraVideo && mDeviceRuntimeService.hasVideoPermission())
         } else {
             finish()
         }
