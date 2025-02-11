@@ -52,4 +52,6 @@ interface IRemoteService {
     interface IEventListener {
         void onEventReceived(String name, in @nullable Map<String, String> data);
     }
+    Map<String, String> getAccountInfo(String account);
+    String getPushToken();
 }

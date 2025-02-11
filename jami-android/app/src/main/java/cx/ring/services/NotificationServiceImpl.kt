@@ -27,7 +27,6 @@ import android.media.AudioAttributes
 import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Build
-import android.os.RemoteException
 import android.text.TextUtils
 import android.text.format.Formatter
 import android.util.JsonWriter
@@ -44,7 +43,6 @@ import androidx.core.content.LocusIdCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.IconCompat
 import com.bumptech.glide.Glide
-import cx.ring.IRemoteService
 import cx.ring.R
 import cx.ring.application.JamiApplication
 import cx.ring.client.CallActivity
@@ -84,7 +82,8 @@ class NotificationServiceImpl(
     private val mContactService: ContactService,
     private val mPreferencesService: PreferencesService,
     private val mDeviceRuntimeService: DeviceRuntimeService,
-    private val mCallService: CallService
+    private val mCallService: CallService,
+    private val eventService: EventService,
     ) : NotificationService {
     private val mNotificationBuilders = SparseArray<NotificationCompat.Builder>()
     private val notificationManager: NotificationManagerCompat = NotificationManagerCompat.from(mContext)
@@ -96,7 +95,6 @@ class NotificationServiceImpl(
     private val dataTransferNotifications = ConcurrentHashMap<Int, Notification>()
     private var pendingNotificationActions = ArrayList<() -> Unit>()
     private var pendingScreenshareCallbacks = HashMap<String, () -> Unit>()
-    private val eventListenerList = mutableListOf<IEventListener>()
 
     init {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -159,7 +157,7 @@ class NotificationServiceImpl(
                     .setIsVideo(hasVideo))
         } else if (conference.isRinging) {
             if (conference.isIncoming) {
-                notifyEventListeners(INCOMING_CALL_RECEIVED_EVENT)
+                eventService.logEvent(INCOMING_CALL_RECEIVED_EVENT)
                 messageNotificationBuilder = NotificationCompat.Builder(mContext, NOTIF_CHANNEL_INCOMING_CALL)
                 messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_incoming_call_title, contact.displayName))
                     .setPriority(NotificationCompat.PRIORITY_MAX)
@@ -386,25 +384,6 @@ class NotificationServiceImpl(
             }
     }
 
-    override fun registerEventListener(listener: IEventListener) {
-        eventListenerList.add(listener)
-    }
-
-    override fun unregisterEventListener(listener: IEventListener) {
-        eventListenerList.remove(listener)
-    }
-
-    private fun notifyEventListeners(name: String, data: Map<String, String>? = null) {
-        eventListenerList.forEach { listener ->
-            net.jami.utils.Log.d(TAG, "try to notify listener: $listener")
-            try {
-                listener.onEventReceived(name, data)
-            } catch (e: RemoteException) {
-                net.jami.utils.Log.e(TAG, "Error notifying event listener", e)
-            }
-        }
-    }
-
     private fun pingPush(accountId: String, start: () -> Unit) {
         if (mPreferencesService.isPushAllowed) {
             val account = mAccountService.getAccount(accountId) ?: return
@@ -437,7 +416,9 @@ class NotificationServiceImpl(
                             val i = InputStreamReader(BufferedInputStream(urlConnection.inputStream)).use { it.readText() }
                             Log.w(TAG, "pingPush Got code ${urlConnection.responseCode} $i")
                         }
+                        eventService.logEvent("push_ping", mapOf("server" to server, "account" to accountId, "token" to JamiApplication.instance!!.pushToken))
                     } catch (e: Exception) {
+                        eventService.logEvent("push_ping_error", mapOf("server" to server, "account" to accountId, "token" to JamiApplication.instance!!.pushToken, "error" to e.stackTraceToString()))
                         Log.w(TAG, "Error sending push ping", e)
                     }
                 }

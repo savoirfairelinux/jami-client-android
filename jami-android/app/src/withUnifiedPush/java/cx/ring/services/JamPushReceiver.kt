@@ -27,6 +27,7 @@ import java.net.URI
 class JamiPushReceiver : MessagingReceiver() {
     override fun onMessage(context: Context, message: ByteArray, instance: String) {
         Log.w("JamiPushReceiver", "onMessage ${String(message)} $instance")
+        JamiApplication.eventServiceInstance?.logEvent("jamiPush", mapOf("message" to String(message), "instance" to instance))
         try {
             val obj = JSONObject(String(message))
             val msg = HashMap<String, String>()
@@ -34,12 +35,14 @@ class JamiPushReceiver : MessagingReceiver() {
             val app = JamiApplication.instance as JamiApplicationUnifiedPush?
             app?.onMessage(msg)
         } catch(e: Exception) {
+            JamiApplication.eventServiceInstance?.logEvent("jami-push-exception", mapOf("error" to e.stackTraceToString()))
             Log.e("JamiPushReceiver", "onMessage", e)
         }
     }
 
     override fun onNewEndpoint(context: Context, endpoint: String, instance: String) {
         Log.w("JamiPushReceiver", "onNewEndpoint $endpoint $instance")
+        JamiApplication.eventServiceInstance?.logEvent("onNewEndpoint", mapOf("endpoint" to endpoint, "instance" to instance))
         val app = JamiApplication.instance as JamiApplicationUnifiedPush?
         //val uri = URI(endpoint) // Drop ?up=1 or query
         //app?.pushToken = "${uri.scheme}://${uri.authority}${uri.path}"
@@ -48,10 +51,12 @@ class JamiPushReceiver : MessagingReceiver() {
 
     override fun onRegistrationFailed(context: Context, instance: String) {
         // called when the registration is not possible, eg. no network
+        JamiApplication.eventServiceInstance?.logEvent("onRegistrationFailed", mapOf("instance" to instance))
         Log.w("JamiPushReceiver", "onRegistrationFailed $instance")
     }
 
     override fun onUnregistered(context: Context, instance: String){
+        JamiApplication.eventServiceInstance?.logEvent("onUnregistered", mapOf("instance" to instance))
         // called when this application is unregistered from receiving push messages
         Log.w("JamiPushReceiver", "onUnregistered $instance")
     }

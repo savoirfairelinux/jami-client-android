@@ -55,9 +55,6 @@ interface NotificationService {
     fun cancelLocationNotification(first: Account, contact: Contact)
     fun processPush()
 
-    fun registerEventListener(listener: IEventListener)
-    fun unregisterEventListener(listener: IEventListener)
-
     companion object {
         const val NOTIF_TRUST_REQUEST_ACCOUNT_ID = "NOTIF_TRUST_REQUEST_ACCOUNT_ID"
         const val NOTIF_TRUST_REQUEST_MULTIPLE = "NOTIFICATION_TRUST_REQUEST_MULTIPLE"
@@ -67,8 +64,4 @@ interface NotificationService {
         const val KEY_NOTIFICATION_ID = "notificationId"
         const val KEY_SCREENSHARE = "screenshare"
     }
-}
-
-interface IEventListener {
-    fun onEventReceived(name: String, data: Map<String, String>? = null)
 }

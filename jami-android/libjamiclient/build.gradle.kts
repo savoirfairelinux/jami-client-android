@@ -32,6 +32,9 @@ dependencies {
     implementation ("com.google.code.gson:gson:2.11.0")
     api("com.google.dagger:dagger:$hilt_version")
     kapt("com.google.dagger:dagger-compiler:$hilt_version")
+
+    implementation ("org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1")
 }
 
 java {

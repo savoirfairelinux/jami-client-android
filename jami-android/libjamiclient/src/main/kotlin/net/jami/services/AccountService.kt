@@ -53,7 +53,8 @@ class AccountService(
     private val mExecutor: ScheduledExecutorService,
     private val mHistoryService: HistoryService,
     private val mDeviceRuntimeService: DeviceRuntimeService,
-    private val mVCardService: VCardService
+    private val mVCardService: VCardService,
+    private val eventService: EventService,
 ) {
     private val scheduler = Schedulers.from(mExecutor)
     /**
@@ -1024,11 +1025,13 @@ class AccountService(
 
     fun pushNotificationReceived(from: String, data: Map<String, String>) {
         // Log.i(TAG, "pushNotificationReceived() $data");
+        eventService.logEvent("pushReceived", data)
         mExecutor.execute { JamiService.pushNotificationReceived(from, StringMap.toSwig(data)) }
     }
 
     fun setPushNotificationToken(pushNotificationToken: String) {
         Log.i(TAG, "setPushNotificationToken()");
+        eventService.logEvent("pushTokenSet", mapOf("token" to pushNotificationToken))
         mExecutor.execute { JamiService.setPushNotificationToken(pushNotificationToken) }
     }
     fun setPushNotificationConfig(token: String = "", topic: String = "", platform: String = "") {

@@ -3,7 +3,6 @@ package cx.ring.service
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.app.Service
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -12,13 +11,18 @@ import android.os.IBinder
 import android.os.RemoteException
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
+import androidx.lifecycle.LifecycleService
+import androidx.lifecycle.lifecycleScope
 import cx.ring.IRemoteService
 import cx.ring.application.JamiApplication
 import cx.ring.fragments.CallFragment
+import net.jami.services.EventService
 import cx.ring.tv.call.TVCallActivity
 import cx.ring.utils.ConversationPath
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import kotlinx.coroutines.Job
+import net.jami.daemon.JamiService
 import net.jami.model.Account
 import net.jami.model.Contact
 import net.jami.model.Profile
@@ -26,13 +30,13 @@ import net.jami.model.Uri
 import net.jami.services.AccountService
 import net.jami.services.CallService
 import net.jami.services.ContactService
-import net.jami.services.IEventListener
+import net.jami.services.DeviceRuntimeService
 import net.jami.services.NotificationService
 import net.jami.utils.Log
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class RemoteControl : Service() {
+class RemoteControl : LifecycleService() {
 
     @Inject
     lateinit var accountService: AccountService
@@ -46,18 +50,16 @@ class RemoteControl : Service() {
     @Inject
     lateinit var notificationService: NotificationService
 
-    private val eventListenerList = mutableListOf<IRemoteService.IEventListener>()
+    @Inject
+    lateinit var eventService: EventService
+
+    @Inject
+    lateinit var deviceService: DeviceRuntimeService
+
+    private val eventListeners = mutableMapOf<IRemoteService.IEventListener, Job>()
 
     private val tag = "JamiRemoteControl"
     private val compositeDisposable = CompositeDisposable()
-
-    val eventListener = object : IEventListener {
-        override fun onEventReceived(name: String, data: Map<String, String>?) {
-            eventListenerList.forEach {
-                it.onEventReceived(name, data)
-            }
-        }
-    }
 
     companion object {
         private const val NOTIFICATION_CHANNEL_ID = "RemoteControlChannel"
@@ -194,7 +196,6 @@ class RemoteControl : Service() {
             callback: IRemoteService.ICallback
         ) {
             Log.d(tag, "Initiating call")
-            notifyEventListeners(OUTGOING_CALL_REQUESTED_EVENT)
             try {
                 val account = accountService.getAccount(fromAccount)
                 if (account != null) {
@@ -249,7 +250,6 @@ class RemoteControl : Service() {
 
         override fun acceptCall() {
             Log.d(tag, "Accepting an incoming call")
-            notifyEventListeners(INCOMING_CALL_ACCEPTED_EVENT)
             try {
                 val incomingCall = callService.getIncomingCall() ?: return
                 callService.accept(
@@ -265,7 +265,6 @@ class RemoteControl : Service() {
         }
 
         override fun rejectCall() {
-            notifyEventListeners(INCOMING_CALL_REJECT_EVENT)
             Log.d(tag, "Rejecting an incoming call")
             try {
                 val incomingCall = callService.getIncomingCall() ?: return
@@ -317,30 +316,33 @@ class RemoteControl : Service() {
         @RequiresApi(Build.VERSION_CODES.P)
         override fun registerEventListener(listener: IRemoteService.IEventListener) {
             Log.d(tag, "Registering event listener: $listener")
-            eventListenerList.add(listener)
-            notificationService.registerEventListener(eventListener)
+            val job = eventService.subscribeToEvents(lifecycleScope) {
+                listener.onEventReceived(
+                    it.name,
+                    it.data
+                )
+            }
+            eventListeners[listener] = job
         }
 
         @RequiresApi(Build.VERSION_CODES.P)
         override fun unregisterEventListener(listener: IRemoteService.IEventListener) {
             Log.d(tag, "Unregistering event listener: $listener")
-            eventListenerList.remove(listener)
-            notificationService.unregisterEventListener(eventListener)
+            eventListeners[listener]?.cancel()
+            eventListeners.remove(listener)
         }
 
-        private fun notifyEventListeners(name: String, data: Map<String, String>? = null) {
-            eventListenerList.forEach { listener ->
-                Log.d(tag, "try to notify listener: $listener")
-                try {
-                    listener.onEventReceived(name, data)
-                } catch (e: RemoteException) {
-                    Log.e(tag, "Error notifying event listener", e)
-                }
-            }
+        override fun getAccountInfo(account: String): Map<String, String> {
+            return JamiService.getAccountDetails(account)
+        }
+
+        override fun getPushToken(): String {
+            return deviceService.pushToken
         }
     }
 
-    override fun onBind(intent: Intent?): IBinder {
+    override fun onBind(intent: Intent): IBinder {
+        super.onBind(intent)
         Log.d(tag, "Service bound")
         val disposable = callService.callsUpdates.onErrorComplete({
             Log.e(tag, "Error observing call updates", it)
