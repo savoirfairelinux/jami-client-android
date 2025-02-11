@@ -64,6 +64,13 @@ class Conference(val accountId: String, val id: String) {
 
     /** virtual call with null ID to represent the "call" between this device and the local hosted conference */
     var hostCall: Call? = null
+        set(value) {
+            field = value
+            hostCallSubject.onNext(value)
+        }
+    private val hostCallSubject = BehaviorSubject.create<Call>()
+    val hostCallObservable: Observable<Call>
+        get() = hostCallSubject
 
     val participantsObservable: Observable<List<Call>>
         get() = mParticipantsSubject
@@ -187,6 +194,33 @@ class Conference(val accountId: String, val id: String) {
             it || hostCall?.hasMedia(Media.MediaType.MEDIA_TYPE_VIDEO) == true
         }
 
+    // Todo: not fully working
+    val hasActiveNonScreenShareVideo: Observable<Boolean> = run{
+        hostCallObservable.switchMap { it.mediaListObservable}.map { mediaList ->
+            mediaList.any { media ->
+                media.isEnabled &&
+                        !media.isMuted &&
+                        media.mediaType == Media.MediaType.MEDIA_TYPE_VIDEO &&
+                        media.source != "camera://desktop"
+            }
+        } ?: mParticipantsSubject.switchMap { participants ->
+            Observable.combineLatest(participants.map { it.mediaListObservable })
+            { mediaLists ->
+                for (mediaList in mediaLists) {
+                    for (media in mediaList as List<Media>) {
+                        if (media.mediaType == Media.MediaType.MEDIA_TYPE_VIDEO
+                            && media.isEnabled
+                            && media.isMuted
+                            && media.source != "camera://desktop"
+                        )
+                            return@combineLatest true
+                    }
+                }
+                false
+            }
+        }
+    }
+
     fun hasAudioMedia(): Boolean {
         return mParticipants.size == 1  && mParticipants[0].hasMedia(Media.MediaType.MEDIA_TYPE_AUDIO)
     }
@@ -209,6 +243,9 @@ class Conference(val accountId: String, val id: String) {
         return hostCall?.hasActiveMedia(Media.MediaType.MEDIA_TYPE_VIDEO) == true
     }
 
+    /**
+     * Check if the conference has an active camera.
+     */
     fun hasActiveNonScreenShareVideo(): Boolean =
         (if (hostCall != null) mParticipants + hostCall!! else mParticipants).any { call ->
             call.mediaList.any { media ->
