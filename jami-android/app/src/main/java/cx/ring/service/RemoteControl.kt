@@ -101,8 +101,6 @@ class RemoteControl : LifecycleService() {
             .setOngoing(true)
             .build()
 
-        JamiApplication.instance?.startDaemon(this)
-
         startForeground(NOTIFICATION_ID, notification)
     }
 
