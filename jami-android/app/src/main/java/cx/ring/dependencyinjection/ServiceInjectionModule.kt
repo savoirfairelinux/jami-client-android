@@ -180,6 +180,7 @@ object ServiceInjectionModule {
     }
 
     @Provides
+    @Singleton
     fun eventService(): EventService {
         return EventServiceImpl()
     }
