@@ -101,6 +101,8 @@ class RemoteControl : LifecycleService() {
             .setOngoing(true)
             .build()
 
+        JamiService.setRingingTimeout(300)
+
         startForeground(NOTIFICATION_ID, notification)
     }
 
