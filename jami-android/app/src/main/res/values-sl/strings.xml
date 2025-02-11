@@ -176,7 +176,6 @@
   <string name="conversation_action_remove_this_message">To bo izbrisalo stik in dokončno počistilo zgodovino pogovora.</string>
   <string name="swarm_group_action_leave">Zapusti skupino</string>
   <string name="swarm_group_action_leave_title">Ali želite zapustiti to skupino?</string>
-  <string name="copied_to_clipboard">%1$s kopirano na odložišče</string>
   <string name="conversation_action_select_peer_number">Izberi številko</string>
   <string name="conversation_action_block_this">Blokiraj stik</string>
   <string name="conversation_action_unblock_this">Odblokiraj stik</string>
@@ -205,11 +204,6 @@
   <string name="conversation_type_contact">Stik Jami</string>
   <string name="conversation_type_private">Zasebno</string>
   <string name="conversation_type_group">Skupina</string>
-  <string name="conversation_contact_invited">%1$s je povabljen/a</string>
-  <string name="conversation_contact_added">%1$s se je pridružil/a</string>
-  <string name="conversation_contact_left">%1$s je odšel/a</string>
-  <string name="conversation_contact_blocked">%1$s je blokiran/a</string>
-  <string name="conversation_contact_unblocked">%1$s je odblokiran/a</string>
   <string name="conversation_search_hint">Poišči pogovor</string>
   <string name="audio_recorder_error">Programa za snemanje zvoka ni možno najti.</string>
   <string name="video_recorder_error">Programa za snemanje videa ni možno najti.</string>
@@ -231,7 +225,7 @@
   <string name="prompt_new_password">Novo geslo</string>
   <string name="prompt_new_password_optional">Novo geslo (neobvezno)</string>
   <string name="prompt_new_password_repeat">Ponovi novo geslo</string>
-  <string name="account_create_title">Ustvari račun Jami</string>
+  <string name="account_create_title">Pridruži se Jami</string>
   <string name="prompt_new_username">Vpiši novo uporabniško ime</string>
   <string name="prompt_hint_username">Uporabniško ime</string>
   <string name="help_password_choose">Izberite močno geslo, ki si ga boste zapomnili in z njim zaščitili svoj račun Jami.</string>
@@ -260,6 +254,7 @@
   <string name="identifier">identifikator</string>
   <string name="account">Račun</string>
   <string name="link_new_device">Poveži novo napravo</string>
+  <string name="devices_header">Naprave</string>
   <string name="devices">Povezane naprave</string>
   <string name="total_devices">Skupaj naprav:</string>
   <!--Share fragment-->
@@ -307,7 +302,6 @@
   <string name="file_transfer_status_error">ni uspelo zaradi napake</string>
   <string name="file_transfer_status_timed_out">poteklo</string>
   <string name="file_saved_in">Datoteka je shranjena v %s</string>
-  <string name="file_saved_successfully">Datoteka je bila uspešno shranjena</string>
   <string name="file_download">Prenesi</string>
   <string name="no_space_left_on_device">Na tej napravi ni več prostora za hrambo.</string>
   <string name="title_media_viewer">Prikazovalnik vsebin</string>

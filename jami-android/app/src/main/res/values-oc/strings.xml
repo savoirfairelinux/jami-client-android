@@ -144,7 +144,6 @@
   <string name="delete_contact">Eliminar lo contacte</string>
   <string name="conversation_action_remove_this_title">Eliminar aquel contacte?</string>
   <string name="conversation_action_remove_this_message">Aquò eliminarà lo contacte e eliminatz definitivament l\'istòria de la conversacion.</string>
-  <string name="copied_to_clipboard">%1$s copiat a la pinça</string>
   <string name="conversation_action_select_peer_number">Seleccionar un nombre</string>
   <string name="conversation_action_block_this">Blocar contacte</string>
   <string name="conversation_action_unblock_this">Desblocar contacte</string>
@@ -169,9 +168,6 @@
   <string name="conversation_preference_emoji">Emoji de conversacion</string>
   <string name="conversation_type_contact">Contacte Jami</string>
   <string name="conversation_type_private">Privat</string>
-  <string name="conversation_contact_invited">%1$s foguèt convidat</string>
-  <string name="conversation_contact_added">%1$s unit</string>
-  <string name="conversation_contact_left">%1$s a esquèrra</string>
   <string name="conversation_search_hint">Conversacion de cercaire</string>
   <string name="today">Uèi</string>
   <string name="yesterday">Ièr</string>
@@ -180,7 +176,7 @@
   <string name="prompt_new_password">Senhal novèl</string>
   <string name="prompt_new_password_optional">Nòva contraròtle (opcional)</string>
   <string name="prompt_new_password_repeat">Repeticion de nòu senhal</string>
-  <string name="account_create_title">Crear un compte Jami</string>
+  <string name="account_create_title">S\' unís a Jami</string>
   <string name="prompt_new_username">Introducir un nòu nom d\' utilizaire</string>
   <string name="prompt_hint_username">Nom d’utilizaire</string>
   <string name="help_password_choose">Escòli una contraròtle fòrta que te remembraràs per protegir ton compte Jami.</string>
@@ -206,6 +202,7 @@
   <string name="identifier">Identificator</string>
   <string name="account">Compte</string>
   <string name="link_new_device">Ligam un dispositiu novèl</string>
+  <string name="devices_header">Aparelhs</string>
   <string name="devices">Dispositius ligats</string>
   <string name="total_devices">Dispositius totals: </string>
   <!--Share fragment-->
@@ -248,7 +245,6 @@
   <string name="file_transfer_status_error">fallís a causa d\'error</string>
   <string name="file_transfer_status_timed_out">temps de sortida</string>
   <string name="file_saved_in">Fichièr salvat en %s</string>
-  <string name="file_saved_successfully">Fichièr salvat amb succès</string>
   <string name="file_download">Descargar</string>
   <string name="title_media_viewer">Vector de medias</string>
   <string name="menu_file_open">Dossièr obèrt</string>

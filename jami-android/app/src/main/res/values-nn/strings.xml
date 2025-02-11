@@ -143,7 +143,6 @@
   <string name="delete_contact">Ta bort kontakt</string>
   <string name="conversation_action_remove_this_title">Vil du sletta denne kontakten?</string>
   <string name="conversation_action_remove_this_message">Dette vil fjerne kontakta og definitivt fjerne samtalshistoria.</string>
-  <string name="copied_to_clipboard">%1$s kopiert til klippbrett</string>
   <string name="conversation_action_select_peer_number">Velg eit nummer</string>
   <string name="conversation_action_block_this">Blockkontakt</string>
   <string name="conversation_action_unblock_this">Avbløka kontakt</string>
@@ -168,9 +167,6 @@
   <string name="conversation_preference_emoji">Samtal emoji</string>
   <string name="conversation_type_contact">Jami kontakt</string>
   <string name="conversation_type_private">Privat</string>
-  <string name="conversation_contact_invited">%1$s vart invitert</string>
-  <string name="conversation_contact_added">%1$s er tilslutte</string>
-  <string name="conversation_contact_left">%1$s er til venstre</string>
   <string name="conversation_search_hint">Søk samtale</string>
   <string name="today">I dag</string>
   <string name="yesterday">I går</string>
@@ -179,7 +175,7 @@
   <string name="prompt_new_password">Nøiv password</string>
   <string name="prompt_new_password_optional">Nøiv password (valgleg)</string>
   <string name="prompt_new_password_repeat">Gjev nytt passord</string>
-  <string name="account_create_title">Skapa ein Jami-konto</string>
+  <string name="account_create_title">Kom til Jami</string>
   <string name="prompt_new_username">Skriv inn nytt brukernavn</string>
   <string name="prompt_hint_username">Bruksnamn</string>
   <string name="help_password_choose">Velg eit sterkt passord du vil huske for å verne kontoen din Jami.</string>
@@ -204,6 +200,7 @@
   <string name="identifier">Identifikator</string>
   <string name="account">Konto</string>
   <string name="link_new_device">Legg ein ny enhet til</string>
+  <string name="devices_header">Enhet</string>
   <string name="devices">Kopplande utstyr</string>
   <string name="total_devices">Totalt utstyr: </string>
   <!--Share fragment-->
@@ -246,7 +243,6 @@
   <string name="file_transfer_status_error">ikkje var i stand på grunn av feil</string>
   <string name="file_transfer_status_timed_out">tidleg ut</string>
   <string name="file_saved_in">File lagd i %s</string>
-  <string name="file_saved_successfully">File lagd framgångsrikt</string>
   <string name="file_download">Ta ned</string>
   <string name="title_media_viewer">Medievisjon</string>
   <string name="menu_file_open">Åpne fil</string>

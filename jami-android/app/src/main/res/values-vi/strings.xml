@@ -116,7 +116,7 @@
   <string name="today">Ngày nay</string>
   <string name="yesterday">Hôm qua</string>
   <!--Contacts-->
-  <string name="account_create_title">Tạo tài khoản Jami</string>
+  <string name="account_create_title">Tham gia Jami</string>
   <string name="prompt_hint_username">Username</string>
   <string name="wizard_next">Tiếp theo</string>
   <string name="wizard_back">Trở lại</string>
@@ -132,6 +132,7 @@
   <string name="identifier">Định dạng</string>
   <string name="account">Tài khoản</string>
   <string name="link_new_device">Kết nối một thiết bị mới</string>
+  <string name="devices_header">Thiết bị</string>
   <string name="devices">Các thiết bị liên kết</string>
   <!--Share fragment-->
   <string name="share_label">Chia sẻ</string>

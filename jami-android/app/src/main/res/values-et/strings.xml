@@ -185,7 +185,6 @@
   <string name="swarm_group_action_leave_title">Kas lahkud sellest vestlusgrupist?</string>
   <string name="swarm_group_action_leave_message">Sellega eemaldad vestluse vestluste loendist</string>
   <string name="conversation_action_copy_peer_number">Kopeeri kontakti kasutajatunnus</string>
-  <string name="copied_to_clipboard">%1$s on kopeeritud lõikelauale</string>
   <string name="conversation_action_select_peer_number">Vali number</string>
   <string name="conversation_action_block_this">Blokeeri kontakt</string>
   <string name="conversation_action_unblock_this">Eemalda kontakti blokeering</string>
@@ -214,11 +213,11 @@
   <string name="conversation_type_contact">Jami kontakt</string>
   <string name="conversation_type_private">Isiklik</string>
   <string name="conversation_type_group">Grupp</string>
-  <string name="conversation_contact_invited">%1$s sai kutse</string>
-  <string name="conversation_contact_added">%1$s liitus</string>
-  <string name="conversation_contact_left">%1$s lahkus</string>
-  <string name="conversation_contact_blocked">%1$s on blokeeritud</string>
-  <string name="conversation_contact_unblocked">%1$s blokeering on eemaldatud</string>
+  <string name="conversation_contact_invited">%1$s sai liitumiskutse selle vestlusega.</string>
+  <string name="conversation_contact_added">%1$s on liitunud vestlusega.</string>
+  <string name="conversation_contact_left">%1$s on lahkunud vestlusest.</string>
+  <string name="conversation_contact_blocked">%1$s osalemine siin vestluses on blokeeritud.</string>
+  <string name="conversation_contact_unblocked">%1$s blokeerimine on eemaldatud.</string>
   <string name="conversation_search_hint">Otsi vestlust</string>
   <string name="audio_recorder_error">Helisalvestuse rakendust ei leidu.</string>
   <string name="video_recorder_error">Videosalvestuse rakendust ei leidu.</string>
@@ -240,7 +239,7 @@
   <string name="prompt_new_password">Uus salasõna</string>
   <string name="prompt_new_password_optional">Uus salasõna (kui soovid)</string>
   <string name="prompt_new_password_repeat">Korda uut salasõna</string>
-  <string name="account_create_title">Loo Jami konto</string>
+  <string name="account_create_title">Liitu Jamiga</string>
   <string name="prompt_new_username">Sisesta uus kasutajanimi</string>
   <string name="prompt_hint_username">Kasutajanimi</string>
   <string name="help_password_choose">Vali tugev ja korralik salasõna, mida sa hästi mäletad, et kaitsta oma Jami kontot.</string>
@@ -248,6 +247,7 @@
   <string name="help_server_enter">Sisesta haldusserveri URL.</string>
   <string name="help_pin_enter">Sisesta teise seadistatud Jami konto PIN-kood. Selle leiad, kui kasutad „Ekspordi Jami konto“ valikut.</string>
   <string name="pin_copied">PIN-kood on kopeeritud lõikelauale.</string>
+  <string name="copied_clipboard">Kopeeritud lõikelauale.</string>
   <string name="wizard_next">Järgmine</string>
   <string name="wizard_back">Tagasi</string>
   <string name="wizard_skip">Jäta vahele</string>
@@ -271,6 +271,7 @@
   <string name="identifier">Tunnus</string>
   <string name="account">Kasutajakonto</string>
   <string name="link_new_device">Seo uus seade</string>
+  <string name="devices_header">Seadmed</string>
   <string name="devices">Seotud seadmed</string>
   <string name="total_devices">Seadmeid kokku: </string>
   <!--Share fragment-->
@@ -323,7 +324,6 @@
   <string name="file_transfer_status_error">veast tingitud ebaõnnestumine</string>
   <string name="file_transfer_status_timed_out">päringu aegumine</string>
   <string name="file_saved_in">Fail on salvestatud kausta %s</string>
-  <string name="file_saved_successfully">Faili salvestamine õnnestus</string>
   <string name="file_download">Laadi alla</string>
   <string name="no_space_left_on_device">Siin nutiseadmes pole piisavalt andmeruumi</string>
   <string name="title_media_viewer">Meediavaataja</string>

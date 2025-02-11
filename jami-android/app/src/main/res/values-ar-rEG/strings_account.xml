@@ -43,9 +43,9 @@
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">عام</string>
   <string name="account_basic_category">إعدادات أولية</string>
-  <string name="account_alias_label">اسم الحساب</string>
   <string name="account_hostname_label">اسم المضيف</string>
   <string name="account_bootstrap_label">تشغيل ذاتي</string>
+  <string name="account_name_server_label">اسم خادم</string>
   <string name="account_username_label">اسم المستخدم</string>
   <string name="account_password_label">كلمة السر</string>
   <string name="account_optionnal_category">إعدادات إختيارية</string>
@@ -77,8 +77,7 @@
   <string name="account_registration_exp_label">إنقضاء فترة التسجيل</string>
   <string name="account_local_interface_label">واجهة محلية</string>
   <string name="account_local_port_label">منفذ عبور محلي</string>
-  <string name="account_stun_enable_label">إستعمال خادم STUN</string>
-  <string name="account_stun_server_label">خادم STUN</string>
+  <string name="account_stun_enable_label">إستعمل خادم STUN</string>
   <string name="account_accept_files">السماح بالملفات الواردة تلقائيا</string>
   <string name="account_conversation_settings_title"> إعدادات المحادثات</string>
   <string name="account_accept_files_max_size">الحد الاقصى لحجم الملف كي يتم إستقباله تلقائيا</string>
@@ -94,6 +93,7 @@
   <string name="account_published_address_label">عنوان النشر</string>
   <string name="disabled">عاجز</string>
   <string name="enabled">مفعل</string>
+  <string name="default_value">القيمة المبدئية</string>
   <string name="account_proxy_label">وكيل DHT</string>
   <string name="account_proxy_enable_label">استخدام وكيل DHT</string>
   <string name="account_proxy_server_label">عنوان وكيل DHT</string>
@@ -112,25 +112,12 @@
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">إستعمل المواصلات TLS</string>
-  <string name="account_tls_port_label">منفذ المستمع (TLS listener port) </string>
-  <string name="account_tls_certificate_list_label">سلطات الشهادة</string>
-  <string name="account_tls_certificate_file_label">ملف الشهادة</string>
-  <string name="account_tls_private_key_file_label">ملف المفتاح الخاص</string>
   <string name="account_tls_password_label">كلمة سر المفتاح الخاص</string>
-  <string name="account_tls_method_label">أسلوب TLS</string>
-  <string name="account_tls_ciphers_label">شيفرة TLS</string>
-  <string name="account_tls_server_name_label">اسم الخادم (server)</string>
-  <string name="account_tls_verify_server_label">تحقق من الخادم (server)</string>
-  <string name="account_tls_verify_client_label">تحقق من المستخدم</string>
-  <string name="account_require_client_certificate_label">يتطلب TLS شهادة عميل</string>
-  <string name="account_tls_negotiation_timeout_sec">إنقضاء فترة التفاوض (ثواني)</string>
   <string name="account_rtp_max_port">الحد الاقصى</string>
   <string name="account_rtp_min_port">الحد الأدنى</string>
-  <string name="account_rtp_port_range">نطاق المنفذ RTP الصوتي</string>
   <!--restore/backup-->
   <string name="account_new_device_password">أدخِل كلمة المرور الرئيسة لفتح الحساب</string>
   <string name="error_password_char_count">6 محارف على الأقل</string>
-  <string name="error_passwords_not_equals">كلمة المرور غير متطابقة</string>
   <string name="export_account_wait_title">الرجاء الإنتظار...</string>
   <string name="export_account_wait_message">تصدير معلومات الحساب</string>
   <string name="account_export_file">حساب احتياطي</string>
@@ -164,12 +151,10 @@
   <string name="account_link_device">اتصل من جهاز آخر</string>
   <string name="account_link_button">الاتصال من الشبكة</string>
   <string name="account_link_archive_button">الاتصال من النسخ الاحتياطي</string>
-  <string name="account_link_prompt_pin">أدخِل رمز الأمان</string>
-  <string name="account_new_button">إنشاء حساب جامي</string>
+  <string name="account_new_button">انضموا إلى جامي</string>
   <string name="account_link_export_button">ربط جهاز جديد</string>
   <string name="account_link_show_button">إظهار %d المزيد من الأجهزة المرتبطة</string>
   <string name="account_link_hide_button">إخفاء الأجهزة المرتبطة</string>
-  <string name="account_start_export_button">توليد رمز PIN</string>
   <string name="account_end_export_button">إغلاق</string>
   <string name="account_export_title">رابط حساب للأجهزة الأخرى</string>
   <string name="account_connect_server_button">الاتصال بخادم الإدارة</string>
@@ -181,10 +166,7 @@
   <string name="account_enter_username">أدخِل اسم المستخدم</string>
   <!--Name registration-->
   <string name="error_username_empty">أدخل اسم مستخدم</string>
-  <string name="no_registered_name_for_account">لا يوجد اسم مسجل</string>
-  <string name="username_available">اسم المستخدم متاح !</string>
   <string name="register_name">تسجيل اسم</string>
-  <string name="trying_to_register_name">محاولة تسجيل الاسم</string>
   <string name="registered_username">اسم المستخدم المسجل</string>
   <string name="register_username">سجل اسم المستخدم العام</string>
   <string name="register_recommended">موصى به</string>
@@ -211,7 +193,6 @@
   <string name="revoke_device_wait_title">الرجاء الإنتظار...</string>
   <string name="revoke_device_wait_message">إبطال الجهاز</string>
   <string name="rename_device_title">أعد تسمية هذا الجهاز</string>
-  <string name="rename_device_message">اختر اسماً جديداً لتعريف هذا الجهاز في حساب چامى</string>
   <string name="rename_device_button">أعد تسمية الجهاز</string>
   <string name="account_rename_device_hint">اختر اسم جهاز جديد</string>
   <string name="account_device_this_indicator">هذا الجهاز</string>
@@ -219,6 +200,7 @@
   <!--Link a new device-->
   <string name="error_format_not_supported">هذا التنسيق غير مدعوم.</string>
   <string name="account_link_device_title">ربط جهاز جديد</string>
+  <string name="connect_device_scanqr">قم بتسجيل رمز QR</string>
   <string name="account_link_device_button">إتصال</string>
   <!--Biometry-->
 </resources>

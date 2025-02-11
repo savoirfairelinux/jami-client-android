@@ -81,7 +81,7 @@
   <string name="extension_reset_preferences_summary">A bővítmény visszaállt az alapértelmezett beállításokra</string>
   <string name="extension_reset_preferences_ask">Szeretne visszaállítani az általános bővítménybeállításokat?</string>
   <string name="extension_reset_account_preferences_ask">Szeretne visszaállítani a fiókbővítmény beállításokat</string>
-  <string name="extension_successfully_installed">A(z) <b>%1$s</b> bővítmény sikeresen telepítve.</string>
+  <string name="extension_successfully_installed">A(z) <b>%1$s</b> bővítmény telepítése sikerült.</string>
   <string name="extension_install_failure">Hiba történt a következő bővítmény telepítésekor: <b>%1$s</b></string>
   <string name="extension_recent_version_exception">A(z) <b>%1$s</b> bővítmény újabb verziója már telepítve van.</string>
   <string name="extension_same_version_exception">A(z) <b>%1$s</b> bővítmény ugyanaz a verziója már telepítve van.</string>

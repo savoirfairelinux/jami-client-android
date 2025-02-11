@@ -48,9 +48,9 @@
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Generalne</string>
   <string name="account_basic_category">Ustawienia Podstawowe</string>
-  <string name="account_alias_label">Nazwa Konta</string>
   <string name="account_hostname_label">Nazwa hosta</string>
   <string name="account_bootstrap_label">Bootstrap</string>
+  <string name="account_name_server_label">Serwer nazw</string>
   <string name="account_username_label">Nazwa użytkownika</string>
   <string name="account_password_label">Hasło</string>
   <string name="account_optionnal_category">Ustawienia Opcjonalne</string>
@@ -84,8 +84,7 @@
   <string name="account_registration_exp_label">Rejestracja Wygasła</string>
   <string name="account_local_interface_label">Lokalny Interfejs</string>
   <string name="account_local_port_label">Port Lokalny</string>
-  <string name="account_stun_enable_label">Użyj Stun</string>
-  <string name="account_stun_server_label">Serwer Stun</string>
+  <string name="account_stun_enable_label">Użyj STUN</string>
   <string name="account_accept_files">Akceptuj przychodzące pliki automatycznie</string>
   <string name="account_conversation_settings_title">Ustawienia konwersacji</string>
   <string name="account_accept_files_max_size">Maksymalny rozmiar pliku akceptowany automatycznie</string>
@@ -101,6 +100,7 @@
   <string name="account_published_address_label">Opublikowany Adres</string>
   <string name="disabled">Niepełnosprawni</string>
   <string name="enabled">Włączone</string>
+  <string name="default_value">Wartość domyślna</string>
   <string name="account_proxy_label">Proxy DHT</string>
   <string name="account_proxy_enable_label">Używaj proxy DHT</string>
   <string name="account_proxy_list_enable_label">Użyj listy proxy DHT</string>
@@ -121,25 +121,12 @@
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Korzystaj z transportu TLS</string>
-  <string name="account_tls_port_label">TLS Port Słuchujący</string>
-  <string name="account_tls_certificate_list_label">Autorytety Certyfikatów</string>
-  <string name="account_tls_certificate_file_label">Plik Certyfikatu</string>
-  <string name="account_tls_private_key_file_label">Plik Klucza Prywatnego</string>
-  <string name="account_tls_password_label">Hasło Klucza Prywatnego</string>
-  <string name="account_tls_method_label">Metoda TLS</string>
-  <string name="account_tls_ciphers_label">Szyfry TLS</string>
-  <string name="account_tls_server_name_label">Nazwa Serwera</string>
-  <string name="account_tls_verify_server_label">Zweryfikuj Serwer</string>
-  <string name="account_tls_verify_client_label">Zweryfikuj Klient</string>
-  <string name="account_require_client_certificate_label">TLS wymaga certyfikatu klienta</string>
-  <string name="account_tls_negotiation_timeout_sec">Limit czasu do negocjacji (w sekundach)</string>
+  <string name="account_tls_password_label">Hasło klucza prywatnego</string>
   <string name="account_rtp_max_port">Maksimum</string>
   <string name="account_rtp_min_port">Minimum</string>
-  <string name="account_rtp_port_range">Zakres Portów Audio RTP</string>
   <!--restore/backup-->
   <string name="account_new_device_password">Wprowadź główne hasło aby odblokować konto</string>
   <string name="error_password_char_count">minimum 6 znaków</string>
-  <string name="error_passwords_not_equals">Hasła nie pasują do siebie</string>
   <string name="export_account_wait_title">Proszę czekać…</string>
   <string name="export_account_wait_message">Eksportowanie informacji o koncie</string>
   <string name="account_export_file">Wykonaj kopię zapasową</string>
@@ -173,12 +160,10 @@
   <string name="account_link_device">Połącz z innego urządzenia</string>
   <string name="account_link_button">Połącz z sieci</string>
   <string name="account_link_archive_button">Połącz z kopii zapasowej</string>
-  <string name="account_link_prompt_pin">Wprowadź PIN</string>
-  <string name="account_new_button">Utwórz konto Jami</string>
+  <string name="account_new_button">Dołącz do Jami</string>
   <string name="account_link_export_button">Połącz nowe urządzenie</string>
   <string name="account_link_show_button">Wyświetlać %d więcej urządzeń połączonych</string>
   <string name="account_link_hide_button">Ukryj urządzenie połączone</string>
-  <string name="account_start_export_button">Generuj PIN</string>
   <string name="account_end_export_button">zamknij</string>
   <string name="account_export_title">Konty łączenia z innymi urządzeniami</string>
   <string name="account_connect_server_button">Połączenie z serwerem zarządzania</string>
@@ -190,10 +175,8 @@
   <string name="account_enter_username">Wpisz nazwę użytkownika</string>
   <!--Name registration-->
   <string name="error_username_empty">Wprowadź nazwę użytkownika</string>
-  <string name="no_registered_name_for_account">Brak zarejestrowanej nazwy</string>
-  <string name="username_available">Nazwa dostępna!</string>
+  <string name="username_available">Nazwa użytkownika jest dostępna.</string>
   <string name="register_name">Zarejestrowana nazwa</string>
-  <string name="trying_to_register_name">Trwa próba rejestracji nazwy</string>
   <string name="registered_username">Zarejestruj nazwę użytkownika</string>
   <string name="register_username">Zarejestruj publiczną nazwę użytkownika</string>
   <string name="register_recommended">Zalecane</string>
@@ -220,27 +203,20 @@
   <string name="revoke_device_wait_title">Proszę czekać…</string>
   <string name="revoke_device_wait_message">Odwoływanie urządzenia</string>
   <string name="rename_device_title">Zmień nazwę tego urządzenia</string>
-  <string name="rename_device_message">Wybierz nową nazwę dla tego urządzenia na swoim koncie Jami</string>
   <string name="rename_device_button">Przemianuj urządzenie</string>
   <string name="account_rename_device_hint">Wybierz nową nazwę dla urządzenia</string>
   <string name="account_device_this_indicator">To urządzenie</string>
   <string name="account_disabled_indicator">wyłączone</string>
   <!--Link a new device-->
-  <string name="account_link_prompt_pin_manually">Wprowadź kod PIN ręcznie</string>
   <string name="qr_invalid">Nie jest to kod QR uwierzytelniania Jami</string>
-  <string name="content_description_checkbox">Twój kod Qr jest ważny</string>
   <string name="error_format_not_supported">Ten format nie jest obsługiwany.</string>
-  <string name="account_link_info">W nowej aplikacji Jami zeskanuj kod QR lub wprowadź PIN ręcznie.</string>
   <string name="account_link_device_title">Połącz nowe urządzenie</string>
   <string name="account_link_password">To konto jest szyfrowane hasłem, wprowadź hasło, aby wygenerować kod PIN.</string>
   <string name="account_link_generate_button">Generowanie</string>
   <string name="account_link_time_valid">Kod PIN będzie nieprawidłowy: %1$s.</string>
-  <string name="account_link_device_info">Wybierz „Połącz nowe urządzenie” z drugiej aplikacji Jami, aby wyświetlić kod QR lub PIN.</string>
   <string name="account_generate_export_device">Na drugim urządzeniu</string>
-  <string name="content_description_qr_generated">Twój kod QR</string>
   <string name="help_pin_info">Wypełnij, jeśli konto jest szyfrowane hasłem</string>
-  <string name="connect_device_scanqr">Skanuj QR</string>
-  <string name="connect_device_enterPIN">Lub wprowadź kod PIN</string>
+  <string name="connect_device_scanqr">Skanowanie kodu QR</string>
   <string name="account_link_device_button">Połącz</string>
   <!--Biometry-->
   <string name="account_biometry_auth_title">Odblokuj konto Jami</string>

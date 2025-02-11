@@ -84,7 +84,7 @@
   <string name="today">Taa</string>
   <string name="yesterday">N\'ụbọchị gara aga</string>
   <!--Contacts-->
-  <string name="account_create_title">Mepụta akaụntụ Jami</string>
+  <string name="account_create_title">Soro Jami</string>
   <string name="prompt_hint_username">Aha njirimara</string>
   <string name="wizard_next">Nke na-abịa</string>
   <string name="wizard_back">Ịlaghachi azụ</string>
@@ -100,6 +100,7 @@
   <string name="identifier">Ihe Nkọwapụta</string>
   <string name="account">Ihe ndekọ</string>
   <string name="link_new_device">Jikọọ ngwaọrụ ọhụrụ</string>
+  <string name="devices_header">Ngwaọrụ</string>
   <string name="devices">Ngwaọrụ jikọtara</string>
   <!--Share fragment-->
   <string name="share_label">Ịkekọrịta</string>
