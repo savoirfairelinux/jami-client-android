@@ -143,7 +143,6 @@
   <string name="delete_contact">Байланысты өшіру</string>
   <string name="conversation_action_remove_this_title">Бұл байланысты өшіру?</string>
   <string name="conversation_action_remove_this_message">Бұл байланыстарды өшіріп, әңгіме тарихын мүлдем өшіреді.</string>
-  <string name="copied_to_clipboard">%1$s клипборда көшірілді</string>
   <string name="conversation_action_select_peer_number">Санды таңдау</string>
   <string name="conversation_action_block_this">Блок контакт</string>
   <string name="conversation_action_unblock_this">Байланысты бұғаттау</string>
@@ -168,9 +167,6 @@
   <string name="conversation_preference_emoji">Әңгімелеу эмоджисі</string>
   <string name="conversation_type_contact">Jami байланысы</string>
   <string name="conversation_type_private">Жеке</string>
-  <string name="conversation_contact_invited">%1$s шақырылды</string>
-  <string name="conversation_contact_added">%1$s қосылды</string>
-  <string name="conversation_contact_left">%1$s сол жақ</string>
   <string name="conversation_search_hint">Іздеу әңгімесі</string>
   <string name="today">Бүгінде</string>
   <string name="yesterday">Келесі күні</string>
@@ -179,7 +175,7 @@
   <string name="prompt_new_password">Жаңа пароль</string>
   <string name="prompt_new_password_optional">Жаңа пароль (босөзбен)</string>
   <string name="prompt_new_password_repeat">Жаңа парольді қайталау</string>
-  <string name="account_create_title">Jami тіркелгісін құру</string>
+  <string name="account_create_title">Жамиге қосыл</string>
   <string name="prompt_new_username">Жаңа пайдаланушы атауын келтіріңіз</string>
   <string name="prompt_hint_username">Пайдаланушы аты</string>
   <string name="help_password_choose">Jami тіркелгіңізді қорғау үшін естен шығармайтын күшті парольді таңдаңыз.</string>
@@ -204,6 +200,7 @@
   <string name="identifier">Тұлғаны анықтау</string>
   <string name="account">Есеп</string>
   <string name="link_new_device">Жаңа құрылғыны қосу</string>
+  <string name="devices_header">Құрылғылар</string>
   <string name="devices">Қосылған құрылғылар</string>
   <string name="total_devices">Жалпы құрылғылар: </string>
   <!--Share fragment-->
@@ -246,7 +243,6 @@
   <string name="file_transfer_status_error">қатесі бойынша сәтсіздікке ұшыраған</string>
   <string name="file_transfer_status_timed_out">уақыты</string>
   <string name="file_saved_in">% s дегенде сақталған файл</string>
-  <string name="file_saved_successfully">Жазба орындалған файл</string>
   <string name="file_download">Жүктеу</string>
   <string name="title_media_viewer">Медиа қараушы</string>
   <string name="menu_file_open">Ашық файл</string>

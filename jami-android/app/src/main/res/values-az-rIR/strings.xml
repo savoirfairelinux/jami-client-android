@@ -143,7 +143,6 @@
   <string name="delete_contact">تماس لری سنده</string>
   <string name="conversation_action_remove_this_title">بو تماسو سينديرماق؟</string>
   <string name="conversation_action_remove_this_message">بو تماسو سينديرار و دانیشما تاريخيني قطعن پاک ائدر.</string>
-  <string name="copied_to_clipboard">%1$s کلیپبوردا کاپیلندی</string>
   <string name="conversation_action_select_peer_number">ساییچ سئچیب</string>
   <string name="conversation_action_block_this">بلاک کنتاکت</string>
   <string name="conversation_action_unblock_this">تماس رو باز کن</string>
@@ -168,9 +167,6 @@
   <string name="conversation_preference_emoji">مکالمات ایموجی</string>
   <string name="conversation_type_contact">جمی تماس</string>
   <string name="conversation_type_private">خصوصی</string>
-  <string name="conversation_contact_invited">%1$s دعوت ائدیلدی</string>
-  <string name="conversation_contact_added">%1$s قوشولدو</string>
-  <string name="conversation_contact_left">%1$s سولدو</string>
   <string name="conversation_search_hint">بحث آختارماق</string>
   <string name="today">بو گون</string>
   <string name="yesterday">دونن</string>
@@ -179,7 +175,6 @@
   <string name="prompt_new_password">یئنی رمز</string>
   <string name="prompt_new_password_optional">یئنی رمز (اختیاری)</string>
   <string name="prompt_new_password_repeat">تزه رمزونو تکرار ائدیر</string>
-  <string name="account_create_title">Jami حسابي يارادين</string>
   <string name="prompt_new_username">یئنی یئنی آد یئتیریر</string>
   <string name="prompt_hint_username">ایستیفاده چی آد</string>
   <string name="help_password_choose">جامی حسابینی قوروماق اوچون خاطیرلاداجاقینیز گوجلو رمز سئچیب.</string>
@@ -204,6 +199,7 @@
   <string name="identifier">آدیفئکتور</string>
   <string name="account">حساب</string>
   <string name="link_new_device">یئنی آلتی باغلا</string>
+  <string name="devices_header">آلاتلار</string>
   <string name="devices">باغلانان سئلاحلار</string>
   <string name="total_devices">کل آلاتلار: </string>
   <!--Share fragment-->
@@ -246,7 +242,6 @@
   <string name="file_transfer_status_error">خطا ایله اوغورلاندی</string>
   <string name="file_transfer_status_timed_out">واختلاشما</string>
   <string name="file_saved_in">%s-ده ساقلانان فایل</string>
-  <string name="file_saved_successfully">فایل اوغورلا ساخلانیلیب</string>
   <string name="file_download">دانلود</string>
   <string name="title_media_viewer">میدیالی باخار</string>
   <string name="menu_file_open">آچیق فایل</string>

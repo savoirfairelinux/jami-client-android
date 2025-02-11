@@ -147,7 +147,6 @@
   <string name="delete_contact">連絡先を削除</string>
   <string name="conversation_action_remove_this_title">この連絡先を削除しますか？</string>
   <string name="conversation_action_remove_this_message">この操作は連絡先を削除し、会話の履歴を完全に削除します。</string>
-  <string name="copied_to_clipboard">%1$s をクリップボードにコピーしました</string>
   <string name="conversation_action_select_peer_number">番号を選択</string>
   <string name="conversation_action_block_this">連絡先をブロック</string>
   <string name="conversation_action_unblock_this">連絡先の解禁</string>
@@ -173,9 +172,6 @@
   <string name="conversation_type_contact">Jamiの連絡先</string>
   <string name="conversation_type_private">プライベート</string>
   <string name="conversation_type_group">グループ</string>
-  <string name="conversation_contact_invited">%1$s が招待されました</string>
-  <string name="conversation_contact_added">%1$s が加入</string>
-  <string name="conversation_contact_left">残り%1$s</string>
   <string name="conversation_search_hint">会話を検索</string>
   <string name="today">今日</string>
   <string name="yesterday">昨日</string>
@@ -184,7 +180,7 @@
   <string name="prompt_new_password">新しいパスワード</string>
   <string name="prompt_new_password_optional">新しいパスワード（オプション）</string>
   <string name="prompt_new_password_repeat">新しいパスワードの確認</string>
-  <string name="account_create_title">Jamiアカウントを作成</string>
+  <string name="account_create_title">Jamiに登録</string>
   <string name="prompt_new_username">新しいユーザー名を入力してください</string>
   <string name="prompt_hint_username">ユーザー名</string>
   <string name="help_password_choose">あなたのJamiアカウントを守るために強固なパスワードを設定してください。また、このパスワードを忘れないでください。</string>
@@ -210,6 +206,7 @@
   <string name="identifier">識別子</string>
   <string name="account">アカウント</string>
   <string name="link_new_device">新しいデバイスをリンク</string>
+  <string name="devices_header">デバイス</string>
   <string name="devices">リンクされたデバイス</string>
   <string name="total_devices">合計デバイス数：</string>
   <!--Share fragment-->
@@ -252,7 +249,6 @@
   <string name="file_transfer_status_error">エラーで失敗しました</string>
   <string name="file_transfer_status_timed_out">タイムアウトしました</string>
   <string name="file_saved_in">%sに保存しました</string>
-  <string name="file_saved_successfully">ファイルが保存されました</string>
   <string name="file_download">入手</string>
   <string name="title_media_viewer">メディアビューアー</string>
   <string name="menu_file_open">ファイルを開く</string>

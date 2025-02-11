@@ -43,9 +43,9 @@
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Opće</string>
   <string name="account_basic_category">Osnovne postavke</string>
-  <string name="account_alias_label">Ime računa</string>
   <string name="account_hostname_label">Ime poslužitelja</string>
   <string name="account_bootstrap_label">Ugrađen</string>
+  <string name="account_name_server_label">Server imena</string>
   <string name="account_username_label">Korisničko ime</string>
   <string name="account_password_label">Lozinka</string>
   <string name="account_optionnal_category">Dodatne postavke</string>
@@ -77,8 +77,7 @@
   <string name="account_registration_exp_label">Registracija istjeće</string>
   <string name="account_local_interface_label">Lokalno sučelje</string>
   <string name="account_local_port_label">Lokalni port</string>
-  <string name="account_stun_enable_label">Koristi Stun</string>
-  <string name="account_stun_server_label">Stun poslužitelj</string>
+  <string name="account_stun_enable_label">Koristi STUN</string>
   <string name="account_accept_files">Automatski prihvaćanje prihađenih datoteka</string>
   <string name="account_conversation_settings_title">Postavke razgovora</string>
   <string name="account_accept_files_max_size">Maksimalna veličina datoteke za automatsko prihvaćanje</string>
@@ -94,6 +93,7 @@
   <string name="account_published_address_label">Izdat je naslov</string>
   <string name="disabled">S invaliditetom</string>
   <string name="enabled">Uključeno</string>
+  <string name="default_value">Zadano</string>
   <string name="account_proxy_label">DHT proxy</string>
   <string name="account_proxy_enable_label">Koristi DHT proxy</string>
   <string name="account_proxy_server_label">DHT proxy adresa</string>
@@ -112,25 +112,12 @@
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Koristite TLS Transport</string>
-  <string name="account_tls_port_label">TLS slušač</string>
-  <string name="account_tls_certificate_list_label">Vlasti za osnivanje</string>
-  <string name="account_tls_certificate_file_label">Dosje potvrde</string>
-  <string name="account_tls_private_key_file_label">Datoteka privatnog ključa</string>
   <string name="account_tls_password_label">Lozinka privatnog ključa</string>
-  <string name="account_tls_method_label">TLS metoda</string>
-  <string name="account_tls_ciphers_label">TLS ciperi</string>
-  <string name="account_tls_server_name_label">Ime poslužitelja</string>
-  <string name="account_tls_verify_server_label">Provjeri poslužitelja</string>
-  <string name="account_tls_verify_client_label">Provjeri klijent</string>
-  <string name="account_require_client_certificate_label">TLS zahtijeva potvrdu o klijentu</string>
-  <string name="account_tls_negotiation_timeout_sec">Prijedlogni rok (sek)</string>
   <string name="account_rtp_max_port">Maksimum</string>
   <string name="account_rtp_min_port">Minimum</string>
-  <string name="account_rtp_port_range">Audio RTP Port Range</string>
   <!--restore/backup-->
   <string name="account_new_device_password">Ubaci glavnu lozinku za otključavanje računa</string>
   <string name="error_password_char_count">6 znakova minimum</string>
-  <string name="error_passwords_not_equals">Lozinke se ne podudaraju</string>
   <string name="export_account_wait_title">Molim pričekajte...</string>
   <string name="export_account_wait_message">Informacije o izvoznim računu</string>
   <string name="account_export_file">Zaštita računa</string>
@@ -164,12 +151,10 @@
   <string name="account_link_device">Povezivanje s drugog uređaja</string>
   <string name="account_link_button">Povezivanje s mreže</string>
   <string name="account_link_archive_button">Povezivanje sa rezervom</string>
-  <string name="account_link_prompt_pin">Unesite PIN</string>
-  <string name="account_new_button">Napravite Jami račun</string>
+  <string name="account_new_button">Pridruži se Jamiju.</string>
   <string name="account_link_export_button">Povežite novi uređaj</string>
   <string name="account_link_show_button">Pokaži %d više povezanih uređaja</string>
   <string name="account_link_hide_button">Skloni se priključeno uređaj</string>
-  <string name="account_start_export_button">Generira PIN</string>
   <string name="account_end_export_button">U blizini</string>
   <string name="account_export_title">Uloženje povezivanja s drugim uređajima</string>
   <string name="account_connect_server_button">Povezivanje s upravnim serverom</string>
@@ -180,10 +165,7 @@
   <string name="account_connect_prompt_username">Korisničko ime</string>
   <!--Name registration-->
   <string name="error_username_empty">Ubaci korisničko ime</string>
-  <string name="no_registered_name_for_account">Ne postoji registrirano ime</string>
-  <string name="username_available">Korisničko ime dostupno!</string>
   <string name="register_name">Ime registra</string>
-  <string name="trying_to_register_name">Pokušavam registrirati ime</string>
   <string name="registered_username">Registrirano korisničko ime</string>
   <string name="register_username">Registracija javnog korisničkog imena</string>
   <string name="register_recommended">Preporučeno</string>
@@ -210,7 +192,6 @@
   <string name="revoke_device_wait_title">Molim pričekajte...</string>
   <string name="revoke_device_wait_message">Uređaj za otkaz</string>
   <string name="rename_device_title">Preimenovati ovaj uređaj</string>
-  <string name="rename_device_message">Izaberite novo ime za identifikaciju ovog uređaja u svom računu Jami</string>
   <string name="rename_device_button">Uređaj za preimenovanje</string>
   <string name="account_rename_device_hint">Izberite ime uređaja</string>
   <string name="account_device_this_indicator">Ovaj uređaj</string>
@@ -218,6 +199,7 @@
   <!--Link a new device-->
   <string name="error_format_not_supported">Ovaj format nije podržan.</string>
   <string name="account_link_device_title">Povežite novi uređaj</string>
+  <string name="connect_device_scanqr">Skeniranje QR koda</string>
   <string name="account_link_device_button">Povezivanje</string>
   <!--Biometry-->
 </resources>

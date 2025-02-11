@@ -140,7 +140,6 @@
   <string name="delete_contact">حذف جهة إتصال</string>
   <string name="conversation_action_remove_this_title">حذف جهة الإتصال؟</string>
   <string name="conversation_action_remove_this_message">هذا سيزيل جهة الإتصال و بالتأكيد سيزيل تاريخ المحادثة.</string>
-  <string name="copied_to_clipboard">%1$sتم النسخ إلى الحافظة</string>
   <string name="conversation_action_select_peer_number">إختيار رقم</string>
   <string name="conversation_action_block_this">حظر جهة إتصال</string>
   <string name="conversation_action_unblock_this">فك الحظر على الاتصال</string>
@@ -166,9 +165,6 @@
   <string name="conversation_type_contact">جهة اتصال جامي</string>
   <string name="conversation_type_private">خاص</string>
   <string name="conversation_type_group">مجموعة</string>
-  <string name="conversation_contact_invited">%1$s تم دعوته</string>
-  <string name="conversation_contact_added">%1$s متضمن</string>
-  <string name="conversation_contact_left">%1$s يسار</string>
   <string name="conversation_search_hint">بحث عن المحادثة</string>
   <string name="today">اليوم</string>
   <string name="yesterday">البارحة</string>
@@ -177,7 +173,7 @@
   <string name="prompt_new_password">كلمة مرور جديدة</string>
   <string name="prompt_new_password_optional">كلمة مرور جديدة (إختياري)</string>
   <string name="prompt_new_password_repeat">إعادة كلمة مرور جديدة</string>
-  <string name="account_create_title">إنشاء حساب جامي</string>
+  <string name="account_create_title">انضموا إلى جامي</string>
   <string name="prompt_new_username">إدخال إسم مستخدم جديد</string>
   <string name="prompt_hint_username">اسم المستخدم</string>
   <string name="help_password_choose">إختيار كلمة مرور قوية يمكن تذكرها لحماية حساب جامي الخاص بك.</string>
@@ -202,6 +198,7 @@
   <string name="identifier">المعرف</string>
   <string name="account">الحساب</string>
   <string name="link_new_device">ربط جهاز جديد</string>
+  <string name="devices_header">الأجهزة</string>
   <string name="devices">الأجهزة المتصلة</string>
   <string name="total_devices">الأجهزة الكلية</string>
   <!--Share fragment-->
@@ -244,7 +241,6 @@
   <string name="file_transfer_status_error">فشل لحدوث خطأ</string>
   <string name="file_transfer_status_timed_out">نفذت المهلة</string>
   <string name="file_saved_in">تم تخزين الملف في %s</string>
-  <string name="file_saved_successfully">تم تخزين الملف بنجاح</string>
   <string name="file_download">تنزيل</string>
   <string name="title_media_viewer">عارض الوسائط</string>
   <string name="menu_file_open">فتح ملف</string>

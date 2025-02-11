@@ -214,11 +214,11 @@
   <string name="conversation_type_contact">Jami yhteystieto</string>
   <string name="conversation_type_private">Yksityinen</string>
   <string name="conversation_type_group">Ryhmä</string>
-  <string name="conversation_contact_invited">%1$s kutsuttiin</string>
-  <string name="conversation_contact_added">%1$s liittyi</string>
-  <string name="conversation_contact_left">%1$s jäljellä</string>
-  <string name="conversation_contact_blocked">%1$s estettiin</string>
-  <string name="conversation_contact_unblocked">%1$s esto vapautettiin</string>
+  <string name="conversation_contact_invited">%1$s kutsuttiin keskusteluun.</string>
+  <string name="conversation_contact_added">%1$s liittyi keskusteluun.</string>
+  <string name="conversation_contact_left">%1$s poistui keskustelusta.</string>
+  <string name="conversation_contact_blocked">%1$s estettiin keskustelusta.</string>
+  <string name="conversation_contact_unblocked">%1$s keskustelun esto poistettiin.</string>
   <string name="conversation_search_hint">Hae keskustelua</string>
   <string name="audio_recorder_error">Audion tallennussovellusta ei löytynyt.</string>
   <string name="video_recorder_error">Videon tallennussovellusta ei löytynyt.</string>
@@ -240,7 +240,7 @@
   <string name="prompt_new_password">Uusi salasana</string>
   <string name="prompt_new_password_optional">Uusi salasana (valinnainen)</string>
   <string name="prompt_new_password_repeat">Toista uusi salasana</string>
-  <string name="account_create_title">Luo Jami-tili</string>
+  <string name="account_create_title">Liity Jamiin</string>
   <string name="prompt_new_username">Anna uusi käyttäjänimi</string>
   <string name="prompt_hint_username">Käyttäjänimi</string>
   <string name="help_password_choose">Valitse muistettava, vahva salasana jota käytät Jami-tilin suojaamiseen.</string>
@@ -248,6 +248,7 @@
   <string name="help_server_enter">Anna hallintapalvelimen URL.</string>
   <string name="help_pin_enter">Anna määritetyn Jami-tilin PIN-koodi. Käytä \"Vie Jami-tili\" ominaisuutta saadaksesi PIN-koodin.</string>
   <string name="pin_copied">PIN-koodi kopioitu leikepöydälle.</string>
+  <string name="copied_clipboard">Kopioitu leikepöydälle</string>
   <string name="wizard_next">Seuraava</string>
   <string name="wizard_back">Takaisin</string>
   <string name="wizard_skip">Ohita</string>
@@ -271,6 +272,7 @@
   <string name="identifier">Tunniste</string>
   <string name="account">Tunnus</string>
   <string name="link_new_device">Linkitä uusi laite</string>
+  <string name="devices_header">Laitteet</string>
   <string name="devices">Linkitetyt laitteet</string>
   <string name="total_devices">Laitteita yhteensä: </string>
   <!--Share fragment-->
@@ -323,7 +325,7 @@
   <string name="file_transfer_status_error">epäonnistui virheen takia</string>
   <string name="file_transfer_status_timed_out">aikakatkaisu</string>
   <string name="file_saved_in">Tiedosto tallennettu %s</string>
-  <string name="file_saved_successfully">Tiedoston tallennus onnistui</string>
+  <string name="file_saved_successfully">Tiedosto tallennettu.</string>
   <string name="file_download">Lataa</string>
   <string name="no_space_left_on_device">Laitteessa ei ole tallennustilaa</string>
   <string name="title_media_viewer">Katseluohjelma</string>

@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--About-->
+  <!--About dialog-->
+  <!--RingActivity-->
+  <!--AB menus-->
+  <!--Sections-->
+  <!--Dialing Fragment-->
+  <!--History Fragment-->
+  <!--Home Fragment-->
+  <!--ContactList Fragment-->
+  <!--FileExplorerDFragement-->
+  <!--TransferDFragment-->
+  <!--Notifications-->
+  <!--Call Fragment-->
+  <string name="action_call_accept_audio">接受語音</string>
+  <string name="action_call_accept_video">接受視訊</string>
+  <!--Text messages-->
+  <!--MediaPreferenceFragment-->
+  <!--Ringtone activity-->
+  <!--Read contacts permission-->
+  <!--Write call log permission-->
+  <!--QRCode Scan-->
+  <!--Settings-->
+  <!--Conversation-->
+  <string name="copied_to_clipboard">%1$s已复制到剪贴板。</string>
+  <string name="conversation_contact_invited">%1$s被邀请加入对话。</string>
+  <string name="conversation_contact_added">%1$s已加入对话。</string>
+  <string name="conversation_contact_left">%1$s已退出对话。</string>
+  <string name="conversation_contact_blocked">%1$s被阻止参与对话。</string>
+  <string name="conversation_contact_unblocked">%1$s被移出黑名单。</string>
+  <!--Contacts-->
+  <string name="prompt_new_password_repeat">再次輸入新密碼</string>
+  <string name="account_create_title">加入 Jami</string>
+  <string name="copied_clipboard">已复制到剪贴板。</string>
+  <!--Account summary-->
+  <string name="devices_header">裝置</string>
+  <!--Share fragment-->
+  <!--Pending invitations-->
+  <!--Blacklist-->
+  <!--Smartlist-->
+  <!--File Transfer-->
+  <string name="file_saved_successfully">文件保存成功。</string>
+  <!--Bottom Navigation-->
+  <!--TV-->
+  <!--Wizard-->
+  <!--Bottom sheet-->
+  <!--Swarm Details-->
+  <!--JamiId-->
+  <!--WelcomeJami-->
+  <!--Conversation details-->
+  <!--Donation-->
+  <!--Extension-->
+</resources>

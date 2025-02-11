@@ -185,7 +185,7 @@
   <string name="swarm_group_action_leave_title">Të braktiset ky grup?</string>
   <string name="swarm_group_action_leave_message">Kjo do ta heqë bisedën nga lista e bisedave tuaja </string>
   <string name="conversation_action_copy_peer_number">Kopjo identifikues kontakti</string>
-  <string name="copied_to_clipboard">%1$s u kopjua te e papastra</string>
+  <string name="copied_to_clipboard">%1$s u kopjua te e papastra.</string>
   <string name="conversation_action_select_peer_number">Përzgjidhni një numër</string>
   <string name="conversation_action_block_this">Bllokojeni kontaktin</string>
   <string name="conversation_action_unblock_this">Zhbllokoje kontaktin</string>
@@ -214,11 +214,11 @@
   <string name="conversation_type_contact">Kontakt Jami</string>
   <string name="conversation_type_private">Privat</string>
   <string name="conversation_type_group">Grup</string>
-  <string name="conversation_contact_invited">U ftua %1$s</string>
-  <string name="conversation_contact_added">%1$s erdhi</string>
-  <string name="conversation_contact_left">%1$s iku</string>
-  <string name="conversation_contact_blocked">%1$s u bllokua</string>
-  <string name="conversation_contact_unblocked">%1$s u zhbllokua</string>
+  <string name="conversation_contact_invited">%1$s u ftua të marrë pjesë në bisedë.</string>
+  <string name="conversation_contact_added">%1$s erdhi te biseda.</string>
+  <string name="conversation_contact_left">%1$s e braktisi bisedën.</string>
+  <string name="conversation_contact_blocked">%1$s u bllokua prej bisede.</string>
+  <string name="conversation_contact_unblocked">%1$s u zhbllokua prej bisede.</string>
   <string name="conversation_search_hint">Kërkoni bisedë</string>
   <string name="audio_recorder_error">S’u gjet aplikacion incizimi audio.</string>
   <string name="video_recorder_error">S’u gjet aplikacion regjistrimi video.</string>
@@ -240,7 +240,7 @@
   <string name="prompt_new_password">Fjalëkalim i ri</string>
   <string name="prompt_new_password_optional">Fjalëkalim i ri (opsional)</string>
   <string name="prompt_new_password_repeat">Përsëriteni fjalëkalimin e ri</string>
-  <string name="account_create_title">Krijoni një llogari Jami</string>
+  <string name="account_create_title">Bëhuni pjesë e Jami-t</string>
   <string name="prompt_new_username">Jepni emër përdoruesi të ri</string>
   <string name="prompt_hint_username">Emër përdoruesi</string>
   <string name="help_password_choose">Për të mbrojtur llogarinë tuaj Jami, zgjidhni fjalëkalim të fuqishëm që do ta mbani mend.</string>
@@ -248,6 +248,7 @@
   <string name="help_server_enter">Jepni URL-në e shërbyesit të administrimeve.</string>
   <string name="help_pin_enter">Jepni PIN-in prej një tjetër llogarie Jami të formësuar. Që të keni PIN-in, përdorni veçorinë “Eksportoni llogari Jami”.</string>
   <string name="pin_copied">Kodi PIN u kopjua në të papastër.</string>
+  <string name="copied_clipboard">U kopjua në të papastër.</string>
   <string name="wizard_next">Pasuesi</string>
   <string name="wizard_back">Mbrapsht</string>
   <string name="wizard_skip">Anashkaloje</string>
@@ -271,6 +272,7 @@
   <string name="identifier">Identifikues</string>
   <string name="account">Llogari</string>
   <string name="link_new_device">Lidhni një pajisje të re</string>
+  <string name="devices_header">Pajisje</string>
   <string name="devices">Pajisje të lidhura</string>
   <string name="total_devices">Pajisje gjithsej:</string>
   <!--Share fragment-->
@@ -323,7 +325,7 @@
   <string name="file_transfer_status_error">e dështuar për shkak të një gabimi</string>
   <string name="file_transfer_status_timed_out">i mbaroi koha</string>
   <string name="file_saved_in">Kartela u ruajt te %s</string>
-  <string name="file_saved_successfully">Kartela u ruajt me sukses</string>
+  <string name="file_saved_successfully">Kartela u ruajt me sukses.</string>
   <string name="file_download">Shkarkoje</string>
   <string name="no_space_left_on_device">Te pajisja s’ka hapësirë depozitimi të lirë. </string>
   <string name="title_media_viewer">Parës mediash</string>

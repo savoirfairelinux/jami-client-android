@@ -42,9 +42,9 @@
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">General</string>
   <string name="account_basic_category">Ntọala Ntọala</string>
-  <string name="account_alias_label">Aha akaụntụ</string>
   <string name="account_hostname_label">Aha nnabata</string>
   <string name="account_bootstrap_label">Akpụkpọ ụkwụ</string>
+  <string name="account_name_server_label">Aha ihe nkesa</string>
   <string name="account_username_label">Aha njirimara</string>
   <string name="account_password_label">Paswọdu</string>
   <string name="account_optionnal_category">Ntọala Nhọrọ</string>
@@ -76,8 +76,7 @@
   <string name="account_registration_exp_label">Ndebanye aha ahụ na-agwụ</string>
   <string name="account_local_interface_label">Nhazi mpaghara</string>
   <string name="account_local_port_label">Ọdụ ụgbọ mmiri</string>
-  <string name="account_stun_enable_label">Jiri Stun</string>
-  <string name="account_stun_server_label">Ihe Nlekọta Ọrụ</string>
+  <string name="account_stun_enable_label">Jiri STUN</string>
   <string name="account_accept_files">Nabata faịlụ na-abata na akpaghị aka</string>
   <string name="account_conversation_settings_title">Ntọala mkparịta ụka</string>
   <string name="account_accept_files_max_size">Oke faịlụ size iji nabata na-akpaghị aka</string>
@@ -93,6 +92,7 @@
   <string name="account_published_address_label">Adreesị E Bipụtara</string>
   <string name="disabled">Ndị nwere nkwarụ</string>
   <string name="enabled">Enyere ya</string>
+  <string name="default_value">Eburupụta</string>
   <string name="account_proxy_label">DHT proxy</string>
   <string name="account_proxy_enable_label">Jiri DHT proxy</string>
   <string name="account_proxy_server_label">DHT proxy address</string>
@@ -111,25 +111,12 @@
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Jiri TLS Transport</string>
-  <string name="account_tls_port_label">TLS Listener Port</string>
-  <string name="account_tls_certificate_list_label">Ndị na-enye ikikere</string>
-  <string name="account_tls_certificate_file_label">Ihe Nlekọta Akwụkwọ</string>
-  <string name="account_tls_private_key_file_label">Ihe ndekọ igodo nzuzo</string>
-  <string name="account_tls_password_label">Paswọdu Isi Ihe Onwe Ya</string>
-  <string name="account_tls_method_label">Usoro TLS</string>
-  <string name="account_tls_ciphers_label">Ihe mkpuchi TLS</string>
-  <string name="account_tls_server_name_label">Aha ihe nkesa</string>
-  <string name="account_tls_verify_server_label">Nyochaa Server</string>
-  <string name="account_tls_verify_client_label">Nyochaa Onye Ahịa</string>
-  <string name="account_require_client_certificate_label">TLS chọrọ akwụkwọ ikike onye ahịa</string>
-  <string name="account_tls_negotiation_timeout_sec">Oge a ga-eji kwurịta okwu (sec)</string>
+  <string name="account_tls_password_label">Paswọdu isi nzuzo</string>
   <string name="account_rtp_max_port">Ihe kachasị</string>
   <string name="account_rtp_min_port">Ihe kacha nta</string>
-  <string name="account_rtp_port_range">Audio RTP Port Range</string>
   <!--restore/backup-->
   <string name="account_new_device_password">Tinye isi paswọọdụ iji mepee akaụntụ</string>
   <string name="error_password_char_count">Ihe dịkarịa ala mkpụrụedemede 6</string>
-  <string name="error_passwords_not_equals">Paswọọdụ adịghị ekwekọ</string>
   <string name="export_account_wait_title">Biko chere...</string>
   <string name="export_account_wait_message">Ozi gbasara akaụntụ mbupụ</string>
   <string name="account_export_file">Akaụntụ ndabere</string>
@@ -163,12 +150,10 @@
   <string name="account_link_device">Jikọọ site na ngwaọrụ ọzọ</string>
   <string name="account_link_button">Jikọọ site na netwọk</string>
   <string name="account_link_archive_button">Jikọọ site nkwado ndabere</string>
-  <string name="account_link_prompt_pin">Tinye PIN</string>
-  <string name="account_new_button">Mepụta akaụntụ Jami</string>
+  <string name="account_new_button">Soro Jami</string>
   <string name="account_link_export_button">Jikọọ ngwaọrụ ọhụrụ</string>
   <string name="account_link_show_button">Gosi %d ọzọ jikọrọ ngwaọrụ</string>
   <string name="account_link_hide_button">Ochechi njikọ ngwaọrụ</string>
-  <string name="account_start_export_button">Mepụta PIN</string>
   <string name="account_end_export_button">nso</string>
   <string name="account_export_title">Njikọ akaụntụ na ngwaọrụ ndị ọzọ</string>
   <string name="account_connect_server_button">Jikọọ na njikwa ihe nkesa</string>
@@ -179,10 +164,7 @@
   <string name="account_connect_prompt_username">Aha njirimara</string>
   <!--Name registration-->
   <string name="error_username_empty">Tinye aha njirimara</string>
-  <string name="no_registered_name_for_account">Enweghị aha edebanyere aha</string>
-  <string name="username_available">Aha njirimara dịnụ!</string>
   <string name="register_name">Aha ndekọ</string>
-  <string name="trying_to_register_name">Na-agbalị ịdebanye aha</string>
   <string name="registered_username">Aha njirimara edebanyere aha</string>
   <string name="register_username">Debanye aha njirimara ọha</string>
   <string name="register_recommended">A Na-atụ aro ya</string>
@@ -209,13 +191,13 @@
   <string name="revoke_device_wait_title">Biko chere...</string>
   <string name="revoke_device_wait_message">Ngwaọrụ na-agbagha</string>
   <string name="rename_device_title">Gbanwee aha ngwaọrụ a</string>
-  <string name="rename_device_message">Họrọ aha ọhụrụ iji mata ngwaọrụ a na akaụntụ Jami gị</string>
   <string name="rename_device_button">Ngwá ọrụ aha ọhụrụ</string>
   <string name="account_rename_device_hint">Họrọ aha ngwaọrụ ọhụrụ</string>
   <string name="account_device_this_indicator">Ngwaọrụ a</string>
   <string name="account_disabled_indicator">ndị nwere nkwarụ</string>
   <!--Link a new device-->
   <string name="account_link_device_title">Jikọọ ngwaọrụ ọhụrụ</string>
+  <string name="connect_device_scanqr">Nyochaa koodu QR</string>
   <string name="account_link_device_button">Jikọọ</string>
   <!--Biometry-->
 </resources>
