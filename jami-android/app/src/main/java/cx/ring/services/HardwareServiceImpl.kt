@@ -121,7 +121,10 @@ class HardwareServiceImpl(
         }
     }
 
-    override fun isSpeakerphoneOn(): Boolean = mAudioManager.isSpeakerphoneOn
+    override fun isSpeakerphoneOn(): Boolean =
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
+            mAudioManager.communicationDevice?.type == AudioDeviceInfo.TYPE_BUILTIN_SPEAKER
+        else mAudioManager.isSpeakerphoneOn
 
     private val RINGTONE_REQUEST = AudioFocusRequestCompat.Builder(AudioManagerCompat.AUDIOFOCUS_GAIN_TRANSIENT)
         .setAudioAttributes(AudioAttributesCompat.Builder()
@@ -153,7 +156,7 @@ class HardwareServiceImpl(
 
     @SuppressLint("NewApi")
     override fun getAudioState(conf: Conference): Observable<AudioState> =
-        conf.call!!.systemConnection
+        (conf.call ?: conf.hostCall)!!.systemConnection
             .flatMapObservable { a -> (a as CallServiceImpl.AndroidCall).connection!!.audioState }
             .map { a -> AudioState(routeToType(a.route), maskToList(a.supportedRouteMask)) }
             .onErrorResumeWith { audioState }
