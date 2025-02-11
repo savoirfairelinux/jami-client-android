@@ -22,7 +22,7 @@ android {
         minSdk = 24
         targetSdk = 34
         // upstream version, patchlevel (last 3 digits)
-        versionCode = 436002
+        versionCode = 436003
         versionName = "20241126-01"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         externalNativeBuild {

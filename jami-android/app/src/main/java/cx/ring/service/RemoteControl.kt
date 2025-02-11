@@ -14,9 +14,7 @@ import androidx.core.app.NotificationCompat
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.lifecycleScope
 import cx.ring.IRemoteService
-import cx.ring.application.JamiApplication
 import cx.ring.fragments.CallFragment
-import net.jami.services.EventService
 import cx.ring.tv.call.TVCallActivity
 import cx.ring.utils.ConversationPath
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,6 +29,7 @@ import net.jami.services.AccountService
 import net.jami.services.CallService
 import net.jami.services.ContactService
 import net.jami.services.DeviceRuntimeService
+import net.jami.services.EventService
 import net.jami.services.NotificationService
 import net.jami.utils.Log
 import javax.inject.Inject
