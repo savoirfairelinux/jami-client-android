@@ -28,7 +28,7 @@ interface CallView {
     fun displayLocalVideo(display: Boolean)
     fun displayHangupButton(display: Boolean)
     fun displayDialPadKeyboard()
-    fun updateAudioState(state: AudioState)
+    fun updateAudioState(state: AudioState, hasVideo: Boolean)
     fun updateTime(duration: Long)
     fun updateCallStatus(callState: CallStatus)
     fun updateBottomSheetButtonStatus(isConference: Boolean, isSpeakerOn: Boolean, isMicrophoneMuted: Boolean, hasMultipleCamera: Boolean, canDial: Boolean, showExtensionBtn: Boolean, onGoingCall: Boolean, hasActiveCameraVideo: Boolean, hasActiveScreenShare: Boolean)
