@@ -83,9 +83,6 @@ class CallPresenter @Inject constructor(
         mCompositeDisposable.add(mHardwareService.getCameraEvents()
             .observeOn(mUiScheduler)
             .subscribe { event: VideoEvent -> onCameraEvent(event) })
-        mCompositeDisposable.add(mHardwareService.audioState
-            .observeOn(mUiScheduler)
-            .subscribe { state: AudioState -> this.view?.updateAudioState(state) })
     }
 
     fun initOutGoing(
@@ -170,7 +167,26 @@ class CallPresenter @Inject constructor(
      * @param conference: conference whose value have been updated
      */
     private fun showConference(conference: Observable<Conference>){
-        val conference = conference.distinctUntilChanged()
+        val distinctConference = conference.distinctUntilChanged()
+        Observable.combineLatest( // Update the audio button state
+            distinctConference.switchMap { it.hasActiveNonScreenShareVideo },
+            distinctConference.switchMap { mHardwareService.getAudioState(it) }
+        ) { hasVideo: Boolean, audioState: AudioState ->
+            hasVideo to audioState
+        }.observeOn(mUiScheduler)
+            .subscribe (
+                { (hasVideo, audioState) ->
+                    try {
+                        view?.updateAudioState(audioState, hasVideo)
+                    } catch (e: Exception) {
+                        Log.e(TAG, "Error in view.updateAudioState: ${e.message}", e)
+                    }
+                },
+                { error ->
+                    Log.e(TAG, "Error in audio state update: ${error.message}", error)
+                }
+            )
+            .apply { mCompositeDisposable.add(this) }
         mCompositeDisposable.add(conference
             .switchMap { obj: Conference ->
                 Observable.combineLatest(obj.participantInfo, obj.pendingCalls,
