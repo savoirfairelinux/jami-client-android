@@ -43,9 +43,9 @@
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">जनरल</string>
   <string name="account_basic_category">मूलभूत सेटिंग्ज</string>
-  <string name="account_alias_label">खाते नाव</string>
   <string name="account_hostname_label">यजमान नाव</string>
   <string name="account_bootstrap_label">बूटस्ट्रॅप</string>
+  <string name="account_name_server_label">नाव सर्व्हर</string>
   <string name="account_username_label">नाव</string>
   <string name="account_password_label">पासवर्ड</string>
   <string name="account_optionnal_category">पर्यायी सेटिंग्ज</string>
@@ -78,8 +78,7 @@
   <string name="account_registration_exp_label">नोंदणी कालावधी संपतो</string>
   <string name="account_local_interface_label">स्थानिक इंटरफेस</string>
   <string name="account_local_port_label">स्थानिक बंदर</string>
-  <string name="account_stun_enable_label">Stun चा वापर करा</string>
-  <string name="account_stun_server_label">स्टन सर्व्हर</string>
+  <string name="account_stun_enable_label">STUN चा वापर करा</string>
   <string name="account_accept_files">येणाऱ्या फायली स्वयंचलितपणे स्वीकारा</string>
   <string name="account_conversation_settings_title">संभाषण सेटिंग्ज</string>
   <string name="account_accept_files_max_size">स्वयंचलितपणे स्वीकारण्यासाठी कमाल फाइल आकार</string>
@@ -95,6 +94,7 @@
   <string name="account_published_address_label">प्रकाशित पत्त्या</string>
   <string name="disabled">अपंग</string>
   <string name="enabled">सक्षम केले</string>
+  <string name="default_value">डिफॉल्ट</string>
   <string name="account_proxy_label">डीएचटी प्रॉक्सी</string>
   <string name="account_proxy_enable_label">डीएचटी प्रॉक्सी वापरा</string>
   <string name="account_proxy_server_label">डीएचटी प्रॉक्सी पत्ता</string>
@@ -113,25 +113,12 @@
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">TLS Transport चा वापर करा</string>
-  <string name="account_tls_port_label">TLS सुनावणी पोर्ट</string>
-  <string name="account_tls_certificate_list_label">प्रमाणपत्र देणारी संस्था</string>
-  <string name="account_tls_certificate_file_label">प्रमाणपत्र फाइल</string>
-  <string name="account_tls_private_key_file_label">खाजगी की फाइल</string>
-  <string name="account_tls_password_label">खाजगी की पासवर्ड</string>
-  <string name="account_tls_method_label">टीएलएस पद्धत</string>
-  <string name="account_tls_ciphers_label">टीएलएस सिफर</string>
-  <string name="account_tls_server_name_label">सर्व्हर नाव</string>
-  <string name="account_tls_verify_server_label">सर्व्हर सत्यापित करा</string>
-  <string name="account_tls_verify_client_label">क्लायंटची पुष्टी करा</string>
-  <string name="account_require_client_certificate_label">TLS क्लायंट प्रमाणपत्र आवश्यक आहे</string>
-  <string name="account_tls_negotiation_timeout_sec">चर्चा कालावधी (सेक)</string>
+  <string name="account_tls_password_label">खाजगी कळाचे संकेतशब्द</string>
   <string name="account_rtp_max_port">जास्तीत जास्त</string>
   <string name="account_rtp_min_port">किमान</string>
-  <string name="account_rtp_port_range">ऑडिओ आरटीपी पोर्ट श्रेणी</string>
   <!--restore/backup-->
   <string name="account_new_device_password">खाते उघडण्यासाठी मुख्य संकेतशब्द प्रविष्ट करा</string>
   <string name="error_password_char_count">किमान 6 वर्ण</string>
-  <string name="error_passwords_not_equals">पासवर्ड जुळत नाहीत</string>
   <string name="export_account_wait_title">कृपया प्रतीक्षा करा.</string>
   <string name="export_account_wait_message">निर्यात खात्याची माहिती</string>
   <string name="account_export_file">बॅकअप खाते</string>
@@ -165,12 +152,10 @@
   <string name="account_link_device">दुसर्या डिव्हाइसवरून कनेक्ट करा</string>
   <string name="account_link_button">नेटवर्कवरून कनेक्ट</string>
   <string name="account_link_archive_button">बॅकअप पासून कनेक्ट</string>
-  <string name="account_link_prompt_pin">पिन प्रविष्ट करा</string>
-  <string name="account_new_button">जामी खाते तयार करा</string>
+  <string name="account_new_button">जामीमध्ये सामील व्हा</string>
   <string name="account_link_export_button">नवीन डिव्हाइस लिंक करा</string>
   <string name="account_link_show_button">%d अधिक जोडलेले डिव्हाइस दाखवा</string>
   <string name="account_link_hide_button">कनेक्ट केलेले डिव्हाइस लपवा</string>
-  <string name="account_start_export_button">पिन तयार करा</string>
   <string name="account_end_export_button">जवळ</string>
   <string name="account_export_title">इतर उपकरणांना लिंक खाते</string>
   <string name="account_connect_server_button">व्यवस्थापन सर्व्हरशी कनेक्ट</string>
@@ -181,10 +166,7 @@
   <string name="account_connect_prompt_username">नाव</string>
   <!--Name registration-->
   <string name="error_username_empty">एक वापरकर्तानाव प्रविष्ट करा</string>
-  <string name="no_registered_name_for_account">नोंदणीकृत नाव नाही</string>
-  <string name="username_available">वापरकर्तानाव उपलब्ध!</string>
   <string name="register_name">नोंदणी नाव</string>
-  <string name="trying_to_register_name">नाव नोंदवण्याचा प्रयत्न</string>
   <string name="registered_username">नोंदणीकृत वापरकर्तानाव</string>
   <string name="register_username">सार्वजनिक वापरकर्तानाव नोंदणी</string>
   <string name="register_recommended">शिफारस केलेले</string>
@@ -211,7 +193,6 @@
   <string name="revoke_device_wait_title">कृपया प्रतीक्षा करा.</string>
   <string name="revoke_device_wait_message">रद्द करण्याचे साधन</string>
   <string name="rename_device_title">या उपकरणाचे नाव बदलून</string>
-  <string name="rename_device_message">तुमच्या Jami खात्यात या डिव्हाइसची ओळख करण्यासाठी नवीन नाव निवडा</string>
   <string name="rename_device_button">नाव बदलण्याची यंत्रणा</string>
   <string name="account_rename_device_hint">नवीन डिव्हाइसचे नाव निवडा</string>
   <string name="account_device_this_indicator">हे यंत्र</string>
@@ -219,6 +200,7 @@
   <!--Link a new device-->
   <string name="error_format_not_supported">या स्वरूपात समर्थन नाही.</string>
   <string name="account_link_device_title">नवीन डिव्हाइस लिंक करा</string>
+  <string name="connect_device_scanqr">QR कोड स्कॅन करा</string>
   <string name="account_link_device_button">कनेक्ट करा</string>
   <!--Biometry-->
 </resources>

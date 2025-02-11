@@ -144,7 +144,6 @@
   <string name="delete_contact">যোগাযোগ মুছে ফেলুন</string>
   <string name="conversation_action_remove_this_title">এই যোগাযোগ মুছে ফেলুন?</string>
   <string name="conversation_action_remove_this_message">এটি যোগাযোগ মুছে ফেলবে এবং কথোপকথনের ইতিহাস অবশ্যই মুছে ফেলবে।</string>
-  <string name="copied_to_clipboard">%1$s ক্লিপবোর্ডে অনুলিপি করা হয়েছে</string>
   <string name="conversation_action_select_peer_number">একটি নম্বর নির্বাচন করুন</string>
   <string name="conversation_action_block_this">ব্লক যোগাযোগ</string>
   <string name="conversation_action_unblock_this">যোগাযোগ বন্ধ করুন</string>
@@ -169,9 +168,6 @@
   <string name="conversation_preference_emoji">কথোপকথন ইমোজি</string>
   <string name="conversation_type_contact">জামি যোগাযোগ</string>
   <string name="conversation_type_private">ব্যক্তিগত</string>
-  <string name="conversation_contact_invited">%1$s আমন্ত্রিত হয়েছে</string>
-  <string name="conversation_contact_added">%1$s যোগ করা হয়েছে</string>
-  <string name="conversation_contact_left">%1$s বাম</string>
   <string name="conversation_search_hint">অনুসন্ধান কথোপকথন</string>
   <string name="today">আজ</string>
   <string name="yesterday">গতকাল</string>
@@ -180,7 +176,6 @@
   <string name="prompt_new_password">নতুন পাসওয়ার্ড</string>
   <string name="prompt_new_password_optional">নতুন পাসওয়ার্ড (ঐচ্ছিক)</string>
   <string name="prompt_new_password_repeat">নতুন পাসওয়ার্ড পুনরাবৃত্তি করুন</string>
-  <string name="account_create_title">জামি অ্যাকাউন্ট তৈরি করুন</string>
   <string name="prompt_new_username">নতুন ব্যবহারকারীর নাম লিখুন</string>
   <string name="prompt_hint_username">ব্যবহারকারীর নাম</string>
   <string name="help_password_choose">আপনার জামি অ্যাকাউন্টের সুরক্ষার জন্য একটি শক্তিশালী পাসওয়ার্ড নির্বাচন করুন।</string>
@@ -205,6 +200,7 @@
   <string name="identifier">সনাক্তকরণ</string>
   <string name="account">অ্যাকাউন্ট</string>
   <string name="link_new_device">একটি নতুন ডিভাইস লিঙ্ক</string>
+  <string name="devices_header">ডিভাইস</string>
   <string name="devices">সংযুক্ত ডিভাইস</string>
   <string name="total_devices">মোট ডিভাইসঃ </string>
   <!--Share fragment-->
@@ -247,7 +243,6 @@
   <string name="file_transfer_status_error">ত্রুটির কারণে ব্যর্থ</string>
   <string name="file_transfer_status_timed_out">সময়সীমা</string>
   <string name="file_saved_in">%s- এ সংরক্ষিত ফাইল</string>
-  <string name="file_saved_successfully">সফলভাবে সংরক্ষিত ফাইল</string>
   <string name="file_download">ডাউনলোড</string>
   <string name="title_media_viewer">মিডিয়া ভিউয়ার</string>
   <string name="menu_file_open">খোলা ফাইল</string>

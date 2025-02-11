@@ -85,7 +85,6 @@
   <string name="today">Сёння</string>
   <string name="yesterday">Учора</string>
   <!--Contacts-->
-  <string name="account_create_title">Стварэнне ўліковага запісу Jami</string>
   <string name="prompt_hint_username">Назва карыстальніка</string>
   <string name="wizard_next">Далей</string>
   <string name="wizard_back">Звярніцеся назад</string>
@@ -101,6 +100,7 @@
   <string name="identifier">Ідэнтыфікатар</string>
   <string name="account">Рахунак</string>
   <string name="link_new_device">Злучыць новае прылада</string>
+  <string name="devices_header">Прылады</string>
   <string name="devices">Злучаныя прылады</string>
   <!--Share fragment-->
   <string name="share_label">Падзяліцца</string>

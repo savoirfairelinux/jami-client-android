@@ -43,9 +43,9 @@
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">ทั่วไป</string>
   <string name="account_basic_category">การตั้งค่าพื้นฐาน</string>
-  <string name="account_alias_label">ชื่อบัญชี</string>
   <string name="account_hostname_label">ชื่อโฮสต์</string>
   <string name="account_bootstrap_label">แถวกระดาน</string>
+  <string name="account_name_server_label">เซอร์เวอร์ชื่อ</string>
   <string name="account_username_label">ชื่อผู้ใช้</string>
   <string name="account_password_label">รหัสผ่าน</string>
   <string name="account_optionnal_category">การตั้งค่าเสริม</string>
@@ -77,8 +77,7 @@
   <string name="account_registration_exp_label">การลงทะเบียนหมดอายุ</string>
   <string name="account_local_interface_label">อินเทอร์เฟซท้องถิ่น</string>
   <string name="account_local_port_label">ท่าเรือท้องถิ่น</string>
-  <string name="account_stun_enable_label">ใช้ Stun</string>
-  <string name="account_stun_server_label">เซอร์เวอร์สตอง</string>
+  <string name="account_stun_enable_label">ใช้ STUN</string>
   <string name="account_accept_files">ยอมรับไฟล์ที่เข้ามาโดยอัตโนมัติ</string>
   <string name="account_conversation_settings_title">การตั้งค่าการสนทนา</string>
   <string name="account_accept_files_max_size">ขนาดไฟล์สูงสุดที่จะยอมรับโดยอัตโนมัติ</string>
@@ -94,6 +93,7 @@
   <string name="account_published_address_label">ที่อยู่เผยแพร่</string>
   <string name="disabled">คนพิการ</string>
   <string name="enabled">อนุญาต</string>
+  <string name="default_value">ค่าเริ่มต้น</string>
   <string name="account_proxy_label">DHT แทนตัวแทน</string>
   <string name="account_proxy_enable_label">ใช้ DHT proxy</string>
   <string name="account_proxy_server_label">ที่อยู่ตัวแทน DHT</string>
@@ -112,25 +112,12 @@
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">ใช้ TLS Transport</string>
-  <string name="account_tls_port_label">ท่าทาง TLS Listener</string>
-  <string name="account_tls_certificate_list_label">สถานะการรับรอง</string>
-  <string name="account_tls_certificate_file_label">ไฟล์รับรอง</string>
-  <string name="account_tls_private_key_file_label">ไฟล์กุญแจส่วนตัว</string>
-  <string name="account_tls_password_label">ปัสริดกุญแจส่วนตัว</string>
-  <string name="account_tls_method_label">วิธี TLS</string>
-  <string name="account_tls_ciphers_label">TLS ซีฟอร์</string>
-  <string name="account_tls_server_name_label">ชื่อเซอร์เวอร์</string>
-  <string name="account_tls_verify_server_label">ยืนยัน Server</string>
-  <string name="account_tls_verify_client_label">ตรวจสอบลูกค้า</string>
-  <string name="account_require_client_certificate_label">TLS เรียกรับรองลูกค้า</string>
-  <string name="account_tls_negotiation_timeout_sec">การเจรจาเวลา (sec)</string>
+  <string name="account_tls_password_label">รหัสผ่านคีย์ส่วนตัว</string>
   <string name="account_rtp_max_port">สูงสุด</string>
   <string name="account_rtp_min_port">ต่ำสุด</string>
-  <string name="account_rtp_port_range">ระยะทาง RTP Port Audio</string>
   <!--restore/backup-->
   <string name="account_new_device_password">ป้อนรหัสผ่านหลักเพื่อปลดล็อกบัญชี</string>
   <string name="error_password_char_count">ขั้นต่ำ 6 ตัวอักษร</string>
-  <string name="error_passwords_not_equals">รหัสผ่านไม่ตรงกัน</string>
   <string name="export_account_wait_title">โปรดรอ…</string>
   <string name="export_account_wait_message">การส่งออกข้อมูลบัญชี</string>
   <string name="account_export_file">บาคเกปบัญชี</string>
@@ -164,12 +151,10 @@
   <string name="account_link_device">เชื่อมต่อจากอุปกรณ์อื่น</string>
   <string name="account_link_button">เชื่อมต่อจากเครือข่าย</string>
   <string name="account_link_archive_button">เชื่อมต่อจากสํารอง</string>
-  <string name="account_link_prompt_pin">ป้อน PIN</string>
-  <string name="account_new_button">สร้างบัญชี Jami</string>
+  <string name="account_new_button">เข้าร่วมกับจามิ</string>
   <string name="account_link_export_button">เชื่อมโยงอุปกรณ์ใหม่</string>
   <string name="account_link_show_button">แสดง %d หน่วยที่เชื่อมต่อมากกว่า</string>
   <string name="account_link_hide_button">ปิดอุปกรณ์เชื่อมโยง</string>
-  <string name="account_start_export_button">สร้าง PIN</string>
   <string name="account_end_export_button">ใกล้</string>
   <string name="account_export_title">บัญชีเชื่อมต่อกับอุปกรณ์อื่นๆ</string>
   <string name="account_connect_server_button">เชื่อมต่อเซอร์เวอร์บริหาร</string>
@@ -180,10 +165,7 @@
   <string name="account_connect_prompt_username">ชื่อผู้ใช้</string>
   <!--Name registration-->
   <string name="error_username_empty">กรอกชื่อผู้ใช้</string>
-  <string name="no_registered_name_for_account">ไม่มีชื่อที่ลงทะเบียน</string>
-  <string name="username_available">ชื่อผู้ใช้ได้</string>
   <string name="register_name">ชื่อทะเบียน</string>
-  <string name="trying_to_register_name">พยายามจดทะเบียนชื่อ</string>
   <string name="registered_username">ชื่อผู้ใช้ที่ลงทะเบียน</string>
   <string name="register_username">ลงทะเบียนชื่อผู้ใช้สาธารณะ</string>
   <string name="register_recommended">ข้อเสนอแนะ</string>
@@ -210,7 +192,6 @@
   <string name="revoke_device_wait_title">โปรดรอ…</string>
   <string name="revoke_device_wait_message">เครื่องเรียกคืน</string>
   <string name="rename_device_title">เรียกชื่อใหม่ของอุปกรณ์นี้</string>
-  <string name="rename_device_message">เลือกชื่อใหม่เพื่อจําหน่ายอุปกรณ์นี้ในบัญชี Jami</string>
   <string name="rename_device_button">เครื่องเปลี่ยนชื่อ</string>
   <string name="account_rename_device_hint">เลือกชื่ออุปกรณ์ใหม่</string>
   <string name="account_device_this_indicator">เครื่องนี้</string>
@@ -218,6 +199,7 @@
   <!--Link a new device-->
   <string name="error_format_not_supported">ไม่รองรับรูปแบบนี้</string>
   <string name="account_link_device_title">เชื่อมโยงอุปกรณ์ใหม่</string>
+  <string name="connect_device_scanqr">ตรวจสอบรหัส QR</string>
   <string name="account_link_device_button">เชื่อมต่อ</string>
   <!--Biometry-->
 </resources>

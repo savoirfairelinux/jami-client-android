@@ -148,7 +148,6 @@
   <string name="delete_contact">Eliminar contacto</string>
   <string name="conversation_action_remove_this_title">Eliminar este contacto?</string>
   <string name="conversation_action_remove_this_message">Esto eliminará o contacto de xeito definitivo e tamén o historial da conversa.</string>
-  <string name="copied_to_clipboard">%1$s copiado ao portapapeis</string>
   <string name="conversation_action_select_peer_number">Escolle un número</string>
   <string name="conversation_action_block_this">Bloquear contacto</string>
   <string name="conversation_action_unblock_this">Desbloquear contacto</string>
@@ -173,9 +172,6 @@
   <string name="conversation_preference_emoji">Emojis da conversa</string>
   <string name="conversation_type_contact">Contacto Jami</string>
   <string name="conversation_type_private">Privado</string>
-  <string name="conversation_contact_invited">Convidouse a %1$s</string>
-  <string name="conversation_contact_added">%1$s uníuse</string>
-  <string name="conversation_contact_left">%1$s saíu</string>
   <string name="conversation_search_hint">Buscar conversa</string>
   <string name="today">Hoxe</string>
   <string name="yesterday">Onte</string>
@@ -184,7 +180,7 @@
   <string name="prompt_new_password">Novo contrasinal</string>
   <string name="prompt_new_password_optional">Novo contrasinal (optativo)</string>
   <string name="prompt_new_password_repeat">Repetir o novo contrasinal</string>
-  <string name="account_create_title">Crear conta Jami</string>
+  <string name="account_create_title">Unirse a Jami</string>
   <string name="prompt_new_username">Escribir novo nome de usuaria</string>
   <string name="prompt_hint_username">Nome de usuaria</string>
   <string name="help_password_choose">Escolle un contrasinal forte e gárdao para protexer a túa conta Jami.</string>
@@ -209,6 +205,7 @@
   <string name="identifier">Identificador</string>
   <string name="account">Conta</string>
   <string name="link_new_device">Ligar un novo dispositio</string>
+  <string name="devices_header">Dispositivos</string>
   <string name="devices">Dispositivos ligados</string>
   <string name="total_devices">Total de dispositivos:</string>
   <!--Share fragment-->
@@ -251,7 +248,6 @@
   <string name="file_transfer_status_error">fallou debido a un erro</string>
   <string name="file_transfer_status_timed_out">caducada</string>
   <string name="file_saved_in">Ficheiro gardado en %s</string>
-  <string name="file_saved_successfully">Ficheiro gardado</string>
   <string name="file_download">Descargar</string>
   <string name="title_media_viewer">Visor de multimedia</string>
   <string name="menu_file_open">Abrir ficheiro</string>

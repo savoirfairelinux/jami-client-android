@@ -84,7 +84,7 @@
   <string name="today">Бүген</string>
   <string name="yesterday">Кичә</string>
   <!--Contacts-->
-  <string name="account_create_title">Jami хисабы булдыру</string>
+  <string name="account_create_title">Җәмигә кушылыгыз</string>
   <string name="prompt_hint_username">Исем кулланучы</string>
   <string name="wizard_next">Киләсесе</string>
   <string name="wizard_back">Кайт!</string>
@@ -100,6 +100,7 @@
   <string name="identifier">Идентификатор</string>
   <string name="account">Хисап</string>
   <string name="link_new_device">Яңа җайланманы тоташтыру</string>
+  <string name="devices_header">Кораллар</string>
   <string name="devices">Бәйләнешле җайланмалар</string>
   <!--Share fragment-->
   <string name="share_label">Бүләкләү</string>

@@ -43,9 +43,9 @@
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">జనరల్</string>
   <string name="account_basic_category">ప్రాథమిక సెట్టింగులు</string>
-  <string name="account_alias_label">ఖాతా పేరు</string>
   <string name="account_hostname_label">హోస్ట్ పేరు</string>
   <string name="account_bootstrap_label">బూట్స్ట్రాప్</string>
+  <string name="account_name_server_label">పేరు సర్వర్</string>
   <string name="account_username_label">వాడుకరి పేరు</string>
   <string name="account_password_label">పాస్వర్డ్</string>
   <string name="account_optionnal_category">ఐచ్ఛిక సెట్టింగులు</string>
@@ -77,8 +77,7 @@
   <string name="account_registration_exp_label">నమోదు గడువు ముగిసింది</string>
   <string name="account_local_interface_label">స్థానిక ఇంటర్ఫేస్</string>
   <string name="account_local_port_label">స్థానిక నౌకాశ్రయం</string>
-  <string name="account_stun_enable_label">స్టన్ ను ఉపయోగించండి</string>
-  <string name="account_stun_server_label">స్టన్ సర్వర్</string>
+  <string name="account_stun_enable_label">STUN ను ఉపయోగించండి</string>
   <string name="account_accept_files">స్వయంచాలకంగా ఇన్కమింగ్ ఫైళ్ళను అంగీకరించండి</string>
   <string name="account_conversation_settings_title">సంభాషణ సెట్టింగులు</string>
   <string name="account_accept_files_max_size">స్వయంచాలకంగా అంగీకరించడానికి గరిష్ట ఫైల్ పరిమాణం</string>
@@ -94,6 +93,7 @@
   <string name="account_published_address_label">ప్రచురించిన చిరునామా</string>
   <string name="disabled">వైకల్యాలు</string>
   <string name="enabled">అనుమతి</string>
+  <string name="default_value">డిఫాల్ట్</string>
   <string name="account_proxy_label">DHT ప్రాక్సీ</string>
   <string name="account_proxy_enable_label">DHT ప్రాక్సీని ఉపయోగించు</string>
   <string name="account_proxy_server_label">DHT ప్రాక్సీ చిరునామా</string>
@@ -112,25 +112,12 @@
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">TLS రవాణాను ఉపయోగించు</string>
-  <string name="account_tls_port_label">TLS వినే పోర్ట్</string>
-  <string name="account_tls_certificate_list_label">సర్టిఫికేషన్ అధికారులు</string>
-  <string name="account_tls_certificate_file_label">సర్టిఫికేట్ ఫైల్</string>
-  <string name="account_tls_private_key_file_label">ప్రైవేట్ కీ ఫైల్</string>
   <string name="account_tls_password_label">ప్రైవేట్ కీ పాస్వర్డ్</string>
-  <string name="account_tls_method_label">TLS పద్ధతి</string>
-  <string name="account_tls_ciphers_label">TLS సిఫర్లు</string>
-  <string name="account_tls_server_name_label">సర్వర్ పేరు</string>
-  <string name="account_tls_verify_server_label">సర్వర్ను ధృవీకరించు</string>
-  <string name="account_tls_verify_client_label">క్లయింట్ను ధృవీకరించు</string>
-  <string name="account_require_client_certificate_label">TLS క్లయింట్ సర్టిఫికేట్ అవసరం</string>
-  <string name="account_tls_negotiation_timeout_sec">చర్చల కాలపరిమితి (సెకన్లు)</string>
   <string name="account_rtp_max_port">గరిష్టం</string>
   <string name="account_rtp_min_port">కనీస</string>
-  <string name="account_rtp_port_range">ఆడియో RTP పోర్ట్ పరిధి</string>
   <!--restore/backup-->
   <string name="account_new_device_password">ఖాతాను అన్లాక్ చేయడానికి ప్రధాన పాస్వర్డ్ను నమోదు చేయండి</string>
   <string name="error_password_char_count">6 అక్షరాలు</string>
-  <string name="error_passwords_not_equals">పాస్వర్డ్లు సరిపోలవు</string>
   <string name="export_account_wait_title">దయచేసి వేచి ఉండండి.</string>
   <string name="export_account_wait_message">ఎగుమతి ఖాతా సమాచారం</string>
   <string name="account_export_file">బ్యాకప్ ఖాతా</string>
@@ -164,12 +151,10 @@
   <string name="account_link_device">మరొక పరికరము నుండి కనెక్ట్</string>
   <string name="account_link_button">నెట్వర్క్ నుండి కనెక్ట్</string>
   <string name="account_link_archive_button">బ్యాకప్ నుండి కనెక్ట్</string>
-  <string name="account_link_prompt_pin">PIN ని నమోదు చేయండి</string>
-  <string name="account_new_button">జమీ ఖాతాను సృష్టించండి</string>
+  <string name="account_new_button">జామితో చేరండి</string>
   <string name="account_link_export_button">కొత్త పరికరాన్ని లింక్ చేయండి</string>
   <string name="account_link_show_button">%d మరింత లింక్ చేయబడిన పరికరాన్ని చూపించు</string>
   <string name="account_link_hide_button">లింక్ చేయబడిన పరికరాన్ని దాచండి</string>
-  <string name="account_start_export_button">PIN ను రూపొందించండి</string>
   <string name="account_end_export_button">దగ్గరగా</string>
   <string name="account_export_title">ఇతర పరికరాలకు లింక్ ఖాతా</string>
   <string name="account_connect_server_button">నిర్వహణ సర్వర్కు కనెక్ట్</string>
@@ -180,10 +165,7 @@
   <string name="account_connect_prompt_username">వాడుకరి పేరు</string>
   <!--Name registration-->
   <string name="error_username_empty">ఒక వినియోగదారు పేరును నమోదు చేయండి</string>
-  <string name="no_registered_name_for_account">నమోదు చేయని పేరు</string>
-  <string name="username_available">వాడుకరి పేరు అందుబాటులో ఉంది!</string>
   <string name="register_name">రిజిస్టర్ పేరు</string>
-  <string name="trying_to_register_name">పేరు నమోదు ప్రయత్నిస్తున్న</string>
   <string name="registered_username">నమోదు చేసిన వాడుకరి పేరు</string>
   <string name="register_username">పబ్లిక్ యూజర్ పేరును నమోదు చేయండి</string>
   <string name="register_recommended">సిఫార్సు</string>
@@ -210,7 +192,6 @@
   <string name="revoke_device_wait_title">దయచేసి వేచి ఉండండి.</string>
   <string name="revoke_device_wait_message">ఉపసంహరించుకునే పరికరం</string>
   <string name="rename_device_title">ఈ పరికరాన్ని పేరు మార్చు</string>
-  <string name="rename_device_message">మీ Jami ఖాతాలో ఈ పరికరాన్ని గుర్తించడానికి కొత్త పేరును ఎంచుకోండి</string>
   <string name="rename_device_button">పేరు మార్చు పరికరం</string>
   <string name="account_rename_device_hint">కొత్త పరికర పేరును ఎంచుకోండి</string>
   <string name="account_device_this_indicator">ఈ పరికరం</string>
@@ -218,6 +199,7 @@
   <!--Link a new device-->
   <string name="error_format_not_supported">ఈ ఫార్మాట్కు మద్దతు లేదు.</string>
   <string name="account_link_device_title">కొత్త పరికరాన్ని లింక్ చేయండి</string>
+  <string name="connect_device_scanqr">QR కోడ్ స్కాన్</string>
   <string name="account_link_device_button">కనెక్ట్</string>
   <!--Biometry-->
 </resources>
