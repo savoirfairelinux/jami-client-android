@@ -777,12 +777,23 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             binding!!.callVideocamBtn.isChecked = true
             return
         }
-        binding!!.callSpeakerBtn.isChecked = false
         presenter.switchOnOffCamera()
     }
 
-    override fun updateAudioState(state: AudioState) {
-        binding!!.callSpeakerBtn.isChecked = state.output.type == HardwareService.AudioOutputType.SPEAKERS
+    /**
+     * Update the speaker mode button.
+     * 3 states: internal speaker, external speaker, headset.
+     * @param state the current audio state (selected/available outputs)
+     * @param hasVideo true if the call has camera.
+     */
+    override fun updateAudioState(state: AudioState, hasVideo: Boolean) {
+        // available mode = available outputs - (internal if hasVideo)
+        // if (available mode >= 2) we enable the speaker button else disable it
+        // display the current mode (decided by the call).
+        val availableOutput = state.availableOutputs.filter { if (hasVideo) it.type != HardwareService.AudioOutputType.INTERNAL else true }
+        // If there is only one output, we disable the speaker button.
+       binding!!.callSpeakerBtn.isEnabled =  availableOutput.size > 1
+       binding!!.callSpeakerBtn.isChecked = state.output.type == HardwareService.AudioOutputType.SPEAKERS
     }
 
     override fun updateTime(duration: Long) {

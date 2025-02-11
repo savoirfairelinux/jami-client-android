@@ -64,6 +64,13 @@ class Conference(val accountId: String, val id: String) {
 
     /** virtual call with null ID to represent the "call" between this device and the local hosted conference */
     var hostCall: Call? = null
+        set(value) {
+            field = value
+            hostCallSubject.onNext(value)
+        }
+    private val hostCallSubject = BehaviorSubject.create<Call>()
+    val hostCallObservable: Observable<Call>
+        get() = hostCallSubject
 
     val participantsObservable: Observable<List<Call>>
         get() = mParticipantsSubject
@@ -187,6 +194,23 @@ class Conference(val accountId: String, val id: String) {
             it || hostCall?.hasMedia(Media.MediaType.MEDIA_TYPE_VIDEO) == true
         }
 
+    val hasActiveNonScreenShareVideo: Observable<Boolean> =
+        Observable.merge(
+            mParticipantsSubject.map { calls -> calls.map { it.mediaListObservable } },
+            hostCallObservable.map { listOf(it.mediaListObservable) }
+        ).switchMap {
+            Observable.combineLatest(it) { mediaLists ->
+                mediaLists.filterIsInstance<List<Media>>().any { mediaList ->
+                    mediaList.any { media ->
+                        media.mediaType == Media.MediaType.MEDIA_TYPE_VIDEO &&
+                                media.isEnabled &&
+                                !media.isMuted &&
+                                media.source != "camera://desktop"
+                    }
+                }
+            }
+        }
+
     fun hasAudioMedia(): Boolean {
         return mParticipants.size == 1  && mParticipants[0].hasMedia(Media.MediaType.MEDIA_TYPE_AUDIO)
     }
@@ -209,6 +233,9 @@ class Conference(val accountId: String, val id: String) {
         return hostCall?.hasActiveMedia(Media.MediaType.MEDIA_TYPE_VIDEO) == true
     }
 
+    /**
+     * Check if the conference has an active camera.
+     */
     fun hasActiveNonScreenShareVideo(): Boolean =
         (if (hostCall != null) mParticipants + hostCall!! else mParticipants).any { call ->
             call.mediaList.any { media ->
