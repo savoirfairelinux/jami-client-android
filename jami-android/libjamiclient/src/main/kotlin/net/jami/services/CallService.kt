@@ -398,10 +398,27 @@ abstract class CallService(
         }
     }
 
-    fun setLocalMediaMuted(accountId:String, callId: String, mediaType: String, mute: Boolean) {
+    fun setLocalMediaMuted(accountId: String, callId: String, mediaType: String, mute: Boolean) {
+        val conf = getConference(callId)
+        val call = conf?.firstCall ?: conf?.hostCall ?: return
+
+        val mediaList = call.mediaList
+        val proposedMediaList = mediaList.map {
+            if (it.mediaType == Media.MediaType.MEDIA_TYPE_AUDIO) {
+                it.copy(isMuted = mute)
+            } else {
+                it
+            }
+        } as MutableList
+
         mExecutor.execute {
             Log.i(TAG, "muteCapture() running…")
             JamiService.muteLocalMedia(accountId, callId, mediaType, mute)
+
+            if (call == conf?.hostCall) {
+                call.setMediaList(proposedMediaList)
+            }
+            conferenceSubject.onNext(conf)
         }
     }
 
