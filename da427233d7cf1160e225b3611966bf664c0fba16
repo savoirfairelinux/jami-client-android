@@ -69,6 +69,29 @@
       },
       "revId": "da427233d7cf1160e225b3611966bf664c0fba16",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cf97f6c1_0f8e126c",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-02-13T21:49:54Z",
+      "side": 1,
+      "message": "This, and others, might need changing to `micophone_mute` to have a consistent convention for the variable names.",
+      "range": {
+        "startLine": 562,
+        "startChar": 30,
+        "endLine": 562,
+        "endChar": 45
+      },
+      "revId": "da427233d7cf1160e225b3611966bf664c0fba16",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
