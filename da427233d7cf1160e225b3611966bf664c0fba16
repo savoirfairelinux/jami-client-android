@@ -24,6 +24,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a29d000_8f9a669b",
+        "filename": "jami-android/app/src/main/res/layout/frag_call.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-02-13T21:46:54Z",
+      "side": 1,
+      "message": "Acknowledged, should the other instances be changed to `call_end` instead?",
+      "parentUuid": "c428cc8e_9450a309",
+      "range": {
+        "startLine": 218,
+        "startChar": 46,
+        "endLine": 218,
+        "endChar": 61
+      },
+      "revId": "da427233d7cf1160e225b3611966bf664c0fba16",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1b40c2fd_26538a90",
