@@ -34,7 +34,7 @@ Make sure to have autotools, autopoint, swig, yasm, m4, ninja-build and cmake av
 ##### On Debian/Ubuntu
 
 ```sh
-apt install cmake build-essential swig yasm ninja-build m4 autotools-dev autopoint
+apt install cmake build-essential swig yasm ninja-build m4 autotools-dev autopoint libtool
 ```
 
 ##### On Arch
