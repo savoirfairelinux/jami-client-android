@@ -18,6 +18,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "082ee9e2_1975df7e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-02-13T21:44:25Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "6a40efc5_15e84d85",
+      "revId": "8b99a0f37c4c2998c0fc9c455e8ae7c0d0886cec",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3fb286cf_00850ce9",
@@ -31,6 +49,30 @@
       "writtenOn": "2024-12-05T01:58:07Z",
       "side": 1,
       "message": "Should this be `action_call_decline`? Thank you",
+      "range": {
+        "startLine": 218,
+        "startChar": 46,
+        "endLine": 218,
+        "endChar": 61
+      },
+      "revId": "8b99a0f37c4c2998c0fc9c455e8ae7c0d0886cec",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb44309a_1045f1d7",
+        "filename": "jami-android/app/src/main/res/layout/frag_call.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-02-13T21:44:25Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "3fb286cf_00850ce9",
       "range": {
         "startLine": 218,
         "startChar": 46,
