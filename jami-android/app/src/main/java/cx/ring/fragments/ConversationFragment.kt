@@ -35,6 +35,7 @@ import android.util.Log
 import android.view.*
 import android.view.animation.AnimationUtils
 import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -1177,6 +1178,15 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                 replyMessage.isVisible = true
             }
             replyGroup.isVisible = true
+
+            msgInputTxt.post {
+                if (!msgInputTxt.hasFocus()) {
+                    msgInputTxt.requestFocus()
+                    (requireContext()
+                        .getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager)
+                        ?.showSoftInput(msgInputTxt, InputMethodManager.SHOW_IMPLICIT)
+                }
+            }
         }
     }
 
