@@ -241,12 +241,8 @@ class ConversationDetailsActivity : AppCompatActivity(), ContactPickerFragment.O
                 } else {
                     binding.audioCall.setOnClickListener { goToCallActivity(conversation, conversation.uri, false) }
                     binding.videoCall.setOnClickListener { goToCallActivity(conversation, conversation.uri, true) }
-
-                    binding.conversationAvatar.setOnClickListener {
-                        conversation.contact?.let { contact ->
-                            profileImageClicked(contact, true)
-                        }
-                    }
+                    // Passing `null` for `contact` because this is a group conversation
+                    binding.conversationAvatar.setOnClickListener { profileImageClicked(null, true) }
                     binding.conversationTitle.setOnClickListener {
                         val dialogBinding = DialogSwarmTitleBinding.inflate(LayoutInflater.from(this)).apply {
                             titleTxt.setText(vm.conversationProfile.displayName)
@@ -297,7 +293,7 @@ class ConversationDetailsActivity : AppCompatActivity(), ContactPickerFragment.O
         binding.addMember.setOnClickListener { ContactPickerFragment(conversation.contacts).show(supportFragmentManager, ContactPickerFragment.TAG) }
     }
 
-    private fun profileImageClicked(contact: Contact, isGroup: Boolean) {
+    private fun profileImageClicked(contact: Contact?, isGroup: Boolean) {
         val view = DialogProfileBinding.inflate(LayoutInflater.from(this)).apply {
             camera.setOnClickListener {
                 if (mDeviceRuntimeService.hasVideoPermission())
@@ -344,11 +340,13 @@ class ConversationDetailsActivity : AppCompatActivity(), ContactPickerFragment.O
                     val avatarBase64 = Base64.encodeToString(avatarByteArray, Base64.NO_WRAP)
 
                     if (!isGroup) {
-                        val id = Base64.encodeToString(
-                            contact.primaryNumber.toByteArray(), Base64.NO_WRAP)
-                        VCardUtils.saveToCustomProfiles(null, avatarByteArray,
-                            path!!.accountId, id, applicationContext.filesDir)
-                        contact.customProfile = mContactService.loadCustomProfileData(contact, path!!.accountId)
+                        contact?.let { contact ->
+                            val id = Base64.encodeToString(
+                                contact.primaryNumber.toByteArray(), Base64.NO_WRAP)
+                            VCardUtils.saveToCustomProfiles(null, avatarByteArray,
+                                path!!.accountId, id, applicationContext.filesDir)
+                            contact.customProfile = mContactService.loadCustomProfileData(contact, path!!.accountId)
+                        }
                     } else {
                         val map: MutableMap<String, String> = HashMap()
                         map["avatar"] = avatarBase64
@@ -359,13 +357,18 @@ class ConversationDetailsActivity : AppCompatActivity(), ContactPickerFragment.O
             }
             .apply {
                 if (!isGroup) {
-                    setNeutralButton(R.string.reset) { dialog, _ ->
-                        val id = Base64.encodeToString(
-                            contact.primaryNumber.toByteArray(), Base64.NO_WRAP)
-                        VCardUtils.resetCustomProfilePicture(
-                            path!!.accountId, id, applicationContext.filesDir)
-                        contact.customProfile = mContactService.loadCustomProfileData(contact, path!!.accountId)
-                        dialog.dismiss()
+                    contact?.let { contact ->
+                        setNeutralButton(R.string.reset) { dialog, _ ->
+                            val id = Base64.encodeToString(
+                                contact.primaryNumber.toByteArray(), Base64.NO_WRAP
+                            )
+                            VCardUtils.resetCustomProfilePicture(
+                                path!!.accountId, id, applicationContext.filesDir
+                            )
+                            contact.customProfile =
+                                mContactService.loadCustomProfileData(contact, path!!.accountId)
+                            dialog.dismiss()
+                        }
                     }
                 }
             }
