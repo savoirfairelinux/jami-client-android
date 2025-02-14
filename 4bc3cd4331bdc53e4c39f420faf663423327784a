@@ -24,6 +24,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f59a819c_f3ab3cae",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-02-14T03:35:25Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "a0371685_b8db13a3",
+      "range": {
+        "startLine": 601,
+        "startChar": 18,
+        "endLine": 601,
+        "endChar": 50
+      },
+      "revId": "4bc3cd4331bdc53e4c39f420faf663423327784a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "058a18d9_d6e9303a",
@@ -37,6 +61,30 @@
       "writtenOn": "2025-02-14T03:34:33Z",
       "side": 1,
       "message": "`looking_for_username_availability` should be changed to `checking_username_availability`. Can this please be done in another patch unless someone wants to take over this patch? Thank you",
+      "range": {
+        "startLine": 279,
+        "startChar": 18,
+        "endLine": 279,
+        "endChar": 51
+      },
+      "revId": "4bc3cd4331bdc53e4c39f420faf663423327784a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "61c041e1_76a5376f",
+        "filename": "jami-android/app/src/main/res/values/strings_account.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-02-14T03:35:25Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "058a18d9_d6e9303a",
       "range": {
         "startLine": 279,
         "startChar": 18,
