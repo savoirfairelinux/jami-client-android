@@ -269,14 +269,14 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="no_registered_name_for_account">No registered username</string>
     <string name="username_available">The username is available.</string>
     <string name="register_name">Register Name</string>
-    <string name="trying_to_register_name">Attempting to register username</string>
+    <string name="trying_to_register_name">Registration of the username is in progress. Please wait…</string>
     <string name="registered_username">Registered username</string>
     <string name="register_username">Register public username</string>
     <string name="register_recommended">Recommended</string>
     <string name="username_already_taken">Username already taken</string>
     <string name="invalid_username">Invalid username</string>
     <string name="unknown_error">Unknown error. Please check your network connection!</string>
-    <string name="looking_for_username_availability">Looking for username availability…</string>
+    <string name="looking_for_username_availability">Checking username availability…</string>
     <string name="account_status_connecting">Connecting</string>
     <string name="account_status_connection_error">Connection error</string>
     <string name="account_status_online">Online</string>
