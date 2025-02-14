@@ -107,7 +107,7 @@ object ContentUri {
         }
     }
 
-    class ShareItem(val type: String, val data: Uri? = null, val text: CharSequence? = null)
+    data class ShareItem(val type: String, val data: Uri? = null, val text: CharSequence? = null)
 
     fun getShareItems(context: Context, intent: Intent): List<ShareItem> {
         val mediaList = mutableListOf<ShareItem>()
@@ -116,7 +116,7 @@ object ContentUri {
             mediaList.add(ShareItem(type, text = intent.getStringExtra(Intent.EXTRA_TEXT)))
         } else {
             val intentUri = intent.data
-            if (intentUri != null)
+            if (intentUri != null && intentUri.scheme != null)
                 mediaList.add(ShareItem(type, intentUri))
             val cr = context.contentResolver
             intent.clipData?.let { clips ->
