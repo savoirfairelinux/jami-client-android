@@ -276,7 +276,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="username_already_taken">Username already taken</string>
     <string name="invalid_username">Invalid username</string>
     <string name="unknown_error">Unknown error. Please check your network connection!</string>
-    <string name="looking_for_username_availability">Looking for username availability…</string>
+    <string name="looking_for_username_availability">Checking username availability…</string>
     <string name="account_status_connecting">Connecting</string>
     <string name="account_status_connection_error">Connection error</string>
     <string name="account_status_online">Online</string>
