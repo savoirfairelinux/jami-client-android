@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "09b8a35b_5a87382a",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-02-14T08:48:48Z",
+      "side": 0,
+      "message": "Should\n`\\n• 32 characters maximum\\n• Special characters allowed: dash (-), underscore (_)`\nbe removed as this information is a duplicate of\n`string name\u003d\"jami_id_info\"`\n?\n\nThank you",
+      "range": {
+        "startLine": 599,
+        "startChar": 70,
+        "endLine": 599,
+        "endChar": 151
+      },
+      "revId": "aa0b08edb841c1b344e4df793390ba22aa36b096",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
