@@ -83,8 +83,8 @@
     <string name="pref_block_record_title">Block screenshot and recording</string>
     <string name="pref_block_record_summary">Block taking screenshot or record video.</string>
 
-    <string name="pref_link_preview_title">Show link previews in conversations</string>
-    <string name="pref_link_preview_summary">Previews require to download content from third-party servers.</string>
+    <string name="pref_link_preview_title">Web link previews</string>
+    <string name="pref_link_preview_summary">Preview requires downloading content from third-party servers.</string>
 
     <!-- Notifications Visibility -->
     <string name="notification_public">Public\n(show notifications and their content on lock screen)\n</string>
