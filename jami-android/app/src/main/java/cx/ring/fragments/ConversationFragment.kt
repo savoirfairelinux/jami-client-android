@@ -181,6 +181,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         marginPxTotal = res.getDimensionPixelSize(R.dimen.conversation_message_input_margin)
 
         return FragConversationBinding.inflate(inflater, container, false).apply {
+            currentBottomView = cvMessageInput
             animation.duration = 150
             animation.addUpdateListener { valueAnimator: ValueAnimator ->
                 histList.updatePadding(bottom = valueAnimator.animatedValue as Int)
@@ -1064,7 +1065,11 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             trustRequestPrompt.visibility = View.GONE
             trustRequestMessageLayout.visibility = View.GONE
             currentBottomView = cvMessageInput
-            histList.updatePadding(bottom = cvMessageInput.height + marginPxTotal)
+            cvMessageInput.doOnNextLayout {
+                cvMessageInput.height.takeIf { it > 0 }?.let {
+                    histList.updatePadding(bottom = it + marginPxTotal)
+                }
+            }
         }
     }
 

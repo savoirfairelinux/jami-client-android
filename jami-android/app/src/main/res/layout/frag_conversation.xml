@@ -334,7 +334,7 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="8dp"
                 android:minHeight="48dp"
-                android:visibility="gone"
+                android:visibility="invisible"
                 app:cardCornerRadius="@dimen/conversation_message_input_radius"
                 app:cardElevation="4dp"
                 tools:visibility="visible">
