@@ -386,8 +386,8 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="add_call_contact_number_to_contacts">Add %1$s?</string>
     <string name="prompt_new_password">New password</string>
     <string name="prompt_new_password_optional">New password (optional)</string>
-    <string name="prompt_new_password_repeat">Repeat new password</string>
-    <string name="account_create_title">Join Jami</string>
+    <string name="prompt_new_password_repeat">Confirm new password</string>
+    <string name="account_create_title">Create Jami account</string>
     <string name="prompt_new_username">Enter new username</string>
     <string name="prompt_hint_username">Username</string>
     <string name="help_password_choose">Choose a strong password you will remember to protect your Jami account.</string>
@@ -409,9 +409,8 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <!-- Account summary -->
     <string name="profile">Profile</string>
     <string name="profile_name">Profile name</string>
-    <string name="profile_message_warning">Your profile is only shared with your contacts</string>
-    <string name="custom_profile_message_warning">Your custom profile is only visible to this
-        account on this device</string>
+    <string name="profile_message_warning">The profile is only shared with the account contacts</string>
+    <string name="custom_profile_message_warning">The custom profile is only visible to the account on this device</string>
     <string name="open_the_gallery">Open the gallery</string>
     <string name="take_a_photo">Take photo</string>
     <string name="remove_photo">Remove photo</string>
@@ -466,25 +465,25 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="generic_error">An unknown error occurred.</string>
 
     <!--File Transfer-->
-    <string name="invalid_file">Invalid file</string>
-    <string name="not_able_to_write_file">Not able to write file</string>
-    <string name="file_transfer_status_created">initializing transfer</string>
-    <string name="file_transfer_status_unsupported">unsupported</string>
-    <string name="file_transfer_status_wait_peer_acceptance">waiting peer acceptance</string>
-    <string name="file_transfer_status_wait_host_acceptance">waiting host acceptance</string>
-    <string name="file_transfer_status_ongoing">ongoing</string>
-    <string name="file_transfer_status_finished">finished</string>
-    <string name="file_transfer_status_closed_by_host">closed by host</string>
-    <string name="file_transfer_status_closed_by_peer">close by peer</string>
-    <string name="file_transfer_status_invalid_pathname">invalid pathname</string>
-    <string name="file_transfer_status_unjoinable_peer">unjoinable peer</string>
-    <string name="file_transfer_status_cancelled">cancelled</string>
-    <string name="file_transfer_status_error">failed due to error</string>
-    <string name="file_transfer_status_timed_out">timed out</string>
-    <string name="file_saved_in">File saved in %s</string>
+    <string name="invalid_file">Invalid file.</string>
+    <string name="not_able_to_write_file">Unable to write the file.</string>
+    <string name="file_transfer_status_created">Initializing</string>
+    <string name="file_transfer_status_unsupported">Unsupported</string>
+    <string name="file_transfer_status_wait_peer_acceptance">Waiting for peer to accept…</string>
+    <string name="file_transfer_status_wait_host_acceptance">Waiting for host to accept…</string>
+    <string name="file_transfer_status_ongoing">In progress</string>
+    <string name="file_transfer_status_finished">Completed</string>
+    <string name="file_transfer_status_closed_by_host">Closed by host</string>
+    <string name="file_transfer_status_closed_by_peer">Closed by peer</string>
+    <string name="file_transfer_status_invalid_pathname">Invalid pathname</string>
+    <string name="file_transfer_status_unjoinable_peer">Unreachable peer</string>
+    <string name="file_transfer_status_cancelled">Cancelled</string>
+    <string name="file_transfer_status_error">An error occurred while transferring the file.</string>
+    <string name="file_transfer_status_timed_out">Timed out</string>
+    <string name="file_saved_in">File saved in %s.</string>
     <string name="file_saved_successfully">File saved successfully.</string>
     <string name="file_download">Download</string>
-    <string name="no_space_left_on_device">No storage space available on the device</string>
+    <string name="no_space_left_on_device">No storage space available on the device.</string>
     <string name="title_media_viewer">Media viewer</string>
     <string name="menu_file_open">Open file</string>
     <string name="menu_file_download">Download file</string>
@@ -523,7 +522,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="conversation_input_speech_hint">Say something…</string>
     <string name="audio_permission_denied">Microphone permission is disabled. Enable it in device settings in order to use this feature.</string>
     <string name="camera_permission_denied">Camera permission is disabled. Enable it in device settings in order to use this feature.</string>
-    <string name="speech_recogniton_unavailable">Speech recognition is not available.</string>
+    <string name="speech_recogniton_unavailable">Speech recognition is unavailable.</string>
     <string name="audio_permission_rationale_title">Audio permission required</string>
     <string name="camera_permission_rationale_title">Camera permission required</string>
     <string name="audio_permission_rationale_message">Jami requires the microphone permission to use speech-to-text and record audio features. It will be asked in the next step.</string>
@@ -595,10 +594,10 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="jami_id_copy">Copy JamiId</string>
     <string name="jami_id_share">Share JamiId</string>
     <string name="jami_id_validate">Register username</string>
-    <string name="jami_id_available">The username is available</string>
-    <string name="jami_id_not_available">The username is not available\n• 32 characters maximum\n• Special characters allowed: dash (-), underscore (_)</string>
+    <string name="jami_id_available">The username is available.</string>
+    <string name="jami_id_not_available">The username is unavailable.</string>
     <string name="jami_id_info">• 32 characters maximum\n• Allowed special characters: dash (-), underscore (_)</string>
-    <string name="jami_id_looking_for_availability">Looking for username availability…</string>
+    <string name="jami_id_looking_for_availability">Checking username availability…</string>
     <string name="jami_id_choose_username">Choose a username</string>
 
     <!--  WelcomeJami  -->
@@ -616,7 +615,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="mute_conversation">Mute conversation</string>
 
     <!-- Donation -->
-    <string name="donation_card_description">If you enjoy using Jami and believe in our mission, would you make a donation?</string>
+    <string name="donation_card_description">If you enjoy using Jami and believe in our mission, do you want to make a donation?</string>
     <string name="donation_card_not_now">Not now</string>
     <string name="donation_donate">Donate</string>
     <string name="donation_setting_title">Donation reminder</string>
