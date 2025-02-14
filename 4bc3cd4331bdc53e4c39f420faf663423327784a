@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a0371685_b8db13a3",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-02-14T03:33:16Z",
+      "side": 1,
+      "message": "`jami_id_looking_for_availability` should be renamed to `jami_id_checking_availability`. Can this please be done in another patch unless someone wants to take over this patch? Thank you",
+      "range": {
+        "startLine": 601,
+        "startChar": 18,
+        "endLine": 601,
+        "endChar": 50
+      },
+      "revId": "4bc3cd4331bdc53e4c39f420faf663423327784a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
