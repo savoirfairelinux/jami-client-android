@@ -23,7 +23,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import cx.ring.R
-import cx.ring.databinding.ItemToolbarSpinnerBinding
+import cx.ring.databinding.ItemAccountBinding
 import cx.ring.utils.DeviceUtils
 import cx.ring.views.AvatarDrawable
 import io.reactivex.rxjava3.core.Observable
@@ -32,7 +32,6 @@ import net.jami.model.Account
 import net.jami.model.Profile
 import net.jami.services.AccountService
 import net.jami.services.ConversationFacade
-
 
 /**
  * Adapter allowing to select account user want to use.
@@ -43,13 +42,12 @@ class AccountAdapter(
     val disposable: CompositeDisposable,
     var mAccountService: AccountService,
     var mConversationFacade: ConversationFacade,
-) : ArrayAdapter<Account>(context, R.layout.item_toolbar_spinner, accounts) {
+) : ArrayAdapter<Account>(context, R.layout.item_account, accounts) {
 
     private val mInflater: LayoutInflater = LayoutInflater.from(context)
     private val ip2ipString = context.getString(R.string.account_type_ip2ip)
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-
         // Try to recycle the view
         val holder: ViewHolder
         var view = convertView
@@ -61,11 +59,11 @@ class AccountAdapter(
             holder.binding.subtitle.text = null
         } else { // Create a new view
             holder = ViewHolder(
-                ItemToolbarSpinnerBinding.inflate(mInflater, parent, false),
+                ItemAccountBinding.inflate(mInflater, parent, false),
                 disposable
             )
             view = holder.binding.root
-            view.setTag(holder)
+            view.tag = holder
         }
 
         // Items can be:
@@ -149,7 +147,7 @@ class AccountAdapter(
             }
         }
 
-    private class ViewHolder(val binding: ItemToolbarSpinnerBinding, parentDisposable: CompositeDisposable) {
+    private class ViewHolder(val binding: ItemAccountBinding, parentDisposable: CompositeDisposable) {
         val loader = CompositeDisposable().apply { parentDisposable.add(this) }
     }
 

@@ -1,96 +1,69 @@
-<?xml version="1.0" encoding="utf-8"?><!-- Copyright (C) 2016-2025 Savoir-faire Linux Inc.
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
--->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="60dp"
-    android:background="?android:attr/selectableItemBackground"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:paddingTop="8dp">
+    android:layout_height="wrap_content"
+    android:padding="16dp">
 
     <ImageView
-        android:id="@+id/account_photo"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="16dp"
-        tools:src="@drawable/ic_contact_picture_fallback" />
+        android:id="@+id/logo"
+        android:layout_width="@dimen/list_medium_icon_size"
+        android:layout_height="@dimen/list_medium_icon_size"
+        android:contentDescription="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/baseline_account_circle_white_36"
+        tools:tint="@color/black" />
 
     <TextView
-        android:id="@+id/account_alias"
-        android:layout_width="wrap_content"
+        android:id="@+id/title"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_toEndOf="@id/account_photo"
-        android:layout_toStartOf="@id/account_disabled"
+        android:layout_marginHorizontal="16dp"
         android:ellipsize="end"
-        android:lines="1"
-        android:textAppearance="@style/ListPrimary"
-        tools:text="Ring account" />
-
-    <TextView
-        android:id="@+id/account_disabled"
-        style="@style/TextAppearance.MaterialComponents.Subtitle2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@id/account_alias"
-        android:layout_alignWithParentIfMissing="true"
-        android:layout_marginStart="8dp"
-        android:layout_toStartOf="@id/loading_indicator"
-        android:text="@string/account_disabled_indicator"
-        android:textStyle="italic" />
-
-    <TextView
-        android:id="@+id/account_host"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="false"
-        android:layout_below="@id/account_alias"
-        android:layout_toEndOf="@id/account_photo"
-        android:layout_toStartOf="@id/loading_indicator"
-        android:ellipsize="middle"
+        android:maxLines="1"
         android:singleLine="true"
-        android:textAppearance="@style/ListSecondary"
-        tools:text="ring:b982672502b9f1236a68353d74734cb82f9d1fab" />
+        android:textColor="@color/colorOnSurface"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@id/subtitle"
+        app:layout_constraintEnd_toStartOf="@id/invitation_badge"
+        app:layout_constraintStart_toEndOf="@id/logo"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Account Name" />
 
-    <ProgressBar
-        android:id="@+id/loading_indicator"
-        style="?android:attr/progressBarStyleSmall"
+    <TextView
+        android:id="@+id/subtitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:ellipsize="middle"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textColor="@color/grey_700"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/invitation_badge"
+        app:layout_constraintStart_toEndOf="@id/logo"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        tools:text="accounturi" />
+
+    <TextView
+        android:id="@+id/invitation_badge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignWithParentIfMissing="true"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="16dp"
-        android:layout_toStartOf="@id/error_indicator"
-        android:visibility="gone" />
-
-    <ImageView
-        android:id="@+id/error_indicator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="16dp"
-        android:clickable="false"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-        app:tint="@color/colorError"
+        android:background="@drawable/background_unread_counter"
+        android:backgroundTint="@color/colorSecondary"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="5dp"
+        android:textColor="@color/invitation_card_on_badge_text_color"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         android:visibility="gone"
-        app:srcCompat="@drawable/baseline_error_24" />
+        tools:text="4"
+        tools:visibility="visible"/>
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
