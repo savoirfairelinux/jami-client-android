@@ -145,7 +145,6 @@
   <string name="delete_contact">Izbriši kontakt</string>
   <string name="conversation_action_remove_this_title">Obrisati ovaj kontakt?</string>
   <string name="conversation_action_remove_this_message">Ovo će obrisati kontakt i definitivno obrisati povijest razgovora.</string>
-  <string name="copied_to_clipboard">%1$s kopiran u međuspremnik</string>
   <string name="conversation_action_select_peer_number">Odaberite broj</string>
   <string name="conversation_action_block_this">Blokiraj kontakt</string>
   <string name="conversation_action_unblock_this">Otključaj kontakt</string>
@@ -171,9 +170,6 @@
   <string name="conversation_type_contact">Kontakt s Jamijem</string>
   <string name="conversation_type_private">Privredni</string>
   <string name="conversation_type_group">Grupa</string>
-  <string name="conversation_contact_invited">%1$s je pozvan</string>
-  <string name="conversation_contact_added">%1$s se pridružio</string>
-  <string name="conversation_contact_left">%1$s je lijevo</string>
   <string name="conversation_search_hint">Razgovor za pretragu</string>
   <string name="today">Danas</string>
   <string name="yesterday">Jučer</string>
@@ -182,7 +178,7 @@
   <string name="prompt_new_password">Nova lozinka</string>
   <string name="prompt_new_password_optional">Nova lozinka (opcionalno)</string>
   <string name="prompt_new_password_repeat">Ponovite novu lozinku</string>
-  <string name="account_create_title">Napravite Jami račun</string>
+  <string name="account_create_title">Pridruži se Jamiju.</string>
   <string name="prompt_new_username">Unesite novo korisničko ime</string>
   <string name="prompt_hint_username">Korisničko ime</string>
   <string name="help_password_choose">Odaberite jaku lozinku koje ćete se sjećati da biste zaštitili vaš Jami račun.</string>
@@ -207,6 +203,7 @@
   <string name="identifier">Identifikacija</string>
   <string name="account">Račun</string>
   <string name="link_new_device">Povežite novi uređaj</string>
+  <string name="devices_header">Uređaji</string>
   <string name="devices">Povezani uređaji</string>
   <string name="total_devices">Ukupna količina uređaja: </string>
   <!--Share fragment-->
@@ -249,7 +246,6 @@
   <string name="file_transfer_status_error">Nepostignut zbog pogreške</string>
   <string name="file_transfer_status_timed_out">vrijeme</string>
   <string name="file_saved_in">Datoteka je spremljena u %s</string>
-  <string name="file_saved_successfully">Dosje uspješno spisano</string>
   <string name="file_download">Snimka</string>
   <string name="title_media_viewer">Sredni gledatelj</string>
   <string name="menu_file_open">Otvori datoteku</string>

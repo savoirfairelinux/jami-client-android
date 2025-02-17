@@ -154,7 +154,6 @@
   <string name="delete_contact">Usuń kontakt</string>
   <string name="conversation_action_remove_this_title">Usunąć ten kontakt?</string>
   <string name="conversation_action_remove_this_message">To usunie kontakt i całkowicie wyczyści historię rozmowy.</string>
-  <string name="copied_to_clipboard">%1$s skopiowany do schowka</string>
   <string name="conversation_action_select_peer_number">Wybierz numer</string>
   <string name="conversation_action_block_this">Blokuj kontakt</string>
   <string name="conversation_action_unblock_this">Odblokuj kontakt</string>
@@ -182,9 +181,6 @@
   <string name="conversation_type_contact">Kontakty Jami</string>
   <string name="conversation_type_private">Prywatne</string>
   <string name="conversation_type_group">Grupa</string>
-  <string name="conversation_contact_invited">Zaproszono %1$s</string>
-  <string name="conversation_contact_added">%1$s dołączony</string>
-  <string name="conversation_contact_left">%1$s opuścił rozmowę</string>
   <string name="conversation_search_hint">Przeszukaj konwersację</string>
   <string name="audio_recorder_error">Nie znaleziono aplikacji rejestratora dźwięku.</string>
   <string name="video_recorder_error">Nie znaleziono aplikacji do nagrywania wideo.</string>
@@ -202,7 +198,7 @@
   <string name="prompt_new_password">Nowe hasło</string>
   <string name="prompt_new_password_optional">Nowe hasło (opcjonalnie)</string>
   <string name="prompt_new_password_repeat">Powtórz nowe hasło</string>
-  <string name="account_create_title">Utwórz konto Jami</string>
+  <string name="account_create_title">Dołącz do Jami</string>
   <string name="prompt_new_username">Wprowadź nową nazwę użytkownika</string>
   <string name="prompt_hint_username">Nazwa użytkownika</string>
   <string name="help_password_choose">Wybierz silne hasło, które zapamiętasz, by chronić swoje konto Jami.</string>
@@ -215,6 +211,7 @@
   <string name="hist_contact_invited">Kontakt zaproszony</string>
   <string name="hist_contact_added">Kontakt dodany</string>
   <string name="hist_contact_left">Kontakt opuścił</string>
+  <string name="hist_contact_blocked">Kontakt zablokowany</string>
   <string name="hist_invitation_received">Otrzymano zaproszenie</string>
   <!--Account summary-->
   <string name="profile">Profil</string>
@@ -229,6 +226,7 @@
   <string name="identifier">Identyfikator</string>
   <string name="account">Konto</string>
   <string name="link_new_device">Połącz nowe urządzenie</string>
+  <string name="devices_header">Urządzenia</string>
   <string name="devices">Połączone urządzenia</string>
   <string name="total_devices">Wszystkich urządzeń:</string>
   <!--Share fragment-->
@@ -271,7 +269,6 @@
   <string name="file_transfer_status_error">Nie udało się, bo wystąpił błąd</string>
   <string name="file_transfer_status_timed_out">Czas upłynął</string>
   <string name="file_saved_in">Plik zapisano w  %s</string>
-  <string name="file_saved_successfully">Plik został zapisany poprawnie</string>
   <string name="file_download">Pobierz</string>
   <string name="title_media_viewer">Przeglądarka mediów</string>
   <string name="menu_file_open">Otwórz plik</string>
@@ -344,6 +341,7 @@
   <string name="reset">Zresetuj</string>
   <!--Swarm Details-->
   <string name="rename_btn">Potwierdź</string>
+  <string name="swarm_description">Dodaj opis</string>
   <string name="tab_members">Użytkownicy</string>
   <string name="tab_files">Pliki</string>
   <string name="tab_settings">Ustawienia</string>
@@ -369,6 +367,7 @@
   <string name="welcome_jami_description">Udostępnij swój identyfikator Jami aby ułatwić skontaktowanie się z Tobą!</string>
   <!--Conversation details-->
   <string name="details">Szczegóły</string>
+  <string name="swarm_type">Typ konwersacji</string>
   <string name="Private">Prywatne</string>
   <string name="mute_conversation">Wycisz konwersację</string>
   <!--Donation-->

@@ -150,7 +150,6 @@
   <string name="delete_contact">Esborrar contacte</string>
   <string name="conversation_action_remove_this_title">Esborrar aquest contacte?</string>
   <string name="conversation_action_remove_this_message">Això esborrarà el contacte i netejarà definitivament l\'historial de converses.</string>
-  <string name="copied_to_clipboard">%1$s copiat al porta-retalls</string>
   <string name="conversation_action_select_peer_number">Seleccioneu un número</string>
   <string name="conversation_action_block_this">Bloqueja el contacte</string>
   <string name="conversation_action_unblock_this">Desbloca contacte</string>
@@ -176,9 +175,6 @@
   <string name="conversation_preference_emoji">Emoticona de conversa</string>
   <string name="conversation_type_contact">Contacte de Jami</string>
   <string name="conversation_type_private">Privat</string>
-  <string name="conversation_contact_invited">%1$s ha estat convidat</string>
-  <string name="conversation_contact_added">%1$s s\'ha unit</string>
-  <string name="conversation_contact_left">%1$s ha sortit</string>
   <string name="conversation_search_hint">Conversació de cerca</string>
   <string name="starting_camera_error">Ha succeït un error iniciant la càmera</string>
   <string name="today">Avui</string>
@@ -188,7 +184,6 @@
   <string name="prompt_new_password">Contrasenya nova</string>
   <string name="prompt_new_password_optional">Contrasenya nova (opcional)</string>
   <string name="prompt_new_password_repeat">Torneu a inserir la contrasenya nova</string>
-  <string name="account_create_title">Crear un compte Jami</string>
   <string name="prompt_new_username">Escriviu un nom d\'usuari</string>
   <string name="prompt_hint_username">Nom d\'usuari</string>
   <string name="help_password_choose">Escull una contrasenya forta que puguis recordar per protegir el teu compte Jami.</string>
@@ -214,6 +209,7 @@
   <string name="identifier">Identificador</string>
   <string name="account">Compte</string>
   <string name="link_new_device">Enllaça un nou dispositiu</string>
+  <string name="devices_header">Dispositius</string>
   <string name="devices">Dispositius enllaçats</string>
   <string name="total_devices">Total de dispositius:</string>
   <!--Share fragment-->
@@ -256,7 +252,6 @@
   <string name="file_transfer_status_error">Fallada per un error</string>
   <string name="file_transfer_status_timed_out">Temps esgotat</string>
   <string name="file_saved_in">Fitxer desat a %s</string>
-  <string name="file_saved_successfully">Fitxer desat amb èxit</string>
   <string name="file_download">Descarrega</string>
   <string name="title_media_viewer">Visor de medis</string>
   <string name="menu_file_open">Obre fitxer</string>

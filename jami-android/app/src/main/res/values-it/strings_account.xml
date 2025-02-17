@@ -56,9 +56,10 @@ Si potra modificare questo account più tardi.</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Generali</string>
   <string name="account_basic_category">Impostazioni di base</string>
-  <string name="account_alias_label">Nome dell\'account</string>
+  <string name="account_alias_label">Nome visualizzato</string>
   <string name="account_hostname_label">Nome host</string>
   <string name="account_bootstrap_label">Server di avvio</string>
+  <string name="account_name_server_label">Server dei nomi</string>
   <string name="account_username_label">Nome utente</string>
   <string name="account_password_label">Password</string>
   <string name="account_optionnal_category">Impostazione facoltative</string>
@@ -107,8 +108,10 @@ Si potra modificare questo account più tardi.</string>
   <string name="account_published_same_as_local_label">Pubblico uguale a quello locale</string>
   <string name="account_published_port_label">Porta pubblicata</string>
   <string name="account_published_address_label">Indirizzo pubblicato</string>
+  <string name="account_connectivity_label">Connessione peer-to-peer</string>
   <string name="disabled">Disabilitato</string>
   <string name="enabled">Attivato</string>
+  <string name="default_value">Predefinito</string>
   <string name="account_proxy_label">Proxy DHT</string>
   <string name="account_proxy_enable_label">Usa proxy DHT</string>
   <string name="account_proxy_list_enable_label">Usa lista proxy DHT</string>
@@ -137,9 +140,9 @@ Si potra modificare questo account più tardi.</string>
   <string name="account_tls_method_label">Metodo TLS</string>
   <string name="account_tls_ciphers_label">Cifratura TLS</string>
   <string name="account_tls_server_name_label">Nome server</string>
-  <string name="account_tls_verify_server_label">Verificare Server</string>
-  <string name="account_tls_verify_client_label">Verificare Client</string>
-  <string name="account_require_client_certificate_label">TLS Richiede certificato Client</string>
+  <string name="account_tls_verify_server_label">Verifica server</string>
+  <string name="account_tls_verify_client_label">Verifica client</string>
+  <string name="account_require_client_certificate_label">TLS richiede certificato client</string>
   <string name="account_tls_negotiation_timeout_sec">Tempo di negoziazione (sec)</string>
   <string name="account_rtp_max_port">Massimo</string>
   <string name="account_rtp_min_port">Minimo</string>
@@ -147,7 +150,7 @@ Si potra modificare questo account più tardi.</string>
   <!--restore/backup-->
   <string name="account_new_device_password">Inserire la password per sbloccare l\'account</string>
   <string name="error_password_char_count">6 caratteri minimo</string>
-  <string name="error_passwords_not_equals">Le password no corrispondono</string>
+  <string name="error_passwords_not_equals">Le password non corrispondono.</string>
   <string name="export_account_wait_title">Attendere…</string>
   <string name="export_account_wait_message">Esportazione dell\'account in corso</string>
   <string name="account_export_file">Salva l\'account</string>
@@ -196,13 +199,13 @@ Si potra modificare questo account più tardi.</string>
   <string name="account_link_device">Connettiti da un altro dispositivo</string>
   <string name="account_link_button">Connetti dalla rete</string>
   <string name="account_link_archive_button">Connetti dal backup</string>
-  <string name="account_link_prompt_pin">Inserire il PIN</string>
-  <string name="account_new_button">Crea un account Jami</string>
+  <string name="account_link_prompt_pin">Inserire il codice PIN</string>
+  <string name="account_new_button">Usa Jami</string>
   <string name="account_link_export_button">Associa un altro dispositivo</string>
   <string name="account_link_show_button">Mostra %d altri dispositivi associati</string>
   <string name="account_link_hide_button">Nascondi i dispositivi associati</string>
   <string name="account_link_export_info">Per utilizzare questo account su altri dispositivi, devi prima esporlo su Jami. Questo genererà un codice PIN che devi inserire sul nuovo dispositivo per configurare l\'account. Il PIN è valido per 10 minuti.</string>
-  <string name="account_start_export_button">Genera PIN</string>
+  <string name="account_start_export_button">Genera codice PIN</string>
   <string name="account_end_export_button">chiudi</string>
   <string name="account_end_export_infos">Il tuo PIN è:\n\n%%\n\nPer completare la procedura, è necessario aprire Jami sul nuovo dispositivo. Crea un nuovo account con \"Associa questo dispositivo a un account\". Il tuo PIN è valido per 10 minuti.</string>
   <string name="account_link_export_info_light">Per utilizzare questo account su altri dispositivi, devi prima esporlo su Jami. Questo genererà un codice PIN che devi inserire sul nuovo dispositivo per configurare l\'account. Il PIN è valido per 10 minuti.</string>
@@ -219,9 +222,9 @@ Si potra modificare questo account più tardi.</string>
   <!--Name registration-->
   <string name="error_username_empty">Inserire un nome utente</string>
   <string name="no_registered_name_for_account">Nessun nome registrato</string>
-  <string name="username_available">Nome utente disponibile!</string>
+  <string name="username_available">Il nome utente è disponibile.</string>
   <string name="register_name">Registra nome</string>
-  <string name="trying_to_register_name">Tentativo di registrazione del nome</string>
+  <string name="trying_to_register_name">Tentativo di registrazione del nome utente</string>
   <string name="registered_username">Nome utente registrato</string>
   <string name="register_username">Registra nome utente pubblico</string>
   <string name="register_recommended">Consigliato</string>
@@ -247,11 +250,11 @@ Si potra modificare questo account più tardi.</string>
   <string name="account_revoke_device_hint">Inserire la password per confermare</string>
   <string name="enter_password">Inserire la password</string>
   <string name="revoke_device_title">Revoca dispositivo</string>
-  <string name="revoke_device_message">Vuoi davvero revocare %1$s?</string>
+  <string name="revoke_device_message">Vuoi revocare %1$s?</string>
   <string name="revoke_device_wait_title">Attendere…</string>
   <string name="revoke_device_wait_message">Revoca in corso</string>
   <string name="rename_device_title">Rinomina questo dispositivo</string>
-  <string name="rename_device_message">Scegli un nuovo nome per identificare questo dispositivo nel tuo account Jami</string>
+  <string name="rename_device_message">Immettere il nome del dispositivo per identificarlo nell\'account Jami</string>
   <string name="rename_device_button">Rinomina dispositivo</string>
   <string name="account_rename_device_hint">Scegli il nuovo nome del dispositivo</string>
   <string name="account_device_name_empty">Il nome del dispositivo non può essere vuoto.</string>
@@ -270,12 +273,12 @@ Si potra modificare questo account più tardi.</string>
   <string name="account_link_device_info">Scegliere \"Associa un altro dispositivo\" dall\'altra applicazione Jami per mostrare il codice QR o il PIN.</string>
   <string name="account_generate_export_device">Nell\'altro dispositivo</string>
   <string name="account_generate_export_info">Installa e avvia Jami, seleziona \"Importa da un altro dispositivo\" e scansiona il codice QR.</string>
-  <string name="content_description_qr_generated">Il tuo codice QR</string>
-  <string name="account_generate_export_invalid">Il PIN non è più valido.\nInserire la password e generare un altro PIN per associare il nuovo dispositivo.</string>
-  <string name="account_generate_export_invalid_two">Il PIN non è più valido.\nGenerare un altro PIN per associare il nuovo dispositivo.</string>
+  <string name="content_description_qr_generated">Codice QR dell\'account</string>
+  <string name="account_generate_export_invalid">Il codice PIN non è più valido.\nInserire la password e generare un altro PIN per associare il nuovo dispositivo.</string>
+  <string name="account_generate_export_invalid_two">Il codice PIN non è più valido.\nGenerare un altro PIN per associare il nuovo dispositivo.</string>
   <string name="help_pin_info">Compilare se l\'account ha una password</string>
-  <string name="connect_device_scanqr">Scansiona QR</string>
-  <string name="connect_device_enterPIN">O inserire il PIN</string>
+  <string name="connect_device_scanqr">Scansione del codice QR</string>
+  <string name="connect_device_enterPIN">O inserire il codice PIN</string>
   <string name="account_link_device_button">Connetti</string>
   <!--Biometry-->
   <string name="account_biometry_auth_title">Sblocca l\'account Jami</string>

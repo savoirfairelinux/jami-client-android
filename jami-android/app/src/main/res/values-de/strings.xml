@@ -185,7 +185,7 @@
   <string name="swarm_group_action_leave_title">Diese Gruppe verlassen?</string>
   <string name="swarm_group_action_leave_message">Dadurch wird die Unterhaltung aus Ihrer Unterhaltungsliste entfernt</string>
   <string name="conversation_action_copy_peer_number">Kontakt-ID kopieren</string>
-  <string name="copied_to_clipboard">%1$s in die Zwischenablage kopiert</string>
+  <string name="copied_to_clipboard">%1$sin die Zwischenablage kopiert.</string>
   <string name="conversation_action_select_peer_number">Eine Nummer auswählen</string>
   <string name="conversation_action_block_this">Kontakt blockieren</string>
   <string name="conversation_action_unblock_this">Blockierung des Kontakts aufheben</string>
@@ -214,11 +214,11 @@
   <string name="conversation_type_contact">Jami-Kontakt</string>
   <string name="conversation_type_private">Privat</string>
   <string name="conversation_type_group">Gruppe</string>
-  <string name="conversation_contact_invited">%1$s wurde eingeladen</string>
-  <string name="conversation_contact_added">%1$s ist beigetreten</string>
-  <string name="conversation_contact_left">%1$s hat die Unterhaltung verlassen</string>
-  <string name="conversation_contact_blocked">%1$s wurde blockiert</string>
-  <string name="conversation_contact_unblocked">Blockierung von %1$swurde aufgehoben</string>
+  <string name="conversation_contact_invited">%1$swurde zur Unterhaltung eingeladen.</string>
+  <string name="conversation_contact_added">%1$sist der Unterhaltung beigetreten.</string>
+  <string name="conversation_contact_left">%1$shat die Unterhaltung verlassen.</string>
+  <string name="conversation_contact_blocked">%1$s wurde in der Unterhaltung blockiert.</string>
+  <string name="conversation_contact_unblocked">%1$swurde in der Unterhaltung entblockt.</string>
   <string name="conversation_search_hint">Unterhaltung durchsuchen</string>
   <string name="audio_recorder_error">Die Audiorecorder-App wurde nicht gefunden.</string>
   <string name="video_recorder_error">Die Videorecorder-App wurde nicht gefunden.</string>
@@ -240,7 +240,7 @@
   <string name="prompt_new_password">Neues Passwort</string>
   <string name="prompt_new_password_optional">Neues Passwort (optional)</string>
   <string name="prompt_new_password_repeat">Neues Passwort wiederholen</string>
-  <string name="account_create_title">Ein Jami-Konto erstellen</string>
+  <string name="account_create_title">Mitmachen bei Jami</string>
   <string name="prompt_new_username">Neuen Benutzernamen eingeben</string>
   <string name="prompt_hint_username">Benutzername</string>
   <string name="help_password_choose">Wählen Sie ein sicheres Passwort, an das Sie sich erinnern können, um Ihr Jami-Konto zu schützen.</string>
@@ -248,6 +248,7 @@
   <string name="help_server_enter">URL des Management-Servers eingeben.</string>
   <string name="help_pin_enter">Geben Sie die PIN eines anderen konfigurierten Jami-Kontos ein. Nutzen Sie die Funktion „Jami-Konto exportieren“, um eine PIN zu erhalten.</string>
   <string name="pin_copied">PIN-Code in die Zwischenablage kopiert.</string>
+  <string name="copied_clipboard">In die Zwischenablage kopiert.</string>
   <string name="wizard_next">Weiter</string>
   <string name="wizard_back">Zurück</string>
   <string name="wizard_skip">Überspringen</string>
@@ -261,6 +262,8 @@
   <string name="profile">Profil</string>
   <string name="profile_name">Profilname</string>
   <string name="profile_message_warning">Ihr Profil wird nur mit Ihren Kontakten geteilt</string>
+  <string name="custom_profile_message_warning">Ihr benutzerdefiniertes Profil ist nur für dieses 
+Konto auf diesem Gerät sichtbar</string>
   <string name="open_the_gallery">Galerie öffnen</string>
   <string name="take_a_photo">Foto aufnehmen</string>
   <string name="remove_photo">Foto entfernen</string>
@@ -271,6 +274,7 @@
   <string name="identifier">Identifikator</string>
   <string name="account">Konto</string>
   <string name="link_new_device">Verbinde ein neues Gerät</string>
+  <string name="devices_header">Geräte</string>
   <string name="devices">Verbundene Geräte</string>
   <string name="total_devices">Gesamtzahl der Geräte:</string>
   <!--Share fragment-->
@@ -323,7 +327,7 @@
   <string name="file_transfer_status_error">fehlgeschlagen aufgrund eines Fehlers</string>
   <string name="file_transfer_status_timed_out">abgelaufen</string>
   <string name="file_saved_in">Datei gespeichert in %s</string>
-  <string name="file_saved_successfully">Datei erfolgreich gespeichert</string>
+  <string name="file_saved_successfully">Datei erfolgreich gespeichert.</string>
   <string name="file_download">Herunterladen</string>
   <string name="no_space_left_on_device">Auf dem Gerät ist kein Speicherplatz verfügbar</string>
   <string name="title_media_viewer">Dateibetrachter</string>
@@ -411,6 +415,7 @@
   <string name="tab_files">Dateien</string>
   <string name="tab_settings">Einstellungen</string>
   <string name="not_admin_toast">Nur Administratoren können die Informationen dieser Gruppe bearbeiten</string>
+  <string name="dialog_title_contact">Anzeigenamen bearbeiten</string>
   <string name="dialogtitle_title">Gruppentitel bearbeiten</string>
   <string name="dialogtitle_description">Gruppenbeschreibung bearbeiten</string>
   <string name="dialog_hint_title">Titel</string>

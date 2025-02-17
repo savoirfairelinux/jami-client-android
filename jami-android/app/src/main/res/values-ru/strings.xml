@@ -2,7 +2,7 @@
 <resources>
   <!--About-->
   <string name="submit_issue_title">Сообщить о проблеме</string>
-  <string name="submit_issue_action_description">Сформулировать проблему</string>
+  <string name="submit_issue_action_description"><u>Отправить на рассмотрение</u></string>
   <string name="section_license">Лицензия</string>
   <string name="sponsor_section">Jami – свободное программное обеспечение, разрабатываемое и поддерживаемое</string>
   <string name="copyright_section">Авторское право</string>
@@ -187,7 +187,7 @@
   <string name="swarm_group_action_leave_title">Покинуть эту группу?</string>
   <string name="swarm_group_action_leave_message">Будет удалена беседа из вашего списка бесед.</string>
   <string name="conversation_action_copy_peer_number">Копировать идентификатор контакта</string>
-  <string name="copied_to_clipboard">%1$s скопировано в буфер обмена</string>
+  <string name="copied_to_clipboard">%1$sскопировано в буфер обмена.</string>
   <string name="conversation_action_select_peer_number">Выбрать номер</string>
   <string name="conversation_action_block_this">Заблокировать контакт</string>
   <string name="conversation_action_unblock_this">Разблокировать контакт</string>
@@ -216,11 +216,11 @@
   <string name="conversation_type_contact">Контакт Jami</string>
   <string name="conversation_type_private">Приватная</string>
   <string name="conversation_type_group">Группа</string>
-  <string name="conversation_contact_invited">%1$s приглашен(а)</string>
-  <string name="conversation_contact_added">%1$s присоединяется</string>
-  <string name="conversation_contact_left">%1$s выходит</string>
-  <string name="conversation_contact_blocked">%1$s заблокирован(а)</string>
-  <string name="conversation_contact_unblocked">%1$s разблокирован(а)</string>
+  <string name="conversation_contact_invited">%1$sбыл(а) приглашен(а) присоединиться к беседе.</string>
+  <string name="conversation_contact_added">%1$sприсоединяется к беседе.</string>
+  <string name="conversation_contact_left">%1$sпокидает беседу.</string>
+  <string name="conversation_contact_blocked">%1$sбыл(а) заблокирован(а) для участия в беседе.</string>
+  <string name="conversation_contact_unblocked">%1$sбыл(а) разблокирован(а) для участия в беседе.</string>
   <string name="conversation_search_hint">Найти беседу</string>
   <string name="audio_recorder_error">Приложение для записи звука не найдено.</string>
   <string name="video_recorder_error">Приложение для записи видео не найдено.</string>
@@ -242,7 +242,7 @@
   <string name="prompt_new_password">Новый пароль</string>
   <string name="prompt_new_password_optional">Новый пароль (необязательно)</string>
   <string name="prompt_new_password_repeat">Повторите новый пароль</string>
-  <string name="account_create_title">Создать аккаунт Jami</string>
+  <string name="account_create_title">Присоединиться к Джами</string>
   <string name="prompt_new_username">Введите новое имя пользователя</string>
   <string name="prompt_hint_username">Имя пользователя</string>
   <string name="help_password_choose">Выберите надёжный пароль, который вы сможете запомнить, чтобы защитить ваш аккаунт Jami.</string>
@@ -250,6 +250,7 @@
   <string name="help_server_enter">Введите URL сервера управления.</string>
   <string name="help_pin_enter">Введите PIN-код из другого настроенного аккаунта Jami. Чтобы получить PIN-код, используйте функцию \"Экспорт аккаунта Jami\".</string>
   <string name="pin_copied">ПИН-код скопирован в буфер обмена.</string>
+  <string name="copied_clipboard">Скопировано в буфер обмена.</string>
   <string name="wizard_next">Далее</string>
   <string name="wizard_back">Назад</string>
   <string name="wizard_skip">Пропустить</string>
@@ -263,6 +264,8 @@
   <string name="profile">Профиль</string>
   <string name="profile_name">Имя профиля</string>
   <string name="profile_message_warning">Ваш профиль доступен только вашим контактам</string>
+  <string name="custom_profile_message_warning">Ваш профиль виден только этой учетной
+         записи на этом устройстве</string>
   <string name="open_the_gallery">Открыть галерею</string>
   <string name="take_a_photo">Сфотографировать</string>
   <string name="remove_photo">Удалить фото</string>
@@ -271,8 +274,9 @@
   <string name="no_registered_name">Имя не зарегистрировано</string>
   <string name="identity">Идентификация</string>
   <string name="identifier">Идентификатор</string>
-  <string name="account">Аккаунт</string>
+  <string name="account">Учётка</string>
   <string name="link_new_device">Привязать новое устройство</string>
+  <string name="devices_header">Устройства</string>
   <string name="devices">Привязанные устройства</string>
   <string name="total_devices">Всего устройств:</string>
   <!--Share fragment-->
@@ -325,7 +329,7 @@
   <string name="file_transfer_status_error">не удалось из-за ошибки</string>
   <string name="file_transfer_status_timed_out">время вышло</string>
   <string name="file_saved_in">Файл сохранён в %s</string>
-  <string name="file_saved_successfully">Файл успешно сохранён</string>
+  <string name="file_saved_successfully">Файл успешно сохранен.</string>
   <string name="file_download">Загрузить</string>
   <string name="no_space_left_on_device">На устройстве нет свободного места для хранения данных.</string>
   <string name="title_media_viewer">Просмотрщик медиа</string>
@@ -413,6 +417,7 @@
   <string name="tab_files">Файлы</string>
   <string name="tab_settings">Настройки</string>
   <string name="not_admin_toast">Только администраторы могут редактировать информацию этой группы</string>
+  <string name="dialog_title_contact">Изменить имя</string>
   <string name="dialogtitle_title">Дать название группе</string>
   <string name="dialogtitle_description">Дать описание группы</string>
   <string name="dialog_hint_title">Заголовок</string>

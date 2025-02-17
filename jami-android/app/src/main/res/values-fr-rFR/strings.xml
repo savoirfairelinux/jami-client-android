@@ -186,7 +186,7 @@
   <string name="swarm_group_action_leave_title">Quitter le groupe ?</string>
   <string name="swarm_group_action_leave_message">Cela supprimera cette conversation de la liste.</string>
   <string name="conversation_action_copy_peer_number">Copiez l\'identifiant du contact</string>
-  <string name="copied_to_clipboard">%1$s a été copié dans le presse-papier</string>
+  <string name="copied_to_clipboard">%1$s copié dans le presse-papier</string>
   <string name="conversation_action_select_peer_number">Choisir un numéro </string>
   <string name="conversation_action_block_this">Bloquer le contact</string>
   <string name="conversation_action_unblock_this">Débloquer un contact</string>
@@ -215,11 +215,11 @@
   <string name="conversation_type_contact">Contact Jami</string>
   <string name="conversation_type_private">Privé</string>
   <string name="conversation_type_group">Groupe</string>
-  <string name="conversation_contact_invited">%1$s a été invité</string>
-  <string name="conversation_contact_added">%1$s a rejoint la discussion</string>
-  <string name="conversation_contact_left">%1$s restant</string>
-  <string name="conversation_contact_blocked">%1$s a été bloqué</string>
-  <string name="conversation_contact_unblocked">%1$s a été débloqué</string>
+  <string name="conversation_contact_invited">1%1$s est invité à rejoindre la conversation.</string>
+  <string name="conversation_contact_added">%1$s a rejoint la conversation.</string>
+  <string name="conversation_contact_left">%1$s a quitté la conversation.</string>
+  <string name="conversation_contact_blocked">%1$s a été bloqué dans la conversation.</string>
+  <string name="conversation_contact_unblocked">%1$s a été débloqué de la conversation.</string>
   <string name="conversation_search_hint">Rechercher des conversations</string>
   <string name="audio_recorder_error">L\'application d\'enregistrement audio n\'est pas trouvée.</string>
   <string name="video_recorder_error">L\'application d\'enregistrement vidéo n\'est pas trouvée.</string>
@@ -241,7 +241,7 @@
   <string name="prompt_new_password">Nouveau mot de passe</string>
   <string name="prompt_new_password_optional">Nouveau mot de passe (optionnel)</string>
   <string name="prompt_new_password_repeat">Saisir à nouveau le mot de passe</string>
-  <string name="account_create_title">Créer un compte Jami</string>
+  <string name="account_create_title">Rejoindre Jami</string>
   <string name="prompt_new_username">Saisir un nouveau nom d\'utilisateur</string>
   <string name="prompt_hint_username">nom d\'utilisateur</string>
   <string name="help_password_choose">Choisir un mot de passe robuste dont vous vous rappellerez pour protéger votre compte Jami.</string>
@@ -249,6 +249,7 @@
   <string name="help_server_enter">Entrez l\'URL du serveur de gestion</string>
   <string name="help_pin_enter">Entrer le NIP de votre compte sur l\'autre appareil. Utiliser pour cela la fonction \"Exporter votre compte\" pour obtenir le NIP.</string>
   <string name="pin_copied">Le NIP a été copié dans le presse-papier</string>
+  <string name="copied_clipboard">Copié dans le presse-papier</string>
   <string name="wizard_next">Suivant</string>
   <string name="wizard_back">Retour</string>
   <string name="wizard_skip">Passer</string>
@@ -262,6 +263,7 @@
   <string name="profile">Profil</string>
   <string name="profile_name">Nom du profile</string>
   <string name="profile_message_warning">Votre profil n\'est partagé qu\'avec vos contacts</string>
+  <string name="custom_profile_message_warning">Votre profil personnalisé n\'est visible que sur cet appareil et que sur ce compte.</string>
   <string name="open_the_gallery">Ouvrir la galerie</string>
   <string name="take_a_photo">Prendre une photo</string>
   <string name="remove_photo">Supprimer l\'image</string>
@@ -272,6 +274,7 @@
   <string name="identifier">Identifiant </string>
   <string name="account">Compte</string>
   <string name="link_new_device">Associer un nouvel appareil</string>
+  <string name="devices_header">Appareils</string>
   <string name="devices">Appareils liés</string>
   <string name="total_devices">Nombre total d\'appareils :</string>
   <!--Share fragment-->
@@ -324,7 +327,7 @@
   <string name="file_transfer_status_error">échoué à cause d\'une erreur</string>
   <string name="file_transfer_status_timed_out">temps dépassé</string>
   <string name="file_saved_in">Fichier enregistré dans %s</string>
-  <string name="file_saved_successfully">Fichier enregistré avec succès</string>
+  <string name="file_saved_successfully">Le fichier a été enregistré.</string>
   <string name="file_download">Télécharger</string>
   <string name="no_space_left_on_device">Pas assez d\'espace de stockage disponible sur l\'appareil</string>
   <string name="title_media_viewer">Visionneuse</string>
@@ -412,6 +415,7 @@
   <string name="tab_files">Fichiers</string>
   <string name="tab_settings">Réglages</string>
   <string name="not_admin_toast">Seuls les administrateurs peuvent modifier les information de ce groupe</string>
+  <string name="dialog_title_contact">Modifier le nom affiché</string>
   <string name="dialogtitle_title">Modifier le titre du groupe</string>
   <string name="dialogtitle_description">Modifier la description du groupe</string>
   <string name="dialog_hint_title">Titre</string>

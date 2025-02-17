@@ -43,9 +43,9 @@
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">General</string>
   <string name="account_basic_category">Paramètres basics</string>
-  <string name="account_alias_label">Nom de compte</string>
   <string name="account_hostname_label">Nom d’òste</string>
   <string name="account_bootstrap_label">Ròtle de botatge</string>
+  <string name="account_name_server_label">Nom del servidor</string>
   <string name="account_username_label">Nom d’utilizaire</string>
   <string name="account_password_label">Senha</string>
   <string name="account_optionnal_category">Paramètres opcionals</string>
@@ -77,8 +77,7 @@
   <string name="account_registration_exp_label">L\'inscripcion expira</string>
   <string name="account_local_interface_label">Interfàcia locala</string>
   <string name="account_local_port_label">Pòrt local</string>
-  <string name="account_stun_enable_label">Utiliza Stun</string>
-  <string name="account_stun_server_label">Serveur aturdit</string>
+  <string name="account_stun_enable_label">Utilizar STUN</string>
   <string name="account_accept_files">Acceptar los fichièrs entrant automaticament</string>
   <string name="account_conversation_settings_title">Ajustaments de conversacion</string>
   <string name="account_accept_files_max_size">Dimensions maxima de fichièr per acceptar automaticament</string>
@@ -94,6 +93,7 @@
   <string name="account_published_address_label">Adressa publicada</string>
   <string name="disabled">Disabilitats</string>
   <string name="enabled">Abilitat</string>
+  <string name="default_value">Default</string>
   <string name="account_proxy_label">DHT proxy</string>
   <string name="account_proxy_enable_label">Utiliza DHT proxy</string>
   <string name="account_proxy_server_label">Adressa proxy DHT</string>
@@ -112,25 +112,12 @@
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Utiliza TLS Transport</string>
-  <string name="account_tls_port_label">Port d\'escolhador TLS</string>
-  <string name="account_tls_certificate_list_label">Autoritats de certificacion</string>
-  <string name="account_tls_certificate_file_label">Fichièr de certificat</string>
-  <string name="account_tls_private_key_file_label">Fichièr de clau privada</string>
-  <string name="account_tls_password_label">Password clau privada</string>
-  <string name="account_tls_method_label">Metòde TLS</string>
-  <string name="account_tls_ciphers_label">Cifrador TLS</string>
-  <string name="account_tls_server_name_label">Nom del servidor</string>
-  <string name="account_tls_verify_server_label">Verificar lo servidor</string>
-  <string name="account_tls_verify_client_label">Verificar lo client</string>
-  <string name="account_require_client_certificate_label">TLS Requerir un certificat de client</string>
-  <string name="account_tls_negotiation_timeout_sec">Temps de negociacion (sec)</string>
+  <string name="account_tls_password_label">Senhal de clau privada</string>
   <string name="account_rtp_max_port">Maximum</string>
   <string name="account_rtp_min_port">Minimum</string>
-  <string name="account_rtp_port_range">Rango de pòrt RTP d\'audi</string>
   <!--restore/backup-->
   <string name="account_new_device_password">Introducir la contraròtle principala per desbloquejar compte</string>
   <string name="error_password_char_count">6 caractèrs minimals</string>
-  <string name="error_passwords_not_equals">Pas de contrasèlas correspondentas</string>
   <string name="export_account_wait_title">Espèri...</string>
   <string name="export_account_wait_message">Informacions de compte d\'exportacion</string>
   <string name="account_export_file">Compte de backup</string>
@@ -164,12 +151,10 @@
   <string name="account_link_device">Conectar d\' un autre dispositiu</string>
   <string name="account_link_button">Conectar de la ret</string>
   <string name="account_link_archive_button">Conectar de backup</string>
-  <string name="account_link_prompt_pin">Introducir lo PIN</string>
-  <string name="account_new_button">Crear un compte Jami</string>
+  <string name="account_new_button">S\' unís a Jami</string>
   <string name="account_link_export_button">Ligam un dispositiu novèl</string>
   <string name="account_link_show_button">Mostrar %d d\' autre dispositiu ligat</string>
   <string name="account_link_hide_button">Escondir un dispositiu ligat</string>
-  <string name="account_start_export_button">Generar lo PIN</string>
   <string name="account_end_export_button">près</string>
   <string name="account_export_title">Conta de ligam a d\'autres dispositius</string>
   <string name="account_connect_server_button">Conectar al servidor de gestion</string>
@@ -180,10 +165,7 @@
   <string name="account_connect_prompt_username">Nom d’utilizaire</string>
   <!--Name registration-->
   <string name="error_username_empty">Introducir un nom d\' utilizaire</string>
-  <string name="no_registered_name_for_account">Pas de nom registrat</string>
-  <string name="username_available">Nom d\' utilizaire disponibla!</string>
   <string name="register_name">Nomen del registre</string>
-  <string name="trying_to_register_name">Probant d\'enregistrar lo nom</string>
   <string name="registered_username">Nomen d\' utilizaire registrat</string>
   <string name="register_username">Registrar nom d\' utilizaire public</string>
   <string name="register_recommended">Recomandat</string>
@@ -210,7 +192,6 @@
   <string name="revoke_device_wait_title">Espèri...</string>
   <string name="revoke_device_wait_message">Dispositiu de revocacion</string>
   <string name="rename_device_title">Renomenar aqueste dispositiu</string>
-  <string name="rename_device_message">Escotar un nom novèl per identificar aqueste dispositiu dins lo vòstre compte Jami</string>
   <string name="rename_device_button">Dispositiu de renomenatge</string>
   <string name="account_rename_device_hint">Seleccionar lo nom de l\' aparelh</string>
   <string name="account_device_this_indicator">Aqueste dispositiu</string>
@@ -218,6 +199,7 @@
   <!--Link a new device-->
   <string name="error_format_not_supported">Aqueste format es pas suportat.</string>
   <string name="account_link_device_title">Ligam un dispositiu novèl</string>
+  <string name="connect_device_scanqr">Escanar lo còdi QR</string>
   <string name="account_link_device_button">Se connectar</string>
   <!--Biometry-->
 </resources>

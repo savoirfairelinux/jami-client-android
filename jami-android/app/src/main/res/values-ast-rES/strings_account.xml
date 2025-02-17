@@ -43,9 +43,9 @@
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">El so nome ye</string>
   <string name="account_basic_category">Les configuraciones básiques</string>
-  <string name="account_alias_label">Nómase la cuenta</string>
   <string name="account_hostname_label">Nombre de host</string>
   <string name="account_bootstrap_label">La banda de arranque</string>
+  <string name="account_name_server_label">Servidor de nome</string>
   <string name="account_username_label">Nombre d\'usuariu</string>
   <string name="account_password_label">Paez que la contraseña</string>
   <string name="account_optionnal_category">Les configuraciones opcionales</string>
@@ -77,8 +77,7 @@
   <string name="account_registration_exp_label">El regresu va expirar</string>
   <string name="account_local_interface_label">Interfaz local</string>
   <string name="account_local_port_label">Portos locales</string>
-  <string name="account_stun_enable_label">Utiliza Stun</string>
-  <string name="account_stun_server_label">El servidor de sorpresa</string>
+  <string name="account_stun_enable_label">Utiliza STUN</string>
   <string name="account_accept_files">Acceptar archivos entrantes automáticamente</string>
   <string name="account_conversation_settings_title">Configuración de conversación</string>
   <string name="account_accept_files_max_size">El tamañu máximu de ficheru pa aceptar automáticamente</string>
@@ -94,6 +93,7 @@
   <string name="account_published_address_label">La dirección publicada</string>
   <string name="disabled">Dispuestos</string>
   <string name="enabled">Permitíu</string>
+  <string name="default_value">Default</string>
   <string name="account_proxy_label">DHT proxy</string>
   <string name="account_proxy_enable_label">Utiliza DHT proxy</string>
   <string name="account_proxy_server_label">La dirección de DHT</string>
@@ -112,25 +112,12 @@
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Utiliza TLS Transport</string>
-  <string name="account_tls_port_label">TLS Port de escucha</string>
-  <string name="account_tls_certificate_list_label">Autoridaes de certificación</string>
-  <string name="account_tls_certificate_file_label">Archivu de Certificación</string>
-  <string name="account_tls_private_key_file_label">Archiváu dende l\'orixinal, el 8 de setiembre de 2009.</string>
-  <string name="account_tls_password_label">La clave privada contraseña</string>
-  <string name="account_tls_method_label">Metodu TLS</string>
-  <string name="account_tls_ciphers_label">TLS cifradores</string>
-  <string name="account_tls_server_name_label">Nombre del servidor</string>
-  <string name="account_tls_verify_server_label">Verificar el servidor</string>
-  <string name="account_tls_verify_client_label">Verificar al cliente</string>
-  <string name="account_require_client_certificate_label">TLS Requiere Certificado de Cliente</string>
-  <string name="account_tls_negotiation_timeout_sec">El tiempu de negociación (sec)</string>
+  <string name="account_tls_password_label">Paez clave privada</string>
   <string name="account_rtp_max_port">Maximu</string>
   <string name="account_rtp_min_port">Minimu</string>
-  <string name="account_rtp_port_range">La banda de radio RTP</string>
   <!--restore/backup-->
   <string name="account_new_device_password">Introduza la contraseña principal pa desbloquear cuenta</string>
   <string name="error_password_char_count">Minimu de 6 caracteres</string>
-  <string name="error_passwords_not_equals">Les contraseñes nun coinciden</string>
   <string name="export_account_wait_title">El so padre foi un fíu de la so madre.</string>
   <string name="export_account_wait_message">Información de cuenta d\'exportación</string>
   <string name="account_export_file">Cuenta de copia de seguridad</string>
@@ -164,12 +151,10 @@
   <string name="account_link_device">Conectar dende otru dispositivu</string>
   <string name="account_link_button">Conectar dende la rede</string>
   <string name="account_link_archive_button">Conectar dende l\' respaldu</string>
-  <string name="account_link_prompt_pin">Entra PIN</string>
-  <string name="account_new_button">Crear una cuenta Jami</string>
+  <string name="account_new_button">Uníu a Jami</string>
   <string name="account_link_export_button">Enlazar un nuevu dispositivu</string>
   <string name="account_link_show_button">Mostrar %d más dispositivos enllazaos</string>
   <string name="account_link_hide_button">Dispositivu de ocultar conectáu</string>
-  <string name="account_start_export_button">Generar PIN</string>
   <string name="account_end_export_button">La so primer apaición foi en</string>
   <string name="account_export_title">La cuenta de enllaces a otros dispositivos</string>
   <string name="account_connect_server_button">Conectase al servidor de xestión</string>
@@ -180,10 +165,7 @@
   <string name="account_connect_prompt_username">Nombre d\'usuariu</string>
   <!--Name registration-->
   <string name="error_username_empty">Introdució un nome d\' usuariu</string>
-  <string name="no_registered_name_for_account">Nun hai nome rexistráu</string>
-  <string name="username_available">El nome d\' usuariu disponible!</string>
   <string name="register_name">Nombre del rexistru</string>
-  <string name="trying_to_register_name">Tratando d\'inscribir un nome</string>
   <string name="registered_username">Nombre d\'usuariu rexistráu</string>
   <string name="register_username">Registrar nome d\'usuariu públicu</string>
   <string name="register_recommended">Recomendáu</string>
@@ -210,7 +192,6 @@
   <string name="revoke_device_wait_title">El so padre foi un fíu de la so madre.</string>
   <string name="revoke_device_wait_message">Dispositivu de revocación</string>
   <string name="rename_device_title">Renombrar a este dispositivu</string>
-  <string name="rename_device_message">Escueye un nome nuevu pa identificar este dispositivu na so cuenta Jami</string>
   <string name="rename_device_button">Dispositivu de renombre</string>
   <string name="account_rename_device_hint">Escueye\'l nome del dispositivu</string>
   <string name="account_device_this_indicator">Esta máquina</string>
@@ -218,6 +199,7 @@
   <!--Link a new device-->
   <string name="error_format_not_supported">Esta versión nun ye compatible.</string>
   <string name="account_link_device_title">Enlazar un nuevu dispositivu</string>
+  <string name="connect_device_scanqr">Escanu del codiciu QR</string>
   <string name="account_link_device_button">Conectar</string>
   <!--Biometry-->
 </resources>

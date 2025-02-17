@@ -150,7 +150,6 @@
   <string name="delete_contact">Contact verwijderen</string>
   <string name="conversation_action_remove_this_title">Dit contact verwijderen?</string>
   <string name="conversation_action_remove_this_message">Dit zal het contact verwijderen en de gespreksgeschiedenis voorgoed wissen.</string>
-  <string name="copied_to_clipboard">%1$s gekopieerd naar klembord</string>
   <string name="conversation_action_select_peer_number">Kies een nummer</string>
   <string name="conversation_action_block_this">Contact blokkeren</string>
   <string name="conversation_action_unblock_this">Contact deblokkeren</string>
@@ -177,9 +176,6 @@
   <string name="conversation_type_contact">Jami contact</string>
   <string name="conversation_type_private">Privé</string>
   <string name="conversation_type_group">Groep</string>
-  <string name="conversation_contact_invited">%1$s is uitgenodigd</string>
-  <string name="conversation_contact_added">%1$s is aangesloten</string>
-  <string name="conversation_contact_left">%1$s is links</string>
   <string name="conversation_search_hint">Zoek gesprek</string>
   <string name="today">Vandaag</string>
   <string name="yesterday">Gisteren</string>
@@ -188,7 +184,7 @@
   <string name="prompt_new_password">Nieuw wachtwoord</string>
   <string name="prompt_new_password_optional">Nieuw wachtwoord (optioneel)</string>
   <string name="prompt_new_password_repeat">Herhaal nieuwe wachtwoord</string>
-  <string name="account_create_title">Een Jami-account aanmaken</string>
+  <string name="account_create_title">Neem deel aan Jami.</string>
   <string name="prompt_new_username">Voer nieuwe gebruikersnaam in</string>
   <string name="prompt_hint_username">Gebruikersnaam</string>
   <string name="help_password_choose">Kies een sterk wachtwoord om uw Jami-account te beschermen.</string>
@@ -214,6 +210,7 @@
   <string name="identifier">Identificatie</string>
   <string name="account">Account</string>
   <string name="link_new_device">Een nieuw apparaat koppelen</string>
+  <string name="devices_header">Apparaten</string>
   <string name="devices">Gekoppelde apparaten</string>
   <string name="total_devices">Totaal aantal apparaten:</string>
   <!--Share fragment-->
@@ -256,7 +253,6 @@
   <string name="file_transfer_status_error">Mislukt door een error</string>
   <string name="file_transfer_status_timed_out">Wachttijd verstreken</string>
   <string name="file_saved_in">Bestand opgeslagen in %s</string>
-  <string name="file_saved_successfully">Bestand opgeslagen</string>
   <string name="file_download">Download</string>
   <string name="title_media_viewer">Mediaweergave</string>
   <string name="menu_file_open">Bestand openen</string>

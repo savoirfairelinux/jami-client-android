@@ -84,7 +84,7 @@
   <string name="today">Sa lá atá inniu ann</string>
   <string name="yesterday">An-dè</string>
   <!--Contacts-->
-  <string name="account_create_title">Déan cuntas Jami</string>
+  <string name="account_create_title">Téigh le Jami</string>
   <string name="prompt_hint_username">Ainm úsáideora</string>
   <string name="wizard_next">Next</string>
   <string name="wizard_back">Ar ais</string>
@@ -100,6 +100,7 @@
   <string name="identifier">Cluiche</string>
   <string name="account">Contae</string>
   <string name="link_new_device">Déan nasc a dhéanamh ar ghléas nua</string>
+  <string name="devices_header">Iarratais</string>
   <string name="devices">Feistí ceangailte</string>
   <!--Share fragment-->
   <string name="share_label">Comhroinnt</string>

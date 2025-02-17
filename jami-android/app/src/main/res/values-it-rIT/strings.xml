@@ -186,7 +186,7 @@
   <string name="swarm_group_action_leave_title">Lasciare questo gruppo?</string>
   <string name="swarm_group_action_leave_message">Ciò rimuoverà la conversazione dall\'elenco delle conversazioni</string>
   <string name="conversation_action_copy_peer_number">Copia l\'identificatore del contatto</string>
-  <string name="copied_to_clipboard">%1$s copiato negli appunti</string>
+  <string name="copied_to_clipboard">%1$s copiato negli appunti.</string>
   <string name="conversation_action_select_peer_number">Seleziona un numero</string>
   <string name="conversation_action_block_this">Blocca contatto</string>
   <string name="conversation_action_unblock_this">Sblocca il contatto</string>
@@ -215,11 +215,11 @@
   <string name="conversation_type_contact">Contatto Jami</string>
   <string name="conversation_type_private">Privato</string>
   <string name="conversation_type_group">Gruppo</string>
-  <string name="conversation_contact_invited">%1$s è stato invitato</string>
-  <string name="conversation_contact_added">%1$s si è unito</string>
-  <string name="conversation_contact_left">%1$s è uscito</string>
-  <string name="conversation_contact_blocked">%1$s è stato bloccato</string>
-  <string name="conversation_contact_unblocked">%1$s è stato sbloccato.</string>
+  <string name="conversation_contact_invited">%1$s è stato invitato a partecipare alla conversazione.</string>
+  <string name="conversation_contact_added">%1$s partecipa alla conversazione.</string>
+  <string name="conversation_contact_left">%1$s ha abbandonato la conversazione.</string>
+  <string name="conversation_contact_blocked">%1$s è stato bloccato dalla conversazione.</string>
+  <string name="conversation_contact_unblocked">%1$s è stato sbloccato dalla conversazione.</string>
   <string name="conversation_search_hint">Cerca conversazione</string>
   <string name="audio_recorder_error">Impossibile trovare l\'app per la registrazione audio.</string>
   <string name="video_recorder_error">Impossibile trovare l\'app per la registrazione video.</string>
@@ -241,7 +241,7 @@
   <string name="prompt_new_password">Nuova password</string>
   <string name="prompt_new_password_optional">Nuova password (opzionale)</string>
   <string name="prompt_new_password_repeat">Ripeti nuova password</string>
-  <string name="account_create_title">Crea un account Jami</string>
+  <string name="account_create_title">Usa Jami</string>
   <string name="prompt_new_username">Inserire il nuovo nome utente</string>
   <string name="prompt_hint_username">Utente</string>
   <string name="help_password_choose">Scegliere una password facile da ricordare per proteggere il tuo account Jami.</string>
@@ -249,6 +249,7 @@
   <string name="help_server_enter">Inserire l\'URL del server di gestione.</string>
   <string name="help_pin_enter">Inserire il PIN da un altro account Jami configurato. Utilizzare la funzione \"Esporta account Jami\" per ottenere un PIN.</string>
   <string name="pin_copied">Codice PIN copiato negli appunti.</string>
+  <string name="copied_clipboard">Copiato negli appunti.</string>
   <string name="wizard_next">Prossimo</string>
   <string name="wizard_back">Indietro</string>
   <string name="wizard_skip">Salta</string>
@@ -262,6 +263,8 @@
   <string name="profile">Profilo</string>
   <string name="profile_name">Nome del profilo</string>
   <string name="profile_message_warning">Il tuo profilo è condiviso solo con i tuoi contatti</string>
+  <string name="custom_profile_message_warning">Il tuo profilo personalizzato è visibile solo
+a questo account su questo dispositivo</string>
   <string name="open_the_gallery">Apri la galleria immagini</string>
   <string name="take_a_photo">Scatta una foto</string>
   <string name="remove_photo">Rimuovi foto</string>
@@ -272,6 +275,7 @@
   <string name="identifier">Identificatore</string>
   <string name="account">Account</string>
   <string name="link_new_device">Associa un altro dispositivo</string>
+  <string name="devices_header">Dispositivi</string>
   <string name="devices">Dispositivi associati</string>
   <string name="total_devices">Tutti i dispositivi: </string>
   <!--Share fragment-->
@@ -324,7 +328,7 @@
   <string name="file_transfer_status_error">fallito a causa di un errore</string>
   <string name="file_transfer_status_timed_out">tempo scaduto</string>
   <string name="file_saved_in">File salvato in %s</string>
-  <string name="file_saved_successfully">File salvato con successo</string>
+  <string name="file_saved_successfully">File salvato con successo.</string>
   <string name="file_download">Scarica</string>
   <string name="no_space_left_on_device">Spazio esaurito sul dispositivo</string>
   <string name="title_media_viewer">Visualizzatore media</string>
@@ -412,6 +416,7 @@
   <string name="tab_files">File</string>
   <string name="tab_settings">Impostazioni</string>
   <string name="not_admin_toast">Solo gli amministratori possono modificare le informazioni di questo gruppo</string>
+  <string name="dialog_title_contact">Modifica il nome da visualizzare</string>
   <string name="dialogtitle_title">Modifica il titolo del gruppo</string>
   <string name="dialogtitle_description">Modifica la descrizione del gruppo</string>
   <string name="dialog_hint_title">Titolo</string>

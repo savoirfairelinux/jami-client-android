@@ -43,9 +43,9 @@
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">ಸಾಮಾನ್ಯ</string>
   <string name="account_basic_category">ಮೂಲ ಸೆಟ್ಟಿಂಗ್ಗಳು</string>
-  <string name="account_alias_label">ಖಾತೆ ಹೆಸರು</string>
   <string name="account_hostname_label">ಆತಿಥೇಯ ಹೆಸರು</string>
   <string name="account_bootstrap_label">ಬೂಟ್ ಸ್ಟ್ರಾಪ್</string>
+  <string name="account_name_server_label">ಹೆಸರು ಸರ್ವರ್</string>
   <string name="account_username_label">ಬಳಕೆದಾರ ಹೆಸರು</string>
   <string name="account_password_label">ಪಾಸ್ವರ್ಡ್</string>
   <string name="account_optionnal_category">ಐಚ್ಛಿಕ ಸೆಟ್ಟಿಂಗ್ಗಳು</string>
@@ -77,8 +77,7 @@
   <string name="account_registration_exp_label">ನೋಂದಣಿ ಅವಧಿ</string>
   <string name="account_local_interface_label">ಸ್ಥಳೀಯ ಇಂಟರ್ಫೇಸ್</string>
   <string name="account_local_port_label">ಸ್ಥಳೀಯ ಬಂದರು</string>
-  <string name="account_stun_enable_label">ಸ್ಟನ್ ಬಳಸಿ</string>
-  <string name="account_stun_server_label">ಸ್ಟನ್ ಸರ್ವರ್</string>
+  <string name="account_stun_enable_label">STUN ಬಳಸಿ</string>
   <string name="account_accept_files">ಸ್ವಯಂಚಾಲಿತವಾಗಿ ಒಳಬರುವ ಫೈಲ್ಗಳನ್ನು ಸ್ವೀಕರಿಸಿ</string>
   <string name="account_conversation_settings_title">ಸಂವಾದದ ಸೆಟ್ಟಿಂಗ್ಗಳು</string>
   <string name="account_accept_files_max_size">ಸ್ವಯಂಚಾಲಿತವಾಗಿ ಸ್ವೀಕರಿಸಲು ಗರಿಷ್ಠ ಫೈಲ್ ಗಾತ್ರ</string>
@@ -94,6 +93,7 @@
   <string name="account_published_address_label">ಪ್ರಕಟಿತ ವಿಳಾಸ</string>
   <string name="disabled">ಅಂಗವಿಕಲರು</string>
   <string name="enabled">ಸಕ್ರಿಯಗೊಳಿಸಲಾಗಿದೆ</string>
+  <string name="default_value">ಡೀಫಾಲ್ಟ್</string>
   <string name="account_proxy_label">ಡಿಎಚ್ಟಿ ಪ್ರಾಕ್ಸಿ</string>
   <string name="account_proxy_enable_label">DHT ಪ್ರಾಕ್ಸಿ ಬಳಸಿ</string>
   <string name="account_proxy_server_label">ಡಿಎಚ್ಟಿ ಪ್ರಾಕ್ಸಿ ವಿಳಾಸ</string>
@@ -112,25 +112,12 @@
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">TLS ಸಾರಿಗೆ ಬಳಸಿ</string>
-  <string name="account_tls_port_label">TLS ಆಲಿಸುವ ಪೋರ್ಟ್</string>
-  <string name="account_tls_certificate_list_label">ಪ್ರಮಾಣೀಕರಣ ಪ್ರಾಧಿಕಾರಗಳು</string>
-  <string name="account_tls_certificate_file_label">ಪ್ರಮಾಣಪತ್ರ ಫೈಲ್</string>
-  <string name="account_tls_private_key_file_label">ಖಾಸಗಿ ಕೀ ಫೈಲ್</string>
   <string name="account_tls_password_label">ಖಾಸಗಿ ಕೀಲಿ ಪಾಸ್ವರ್ಡ್</string>
-  <string name="account_tls_method_label">ಟಿಎಲ್ಎಸ್ ವಿಧಾನ</string>
-  <string name="account_tls_ciphers_label">ಟಿಎಲ್ಎಸ್ ಸಿಫರ್ಗಳು</string>
-  <string name="account_tls_server_name_label">ಸರ್ವರ್ ಹೆಸರು</string>
-  <string name="account_tls_verify_server_label">ಸರ್ವರ್ ಪರಿಶೀಲಿಸಿ</string>
-  <string name="account_tls_verify_client_label">ಕ್ಲೈಂಟ್ ಅನ್ನು ಪರಿಶೀಲಿಸಿ</string>
-  <string name="account_require_client_certificate_label">TLS ಕ್ಲೈಂಟ್ ಪ್ರಮಾಣಪತ್ರವನ್ನು ಅಗತ್ಯವಿದೆ</string>
-  <string name="account_tls_negotiation_timeout_sec">ಮಾತುಕತೆ ಸಮಯಾವಧಿ (ಸೆಕೆಂಡು)</string>
   <string name="account_rtp_max_port">ಗರಿಷ್ಠ</string>
   <string name="account_rtp_min_port">ಕನಿಷ್ಠ</string>
-  <string name="account_rtp_port_range">ಆಡಿಯೋ ಆರ್ಟಿಪಿ ಪೋರ್ಟ್ ಶ್ರೇಣಿ</string>
   <!--restore/backup-->
   <string name="account_new_device_password">ಖಾತೆಯನ್ನು ಅನ್ಲಾಕ್ ಮಾಡಲು ಮುಖ್ಯ ಪಾಸ್ವರ್ಡ್ ನಮೂದಿಸಿ</string>
   <string name="error_password_char_count">ಕನಿಷ್ಠ 6 ಅಕ್ಷರಗಳು</string>
-  <string name="error_passwords_not_equals">ಪಾಸ್ವರ್ಡ್ಗಳು ಹೊಂದಿಕೆಯಾಗುವುದಿಲ್ಲ</string>
   <string name="export_account_wait_title">ದಯವಿಟ್ಟು ಕಾಯಿರಿ.</string>
   <string name="export_account_wait_message">ರಫ್ತು ಖಾತೆ ಮಾಹಿತಿ</string>
   <string name="account_export_file">ಬ್ಯಾಕಪ್ ಖಾತೆ</string>
@@ -164,12 +151,10 @@
   <string name="account_link_device">ಮತ್ತೊಂದು ಸಾಧನದಿಂದ ಸಂಪರ್ಕ</string>
   <string name="account_link_button">ನೆಟ್ವರ್ಕ್ನಿಂದ ಸಂಪರ್ಕ</string>
   <string name="account_link_archive_button">ಬ್ಯಾಕ್ಅಪ್ನಿಂದ ಸಂಪರ್ಕ</string>
-  <string name="account_link_prompt_pin">ಪಿನ್ ನಮೂದಿಸಿ</string>
-  <string name="account_new_button">ಜಾಮಿ ಖಾತೆಯನ್ನು ರಚಿಸಿ</string>
+  <string name="account_new_button">ಜಾಮಿಗೆ ಸೇರಿ</string>
   <string name="account_link_export_button">ಹೊಸ ಸಾಧನವನ್ನು ಸಂಪರ್ಕಿಸಿ</string>
   <string name="account_link_show_button">%d ಹೆಚ್ಚು ಸಂಪರ್ಕಿತ ಸಾಧನವನ್ನು ತೋರಿಸಿ</string>
   <string name="account_link_hide_button">ಸಂಪರ್ಕಿತ ಸಾಧನವನ್ನು ಮರೆಮಾಡಿ</string>
-  <string name="account_start_export_button">ಪಿನ್ ರಚಿಸಿ</string>
   <string name="account_end_export_button">ಮುಚ್ಚುವಿಕೆ</string>
   <string name="account_export_title">ಇತರ ಸಾಧನಗಳಿಗೆ ಲಿಂಕ್ ಖಾತೆ</string>
   <string name="account_connect_server_button">ನಿರ್ವಹಣಾ ಸರ್ವರ್ಗೆ ಸಂಪರ್ಕ</string>
@@ -180,10 +165,7 @@
   <string name="account_connect_prompt_username">ಬಳಕೆದಾರ ಹೆಸರು</string>
   <!--Name registration-->
   <string name="error_username_empty">ಬಳಕೆದಾರ ಹೆಸರು ನಮೂದಿಸಿ</string>
-  <string name="no_registered_name_for_account">ನೋಂದಾಯಿತ ಹೆಸರು ಇಲ್ಲ</string>
-  <string name="username_available">ಬಳಕೆದಾರ ಹೆಸರು ಲಭ್ಯವಿದೆ!</string>
   <string name="register_name">ನೋಂದಣಿ ಹೆಸರು</string>
-  <string name="trying_to_register_name">ಹೆಸರು ನೋಂದಾಯಿಸಲು ಪ್ರಯತ್ನಿಸುತ್ತಿರುವ</string>
   <string name="registered_username">ನೋಂದಾಯಿತ ಬಳಕೆದಾರ ಹೆಸರು</string>
   <string name="register_username">ಸಾರ್ವಜನಿಕ ಬಳಕೆದಾರ ಹೆಸರನ್ನು ನೋಂದಾಯಿಸಿ</string>
   <string name="register_recommended">ಶಿಫಾರಸು ಮಾಡಲಾಗಿದೆ</string>
@@ -210,7 +192,6 @@
   <string name="revoke_device_wait_title">ದಯವಿಟ್ಟು ಕಾಯಿರಿ.</string>
   <string name="revoke_device_wait_message">ಮರುಕಳಿಸುವ ಸಾಧನ</string>
   <string name="rename_device_title">ಈ ಸಾಧನವನ್ನು ಮರುನಾಮಕರಣ ಮಾಡಿ</string>
-  <string name="rename_device_message">ನಿಮ್ಮ ಜಾಮಿ ಖಾತೆಯಲ್ಲಿ ಈ ಸಾಧನವನ್ನು ಗುರುತಿಸಲು ಹೊಸ ಹೆಸರನ್ನು ಆರಿಸಿ</string>
   <string name="rename_device_button">ಮರುನಾಮಕರಣ ಸಾಧನ</string>
   <string name="account_rename_device_hint">ಹೊಸ ಸಾಧನದ ಹೆಸರನ್ನು ಆರಿಸಿ</string>
   <string name="account_device_this_indicator">ಈ ಸಾಧನ</string>
@@ -218,6 +199,7 @@
   <!--Link a new device-->
   <string name="error_format_not_supported">ಈ ಸ್ವರೂಪವನ್ನು ಬೆಂಬಲಿಸುವುದಿಲ್ಲ.</string>
   <string name="account_link_device_title">ಹೊಸ ಸಾಧನವನ್ನು ಸಂಪರ್ಕಿಸಿ</string>
+  <string name="connect_device_scanqr">QR ಕೋಡ್ ಸ್ಕ್ಯಾನ್ ಮಾಡಿ</string>
   <string name="account_link_device_button">ಸಂಪರ್ಕ</string>
   <!--Biometry-->
 </resources>
