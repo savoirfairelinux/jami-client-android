@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2cd96068_739864d3",
+        "filename": "jami-android/app/src/main/res/layout/item_account.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2025-02-18T15:51:00Z",
+      "side": 1,
+      "message": "Deprecated.",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 2
+      },
+      "revId": "359f9477f98d99b76e3c52ed85d9548a493733a9",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
