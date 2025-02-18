@@ -82,7 +82,7 @@ class Account(
         }
 
     private val mProfileSubject: Subject<Single<Profile>> = BehaviorSubject.create()
-    val loadedProfileObservable: Observable<Profile> = mProfileSubject.switchMapSingle { single -> single }
+    val loadedProfileObservable: Observable<Profile> = mProfileSubject.switchMapSingle { it }
 
     fun cleanup() {
         conversationSubject.onComplete()

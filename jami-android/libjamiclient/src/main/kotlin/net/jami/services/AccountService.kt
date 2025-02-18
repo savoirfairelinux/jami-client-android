@@ -408,7 +408,6 @@ class AccountService(
         Observable.just(account)
             .concatWith(observableAccounts.filter { acc -> acc === account })
 
-    // Todo: Doubt on this working correctly. No updates on `account.username` on account created.
     val currentProfileAccountSubject: Observable<Pair<Account, Profile>>
         get() = currentAccountSubject.flatMap { a: Account ->
             mVCardService.loadProfile(a).map { profile -> Pair(a, profile) }
