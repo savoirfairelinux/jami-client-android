@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "90c83ef3_7d79ca66",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2025-02-18T16:54:34Z",
+      "side": 1,
+      "message": "The account profile is a personal profile representing the user himself to his contacts, so I would be in favor of the personal form (your profile, your contacts), both for clarity and friendliness, but if you think it wasn\u0027t clear we can change it.",
+      "range": {
+        "startLine": 412,
+        "startChar": 43,
+        "endLine": 412,
+        "endChar": 95
+      },
+      "revId": "2689a83348a47a7907aec57067909fe787d978ef",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7b5a3cb1_6430e97c",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2025-02-18T16:54:34Z",
+      "side": 1,
+      "message": "This one is different because it actually relates to a custom contact profile, so \"your custom profile\" was confusing and I agree with this change.",
+      "range": {
+        "startLine": 413,
+        "startChar": 50,
+        "endLine": 413,
+        "endChar": 114
+      },
+      "revId": "2689a83348a47a7907aec57067909fe787d978ef",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5817f078_10d1e3e5",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2025-02-18T16:54:34Z",
+      "side": 1,
+      "message": "UI/UX will always make clear this is about the file transfer.\nIt should just be:\n`In progress`\n`Completed`\n`Cancelled`\netc.\n\nAlso, these will just be should as status labels, the period is not required.",
+      "range": {
+        "startLine": 474,
+        "startChar": 48,
+        "endLine": 474,
+        "endChar": 76
+      },
+      "revId": "2689a83348a47a7907aec57067909fe787d978ef",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
