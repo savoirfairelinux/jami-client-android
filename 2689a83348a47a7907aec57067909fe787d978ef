@@ -140,6 +140,30 @@
       },
       "revId": "2689a83348a47a7907aec57067909fe787d978ef",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a1fe476_d023ce6c",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-02-18T21:03:40Z",
+      "side": 1,
+      "message": "Can you please advise the lines of the status labels, i.e., so that the period can be removed if it is present?",
+      "parentUuid": "820e8409_863a6fc4",
+      "range": {
+        "startLine": 474,
+        "startChar": 48,
+        "endLine": 474,
+        "endChar": 76
+      },
+      "revId": "2689a83348a47a7907aec57067909fe787d978ef",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
