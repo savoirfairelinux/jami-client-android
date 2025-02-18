@@ -71,6 +71,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a74a5e8b_f5dfdcab",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-02-18T20:56:58Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "7b5a3cb1_6430e97c",
+      "range": {
+        "startLine": 413,
+        "startChar": 50,
+        "endLine": 413,
+        "endChar": 114
+      },
+      "revId": "2689a83348a47a7907aec57067909fe787d978ef",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5817f078_10d1e3e5",
@@ -84,6 +108,30 @@
       "writtenOn": "2025-02-18T16:54:34Z",
       "side": 1,
       "message": "UI/UX will always make clear this is about the file transfer.\nIt should just be:\n`In progress`\n`Completed`\n`Cancelled`\netc.\n\nAlso, these will just be should as status labels, the period is not required.",
+      "range": {
+        "startLine": 474,
+        "startChar": 48,
+        "endLine": 474,
+        "endChar": 76
+      },
+      "revId": "2689a83348a47a7907aec57067909fe787d978ef",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "820e8409_863a6fc4",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-02-18T20:56:58Z",
+      "side": 1,
+      "message": "Done. Please check that the changes are correct. Thank you",
+      "parentUuid": "5817f078_10d1e3e5",
       "range": {
         "startLine": 474,
         "startChar": 48,
