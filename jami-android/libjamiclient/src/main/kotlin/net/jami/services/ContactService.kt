@@ -121,15 +121,16 @@ abstract class ContactService(
         }
     }
 
-    fun observeContact(accountId: String, contacts: Collection<Contact>, withPresence: Boolean): Observable<List<ContactViewModel>> =
+    fun observeContact(accountId: String, contacts: Collection<Contact>, withPresence: Boolean, withUser: Boolean = false): Observable<List<ContactViewModel>> =
         if (contacts.isEmpty()) {
             Observable.just(emptyList())
-        } else if (contacts.size == 1 && contacts.first().isUser) {
+        } else if (contacts.size == 1) {
             observeContact(accountId, contacts.first(), withPresence).map(Collections::singletonList)
-        }  else {
+        } else {
             val observables: MutableList<Observable<ContactViewModel>> = ArrayList(contacts.size)
             for (contact in contacts)
-                observables.add(observeContact(accountId, contact, withPresence))
+                if (!contact.isUser || withUser)
+                    observables.add(observeContact(accountId, contact, withPresence))
             if (observables.isEmpty()) Observable.just(emptyList()) else Observable.combineLatest(observables) { a: Array<Any> ->
                 a.map { it as ContactViewModel }
             }

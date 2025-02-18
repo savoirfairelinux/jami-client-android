@@ -69,7 +69,7 @@ class ConversationMembersFragment : Fragment() {
                 }
             }
             .flatMap { (conversation, contacts) ->
-                contactService.observeContact(path.accountId, contacts, false)
+                contactService.observeContact(path.accountId, contacts, false, withUser = true)
                     .map { contactViewModels -> Pair(conversation, contactViewModels) }
             }
             .observeOn(DeviceUtils.uiScheduler)
