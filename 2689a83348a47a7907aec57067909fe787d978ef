@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "78a3977b_480cf476",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-02-18T20:51:33Z",
+      "side": 1,
+      "message": "1. Tech support could be setting up the account.\n\n2. Translating \"your\" into other languages may be male or female. If it is translated as male and the user is female, it may not give a nice UX. Likewise, if \"your\" is translated into female and the user is male.\n\nThe suggested string intends to satisfy both tech support and the personal person.\n\nHowever, if you want this change to be reverted, please advise, and it will happen.\n\nThank you",
+      "parentUuid": "90c83ef3_7d79ca66",
+      "range": {
+        "startLine": 412,
+        "startChar": 43,
+        "endLine": 412,
+        "endChar": 95
+      },
+      "revId": "2689a83348a47a7907aec57067909fe787d978ef",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7b5a3cb1_6430e97c",
         "filename": "jami-android/app/src/main/res/values/strings.xml",
         "patchSetId": 16
