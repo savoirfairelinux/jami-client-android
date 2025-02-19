@@ -24,6 +24,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ae29bde_0a9cc24a",
+        "filename": "jami-android/app/src/main/java/cx/ring/views/twopane/TwoPaneLayout.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2025-02-19T17:04:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81618509_f259c711",
+      "range": {
+        "startLine": 95,
+        "startChar": 16,
+        "endLine": 95,
+        "endChar": 29
+      },
+      "revId": "88e865eb8f5ca587bbb9f14e8d7c7950df2cf9e5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "75e6f8bc_98281c63",
@@ -37,6 +61,30 @@
       "writtenOn": "2025-02-19T16:05:31Z",
       "side": 1,
       "message": "isSlideable",
+      "range": {
+        "startLine": 143,
+        "startChar": 33,
+        "endLine": 143,
+        "endChar": 46
+      },
+      "revId": "88e865eb8f5ca587bbb9f14e8d7c7950df2cf9e5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "664458a1_8e7bae32",
+        "filename": "jami-android/app/src/main/java/cx/ring/views/twopane/TwoPaneLayout.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1109
+      },
+      "writtenOn": "2025-02-19T17:04:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75e6f8bc_98281c63",
       "range": {
         "startLine": 143,
         "startChar": 33,
