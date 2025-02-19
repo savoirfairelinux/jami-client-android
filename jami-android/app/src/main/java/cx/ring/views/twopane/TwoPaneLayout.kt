@@ -92,6 +92,7 @@ class TwoPaneLayout @JvmOverloads constructor(
      */
     private var isOpened = false
     private val mPanelListeners: MutableList<PanelListener> = CopyOnWriteArrayList()
+    private var isTwoPaneMode = false
 
     private val tmpRect = Rect()
     private val tmpRect2 = Rect()
@@ -133,6 +134,13 @@ class TwoPaneLayout @JvmOverloads constructor(
          * @param panel The detail view that was slid to a closed position
          */
         fun onPanelClosed(panel: View)
+
+        /**
+         * Called when the two-pane mode changes.
+         *
+         * @param isTwoPaneMode True if the layout is in two-pane mode, false otherwise.
+         */
+        fun onTwoPaneModeChanged(isTwoPaneMode: Boolean)
     }
 
     private val mFoldingFeatureObserver: FoldingFeatureObserver?
@@ -185,6 +193,12 @@ class TwoPaneLayout @JvmOverloads constructor(
         sendAccessibilityEvent(AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED)
     }
 
+    fun dispatchTwoPaneModeChanged() {
+        for (listener in mPanelListeners) {
+            listener.onTwoPaneModeChanged(isTwoPaneMode)
+        }
+    }
+
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         mFirstLayout = true
@@ -220,6 +234,7 @@ class TwoPaneLayout @JvmOverloads constructor(
         var canSlide = false
         val widthAvailable = max(widthSize - getPaddingLeft() - getPaddingRight(), 0)
         var widthRemaining = widthAvailable
+        val previousTwoPaneMode = isTwoPaneMode
         val childCount = childCount
         if (childCount > 2) {
             Log.e(TAG, "onMeasure: More than two child views are not supported.")
@@ -363,6 +378,10 @@ class TwoPaneLayout @JvmOverloads constructor(
         val measuredHeight = layoutHeight + paddingTop + paddingBottom
         setMeasuredDimension(widthSize, measuredHeight)
         isSlideable = canSlide
+        isTwoPaneMode = !isSlideable
+        if (previousTwoPaneMode != isTwoPaneMode) {
+            dispatchTwoPaneModeChanged()
+        }
     }
 
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
