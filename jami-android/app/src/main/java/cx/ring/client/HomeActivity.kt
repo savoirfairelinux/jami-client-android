@@ -116,6 +116,7 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
                         mBinding?.panel?.closePane()
                     } else showWelcomeFragment()
 
+                    loadHomeFragmentIfMissing()
                     // Next back press doesn't have to be handled by this callback.
                     isEnabled = false
                 } else {
@@ -154,11 +155,21 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
                     fConversation = null
                     fWelcomeJami = null
                 }
+
+                override fun onTwoPaneModeChanged(isTwoPaneMode: Boolean) {
+                    if (isTwoPaneMode) {
+                        loadHomeFragmentIfMissing()
+                    }
+                }
             })
         }
         WindowCompat.setDecorFitsSystemWindows(window, false)
+        val isHomeFragmentRequired = intent?.action != Intent.ACTION_SEND
+                && intent?.action != Intent.ACTION_VIEW
+        if (isHomeFragmentRequired) {
+            loadHomeFragmentIfMissing()
+        }
 
-        mHomeFragment = supportFragmentManager.findFragmentById(R.id.home_fragment) as HomeFragment
         frameContent = supportFragmentManager.findFragmentById(R.id.frame)
         supportFragmentManager.addOnBackStackChangedListener {
             frameContent = supportFragmentManager.findFragmentById(R.id.frame)
@@ -218,6 +229,16 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
                     it.openPane()
                 }
             }
+        }
+    }
+
+    private fun loadHomeFragmentIfMissing() {
+        mHomeFragment = supportFragmentManager.findFragmentById(R.id.home_fragment) as? HomeFragment
+        if (mHomeFragment == null) {
+            mHomeFragment = HomeFragment()
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.home_fragment, mHomeFragment!!, HomeFragment::class.java.simpleName)
+                .commit()
         }
     }
 
