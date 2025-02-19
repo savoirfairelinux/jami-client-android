@@ -133,6 +133,14 @@ class TwoPaneLayout @JvmOverloads constructor(
          * @param panel The detail view that was slid to a closed position
          */
         fun onPanelClosed(panel: View)
+
+        /**
+         * Called when the sliding capability of the layout changes.
+         *
+         * @param isSlideable True if the layout allows sliding between panes (single-pane mode),
+         * false if both panes are fully visible (two-pane mode).
+         */
+        fun onSlideableStateChanged(isSlideable: Boolean)
     }
 
     private val mFoldingFeatureObserver: FoldingFeatureObserver?
@@ -183,6 +191,12 @@ class TwoPaneLayout @JvmOverloads constructor(
             listener.onPanelClosed(panel)
         }
         sendAccessibilityEvent(AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED)
+    }
+
+    fun dispatchSlideableStateChanged() {
+        for (listener in mPanelListeners) {
+            listener.onSlideableStateChanged(isSlideable)
+        }
     }
 
     override fun onAttachedToWindow() {
@@ -362,7 +376,11 @@ class TwoPaneLayout @JvmOverloads constructor(
         }
         val measuredHeight = layoutHeight + paddingTop + paddingBottom
         setMeasuredDimension(widthSize, measuredHeight)
+        val previousSlideable = isSlideable
         isSlideable = canSlide
+        if (previousSlideable != isSlideable || mFirstLayout) {
+            dispatchSlideableStateChanged()
+        }
     }
 
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
