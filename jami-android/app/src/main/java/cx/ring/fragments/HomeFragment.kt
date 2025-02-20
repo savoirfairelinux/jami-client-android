@@ -424,6 +424,15 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        ViewCompat.setOnApplyWindowInsetsListener(mBinding!!.searchView) { v, insets ->
+            if (v.paddingTop > 0) {
+                // Ensure searchView ignores top insets for proper fullscreen appearance
+                v.setPadding(v.paddingLeft, 0, v.paddingRight, v.paddingBottom)
+            }
+            insets
+        }
+
         mSmartListFragment = mBinding!!.fragmentContainer.getFragment()
 
         disableAppBarScroll()
