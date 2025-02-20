@@ -30,7 +30,9 @@ import androidx.core.app.Person
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
+import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.doOnNextLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -162,7 +164,28 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
                     }
                 }
             })
+
+            val originalPaddingLeft = binding.root.paddingLeft
+            val originalPaddingRight = binding.root.paddingRight
+
+            ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, insets ->
+                val navInsets = insets.getInsets(WindowInsetsCompat.Type.navigationBars())
+                val cutoutInsets = insets.getInsets(WindowInsetsCompat.Type.displayCutout())
+                val newPaddingLeft = originalPaddingLeft + maxOf(navInsets.left, cutoutInsets.left)
+                val newPaddingRight = originalPaddingRight + maxOf(navInsets.right,
+                    cutoutInsets.right)
+
+                if (view.paddingLeft != newPaddingLeft || view.paddingRight != newPaddingRight) {
+                    view.setPadding(newPaddingLeft, view.paddingTop,
+                        newPaddingRight, view.paddingBottom)
+                }
+                // Consume only left & right insets from navigation bars & display cutout
+                // to prevent layout issues in landscape mode
+                insets.inset(maxOf(navInsets.left, cutoutInsets.left), 0,
+                    maxOf(navInsets.right, cutoutInsets.right), 0)
+            }
         }
+
         WindowCompat.setDecorFitsSystemWindows(window, false)
         val isHomeFragmentRequired = intent?.action != Intent.ACTION_SEND
                 && intent?.action != Intent.ACTION_VIEW
