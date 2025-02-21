@@ -96,6 +96,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "97c8c8fb_23a0ee7c",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-02-21T19:33:53Z",
+      "side": 1,
+      "message": "2. It is understood that Transifex is proprietary and Weblate is open-source. As Jami has been blocked from Reddit and Facebook, it seems prudent to move away from Transifex to Weblate. Spending more time in Transifex is creating more vendor lock-in.\n\nInvesting more time in setting up your own Weblate instance may be a better investment, like:\n* https://weblate.linphone.org/\n* https://translations.documentfoundation.org/",
+      "parentUuid": "7f018207_b67743d8",
+      "range": {
+        "startLine": 412,
+        "startChar": 43,
+        "endLine": 412,
+        "endChar": 95
+      },
+      "revId": "2689a83348a47a7907aec57067909fe787d978ef",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7b5a3cb1_6430e97c",
