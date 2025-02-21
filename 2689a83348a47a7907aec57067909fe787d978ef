@@ -72,6 +72,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7f018207_b67743d8",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-02-21T19:24:34Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "b78c6f9b_ad9a5328",
+      "range": {
+        "startLine": 412,
+        "startChar": 43,
+        "endLine": 412,
+        "endChar": 95
+      },
+      "revId": "2689a83348a47a7907aec57067909fe787d978ef",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7b5a3cb1_6430e97c",
@@ -204,6 +228,30 @@
       "side": 1,
       "message": "*shown\n\nYes the new version seems right. Thanks.",
       "parentUuid": "5a1fe476_d023ce6c",
+      "range": {
+        "startLine": 474,
+        "startChar": 48,
+        "endLine": 474,
+        "endChar": 76
+      },
+      "revId": "2689a83348a47a7907aec57067909fe787d978ef",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc723123_b575d0e3",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-02-21T19:24:34Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "990de70c_c2158b20",
       "range": {
         "startLine": 474,
         "startChar": 48,
