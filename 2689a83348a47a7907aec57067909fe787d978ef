@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b78c6f9b_ad9a5328",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2025-02-21T19:15:59Z",
+      "side": 1,
+      "message": "1. Tech support or other people helping a user act on behalf of that user, we don\u0027t want to compromise the user experience with overly generic terms.\nA Jami account is designed as personal. We intent Jami to feel friendly (without being too casual, and keeping a professional tone).\nPersonally, I don\u0027t think we need to use the personal form too often (I didn\u0027t like Windows XP saying \"My documents\", \"My computer\" etc.), but when setting up an account or its profile, it felt appropriate. However since other parts of the app simply say \"Account\" and \"Profile\" (not your account or your profile) it\u0027s also a matter of consistency.\n\n2. this is a convincing argument. On a more general note, I\u0027m not sure how we should handle this issue, does Transifex handle these cases ? IIRC Android APIs allow this but it would need to be integrated with Transifex. That would be a separate work, so for now I\u0027m ok with your changes.",
+      "parentUuid": "78a3977b_480cf476",
+      "range": {
+        "startLine": 412,
+        "startChar": 43,
+        "endLine": 412,
+        "endChar": 95
+      },
+      "revId": "2689a83348a47a7907aec57067909fe787d978ef",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7b5a3cb1_6430e97c",
         "filename": "jami-android/app/src/main/res/values/strings.xml",
         "patchSetId": 16
@@ -156,6 +180,30 @@
       "side": 1,
       "message": "Can you please advise the lines of the status labels, i.e., so that the period can be removed if it is present?",
       "parentUuid": "820e8409_863a6fc4",
+      "range": {
+        "startLine": 474,
+        "startChar": 48,
+        "endLine": 474,
+        "endChar": 76
+      },
+      "revId": "2689a83348a47a7907aec57067909fe787d978ef",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "990de70c_c2158b20",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2025-02-21T19:15:59Z",
+      "side": 1,
+      "message": "*shown\n\nYes the new version seems right. Thanks.",
+      "parentUuid": "5a1fe476_d023ce6c",
       "range": {
         "startLine": 474,
         "startChar": 48,
