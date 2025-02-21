@@ -74,10 +74,10 @@ RUN yes Y | sdkmanager --licenses
 RUN sdkmanager --channel=1 --no_https "platforms;android-${API_LEVEL}" \
     'extras;android;m2repository' \
     'extras;google;m2repository' \
-    'ndk;26.3.11579264' \
+    'ndk;28.0.13004108' \
     "build-tools;${BUILD_TOOLS}"
 ENV ANDROID_SDK=${ANDROID_SDK_ROOT}
-ENV ANDROID_NDK=${ANDROID_SDK_ROOT}/ndk/26.3.11579264
+ENV ANDROID_NDK=${ANDROID_SDK_ROOT}/ndk/28.0.13004108
 
 
 FROM build as test
