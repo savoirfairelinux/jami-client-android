@@ -15,18 +15,18 @@ plugins {
 
 android {
     namespace = "cx.ring"
-    compileSdk = 34
-    buildToolsVersion = "34.0.0"
-    ndkVersion = "26.3.11579264"
+    compileSdk = 35
+    buildToolsVersion = "35.0.1"
+    ndkVersion = "28.0.13004108"
     defaultConfig {
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 446
         versionName = "20250219-01"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         externalNativeBuild {
             cmake {
-                version = "3.22.1"
+                version = "3.30.5"
                 arguments += listOf(
                     "-DANDROID_STL=c++_shared",
                     "-DBUILD_CONTRIB=ON",
@@ -88,7 +88,7 @@ android {
     externalNativeBuild {
         cmake {
             path = file("../../daemon/CMakeLists.txt")
-            version = "3.22.1"
+            version = "3.30.5"
         }
     }
 }
@@ -98,9 +98,9 @@ val markwon_version = "4.6.2"
 dependencies {
     implementation (project(":libjamiclient"))
     implementation ("org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version")
-    implementation ("androidx.core:core-ktx:1.13.1")
+    implementation ("androidx.core:core-ktx:1.15.0")
     implementation ("androidx.appcompat:appcompat:1.7.0")
-    implementation ("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation ("androidx.constraintlayout:constraintlayout:2.2.0")
     implementation ("androidx.cardview:cardview:1.0.0")
     implementation ("androidx.preference:preference-ktx:1.2.1")
     implementation ("androidx.recyclerview:recyclerview:1.3.2")
@@ -113,13 +113,13 @@ dependencies {
     implementation ("androidx.emoji2:emoji2:1.5.0")
     implementation ("androidx.viewpager2:viewpager2:1.1.0")
     implementation ("androidx.emoji2:emoji2-emojipicker:1.5.0")
-    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.6")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7")
     implementation ("androidx.window:window:1.3.0")
     implementation ("com.google.android.material:material:1.12.0")
     implementation ("androidx.biometric:biometric:1.1.0")
     implementation ("com.google.android.flexbox:flexbox:3.0.0")
     implementation ("com.google.protobuf:protobuf-javalite:4.28.3")
-    implementation("androidx.annotation:annotation-jvm:1.9.0")
+    implementation("androidx.annotation:annotation-jvm:1.9.1")
 
     // ORM
     implementation ("com.j256.ormlite:ormlite-android:5.7")
