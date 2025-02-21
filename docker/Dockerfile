@@ -67,17 +67,17 @@ RUN wget https://dl.google.com/android/repository/${ANDROID_CMD} -P /tmp && \
 ENV PATH "$PATH:$ANDROID_SDK_ROOT/cmdline-tools/tools:$ANDROID_SDK_ROOT/cmdline-tools/tools/bin:$ANDROID_SDK_ROOT/emulator:$ANDROID_SDK_ROOT/tools/bin:$ANDROID_SDK_ROOT/platform-tools:$ANDROID_SDK_ROOT/build-tools/${BUILD_TOOLS}"
 
 # Install android SDK libraries, NDK.
-ARG API_LEVEL="34"
-ARG BUILD_TOOLS="34.0.0"
+ARG API_LEVEL="35"
+ARG BUILD_TOOLS="35.0.1"
 RUN sdkmanager --update
 RUN yes Y | sdkmanager --licenses
 RUN sdkmanager --channel=1 --no_https "platforms;android-${API_LEVEL}" \
     'extras;android;m2repository' \
     'extras;google;m2repository' \
-    'ndk;26.3.11579264' \
+    'ndk;28.0.13004108' \
     "build-tools;${BUILD_TOOLS}"
 ENV ANDROID_SDK=${ANDROID_SDK_ROOT}
-ENV ANDROID_NDK=${ANDROID_SDK_ROOT}/ndk/26.3.11579264
+ENV ANDROID_NDK=${ANDROID_SDK_ROOT}/ndk/28.0.13004108
 
 
 FROM build as test
@@ -91,11 +91,11 @@ ENV SPOON_RUNNER_PATH=/spoon-runner.jar
 RUN wget -O /spoon-runner.jar "https://search.maven.org/remote_content?g=com.squareup.spoon&a=spoon-runner&v=LATEST&c=jar-with-dependencies"
 
 # Install android SDK libraries for emulation.
-ARG API_LEVEL="34"
+ARG API_LEVEL="35"
 ARG TARGET="google_apis_playstore"
 ARG ARCH="x86_64"
 ARG EMULATOR_PACKAGE="system-images;android-${API_LEVEL};${TARGET};${ARCH}"
-ARG BUILD_TOOLS="34.0.0"
+ARG BUILD_TOOLS="35.0.1"
 RUN sdkmanager --update
 RUN yes Y | sdkmanager --licenses
 RUN sdkmanager --channel=1 --no_https "${EMULATOR_PACKAGE}" "emulator" "platform-tools"
