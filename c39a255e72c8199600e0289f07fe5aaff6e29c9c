@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2ec928fa_08cd0324",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 24
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-02-21T19:27:20Z",
+      "side": 1,
+      "message": "@adrien.beraud@savoirfairelinux.com your +2 disappeared, and the `Submit` button is not showing. If this is ready, can you please merge? Thank you",
+      "revId": "c39a255e72c8199600e0289f07fe5aaff6e29c9c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
