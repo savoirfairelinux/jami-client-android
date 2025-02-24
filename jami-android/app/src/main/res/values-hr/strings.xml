@@ -145,7 +145,6 @@
   <string name="delete_contact">Izbriši kontakt</string>
   <string name="conversation_action_remove_this_title">Obrisati ovaj kontakt?</string>
   <string name="conversation_action_remove_this_message">Ovo će obrisati kontakt i definitivno obrisati povijest razgovora.</string>
-  <string name="copied_to_clipboard">%1$s kopiran u međuspremnik</string>
   <string name="conversation_action_select_peer_number">Odaberite broj</string>
   <string name="conversation_action_block_this">Blokiraj kontakt</string>
   <string name="conversation_action_unblock_this">Otključaj kontakt</string>
@@ -171,9 +170,6 @@
   <string name="conversation_type_contact">Kontakt s Jamijem</string>
   <string name="conversation_type_private">Privredni</string>
   <string name="conversation_type_group">Grupa</string>
-  <string name="conversation_contact_invited">%1$s je pozvan</string>
-  <string name="conversation_contact_added">%1$s se pridružio</string>
-  <string name="conversation_contact_left">%1$s je lijevo</string>
   <string name="conversation_search_hint">Razgovor za pretragu</string>
   <string name="today">Danas</string>
   <string name="yesterday">Jučer</string>
@@ -181,8 +177,8 @@
   <string name="add_call_contact_number_to_contacts">Dodati %1$s?</string>
   <string name="prompt_new_password">Nova lozinka</string>
   <string name="prompt_new_password_optional">Nova lozinka (opcionalno)</string>
-  <string name="prompt_new_password_repeat">Ponovite novu lozinku</string>
-  <string name="account_create_title">Napravite Jami račun</string>
+  <string name="prompt_new_password_repeat">Potvrdi novu lozinku</string>
+  <string name="account_create_title">Stvoriti račun Jami</string>
   <string name="prompt_new_username">Unesite novo korisničko ime</string>
   <string name="prompt_hint_username">Korisničko ime</string>
   <string name="help_password_choose">Odaberite jaku lozinku koje ćete se sjećati da biste zaštitili vaš Jami račun.</string>
@@ -197,7 +193,6 @@
   <string name="hist_invitation_received">Poziv primljen</string>
   <!--Account summary-->
   <string name="profile">Profil</string>
-  <string name="profile_message_warning">Vaš profil je podjeljen samo sa vašim kontaktima</string>
   <string name="open_the_gallery">Otvorite galeriju</string>
   <string name="take_a_photo">Fotografija</string>
   <string name="profile_name_hint">Unesite svoje ime</string>
@@ -207,6 +202,7 @@
   <string name="identifier">Identifikacija</string>
   <string name="account">Račun</string>
   <string name="link_new_device">Povežite novi uređaj</string>
+  <string name="devices_header">Uređaji</string>
   <string name="devices">Povezani uređaji</string>
   <string name="total_devices">Ukupna količina uređaja: </string>
   <!--Share fragment-->
@@ -228,28 +224,10 @@
   <string name="conversation_placeholder">Još niste razgovarali.</string>
   <string name="contact_request_sent">Poslan kontaktni zahtjev</string>
   <string name="start_conversation">Pokrenite razgovor.</string>
-  <string name="search_results">Rezultati pretrage</string>
   <string name="tv_contact_row_header">Kontakti</string>
   <string name="gallery_error_title">Ne pronađeno aplikacija Galerija</string>
   <string name="gallery_error_message">Nije pronađena aplikacija na uređaju za otvaranje Galerije</string>
   <!--File Transfer-->
-  <string name="invalid_file">Neispravna datoteka</string>
-  <string name="not_able_to_write_file">Ne mogu pisati datoteku</string>
-  <string name="file_transfer_status_created">inicijalizacija prijenosa</string>
-  <string name="file_transfer_status_unsupported">nepodržano</string>
-  <string name="file_transfer_status_wait_peer_acceptance">Čekaju prihvaćanje s vršnjaka</string>
-  <string name="file_transfer_status_wait_host_acceptance">Čekajuci domaćin prihvaćanje</string>
-  <string name="file_transfer_status_ongoing">u toku</string>
-  <string name="file_transfer_status_finished">gotovi</string>
-  <string name="file_transfer_status_closed_by_host">zatvoreni od strane domaćina</string>
-  <string name="file_transfer_status_closed_by_peer">blizak s vršnjacima</string>
-  <string name="file_transfer_status_invalid_pathname">Nevaljan naziv putovanja</string>
-  <string name="file_transfer_status_unjoinable_peer">Neprijateljski</string>
-  <string name="file_transfer_status_cancelled">otkazano</string>
-  <string name="file_transfer_status_error">Nepostignut zbog pogreške</string>
-  <string name="file_transfer_status_timed_out">vrijeme</string>
-  <string name="file_saved_in">Datoteka je spremljena u %s</string>
-  <string name="file_saved_successfully">Dosje uspješno spisano</string>
   <string name="file_download">Snimka</string>
   <string name="title_media_viewer">Sredni gledatelj</string>
   <string name="menu_file_open">Otvori datoteku</string>
@@ -326,7 +304,6 @@
   <string name="bottomsheet_remove">Uklonite član</string>
   <!--JamiId-->
   <string name="jami_id_validate">Upis korisničkog imena</string>
-  <string name="jami_id_looking_for_availability">Tražim dostupnost korisničkog imena...</string>
   <string name="jami_id_choose_username">Izaberite korisničko ime</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Dobrodošli u Jami</string>

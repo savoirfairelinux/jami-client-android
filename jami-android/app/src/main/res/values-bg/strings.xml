@@ -144,7 +144,6 @@
   <string name="delete_contact">Изтриване на контакт</string>
   <string name="conversation_action_remove_this_title">Изтриване на този контакт?</string>
   <string name="conversation_action_remove_this_message">Това определено ще изтрие този контакт и ще изчисти историята на повикванията.</string>
-  <string name="copied_to_clipboard">%1$s е копиран</string>
   <string name="conversation_action_select_peer_number">Изберете номер</string>
   <string name="conversation_action_block_this">Блокиране на контакт</string>
   <string name="conversation_action_unblock_this">Деблокиране на контакта</string>
@@ -170,9 +169,6 @@
   <string name="conversation_type_contact">Контакт с Джами</string>
   <string name="conversation_type_private">Приватна</string>
   <string name="conversation_type_group">Група</string>
-  <string name="conversation_contact_invited">%1$s е поканен</string>
-  <string name="conversation_contact_added">%1$s е включен</string>
-  <string name="conversation_contact_left">%1$s е останал</string>
   <string name="conversation_search_hint">Търсене на разговор</string>
   <string name="today">Днес</string>
   <string name="yesterday">Вчера</string>
@@ -180,8 +176,6 @@
   <string name="add_call_contact_number_to_contacts">Добавяне на %1$s?</string>
   <string name="prompt_new_password">Нова парола</string>
   <string name="prompt_new_password_optional">Нова парола (незадължително)</string>
-  <string name="prompt_new_password_repeat">Повторете новата парола</string>
-  <string name="account_create_title">Създаване на профил в Jami</string>
   <string name="prompt_new_username">Въведете ново потребителско име</string>
   <string name="prompt_hint_username">Потребителско име</string>
   <string name="help_password_choose">Изберете сигурна парола, която ще запомните, за да е защитен профилът ви.</string>
@@ -196,7 +190,6 @@
   <string name="hist_invitation_received">Поканата е приета</string>
   <!--Account summary-->
   <string name="profile">Профил</string>
-  <string name="profile_message_warning">Профилът Ви се споделя само с контактите Ви</string>
   <string name="open_the_gallery">Отваряне на галерията</string>
   <string name="take_a_photo">Направи снимка</string>
   <string name="profile_name_hint">Введете името си.</string>
@@ -206,6 +199,7 @@
   <string name="identifier">Идентификатор</string>
   <string name="account">Профил</string>
   <string name="link_new_device">Свържете ново устройство</string>
+  <string name="devices_header">Устройства</string>
   <string name="devices">Свързани устройства</string>
   <string name="total_devices">Общо устройства: </string>
   <!--Share fragment-->
@@ -227,28 +221,10 @@
   <string name="conversation_placeholder">Още не сте говорили.</string>
   <string name="contact_request_sent">Заявката за свързване с нов контакт е изпратена</string>
   <string name="start_conversation">Започнете разговор.</string>
-  <string name="search_results">Резултати от търсенето</string>
   <string name="tv_contact_row_header">Контакти</string>
   <string name="gallery_error_title">Не е намерено приложение на Галерия</string>
   <string name="gallery_error_message">Не е намерено приложение на устройството, което да отвори Галерия</string>
   <!--File Transfer-->
-  <string name="invalid_file">Невалиден файл</string>
-  <string name="not_able_to_write_file">Не може да пише файл</string>
-  <string name="file_transfer_status_created">инициализиране на трансфер</string>
-  <string name="file_transfer_status_unsupported">неподдържан</string>
-  <string name="file_transfer_status_wait_peer_acceptance">чакаме пиъра да приеме</string>
-  <string name="file_transfer_status_wait_host_acceptance">чакаме хоста да приеме</string>
-  <string name="file_transfer_status_ongoing">текущ</string>
-  <string name="file_transfer_status_finished">завършен</string>
-  <string name="file_transfer_status_closed_by_host">затворен от хост</string>
-  <string name="file_transfer_status_closed_by_peer">затворен от пиър</string>
-  <string name="file_transfer_status_invalid_pathname">Невалидно име на пътеката</string>
-  <string name="file_transfer_status_unjoinable_peer">несъвместими връстници</string>
-  <string name="file_transfer_status_cancelled">отменено</string>
-  <string name="file_transfer_status_error">не е успял поради грешка</string>
-  <string name="file_transfer_status_timed_out">Изключен срок</string>
-  <string name="file_saved_in">Файлът е запазен в %s</string>
-  <string name="file_saved_successfully">Спят файл</string>
   <string name="file_download">Скачане</string>
   <string name="title_media_viewer">Прегледник на медиите</string>
   <string name="menu_file_open">Отваряне на файл</string>
@@ -325,7 +301,6 @@
   <string name="bottomsheet_remove">Извадете член</string>
   <!--JamiId-->
   <string name="jami_id_validate">Регистрирайте потребителско име</string>
-  <string name="jami_id_looking_for_availability">Проверяване дали потребителското име е свободно…</string>
   <string name="jami_id_choose_username">Изберете потребителско име</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Добре дошли в Jami</string>

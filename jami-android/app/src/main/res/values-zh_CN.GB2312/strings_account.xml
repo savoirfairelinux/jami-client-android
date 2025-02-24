@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--Strings related to account edition screen-->
+  <!--Strings related to account creation-->
+  <!--Strings related to account deletion-->
+  <!--AccountManagementFragment-->
+  <!--Basic Details-->
+  <string name="account_alias_label">账户名称</string>
+  <string name="account_name_server_label">名称服务器</string>
+  <!--Extension Details-->
+  <!--Audio Details-->
+  <!--Video Details-->
+  <!--Advanced Details-->
+  <string name="account_stun_enable_label">使用 STUN</string>
+  <string name="account_stun_server_label">Stun服务器</string>
+  <string name="account_connectivity_label">点到点连接</string>
+  <string name="default_value">默认</string>
+  <!--Security Details-->
+  <!--SRTP Details-->
+  <!--SIP-->
+  <!--TLS Details-->
+  <string name="account_tls_port_label">TLS监听端口</string>
+  <string name="account_tls_certificate_list_label">证书颁发机构</string>
+  <string name="account_tls_certificate_file_label">证书文件</string>
+  <string name="account_tls_private_key_file_label">私钥文件</string>
+  <string name="account_tls_password_label">私鑰保護密碼</string>
+  <string name="account_tls_method_label">TLS方法</string>
+  <string name="account_tls_ciphers_label">TLS加密</string>
+  <string name="account_tls_server_name_label">服务器名称</string>
+  <string name="account_tls_verify_server_label">TLS验证服务器</string>
+  <string name="account_tls_verify_client_label">验证客户端</string>
+  <string name="account_require_client_certificate_label">TLS需要客户端证书</string>
+  <string name="account_tls_negotiation_timeout_sec">握手超时（秒）</string>
+  <string name="account_rtp_port_range">音频RTP端口范围</string>
+  <!--restore/backup-->
+  <string name="error_passwords_not_equals">密码不匹配。</string>
+  <!--TV-->
+  <string name="account_link_prompt_pin">输入PIN码</string>
+  <string name="account_new_button">加入 Jami</string>
+  <string name="account_link_export_info">要在其他设备上使用此账户，您必须先在Jami上公开它。这将生成一个PIN码，您必须在新设备上输入该PIN码才能设置此账户。PIN码有效期为 10 分钟。</string>
+  <string name="account_start_export_button">生成PIN码</string>
+  <string name="account_end_export_infos">我们的PIN是：\n\n%%\n\n要完成此过程，您需要在新设备上打开Jami。使用“将此设备链接到帐户”创建新帐户。PIN将在10分钟后过期。</string>
+  <string name="account_link_export_info_light">要在其他设备上使用此账户，您必须先在Jami上公开它。这将生成一个PIN码，您必须在新设备上输入该PIN码才能设置此账户。PIN码有效期为 10 分钟。</string>
+  <!--Name registration-->
+  <string name="no_registered_name_for_account">没有注册名称</string>
+  <string name="username_available">用户名可用。</string>
+  <string name="register_name">注册名称</string>
+  <!--Create account-->
+  <!--Edit profile-->
+  <!--Devices-->
+  <string name="revoke_device_message">您确定要注销设备%1$s吗？</string>
+  <string name="rename_device_message">输入设备名称以在Jami帐户中标识此设备</string>
+  <string name="account_disabled_indicator">已停用</string>
+  <!--Link a new device-->
+  <string name="account_link_prompt_pin_manually">手动输入PIN</string>
+  <string name="content_description_checkbox">您的二维码有效</string>
+  <string name="account_link_info">在新的Jami应用程序上，扫描二维码或手动输入PIN</string>
+  <string name="account_link_device_info">从其他Jami应用程序中选择“链接新设备”以显示二维码或PIN</string>
+  <string name="content_description_qr_generated">此账户二维码</string>
+  <string name="account_generate_export_invalid">PIN不再有效。\n输入密码并生成新的密码以链接新设备。</string>
+  <string name="account_generate_export_invalid_two">PIN不再有效。\n生成新PIN以链接新设备。</string>
+  <string name="connect_device_scanqr">扫描 QR 码</string>
+  <string name="connect_device_enterPIN">或输入PIN</string>
+  <!--Biometry-->
+</resources>

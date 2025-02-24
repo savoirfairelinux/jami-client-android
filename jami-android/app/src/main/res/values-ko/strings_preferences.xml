@@ -45,8 +45,8 @@
   <string name="pref_typing_summary">문자 입력 표시를 보내서 수신하여 메시지가 입력되고 있음을 나타냅니다.</string>
   <string name="pref_block_record_title">스크린샷 및 녹화 차단</string>
   <string name="pref_block_record_summary">스크린샷이나 동영상 촬영을 차단하세요.</string>
-  <string name="pref_link_preview_title">대화에서 링크 미리보기 표시</string>
-  <string name="pref_link_preview_summary">미리보기에는 타사 서버에서 콘텐츠를 다운로드해야 합니다.</string>
+  <string name="pref_link_preview_title">웹 링크 미리 보기</string>
+  <string name="pref_link_preview_summary">미리보기에는 제3자 서버에서 콘텐츠를 다운로드해야 합니다.</string>
   <!--Notifications Visibility-->
   <string name="connectivity_custom_title">관습</string>
   <!--Extension-->

@@ -150,7 +150,6 @@
   <string name="delete_contact">Esborrar contacte</string>
   <string name="conversation_action_remove_this_title">Esborrar aquest contacte?</string>
   <string name="conversation_action_remove_this_message">Això esborrarà el contacte i netejarà definitivament l\'historial de converses.</string>
-  <string name="copied_to_clipboard">%1$s copiat al porta-retalls</string>
   <string name="conversation_action_select_peer_number">Seleccioneu un número</string>
   <string name="conversation_action_block_this">Bloqueja el contacte</string>
   <string name="conversation_action_unblock_this">Desbloca contacte</string>
@@ -176,9 +175,6 @@
   <string name="conversation_preference_emoji">Emoticona de conversa</string>
   <string name="conversation_type_contact">Contacte de Jami</string>
   <string name="conversation_type_private">Privat</string>
-  <string name="conversation_contact_invited">%1$s ha estat convidat</string>
-  <string name="conversation_contact_added">%1$s s\'ha unit</string>
-  <string name="conversation_contact_left">%1$s ha sortit</string>
   <string name="conversation_search_hint">Conversació de cerca</string>
   <string name="starting_camera_error">Ha succeït un error iniciant la càmera</string>
   <string name="today">Avui</string>
@@ -187,8 +183,6 @@
   <string name="add_call_contact_number_to_contacts">Afegir %1$s?</string>
   <string name="prompt_new_password">Contrasenya nova</string>
   <string name="prompt_new_password_optional">Contrasenya nova (opcional)</string>
-  <string name="prompt_new_password_repeat">Torneu a inserir la contrasenya nova</string>
-  <string name="account_create_title">Crear un compte Jami</string>
   <string name="prompt_new_username">Escriviu un nom d\'usuari</string>
   <string name="prompt_hint_username">Nom d\'usuari</string>
   <string name="help_password_choose">Escull una contrasenya forta que puguis recordar per protegir el teu compte Jami.</string>
@@ -204,7 +198,6 @@
   <!--Account summary-->
   <string name="profile">Perfil</string>
   <string name="profile_name">Nom de perfil</string>
-  <string name="profile_message_warning">El vostre perfil només es comparteix amb els vostres contactes</string>
   <string name="open_the_gallery">Obre la galeria</string>
   <string name="take_a_photo">Fer foto</string>
   <string name="profile_name_hint">Escriu el teu nom</string>
@@ -214,6 +207,7 @@
   <string name="identifier">Identificador</string>
   <string name="account">Compte</string>
   <string name="link_new_device">Enllaça un nou dispositiu</string>
+  <string name="devices_header">Dispositius</string>
   <string name="devices">Dispositius enllaçats</string>
   <string name="total_devices">Total de dispositius:</string>
   <!--Share fragment-->
@@ -235,28 +229,10 @@
   <string name="conversation_placeholder">Encara no tens converses</string>
   <string name="contact_request_sent">S\'ha enviat una petició de contacte</string>
   <string name="start_conversation">Inicia conversa</string>
-  <string name="search_results">Resultats de cerca</string>
   <string name="tv_contact_row_header">Contactes</string>
   <string name="gallery_error_title">No s\'ha trobat cap applicació de Galeria</string>
   <string name="gallery_error_message">No s\'ha trobat cap aplicació al dispositiu per obrir Galeria</string>
   <!--File Transfer-->
-  <string name="invalid_file">Fitxer invalid</string>
-  <string name="not_able_to_write_file">No es pot escriure l\'arxiu</string>
-  <string name="file_transfer_status_created">Iniciant transferència</string>
-  <string name="file_transfer_status_unsupported">No suportat</string>
-  <string name="file_transfer_status_wait_peer_acceptance">Esperant acceptació del parell</string>
-  <string name="file_transfer_status_wait_host_acceptance">Esperant acceptació de l\'amfitrió</string>
-  <string name="file_transfer_status_ongoing">En curs</string>
-  <string name="file_transfer_status_finished">Acabat</string>
-  <string name="file_transfer_status_closed_by_host">Tancat per l\'amfitrió</string>
-  <string name="file_transfer_status_closed_by_peer">Tancat pel parell</string>
-  <string name="file_transfer_status_invalid_pathname">Ruta invalida</string>
-  <string name="file_transfer_status_unjoinable_peer">Parell no disponible</string>
-  <string name="file_transfer_status_cancelled">cancel·lada</string>
-  <string name="file_transfer_status_error">Fallada per un error</string>
-  <string name="file_transfer_status_timed_out">Temps esgotat</string>
-  <string name="file_saved_in">Fitxer desat a %s</string>
-  <string name="file_saved_successfully">Fitxer desat amb èxit</string>
   <string name="file_download">Descarrega</string>
   <string name="title_media_viewer">Visor de medis</string>
   <string name="menu_file_open">Obre fitxer</string>
@@ -337,10 +313,7 @@
   <string name="jami_id_copy">Copia el JamiId</string>
   <string name="jami_id_share">Comparteix el JamiId</string>
   <string name="jami_id_validate">Registra nom d\'usuari</string>
-  <string name="jami_id_available">El nom d\'usuari està disponible</string>
-  <string name="jami_id_not_available">El nom d\'usuari no està disponible\n•  Màxim 32 caràcters\n•  Caràcters especials permesos: guionet (-),  guió baix (_)</string>
   <string name="jami_id_info">•  Màxim 32 caràcters\n· Caràcters especials permesos: guionet (-), guió baix (_)</string>
-  <string name="jami_id_looking_for_availability">Comprovant disponibilitat del nom d\'usuari…</string>
   <string name="jami_id_choose_username">Seleccioneu un nom d\'usuari</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Benvingut a Jami</string>
@@ -350,7 +323,6 @@
   <string name="Private">Privat</string>
   <string name="mute_conversation">Conversació mudada</string>
   <!--Donation-->
-  <string name="donation_card_description">Si gaudeixes utilitzant el Jami i creus en la nostre missió, faries una donació?</string>
   <string name="donation_card_not_now">Ara no</string>
   <string name="donation_donate">Donar</string>
   <string name="donation_setting_title">Recordatori de donació</string>

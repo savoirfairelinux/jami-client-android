@@ -45,8 +45,8 @@
   <string name="pref_typing_summary">Envia i rep els indicadors de tecleig indicant que un missatge s\'està escrivint</string>
   <string name="pref_block_record_title">Bloqueja captures de pantalla i gravació</string>
   <string name="pref_block_record_summary">Bloqueja captures o gravació de pantalla</string>
-  <string name="pref_link_preview_title">Mostra previsualitzacions dels enllaços en les converses</string>
-  <string name="pref_link_preview_summary">Les previsualitzacions requereixen descarregar contingut de llocs de tercers</string>
+  <string name="pref_link_preview_title">Visualitzacions prèvies d\'enllaços web</string>
+  <string name="pref_link_preview_summary">La visualització prealable requereix descarregar contingut des de servidors de tercers.</string>
   <!--Notifications Visibility-->
   <string name="connectivity_custom_title">Personalitzat</string>
   <!--Extension-->

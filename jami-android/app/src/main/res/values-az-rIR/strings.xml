@@ -143,7 +143,6 @@
   <string name="delete_contact">تماس لری سنده</string>
   <string name="conversation_action_remove_this_title">بو تماسو سينديرماق؟</string>
   <string name="conversation_action_remove_this_message">بو تماسو سينديرار و دانیشما تاريخيني قطعن پاک ائدر.</string>
-  <string name="copied_to_clipboard">%1$s کلیپبوردا کاپیلندی</string>
   <string name="conversation_action_select_peer_number">ساییچ سئچیب</string>
   <string name="conversation_action_block_this">بلاک کنتاکت</string>
   <string name="conversation_action_unblock_this">تماس رو باز کن</string>
@@ -168,9 +167,6 @@
   <string name="conversation_preference_emoji">مکالمات ایموجی</string>
   <string name="conversation_type_contact">جمی تماس</string>
   <string name="conversation_type_private">خصوصی</string>
-  <string name="conversation_contact_invited">%1$s دعوت ائدیلدی</string>
-  <string name="conversation_contact_added">%1$s قوشولدو</string>
-  <string name="conversation_contact_left">%1$s سولدو</string>
   <string name="conversation_search_hint">بحث آختارماق</string>
   <string name="today">بو گون</string>
   <string name="yesterday">دونن</string>
@@ -178,8 +174,6 @@
   <string name="add_call_contact_number_to_contacts">%1$s قوشماق؟</string>
   <string name="prompt_new_password">یئنی رمز</string>
   <string name="prompt_new_password_optional">یئنی رمز (اختیاری)</string>
-  <string name="prompt_new_password_repeat">تزه رمزونو تکرار ائدیر</string>
-  <string name="account_create_title">Jami حسابي يارادين</string>
   <string name="prompt_new_username">یئنی یئنی آد یئتیریر</string>
   <string name="prompt_hint_username">ایستیفاده چی آد</string>
   <string name="help_password_choose">جامی حسابینی قوروماق اوچون خاطیرلاداجاقینیز گوجلو رمز سئچیب.</string>
@@ -194,7 +188,6 @@
   <string name="hist_invitation_received">دعوت آلدی</string>
   <!--Account summary-->
   <string name="profile">پروفایل</string>
-  <string name="profile_message_warning">پروفایلینیز آنجاق تماس لاریزا اشتراک اولونور</string>
   <string name="open_the_gallery">گالری آچ</string>
   <string name="take_a_photo">عکس آل</string>
   <string name="profile_name_hint">آدینی واردات</string>
@@ -204,6 +197,7 @@
   <string name="identifier">آدیفئکتور</string>
   <string name="account">حساب</string>
   <string name="link_new_device">یئنی آلتی باغلا</string>
+  <string name="devices_header">آلاتلار</string>
   <string name="devices">باغلانان سئلاحلار</string>
   <string name="total_devices">کل آلاتلار: </string>
   <!--Share fragment-->
@@ -225,28 +219,10 @@
   <string name="conversation_placeholder">داها دانیشیقلارینیز یوخدور</string>
   <string name="contact_request_sent">تماس طلبی ارسال شده</string>
   <string name="start_conversation">مکالمه یه باشلا</string>
-  <string name="search_results">آختاریش نتیجه لری</string>
   <string name="tv_contact_row_header">تماس</string>
   <string name="gallery_error_title">گالری ایستیفاده سی تاپیلدی</string>
   <string name="gallery_error_message">گالری آچیقلاماق اوچون آلینادا ایستیفاده تاپیلدی</string>
   <!--File Transfer-->
-  <string name="invalid_file">ساري ساري</string>
-  <string name="not_able_to_write_file">فایل یازماغا قادیر</string>
-  <string name="file_transfer_status_created">نقل اولدوقجا</string>
-  <string name="file_transfer_status_unsupported">معاون اولمایان</string>
-  <string name="file_transfer_status_wait_peer_acceptance">همتداشلارین قبول ائتمه سینی گؤزله ییب</string>
-  <string name="file_transfer_status_wait_host_acceptance">منتظر میزبان قبول</string>
-  <string name="file_transfer_status_ongoing">حال حال</string>
-  <string name="file_transfer_status_finished">قورتارمیش</string>
-  <string name="file_transfer_status_closed_by_host">کوره طرفیندن باغلانان</string>
-  <string name="file_transfer_status_closed_by_peer">قریبه لرین</string>
-  <string name="file_transfer_status_invalid_pathname">نام یول</string>
-  <string name="file_transfer_status_unjoinable_peer">بیر یاشا بیر یاشا</string>
-  <string name="file_transfer_status_cancelled">لغو</string>
-  <string name="file_transfer_status_error">خطا ایله اوغورلاندی</string>
-  <string name="file_transfer_status_timed_out">واختلاشما</string>
-  <string name="file_saved_in">%s-ده ساقلانان فایل</string>
-  <string name="file_saved_successfully">فایل اوغورلا ساخلانیلیب</string>
   <string name="file_download">دانلود</string>
   <string name="title_media_viewer">میدیالی باخار</string>
   <string name="menu_file_open">آچیق فایل</string>
@@ -323,7 +299,6 @@
   <string name="bottomsheet_remove">عضوی گؤتور</string>
   <!--JamiId-->
   <string name="jami_id_validate">آدی یازی</string>
-  <string name="jami_id_looking_for_availability">آدی یئرلشمه لییینی آختاریرام...</string>
   <string name="jami_id_choose_username">ایستیفاده چی آدینی سئچیب</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">\" جامي \" نين خوش آمديد</string>

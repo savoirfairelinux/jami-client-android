@@ -145,7 +145,6 @@
   <string name="delete_contact">Διαγραφή επαφής</string>
   <string name="conversation_action_remove_this_title">Διαγραφή αυτής της επαφής;</string>
   <string name="conversation_action_remove_this_message">Αυτό θα διαγράψει την επαφή και σίγουρα και το ιστορικό συνομιλίας.</string>
-  <string name="copied_to_clipboard">%1$s αντιγράφτηκε στο πρόχειρο</string>
   <string name="conversation_action_select_peer_number">Επιλέξτε αριθμό </string>
   <string name="conversation_action_block_this">Μπλοκάρισμα επαφής</string>
   <string name="conversation_action_unblock_this">Ανοίξτε την επαφή</string>
@@ -171,9 +170,6 @@
   <string name="conversation_type_contact">Επαφή Jami</string>
   <string name="conversation_type_private">Ιδιωτικό</string>
   <string name="conversation_type_group">Ομάδα</string>
-  <string name="conversation_contact_invited">%1$s προσκλήθηκε</string>
-  <string name="conversation_contact_added">%1$s μπήκε</string>
-  <string name="conversation_contact_left">%1$s έφυγε</string>
   <string name="conversation_search_hint">Ψάξτε για συζήτηση</string>
   <string name="today">Σήμερα</string>
   <string name="yesterday">Χθες</string>
@@ -181,8 +177,6 @@
   <string name="add_call_contact_number_to_contacts">Προσθήκη %1$s;</string>
   <string name="prompt_new_password">Νέο συνθηματικό</string>
   <string name="prompt_new_password_optional">Νέος κωδικός  (προαιρετικό)</string>
-  <string name="prompt_new_password_repeat">Επανάληψη νέου συνθηματικού</string>
-  <string name="account_create_title">Δημιουργία λογαριασμού Jami</string>
   <string name="prompt_new_username">Εισάγετε νέο ψευδώνυμο</string>
   <string name="prompt_hint_username">Όνομα χρήστη</string>
   <string name="help_password_choose">Επιλέξτε έναν κωδικό που θα θυμάστε για την προστασία του λογαριασμού σας στο Jami.</string>
@@ -197,7 +191,6 @@
   <string name="hist_invitation_received">Η πρόσκληση παραλήφθηκε</string>
   <!--Account summary-->
   <string name="profile">Προφίλ</string>
-  <string name="profile_message_warning">Το προφίλ σας διαμοιράζεται μόνο με τις επαφές σας</string>
   <string name="open_the_gallery">Άνοιγμα έκθεσης</string>
   <string name="take_a_photo">Λήψη φωτογραφίας</string>
   <string name="profile_name_hint">Εισάγετε το όνομά σας</string>
@@ -207,6 +200,7 @@
   <string name="identifier">Ταυτοποιητής</string>
   <string name="account">Λογαριασμός</string>
   <string name="link_new_device">Σύνδεση νέας συσκευής</string>
+  <string name="devices_header">Συσκευές</string>
   <string name="devices">Συνδεδεμένες συσκευές</string>
   <string name="total_devices">Σύνολο συσκευών:</string>
   <!--Share fragment-->
@@ -228,28 +222,10 @@
   <string name="conversation_placeholder">Δεν έχεις συνομιλίες ακόμη</string>
   <string name="contact_request_sent">Αίτημα επαφής εστάλει</string>
   <string name="start_conversation">Έναρξη συνομιλίας</string>
-  <string name="search_results">Αποτελέσματα αναζήτησης</string>
   <string name="tv_contact_row_header">Επαφές</string>
   <string name="gallery_error_title">Δεν βρέθηκε εφαρμογή συλλογής</string>
   <string name="gallery_error_message">Δεν βρέθηκε εφαρμογή σε αυτή τη συσκευή για άνοιγμα της Συλλογής</string>
   <!--File Transfer-->
-  <string name="invalid_file">Μη έγκυρο αρχείο</string>
-  <string name="not_able_to_write_file">Μη δυνατή η εγγραφή αρχείου</string>
-  <string name="file_transfer_status_created">Αρχικοποίηση μεταφοράς</string>
-  <string name="file_transfer_status_unsupported">Δεν υποστηρίζεται</string>
-  <string name="file_transfer_status_wait_peer_acceptance">αναμονή αποδοχής χρήστη</string>
-  <string name="file_transfer_status_wait_host_acceptance">αναμονή αποδοχής διακομιστή</string>
-  <string name="file_transfer_status_ongoing">σε εξέλιξη</string>
-  <string name="file_transfer_status_finished">ολοκληρώθηκε</string>
-  <string name="file_transfer_status_closed_by_host">τερματισμός από διακομιστή</string>
-  <string name="file_transfer_status_closed_by_peer">διακοπή από χρήστη</string>
-  <string name="file_transfer_status_invalid_pathname">μη έγκυρο όνομα διαδρομής</string>
-  <string name="file_transfer_status_unjoinable_peer">ασύνδετος χρήστης</string>
-  <string name="file_transfer_status_cancelled">ακυρώθηκε</string>
-  <string name="file_transfer_status_error">αποτυχία λόγω σφάλματος</string>
-  <string name="file_transfer_status_timed_out">έληξε</string>
-  <string name="file_saved_in">Το αρχείο αποθηκεύτηκε σε %s</string>
-  <string name="file_saved_successfully">Το αρχείο αποθηκεύτηκε επιτυχώς</string>
   <string name="file_download">Λήψη</string>
   <string name="title_media_viewer">Προβολέας πολυμέσων</string>
   <string name="menu_file_open">Άνοιγμα αρχείου</string>
@@ -326,7 +302,6 @@
   <string name="bottomsheet_remove">Αφαίρεση μέλος</string>
   <!--JamiId-->
   <string name="jami_id_validate">Καταχωρίστε το όνομα χρήστη</string>
-  <string name="jami_id_looking_for_availability">Ψάχνω για τη διαθεσιμότητα του ονόματος χρήστη...</string>
   <string name="jami_id_choose_username">Επιλέξτε όνομα χρήστη</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Καλώς ήλθατε στο  Jami</string>

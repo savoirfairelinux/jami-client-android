@@ -45,8 +45,8 @@
   <string name="pref_typing_summary">Send og modtage indskriftsindikatorer, der viser, at der er skrevet en besked.</string>
   <string name="pref_block_record_title">Block skærmbilleder og optagelse</string>
   <string name="pref_block_record_summary">Blokker at tage skærmbilleder eller optage videoer.</string>
-  <string name="pref_link_preview_title">Vis linkforsyninger i samtaler</string>
-  <string name="pref_link_preview_summary">Forudsigter kræver download af indhold fra tredjepartsservere.</string>
+  <string name="pref_link_preview_title">Eksempelvisning af weblinks</string>
+  <string name="pref_link_preview_summary">Forhåndsvisning kræver download af indhold fra tredjepartsservere.</string>
   <!--Notifications Visibility-->
   <string name="connectivity_custom_title">Brugerdefineret</string>
   <!--Extension-->

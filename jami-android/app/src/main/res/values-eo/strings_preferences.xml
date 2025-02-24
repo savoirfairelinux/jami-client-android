@@ -45,8 +45,7 @@
   <string name="pref_typing_summary">Sendu kaj ricevu tajpantaj indikilojn montrantajn, ke mesaĝo estas tajpita.</string>
   <string name="pref_block_record_title">Bloki ekranbildon kaj registradon</string>
   <string name="pref_block_record_summary">Ne faru ekranbildon aŭ registri videon.</string>
-  <string name="pref_link_preview_title">Montru antaŭrigardojn de ligiloj en konversacioj</string>
-  <string name="pref_link_preview_summary">Antaŭvidoj postulas elŝuti enhavon de triaj serviloj.</string>
+  <string name="pref_link_preview_summary">Antaŭvidado postulas elŝuti enhavon de triaj serviloj.</string>
   <!--Notifications Visibility-->
   <string name="connectivity_custom_title">Propra</string>
   <!--Extension-->

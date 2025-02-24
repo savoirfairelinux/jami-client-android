@@ -14,6 +14,8 @@
   <string name="pref_connection_monitor_summary">监控对等连接</string>
   <string name="pref_push_notifications_logs_title">推送通知日志</string>
   <string name="pref_push_notifications_logs_summary">查看从推送通知中捕获的日志。</string>
+  <string name="pref_link_preview_title">網頁連結預覽</string>
+  <string name="pref_link_preview_summary">预览需要从第三方服务器下载内容.</string>
   <!--Notifications Visibility-->
   <string name="notification_public">公开\n（在锁屏上显示通知及其内容）\n</string>
   <string name="notification_private">隐私\n（在锁屏上显示通知但隐藏其内容）\n</string>

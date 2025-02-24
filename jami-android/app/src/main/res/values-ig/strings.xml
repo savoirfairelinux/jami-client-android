@@ -84,6 +84,7 @@
   <string name="today">Taa</string>
   <string name="yesterday">N\'ụbọchị gara aga</string>
   <!--Contacts-->
+  <string name="prompt_new_password_repeat">Nyochaa paswọọdụ ọhụrụ</string>
   <string name="account_create_title">Mepụta akaụntụ Jami</string>
   <string name="prompt_hint_username">Aha njirimara</string>
   <string name="wizard_next">Nke na-abịa</string>
@@ -93,13 +94,13 @@
   <string name="hist_invitation_received">Òkù a kpọrọ</string>
   <!--Account summary-->
   <string name="profile">Ihe gbasara ya</string>
-  <string name="profile_message_warning">A na-ekenye profaịlụ gị naanị na kọntaktị gị</string>
   <string name="take_a_photo">Were foto</string>
   <string name="profile_name_hint">Tinye aha gị</string>
   <string name="identity">Ihe Ndị A Kpọrọ Mmadụ</string>
   <string name="identifier">Ihe Nkọwapụta</string>
   <string name="account">Ihe ndekọ</string>
   <string name="link_new_device">Jikọọ ngwaọrụ ọhụrụ</string>
+  <string name="devices_header">Ngwaọrụ</string>
   <string name="devices">Ngwaọrụ jikọtara</string>
   <!--Share fragment-->
   <string name="share_label">Ịkekọrịta</string>
@@ -111,10 +112,8 @@
   <!--Blacklist-->
   <string name="no_blocked_contact">Enweghị kọntaktị egbochi</string>
   <!--Smartlist-->
-  <string name="search_results">Nsonaazụ Ọchụchọ</string>
   <string name="tv_contact_row_header">Ndị a na-akpọtụrụ</string>
   <!--File Transfer-->
-  <string name="file_transfer_status_cancelled">A kagbuola ihe omume ahụ.</string>
   <string name="menu_file_open">Mepee faịlụ</string>
   <string name="menu_file_save">Chekwaa faịlụ</string>
   <string name="menu_file_share">Share faịlụ</string>
@@ -157,7 +156,6 @@
   <string name="bottomsheet_remove">Wepụ onye so</string>
   <!--JamiId-->
   <string name="jami_id_validate">Debanye aha njirimara</string>
-  <string name="jami_id_looking_for_availability">Na-achọ maka aha njirimara dịnụ...</string>
   <string name="jami_id_choose_username">Họrọ aha njirimara</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Mmadụ Bịa na Jami</string>

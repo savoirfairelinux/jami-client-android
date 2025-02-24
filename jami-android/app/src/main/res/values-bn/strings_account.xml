@@ -24,7 +24,6 @@
   <string name="account_type_ip2ip">আইপি অ্যাকাউন্ট</string>
   <string name="help_ring">জামি অ্যাকাউন্ট আপনাকে সম্পূর্ণ বিতরণকৃত নেটওয়ার্কের মাধ্যমে নিরাপদে ব্যক্তিদের সাথে যোগাযোগ করতে দেয়।</string>
   <string name="help_sip_title">SIP অ্যাকাউন্ট যোগ করুন</string>
-  <string name="help_sip">একটি বিদ্যমান SIP অ্যাকাউন্ট কনফিগার করুন।</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_message">এই পদক্ষেপটি বাতিল করা যাবে না।</string>
   <!--AccountManagementFragment-->
@@ -43,9 +42,9 @@
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">সাধারণ</string>
   <string name="account_basic_category">বেসিক সেটিংস</string>
-  <string name="account_alias_label">অ্যাকাউন্টের নাম</string>
   <string name="account_hostname_label">হোস্ট নাম</string>
   <string name="account_bootstrap_label">বুটস্ট্র্যাপ</string>
+  <string name="account_name_server_label">নাম সার্ভার</string>
   <string name="account_username_label">ব্যবহারকারীর নাম</string>
   <string name="account_password_label">পাসওয়ার্ড</string>
   <string name="account_optionnal_category">অপশনাল সেটিং</string>
@@ -77,8 +76,7 @@
   <string name="account_registration_exp_label">নিবন্ধন মেয়াদ শেষ</string>
   <string name="account_local_interface_label">স্থানীয় ইন্টারফেস</string>
   <string name="account_local_port_label">স্থানীয় বন্দর</string>
-  <string name="account_stun_enable_label">Stun ব্যবহার করুন</string>
-  <string name="account_stun_server_label">স্টান সার্ভার</string>
+  <string name="account_stun_enable_label">STUN ব্যবহার করুন</string>
   <string name="account_accept_files">ইনকামিং ফাইলগুলি স্বয়ংক্রিয়ভাবে গ্রহণ করুন</string>
   <string name="account_conversation_settings_title">কথোপকথন সেটিংস</string>
   <string name="account_accept_files_max_size">স্বয়ংক্রিয়ভাবে গ্রহণযোগ্য সর্বোচ্চ ফাইলের আকার</string>
@@ -94,6 +92,7 @@
   <string name="account_published_address_label">প্রকাশিত ঠিকানা</string>
   <string name="disabled">অক্ষম</string>
   <string name="enabled">সক্ষম করা হয়েছে</string>
+  <string name="default_value">ডিফল্ট</string>
   <string name="account_proxy_label">DHT প্রক্সি</string>
   <string name="account_proxy_enable_label">DHT প্রক্সি ব্যবহার করুন</string>
   <string name="account_proxy_server_label">DHT প্রক্সি ঠিকানা</string>
@@ -112,25 +111,12 @@
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">TLS পরিবহন ব্যবহার করুন</string>
-  <string name="account_tls_port_label">TLS শ্রোতা পোর্ট</string>
-  <string name="account_tls_certificate_list_label">সার্টিফিকেশন কর্তৃপক্ষ</string>
-  <string name="account_tls_certificate_file_label">সার্টিফিকেট ফাইল</string>
-  <string name="account_tls_private_key_file_label">ব্যক্তিগত কী ফাইল</string>
   <string name="account_tls_password_label">ব্যক্তিগত কী পাসওয়ার্ড</string>
-  <string name="account_tls_method_label">টিএলএস পদ্ধতি</string>
-  <string name="account_tls_ciphers_label">টিএলএস সিফার</string>
-  <string name="account_tls_server_name_label">সার্ভারের নাম</string>
-  <string name="account_tls_verify_server_label">সার্ভার যাচাই করুন</string>
-  <string name="account_tls_verify_client_label">ক্লায়েন্ট যাচাই করুন</string>
-  <string name="account_require_client_certificate_label">TLS ক্লায়েন্ট সার্টিফিকেট প্রয়োজন</string>
-  <string name="account_tls_negotiation_timeout_sec">আলোচনার সময়সীমা (সেকেন্ড)</string>
   <string name="account_rtp_max_port">সর্বোচ্চ</string>
   <string name="account_rtp_min_port">সর্বনিম্ন</string>
-  <string name="account_rtp_port_range">অডিও আরটিপি পোর্ট পরিসীমা</string>
   <!--restore/backup-->
   <string name="account_new_device_password">অ্যাকাউন্ট আনলক করতে মূল পাসওয়ার্ড লিখুন</string>
   <string name="error_password_char_count">৬টি অক্ষর কমপক্ষে</string>
-  <string name="error_passwords_not_equals">পাসওয়ার্ড মিলছে না</string>
   <string name="export_account_wait_title">দয়া করে অপেক্ষা করুন...</string>
   <string name="export_account_wait_message">রপ্তানি অ্যাকাউন্টের তথ্য</string>
   <string name="account_export_file">ব্যাকআপ অ্যাকাউন্ট</string>
@@ -164,12 +150,10 @@
   <string name="account_link_device">অন্য ডিভাইস থেকে সংযোগ</string>
   <string name="account_link_button">নেটওয়ার্ক থেকে সংযোগ</string>
   <string name="account_link_archive_button">ব্যাকআপ থেকে সংযোগ</string>
-  <string name="account_link_prompt_pin">পিন লিখুন</string>
-  <string name="account_new_button">জামি অ্যাকাউন্ট তৈরি করুন</string>
+  <string name="account_new_button">জামিতে যোগদান করুন</string>
   <string name="account_link_export_button">একটি নতুন ডিভাইস লিঙ্ক</string>
   <string name="account_link_show_button">%d আরো সংযুক্ত ডিভাইস দেখান</string>
   <string name="account_link_hide_button">সংযুক্ত ডিভাইস লুকান</string>
-  <string name="account_start_export_button">পিন তৈরি করুন</string>
   <string name="account_end_export_button">ঘনিষ্ঠ</string>
   <string name="account_export_title">অন্যান্য ডিভাইসের সাথে লিঙ্ক অ্যাকাউন্ট</string>
   <string name="account_connect_server_button">ম্যানেজমেন্ট সার্ভারের সাথে সংযোগ স্থাপন</string>
@@ -180,17 +164,13 @@
   <string name="account_connect_prompt_username">ব্যবহারকারীর নাম</string>
   <!--Name registration-->
   <string name="error_username_empty">একটি ব্যবহারকারীর নাম লিখুন</string>
-  <string name="no_registered_name_for_account">নিবন্ধিত নাম নেই</string>
-  <string name="username_available">ব্যবহারকারীর নাম উপলব্ধ!</string>
   <string name="register_name">নিবন্ধন নাম</string>
-  <string name="trying_to_register_name">নাম নিবন্ধন করার চেষ্টা</string>
   <string name="registered_username">নিবন্ধিত ব্যবহারকারীর নাম</string>
   <string name="register_username">জনসাধারণের ব্যবহারকারীর নাম নিবন্ধন করুন</string>
   <string name="register_recommended">প্রস্তাবিত</string>
   <string name="username_already_taken">ব্যবহারকারীর নাম ইতিমধ্যেই নেওয়া হয়েছে</string>
   <string name="invalid_username">অবৈধ ব্যবহারকারীর নাম</string>
   <string name="unknown_error">অজানা ত্রুটি. দয়া করে আপনার নেটওয়ার্ক সংযোগ পরীক্ষা করুন!</string>
-  <string name="looking_for_username_availability">ইউজার নামের জন্য অনুসন্ধান করছি...</string>
   <string name="account_status_connecting">সংযোগ</string>
   <string name="account_status_connection_error">সংযোগ ত্রুটি</string>
   <string name="account_status_online">অনলাইন</string>
@@ -210,7 +190,6 @@
   <string name="revoke_device_wait_title">দয়া করে অপেক্ষা করুন...</string>
   <string name="revoke_device_wait_message">প্রত্যাহারকারী ডিভাইস</string>
   <string name="rename_device_title">এই ডিভাইসের নাম পরিবর্তন করুন</string>
-  <string name="rename_device_message">আপনার জামি অ্যাকাউন্টে এই ডিভাইসটি সনাক্ত করতে একটি নতুন নাম নির্বাচন করুন</string>
   <string name="rename_device_button">ডিভাইস নাম পরিবর্তন</string>
   <string name="account_rename_device_hint">নতুন ডিভাইসের নাম নির্বাচন করুন</string>
   <string name="account_device_this_indicator">এই ডিভাইস</string>
@@ -218,6 +197,7 @@
   <!--Link a new device-->
   <string name="error_format_not_supported">এই ফরম্যাট সমর্থিত নয়।</string>
   <string name="account_link_device_title">একটি নতুন ডিভাইস লিঙ্ক</string>
+  <string name="connect_device_scanqr">QR কোড স্ক্যান করুন</string>
   <string name="account_link_device_button">সংযুক্ত করুন</string>
   <!--Biometry-->
 </resources>

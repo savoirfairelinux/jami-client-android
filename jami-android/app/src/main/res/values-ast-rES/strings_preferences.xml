@@ -45,8 +45,7 @@
   <string name="pref_typing_summary">Enviar y recibir indicadores de mecanografía que muestren que se ta mecanografiando un mensaxe.</string>
   <string name="pref_block_record_title">Bloquear captura d\' pantalla y grabación</string>
   <string name="pref_block_record_summary">Bloquear la toma de captura de pantalla o grabación de video.</string>
-  <string name="pref_link_preview_title">Mostrar previews de enllaces en conversaciones</string>
-  <string name="pref_link_preview_summary">Les previsiones requieren descargar conteníos de servidores de terceros.</string>
+  <string name="pref_link_preview_summary">La vista previa requiere descargar conteníos de servidores de terceros.</string>
   <!--Notifications Visibility-->
   <string name="connectivity_custom_title">La personalidá</string>
   <!--Extension-->

@@ -45,8 +45,7 @@
   <string name="pref_typing_summary">مڠهادڤي دان مڠهادڤي ڤڠوربانن ڤمباچ يڠ مڠمبيلكن ڤمباچ يڠ دڤرچايا?? ي.</string>
   <string name="pref_block_record_title">ڤڠهولوڠ ڤرسكوتوان دان ڤرڬي</string>
   <string name="pref_block_record_summary">مڠهادڤكن ڤمبلاجرن سكرينوت اتاو ڤمبلاجرن ڤيديو.</string>
-  <string name="pref_link_preview_title">ممبينا ڤرليمن لنک دالم ڤمباچ</string>
-  <string name="pref_link_preview_summary">ڤرليندوڠ مڠمبيل ڤرلو مڠمبيل ڤرلو مڠمبيل ڤرلو مڠمبيل ڤرلو مڠمبيل ڤرلو مڠمبيل ڤرلو مڠمبيل ڤرلو مڠمبيل ڤرلو مڠمبيل ڤرلو مڠمبيل ڤرلو مڠمبيل ڤرلو مڠمبيل ڤرلو مڠمبيل.</string>
+  <string name="pref_link_preview_summary">ڤريڤوڠ ڤرلو مڠمبيل ڤمبلاجرن دري ڤرلاونن ڤرلاونن ترسبوت.</string>
   <!--Notifications Visibility-->
   <!--Extension-->
 </resources>
