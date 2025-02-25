@@ -409,7 +409,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <!-- Account summary -->
     <string name="profile">Profile</string>
     <string name="profile_name">Profile name</string>
-    <string name="profile_message_warning">The profile is only shared with the account contacts</string>
+    <string name="profile_message_warning">Profile is only shared with contacts</string>
     <string name="custom_profile_message_warning">The custom profile is only visible to the account on this device</string>
     <string name="open_the_gallery">Open the gallery</string>
     <string name="take_a_photo">Take photo</string>
@@ -477,7 +477,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="file_transfer_status_closed_by_peer">Closed by peer</string>
     <string name="file_transfer_status_invalid_pathname">Invalid pathname</string>
     <string name="file_transfer_status_unjoinable_peer">Unreachable peer</string>
-    <string name="file_transfer_status_cancelled">Cancelled</string>
+    <string name="file_transfer_status_cancelled">Canceled</string>
     <string name="file_transfer_status_error">An error occurred while transferring the file.</string>
     <string name="file_transfer_status_timed_out">Timed out</string>
     <string name="file_saved_in">File saved in %s.</string>
