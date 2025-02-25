@@ -115,7 +115,7 @@ object TextUtils {
             TransferStatus.TRANSFER_AWAITING_HOST -> context.getString(R.string.file_transfer_status_wait_host_acceptance)
             TransferStatus.TRANSFER_ONGOING -> context.getString(R.string.file_transfer_status_ongoing)
             TransferStatus.TRANSFER_FINISHED -> context.getString(R.string.file_transfer_status_finished)
-            TransferStatus.TRANSFER_CANCELED -> context.getString(R.string.file_transfer_status_cancelled)
+            TransferStatus.TRANSFER_CANCELED -> context.getString(R.string.file_transfer_status_canceled)
             TransferStatus.TRANSFER_UNJOINABLE_PEER -> context.getString(R.string.file_transfer_status_unjoinable_peer)
             TransferStatus.TRANSFER_ERROR -> context.getString(R.string.file_transfer_status_error)
             TransferStatus.TRANSFER_TIMEOUT_EXPIRED -> context.getString(R.string.file_transfer_status_timed_out)
