@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b71811ac_cc4e32f6",
+        "filename": "jami-android/app/src/main/java/cx/ring/linkdevice/view/ExportSideStep3Fragment.kt",
+        "patchSetId": 23
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 225
+      },
+      "writtenOn": "2025-02-25T15:29:18Z",
+      "side": 1,
+      "message": "possible errors enum class Error { NETWORK, TIMEOUT, AUTH_ERROR, CANCELED, UNKNOWN, NONE };",
+      "revId": "5376803d5efcb2e4e27c5e75399bae0ddfc45a27",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "95f6aca3_73e3158e",
+        "filename": "jami-android/app/src/main/java/cx/ring/linkdevice/viewmodel/ExportSideViewModel.kt",
+        "patchSetId": 23
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 225
+      },
+      "writtenOn": "2025-02-25T15:29:18Z",
+      "side": 1,
+      "message": "operationId could be negative if addDevice returns an error",
+      "revId": "5376803d5efcb2e4e27c5e75399bae0ddfc45a27",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
