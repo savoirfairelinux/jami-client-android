@@ -45,8 +45,7 @@
   <string name="pref_typing_summary">بیر پیغامین تایپ اولونماسی ایفاده اولونان تایپ گؤستریجیلرینی گؤندرمک و آلماق.</string>
   <string name="pref_block_record_title">سکرین شات و ضبطی بلاک</string>
   <string name="pref_block_record_summary">سکرین عکس آلماغی یا ویدئو ضبط ائتمه یه مانع اول.</string>
-  <string name="pref_link_preview_title">دانیشیقلاردا لینک لرین اؤرنک لرینی گؤستریر</string>
-  <string name="pref_link_preview_summary">اؤتنلر اوچونجو طرفین سرورلاریندان محتوا آلینماسی لازیمدیر.</string>
+  <string name="pref_link_preview_summary">پیش نمایش اوچونجو طرفین سرورلاریندان محتوا آلتیندا آلینما لازیمدیر.</string>
   <!--Notifications Visibility-->
   <string name="connectivity_custom_title">آدامی</string>
   <!--Extension-->

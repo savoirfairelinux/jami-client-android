@@ -45,8 +45,8 @@
   <string name="pref_typing_summary">Хатты жазатындығын көрсететін жазу индикаторларын жіберу және алу.</string>
   <string name="pref_block_record_title">Экран түсірілімін және жазуды бөлеңіз</string>
   <string name="pref_block_record_summary">Скрийн түсіруді немесе бейне түсіруді тоқтату.</string>
-  <string name="pref_link_preview_title">Әңгімелерде сілтемелерді алдын ала қарау</string>
-  <string name="pref_link_preview_summary">Алдын ала қарау үшін үшінші тараптың серверлерінен мазмұн жүгірту қажет.</string>
+  <string name="pref_link_preview_title">Веб-сілтеменің алдын ала қарау нұсқалары</string>
+  <string name="pref_link_preview_summary">Алдын ала қарау үшін үшінші тараптың серверлерінен мазмұнды жүктеу қажет.</string>
   <!--Notifications Visibility-->
   <string name="connectivity_custom_title">Әдеттегі</string>
   <!--Extension-->

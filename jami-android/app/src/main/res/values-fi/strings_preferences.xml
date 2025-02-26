@@ -57,8 +57,8 @@
   <string name="pref_typing_summary">Kirjoittamisen ilmaisin, joka näyttää, että viestiä kirjoitetaan.</string>
   <string name="pref_block_record_title">Estä ruudunkaappaus ja tallennus</string>
   <string name="pref_block_record_summary">Estä ruudunkaappaus tai videon tallennus.</string>
-  <string name="pref_link_preview_title">Näytä linkkien esikatselu keskusteluissa</string>
-  <string name="pref_link_preview_summary">Esikatselu vaatii sisällön lataamista kolmannen osapuolen palvelimelta.</string>
+  <string name="pref_link_preview_title">Linkin esikatselu</string>
+  <string name="pref_link_preview_summary">Esikatselu edellyttää sisällön lataamista kolmannen osapuolen palvelimelta.</string>
   <!--Notifications Visibility-->
   <string name="notification_public">Julkinen\n(näytä ilmoitukset ja sisältö lukitusnäytöllä)\n</string>
   <string name="notification_private">Yksityinen\n(näytä ilmoitukset, piilota sisältö lukitusnäytöllä)\n</string>

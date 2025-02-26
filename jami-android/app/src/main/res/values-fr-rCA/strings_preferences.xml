@@ -56,8 +56,8 @@
   <string name="pref_typing_summary">Envoyer et recevoir les indicateurs de frappe montrant qu\'un message est cours de rédaction.</string>
   <string name="pref_block_record_title">Bloquer la capture d\'écran et l\'enregistrement</string>
   <string name="pref_block_record_summary">Bloquer la capture d\'écran et l\'enregistrement vidéo</string>
-  <string name="pref_link_preview_title">Charger la prévisualisation des liens dans les conversations</string>
-  <string name="pref_link_preview_summary">Les prévisualisations requièrent le téléchargement de contenu provenant de serveurs tiers.</string>
+  <string name="pref_link_preview_title">Aperçu des liens</string>
+  <string name="pref_link_preview_summary">Les prévisualisations requièrent le téléchargement de contenus provenant de serveurs tiers.</string>
   <!--Notifications Visibility-->
   <string name="notification_public">Public \n(affiche les notifications et leur contenu sur l\'écran verrouillé)\n</string>
   <string name="notification_private">Privé \n(affiche les notifications mais cache leur contenu sur l\'écran verrouillé)\n</string>

@@ -57,7 +57,7 @@
   <string name="pref_typing_summary">Trimite și primește indicatoare de scriere care arată că se scrie un mesaj.</string>
   <string name="pref_block_record_title">Blochează captura de ecran și înregistrarea</string>
   <string name="pref_block_record_summary">Blochează captura de ecran și înregistrarea video.</string>
-  <string name="pref_link_preview_title">Arată adresele web în discuții</string>
+  <string name="pref_link_preview_title">Previzualizări de linkuri web</string>
   <string name="pref_link_preview_summary">Previzualizările necesită descărcarea de conținut de pe servere terțe.</string>
   <!--Notifications Visibility-->
   <string name="notification_public">Public\n(arată notificările și conținutul lor pe ecranul blocat)\n</string>

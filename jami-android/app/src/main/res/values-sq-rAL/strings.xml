@@ -185,7 +185,7 @@
   <string name="swarm_group_action_leave_title">Të braktiset ky grup?</string>
   <string name="swarm_group_action_leave_message">Kjo do ta heqë bisedën nga lista e bisedave tuaja </string>
   <string name="conversation_action_copy_peer_number">Kopjo identifikues kontakti</string>
-  <string name="copied_to_clipboard">%1$s u kopjua te e papastra</string>
+  <string name="copied_to_clipboard">%1$s u kopjua te e papastra.</string>
   <string name="conversation_action_select_peer_number">Përzgjidhni një numër</string>
   <string name="conversation_action_block_this">Bllokojeni kontaktin</string>
   <string name="conversation_action_unblock_this">Zhbllokoje kontaktin</string>
@@ -214,11 +214,11 @@
   <string name="conversation_type_contact">Kontakt Jami</string>
   <string name="conversation_type_private">Privat</string>
   <string name="conversation_type_group">Grup</string>
-  <string name="conversation_contact_invited">U ftua %1$s</string>
-  <string name="conversation_contact_added">%1$s erdhi</string>
-  <string name="conversation_contact_left">%1$s iku</string>
-  <string name="conversation_contact_blocked">%1$s u bllokua</string>
-  <string name="conversation_contact_unblocked">%1$s u zhbllokua</string>
+  <string name="conversation_contact_invited">%1$s u ftua të marrë pjesë në bisedë.</string>
+  <string name="conversation_contact_added">%1$s erdhi te biseda.</string>
+  <string name="conversation_contact_left">%1$s e braktisi bisedën.</string>
+  <string name="conversation_contact_blocked">%1$s u bllokua prej bisede.</string>
+  <string name="conversation_contact_unblocked">%1$s u zhbllokua prej bisede.</string>
   <string name="conversation_search_hint">Kërkoni bisedë</string>
   <string name="audio_recorder_error">S’u gjet aplikacion incizimi audio.</string>
   <string name="video_recorder_error">S’u gjet aplikacion regjistrimi video.</string>
@@ -239,7 +239,7 @@
   <string name="add_call_contact_number_to_contacts">Të shtohet %1$s?</string>
   <string name="prompt_new_password">Fjalëkalim i ri</string>
   <string name="prompt_new_password_optional">Fjalëkalim i ri (opsional)</string>
-  <string name="prompt_new_password_repeat">Përsëriteni fjalëkalimin e ri</string>
+  <string name="prompt_new_password_repeat">Ripohoni fjalëkalimin e ri</string>
   <string name="account_create_title">Krijoni një llogari Jami</string>
   <string name="prompt_new_username">Jepni emër përdoruesi të ri</string>
   <string name="prompt_hint_username">Emër përdoruesi</string>
@@ -248,6 +248,7 @@
   <string name="help_server_enter">Jepni URL-në e shërbyesit të administrimeve.</string>
   <string name="help_pin_enter">Jepni PIN-in prej një tjetër llogarie Jami të formësuar. Që të keni PIN-in, përdorni veçorinë “Eksportoni llogari Jami”.</string>
   <string name="pin_copied">Kodi PIN u kopjua në të papastër.</string>
+  <string name="copied_clipboard">U kopjua në të papastër.</string>
   <string name="wizard_next">Pasuesi</string>
   <string name="wizard_back">Mbrapsht</string>
   <string name="wizard_skip">Anashkaloje</string>
@@ -260,7 +261,8 @@
   <!--Account summary-->
   <string name="profile">Profil</string>
   <string name="profile_name">Emër profili</string>
-  <string name="profile_message_warning">Profili juaj ndahet vetëm me kontaktet tuaja</string>
+  <string name="profile_message_warning">Profili jepet vetëm për kontaktet e llogarisë</string>
+  <string name="custom_profile_message_warning">Profili vetjak është i dukshëm vetëm për llogarinë në këtë pajisje</string>
   <string name="open_the_gallery">Hape galerinë</string>
   <string name="take_a_photo">Bëni një foto</string>
   <string name="remove_photo">Hiqe foton</string>
@@ -271,6 +273,7 @@
   <string name="identifier">Identifikues</string>
   <string name="account">Llogari</string>
   <string name="link_new_device">Lidhni një pajisje të re</string>
+  <string name="devices_header">Pajisje</string>
   <string name="devices">Pajisje të lidhura</string>
   <string name="total_devices">Pajisje gjithsej:</string>
   <!--Share fragment-->
@@ -301,31 +304,31 @@
   <string name="conversation_placeholder">Ende s’keni biseda</string>
   <string name="contact_request_sent">Kërkesa e kontaktit u dërgua</string>
   <string name="start_conversation">Nisni bisedë</string>
-  <string name="search_results">Përfundime Kërkimi</string>
+  <string name="search_results">Përfundime kërkimi</string>
   <string name="tv_contact_row_header">Kontakte</string>
   <string name="gallery_error_title">S\’u gjet aplikacion galerie</string>
   <string name="gallery_error_message">Në këtë pajisje s\’u gjet aplikacion për të hapur Galerinë</string>
   <string name="generic_error">Ndodhi një gabim i panjohur.</string>
   <!--File Transfer-->
-  <string name="invalid_file">Kartelë e pavlefshme</string>
-  <string name="not_able_to_write_file">S\’arrihet të shkruhet kartelë</string>
-  <string name="file_transfer_status_created">po gatitet shpërngulja</string>
-  <string name="file_transfer_status_unsupported">e pambuluar</string>
-  <string name="file_transfer_status_wait_peer_acceptance">po pritet për pranim nga ana tjetër</string>
-  <string name="file_transfer_status_wait_host_acceptance">po pritet për pranim nga strehuesi</string>
-  <string name="file_transfer_status_ongoing">në punë e sipër</string>
-  <string name="file_transfer_status_finished">e përfunduar</string>
-  <string name="file_transfer_status_closed_by_host">mbyllur nga strehuesi</string>
-  <string name="file_transfer_status_closed_by_peer">mbyllur nga ana tjetër</string>
-  <string name="file_transfer_status_invalid_pathname">emër i pavlefshëm shtegu</string>
-  <string name="file_transfer_status_unjoinable_peer">ortak që s\’futet dot</string>
-  <string name="file_transfer_status_cancelled">e anuluar</string>
-  <string name="file_transfer_status_error">e dështuar për shkak të një gabimi</string>
-  <string name="file_transfer_status_timed_out">i mbaroi koha</string>
-  <string name="file_saved_in">Kartela u ruajt te %s</string>
-  <string name="file_saved_successfully">Kartela u ruajt me sukses</string>
+  <string name="invalid_file">Kartelë e pavlefshme.</string>
+  <string name="not_able_to_write_file">S’arrihet të shkruhet kartela.</string>
+  <string name="file_transfer_status_created">Po gatitet</string>
+  <string name="file_transfer_status_unsupported">Nuk mbulohet</string>
+  <string name="file_transfer_status_wait_peer_acceptance">Po pritet pranimi nga ana tjetër…</string>
+  <string name="file_transfer_status_wait_host_acceptance">Po pritet pranimi nga strehuesi…</string>
+  <string name="file_transfer_status_ongoing">Në kryerje e sipër</string>
+  <string name="file_transfer_status_finished">E plotësuar</string>
+  <string name="file_transfer_status_closed_by_host">Mbyllur nga strehuesi</string>
+  <string name="file_transfer_status_closed_by_peer">Mbyllur nga ana tjetër</string>
+  <string name="file_transfer_status_invalid_pathname">Emër i pavlefshëm shtegu</string>
+  <string name="file_transfer_status_unjoinable_peer">Palë që s’kapet</string>
+  <string name="file_transfer_status_cancelled">Anuluar</string>
+  <string name="file_transfer_status_error">Ndodhi një gabim teksa shpërngulej kartela.</string>
+  <string name="file_transfer_status_timed_out">I mbaroi koha</string>
+  <string name="file_saved_in">Kartela u ruajt te %s.</string>
+  <string name="file_saved_successfully">Kartela u ruajt me sukses.</string>
   <string name="file_download">Shkarkoje</string>
-  <string name="no_space_left_on_device">Te pajisja s’ka hapësirë depozitimi të lirë. </string>
+  <string name="no_space_left_on_device">S’ka hapësirë depozitimi në këtë pajisje.</string>
   <string name="title_media_viewer">Parës mediash</string>
   <string name="menu_file_open">Hap kartelë</string>
   <string name="menu_file_download">Shkarkoje kartelën</string>
@@ -362,7 +365,7 @@
   <string name="conversation_input_speech_hint">Thoni diçka…</string>
   <string name="audio_permission_denied">Leja për mikrofonin është e çaktivizuar. Që të mund të përdorni këtë veçori, aktivizojeni te rregullimet e pajisjes.</string>
   <string name="camera_permission_denied">Leja mbi kamerën është e çaktivizuar. Që të mund të përdorni këtë veçori, aktivizojeni te rregullimet e pajisjes.</string>
-  <string name="speech_recogniton_unavailable">S’është e përdorshme njohja e të  folurit.</string>
+  <string name="speech_recogniton_unavailable">S’mund të kihet të kuptuar të foluri.</string>
   <string name="audio_permission_rationale_title">Lypset leje audio</string>
   <string name="camera_permission_rationale_title">Lypset leje kamere</string>
   <string name="audio_permission_rationale_message">Që të përdorë veçori shndërrimi të folure në tekst dhe incizimi audio, Jami lyp leje mbi mikrofonin. Do të kërkohet në hapin pasues.</string>
@@ -410,6 +413,7 @@
   <string name="tab_files">Kartela</string>
   <string name="tab_settings">Rregullime</string>
   <string name="not_admin_toast">Hollësitë e këtij grupi mund t’i përpunojnë vetëm përgjegjësit</string>
+  <string name="dialog_title_contact">Përpunoni emër në ekran</string>
   <string name="dialogtitle_title">Përpunoni titull grupi</string>
   <string name="dialogtitle_description">Përpunoni përshkrim grupi</string>
   <string name="dialog_hint_title">Titull</string>
@@ -428,10 +432,10 @@
   <string name="jami_id_copy">Kopjo JamiId</string>
   <string name="jami_id_share">Ndajeni JamiId-në me të tjerë</string>
   <string name="jami_id_validate">Regjistroni emër përdoruesi</string>
-  <string name="jami_id_available">Emri i përdoruesit është i lirë</string>
-  <string name="jami_id_not_available">Emri i përdoruesit s’është i lirë\n• E shumta 32 shenja\n• Shenja speciale të lejuara: vijë ndarëse në mes (-), nënvijë (_)</string>
+  <string name="jami_id_available">Emri i përdoruesit është i lirë.</string>
+  <string name="jami_id_not_available">Emri i përdoruesit s’mund të kihet.</string>
   <string name="jami_id_info">• E shumta 32 shenja\n• Shenja speciale të lejuara: vijë ndarëse në mes (-), nënvijë (_)</string>
-  <string name="jami_id_looking_for_availability">Po shihet nëse emri i përdoruesit është i pazënë…</string>
+  <string name="jami_id_looking_for_availability">Po kontrollohet a është i zënë emri i përdoruesit…</string>
   <string name="jami_id_choose_username">Zgjidhni emër përdoruesi</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Mirë se vini te Jami</string>
@@ -446,7 +450,7 @@
   <string name="show_certificate">Shfaq dëshmi</string>
   <string name="mute_conversation">Heshtoje bisedën</string>
   <!--Donation-->
-  <string name="donation_card_description">Nëse ju shijon të përdorni Jami-n dhe besoni në misionin tonë, a do të bënit një dhurim?</string>
+  <string name="donation_card_description">Nëse ju shijon të përdorni Jami-n dhe besoni në misionin tonë, doni të bëni një dhurim?</string>
   <string name="donation_card_not_now">Jo tani</string>
   <string name="donation_donate">Dhuroni</string>
   <string name="donation_setting_title">Kujtues dhurimi</string>

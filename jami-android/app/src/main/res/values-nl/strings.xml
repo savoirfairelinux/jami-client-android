@@ -150,7 +150,6 @@
   <string name="delete_contact">Contact verwijderen</string>
   <string name="conversation_action_remove_this_title">Dit contact verwijderen?</string>
   <string name="conversation_action_remove_this_message">Dit zal het contact verwijderen en de gespreksgeschiedenis voorgoed wissen.</string>
-  <string name="copied_to_clipboard">%1$s gekopieerd naar klembord</string>
   <string name="conversation_action_select_peer_number">Kies een nummer</string>
   <string name="conversation_action_block_this">Contact blokkeren</string>
   <string name="conversation_action_unblock_this">Contact deblokkeren</string>
@@ -177,9 +176,6 @@
   <string name="conversation_type_contact">Jami contact</string>
   <string name="conversation_type_private">Privé</string>
   <string name="conversation_type_group">Groep</string>
-  <string name="conversation_contact_invited">%1$s is uitgenodigd</string>
-  <string name="conversation_contact_added">%1$s is aangesloten</string>
-  <string name="conversation_contact_left">%1$s is links</string>
   <string name="conversation_search_hint">Zoek gesprek</string>
   <string name="today">Vandaag</string>
   <string name="yesterday">Gisteren</string>
@@ -187,8 +183,8 @@
   <string name="add_call_contact_number_to_contacts">%1$s toevoegen?</string>
   <string name="prompt_new_password">Nieuw wachtwoord</string>
   <string name="prompt_new_password_optional">Nieuw wachtwoord (optioneel)</string>
-  <string name="prompt_new_password_repeat">Herhaal nieuwe wachtwoord</string>
-  <string name="account_create_title">Een Jami-account aanmaken</string>
+  <string name="prompt_new_password_repeat">Bevestig het nieuwe wachtwoord</string>
+  <string name="account_create_title">Maak een account op Jami</string>
   <string name="prompt_new_username">Voer nieuwe gebruikersnaam in</string>
   <string name="prompt_hint_username">Gebruikersnaam</string>
   <string name="help_password_choose">Kies een sterk wachtwoord om uw Jami-account te beschermen.</string>
@@ -204,7 +200,6 @@
   <!--Account summary-->
   <string name="profile">Profiel</string>
   <string name="profile_name">Profielnaam</string>
-  <string name="profile_message_warning">Uw profiel wordt enkel gedeeld met uw contacten</string>
   <string name="open_the_gallery">Galerij openen</string>
   <string name="take_a_photo">Foto nemen</string>
   <string name="profile_name_hint">Voer uw scherm naam in</string>
@@ -214,6 +209,7 @@
   <string name="identifier">Identificatie</string>
   <string name="account">Account</string>
   <string name="link_new_device">Een nieuw apparaat koppelen</string>
+  <string name="devices_header">Apparaten</string>
   <string name="devices">Gekoppelde apparaten</string>
   <string name="total_devices">Totaal aantal apparaten:</string>
   <!--Share fragment-->
@@ -235,28 +231,11 @@
   <string name="conversation_placeholder">U heeft nog geen gesprekken</string>
   <string name="contact_request_sent">Contactverzoek verstuurd</string>
   <string name="start_conversation">Gesprek beginnen</string>
-  <string name="search_results">Zoekresultaten</string>
   <string name="tv_contact_row_header">Contacten</string>
   <string name="gallery_error_title">Geen Galerij-app gevonden</string>
   <string name="gallery_error_message">Geen app om Galerij te openen gevonden op dit apparaat</string>
   <!--File Transfer-->
-  <string name="invalid_file">Ongeldig bestand</string>
-  <string name="not_able_to_write_file">Kan bestand niet schrijven</string>
-  <string name="file_transfer_status_created">overdracht initialiseren</string>
-  <string name="file_transfer_status_unsupported">niet ondersteund</string>
-  <string name="file_transfer_status_wait_peer_acceptance">wachten op acceptering door peer</string>
-  <string name="file_transfer_status_wait_host_acceptance">wachten op acceptering door host</string>
-  <string name="file_transfer_status_ongoing">bezig</string>
-  <string name="file_transfer_status_finished">voltooid</string>
-  <string name="file_transfer_status_closed_by_host">gesloten door host</string>
-  <string name="file_transfer_status_closed_by_peer">gesloten door peer</string>
-  <string name="file_transfer_status_invalid_pathname">ongeldige padnaam</string>
-  <string name="file_transfer_status_unjoinable_peer">peer kan niet deelnemen</string>
-  <string name="file_transfer_status_cancelled">Geannuleerd</string>
-  <string name="file_transfer_status_error">Mislukt door een error</string>
-  <string name="file_transfer_status_timed_out">Wachttijd verstreken</string>
-  <string name="file_saved_in">Bestand opgeslagen in %s</string>
-  <string name="file_saved_successfully">Bestand opgeslagen</string>
+  <string name="file_transfer_status_created">Bezig met initialiseren</string>
   <string name="file_download">Download</string>
   <string name="title_media_viewer">Mediaweergave</string>
   <string name="menu_file_open">Bestand openen</string>
@@ -291,7 +270,6 @@
   <string name="tv_send_video">Verstuur Media</string>
   <string name="tv_action_more">Meer</string>
   <string name="conversation_input_speech_hint">Zeg iets...</string>
-  <string name="speech_recogniton_unavailable">Spraak herkenning is niet beschikbaar</string>
   <string name="audio_permission_rationale_title">Audio-toestemming vereist</string>
   <string name="audio_permission_rationale_message">Jami heeft microfoon-toegang nodig voor spraak-naar-text en audio-opname functies. Het zal in de volgende step gevraagd worden</string>
   <string name="camera_permission_rationale_message">Jami heeft camera-toegang nodig voor het opnemen van video en video-bellen. Het zal in de volgende step gevraagd worden</string>
@@ -341,10 +319,7 @@
   <string name="jami_id_copy">Jami-ID Kopiëren</string>
   <string name="jami_id_share">Jami-ID Delen</string>
   <string name="jami_id_validate">Gebruikersnaam registreren</string>
-  <string name="jami_id_available">De gebruikersnaam is beschikbaar</string>
-  <string name="jami_id_not_available">De gebruikersnaam is niet beschikbaar\n• Maximaal 32 karakters\n•  Speciale karakters toegestaan: streep(-), laag streepje(_)</string>
   <string name="jami_id_info">• Maximaal 32 karakters\n• Speciale karakters toegestaan: streep(-), laag streepje(_)</string>
-  <string name="jami_id_looking_for_availability">Beschikbaarheid van gebruikersnaam wordt gecontroleerd…</string>
   <string name="jami_id_choose_username">Kies een gebruikersnaam</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Welkom bij Jami</string>
@@ -354,7 +329,6 @@
   <string name="Private">Privé</string>
   <string name="mute_conversation">Zwijg gesprek</string>
   <!--Donation-->
-  <string name="donation_card_description">Als u van Jami geniet en in onze missie gelooft, zou u een donatie wilen doen?</string>
   <string name="donation_card_not_now">Niet nu</string>
   <string name="donation_donate">Doneren</string>
   <string name="donation_setting_title">Donatie herinnering</string>

@@ -143,7 +143,6 @@
   <string name="delete_contact">தொடர்புகளை நீக்கவும்</string>
   <string name="conversation_action_remove_this_title">இந்த தொடர்பு நீக்க?</string>
   <string name="conversation_action_remove_this_message">இது தொடர்பு நீக்கி உரையாடல் வரலாற்றை அழிக்கும்.</string>
-  <string name="copied_to_clipboard">%1$s கிளிப்போர்டில் நகலெடுக்கப்பட்டது</string>
   <string name="conversation_action_select_peer_number">ஒரு எண்ணைத் தேர்ந்தெடுக்கவும்</string>
   <string name="conversation_action_block_this">பிளாக் தொடர்பு</string>
   <string name="conversation_action_unblock_this">தொடர்புகளைத் திறக்கவும்</string>
@@ -168,9 +167,6 @@
   <string name="conversation_preference_emoji">உரையாடல் ஈமோஜி</string>
   <string name="conversation_type_contact">ஜாமி தொடர்பு</string>
   <string name="conversation_type_private">தனியார்</string>
-  <string name="conversation_contact_invited">%1$s அழைக்கப்பட்டார்</string>
-  <string name="conversation_contact_added">%1$s சேர்க்கப்பட்டது</string>
-  <string name="conversation_contact_left">%1$s இடது</string>
   <string name="conversation_search_hint">தேடல் உரையாடல்</string>
   <string name="today">இன்று</string>
   <string name="yesterday">நேற்று</string>
@@ -178,7 +174,7 @@
   <string name="add_call_contact_number_to_contacts">%1$s சேர்க்க?</string>
   <string name="prompt_new_password">புதிய கடவுச்சொல்</string>
   <string name="prompt_new_password_optional">புதிய கடவுச்சொல் (விரும்பினால்)</string>
-  <string name="prompt_new_password_repeat">புதிய கடவுச்சொல்லை மீண்டும் செய்யவும்</string>
+  <string name="prompt_new_password_repeat">புதிய கடவுச்சொல்லை உறுதிப்படுத்தவும்</string>
   <string name="account_create_title">ஜாமி கணக்கை உருவாக்கவும்</string>
   <string name="prompt_new_username">புதிய பயனர்பெயரை உள்ளிடவும்</string>
   <string name="prompt_hint_username">பயனர் பெயர்</string>
@@ -194,7 +190,6 @@
   <string name="hist_invitation_received">அழைப்பு</string>
   <!--Account summary-->
   <string name="profile">சுயவிவரம்</string>
-  <string name="profile_message_warning">உங்கள் சுயவிவரம் உங்கள் தொடர்புகளுடன் மட்டுமே பகிரப்படுகிறது</string>
   <string name="open_the_gallery">காட்சியகம் திறக்க</string>
   <string name="take_a_photo">புகைப்படம் எடு</string>
   <string name="profile_name_hint">உங்கள் பெயரை உள்ளிடவும்</string>
@@ -204,6 +199,7 @@
   <string name="identifier">அடையாளங்காட்டி</string>
   <string name="account">கணக்கு</string>
   <string name="link_new_device">புதிய சாதனத்தை இணைக்கவும்</string>
+  <string name="devices_header">சாதனங்கள்</string>
   <string name="devices">இணைக்கப்பட்ட சாதனங்கள்</string>
   <string name="total_devices">மொத்த உபகரணங்கள்ஃ </string>
   <!--Share fragment-->
@@ -225,28 +221,10 @@
   <string name="conversation_placeholder">நீங்கள் இன்னும் எந்த உரையாடல்கள் இல்லை</string>
   <string name="contact_request_sent">தொடர்பு கோரிக்கை அனுப்பப்பட்டது</string>
   <string name="start_conversation">உரையாடலைத் தொடங்குங்கள்</string>
-  <string name="search_results">தேடல் முடிவுகள்</string>
   <string name="tv_contact_row_header">தொடர்புகள்</string>
   <string name="gallery_error_title">எந்த கேலரி பயன்பாடு காணப்படவில்லை</string>
   <string name="gallery_error_message">கேலரியை திறக்க சாதனத்தில் எந்த பயன்பாடும் காணப்படவில்லை</string>
   <!--File Transfer-->
-  <string name="invalid_file">செல்லாத கோப்பு</string>
-  <string name="not_able_to_write_file">கோப்பு எழுத முடியவில்லை</string>
-  <string name="file_transfer_status_created">பரிமாற்றத்தை ஆரம்பிக்கவும்</string>
-  <string name="file_transfer_status_unsupported">ஆதரிக்கப்படாதது</string>
-  <string name="file_transfer_status_wait_peer_acceptance">சக ஊழியர்களால் ஏற்றுக்கொள்ளப்படுவதை எதிர்நோக்குதல்</string>
-  <string name="file_transfer_status_wait_host_acceptance">காத்திருக்கும் விருந்தினரின் ஏற்றுக்கொள்ளல்</string>
-  <string name="file_transfer_status_ongoing">தொடரும்</string>
-  <string name="file_transfer_status_finished">முடிந்த</string>
-  <string name="file_transfer_status_closed_by_host">புரவலன் மூடப்பட்ட</string>
-  <string name="file_transfer_status_closed_by_peer">அருகில் உள்ள தோழர்கள்</string>
-  <string name="file_transfer_status_invalid_pathname">செல்லாத பாதை பெயர்</string>
-  <string name="file_transfer_status_unjoinable_peer">இணைக்க முடியாத சகா</string>
-  <string name="file_transfer_status_cancelled">ரத்து செய்யப்பட்டது</string>
-  <string name="file_transfer_status_error">தவறு காரணமாக தோல்வி</string>
-  <string name="file_transfer_status_timed_out">காலக்கெடு</string>
-  <string name="file_saved_in">%s இல் சேமிக்கப்பட்ட கோப்பு</string>
-  <string name="file_saved_successfully">சேமிக்கப்பட்ட கோப்பு வெற்றிகரமாக</string>
   <string name="file_download">பதிவிறக்கம்</string>
   <string name="title_media_viewer">ஊடக பார்வையாளர்</string>
   <string name="menu_file_open">திறந்த கோப்பு</string>
@@ -323,7 +301,6 @@
   <string name="bottomsheet_remove">உறுப்பினர் நீக்க</string>
   <!--JamiId-->
   <string name="jami_id_validate">பயனர்பெயரை பதிவு செய்யவும்</string>
-  <string name="jami_id_looking_for_availability">பயனர் பெயர் கிடைக்கும் தேடும்...</string>
   <string name="jami_id_choose_username">ஒரு பயனர்பெயரைத் தேர்ந்தெடுக்கவும்</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">ஜாமிக்கு வரவேற்கிறோம்</string>

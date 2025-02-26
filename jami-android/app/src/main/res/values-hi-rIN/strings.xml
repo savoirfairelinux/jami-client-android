@@ -151,7 +151,6 @@
   <string name="delete_contact">संपर्क हटाएँ</string>
   <string name="conversation_action_remove_this_title">इस संपर्क को हटा दें?</string>
   <string name="conversation_action_remove_this_message">यह संपर्क को हटा देगा और बातचीत इतिहास को निश्चित रूप से साफ कर देगा।</string>
-  <string name="copied_to_clipboard">%1$s क्लिपबोर्ड पर कॉपी किया गया</string>
   <string name="conversation_action_select_peer_number">एक संख्या चुनें</string>
   <string name="conversation_action_block_this">ब्लॉक संपर्क</string>
   <string name="conversation_action_unblock_this">संपर्क अवरोधित करें</string>
@@ -178,9 +177,6 @@
   <string name="conversation_preference_emoji">वार्तालाप इमोजी</string>
   <string name="conversation_type_contact">जमी संपर्क</string>
   <string name="conversation_type_private">निजी</string>
-  <string name="conversation_contact_invited">%1$s को आमंत्रित किया गया था</string>
-  <string name="conversation_contact_added">%1$s जोड़ा गया</string>
-  <string name="conversation_contact_left">%1$s बाएं</string>
   <string name="conversation_search_hint">खोज वार्तालाप</string>
   <string name="audio_recorder_error">ऑडियो रिकॉर्डर ऐप नहीं मिला.</string>
   <string name="video_recorder_error">वीडियो रिकॉर्डर ऐप नहीं मिला.</string>
@@ -197,8 +193,8 @@
   <string name="add_call_contact_number_to_contacts">%1$s जोड़ें?</string>
   <string name="prompt_new_password">नया पासवर्ड</string>
   <string name="prompt_new_password_optional">नया पासवर्ड (वैकल्पिक)</string>
-  <string name="prompt_new_password_repeat">नया पासवर्ड दोहराएँ</string>
-  <string name="account_create_title">एक जामी खाता बनाएं</string>
+  <string name="prompt_new_password_repeat">नया पासवर्ड पुष्टि करें</string>
+  <string name="account_create_title">Jami खाता बनाएं</string>
   <string name="prompt_new_username">नया उपयोगकर्ता नाम दर्ज करें</string>
   <string name="prompt_hint_username">उपयोगकर्ता नाम</string>
   <string name="help_password_choose">अपने जेमी खाते की सुरक्षा के लिए एक मजबूत पासवर्ड चुनें जिसे आप याद रखेंगे।</string>
@@ -214,7 +210,6 @@
   <string name="hist_invitation_received">प्राप्त निमंत्रण</string>
   <!--Account summary-->
   <string name="profile">प्रोफ़ाइल</string>
-  <string name="profile_message_warning">आपकी प्रोफ़ाइल केवल आपके संपर्कों के साथ साझा की जाती है</string>
   <string name="open_the_gallery">गैलरी खोलें</string>
   <string name="take_a_photo">तस्वीरें लें</string>
   <string name="profile_name_hint">अपना नाम दर्ज करें</string>
@@ -224,6 +219,7 @@
   <string name="identifier">पहचानकर्ता</string>
   <string name="account">खाता</string>
   <string name="link_new_device">एक नई डिवाइस को लिंक करें</string>
+  <string name="devices_header">उपकरण</string>
   <string name="devices">जुड़े हुए उपकरण</string>
   <string name="total_devices">कुल उपकरण: </string>
   <!--Share fragment-->
@@ -245,28 +241,10 @@
   <string name="conversation_placeholder">आप अभी तक कोई बातचीत नहीं की है</string>
   <string name="contact_request_sent">संपर्क अनुरोध भेजा गया</string>
   <string name="start_conversation">बातचीत शुरू करें</string>
-  <string name="search_results">खोज परिणाम</string>
   <string name="tv_contact_row_header">संपर्क</string>
   <string name="gallery_error_title">कोई गैलरी ऐप नहीं मिला</string>
   <string name="gallery_error_message">गैलरी खोलने के लिए डिवाइस पर कोई एप्लिकेशन नहीं मिला</string>
   <!--File Transfer-->
-  <string name="invalid_file">अमान्य फ़ाइल</string>
-  <string name="not_able_to_write_file">फ़ाइल लिखने में असमर्थ</string>
-  <string name="file_transfer_status_created">स्थानांतरण को आरंभ करना</string>
-  <string name="file_transfer_status_unsupported">असमर्थित</string>
-  <string name="file_transfer_status_wait_peer_acceptance">सहकर्मी स्वीकृति का इंतजार</string>
-  <string name="file_transfer_status_wait_host_acceptance">प्रतीक्षा मेजबान स्वीकृति</string>
-  <string name="file_transfer_status_ongoing">चल रहा है</string>
-  <string name="file_transfer_status_finished">समाप्त</string>
-  <string name="file_transfer_status_closed_by_host">मेजबान द्वारा बंद</string>
-  <string name="file_transfer_status_closed_by_peer">समकक्षों के निकट</string>
-  <string name="file_transfer_status_invalid_pathname">अवैध पथनाम</string>
-  <string name="file_transfer_status_unjoinable_peer">अयोग्य समकक्ष</string>
-  <string name="file_transfer_status_cancelled">रद्द किया गया</string>
-  <string name="file_transfer_status_error">त्रुटि के कारण विफल</string>
-  <string name="file_transfer_status_timed_out">समयबद्ध</string>
-  <string name="file_saved_in">%s में सहेजी गई फ़ाइल</string>
-  <string name="file_saved_successfully">फ़ाइल सफलतापूर्वक सहेजी गई</string>
   <string name="file_download">डाउनलोड करें</string>
   <string name="title_media_viewer">मीडिया दर्शक</string>
   <string name="menu_file_open">फ़ाइल खोलें</string>
@@ -302,7 +280,6 @@
   <string name="tv_send_video">मीडिया भेजें</string>
   <string name="tv_action_more">अधिक</string>
   <string name="conversation_input_speech_hint">कुछ कहो...</string>
-  <string name="speech_recogniton_unavailable">वाक् पहचान उपलब्ध नहीं है</string>
   <string name="audio_permission_rationale_title">ऑडियो अनुमति आवश्यक</string>
   <string name="audio_permission_rationale_message">जैमी को स्पीच-टू-टेक्स्ट और ऑडियो रिकॉर्ड करने की सुविधाओं का उपयोग करने के लिए माइक्रोफ़ोन की अनुमति की आवश्यकता होती है। यह अगले चरण में पूछा जाएगा</string>
   <string name="camera_permission_rationale_message">जैमी को वीडियो रिकॉर्ड करने और वीडियो कॉल करने के लिए कैमरे की अनुमति की आवश्यकता है। यह अगले चरण में पूछा जाएगा</string>
@@ -356,10 +333,7 @@
   <string name="jami_id_copy">जामीआईडी कॉपी करें</string>
   <string name="jami_id_share">जामीआईडी शेयर करें</string>
   <string name="jami_id_validate">उपयोगकर्ता नाम पंजीकृत करें</string>
-  <string name="jami_id_available">उपयोगकर्ता नाम उपलब्ध है</string>
-  <string name="jami_id_not_available">उपयोगकर्ता नाम उपलब्ध नहीं है\n• अधिकतम 32 वर्ण\n• विशेष वर्ण अनुमति हैं: डैश (-), अंडरस्कोर (_)</string>
   <string name="jami_id_info">अधिकतम 32 वर्ण\n• स्वीकृत विशेष वर्ण: डैश (-), अंडरस्कोर (_)</string>
-  <string name="jami_id_looking_for_availability">उपयोगकर्ता नाम उपलब्धता की तलाश में...</string>
   <string name="jami_id_choose_username">एक उपयोगकर्ता नाम चुनें</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">जामी में आपका स्वागत है</string>
@@ -369,7 +343,6 @@
   <string name="Private">निजी</string>
   <string name="mute_conversation">मूक बातचीत</string>
   <!--Donation-->
-  <string name="donation_card_description">यदि आपको जैमी का उपयोग करना अच्छा लगता है और आप हमारे मिशन में विश्वास करते हैं, तो क्या आप दान देंगे?</string>
   <string name="donation_card_not_now">अभी नहीं</string>
   <string name="donation_donate">दान करें</string>
   <string name="donation_setting_title">दान अनुस्मारक</string>

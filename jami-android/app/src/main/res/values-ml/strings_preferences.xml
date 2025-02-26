@@ -45,8 +45,8 @@
   <string name="pref_typing_summary">ഒരു സന്ദേശം ടൈപ്പുചെയ്യുന്നതായി കാണിക്കുന്ന ടൈപ്പുചെയ്യൽ സൂചകങ്ങൾ അയയ്ക്കുകയും സ്വീകരിക്കുകയും ചെയ്യുക.</string>
   <string name="pref_block_record_title">സ്ക്രീൻഷോട്ടും റെക്കോർഡിംഗും തടയുക</string>
   <string name="pref_block_record_summary">സ്ക്രീൻഷോട്ട് എടുക്കുകയോ വീഡിയോ റെക്കോർഡ് ചെയ്യുകയോ ചെയ്യുന്നത് തടയുക.</string>
-  <string name="pref_link_preview_title">സംഭാഷണങ്ങളിൽ ലിങ്ക് പ്രിവ്യൂ കാണിക്കുക</string>
-  <string name="pref_link_preview_summary">മുൻകൂർ കാണലുകൾക്ക് മൂന്നാം കക്ഷി സെർവറുകളിൽ നിന്നും ഉള്ളടക്കം ഡൌൺലോഡ് ചെയ്യണം.</string>
+  <string name="pref_link_preview_title">വെബ് ലിങ്ക് പ്രിവ്യൂകൾ</string>
+  <string name="pref_link_preview_summary">പ്രിവ്യൂ മൂന്നാം കക്ഷി സെർവറുകളിൽ നിന്നും ഉള്ളടക്കം ഡൌൺലോഡ് ചെയ്യണം.</string>
   <!--Notifications Visibility-->
   <string name="connectivity_custom_title">കസ്റ്റംസ്</string>
   <!--Extension-->

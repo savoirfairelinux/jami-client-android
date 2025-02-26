@@ -144,7 +144,6 @@
   <string name="delete_contact">Байрлагыг устгах</string>
   <string name="conversation_action_remove_this_title">Энэ холбоосыг устгах уу?</string>
   <string name="conversation_action_remove_this_message">Энэ нь холбоосыг устгаж, ярианы түүхийг арилгана.</string>
-  <string name="copied_to_clipboard">%1$s-ийг клипборд дээр хуулбарлан</string>
   <string name="conversation_action_select_peer_number">Үргэлж</string>
   <string name="conversation_action_block_this">Блок-тай холбоо тогтоох</string>
   <string name="conversation_action_unblock_this">Байлгын сүлжээг буулгах</string>
@@ -169,9 +168,6 @@
   <string name="conversation_preference_emoji">Хэлэлцүүлгийн эможи</string>
   <string name="conversation_type_contact">Жэми-ийн холбоо</string>
   <string name="conversation_type_private">Хувь хүн</string>
-  <string name="conversation_contact_invited">%1$s-ийг урьсан</string>
-  <string name="conversation_contact_added">%1$s-ийг холбосон</string>
-  <string name="conversation_contact_left">%1$s нь үлдлээ</string>
   <string name="conversation_search_hint">Танд ярилцлага хайх</string>
   <string name="today">Өнөөдөр</string>
   <string name="yesterday">Өчигдөр</string>
@@ -179,7 +175,7 @@
   <string name="add_call_contact_number_to_contacts">%1$s нэмнэ үү?</string>
   <string name="prompt_new_password">Шинэ нууц үг</string>
   <string name="prompt_new_password_optional">Шинэ нууц үг (болдлоо)</string>
-  <string name="prompt_new_password_repeat">Шинэ нууц үгг дахин давтаарай</string>
+  <string name="prompt_new_password_repeat">Шинэ нууц үг батлах</string>
   <string name="account_create_title">Jami-ийн дансыг бий болгох</string>
   <string name="prompt_new_username">Шинэ хэрэглэгчдийн нэрийг оруул</string>
   <string name="prompt_hint_username">Хэрэглэгчийн нэр</string>
@@ -195,7 +191,6 @@
   <string name="hist_invitation_received">Нээлтийг хүлээн авсан</string>
   <!--Account summary-->
   <string name="profile">Профиль</string>
-  <string name="profile_message_warning">Таны профил таны холбоотонтай л хуваалцаж байна</string>
   <string name="open_the_gallery">Галерейг нээе</string>
   <string name="take_a_photo">Сүрэл зураг хий</string>
   <string name="profile_name_hint">Таны нэрийг оруул</string>
@@ -205,6 +200,7 @@
   <string name="identifier">Төлөөлөгч</string>
   <string name="account">Санхүүжилт</string>
   <string name="link_new_device">Шинэ төхөөрөмжийг холбох</string>
+  <string name="devices_header">Утасны хэрэгсэл</string>
   <string name="devices">Хөгжлийн багаж хэрэгсэл</string>
   <string name="total_devices">Бүхэл бүтэн төхөөрөмж: </string>
   <!--Share fragment-->
@@ -226,28 +222,10 @@
   <string name="conversation_placeholder">Та одоохондоо яриагүй.</string>
   <string name="contact_request_sent">Байлдан авах хүсэлтийг ирүүлсэн</string>
   <string name="start_conversation">Хэлэлцүүлэг эхлүүлэх</string>
-  <string name="search_results">Танд хайлын үр дүн</string>
   <string name="tv_contact_row_header">Байлцаагч</string>
   <string name="gallery_error_title">Галерийн хэрэгсэл олдохгүй</string>
   <string name="gallery_error_message">Галерея нээлтэд хэрэгсэл байхгүй</string>
   <!--File Transfer-->
-  <string name="invalid_file">Үндсэн хуулийн бус файл</string>
-  <string name="not_able_to_write_file">Файлыг бичиж чадахгүй</string>
-  <string name="file_transfer_status_created">нэвтрүүлгийг эхлүүлэх</string>
-  <string name="file_transfer_status_unsupported">дэмжлэггүй</string>
-  <string name="file_transfer_status_wait_peer_acceptance">Эдгээрийнхээ хүлээн зөвшөөрөл хүлээдэг</string>
-  <string name="file_transfer_status_wait_host_acceptance">хүлээсэн зочид хүлээн авах</string>
-  <string name="file_transfer_status_ongoing">үргэлжилж байна</string>
-  <string name="file_transfer_status_finished">дууссан</string>
-  <string name="file_transfer_status_closed_by_host">зочид буудал</string>
-  <string name="file_transfer_status_closed_by_peer">ойр дотно</string>
-  <string name="file_transfer_status_invalid_pathname">хүчингүй замны нэр</string>
-  <string name="file_transfer_status_unjoinable_peer">нэгдэж чадахгүй</string>
-  <string name="file_transfer_status_cancelled">Цуцаллаа</string>
-  <string name="file_transfer_status_error">алдааны улмаас алдаа гарсан</string>
-  <string name="file_transfer_status_timed_out">цаг хугацааны</string>
-  <string name="file_saved_in">%s-д хадгагдсан файл</string>
-  <string name="file_saved_successfully">Үргэлжүүлэн хадгагдсан файл</string>
   <string name="file_download">Хөгжүүлнэ</string>
   <string name="title_media_viewer">Мэдээлэл үзэгч</string>
   <string name="menu_file_open">Ашигласан файл</string>
@@ -324,7 +302,6 @@
   <string name="bottomsheet_remove">Хөгжлийн гишүүн</string>
   <!--JamiId-->
   <string name="jami_id_validate">Хэрэглэгчийн нэрийг бүртгүүлэх</string>
-  <string name="jami_id_looking_for_availability">Хэрэглэгчийн нэртэй байхын тулд хайж байна...</string>
   <string name="jami_id_choose_username">Хэрэглэгчийн нэрийг сонго</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Жэми-д тавтай морилно уу</string>

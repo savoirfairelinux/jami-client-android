@@ -45,8 +45,8 @@
   <string name="pref_typing_summary">Send og motta inntastingindikatorer som viser at en melding blir tastet.</string>
   <string name="pref_block_record_title">Hindre skjermdump og -opptak</string>
   <string name="pref_block_record_summary">Hindre skjermdump og -opptak</string>
-  <string name="pref_link_preview_title">Forhåndsvis linker i samtaler</string>
-  <string name="pref_link_preview_summary">Forhåndsvisninger betyr at Jami må laste ned media fra tredjeparts servere.</string>
+  <string name="pref_link_preview_title">Koblingsforhåndsvisninger</string>
+  <string name="pref_link_preview_summary">Forutsetning krever å laste ned innhold fra tredjepartsservere.</string>
   <!--Notifications Visibility-->
   <string name="connectivity_custom_title">Tilpasset</string>
   <!--Extension-->

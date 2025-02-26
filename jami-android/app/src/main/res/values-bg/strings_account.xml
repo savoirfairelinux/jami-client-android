@@ -24,7 +24,6 @@
   <string name="account_type_ip2ip">IP профил</string>
   <string name="help_ring">Jami ви позволява да се свържете с хора безопасно чрез изцяло разпределена мрежова структура.</string>
   <string name="help_sip_title">Добавяне на профил за SIP</string>
-  <string name="help_sip">Настройка на съществуващ профил за SIP</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_message">Това действие е необратимо.</string>
   <!--AccountManagementFragment-->
@@ -43,9 +42,9 @@
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Общи</string>
   <string name="account_basic_category">Общи настройки</string>
-  <string name="account_alias_label">Име на профил</string>
   <string name="account_hostname_label">Име на сървъра</string>
   <string name="account_bootstrap_label">Начална установка</string>
+  <string name="account_name_server_label">Именен сървър</string>
   <string name="account_username_label">Потребителско име</string>
   <string name="account_password_label">Парола</string>
   <string name="account_optionnal_category">Незадължителни настройки</string>
@@ -77,8 +76,7 @@
   <string name="account_registration_exp_label">Срок на регистрацията</string>
   <string name="account_local_interface_label">Местен интерфейс</string>
   <string name="account_local_port_label">Местен порт</string>
-  <string name="account_stun_enable_label">Използване на Stun</string>
-  <string name="account_stun_server_label">Сървър за Stun</string>
+  <string name="account_stun_enable_label">Използване на STUN</string>
   <string name="account_accept_files">Приемайте входящи файлове автоматично</string>
   <string name="account_conversation_settings_title">Настройки за разговори</string>
   <string name="account_accept_files_max_size">Максимален размер на файла, който да се приема автоматично</string>
@@ -94,6 +92,7 @@
   <string name="account_published_address_label">Публикуван адрес</string>
   <string name="disabled">Опасни</string>
   <string name="enabled">Включено</string>
+  <string name="default_value">По подразбиране</string>
   <string name="account_proxy_label">DHT прокси</string>
   <string name="account_proxy_enable_label">Използвайте DHT прокси</string>
   <string name="account_proxy_server_label">Адрес на DHT</string>
@@ -112,25 +111,12 @@
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Използване на TLS</string>
-  <string name="account_tls_port_label">Порт за слушане на TLS</string>
-  <string name="account_tls_certificate_list_label">Източници на сертификати</string>
-  <string name="account_tls_certificate_file_label">Файл със сертификат</string>
-  <string name="account_tls_private_key_file_label">Файл с частен ключ</string>
   <string name="account_tls_password_label">Парола за частен ключ</string>
-  <string name="account_tls_method_label">Метод на TLS</string>
-  <string name="account_tls_ciphers_label">Шифри на TLS</string>
-  <string name="account_tls_server_name_label">Име на сървъра</string>
-  <string name="account_tls_verify_server_label">Проверка на сървъра</string>
-  <string name="account_tls_verify_client_label">Проверка на клиента</string>
-  <string name="account_require_client_certificate_label">TLS изисква сертификат за клиент</string>
-  <string name="account_tls_negotiation_timeout_sec">Време за изчакване на договарянето (сек)</string>
   <string name="account_rtp_max_port">Максимален</string>
   <string name="account_rtp_min_port">Минимален</string>
-  <string name="account_rtp_port_range">Диапазон на аудио RTP портове</string>
   <!--restore/backup-->
   <string name="account_new_device_password">Въведете основната парола, за да отключите профилa</string>
   <string name="error_password_char_count">Най-малко 6 знака</string>
-  <string name="error_passwords_not_equals">Паролите не съвпадат</string>
   <string name="export_account_wait_title">Моля, изчакайте…</string>
   <string name="export_account_wait_message">Информация за износната сметка</string>
   <string name="account_export_file">Резервен профил</string>
@@ -164,11 +150,9 @@
   <string name="account_link_device">Свържете се от друго устройство</string>
   <string name="account_link_button">Свържете се от мрежата</string>
   <string name="account_link_archive_button">Свържете се от резервното</string>
-  <string name="account_link_prompt_pin">Въведете ПИН</string>
-  <string name="account_new_button">Създаване на профил в Jami</string>
+  <string name="account_new_button">Присъединете се към Джами.</string>
   <string name="account_link_export_button">Свържете ново устройство</string>
   <string name="account_link_hide_button">Скрийте свързано устройство</string>
-  <string name="account_start_export_button">Генериране на PIN код</string>
   <string name="account_end_export_button">затваряне</string>
   <string name="account_export_title">Свързване на акаунт с други устройства</string>
   <string name="account_connect_server_button">Свързване с сървър за управление</string>
@@ -180,17 +164,13 @@
   <string name="account_enter_username">Въведете потребителско име</string>
   <!--Name registration-->
   <string name="error_username_empty">Въведете потребителско име</string>
-  <string name="no_registered_name_for_account">Без регистрирано име</string>
-  <string name="username_available">Потребителското име е налично!</string>
   <string name="register_name">Име на регистъра</string>
-  <string name="trying_to_register_name">Протича опит за регистриране на името</string>
   <string name="registered_username">Регистрирано потребителско име</string>
   <string name="register_username">Регистриране на публично потребителско име</string>
   <string name="register_recommended">Препоръчително</string>
   <string name="username_already_taken">Потребителското име е вече заето</string>
   <string name="invalid_username">Грешно потребителско име</string>
   <string name="unknown_error">Неизвестна грешка. Моля, проверете връзката си с мрежата!</string>
-  <string name="looking_for_username_availability">Проверяване дали потребителското име е свободно…</string>
   <string name="account_status_connecting">Свързване</string>
   <string name="account_status_connection_error">Грешка при свързването</string>
   <string name="account_status_online">На линия</string>
@@ -210,14 +190,14 @@
   <string name="revoke_device_wait_title">Моля, изчакайте…</string>
   <string name="revoke_device_wait_message">Премахване на устройството</string>
   <string name="rename_device_title">Преименуване на това устройство</string>
-  <string name="rename_device_message">Изберете ново име, за да идентифицирате това устройство в акаунта си в Jami</string>
   <string name="rename_device_button">Преименуване на устройството</string>
   <string name="account_rename_device_hint">Изберете ново име за устройството</string>
   <string name="account_device_this_indicator">Това устройство</string>
-  <string name="account_disabled_indicator">изключено</string>
+  <string name="account_disabled_indicator">Опасни</string>
   <!--Link a new device-->
   <string name="error_format_not_supported">Този формат не се поддържа.</string>
   <string name="account_link_device_title">Свържете ново устройство</string>
+  <string name="connect_device_scanqr">Сканиране на QR код</string>
   <string name="account_link_device_button">Свържете се</string>
   <!--Biometry-->
 </resources>

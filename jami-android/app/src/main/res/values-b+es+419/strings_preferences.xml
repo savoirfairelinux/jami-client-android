@@ -17,6 +17,8 @@
   <string name="pref_push_notifications_logs_title">Pulsar los registros de notificaciones</string>
   <string name="pref_push_notifications_logs_summary">Ver registros capturados desde las
 notificaciones pulsadas.</string>
+  <string name="pref_link_preview_title">Vista previas de vínculos web</string>
+  <string name="pref_link_preview_summary">La vista previa requiere la descarga de contenido desde servidores de terceros.</string>
   <!--Notifications Visibility-->
   <string name="notification_public">Públic\n(mostrar notificaciones y su contenido en la pantalla de bloqueo)\n</string>
   <string name="notification_private">Private\n(mostrar notificaciones pero ocultar su contenido en la pantalla de bloqueo)\n</string>

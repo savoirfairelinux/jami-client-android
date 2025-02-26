@@ -148,7 +148,6 @@
   <string name="delete_contact">حذف جهة إتصال</string>
   <string name="conversation_action_remove_this_title">حذف جهة الإتصال؟</string>
   <string name="conversation_action_remove_this_message">هذا سيزيل جهة الإتصال و بالتأكيد سيزيل تاريخ المحادثة.</string>
-  <string name="copied_to_clipboard">%1$sتم النسخ إلى الحافظة</string>
   <string name="conversation_action_select_peer_number">إختيار رقم</string>
   <string name="conversation_action_block_this">حظر جهة إتصال</string>
   <string name="conversation_action_unblock_this">فك الحظر على الاتصال</string>
@@ -174,9 +173,6 @@
   <string name="conversation_type_contact">جهة اتصال جامي</string>
   <string name="conversation_type_private">خاص</string>
   <string name="conversation_type_group">مجموعة</string>
-  <string name="conversation_contact_invited">%1$s تم دعوته</string>
-  <string name="conversation_contact_added">%1$s متضمن</string>
-  <string name="conversation_contact_left">%1$s يسار</string>
   <string name="conversation_search_hint">بحث عن المحادثة</string>
   <string name="today">اليوم</string>
   <string name="yesterday">البارحة</string>
@@ -184,8 +180,8 @@
   <string name="add_call_contact_number_to_contacts">إضافة %1$s؟</string>
   <string name="prompt_new_password">كلمة مرور جديدة</string>
   <string name="prompt_new_password_optional">كلمة مرور جديدة (إختياري)</string>
-  <string name="prompt_new_password_repeat">إعادة كلمة مرور جديدة</string>
-  <string name="account_create_title">إنشاء حساب جامي</string>
+  <string name="prompt_new_password_repeat">تأكيد كلمة المرور الجديدة</string>
+  <string name="account_create_title">إعداد حساب جامي</string>
   <string name="prompt_new_username">إدخال إسم مستخدم جديد</string>
   <string name="prompt_hint_username">اسم المستخدم</string>
   <string name="help_password_choose">إختيار كلمة مرور قوية يمكن تذكرها لحماية حساب جامي الخاص بك.</string>
@@ -200,7 +196,6 @@
   <string name="hist_invitation_received">تم تلقي دعوة</string>
   <!--Account summary-->
   <string name="profile">الملف الشخصى</string>
-  <string name="profile_message_warning">حسابك مشارك فقط مع جهات إتصالك</string>
   <string name="open_the_gallery">فتح المعرض</string>
   <string name="take_a_photo">التقاط صورة</string>
   <string name="profile_name_hint">إدخال إسمك</string>
@@ -210,6 +205,7 @@
   <string name="identifier">المعرف</string>
   <string name="account">حساب</string>
   <string name="link_new_device">ربط جهاز جديد</string>
+  <string name="devices_header">الأجهزة</string>
   <string name="devices">الأجهزة المتصلة</string>
   <string name="total_devices">الأجهزة الكلية</string>
   <!--Share fragment-->
@@ -231,28 +227,10 @@
   <string name="conversation_placeholder">لا يوجد محادثات لك بعد</string>
   <string name="contact_request_sent">تم إرسال طلب جهة إتصال</string>
   <string name="start_conversation">بدء محادثة</string>
-  <string name="search_results">نتائج البحث</string>
   <string name="tv_contact_row_header">جهات الاتصال</string>
   <string name="gallery_error_title">لا يوجد برنامج المعرض</string>
   <string name="gallery_error_message">لم يتم إيجاد برنامج على الجهاز لفتح المعرض</string>
   <!--File Transfer-->
-  <string name="invalid_file">ملف غير صالح</string>
-  <string name="not_able_to_write_file">غير قابل على كتابة ملف</string>
-  <string name="file_transfer_status_created">تهيئة النقل</string>
-  <string name="file_transfer_status_unsupported">غير مدعوم</string>
-  <string name="file_transfer_status_wait_peer_acceptance">بإنتظار قبول الند</string>
-  <string name="file_transfer_status_wait_host_acceptance">بإنتظار قبول المضيف</string>
-  <string name="file_transfer_status_ongoing">جاري</string>
-  <string name="file_transfer_status_finished">انتهى</string>
-  <string name="file_transfer_status_closed_by_host">مغلق من قبل المضيف</string>
-  <string name="file_transfer_status_closed_by_peer">غلق من قبل الند</string>
-  <string name="file_transfer_status_invalid_pathname">اسم مسار غير صالح</string>
-  <string name="file_transfer_status_unjoinable_peer">ند غير قابل للإنضمام</string>
-  <string name="file_transfer_status_cancelled">ملغي</string>
-  <string name="file_transfer_status_error">فشل لحدوث خطأ</string>
-  <string name="file_transfer_status_timed_out">نفذت المهلة</string>
-  <string name="file_saved_in">تم تخزين الملف في %s</string>
-  <string name="file_saved_successfully">تم تخزين الملف بنجاح</string>
   <string name="file_download">تنزيل</string>
   <string name="title_media_viewer">عارض الوسائط</string>
   <string name="menu_file_open">فتح ملف</string>
@@ -329,7 +307,6 @@
   <string name="bottomsheet_remove">إزالة عضو</string>
   <!--JamiId-->
   <string name="jami_id_validate">تسجيل اسم المستخدم</string>
-  <string name="jami_id_looking_for_availability">جاري البحث عن توفر اسم المستخدم…</string>
   <string name="jami_id_choose_username">اختر اسم مستخدم</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">مرحبا بك في جامي</string>
