@@ -40,7 +40,7 @@
   <string name="pref_blackList_summary">Проверить список блокировок</string>
   <string name="pref_delete_account_title">Удалить учетную запись</string>
   <string name="pref_delete_account_summary">Удалить учетную запись с этого устройства</string>
-  <string name="pref_persistNotification_title">Запустить в фоновом режиме</string>
+  <string name="pref_persistNotification_title">Фоновый режим работы</string>
   <string name="pref_persistNotification_summary">Разрешить работать в фоновом режиме для приема звонков и сообщений.</string>
   <string name="pref_newGroup_title">Включить групповые чаты</string>
   <string name="pref_newGroup_summary">Включить создание групп в Jami.</string>
@@ -56,8 +56,8 @@
   <string name="pref_typing_summary">Оповещения о наборе текста показывают что пользователь набирает сообщение</string>
   <string name="pref_block_record_title">Отключить снимки и запись экрана</string>
   <string name="pref_block_record_summary">Отключить снимки и запись экрана</string>
-  <string name="pref_link_preview_title">Показывать предварительный просмотр ссылок в разговорах</string>
-  <string name="pref_link_preview_summary">Предварительный просмотр требует загрузки контента со сторонних серверов.</string>
+  <string name="pref_link_preview_title">Предпросмотры ссылок</string>
+  <string name="pref_link_preview_summary">Для предварительного просмотра требуется загрузка содержимого со сторонних серверов.</string>
   <!--Notifications Visibility-->
   <string name="notification_public">Показать всё \n(отображать уведомления и их содержимое на экране блокировки)\n</string>
   <string name="notification_private">Скрыть содержимое \n(отображать уведомления на экране блокировки, но скрывать их содержимое)\n</string>

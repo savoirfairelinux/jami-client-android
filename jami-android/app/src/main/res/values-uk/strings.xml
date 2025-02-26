@@ -2,9 +2,11 @@
 <resources>
   <!--About-->
   <string name="section_license">Ліцензія</string>
+  <string name="sponsor_section">Jami — це вільне програмне забезпечення, яке розроблене й підтримується</string>
   <string name="copyright_section">Авторське право</string>
   <string name="contribute_section">Зробити внесок</string>
   <string name="version_section">Версія</string>
+  <string name="no_browser_app_installed">Не знайдено жодного браузера. Будь ласка, встановіть браузер, щоб переглянути цю сторінку.</string>
   <string name="website_chooser_title">Переглянути сайт за допомогою...</string>
   <string name="license">Це програмне забезпечення надається \"як є\", без будь-яких гарантій. Більш детально дивіться<u>GNU General Public License версію 3 чи новішу</u></string>
   <string name="description">Jami — це вільне програмне забезпечення для будь-якого звʼязку з повагою до свобод і приватності користувачів.</string>
@@ -150,7 +152,6 @@
   <string name="delete_contact">Видалити контакт</string>
   <string name="conversation_action_remove_this_title">Видалити цей контакт?</string>
   <string name="conversation_action_remove_this_message">Це видалить контакт і остаточно очистить історію розмов.</string>
-  <string name="copied_to_clipboard">%1$s збережено у буфер</string>
   <string name="conversation_action_select_peer_number">Виберіть номер</string>
   <string name="conversation_action_block_this">Заблокувати контакт</string>
   <string name="conversation_action_unblock_this">Відблокувати контакт</string>
@@ -176,9 +177,6 @@
   <string name="conversation_type_contact">Контакт Jami</string>
   <string name="conversation_type_private">Приватне</string>
   <string name="conversation_type_group">Група</string>
-  <string name="conversation_contact_invited">%1$s запрошений</string>
-  <string name="conversation_contact_added">%1$s приєднаний</string>
-  <string name="conversation_contact_left">%1$s залишився</string>
   <string name="conversation_search_hint">Пошук розмов</string>
   <string name="today">Сьогодні</string>
   <string name="yesterday">Учора</string>
@@ -186,8 +184,8 @@
   <string name="add_call_contact_number_to_contacts">Додати %1$s?</string>
   <string name="prompt_new_password">Новий пароль</string>
   <string name="prompt_new_password_optional">Новий пароль (не обов\'язково)</string>
-  <string name="prompt_new_password_repeat">Новий пароль ще раз</string>
-  <string name="account_create_title">Створити обліковий запис Jami</string>
+  <string name="prompt_new_password_repeat">Підтвердити новий пароль</string>
+  <string name="account_create_title">Створення акаунту Jami</string>
   <string name="prompt_new_username">Вкажіть нове ім\'я користувача</string>
   <string name="prompt_hint_username">Ім’я</string>
   <string name="help_password_choose">Оберіть сильний пароль, який ви запамʼятаєте, щоб захистити свій обліковий запис Jami.</string>
@@ -202,7 +200,6 @@
   <string name="hist_invitation_received">Отримано запрошення</string>
   <!--Account summary-->
   <string name="profile">Профіль</string>
-  <string name="profile_message_warning">Ваш профіль бачитимуть лише ваші контакти</string>
   <string name="open_the_gallery">Відкрити галерею</string>
   <string name="take_a_photo">Сфотографувати</string>
   <string name="profile_name_hint">Введіть своє ім\'я</string>
@@ -212,6 +209,7 @@
   <string name="identifier">Ідентифікатор</string>
   <string name="account">Обліковий запис</string>
   <string name="link_new_device">Прив\'язати новий пристрій</string>
+  <string name="devices_header">Пристрої</string>
   <string name="devices">Привʼязані пристрої</string>
   <string name="total_devices">Загальна кількість пристроїв:</string>
   <!--Share fragment-->
@@ -233,28 +231,11 @@
   <string name="conversation_placeholder">Поки що діалоги відсутні</string>
   <string name="contact_request_sent">Запит контакту надіслано</string>
   <string name="start_conversation">Почати розмову</string>
-  <string name="search_results">Результати пошуку</string>
   <string name="tv_contact_row_header">Контакти</string>
   <string name="gallery_error_title">Не знайдено програми для перегляду світлин</string>
   <string name="gallery_error_message">На пристрої не знайдено програми, щоб відкрити галерею</string>
   <!--File Transfer-->
-  <string name="invalid_file">Недопустимий файл</string>
-  <string name="not_able_to_write_file">Помилка при записі файлу</string>
-  <string name="file_transfer_status_created">Розпочинаю трансфер</string>
-  <string name="file_transfer_status_unsupported">не підтримується</string>
-  <string name="file_transfer_status_wait_peer_acceptance">чекає прийняття з однолітків</string>
-  <string name="file_transfer_status_wait_host_acceptance">чекаючий приймач</string>
-  <string name="file_transfer_status_ongoing">триває</string>
-  <string name="file_transfer_status_finished">завершено</string>
-  <string name="file_transfer_status_closed_by_host">закритою хост</string>
-  <string name="file_transfer_status_closed_by_peer">Близький до однолітків</string>
-  <string name="file_transfer_status_invalid_pathname">Недійне ім\'я шляху</string>
-  <string name="file_transfer_status_unjoinable_peer">неполучається рівнім</string>
-  <string name="file_transfer_status_cancelled">скасовано</string>
-  <string name="file_transfer_status_error">не вдалося через помилку</string>
-  <string name="file_transfer_status_timed_out">час вичерпано</string>
-  <string name="file_saved_in">Файл збережено у %s</string>
-  <string name="file_saved_successfully">Файл успішно збережено</string>
+  <string name="file_transfer_status_created">Розпочинаю</string>
   <string name="file_download">Завантажити</string>
   <string name="title_media_viewer">Медіа переглядач</string>
   <string name="menu_file_open">Відкрити файл</string>
@@ -335,10 +316,7 @@
   <string name="jami_id_copy">Копіювати JamiId</string>
   <string name="jami_id_share">Поділитися JamiId</string>
   <string name="jami_id_validate">Зареєструйте ім\'я користувача</string>
-  <string name="jami_id_available">Імʼя користувача доступне</string>
-  <string name="jami_id_not_available">Імʼя користувача недоступне\n• Максимальна кількість символів – 32\n• Дозволені спеціальні символи: дефіс (-), підкреслення (_)</string>
   <string name="jami_id_info">• 32 символи максимум\n• Дозволені спеціальні символи: дефіс (-), підкреслення (_)</string>
-  <string name="jami_id_looking_for_availability">Перевіряю доступність імені користувача…</string>
   <string name="jami_id_choose_username">Виберіть ім\'я користувача</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Вітаємо в Jami</string>
@@ -348,7 +326,6 @@
   <string name="Private">Приватне</string>
   <string name="mute_conversation">Немовний розмову</string>
   <!--Donation-->
-  <string name="donation_card_description">Якщо вам подобається Jami і ви вірите в нашу місію, чи не зробили б ви пожертву?</string>
   <string name="donation_card_not_now">Не зараз</string>
   <string name="donation_donate">Донат</string>
   <string name="donation_setting_title">Нагадування про пожертвування</string>

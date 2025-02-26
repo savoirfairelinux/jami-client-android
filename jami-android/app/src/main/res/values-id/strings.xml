@@ -144,7 +144,6 @@
   <string name="delete_contact">Hapus kontak</string>
   <string name="conversation_action_remove_this_title">Hapus kontak ini?</string>
   <string name="conversation_action_remove_this_message">Ini akan menghapus kontak dan membersihkan riwayat percakapan.</string>
-  <string name="copied_to_clipboard">%1$s telah disalin</string>
   <string name="conversation_action_select_peer_number">Pilih nomor</string>
   <string name="conversation_action_block_this">Blokir kontak</string>
   <string name="conversation_action_unblock_this">Buka blokir kontak</string>
@@ -169,9 +168,6 @@
   <string name="conversation_preference_emoji">Emoji percakapan</string>
   <string name="conversation_type_contact">Kontak jami</string>
   <string name="conversation_type_private">Privat</string>
-  <string name="conversation_contact_invited"> %1$sdiundang</string>
-  <string name="conversation_contact_added">%1$s bergabung</string>
-  <string name="conversation_contact_left">%1$s keluar</string>
   <string name="conversation_search_hint">Cari percakapan</string>
   <string name="today">Hari ini</string>
   <string name="yesterday">Kemarin</string>
@@ -179,7 +175,7 @@
   <string name="add_call_contact_number_to_contacts">Tambah %1$s?</string>
   <string name="prompt_new_password">Kata sandi baru</string>
   <string name="prompt_new_password_optional">Kata sandi baru (opsional)</string>
-  <string name="prompt_new_password_repeat">Ulangi kata sandi baru</string>
+  <string name="prompt_new_password_repeat">Konfirmasi kata sandi baru</string>
   <string name="account_create_title">Buat akun Jami</string>
   <string name="prompt_new_username">Masukkan username baru</string>
   <string name="prompt_hint_username">Nama pengguna</string>
@@ -195,7 +191,6 @@
   <string name="hist_invitation_received">Undangan diterima</string>
   <!--Account summary-->
   <string name="profile">Profil</string>
-  <string name="profile_message_warning">Profil Anda hanya dibagikan kepada kontak Anda</string>
   <string name="open_the_gallery">Buka galeri</string>
   <string name="take_a_photo">Ambil foto</string>
   <string name="profile_name_hint">Masukkan nama anda</string>
@@ -205,6 +200,7 @@
   <string name="identifier">Pengidentifikasi</string>
   <string name="account">Akun</string>
   <string name="link_new_device">Hubungkan perangkat baru</string>
+  <string name="devices_header">Perangkat</string>
   <string name="devices">Perangkat yang terhubung</string>
   <string name="total_devices">Jumlah perangkat:</string>
   <!--Share fragment-->
@@ -226,28 +222,10 @@
   <string name="conversation_placeholder">Belum ada obrolan</string>
   <string name="contact_request_sent">Permintaan kontak terkirim</string>
   <string name="start_conversation">Mulai obrolan</string>
-  <string name="search_results">Hasil Pencarian</string>
   <string name="tv_contact_row_header">Kontak</string>
   <string name="gallery_error_title">Aplikasi galeri tidak ditemukan</string>
   <string name="gallery_error_message">Tidak ada aplikasi yang ditemukan untuk membuka galeri</string>
   <!--File Transfer-->
-  <string name="invalid_file">Berkas tidak valid</string>
-  <string name="not_able_to_write_file">Tidak dapat menulis berkas</string>
-  <string name="file_transfer_status_created">menginisiasi transfer</string>
-  <string name="file_transfer_status_unsupported">Tidak didukung</string>
-  <string name="file_transfer_status_wait_peer_acceptance">menunggu diterima kawan</string>
-  <string name="file_transfer_status_wait_host_acceptance">menunggu diterima oleh host</string>
-  <string name="file_transfer_status_ongoing">Sedang berlangsung</string>
-  <string name="file_transfer_status_finished">Selesai</string>
-  <string name="file_transfer_status_closed_by_host">Ditutup oleh host</string>
-  <string name="file_transfer_status_closed_by_peer">Tutup oleh sejawat</string>
-  <string name="file_transfer_status_invalid_pathname">Jalur tidak valid</string>
-  <string name="file_transfer_status_unjoinable_peer">teman yang tidak bisa bergabung</string>
-  <string name="file_transfer_status_cancelled">Dibatalkan</string>
-  <string name="file_transfer_status_error">Gagal karena galat</string>
-  <string name="file_transfer_status_timed_out">Waktu habis</string>
-  <string name="file_saved_in">Berkas disimpan di %s</string>
-  <string name="file_saved_successfully">Berkas berhasil disimpan</string>
   <string name="file_download">Unduh</string>
   <string name="title_media_viewer">Penglihat media</string>
   <string name="menu_file_open">Buka berkas</string>
@@ -324,7 +302,6 @@
   <string name="bottomsheet_remove">Hapus anggota</string>
   <!--JamiId-->
   <string name="jami_id_validate">Daftarkan nama pengguna</string>
-  <string name="jami_id_looking_for_availability">Memeriksa ketersediaan nama pengguna...</string>
   <string name="jami_id_choose_username">Tentukan nama pengguna</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Selamat datang di Jami</string>

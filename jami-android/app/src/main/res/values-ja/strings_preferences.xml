@@ -45,8 +45,8 @@
   <string name="pref_typing_summary">相手や自分がメッセージを入力している最中であることを送受信する。</string>
   <string name="pref_block_record_title">画面撮影・録画の禁止</string>
   <string name="pref_block_record_summary">画面を撮影・録画することを禁止する。</string>
-  <string name="pref_link_preview_title">リンクプレビューの表示</string>
-  <string name="pref_link_preview_summary">プレビューの取得にはサードパーティーサーバーを経由します</string>
+  <string name="pref_link_preview_title">Web リンクのプレビュー</string>
+  <string name="pref_link_preview_summary">プレビューは,第三者のサーバーからコンテンツをダウンロードする必要があります.</string>
   <!--Notifications Visibility-->
   <string name="connectivity_custom_title">カスタム</string>
   <!--Extension-->

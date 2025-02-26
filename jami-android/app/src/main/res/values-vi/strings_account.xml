@@ -24,7 +24,6 @@
   <string name="account_type_ip2ip">Tài khoản IP</string>
   <string name="help_ring">Một tài khoản Jami cho phép bạn tiếp cận mọi người an toàn bằng cách cùng cấp thông qua một mạng lưới được phân phối đầy đủ.</string>
   <string name="help_sip_title">Thêm tài khoản SIP</string>
-  <string name="help_sip">Thiết lập tài khoản SIP hiện có.</string>
   <!--Strings related to account deletion-->
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Không có tài khoản đăng ký</string>
@@ -42,9 +41,9 @@
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Tổng thống</string>
   <string name="account_basic_category">Cài đặt cơ bản</string>
-  <string name="account_alias_label">Tên tài khoản</string>
   <string name="account_hostname_label">Tên chủ nhà</string>
   <string name="account_bootstrap_label">Bootstrap</string>
+  <string name="account_name_server_label">Name server</string>
   <string name="account_username_label">Username</string>
   <string name="account_password_label">Mật khẩu</string>
   <string name="account_optionnal_category">Thiết lập tùy chọn</string>
@@ -76,8 +75,7 @@
   <string name="account_registration_exp_label">Việc đăng ký hết hạn</string>
   <string name="account_local_interface_label">Local Interface</string>
   <string name="account_local_port_label">Cảng địa phương</string>
-  <string name="account_stun_enable_label">Sử dụng Stun</string>
-  <string name="account_stun_server_label">- Thức thối máy chủ</string>
+  <string name="account_stun_enable_label">Sử dụng STUN</string>
   <string name="account_accept_files">Tự động chấp nhận các tệp nhập</string>
   <string name="account_conversation_settings_title">Cài đặt cuộc trò chuyện</string>
   <string name="account_accept_files_max_size">Kích thước tập tin tối đa để chấp nhận tự động</string>
@@ -93,6 +91,7 @@
   <string name="account_published_address_label">Địa chỉ xuất bản</string>
   <string name="disabled">Khối khuyết tật</string>
   <string name="enabled">Được cho phép</string>
+  <string name="default_value">Mặc định</string>
   <string name="account_proxy_label">DHT thay thế</string>
   <string name="account_proxy_enable_label">Sử dụng DHT proxy</string>
   <string name="account_proxy_server_label">Địa chỉ đại diện DHT</string>
@@ -111,25 +110,12 @@
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Sử dụng TLS Transport</string>
-  <string name="account_tls_port_label">TLS Port Listener</string>
-  <string name="account_tls_certificate_list_label">Cơ quan chứng nhận</string>
-  <string name="account_tls_certificate_file_label">File chứng chỉ</string>
-  <string name="account_tls_private_key_file_label">File khóa riêng</string>
   <string name="account_tls_password_label">mật khẩu khóa riêng</string>
-  <string name="account_tls_method_label">Phương pháp TLS</string>
-  <string name="account_tls_ciphers_label">TLS Cifers</string>
-  <string name="account_tls_server_name_label">Tên máy chủ</string>
-  <string name="account_tls_verify_server_label">Tiêu chuẩn Server</string>
-  <string name="account_tls_verify_client_label">Kiểm tra Client</string>
-  <string name="account_require_client_certificate_label">TLS yêu cầu chứng chỉ khách hàng</string>
-  <string name="account_tls_negotiation_timeout_sec">Thời gian đàm phán (sec)</string>
   <string name="account_rtp_max_port">Tối đa</string>
   <string name="account_rtp_min_port">Tối thiểu</string>
-  <string name="account_rtp_port_range">Audio RTP Port Range</string>
   <!--restore/backup-->
   <string name="account_new_device_password">Nhập mật khẩu chính để mở khóa tài khoản</string>
   <string name="error_password_char_count">6 ký tự tối thiểu</string>
-  <string name="error_passwords_not_equals">Mật khẩu không phù hợp</string>
   <string name="export_account_wait_title">Xin anh chờ...</string>
   <string name="export_account_wait_message">Thông tin tài khoản xuất khẩu</string>
   <string name="account_export_file">Tài khoản sao lưu</string>
@@ -163,12 +149,10 @@
   <string name="account_link_device">Kết nối từ thiết bị khác</string>
   <string name="account_link_button">Kết nối từ mạng</string>
   <string name="account_link_archive_button">Kết nối từ backup</string>
-  <string name="account_link_prompt_pin">Nhập PIN</string>
-  <string name="account_new_button">Tạo tài khoản Jami</string>
+  <string name="account_new_button">Tham gia Jami</string>
   <string name="account_link_export_button">Kết nối một thiết bị mới</string>
   <string name="account_link_show_button">hiển thị %d thiết bị liên kết khác</string>
   <string name="account_link_hide_button">Cụm thiết bị kết nối</string>
-  <string name="account_start_export_button">Tạo PIN</string>
   <string name="account_end_export_button">gần</string>
   <string name="account_export_title">Tài khoản liên kết với các thiết bị khác</string>
   <string name="account_connect_server_button">Kết nối với máy chủ quản lý</string>
@@ -179,17 +163,13 @@
   <string name="account_connect_prompt_username">Username</string>
   <!--Name registration-->
   <string name="error_username_empty">Nhập tên người dùng</string>
-  <string name="no_registered_name_for_account">Không có tên đăng ký</string>
-  <string name="username_available">Tên người dùng có sẵn!</string>
   <string name="register_name">Tên đăng ký</string>
-  <string name="trying_to_register_name">Cố gắng đăng ký tên</string>
   <string name="registered_username">Tên người dùng đăng ký</string>
   <string name="register_username">Đăng ký tên người dùng công khai</string>
   <string name="register_recommended">Ưu tiên</string>
   <string name="username_already_taken">Tên người dùng đã được lấy</string>
   <string name="invalid_username">Tên người dùng không hợp lệ</string>
   <string name="unknown_error">Lỗi không rõ, xin vui lòng kiểm tra kết nối mạng của bạn!</string>
-  <string name="looking_for_username_availability">Tìm kiếm tên người dùng sẵn có...</string>
   <string name="account_status_connecting">Kết nối</string>
   <string name="account_status_connection_error">Hầm kết nối</string>
   <string name="account_status_online">Trên mạng</string>
@@ -209,13 +189,13 @@
   <string name="revoke_device_wait_title">Xin anh chờ...</string>
   <string name="revoke_device_wait_message">Thiết bị hủy bỏ</string>
   <string name="rename_device_title">Thay đổi tên thiết bị này</string>
-  <string name="rename_device_message">Chọn tên mới để xác định thiết bị này trong tài khoản Jami của bạn</string>
   <string name="rename_device_button">Thiết bị đổi tên</string>
   <string name="account_rename_device_hint">Chọn tên thiết bị mới</string>
   <string name="account_device_this_indicator">Thiết bị này</string>
-  <string name="account_disabled_indicator">người khuyết tật</string>
+  <string name="account_disabled_indicator">Khối khuyết tật</string>
   <!--Link a new device-->
   <string name="account_link_device_title">Kết nối một thiết bị mới</string>
+  <string name="connect_device_scanqr">Quét mã QR</string>
   <string name="account_link_device_button">Kết nối</string>
   <!--Biometry-->
 </resources>

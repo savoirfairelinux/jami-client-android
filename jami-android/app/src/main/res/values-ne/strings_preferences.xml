@@ -45,8 +45,7 @@
   <string name="pref_typing_summary">सन्देश टाइप भइरहेको देखाउने टाइपिंग सूचकहरू पठाउनुहोस् र प्राप्त गर्नुहोस्।</string>
   <string name="pref_block_record_title">स्क्रीनशट र रेकर्डिङ रोक्नुहोस्</string>
   <string name="pref_block_record_summary">स्क्रिनशट लिने वा भिडियो रेकर्ड गर्ने कार्य रोक्नुहोस्।</string>
-  <string name="pref_link_preview_title">वार्तालापमा लिंक पूर्वावलोकन देखाउनुहोस्</string>
-  <string name="pref_link_preview_summary">पूर्वावलोकनहरू तेस्रो पक्ष सर्भरहरूबाट सामग्री डाउनलोड गर्न आवश्यक छ।</string>
+  <string name="pref_link_preview_summary">पूर्वावलोकनले तेस्रो पक्षको सर्भरबाट सामग्री डाउनलोड गर्न आवश्यक छ।</string>
   <!--Notifications Visibility-->
   <string name="connectivity_custom_title">अनुकूलन</string>
   <!--Extension-->

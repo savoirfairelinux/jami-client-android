@@ -45,7 +45,7 @@
   <string name="pref_typing_summary">বার্তাটি টাইপ করা হচ্ছে তা দেখানোর জন্য টাইপিং নির্দেশক প্রেরণ এবং গ্রহণ করুন।</string>
   <string name="pref_block_record_title">স্ক্রিনশট এবং রেকর্ডিং ব্লক করুন</string>
   <string name="pref_block_record_summary">স্ক্রিনশট বা ভিডিও রেকর্ডিং বন্ধ করুন।</string>
-  <string name="pref_link_preview_title">কথোপকথনে লিঙ্ক প্রিভিউ দেখান</string>
+  <string name="pref_link_preview_title">ওয়েব সংযোগের প্রাকদর্শন</string>
   <string name="pref_link_preview_summary">প্রিভিউতে তৃতীয় পক্ষের সার্ভার থেকে সামগ্রী ডাউনলোড করা প্রয়োজন।</string>
   <!--Notifications Visibility-->
   <string name="connectivity_custom_title">কাস্টম</string>

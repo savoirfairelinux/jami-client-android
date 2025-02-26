@@ -98,7 +98,8 @@
   <string name="today">היום</string>
   <string name="yesterday">אתמול</string>
   <!--Contacts-->
-  <string name="account_create_title">יצירת חשבון Jami</string>
+  <string name="prompt_new_password_repeat">אישר סיסמה חדשה</string>
+  <string name="account_create_title">ליצור חשבון Jami</string>
   <string name="prompt_hint_username">שם משתמש</string>
   <string name="wizard_next">קדימה</string>
   <string name="wizard_back">חזרה</string>
@@ -107,13 +108,13 @@
   <string name="hist_invitation_received">הזמנה התקבלה</string>
   <!--Account summary-->
   <string name="profile">פרופיל</string>
-  <string name="profile_message_warning">הפרופיל שלך משתף רק עם אנשי הקשר שלך</string>
   <string name="take_a_photo">צלם.</string>
   <string name="profile_name_hint">הכנס את שמך</string>
   <string name="identity">זהות</string>
   <string name="identifier">זיהוי</string>
   <string name="account">חשבון</string>
   <string name="link_new_device">קישור מכשיר חדש</string>
+  <string name="devices_header">התקנים</string>
   <string name="devices">מכשירים מחוברים</string>
   <!--Share fragment-->
   <string name="share_label">שיתוף</string>
@@ -125,11 +126,8 @@
   <!--Blacklist-->
   <string name="no_blocked_contact">אין קשרים חסומים</string>
   <!--Smartlist-->
-  <string name="search_results">תוצאות החיפוש</string>
   <string name="tv_contact_row_header">אנשי קשר</string>
   <!--File Transfer-->
-  <string name="invalid_file">קובץ לא חוקי</string>
-  <string name="file_transfer_status_cancelled">מבוטל</string>
   <string name="menu_file_open">פתיחת קובץ</string>
   <string name="menu_file_save">שמירת קובץ</string>
   <string name="menu_file_share">שיתוף קובץ</string>
@@ -172,7 +170,6 @@
   <string name="bottomsheet_remove">הסיר חבר</string>
   <!--JamiId-->
   <string name="jami_id_validate">רשום שם משתמש</string>
-  <string name="jami_id_looking_for_availability">מחפש זמינות שם המשתמש...</string>
   <string name="jami_id_choose_username">בחר שם משתמש</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">ברוך בואך אל Jami</string>

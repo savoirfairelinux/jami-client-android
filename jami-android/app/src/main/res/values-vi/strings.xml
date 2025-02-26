@@ -116,6 +116,7 @@
   <string name="today">Ngày nay</string>
   <string name="yesterday">Hôm qua</string>
   <!--Contacts-->
+  <string name="prompt_new_password_repeat">Xác nhận mật khẩu mới</string>
   <string name="account_create_title">Tạo tài khoản Jami</string>
   <string name="prompt_hint_username">Username</string>
   <string name="wizard_next">Tiếp theo</string>
@@ -125,13 +126,13 @@
   <string name="hist_invitation_received">Thỉnh cầu được nhận</string>
   <!--Account summary-->
   <string name="profile">Tương tự</string>
-  <string name="profile_message_warning">Profile của bạn chỉ được chia sẻ với các liên lạc của bạn</string>
   <string name="take_a_photo">Tạo ảnh</string>
   <string name="profile_name_hint">Nhập tên của bạn</string>
   <string name="identity">Định dạng</string>
   <string name="identifier">Định dạng</string>
   <string name="account">Tài khoản</string>
   <string name="link_new_device">Kết nối một thiết bị mới</string>
+  <string name="devices_header">Thiết bị</string>
   <string name="devices">Các thiết bị liên kết</string>
   <!--Share fragment-->
   <string name="share_label">Chia sẻ</string>
@@ -146,7 +147,6 @@
   <string name="search_results">Kết quả tìm kiếm</string>
   <string name="tv_contact_row_header">Liên hệ</string>
   <!--File Transfer-->
-  <string name="file_transfer_status_cancelled">đã hủy bỏ</string>
   <string name="menu_file_open">Mở file</string>
   <string name="menu_file_save">Tự lưu tập tin</string>
   <string name="menu_file_share">Chia sẻ file</string>
@@ -191,7 +191,6 @@
   <string name="bottomsheet_remove">Xóa thành viên</string>
   <!--JamiId-->
   <string name="jami_id_validate">Đăng ký tên người dùng</string>
-  <string name="jami_id_looking_for_availability">Tìm kiếm tên người dùng sẵn có...</string>
   <string name="jami_id_choose_username">Chọn tên người dùng</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Chào mừng đến với Jami.</string>

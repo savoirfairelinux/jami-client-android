@@ -45,8 +45,7 @@
   <string name="pref_typing_summary">Tuma na kupokea viashiria vya kuandika vinavyoonyesha kwamba ujumbe unapiga.</string>
   <string name="pref_block_record_title">Kuzuia screenshot na kurekodi</string>
   <string name="pref_block_record_summary">Acha kupiga picha za skrini au kurekodi video.</string>
-  <string name="pref_link_preview_title">Onyesha viungo vya kutafakari katika mazungumzo</string>
-  <string name="pref_link_preview_summary">Kuangalia awali inahitaji kupakua maudhui kutoka kwa seva za mtu wa tatu.</string>
+  <string name="pref_link_preview_summary">Kuangalia mbele inahitaji kupakua maudhui kutoka kwa seva za mtu wa tatu.</string>
   <!--Notifications Visibility-->
   <string name="connectivity_custom_title">Desturi</string>
   <!--Extension-->

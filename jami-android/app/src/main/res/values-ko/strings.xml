@@ -147,7 +147,6 @@
   <string name="delete_contact">연락처 삭제</string>
   <string name="conversation_action_remove_this_title">이 연락처를 삭제하세요?</string>
   <string name="conversation_action_remove_this_message">이것은 연락처를 삭제하고 대화 역사를 확실히 삭제합니다.</string>
-  <string name="copied_to_clipboard">%1$s는 클립보드에 복사</string>
   <string name="conversation_action_select_peer_number">번호를 선택</string>
   <string name="conversation_action_block_this">차단 접촉</string>
   <string name="conversation_action_unblock_this">연결 차단</string>
@@ -173,9 +172,6 @@
   <string name="conversation_preference_emoji">대화 에모지</string>
   <string name="conversation_type_contact">자미 연락처</string>
   <string name="conversation_type_private">개인</string>
-  <string name="conversation_contact_invited">%1$s가 초청되었습니다</string>
-  <string name="conversation_contact_added">%1$s가 합류</string>
-  <string name="conversation_contact_left">%1$s는 왼쪽</string>
   <string name="conversation_search_hint">검색 대화</string>
   <string name="audio_recorder_error">녹음 앱을 찾을 수 없음</string>
   <string name="video_recorder_error">녹화 앱을 찾을 수 없음</string>
@@ -186,7 +182,7 @@
   <string name="add_call_contact_number_to_contacts">%1$s를 추가하세요?</string>
   <string name="prompt_new_password">새로운 비밀번호</string>
   <string name="prompt_new_password_optional">새 비밀번호 (선택)</string>
-  <string name="prompt_new_password_repeat">새 암호를 반복</string>
+  <string name="prompt_new_password_repeat">새로운 비밀번호를 확인</string>
   <string name="account_create_title">Jami 계정을 생성</string>
   <string name="prompt_new_username">새로운 사용자 이름을 입력</string>
   <string name="prompt_hint_username">사용자명</string>
@@ -203,7 +199,6 @@
   <string name="hist_invitation_received">초대 받은 것</string>
   <!--Account summary-->
   <string name="profile">프로필</string>
-  <string name="profile_message_warning">귀하의 프로필은 귀하의 연락처와만 공유됩니다</string>
   <string name="open_the_gallery">갤러리를 열</string>
   <string name="take_a_photo">사진 찍기</string>
   <string name="profile_name_hint">네 이름을 입력해</string>
@@ -213,6 +208,7 @@
   <string name="identifier">식별자</string>
   <string name="account">계정</string>
   <string name="link_new_device">새로운 장치를 연결</string>
+  <string name="devices_header">장치</string>
   <string name="devices">연결된 장치</string>
   <string name="total_devices">총 장치: </string>
   <!--Share fragment-->
@@ -234,28 +230,10 @@
   <string name="conversation_placeholder">아직 대화가 안 됐어</string>
   <string name="contact_request_sent">연락 요청이 전송되었습니다</string>
   <string name="start_conversation">대화 시작</string>
-  <string name="search_results">검색 결과</string>
   <string name="tv_contact_row_header">연락처</string>
   <string name="gallery_error_title">갤러리 앱은 발견되지 않았습니다</string>
   <string name="gallery_error_message">갤러리를 열 수 있는 장치에서 응용 프로그램이 발견되지 않았습니다</string>
   <!--File Transfer-->
-  <string name="invalid_file">유효하지 않은 파일</string>
-  <string name="not_able_to_write_file">파일 작성 불가능</string>
-  <string name="file_transfer_status_created">이니셔얼 전송</string>
-  <string name="file_transfer_status_unsupported">지원되지 않은</string>
-  <string name="file_transfer_status_wait_peer_acceptance">동료들의 수용을 기다리고 있습니다.</string>
-  <string name="file_transfer_status_wait_host_acceptance">대기하는 호스트 수용</string>
-  <string name="file_transfer_status_ongoing">계속되고 있는</string>
-  <string name="file_transfer_status_finished">완성</string>
-  <string name="file_transfer_status_closed_by_host">호스트에 의해 닫힌</string>
-  <string name="file_transfer_status_closed_by_peer">가까운 동료</string>
-  <string name="file_transfer_status_invalid_pathname">유효하지 않은 경로 이름</string>
-  <string name="file_transfer_status_unjoinable_peer">짝을 이루지 못하는</string>
-  <string name="file_transfer_status_cancelled">취소됨</string>
-  <string name="file_transfer_status_error">오류로 실패</string>
-  <string name="file_transfer_status_timed_out">시간</string>
-  <string name="file_saved_in">%s에서 저장된 파일</string>
-  <string name="file_saved_successfully">성공적으로 저장된 파일</string>
   <string name="file_download">다운로드</string>
   <string name="title_media_viewer">미디어 시청자</string>
   <string name="menu_file_open">열 파일</string>
@@ -333,7 +311,6 @@
   <string name="bottomsheet_remove">멤버를 제거</string>
   <!--JamiId-->
   <string name="jami_id_validate">사용자 이름을 등록</string>
-  <string name="jami_id_looking_for_availability">사용자 이름 사용 가능성에 대해 찾고 있습니다.</string>
   <string name="jami_id_choose_username">사용자 이름을 선택</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">자미에 오신 것을 환영합니다</string>

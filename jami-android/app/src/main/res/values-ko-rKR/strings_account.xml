@@ -24,7 +24,6 @@
   <string name="account_type_ip2ip">IP 계정</string>
   <string name="help_ring">자미 계정으로 인해 완전히 분산된 네트워크를 통해 안전하게 peer-to-peer으로 사람들을 만날 수 있습니다.</string>
   <string name="help_sip_title">SIP 계정을 추가</string>
-  <string name="help_sip">기존 SIP 계정을 구성합니다.</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_message">이 행동은 되돌릴 수 없습니다.</string>
   <!--AccountManagementFragment-->
@@ -43,9 +42,9 @@
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">일반</string>
   <string name="account_basic_category">기본 설정</string>
-  <string name="account_alias_label">계정 이름</string>
   <string name="account_hostname_label">호스트명</string>
   <string name="account_bootstrap_label">부트 스트랩</string>
+  <string name="account_name_server_label">이름 서버</string>
   <string name="account_username_label">사용자명</string>
   <string name="account_password_label">암호</string>
   <string name="account_optionnal_category">선택적 설정</string>
@@ -77,8 +76,7 @@
   <string name="account_registration_exp_label">등록 기간이 만료</string>
   <string name="account_local_interface_label">로컬 인터페이스</string>
   <string name="account_local_port_label">지역 항구</string>
-  <string name="account_stun_enable_label">스턴을 사용</string>
-  <string name="account_stun_server_label">스턴 서버</string>
+  <string name="account_stun_enable_label">STUN 사용</string>
   <string name="account_accept_files">자동으로 입력된 파일을 받아</string>
   <string name="account_conversation_settings_title">대화 설정</string>
   <string name="account_accept_files_max_size">자동으로 받아 들일 수 있는 최대 파일 크기가</string>
@@ -94,6 +92,7 @@
   <string name="account_published_address_label">공개 주소</string>
   <string name="disabled">장애인</string>
   <string name="enabled">허용</string>
+  <string name="default_value">기본값</string>
   <string name="account_proxy_label">DHT 대리</string>
   <string name="account_proxy_enable_label">DHT 대리기를 사용</string>
   <string name="account_proxy_server_label">DHT 프록시 주소</string>
@@ -112,25 +111,12 @@
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">TLS 운송을 사용</string>
-  <string name="account_tls_port_label">TLS 청취자 포트</string>
-  <string name="account_tls_certificate_list_label">인증 기관</string>
-  <string name="account_tls_certificate_file_label">인증서 파일</string>
-  <string name="account_tls_private_key_file_label">개인 키 파일</string>
-  <string name="account_tls_password_label">개인 키 비밀번호</string>
-  <string name="account_tls_method_label">TLS 방법</string>
-  <string name="account_tls_ciphers_label">TLS 암호</string>
-  <string name="account_tls_server_name_label">서버 이름</string>
-  <string name="account_tls_verify_server_label">서버 확인</string>
-  <string name="account_tls_verify_client_label">클라이언트를 확인</string>
-  <string name="account_require_client_certificate_label">TLS 클라이언트 인증서가 필요합니다</string>
-  <string name="account_tls_negotiation_timeout_sec">협상 시간제 (sec)</string>
+  <string name="account_tls_password_label">개인키 암호</string>
   <string name="account_rtp_max_port">최대</string>
   <string name="account_rtp_min_port">최소</string>
-  <string name="account_rtp_port_range">오디오 RTP 포트 범위</string>
   <!--restore/backup-->
   <string name="account_new_device_password">계정 잠금 해제하려면 메인 비밀번호를 입력하세요</string>
   <string name="error_password_char_count">최소 6자</string>
-  <string name="error_passwords_not_equals">비밀번호가 일치하지 않습니다</string>
   <string name="export_account_wait_title">잠깐만요</string>
   <string name="export_account_wait_message">수출 계좌 정보</string>
   <string name="account_export_file">백업 계좌</string>
@@ -164,12 +150,10 @@
   <string name="account_link_device">다른 장치에서 연결</string>
   <string name="account_link_button">네트워크에서 연결</string>
   <string name="account_link_archive_button">백업에서 연결</string>
-  <string name="account_link_prompt_pin">PIN를 입력</string>
-  <string name="account_new_button">Jami 계정을 생성</string>
+  <string name="account_new_button">자미에 합류해</string>
   <string name="account_link_export_button">새로운 장치를 연결</string>
   <string name="account_link_show_button">%d 더 많은 연결된 장치를 표시</string>
   <string name="account_link_hide_button">연결된 장치를 숨기</string>
-  <string name="account_start_export_button">PIN을 생성</string>
   <string name="account_end_export_button">가까이</string>
   <string name="account_export_title">다른 장치에 연결된 계정</string>
   <string name="account_connect_server_button">관리 서버에 연결</string>
@@ -180,17 +164,13 @@
   <string name="account_connect_prompt_username">사용자명</string>
   <!--Name registration-->
   <string name="error_username_empty">사용자 이름을 입력</string>
-  <string name="no_registered_name_for_account">등록된 이름도 없습니다</string>
-  <string name="username_available">사용자 이름 사용 가능</string>
   <string name="register_name">등록 이름</string>
-  <string name="trying_to_register_name">이름을 등록하려고</string>
   <string name="registered_username">등록된 사용자 이름</string>
   <string name="register_username">공개 사용자 이름을 등록</string>
   <string name="register_recommended">추천</string>
   <string name="username_already_taken">이미 사용 이름</string>
   <string name="invalid_username">유효하지 않은 사용자 이름</string>
   <string name="unknown_error">알려지지 않은 오류. 네트워크 연결을 확인해 주세요!</string>
-  <string name="looking_for_username_availability">사용자 이름 사용 가능성에 대해 찾고 있습니다.</string>
   <string name="account_status_connecting">연결</string>
   <string name="account_status_connection_error">연결 오류</string>
   <string name="account_status_online">온라인</string>
@@ -210,7 +190,6 @@
   <string name="revoke_device_wait_title">잠깐만요</string>
   <string name="revoke_device_wait_message">취소 장치</string>
   <string name="rename_device_title">이 장치의 이름을 바꾸</string>
-  <string name="rename_device_message">Jami 계정에서 이 장치를 식별하기 위해 새로운 이름을 선택하십시오</string>
   <string name="rename_device_button">이름 변경 장치</string>
   <string name="account_rename_device_hint">새로운 장치 이름을 선택</string>
   <string name="account_device_this_indicator">이 장치</string>
@@ -218,6 +197,7 @@
   <!--Link a new device-->
   <string name="error_format_not_supported">이 형식은 지원되지 않습니다.</string>
   <string name="account_link_device_title">새로운 장치를 연결</string>
+  <string name="connect_device_scanqr">QR 코드를 스캔</string>
   <string name="account_link_device_button">연결</string>
   <!--Biometry-->
 </resources>

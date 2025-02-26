@@ -24,7 +24,6 @@
   <string name="account_type_ip2ip">IP hesabı</string>
   <string name="help_ring">Jami hesabı, tümüyle dağıtık ağdan insanlara uçtan uca güvenle ulaşmanızı sağlar.</string>
   <string name="help_sip_title">SIP hesabı ekle</string>
-  <string name="help_sip">Var olan SIP hesabını yapılandır</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_message">Bu eylem geri alınamaz.</string>
   <!--AccountManagementFragment-->
@@ -43,9 +42,9 @@
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Genel</string>
   <string name="account_basic_category">Temel Ayarlar</string>
-  <string name="account_alias_label">Hesap adı</string>
   <string name="account_hostname_label">Sunucu adı</string>
   <string name="account_bootstrap_label">Önyükleme</string>
+  <string name="account_name_server_label">Ad Sunucusu</string>
   <string name="account_username_label">Kullanıcı adı</string>
   <string name="account_password_label">Parola</string>
   <string name="account_optionnal_category">İsteğe Bağlı Ayarlar</string>
@@ -79,8 +78,7 @@
   <string name="account_registration_exp_label">Kaydolma Bitimi</string>
   <string name="account_local_interface_label">Yerel Arayüz</string>
   <string name="account_local_port_label">Yerel Bağlantı Noktası</string>
-  <string name="account_stun_enable_label">Stun Kullan</string>
-  <string name="account_stun_server_label">Stun Sunucusu</string>
+  <string name="account_stun_enable_label">STUN kullan</string>
   <string name="account_accept_files">Gelen dosyaları otomatik olarak kabul et</string>
   <string name="account_conversation_settings_title">Görüşme ayarları</string>
   <string name="account_accept_files_max_size">Otomatik kabul edilebilir azami dosya boyutu </string>
@@ -96,6 +94,7 @@
   <string name="account_published_address_label">Yayınlanan Adres</string>
   <string name="disabled">Engelliler</string>
   <string name="enabled">Etkin</string>
+  <string name="default_value">Varsayılan</string>
   <string name="account_proxy_label">DHT vekil</string>
   <string name="account_proxy_enable_label">DHT vekil sunucu kullan</string>
   <string name="account_proxy_server_label">DHT vekil adresi</string>
@@ -114,25 +113,12 @@
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">TLS Taşıyıcı kullan</string>
-  <string name="account_tls_port_label">TLS Dinleyici Bağlantı Noktası</string>
-  <string name="account_tls_certificate_list_label">Onay Kurumları</string>
-  <string name="account_tls_certificate_file_label">Sertifika Dosyası</string>
-  <string name="account_tls_private_key_file_label">Özel Anahtar Dosyası</string>
-  <string name="account_tls_password_label">Özel Anahtar Parolası</string>
-  <string name="account_tls_method_label">TLS Yöntemi</string>
-  <string name="account_tls_ciphers_label">TLS Şifreleyicileri</string>
-  <string name="account_tls_server_name_label">Sunucu Adı</string>
-  <string name="account_tls_verify_server_label">Sunucu Doğrula</string>
-  <string name="account_tls_verify_client_label">İstemciyi Doğrula</string>
-  <string name="account_require_client_certificate_label">TLS İstemci Sertifikası Gerektirir</string>
-  <string name="account_tls_negotiation_timeout_sec">Görüşme Zaman Aşımı (saniye)</string>
+  <string name="account_tls_password_label">Özel anahtar parolası</string>
   <string name="account_rtp_max_port">Azami</string>
   <string name="account_rtp_min_port">Asgari</string>
-  <string name="account_rtp_port_range">Ses RTP Bağlantı Noktası Aralığı</string>
   <!--restore/backup-->
   <string name="account_new_device_password">Hesabın kilidini açmak için ana parolayı gir</string>
   <string name="error_password_char_count">En az 6 karakter</string>
-  <string name="error_passwords_not_equals">Parolalar eşleşmedi</string>
   <string name="export_account_wait_title">Lütfen bekleyin...</string>
   <string name="export_account_wait_message">Hesap bilgilerini dışa aktar</string>
   <string name="account_export_file">Hesabı yedekle</string>
@@ -166,12 +152,10 @@
   <string name="account_link_device">Başka aygıttan bağlan</string>
   <string name="account_link_button">Ağdan bağlan</string>
   <string name="account_link_archive_button">Yedekten bağlan</string>
-  <string name="account_link_prompt_pin">PIN\'i gir</string>
-  <string name="account_new_button">Jami hesabı oluştur</string>
+  <string name="account_new_button">Jami\'ye katılın.</string>
   <string name="account_link_export_button">Yeni aygıt bağla</string>
   <string name="account_link_show_button">Diğer %d bağlı aygıtı göster</string>
   <string name="account_link_hide_button">Bağlı aygıtı gizle</string>
-  <string name="account_start_export_button">PIN oluştur</string>
   <string name="account_end_export_button">kapat</string>
   <string name="account_export_title">Hesabı diğer aygıtlara bağla</string>
   <string name="account_connect_server_button">Yönetim sunucusuna bağlan</string>
@@ -183,17 +167,13 @@
   <string name="account_enter_username">Kullanıcı adını girin</string>
   <!--Name registration-->
   <string name="error_username_empty">Kullanıcı adı gir</string>
-  <string name="no_registered_name_for_account">Kayıtlı ad yok</string>
-  <string name="username_available">Kullanıcı adı geçerli !</string>
   <string name="register_name">Ad Kaydet</string>
-  <string name="trying_to_register_name">Ad kaydedilmeye çalışılıyor</string>
   <string name="registered_username">Kayıtlı kullanıcı adı</string>
   <string name="register_username">Halka açık kullanıcı adı kaydet</string>
   <string name="register_recommended">Önerilen</string>
   <string name="username_already_taken">Kullanıcı adı önceden alınmış</string>
   <string name="invalid_username">Geçersiz kullanıcı adı</string>
   <string name="unknown_error">Bilinmeyen hata. Lütfen ağ bağlantınızı denetleyin!</string>
-  <string name="looking_for_username_availability">Kullanıcı adının uygunluğuna bakılıyor...</string>
   <string name="account_status_connecting">Bağlanılıyor</string>
   <string name="account_status_connection_error">Bağlantı hatası</string>
   <string name="account_status_online">Çevrim İçi</string>
@@ -213,27 +193,20 @@
   <string name="revoke_device_wait_title">Lütfen bekleyin...</string>
   <string name="revoke_device_wait_message">Aygıt iptal ediliyor</string>
   <string name="rename_device_title">Bu aygıtı yeniden adlandır</string>
-  <string name="rename_device_message">Jami hesabınızı bu aygıtta tanımlamak için yeni ad seçin</string>
   <string name="rename_device_button">Aygıtı yeniden adlandır</string>
   <string name="account_rename_device_hint">Yeni aygıt adı seç</string>
   <string name="account_device_this_indicator">Bu aygıt</string>
-  <string name="account_disabled_indicator">devre dışı</string>
+  <string name="account_disabled_indicator">Engelliler</string>
   <!--Link a new device-->
-  <string name="account_link_prompt_pin_manually">PIN\'i manuel olarak girin</string>
   <string name="qr_invalid">Bir Jami Kimlik Doğrulama QR kodu değil</string>
-  <string name="content_description_checkbox">QR Kodunuz geçerli</string>
   <string name="error_format_not_supported">Bu biçim desteklenmiyor.</string>
-  <string name="account_link_info">Yeni Jami uygulamasında QR kodunu tarayın veya PIN\'i manuel olarak girin.</string>
   <string name="account_link_device_title">Yeni aygıt bağla</string>
   <string name="account_link_password">Bu hesap parola ile şifrelenmiştir; PIN kodunu oluşturmak için parolayı girin.</string>
   <string name="account_link_generate_button">Oluştur</string>
   <string name="account_link_time_valid">%1$s sonra bu PIN geçerliliğini yitirecek.</string>
-  <string name="account_link_device_info">QR kodunu veya PIN\'i göstermek için diğer Jami uygulamasından \"Yeni bir aygıt bağla\"yı seç</string>
   <string name="account_generate_export_device">Diğer aygıtta</string>
-  <string name="content_description_qr_generated">QR kodunuz</string>
   <string name="help_pin_info">Hesap parola ile şifrelenmişse doldurun</string>
-  <string name="connect_device_scanqr">QR kodu tara</string>
-  <string name="connect_device_enterPIN">veya PIN\'i gir</string>
+  <string name="connect_device_scanqr">QR kodunu tarayın</string>
   <string name="account_link_device_button">Bağlan</string>
   <!--Biometry-->
 </resources>

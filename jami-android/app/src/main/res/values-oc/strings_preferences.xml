@@ -45,8 +45,8 @@
   <string name="pref_typing_summary">Enviar e recebre d\'indicadores de mecanografia que mòstran que se mecanogra un messatge.</string>
   <string name="pref_block_record_title">Blocatge de captura d\' ecran e enregistrament</string>
   <string name="pref_block_record_summary">Blocar de prene una captura d\'ecran o d\'enregistrar una video.</string>
-  <string name="pref_link_preview_title">Mostrar las previatges de ligams dins las conversas</string>
-  <string name="pref_link_preview_summary">Las previradas necessitan de descargar de contengut de servidors de tèrces.</string>
+  <string name="pref_link_preview_title">Visualitzacions prèvies d\'enllaços web</string>
+  <string name="pref_link_preview_summary">La preview demanda de descargar de contengut de servidors de tèrces.</string>
   <!--Notifications Visibility-->
   <string name="connectivity_custom_title">Personalitat</string>
   <!--Extension-->
