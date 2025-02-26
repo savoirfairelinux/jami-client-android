@@ -45,8 +45,8 @@
   <string name="pref_typing_summary">Bidali eta jaso mezu bat idazten ari dela adierazten duten adierazleak.</string>
   <string name="pref_block_record_title">Ezabatu pantaila-irudia eta grabazioa</string>
   <string name="pref_block_record_summary">Ez atera pantaila edo grabatu bideo bat.</string>
-  <string name="pref_link_preview_title">Elkarrizketetan esteka aurreikuspenak erakutsi</string>
-  <string name="pref_link_preview_summary">Aurrez ikusi behar da hirugarrenen zerbitzarietatik edukiak deskargatzea.</string>
+  <string name="pref_link_preview_title">Web-esteken aurrebistak</string>
+  <string name="pref_link_preview_summary">Aurreikuspenak behar du hirugarrenen zerbitzarietatik edukiak deskargatzea.</string>
   <!--Notifications Visibility-->
   <string name="connectivity_custom_title">Pertsonala</string>
   <!--Extension-->

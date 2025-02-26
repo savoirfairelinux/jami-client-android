@@ -45,8 +45,8 @@
   <string name="pref_typing_summary">Gửi và nhận các chỉ số đánh dấu cho thấy một tin nhắn đang được đánh dấu.</string>
   <string name="pref_block_record_title">Blok chụp màn hình và ghi</string>
   <string name="pref_block_record_summary">Blok chụp ảnh màn hình hoặc ghi video.</string>
-  <string name="pref_link_preview_title">Hình trước liên kết trong các cuộc trò chuyện</string>
-  <string name="pref_link_preview_summary">Xem trước yêu cầu tải nội dung từ các máy chủ bên thứ ba.</string>
+  <string name="pref_link_preview_title">Xem trước kết nối web</string>
+  <string name="pref_link_preview_summary">Preview yêu cầu tải nội dung từ các máy chủ bên thứ ba.</string>
   <!--Notifications Visibility-->
   <!--Extension-->
 </resources>

@@ -142,7 +142,6 @@
   <string name="delete_contact">Padam kenalan</string>
   <string name="conversation_action_remove_this_title">ഈ കോൺടാക്റ്റ് ഇല്ലാതാക്കണോ?</string>
   <string name="conversation_action_remove_this_message">ഇത് ബന്ധം ഇല്ലാതാക്കുകയും സംഭാഷണ ചരിത്രം മായ്ക്കുകയും ചെയ്യും.</string>
-  <string name="copied_to_clipboard">%1$s telah disalin</string>
   <string name="conversation_action_select_peer_number">Pilih nombor</string>
   <string name="conversation_action_block_this">തടയൽ കോൺടാക്റ്റ്</string>
   <string name="conversation_action_unblock_this">കോൺടാക്റ്റ് തടയുക</string>
@@ -168,9 +167,6 @@
   <string name="conversation_type_contact">ജാമി കോൺടാക്ട്</string>
   <string name="conversation_type_private">സ്വകാര്യ</string>
   <string name="conversation_type_group">Kumpulan</string>
-  <string name="conversation_contact_invited">%1$s ക്ഷണിച്ചു</string>
-  <string name="conversation_contact_added">%1$s ചേർന്നു</string>
-  <string name="conversation_contact_left">%1$s ഇടതുവശത്ത്</string>
   <string name="conversation_search_hint">തിരയൽ സംഭാഷണം</string>
   <string name="today">Hari ini</string>
   <string name="yesterday">Semalam</string>
@@ -178,7 +174,7 @@
   <string name="add_call_contact_number_to_contacts">%1$s ചേർക്കുക?</string>
   <string name="prompt_new_password">Kata laluan baharu</string>
   <string name="prompt_new_password_optional">പുതിയ പാസ്വേഡ് (ഓപ്ഷണൽ)</string>
-  <string name="prompt_new_password_repeat">Ulang kata laluan baharu</string>
+  <string name="prompt_new_password_repeat">പുതിയ പാസ്വേഡ് സ്ഥിരീകരിക്കുക</string>
   <string name="account_create_title">ജാമി അക്കൌണ്ട് സൃഷ്ടിക്കുക</string>
   <string name="prompt_new_username">Masukkan nama pengguna baharu</string>
   <string name="prompt_hint_username">Nama pengguna</string>
@@ -194,7 +190,6 @@
   <string name="hist_invitation_received">ക്ഷണം ലഭിച്ചത്</string>
   <!--Account summary-->
   <string name="profile">പ്രൊഫൈല്</string>
-  <string name="profile_message_warning">നിങ്ങളുടെ പ്രൊഫൈല് നിങ്ങളുടെ കോൺടാക്റ്റുകളുമായി മാത്രമേ പങ്കിടാന് കഴിയൂ</string>
   <string name="open_the_gallery">Buka galeri</string>
   <string name="take_a_photo">ഫോട്ടോ എടുക്കൂ</string>
   <string name="profile_name_hint">നിങ്ങളുടെ പേര് നൽകുക</string>
@@ -204,6 +199,7 @@
   <string name="identifier">ഐഡന്റിഫയർ</string>
   <string name="account">Akaun</string>
   <string name="link_new_device">പുതിയ ഉപകരണം ബന്ധിപ്പിക്കുക</string>
+  <string name="devices_header">Perangkat</string>
   <string name="devices">ബന്ധിപ്പിച്ച ഉപകരണങ്ങൾ</string>
   <string name="total_devices">മൊത്തം ഉപകരണങ്ങള്: </string>
   <!--Share fragment-->
@@ -225,28 +221,10 @@
   <string name="conversation_placeholder">നിങ്ങള് ക്ക് ഇതുവരെ സംഭാഷണം ഉണ്ടായില്ല</string>
   <string name="contact_request_sent">കോൺടാക്റ്റ് അഭ്യർത്ഥന അയച്ചു</string>
   <string name="start_conversation">സംഭാഷണം ആരംഭിക്കുക</string>
-  <string name="search_results">തിരയൽ ഫലങ്ങൾ</string>
   <string name="tv_contact_row_header">Kenalan</string>
   <string name="gallery_error_title">ഗാലറി ആപ്ലിക്കേഷൻ കണ്ടെത്തിയില്ല</string>
   <string name="gallery_error_message">ഗാലറി തുറക്കുന്നതിനുള്ള ഉപകരണത്തിൽ ഒരു ആപ്ലിക്കേഷനും കണ്ടെത്തിയില്ല</string>
   <!--File Transfer-->
-  <string name="invalid_file">അസാധുവായ ഫയൽ</string>
-  <string name="not_able_to_write_file">ഫയൽ എഴുതാൻ കഴിയുന്നില്ല</string>
-  <string name="file_transfer_status_created">കൈമാറ്റം ആരംഭിക്കുക</string>
-  <string name="file_transfer_status_unsupported">പിന്തുണയ്ക്കാത്തത്</string>
-  <string name="file_transfer_status_wait_peer_acceptance">സഹപ്രവർത്തകരുടെ അംഗീകാരത്തിനായി കാത്തിരിക്കുക</string>
-  <string name="file_transfer_status_wait_host_acceptance">കാത്തിരിക്കുന്ന ആതിഥേയരായ സ്വീകരണം</string>
-  <string name="file_transfer_status_ongoing">തുടര് ന്ന</string>
-  <string name="file_transfer_status_finished">പൂർത്തിയായി</string>
-  <string name="file_transfer_status_closed_by_host">ഹോസ്റ്റുചെയ്താൽ അടച്ചുപൂട്ടൽ</string>
-  <string name="file_transfer_status_closed_by_peer">അടുത്തുള്ളവർ</string>
-  <string name="file_transfer_status_invalid_pathname">അസാധുവായ പാത്ത് നാമം</string>
-  <string name="file_transfer_status_unjoinable_peer">കൂട്ടുകെട്ടില്ലാത്ത കൂട്ടുകാരി</string>
-  <string name="file_transfer_status_cancelled">dibatalkan</string>
-  <string name="file_transfer_status_error">പിശകിന് കാരണം പരാജയപ്പെട്ടു</string>
-  <string name="file_transfer_status_timed_out">കാലികമായി</string>
-  <string name="file_saved_in">%s ൽ സംരക്ഷിച്ച ഫയൽ</string>
-  <string name="file_saved_successfully">വിജയകരമായി സംരക്ഷിച്ച ഫയൽ</string>
   <string name="file_download">ഡൌൺലോഡ് ചെയ്യുക</string>
   <string name="title_media_viewer">മാധ്യമ കാഴ്ചക്കാരൻ</string>
   <string name="menu_file_open">തുറന്ന ഫയൽ</string>
@@ -323,7 +301,6 @@
   <string name="bottomsheet_remove">അംഗം നീക്കം ചെയ്യുക</string>
   <!--JamiId-->
   <string name="jami_id_validate">ഉപയോക്തൃനാമം രജിസ്റ്റർ ചെയ്യുക</string>
-  <string name="jami_id_looking_for_availability">ഉപയോക്തൃനാമം ലഭ്യമാക്കാൻ നോക്കുന്നത്...</string>
   <string name="jami_id_choose_username">ഒരു ഉപയോക്തൃനാമം തിരഞ്ഞെടുക്കുക</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">ജാമിയിൽ സ്വാഗതം</string>

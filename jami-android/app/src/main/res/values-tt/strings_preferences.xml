@@ -45,8 +45,7 @@
   <string name="pref_typing_summary">Хәбәрнең язылачагын күрсәтүче язу күрсәткечләрен җибәрү һәм алу.</string>
   <string name="pref_block_record_title">Скриншотны һәм язманы туктату</string>
   <string name="pref_block_record_summary">Скриншотны төшерү яки видеоязманы ясауны туктатыгыз.</string>
-  <string name="pref_link_preview_title">Сөйләшүләрдә сылтамалар күрсәтү</string>
-  <string name="pref_link_preview_summary">Премьералар өченче як серверларыннан йөкләү кирәк.</string>
+  <string name="pref_link_preview_summary">Пресматривать өченче як серверларыннан контентны йөкләүне таләп итә.</string>
   <!--Notifications Visibility-->
   <!--Extension-->
 </resources>

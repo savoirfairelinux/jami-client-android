@@ -45,8 +45,8 @@
   <string name="pref_typing_summary">Verstuur en ontvang meldingen die aangeven of een bericht wordt ingetypt</string>
   <string name="pref_block_record_title">Blokkeer schermafdruk en -opname</string>
   <string name="pref_block_record_summary">Blokkeer het maken van een schermafdruk of scherm video-opnames</string>
-  <string name="pref_link_preview_title">Vertoon linkvoorziening in gesprekken</string>
-  <string name="pref_link_preview_summary">Voorbeelden vereisen het downloaden van inhoud van servers van derden.</string>
+  <string name="pref_link_preview_title">Voorbeelden van links</string>
+  <string name="pref_link_preview_summary">Voorbeeldbeelden vereisen het downloaden van inhoud van servers van derden.</string>
   <!--Notifications Visibility-->
   <string name="connectivity_custom_title">Aangepast</string>
   <!--Extension-->

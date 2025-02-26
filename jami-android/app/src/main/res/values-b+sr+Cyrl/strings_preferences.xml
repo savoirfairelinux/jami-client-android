@@ -56,8 +56,8 @@
   <string name="pref_typing_summary">Шаљи и примај индикаторе куцања који показују да се порука куца.</string>
   <string name="pref_block_record_title">Блокирај снимак екрана и снимање</string>
   <string name="pref_block_record_summary">Блокирај снимање екрана или видео снимка.</string>
-  <string name="pref_link_preview_title">Прикажи прегледе веза у разговорима</string>
-  <string name="pref_link_preview_summary">Прегледи захтевају преузимање садржаја са сервера трећих страна.</string>
+  <string name="pref_link_preview_title">Прегледи веб-веза</string>
+  <string name="pref_link_preview_summary">Превизија захтева преузимање садржаја са сервера трећих страна.</string>
   <!--Notifications Visibility-->
   <string name="notification_public">Јавно\n(прикажи обавештења и њихов садржај на закључаном екрану)\n</string>
   <string name="notification_private">Приватно\n(прикажите обавештења, али сакријте њихов садржај на закључаном екрану)\n</string>

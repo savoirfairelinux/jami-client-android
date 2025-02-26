@@ -45,8 +45,7 @@
   <string name="pref_typing_summary">Мэдээлэл бичиж байгаа эсэхийг харуулсан тэмдэглэлүүд илгээж хүлээн ав.</string>
   <string name="pref_block_record_title">Скриншот, бичлэгд сэжиглэх</string>
   <string name="pref_block_record_summary">Скриншот авах, видео бичлэг хийхэд саад.</string>
-  <string name="pref_link_preview_title">Хэлэлцүүлэгт холболтны урьдчилсан үзлэг үзүүлнэ</string>
-  <string name="pref_link_preview_summary">Анхны үзлэгт гуравдагч этгээдийн серверээс контентыг татаж авах шаардлагатай.</string>
+  <string name="pref_link_preview_summary">Анхны үзлэг нь гуравдагч этгээдийн серверээс контентыг татаж авах шаардлагатай.</string>
   <!--Notifications Visibility-->
   <string name="connectivity_custom_title">Хувьцааны</string>
   <!--Extension-->

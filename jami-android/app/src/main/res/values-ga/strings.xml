@@ -84,7 +84,8 @@
   <string name="today">Sa lá atá inniu ann</string>
   <string name="yesterday">An-dè</string>
   <!--Contacts-->
-  <string name="account_create_title">Déan cuntas Jami</string>
+  <string name="prompt_new_password_repeat">Déan pasfhocal nua a dhearbhú</string>
+  <string name="account_create_title">Creidigh cuntas Jami</string>
   <string name="prompt_hint_username">Ainm úsáideora</string>
   <string name="wizard_next">Next</string>
   <string name="wizard_back">Ar ais</string>
@@ -93,13 +94,13 @@
   <string name="hist_invitation_received">Ag iarraidh a fháil</string>
   <!--Account summary-->
   <string name="profile">Proifíl</string>
-  <string name="profile_message_warning">Ní roinntear do phróifíl ach le do chaontaithe</string>
   <string name="take_a_photo">Déan grianghraf</string>
   <string name="profile_name_hint">Cuir isteach do ainm</string>
   <string name="identity">Úinéir</string>
   <string name="identifier">Cluiche</string>
   <string name="account">Contae</string>
   <string name="link_new_device">Déan nasc a dhéanamh ar ghléas nua</string>
+  <string name="devices_header">Iarratais</string>
   <string name="devices">Feistí ceangailte</string>
   <!--Share fragment-->
   <string name="share_label">Comhroinnt</string>
@@ -111,10 +112,8 @@
   <!--Blacklist-->
   <string name="no_blocked_contact">Ní thiocfar teagmhálacha</string>
   <!--Smartlist-->
-  <string name="search_results">Résultats de la recherche</string>
   <string name="tv_contact_row_header">Contacts</string>
   <!--File Transfer-->
-  <string name="file_transfer_status_cancelled">cealaithe</string>
   <string name="menu_file_open">Dhomhchlár oscailte</string>
   <string name="menu_file_save">Fail a shábháil</string>
   <string name="menu_file_share">Comparáid comhad</string>
@@ -157,7 +156,6 @@
   <string name="bottomsheet_remove">Cúlghairm a bhaint</string>
   <!--JamiId-->
   <string name="jami_id_validate">Ainm úsáideora a chlárú</string>
-  <string name="jami_id_looking_for_availability">Ag lorg ar fáil ainm úsáideora...</string>
   <string name="jami_id_choose_username">Roghnaigh ainm úsáideora</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Fáilte go Jami</string>

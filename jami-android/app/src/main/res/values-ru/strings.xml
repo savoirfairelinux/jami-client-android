@@ -2,7 +2,7 @@
 <resources>
   <!--About-->
   <string name="submit_issue_title">Сообщить о проблеме</string>
-  <string name="submit_issue_action_description">Сформулировать проблему</string>
+  <string name="submit_issue_action_description"><u>Отправить на рассмотрение</u></string>
   <string name="section_license">Лицензия</string>
   <string name="sponsor_section">Jami – свободное программное обеспечение, разрабатываемое и поддерживаемое</string>
   <string name="copyright_section">Авторское право</string>
@@ -187,7 +187,7 @@
   <string name="swarm_group_action_leave_title">Покинуть эту группу?</string>
   <string name="swarm_group_action_leave_message">Будет удалена беседа из вашего списка бесед.</string>
   <string name="conversation_action_copy_peer_number">Копировать идентификатор контакта</string>
-  <string name="copied_to_clipboard">%1$s скопировано в буфер обмена</string>
+  <string name="copied_to_clipboard">%1$sскопировано в буфер обмена.</string>
   <string name="conversation_action_select_peer_number">Выбрать номер</string>
   <string name="conversation_action_block_this">Заблокировать контакт</string>
   <string name="conversation_action_unblock_this">Разблокировать контакт</string>
@@ -216,11 +216,11 @@
   <string name="conversation_type_contact">Контакт Jami</string>
   <string name="conversation_type_private">Приватная</string>
   <string name="conversation_type_group">Группа</string>
-  <string name="conversation_contact_invited">%1$s приглашен(а)</string>
-  <string name="conversation_contact_added">%1$s присоединяется</string>
-  <string name="conversation_contact_left">%1$s выходит</string>
-  <string name="conversation_contact_blocked">%1$s заблокирован(а)</string>
-  <string name="conversation_contact_unblocked">%1$s разблокирован(а)</string>
+  <string name="conversation_contact_invited">%1$sбыл(а) приглашен(а) присоединиться к беседе.</string>
+  <string name="conversation_contact_added">%1$sприсоединяется к беседе.</string>
+  <string name="conversation_contact_left">%1$sпокидает беседу.</string>
+  <string name="conversation_contact_blocked">%1$sбыл(а) заблокирован(а) для участия в беседе.</string>
+  <string name="conversation_contact_unblocked">%1$sбыл(а) разблокирован(а) для участия в беседе.</string>
   <string name="conversation_search_hint">Найти беседу</string>
   <string name="audio_recorder_error">Приложение для записи звука не найдено.</string>
   <string name="video_recorder_error">Приложение для записи видео не найдено.</string>
@@ -241,8 +241,8 @@
   <string name="add_call_contact_number_to_contacts">Добавить %1$s?</string>
   <string name="prompt_new_password">Новый пароль</string>
   <string name="prompt_new_password_optional">Новый пароль (необязательно)</string>
-  <string name="prompt_new_password_repeat">Повторите новый пароль</string>
-  <string name="account_create_title">Создать аккаунт Jami</string>
+  <string name="prompt_new_password_repeat">Подтвердите новый пароль</string>
+  <string name="account_create_title">Создать учетную запись Jami</string>
   <string name="prompt_new_username">Введите новое имя пользователя</string>
   <string name="prompt_hint_username">Имя пользователя</string>
   <string name="help_password_choose">Выберите надёжный пароль, который вы сможете запомнить, чтобы защитить ваш аккаунт Jami.</string>
@@ -250,6 +250,7 @@
   <string name="help_server_enter">Введите URL сервера управления.</string>
   <string name="help_pin_enter">Введите PIN-код из другого настроенного аккаунта Jami. Чтобы получить PIN-код, используйте функцию \"Экспорт аккаунта Jami\".</string>
   <string name="pin_copied">ПИН-код скопирован в буфер обмена.</string>
+  <string name="copied_clipboard">Скопировано в буфер обмена.</string>
   <string name="wizard_next">Далее</string>
   <string name="wizard_back">Назад</string>
   <string name="wizard_skip">Пропустить</string>
@@ -262,7 +263,6 @@
   <!--Account summary-->
   <string name="profile">Профиль</string>
   <string name="profile_name">Имя профиля</string>
-  <string name="profile_message_warning">Ваш профиль доступен только вашим контактам</string>
   <string name="open_the_gallery">Открыть галерею</string>
   <string name="take_a_photo">Сфотографировать</string>
   <string name="remove_photo">Удалить фото</string>
@@ -271,8 +271,9 @@
   <string name="no_registered_name">Имя не зарегистрировано</string>
   <string name="identity">Идентификация</string>
   <string name="identifier">Идентификатор</string>
-  <string name="account">Аккаунт</string>
+  <string name="account">Учётка</string>
   <string name="link_new_device">Привязать новое устройство</string>
+  <string name="devices_header">Устройства</string>
   <string name="devices">Привязанные устройства</string>
   <string name="total_devices">Всего устройств:</string>
   <!--Share fragment-->
@@ -309,25 +310,10 @@
   <string name="gallery_error_message">На устройстве не найдено приложения для открытия Галереи</string>
   <string name="generic_error">Произошла неизвестная ошибка.</string>
   <!--File Transfer-->
-  <string name="invalid_file">Некорректный файл</string>
-  <string name="not_able_to_write_file">Невозможно записать файл</string>
-  <string name="file_transfer_status_created">начата передача файла</string>
-  <string name="file_transfer_status_unsupported">не поддерживается</string>
-  <string name="file_transfer_status_wait_peer_acceptance">ожидание принятия пиром</string>
-  <string name="file_transfer_status_wait_host_acceptance">ожидание принятия</string>
-  <string name="file_transfer_status_ongoing">передача</string>
-  <string name="file_transfer_status_finished">принят</string>
-  <string name="file_transfer_status_closed_by_host">закрыто хостом</string>
-  <string name="file_transfer_status_closed_by_peer">остановлено пиром</string>
-  <string name="file_transfer_status_invalid_pathname">Некорректный путь</string>
-  <string name="file_transfer_status_unjoinable_peer">пир недоступен</string>
-  <string name="file_transfer_status_cancelled">отменено</string>
-  <string name="file_transfer_status_error">не удалось из-за ошибки</string>
-  <string name="file_transfer_status_timed_out">время вышло</string>
-  <string name="file_saved_in">Файл сохранён в %s</string>
-  <string name="file_saved_successfully">Файл успешно сохранён</string>
+  <string name="file_transfer_status_created">Инициализация</string>
+  <string name="file_transfer_status_unjoinable_peer">Недоступный узел</string>
+  <string name="file_saved_successfully">Файл успешно сохранен.</string>
   <string name="file_download">Загрузить</string>
-  <string name="no_space_left_on_device">На устройстве нет свободного места для хранения данных.</string>
   <string name="title_media_viewer">Просмотрщик медиа</string>
   <string name="menu_file_open">Открыть файл</string>
   <string name="menu_file_download">Загрузить файл</string>
@@ -364,7 +350,6 @@
   <string name="conversation_input_speech_hint">Скажите что-нибудь...</string>
   <string name="audio_permission_denied">Разрешение на использование микрофона отключено. Включите его в настройках устройства, чтобы использовать эту функцию.</string>
   <string name="camera_permission_denied">Разрешение на использование камеры отключено. Включите его в настройках устройства, чтобы использовать эту функцию.</string>
-  <string name="speech_recogniton_unavailable">Распознавание речи недоступно.</string>
   <string name="audio_permission_rationale_title">Требуется разрешение на аудио</string>
   <string name="camera_permission_rationale_title">Требуется разрешение на использование камеры</string>
   <string name="audio_permission_rationale_message">Для использования функций преобразования речи в текст и записи звука Jami требуется разрешение на использование микрофона. Оно будет запрошено на следующем шаге.</string>
@@ -413,6 +398,7 @@
   <string name="tab_files">Файлы</string>
   <string name="tab_settings">Настройки</string>
   <string name="not_admin_toast">Только администраторы могут редактировать информацию этой группы</string>
+  <string name="dialog_title_contact">Изменить имя</string>
   <string name="dialogtitle_title">Дать название группе</string>
   <string name="dialogtitle_description">Дать описание группы</string>
   <string name="dialog_hint_title">Заголовок</string>
@@ -431,10 +417,9 @@
   <string name="jami_id_copy">Скопировать Jami ID</string>
   <string name="jami_id_share">Поделиться Jami ID</string>
   <string name="jami_id_validate">Зарегистрировать имя пользователя</string>
-  <string name="jami_id_available">Псевдоним доступен</string>
-  <string name="jami_id_not_available">Псевдоним недоступен\n• Максимум 32 символа\n• Разрешены специальные символы: тире (-), нижнее подчёркивание (_)</string>
+  <string name="jami_id_available">Имя пользователя доступно.</string>
+  <string name="jami_id_not_available">Имя пользователя недоступно.</string>
   <string name="jami_id_info">• Максимум 32 символа\n• Разрешены специальные символы: тире (-), нижнее подчёркивание (_)</string>
-  <string name="jami_id_looking_for_availability">Проверяем доступность имени пользователя…</string>
   <string name="jami_id_choose_username">Выберите имя пользователя</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Добро пожаловать в Jami</string>
@@ -449,7 +434,6 @@
   <string name="show_certificate">Показать сертификат</string>
   <string name="mute_conversation">Отключить звук в беседе</string>
   <!--Donation-->
-  <string name="donation_card_description">Если вам нравится использовать Jami и вы верите в нашу миссию, вы бы сделали пожертвование?</string>
   <string name="donation_card_not_now">Не сейчас</string>
   <string name="donation_donate">Пожертвование</string>
   <string name="donation_setting_title">Напоминание пожертвования</string>

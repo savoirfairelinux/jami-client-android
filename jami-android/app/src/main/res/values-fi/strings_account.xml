@@ -30,7 +30,7 @@ Voit muokata tiliäsi myöhemmin</string>
   <string name="account_type_ip2ip">IP-tunnus</string>
   <string name="help_ring">Jami-tilillä tavoitat ihmiset turvallisesti vertaisverkossa täysin hajautetun verkoston kautta.</string>
   <string name="help_sip_title">Lisää SIP-tili</string>
-  <string name="help_sip">Määritä olemassa oleva SIP-tili.</string>
+  <string name="help_sip">Määritä olemassa oleva SIP-tili</string>
   <string name="create_sip_account">Määritä SIP-tili</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_title">Poistetaanko tili?</string>
@@ -56,9 +56,10 @@ Voit muokata tiliäsi myöhemmin</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Yleiset</string>
   <string name="account_basic_category">Yleiset asetukset</string>
-  <string name="account_alias_label">Tunnuksen nimi</string>
+  <string name="account_alias_label">Näytä nimi</string>
   <string name="account_hostname_label">Yhteysosoite</string>
   <string name="account_bootstrap_label">Bootstrap</string>
+  <string name="account_name_server_label">Nimipalvelin</string>
   <string name="account_username_label">Käyttäjänimi</string>
   <string name="account_password_label">Salasana</string>
   <string name="account_optionnal_category">Valinnaiset asetukset</string>
@@ -92,8 +93,8 @@ Voit muokata tiliäsi myöhemmin</string>
   <string name="account_registration_exp_label">Rekistöröinti vanhentuu</string>
   <string name="account_local_interface_label">Paikallinen liitäntä</string>
   <string name="account_local_port_label">Paikallinen portti</string>
-  <string name="account_stun_enable_label">Käytä Stun</string>
-  <string name="account_stun_server_label">Stun palvelin</string>
+  <string name="account_stun_enable_label">Käytä STUNia</string>
+  <string name="account_stun_server_label">STUN palvelin</string>
   <string name="account_accept_files">Hyväksy saapuvat tiedostot automaattisesti</string>
   <string name="account_conversation_settings_title">Keskustelun asetukset</string>
   <string name="account_accept_files_max_size">Autom. hyväksyttävän tiedoston enimmäiskoko</string>
@@ -107,8 +108,10 @@ Voit muokata tiliäsi myöhemmin</string>
   <string name="account_published_same_as_local_label">Julkaisutapa sama kuin paikallinen</string>
   <string name="account_published_port_label">Julkinen portti</string>
   <string name="account_published_address_label">Julkinen osoite</string>
+  <string name="account_connectivity_label">Vertaisyhteys</string>
   <string name="disabled">Poistettu</string>
   <string name="enabled">Päällä</string>
+  <string name="default_value">Oletus</string>
   <string name="account_proxy_label">DHT välityspalvelin</string>
   <string name="account_proxy_enable_label">Käytä DHT välityspalvelinta</string>
   <string name="account_proxy_list_enable_label">Käytä DHT-välityspalvelin luetteloa</string>
@@ -129,25 +132,25 @@ Voit muokata tiliäsi myöhemmin</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Käytä TLS-siirtoa</string>
-  <string name="account_tls_port_label">Kuunneltava TLS-portti</string>
+  <string name="account_tls_port_label">TLS-kuunteluportti</string>
   <string name="account_tls_certificate_list_label">Varmenteiden myöntäjät</string>
   <string name="account_tls_certificate_file_label">Varmennetiedosto</string>
   <string name="account_tls_private_key_file_label">Salausavain</string>
-  <string name="account_tls_password_label">Salausavaimen salassana</string>
+  <string name="account_tls_password_label">Henkilökohtaisen salausavaimen salasana</string>
   <string name="account_tls_method_label">TLS-menetelmä</string>
   <string name="account_tls_ciphers_label">TLS-salaukset</string>
-  <string name="account_tls_server_name_label">Palvelinnimi</string>
+  <string name="account_tls_server_name_label">Palvelimen nimi</string>
   <string name="account_tls_verify_server_label">Vahvista palvelin</string>
-  <string name="account_tls_verify_client_label">Vahvista asiakasohjelma</string>
-  <string name="account_require_client_certificate_label">TLS vaatii asiakasvarmenteen</string>
-  <string name="account_tls_negotiation_timeout_sec">Neuvottelun aikakatkaisu (s)</string>
+  <string name="account_tls_verify_client_label">Vahvista asiakas</string>
+  <string name="account_require_client_certificate_label">TLS vaatii asiakkaan varmenteen</string>
+  <string name="account_tls_negotiation_timeout_sec">Neuvottelun aikakatkaisu (sek)</string>
   <string name="account_rtp_max_port">Maksimi</string>
   <string name="account_rtp_min_port">Minimi</string>
-  <string name="account_rtp_port_range">RTP porttialue</string>
+  <string name="account_rtp_port_range">Audio RTP porttiväli</string>
   <!--restore/backup-->
   <string name="account_new_device_password">Kirjoita pääsalasana tilin lukituksen avaamiseksi</string>
   <string name="error_password_char_count">Vähintään 6 merkkiä</string>
-  <string name="error_passwords_not_equals">Salasanat eivät täsmää</string>
+  <string name="error_passwords_not_equals">Salasanat eivät täsmää.</string>
   <string name="export_account_wait_title">Odota hetki...</string>
   <string name="export_account_wait_message">Tilitietojen vieminen</string>
   <string name="account_export_file">Varakäyttäjätunnus</string>
@@ -197,15 +200,15 @@ Voit muokata tiliäsi myöhemmin</string>
   <string name="account_link_button">Yhdistä verkosta</string>
   <string name="account_link_archive_button">Yhdistä varmuuskopiosta</string>
   <string name="account_link_prompt_pin">Anna PIN-koodi</string>
-  <string name="account_new_button">Luo Jami-tili</string>
+  <string name="account_new_button">Liity Jamiin</string>
   <string name="account_link_export_button">Linkitä uusi laite</string>
   <string name="account_link_show_button">Näytä %d muuta linkitettyä laitetta</string>
   <string name="account_link_hide_button">Piilota linkitetty laite</string>
-  <string name="account_link_export_info">Jotta voit käyttää tiliä muilla laitteilla, sinun on ensin vietävä se Jami:lle. Tämä luo PIN-koodin, joka sinun on annettava uuteen laitteeseen tilin luomiseksi. PIN-koodi vanhenee 10 minuutissa.</string>
+  <string name="account_link_export_info">Käyttääksesi tiliä muilla laitteilla, sinun on ensin vietävä se Jami:lle. Tämä luo PIN-koodin, joka annetaan uuteen laitteeseen tilin luomiseksi. PIN-koodi vanhenee 10 minuutissa.</string>
   <string name="account_start_export_button">Luo PIN-koodi</string>
   <string name="account_end_export_button">sulje</string>
   <string name="account_end_export_infos">PIN-koodisi on:\n\n%%\n\nSuorita prosessin loppuun, avaamalla Jami uudessa laitteessa. Luo uusi tili, valitse \"Yhdistä tämä laite tiliin\". Huomaa: PIN-koodi vanhenee 10 minuutissa.</string>
-  <string name="account_link_export_info_light">Jotta voit käyttää tiliä muilla laitteilla, sinun on ensin vietävä se Jami:lle. Tämä luo PIN-koodin, joka sinun on annettava uuteen laitteeseen tilin luomiseksi. PIN-koodi vanhenee 10 minuutissa.</string>
+  <string name="account_link_export_info_light">Käyttääksesi tiliä muilla laitteilla, sinun on ensin vietävä se Jami:lle. Tämä luo PIN-koodin, joka annetaan uuteen laitteeseen tilin luomiseksi. PIN-koodi vanhenee 10 minuutissa.</string>
   <string name="account_export_title">Linkitä tunnus toisesta laitteesta</string>
   <string name="account_connect_server_button">Yhteyden muodostaminen hallintapalvelimeen</string>
   <string name="account_connect_button">Yhdistä</string>
@@ -219,16 +222,14 @@ Voit muokata tiliäsi myöhemmin</string>
   <!--Name registration-->
   <string name="error_username_empty">Anna käyttäjänimi</string>
   <string name="no_registered_name_for_account">Ei rekisteröityä nimeä</string>
-  <string name="username_available">Käyttäjänimi on saatavilla!</string>
+  <string name="username_available">Käyttäjänimi on saatavilla.</string>
   <string name="register_name">Rekisteröi nimi</string>
-  <string name="trying_to_register_name">Yritetään rekisteröidä nimeä</string>
   <string name="registered_username">Rekisteröity käyttäjänimi</string>
   <string name="register_username">Rekisteröi julkinen käyttäjänimi</string>
   <string name="register_recommended">Suositus</string>
   <string name="username_already_taken">Käyttäjänimi on jo varattu</string>
   <string name="invalid_username">Virheellinen käyttäjänimi</string>
   <string name="unknown_error">Tuntematon virhe. Tarkista verkkoyhteytesi!</string>
-  <string name="looking_for_username_availability">Tarkistetaan, onko käyttäjänimi vapaana...</string>
   <string name="account_status_connecting">Yhdistetään</string>
   <string name="account_status_connection_error">Yhteysvirhe</string>
   <string name="account_status_online">Verkossa</string>
@@ -247,35 +248,35 @@ Voit muokata tiliäsi myöhemmin</string>
   <string name="account_revoke_device_hint">Vahvista antamalla salasana</string>
   <string name="enter_password">Anna salasana</string>
   <string name="revoke_device_title">Peruuta laite</string>
-  <string name="revoke_device_message">Haluatko todella poistaa %1$s?</string>
+  <string name="revoke_device_message">Haluatko poistaa %1$s?</string>
   <string name="revoke_device_wait_title">Odota hetki...</string>
   <string name="revoke_device_wait_message">Laitetta peruutetaan</string>
   <string name="rename_device_title">Nimeä tämä laite</string>
-  <string name="rename_device_message">Valitse uusi nimi, josta tunnistaa tämän laitteen sinun Jami-tilillä</string>
+  <string name="rename_device_message">Anna laitenimi, jotta tunnistat sen Jami-tililläsi</string>
   <string name="rename_device_button">Nimeä laite</string>
   <string name="account_rename_device_hint">Valitse laitteelle uusi nimi</string>
   <string name="account_device_name_empty">Laitteen nimi ei voi olla tyhjä.</string>
   <string name="account_device_this_indicator">Tämä laite</string>
-  <string name="account_disabled_indicator">poistettu</string>
+  <string name="account_disabled_indicator">Poistettu</string>
   <!--Link a new device-->
-  <string name="account_link_prompt_pin_manually">Anna PIN manuaalisesti</string>
+  <string name="account_link_prompt_pin_manually">Anna PIN-koodi käsin</string>
   <string name="qr_invalid">Ei Jamin QR-koodi</string>
-  <string name="content_description_checkbox">Sinun QR-koodi on voimassa</string>
+  <string name="content_description_checkbox">QR-koodi on voimassa</string>
   <string name="error_format_not_supported">Tätä tiedostomuotoa ei tueta.</string>
-  <string name="account_link_info">Skannaa QR-koodi uudessa Jami-sovelluksessa tai anna PIN-koodi manuaalisesti.</string>
+  <string name="account_link_info">Skannaa QR-koodi uudessa Jami-sovelluksessa tai anna PIN-koodi käsin.</string>
   <string name="account_link_device_title">Linkitä uusi laite</string>
   <string name="account_link_password">Tili on salattu salasanalla, anna salasana ja luo PIN-koodi.</string>
   <string name="account_link_generate_button">Luo</string>
   <string name="account_link_time_valid">PIN-koodi on virheellinen: %1$s.</string>
-  <string name="account_link_device_info">Valitse \"Linkitä uusi laite\" toisesta Jami-sovelluksesta nähdäksesi QR-koodin tai PIN-koodin</string>
+  <string name="account_link_device_info">Valitse toisesta Jami-sovelluksesta \"Linkitä uusi laite\" saadaksesi QR-koodin tai PIN-koodin.</string>
   <string name="account_generate_export_device">Toisella laitteella</string>
   <string name="account_generate_export_info">Asenna ja käynnistä Jami. Valitse \"Tuo toisesta laitteesta\" ja skannaa QR-koodi.</string>
-  <string name="content_description_qr_generated">Sinun QR-koodi</string>
-  <string name="account_generate_export_invalid">PIN-koodi ei ole enää voimassa.\nAnna salasana ja luo uusi linkittääksesi laite uudelleen.</string>
-  <string name="account_generate_export_invalid_two">PIN-koodi ei ole enää voimassa.\nLuo toinen, jotta voit linkittää laitteen uudelleen.</string>
+  <string name="content_description_qr_generated">Tilin QR-koodi</string>
+  <string name="account_generate_export_invalid">PIN-koodi ei ole enää voimassa.\nAnna salasana ja linkitä laite uudelleen.</string>
+  <string name="account_generate_export_invalid_two">PIN-koodi ei ole enää voimassa.\nLuo uusi ja linkitä laite uudelleen.</string>
   <string name="help_pin_info">Täytä, jos tili on salattu salasanalla</string>
-  <string name="connect_device_scanqr">Skannaa QR</string>
-  <string name="connect_device_enterPIN">tai anna PIN</string>
+  <string name="connect_device_scanqr">Skannaa QR-koodi</string>
+  <string name="connect_device_enterPIN">tai anna PIN-koodi</string>
   <string name="account_link_device_button">Yhdistä</string>
   <!--Biometry-->
   <string name="account_biometry_auth_title">Avaa Jami-tilin lukitus</string>

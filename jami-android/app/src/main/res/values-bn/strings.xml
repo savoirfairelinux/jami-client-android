@@ -144,7 +144,6 @@
   <string name="delete_contact">যোগাযোগ মুছে ফেলুন</string>
   <string name="conversation_action_remove_this_title">এই যোগাযোগ মুছে ফেলুন?</string>
   <string name="conversation_action_remove_this_message">এটি যোগাযোগ মুছে ফেলবে এবং কথোপকথনের ইতিহাস অবশ্যই মুছে ফেলবে।</string>
-  <string name="copied_to_clipboard">%1$s ক্লিপবোর্ডে অনুলিপি করা হয়েছে</string>
   <string name="conversation_action_select_peer_number">একটি নম্বর নির্বাচন করুন</string>
   <string name="conversation_action_block_this">ব্লক যোগাযোগ</string>
   <string name="conversation_action_unblock_this">যোগাযোগ বন্ধ করুন</string>
@@ -169,9 +168,6 @@
   <string name="conversation_preference_emoji">কথোপকথন ইমোজি</string>
   <string name="conversation_type_contact">জামি যোগাযোগ</string>
   <string name="conversation_type_private">ব্যক্তিগত</string>
-  <string name="conversation_contact_invited">%1$s আমন্ত্রিত হয়েছে</string>
-  <string name="conversation_contact_added">%1$s যোগ করা হয়েছে</string>
-  <string name="conversation_contact_left">%1$s বাম</string>
   <string name="conversation_search_hint">অনুসন্ধান কথোপকথন</string>
   <string name="today">আজ</string>
   <string name="yesterday">গতকাল</string>
@@ -179,7 +175,7 @@
   <string name="add_call_contact_number_to_contacts">%1$s যোগ করা?</string>
   <string name="prompt_new_password">নতুন পাসওয়ার্ড</string>
   <string name="prompt_new_password_optional">নতুন পাসওয়ার্ড (ঐচ্ছিক)</string>
-  <string name="prompt_new_password_repeat">নতুন পাসওয়ার্ড পুনরাবৃত্তি করুন</string>
+  <string name="prompt_new_password_repeat">নতুন পাসওয়ার্ড নিশ্চিত করুন</string>
   <string name="account_create_title">জামি অ্যাকাউন্ট তৈরি করুন</string>
   <string name="prompt_new_username">নতুন ব্যবহারকারীর নাম লিখুন</string>
   <string name="prompt_hint_username">ব্যবহারকারীর নাম</string>
@@ -195,7 +191,6 @@
   <string name="hist_invitation_received">আমন্ত্রণ প্রাপ্তি</string>
   <!--Account summary-->
   <string name="profile">প্রোফাইল</string>
-  <string name="profile_message_warning">আপনার প্রোফাইল শুধুমাত্র আপনার পরিচিতির সাথে ভাগ করা হয়</string>
   <string name="open_the_gallery">গ্যালারী খুলুন</string>
   <string name="take_a_photo">ছবি তুলুন</string>
   <string name="profile_name_hint">আপনার নাম লিখুন</string>
@@ -205,6 +200,7 @@
   <string name="identifier">সনাক্তকরণ</string>
   <string name="account">অ্যাকাউন্ট</string>
   <string name="link_new_device">একটি নতুন ডিভাইস লিঙ্ক</string>
+  <string name="devices_header">ডিভাইস</string>
   <string name="devices">সংযুক্ত ডিভাইস</string>
   <string name="total_devices">মোট ডিভাইসঃ </string>
   <!--Share fragment-->
@@ -226,28 +222,10 @@
   <string name="conversation_placeholder">তোমার সাথে এখনো কোন কথোপকথন হয়নি</string>
   <string name="contact_request_sent">যোগাযোগের অনুরোধ পাঠানো হয়েছে</string>
   <string name="start_conversation">কথোপকথন শুরু করুন</string>
-  <string name="search_results">অনুসন্ধানের ফলাফল</string>
   <string name="tv_contact_row_header">পরিচিতি</string>
   <string name="gallery_error_title">কোন গ্যালারি অ্যাপ পাওয়া যায় নি</string>
   <string name="gallery_error_message">গ্যালারি খুলতে ডিভাইসে কোন অ্যাপ্লিকেশন পাওয়া যায়নি</string>
   <!--File Transfer-->
-  <string name="invalid_file">অবৈধ ফাইল</string>
-  <string name="not_able_to_write_file">ফাইল লিখতে পারছে না</string>
-  <string name="file_transfer_status_created">স্থানান্তর শুরু করা</string>
-  <string name="file_transfer_status_unsupported">সমর্থিত নয়</string>
-  <string name="file_transfer_status_wait_peer_acceptance">সমকামীদের দ্বারা গ্রহণযোগ্যতা পাওয়ার অপেক্ষায়</string>
-  <string name="file_transfer_status_wait_host_acceptance">অপেক্ষা করা হোস্ট গ্রহণ</string>
-  <string name="file_transfer_status_ongoing">চলমান</string>
-  <string name="file_transfer_status_finished">সমাপ্ত</string>
-  <string name="file_transfer_status_closed_by_host">হোস্ট দ্বারা বন্ধ</string>
-  <string name="file_transfer_status_closed_by_peer">সমকক্ষের নিকটবর্তী</string>
-  <string name="file_transfer_status_invalid_pathname">অবৈধ পথের নাম</string>
-  <string name="file_transfer_status_unjoinable_peer">অযৌক্তিক সমকক্ষ</string>
-  <string name="file_transfer_status_cancelled">বাতিল হয়েছে</string>
-  <string name="file_transfer_status_error">ত্রুটির কারণে ব্যর্থ</string>
-  <string name="file_transfer_status_timed_out">সময়সীমা</string>
-  <string name="file_saved_in">%s- এ সংরক্ষিত ফাইল</string>
-  <string name="file_saved_successfully">সফলভাবে সংরক্ষিত ফাইল</string>
   <string name="file_download">ডাউনলোড</string>
   <string name="title_media_viewer">মিডিয়া ভিউয়ার</string>
   <string name="menu_file_open">খোলা ফাইল</string>
@@ -325,7 +303,6 @@
   <string name="error_open_no_app_found">এই ফাইলটি সামলানোর জন্য কোন আপ্লিকেশন পাওয়া যাইনি: 1%1$s</string>
   <!--JamiId-->
   <string name="jami_id_validate">ব্যবহারকারীর নাম নিবন্ধন</string>
-  <string name="jami_id_looking_for_availability">ইউজার নামের জন্য অনুসন্ধান করছি...</string>
   <string name="jami_id_choose_username">একটি ব্যবহারকারীর নাম নির্বাচন করুন</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">জামিতে স্বাগতম</string>

@@ -143,7 +143,6 @@
   <string name="delete_contact">ಸಂಪರ್ಕವನ್ನು ಅಳಿಸಿ</string>
   <string name="conversation_action_remove_this_title">ಈ ಸಂಪರ್ಕವನ್ನು ಅಳಿಸಲು?</string>
   <string name="conversation_action_remove_this_message">ಇದು ಸಂಪರ್ಕವನ್ನು ಅಳಿಸುತ್ತದೆ ಮತ್ತು ಸಂಭಾಷಣೆ ಇತಿಹಾಸವನ್ನು ಖಂಡಿತವಾಗಿಯೂ ತೆರವುಗೊಳಿಸುತ್ತದೆ.</string>
-  <string name="copied_to_clipboard">%1$s ಅನ್ನು ಕ್ಲಿಪ್ಬೋರ್ಡ್ಗೆ ನಕಲಿಸಲಾಗಿದೆ</string>
   <string name="conversation_action_select_peer_number">ಒಂದು ಸಂಖ್ಯೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ</string>
   <string name="conversation_action_block_this">ಬ್ಲಾಕ್ ಸಂಪರ್ಕ</string>
   <string name="conversation_action_unblock_this">ಸಂಪರ್ಕವನ್ನು ನಿರ್ಬಂಧಿಸಲು</string>
@@ -168,9 +167,6 @@
   <string name="conversation_preference_emoji">ಸಂಭಾಷಣೆ ಎಮೋಜಿ</string>
   <string name="conversation_type_contact">ಜಾಮಿ ಸಂಪರ್ಕ</string>
   <string name="conversation_type_private">ಖಾಸಗಿ</string>
-  <string name="conversation_contact_invited">%1$s ಅನ್ನು ಆಹ್ವಾನಿಸಲಾಗಿದೆ</string>
-  <string name="conversation_contact_added">%1$s ಸೇರಿಕೊಂಡಿದೆ</string>
-  <string name="conversation_contact_left">%1$s ಎಡಕ್ಕೆ</string>
   <string name="conversation_search_hint">ಹುಡುಕಾಟ ಸಂಭಾಷಣೆ</string>
   <string name="today">ಇಂದು</string>
   <string name="yesterday">ನಿನ್ನೆ</string>
@@ -178,7 +174,7 @@
   <string name="add_call_contact_number_to_contacts">%1$s ಅನ್ನು ಸೇರಿಸುವುದೇ?</string>
   <string name="prompt_new_password">ಹೊಸ ಪಾಸ್ವರ್ಡ್</string>
   <string name="prompt_new_password_optional">ಹೊಸ ಪಾಸ್ವರ್ಡ್ (ಐಚ್ಛಿಕ)</string>
-  <string name="prompt_new_password_repeat">ಹೊಸ ಪಾಸ್ವರ್ಡ್ ಅನ್ನು ಪುನರಾವರ್ತಿಸಿ</string>
+  <string name="prompt_new_password_repeat">ಹೊಸ ಪಾಸ್ವರ್ಡ್ ಅನ್ನು ದೃಢೀಕರಿಸಿ</string>
   <string name="account_create_title">ಜಾಮಿ ಖಾತೆಯನ್ನು ರಚಿಸಿ</string>
   <string name="prompt_new_username">ಹೊಸ ಬಳಕೆದಾರ ಹೆಸರನ್ನು ನಮೂದಿಸಿ</string>
   <string name="prompt_hint_username">ಬಳಕೆದಾರ ಹೆಸರು</string>
@@ -194,7 +190,6 @@
   <string name="hist_invitation_received">ಸ್ವೀಕರಿಸಿದ ಆಹ್ವಾನ</string>
   <!--Account summary-->
   <string name="profile">ಪ್ರೊಫೈಲ್</string>
-  <string name="profile_message_warning">ನಿಮ್ಮ ಪ್ರೊಫೈಲ್ ನಿಮ್ಮ ಸಂಪರ್ಕಗಳೊಂದಿಗೆ ಮಾತ್ರ ಹಂಚಿಕೊಳ್ಳಲಾಗುತ್ತದೆ</string>
   <string name="open_the_gallery">ಗ್ಯಾಲರಿ ತೆರೆಯಿರಿ</string>
   <string name="take_a_photo">ಫೋಟೋ ತೆಗೆದುಕೊ</string>
   <string name="profile_name_hint">ನಿಮ್ಮ ಹೆಸರನ್ನು ನಮೂದಿಸಿ</string>
@@ -204,6 +199,7 @@
   <string name="identifier">ಗುರುತಿನ ಚೀಟಿ</string>
   <string name="account">ಖಾತೆ</string>
   <string name="link_new_device">ಹೊಸ ಸಾಧನವನ್ನು ಸಂಪರ್ಕಿಸಿ</string>
+  <string name="devices_header">ಉಪಕರಣಗಳು</string>
   <string name="devices">ಸಂಪರ್ಕಿತ ಸಾಧನಗಳು</string>
   <string name="total_devices">ಒಟ್ಟು ಉಪಕರಣಗಳು: </string>
   <!--Share fragment-->
@@ -225,28 +221,10 @@
   <string name="conversation_placeholder">ನೀವು ಇನ್ನೂ ಯಾವುದೇ ಸಂಭಾಷಣೆಗಳನ್ನು ಹೊಂದಿಲ್ಲ</string>
   <string name="contact_request_sent">ಸಂಪರ್ಕ ವಿನಂತಿಯನ್ನು ಕಳುಹಿಸಲಾಗಿದೆ</string>
   <string name="start_conversation">ಸಂಭಾಷಣೆಯನ್ನು ಪ್ರಾರಂಭಿಸಿ</string>
-  <string name="search_results">ಹುಡುಕಾಟ ಫಲಿತಾಂಶಗಳು</string>
   <string name="tv_contact_row_header">ಸಂಪರ್ಕಗಳು</string>
   <string name="gallery_error_title">ಗ್ಯಾಲರಿ ಅಪ್ಲಿಕೇಶನ್ ಕಂಡುಬಂದಿಲ್ಲ</string>
   <string name="gallery_error_message">ಗ್ಯಾಲರಿ ತೆರೆಯಲು ಸಾಧನದಲ್ಲಿ ಯಾವುದೇ ಅಪ್ಲಿಕೇಶನ್ ಕಂಡುಬಂದಿಲ್ಲ</string>
   <!--File Transfer-->
-  <string name="invalid_file">ಅಮಾನ್ಯ ಕಡತ</string>
-  <string name="not_able_to_write_file">ಫೈಲ್ ಬರೆಯಲು ಸಾಧ್ಯವಾಗುತ್ತಿಲ್ಲ</string>
-  <string name="file_transfer_status_created">ವರ್ಗಾವಣೆ ಆರಂಭಿಸುವಿಕೆ</string>
-  <string name="file_transfer_status_unsupported">ಬೆಂಬಲವಿಲ್ಲದ</string>
-  <string name="file_transfer_status_wait_peer_acceptance">ಸಹವರ್ತಿಗಳ ಅಂಗೀಕಾರಕ್ಕಾಗಿ ಕಾಯುತ್ತಿರುವುದು</string>
-  <string name="file_transfer_status_wait_host_acceptance">ಕಾಯುತ್ತಿರುವ ಆತಿಥೇಯರು</string>
-  <string name="file_transfer_status_ongoing">ನಡೆಯುತ್ತಿರುವ</string>
-  <string name="file_transfer_status_finished">ಮುಗಿದ</string>
-  <string name="file_transfer_status_closed_by_host">ಆತಿಥೇಯರಿಂದ ಮುಚ್ಚಲಾಗಿದೆ</string>
-  <string name="file_transfer_status_closed_by_peer">ಸಮೀಪದ ಪೀರ್</string>
-  <string name="file_transfer_status_invalid_pathname">ಅಮಾನ್ಯ ಮಾರ್ಗ ಹೆಸರು</string>
-  <string name="file_transfer_status_unjoinable_peer">ಅನ್ಯೋನ್ಯತೆಯುಳ್ಳ ಗೆಳೆಯ</string>
-  <string name="file_transfer_status_cancelled">ರದ್ದುಗೊಳಿಸಲಾಗಿದೆ</string>
-  <string name="file_transfer_status_error">ದೋಷದಿಂದಾಗಿ ವಿಫಲವಾಗಿದೆ</string>
-  <string name="file_transfer_status_timed_out">ಸಮಯ</string>
-  <string name="file_saved_in">%s ನಲ್ಲಿ ಉಳಿಸಲಾದ ಫೈಲ್</string>
-  <string name="file_saved_successfully">ಯಶಸ್ವಿಯಾಗಿ ಉಳಿಸಿದ ಫೈಲ್</string>
   <string name="file_download">ಡೌನ್ಲೋಡ್ ಮಾಡಿ</string>
   <string name="title_media_viewer">ಮಾಧ್ಯಮ ವೀಕ್ಷಕ</string>
   <string name="menu_file_open">ತೆರೆದ ಕಡತ</string>
@@ -323,7 +301,6 @@
   <string name="bottomsheet_remove">ಸದಸ್ಯರನ್ನು ತೆಗೆದುಹಾಕಿ</string>
   <!--JamiId-->
   <string name="jami_id_validate">ಬಳಕೆದಾರ ಹೆಸರನ್ನು ನೋಂದಾಯಿಸಿ</string>
-  <string name="jami_id_looking_for_availability">ಬಳಕೆದಾರ ಹೆಸರು ಲಭ್ಯತೆಗಾಗಿ ಹುಡುಕುತ್ತಿದ್ದೇನೆ.</string>
   <string name="jami_id_choose_username">ಬಳಕೆದಾರ ಹೆಸರನ್ನು ಆರಿಸಿ</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">ಜಾಮಿಗೆ ಸ್ವಾಗತ</string>

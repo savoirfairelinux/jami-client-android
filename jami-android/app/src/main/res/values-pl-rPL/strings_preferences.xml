@@ -46,8 +46,8 @@
   <string name="pref_typing_summary">Wysyłaj i odbieraj wskaźniki pisania pokazujące, że wiadomość jest pisana.</string>
   <string name="pref_block_record_title">Zablokuj zrzuty ekranu i nagrywanie</string>
   <string name="pref_block_record_summary">Zablokuj robienie zrzutu ekranu lub nagrywania wideo.</string>
-  <string name="pref_link_preview_title">Pokaż link do podglądu konwersacji</string>
-  <string name="pref_link_preview_summary">Przegląd jest wymagany do ściągnięcia z serwerów innych partnerów.</string>
+  <string name="pref_link_preview_title">Podglądy linków</string>
+  <string name="pref_link_preview_summary">Wystarczy pobrać treści z serwerów stron trzecich.</string>
   <!--Notifications Visibility-->
   <string name="connectivity_custom_title">Wartość własna</string>
   <!--Extension-->

@@ -45,8 +45,8 @@
   <string name="pref_typing_summary">Send og motta skrivingsindikator som viser at ein melding blir skrivd.</string>
   <string name="pref_block_record_title">Block skjermbild og opptak</string>
   <string name="pref_block_record_summary">Blokkar å ta skjermbilder eller opptake av video.</string>
-  <string name="pref_link_preview_title">Visa linkpreviews i samtal</string>
-  <string name="pref_link_preview_summary">Forhandsvisningar krev å laste ned innhald frå tredjepartsserver.</string>
+  <string name="pref_link_preview_title">Førehandsvisingar av nettkoplingar</string>
+  <string name="pref_link_preview_summary">Forhandsvisning krev å laste ned innhald frå tredjepartsserver.</string>
   <!--Notifications Visibility-->
   <string name="connectivity_custom_title">Kastum</string>
   <!--Extension-->

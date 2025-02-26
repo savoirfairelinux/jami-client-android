@@ -25,7 +25,6 @@
   <string name="account_type_ip2ip">Compte IP</string>
   <string name="help_ring">Un compte de Jami et permet comunicar amb gent de forma segura punt a punt mitjançant una xarxa completament distribuïda.</string>
   <string name="help_sip_title">Ajuda compte SIP</string>
-  <string name="help_sip">Configura un compte SIP existent</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_message">Aquesta acció no es pot desfer.</string>
   <!--AccountManagementFragment-->
@@ -44,9 +43,9 @@
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">General</string>
   <string name="account_basic_category">Preferències bàsiques</string>
-  <string name="account_alias_label">Nom del compte</string>
   <string name="account_hostname_label">Nom d\'amfitrió</string>
   <string name="account_bootstrap_label">Bootstrap</string>
+  <string name="account_name_server_label">Servidor de noms</string>
   <string name="account_username_label">Nom d\'usuari</string>
   <string name="account_password_label">Contrasenya</string>
   <string name="account_optionnal_category">Preferències opcionals</string>
@@ -78,8 +77,7 @@
   <string name="account_registration_exp_label">Expiració del registre</string>
   <string name="account_local_interface_label">Interfície local</string>
   <string name="account_local_port_label">Port local</string>
-  <string name="account_stun_enable_label">Utilitza Stun</string>
-  <string name="account_stun_server_label">Servidor Stun</string>
+  <string name="account_stun_enable_label">Utilitza STUN</string>
   <string name="account_accept_files">Accepta arxius entrants automàticament</string>
   <string name="account_conversation_settings_title">Configuració de la conversa</string>
   <string name="account_accept_files_max_size">Mida màxima d\'arxiu que es pot acceptar automàticament</string>
@@ -95,6 +93,7 @@
   <string name="account_published_address_label">Adreça publicada</string>
   <string name="disabled">Deshabilitat</string>
   <string name="enabled">Habilitat</string>
+  <string name="default_value">Per defecte</string>
   <string name="account_proxy_label">Servidor intermediari DHT</string>
   <string name="account_proxy_enable_label">Utilitza servidor intermediari DHT</string>
   <string name="account_proxy_server_label">Direcció de l\'intermediari DHT</string>
@@ -113,25 +112,12 @@
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Utilitza transport TLS</string>
-  <string name="account_tls_port_label">Port del receptor TLS</string>
-  <string name="account_tls_certificate_list_label">Autoritats de certificació</string>
-  <string name="account_tls_certificate_file_label">Fitxer del certificat</string>
-  <string name="account_tls_private_key_file_label">Fitxer de la clau privada</string>
   <string name="account_tls_password_label">Contrasenya de la clau privada</string>
-  <string name="account_tls_method_label">Mètode TLS</string>
-  <string name="account_tls_ciphers_label">Xifrats del TLS</string>
-  <string name="account_tls_server_name_label">Nom del servidor</string>
-  <string name="account_tls_verify_server_label">Verifica el servidor</string>
-  <string name="account_tls_verify_client_label">Client Verifica el client</string>
-  <string name="account_require_client_certificate_label">Fer que TLS requereixi certificat de client</string>
-  <string name="account_tls_negotiation_timeout_sec">Temps d\'espera de la negociació (s)</string>
   <string name="account_rtp_max_port">Màxim</string>
   <string name="account_rtp_min_port">Mínim</string>
-  <string name="account_rtp_port_range">Rang de ports de l\'àudio RTP</string>
   <!--restore/backup-->
   <string name="account_new_device_password">Introduïu la contrasenya principal per a desbloquejar el compte</string>
   <string name="error_password_char_count">Mínim 6 caràcters</string>
-  <string name="error_passwords_not_equals">No coincideixen les contrasenyes</string>
   <string name="export_account_wait_title">Si us plau espereu...</string>
   <string name="export_account_wait_message">Exportant informació del compte</string>
   <string name="account_export_file">Fes còpia de seguretat del compte</string>
@@ -165,12 +151,10 @@
   <string name="account_link_device">Connecta des d\'un altre dispositiu</string>
   <string name="account_link_button">Connecta des de la xarxa</string>
   <string name="account_link_archive_button">Connecta des d\'una còpia de seguretat</string>
-  <string name="account_link_prompt_pin">Introdueix PIN</string>
-  <string name="account_new_button">Crear un compte Jami</string>
+  <string name="account_new_button">Unir-se a Jami</string>
   <string name="account_link_export_button">Enllaça un nou dispositiu</string>
   <string name="account_link_show_button">Mostra %d més dispositius enllaçats</string>
   <string name="account_link_hide_button">Amaga el dispositiu enllaçat</string>
-  <string name="account_start_export_button">Genera el PIN</string>
   <string name="account_end_export_button">tanca</string>
   <string name="account_export_title">Enllaça el compte amb altres dispositius</string>
   <string name="account_connect_server_button">Connecta amb el servidor de gestió</string>
@@ -182,17 +166,13 @@
   <string name="account_enter_username">Inseriu el vostre nom d\'usuari</string>
   <!--Name registration-->
   <string name="error_username_empty">Inseriu el vostre nom d\'usuari</string>
-  <string name="no_registered_name_for_account">Sense connexió</string>
-  <string name="username_available">Nom d\'usuari disponible !</string>
   <string name="register_name">Registra el nom</string>
-  <string name="trying_to_register_name">Provant de registrar nom d\'usuari</string>
   <string name="registered_username">Nom d\'usuari registrat</string>
   <string name="register_username">Registra nom d\'usuari públic</string>
   <string name="register_recommended">Recomanat</string>
   <string name="username_already_taken">Nom d\'usuari ja registrat.</string>
   <string name="invalid_username">Nom d\'usuari invalid</string>
   <string name="unknown_error">Error desconegut. Si us plau, comprovi la seva connexió a la xarxa!</string>
-  <string name="looking_for_username_availability">Comprovant disponibilitat del nom d\'usuari…</string>
   <string name="account_status_connecting">Connectant</string>
   <string name="account_status_connection_error">Error de xarxa</string>
   <string name="account_status_online">En línia</string>
@@ -212,14 +192,14 @@
   <string name="revoke_device_wait_title">Si us plau espereu...</string>
   <string name="revoke_device_wait_message">Revocant dispositiu</string>
   <string name="rename_device_title">Canvia el nom d\'aquest dispositiu</string>
-  <string name="rename_device_message">Esculli un nou nom per identificar aquest dispositiu en el seu compte Jami</string>
   <string name="rename_device_button">Canvia el nom del dispositiu</string>
   <string name="account_rename_device_hint">Esculli nou nom de dispositiu</string>
   <string name="account_device_this_indicator">Aquest dispositiu</string>
-  <string name="account_disabled_indicator">deshabilitat</string>
+  <string name="account_disabled_indicator">Deshabilitat</string>
   <!--Link a new device-->
   <string name="error_format_not_supported">Aquest format no és compatible.</string>
   <string name="account_link_device_title">Enllaça un nou dispositiu</string>
+  <string name="connect_device_scanqr">Escanir codi QR</string>
   <string name="account_link_device_button">Connectar</string>
   <!--Biometry-->
 </resources>
