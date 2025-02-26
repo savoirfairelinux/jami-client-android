@@ -100,7 +100,7 @@
   <string name="ongoing_call">Pooleli olev kõne</string>
   <string name="hist_in_call">Sissetulnud kõne kestusega %1$s</string>
   <string name="hist_out_call">Väljunud kõne kestusega %1$s</string>
-  <string name="call_duration">Ketus: %s</string>
+  <string name="call_duration">Kestus: %s</string>
   <string name="start_error_title">Jami käivitamine ei õnnestu</string>
   <string name="action_call_accept">Vasta kõnele</string>
   <string name="action_call_accept_audio">Vasta häälkõnena</string>
@@ -214,11 +214,11 @@
   <string name="conversation_type_contact">Jami kontakt</string>
   <string name="conversation_type_private">Isiklik</string>
   <string name="conversation_type_group">Grupp</string>
-  <string name="conversation_contact_invited">%1$s sai kutse</string>
-  <string name="conversation_contact_added">%1$s liitus</string>
-  <string name="conversation_contact_left">%1$s lahkus</string>
-  <string name="conversation_contact_blocked">%1$s on blokeeritud</string>
-  <string name="conversation_contact_unblocked">%1$s blokeering on eemaldatud</string>
+  <string name="conversation_contact_invited">%1$s sai liitumiskutse selle vestlusega.</string>
+  <string name="conversation_contact_added">%1$s on liitunud vestlusega.</string>
+  <string name="conversation_contact_left">%1$s on lahkunud vestlusest.</string>
+  <string name="conversation_contact_blocked">%1$s osalemine siin vestluses on blokeeritud.</string>
+  <string name="conversation_contact_unblocked">%1$s blokeerimine on eemaldatud.</string>
   <string name="conversation_search_hint">Otsi vestlust</string>
   <string name="audio_recorder_error">Helisalvestuse rakendust ei leidu.</string>
   <string name="video_recorder_error">Videosalvestuse rakendust ei leidu.</string>
@@ -248,6 +248,7 @@
   <string name="help_server_enter">Sisesta haldusserveri URL.</string>
   <string name="help_pin_enter">Sisesta teise seadistatud Jami konto PIN-kood. Selle leiad, kui kasutad „Ekspordi Jami konto“ valikut.</string>
   <string name="pin_copied">PIN-kood on kopeeritud lõikelauale.</string>
+  <string name="copied_clipboard">Kopeeritud lõikelauale.</string>
   <string name="wizard_next">Järgmine</string>
   <string name="wizard_back">Tagasi</string>
   <string name="wizard_skip">Jäta vahele</string>
@@ -260,7 +261,8 @@
   <!--Account summary-->
   <string name="profile">Profiil</string>
   <string name="profile_name">Profiili nimi</string>
-  <string name="profile_message_warning">Sinu profiil on jagatud ainult sinu kontaktidega</string>
+  <string name="profile_message_warning">Seda profiili jagatakse ainult kasutajakonto kontaktidega</string>
+  <string name="custom_profile_message_warning">Sinu kohendatud profiil on nähtav vaid sellele kasutajakontole selles seadmes</string>
   <string name="open_the_gallery">Ava galerii</string>
   <string name="take_a_photo">Pildista</string>
   <string name="remove_photo">Eemalda foto</string>
@@ -271,6 +273,7 @@
   <string name="identifier">Tunnus</string>
   <string name="account">Kasutajakonto</string>
   <string name="link_new_device">Seo uus seade</string>
+  <string name="devices_header">Seadmed</string>
   <string name="devices">Seotud seadmed</string>
   <string name="total_devices">Seadmeid kokku: </string>
   <!--Share fragment-->
@@ -307,23 +310,23 @@
   <string name="gallery_error_message">Selles nutiseadmes ei leidu galerii avamiseks vajalikku rakendust</string>
   <string name="generic_error">Tekkis tundmatu viga.</string>
   <!--File Transfer-->
-  <string name="invalid_file">Vigane fail</string>
-  <string name="not_able_to_write_file">Faili salvestamine pole võimalik</string>
-  <string name="file_transfer_status_created">käivitame faili ülekandmist</string>
-  <string name="file_transfer_status_unsupported">pole toetatud</string>
-  <string name="file_transfer_status_wait_peer_acceptance">oodates teise osapoole heakskiitu</string>
-  <string name="file_transfer_status_wait_host_acceptance">oodates serveri heakskiitu</string>
-  <string name="file_transfer_status_ongoing">käimas</string>
-  <string name="file_transfer_status_finished">valmis</string>
-  <string name="file_transfer_status_closed_by_host">serveri poolt suletud</string>
-  <string name="file_transfer_status_closed_by_peer">teise osapoole poolt suletud</string>
-  <string name="file_transfer_status_invalid_pathname">vigane asukoha nimi</string>
-  <string name="file_transfer_status_unjoinable_peer">teine osapool, kellega ei saa liituda</string>
-  <string name="file_transfer_status_cancelled">tühistatud</string>
-  <string name="file_transfer_status_error">veast tingitud ebaõnnestumine</string>
-  <string name="file_transfer_status_timed_out">päringu aegumine</string>
+  <string name="invalid_file">Vigane fail.</string>
+  <string name="not_able_to_write_file">Faili salvestamine pole võimalik.</string>
+  <string name="file_transfer_status_created">Käivitame</string>
+  <string name="file_transfer_status_unsupported">Pole toetatud</string>
+  <string name="file_transfer_status_wait_peer_acceptance">Ootame, et teine osapool nõustuks päringuga…</string>
+  <string name="file_transfer_status_wait_host_acceptance">Ootame, et server nõustuks päringuga…</string>
+  <string name="file_transfer_status_ongoing">Töös</string>
+  <string name="file_transfer_status_finished">Valmis</string>
+  <string name="file_transfer_status_closed_by_host">Serveri poolt suletud</string>
+  <string name="file_transfer_status_closed_by_peer">Teise osapoole poolt suletud</string>
+  <string name="file_transfer_status_invalid_pathname">Vigane asukoha nimi</string>
+  <string name="file_transfer_status_unjoinable_peer">Võrdõigusvõrgu sõlm pole leitav</string>
+  <string name="file_transfer_status_cancelled">Tühistatud</string>
+  <string name="file_transfer_status_error">Faili edastamisel tekkis viga.</string>
+  <string name="file_transfer_status_timed_out">Päring aegus</string>
   <string name="file_saved_in">Fail on salvestatud kausta %s</string>
-  <string name="file_saved_successfully">Faili salvestamine õnnestus</string>
+  <string name="file_saved_successfully">Faili salvestamine õnnestus.</string>
   <string name="file_download">Laadi alla</string>
   <string name="no_space_left_on_device">Siin nutiseadmes pole piisavalt andmeruumi</string>
   <string name="title_media_viewer">Meediavaataja</string>
@@ -411,6 +414,7 @@
   <string name="tab_files">Failid</string>
   <string name="tab_settings">Seadistused</string>
   <string name="not_admin_toast">Ainult peakasutajad saavad selle grupi andmeid muuta</string>
+  <string name="dialog_title_contact">Muuda kuvatavat nime</string>
   <string name="dialogtitle_title">Muuda grupi nime</string>
   <string name="dialogtitle_description">Muuda grupi kirjeldust</string>
   <string name="dialog_hint_title">Nimi</string>
@@ -429,10 +433,10 @@
   <string name="jami_id_copy">Kopeeri JamiId</string>
   <string name="jami_id_share">Jaga JamiId</string>
   <string name="jami_id_validate">Registreeri kasutajanimi</string>
-  <string name="jami_id_available">Kasutajanimi pole saadaval</string>
-  <string name="jami_id_not_available">See kasutajanimi pole saadaval\n• kuni 32 tähemärki\n• lubatud erimärgid: sidekriips (-), alakriips (_)</string>
+  <string name="jami_id_available">Kasutajanimi on saadaval</string>
+  <string name="jami_id_not_available">Kasutajanimi pole saadaval</string>
   <string name="jami_id_info">• kuni 32 tähemärki\n• lubatud erimärgid: sidekriips (-), alakriips (_)</string>
-  <string name="jami_id_looking_for_availability">Kontrollime kasutajanime saadavust...</string>
+  <string name="jami_id_looking_for_availability">Uurime kasutajanime kättesaadavust...</string>
   <string name="jami_id_choose_username">Vali kasutajanimi</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Tere tulemast kasutama suhtlusrakendust Jami</string>

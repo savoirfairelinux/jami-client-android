@@ -24,7 +24,6 @@
   <string name="account_type_ip2ip">IP účet</string>
   <string name="help_ring">Jami účet vám umožňuje kontaktovať ľudí pomocou P2P pripojenia na plne distribuovanej sieti.</string>
   <string name="help_sip_title">Pridať SIP účet</string>
-  <string name="help_sip">Konfigurovať existujúci SIP účet</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_message">Túto operáciu nie je možné vrátiť.</string>
   <!--AccountManagementFragment-->
@@ -43,9 +42,9 @@
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Všeobecné</string>
   <string name="account_basic_category">Základné nastavenia</string>
-  <string name="account_alias_label">Názov účtu</string>
   <string name="account_hostname_label">Názov hostiteľa</string>
   <string name="account_bootstrap_label">Zavádzací uzol</string>
+  <string name="account_name_server_label">Menný server</string>
   <string name="account_username_label">Používateľské meno</string>
   <string name="account_password_label">Heslo</string>
   <string name="account_optionnal_category">Voliteľné nastavenia</string>
@@ -78,7 +77,6 @@
   <string name="account_local_interface_label">Lokálne rozhranie</string>
   <string name="account_local_port_label">Miestny port</string>
   <string name="account_stun_enable_label">Použiť STUN</string>
-  <string name="account_stun_server_label">STUN server</string>
   <string name="account_accept_files">Automaticky prijať prichádzajúce súbory</string>
   <string name="account_conversation_settings_title">Nastavenia konverzácie</string>
   <string name="account_accept_files_max_size">Maximálna veľkosť súboru pre automatické prijatie</string>
@@ -94,6 +92,7 @@
   <string name="account_published_address_label">Publikovaná adresa</string>
   <string name="disabled">Znižujúci</string>
   <string name="enabled">Zapnutý</string>
+  <string name="default_value">Predvolený</string>
   <string name="account_proxy_label">DHT proxy</string>
   <string name="account_proxy_enable_label">Použiť DHT proxy</string>
   <string name="account_proxy_server_label">DHT proxy adresa</string>
@@ -112,25 +111,12 @@
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Používať TLS prenos</string>
-  <string name="account_tls_port_label">TLS počúvací port</string>
-  <string name="account_tls_certificate_list_label">Certifikačné autority</string>
-  <string name="account_tls_certificate_file_label">Súbor s certifikátom</string>
-  <string name="account_tls_private_key_file_label">Súbor s privátnym kľúčom</string>
   <string name="account_tls_password_label">Heslo privátneho kľúča</string>
-  <string name="account_tls_method_label">TLS metóda</string>
-  <string name="account_tls_ciphers_label">TLS šifry</string>
-  <string name="account_tls_server_name_label">Názov servera</string>
-  <string name="account_tls_verify_server_label">Overiť server</string>
-  <string name="account_tls_verify_client_label">Overiť klienta</string>
-  <string name="account_require_client_certificate_label">TLS vyžaduje certifikát klienta</string>
-  <string name="account_tls_negotiation_timeout_sec">Časový limit vyjednávania (v sekundách)</string>
   <string name="account_rtp_max_port">Maximum</string>
   <string name="account_rtp_min_port">Minimum</string>
-  <string name="account_rtp_port_range">Rozsah audio RTP portov</string>
   <!--restore/backup-->
   <string name="account_new_device_password">Zadajte hlavné heslo na odomknutie účtu</string>
   <string name="error_password_char_count">Minimálne 6 znakov</string>
-  <string name="error_passwords_not_equals">Heslá sa nezhodujú</string>
   <string name="export_account_wait_title">Čakajte, prosím...</string>
   <string name="export_account_wait_message">Exportovanie údajov o účte</string>
   <string name="account_export_file">Zálohovať účet</string>
@@ -164,11 +150,9 @@
   <string name="account_link_device">Pripojenie z iného zariadenia</string>
   <string name="account_link_button">Pripojiť zo siete</string>
   <string name="account_link_archive_button">Pripojiť zo zálohy</string>
-  <string name="account_link_prompt_pin">Zadajte PIN</string>
-  <string name="account_new_button">Vytvoriť Jami účet</string>
+  <string name="account_new_button">Pridajte sa k Jami</string>
   <string name="account_link_export_button">Prepojiť nové zariadenie</string>
   <string name="account_link_hide_button">Skryjte prepojené zariadenie</string>
-  <string name="account_start_export_button">Vygenerovať PIN</string>
   <string name="account_end_export_button">Zavrieť</string>
   <string name="account_export_title">Účet prepojenia s inými zariadeniami</string>
   <string name="account_connect_server_button">Pripojiť k spravujúcemu serveru</string>
@@ -180,17 +164,13 @@
   <string name="account_enter_username">Zadajte používateľské meno</string>
   <!--Name registration-->
   <string name="error_username_empty">Zadajte používateľské meno</string>
-  <string name="no_registered_name_for_account">Žiadne registrované meno</string>
-  <string name="username_available">Používateľské meno dostupné!</string>
   <string name="register_name">Názov registra</string>
-  <string name="trying_to_register_name">Pokus o registráciu mena</string>
   <string name="registered_username">Registrované používateľské meno</string>
   <string name="register_username">Registrovať verejné používateľské meno</string>
   <string name="register_recommended">Odporúčané</string>
   <string name="username_already_taken">Používateľské meno je už použité</string>
   <string name="invalid_username">Neplatné používateľské meno</string>
   <string name="unknown_error">Neznáma chyba. Skontrolujte prosím vaše sieťové pripojenie. </string>
-  <string name="looking_for_username_availability">Kontrolujeme dostupnosť používateľského mena...</string>
   <string name="account_status_connecting">Pripájanie</string>
   <string name="account_status_connection_error">Chyba pripojenia</string>
   <string name="account_status_online">Online</string>
@@ -210,15 +190,14 @@
   <string name="revoke_device_wait_title">Čakajte, prosím...</string>
   <string name="revoke_device_wait_message">Odoberanie zariadenia</string>
   <string name="rename_device_title">Premenovať toto zariadenie</string>
-  <string name="rename_device_message">Zvoľte nový názov, ktorý bude identifikovať toto zariadenie vo vašom Jami účte</string>
   <string name="rename_device_button">Premenovať zariadenie</string>
   <string name="account_rename_device_hint">Zvoľte nový názov zariadenia</string>
   <string name="account_device_this_indicator">Toto zariadenie</string>
-  <string name="account_disabled_indicator">vypnuté</string>
+  <string name="account_disabled_indicator">Znižujúci</string>
   <!--Link a new device-->
   <string name="error_format_not_supported">Tento formát nie je podporovaný.</string>
   <string name="account_link_device_title">Prepojiť nové zariadenie</string>
-  <string name="account_link_device_info">Ak chcete zobraziť QR kód alebo PIN, vyberte „Prepojiť nové zariadenie“ z inej aplikácie Jami</string>
+  <string name="connect_device_scanqr">Skenovanie QR kódu</string>
   <string name="account_link_device_button">Pripojiť</string>
   <!--Biometry-->
 </resources>

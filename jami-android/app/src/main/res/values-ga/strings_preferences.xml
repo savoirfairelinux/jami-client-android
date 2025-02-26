@@ -45,8 +45,7 @@
   <string name="pref_typing_summary">Cuir isteach agus faigh comharthaí teip a léiríonn go bhfuil teip ar teip.</string>
   <string name="pref_block_record_title">Scáileán agus taifeadadh bloc</string>
   <string name="pref_block_record_summary">Stop a ghlacadh grianghraf scrion nó físeán a thaifeadadh.</string>
-  <string name="pref_link_preview_title">Taispeánadh réamhshocraithe nasc i comhráite</string>
-  <string name="pref_link_preview_summary">Ní mór don réamh-sheiceáil ábhar a íoslódáil ó sheirbhísí tríú páirtí.</string>
+  <string name="pref_link_preview_summary">Ní mór don réamhsheiceáil ábhar a íoslódáil ó sheirbhísí tríú páirtí.</string>
   <!--Notifications Visibility-->
   <!--Extension-->
 </resources>

@@ -45,8 +45,7 @@
   <string name="pref_typing_summary">Տեղադրել եւ ստանալ տիպման ցուցանիշներ, որոնք ցույց են տալիս, որ հաղորդագրություն է տիպվում:</string>
   <string name="pref_block_record_title">Բլոկել էկրանային նկարը եւ ձայնագրումը</string>
   <string name="pref_block_record_summary">Պակասեք էկրանային նկարահանումները կամ տեսանյութերը ձայնագրելը:</string>
-  <string name="pref_link_preview_title">Կապի նախադասություն ցուցադրեք զրույցներում</string>
-  <string name="pref_link_preview_summary">Նախագահական դիտումները պահանջում են բովանդակություն ներբեռնել երրորդ կողմի սերվերներից:</string>
+  <string name="pref_link_preview_summary">Նախագահում պահանջում է բովանդակություն ներբեռնել երրորդ կողմի սերվերներից:</string>
   <!--Notifications Visibility-->
   <string name="connectivity_custom_title">Պարբերական</string>
   <!--Extension-->

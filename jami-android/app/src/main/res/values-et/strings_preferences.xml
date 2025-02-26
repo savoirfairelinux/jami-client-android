@@ -56,7 +56,7 @@
   <string name="pref_typing_summary">Saada ise ja saa trükkimisteatisi, mis näitavad, et teine osapool kirjutab sõnumit.</string>
   <string name="pref_block_record_title">Blokeeri ekraanitõmmised ja -salvestamine</string>
   <string name="pref_block_record_summary">Blokeeri ekraanivaatest tõmmiste ja salvestuste tegemine.</string>
-  <string name="pref_link_preview_title">Näita vestlustes linkide eelvaateid</string>
+  <string name="pref_link_preview_title">Veebilinkide eelvaated</string>
   <string name="pref_link_preview_summary">Eelvaadete näitamine eeldab sisu laadimist kolmandate osapoolte serveritest.</string>
   <!--Notifications Visibility-->
   <string name="notification_public">Avalik\n(näita teavitusi ja nende sisu nutiseadme lukustusvaates)\n</string>

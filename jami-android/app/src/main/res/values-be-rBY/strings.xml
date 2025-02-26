@@ -85,6 +85,7 @@
   <string name="today">Сёння</string>
   <string name="yesterday">Учора</string>
   <!--Contacts-->
+  <string name="prompt_new_password_repeat">Пацвердзіце новы пароль</string>
   <string name="account_create_title">Стварэнне ўліковага запісу Jami</string>
   <string name="prompt_hint_username">Назва карыстальніка</string>
   <string name="wizard_next">Далей</string>
@@ -94,13 +95,13 @@
   <string name="hist_invitation_received">Атрыманая запрашэнне</string>
   <!--Account summary-->
   <string name="profile">Профіль</string>
-  <string name="profile_message_warning">Ваш профіль падзяляецца толькі з вашымі кантактамі</string>
   <string name="take_a_photo">Здымайце фота</string>
   <string name="profile_name_hint">Увядзіце сваё імя</string>
   <string name="identity">Пазначэнне</string>
   <string name="identifier">Ідэнтыфікатар</string>
   <string name="account">Рахунак</string>
   <string name="link_new_device">Злучыць новае прылада</string>
+  <string name="devices_header">Прылады</string>
   <string name="devices">Злучаныя прылады</string>
   <!--Share fragment-->
   <string name="share_label">Падзяліцца</string>
@@ -112,10 +113,8 @@
   <!--Blacklist-->
   <string name="no_blocked_contact">Ніякіх заблакаваных кантактаў</string>
   <!--Smartlist-->
-  <string name="search_results">Вынікі пошуку</string>
   <string name="tv_contact_row_header">Кантакты</string>
   <!--File Transfer-->
-  <string name="file_transfer_status_cancelled">скасавана</string>
   <string name="menu_file_open">Адкрыты файл</string>
   <string name="menu_file_save">Захаваць файл</string>
   <string name="menu_file_share">Падзяліцца файлам</string>
@@ -158,7 +157,6 @@
   <string name="bottomsheet_remove">Выключыць члена</string>
   <!--JamiId-->
   <string name="jami_id_validate">Запіс імя карыстальніка</string>
-  <string name="jami_id_looking_for_availability">Шукаю даступнасць імя карыстальніка...</string>
   <string name="jami_id_choose_username">Выберыце імя карыстальніка</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Сардэчна запрашаем у Джамі</string>

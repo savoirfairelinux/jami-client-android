@@ -45,7 +45,7 @@
   <string name="pref_typing_summary">संदेश टाइप केला जात आहे हे दर्शविणारे टाइपिंग निर्देशक पाठवा आणि प्राप्त करा.</string>
   <string name="pref_block_record_title">स्क्रीनशॉट आणि रेकॉर्डिंग ब्लॉक करा</string>
   <string name="pref_block_record_summary">स्क्रीनशॉट किंवा व्हिडिओ रेकॉर्डिंग टाळा.</string>
-  <string name="pref_link_preview_title">संभाषणात लिंक पूर्वावलोकन दाखवा</string>
+  <string name="pref_link_preview_title">वेब लिंक पूर्वावलोकने</string>
   <string name="pref_link_preview_summary">पूर्वावलोकन तृतीय पक्षाच्या सर्व्हरवरून सामग्री डाउनलोड करणे आवश्यक आहे.</string>
   <!--Notifications Visibility-->
   <string name="connectivity_custom_title">कस्टम</string>

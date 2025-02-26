@@ -143,7 +143,6 @@
   <string name="delete_contact">La so direición de la páxina web</string>
   <string name="conversation_action_remove_this_title">¿Borrear esti contautu?</string>
   <string name="conversation_action_remove_this_message">Esto borrará\'l contautu y definitivamente borrará\'l historial de conversaciones.</string>
-  <string name="copied_to_clipboard">%1$s copiáu na taquilla</string>
   <string name="conversation_action_select_peer_number">Seleccione un númberu</string>
   <string name="conversation_action_block_this">Bloquear el contacto</string>
   <string name="conversation_action_unblock_this">Desbloquear el contacto</string>
@@ -168,9 +167,6 @@
   <string name="conversation_preference_emoji">Emoji de conversación</string>
   <string name="conversation_type_contact">El contautu Jami</string>
   <string name="conversation_type_private">Privada</string>
-  <string name="conversation_contact_invited">%1$s foi convidáu</string>
-  <string name="conversation_contact_added">%1$s xuníu</string>
-  <string name="conversation_contact_left">%1$s ye izquierdu</string>
   <string name="conversation_search_hint">La conversación de busca</string>
   <string name="today">El so nome ye \"El pueblu de Dios\".</string>
   <string name="yesterday">En xineru de 2011</string>
@@ -178,8 +174,8 @@
   <string name="add_call_contact_number_to_contacts">¿Agregar %1$s?</string>
   <string name="prompt_new_password">Nueva contraseña</string>
   <string name="prompt_new_password_optional">Nueva contraseña (opcional)</string>
-  <string name="prompt_new_password_repeat">Repite la contraseña nueva</string>
-  <string name="account_create_title">Crear una cuenta Jami</string>
+  <string name="prompt_new_password_repeat">Confirmar la contraseña nueva</string>
+  <string name="account_create_title">Crear cuenta Jami</string>
   <string name="prompt_new_username">Introducir un nuevu nome d\' usuariu</string>
   <string name="prompt_hint_username">Nombre d\'usuariu</string>
   <string name="help_password_choose">Escueye una contraseña fuerte que recordar pa protexer la so cuenta Jami.</string>
@@ -194,7 +190,6 @@
   <string name="hist_invitation_received">La invitación recibida</string>
   <!--Account summary-->
   <string name="profile">Perfil</string>
-  <string name="profile_message_warning">El so perfil ye compartidu solamente con los sos contactos.</string>
   <string name="open_the_gallery">Abri la galería.</string>
   <string name="take_a_photo">Ye una fotografía.</string>
   <string name="profile_name_hint">Entra\'l so nome</string>
@@ -204,6 +199,7 @@
   <string name="identifier">Identificador</string>
   <string name="account">Cuenta</string>
   <string name="link_new_device">Enlazar un nuevu dispositivu</string>
+  <string name="devices_header">Dispositivos</string>
   <string name="devices">Dispositivos enllazaos</string>
   <string name="total_devices">Total de los dispositivos: </string>
   <!--Share fragment-->
@@ -225,28 +221,10 @@
   <string name="conversation_placeholder">Nun hai conversaciones.</string>
   <string name="contact_request_sent">Envíada solicitú de contacto</string>
   <string name="start_conversation">Comienza la conversación</string>
-  <string name="search_results">Resultaos de la busca</string>
   <string name="tv_contact_row_header">Contactos</string>
   <string name="gallery_error_title">Nun se atopó l\' aplicación Galería</string>
   <string name="gallery_error_message">Nun se atopó aplicación nel dispositivu pa abrir Galería</string>
   <!--File Transfer-->
-  <string name="invalid_file">Archivu inválidu</string>
-  <string name="not_able_to_write_file">Nun pue escribir archivos</string>
-  <string name="file_transfer_status_created">Iniciativa de transferencia</string>
-  <string name="file_transfer_status_unsupported">No apoyada</string>
-  <string name="file_transfer_status_wait_peer_acceptance">Esperando la aceptación de los compañeros</string>
-  <string name="file_transfer_status_wait_host_acceptance">Esperando la aceptación del anfitrión</string>
-  <string name="file_transfer_status_ongoing">En cursu</string>
-  <string name="file_transfer_status_finished">Fináu</string>
-  <string name="file_transfer_status_closed_by_host">Cerráu por anfitrión</string>
-  <string name="file_transfer_status_closed_by_peer">La so familia ye de la familia de los parientes.</string>
-  <string name="file_transfer_status_invalid_pathname">Nombre de ruta inválidu</string>
-  <string name="file_transfer_status_unjoinable_peer">La so familia ye una familia de trés fíos.</string>
-  <string name="file_transfer_status_cancelled">cancelada</string>
-  <string name="file_transfer_status_error">Faló por error</string>
-  <string name="file_transfer_status_timed_out">El tiempu de la fecha</string>
-  <string name="file_saved_in">Archiváu en %s</string>
-  <string name="file_saved_successfully">Archiváu con ésitu</string>
   <string name="file_download">Descargar</string>
   <string name="title_media_viewer">Vía de medios</string>
   <string name="menu_file_open">Archivu abiertu</string>
@@ -323,7 +301,6 @@
   <string name="bottomsheet_remove">Remover miembru</string>
   <!--JamiId-->
   <string name="jami_id_validate">Registrar nome d\' usuariu</string>
-  <string name="jami_id_looking_for_availability">Buscando la disponibilidá del nome d\'usuariu...</string>
   <string name="jami_id_choose_username">Escueye un nome d\' usuariu</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Bienveníu a Jami.</string>

@@ -57,8 +57,8 @@ notificaciones pulsadas.</string>
   <string name="pref_typing_summary">Enviar y recibir indicadores de tipeo mostrando que se está escribiendo un mensaje.</string>
   <string name="pref_block_record_title">Bloquear capturas de pantalla y grabaciones</string>
   <string name="pref_block_record_summary">Impedir que se hagan capturas de pantalla o se graben videos.</string>
-  <string name="pref_link_preview_title">Mostrar vistas previas de enlaces en las conversaciones</string>
-  <string name="pref_link_preview_summary">Las vistas previas requieren la descarga de contenido desde servidores de terceros.</string>
+  <string name="pref_link_preview_title">Vista previas de vínculos web</string>
+  <string name="pref_link_preview_summary">La vista previa requiere la descarga de contenido desde servidores de terceros.</string>
   <!--Notifications Visibility-->
   <string name="notification_public">Públic\n(mostrar notificaciones y su contenido en la pantalla de bloqueo)\n</string>
   <string name="notification_private">Private\n(mostrar notificaciones pero ocultar su contenido en la pantalla de bloqueo)\n</string>

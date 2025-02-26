@@ -57,8 +57,8 @@
   <string name="pref_typing_summary">Küldjön és fogadjon gépelési mutatókat, amelyek azt mutatják, hogy egy üzenetet gépel.</string>
   <string name="pref_block_record_title">Képernyőkép és felvétel letiltása</string>
   <string name="pref_block_record_summary">Letiltsa a képernyőkép készítését vagy a videók rögzítését.</string>
-  <string name="pref_link_preview_title">Hivatkozások előnézetének megjelenítése</string>
-  <string name="pref_link_preview_summary">Az előnézethez tartalmat kell letölteni harmadik féltől származó kiszolgálókról.</string>
+  <string name="pref_link_preview_title">Webhivatkozások előnézete</string>
+  <string name="pref_link_preview_summary">Az előnézethez tartalmat kell letölteni harmadik fél kiszolgálókról.</string>
   <!--Notifications Visibility-->
   <string name="notification_public">Nyilvános\n(az értesítések és azok tartalmának megjelenítése a zárolási képernyőn)\n</string>
   <string name="notification_private">Magán\n(értesítések megjelenítése, de tartalmuk elrejtése a zárolási képernyőn)\n</string>
@@ -81,7 +81,7 @@
   <string name="extension_reset_preferences_summary">A bővítmény visszaállt az alapértelmezett beállításokra</string>
   <string name="extension_reset_preferences_ask">Szeretne visszaállítani az általános bővítménybeállításokat?</string>
   <string name="extension_reset_account_preferences_ask">Szeretne visszaállítani a fiókbővítmény beállításokat</string>
-  <string name="extension_successfully_installed">A(z) <b>%1$s</b> bővítmény sikeresen telepítve.</string>
+  <string name="extension_successfully_installed">A(z) <b>%1$s</b> bővítmény telepítése sikerült.</string>
   <string name="extension_install_failure">Hiba történt a következő bővítmény telepítésekor: <b>%1$s</b></string>
   <string name="extension_recent_version_exception">A(z) <b>%1$s</b> bővítmény újabb verziója már telepítve van.</string>
   <string name="extension_same_version_exception">A(z) <b>%1$s</b> bővítmény ugyanaz a verziója már telepítve van.</string>

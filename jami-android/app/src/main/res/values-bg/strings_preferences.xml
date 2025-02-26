@@ -45,8 +45,8 @@
   <string name="pref_typing_summary">Изпращане и получаване на индикатори за вписване, които показват, че се вписва съобщение.</string>
   <string name="pref_block_record_title">Блокиране на екран и записване</string>
   <string name="pref_block_record_summary">Не снимайте екран или записвайте видео.</string>
-  <string name="pref_link_preview_title">Покажете прегледи на връзките в разговорите</string>
-  <string name="pref_link_preview_summary">Превизиите изискват изтегляне на съдържание от сървъри на трети страни.</string>
+  <string name="pref_link_preview_title">Визуализация на уеб връзки</string>
+  <string name="pref_link_preview_summary">Прегледът изисква изтегляне на съдържание от сървъри на трети страни.</string>
   <!--Notifications Visibility-->
   <string name="connectivity_custom_title">Персонализиран</string>
   <!--Extension-->
