@@ -154,7 +154,6 @@
   <string name="delete_contact">Usuń kontakt</string>
   <string name="conversation_action_remove_this_title">Usunąć ten kontakt?</string>
   <string name="conversation_action_remove_this_message">To usunie kontakt i całkowicie wyczyści historię rozmowy.</string>
-  <string name="copied_to_clipboard">%1$s skopiowany do schowka</string>
   <string name="conversation_action_select_peer_number">Wybierz numer</string>
   <string name="conversation_action_block_this">Blokuj kontakt</string>
   <string name="conversation_action_unblock_this">Odblokuj kontakt</string>
@@ -182,9 +181,6 @@
   <string name="conversation_type_contact">Kontakty Jami</string>
   <string name="conversation_type_private">Prywatne</string>
   <string name="conversation_type_group">Grupa</string>
-  <string name="conversation_contact_invited">Zaproszono %1$s</string>
-  <string name="conversation_contact_added">%1$s dołączony</string>
-  <string name="conversation_contact_left">%1$s opuścił rozmowę</string>
   <string name="conversation_search_hint">Przeszukaj konwersację</string>
   <string name="audio_recorder_error">Nie znaleziono aplikacji rejestratora dźwięku.</string>
   <string name="video_recorder_error">Nie znaleziono aplikacji do nagrywania wideo.</string>
@@ -201,8 +197,8 @@
   <string name="add_call_contact_number_to_contacts">Dodać %1$s?</string>
   <string name="prompt_new_password">Nowe hasło</string>
   <string name="prompt_new_password_optional">Nowe hasło (opcjonalnie)</string>
-  <string name="prompt_new_password_repeat">Powtórz nowe hasło</string>
-  <string name="account_create_title">Utwórz konto Jami</string>
+  <string name="prompt_new_password_repeat">Potwierdź nowe hasło</string>
+  <string name="account_create_title">Utworz konto Jami</string>
   <string name="prompt_new_username">Wprowadź nową nazwę użytkownika</string>
   <string name="prompt_hint_username">Nazwa użytkownika</string>
   <string name="help_password_choose">Wybierz silne hasło, które zapamiętasz, by chronić swoje konto Jami.</string>
@@ -215,11 +211,11 @@
   <string name="hist_contact_invited">Kontakt zaproszony</string>
   <string name="hist_contact_added">Kontakt dodany</string>
   <string name="hist_contact_left">Kontakt opuścił</string>
+  <string name="hist_contact_blocked">Kontakt zablokowany</string>
   <string name="hist_invitation_received">Otrzymano zaproszenie</string>
   <!--Account summary-->
   <string name="profile">Profil</string>
   <string name="profile_name">Nazwa profilu</string>
-  <string name="profile_message_warning">Twój profil jest udostępniany tylko twoim kontaktom</string>
   <string name="open_the_gallery">Otwórz galerię</string>
   <string name="take_a_photo">Zrób zdjęcie</string>
   <string name="profile_name_hint">Wprowadź swoją nazwę</string>
@@ -229,6 +225,7 @@
   <string name="identifier">Identyfikator</string>
   <string name="account">Konto</string>
   <string name="link_new_device">Połącz nowe urządzenie</string>
+  <string name="devices_header">Urządzenia</string>
   <string name="devices">Połączone urządzenia</string>
   <string name="total_devices">Wszystkich urządzeń:</string>
   <!--Share fragment-->
@@ -250,28 +247,11 @@
   <string name="conversation_placeholder">Nie masz jeszcze żadnych konwersacji</string>
   <string name="contact_request_sent">Wysłano zaproszenie</string>
   <string name="start_conversation">Rozpocznij rozmowę</string>
-  <string name="search_results">Wyniki wyszukiwania</string>
   <string name="tv_contact_row_header">Kontakty</string>
   <string name="gallery_error_title">Nie znaleziono aplikacji Galeria</string>
   <string name="gallery_error_message">Nie znaleziono aplikacji do otworzenia Galerii</string>
   <!--File Transfer-->
-  <string name="invalid_file">Niepoprawny plik</string>
-  <string name="not_able_to_write_file">Nie da się zapisać pliku</string>
-  <string name="file_transfer_status_created">Rozpoczynanie transferu</string>
-  <string name="file_transfer_status_unsupported">niewspierane</string>
-  <string name="file_transfer_status_wait_peer_acceptance">czekanie na zaakceptowanie</string>
-  <string name="file_transfer_status_wait_host_acceptance">czekanie na zaakceptowanie</string>
-  <string name="file_transfer_status_ongoing">trwa połączenie</string>
-  <string name="file_transfer_status_finished">zakończono</string>
-  <string name="file_transfer_status_closed_by_host">zakończono przez hosta</string>
-  <string name="file_transfer_status_closed_by_peer">zakończono przez peera</string>
-  <string name="file_transfer_status_invalid_pathname">nieprawidłowa ścieżka</string>
-  <string name="file_transfer_status_unjoinable_peer">nieosiągalny klient</string>
-  <string name="file_transfer_status_cancelled">anulowano</string>
-  <string name="file_transfer_status_error">Nie udało się, bo wystąpił błąd</string>
-  <string name="file_transfer_status_timed_out">Czas upłynął</string>
-  <string name="file_saved_in">Plik zapisano w  %s</string>
-  <string name="file_saved_successfully">Plik został zapisany poprawnie</string>
+  <string name="file_transfer_status_created">Uruchamianie</string>
   <string name="file_download">Pobierz</string>
   <string name="title_media_viewer">Przeglądarka mediów</string>
   <string name="menu_file_open">Otwórz plik</string>
@@ -307,7 +287,6 @@
   <string name="tv_send_video">Wyślij Multimedia</string>
   <string name="tv_action_more">Więcej</string>
   <string name="conversation_input_speech_hint">Powiedz coś...</string>
-  <string name="speech_recogniton_unavailable">Funkcja rozpoznawania mowy nie jest dostępna.</string>
   <string name="audio_permission_rationale_title">Wymagane pozwolenie na odtwarzanie dźwięku</string>
   <string name="audio_permission_rationale_message">Jami wymaga uprawnień mikrofonu do korzystania z funkcji zamiany mowy na tekst i nagrywania dźwięku. Zostaniesz o to poproszony/a w następnym kroku.</string>
   <string name="camera_permission_rationale_message">Jami wymaga uprawnień kamery na nagrywanie wideo i wykonywanie połączeń wideo. Zostaniesz o to poproszony/a w następnym kroku.</string>
@@ -344,6 +323,7 @@
   <string name="reset">Zresetuj</string>
   <!--Swarm Details-->
   <string name="rename_btn">Potwierdź</string>
+  <string name="swarm_description">Dodaj opis</string>
   <string name="tab_members">Użytkownicy</string>
   <string name="tab_files">Pliki</string>
   <string name="tab_settings">Ustawienia</string>
@@ -359,20 +339,18 @@
   <string name="jami_id_copy">Skopiuj Jamild</string>
   <string name="jami_id_share">Udostępnij Jamild</string>
   <string name="jami_id_validate">Zarejestruj nazwę użytkownika</string>
-  <string name="jami_id_available">Nazwa użytkownika jest dostępna</string>
-  <string name="jami_id_not_available">Nazwa użytkownika nie jest dostępna\n• maksymalnie 32 znaki\n• Następujące specjalne znaki są dozwolone: myślnik (-), podkreślnik (_)</string>
+  <string name="jami_id_available">Nazwa użytkownika jest dostępna.</string>
   <string name="jami_id_info">• maksymalnie 32 znaki\n• Następujące specjalne znaki są dozwolone: myślnik (-), podkreślnik (_)</string>
-  <string name="jami_id_looking_for_availability">Sprawdzanie dostępności nazwy użytkownika...</string>
   <string name="jami_id_choose_username">Wybierz nazwę użytkownika</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Witaj w Jami</string>
   <string name="welcome_jami_description">Udostępnij swój identyfikator Jami aby ułatwić skontaktowanie się z Tobą!</string>
   <!--Conversation details-->
   <string name="details">Szczegóły</string>
+  <string name="swarm_type">Typ konwersacji</string>
   <string name="Private">Prywatne</string>
   <string name="mute_conversation">Wycisz konwersację</string>
   <!--Donation-->
-  <string name="donation_card_description">Jeśli lubisz korzystać z Jami i wierzysz w naszą misję, czy mógłbyś przekazać darowiznę?</string>
   <string name="donation_card_not_now">Nie w tej chwili</string>
   <string name="donation_donate">Przekaż darowiznę</string>
   <string name="donation_setting_title">Przypomnienie o darowiźnie </string>

@@ -143,7 +143,6 @@
   <string name="delete_contact">Ta bort kontakt</string>
   <string name="conversation_action_remove_this_title">Vil du sletta denne kontakten?</string>
   <string name="conversation_action_remove_this_message">Dette vil fjerne kontakta og definitivt fjerne samtalshistoria.</string>
-  <string name="copied_to_clipboard">%1$s kopiert til klippbrett</string>
   <string name="conversation_action_select_peer_number">Velg eit nummer</string>
   <string name="conversation_action_block_this">Blockkontakt</string>
   <string name="conversation_action_unblock_this">Avbløka kontakt</string>
@@ -168,9 +167,6 @@
   <string name="conversation_preference_emoji">Samtal emoji</string>
   <string name="conversation_type_contact">Jami kontakt</string>
   <string name="conversation_type_private">Privat</string>
-  <string name="conversation_contact_invited">%1$s vart invitert</string>
-  <string name="conversation_contact_added">%1$s er tilslutte</string>
-  <string name="conversation_contact_left">%1$s er til venstre</string>
   <string name="conversation_search_hint">Søk samtale</string>
   <string name="today">I dag</string>
   <string name="yesterday">I går</string>
@@ -178,8 +174,8 @@
   <string name="add_call_contact_number_to_contacts">Legg til %1$s?</string>
   <string name="prompt_new_password">Nøiv password</string>
   <string name="prompt_new_password_optional">Nøiv password (valgleg)</string>
-  <string name="prompt_new_password_repeat">Gjev nytt passord</string>
-  <string name="account_create_title">Skapa ein Jami-konto</string>
+  <string name="prompt_new_password_repeat">Bekreft nytt passord</string>
+  <string name="account_create_title">Skapa Jami-konto</string>
   <string name="prompt_new_username">Skriv inn nytt brukernavn</string>
   <string name="prompt_hint_username">Bruksnamn</string>
   <string name="help_password_choose">Velg eit sterkt passord du vil huske for å verne kontoen din Jami.</string>
@@ -194,7 +190,6 @@
   <string name="hist_invitation_received">Innbyding motteke</string>
   <!--Account summary-->
   <string name="profile">Profil</string>
-  <string name="profile_message_warning">Profilen din blir berre delt med kontaktane dine</string>
   <string name="open_the_gallery">Opna galleriet</string>
   <string name="take_a_photo">Ta eit foto</string>
   <string name="profile_name_hint">Skriv inn namnet ditt</string>
@@ -204,6 +199,7 @@
   <string name="identifier">Identifikator</string>
   <string name="account">Konto</string>
   <string name="link_new_device">Legg ein ny enhet til</string>
+  <string name="devices_header">Enhet</string>
   <string name="devices">Kopplande utstyr</string>
   <string name="total_devices">Totalt utstyr: </string>
   <!--Share fragment-->
@@ -225,28 +221,10 @@
   <string name="conversation_placeholder">Du har ikkje samtal enda</string>
   <string name="contact_request_sent">Kontaktforfrågan send</string>
   <string name="start_conversation">Start samtale</string>
-  <string name="search_results">Søkresultatar</string>
   <string name="tv_contact_row_header">Kontakt</string>
   <string name="gallery_error_title">Ingen Gallery app finnast</string>
   <string name="gallery_error_message">Ingen applikasjon finnast på einheten til å opna Gallery</string>
   <!--File Transfer-->
-  <string name="invalid_file">Utilgrepeleg fil</string>
-  <string name="not_able_to_write_file">Ikkje kan skrive fil</string>
-  <string name="file_transfer_status_created">startar overføringa</string>
-  <string name="file_transfer_status_unsupported">ikkje støtta</string>
-  <string name="file_transfer_status_wait_peer_acceptance">ventande på å bli akseptert av eigne</string>
-  <string name="file_transfer_status_wait_host_acceptance">venande vert akseptert</string>
-  <string name="file_transfer_status_ongoing">pågående</string>
-  <string name="file_transfer_status_finished">ferdig</string>
-  <string name="file_transfer_status_closed_by_host">stengd av vert</string>
-  <string name="file_transfer_status_closed_by_peer">nær saman med eigne</string>
-  <string name="file_transfer_status_invalid_pathname">Utilgjengeleg vegnavn</string>
-  <string name="file_transfer_status_unjoinable_peer">uforenbare eige</string>
-  <string name="file_transfer_status_cancelled">avbrutt</string>
-  <string name="file_transfer_status_error">ikkje var i stand på grunn av feil</string>
-  <string name="file_transfer_status_timed_out">tidleg ut</string>
-  <string name="file_saved_in">File lagd i %s</string>
-  <string name="file_saved_successfully">File lagd framgångsrikt</string>
   <string name="file_download">Ta ned</string>
   <string name="title_media_viewer">Medievisjon</string>
   <string name="menu_file_open">Åpne fil</string>
@@ -323,7 +301,6 @@
   <string name="bottomsheet_remove">Ta bort medlem</string>
   <!--JamiId-->
   <string name="jami_id_validate">Registrer brukernavn</string>
-  <string name="jami_id_looking_for_availability">Eg leitar etter brukernavn...</string>
   <string name="jami_id_choose_username">Velg ein brukernavn</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Velkommen til Jami</string>

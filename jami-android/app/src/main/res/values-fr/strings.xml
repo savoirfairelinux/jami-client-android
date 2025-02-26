@@ -17,7 +17,7 @@
   <string name="call_service_description">Ce service est nécessaire pour garder vos appels actifs en avant-plan. Il ne fonctionne que durant les appels.</string>
   <string name="data_transfer_service_description">Ce service est nécessaire pour afficher des notifications persistantes lors des transferts de fichiers. Il ne s\'exécute que lors des transferts de fichiers.</string>
   <!--About dialog-->
-  <string name="thank_note">Nous aimerions remercier l\'ensemble des contributeurs dont les efforts ont permis à travers les années de faire ce logiciel ce qu\'il est.</string>
+  <string name="thank_note">Nous aimerions remercier l\'ensemble des contributeurs dont les efforts ont permis à travers les années de faire de ce logiciel ce qu\'il est.</string>
   <string name="developers">Développeurs</string>
   <string name="media">Médias</string>
   <string name="community_management">Gestion de la communauté</string>
@@ -215,11 +215,11 @@
   <string name="conversation_type_contact">Contact Jami</string>
   <string name="conversation_type_private">Privé</string>
   <string name="conversation_type_group">Groupe</string>
-  <string name="conversation_contact_invited">%1$s a été invité</string>
-  <string name="conversation_contact_added">%1$s a rejoint la discussion</string>
-  <string name="conversation_contact_left">%1$s restant(s)</string>
-  <string name="conversation_contact_blocked">%1$s a été bloqué</string>
-  <string name="conversation_contact_unblocked">%1$s a été débloqué</string>
+  <string name="conversation_contact_invited">%1$s est invité à rejoindre la conversation.</string>
+  <string name="conversation_contact_added">%1$s a rejoint la conversation.</string>
+  <string name="conversation_contact_left">%1$s a quitté la conversation.</string>
+  <string name="conversation_contact_blocked">%1$s a été bloqué dans la conversation.</string>
+  <string name="conversation_contact_unblocked">%1$s a été débloqué de la conversation.</string>
   <string name="conversation_search_hint">Rechercher des conversations</string>
   <string name="audio_recorder_error">L\'application d\'enregistrement audio n\'est pas trouvée.</string>
   <string name="video_recorder_error">L\'application d\'enregistrement vidéo n\'est pas trouvée.</string>
@@ -240,7 +240,7 @@
   <string name="add_call_contact_number_to_contacts">Ajouter %1$s ?</string>
   <string name="prompt_new_password">Nouveau mot de passe</string>
   <string name="prompt_new_password_optional">Nouveau mot de passe (optionnel)</string>
-  <string name="prompt_new_password_repeat">Confirmez le mot de passe</string>
+  <string name="prompt_new_password_repeat">Confirmer le nouveau mot de passe</string>
   <string name="account_create_title">Créer un compte Jami</string>
   <string name="prompt_new_username">Entrez un nouveau nom d\'utilisateur</string>
   <string name="prompt_hint_username">Nom d\'utilisateur</string>
@@ -249,6 +249,7 @@
   <string name="help_server_enter">Entrez l\'URL du serveur de gestion</string>
   <string name="help_pin_enter">Entrer le NIP de votre compte sur l\'autre appareil. Utiliser pour cela la fonction \"Exporter votre compte\" pour obtenir le NIP.</string>
   <string name="pin_copied">Le NIP a été copié dans le presse-papier.</string>
+  <string name="copied_clipboard">Copié dans le presse-papier</string>
   <string name="wizard_next">Suivant</string>
   <string name="wizard_back">Précédent</string>
   <string name="wizard_skip">Passer</string>
@@ -261,7 +262,6 @@
   <!--Account summary-->
   <string name="profile">Profil</string>
   <string name="profile_name">Nom du profile</string>
-  <string name="profile_message_warning">Votre profil n\'est partagé qu\'avec vos contacts</string>
   <string name="open_the_gallery">Ouvrir la galerie</string>
   <string name="take_a_photo">Prendre une photo</string>
   <string name="remove_photo">Supprimer l\'image</string>
@@ -272,6 +272,7 @@
   <string name="identifier">Identifiant </string>
   <string name="account">Compte</string>
   <string name="link_new_device">Associer un nouvel appareil</string>
+  <string name="devices_header">Appareils</string>
   <string name="devices">Appareils associés</string>
   <string name="total_devices">Nombre total d\'appareils :</string>
   <!--Share fragment-->
@@ -308,25 +309,10 @@
   <string name="gallery_error_message">Aucune application trouvée sur l\'appareil pour ouvrir la galerie d\'images</string>
   <string name="generic_error">Une erreur inconnue s\'est produite</string>
   <!--File Transfer-->
-  <string name="invalid_file">Fichier invalide</string>
-  <string name="not_able_to_write_file">Impossible d\'écrire le fichier</string>
-  <string name="file_transfer_status_created">initialisation du transfert</string>
-  <string name="file_transfer_status_unsupported">non supporté</string>
-  <string name="file_transfer_status_wait_peer_acceptance">attente de l\'autorisation du pair</string>
-  <string name="file_transfer_status_wait_host_acceptance">attente de l\'autorisation de l\'appareil</string>
-  <string name="file_transfer_status_ongoing">en cours</string>
-  <string name="file_transfer_status_finished">terminé</string>
-  <string name="file_transfer_status_closed_by_host">fermé par l\'appareil</string>
-  <string name="file_transfer_status_closed_by_peer">fermé par le pair</string>
-  <string name="file_transfer_status_invalid_pathname">Chemin d\'accès invalide</string>
-  <string name="file_transfer_status_unjoinable_peer">pair injoignable</string>
-  <string name="file_transfer_status_cancelled">annulé</string>
-  <string name="file_transfer_status_error">échoué à cause d\'une erreur</string>
-  <string name="file_transfer_status_timed_out">délai dépassé</string>
-  <string name="file_saved_in">Fichier enregistré dans %s</string>
-  <string name="file_saved_successfully">Le fichier a été enregistré</string>
+  <string name="file_transfer_status_created">Initialisation</string>
+  <string name="file_transfer_status_unjoinable_peer">Interlocuteur injoignable</string>
+  <string name="file_saved_successfully">Le fichier a été enregistré.</string>
   <string name="file_download">Télécharger</string>
-  <string name="no_space_left_on_device">Pas assez d\'espace de stockage disponible sur l\'appareil</string>
   <string name="title_media_viewer">Visionneuse</string>
   <string name="menu_file_open">Ouvrir le fichier</string>
   <string name="menu_file_download">Télécharger le fichier</string>
@@ -363,7 +349,6 @@
   <string name="conversation_input_speech_hint">Dîtes quelque chose ...</string>
   <string name="audio_permission_denied">L\'accès à votre microphone est désactivé. Veuillez l\'activer dans les paramètres.</string>
   <string name="camera_permission_denied">L\'accès à votre caméra est désactivé. Veuillez l\'activer dans les paramètres.</string>
-  <string name="speech_recogniton_unavailable">La reconnaissance vocale n\'est pas disponible.</string>
   <string name="audio_permission_rationale_title">Autorisation audio nécessaire</string>
   <string name="camera_permission_rationale_title">Autorisation vidéo nécessaire</string>
   <string name="audio_permission_rationale_message">Jami a besoin de l\'autorisation du microphone pour utiliser les fonctions de synthèse vocale et d\'enregistrement audio. Cette autorisation sera demandée à l\'étape suivante.</string>
@@ -412,6 +397,7 @@
   <string name="tab_files">Fichiers</string>
   <string name="tab_settings">Paramètres</string>
   <string name="not_admin_toast">Seuls les administrateurs peuvent modifier les information de ce groupe</string>
+  <string name="dialog_title_contact">Modifier le nom affiché</string>
   <string name="dialogtitle_title">Modifier le titre du groupe</string>
   <string name="dialogtitle_description">Modifier la description du groupe</string>
   <string name="dialog_hint_title">Titre</string>
@@ -430,10 +416,10 @@
   <string name="jami_id_copy">Copier le JamiId</string>
   <string name="jami_id_share">Partager votre JamiId</string>
   <string name="jami_id_validate">Enregistrer le nom d\'utilisateur</string>
-  <string name="jami_id_available">Ce nom est disponible</string>
-  <string name="jami_id_not_available">Ce nom n\'est pas disponible\n• 32 caractères maximum\n• Caractères spéciaux autorisés: tiret (-), souligné (_)</string>
+  <string name="jami_id_available">Le nom d\'utilisateur est disponible.</string>
+  <string name="jami_id_not_available">Ce nom d\'utilisateur est indisponible.</string>
   <string name="jami_id_info">• 32 caractères maximum\n• Caractères spéciaux autorisés: tiret (-), souligné (_)</string>
-  <string name="jami_id_looking_for_availability">Vérification de la disponibilité…</string>
+  <string name="jami_id_looking_for_availability">Vérification de la disponibilité du nom d\'utilisateur...</string>
   <string name="jami_id_choose_username">Choisir un nom d\'utilisateur</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Bienvenue sur Jami</string>
@@ -448,7 +434,7 @@
   <string name="show_certificate">Montrer le certificat</string>
   <string name="mute_conversation">Mettre en sourdine</string>
   <!--Donation-->
-  <string name="donation_card_description">Si vous appréciez Jami et que vous croyez à notre mission, feriez-vous une donation ?</string>
+  <string name="donation_card_description">Si vous appréciez Jami et que vous croyez à notre mission, feriez-vous un don ?</string>
   <string name="donation_card_not_now">Pas maintenant</string>
   <string name="donation_donate">Donnez </string>
   <string name="donation_setting_title">Rappel de donation</string>

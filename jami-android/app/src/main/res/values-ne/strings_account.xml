@@ -24,7 +24,6 @@
   <string name="account_type_ip2ip">आईपी खाता</string>
   <string name="help_ring">एक Jami खाता तपाईं एक पूर्ण रूपमा वितरित नेटवर्क मार्फत सुरक्षित रूपमा पीयर-टु-पीयर व्यक्तिहरू पुग्न अनुमति दिन्छ।</string>
   <string name="help_sip_title">SIP खाता थप्नुहोस्</string>
-  <string name="help_sip">एक विद्यमान SIP खाता कन्फिगर गर्नुहोस्।</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_message">यो कार्यलाई उल्टाउन सकिँदैन।</string>
   <!--AccountManagementFragment-->
@@ -43,9 +42,9 @@
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">सामान्य</string>
   <string name="account_basic_category">आधारभूत सेटिंग्स</string>
-  <string name="account_alias_label">खाताको नाम</string>
   <string name="account_hostname_label">होस्टनाम</string>
   <string name="account_bootstrap_label">बुटस्ट्रेप</string>
+  <string name="account_name_server_label">नाम सर्भर</string>
   <string name="account_username_label">प्रयोगकर्ता नाम</string>
   <string name="account_password_label">पासवर्ड</string>
   <string name="account_optionnal_category">वैकल्पिक सेटिंग्स</string>
@@ -77,8 +76,7 @@
   <string name="account_registration_exp_label">दर्ता समाप्त</string>
   <string name="account_local_interface_label">स्थानीय इन्टरफेस</string>
   <string name="account_local_port_label">स्थानीय बन्दरगाह</string>
-  <string name="account_stun_enable_label">Stun प्रयोग गर्नुहोस्</string>
-  <string name="account_stun_server_label">स्टन सर्भर</string>
+  <string name="account_stun_enable_label">STUN प्रयोग गर्नुहोस्</string>
   <string name="account_accept_files">स्वचालित रूपमा आगमन फाइलहरू स्वीकार</string>
   <string name="account_conversation_settings_title">वार्तालाप सेटिंग्स</string>
   <string name="account_accept_files_max_size">स्वचालित रूपमा स्वीकार गर्नका लागि अधिकतम फाइल आकार</string>
@@ -94,6 +92,7 @@
   <string name="account_published_address_label">प्रकाशित ठेगाना</string>
   <string name="disabled">अपाङ्गता</string>
   <string name="enabled">सक्षम</string>
+  <string name="default_value">पूर्वनिर्धारित</string>
   <string name="account_proxy_label">DHT प्रोक्सी</string>
   <string name="account_proxy_enable_label">DHT प्रोक्सी प्रयोग गर्नुहोस्</string>
   <string name="account_proxy_server_label">DHT प्रोक्सी ठेगाना</string>
@@ -112,25 +111,12 @@
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">TLS Transport प्रयोग गर्नुहोस्</string>
-  <string name="account_tls_port_label">TLS सुन्नुहोस् पोर्ट</string>
-  <string name="account_tls_certificate_list_label">प्रमाणिकरण प्राधिकरण</string>
-  <string name="account_tls_certificate_file_label">प्रमाणपत्र फाइल</string>
-  <string name="account_tls_private_key_file_label">निजी कुञ्जी फाइल</string>
   <string name="account_tls_password_label">निजी कुञ्जी पासवर्ड</string>
-  <string name="account_tls_method_label">TLS विधि</string>
-  <string name="account_tls_ciphers_label">TLS सिफरहरू</string>
-  <string name="account_tls_server_name_label">सर्भर नाम</string>
-  <string name="account_tls_verify_server_label">सर्भर प्रमाणित गर्नुहोस्</string>
-  <string name="account_tls_verify_client_label">ग्राहक प्रमाणित गर्नुहोस्</string>
-  <string name="account_require_client_certificate_label">TLS ग्राहक प्रमाणपत्र आवश्यक छ</string>
-  <string name="account_tls_negotiation_timeout_sec">वार्ता समय (सेक)</string>
   <string name="account_rtp_max_port">अधिकतम</string>
   <string name="account_rtp_min_port">न्यूनतम</string>
-  <string name="account_rtp_port_range">अडियो आरटीपी पोर्ट दायरा</string>
   <!--restore/backup-->
   <string name="account_new_device_password">खाता अनलक गर्न मुख्य पासवर्ड प्रविष्ट गर्नुहोस्</string>
   <string name="error_password_char_count">न्यूनतम ६ वर्ण</string>
-  <string name="error_passwords_not_equals">पासवर्ड मेल खाँदैन</string>
   <string name="export_account_wait_title">कृपया प्रतीक्षा गर्नुहोस्...</string>
   <string name="export_account_wait_message">निर्यात खाताको जानकारी</string>
   <string name="account_export_file">ब्याकअप खाता</string>
@@ -164,12 +150,10 @@
   <string name="account_link_device">अर्को उपकरणबाट जडान</string>
   <string name="account_link_button">नेटवर्कबाट जडान</string>
   <string name="account_link_archive_button">ब्याकअपबाट जडान</string>
-  <string name="account_link_prompt_pin">पिन प्रविष्ट गर्नुहोस्</string>
-  <string name="account_new_button">Jami खाता सिर्जना गर्नुहोस्</string>
+  <string name="account_new_button">जामीमा सामेल हुनुहोस्</string>
   <string name="account_link_export_button">नयाँ उपकरण जडान गर्नुहोस्</string>
   <string name="account_link_show_button">%d थप जोडिएको उपकरण देखाउनुहोस्</string>
   <string name="account_link_hide_button">छुपाएर जडान गरिएको उपकरण</string>
-  <string name="account_start_export_button">पिन उत्पन्न गर्नुहोस्</string>
   <string name="account_end_export_button">नजिक</string>
   <string name="account_export_title">अन्य उपकरणहरूमा लिंक खाता</string>
   <string name="account_connect_server_button">व्यवस्थापन सर्भरमा जडान</string>
@@ -180,17 +164,13 @@
   <string name="account_connect_prompt_username">प्रयोगकर्ता नाम</string>
   <!--Name registration-->
   <string name="error_username_empty">प्रयोगकर्ता नाम प्रविष्ट गर्नुहोस्</string>
-  <string name="no_registered_name_for_account">कुनै दर्ता गरिएको नाम छैन</string>
-  <string name="username_available">प्रयोगकर्ता नाम उपलब्ध छ!</string>
   <string name="register_name">नाम दर्ता</string>
-  <string name="trying_to_register_name">नाम दर्ता गर्ने प्रयास गर्दै</string>
   <string name="registered_username">दर्ता गरिएको प्रयोगकर्ता नाम</string>
   <string name="register_username">सार्वजनिक प्रयोगकर्ता नाम दर्ता गर्नुहोस्</string>
   <string name="register_recommended">सिफारिस गरिएको</string>
   <string name="username_already_taken">प्रयोगकर्ता नाम पहिले नै लिइएको</string>
   <string name="invalid_username">अवैध प्रयोगकर्ता नाम</string>
   <string name="unknown_error">अज्ञात त्रुटि. कृपया आफ्नो नेटवर्क जडान जाँच गर्नुहोस्!</string>
-  <string name="looking_for_username_availability">प्रयोगकर्ता नाम उपलब्धता खोज्दै...</string>
   <string name="account_status_connecting">जडान</string>
   <string name="account_status_connection_error">जडान त्रुटि</string>
   <string name="account_status_online">अनलाइन</string>
@@ -210,14 +190,14 @@
   <string name="revoke_device_wait_title">कृपया प्रतीक्षा गर्नुहोस्...</string>
   <string name="revoke_device_wait_message">रिभोकेसन उपकरण</string>
   <string name="rename_device_title">यो यन्त्रको नाम परिवर्तन गर्नुहोस्</string>
-  <string name="rename_device_message">तपाईंको Jami खातामा यो उपकरण पहिचान गर्न नयाँ नाम चयन गर्नुहोस्</string>
   <string name="rename_device_button">नाम परिवर्तन गर्ने यन्त्र</string>
   <string name="account_rename_device_hint">नयाँ यन्त्रको नाम चयन गर्नुहोस्</string>
   <string name="account_device_this_indicator">यो यन्त्र</string>
-  <string name="account_disabled_indicator">अपाङ्ग</string>
+  <string name="account_disabled_indicator">अपाङ्गता</string>
   <!--Link a new device-->
   <string name="error_format_not_supported">यो ढाँचा समर्थित छैन।</string>
   <string name="account_link_device_title">नयाँ उपकरण जडान गर्नुहोस्</string>
+  <string name="connect_device_scanqr">QR कोड स्क्यान गर्नुहोस्</string>
   <string name="account_link_device_button">जोड्नुहोस्</string>
   <!--Biometry-->
 </resources>

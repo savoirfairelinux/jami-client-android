@@ -45,8 +45,8 @@
   <string name="pref_typing_summary">Indikátory odesílání a přijímání, které ukazují, že se zpráva právě píše.</string>
   <string name="pref_block_record_title">Blokování snímku obrazovky a nahrávání</string>
   <string name="pref_block_record_summary">Blokování pořizování snímků obrazovky nebo nahrávání videa.</string>
-  <string name="pref_link_preview_title">Zobrazení náhledů odkazů v konverzacích</string>
-  <string name="pref_link_preview_summary">Náhledy vyžadují stažení obsahu ze serverů třetích stran.</string>
+  <string name="pref_link_preview_title">Náhledy odkazů</string>
+  <string name="pref_link_preview_summary">Náhled vyžaduje stahování obsahu ze serverů třetích stran.</string>
   <!--Notifications Visibility-->
   <string name="connectivity_custom_title">Vlastní</string>
   <!--Extension-->

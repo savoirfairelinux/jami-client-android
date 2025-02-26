@@ -45,8 +45,8 @@
   <string name="pref_typing_summary">ஒரு செய்தியை தட்டச்சு செய்கிறார்கள் என்பதைக் காட்டும் தட்டச்சு குறிகாட்டிகளை அனுப்புங்கள் மற்றும் பெறுங்கள்.</string>
   <string name="pref_block_record_title">திரைப்படம் மற்றும் பதிவுகளை முடக்கு</string>
   <string name="pref_block_record_summary">திரைப்படம் எடுப்பதை அல்லது வீடியோவை பதிவு செய்வதைத் தடுக்கவும்.</string>
-  <string name="pref_link_preview_title">உரையாடல்களில் இணைப்பு முன்னோட்டங்களை காண்பி</string>
-  <string name="pref_link_preview_summary">முன்னோட்டங்கள் மூன்றாம் தரப்பு சேவையகங்களிலிருந்து உள்ளடக்கத்தை பதிவிறக்கம் செய்ய வேண்டும்.</string>
+  <string name="pref_link_preview_title">வலை இணைப்பு முன்னோட்டங்கள்</string>
+  <string name="pref_link_preview_summary">முன்னோட்டமானது மூன்றாம் தரப்பு சேவையகங்களிலிருந்து உள்ளடக்கத்தை பதிவிறக்குவதைக் குறிக்கிறது.</string>
   <!--Notifications Visibility-->
   <string name="connectivity_custom_title">தனிப்பயன்</string>
   <!--Extension-->

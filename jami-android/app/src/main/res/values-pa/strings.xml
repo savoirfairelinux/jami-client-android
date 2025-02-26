@@ -134,7 +134,6 @@
   <string name="delete_contact">ਸੰਪਰਕ ਮਿਟਾਓ</string>
   <string name="conversation_action_remove_this_title">ਇਹ ਸੰਪਰਕ ਮਿਟਾਈਏ?</string>
   <string name="conversation_action_remove_this_message">ਇੰਝ ਕਰਨ ਨਾਲ ਸੰਪਰਕ ਅਤੇ ਗੱਲਬਾਤ ਦਾ ਇਤਿਹਾਸ ਮਿਟ ਜਾਵੇਗਾ।</string>
-  <string name="copied_to_clipboard">%1$s ਨੂੰ ਚੂੰਢੀ-ਤਖਤੀ \'ਤੇ ਕਾਪੀ ਕੀਤਾ ਗਿਆ</string>
   <string name="conversation_action_select_peer_number">ਕੋਈ ਨੰਬਰ ਚੁਣੋ</string>
   <string name="conversation_action_block_this">ਸੰਪਰਕ \'ਤੇ ਬੰਦਸ਼ ਲਗਾਓ</string>
   <string name="conversation_action_incoming_call">ਆਉਂਦੀ ਕਾਲ</string>
@@ -155,8 +154,6 @@
   <string name="add_call_contact_number_to_contacts">%1$s ਨੂੰ ਜੋੜੀਏ?</string>
   <string name="prompt_new_password">ਨਵਾਂ ਪਾਸਵਰਡ</string>
   <string name="prompt_new_password_optional">ਨਵਾਂ ਪਾਸਵਰਡ (ਮਰਜ਼ੀ ਮੁਤਾਬਕ)</string>
-  <string name="prompt_new_password_repeat">ਨਵਾਂ ਪਾਸਵਰਡ ਦੁਹਰਾਓ</string>
-  <string name="account_create_title">Jami ਖਾਤਾ ਬਣਾਓ</string>
   <string name="prompt_new_username">ਨਵਾਂ ਵਰਤੋਂਕਾਰ ਨਾਂ ਦਾਖਲ ਕਰੋ</string>
   <string name="prompt_hint_username">ਵਰਤੋਂਕਾਰ ਨਾਂ</string>
   <string name="help_password_choose">ਆਪਣੇ Jami ਖਾਤੇ ਨੂੰ ਸੁਰੱਖਿਅਤ ਰੱਖਣ ਲਈ ਅਜਿਹਾ ਮਜ਼ਬੂਤ ਪਾਸਵਰਡ ਚੁਣੋ ਜੋ ਤੁਹਾਨੂੰ ਯਾਦ ਰਹੇ।</string>
@@ -170,13 +167,13 @@
   <string name="hist_invitation_received">ਸੱਦਾ ਮਿਲਿਆ</string>
   <!--Account summary-->
   <string name="profile">ਪ੍ਰੋਫ਼ਾਈਲ</string>
-  <string name="profile_message_warning">ਤੁਹਾਡੀ ਪ੍ਰੋਫਾਈਲ ਸਿਰਫ਼ ਤੁਹਾਡੇ ਸੰਪਰਕਾਂ ਨਾਲ ਸਾਂਝਾ ਕੀਤੀ ਜਾਂਦੀ ਹੈ</string>
   <string name="open_the_gallery">ਗੈਲਰੀ ਖੋਲ੍ਹੋ</string>
   <string name="take_a_photo">ਫ਼ੋਟੋ ਖਿੱਚੋ</string>
   <string name="profile_name_hint">ਆਪਣਾ ਨਾਂ ਦਾਖਲ ਕਰੋ</string>
   <string name="identity">ਪਛਾਣ</string>
   <string name="account">ਖਾਤਾ</string>
   <string name="link_new_device">ਨਵਾਂ ਡੀਵਾਈਸ ਜੋੜੋ</string>
+  <string name="devices_header">ਡੀਵਾਈਸ</string>
   <!--Share fragment-->
   <string name="share_message">Jami ਨਾਲ ਇਹ ਕੋਡ ਸਕੈਨ ਕਰੋ</string>
   <string name="share_message_no_account">ਕਿਰਪਾ ਕਰਕੇ ਸਾਂਝਾ ਕਰਨ ਲਈ ਕੋਈ ਖਾਤਾ ਚੁਣੋ।</string>
@@ -195,28 +192,11 @@
   <string name="conversation_placeholder">ਤੁਸੀਂ ਫ਼ਿਲਹਾਲ ਕਿਸੇ ਨਾਲ ਗੱਲਬਾਤ ਨਹੀਂ ਕੀਤੀ</string>
   <string name="contact_request_sent">ਸੰਪਰਕ ਬੇਨਤੀ ਭੇਜੀ ਗਈ</string>
   <string name="start_conversation">ਗੱਲਬਾਤ ਸ਼ੁਰੂ ਕਰੋ</string>
-  <string name="search_results">ਖੋਜ ਨਤੀਜੇ</string>
   <string name="tv_contact_row_header">ਸੰਪਰਕ</string>
   <string name="gallery_error_title">ਕੋਈ ਗੈਲਰੀ ਐਪ ਨਹੀਂ ਮਿਲੀ</string>
   <string name="gallery_error_message">ਗੈਲਰੀ ਖੋਲ੍ਹਣ ਲਈ ਇਸ ਡੀਵਾਈਸ \'ਤੇ ਕੋਈ ਐਪਲੀਕੇਸ਼ਨ ਨਹੀਂ ਮਿਲੀ</string>
   <!--File Transfer-->
-  <string name="invalid_file">ਅਢੁਕਵੀਂ ਫ਼ਾਈਲ</string>
-  <string name="not_able_to_write_file">ਫ਼ਾਈਲ ਲਿਖੀ ਨਹੀਂ ਜਾ ਸਕੀ</string>
-  <string name="file_transfer_status_created">ਤਬਾਦਲਾ ਸ਼ੁਰੂ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ</string>
-  <string name="file_transfer_status_unsupported">ਸੁਵਿਧਾ ਨਹੀਂ</string>
-  <string name="file_transfer_status_wait_peer_acceptance">ਸਾਥੀ ਦੀ ਮਨਜ਼ੂਰੀ ਦੀ ਉਡੀਕ ਹੋ ਰਹੀ ਹੈ</string>
-  <string name="file_transfer_status_wait_host_acceptance">ਮੇਜ਼ਬਾਨ ਦੀ ਮਨਜ਼ੂਰੀ ਦੀ ਉਡੀਕ ਹੋ ਰਹੀ ਹੈ</string>
-  <string name="file_transfer_status_ongoing">ਜਾਰੀ</string>
-  <string name="file_transfer_status_finished">ਪੂਰਾ ਹੋਇਆ</string>
-  <string name="file_transfer_status_closed_by_host">ਮੇਜ਼ਬਾਨ ਨੇ ਬੰਦ ਕੀਤਾ</string>
-  <string name="file_transfer_status_closed_by_peer">ਸਾਥੀ ਨੇ ਬੰਦ ਕੀਤਾ</string>
-  <string name="file_transfer_status_invalid_pathname">ਰਾਹ ਦਾ ਅਢੁਕਵਾਂ ਨਾਮ</string>
-  <string name="file_transfer_status_unjoinable_peer">ਗੈਰ-ਜੁੜਨਯੋਗ ਸਾਥੀ</string>
-  <string name="file_transfer_status_cancelled">ਰੱਦ ਕੀਤਾ ਗਿਆ</string>
-  <string name="file_transfer_status_error">ਗੜਬੜ ਕਾਰਨ ਤਬਾਦਲਾ ਨਹੀਂ ਹੋਇਆ</string>
-  <string name="file_transfer_status_timed_out">ਸਮਾਂ ਖਤਮ ਹੋਇਆ</string>
-  <string name="file_saved_in">ਫ਼ਾਈਲ %s ਵਿੱਚ ਸਾਂਭੀ ਗਈ</string>
-  <string name="file_saved_successfully">ਫ਼ਾਈਲ ਸਾਂਭੀ ਗਈ</string>
+  <string name="file_transfer_status_created">ਸ਼ੁਰੂ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ</string>
   <string name="title_media_viewer">ਮੀਡੀਆ ਵਿਊਅਰ</string>
   <string name="menu_file_open">ਫ਼ਾਈਲ ਖੋਲ੍ਹੋ</string>
   <string name="menu_file_download">ਫ਼ਾਈਲ ਡਾਊਨਲੋਡ ਕਰੋ</string>
@@ -275,7 +255,6 @@
   <string name="tab_settings">ਸੈਟਿੰਗਾਂ</string>
   <string name="dialog_hint_title">ਸਿਰਲੇਖ</string>
   <!--JamiId-->
-  <string name="jami_id_looking_for_availability">ਵਰਤੋਂਕਾਰ ਨਾਂ ਦੀ ਉਪਲਬਧਤਾ ਲੱਭੀ ਜਾ ਰਹੀ ਹੈ…</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Jami ਵਿੱਚ ਜੀ ਆਇਆਂ ਨੂੰ</string>
   <!--Conversation details-->

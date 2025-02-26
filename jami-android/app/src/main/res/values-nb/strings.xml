@@ -145,7 +145,6 @@
   <string name="delete_contact">Slett kontakt</string>
   <string name="conversation_action_remove_this_title">Slett denne kontakten?</string>
   <string name="conversation_action_remove_this_message">Dette vil slette denne kontakten og permanent nullstille samtalehistorikken.</string>
-  <string name="copied_to_clipboard">%1$s kopiert til utklippstavle</string>
   <string name="conversation_action_select_peer_number">Velg et nummer</string>
   <string name="conversation_action_block_this">Blokker kontakt</string>
   <string name="conversation_action_unblock_this">Fjern kontaktblokkering</string>
@@ -171,9 +170,6 @@
   <string name="conversation_type_contact">Jami-kontakt</string>
   <string name="conversation_type_private">Privat</string>
   <string name="conversation_type_group">Gruppe</string>
-  <string name="conversation_contact_invited">%1$s ble invitert</string>
-  <string name="conversation_contact_added">%1$s er blitt lagt til</string>
-  <string name="conversation_contact_left">%1$s er venstre</string>
   <string name="conversation_search_hint">Søk samtale</string>
   <string name="today">I dag</string>
   <string name="yesterday">Igår</string>
@@ -181,8 +177,8 @@
   <string name="add_call_contact_number_to_contacts">Legg til %1$s?</string>
   <string name="prompt_new_password">Nytt passord</string>
   <string name="prompt_new_password_optional">Nytt passord (valgfritt)</string>
-  <string name="prompt_new_password_repeat">Gjenta nytt passord</string>
-  <string name="account_create_title">Opprett en Jami-konto</string>
+  <string name="prompt_new_password_repeat">Bekreft nytt passord</string>
+  <string name="account_create_title">opprette Jami-konto</string>
   <string name="prompt_new_username">Skriv inn nytt brukernavn</string>
   <string name="prompt_hint_username">Brukernavn</string>
   <string name="help_password_choose">Velg et sterkt passord som du husker, for å beskytte Jami-kontoen din.</string>
@@ -197,7 +193,6 @@
   <string name="hist_invitation_received">Invitasjon mottatt</string>
   <!--Account summary-->
   <string name="profile">Profil</string>
-  <string name="profile_message_warning">Din profil deles bare med dine kontakter</string>
   <string name="open_the_gallery">Åpne galleriet</string>
   <string name="take_a_photo">Ta bilde</string>
   <string name="profile_name_hint">Tast inn ditt navn</string>
@@ -207,6 +202,7 @@
   <string name="identifier">Identifikator</string>
   <string name="account">Konto</string>
   <string name="link_new_device">Koble til en ny enhet</string>
+  <string name="devices_header">Enheter</string>
   <string name="devices">Koblede enheter</string>
   <string name="total_devices">Antall enheter:</string>
   <!--Share fragment-->
@@ -228,28 +224,11 @@
   <string name="conversation_placeholder">Du har ingen samtaler foreløpig</string>
   <string name="contact_request_sent">Kontaktforespørsel sendt</string>
   <string name="start_conversation">Ny samtale</string>
-  <string name="search_results">Søkeresultater</string>
   <string name="tv_contact_row_header">Kontakter</string>
   <string name="gallery_error_title">Fant ingen galleriprogrammer</string>
   <string name="gallery_error_message">Fant ingen programmer på enheten for åpning av galleri</string>
   <!--File Transfer-->
-  <string name="invalid_file">Ugyldig fil</string>
-  <string name="not_able_to_write_file">Kunne ikke skrive fil</string>
-  <string name="file_transfer_status_created">igangsetter overføring</string>
-  <string name="file_transfer_status_unsupported">ikke støttet</string>
-  <string name="file_transfer_status_wait_peer_acceptance">venter på godkjenning fra node</string>
-  <string name="file_transfer_status_wait_host_acceptance">venter på godkjenning fra vert</string>
-  <string name="file_transfer_status_ongoing">pågår</string>
-  <string name="file_transfer_status_finished">fullført</string>
-  <string name="file_transfer_status_closed_by_host">lukket av vert</string>
-  <string name="file_transfer_status_closed_by_peer">lukket av node</string>
-  <string name="file_transfer_status_invalid_pathname">ugyldig stinavn</string>
-  <string name="file_transfer_status_unjoinable_peer">node det ikke går an å koble til</string>
-  <string name="file_transfer_status_cancelled">avbrutt</string>
-  <string name="file_transfer_status_error">mislyktes på grunn av feil</string>
-  <string name="file_transfer_status_timed_out">tidsavbrudd</string>
-  <string name="file_saved_in">Fil lagret i %s</string>
-  <string name="file_saved_successfully">Filen er lagret</string>
+  <string name="file_transfer_status_created">Igangsetter</string>
   <string name="file_download">Last ned</string>
   <string name="title_media_viewer">Mediaviser</string>
   <string name="menu_file_open">Åpne fil</string>
@@ -326,7 +305,6 @@
   <string name="bottomsheet_remove">Fjern medlem</string>
   <!--JamiId-->
   <string name="jami_id_validate">Registrer brukernavn</string>
-  <string name="jami_id_looking_for_availability">Sjekker hvorvidt brukernavnet er tilgjengelig…</string>
   <string name="jami_id_choose_username">Velg et brukernavn</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Velkommen til Jami</string>
@@ -335,7 +313,6 @@
   <string name="Private">Privat</string>
   <string name="mute_conversation">Taus samtale</string>
   <!--Donation-->
-  <string name="donation_card_description">Hvis du liker å bruke Jami og tror på prosjektet vårt, vil du gi en donasjon?</string>
   <string name="donation_card_not_now">Ikke nå</string>
   <string name="donation_donate">Doner</string>
   <!--Extension-->

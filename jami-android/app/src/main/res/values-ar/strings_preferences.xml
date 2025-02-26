@@ -45,7 +45,7 @@
   <string name="pref_typing_summary">إرسال مؤشرات الكتابة واستلامها إظهار أن الرسالة تتم كتابتها</string>
   <string name="pref_block_record_title">حظر التقاط الشاشة وتسجيل</string>
   <string name="pref_block_record_summary">أمنع التقاط صور الشاشة أو تسجيل الفيديو</string>
-  <string name="pref_link_preview_title">أظهر مشاهد المراسلة في المحادثات</string>
+  <string name="pref_link_preview_title">معاينات ارتباطات ويب</string>
   <string name="pref_link_preview_summary">تطلب المشاهدة المسبقة تنزيل المحتوى من خوادم طرف ثالث.</string>
   <!--Notifications Visibility-->
   <string name="connectivity_custom_title">تخصيص</string>

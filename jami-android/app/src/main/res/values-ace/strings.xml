@@ -83,7 +83,8 @@
   <string name="today">هاري اين</string>
   <string name="yesterday">ديري</string>
   <!--Contacts-->
-  <string name="account_create_title">منوليسكن اکاونت Jami</string>
+  <string name="prompt_new_password_repeat">ڤڠاتسكن ڤرسودن بارو</string>
+  <string name="account_create_title">منوليس ايكون Jami</string>
   <string name="prompt_hint_username">نام ڤڠڬونا</string>
   <string name="wizard_next">ڤد ماس يڠ لاين</string>
   <string name="wizard_back">ڤرنه</string>
@@ -92,13 +93,13 @@
   <string name="hist_invitation_received">ڤڠاجين يڠ دڤرچايا?? ي</string>
   <!--Account summary-->
   <string name="profile">ڤروڤيل</string>
-  <string name="profile_message_warning">ڤروڤيلڽ اداله دڤرچايا?? ي دڠن ڤڠاجرنڽ</string>
   <string name="take_a_photo">ڤيليهن</string>
   <string name="profile_name_hint">نامت ڤدڤن</string>
   <string name="identity">ادينتيتي</string>
   <string name="identifier">ڤڠڬونا</string>
   <string name="account">حساب</string>
   <string name="link_new_device">منچيلكن ڤڠڬونا?? ن بارو</string>
+  <string name="devices_header">ڤرودوک</string>
   <string name="devices">ڤڠڬيلن يڠ دڤرچايا?? ي</string>
   <!--Share fragment-->
   <string name="share_label">ڤڠاجين</string>
@@ -110,7 +111,6 @@
   <!--Blacklist-->
   <string name="no_blocked_contact">تيدق ڤرلو ممبليكن ڤڠاجرن</string>
   <!--Smartlist-->
-  <string name="search_results">ڤڠاجرن ڤرچاي</string>
   <string name="tv_contact_row_header">ڤڠاجين</string>
   <!--File Transfer-->
   <string name="menu_file_open">ملف مفتوح</string>
@@ -154,7 +154,6 @@
   <string name="bottomsheet_remove">ممبلي ممبلي</string>
   <!--JamiId-->
   <string name="jami_id_validate">نام ڤڠڬونا</string>
-  <string name="jami_id_looking_for_availability">دالم مڠمبيل نام ڤڠڬونا...</string>
   <string name="jami_id_choose_username">مميليه نام ڤڠڬونا</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">خوش اومدن جامي</string>

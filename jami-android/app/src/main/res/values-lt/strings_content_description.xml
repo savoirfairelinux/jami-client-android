@@ -6,4 +6,5 @@
   <string name="file_download_button">Atsisiųsti</string>
   <string name="control_play">Groti</string>
   <string name="control_pause">Pristabdyti</string>
+  <string name="searchbar_navigation_account">Pasirinkite paskyrą</string>
 </resources>

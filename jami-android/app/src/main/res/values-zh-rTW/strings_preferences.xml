@@ -56,8 +56,8 @@
   <string name="pref_typing_summary">傳送與接收輸入指示器，表明正在輸入訊息。</string>
   <string name="pref_block_record_title">封鎖螢幕截圖與錄製</string>
   <string name="pref_block_record_summary">靜止拍攝螢幕截圖或錄製影片。</string>
-  <string name="pref_link_preview_title">在對話中顯示連結預覽</string>
-  <string name="pref_link_preview_summary">預覽需要從第三方伺服器下載內容。</string>
+  <string name="pref_link_preview_title">網頁連結預覽</string>
+  <string name="pref_link_preview_summary">预览需要从第三方服务器下载内容.</string>
   <!--Notifications Visibility-->
   <string name="notification_public">公开\n（在锁屏上显示通知及其内容）\n</string>
   <string name="notification_private">隐私\n（在锁屏上显示通知但隐藏其内容）\n</string>

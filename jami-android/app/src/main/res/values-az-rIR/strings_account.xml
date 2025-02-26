@@ -24,7 +24,6 @@
   <string name="account_type_ip2ip">IP حساب</string>
   <string name="help_ring">جامی حسابی، تامامن یاییلمیش شبکه له برابر شخصلره آرخایینجا چاتماغا imkan وئریر.</string>
   <string name="help_sip_title">SIP حسابي قوش</string>
-  <string name="help_sip">SIP حسابینی قورولوشونا قوی.</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_message">بو عملین ردّ اولونماسی اولماز.</string>
   <!--AccountManagementFragment-->
@@ -43,9 +42,9 @@
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">عمومی</string>
   <string name="account_basic_category">اساس تنظیمات</string>
-  <string name="account_alias_label">حساب آد</string>
   <string name="account_hostname_label">آدی</string>
   <string name="account_bootstrap_label">بوتر</string>
+  <string name="account_name_server_label">آدی سرور</string>
   <string name="account_username_label">ایستیفاده چی آد</string>
   <string name="account_password_label">رمز</string>
   <string name="account_optionnal_category">اختیاری تنظیمات</string>
@@ -77,8 +76,7 @@
   <string name="account_registration_exp_label">ثبت ائتمه لی دیر</string>
   <string name="account_local_interface_label">یئرلی انترفییسه</string>
   <string name="account_local_port_label">محله لی بندر</string>
-  <string name="account_stun_enable_label">Stun (استون)</string>
-  <string name="account_stun_server_label">سرور چنده</string>
+  <string name="account_stun_enable_label">STUN- نی قوللانیب</string>
   <string name="account_accept_files">آوتوماتیک اولاراق گلن فایللاری قبول ائدیر</string>
   <string name="account_conversation_settings_title">دانیشیق لارین قورولوشلاری</string>
   <string name="account_accept_files_max_size">آٹوماکاسییا قبول اولونان فایلین حدسی</string>
@@ -94,6 +92,7 @@
   <string name="account_published_address_label">یاییملانمیش آدرس</string>
   <string name="disabled">معلوللار</string>
   <string name="enabled">فعال</string>
+  <string name="default_value">آلن</string>
   <string name="account_proxy_label">DHT پروکسی</string>
   <string name="account_proxy_enable_label">DHT proxy-ي پايداري کن</string>
   <string name="account_proxy_server_label">DHT پروکسی آدرس</string>
@@ -112,25 +111,12 @@
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">TLS Transport-ی یوللا</string>
-  <string name="account_tls_port_label">TLS Listener Port</string>
-  <string name="account_tls_certificate_list_label">گواهینما ائدک لری</string>
-  <string name="account_tls_certificate_file_label">سند فایل</string>
-  <string name="account_tls_private_key_file_label">خصوصی کلید فایل</string>
-  <string name="account_tls_password_label">خصوصی کلید رمز</string>
-  <string name="account_tls_method_label">TLS متد</string>
-  <string name="account_tls_ciphers_label">TLS سیفرلر</string>
-  <string name="account_tls_server_name_label">سرور آد</string>
-  <string name="account_tls_verify_server_label">سرورو تصدیق ائتمک</string>
-  <string name="account_tls_verify_client_label">موکلین تصدیق ائت</string>
-  <string name="account_require_client_certificate_label">TLS Client Certificate طلب ائدیر</string>
-  <string name="account_tls_negotiation_timeout_sec">مذاکره واختي (sec)</string>
+  <string name="account_tls_password_label">خصوصی کلید پاسورلی</string>
   <string name="account_rtp_max_port">ماکسیما</string>
   <string name="account_rtp_min_port">حداقل</string>
-  <string name="account_rtp_port_range">آدیو RTP پورت رنچ</string>
   <!--restore/backup-->
   <string name="account_new_device_password">حسابين قفليني آچماق اوچون اصلي رمزي دن گئر</string>
   <string name="error_password_char_count">6 حرفدن آز</string>
-  <string name="error_passwords_not_equals">رمزلر تطبیق اولماز</string>
   <string name="export_account_wait_title">لطفاً صبر کنین...</string>
   <string name="export_account_wait_message">صادرات حسابلاری</string>
   <string name="account_export_file">پشتیبان حساب</string>
@@ -164,12 +150,10 @@
   <string name="account_link_device">باشقا آلاتدان باغلانیب</string>
   <string name="account_link_button">شبکه دن باغلانیب</string>
   <string name="account_link_archive_button">پشتیبانلیکدن باغلانیب</string>
-  <string name="account_link_prompt_pin">PIN یئری</string>
-  <string name="account_new_button">Jami حسابي يارادين</string>
+  <string name="account_new_button">جمیه یه قوشول</string>
   <string name="account_link_export_button">یئنی آلتی باغلا</string>
   <string name="account_link_show_button">%d داها باغلي اولان آلتی گؤرسهدیر</string>
   <string name="account_link_hide_button">باغلي اولان آلتی اؤرت</string>
-  <string name="account_start_export_button">PIN یوللاندیر</string>
   <string name="account_end_export_button">یاخینلاشماق</string>
   <string name="account_export_title">باشقا آلاتلارا باغلانان حساب</string>
   <string name="account_connect_server_button">مدیریت سرورینا باغلانیب</string>
@@ -180,17 +164,13 @@
   <string name="account_connect_prompt_username">ایستیفاده چی آد</string>
   <!--Name registration-->
   <string name="error_username_empty">ایستیفاده چی آدینی دن</string>
-  <string name="no_registered_name_for_account">ثبت اولونموش آد یوخدور</string>
-  <string name="username_available">آدلار یئرلشیر!</string>
   <string name="register_name">آد آدینی ثبت ائدیر</string>
-  <string name="trying_to_register_name">آدینی ثبت ائتمه یه چالیشیرام</string>
   <string name="registered_username">ثبت اولونموش ایستیفاده چی آد</string>
   <string name="register_username">عمومی ایستیفاده چی آدینی یاز</string>
   <string name="register_recommended">توصیه اولونور</string>
   <string name="username_already_taken">ایسته ینجه آدی</string>
   <string name="invalid_username">حاقسيز اِتمه آد</string>
   <string name="unknown_error">نامعلوم خاتم. لطفا شبکه اتصالونو چک کنید!</string>
-  <string name="looking_for_username_availability">آدی یئرلشمه لییینی آختاریرام...</string>
   <string name="account_status_connecting">باغلاشما</string>
   <string name="account_status_connection_error">اتصال خطيي</string>
   <string name="account_status_online">اونلاين</string>
@@ -210,14 +190,14 @@
   <string name="revoke_device_wait_title">لطفاً صبر کنین...</string>
   <string name="revoke_device_wait_message">ردّ ادن آلات</string>
   <string name="rename_device_title">بو آلینین آدینی دَییشدیر</string>
-  <string name="rename_device_message">بو آلینانی Jami حسابین دن تانینماق اوچون تزه بیر آد سچ</string>
   <string name="rename_device_button">آد آلتی</string>
   <string name="account_rename_device_hint">آلنادا آدینی سئچیب</string>
   <string name="account_device_this_indicator">بو آلین</string>
-  <string name="account_disabled_indicator">معلول</string>
+  <string name="account_disabled_indicator">معلوللار</string>
   <!--Link a new device-->
   <string name="error_format_not_supported">بو فورمات دا معاون دئییل.</string>
   <string name="account_link_device_title">یئنی آلتی باغلا</string>
+  <string name="connect_device_scanqr">QR کد سکن</string>
   <string name="account_link_device_button">باغلا</string>
   <!--Biometry-->
 </resources>

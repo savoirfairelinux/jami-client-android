@@ -45,8 +45,8 @@
   <string name="pref_typing_summary">Kirim dan terima indikator pengetikan yang menunjukkan bahwa pesan sedang diketik.</string>
   <string name="pref_block_record_title">Cegah tangkapan layar dan rekaman</string>
   <string name="pref_block_record_summary">Cegah pengambilan tangkapan layar atau rekaman video.</string>
-  <string name="pref_link_preview_title">Tampilkan tautan pratinjau di obrolan</string>
-  <string name="pref_link_preview_summary">Pratinjau perlu mengunduh konten dari server pihak ketiga.</string>
+  <string name="pref_link_preview_title">Pratinjau link web</string>
+  <string name="pref_link_preview_summary">Pratinjau membutuhkan pengunduhan konten dari server pihak ketiga.</string>
   <!--Notifications Visibility-->
   <string name="connectivity_custom_title">Kustom</string>
   <!--Extension-->

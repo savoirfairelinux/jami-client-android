@@ -145,7 +145,6 @@
   <string name="delete_contact">Ta bort kontakt</string>
   <string name="conversation_action_remove_this_title">Ta bort den här kontakten?</string>
   <string name="conversation_action_remove_this_message">Detta kommer att ta bort kontakten och rensa konversationshistoriken för gott.</string>
-  <string name="copied_to_clipboard">%1$s kopierat till urklipp</string>
   <string name="conversation_action_select_peer_number">Välj ett nummer</string>
   <string name="conversation_action_block_this">Blockera kontakt</string>
   <string name="conversation_action_unblock_this">Avblockera kontakt</string>
@@ -171,9 +170,6 @@
   <string name="conversation_type_contact">Jami kontakt</string>
   <string name="conversation_type_private">Privat</string>
   <string name="conversation_type_group">Grupp</string>
-  <string name="conversation_contact_invited">%1$s har blivit inbjuden</string>
-  <string name="conversation_contact_added">%1$s ansluten</string>
-  <string name="conversation_contact_left">%1$s är vänster</string>
   <string name="conversation_search_hint">Söksamtal</string>
   <string name="today">I dag</string>
   <string name="yesterday">I går</string>
@@ -181,8 +177,8 @@
   <string name="add_call_contact_number_to_contacts">Lägga till %1$s?</string>
   <string name="prompt_new_password">Nytt lösenord</string>
   <string name="prompt_new_password_optional">Nytt lösenord (ej obligatoriskt)</string>
-  <string name="prompt_new_password_repeat">Upprepa nytt lösenord</string>
-  <string name="account_create_title">Skapa ett Jami-konto</string>
+  <string name="prompt_new_password_repeat">Bekräfta nytt lösenord</string>
+  <string name="account_create_title">Skapa Jami-konto</string>
   <string name="prompt_new_username">Ange nytt användarnamn</string>
   <string name="prompt_hint_username">Användarnamn</string>
   <string name="help_password_choose">Välj ett starkt lösenord som du kommer ihåg, för att skydda ditt Jami-konto.</string>
@@ -197,7 +193,6 @@
   <string name="hist_invitation_received">Inbjudan mottagen</string>
   <!--Account summary-->
   <string name="profile">Profil</string>
-  <string name="profile_message_warning">Din profil delas endast med dina kontakter</string>
   <string name="open_the_gallery">Öppna galleriet</string>
   <string name="take_a_photo">Ta ett foto</string>
   <string name="profile_name_hint">Ange ditt namn</string>
@@ -207,6 +202,7 @@
   <string name="identifier">identifierare</string>
   <string name="account">Konto</string>
   <string name="link_new_device">Koppla en ny enhet</string>
+  <string name="devices_header">Enheter</string>
   <string name="devices">Kopplade enheter</string>
   <string name="total_devices">Totalt antal enheter:</string>
   <!--Share fragment-->
@@ -228,28 +224,11 @@
   <string name="conversation_placeholder">Du har inga konversationer än</string>
   <string name="contact_request_sent">Kontaktförfrågan skickad</string>
   <string name="start_conversation">Starta konversation</string>
-  <string name="search_results">Sökresultat</string>
   <string name="tv_contact_row_header">Kontakter</string>
   <string name="gallery_error_title">Ingen galleriapp hittades</string>
   <string name="gallery_error_message">Ingen app hittades på enheten, för att öppna Galleri</string>
   <!--File Transfer-->
-  <string name="invalid_file">Ogiltig fil</string>
-  <string name="not_able_to_write_file">Kunde inte skriva fil</string>
-  <string name="file_transfer_status_created">Startar överföring</string>
-  <string name="file_transfer_status_unsupported">saknar stöd</string>
-  <string name="file_transfer_status_wait_peer_acceptance">väntar på motparts godkännande</string>
-  <string name="file_transfer_status_wait_host_acceptance">väntar på värddators godkännande</string>
-  <string name="file_transfer_status_ongoing">pågående</string>
-  <string name="file_transfer_status_finished">slutförd</string>
-  <string name="file_transfer_status_closed_by_host">stängd av värddatorn</string>
-  <string name="file_transfer_status_closed_by_peer">stängd av motpart</string>
-  <string name="file_transfer_status_invalid_pathname">ogiltigt sökvägsnamn</string>
-  <string name="file_transfer_status_unjoinable_peer">oanslutbar motpart</string>
-  <string name="file_transfer_status_cancelled">avbruten</string>
-  <string name="file_transfer_status_error">misslyckades på grund av fel</string>
-  <string name="file_transfer_status_timed_out">avbrott</string>
-  <string name="file_saved_in">Fil sparad i %s</string>
-  <string name="file_saved_successfully">Filen sparade korrekt</string>
+  <string name="file_transfer_status_created">Startar</string>
   <string name="file_download">Ladda ner</string>
   <string name="title_media_viewer">Mediaspelare</string>
   <string name="menu_file_open">Öppna fil</string>
@@ -326,7 +305,6 @@
   <string name="bottomsheet_remove">Ta bort medlem</string>
   <!--JamiId-->
   <string name="jami_id_validate">Registrera användarnamn</string>
-  <string name="jami_id_looking_for_availability">Söker efter användarnamnets tillgänglighet...</string>
   <string name="jami_id_choose_username">Välj ett användarnamn</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Välkommen till Jami!</string>

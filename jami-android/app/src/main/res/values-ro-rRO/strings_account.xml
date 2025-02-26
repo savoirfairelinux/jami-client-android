@@ -30,7 +30,7 @@
   <string name="account_type_ip2ip">Cont IP</string>
   <string name="help_ring">Un cont Jami îți permite să comunici direct cu alții, în siguranță, fără server, printr-o rețea complet distribuită.</string>
   <string name="help_sip_title">Adaugă un cont SIP</string>
-  <string name="help_sip">Configurează un cont SIP existent.</string>
+  <string name="help_sip">Configurează un cont SIP existent</string>
   <string name="create_sip_account">Configurează contul SIP</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_title">Ștergi contul ?</string>
@@ -56,9 +56,10 @@
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Generale</string>
   <string name="account_basic_category">Reglări simple</string>
-  <string name="account_alias_label">Numele contului</string>
+  <string name="account_alias_label">Nume afișat</string>
   <string name="account_hostname_label">Numele serverului</string>
   <string name="account_bootstrap_label">Server de pornire</string>
+  <string name="account_name_server_label">Server de nume</string>
   <string name="account_username_label">Nume de utilizator</string>
   <string name="account_password_label">Parola</string>
   <string name="account_optionnal_category">Reglări facultative</string>
@@ -107,8 +108,10 @@
   <string name="account_published_same_as_local_label">Public ca cel local</string>
   <string name="account_published_port_label">Port Public</string>
   <string name="account_published_address_label">Adresa publicată</string>
+  <string name="account_connectivity_label">Conexiune directă P2P</string>
   <string name="disabled">Dezactivat</string>
   <string name="enabled">Activat</string>
+  <string name="default_value">Prestabilit</string>
   <string name="account_proxy_label">Proxy DHT</string>
   <string name="account_proxy_enable_label">Folosește proxy DHT</string>
   <string name="account_proxy_list_enable_label">Folosește lista de proxy DHT</string>
@@ -129,25 +132,25 @@
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Folosește Transportul TLS</string>
-  <string name="account_tls_port_label">Port de Recepție TLS</string>
-  <string name="account_tls_certificate_list_label">Autoritate de certificare</string>
+  <string name="account_tls_port_label">Port de recepție TLS</string>
+  <string name="account_tls_certificate_list_label">Autoritatea de certificare</string>
   <string name="account_tls_certificate_file_label">Fișierul certificatului</string>
   <string name="account_tls_private_key_file_label">Fișierul cheii private</string>
-  <string name="account_tls_password_label">Parola Cheii Private</string>
+  <string name="account_tls_password_label">Parola cheii private</string>
   <string name="account_tls_method_label">Metoda TLS</string>
   <string name="account_tls_ciphers_label">Cifrare TLS</string>
-  <string name="account_tls_server_name_label">Numele Serverului</string>
-  <string name="account_tls_verify_server_label">Verifică Serverul</string>
-  <string name="account_tls_verify_client_label">Verifică Clientul</string>
-  <string name="account_require_client_certificate_label">TLS Solicită un Certificat de Client</string>
+  <string name="account_tls_server_name_label">Numele serverului</string>
+  <string name="account_tls_verify_server_label">Verifică serverul</string>
+  <string name="account_tls_verify_client_label">Verifică clientul</string>
+  <string name="account_require_client_certificate_label">TLS solicită certificatul clientului</string>
   <string name="account_tls_negotiation_timeout_sec">Timp de negociere (sec)</string>
   <string name="account_rtp_max_port">Maximum</string>
   <string name="account_rtp_min_port">Minimum</string>
-  <string name="account_rtp_port_range">Interval Port audio RTP</string>
+  <string name="account_rtp_port_range">Interval port audio RTP</string>
   <!--restore/backup-->
   <string name="account_new_device_password">Introdu parola pentru a debloca contul</string>
   <string name="error_password_char_count">minimum 6 caractere</string>
-  <string name="error_passwords_not_equals">Parolele nu se potrivesc</string>
+  <string name="error_passwords_not_equals">Parolele nu se potrivesc.</string>
   <string name="export_account_wait_title">Așteaptă...</string>
   <string name="export_account_wait_message">Se exportă contul Jami</string>
   <string name="account_export_file">Copiază contul</string>
@@ -197,15 +200,15 @@
   <string name="account_link_button">Conectează-te dintr-o rețea</string>
   <string name="account_link_archive_button">Conectare din copia de rezervă</string>
   <string name="account_link_prompt_pin">Introdu codul PIN</string>
-  <string name="account_new_button">Creează un cont Jami</string>
+  <string name="account_new_button">Folosește Jami</string>
   <string name="account_link_export_button">Asociază alt aparat</string>
   <string name="account_link_show_button">Arată încă %d aparate asociate</string>
   <string name="account_link_hide_button">Ascunde aparatul asociat</string>
-  <string name="account_link_export_info">Pentru a folosi acest cont în alte aparate, trebuie să îl expui mai întîi pe Jami. Asta va genera un cod PIN care trebuie introdus în noul aparat pentru a configura contul. Acest PIN e valabil 10 minute.</string>
-  <string name="account_start_export_button">Generează PIN</string>
+  <string name="account_link_export_info">Pentru a folosi acest cont în alte aparate, trebuie să îl expui mai întâi în Jami. Asta va genera un cod PIN care trebuie introdus în noul aparat pentru a configura contul. Acest PIN e valabil 10 minute.</string>
+  <string name="account_start_export_button">Generează codul PIN</string>
   <string name="account_end_export_button">închide</string>
-  <string name="account_end_export_infos">PIN-ul tău este:\n\n%%\n\nPentru a completa procesul, trebuie să deschizi Jami în noul aparat. Creează un cont nou cu „Asociază acest aparat cu un cont”. Codul tău PIN este valabil 10 minute.</string>
-  <string name="account_link_export_info_light">Pentru a folosi acest cont în alte aparate, trebuie să îl expui mai întîi pe Jami. Asta va genera un cod PIN care trebuie introdus în noul aparat pentru a configura contul. Acest PIN e valabil 10 minute.</string>
+  <string name="account_end_export_infos">Codul tău PIN este:\n\n%%\n\nPentru a completa procesul, trebuie să deschizi Jami în noul aparat. Creează un cont nou cu „Asociază acest aparat cu un cont”. Codul tău PIN este valabil 10 minute.</string>
+  <string name="account_link_export_info_light">Pentru a folosi acest cont în alte aparate, trebuie să îl expui mai întâi în Jami. Asta va genera un cod PIN care trebuie introdus în noul aparat pentru a configura contul. Acest PIN e valabil 10 minute.</string>
   <string name="account_export_title">Asociază contul cu alte aparate</string>
   <string name="account_connect_server_button">Conectează-te la serverul de administrare</string>
   <string name="account_connect_button">Conectează</string>
@@ -219,16 +222,14 @@
   <!--Name registration-->
   <string name="error_username_empty">Introdu un nume de utilizator</string>
   <string name="no_registered_name_for_account">Niciun nume înscris</string>
-  <string name="username_available">Nume disponibil!</string>
+  <string name="username_available">Numele este disponibil.</string>
   <string name="register_name">Înscrie numele</string>
-  <string name="trying_to_register_name">Se înscrie numele</string>
   <string name="registered_username">Nume înscris</string>
   <string name="register_username">Înscrie numele public de utilizator</string>
   <string name="register_recommended">Recomandat</string>
   <string name="username_already_taken">Nume ales deja</string>
   <string name="invalid_username">Nume greșit</string>
   <string name="unknown_error">Eroare necunoscută. Verifică conectarea la rețea!</string>
-  <string name="looking_for_username_availability">Caut disponibilitatea numelui de utilizator...</string>
   <string name="account_status_connecting">Se conectează</string>
   <string name="account_status_connection_error">Eroare de conectare</string>
   <string name="account_status_online">Conectat</string>
@@ -251,14 +252,14 @@
   <string name="revoke_device_wait_title">Așteaptă...</string>
   <string name="revoke_device_wait_message">Se elimină aparatul</string>
   <string name="rename_device_title">Redenumește acest aparat</string>
-  <string name="rename_device_message">Alege un nume nou pentru a identifica acest aparat în contul tău Jami</string>
+  <string name="rename_device_message">Introdu numele aparatului pentru a-l identifica în contul tău Jami</string>
   <string name="rename_device_button">Redenumește aparatul</string>
   <string name="account_rename_device_hint">Alege un nume nou pentru aparat</string>
   <string name="account_device_name_empty">Numele aparatului trebuie pus</string>
   <string name="account_device_this_indicator">Acest aparat</string>
-  <string name="account_disabled_indicator">dezactivat</string>
+  <string name="account_disabled_indicator">Dezactivat</string>
   <!--Link a new device-->
-  <string name="account_link_prompt_pin_manually">Introdu manual PIN-ul</string>
+  <string name="account_link_prompt_pin_manually">Introdu manual codul PIN</string>
   <string name="qr_invalid">Nu este un cod QR de autentificare Jami</string>
   <string name="content_description_checkbox">Codul tău QR este valabil</string>
   <string name="error_format_not_supported">Acest format nu este acceptat.</string>
@@ -270,11 +271,11 @@
   <string name="account_link_device_info">Alege „Asociază alt aparat” din cealaltă aplicație Jami pentru a afișa codul QR sau PIN-ul.</string>
   <string name="account_generate_export_device">În celălalt aparat</string>
   <string name="account_generate_export_info">Instalează și pornește Jami, alege „Importă din alt aparat” și scanează codul QR.</string>
-  <string name="content_description_qr_generated">Codul tău QR</string>
-  <string name="account_generate_export_invalid">PIN-ul nu mai este valabil.\nIntrodu parola și generează alt PIN pentru asocierea noului aparat.</string>
-  <string name="account_generate_export_invalid_two">PIN-ul nu mai este valabil.\nGenerează alt PIN pentru asocierea noului aparat.</string>
+  <string name="content_description_qr_generated">Codul QR al contului</string>
+  <string name="account_generate_export_invalid">Codul PIN nu mai este valabil.\nIntrodu parola și generează altul pentru asocierea noului aparat.</string>
+  <string name="account_generate_export_invalid_two">Codul PIN nu mai este valabil.\nGenerează altul pentru asocierea noului aparat.</string>
   <string name="help_pin_info">Se completează dacă acest cont are parolă</string>
-  <string name="connect_device_scanqr">Scanează QR-ul</string>
+  <string name="connect_device_scanqr">Scanează codul QR</string>
   <string name="connect_device_enterPIN">Sau introdu codul PIN</string>
   <string name="account_link_device_button">Conectează</string>
   <!--Biometry-->

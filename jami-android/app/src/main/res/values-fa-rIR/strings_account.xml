@@ -24,7 +24,6 @@
   <string name="account_type_ip2ip">حساب IP</string>
   <string name="help_ring">حساب جمی به شما اجازه می‌دهد از درون یک شبکه کاملا توزیع‌شده، به صورت امن با افراد در تماس باشید.</string>
   <string name="help_sip_title">افزودن حساب SIP</string>
-  <string name="help_sip">پیکربندی یک حساب SIP موجود.</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_message">این کار قابل بازگشت نیست.</string>
   <!--AccountManagementFragment-->
@@ -43,9 +42,9 @@
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">عمومی</string>
   <string name="account_basic_category">تنظیمات پایه</string>
-  <string name="account_alias_label">نام حساب</string>
   <string name="account_hostname_label">نام میزبان</string>
   <string name="account_bootstrap_label">خود‌راه‌انداز(Bootstrap)</string>
+  <string name="account_name_server_label">نام سرور</string>
   <string name="account_username_label">نام کاربری</string>
   <string name="account_password_label">گذرواژه</string>
   <string name="account_optionnal_category">تنظیمات انتخابی</string>
@@ -77,8 +76,7 @@
   <string name="account_registration_exp_label">ثبت‌نام منقضی شد</string>
   <string name="account_local_interface_label">رابط محلی</string>
   <string name="account_local_port_label">درگاه محلی</string>
-  <string name="account_stun_enable_label">استفاده از Stun</string>
-  <string name="account_stun_server_label">سرور Stun</string>
+  <string name="account_stun_enable_label">استفاده از STUN</string>
   <string name="account_accept_files">پذیرش خودکار فایل‌های ورودی</string>
   <string name="account_conversation_settings_title">تنظیمات گفتگو</string>
   <string name="account_accept_files_max_size">بیشینه اندازه فایل برای پذیرش خودکار</string>
@@ -94,6 +92,7 @@
   <string name="account_published_address_label">نشانی منتشر‌شده</string>
   <string name="disabled">غیرفعال</string>
   <string name="enabled">فعال</string>
+  <string name="default_value">پیش‌گزیده</string>
   <string name="account_proxy_label">پروکسی DHT</string>
   <string name="account_proxy_enable_label"> استفاده از پروکسی DHT</string>
   <string name="account_proxy_server_label">آدرس پروکسی DHT</string>
@@ -112,25 +111,12 @@
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">استفاده از جابه‌جایی TLS</string>
-  <string name="account_tls_port_label">درگاه شنود TLS</string>
-  <string name="account_tls_certificate_list_label">مراجع صدور گواهینامه</string>
-  <string name="account_tls_certificate_file_label">فایل گواهینامه</string>
-  <string name="account_tls_private_key_file_label">فایل کلید خصوصی</string>
-  <string name="account_tls_password_label">گذرواژه  کلید خصوصی</string>
-  <string name="account_tls_method_label">روش TLS</string>
-  <string name="account_tls_ciphers_label">رمزهای TLS</string>
-  <string name="account_tls_server_name_label">نام سرور</string>
-  <string name="account_tls_verify_server_label">تأیید سرور</string>
-  <string name="account_tls_verify_client_label">تأیید مشتری</string>
-  <string name="account_require_client_certificate_label">TLS نیاز به گواهی‌نامه کارخواه دارد</string>
-  <string name="account_tls_negotiation_timeout_sec">مهلت مذاکره (ثانیه)</string>
+  <string name="account_tls_password_label">گذرواژه خصوصی</string>
   <string name="account_rtp_max_port">بیشینه</string>
   <string name="account_rtp_min_port">کمینه</string>
-  <string name="account_rtp_port_range">دامنه درگاه RTP صدا</string>
   <!--restore/backup-->
   <string name="account_new_device_password">برای قفل‌گشایی حساب، گذرواژه اصلی را وارد کنید</string>
   <string name="error_password_char_count">حداقل ۶ نویسه</string>
-  <string name="error_passwords_not_equals">گذرواژه‌ها یکسان نیستند</string>
   <string name="export_account_wait_title">لطفا صبر کنید…</string>
   <string name="export_account_wait_message">برون‌برد اطلاعات حساب</string>
   <string name="account_export_file">پشتیبان‌گیری حساب</string>
@@ -164,12 +150,10 @@
   <string name="account_link_device">اتصال از دستگاه دیگر</string>
   <string name="account_link_button">اتصال از طریق شبکه</string>
   <string name="account_link_archive_button">اتصال از طریق پشتیبان</string>
-  <string name="account_link_prompt_pin">پین را وارد کنید</string>
-  <string name="account_new_button">ایجاد یک حساب جمی</string>
+  <string name="account_new_button">با جمی هم همراهی کن</string>
   <string name="account_link_export_button">پیوند یک دستگاه جدید</string>
   <string name="account_link_show_button">نمایش %d دستگاه‌های پیوندیافته بیشتر</string>
   <string name="account_link_hide_button">مخفی‌کردن دستگاه پیوند‌داده‌شده</string>
-  <string name="account_start_export_button">تولید پین</string>
   <string name="account_end_export_button">بستن</string>
   <string name="account_export_title">پیوند حساب کاربری با دستگاه دیگر</string>
   <string name="account_connect_server_button">اتصال یه سرور مدیریت</string>
@@ -181,17 +165,13 @@
   <string name="account_enter_username">نام کاربری را وارد کنید</string>
   <!--Name registration-->
   <string name="error_username_empty">یک نام کاربری وارد کنید</string>
-  <string name="no_registered_name_for_account">بدون نام ثبت‌شده</string>
-  <string name="username_available">نام کاربری در‌دسترس است!</string>
   <string name="register_name">ثبت‌نام</string>
-  <string name="trying_to_register_name">در حال تلاش برای ثبت نام</string>
   <string name="registered_username">نام کاربری ثبت‌شده</string>
   <string name="register_username">ثبت نام کاربری عمومی</string>
   <string name="register_recommended">توصیه‌شده</string>
   <string name="username_already_taken">نام کاربری قبلا گرفته شده است</string>
   <string name="invalid_username">نام کاربری نامعتبر</string>
   <string name="unknown_error">خطای نامشخص. لطفا اتصال شبکه خود را بررسی کنید!</string>
-  <string name="looking_for_username_availability">در حال جستجو برای در دسترس بودن نام کاربری …</string>
   <string name="account_status_connecting">در حال اتصال</string>
   <string name="account_status_connection_error">خطای ارتباط</string>
   <string name="account_status_online">آنلاین</string>
@@ -211,7 +191,6 @@
   <string name="revoke_device_wait_title">لطفا صبر کنید…</string>
   <string name="revoke_device_wait_message">در حال باطل کردن دستگاه</string>
   <string name="rename_device_title">تغییر نام این دستگاه</string>
-  <string name="rename_device_message">نام جدیدی را برای شناسایی این دستگاه در حساب جمی خود انتخاب کنید</string>
   <string name="rename_device_button">تغییر نام دستگاه</string>
   <string name="account_rename_device_hint">انتخاب نام دستگاه جدید</string>
   <string name="account_device_this_indicator">این دستگاه</string>
@@ -219,6 +198,7 @@
   <!--Link a new device-->
   <string name="error_format_not_supported">این قالب پشتیبانی نمی‌شود.</string>
   <string name="account_link_device_title">پیوند یک دستگاه جدید</string>
+  <string name="connect_device_scanqr">کد QR را اسکن کنید</string>
   <string name="account_link_device_button">اتصال</string>
   <!--Biometry-->
 </resources>
