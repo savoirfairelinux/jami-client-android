@@ -48,8 +48,8 @@
   <string name="pref_typing_summary">Pošilja in prejema pokazatelje tipkanja, ki kažejo, da se sporočilo vnaša.</string>
   <string name="pref_block_record_title">Blokiraj zajem slik in snemanje</string>
   <string name="pref_block_record_summary">Blokirajte zajem slike ali snemanje videoposnetkov.</string>
-  <string name="pref_link_preview_title">Pokaži predogled povezav v pogovorih</string>
-  <string name="pref_link_preview_summary">Za predoglede je potrebno prenesti vsebino s strežnikov tretjih strani.</string>
+  <string name="pref_link_preview_title">Predogled spletnih povezav</string>
+  <string name="pref_link_preview_summary">Predogled zahteva prenos vsebine s strežnikov tretjih oseb.</string>
   <!--Notifications Visibility-->
   <string name="connectivity_custom_title">Po meri</string>
   <!--Extension-->

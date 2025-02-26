@@ -184,7 +184,7 @@
   <string name="swarm_group_action_leave_title">离开这个群组？</string>
   <string name="swarm_group_action_leave_message">这将从您的对话列表中删除该对话</string>
   <string name="conversation_action_copy_peer_number">复制联系人号码</string>
-  <string name="copied_to_clipboard">%1$s已复制至剪贴板</string>
+  <string name="copied_to_clipboard">%1$s已复制到剪贴板。</string>
   <string name="conversation_action_select_peer_number">选择一个数字</string>
   <string name="conversation_action_block_this">阻擋連絡人</string>
   <string name="conversation_action_unblock_this">取消屏蔽联系人</string>
@@ -213,11 +213,11 @@
   <string name="conversation_type_contact">Jami 联系人</string>
   <string name="conversation_type_private">私人</string>
   <string name="conversation_type_group">群組</string>
-  <string name="conversation_contact_invited">已邀請 %1$s</string>
-  <string name="conversation_contact_added">%1$s 已加入</string>
-  <string name="conversation_contact_left">%1$s 已離開</string>
-  <string name="conversation_contact_blocked">%1$s被封锁了</string>
-  <string name="conversation_contact_unblocked">%1$s已解除封锁</string>
+  <string name="conversation_contact_invited">%1$s被邀请加入对话。</string>
+  <string name="conversation_contact_added">%1$s已加入对话。</string>
+  <string name="conversation_contact_left">%1$s已退出对话。</string>
+  <string name="conversation_contact_blocked">%1$s被阻止参与对话。</string>
+  <string name="conversation_contact_unblocked">%1$s被移出黑名单。</string>
   <string name="conversation_search_hint">在会话中搜索</string>
   <string name="audio_recorder_error">找不到录音应用</string>
   <string name="video_recorder_error">找不到相机</string>
@@ -238,7 +238,7 @@
   <string name="add_call_contact_number_to_contacts">添加%1$s？</string>
   <string name="prompt_new_password">新密碼</string>
   <string name="prompt_new_password_optional">新的密码（可选）</string>
-  <string name="prompt_new_password_repeat">重新輸入新密碼</string>
+  <string name="prompt_new_password_repeat">确认新密码</string>
   <string name="account_create_title">建立 Jami 帳號</string>
   <string name="prompt_new_username">輸入新使用者名稱</string>
   <string name="prompt_hint_username">使用者名</string>
@@ -247,6 +247,7 @@
   <string name="help_server_enter">输入管理服务器的 URL。</string>
   <string name="help_pin_enter">从另一个配置的Jami帐户输入PIN。使用“导出Jami帐户”功能获取PIN。</string>
   <string name="pin_copied">PIN码复制到剪贴板</string>
+  <string name="copied_clipboard">已复制到剪贴板。</string>
   <string name="wizard_next">下一步</string>
   <string name="wizard_back">前一個</string>
   <string name="wizard_skip">跳过</string>
@@ -259,7 +260,8 @@
   <!--Account summary-->
   <string name="profile">個人檔案</string>
   <string name="profile_name">個人檔案名稱</string>
-  <string name="profile_message_warning">您的账户资料仅会与您的联系人分享</string>
+  <string name="profile_message_warning">个人资料只与该账户联系人共享</string>
+  <string name="custom_profile_message_warning">自定义配置文件只对该设备上的账户可见</string>
   <string name="open_the_gallery">開啟相簿</string>
   <string name="take_a_photo">照相</string>
   <string name="remove_photo">删除照片</string>
@@ -270,6 +272,7 @@
   <string name="identifier">标识符</string>
   <string name="account">帳號</string>
   <string name="link_new_device">关联新设备</string>
+  <string name="devices_header">裝置</string>
   <string name="devices">关联设备</string>
   <string name="total_devices">全部设备：</string>
   <!--Share fragment-->
@@ -306,25 +309,25 @@
   <string name="gallery_error_message">设备上没有程序用来打开图库</string>
   <string name="generic_error">发生未知错误。</string>
   <!--File Transfer-->
-  <string name="invalid_file">无效文件</string>
-  <string name="not_able_to_write_file">无法写入文件</string>
-  <string name="file_transfer_status_created">正在初始化传送</string>
+  <string name="invalid_file">无效文件。</string>
+  <string name="not_able_to_write_file">无法写入文件。</string>
+  <string name="file_transfer_status_created">正在初始化</string>
   <string name="file_transfer_status_unsupported">不支持</string>
-  <string name="file_transfer_status_wait_peer_acceptance">等待对等节点接受</string>
-  <string name="file_transfer_status_wait_host_acceptance">等待主机接受</string>
-  <string name="file_transfer_status_ongoing">正在进行</string>
-  <string name="file_transfer_status_finished">完成</string>
-  <string name="file_transfer_status_closed_by_host">被主机关闭</string>
-  <string name="file_transfer_status_closed_by_peer">被对等节点关闭</string>
+  <string name="file_transfer_status_wait_peer_acceptance">等待同行接受...</string>
+  <string name="file_transfer_status_wait_host_acceptance">等待主机接受...</string>
+  <string name="file_transfer_status_ongoing">进行中</string>
+  <string name="file_transfer_status_finished">已完成</string>
+  <string name="file_transfer_status_closed_by_host">主机关闭</string>
+  <string name="file_transfer_status_closed_by_peer">由对方关闭</string>
   <string name="file_transfer_status_invalid_pathname">无效路径</string>
-  <string name="file_transfer_status_unjoinable_peer">无法加入的对等节点</string>
-  <string name="file_transfer_status_cancelled">已取消</string>
-  <string name="file_transfer_status_error">因出错导致失败</string>
+  <string name="file_transfer_status_unjoinable_peer">对方无法连接</string>
+  <string name="file_transfer_status_cancelled">取消</string>
+  <string name="file_transfer_status_error">传输文件时发生错误。</string>
   <string name="file_transfer_status_timed_out">超时</string>
-  <string name="file_saved_in">文件已保存到%s</string>
-  <string name="file_saved_successfully">文件保存成功</string>
+  <string name="file_saved_in">文件保存在%s。</string>
+  <string name="file_saved_successfully">文件保存成功。</string>
   <string name="file_download">下载</string>
-  <string name="no_space_left_on_device">设备上没有可用的存储空间</string>
+  <string name="no_space_left_on_device">设备上没有可用存储空间。</string>
   <string name="title_media_viewer">媒体播放器</string>
   <string name="menu_file_open">打开文件</string>
   <string name="menu_file_download">下载文件</string>
@@ -361,7 +364,7 @@
   <string name="conversation_input_speech_hint">说点什么…</string>
   <string name="audio_permission_denied">麦克风权限已禁用。在设备设置中启用它以使用此功能。</string>
   <string name="camera_permission_denied">相机权限已禁用。在设备设置中启用它以使用此功能。</string>
-  <string name="speech_recogniton_unavailable">语音识别不可用</string>
+  <string name="speech_recogniton_unavailable">语音识别不可用。</string>
   <string name="audio_permission_rationale_title">需要音频权限</string>
   <string name="camera_permission_rationale_title">需要相机权限</string>
   <string name="audio_permission_rationale_message">Jami需要获得麦克风许可才能使用语音转文本和录制音频功能。下一步将对此进行询问</string>
@@ -410,6 +413,7 @@
   <string name="tab_files">文件</string>
   <string name="tab_settings">設定</string>
   <string name="not_admin_toast">只有管理员可以编辑此组的信息</string>
+  <string name="dialog_title_contact">编辑显示名称</string>
   <string name="dialogtitle_title">编辑群名称</string>
   <string name="dialogtitle_description">编辑群简介</string>
   <string name="dialog_hint_title">標題</string>
@@ -428,10 +432,10 @@
   <string name="jami_id_copy">复制Jami的Id</string>
   <string name="jami_id_share">分享jami的ID</string>
   <string name="jami_id_validate">注册用户名</string>
-  <string name="jami_id_available">用户名可用</string>
-  <string name="jami_id_not_available">此用户名不可用\n• 最多32字符\n• 允许使用的特殊字符：横杠（-），下划线（_）</string>
+  <string name="jami_id_available">用户名可用。</string>
+  <string name="jami_id_not_available">用户名不可用。</string>
   <string name="jami_id_info">• 最多32字符\n• 允许使用的特殊字符：破折号（-），下划线（_）</string>
-  <string name="jami_id_looking_for_availability">正在尋找使用者名稱的可用性…</string>
+  <string name="jami_id_looking_for_availability">检查用户名是否可用...</string>
   <string name="jami_id_choose_username">选择一个用户名</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">欢迎来到 Jami</string>

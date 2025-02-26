@@ -143,7 +143,6 @@
   <string name="delete_contact">Slet kontakt</string>
   <string name="conversation_action_remove_this_title">Slet kontakten?</string>
   <string name="conversation_action_remove_this_message">Det vil slette kontakten og helt sikkert rydde samtalehistorikken.</string>
-  <string name="copied_to_clipboard">%1$s kopieret til udklipsholder</string>
   <string name="conversation_action_select_peer_number">Vælg et nummer</string>
   <string name="conversation_action_block_this">Bloker kontakt</string>
   <string name="conversation_action_unblock_this">Ublokere kontakt</string>
@@ -169,9 +168,6 @@
   <string name="conversation_type_contact">Jami kontakt</string>
   <string name="conversation_type_private">Privat</string>
   <string name="conversation_type_group">Gruppe</string>
-  <string name="conversation_contact_invited">%1$s blev inviteret</string>
-  <string name="conversation_contact_added">%1$s er blevet tilsluttet</string>
-  <string name="conversation_contact_left">%1$s er venstre</string>
   <string name="conversation_search_hint">Søg samtale</string>
   <string name="today">I dag</string>
   <string name="yesterday">I går</string>
@@ -179,8 +175,8 @@
   <string name="add_call_contact_number_to_contacts">Tilføj %1$s?</string>
   <string name="prompt_new_password">Ny adgangskode</string>
   <string name="prompt_new_password_optional">Ny adgangskode (valgfrit)</string>
-  <string name="prompt_new_password_repeat">Gentag ny adgangskode</string>
-  <string name="account_create_title">Opret en Jami-konto</string>
+  <string name="prompt_new_password_repeat">bekræft nyt adgangskode</string>
+  <string name="account_create_title">Oprette Jami-konto</string>
   <string name="prompt_new_username">Indtast nyt brugernavn</string>
   <string name="prompt_hint_username">Brugernavn</string>
   <string name="help_password_choose">Vælg et stærkt kodeord som du kan huske, til at beskytte din Jami-konto.</string>
@@ -195,7 +191,6 @@
   <string name="hist_invitation_received">Invitation modtaget</string>
   <!--Account summary-->
   <string name="profile">Profil</string>
-  <string name="profile_message_warning">Din profil vil kun blive delt med dine kontakter</string>
   <string name="open_the_gallery">Åbn galleriet</string>
   <string name="take_a_photo">Tag billede</string>
   <string name="profile_name_hint">Indtast dit navn</string>
@@ -205,6 +200,7 @@
   <string name="identifier">Identifikator</string>
   <string name="account">Konto</string>
   <string name="link_new_device">Tilknyt en ny enhed</string>
+  <string name="devices_header">Enheder</string>
   <string name="devices">Sammenkædede enheder</string>
   <string name="total_devices">Antal enheder:</string>
   <!--Share fragment-->
@@ -226,28 +222,11 @@
   <string name="conversation_placeholder">Du har endnu ingen samtaler</string>
   <string name="contact_request_sent">Kontaktforespørgsel afsendt</string>
   <string name="start_conversation">Start en samtale</string>
-  <string name="search_results">Søgeresultater</string>
   <string name="tv_contact_row_header">Kontakter</string>
   <string name="gallery_error_title">Ingen Galleri-applikation fundet</string>
   <string name="gallery_error_message">Der blev ikke funden nogen applikation på enheden der kan vise Galleriet</string>
   <!--File Transfer-->
-  <string name="invalid_file">Ugyldig fil</string>
-  <string name="not_able_to_write_file">Kan ikke skrive fil</string>
-  <string name="file_transfer_status_created">Start overførsel</string>
-  <string name="file_transfer_status_unsupported">ikke understøttet</string>
-  <string name="file_transfer_status_wait_peer_acceptance">afventer modpartens godkendelse.</string>
-  <string name="file_transfer_status_wait_host_acceptance">afventer værtens godkendelse.</string>
-  <string name="file_transfer_status_ongoing">igangværende</string>
-  <string name="file_transfer_status_finished">afsluttet</string>
-  <string name="file_transfer_status_closed_by_host">lukket af vært</string>
-  <string name="file_transfer_status_closed_by_peer">lukket af modpart</string>
-  <string name="file_transfer_status_invalid_pathname">ugyldigt stinavn</string>
-  <string name="file_transfer_status_unjoinable_peer">modparten kunne ikke deltage</string>
-  <string name="file_transfer_status_cancelled">annulleret</string>
-  <string name="file_transfer_status_error">Der skete end fejl</string>
-  <string name="file_transfer_status_timed_out">ventetiden udløb</string>
-  <string name="file_saved_in">Fil gemt i %s</string>
-  <string name="file_saved_successfully">Filen blev gemt</string>
+  <string name="file_transfer_status_created">Initialiserer</string>
   <string name="file_download">Download</string>
   <string name="title_media_viewer">Mediefremviser</string>
   <string name="menu_file_open">Åbn fil</string>
@@ -324,7 +303,6 @@
   <string name="bottomsheet_remove">Fjern medlem</string>
   <!--JamiId-->
   <string name="jami_id_validate">Registrer brugernavn</string>
-  <string name="jami_id_looking_for_availability">Tjekker efter om brugernavnet er ledigt...</string>
   <string name="jami_id_choose_username">Vælg et brugernavn</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Velkommen til Jami</string>

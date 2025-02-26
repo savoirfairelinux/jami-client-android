@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="pref_link_preview_title">Перегляди веб-посилань</string>
+  <string name="pref_link_preview_summary">Вигляд вимагає завантаження контенту з серверів третіх осіб.</string>
+  <!--Notifications Visibility-->
+  <!--Extension-->
+</resources>

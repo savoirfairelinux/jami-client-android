@@ -186,7 +186,7 @@
   <string name="swarm_group_action_leave_title">¿Dejar este grupo?</string>
   <string name="swarm_group_action_leave_message">Esto eliminará la conversación de tu lista de conversaciones.</string>
   <string name="conversation_action_copy_peer_number">Copiar identificador de contacto</string>
-  <string name="copied_to_clipboard">%1$s copiado al portapapeles</string>
+  <string name="copied_to_clipboard">%1$s copiado al portapapeles.</string>
   <string name="conversation_action_select_peer_number">Seleccioná un número</string>
   <string name="conversation_action_block_this">Bloquear contacto</string>
   <string name="conversation_action_unblock_this">Desbloquear contacto</string>
@@ -215,11 +215,11 @@
   <string name="conversation_type_contact">Contacto de Jami</string>
   <string name="conversation_type_private">Privado</string>
   <string name="conversation_type_group">Grupo</string>
-  <string name="conversation_contact_invited">%1$s fue invitado</string>
-  <string name="conversation_contact_added">%1$s se unió</string>
-  <string name="conversation_contact_left">%1$sse salió</string>
-  <string name="conversation_contact_blocked">Se bloqueó a %1$s</string>
-  <string name="conversation_contact_unblocked">Se desbloqueó a %1$s</string>
+  <string name="conversation_contact_invited">%1$s fue invitado a unirse a la conversación.</string>
+  <string name="conversation_contact_added">%1$s se ha unido a la conversación.</string>
+  <string name="conversation_contact_left">%1$s ha abandonado la conversación.</string>
+  <string name="conversation_contact_blocked">%1$s fue bloqueado de la conversación.</string>
+  <string name="conversation_contact_unblocked">%1$s fue desbloqueado de la conversación.</string>
   <string name="conversation_search_hint">Buscar conversación</string>
   <string name="audio_recorder_error">No se encontró la aplicación Grabadora de audio.</string>
   <string name="video_recorder_error">No se encontró la aplicación Grabadora de vídeo.</string>
@@ -240,8 +240,8 @@
   <string name="add_call_contact_number_to_contacts">¿Añadir a %1$s?</string>
   <string name="prompt_new_password">Nueva contraseña</string>
   <string name="prompt_new_password_optional">Nueva contraseña (opcional)</string>
-  <string name="prompt_new_password_repeat">Repetir nueva contraseña</string>
-  <string name="account_create_title">Crear una cuenta de Jami</string>
+  <string name="prompt_new_password_repeat">Confirmar nueva contraseña</string>
+  <string name="account_create_title">Crear una cuenta en Jami</string>
   <string name="prompt_new_username">Escribir nuevo usuario</string>
   <string name="prompt_hint_username">Nombre de usuario</string>
   <string name="help_password_choose">Elegí una contraseña robusta que recuerdes para proteger tu cuenta de Jami.</string>
@@ -249,6 +249,7 @@
   <string name="help_server_enter">Ingresá la URL del servidor de administración.</string>
   <string name="help_pin_enter">Ingrese el PIN de otra cuenta Jami configurada. Utilice la función\" Exportar cuenta Jami \" para obtener un PIN.</string>
   <string name="pin_copied">Código PIN copiado en el portapapeles.</string>
+  <string name="copied_clipboard">Copiado al portapapeles.</string>
   <string name="wizard_next">Siguiente</string>
   <string name="wizard_back">Atrás</string>
   <string name="wizard_skip">Saltar</string>
@@ -261,7 +262,6 @@
   <!--Account summary-->
   <string name="profile">Perfil</string>
   <string name="profile_name">Nombre de perfil</string>
-  <string name="profile_message_warning">Tu perfil sólo es compartido con tus contactos</string>
   <string name="open_the_gallery">Abrir galería</string>
   <string name="take_a_photo">Tomar foto</string>
   <string name="remove_photo">Eliminar foto</string>
@@ -272,6 +272,7 @@
   <string name="identifier">Identificador</string>
   <string name="account">Cuenta</string>
   <string name="link_new_device">Vincular un nuevo dispositivo</string>
+  <string name="devices_header">Dispositivos</string>
   <string name="devices">Dispositivos vinculados</string>
   <string name="total_devices">Dispositivos totales:</string>
   <!--Share fragment-->
@@ -302,31 +303,14 @@
   <string name="conversation_placeholder">Todavía no tienes conversaciones</string>
   <string name="contact_request_sent">Solicitud de contacto enviada</string>
   <string name="start_conversation">Comenzar una conversación</string>
-  <string name="search_results">Resultados de la búsqueda</string>
   <string name="tv_contact_row_header">Contactos</string>
   <string name="gallery_error_title">No se encontró una aplicación de galería</string>
   <string name="gallery_error_message">No se encontró ninguna aplicación para abrir la Galería</string>
   <string name="generic_error">Ocurrió un error desconocido.</string>
   <!--File Transfer-->
-  <string name="invalid_file">Archivo inválido</string>
-  <string name="not_able_to_write_file">No se puede escribir el archivo</string>
-  <string name="file_transfer_status_created">iniciando transferencia</string>
-  <string name="file_transfer_status_unsupported">no soportado</string>
-  <string name="file_transfer_status_wait_peer_acceptance">esperando aprobación de compañero</string>
-  <string name="file_transfer_status_wait_host_acceptance">esperando aprobación de anfitrión</string>
-  <string name="file_transfer_status_ongoing">en curso</string>
-  <string name="file_transfer_status_finished">finalizado</string>
-  <string name="file_transfer_status_closed_by_host">cerrado por anfitrión</string>
-  <string name="file_transfer_status_closed_by_peer">cerrado por compañero</string>
-  <string name="file_transfer_status_invalid_pathname">nombre de ruta inválido</string>
-  <string name="file_transfer_status_unjoinable_peer">no se puede acceder al compañero</string>
-  <string name="file_transfer_status_cancelled">Cancelado</string>
-  <string name="file_transfer_status_error">Falló debido a un error</string>
-  <string name="file_transfer_status_timed_out">Caducado: tiempo agotado</string>
-  <string name="file_saved_in">Archivo guardado en %s</string>
-  <string name="file_saved_successfully">Archivo guardado correctamente</string>
+  <string name="file_transfer_status_created">Inicializando</string>
+  <string name="file_saved_successfully">Archivo guardado correctamente.</string>
   <string name="file_download">Descargar</string>
-  <string name="no_space_left_on_device">No hay espacio de almacenamiento disponible en el dispositivo</string>
   <string name="title_media_viewer">Visor de archivos</string>
   <string name="menu_file_open">Abrir archivo</string>
   <string name="menu_file_download">Descargar archivo</string>
@@ -363,7 +347,6 @@
   <string name="conversation_input_speech_hint">Diga algo...</string>
   <string name="audio_permission_denied">El permiso del micrófono está deshabilitado. Habilítelo en la configuración del dispositivo para usar esta función.</string>
   <string name="camera_permission_denied">El permiso de la cámara está deshabilitado. Habilítelo en la configuración del dispositivo para usar esta función.</string>
-  <string name="speech_recogniton_unavailable">El reconocimiento de voz no está disponible.</string>
   <string name="audio_permission_rationale_title">Permiso de audio requerido</string>
   <string name="camera_permission_rationale_title">Se requiere permiso de la cámara</string>
   <string name="audio_permission_rationale_message">Jami requiere el permiso del micrófono para utilizar la función de texto a voz y grabar audio. Se solicitará en el siguiente paso.</string>
@@ -412,6 +395,7 @@
   <string name="tab_files">Archivos</string>
   <string name="tab_settings">Ajustes</string>
   <string name="not_admin_toast">Solo los administradores pueden editar la información de este grupo</string>
+  <string name="dialog_title_contact">Editar nombre para mostrar</string>
   <string name="dialogtitle_title">Editar título de grupo</string>
   <string name="dialogtitle_description">Editar la descripción del grupo</string>
   <string name="dialog_hint_title">Título</string>
@@ -430,10 +414,9 @@
   <string name="jami_id_copy">Copiar JamiId</string>
   <string name="jami_id_share">Compartir JamiId</string>
   <string name="jami_id_validate">Registrar nombre de usuario</string>
-  <string name="jami_id_available">El nombre de usuario no está disponible</string>
-  <string name="jami_id_not_available">El nombre de usuario no está disponible\n• Máximo 32 caracteres\n• Caracteres especiales permitidos: guion (-), subrayado (_)</string>
+  <string name="jami_id_available">El nombre de usuario está disponible.</string>
+  <string name="jami_id_not_available">El nombre de usuario no está disponible.</string>
   <string name="jami_id_info">• Máximo 32 caracteres\n• Caracteres especiales permitidos: guion (-), subrayado (_)</string>
-  <string name="jami_id_looking_for_availability">Revisando si el nombre de usuario está disponible</string>
   <string name="jami_id_choose_username">Elegir nombre de usuario</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Bienvenido a Jami</string>
@@ -448,7 +431,6 @@
   <string name="show_certificate">Mostrar el certificado</string>
   <string name="mute_conversation">Silenciar conversación</string>
   <!--Donation-->
-  <string name="donation_card_description">Si disfruta usando Jami y cree en nuestra misión, ¿le gustaría hacer una donación?</string>
   <string name="donation_card_not_now">Ahora no</string>
   <string name="donation_donate">Donar</string>
   <string name="donation_setting_title">Recordatorio de donación</string>

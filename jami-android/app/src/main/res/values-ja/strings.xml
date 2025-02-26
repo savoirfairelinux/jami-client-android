@@ -147,7 +147,6 @@
   <string name="delete_contact">連絡先を削除</string>
   <string name="conversation_action_remove_this_title">この連絡先を削除しますか？</string>
   <string name="conversation_action_remove_this_message">この操作は連絡先を削除し、会話の履歴を完全に削除します。</string>
-  <string name="copied_to_clipboard">%1$s をクリップボードにコピーしました</string>
   <string name="conversation_action_select_peer_number">番号を選択</string>
   <string name="conversation_action_block_this">連絡先をブロック</string>
   <string name="conversation_action_unblock_this">連絡先の解禁</string>
@@ -173,9 +172,6 @@
   <string name="conversation_type_contact">Jamiの連絡先</string>
   <string name="conversation_type_private">プライベート</string>
   <string name="conversation_type_group">グループ</string>
-  <string name="conversation_contact_invited">%1$s が招待されました</string>
-  <string name="conversation_contact_added">%1$s が加入</string>
-  <string name="conversation_contact_left">残り%1$s</string>
   <string name="conversation_search_hint">会話を検索</string>
   <string name="today">今日</string>
   <string name="yesterday">昨日</string>
@@ -183,8 +179,8 @@
   <string name="add_call_contact_number_to_contacts">%1$sを追加しますか？</string>
   <string name="prompt_new_password">新しいパスワード</string>
   <string name="prompt_new_password_optional">新しいパスワード（オプション）</string>
-  <string name="prompt_new_password_repeat">新しいパスワードの確認</string>
-  <string name="account_create_title">Jamiアカウントを作成</string>
+  <string name="prompt_new_password_repeat">新しいパスワードを確認する</string>
+  <string name="account_create_title">Jamiアカウントを作成する</string>
   <string name="prompt_new_username">新しいユーザー名を入力してください</string>
   <string name="prompt_hint_username">ユーザー名</string>
   <string name="help_password_choose">あなたのJamiアカウントを守るために強固なパスワードを設定してください。また、このパスワードを忘れないでください。</string>
@@ -200,7 +196,6 @@
   <!--Account summary-->
   <string name="profile">プロフィール</string>
   <string name="profile_name">プロフィール名</string>
-  <string name="profile_message_warning">プロフィールは連絡先以外に共有されません</string>
   <string name="open_the_gallery">ギャラリーを開く</string>
   <string name="take_a_photo">撮影</string>
   <string name="profile_name_hint">名前を入力</string>
@@ -210,6 +205,7 @@
   <string name="identifier">識別子</string>
   <string name="account">アカウント</string>
   <string name="link_new_device">新しいデバイスをリンク</string>
+  <string name="devices_header">デバイス</string>
   <string name="devices">リンクされたデバイス</string>
   <string name="total_devices">合計デバイス数：</string>
   <!--Share fragment-->
@@ -231,28 +227,10 @@
   <string name="conversation_placeholder">まだ会話がありません</string>
   <string name="contact_request_sent">連絡先のリクエストを送信しました</string>
   <string name="start_conversation">会話を開始</string>
-  <string name="search_results">検索結果</string>
   <string name="tv_contact_row_header">連絡先</string>
   <string name="gallery_error_title">ギャラリーアプリがありません</string>
   <string name="gallery_error_message">デバイス上にギャラリーを開くアプリがありません</string>
   <!--File Transfer-->
-  <string name="invalid_file">無効なファイル</string>
-  <string name="not_able_to_write_file">ファイルを書き込めません</string>
-  <string name="file_transfer_status_created">転送の初期化中</string>
-  <string name="file_transfer_status_unsupported">未対応</string>
-  <string name="file_transfer_status_wait_peer_acceptance">相手の許可を待っています</string>
-  <string name="file_transfer_status_wait_host_acceptance">ホストの許可を待っています</string>
-  <string name="file_transfer_status_ongoing">通話中</string>
-  <string name="file_transfer_status_finished">終了</string>
-  <string name="file_transfer_status_closed_by_host">ホストが終了しました</string>
-  <string name="file_transfer_status_closed_by_peer">相手が終了しました</string>
-  <string name="file_transfer_status_invalid_pathname">不正なパス名</string>
-  <string name="file_transfer_status_unjoinable_peer">参加できない相手</string>
-  <string name="file_transfer_status_cancelled">キャンセルしました</string>
-  <string name="file_transfer_status_error">エラーで失敗しました</string>
-  <string name="file_transfer_status_timed_out">タイムアウトしました</string>
-  <string name="file_saved_in">%sに保存しました</string>
-  <string name="file_saved_successfully">ファイルが保存されました</string>
   <string name="file_download">入手</string>
   <string name="title_media_viewer">メディアビューアー</string>
   <string name="menu_file_open">ファイルを開く</string>
@@ -329,7 +307,6 @@
   <string name="bottomsheet_remove">メンバーを削除</string>
   <!--JamiId-->
   <string name="jami_id_validate">ユーザー名を登録</string>
-  <string name="jami_id_looking_for_availability">利用可能なユーザー名を検索中…</string>
   <string name="jami_id_choose_username">ユーザー名を選択する</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Jamiへようこそ</string>

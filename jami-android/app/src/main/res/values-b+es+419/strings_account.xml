@@ -21,6 +21,8 @@
   <string name="account_biometric_set">Desactivar autenticación biométrica</string>
   <string name="account_biometric_summary">Administre la autenticación biométrica para su cuenta.</string>
   <!--Basic Details-->
+  <string name="account_alias_label">Nombre para mostrar</string>
+  <string name="account_name_server_label">Servidor de nombres</string>
   <!--Extension Details-->
   <string name="account_preferences_extension_tab">Extensions</string>
   <!--Audio Details-->
@@ -29,13 +31,31 @@
   <string name="account_chat_settings_title">Configuraciones de chat</string>
   <string name="account_read_receipts_label">Habilitar confirmaciones de lectura</string>
   <string name="account_read_receipts_summary">Enviar y recibir confirmaciones de lectura indicando que se ha visto un mensaje.</string>
+  <string name="account_stun_enable_label">Usar STUN</string>
+  <string name="account_stun_server_label">Servidor STUN</string>
+  <string name="account_connectivity_label">Conectividad punto a punto</string>
+  <string name="default_value">Predeterminado</string>
   <string name="account_proxy_list_enable_label">Usar lista de proxy DHT</string>
   <string name="account_proxy_server_used">Usando: %1$s</string>
   <!--Security Details-->
   <!--SRTP Details-->
   <!--SIP-->
   <!--TLS Details-->
+  <string name="account_tls_port_label">Puerto de escucha TLS</string>
+  <string name="account_tls_certificate_list_label">Autoridades de certificación</string>
+  <string name="account_tls_certificate_file_label">Archivo de certificado</string>
+  <string name="account_tls_private_key_file_label">Archivo de clave privada</string>
+  <string name="account_tls_password_label">Contraseña de clave privada</string>
+  <string name="account_tls_method_label">Método TLS</string>
+  <string name="account_tls_ciphers_label">Cifrados TLS</string>
+  <string name="account_tls_server_name_label">Nombre del servidor</string>
+  <string name="account_tls_verify_server_label">Verificar servidor</string>
+  <string name="account_tls_verify_client_label">Verificar cliente</string>
+  <string name="account_require_client_certificate_label">TLS requiere certificado de cliente</string>
+  <string name="account_tls_negotiation_timeout_sec">Tiempo de espera de negociación (seg)</string>
+  <string name="account_rtp_port_range">Rango de puertos RTP de audio</string>
   <!--restore/backup-->
+  <string name="error_passwords_not_equals">Las contraseñas no coinciden.</string>
   <string name="account_export_file">Crear copia de seguridad de la cuenta</string>
   <string name="account_export_end_decryption_message">Contraseña incorrecta. Por favor, inténtelo de nuevo con la contraseña correcta.</string>
   <string name="account_export_end_network_message">Se produjo un error de red al exportar la cuenta. Verifica tu conectividad.</string>
@@ -56,39 +76,47 @@
   <string name="account_sip_success_title">Cuenta SIP registrada</string>
   <string name="account_sip_success_message">Cuenta SIP registrada con éxito.</string>
   <!--TV-->
-  <string name="account_link_export_info">Para usar esta cuenta en otros dispositivos, primero debe enseñarla en Jami. Esto generará un código PIN que deberá ingresar en el nuevo dispositivo para configurar la cuenta. El PIN caducará en 10 minutos.</string>
-  <string name="account_end_export_infos">Tu PIN es:\n\n%%\n\nTo para completar el proceso, debes abrir Jami en el nuevo dispositivo. Crear una nueva cuenta con \"Vincular este dispositivo a una cuenta\". El PIN caducará en 10 minutos.</string>
-  <string name="account_link_export_info_light">Para usar esta cuenta en otros dispositivos, primero debe enseñarla en Jami. Esto generará un código PIN que deberá ingresar en el nuevo dispositivo para configurar la cuenta. El PIN caducará en 10 minutos.</string>
+  <string name="account_link_prompt_pin">Introducir el código PIN</string>
+  <string name="account_new_button">Unirse a Jami</string>
+  <string name="account_link_export_info">Para usar esta cuenta en otros dispositivos, primero debe aparecer en Jami. Esto generará un código PIN que deberá ingresar en el nuevo dispositivo para configurar la cuenta. El código PIN caduca en 10 minutos.</string>
+  <string name="account_start_export_button">Generar código PIN</string>
+  <string name="account_end_export_infos">Su código PIN es:\n\n%%\n\nPara completar el proceso, debe abrir Jami en el nuevo dispositivo. Crear una nueva cuenta con \"Vincular este dispositivo a una cuenta\". El código PIN caduca en 10 minutos.</string>
+  <string name="account_link_export_info_light">Para usar esta cuenta en otros dispositivos, primero debe aparecer en Jami. Esto generará un código PIN que deberá ingresar en el nuevo dispositivo para configurar la cuenta. El código PIN caduca en 10 minutos.</string>
   <string name="account_connect_server">Conéctese al servidor JAMS</string>
   <string name="account_enter_username">Ingresar nombre de usuario</string>
   <string name="account_enter_servername">Entrar al servidor</string>
   <!--Name registration-->
+  <string name="no_registered_name_for_account">Nombre de usuario no registrado</string>
+  <string name="username_available">El nombre de usuario está disponible.</string>
+  <string name="register_name">Registrá tu nombre</string>
   <!--Create account-->
   <string name="account_sip_cannot_be_registered">Se produjo un error al registrar la cuenta SIP.</string>
   <!--Edit profile-->
   <string name="account_edit_profile">Editar perfil</string>
   <!--Devices-->
-  <string name="revoke_device_message">¿Realmente quieres revocar %1$s?</string>
+  <string name="revoke_device_message">¿Quieres revocar %1$s?</string>
+  <string name="rename_device_message">Ingrese el nombre del dispositivo para identificar este dispositivo en su cuenta de Jami</string>
   <string name="account_device_name_empty">El nombre del dispositivo no puede estar vacío.</string>
+  <string name="account_disabled_indicator">Deshabilitado</string>
   <!--Link a new device-->
-  <string name="account_link_prompt_pin_manually">Introducir PIN manualmente</string>
+  <string name="account_link_prompt_pin_manually">Ingresar el código PIN de forma manual</string>
   <string name="qr_invalid">No es un código QR de autenticación de Jami</string>
-  <string name="content_description_checkbox">Su código Qr es válido</string>
+  <string name="content_description_checkbox">Es válido el código QR</string>
   <string name="error_format_not_supported">Formato no soportado.</string>
-  <string name="account_link_info">En la nueva aplicación de Jami, escanear el código QR o introducir manualmente el PIN.</string>
+  <string name="account_link_info">En la nueva aplicación Jami, escanear el código QR o ingresar manualmente el código PIN.</string>
   <string name="account_link_device_title">Vincular un nuevo dispositivo</string>
   <string name="account_link_password">Esta cuenta está cifrada con contraseña, introducir la contraseña para generar el código PIN.</string>
   <string name="account_link_generate_button">Generar</string>
   <string name="account_link_time_valid">El código PIN será inválido: %1$s.</string>
-  <string name="account_link_device_info">Elija \"Enlazar un nuevo dispositivo\" desde otra aplicación Jami para mostrar el código QR o el PIN</string>
+  <string name="account_link_device_info">Elegir \"Vincular un nuevo dispositivo\" en la otra aplicación Jami para mostrar el código QR o el código PIN.</string>
   <string name="account_generate_export_device">En el otro dispositivo</string>
   <string name="account_generate_export_info">Instala y ejecuta Jami, selecciona \"Importar desde otro dispositivo\" y escanea el código QR.</string>
-  <string name="content_description_qr_generated">Su código Qr</string>
-  <string name="account_generate_export_invalid">El PIN ya no es válido.\ ingrese la contraseña y genere otra para vincular el nuevo dispositivo .</string>
-  <string name="account_generate_export_invalid_two">El PIN ya no es válido.\ genere otro para vincular el nuevo dispositivo.</string>
+  <string name="content_description_qr_generated">Código QR de la cuenta</string>
+  <string name="account_generate_export_invalid">El código PIN ya no es válido.\ ingresar la contraseña y generar otra para vincular el nuevo dispositivo .</string>
+  <string name="account_generate_export_invalid_two">El código PIN ya no es válido.\nGenerar otro para vincular el nuevo dispositivo.</string>
   <string name="help_pin_info">Rellene si la cuenta está cifrada con contraseña</string>
-  <string name="connect_device_scanqr">Escanear QR</string>
-  <string name="connect_device_enterPIN">O introducir PIN</string>
+  <string name="connect_device_scanqr">Escanear el código QR</string>
+  <string name="connect_device_enterPIN">O ingrese el código PIN</string>
   <string name="account_link_device_button">Conectarse</string>
   <!--Biometry-->
   <string name="account_biometry_auth_title">Desbloquear cuenta de Jami</string>

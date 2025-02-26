@@ -68,18 +68,25 @@
   <string name="swarm_group_action_leave_title">Diese Gruppe verlassen?</string>
   <string name="swarm_group_action_leave_message">Dadurch wird die Unterhaltung aus Ihrer Unterhaltungsliste entfernt</string>
   <string name="conversation_action_copy_peer_number">Kontakt-ID kopieren</string>
-  <string name="copied_to_clipboard">%1$s wurde in die Zwischenablage kopiert.</string>
+  <string name="copied_to_clipboard">%1$sin die Zwischenablage kopiert.</string>
   <string name="clip_message">Nachrichteninhalt</string>
+  <string name="conversation_message_deleted">%s hat eine Nachricht gelöscht</string>
   <string name="conversation_type_private">Privat</string>
   <string name="conversation_type_group">Gruppe</string>
-  <string name="conversation_contact_blocked">%1$s wurde blockiert</string>
-  <string name="conversation_contact_unblocked">Blockierung von %1$swurde aufgehoben</string>
+  <string name="conversation_contact_invited">%1$swurde zur Unterhaltung eingeladen.</string>
+  <string name="conversation_contact_added">%1$sist der Unterhaltung beigetreten.</string>
+  <string name="conversation_contact_left">%1$shat die Unterhaltung verlassen.</string>
+  <string name="conversation_contact_blocked">%1$s wurde von der Unterhaltung ausgeschlossen.</string>
+  <string name="conversation_contact_unblocked">%1$swurde in der Unterhaltung entblockt.</string>
   <string name="taking_picture_error">Beim Aufnehmen des Bildes ist ein Fehler aufgetreten.</string>
   <string name="find_picture_error">Beim Suchen des Bildes ist ein Fehler aufgetreten.</string>
   <string name="load_ringtone_error">Beim Laden des Klingeltons ist ein Fehler aufgetreten.</string>
   <string name="sharing_log_error">Beim Teilen der Protokolle ist ein Fehler aufgetreten.</string>
   <!--Contacts-->
+  <string name="prompt_new_password_repeat">Neues Passwort bestätigen</string>
+  <string name="account_create_title">Erstellen Sie ein Jami-Konto</string>
   <string name="help_pin_enter">Geben Sie die PIN eines anderen konfigurierten Jami-Kontos ein. Nutzen Sie die Funktion „Jami-Konto exportieren“, um eine PIN zu erhalten.</string>
+  <string name="copied_clipboard">In die Zwischenablage kopiert.</string>
   <string name="hist_contact_blocked">Kontakt blockiert</string>
   <string name="hist_contact_unblocked">Blockierung des Kontaktes aufgehoben</string>
   <!--Account summary-->
@@ -87,6 +94,7 @@
   <string name="take_a_photo">Bild aufnehmen</string>
   <string name="remove_photo">Foto entfernen</string>
   <string name="identifier">Kennung</string>
+  <string name="devices_header">Geräte</string>
   <!--Share fragment-->
   <string name="share_contact_information">Kontaktinformationen teilen</string>
   <string name="generic_error_migration_message">Beim Migrieren des Kontos ist ein Fehler aufgetreten.</string>
@@ -102,9 +110,12 @@
   <string name="outgoing_contact_invitation_message">Dieser Kontakt ist nicht in Ihrer Kontaktliste.\nSenden Sie eine Verbindungsanfrage.</string>
   <!--Blacklist-->
   <!--Smartlist-->
+  <string name="search_results">Suchergebnisse</string>
   <string name="generic_error">Ein unbekannter Fehler ist aufgetreten.</string>
   <!--File Transfer-->
-  <string name="no_space_left_on_device">Auf dem Gerät ist kein Speicherplatz verfügbar</string>
+  <string name="file_transfer_status_created">Initialisiere</string>
+  <string name="file_transfer_status_unjoinable_peer">Teilnehmer nicht erreichbar</string>
+  <string name="file_saved_successfully">Datei erfolgreich gespeichert.</string>
   <!--Bottom Navigation-->
   <!--TV-->
   <string name="audio_permission_denied">Die Mikrofonberechtigung ist deaktiviert. Aktivieren Sie diese in den Geräteeinstellungen, um diese Funktion zu nutzen.</string>
@@ -125,6 +136,7 @@
   <string name="tab_files">Dateien</string>
   <string name="tab_settings">Einstellungen</string>
   <string name="not_admin_toast">Nur Administratoren können die Informationen dieser Gruppe bearbeiten</string>
+  <string name="dialog_title_contact">Anzeigenamen bearbeiten</string>
   <string name="dialogtitle_title">Gruppentitel bearbeiten</string>
   <string name="dialogtitle_description">Gruppenbeschreibung bearbeiten</string>
   <string name="no_contact_to_add">Sie haben keinen Kontakt zum Hinzufügen</string>
@@ -133,6 +145,8 @@
   <string name="share_contact_intent_title">Diesen Kontakt zu Jami hinzufügen!</string>
   <string name="share_contact_intent_body">Sie können diesen Kontakt „%1$s“ auf der verteilten Kommunikationsplattform Jami hinzufügen: %2$s</string>
   <!--JamiId-->
+  <string name="jami_id_available">Der Benutzername ist verfügbar.</string>
+  <string name="jami_id_not_available">Der Benutzername ist nicht verfügbar.</string>
   <!--WelcomeJami-->
   <!--Conversation details-->
   <string name="details">Details</string>

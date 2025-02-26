@@ -147,7 +147,6 @@
   <string name="delete_contact">مخاطب را حذف کنید</string>
   <string name="conversation_action_remove_this_title">حذف این مخاطب؟</string>
   <string name="conversation_action_remove_this_message">این باعث حذف مخاطب شده و قطعا تاریخچه گفتگو را پاک خواهد کرد.</string>
-  <string name="copied_to_clipboard">‫%1$s در حافظه رونویسی شد</string>
   <string name="conversation_action_select_peer_number">گزینش یک شماره</string>
   <string name="conversation_action_block_this">مسدودسازی مخاطب</string>
   <string name="conversation_action_unblock_this">رفع مسدودی آشنا</string>
@@ -173,9 +172,6 @@
   <string name="conversation_type_contact">مخاطب جامی</string>
   <string name="conversation_type_private">خصوصی</string>
   <string name="conversation_type_group">گروه</string>
-  <string name="conversation_contact_invited">%1$s دعوت شده است.</string>
-  <string name="conversation_contact_added">%1$sپیوست</string>
-  <string name="conversation_contact_left">%1$s ترک کرد</string>
   <string name="conversation_search_hint">جستجو گفتگو‌ها</string>
   <string name="today">امروز</string>
   <string name="yesterday">دیروز</string>
@@ -183,8 +179,8 @@
   <string name="add_call_contact_number_to_contacts">افزودن %1$s؟</string>
   <string name="prompt_new_password">گذرواژه جدید</string>
   <string name="prompt_new_password_optional">گذرواژه جدید (اختیاری)</string>
-  <string name="prompt_new_password_repeat">گذرواژه جدید را تکرار کنید</string>
-  <string name="account_create_title">ایجاد یک حساب جمی</string>
+  <string name="prompt_new_password_repeat">تایید گذرواژه جدید</string>
+  <string name="account_create_title">حساب Jami را ایجاد کنید</string>
   <string name="prompt_new_username">نام کاربری جدید را وارد کنید</string>
   <string name="prompt_hint_username">نام کاربری</string>
   <string name="help_password_choose">برای حفاظت از حساب جمی خود، گذرواژه‌ای قوی را که به خاطر خواهید سپرد، برگزینید.</string>
@@ -201,7 +197,6 @@
   <!--Account summary-->
   <string name="profile">نمایه</string>
   <string name="profile_name">نام نمایه</string>
-  <string name="profile_message_warning">نمایه شما تنها با مخاطبانتان هم‌رسانی می‌شود</string>
   <string name="open_the_gallery">گالری را باز کنید</string>
   <string name="take_a_photo">عکس  بگیرید!</string>
   <string name="profile_name_hint">نام خود را وارد کنید</string>
@@ -211,6 +206,7 @@
   <string name="identifier">شناسه</string>
   <string name="account">حساب</string>
   <string name="link_new_device">پیوند یک دستگاه جدید</string>
+  <string name="devices_header">دستگاه ها</string>
   <string name="devices">دستگاه‌های پیوند‌‌داده‌شده</string>
   <string name="total_devices">تمام دستگاه‌ها:</string>
   <!--Share fragment-->
@@ -232,28 +228,11 @@
   <string name="conversation_placeholder">شما تاکنون مکالمه‌ای نداشتید</string>
   <string name="contact_request_sent">درخواست ارتباط ارسال شد</string>
   <string name="start_conversation">شروع گفتگو</string>
-  <string name="search_results">نتایج جستجو</string>
   <string name="tv_contact_row_header">مخاطبان</string>
   <string name="gallery_error_title">هیچ برنامه گالری یافت نشد.</string>
   <string name="gallery_error_message">هیچ برنامه کاربردی برای باز کردن گالری، در دستگاه یافت نشد.</string>
   <!--File Transfer-->
-  <string name="invalid_file">فایل نامعتبر</string>
-  <string name="not_able_to_write_file">ناتوان در نوشتن فایل</string>
-  <string name="file_transfer_status_created">آماده‌سازی ارسال</string>
-  <string name="file_transfer_status_unsupported">پشتیبانی‌نشده</string>
-  <string name="file_transfer_status_wait_peer_acceptance"> در انتظار پذیرش همتا</string>
-  <string name="file_transfer_status_wait_host_acceptance">در انتظار پذیرش میزبان</string>
-  <string name="file_transfer_status_ongoing">در جریان</string>
-  <string name="file_transfer_status_finished">پایان‌یافته</string>
-  <string name="file_transfer_status_closed_by_host">توسط میزبان بسته شد</string>
-  <string name="file_transfer_status_closed_by_peer">توسط همتا بسته شد</string>
-  <string name="file_transfer_status_invalid_pathname">نام مسیر نامعتبر</string>
-  <string name="file_transfer_status_unjoinable_peer">همتا غیر‌قابل‌اتصال</string>
-  <string name="file_transfer_status_cancelled">لغو‌شده</string>
-  <string name="file_transfer_status_error">به دلیل خطا ناموفق بود</string>
-  <string name="file_transfer_status_timed_out">مهلت پایان یافت</string>
-  <string name="file_saved_in">فایل در %s ذخیره شد</string>
-  <string name="file_saved_successfully">فایل با موفقیت ذخیره شد</string>
+  <string name="file_transfer_status_created">آغازِ فرایند</string>
   <string name="file_download">دانلود</string>
   <string name="title_media_viewer">نمایش‌دهنده رسانه</string>
   <string name="menu_file_open">باز کردن فایل</string>
@@ -330,8 +309,6 @@
   <string name="bottomsheet_remove">عضو را حذف کنید</string>
   <!--JamiId-->
   <string name="jami_id_validate">ثبت نام کاربری</string>
-  <string name="jami_id_available">نام کاربری دردسترس است</string>
-  <string name="jami_id_looking_for_availability">در حال جستجو برای در دسترس بودن نام کاربری …</string>
   <string name="jami_id_choose_username">یک نام کاربری را انتخاب کنید</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">به جمی خوش آمدید</string>

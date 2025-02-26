@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--Strings related to account edition screen-->
+  <!--Strings related to account creation-->
+  <!--Strings related to account deletion-->
+  <!--AccountManagementFragment-->
+  <!--Basic Details-->
+  <!--Extension Details-->
+  <!--Audio Details-->
+  <!--Video Details-->
+  <!--Advanced Details-->
+  <!--Security Details-->
+  <!--SRTP Details-->
+  <!--SIP-->
+  <!--TLS Details-->
+  <!--restore/backup-->
+  <!--TV-->
+  <string name="account_new_button">Приєднуйся до Jami</string>
+  <!--Name registration-->
+  <string name="register_name">Назва реєстру</string>
+  <!--Create account-->
+  <!--Edit profile-->
+  <!--Devices-->
+  <string name="account_disabled_indicator">Інваліди</string>
+  <!--Link a new device-->
+  <!--Biometry-->
+</resources>
