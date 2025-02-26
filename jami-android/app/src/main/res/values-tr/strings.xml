@@ -149,7 +149,6 @@
   <string name="delete_contact">Kişiyi sil</string>
   <string name="conversation_action_remove_this_title">Bu kişi silinsin mi?</string>
   <string name="conversation_action_remove_this_message">Bu, kişiyi silecek ve görüşme geçmişini tümüyle temizleyecek.</string>
-  <string name="copied_to_clipboard">%1$s panoya kopyalandı</string>
   <string name="conversation_action_select_peer_number">Numara seç</string>
   <string name="conversation_action_block_this">Kişiyi engelle</string>
   <string name="conversation_action_unblock_this">Kişinin engelini kaldır</string>
@@ -175,9 +174,6 @@
   <string name="conversation_type_contact">Jami kişisi</string>
   <string name="conversation_type_private">Özel</string>
   <string name="conversation_type_group">Küme</string>
-  <string name="conversation_contact_invited">%1$s davet edildi</string>
-  <string name="conversation_contact_added">%1$s katıldı</string>
-  <string name="conversation_contact_left">%1$s ayrıldı</string>
   <string name="conversation_search_hint">Görüşmede ara</string>
   <string name="today">Bugün</string>
   <string name="yesterday">Dün</string>
@@ -185,7 +181,7 @@
   <string name="add_call_contact_number_to_contacts">%1$s eklensin mi?</string>
   <string name="prompt_new_password">Yeni parola</string>
   <string name="prompt_new_password_optional">Yeni parola (isteğe bağlı)</string>
-  <string name="prompt_new_password_repeat">Yeni parolayı yinele</string>
+  <string name="prompt_new_password_repeat">Yeni parolayı doğrulayın</string>
   <string name="account_create_title">Jami hesabı oluştur</string>
   <string name="prompt_new_username">Yeni kullanıcı adı gir</string>
   <string name="prompt_hint_username">Kullanıcı adı</string>
@@ -202,7 +198,6 @@
   <!--Account summary-->
   <string name="profile">Profil</string>
   <string name="profile_name">Profil adı</string>
-  <string name="profile_message_warning">Profilin yalnızca kişilerinle paylaşılır</string>
   <string name="open_the_gallery">Galeriyi aç</string>
   <string name="take_a_photo">Fotoğraf çek</string>
   <string name="profile_name_hint">İsim gir</string>
@@ -212,6 +207,7 @@
   <string name="identifier">Tanımlayıcı</string>
   <string name="account">Hesap</string>
   <string name="link_new_device">Yeni aygıt bağla</string>
+  <string name="devices_header">Aygıtlar</string>
   <string name="devices">Bağlı Aygıtlar</string>
   <string name="total_devices">Toplam aygıt:</string>
   <!--Share fragment-->
@@ -233,28 +229,11 @@
   <string name="conversation_placeholder">Henüz görüşme yok</string>
   <string name="contact_request_sent">İletişim isteği gönderildi</string>
   <string name="start_conversation">Görüşme başlat </string>
-  <string name="search_results">Arama Sonuçları</string>
   <string name="tv_contact_row_header">Kişiler</string>
   <string name="gallery_error_title">Galeri uygulaması bulunamadı</string>
   <string name="gallery_error_message">Galeriyi açmak için aygıtta herhangi bir uygulama bulunamadı</string>
   <!--File Transfer-->
-  <string name="invalid_file">Geçersiz dosya</string>
-  <string name="not_able_to_write_file">Dosya yazılamıyor</string>
-  <string name="file_transfer_status_created">Aktarım başlatılıyor</string>
-  <string name="file_transfer_status_unsupported">desteklenmeyen</string>
-  <string name="file_transfer_status_wait_peer_acceptance">bekleyen bağlantı kabulü</string>
-  <string name="file_transfer_status_wait_host_acceptance">bekleyen hizmet sunucu kabulü</string>
-  <string name="file_transfer_status_ongoing">devam eden</string>
-  <string name="file_transfer_status_finished">Bitti</string>
-  <string name="file_transfer_status_closed_by_host">sunucu tarafından kapatıldı</string>
-  <string name="file_transfer_status_closed_by_peer">bağlantı tarafından kapat</string>
-  <string name="file_transfer_status_invalid_pathname">geçersiz yol adı</string>
-  <string name="file_transfer_status_unjoinable_peer">birleştirilemez bağlantı</string>
-  <string name="file_transfer_status_cancelled">iptal edildi</string>
-  <string name="file_transfer_status_error">hata nedeniyle başarısız </string>
-  <string name="file_transfer_status_timed_out">zaman aşımı</string>
-  <string name="file_saved_in">Dosya %s içine kaydedildi</string>
-  <string name="file_saved_successfully">Dosya başarıyla kaydedildi</string>
+  <string name="file_transfer_status_created">Başlatılıyor</string>
   <string name="file_download">İndir</string>
   <string name="title_media_viewer">Ortam Galerisi</string>
   <string name="menu_file_open">Dosyayı Aç</string>
@@ -335,10 +314,7 @@
   <string name="jami_id_copy">JamiId kopyala</string>
   <string name="jami_id_share">JamiId paylaş</string>
   <string name="jami_id_validate">Kullanıcı adını kaydet</string>
-  <string name="jami_id_available">Kullanıcı adı uygun</string>
-  <string name="jami_id_not_available">Kullanıcı adı uygun değil\n• Maksimum 32 karakter\n• Özel karakterlere izin verilir: tire (-), alt çizgi (_)</string>
   <string name="jami_id_info">• Maksimum 32 karakter\n• İzin verilen özel karakterler: tire (-), alt çizgi (_)</string>
-  <string name="jami_id_looking_for_availability">Kullanıcı adının uygunluğuna bakılıyor...</string>
   <string name="jami_id_choose_username">Kullanıcı Adı Seç</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Jami ye Hoş geldin</string>
@@ -348,7 +324,6 @@
   <string name="Private">Özel</string>
   <string name="mute_conversation">Görüşmeyi sessize al</string>
   <!--Donation-->
-  <string name="donation_card_description">Jami\'yi kullanmaktan hoşlanıyor ve misyonumuza inanıyorsan bağış yapmak ister misin?</string>
   <string name="donation_card_not_now">Şimdi değil</string>
   <string name="donation_donate">Bağış</string>
   <string name="donation_setting_title">Bağış anımsatıcı</string>

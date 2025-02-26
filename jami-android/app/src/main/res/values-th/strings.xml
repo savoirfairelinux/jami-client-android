@@ -143,7 +143,6 @@
   <string name="delete_contact">ลบผู้ติดต่อ</string>
   <string name="conversation_action_remove_this_title">ลบรายชื่อติดต่อนี้ไหม</string>
   <string name="conversation_action_remove_this_message">การดำเนินการนี้จะลบผู้ติดต่อและล้างประวัติการสนทนาอย่างแน่นอน</string>
-  <string name="copied_to_clipboard">%1$s ถูกสําเนาไปยังกระดานตัด</string>
   <string name="conversation_action_select_peer_number">เลือกหมายเลข</string>
   <string name="conversation_action_block_this">บล็อคการติดต่อ</string>
   <string name="conversation_action_unblock_this">กดติดต่อ</string>
@@ -168,9 +167,6 @@
   <string name="conversation_preference_emoji">อิโมจิการสนทนา</string>
   <string name="conversation_type_contact">๋ติดต่อ Jami</string>
   <string name="conversation_type_private">เอกชน</string>
-  <string name="conversation_contact_invited">%1$sได้รับเชิญ</string>
-  <string name="conversation_contact_added">%1$sเข้าร่วม</string>
-  <string name="conversation_contact_left">%1$s อยู่ซ้าย</string>
   <string name="conversation_search_hint">ค้นหาบทสนทนา</string>
   <string name="today">วัน นี้</string>
   <string name="yesterday">เมื่อวาน</string>
@@ -178,7 +174,7 @@
   <string name="add_call_contact_number_to_contacts">เพิ่ม%1$s?</string>
   <string name="prompt_new_password">รหัสผ่านใหม่</string>
   <string name="prompt_new_password_optional">รหัสผ่านใหม่ (ไม่บังคับ)</string>
-  <string name="prompt_new_password_repeat">รหัสผ่านใหม่ซ้ำ</string>
+  <string name="prompt_new_password_repeat">ยืนยันคําว่าใหม่</string>
   <string name="account_create_title">สร้างบัญชี Jami</string>
   <string name="prompt_new_username">ใส่ชื่อผู้ใช้ใหม่</string>
   <string name="prompt_hint_username">ชื่อผู้ใช้</string>
@@ -194,7 +190,6 @@
   <string name="hist_invitation_received">ได้รับคำเชิญ</string>
   <!--Account summary-->
   <string name="profile">ประวัติโดยย่อ</string>
-  <string name="profile_message_warning">โปรไฟล์ของคุณจะถูกแชร์กับผู้ติดต่อของคุณเท่านั้น</string>
   <string name="open_the_gallery">เปิดแกลเลอรี่</string>
   <string name="take_a_photo">ถ่ายภาพ</string>
   <string name="profile_name_hint">ใส่ชื่อของคุณ</string>
@@ -204,6 +199,7 @@
   <string name="identifier">ตัวประจําตัว</string>
   <string name="account">บัญชี</string>
   <string name="link_new_device">เชื่อมโยงอุปกรณ์ใหม่</string>
+  <string name="devices_header">อุปกรณ์</string>
   <string name="devices">อุปกรณ์ที่เชื่อมโยง</string>
   <string name="total_devices">อุปกรณ์ทั้งหมด:</string>
   <!--Share fragment-->
@@ -225,28 +221,10 @@
   <string name="conversation_placeholder">คุณยังไม่มีการสนทนาเลย</string>
   <string name="contact_request_sent">ส่งคำขอติดต่อแล้ว</string>
   <string name="start_conversation">เริ่มการสนทนา</string>
-  <string name="search_results">ผลการค้นหา</string>
   <string name="tv_contact_row_header">ติดต่อ</string>
   <string name="gallery_error_title">ไม่พบแอปแกลเลอรี</string>
   <string name="gallery_error_message">ไม่พบแอปพลิเคชันบนอุปกรณ์ที่จะเปิด Gallery</string>
   <!--File Transfer-->
-  <string name="invalid_file">ไฟล์ไม่ถูกต้อง</string>
-  <string name="not_able_to_write_file">เขียนไฟล์ไม่ได้</string>
-  <string name="file_transfer_status_created">เริ่มต้นการถ่ายโอน</string>
-  <string name="file_transfer_status_unsupported">ไม่รองรับ</string>
-  <string name="file_transfer_status_wait_peer_acceptance">รอการยอมรับจากเพื่อน</string>
-  <string name="file_transfer_status_wait_host_acceptance">รอรับเจ้าบ้าน</string>
-  <string name="file_transfer_status_ongoing">ต่อเนื่อง</string>
-  <string name="file_transfer_status_finished">เสร็จ</string>
-  <string name="file_transfer_status_closed_by_host">ปิดโดยเจ้าภาพ</string>
-  <string name="file_transfer_status_closed_by_peer">ใกล้ๆกัน</string>
-  <string name="file_transfer_status_invalid_pathname">ชื่อพาธไม่ถูกต้อง</string>
-  <string name="file_transfer_status_unjoinable_peer">เพียร์ที่ไม่เข้าร่วม</string>
-  <string name="file_transfer_status_cancelled">ยกเลิกแล้ว</string>
-  <string name="file_transfer_status_error">ล้มเหลวเนื่องจากข้อผิดพลาด</string>
-  <string name="file_transfer_status_timed_out">หมดเวลา</string>
-  <string name="file_saved_in">ไฟล์ที่บันทึกไว้ใน%s</string>
-  <string name="file_saved_successfully">บันทึกไฟล์เรียบร้อยแล้ว</string>
   <string name="file_download">ดาวน์โหลด</string>
   <string name="title_media_viewer">โปรแกรมดูสื่อ</string>
   <string name="menu_file_open">เปิดไฟล์</string>
@@ -323,7 +301,6 @@
   <string name="bottomsheet_remove">ยกสมาชิก</string>
   <!--JamiId-->
   <string name="jami_id_validate">จดทะเบียนชื่อผู้ใช้</string>
-  <string name="jami_id_looking_for_availability">กําลังค้นหาชื่อผู้ใช้ได้</string>
   <string name="jami_id_choose_username">เลือกชื่อผู้ใช้งาน</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">ยินดีต้อนรับสู่ Jami</string>

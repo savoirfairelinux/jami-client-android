@@ -143,7 +143,6 @@
   <string name="delete_contact">સંપર્કને કાઢી નાખો</string>
   <string name="conversation_action_remove_this_title">આ સંપર્કને કાઢી નાખો?</string>
   <string name="conversation_action_remove_this_message">આ સંપર્કને કાઢી નાખશે અને વાતચીત ઇતિહાસને ચોક્કસપણે સાફ કરશે.</string>
-  <string name="copied_to_clipboard">%1$s ક્લિપબોર્ડ પર કૉપિ</string>
   <string name="conversation_action_select_peer_number">એક નંબર પસંદ કરો</string>
   <string name="conversation_action_block_this">બ્લોક સંપર્ક</string>
   <string name="conversation_action_unblock_this">સંપર્કને અનબ્લોક કરો</string>
@@ -168,9 +167,6 @@
   <string name="conversation_preference_emoji">વાતચીત ઇમોજી</string>
   <string name="conversation_type_contact">જમી સંપર્ક</string>
   <string name="conversation_type_private">ખાનગી</string>
-  <string name="conversation_contact_invited">%1$s આમંત્રિત કરવામાં આવી હતી</string>
-  <string name="conversation_contact_added">%1$s જોડાયા</string>
-  <string name="conversation_contact_left">%1$s ડાબી</string>
   <string name="conversation_search_hint">શોધ વાતચીત</string>
   <string name="today">આજે</string>
   <string name="yesterday">ગઈકાલે</string>
@@ -178,8 +174,8 @@
   <string name="add_call_contact_number_to_contacts">%1$s ઉમેરવા?</string>
   <string name="prompt_new_password">નવો પાસવર્ડ</string>
   <string name="prompt_new_password_optional">નવો પાસવર્ડ (વૈકલ્પિક)</string>
-  <string name="prompt_new_password_repeat">નવો પાસવર્ડ પુનરાવર્તન કરો</string>
-  <string name="account_create_title">એક Jami એકાઉન્ટ બનાવો</string>
+  <string name="prompt_new_password_repeat">નવા પાસવર્ડની પુષ્ટિ કરો</string>
+  <string name="account_create_title">Jami એકાઉન્ટ બનાવો</string>
   <string name="prompt_new_username">નવું વપરાશકર્તાનામ દાખલ કરો</string>
   <string name="prompt_hint_username">વપરાશકર્તા નામ</string>
   <string name="help_password_choose">તમારા જેમી એકાઉન્ટને સુરક્ષિત કરવા માટે તમે યાદ રાખશો તે મજબૂત પાસવર્ડ પસંદ કરો.</string>
@@ -194,7 +190,6 @@
   <string name="hist_invitation_received">પ્રાપ્ત આમંત્રણ</string>
   <!--Account summary-->
   <string name="profile">પ્રોફાઇલ</string>
-  <string name="profile_message_warning">તમારી પ્રોફાઇલ ફક્ત તમારા સંપર્કો સાથે શેર કરવામાં આવે છે</string>
   <string name="open_the_gallery">ગેલેરી ખોલો</string>
   <string name="take_a_photo">ફોટો લો</string>
   <string name="profile_name_hint">તમારું નામ દાખલ કરો</string>
@@ -204,6 +199,7 @@
   <string name="identifier">ઓળખકર્તા</string>
   <string name="account">ખાતું</string>
   <string name="link_new_device">નવી ઉપકરણને લિંક કરો</string>
+  <string name="devices_header">ઉપકરણો</string>
   <string name="devices">જોડાયેલ ઉપકરણો</string>
   <string name="total_devices">કુલ ઉપકરણો: </string>
   <!--Share fragment-->
@@ -225,28 +221,10 @@
   <string name="conversation_placeholder">તમે હજુ સુધી કોઈ વાતચીત નથી કરી</string>
   <string name="contact_request_sent">સંપર્ક વિનંતી મોકલવામાં આવી</string>
   <string name="start_conversation">વાતચીત શરૂ કરો</string>
-  <string name="search_results">શોધ પરિણામો</string>
   <string name="tv_contact_row_header">સંપર્કો</string>
   <string name="gallery_error_title">ગેલેરી એપ્લિકેશન મળી નથી</string>
   <string name="gallery_error_message">ગેલેરી ખોલવા માટે ઉપકરણ પર કોઈ એપ્લિકેશન મળી નથી</string>
   <!--File Transfer-->
-  <string name="invalid_file">અમાન્ય ફાઇલ</string>
-  <string name="not_able_to_write_file">ફાઇલ લખી શકતો નથી</string>
-  <string name="file_transfer_status_created">ટ્રાન્સફર શરૂ</string>
-  <string name="file_transfer_status_unsupported">આધારભૂત નથી</string>
-  <string name="file_transfer_status_wait_peer_acceptance">સહકર્મીઓની સ્વીકૃતિની રાહ જોવી</string>
-  <string name="file_transfer_status_wait_host_acceptance">રાહ જોતા યજમાન સ્વીકૃતિ</string>
-  <string name="file_transfer_status_ongoing">ચાલુ</string>
-  <string name="file_transfer_status_finished">પૂર્ણ</string>
-  <string name="file_transfer_status_closed_by_host">યજમાન દ્વારા બંધ</string>
-  <string name="file_transfer_status_closed_by_peer">નજીકના સમકક્ષ</string>
-  <string name="file_transfer_status_invalid_pathname">અમાન્ય પાથ નામ</string>
-  <string name="file_transfer_status_unjoinable_peer">અયોગ્ય સમકક્ષ</string>
-  <string name="file_transfer_status_cancelled">રદ થયેલ છે</string>
-  <string name="file_transfer_status_error">ભૂલને કારણે નિષ્ફળ</string>
-  <string name="file_transfer_status_timed_out">સમયસર</string>
-  <string name="file_saved_in">%s માં સાચવેલ ફાઇલ</string>
-  <string name="file_saved_successfully">ફાઇલ સફળતાપૂર્વક સાચવવામાં</string>
   <string name="file_download">ડાઉનલોડ કરો</string>
   <string name="title_media_viewer">મીડિયા દર્શક</string>
   <string name="menu_file_open">ખુલ્લી ફાઇલ</string>
@@ -323,7 +301,6 @@
   <string name="bottomsheet_remove">સભ્ય દૂર કરો</string>
   <!--JamiId-->
   <string name="jami_id_validate">વપરાશકર્તા નામ નોંધણી</string>
-  <string name="jami_id_looking_for_availability">વપરાશકર્તા નામ ઉપલબ્ધતા શોધી રહ્યા છીએ...</string>
   <string name="jami_id_choose_username">વપરાશકર્તા નામ પસંદ કરો</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">જમીમાં આપનું સ્વાગત છે</string>

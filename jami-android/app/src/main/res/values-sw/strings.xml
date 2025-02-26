@@ -143,7 +143,6 @@
   <string name="delete_contact">Kufuta mawasiliano</string>
   <string name="conversation_action_remove_this_title">Kufuta mawasiliano haya?</string>
   <string name="conversation_action_remove_this_message">Hii itafuta mawasiliano na dhahiri kufuta historia ya mazungumzo.</string>
-  <string name="copied_to_clipboard">%1$s imerekodiwa kwenye clipboard</string>
   <string name="conversation_action_select_peer_number">Chagua namba</string>
   <string name="conversation_action_block_this">Kuzuia mawasiliano</string>
   <string name="conversation_action_unblock_this">Kufungua mawasiliano</string>
@@ -168,9 +167,6 @@
   <string name="conversation_preference_emoji">Emoji ya mazungumzo</string>
   <string name="conversation_type_contact">Wasiliana na Jami</string>
   <string name="conversation_type_private">Private</string>
-  <string name="conversation_contact_invited">%1$s aliitwa</string>
-  <string name="conversation_contact_added">%1$s imeunganishwa</string>
-  <string name="conversation_contact_left">%1$s ni kushoto</string>
   <string name="conversation_search_hint">Tafuta mazungumzo</string>
   <string name="today">Leo</string>
   <string name="yesterday">Jana</string>
@@ -178,7 +174,7 @@
   <string name="add_call_contact_number_to_contacts">Ongeza %1$s?</string>
   <string name="prompt_new_password">Nambari mpya</string>
   <string name="prompt_new_password_optional">Nywele mpya (zaidi)</string>
-  <string name="prompt_new_password_repeat">Kurudia password mpya</string>
+  <string name="prompt_new_password_repeat">Thibitisha password mpya</string>
   <string name="account_create_title">Unda akaunti ya Jami</string>
   <string name="prompt_new_username">Ingiza jina jipya la mtumiaji</string>
   <string name="prompt_hint_username">Jina la mtumiaji</string>
@@ -194,7 +190,6 @@
   <string name="hist_invitation_received">Mwaliko uliopokelewa</string>
   <!--Account summary-->
   <string name="profile">Profaili</string>
-  <string name="profile_message_warning">Profaili yako inashirikiwa tu na wawasiliani wako</string>
   <string name="open_the_gallery">Fungua ukumbi</string>
   <string name="take_a_photo">Piga picha</string>
   <string name="profile_name_hint">Ingiza jina lako</string>
@@ -204,6 +199,7 @@
   <string name="identifier">Kitambulisho</string>
   <string name="account">Akaunti</string>
   <string name="link_new_device">Unganisha kifaa kipya</string>
+  <string name="devices_header">Vifaa</string>
   <string name="devices">Vifaa vilivyounganishwa</string>
   <string name="total_devices">Jumla ya vifaa: </string>
   <!--Share fragment-->
@@ -225,28 +221,10 @@
   <string name="conversation_placeholder">Wewe bado hawana mazungumzo</string>
   <string name="contact_request_sent">Maombi ya mawasiliano yaliyotumwa</string>
   <string name="start_conversation">Anza mazungumzo</string>
-  <string name="search_results">Matokeo ya Utafutaji</string>
   <string name="tv_contact_row_header">Mawasiliano</string>
   <string name="gallery_error_title">Hakuna programu ya Galeria iliyopatikana</string>
   <string name="gallery_error_message">Hakuna programu iliyopatikana kwenye kifaa cha kufungua Galeria</string>
   <!--File Transfer-->
-  <string name="invalid_file">Faili isiyofaa</string>
-  <string name="not_able_to_write_file">Haiwezi kuandika faili</string>
-  <string name="file_transfer_status_created">kuanza uhamisho</string>
-  <string name="file_transfer_status_unsupported">bila msaada</string>
-  <string name="file_transfer_status_wait_peer_acceptance">kusubiri kukubaliwa na wenzao</string>
-  <string name="file_transfer_status_wait_host_acceptance">kukaribisha mwenyeji</string>
-  <string name="file_transfer_status_ongoing">kuendelea</string>
-  <string name="file_transfer_status_finished">ya mwisho</string>
-  <string name="file_transfer_status_closed_by_host">kufungwa na mwenyeji</string>
-  <string name="file_transfer_status_closed_by_peer">karibu na wenzao</string>
-  <string name="file_transfer_status_invalid_pathname">jina la njia lisilofaa</string>
-  <string name="file_transfer_status_unjoinable_peer">wa rika lisiloweza kuunganishwa</string>
-  <string name="file_transfer_status_cancelled">imeghairiwa</string>
-  <string name="file_transfer_status_error">kushindwa kwa sababu ya kosa</string>
-  <string name="file_transfer_status_timed_out">muda wa mwisho</string>
-  <string name="file_saved_in">Faili iliyohifadhiwa katika %s</string>
-  <string name="file_saved_successfully">Faili iliyohifadhiwa kwa mafanikio</string>
   <string name="file_download">Pakua</string>
   <string name="title_media_viewer">Kiangaliaji cha media</string>
   <string name="menu_file_open">Open faili</string>
@@ -323,7 +301,6 @@
   <string name="bottomsheet_remove">Ondoa mshiriki</string>
   <!--JamiId-->
   <string name="jami_id_validate">Kujiandikisha jina la mtumiaji</string>
-  <string name="jami_id_looking_for_availability">Kutafuta upatikanaji wa jina la mtumiaji...</string>
   <string name="jami_id_choose_username">Chagua jina la mtumiaji</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Karibu Jami</string>

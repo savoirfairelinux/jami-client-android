@@ -148,7 +148,6 @@
   <string name="delete_contact">Eliminar contacto</string>
   <string name="conversation_action_remove_this_title">Eliminar este contacto?</string>
   <string name="conversation_action_remove_this_message">Esto eliminará o contacto de xeito definitivo e tamén o historial da conversa.</string>
-  <string name="copied_to_clipboard">%1$s copiado ao portapapeis</string>
   <string name="conversation_action_select_peer_number">Escolle un número</string>
   <string name="conversation_action_block_this">Bloquear contacto</string>
   <string name="conversation_action_unblock_this">Desbloquear contacto</string>
@@ -173,9 +172,6 @@
   <string name="conversation_preference_emoji">Emojis da conversa</string>
   <string name="conversation_type_contact">Contacto Jami</string>
   <string name="conversation_type_private">Privado</string>
-  <string name="conversation_contact_invited">Convidouse a %1$s</string>
-  <string name="conversation_contact_added">%1$s uníuse</string>
-  <string name="conversation_contact_left">%1$s saíu</string>
   <string name="conversation_search_hint">Buscar conversa</string>
   <string name="today">Hoxe</string>
   <string name="yesterday">Onte</string>
@@ -183,8 +179,8 @@
   <string name="add_call_contact_number_to_contacts">Engadir %1$s?</string>
   <string name="prompt_new_password">Novo contrasinal</string>
   <string name="prompt_new_password_optional">Novo contrasinal (optativo)</string>
-  <string name="prompt_new_password_repeat">Repetir o novo contrasinal</string>
-  <string name="account_create_title">Crear conta Jami</string>
+  <string name="prompt_new_password_repeat">Confirmar a nova contrasinal</string>
+  <string name="account_create_title">Crea unha conta Jami</string>
   <string name="prompt_new_username">Escribir novo nome de usuaria</string>
   <string name="prompt_hint_username">Nome de usuaria</string>
   <string name="help_password_choose">Escolle un contrasinal forte e gárdao para protexer a túa conta Jami.</string>
@@ -199,7 +195,6 @@
   <string name="hist_invitation_received">Convite recibido</string>
   <!--Account summary-->
   <string name="profile">Perfil</string>
-  <string name="profile_message_warning">O teu perfil só se comparte cos teus contactos</string>
   <string name="open_the_gallery">Abrir a galería</string>
   <string name="take_a_photo">Tomar foto</string>
   <string name="profile_name_hint">Escribe o teu nome</string>
@@ -209,6 +204,7 @@
   <string name="identifier">Identificador</string>
   <string name="account">Conta</string>
   <string name="link_new_device">Ligar un novo dispositio</string>
+  <string name="devices_header">Dispositivos</string>
   <string name="devices">Dispositivos ligados</string>
   <string name="total_devices">Total de dispositivos:</string>
   <!--Share fragment-->
@@ -230,28 +226,10 @@
   <string name="conversation_placeholder">Aínda non tes conversas</string>
   <string name="contact_request_sent">Solicitude de contacto enviada</string>
   <string name="start_conversation">Comezar conversa</string>
-  <string name="search_results">Resultados da busca</string>
   <string name="tv_contact_row_header">Contactos</string>
   <string name="gallery_error_title">Non se atopa app Galería</string>
   <string name="gallery_error_message">Non se atopa unha app no dispositivo para abrir Galería</string>
   <!--File Transfer-->
-  <string name="invalid_file">Ficheiro non válido</string>
-  <string name="not_able_to_write_file">Non se pode escribir o ficheiro</string>
-  <string name="file_transfer_status_created">iniciando a transferencia</string>
-  <string name="file_transfer_status_unsupported">non soportado</string>
-  <string name="file_transfer_status_wait_peer_acceptance">agardando aceptación do par</string>
-  <string name="file_transfer_status_wait_host_acceptance">agardando aceptación do host</string>
-  <string name="file_transfer_status_ongoing">en curso</string>
-  <string name="file_transfer_status_finished">rematada</string>
-  <string name="file_transfer_status_closed_by_host">pechada polo host</string>
-  <string name="file_transfer_status_closed_by_peer">pechada polo par</string>
-  <string name="file_transfer_status_invalid_pathname">ruta non válida</string>
-  <string name="file_transfer_status_unjoinable_peer">par non accesible</string>
-  <string name="file_transfer_status_cancelled">cancelada</string>
-  <string name="file_transfer_status_error">fallou debido a un erro</string>
-  <string name="file_transfer_status_timed_out">caducada</string>
-  <string name="file_saved_in">Ficheiro gardado en %s</string>
-  <string name="file_saved_successfully">Ficheiro gardado</string>
   <string name="file_download">Descargar</string>
   <string name="title_media_viewer">Visor de multimedia</string>
   <string name="menu_file_open">Abrir ficheiro</string>
@@ -332,10 +310,7 @@
   <string name="jami_id_copy">Copiar Jamild</string>
   <string name="jami_id_share">Compartir Jamild</string>
   <string name="jami_id_validate">Rexistrar o nome de usuario/a</string>
-  <string name="jami_id_available">O identificador está dispoñible</string>
-  <string name="jami_id_not_available">O identificador non está dispoñible\n· Máximo 32 caracteres\n· Permitidos caracteres especiais: trazo (-), trazo baixo (_)</string>
   <string name="jami_id_info">· Máximo 32 caracteres\n· Permitidos caracteres especiais: trazo (-), trazo baixo (_)</string>
-  <string name="jami_id_looking_for_availability">Comprobando a dispoñibilidade do nome...</string>
   <string name="jami_id_choose_username">Escoller un nome de usuario</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Benvida/o a Jami</string>
@@ -345,7 +320,6 @@
   <string name="Private">Privado</string>
   <string name="mute_conversation">Acalar conversa</string>
   <!--Donation-->
-  <string name="donation_card_description">Se desfrutas usando Jami e cres nos nosos obxectivos, farías unha doazón?</string>
   <string name="donation_card_not_now">Agora non</string>
   <string name="donation_donate">Doar</string>
   <string name="donation_setting_title">Lembrar doazón</string>

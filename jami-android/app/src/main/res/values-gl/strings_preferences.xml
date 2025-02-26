@@ -46,8 +46,8 @@
   <string name="pref_typing_summary">Enviar e recibir indicadores de escritura mostrando que se está a escribir unha mensaxe.</string>
   <string name="pref_block_record_title">Bloquear captura de pantalla e gravación</string>
   <string name="pref_block_record_summary">Bloquear a captura de pantalla ou gravación de vídeo.</string>
-  <string name="pref_link_preview_title">Mostrar na conversa vista previa das ligazóns</string>
-  <string name="pref_link_preview_summary">A vista previa precisa descargar contido desde servidores de terceiras partes.</string>
+  <string name="pref_link_preview_title">Previsualización de ligazóns web</string>
+  <string name="pref_link_preview_summary">A visualización previa require descargar contido de servidores de terceiros.</string>
   <!--Notifications Visibility-->
   <string name="connectivity_custom_title">Personalizar</string>
   <!--Extension-->

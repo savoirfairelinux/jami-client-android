@@ -57,8 +57,8 @@
   <string name="pref_typing_summary">Dërgoni dhe merrni shenja shtypjeje që tregojnë se po shtypet një mesazh.</string>
   <string name="pref_block_record_title">Bllokoni foto ekrani dhe regjistrim</string>
   <string name="pref_block_record_summary">Blloko bërje fotosh ose regjistrim videosh.</string>
-  <string name="pref_link_preview_title">Shfaq paraparje lidhjesh në biseda</string>
-  <string name="pref_link_preview_summary">Paraparjet lypin që të shkarkohet lëndë nga shërbyes palësh të treta.</string>
+  <string name="pref_link_preview_title">Paraparje lidhjesh web</string>
+  <string name="pref_link_preview_summary">Paraparja lyp shkarkim lënde prej shërbyesish palë të treta.</string>
   <!--Notifications Visibility-->
   <string name="notification_public">Publike\n(shfaq njoftime dhe lëndën e tyre nën ekran të kyçur)\n</string>
   <string name="notification_private">Private\n(shfaq njoftime, por fshihe lëndën e tyre, kur ekrani është i kyçur)\n</string>

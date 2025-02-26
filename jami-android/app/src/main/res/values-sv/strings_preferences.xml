@@ -45,8 +45,8 @@
   <string name="pref_typing_summary">Skicka och ta emot skrivindikering när ett meddelande skrivs. </string>
   <string name="pref_block_record_title">Blockera skärmbildskopia och inspelning </string>
   <string name="pref_block_record_summary">Blockera skärmbildskopia och videoinspelning </string>
-  <string name="pref_link_preview_title">Visa länk till förhandsvisning i konversationer </string>
-  <string name="pref_link_preview_summary">Förhandsvisning kräver nedladdning av innehåll från tredje-part server.  </string>
+  <string name="pref_link_preview_title">Förhandsvisningar av länkar</string>
+  <string name="pref_link_preview_summary">Förhandsvisning kräver att du laddar ner innehåll från tredje parts servrar.</string>
   <!--Notifications Visibility-->
   <string name="connectivity_custom_title">Anpassad</string>
   <!--Extension-->

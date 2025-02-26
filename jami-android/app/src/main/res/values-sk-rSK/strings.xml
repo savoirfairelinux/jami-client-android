@@ -147,7 +147,6 @@
   <string name="delete_contact">Odstrániť kontakt</string>
   <string name="conversation_action_remove_this_title">Odstrániť tento kontakt?</string>
   <string name="conversation_action_remove_this_message">Kontakt i história konverzácie bude natrvalo vymazaná. </string>
-  <string name="copied_to_clipboard">%1$s skopírované do schránky</string>
   <string name="conversation_action_select_peer_number">Zvoliť číslo</string>
   <string name="conversation_action_block_this">Zablokovať kontakt</string>
   <string name="conversation_action_unblock_this">Odblokovať kontakt</string>
@@ -173,9 +172,6 @@
   <string name="conversation_type_contact">Kontakt s Jami</string>
   <string name="conversation_type_private">Privátny</string>
   <string name="conversation_type_group">Skupina</string>
-  <string name="conversation_contact_invited">%1$s bol pozvaný</string>
-  <string name="conversation_contact_added">Pridaný %1$s</string>
-  <string name="conversation_contact_left">%1$s je ľavý</string>
   <string name="conversation_search_hint">Vyhľadávacie rozhovor</string>
   <string name="today">Dnes</string>
   <string name="yesterday">Včera</string>
@@ -183,8 +179,8 @@
   <string name="add_call_contact_number_to_contacts">Pridať %1$s?</string>
   <string name="prompt_new_password">Nové heslo</string>
   <string name="prompt_new_password_optional">Nové heslo (voliteľné)</string>
-  <string name="prompt_new_password_repeat">Zopakujte nové heslo</string>
-  <string name="account_create_title">Vytvoriť Jami účet</string>
+  <string name="prompt_new_password_repeat">Potvrďte nový heslo</string>
+  <string name="account_create_title">Vytvorte účet Jami</string>
   <string name="prompt_new_username">Zadajte nové používateľské meno</string>
   <string name="prompt_hint_username">Používateľské meno</string>
   <string name="help_password_choose">Zvoľte si silné heslo, ktoré si zapamätáte, na ochranu vášho účtu.</string>
@@ -200,7 +196,6 @@
   <!--Account summary-->
   <string name="profile">Profil</string>
   <string name="profile_name">Profilové meno</string>
-  <string name="profile_message_warning">Váš profil je zdieľaný iba s vašimi kontaktmi</string>
   <string name="open_the_gallery">Otvoriť galériu</string>
   <string name="take_a_photo">Zhotoviť fotografiu</string>
   <string name="profile_name_hint">Vložte svoje meno</string>
@@ -210,6 +205,7 @@
   <string name="identifier">Identifikátor</string>
   <string name="account">Účet</string>
   <string name="link_new_device">Prepojiť nové zariadenie</string>
+  <string name="devices_header">Zariadenia</string>
   <string name="devices">Prepojené zariadenia</string>
   <string name="total_devices">Celkové zariadenia: </string>
   <!--Share fragment-->
@@ -231,28 +227,11 @@
   <string name="conversation_placeholder">Ešte ste nemali žiadne rozhovory.</string>
   <string name="contact_request_sent">Žiadosť o kontakt poslaná</string>
   <string name="start_conversation">Začať konverzáciu</string>
-  <string name="search_results">Výsledky vyhľadávania</string>
   <string name="tv_contact_row_header">Kontakty</string>
   <string name="gallery_error_title">Aplikácia Galéria nebola nájdená</string>
   <string name="gallery_error_message">Nebola nájdená žiadna aplikácia na otvorenie Galérie</string>
   <!--File Transfer-->
-  <string name="invalid_file">Neplatný súbor</string>
-  <string name="not_able_to_write_file">Nie je možné zapisovať do súboru</string>
-  <string name="file_transfer_status_created">inicializácia prenosu</string>
-  <string name="file_transfer_status_unsupported">nepodporovaný</string>
-  <string name="file_transfer_status_wait_peer_acceptance">čakanie na prijatie peerom</string>
-  <string name="file_transfer_status_wait_host_acceptance">čakanie na prijatie hostom</string>
-  <string name="file_transfer_status_ongoing">prebiehajúci</string>
-  <string name="file_transfer_status_finished">ukončený</string>
-  <string name="file_transfer_status_closed_by_host">ukončený hostom</string>
-  <string name="file_transfer_status_closed_by_peer">ukončený peerom</string>
-  <string name="file_transfer_status_invalid_pathname">neplatná adresa súboru</string>
-  <string name="file_transfer_status_unjoinable_peer">nepripojiteľný peer</string>
-  <string name="file_transfer_status_cancelled">zrušené</string>
-  <string name="file_transfer_status_error">zlyhalo kvôli chybe</string>
-  <string name="file_transfer_status_timed_out">vypršal čas</string>
-  <string name="file_saved_in">Súbor uložený v %s</string>
-  <string name="file_saved_successfully">Súbor úspešne uložený</string>
+  <string name="file_transfer_status_created">Inicializácia</string>
   <string name="file_download">Stiahnite</string>
   <string name="title_media_viewer">Zobrazovač médií</string>
   <string name="menu_file_open">Otvoriť súbor</string>
@@ -329,7 +308,6 @@
   <string name="bottomsheet_remove">Odstránenie člena</string>
   <!--JamiId-->
   <string name="jami_id_validate">Registrovať používateľské meno</string>
-  <string name="jami_id_looking_for_availability">Kontrolujeme dostupnosť používateľského mena...</string>
   <string name="jami_id_choose_username">Vyberte používateľské meno</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Vitajte v Jami</string>
@@ -338,7 +316,6 @@
   <string name="Private">Privátny</string>
   <string name="mute_conversation">Mlčité rozhovory</string>
   <!--Donation-->
-  <string name="donation_card_description">Ak radi používate Jami a veríte v naše poslanie, prispeli by ste nám?</string>
   <string name="donation_card_not_now">Teraz nie</string>
   <string name="donation_donate">Prispejte</string>
   <!--Extension-->

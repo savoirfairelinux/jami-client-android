@@ -45,8 +45,8 @@
   <string name="pref_typing_summary">సందేశాన్ని టైప్ చేస్తున్నట్లు చూపించే టైపింగ్ సూచికలను పంపండి మరియు స్వీకరించండి.</string>
   <string name="pref_block_record_title">స్క్రీన్షాట్ మరియు రికార్డింగ్ను బ్లాక్ చేయండి</string>
   <string name="pref_block_record_summary">స్క్రీన్షాట్ తీయడం లేదా వీడియో రికార్డింగ్ను నిరోధించండి.</string>
-  <string name="pref_link_preview_title">సంభాషణలలో లింక్ ప్రివ్యూలను చూపించు</string>
-  <string name="pref_link_preview_summary">ముందస్తు వీక్షణలు మూడవ పార్టీ సర్వర్ల నుండి కంటెంట్ను డౌన్లోడ్ చేసుకోవలసి ఉంటుంది.</string>
+  <string name="pref_link_preview_title">వెబ్ లింక్ పరిదృశ్యాలు</string>
+  <string name="pref_link_preview_summary">ముందస్తు వీక్షణ మూడవ పార్టీ సర్వర్ల నుండి కంటెంట్ను డౌన్లోడ్ చేసుకోవాలి.</string>
   <!--Notifications Visibility-->
   <string name="connectivity_custom_title">కస్టమ్</string>
   <!--Extension-->

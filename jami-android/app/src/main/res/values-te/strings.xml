@@ -143,7 +143,6 @@
   <string name="delete_contact">పరిచయాన్ని తొలగించు</string>
   <string name="conversation_action_remove_this_title">ఈ పరిచయం తొలగించడానికి?</string>
   <string name="conversation_action_remove_this_message">ఇది పరిచయాన్ని తొలగిస్తుంది మరియు సంభాషణ చరిత్రను ఖచ్చితంగా క్లియర్ చేస్తుంది.</string>
-  <string name="copied_to_clipboard">%1$s ను క్లిప్బోర్డ్ కు కాపీ చేయబడింది</string>
   <string name="conversation_action_select_peer_number">ఒక సంఖ్యను ఎంచుకోండి</string>
   <string name="conversation_action_block_this">బ్లాక్ కాంటాక్ట్</string>
   <string name="conversation_action_unblock_this">పరిచయాలను అన్బ్లాక్ చేయండి</string>
@@ -168,9 +167,6 @@
   <string name="conversation_preference_emoji">సంభాషణ ఎమోజీ</string>
   <string name="conversation_type_contact">జామి పరిచయం</string>
   <string name="conversation_type_private">ప్రైవేటు</string>
-  <string name="conversation_contact_invited">%1$s ఆహ్వానించబడింది</string>
-  <string name="conversation_contact_added">%1$s చేరింది</string>
-  <string name="conversation_contact_left">%1$s ఎడమవైపు</string>
   <string name="conversation_search_hint">శోధన సంభాషణ</string>
   <string name="today">నేడు</string>
   <string name="yesterday">నిన్న</string>
@@ -178,8 +174,8 @@
   <string name="add_call_contact_number_to_contacts">%1$s ను జోడించాలా?</string>
   <string name="prompt_new_password">కొత్త పాస్వర్డ్</string>
   <string name="prompt_new_password_optional">కొత్త పాస్వర్డ్ (ఐచ్ఛికం)</string>
-  <string name="prompt_new_password_repeat">కొత్త పాస్వర్డ్ను పునరావృతం చేయండి</string>
-  <string name="account_create_title">జమీ ఖాతాను సృష్టించండి</string>
+  <string name="prompt_new_password_repeat">కొత్త పాస్వర్డ్ను నిర్ధారించు</string>
+  <string name="account_create_title">జమి ఖాతాను సృష్టించు</string>
   <string name="prompt_new_username">కొత్త వాడుకరి పేరును నమోదు చేయండి</string>
   <string name="prompt_hint_username">వాడుకరి పేరు</string>
   <string name="help_password_choose">మీ జమీ ఖాతాను రక్షించడానికి మీరు గుర్తుంచుకోగల బలమైన పాస్వర్డ్ను ఎంచుకోండి.</string>
@@ -194,7 +190,6 @@
   <string name="hist_invitation_received">అందుకున్న ఆహ్వానం</string>
   <!--Account summary-->
   <string name="profile">ప్రొఫైల్</string>
-  <string name="profile_message_warning">మీ ప్రొఫైల్ మీ పరిచయాలతో మాత్రమే పంచుకుంటుంది</string>
   <string name="open_the_gallery">గ్యాలరీ తెరవండి</string>
   <string name="take_a_photo">ఫోటో తీయండి</string>
   <string name="profile_name_hint">మీ పేరు నమోదు</string>
@@ -204,6 +199,7 @@
   <string name="identifier">గుర్తింపు</string>
   <string name="account">ఖాతా</string>
   <string name="link_new_device">కొత్త పరికరాన్ని లింక్ చేయండి</string>
+  <string name="devices_header">పరికరాలు</string>
   <string name="devices">లింక్ చేయబడిన పరికరాలు</string>
   <string name="total_devices">మొత్తం పరికరాలుః </string>
   <!--Share fragment-->
@@ -225,28 +221,10 @@
   <string name="conversation_placeholder">మీరు ఇంకా సంభాషణలు లేవు</string>
   <string name="contact_request_sent">సంప్రదింపు అభ్యర్థన పంపబడింది</string>
   <string name="start_conversation">సంభాషణ ప్రారంభించండి</string>
-  <string name="search_results">శోధన ఫలితాలు</string>
   <string name="tv_contact_row_header">పరిచయాలు</string>
   <string name="gallery_error_title">గ్యాలరీ యాప్ దొరకలేదు</string>
   <string name="gallery_error_message">గ్యాలరీని తెరవడానికి పరికరంలో ఏ అప్లికేషన్ కనుగొనబడలేదు</string>
   <!--File Transfer-->
-  <string name="invalid_file">చెల్లుబాటు అయ్యే ఫైల్</string>
-  <string name="not_able_to_write_file">ఫైల్ రాయలేకపోయింది</string>
-  <string name="file_transfer_status_created">బదిలీని ప్రారంభించడం</string>
-  <string name="file_transfer_status_unsupported">మద్దతు లేనిది</string>
-  <string name="file_transfer_status_wait_peer_acceptance">సహచరుల ఆమోదం కోసం ఎదురుచూస్తున్నది</string>
-  <string name="file_transfer_status_wait_host_acceptance">వేచి ఉన్న హోస్ట్ అంగీకారం</string>
-  <string name="file_transfer_status_ongoing">కొనసాగుతున్న</string>
-  <string name="file_transfer_status_finished">పూర్తి</string>
-  <string name="file_transfer_status_closed_by_host">హోస్ట్ ద్వారా మూసివేయబడింది</string>
-  <string name="file_transfer_status_closed_by_peer">సహోద్యోగుల దగ్గరి</string>
-  <string name="file_transfer_status_invalid_pathname">చెల్లని మార్గం పేరు</string>
-  <string name="file_transfer_status_unjoinable_peer">అసంఘటిత సహచరుడు</string>
-  <string name="file_transfer_status_cancelled">రద్దు చేయబడినది</string>
-  <string name="file_transfer_status_error">తప్పు కారణంగా విఫలమైంది</string>
-  <string name="file_transfer_status_timed_out">కాలపరిమితి</string>
-  <string name="file_saved_in">%s లో సేవ్ చేయబడిన ఫైల్</string>
-  <string name="file_saved_successfully">విజయవంతంగా సేవ్ చేయబడిన ఫైల్</string>
   <string name="file_download">డౌన్లోడ్</string>
   <string name="title_media_viewer">మీడియా వీక్షకుడు</string>
   <string name="menu_file_open">ఫైల్ తెరిచి</string>
@@ -323,7 +301,6 @@
   <string name="bottomsheet_remove">సభ్యుడిని తొలగించు</string>
   <!--JamiId-->
   <string name="jami_id_validate">వినియోగదారు పేరును నమోదు చేయండి</string>
-  <string name="jami_id_looking_for_availability">వాడుకరి పేరు లభ్యత కోసం చూస్తున్న.</string>
   <string name="jami_id_choose_username">ఒక వినియోగదారు పేరును ఎంచుకోండి</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">జామికి స్వాగతం</string>
