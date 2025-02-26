@@ -84,6 +84,7 @@
   <string name="today">Бүген</string>
   <string name="yesterday">Кичә</string>
   <!--Contacts-->
+  <string name="prompt_new_password_repeat">Яңа шифәрне раслау</string>
   <string name="account_create_title">Jami хисабы булдыру</string>
   <string name="prompt_hint_username">Исем кулланучы</string>
   <string name="wizard_next">Киләсесе</string>
@@ -93,13 +94,13 @@
   <string name="hist_invitation_received">Чакыру кабул ителгән</string>
   <!--Account summary-->
   <string name="profile">Профиль</string>
-  <string name="profile_message_warning">Профильгез сезнең контактларыгыз белән генә уртаклаша</string>
   <string name="take_a_photo">Фотога төшерегез</string>
   <string name="profile_name_hint">Исемегезне кертегез</string>
   <string name="identity">Идентификация</string>
   <string name="identifier">Идентификатор</string>
   <string name="account">Хисап</string>
   <string name="link_new_device">Яңа җайланманы тоташтыру</string>
+  <string name="devices_header">Кораллар</string>
   <string name="devices">Бәйләнешле җайланмалар</string>
   <!--Share fragment-->
   <string name="share_label">Бүләкләү</string>
@@ -111,10 +112,8 @@
   <!--Blacklist-->
   <string name="no_blocked_contact">Бәйләнешләрне туктату юк</string>
   <!--Smartlist-->
-  <string name="search_results">Эзләү нәтиҗәләре</string>
   <string name="tv_contact_row_header">Контактлар</string>
   <!--File Transfer-->
-  <string name="file_transfer_status_cancelled">баш тартты</string>
   <string name="menu_file_open">Ачык файл</string>
   <string name="menu_file_save">Файлны сакларга</string>
   <string name="menu_file_share">Файлны бүлегез</string>
@@ -156,7 +155,6 @@
   <string name="bottomsheet_remove">Алып баручыны алып ташлау</string>
   <!--JamiId-->
   <string name="jami_id_validate">Кулланучы исемен теркәгез</string>
-  <string name="jami_id_looking_for_availability">Исемнәр эзлибез...</string>
   <string name="jami_id_choose_username">Кулланучы исемен сайлагыз</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Җәмигә рәхим итегез.</string>

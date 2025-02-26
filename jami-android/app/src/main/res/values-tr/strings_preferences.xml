@@ -46,8 +46,8 @@
   <string name="pref_typing_summary">İleti yazıldığını gösteren yazım göstergelerini gönder ve al.</string>
   <string name="pref_block_record_title">Ekran görüntüsünü ve kaydını engelle</string>
   <string name="pref_block_record_summary">Ekran görüntüsü ya da kaydını almayı engelle.</string>
-  <string name="pref_link_preview_title">Görüşmelerde bağlantı ön izlemelerini göster</string>
-  <string name="pref_link_preview_summary">Ön izlemeler üçüncü taraf sunuculardan içerik indirmeyi gerektirir</string>
+  <string name="pref_link_preview_title">Web bağlantısı önizlemeleri</string>
+  <string name="pref_link_preview_summary">Ön izleme, içeriğin üçüncü taraf sunuculardan indirilmesini gerektirir.</string>
   <!--Notifications Visibility-->
   <string name="connectivity_custom_title">Özel</string>
   <!--Extension-->

@@ -56,8 +56,8 @@
   <string name="pref_typing_summary">Senden und Empfangen von Tipp-Benachrichtungen, die das Tippen einer Nachricht anzeigen.</string>
   <string name="pref_block_record_title">Screenshot und Aufzeichnung blockieren</string>
   <string name="pref_block_record_summary">Aufnahme von Screenshots oder Videos blockieren.</string>
-  <string name="pref_link_preview_title">Linkvorschauen in Unterhaltungen anzeigen</string>
-  <string name="pref_link_preview_summary">Vorschauen erfordern das Herunterladen von Inhalten von Drittanbieter-Servern</string>
+  <string name="pref_link_preview_title">Linkvorschau</string>
+  <string name="pref_link_preview_summary">Vorschau erfordert dass Inhalte von Drittanbieter-Servern heruntergeladen werden.</string>
   <!--Notifications Visibility-->
   <string name="notification_public">Öffentlich\n(Benachrichtigungen und deren Inhalt auf dem Sperrbildschirm anzeigen)\n</string>
   <string name="notification_private">Privat\n(Benachrichtigungen anzeigen, aber deren Inhalt auf dem Sperrbildschirm ausblenden)\n</string>

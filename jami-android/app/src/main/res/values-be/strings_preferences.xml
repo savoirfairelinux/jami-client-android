@@ -45,7 +45,7 @@
   <string name="pref_typing_summary">Пашляць і атрымліваць паказчыкі накладу, якія паказваюць, што паведамленне накладзена.</string>
   <string name="pref_block_record_title">Блокіраванне скрыншот і запіс</string>
   <string name="pref_block_record_summary">Блокіруйце здымак экрана або запіс відэа.</string>
-  <string name="pref_link_preview_title">Паказаць перагляд спасылкі ў размовах</string>
+  <string name="pref_link_preview_title">Папярэднія прагляды вэб-спасылак</string>
   <string name="pref_link_preview_summary">Перагляд патрабуе спампоўкі кантэнту з сервераў трэціх бакоў.</string>
   <!--Notifications Visibility-->
   <!--Extension-->

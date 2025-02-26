@@ -45,8 +45,8 @@
   <string name="pref_typing_summary">Στείλτε και λαμβάνετε δείκτες πληκτρολόγησης που δείχνουν ότι πληκτρολογείται ένα μήνυμα.</string>
   <string name="pref_block_record_title">Κλείστε το screenshot και την εγγραφή</string>
   <string name="pref_block_record_summary">Αποτρέψτε την λήψη οθόνης ή την ηχογράφηση βίντεο.</string>
-  <string name="pref_link_preview_title">Δείξτε προεπισκόπηση συνδέσμων στις συνομιλίες</string>
-  <string name="pref_link_preview_summary">Οι προβολές απαιτούν να κατεβάσετε περιεχόμενο από διακομιστές τρίτων.</string>
+  <string name="pref_link_preview_title">Προεπισκοπήσεις συνδέσεων Web</string>
+  <string name="pref_link_preview_summary">Η προεπισκόπηση απαιτεί την λήψη περιεχομένου από διακομιστές τρίτων.</string>
   <!--Notifications Visibility-->
   <string name="connectivity_custom_title">Προμηθευτές</string>
   <!--Extension-->

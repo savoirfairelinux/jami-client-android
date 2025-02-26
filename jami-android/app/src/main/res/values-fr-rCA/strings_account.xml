@@ -30,7 +30,7 @@ Vous pourrez apporter des modifications à ce compte plus tard.</string>
   <string name="account_type_ip2ip">Compte IP</string>
   <string name="help_ring">Un compte Jami vous permet de joindre des personnes en pair-à-pair de façon sécurisée au travers d\'un réseau entièrement distribué.</string>
   <string name="help_sip_title">Ajouter un compte SIP</string>
-  <string name="help_sip">Configurer un compte SIP existant</string>
+  <string name="help_sip">Configurer un compte SIP existant.</string>
   <string name="create_sip_account">Configurer un compte SIP</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_title">Supprimer le compte ?</string>
@@ -56,9 +56,10 @@ Vous pourrez apporter des modifications à ce compte plus tard.</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Général</string>
   <string name="account_basic_category">Réglages de base</string>
-  <string name="account_alias_label">Nom de compte</string>
+  <string name="account_alias_label">Nom affiché</string>
   <string name="account_hostname_label">Nom d\'hôte</string>
   <string name="account_bootstrap_label">Amorcer</string>
+  <string name="account_name_server_label">Serveur de nom</string>
   <string name="account_username_label">Nom d\'utilisateur</string>
   <string name="account_password_label">Mot de passe</string>
   <string name="account_optionnal_category">Réglages optionnels</string>
@@ -107,8 +108,10 @@ Vous pourrez apporter des modifications à ce compte plus tard.</string>
   <string name="account_published_same_as_local_label">Identique aux paramètres locaux</string>
   <string name="account_published_port_label">Port publié</string>
   <string name="account_published_address_label">Adresse publiée</string>
+  <string name="account_connectivity_label">Connectivité pair à pair</string>
   <string name="disabled">Désactivé</string>
   <string name="enabled">Activé</string>
+  <string name="default_value">Défaut</string>
   <string name="account_proxy_label">Proxy DHT</string>
   <string name="account_proxy_enable_label">Utiliser un proxy DHT </string>
   <string name="account_proxy_list_enable_label">Utiliser la liste des serveurs mandataires DHT</string>
@@ -129,25 +132,25 @@ Vous pourrez apporter des modifications à ce compte plus tard.</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Utiliser le transport TLS</string>
-  <string name="account_tls_port_label">Port TLS auditeur</string>
+  <string name="account_tls_port_label">Port d\'écoute TLS</string>
   <string name="account_tls_certificate_list_label">Autorités de certification</string>
   <string name="account_tls_certificate_file_label">Fichier de certificat</string>
-  <string name="account_tls_private_key_file_label">Fichier de clé privée</string>
-  <string name="account_tls_password_label">Mot de passe de la clé privée</string>
+  <string name="account_tls_private_key_file_label">Fichier de la clé privée</string>
+  <string name="account_tls_password_label">Mot de passe de la clé privée </string>
   <string name="account_tls_method_label">Méthode TLS</string>
-  <string name="account_tls_ciphers_label">Chiffrements TLS </string>
-  <string name="account_tls_server_name_label">Nom de serveur</string>
-  <string name="account_tls_verify_server_label">Vérifier le serveur</string>
-  <string name="account_tls_verify_client_label">Vérifier le client</string>
+  <string name="account_tls_ciphers_label">Chiffrements TLS</string>
+  <string name="account_tls_server_name_label">Nom du serveur TLS</string>
+  <string name="account_tls_verify_server_label">Authentifier le serveur</string>
+  <string name="account_tls_verify_client_label">Authentifier le client</string>
   <string name="account_require_client_certificate_label">Le protocole TLS exige un certificat client</string>
-  <string name="account_tls_negotiation_timeout_sec">Durée de négociation (secondes)</string>
+  <string name="account_tls_negotiation_timeout_sec">Délai de négociation (en secondes)</string>
   <string name="account_rtp_max_port">Maximum</string>
   <string name="account_rtp_min_port">Minimum</string>
-  <string name="account_rtp_port_range">Plage de ports RTP audio</string>
+  <string name="account_rtp_port_range">Plage de ports RTP pour l\'audio</string>
   <!--restore/backup-->
   <string name="account_new_device_password">Entrer le mot de passe principal pour déverrouiller le compte</string>
   <string name="error_password_char_count">Minimum de 6 caractères</string>
-  <string name="error_passwords_not_equals">Les mots de passe ne concordent pas</string>
+  <string name="error_passwords_not_equals">Les mots de passe ne correspondent pas.</string>
   <string name="export_account_wait_title">Veuillez patienter...</string>
   <string name="export_account_wait_message">Exporter les informations du compte</string>
   <string name="account_export_file">Sauvegarder le compte</string>
@@ -196,16 +199,16 @@ Vous pourrez apporter des modifications à ce compte plus tard.</string>
   <string name="account_link_device">Se connecter à partir d\'un autre appareil</string>
   <string name="account_link_button">Se connecter à partir d\'un réseau</string>
   <string name="account_link_archive_button">Se connecter à partir d\'une sauvegarde</string>
-  <string name="account_link_prompt_pin">Entrer le NIP</string>
-  <string name="account_new_button">Créer un compte Jami</string>
+  <string name="account_link_prompt_pin">Entrer le code NIP</string>
+  <string name="account_new_button">Rejoindre Jami</string>
   <string name="account_link_export_button">Associer un nouvel appareil</string>
   <string name="account_link_show_button">Montrer %d appareils liés supplémentaires</string>
   <string name="account_link_hide_button">Cacher les appareils liés</string>
-  <string name="account_link_export_info">Pour utiliser ce compte sur d\'autres appareils, vous devez d\'abord l\'exposer sur Jami. Ceci génèrera un code NIP que vous devrez entrer sur le nouvel appareil pour configurer le compte. Le NIP restera valide pendant 10 minutes.</string>
-  <string name="account_start_export_button">Générer le NIP</string>
+  <string name="account_link_export_info">Pour utiliser ce compte sur d\\'autres appareils, vous devez d\\'abord l\\'exposer sur Jami. Ceci générera un code NIP que vous devrez entrer sur le nouvel appareil pour configurer le compte. Le NIP restera valide pendant 10 minutes. </string>
+  <string name="account_start_export_button">Générer un NIP</string>
   <string name="account_end_export_button">fermer</string>
-  <string name="account_end_export_infos">Votre NIP est:\n\n%%\n\nPour terminer l\'opération, vous devez ouvrir Jami sur un autre appareil puis créer un nouveau compte avec \"Lier cet appareil à un compte\".  Votre NIP est utilisable pendant 10 minutes.</string>
-  <string name="account_link_export_info_light">Pour utiliser ce compte sur d\'autres appareils, vous devez d\'abord l\'exposer sur Jami. Ceci génèrera un code NIP que vous devrez entrer sur le nouvel appareil pour configurer le compte. Le NIP restera valide pendant 10 minutes.</string>
+  <string name="account_end_export_infos">Votre NIP est:\n\n%%\n\nPour terminer l\\'opération, vous devez ouvrir Jami sur un autre appareil puis créer un nouveau compte avec \"Lier cet appareil à un compte\".  Votre NIP est utilisable pendant 10 minutes.</string>
+  <string name="account_link_export_info_light">Pour utiliser ce compte sur d\\'autres appareils, vous devez d\\'abord l\\'exposer sur Jami. Ceci générera un code NIP que vous devrez entrer sur le nouvel appareil pour configurer le compte. Le NIP restera valide pendant 10 minutes. </string>
   <string name="account_export_title">Associer le compte à d\'autres appareils</string>
   <string name="account_connect_server_button">Se connecter à un serveur de gestion de comptes</string>
   <string name="account_connect_button">Se connecter</string>
@@ -219,9 +222,9 @@ Vous pourrez apporter des modifications à ce compte plus tard.</string>
   <!--Name registration-->
   <string name="error_username_empty">Entrer le nom d\'utilisateur</string>
   <string name="no_registered_name_for_account">Aucun nom enregistré</string>
-  <string name="username_available">Identifiant disponible!</string>
+  <string name="username_available">Le nom d\'utilisateur est disponible.</string>
   <string name="register_name">Enregistrer un nom</string>
-  <string name="trying_to_register_name">Enregistrement du nom en cours</string>
+  <string name="trying_to_register_name">L\'enregistrement du nom d\'utilisateur est en cours. Veuillez patienter...</string>
   <string name="registered_username">Nom d\'utilisateur enregistré</string>
   <string name="register_username">Enregistrer un nom d\'utilisateur public</string>
   <string name="register_recommended">Recommandé</string>
@@ -256,7 +259,7 @@ Vous pourrez apporter des modifications à ce compte plus tard.</string>
   <string name="account_rename_device_hint">Choisir un nouveau nom d\'appareil</string>
   <string name="account_device_name_empty">Le nom d\'appareil ne peut être vide.</string>
   <string name="account_device_this_indicator">Cet appareil</string>
-  <string name="account_disabled_indicator">désactivé</string>
+  <string name="account_disabled_indicator">Désactivé</string>
   <!--Link a new device-->
   <string name="account_link_prompt_pin_manually">Entrer votre NIP manuellement</string>
   <string name="qr_invalid">n\'est pas un QR code Jami valide</string>
@@ -270,7 +273,7 @@ Vous pourrez apporter des modifications à ce compte plus tard.</string>
   <string name="account_link_device_info">Allez sur \"Associer un nouvel appareil\" sur l\'autre appareil pour voir le code QR ou le NIP</string>
   <string name="account_generate_export_device">Sur l\'autre appareil</string>
   <string name="account_generate_export_info">Installer et lancer Jami, choisissez \"Importer d\'un nouvel appareil\" et scanner le code QR.</string>
-  <string name="content_description_qr_generated">Votre code QR</string>
+  <string name="content_description_qr_generated">Code QR du compte</string>
   <string name="account_generate_export_invalid">Votre NIP n\'est plus valide. Saisissez le mot de passe et générer un nouveau NIP pour associer cet appareil.</string>
   <string name="account_generate_export_invalid_two">Votre NIP n\'est plus valide. Générer un nouveau NIP pour associer cet appareil.</string>
   <string name="help_pin_info">Renseigner ce champ si le compte est chiffré</string>

@@ -45,8 +45,8 @@
   <string name="pref_typing_summary">ส่งและรับตัวบ่งชี้การพิมพ์ที่แสดงว่ากำลังพิมพ์ข้อความ</string>
   <string name="pref_block_record_title">บล็อกภาพหน้าจอและการบันทึก</string>
   <string name="pref_block_record_summary">บล็อกการจับภาพหน้าจอหรือบันทึกวิดีโอ</string>
-  <string name="pref_link_preview_title">แสดงตัวอย่างลิงก์ในการสนทนา</string>
-  <string name="pref_link_preview_summary">การแสดงตัวอย่างจำเป็นต้องดาวน์โหลดเนื้อหาจากเซิร์ฟเวอร์บุคคลที่สาม</string>
+  <string name="pref_link_preview_title">ตัวอย่างลิงก์เว็บ</string>
+  <string name="pref_link_preview_summary">การดูก่อนหน้านี้ต้องดาวน์โหลดเนื้อหาจากเซอร์เวอร์พาร์ทที่สาม</string>
   <!--Notifications Visibility-->
   <string name="connectivity_custom_title">กำหนดเอง</string>
   <!--Extension-->

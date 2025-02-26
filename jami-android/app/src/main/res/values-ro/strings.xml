@@ -186,7 +186,7 @@
   <string name="swarm_group_action_leave_title">Părăsești acest grup?</string>
   <string name="swarm_group_action_leave_message">Aceasta va elimina conversația din lista conversațiilor</string>
   <string name="conversation_action_copy_peer_number">Copiază identificatorul contactului</string>
-  <string name="copied_to_clipboard">%1$s copiat în memorie</string>
+  <string name="copied_to_clipboard">%1$s copiat în memorie.</string>
   <string name="conversation_action_select_peer_number">Alege un număr</string>
   <string name="conversation_action_block_this">Blochează contactul</string>
   <string name="conversation_action_unblock_this">Deblochează contactul</string>
@@ -215,11 +215,11 @@
   <string name="conversation_type_contact">Contact Jami</string>
   <string name="conversation_type_private">Privat</string>
   <string name="conversation_type_group">Grup</string>
-  <string name="conversation_contact_invited">%1$s a fost invitat</string>
-  <string name="conversation_contact_added">%1$s s-a alăturat</string>
-  <string name="conversation_contact_left">%1$s a ieșit</string>
-  <string name="conversation_contact_blocked">%1$s a fost blocat</string>
-  <string name="conversation_contact_unblocked">%1$s a fost deblocat</string>
+  <string name="conversation_contact_invited">%1$s a fost invitat să participe la conversație.</string>
+  <string name="conversation_contact_added">%1$s participă la conversație.</string>
+  <string name="conversation_contact_left">%1$s a părăsit conversația.</string>
+  <string name="conversation_contact_blocked">%1$s a fost blocat din conversație.</string>
+  <string name="conversation_contact_unblocked">%1$s a fost deblocat din conversație.</string>
   <string name="conversation_search_hint">Caută conversația</string>
   <string name="audio_recorder_error">Aplicația de înregistrare audio nu a fost găsită.</string>
   <string name="video_recorder_error">Aplicația de înregistrare video nu a fost găsită.</string>
@@ -240,7 +240,7 @@
   <string name="add_call_contact_number_to_contacts">Adaugi %1$s?</string>
   <string name="prompt_new_password">Parola nouă</string>
   <string name="prompt_new_password_optional">Parola nouă (facultativ)</string>
-  <string name="prompt_new_password_repeat">Repetă parola nouă</string>
+  <string name="prompt_new_password_repeat">Confirmă parola nouă</string>
   <string name="account_create_title">Creează un cont Jami</string>
   <string name="prompt_new_username">Introdu un nou nume de utilizator</string>
   <string name="prompt_hint_username">Nume de utilizator</string>
@@ -249,6 +249,7 @@
   <string name="help_server_enter">Introdu URL-ul serverului de administrare</string>
   <string name="help_pin_enter">Introdu codul PIN obținut de la un cont Jami. Folosește opțiunea „Exportă contul Jami” pentru a obține codul PIN.</string>
   <string name="pin_copied">Cod PIN copiat în memorie.</string>
+  <string name="copied_clipboard">Copiat în memorie.</string>
   <string name="wizard_next">Înainte</string>
   <string name="wizard_back">Înapoi</string>
   <string name="wizard_skip">Omite</string>
@@ -261,7 +262,6 @@
   <!--Account summary-->
   <string name="profile">Profilul</string>
   <string name="profile_name">Numele profilului</string>
-  <string name="profile_message_warning">Profilul tău este distribuit doar contactelor tale</string>
   <string name="open_the_gallery">Deschide galeria</string>
   <string name="take_a_photo">Fă o poză</string>
   <string name="remove_photo">Elimină poza</string>
@@ -272,6 +272,7 @@
   <string name="identifier">Identificator</string>
   <string name="account">Cont</string>
   <string name="link_new_device">Asociază alt aparat</string>
+  <string name="devices_header">Aparate</string>
   <string name="devices">Aparate asociate</string>
   <string name="total_devices">Toate aparatele: </string>
   <!--Share fragment-->
@@ -308,25 +309,9 @@
   <string name="gallery_error_message">Nu a fost găsită nicio aplicație instalată care să deschidă galeria</string>
   <string name="generic_error">A apărut o eroare necunoscută.</string>
   <!--File Transfer-->
-  <string name="invalid_file">Fișier greșit</string>
-  <string name="not_able_to_write_file">Fișierul nu poate fi scris</string>
-  <string name="file_transfer_status_created">se inițializează transferul</string>
-  <string name="file_transfer_status_unsupported">neacceptat</string>
-  <string name="file_transfer_status_wait_peer_acceptance">Se așteaptă acceptarea</string>
-  <string name="file_transfer_status_wait_host_acceptance">Se așteaptă acceptarea</string>
-  <string name="file_transfer_status_ongoing">în curs</string>
-  <string name="file_transfer_status_finished">terminat</string>
-  <string name="file_transfer_status_closed_by_host">închis de aparat</string>
-  <string name="file_transfer_status_closed_by_peer">închis de interlocutor</string>
-  <string name="file_transfer_status_invalid_pathname">cale greșită</string>
-  <string name="file_transfer_status_unjoinable_peer">utilizator inaccesibil</string>
-  <string name="file_transfer_status_cancelled">anulat</string>
-  <string name="file_transfer_status_error">nereușit din cauza unei erori</string>
-  <string name="file_transfer_status_timed_out">timp expirat</string>
-  <string name="file_saved_in">Fișier salvat în %s</string>
-  <string name="file_saved_successfully">Fișier salvat cu succes</string>
+  <string name="file_transfer_status_unjoinable_peer">Utilizator inaccesibil</string>
+  <string name="file_saved_successfully">Fișier salvat cu succes.</string>
   <string name="file_download">Descarcă</string>
-  <string name="no_space_left_on_device">Spațiu de stocare insuficient</string>
   <string name="title_media_viewer">Vizualizator Media</string>
   <string name="menu_file_open">Deschide fișierul</string>
   <string name="menu_file_download">Descarcă fișierul</string>
@@ -363,7 +348,6 @@
   <string name="conversation_input_speech_hint">Spune ceva...</string>
   <string name="audio_permission_denied">Nu este permisă folosirea microfonului. Poate fi dată din reglările sistemului.</string>
   <string name="camera_permission_denied">Nu este permisă folosirea camerei. Poate fi dată din reglările sistemului.</string>
-  <string name="speech_recogniton_unavailable">Recunoașterea vorbirii nu este disponibilă.</string>
   <string name="audio_permission_rationale_title">Permisiunea audio este necesară</string>
   <string name="camera_permission_rationale_title">Este necesar accesul la cameră</string>
   <string name="audio_permission_rationale_message">Jami are nevoie de acces la microfon pentru a transforma vorbirea în text și pentru a înregistra audio. Acesta va fi solicitat la pasul următor.</string>
@@ -412,6 +396,7 @@
   <string name="tab_files">Fișiere</string>
   <string name="tab_settings">Reglări</string>
   <string name="not_admin_toast">Numai administratorii pot modifica informațiile acestui grup</string>
+  <string name="dialog_title_contact">Modifică numele afișat</string>
   <string name="dialogtitle_title">Modifică titlul grupului</string>
   <string name="dialogtitle_description">Modifică descrierea grupului</string>
   <string name="dialog_hint_title">Titlu</string>
@@ -430,17 +415,16 @@
   <string name="jami_id_copy">Copiază JamiID</string>
   <string name="jami_id_share">Distribuie JamiID</string>
   <string name="jami_id_validate">Înscrie numele de utilizator</string>
-  <string name="jami_id_available">Numele este disponibil</string>
-  <string name="jami_id_not_available">Numele de utilizator nu este disponibil\n• maximum 32 de caractere\n• Caractere speciale permise: cratimă (-), liniuță joasă (_)</string>
+  <string name="jami_id_available">Numele este disponibil.</string>
+  <string name="jami_id_not_available">Numele nu este disponibil.</string>
   <string name="jami_id_info">• maximum 32 de caractere\n• Caractere speciale permise: cratimă (-), liniuță joasă (_)</string>
-  <string name="jami_id_looking_for_availability">Caut disponibilitatea numelui de utilizator...</string>
   <string name="jami_id_choose_username">Alege un nume de utilizator</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Bine ai venit pe Jami</string>
   <string name="welcome_jami_description">Împărtășește identificatorul tău Jami pentru a fi contactat mai ușor!</string>
   <!--Conversation details-->
   <string name="details">Detalii</string>
-  <string name="secure_p2p_connection">Conexiune sigură</string>
+  <string name="secure_p2p_connection">Conexiune sigură P2P</string>
   <string name="swarm_type">Tipul conversației</string>
   <string name="Private">Privat</string>
   <string name="swarm_id">ID-ul grupului</string>
@@ -448,7 +432,6 @@
   <string name="show_certificate">Arată certificatul</string>
   <string name="mute_conversation">Dezactivează notificările</string>
   <!--Donation-->
-  <string name="donation_card_description">Dacă îți place să folosești Jami și crezi că misiunea noastră este importantă, poți face o donație?</string>
   <string name="donation_card_not_now">Nu acum</string>
   <string name="donation_donate">Donează</string>
   <string name="donation_setting_title">Reamintire donații</string>

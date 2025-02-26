@@ -86,6 +86,8 @@
   <string name="hist_in_call">Příchozí hovor %1$s</string>
   <string name="hist_out_call">Odchozí hovor %1$s</string>
   <string name="action_call_accept">Přijmout hovor</string>
+  <string name="action_call_accept_audio">Přijmout se zvukem</string>
+  <string name="action_call_accept_video">Přijmout s obrazem</string>
   <string name="action_call_decline">Odmítnout</string>
   <string name="action_call_mic_mute">Ztlumit mikrofon</string>
   <string name="ab_action_speakerphone">Zapnout reproduktor</string>
@@ -147,7 +149,6 @@
   <string name="delete_contact">Smazat kontakt</string>
   <string name="conversation_action_remove_this_title">Smazat toto spojení?</string>
   <string name="conversation_action_remove_this_message">Toto smaže kontakt a s konečnou platností vymaže konverzační historii.</string>
-  <string name="copied_to_clipboard">%1$s zkopírováno do schránky</string>
   <string name="conversation_action_select_peer_number">Vyberte číslo</string>
   <string name="conversation_action_block_this">Blokovat spojení</string>
   <string name="conversation_action_unblock_this">Odblokovat kontakt</string>
@@ -173,9 +174,6 @@
   <string name="conversation_type_contact">Kontakt na Jami</string>
   <string name="conversation_type_private">Soukromý</string>
   <string name="conversation_type_group">Skupina</string>
-  <string name="conversation_contact_invited">%1$sbyl pozván</string>
-  <string name="conversation_contact_added">%1$sse připojil</string>
-  <string name="conversation_contact_left">%1$sodešel</string>
   <string name="conversation_search_hint">Najít konverzaci</string>
   <string name="today">Dnes</string>
   <string name="yesterday">Včera</string>
@@ -183,8 +181,8 @@
   <string name="add_call_contact_number_to_contacts">Přidat %1$s?</string>
   <string name="prompt_new_password">Nové heslo</string>
   <string name="prompt_new_password_optional">Nové heslo (volitelné)</string>
-  <string name="prompt_new_password_repeat">Zopakujte nové heslo</string>
-  <string name="account_create_title">Vytvořit účet Jami</string>
+  <string name="prompt_new_password_repeat">Potvrďte nové heslo</string>
+  <string name="account_create_title">Vytvoři Jami účet</string>
   <string name="prompt_new_username">Zadejte nové uživatelské jméno</string>
   <string name="prompt_hint_username">Uživatelské jméno</string>
   <string name="help_password_choose">K ochraně účtu Jami si zvolte silné heslo, které si dovedete zapamatovat.</string>
@@ -200,7 +198,6 @@
   <!--Account summary-->
   <string name="profile">Profil</string>
   <string name="profile_name">Název profilu</string>
-  <string name="profile_message_warning">Váš profil je sdílen jen s vašimi kontakty</string>
   <string name="open_the_gallery">Otevřít galerii</string>
   <string name="take_a_photo">Vyfotit</string>
   <string name="profile_name_hint">Zadejte své jméno</string>
@@ -210,6 +207,7 @@
   <string name="identifier">Identifikátor</string>
   <string name="account">Účet</string>
   <string name="link_new_device">Připojit nové zařízení</string>
+  <string name="devices_header">Zařízení</string>
   <string name="devices">Připojená zařízení</string>
   <string name="total_devices">Celkově zařízení:</string>
   <!--Share fragment-->
@@ -231,28 +229,11 @@
   <string name="conversation_placeholder">Zatím nemáte žádné konverzace</string>
   <string name="contact_request_sent">Poslána žádost o kontakt</string>
   <string name="start_conversation">Začněte konverzaci</string>
-  <string name="search_results">Výsledky hledání</string>
   <string name="tv_contact_row_header">Kontakty</string>
   <string name="gallery_error_title">Nenalezena žádná aplikace pro galerii</string>
   <string name="gallery_error_message">Na zařízení nebyla nalezena žádná aplikace na otevření galerie</string>
   <!--File Transfer-->
-  <string name="invalid_file">Neplatný soubor</string>
-  <string name="not_able_to_write_file">Nelze zapsat soubor</string>
-  <string name="file_transfer_status_created">Začíná se přenos</string>
-  <string name="file_transfer_status_unsupported">nepodporováno</string>
-  <string name="file_transfer_status_wait_peer_acceptance">čeká na přijetí protějšku</string>
-  <string name="file_transfer_status_wait_host_acceptance">čeká se na přijetí hostitele</string>
-  <string name="file_transfer_status_ongoing">probíhá</string>
-  <string name="file_transfer_status_finished">dokončeno</string>
-  <string name="file_transfer_status_closed_by_host">zavřeno hostitelem</string>
-  <string name="file_transfer_status_closed_by_peer">zavřeno protějškem</string>
-  <string name="file_transfer_status_invalid_pathname">neplatný název cesty</string>
-  <string name="file_transfer_status_unjoinable_peer">nepřipojitelný protějšek</string>
-  <string name="file_transfer_status_cancelled">zrušeno</string>
-  <string name="file_transfer_status_error">selhalo kvůli chybě</string>
-  <string name="file_transfer_status_timed_out">vypršel časový limit</string>
-  <string name="file_saved_in">Soubor uložen do %s</string>
-  <string name="file_saved_successfully">Soubor byl úspěšně uložen</string>
+  <string name="file_transfer_status_created">Inicializuje se</string>
   <string name="file_download">Stáhnout</string>
   <string name="title_media_viewer">Prohlížeč záznamů</string>
   <string name="menu_file_open">Otevřít soubor</string>
@@ -329,7 +310,6 @@
   <string name="bottomsheet_remove">Odstranit člena</string>
   <!--JamiId-->
   <string name="jami_id_validate">Zaregistrovat uživatelské jméno</string>
-  <string name="jami_id_looking_for_availability">Zjišťuje se dostupnost uživatelského jména…</string>
   <string name="jami_id_choose_username">Výberte uživatelské jméno</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Vítejte v Jami</string>

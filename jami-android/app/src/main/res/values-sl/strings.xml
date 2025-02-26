@@ -176,7 +176,6 @@
   <string name="conversation_action_remove_this_message">To bo izbrisalo stik in dokončno počistilo zgodovino pogovora.</string>
   <string name="swarm_group_action_leave">Zapusti skupino</string>
   <string name="swarm_group_action_leave_title">Ali želite zapustiti to skupino?</string>
-  <string name="copied_to_clipboard">%1$s kopirano na odložišče</string>
   <string name="conversation_action_select_peer_number">Izberi številko</string>
   <string name="conversation_action_block_this">Blokiraj stik</string>
   <string name="conversation_action_unblock_this">Odblokiraj stik</string>
@@ -205,11 +204,6 @@
   <string name="conversation_type_contact">Stik Jami</string>
   <string name="conversation_type_private">Zasebno</string>
   <string name="conversation_type_group">Skupina</string>
-  <string name="conversation_contact_invited">%1$s je povabljen/a</string>
-  <string name="conversation_contact_added">%1$s se je pridružil/a</string>
-  <string name="conversation_contact_left">%1$s je odšel/a</string>
-  <string name="conversation_contact_blocked">%1$s je blokiran/a</string>
-  <string name="conversation_contact_unblocked">%1$s je odblokiran/a</string>
   <string name="conversation_search_hint">Poišči pogovor</string>
   <string name="audio_recorder_error">Programa za snemanje zvoka ni možno najti.</string>
   <string name="video_recorder_error">Programa za snemanje videa ni možno najti.</string>
@@ -230,8 +224,8 @@
   <string name="add_call_contact_number_to_contacts">Želite dodati %1$s?</string>
   <string name="prompt_new_password">Novo geslo</string>
   <string name="prompt_new_password_optional">Novo geslo (neobvezno)</string>
-  <string name="prompt_new_password_repeat">Ponovi novo geslo</string>
-  <string name="account_create_title">Ustvari račun Jami</string>
+  <string name="prompt_new_password_repeat">Potrdite novo geslo</string>
+  <string name="account_create_title">Ustvarite račun Jami</string>
   <string name="prompt_new_username">Vpiši novo uporabniško ime</string>
   <string name="prompt_hint_username">Uporabniško ime</string>
   <string name="help_password_choose">Izberite močno geslo, ki si ga boste zapomnili in z njim zaščitili svoj račun Jami.</string>
@@ -250,7 +244,6 @@
   <!--Account summary-->
   <string name="profile">Profil</string>
   <string name="profile_name">Ime profila</string>
-  <string name="profile_message_warning">Vaš profil se deli samo z vašimi stiki</string>
   <string name="open_the_gallery">Odpri galerijo</string>
   <string name="take_a_photo">Slikaj</string>
   <string name="profile_name_hint">Vnesite svoje ime</string>
@@ -260,6 +253,7 @@
   <string name="identifier">identifikator</string>
   <string name="account">Račun</string>
   <string name="link_new_device">Poveži novo napravo</string>
+  <string name="devices_header">Naprave</string>
   <string name="devices">Povezane naprave</string>
   <string name="total_devices">Skupaj naprav:</string>
   <!--Share fragment-->
@@ -285,31 +279,13 @@
   <string name="conversation_placeholder">Trenutno še nimate pogovorov</string>
   <string name="contact_request_sent">Zahteva za stik poslana</string>
   <string name="start_conversation">Začni pogovor</string>
-  <string name="search_results">Rezultati iskanja</string>
   <string name="tv_contact_row_header">Stiki</string>
   <string name="gallery_error_title">Ni aplikacije za galerijo</string>
   <string name="gallery_error_message">Na napravi ni bilo mogoče najti aplikacije za odpiranje galerije</string>
   <string name="generic_error">Prišlo je do neznane napake.</string>
   <!--File Transfer-->
-  <string name="invalid_file">Napačna datoteka</string>
-  <string name="not_able_to_write_file">Ne možno zapisati datoteke</string>
-  <string name="file_transfer_status_created">inicializacija prenosa</string>
-  <string name="file_transfer_status_unsupported">ni podprto</string>
-  <string name="file_transfer_status_wait_peer_acceptance">čakanje na potrditev soležnika</string>
-  <string name="file_transfer_status_wait_host_acceptance">čakanje na potrditev gostitelja</string>
-  <string name="file_transfer_status_ongoing">v teku</string>
-  <string name="file_transfer_status_finished">končano</string>
-  <string name="file_transfer_status_closed_by_host">zaprto s strani gostitelja</string>
-  <string name="file_transfer_status_closed_by_peer">zaprto s strani soležnika</string>
-  <string name="file_transfer_status_invalid_pathname">napačno ime poti</string>
-  <string name="file_transfer_status_unjoinable_peer">soležniku se ni mogoče pridružiti</string>
-  <string name="file_transfer_status_cancelled">prekinjeno</string>
-  <string name="file_transfer_status_error">ni uspelo zaradi napake</string>
-  <string name="file_transfer_status_timed_out">poteklo</string>
-  <string name="file_saved_in">Datoteka je shranjena v %s</string>
-  <string name="file_saved_successfully">Datoteka je bila uspešno shranjena</string>
+  <string name="file_transfer_status_created">Zaganjam</string>
   <string name="file_download">Prenesi</string>
-  <string name="no_space_left_on_device">Na tej napravi ni več prostora za hrambo.</string>
   <string name="title_media_viewer">Prikazovalnik vsebin</string>
   <string name="menu_file_open">Odpri datoteko</string>
   <string name="menu_file_download">Prenesi datoteko</string>
@@ -344,7 +320,6 @@
   <string name="tv_send_video">Pošlji medij</string>
   <string name="tv_action_more">Dodatno</string>
   <string name="conversation_input_speech_hint">Recite nekaj ...</string>
-  <string name="speech_recogniton_unavailable">Razpoznavanje govora ni na voljo.</string>
   <string name="audio_permission_rationale_title">Zahtevano je dovoljenje za zvok</string>
   <string name="audio_permission_rationale_message">Jami zahteva dovoljenje mikrofona za uporabo funkcije govor-v-besedilo in za funkcije snemanja zvoka. O tem boste povprašani v naslednjem koraku.</string>
   <string name="camera_permission_rationale_message">Jami zahteva dovoljenje kamere za snemanje videa in za vzpostavljanje videoklica. O tem boste povprašani v naslednjem koraku.</string>
@@ -404,10 +379,7 @@
   <string name="jami_id_copy">Kopiraj JamiId</string>
   <string name="jami_id_share">Deli JamiId</string>
   <string name="jami_id_validate">Registriraj uporabniško ime</string>
-  <string name="jami_id_available">Uporabniško ime je na voljo</string>
-  <string name="jami_id_not_available">Uporabniško ime ni na voljo\n• Največ 32 znakov\n• Dovoljena posebna znaka: vezaj (-), podčrtaj (_)</string>
   <string name="jami_id_info">• Največ 32 znakov\n• Dovoljena posebna znaka: vezaj (-), podčrtaj (_)</string>
-  <string name="jami_id_looking_for_availability">Poteka preverjanje, ali je uporabniško ime na voljo ...</string>
   <string name="jami_id_choose_username">Izberite uporabniško ime</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Dobrodošli v Jami</string>
@@ -420,7 +392,6 @@
   <string name="show_certificate">Pokaži potrdilo</string>
   <string name="mute_conversation">Utišaj pogovor</string>
   <!--Donation-->
-  <string name="donation_card_description">Če vam je všeč Jami in verjamete v naše poslanstvo - bi prispevali projektu?</string>
   <string name="donation_card_not_now">Ne zdaj</string>
   <string name="donation_donate">Donirajte</string>
   <string name="donation_setting_title">Opomnik za donacije</string>

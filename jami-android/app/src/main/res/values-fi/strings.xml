@@ -214,11 +214,11 @@
   <string name="conversation_type_contact">Jami yhteystieto</string>
   <string name="conversation_type_private">Yksityinen</string>
   <string name="conversation_type_group">Ryhmä</string>
-  <string name="conversation_contact_invited">%1$s kutsuttiin</string>
-  <string name="conversation_contact_added">%1$s liittyi</string>
-  <string name="conversation_contact_left">%1$s jäljellä</string>
-  <string name="conversation_contact_blocked">%1$s estettiin</string>
-  <string name="conversation_contact_unblocked">%1$s esto vapautettiin</string>
+  <string name="conversation_contact_invited">%1$s kutsuttiin keskusteluun.</string>
+  <string name="conversation_contact_added">%1$s liittyi keskusteluun.</string>
+  <string name="conversation_contact_left">%1$s poistui keskustelusta.</string>
+  <string name="conversation_contact_blocked">%1$s estettiin keskustelusta.</string>
+  <string name="conversation_contact_unblocked">%1$s keskustelun esto poistettiin.</string>
   <string name="conversation_search_hint">Hae keskustelua</string>
   <string name="audio_recorder_error">Audion tallennussovellusta ei löytynyt.</string>
   <string name="video_recorder_error">Videon tallennussovellusta ei löytynyt.</string>
@@ -239,8 +239,8 @@
   <string name="add_call_contact_number_to_contacts">Lisäätkö %1$s?</string>
   <string name="prompt_new_password">Uusi salasana</string>
   <string name="prompt_new_password_optional">Uusi salasana (valinnainen)</string>
-  <string name="prompt_new_password_repeat">Toista uusi salasana</string>
-  <string name="account_create_title">Luo Jami-tili</string>
+  <string name="prompt_new_password_repeat">Vahvista uusi salasana</string>
+  <string name="account_create_title">Luo Jami-tilin</string>
   <string name="prompt_new_username">Anna uusi käyttäjänimi</string>
   <string name="prompt_hint_username">Käyttäjänimi</string>
   <string name="help_password_choose">Valitse muistettava, vahva salasana jota käytät Jami-tilin suojaamiseen.</string>
@@ -248,6 +248,7 @@
   <string name="help_server_enter">Anna hallintapalvelimen URL.</string>
   <string name="help_pin_enter">Anna määritetyn Jami-tilin PIN-koodi. Käytä \"Vie Jami-tili\" ominaisuutta saadaksesi PIN-koodin.</string>
   <string name="pin_copied">PIN-koodi kopioitu leikepöydälle.</string>
+  <string name="copied_clipboard">Kopioitu leikepöydälle</string>
   <string name="wizard_next">Seuraava</string>
   <string name="wizard_back">Takaisin</string>
   <string name="wizard_skip">Ohita</string>
@@ -260,7 +261,6 @@
   <!--Account summary-->
   <string name="profile">Profiili</string>
   <string name="profile_name">Profiilin nimi</string>
-  <string name="profile_message_warning">Profiilisi jaetaan vain sinun yhteystietojen kanssa</string>
   <string name="open_the_gallery">Avaa valokuvat</string>
   <string name="take_a_photo">Ota valokuva</string>
   <string name="remove_photo">Poista valokuva</string>
@@ -271,6 +271,7 @@
   <string name="identifier">Tunniste</string>
   <string name="account">Tunnus</string>
   <string name="link_new_device">Linkitä uusi laite</string>
+  <string name="devices_header">Laitteet</string>
   <string name="devices">Linkitetyt laitteet</string>
   <string name="total_devices">Laitteita yhteensä: </string>
   <!--Share fragment-->
@@ -307,25 +308,8 @@
   <string name="gallery_error_message">Laitteesta ei löydy sovellusta valokuvien avaamiseen</string>
   <string name="generic_error">Tapahtui tuntematon virhe.</string>
   <!--File Transfer-->
-  <string name="invalid_file">Virheellinen tiedosto</string>
-  <string name="not_able_to_write_file">Tiedostoa ei voi kirjoittaa</string>
-  <string name="file_transfer_status_created">siirron valmistelu</string>
-  <string name="file_transfer_status_unsupported">ei tueta</string>
-  <string name="file_transfer_status_wait_peer_acceptance">odottaa hyväksymistä</string>
-  <string name="file_transfer_status_wait_host_acceptance">odotetaan isännän hyväksyntää</string>
-  <string name="file_transfer_status_ongoing">meneillään</string>
-  <string name="file_transfer_status_finished">valmis</string>
-  <string name="file_transfer_status_closed_by_host">suljettu laitteelta</string>
-  <string name="file_transfer_status_closed_by_peer">suljettu vertaisverkosta</string>
-  <string name="file_transfer_status_invalid_pathname">virheellinen polku</string>
-  <string name="file_transfer_status_unjoinable_peer">yhdistämätön vertaisverkko</string>
-  <string name="file_transfer_status_cancelled">peruttu</string>
-  <string name="file_transfer_status_error">epäonnistui virheen takia</string>
-  <string name="file_transfer_status_timed_out">aikakatkaisu</string>
-  <string name="file_saved_in">Tiedosto tallennettu %s</string>
-  <string name="file_saved_successfully">Tiedoston tallennus onnistui</string>
+  <string name="file_saved_successfully">Tiedosto tallennettu.</string>
   <string name="file_download">Lataa</string>
-  <string name="no_space_left_on_device">Laitteessa ei ole tallennustilaa</string>
   <string name="title_media_viewer">Katseluohjelma</string>
   <string name="menu_file_open">Avaa tiedosto</string>
   <string name="menu_file_download">Lataa tiedosto</string>
@@ -362,7 +346,6 @@
   <string name="conversation_input_speech_hint">Sano jotakin...</string>
   <string name="audio_permission_denied">Mikrofonin käyttö on estetty. Ota käyttöön laitteen asetuksissa, jotta voit käyttää ominaisuutta.</string>
   <string name="camera_permission_denied">Kameran käyttö on estetty. Ota käyttöön laitteen asetuksissa, jotta voit käyttää ominaisuutta.</string>
-  <string name="speech_recogniton_unavailable">Puheentunnistus ei ole käytettävissä.</string>
   <string name="audio_permission_rationale_title">Audion käyttöoikeus vaaditaan</string>
   <string name="camera_permission_rationale_title">Kameran käyttöoikeus vaaditaan</string>
   <string name="audio_permission_rationale_message">Jami vaatii mikrofonin käyttöoikeuden puhetta tekstiksi ja äänen äänitysominaisuuksia varten. Sitä kysytään seuraavassa vaiheessa.</string>
@@ -429,10 +412,9 @@
   <string name="jami_id_copy">Kopioi Jami-id</string>
   <string name="jami_id_share">Jaa Jami-id</string>
   <string name="jami_id_validate">Rekisteröi käyttäjänimi</string>
-  <string name="jami_id_available">Käyttäjänimi on saatavilla</string>
-  <string name="jami_id_not_available">Käyttäjänimi ei ole käytettävissä\n• Enintään 32 merkkiä\n• Erikoismerkit: viiva (-), alaviiva (_)</string>
+  <string name="jami_id_available">Käyttäjänimi on saatavilla.</string>
+  <string name="jami_id_not_available">Käyttäjänimi ei ole saatavilla.</string>
   <string name="jami_id_info">• Enintään 32 merkkiä\n• Erikoismerkit: viiva (-), alaviiva (_)</string>
-  <string name="jami_id_looking_for_availability">Tarkistetaan, onko käyttäjänimi vapaana...</string>
   <string name="jami_id_choose_username">Valitse käyttäjänimi</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Tervetuloa Jamiin</string>
@@ -447,7 +429,7 @@
   <string name="show_certificate">Näytä sertifikaatti</string>
   <string name="mute_conversation">Mykistä keskustelu</string>
   <!--Donation-->
-  <string name="donation_card_description">Jos pidät Jamista ja uskot missioomme, tekisitkö lahjoituksen?</string>
+  <string name="donation_card_description">Jos pidät Jamista ja uskot tehtäväämme, Haluatko tehdä lahjoituksen?</string>
   <string name="donation_card_not_now">Ei nyt</string>
   <string name="donation_donate">Lahjoita</string>
   <string name="donation_setting_title">Lahjoituksen muistutus</string>
