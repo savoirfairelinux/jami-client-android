@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8ddbc1ff_35c4bbb8",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2025-02-26T16:43:49Z",
+      "side": 0,
+      "message": "Wouldn\u0027t this change break existing translations for this string, and cause unnecessary work for community translators ?",
+      "range": {
+        "startLine": 480,
+        "startChar": 18,
+        "endLine": 480,
+        "endChar": 48
+      },
+      "revId": "3ecfabee317f0b99b85aa975df33c11a8e0dda9f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
