@@ -46,6 +46,30 @@
       },
       "revId": "3ecfabee317f0b99b85aa975df33c11a8e0dda9f",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca35c999_c06bad0c",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-02-28T14:53:03Z",
+      "side": 0,
+      "message": "Yes, it will break existing translation; however, it will show the previous string as a suggestion.\n\nIf a word is incorrect, it should be fixed.\n\nPreviously corrected `bellow` to `below`.",
+      "parentUuid": "29aba55a_11f33d47",
+      "range": {
+        "startLine": 480,
+        "startChar": 18,
+        "endLine": 480,
+        "endChar": 48
+      },
+      "revId": "3ecfabee317f0b99b85aa975df33c11a8e0dda9f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
