@@ -22,6 +22,30 @@
       },
       "revId": "3ecfabee317f0b99b85aa975df33c11a8e0dda9f",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "29aba55a_11f33d47",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-02-28T03:42:59Z",
+      "side": 0,
+      "message": "No, as the translation memory would automatically add the translation to the new string. However, I\u0027ve changed it back to non en-US label.\n\nWas trying to remove technical debt. If you would like the string to be returned to the en-US spelling, please advise.\n\nThank you",
+      "parentUuid": "8ddbc1ff_35c4bbb8",
+      "range": {
+        "startLine": 480,
+        "startChar": 18,
+        "endLine": 480,
+        "endChar": 48
+      },
+      "revId": "3ecfabee317f0b99b85aa975df33c11a8e0dda9f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
