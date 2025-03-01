@@ -243,7 +243,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="action_call_decline">Decline</string>
     <string name="action_call_mic_mute">Mute microphone</string>
     <string name="action_load_extension">Load extension</string>
-    <string name="ab_action_speakerphone">Enable speaker</string>
+    <string name="ab_action_speakerphone">Turn on speaker</string>
     <string name="ab_action_contact_add">Add to contacts</string>
     <string name="ab_action_contact_add_question">Add to contacts?</string>
     <string name="ab_action_audio_call">Start audio call</string>
