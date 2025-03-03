@@ -193,6 +193,7 @@
   <string name="hist_invitation_received">Poziv primljen</string>
   <!--Account summary-->
   <string name="profile">Profil</string>
+  <string name="profile_message_warning">Profil se dijeli samo s kontaktima</string>
   <string name="open_the_gallery">Otvorite galeriju</string>
   <string name="take_a_photo">Fotografija</string>
   <string name="profile_name_hint">Unesite svoje ime</string>
@@ -228,6 +229,7 @@
   <string name="gallery_error_title">Ne pronađeno aplikacija Galerija</string>
   <string name="gallery_error_message">Nije pronađena aplikacija na uređaju za otvaranje Galerije</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_canceled">Otkazano</string>
   <string name="file_download">Snimka</string>
   <string name="title_media_viewer">Sredni gledatelj</string>
   <string name="menu_file_open">Otvori datoteku</string>
@@ -282,6 +284,7 @@
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Podijeli</string>
   <string name="bottomSheet_dialpad_btn">Ugrađivanje</string>
+  <string name="bottomSheet_extensions_btn">Proširenja</string>
   <string name="bottomSheet_add_participants_btn">Dodavanje</string>
   <string name="bottomSheet_change_camera_btn">Promjena</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>
@@ -313,5 +316,6 @@
   <string name="mute_conversation">Tiho razgovor</string>
   <!--Donation-->
   <string name="donation_card_not_now">Ne sada</string>
+  <string name="donation_donate">Doniraj</string>
   <!--Extension-->
 </resources>

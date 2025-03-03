@@ -223,6 +223,7 @@
   <string name="no_registered_name_for_account">Nenhum nome de utilizador registado</string>
   <string name="username_available">O nome de utilizador está disponível.</string>
   <string name="register_name">Registar nome</string>
+  <string name="trying_to_register_name">O registo do nome de utilizador está em curso. Por favor, aguarde…</string>
   <string name="registered_username">Nome de utilizador registado</string>
   <string name="register_username">Registar nome de utilizador público</string>
   <string name="register_recommended">Recomendado</string>

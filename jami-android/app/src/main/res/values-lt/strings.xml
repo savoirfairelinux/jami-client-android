@@ -185,6 +185,7 @@
   <!--Account summary-->
   <string name="profile">Profilis</string>
   <string name="profile_name">Profilio pavadinimas</string>
+  <string name="profile_message_warning">Profilis yra bendrinamas tik su adresatais</string>
   <string name="open_the_gallery">Atverti galeriją</string>
   <string name="take_a_photo">Padaryti nuotrauką</string>
   <string name="remove_photo">Šalinti nuotrauką</string>
@@ -225,6 +226,7 @@
   <string name="generic_error">Įvyko nežinoma klaida.</string>
   <!--File Transfer-->
   <string name="file_transfer_status_created">Inicijuojama</string>
+  <string name="file_transfer_status_canceled">Atsisakyta</string>
   <string name="file_download">Atsisiųsti</string>
   <string name="title_media_viewer">Medijos žiūryklė</string>
   <string name="menu_file_open">Atverti failą</string>

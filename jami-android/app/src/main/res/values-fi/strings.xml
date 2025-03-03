@@ -22,7 +22,7 @@
   <string name="media">Media</string>
   <string name="community_management">Yhteisön hallinnointi</string>
   <string name="special_thanks">Erityiset kiitokset</string>
-  <string name="end_note">Luettelo ihmisistä, jotka ovat investoineet merkittävästi aikaa Jamiin. Kaikki, jotka haluavat tulla tälle listalle, tulee ottaa yhteyttä Jamin tiimiin contact@jami.net</string>
+  <string name="end_note">Luettelo ihmisistä, jotka ovat investoineet aikaa merkittävästi Jamiin. Kaikki, jotka haluavat päästä listalle, tulee ottaa yhteyttä Jami-tiimiin contact@jami.net</string>
   <!--RingActivity-->
   <string name="error_no_network">Ei yhteyttä verkkoon</string>
   <string name="error_account_offline">Tili on offline-tilassa</string>
@@ -84,7 +84,7 @@
   <string name="notif_sync_title">Synkronoidaan tietoja...</string>
   <string name="notif_location_title">Sijainnin jakaminen %1$s</string>
   <string name="location_share_contact">%1$s jakaa sijainnin kanssasi</string>
-  <string name="notif_location_multi_title">Sijainnin %1$d jakaminen yhteystiedoillesi</string>
+  <string name="notif_location_multi_title">Sijainnin jako %1$d kontaktien kanssa</string>
   <string name="notif_location_remaining">%1$d minuuttia jäljellä</string>
   <string name="notif_location_action_stop">Lopeta sijainnin jakaminen</string>
   <string name="location_share_action_start">Aloita jakaminen</string>
@@ -112,8 +112,8 @@
   <string name="action_call_mic_mute">Mykistä mikrofoni</string>
   <string name="action_load_extension">Lataa laajennus</string>
   <string name="ab_action_speakerphone">Kaiutin käyttöön</string>
-  <string name="ab_action_contact_add">Lisää yhteystietoihin</string>
-  <string name="ab_action_contact_add_question">Lisätäänkö yhteystietoihin?</string>
+  <string name="ab_action_contact_add">Lisää kontakteihin</string>
+  <string name="ab_action_contact_add_question">Lisätäänkö kontakteihin?</string>
   <string name="ab_action_audio_call">Aloita äänipuhelu</string>
   <string name="ab_action_video_call">Aloita videopuhelu</string>
   <string name="ab_action_change_screen_orientation">Muuta näytön suuntaa</string>
@@ -193,7 +193,7 @@
   <string name="conversation_action_incoming_call">Saapuva puhelu</string>
   <string name="conversation_action_latest">Vieritä viimeiseen</string>
   <string name="conversation_open_file_error">Mikään asennettu sovellus ei pysty avaamaan tätä tiedostotyyppiä.</string>
-  <string name="clip_contact_uri">Yhteystiedot</string>
+  <string name="clip_contact_uri">Kontaktit</string>
   <string name="clip_message">Viestin sisältö</string>
   <string name="block_contact_dialog_title">Estätkö %1$s?</string>
   <string name="block_contact_dialog_message">%1$sei voi ottaa sinuun yhteyttä, ellet poista hänen estoa.</string>
@@ -211,7 +211,7 @@
   <string name="conversation_reply_you">Sinä</string>
   <string name="conversation_preference_color">Keskustelun väri</string>
   <string name="conversation_preference_emoji">Keskustelun hymiö</string>
-  <string name="conversation_type_contact">Jami yhteystieto</string>
+  <string name="conversation_type_contact">Jami kontakti</string>
   <string name="conversation_type_private">Yksityinen</string>
   <string name="conversation_type_group">Ryhmä</string>
   <string name="conversation_contact_invited">%1$s kutsuttiin keskusteluun.</string>
@@ -261,6 +261,8 @@
   <!--Account summary-->
   <string name="profile">Profiili</string>
   <string name="profile_name">Profiilin nimi</string>
+  <string name="profile_message_warning">Profiili jaetaan vain yhteystietojen kanssa</string>
+  <string name="custom_profile_message_warning">Mukautettu profiili näkyy vain tällä laitteella</string>
   <string name="open_the_gallery">Avaa valokuvat</string>
   <string name="take_a_photo">Ota valokuva</string>
   <string name="remove_photo">Poista valokuva</string>
@@ -308,8 +310,25 @@
   <string name="gallery_error_message">Laitteesta ei löydy sovellusta valokuvien avaamiseen</string>
   <string name="generic_error">Tapahtui tuntematon virhe.</string>
   <!--File Transfer-->
+  <string name="invalid_file">Virheellinen tiedosto.</string>
+  <string name="not_able_to_write_file">Tiedostoa ei voi kirjoittaa.</string>
+  <string name="file_transfer_status_created">Valmistellaan</string>
+  <string name="file_transfer_status_unsupported">Ei tueta</string>
+  <string name="file_transfer_status_wait_peer_acceptance">Odotetaan, että vertainen hyväksyy…</string>
+  <string name="file_transfer_status_wait_host_acceptance">Odotetaan, että isäntä hyväksyy…</string>
+  <string name="file_transfer_status_ongoing">Käynnissä</string>
+  <string name="file_transfer_status_finished">Valmis</string>
+  <string name="file_transfer_status_closed_by_host">Suljettu isännän toimesta</string>
+  <string name="file_transfer_status_closed_by_peer">Suljettu vertaisen toimesta</string>
+  <string name="file_transfer_status_invalid_pathname">Virheellinen polku</string>
+  <string name="file_transfer_status_unjoinable_peer">Vertaista ei tavoiteta</string>
+  <string name="file_transfer_status_canceled">Peruttu</string>
+  <string name="file_transfer_status_error">Tiedostoa siirrettäessä tapahtui virhe.</string>
+  <string name="file_transfer_status_timed_out">Aikakatkaisu</string>
+  <string name="file_saved_in">Tiedosto tallennettu %s.</string>
   <string name="file_saved_successfully">Tiedosto tallennettu.</string>
   <string name="file_download">Lataa</string>
+  <string name="no_space_left_on_device">Laitteessa ei ole tallennustilaa.</string>
   <string name="title_media_viewer">Katseluohjelma</string>
   <string name="menu_file_open">Avaa tiedosto</string>
   <string name="menu_file_download">Lataa tiedosto</string>
@@ -346,6 +365,7 @@
   <string name="conversation_input_speech_hint">Sano jotakin...</string>
   <string name="audio_permission_denied">Mikrofonin käyttö on estetty. Ota käyttöön laitteen asetuksissa, jotta voit käyttää ominaisuutta.</string>
   <string name="camera_permission_denied">Kameran käyttö on estetty. Ota käyttöön laitteen asetuksissa, jotta voit käyttää ominaisuutta.</string>
+  <string name="speech_recogniton_unavailable">Puheentunnistus ei ole käytettävissä.</string>
   <string name="audio_permission_rationale_title">Audion käyttöoikeus vaaditaan</string>
   <string name="camera_permission_rationale_title">Kameran käyttöoikeus vaaditaan</string>
   <string name="audio_permission_rationale_message">Jami vaatii mikrofonin käyttöoikeuden puhetta tekstiksi ja äänen äänitysominaisuuksia varten. Sitä kysytään seuraavassa vaiheessa.</string>
@@ -394,6 +414,7 @@
   <string name="tab_files">Tiedostoja</string>
   <string name="tab_settings">Asetukset</string>
   <string name="not_admin_toast">Ainoastaan ylläpitäjät voivat muokata ryhmän tietoja</string>
+  <string name="dialog_title_contact">Muokkaa näyttönimeä</string>
   <string name="dialogtitle_title">Muokkaa ryhmän nimeä</string>
   <string name="dialogtitle_description">Muokkaa ryhmän kuvausta</string>
   <string name="dialog_hint_title">Otsikko</string>
@@ -415,6 +436,7 @@
   <string name="jami_id_available">Käyttäjänimi on saatavilla.</string>
   <string name="jami_id_not_available">Käyttäjänimi ei ole saatavilla.</string>
   <string name="jami_id_info">• Enintään 32 merkkiä\n• Erikoismerkit: viiva (-), alaviiva (_)</string>
+  <string name="jami_id_looking_for_availability">Tarkistetaan käyttäjänimen saatavuutta…</string>
   <string name="jami_id_choose_username">Valitse käyttäjänimi</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Tervetuloa Jamiin</string>

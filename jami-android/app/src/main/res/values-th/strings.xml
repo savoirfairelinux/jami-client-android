@@ -190,6 +190,7 @@
   <string name="hist_invitation_received">ได้รับคำเชิญ</string>
   <!--Account summary-->
   <string name="profile">ประวัติโดยย่อ</string>
+  <string name="profile_message_warning">โปรไฟล์ถูกแชร์กับผู้ติดต่อเท่านั้น</string>
   <string name="open_the_gallery">เปิดแกลเลอรี่</string>
   <string name="take_a_photo">ถ่ายภาพ</string>
   <string name="profile_name_hint">ใส่ชื่อของคุณ</string>
@@ -225,6 +226,7 @@
   <string name="gallery_error_title">ไม่พบแอปแกลเลอรี</string>
   <string name="gallery_error_message">ไม่พบแอปพลิเคชันบนอุปกรณ์ที่จะเปิด Gallery</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_canceled">ยกเลิกแล้ว</string>
   <string name="file_download">ดาวน์โหลด</string>
   <string name="title_media_viewer">โปรแกรมดูสื่อ</string>
   <string name="menu_file_open">เปิดไฟล์</string>

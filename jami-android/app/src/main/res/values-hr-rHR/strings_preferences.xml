@@ -4,6 +4,7 @@
   <string name="pref_category_diagnostic">Diagnostika</string>
   <string name="pref_category_appearance">Izgled</string>
   <string name="pref_category_connectivity">Spojivost</string>
+  <string name="pref_category_extensions">Proširenja</string>
   <string name="pref_category_video_settings">Napredne video postavke</string>
   <string name="pref_mobileData_summary">Dozvolite Jamiju na 3G/LTE mrežama osim Wi-Fi-a</string>
   <string name="pref_pushNotifications_title">Uložite obavijesti</string>

@@ -191,6 +191,7 @@
   <string name="hist_invitation_received">আমন্ত্রণ প্রাপ্তি</string>
   <!--Account summary-->
   <string name="profile">প্রোফাইল</string>
+  <string name="profile_message_warning">প্রোফাইল শুধুমাত্র পরিচিতির সাথে ভাগ করা হয়</string>
   <string name="open_the_gallery">গ্যালারী খুলুন</string>
   <string name="take_a_photo">ছবি তুলুন</string>
   <string name="profile_name_hint">আপনার নাম লিখুন</string>
@@ -226,6 +227,7 @@
   <string name="gallery_error_title">কোন গ্যালারি অ্যাপ পাওয়া যায় নি</string>
   <string name="gallery_error_message">গ্যালারি খুলতে ডিভাইসে কোন অ্যাপ্লিকেশন পাওয়া যায়নি</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_canceled">বাতিল হয়েছে</string>
   <string name="file_download">ডাউনলোড</string>
   <string name="title_media_viewer">মিডিয়া ভিউয়ার</string>
   <string name="menu_file_open">খোলা ফাইল</string>

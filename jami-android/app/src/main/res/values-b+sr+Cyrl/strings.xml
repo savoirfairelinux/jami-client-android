@@ -226,6 +226,7 @@
   <!--Account summary-->
   <string name="profile">Профил</string>
   <string name="profile_name">Ime profila</string>
+  <string name="profile_message_warning">Профил се дели само са контактима</string>
   <string name="open_the_gallery">Отвори галерију</string>
   <string name="take_a_photo">Снимите фотографију.</string>
   <string name="remove_photo">Ukloni fotografiju</string>
@@ -265,6 +266,7 @@
   <string name="gallery_error_title">Није пронађена апликација за галерију</string>
   <string name="gallery_error_message">Није пронађена апликација која ће отворити галерију</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_canceled">Отказано</string>
   <string name="file_download">Преузимање</string>
   <string name="title_media_viewer">Прегледач медија</string>
   <string name="menu_file_open">Отвори датотеку</string>

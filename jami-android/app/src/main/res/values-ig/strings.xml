@@ -94,6 +94,7 @@
   <string name="hist_invitation_received">Òkù a kpọrọ</string>
   <!--Account summary-->
   <string name="profile">Ihe gbasara ya</string>
+  <string name="profile_message_warning">Profaịlụ na-akọrọ naanị na kọntaktị</string>
   <string name="take_a_photo">Were foto</string>
   <string name="profile_name_hint">Tinye aha gị</string>
   <string name="identity">Ihe Ndị A Kpọrọ Mmadụ</string>
@@ -114,6 +115,7 @@
   <!--Smartlist-->
   <string name="tv_contact_row_header">Ndị a na-akpọtụrụ</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_canceled">A kagbuola ihe omume ahụ.</string>
   <string name="menu_file_open">Mepee faịlụ</string>
   <string name="menu_file_save">Chekwaa faịlụ</string>
   <string name="menu_file_share">Share faịlụ</string>

@@ -244,6 +244,7 @@
   <!--Account summary-->
   <string name="profile">Profil</string>
   <string name="profile_name">Ime profila</string>
+  <string name="profile_message_warning">Profil se deli le s stiki</string>
   <string name="open_the_gallery">Odpri galerijo</string>
   <string name="take_a_photo">Slikaj</string>
   <string name="profile_name_hint">Vnesite svoje ime</string>
@@ -285,6 +286,7 @@
   <string name="generic_error">Prišlo je do neznane napake.</string>
   <!--File Transfer-->
   <string name="file_transfer_status_created">Zaganjam</string>
+  <string name="file_transfer_status_canceled">Preklicano</string>
   <string name="file_download">Prenesi</string>
   <string name="title_media_viewer">Prikazovalnik vsebin</string>
   <string name="menu_file_open">Odpri datoteko</string>

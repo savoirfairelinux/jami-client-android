@@ -193,6 +193,7 @@
   <string name="hist_invitation_received">Η πρόσκληση παραλήφθηκε</string>
   <!--Account summary-->
   <string name="profile">Προφίλ</string>
+  <string name="profile_message_warning">Το προφίλ σας διαμοιράζεται μόνο με τις επαφές σας</string>
   <string name="open_the_gallery">Άνοιγμα έκθεσης</string>
   <string name="take_a_photo">Λήψη φωτογραφίας</string>
   <string name="profile_name_hint">Εισάγετε το όνομά σας</string>
@@ -228,6 +229,7 @@
   <string name="gallery_error_title">Δεν βρέθηκε εφαρμογή συλλογής</string>
   <string name="gallery_error_message">Δεν βρέθηκε εφαρμογή σε αυτή τη συσκευή για άνοιγμα της Συλλογής</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_canceled">Ακυρώθηκε</string>
   <string name="file_download">Λήψη</string>
   <string name="title_media_viewer">Προβολέας πολυμέσων</string>
   <string name="menu_file_open">Άνοιγμα αρχείου</string>

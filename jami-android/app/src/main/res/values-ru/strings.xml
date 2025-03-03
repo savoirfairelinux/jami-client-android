@@ -263,6 +263,8 @@
   <!--Account summary-->
   <string name="profile">Профиль</string>
   <string name="profile_name">Имя профиля</string>
+  <string name="profile_message_warning">Ваш профиль доступен только вашим контактам</string>
+  <string name="custom_profile_message_warning">Пользовательский профиль виден только учетной записи на этом устройстве</string>
   <string name="open_the_gallery">Открыть галерею</string>
   <string name="take_a_photo">Сфотографировать</string>
   <string name="remove_photo">Удалить фото</string>
@@ -310,10 +312,25 @@
   <string name="gallery_error_message">На устройстве не найдено приложения для открытия Галереи</string>
   <string name="generic_error">Произошла неизвестная ошибка.</string>
   <!--File Transfer-->
+  <string name="invalid_file">Некорректный файл.</string>
+  <string name="not_able_to_write_file">Невозможно записать файл.</string>
   <string name="file_transfer_status_created">Инициализация</string>
+  <string name="file_transfer_status_unsupported">Не поддерживается</string>
+  <string name="file_transfer_status_wait_peer_acceptance">Ожидание принятия одноранговым узлом…</string>
+  <string name="file_transfer_status_wait_host_acceptance">Ожидание принятия…</string>
+  <string name="file_transfer_status_ongoing">В процессе</string>
+  <string name="file_transfer_status_finished">Завершено</string>
+  <string name="file_transfer_status_closed_by_host">Закрыто хостом</string>
+  <string name="file_transfer_status_closed_by_peer">Закрыто партнером</string>
+  <string name="file_transfer_status_invalid_pathname">Некорректный путь</string>
   <string name="file_transfer_status_unjoinable_peer">Недоступный узел</string>
+  <string name="file_transfer_status_canceled">Отменено</string>
+  <string name="file_transfer_status_error">Произошла ошибка при передаче файла.</string>
+  <string name="file_transfer_status_timed_out">Время вышло</string>
+  <string name="file_saved_in">Файл сохранен в %s.</string>
   <string name="file_saved_successfully">Файл успешно сохранен.</string>
   <string name="file_download">Загрузить</string>
+  <string name="no_space_left_on_device">На устройстве нет свободного места.</string>
   <string name="title_media_viewer">Просмотрщик медиа</string>
   <string name="menu_file_open">Открыть файл</string>
   <string name="menu_file_download">Загрузить файл</string>
@@ -350,6 +367,7 @@
   <string name="conversation_input_speech_hint">Скажите что-нибудь...</string>
   <string name="audio_permission_denied">Разрешение на использование микрофона отключено. Включите его в настройках устройства, чтобы использовать эту функцию.</string>
   <string name="camera_permission_denied">Разрешение на использование камеры отключено. Включите его в настройках устройства, чтобы использовать эту функцию.</string>
+  <string name="speech_recogniton_unavailable">Распознавание речи недоступно.</string>
   <string name="audio_permission_rationale_title">Требуется разрешение на аудио</string>
   <string name="camera_permission_rationale_title">Требуется разрешение на использование камеры</string>
   <string name="audio_permission_rationale_message">Для использования функций преобразования речи в текст и записи звука Jami требуется разрешение на использование микрофона. Оно будет запрошено на следующем шаге.</string>
@@ -420,6 +438,7 @@
   <string name="jami_id_available">Имя пользователя доступно.</string>
   <string name="jami_id_not_available">Имя пользователя недоступно.</string>
   <string name="jami_id_info">• Максимум 32 символа\n• Разрешены специальные символы: тире (-), нижнее подчёркивание (_)</string>
+  <string name="jami_id_looking_for_availability">Проверка наличия имени пользователя…</string>
   <string name="jami_id_choose_username">Выберите имя пользователя</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Добро пожаловать в Jami</string>
@@ -434,6 +453,7 @@
   <string name="show_certificate">Показать сертификат</string>
   <string name="mute_conversation">Отключить звук в беседе</string>
   <!--Donation-->
+  <string name="donation_card_description">Если вам нравится использовать Jami и вы верите в нашу миссию, не хотите ли сделать пожертвование?</string>
   <string name="donation_card_not_now">Не сейчас</string>
   <string name="donation_donate">Пожертвование</string>
   <string name="donation_setting_title">Напоминание пожертвования</string>

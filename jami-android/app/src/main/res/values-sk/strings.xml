@@ -190,6 +190,7 @@
   <!--Account summary-->
   <string name="profile">Profil</string>
   <string name="profile_name">Profilové meno</string>
+  <string name="profile_message_warning">Profil je zdieľaný len s kontaktmi</string>
   <string name="open_the_gallery">Otvoriť galériu</string>
   <string name="take_a_photo">Zhotoviť fotografiu</string>
   <string name="profile_name_hint">Vložte svoje meno</string>
@@ -226,6 +227,7 @@
   <string name="gallery_error_message">Nebola nájdená žiadna aplikácia na otvorenie Galérie</string>
   <!--File Transfer-->
   <string name="file_transfer_status_created">Inicializácia</string>
+  <string name="file_transfer_status_canceled">Zrušené</string>
   <string name="file_download">Stiahnite</string>
   <string name="title_media_viewer">Zobrazovač médií</string>
   <string name="menu_file_open">Otvoriť súbor</string>

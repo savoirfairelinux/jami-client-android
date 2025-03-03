@@ -190,6 +190,7 @@
   <string name="hist_invitation_received">ಸ್ವೀಕರಿಸಿದ ಆಹ್ವಾನ</string>
   <!--Account summary-->
   <string name="profile">ಪ್ರೊಫೈಲ್</string>
+  <string name="profile_message_warning">ಪ್ರೊಫೈಲ್ ಅನ್ನು ಸಂಪರ್ಕಗಳೊಂದಿಗೆ ಮಾತ್ರ ಹಂಚಿಕೊಳ್ಳಲಾಗುತ್ತದೆ</string>
   <string name="open_the_gallery">ಗ್ಯಾಲರಿ ತೆರೆಯಿರಿ</string>
   <string name="take_a_photo">ಫೋಟೋ ತೆಗೆದುಕೊ</string>
   <string name="profile_name_hint">ನಿಮ್ಮ ಹೆಸರನ್ನು ನಮೂದಿಸಿ</string>
@@ -225,6 +226,7 @@
   <string name="gallery_error_title">ಗ್ಯಾಲರಿ ಅಪ್ಲಿಕೇಶನ್ ಕಂಡುಬಂದಿಲ್ಲ</string>
   <string name="gallery_error_message">ಗ್ಯಾಲರಿ ತೆರೆಯಲು ಸಾಧನದಲ್ಲಿ ಯಾವುದೇ ಅಪ್ಲಿಕೇಶನ್ ಕಂಡುಬಂದಿಲ್ಲ</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_canceled">ರದ್ದುಗೊಳಿಸಲಾಗಿದೆ</string>
   <string name="file_download">ಡೌನ್ಲೋಡ್ ಮಾಡಿ</string>
   <string name="title_media_viewer">ಮಾಧ್ಯಮ ವೀಕ್ಷಕ</string>
   <string name="menu_file_open">ತೆರೆದ ಕಡತ</string>

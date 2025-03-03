@@ -225,6 +225,7 @@
   <string name="gallery_error_title">گالری ایستیفاده سی تاپیلدی</string>
   <string name="gallery_error_message">گالری آچیقلاماق اوچون آلینادا ایستیفاده تاپیلدی</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_canceled">لغو ائدیلدی</string>
   <string name="file_download">دانلود</string>
   <string name="title_media_viewer">میدیالی باخار</string>
   <string name="menu_file_open">آچیق فایل</string>

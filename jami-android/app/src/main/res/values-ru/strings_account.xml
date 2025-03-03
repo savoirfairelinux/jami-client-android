@@ -224,12 +224,14 @@
   <string name="no_registered_name_for_account">Нет зарегистрированного имени</string>
   <string name="username_available">Имя пользователя доступно.</string>
   <string name="register_name">Зарегистрировать имя</string>
+  <string name="trying_to_register_name">Производится регистрация имени пользователя. Подождите...</string>
   <string name="registered_username">Зарегистрированное имя пользователя</string>
   <string name="register_username">Зарегистрировать публичное имя</string>
   <string name="register_recommended">Рекомендуется</string>
   <string name="username_already_taken">Имя пользователя уже занято</string>
   <string name="invalid_username">Недопустимое имя пользователя</string>
   <string name="unknown_error">Неизвестная ошибка. Пожалуйста, проверьте сетевое соединение!</string>
+  <string name="looking_for_username_availability">Проверка наличия имени пользователя…</string>
   <string name="account_status_connecting">Подключение</string>
   <string name="account_status_connection_error">Ошибка подключения</string>
   <string name="account_status_online">В сети</string>

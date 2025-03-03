@@ -192,6 +192,7 @@
   <!--Account summary-->
   <string name="profile">Perfil</string>
   <string name="profile_name">Nom del perfil</string>
+  <string name="profile_message_warning">Lo perfil es pas compartida que amb los contactes</string>
   <string name="open_the_gallery">Ouvre la galeria</string>
   <string name="take_a_photo">Prendre fòto</string>
   <string name="profile_name_hint">Escriure son nom</string>
@@ -227,6 +228,7 @@
   <string name="gallery_error_title">Pas cap d\' aplicacion Galeria trobada</string>
   <string name="gallery_error_message">Pas cap d\' aplicacion trobada sul dispositiu per dobrir Galeria</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_canceled">Annulèt</string>
   <string name="file_download">Descargar</string>
   <string name="title_media_viewer">Vector de medias</string>
   <string name="menu_file_open">Dossièr obèrt</string>

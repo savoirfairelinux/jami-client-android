@@ -120,7 +120,7 @@
   <string name="hist_contact_unblocked">联系人解除封锁</string>
   <!--Account summary-->
   <string name="profile_name">個人檔案名稱</string>
-  <string name="profile_message_warning">个人资料只与该账户联系人共享</string>
+  <string name="profile_message_warning">资料仅会与联系人分享</string>
   <string name="custom_profile_message_warning">自定义配置文件只对该设备上的账户可见</string>
   <string name="take_a_photo">照相</string>
   <string name="remove_photo">删除照片</string>
@@ -157,7 +157,7 @@
   <string name="file_transfer_status_closed_by_peer">由对方关闭</string>
   <string name="file_transfer_status_invalid_pathname">无效路径</string>
   <string name="file_transfer_status_unjoinable_peer">对方无法连接</string>
-  <string name="file_transfer_status_cancelled">取消</string>
+  <string name="file_transfer_status_canceled">已取消</string>
   <string name="file_transfer_status_error">传输文件时发生错误。</string>
   <string name="file_transfer_status_timed_out">超时</string>
   <string name="file_saved_in">文件保存在%s。</string>

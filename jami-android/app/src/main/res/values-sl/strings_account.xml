@@ -179,6 +179,7 @@
   <!--Name registration-->
   <string name="error_username_empty">Vnesite uporabniško ime</string>
   <string name="register_name">Registriraj ime</string>
+  <string name="trying_to_register_name">Registracija uporabniškega imena poteka ... Počakajte za trenutek.</string>
   <string name="registered_username">Registrirano uporabniško ime</string>
   <string name="register_username">Registriraj javno uporabniško ime</string>
   <string name="register_recommended">Priporočeno</string>

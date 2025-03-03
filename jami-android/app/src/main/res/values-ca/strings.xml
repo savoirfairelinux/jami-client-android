@@ -200,6 +200,7 @@
   <!--Account summary-->
   <string name="profile">Perfil</string>
   <string name="profile_name">Nom de perfil</string>
+  <string name="profile_message_warning">El perfil només és compartit entre contactes</string>
   <string name="open_the_gallery">Obre la galeria</string>
   <string name="take_a_photo">Fer foto</string>
   <string name="profile_name_hint">Escriu el teu nom</string>
@@ -235,6 +236,7 @@
   <string name="gallery_error_title">No s\'ha trobat cap applicació de Galeria</string>
   <string name="gallery_error_message">No s\'ha trobat cap aplicació al dispositiu per obrir Galeria</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_canceled">Cancel·lada</string>
   <string name="file_download">Descarrega</string>
   <string name="title_media_viewer">Visor de medis</string>
   <string name="menu_file_open">Obre fitxer</string>

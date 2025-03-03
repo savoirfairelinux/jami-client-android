@@ -190,6 +190,7 @@
   <string name="hist_invitation_received">निमन्त्रणा प्राप्त</string>
   <!--Account summary-->
   <string name="profile">प्रोफाइल</string>
+  <string name="profile_message_warning">प्रोफाइल सम्पर्कहरूसँग मात्र साझा गरिन्छ</string>
   <string name="open_the_gallery">ग्यालरी खोल्नुहोस्</string>
   <string name="take_a_photo">फोटो खिच्नुस्</string>
   <string name="profile_name_hint">आफ्नो नाम प्रविष्ट गर्नुहोस्</string>
@@ -225,6 +226,7 @@
   <string name="gallery_error_title">कुनै ग्यालरी अनुप्रयोग भेटिएन</string>
   <string name="gallery_error_message">Gallery खोल्नका लागि कुनै अनुप्रयोग उपकरणमा फेला परेन</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_canceled">रद्द गरियो</string>
   <string name="file_download">डाउनलोड</string>
   <string name="title_media_viewer">मिडिया दर्शक</string>
   <string name="menu_file_open">फाइल खोल्नुहोस्</string>

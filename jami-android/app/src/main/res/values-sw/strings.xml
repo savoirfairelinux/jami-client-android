@@ -190,6 +190,7 @@
   <string name="hist_invitation_received">Mwaliko uliopokelewa</string>
   <!--Account summary-->
   <string name="profile">Profaili</string>
+  <string name="profile_message_warning">Profile ni kushiriki tu na wawasiliani</string>
   <string name="open_the_gallery">Fungua ukumbi</string>
   <string name="take_a_photo">Piga picha</string>
   <string name="profile_name_hint">Ingiza jina lako</string>
@@ -225,6 +226,7 @@
   <string name="gallery_error_title">Hakuna programu ya Galeria iliyopatikana</string>
   <string name="gallery_error_message">Hakuna programu iliyopatikana kwenye kifaa cha kufungua Galeria</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_canceled">Imeghairiwa</string>
   <string name="file_download">Pakua</string>
   <string name="title_media_viewer">Kiangaliaji cha media</string>
   <string name="menu_file_open">Open faili</string>

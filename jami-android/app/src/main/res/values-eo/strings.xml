@@ -191,6 +191,7 @@
   <string name="hist_invitation_received">Invito ricevita</string>
   <!--Account summary-->
   <string name="profile">Profilo</string>
+  <string name="profile_message_warning">Profilo estas dividita nur kun kontaktoj</string>
   <string name="open_the_gallery">Malfermu la galerion</string>
   <string name="take_a_photo">Foti</string>
   <string name="profile_name_hint">Entajpu vian nomon</string>
@@ -226,6 +227,7 @@
   <string name="gallery_error_title">Neniu Galerio-apliko trovita</string>
   <string name="gallery_error_message">Neniu apliko trovita en la aparato por malfermi Galerion</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_canceled">Nuligita</string>
   <string name="file_download">Elŝutu</string>
   <string name="title_media_viewer">Amaskomunikila spektanto</string>
   <string name="menu_file_open">Malfermu dosieron</string>

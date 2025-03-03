@@ -191,6 +191,7 @@
   <string name="hist_invitation_received">Հրավիրություն</string>
   <!--Account summary-->
   <string name="profile">Պրոֆիլ</string>
+  <string name="profile_message_warning">Պրոֆիլը միայն բաժանվում է կոնտակտների հետ</string>
   <string name="open_the_gallery">Բացե՛ք պատկերասրահը</string>
   <string name="take_a_photo">Լուսանկարներ արեք</string>
   <string name="profile_name_hint">Գտեք ձեր անունը</string>
@@ -226,6 +227,7 @@
   <string name="gallery_error_title">Գալերիային հավելված չի գտնվել</string>
   <string name="gallery_error_message">Գալերիա բացելու սարքում չի գտնվել ծրագիր</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_canceled">Արգելվել է</string>
   <string name="file_download">Ներբեռնել</string>
   <string name="title_media_viewer">ԶԼՄ-ների դիտող</string>
   <string name="menu_file_open">Բաց ֆայլ</string>

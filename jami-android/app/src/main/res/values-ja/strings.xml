@@ -196,6 +196,7 @@
   <!--Account summary-->
   <string name="profile">プロフィール</string>
   <string name="profile_name">プロフィール名</string>
+  <string name="profile_message_warning">個人情報を共有できるのは連絡先だけです</string>
   <string name="open_the_gallery">ギャラリーを開く</string>
   <string name="take_a_photo">撮影</string>
   <string name="profile_name_hint">名前を入力</string>
@@ -231,6 +232,7 @@
   <string name="gallery_error_title">ギャラリーアプリがありません</string>
   <string name="gallery_error_message">デバイス上にギャラリーを開くアプリがありません</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_canceled">キャンセルしました</string>
   <string name="file_download">入手</string>
   <string name="title_media_viewer">メディアビューアー</string>
   <string name="menu_file_open">ファイルを開く</string>

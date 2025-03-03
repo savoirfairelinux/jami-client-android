@@ -262,6 +262,8 @@
   <!--Account summary-->
   <string name="profile">Perfil</string>
   <string name="profile_name">Nombre de perfil</string>
+  <string name="profile_message_warning">Tu perfil sólo es compartido con tus contactos</string>
+  <string name="custom_profile_message_warning">El perfil personalizado solo es visible para la cuenta en este dispositivo</string>
   <string name="open_the_gallery">Abrir galería</string>
   <string name="take_a_photo">Tomar foto</string>
   <string name="remove_photo">Eliminar foto</string>
@@ -303,12 +305,24 @@
   <string name="conversation_placeholder">Todavía no tienes conversaciones</string>
   <string name="contact_request_sent">Solicitud de contacto enviada</string>
   <string name="start_conversation">Comenzar una conversación</string>
+  <string name="search_results">Resultados de la búsqueda</string>
   <string name="tv_contact_row_header">Contactos</string>
   <string name="gallery_error_title">No se encontró una aplicación de galería</string>
   <string name="gallery_error_message">No se encontró ninguna aplicación para abrir la Galería</string>
   <string name="generic_error">Ocurrió un error desconocido.</string>
   <!--File Transfer-->
+  <string name="invalid_file">Archivo inválidado.</string>
+  <string name="not_able_to_write_file">No se puede escribir el archivo.</string>
   <string name="file_transfer_status_created">Inicializando</string>
+  <string name="file_transfer_status_unsupported">Sin soporte</string>
+  <string name="file_transfer_status_wait_peer_acceptance">Esperando a que el compañero acepte…</string>
+  <string name="file_transfer_status_wait_host_acceptance">Esperando a que el anfitrión acepte…</string>
+  <string name="file_transfer_status_ongoing">En progreso</string>
+  <string name="file_transfer_status_finished">Completado</string>
+  <string name="file_transfer_status_closed_by_host">Cerrado por anfitrión</string>
+  <string name="file_transfer_status_closed_by_peer">Cerrado por pares</string>
+  <string name="file_transfer_status_invalid_pathname">Ruta de acceso no válida</string>
+  <string name="file_transfer_status_canceled">Cancelado</string>
   <string name="file_saved_successfully">Archivo guardado correctamente.</string>
   <string name="file_download">Descargar</string>
   <string name="title_media_viewer">Visor de archivos</string>
@@ -417,6 +431,7 @@
   <string name="jami_id_available">El nombre de usuario está disponible.</string>
   <string name="jami_id_not_available">El nombre de usuario no está disponible.</string>
   <string name="jami_id_info">• Máximo 32 caracteres\n• Caracteres especiales permitidos: guion (-), subrayado (_)</string>
+  <string name="jami_id_looking_for_availability">Comprobación de la disponibilidad del nombre de usuario…</string>
   <string name="jami_id_choose_username">Elegir nombre de usuario</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Bienvenido a Jami</string>

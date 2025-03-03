@@ -108,6 +108,7 @@
   <string name="hist_invitation_received">הזמנה התקבלה</string>
   <!--Account summary-->
   <string name="profile">פרופיל</string>
+  <string name="profile_message_warning">פרופיל משתף רק עם אנשי קשר</string>
   <string name="take_a_photo">צלם.</string>
   <string name="profile_name_hint">הכנס את שמך</string>
   <string name="identity">זהות</string>
@@ -128,6 +129,7 @@
   <!--Smartlist-->
   <string name="tv_contact_row_header">אנשי קשר</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_canceled">מבוטל</string>
   <string name="menu_file_open">פתיחת קובץ</string>
   <string name="menu_file_save">שמירת קובץ</string>
   <string name="menu_file_share">שיתוף קובץ</string>

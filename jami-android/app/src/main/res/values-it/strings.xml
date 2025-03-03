@@ -262,6 +262,8 @@
   <!--Account summary-->
   <string name="profile">Profilo</string>
   <string name="profile_name">Nome del profilo</string>
+  <string name="profile_message_warning">Il profilo è condiviso solo con i contatti</string>
+  <string name="custom_profile_message_warning">Il profilo personalizzato è visibile solo all\'account su questo dispositivo</string>
   <string name="open_the_gallery">Apri la galleria</string>
   <string name="take_a_photo">Scatta una foto</string>
   <string name="remove_photo">Rimuovi foto</string>
@@ -309,10 +311,25 @@
   <string name="gallery_error_message">Nessuna applicazione trovata sul dispositivo per aprire la galleria</string>
   <string name="generic_error">Si è verificato un errore sconosciuto.</string>
   <!--File Transfer-->
+  <string name="invalid_file">File non valido.</string>
+  <string name="not_able_to_write_file">Impossibile scrivere il file.</string>
   <string name="file_transfer_status_created">Inizializzare</string>
+  <string name="file_transfer_status_unsupported">Non supportato</string>
+  <string name="file_transfer_status_wait_peer_acceptance">In attesa di accettazione…</string>
+  <string name="file_transfer_status_wait_host_acceptance">In attesa che l\'host accetti…</string>
+  <string name="file_transfer_status_ongoing">In corso</string>
+  <string name="file_transfer_status_finished">Completo</string>
+  <string name="file_transfer_status_closed_by_host">Chiuso dall\'host</string>
+  <string name="file_transfer_status_closed_by_peer">Chiuso dall\'interlocutore</string>
+  <string name="file_transfer_status_invalid_pathname">Percorso non valido</string>
   <string name="file_transfer_status_unjoinable_peer">Utente irraggiungibile</string>
+  <string name="file_transfer_status_canceled">Annullato</string>
+  <string name="file_transfer_status_error">Si è verificato un errore durante il trasferimento del file.</string>
+  <string name="file_transfer_status_timed_out">Tempo scaduto</string>
+  <string name="file_saved_in">File salvato in %s.</string>
   <string name="file_saved_successfully">File salvato con successo.</string>
   <string name="file_download">Scarica</string>
+  <string name="no_space_left_on_device">Spazio esaurito sul dispositivo.</string>
   <string name="title_media_viewer">Visualizzatore media</string>
   <string name="menu_file_open">Apri file</string>
   <string name="menu_file_download">Scarica file</string>
@@ -349,6 +366,7 @@
   <string name="conversation_input_speech_hint">Parla…</string>
   <string name="audio_permission_denied">L\'autorizzazione per il microfono non è stata concessa. Per utilizzare questa funzione, abilitarla nelle impostazioni del dispositivo.</string>
   <string name="camera_permission_denied">L\'autorizzazione per la fotocamera non è stata concessa. Per utilizzare questa funzione, abilitarla nelle impostazioni del dispositivo.</string>
+  <string name="speech_recogniton_unavailable">Il riconoscimento vocale non è disponibile.</string>
   <string name="audio_permission_rationale_title">È necessario il permesso per l\'audio</string>
   <string name="camera_permission_rationale_title">È richiesta l\'autorizzazione per la fotocamera</string>
   <string name="audio_permission_rationale_message">Jami ha bisogno di accedere al microfono per trasformare il parlato in testo e registrare l\'audio. Questo verrà richiesto nella fase successiva.</string>
@@ -419,6 +437,7 @@
   <string name="jami_id_available">Il nome utente è disponibile.</string>
   <string name="jami_id_not_available">Il nome utente non è disponibile.</string>
   <string name="jami_id_info">• massimo 32 caratteri\n• Caratteri speciali consentiti: trattino (-), trattino basso (_)</string>
+  <string name="jami_id_looking_for_availability">Sto cercando la disponibilità del nome utente…</string>
   <string name="jami_id_choose_username">Scegli un nome utente</string>
   <!--WelcomeJami-->
   <string name="welcome_jami_title">Benvenuto in Jami</string>
@@ -433,6 +452,7 @@
   <string name="show_certificate">Mostra certificato</string>
   <string name="mute_conversation">Disattiva le notifiche</string>
   <!--Donation-->
+  <string name="donation_card_description">Se ti piace usare Jami e pensi che la nostra missione sia importante, vuoi fare una donazione?</string>
   <string name="donation_card_not_now">Non adesso</string>
   <string name="donation_donate">Donare</string>
   <string name="donation_setting_title">Promemoria donazioni</string>

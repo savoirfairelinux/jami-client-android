@@ -55,6 +55,7 @@
   <string name="account_upnp_label">Omogući UPnP</string>
   <string name="account_proxy_field">Proxy</string>
   <!--Extension Details-->
+  <string name="account_preferences_extension_tab">Proširenja</string>
   <!--Audio Details-->
   <string name="account_audio_label">Zvuk</string>
   <string name="account_preferences_media_tab">Medij</string>

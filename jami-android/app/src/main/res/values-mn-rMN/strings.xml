@@ -191,6 +191,7 @@
   <string name="hist_invitation_received">Нээлтийг хүлээн авсан</string>
   <!--Account summary-->
   <string name="profile">Профиль</string>
+  <string name="profile_message_warning">Профиль зөвхөн холбоотонтой хуваалцдаг</string>
   <string name="open_the_gallery">Галерейг нээе</string>
   <string name="take_a_photo">Сүрэл зураг хий</string>
   <string name="profile_name_hint">Таны нэрийг оруул</string>
@@ -226,6 +227,7 @@
   <string name="gallery_error_title">Галерийн хэрэгсэл олдохгүй</string>
   <string name="gallery_error_message">Галерея нээлтэд хэрэгсэл байхгүй</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_canceled">Цуцаллаа</string>
   <string name="file_download">Хөгжүүлнэ</string>
   <string name="title_media_viewer">Мэдээлэл үзэгч</string>
   <string name="menu_file_open">Ашигласан файл</string>

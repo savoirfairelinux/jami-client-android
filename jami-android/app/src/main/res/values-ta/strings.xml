@@ -190,6 +190,7 @@
   <string name="hist_invitation_received">அழைப்பு</string>
   <!--Account summary-->
   <string name="profile">சுயவிவரம்</string>
+  <string name="profile_message_warning">சுயவிவரம் தொடர்புகளுடன் மட்டுமே பகிரப்படுகிறது</string>
   <string name="open_the_gallery">காட்சியகம் திறக்க</string>
   <string name="take_a_photo">புகைப்படம் எடு</string>
   <string name="profile_name_hint">உங்கள் பெயரை உள்ளிடவும்</string>
@@ -225,6 +226,7 @@
   <string name="gallery_error_title">எந்த கேலரி பயன்பாடு காணப்படவில்லை</string>
   <string name="gallery_error_message">கேலரியை திறக்க சாதனத்தில் எந்த பயன்பாடும் காணப்படவில்லை</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_canceled">ரத்து செய்யப்பட்டது</string>
   <string name="file_download">பதிவிறக்கம்</string>
   <string name="title_media_viewer">ஊடக பார்வையாளர்</string>
   <string name="menu_file_open">திறந்த கோப்பு</string>

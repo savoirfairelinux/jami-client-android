@@ -195,6 +195,7 @@
   <string name="hist_invitation_received">Convite recibido</string>
   <!--Account summary-->
   <string name="profile">Perfil</string>
+  <string name="profile_message_warning">O perfil só se comparte cos contactos</string>
   <string name="open_the_gallery">Abrir a galería</string>
   <string name="take_a_photo">Tomar foto</string>
   <string name="profile_name_hint">Escribe o teu nome</string>
@@ -230,6 +231,7 @@
   <string name="gallery_error_title">Non se atopa app Galería</string>
   <string name="gallery_error_message">Non se atopa unha app no dispositivo para abrir Galería</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_canceled">Cancelado</string>
   <string name="file_download">Descargar</string>
   <string name="title_media_viewer">Visor de multimedia</string>
   <string name="menu_file_open">Abrir ficheiro</string>

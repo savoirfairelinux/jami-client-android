@@ -198,6 +198,7 @@
   <!--Account summary-->
   <string name="profile">Profil</string>
   <string name="profile_name">Název profilu</string>
+  <string name="profile_message_warning">Profil je sdílen jen s kontakty</string>
   <string name="open_the_gallery">Otevřít galerii</string>
   <string name="take_a_photo">Vyfotit</string>
   <string name="profile_name_hint">Zadejte své jméno</string>
@@ -234,6 +235,7 @@
   <string name="gallery_error_message">Na zařízení nebyla nalezena žádná aplikace na otevření galerie</string>
   <!--File Transfer-->
   <string name="file_transfer_status_created">Inicializuje se</string>
+  <string name="file_transfer_status_canceled">Zrušeno</string>
   <string name="file_download">Stáhnout</string>
   <string name="title_media_viewer">Prohlížeč záznamů</string>
   <string name="menu_file_open">Otevřít soubor</string>

@@ -33,6 +33,7 @@
   <!--Blacklist-->
   <!--Smartlist-->
   <!--File Transfer-->
+  <string name="file_transfer_status_canceled">අවලංගු කළා</string>
   <!--Bottom Navigation-->
   <!--TV-->
   <!--Wizard-->

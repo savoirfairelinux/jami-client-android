@@ -224,12 +224,14 @@
   <string name="no_registered_name_for_account">Niciun nume înscris</string>
   <string name="username_available">Numele este disponibil.</string>
   <string name="register_name">Înscrie numele</string>
+  <string name="trying_to_register_name">Înscriere în curs a numelui de utilizator. Așteaptă…</string>
   <string name="registered_username">Nume înscris</string>
   <string name="register_username">Înscrie numele public de utilizator</string>
   <string name="register_recommended">Recomandat</string>
   <string name="username_already_taken">Nume ales deja</string>
   <string name="invalid_username">Nume greșit</string>
   <string name="unknown_error">Eroare necunoscută. Verifică conectarea la rețea!</string>
+  <string name="looking_for_username_availability">Caut disponibilitatea numelui de utilizator…</string>
   <string name="account_status_connecting">Se conectează</string>
   <string name="account_status_connection_error">Eroare de conectare</string>
   <string name="account_status_online">Conectat</string>

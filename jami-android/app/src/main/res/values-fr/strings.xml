@@ -262,6 +262,8 @@
   <!--Account summary-->
   <string name="profile">Profil</string>
   <string name="profile_name">Nom du profile</string>
+  <string name="profile_message_warning">Votre profil n\'est partagé qu\'avec vos contacts</string>
+  <string name="custom_profile_message_warning">Le profil personnalisé n\'est visible que pour le compte de cet appareil.</string>
   <string name="open_the_gallery">Ouvrir la galerie</string>
   <string name="take_a_photo">Prendre une photo</string>
   <string name="remove_photo">Supprimer l\'image</string>
@@ -309,10 +311,25 @@
   <string name="gallery_error_message">Aucune application trouvée sur l\'appareil pour ouvrir la galerie d\'images</string>
   <string name="generic_error">Une erreur inconnue s\'est produite</string>
   <!--File Transfer-->
+  <string name="invalid_file">Fichier invalide</string>
+  <string name="not_able_to_write_file">Incapable d\'écrire le fichier.</string>
   <string name="file_transfer_status_created">Initialisation</string>
+  <string name="file_transfer_status_unsupported">Non-supporté</string>
+  <string name="file_transfer_status_wait_peer_acceptance">En attente de l\'acceptation du paire ...</string>
+  <string name="file_transfer_status_wait_host_acceptance">En attendant que l\'hôte accepte...</string>
+  <string name="file_transfer_status_ongoing">En cours</string>
+  <string name="file_transfer_status_finished">Complété</string>
+  <string name="file_transfer_status_closed_by_host">Fermé par l\'hôte</string>
+  <string name="file_transfer_status_closed_by_peer">Fermé par un pair</string>
+  <string name="file_transfer_status_invalid_pathname">Chemin d\'accès invalide</string>
   <string name="file_transfer_status_unjoinable_peer">Interlocuteur injoignable</string>
+  <string name="file_transfer_status_canceled">Annulé</string>
+  <string name="file_transfer_status_error">Une erreur s\'est produite pendant le transfert du fichier.</string>
+  <string name="file_transfer_status_timed_out">Délai dépassé</string>
+  <string name="file_saved_in">Fichier sauvegardé sur %s.</string>
   <string name="file_saved_successfully">Le fichier a été enregistré.</string>
   <string name="file_download">Télécharger</string>
+  <string name="no_space_left_on_device">Plus d\'espace de stockage disponible sur cet appareil.</string>
   <string name="title_media_viewer">Visionneuse</string>
   <string name="menu_file_open">Ouvrir le fichier</string>
   <string name="menu_file_download">Télécharger le fichier</string>
@@ -349,6 +366,7 @@
   <string name="conversation_input_speech_hint">Dîtes quelque chose ...</string>
   <string name="audio_permission_denied">L\'accès à votre microphone est désactivé. Veuillez l\'activer dans les paramètres.</string>
   <string name="camera_permission_denied">L\'accès à votre caméra est désactivé. Veuillez l\'activer dans les paramètres.</string>
+  <string name="speech_recogniton_unavailable">La reconnaissance vocale n\'est pas disponible.</string>
   <string name="audio_permission_rationale_title">Autorisation audio nécessaire</string>
   <string name="camera_permission_rationale_title">Autorisation vidéo nécessaire</string>
   <string name="audio_permission_rationale_message">Jami a besoin de l\'autorisation du microphone pour utiliser les fonctions de synthèse vocale et d\'enregistrement audio. Cette autorisation sera demandée à l\'étape suivante.</string>

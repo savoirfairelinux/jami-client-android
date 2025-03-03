@@ -200,6 +200,7 @@
   <string name="hist_invitation_received">Отримано запрошення</string>
   <!--Account summary-->
   <string name="profile">Профіль</string>
+  <string name="profile_message_warning">Ваш профіль бачитимуть лише ваші контакти</string>
   <string name="open_the_gallery">Відкрити галерею</string>
   <string name="take_a_photo">Сфотографувати</string>
   <string name="profile_name_hint">Введіть своє ім\'я</string>
@@ -236,6 +237,7 @@
   <string name="gallery_error_message">На пристрої не знайдено програми, щоб відкрити галерею</string>
   <!--File Transfer-->
   <string name="file_transfer_status_created">Розпочинаю</string>
+  <string name="file_transfer_status_canceled">Скасовано</string>
   <string name="file_download">Завантажити</string>
   <string name="title_media_viewer">Медіа переглядач</string>
   <string name="menu_file_open">Відкрити файл</string>

@@ -191,6 +191,7 @@
   <string name="hist_invitation_received">Gonbidapena jasota</string>
   <!--Account summary-->
   <string name="profile">Profila</string>
+  <string name="profile_message_warning">Perfil bat kontaktuekin soilik partekatzen da.</string>
   <string name="open_the_gallery">Ireki galeria</string>
   <string name="take_a_photo">Atera argazkia</string>
   <string name="profile_name_hint">Sartu zure izena</string>
@@ -226,6 +227,7 @@
   <string name="gallery_error_title">Ez da galeria aplikaziorik aurkitu</string>
   <string name="gallery_error_message">Galeri-errorearen mezua</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_canceled">Bertan behera utzita</string>
   <string name="file_download">Deskargatu </string>
   <string name="title_media_viewer">Titulu-euskarriko ikusle</string>
   <string name="menu_file_open">Ireki fitxategia</string>

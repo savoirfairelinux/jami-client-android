@@ -227,6 +227,7 @@
   <string name="gallery_error_title">Не е намерено приложение на Галерия</string>
   <string name="gallery_error_message">Не е намерено приложение на устройството, което да отвори Галерия</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_canceled">Отменено</string>
   <string name="file_download">Скачане</string>
   <string name="title_media_viewer">Прегледник на медиите</string>
   <string name="menu_file_open">Отваряне на файл</string>

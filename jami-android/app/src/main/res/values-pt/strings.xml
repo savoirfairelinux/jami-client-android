@@ -262,6 +262,7 @@
   <!--Account summary-->
   <string name="profile">Perfil</string>
   <string name="profile_name">Nome do perfil</string>
+  <string name="profile_message_warning">O perfil só é partilhado com os contactos</string>
   <string name="open_the_gallery">Abrir a galeria</string>
   <string name="take_a_photo">Tirar fotografia</string>
   <string name="remove_photo">Remover fotografia</string>
@@ -309,6 +310,7 @@
   <string name="generic_error">Ocorreu um erro desconhecido.</string>
   <!--File Transfer-->
   <string name="file_transfer_status_created">A inicializar</string>
+  <string name="file_transfer_status_canceled">Cancelada</string>
   <string name="file_download">Descarregar</string>
   <string name="title_media_viewer">Visualizador de média</string>
   <string name="menu_file_open">Abrir ficheiro</string>

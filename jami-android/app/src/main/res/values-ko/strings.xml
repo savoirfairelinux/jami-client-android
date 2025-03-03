@@ -199,6 +199,7 @@
   <string name="hist_invitation_received">초대 받은 것</string>
   <!--Account summary-->
   <string name="profile">프로필</string>
+  <string name="profile_message_warning">프로파일은 연락처만 공유합니다</string>
   <string name="open_the_gallery">갤러리를 열</string>
   <string name="take_a_photo">사진 찍기</string>
   <string name="profile_name_hint">네 이름을 입력해</string>
@@ -234,6 +235,7 @@
   <string name="gallery_error_title">갤러리 앱은 발견되지 않았습니다</string>
   <string name="gallery_error_message">갤러리를 열 수 있는 장치에서 응용 프로그램이 발견되지 않았습니다</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_canceled">취소됨</string>
   <string name="file_download">다운로드</string>
   <string name="title_media_viewer">미디어 시청자</string>
   <string name="menu_file_open">열 파일</string>

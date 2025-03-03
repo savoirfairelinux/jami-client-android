@@ -322,7 +322,7 @@
   <string name="file_transfer_status_closed_by_peer">A társ lezárta</string>
   <string name="file_transfer_status_invalid_pathname">Érvénytelen elérési út</string>
   <string name="file_transfer_status_unjoinable_peer">Elérhetetlen társ</string>
-  <string name="file_transfer_status_cancelled">Törölve</string>
+  <string name="file_transfer_status_canceled">Törölve</string>
   <string name="file_transfer_status_error">Hiba történt a fájl átvitele közben.</string>
   <string name="file_transfer_status_timed_out">Időtúllépés</string>
   <string name="file_saved_in">Fájl mentve ide: %s.</string>

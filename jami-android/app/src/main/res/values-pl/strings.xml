@@ -216,6 +216,7 @@
   <!--Account summary-->
   <string name="profile">Profil</string>
   <string name="profile_name">Nazwa profilu</string>
+  <string name="profile_message_warning">Profil jest udostępniany wyłącznie kontaktom</string>
   <string name="open_the_gallery">Otwórz galerię</string>
   <string name="take_a_photo">Zrób zdjęcie</string>
   <string name="profile_name_hint">Wprowadź swoją nazwę</string>
@@ -252,6 +253,7 @@
   <string name="gallery_error_message">Nie znaleziono aplikacji do otworzenia Galerii</string>
   <!--File Transfer-->
   <string name="file_transfer_status_created">Uruchamianie</string>
+  <string name="file_transfer_status_canceled">Anulowano</string>
   <string name="file_download">Pobierz</string>
   <string name="title_media_viewer">Przeglądarka mediów</string>
   <string name="menu_file_open">Otwórz plik</string>

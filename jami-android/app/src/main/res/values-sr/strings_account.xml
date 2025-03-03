@@ -198,6 +198,7 @@
   <!--Name registration-->
   <string name="error_username_empty">Unesi korisničko ime</string>
   <string name="register_name">Registruj ime</string>
+  <string name="trying_to_register_name">Registracija korisničkog imena je u toku. Molimo sačekajte…</string>
   <string name="registered_username">Registrovano ime</string>
   <string name="register_username">Registruj javno korisničko ime</string>
   <string name="register_recommended">Preporučeno</string>

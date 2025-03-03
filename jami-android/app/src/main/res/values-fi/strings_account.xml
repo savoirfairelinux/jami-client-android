@@ -224,12 +224,14 @@ Voit muokata tiliäsi myöhemmin</string>
   <string name="no_registered_name_for_account">Ei rekisteröityä nimeä</string>
   <string name="username_available">Käyttäjänimi on saatavilla.</string>
   <string name="register_name">Rekisteröi nimi</string>
+  <string name="trying_to_register_name">Käyttäjätunnuksen rekisteröinti käynnissä. Odota...</string>
   <string name="registered_username">Rekisteröity käyttäjänimi</string>
   <string name="register_username">Rekisteröi julkinen käyttäjänimi</string>
   <string name="register_recommended">Suositus</string>
   <string name="username_already_taken">Käyttäjänimi on jo varattu</string>
   <string name="invalid_username">Virheellinen käyttäjänimi</string>
   <string name="unknown_error">Tuntematon virhe. Tarkista verkkoyhteytesi!</string>
+  <string name="looking_for_username_availability">Tarkistetaan käyttäjänimen saatavuutta…</string>
   <string name="account_status_connecting">Yhdistetään</string>
   <string name="account_status_connection_error">Yhteysvirhe</string>
   <string name="account_status_online">Verkossa</string>

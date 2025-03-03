@@ -94,6 +94,7 @@
   <string name="hist_invitation_received">Ag iarraidh a fháil</string>
   <!--Account summary-->
   <string name="profile">Proifíl</string>
+  <string name="profile_message_warning">Ní roinntear próifíl ach le teagmhálacha</string>
   <string name="take_a_photo">Déan grianghraf</string>
   <string name="profile_name_hint">Cuir isteach do ainm</string>
   <string name="identity">Úinéir</string>
@@ -114,6 +115,7 @@
   <!--Smartlist-->
   <string name="tv_contact_row_header">Contacts</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_canceled">Cealaithe</string>
   <string name="menu_file_open">Dhomhchlár oscailte</string>
   <string name="menu_file_save">Fail a shábháil</string>
   <string name="menu_file_share">Comparáid comhad</string>

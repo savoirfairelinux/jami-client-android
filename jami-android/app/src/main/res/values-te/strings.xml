@@ -190,6 +190,7 @@
   <string name="hist_invitation_received">అందుకున్న ఆహ్వానం</string>
   <!--Account summary-->
   <string name="profile">ప్రొఫైల్</string>
+  <string name="profile_message_warning">ప్రొఫైల్ పరిచయాలతో మాత్రమే పంచుకోబడుతుంది</string>
   <string name="open_the_gallery">గ్యాలరీ తెరవండి</string>
   <string name="take_a_photo">ఫోటో తీయండి</string>
   <string name="profile_name_hint">మీ పేరు నమోదు</string>
@@ -225,6 +226,7 @@
   <string name="gallery_error_title">గ్యాలరీ యాప్ దొరకలేదు</string>
   <string name="gallery_error_message">గ్యాలరీని తెరవడానికి పరికరంలో ఏ అప్లికేషన్ కనుగొనబడలేదు</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_canceled">రద్దు చేయబడినది</string>
   <string name="file_download">డౌన్లోడ్</string>
   <string name="title_media_viewer">మీడియా వీక్షకుడు</string>
   <string name="menu_file_open">ఫైల్ తెరిచి</string>

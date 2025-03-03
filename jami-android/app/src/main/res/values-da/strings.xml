@@ -191,6 +191,7 @@
   <string name="hist_invitation_received">Invitation modtaget</string>
   <!--Account summary-->
   <string name="profile">Profil</string>
+  <string name="profile_message_warning">Profilen bliver kun delt med kontakterne</string>
   <string name="open_the_gallery">Åbn galleriet</string>
   <string name="take_a_photo">Tag billede</string>
   <string name="profile_name_hint">Indtast dit navn</string>
@@ -227,6 +228,7 @@
   <string name="gallery_error_message">Der blev ikke funden nogen applikation på enheden der kan vise Galleriet</string>
   <!--File Transfer-->
   <string name="file_transfer_status_created">Initialiserer</string>
+  <string name="file_transfer_status_canceled">Annulleret</string>
   <string name="file_download">Download</string>
   <string name="title_media_viewer">Mediefremviser</string>
   <string name="menu_file_open">Åbn fil</string>

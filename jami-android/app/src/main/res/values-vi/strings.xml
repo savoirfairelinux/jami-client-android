@@ -126,6 +126,7 @@
   <string name="hist_invitation_received">Thỉnh cầu được nhận</string>
   <!--Account summary-->
   <string name="profile">Tương tự</string>
+  <string name="profile_message_warning">Profile chỉ được chia sẻ với các liên hệ</string>
   <string name="take_a_photo">Tạo ảnh</string>
   <string name="profile_name_hint">Nhập tên của bạn</string>
   <string name="identity">Định dạng</string>
@@ -147,6 +148,7 @@
   <string name="search_results">Kết quả tìm kiếm</string>
   <string name="tv_contact_row_header">Liên hệ</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_canceled">Đã hủy bỏ</string>
   <string name="menu_file_open">Mở file</string>
   <string name="menu_file_save">Tự lưu tập tin</string>
   <string name="menu_file_share">Chia sẻ file</string>

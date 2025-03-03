@@ -198,6 +198,7 @@
   <!--Account summary-->
   <string name="profile">Profil</string>
   <string name="profile_name">Profil adı</string>
+  <string name="profile_message_warning">Profil, yalnızca kişilerle paylaşılır</string>
   <string name="open_the_gallery">Galeriyi aç</string>
   <string name="take_a_photo">Fotoğraf çek</string>
   <string name="profile_name_hint">İsim gir</string>
@@ -234,6 +235,7 @@
   <string name="gallery_error_message">Galeriyi açmak için aygıtta herhangi bir uygulama bulunamadı</string>
   <!--File Transfer-->
   <string name="file_transfer_status_created">Başlatılıyor</string>
+  <string name="file_transfer_status_canceled">İptal edildi</string>
   <string name="file_download">İndir</string>
   <string name="title_media_viewer">Ortam Galerisi</string>
   <string name="menu_file_open">Dosyayı Aç</string>

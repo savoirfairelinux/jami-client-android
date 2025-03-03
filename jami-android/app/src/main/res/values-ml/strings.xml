@@ -190,6 +190,7 @@
   <string name="hist_invitation_received">ക്ഷണം ലഭിച്ചത്</string>
   <!--Account summary-->
   <string name="profile">പ്രൊഫൈല്</string>
+  <string name="profile_message_warning">പ്രൊഫൈല് കോൺടാക്റ്റുകളുമായി മാത്രമേ പങ്കിടാന് കഴിയൂ</string>
   <string name="open_the_gallery">ഗാലറി തുറക്കുക</string>
   <string name="take_a_photo">ഫോട്ടോ എടുക്കൂ</string>
   <string name="profile_name_hint">നിങ്ങളുടെ പേര് നൽകുക</string>
@@ -225,6 +226,7 @@
   <string name="gallery_error_title">ഗാലറി ആപ്ലിക്കേഷൻ കണ്ടെത്തിയില്ല</string>
   <string name="gallery_error_message">ഗാലറി തുറക്കുന്നതിനുള്ള ഉപകരണത്തിൽ ഒരു ആപ്ലിക്കേഷനും കണ്ടെത്തിയില്ല</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_canceled">റദ്ദാക്കി</string>
   <string name="file_download">ഡൌൺലോഡ് ചെയ്യുക</string>
   <string name="title_media_viewer">മാധ്യമ കാഴ്ചക്കാരൻ</string>
   <string name="menu_file_open">തുറന്ന ഫയൽ</string>

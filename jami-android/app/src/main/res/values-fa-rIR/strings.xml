@@ -197,6 +197,7 @@
   <!--Account summary-->
   <string name="profile">نمایه</string>
   <string name="profile_name">نام نمایه</string>
+  <string name="profile_message_warning">نمایه فقط با مخاطبین به اشتراک گذاشته می‌شود</string>
   <string name="open_the_gallery">گالری را باز کنید</string>
   <string name="take_a_photo">عکس  بگیرید!</string>
   <string name="profile_name_hint">نام خود را وارد کنید</string>
@@ -233,6 +234,7 @@
   <string name="gallery_error_message">هیچ برنامه کاربردی برای باز کردن گالری، در دستگاه یافت نشد.</string>
   <!--File Transfer-->
   <string name="file_transfer_status_created">آغازِ فرایند</string>
+  <string name="file_transfer_status_canceled">لغو شده</string>
   <string name="file_download">دانلود</string>
   <string name="title_media_viewer">نمایش‌دهنده رسانه</string>
   <string name="menu_file_open">باز کردن فایل</string>

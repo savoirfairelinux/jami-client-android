@@ -167,6 +167,7 @@
   <string name="hist_invitation_received">ਸੱਦਾ ਮਿਲਿਆ</string>
   <!--Account summary-->
   <string name="profile">ਪ੍ਰੋਫ਼ਾਈਲ</string>
+  <string name="profile_message_warning">ਪ੍ਰੋਫ਼ਾਈਲ ਸਿਰਫ਼ ਸੰਪਰਕਾਂ ਨਾਲ ਸਾਂਝੀ ਕੀਤੀ ਜਾਂਦੀ ਹੈ</string>
   <string name="open_the_gallery">ਗੈਲਰੀ ਖੋਲ੍ਹੋ</string>
   <string name="take_a_photo">ਫ਼ੋਟੋ ਖਿੱਚੋ</string>
   <string name="profile_name_hint">ਆਪਣਾ ਨਾਂ ਦਾਖਲ ਕਰੋ</string>
@@ -197,6 +198,7 @@
   <string name="gallery_error_message">ਗੈਲਰੀ ਖੋਲ੍ਹਣ ਲਈ ਇਸ ਡੀਵਾਈਸ \'ਤੇ ਕੋਈ ਐਪਲੀਕੇਸ਼ਨ ਨਹੀਂ ਮਿਲੀ</string>
   <!--File Transfer-->
   <string name="file_transfer_status_created">ਸ਼ੁਰੂ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ</string>
+  <string name="file_transfer_status_canceled">ਰੱਦ ਕੀਤਾ ਗਿਆ</string>
   <string name="title_media_viewer">ਮੀਡੀਆ ਵਿਊਅਰ</string>
   <string name="menu_file_open">ਫ਼ਾਈਲ ਖੋਲ੍ਹੋ</string>
   <string name="menu_file_download">ਫ਼ਾਈਲ ਡਾਊਨਲੋਡ ਕਰੋ</string>

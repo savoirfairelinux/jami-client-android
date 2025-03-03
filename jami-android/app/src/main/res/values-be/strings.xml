@@ -115,6 +115,7 @@
   <!--Smartlist-->
   <string name="tv_contact_row_header">Кантакты</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_canceled">Скасавана</string>
   <string name="menu_file_open">Адкрыты файл</string>
   <string name="menu_file_save">Захаваць файл</string>
   <string name="menu_file_share">Падзяліцца файлам</string>

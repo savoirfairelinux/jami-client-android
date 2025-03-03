@@ -158,6 +158,7 @@
   <string name="account_enter_username">Įveskite naudotojo vardą</string>
   <!--Name registration-->
   <string name="error_username_empty">Įveskite naudotojo vardą</string>
+  <string name="trying_to_register_name">Vyksta naudotojo vardo registracija. Palaukite…</string>
   <string name="registered_username">Registruotas naudotojo vardas</string>
   <string name="register_username">Registruoti viešąjį naudotojo vardą</string>
   <string name="register_recommended">Rekomenduojama</string>

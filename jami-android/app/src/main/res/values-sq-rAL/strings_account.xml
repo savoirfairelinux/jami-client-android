@@ -224,7 +224,7 @@
   <string name="no_registered_name_for_account">Emër përdoruesi jo i regjistruar</string>
   <string name="username_available">Emri i përdoruesit është i lirë.</string>
   <string name="register_name">Regjistroni Emër</string>
-  <string name="trying_to_register_name">Regjistrimi i emrit të përdoruesit është në kryerje e sipër. Ju lutemi, pritni…</string>
+  <string name="trying_to_register_name">Regjistrimi i emrit të përdoruesit është në ecuri e sipër. Ju lutemi, prisni…</string>
   <string name="registered_username">Emër përdoruesi i regjistruar</string>
   <string name="register_username">Regjistroni emër publik përdoruesi</string>
   <string name="register_recommended">E rekomanduar</string>

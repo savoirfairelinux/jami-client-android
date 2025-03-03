@@ -3,6 +3,7 @@
   <!--Strings related to account edition screen-->
   <!--Strings related to account creation-->
   <string name="add_ring_account_title">Dodaj račun</string>
+  <string name="prompt_alias">Nadimak</string>
   <string name="help_ring">Ako imate račun u Jamiju, možete se sigurno javiti ljudima putem potpuno raspoređene mreže.</string>
   <string name="help_sip_title">Dodajte SIP račun</string>
   <!--Strings related to account deletion-->
@@ -16,18 +17,21 @@
   <string name="account_password_summary">Upravljaj lozinku računa.</string>
   <string name="account_password_change_wait_message">Promjena lozinke računa</string>
   <!--Basic Details-->
+  <string name="account_preferences_basic_tab">Općenito</string>
   <string name="account_bootstrap_label">Ugrađen</string>
   <string name="account_name_server_label">Server imena</string>
   <string name="account_useragent_label">Uloga korisnika</string>
   <string name="account_rendezvous_label">Režim sastanka</string>
   <string name="account_rendezvous_summary">U režimu \"Rendezvous\" prihađani pozivi će se dodati u konferencijsku sobu.</string>
   <!--Extension Details-->
+  <string name="account_preferences_extension_tab">Proširenja</string>
   <!--Audio Details-->
   <string name="account_ringtone_custom_label">Koristite prilagođen zvon</string>
   <!--Video Details-->
   <!--Advanced Details-->
   <string name="account_read_receipts_label">Aktivirajte prijemni račune</string>
   <string name="account_read_receipts_summary">Pošaljite i primijte potvrde o prikazu poruke.</string>
+  <string name="account_dht_public_in_calls_label">Dopusti dolazne pozive nepoznatih kontakata</string>
   <string name="account_stun_enable_label">Koristi STUN</string>
   <string name="account_accept_files">Automatski prihvaćanje prihađenih datoteka</string>
   <string name="account_accept_files_max_size">Maksimalna veličina datoteke za automatsko prihvaćanje</string>
@@ -56,6 +60,7 @@
   <string name="export_account_wait_message">Informacije o izvoznim računu</string>
   <string name="account_export_file">Zaštita računa</string>
   <string name="account_export_file_summary">Zaštita računa na uređaju da ga kasnije obnovite.</string>
+  <string name="account_enter_password">Unesi lozinku</string>
   <string name="account_contact_me">Kontaktirajte me na Jami!</string>
   <string name="account_migration">Vaš Jami račun može biti ažuriran.</string>
   <string name="ring_account">Jami račun</string>
@@ -104,6 +109,7 @@
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">Ubaci lozinku za potvrdu</string>
+  <string name="enter_password">Unesi lozinku</string>
   <string name="revoke_device_title">Uređaj za ukidanje</string>
   <string name="revoke_device_wait_message">Uređaj za otkaz</string>
   <string name="rename_device_title">Preimenovati ovaj uređaj</string>

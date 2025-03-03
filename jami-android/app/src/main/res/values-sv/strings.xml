@@ -193,6 +193,7 @@
   <string name="hist_invitation_received">Inbjudan mottagen</string>
   <!--Account summary-->
   <string name="profile">Profil</string>
+  <string name="profile_message_warning">Användarprofilen delas endast med dina kontakter. </string>
   <string name="open_the_gallery">Öppna galleriet</string>
   <string name="take_a_photo">Ta ett foto</string>
   <string name="profile_name_hint">Ange ditt namn</string>
@@ -229,6 +230,7 @@
   <string name="gallery_error_message">Ingen app hittades på enheten, för att öppna Galleri</string>
   <!--File Transfer-->
   <string name="file_transfer_status_created">Startar</string>
+  <string name="file_transfer_status_canceled">Avbruten</string>
   <string name="file_download">Ladda ner</string>
   <string name="title_media_viewer">Mediaspelare</string>
   <string name="menu_file_open">Öppna fil</string>

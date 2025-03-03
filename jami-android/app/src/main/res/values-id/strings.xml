@@ -191,6 +191,7 @@
   <string name="hist_invitation_received">Undangan diterima</string>
   <!--Account summary-->
   <string name="profile">Profil</string>
+  <string name="profile_message_warning">Profil hanya dibagikan dengan kontak</string>
   <string name="open_the_gallery">Buka galeri</string>
   <string name="take_a_photo">Ambil foto</string>
   <string name="profile_name_hint">Masukkan nama anda</string>
@@ -226,6 +227,7 @@
   <string name="gallery_error_title">Aplikasi galeri tidak ditemukan</string>
   <string name="gallery_error_message">Tidak ada aplikasi yang ditemukan untuk membuka galeri</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_canceled">Dibatalkan</string>
   <string name="file_download">Unduh</string>
   <string name="title_media_viewer">Penglihat media</string>
   <string name="menu_file_open">Buka berkas</string>

@@ -200,6 +200,7 @@
   <!--Account summary-->
   <string name="profile">Profiel</string>
   <string name="profile_name">Profielnaam</string>
+  <string name="profile_message_warning">Uw profiel wordt enkel gedeeld met uw contacten</string>
   <string name="open_the_gallery">Galerij openen</string>
   <string name="take_a_photo">Foto nemen</string>
   <string name="profile_name_hint">Voer uw scherm naam in</string>
@@ -236,6 +237,7 @@
   <string name="gallery_error_message">Geen app om Galerij te openen gevonden op dit apparaat</string>
   <!--File Transfer-->
   <string name="file_transfer_status_created">Bezig met initialiseren</string>
+  <string name="file_transfer_status_canceled">Geannuleerd</string>
   <string name="file_download">Download</string>
   <string name="title_media_viewer">Mediaweergave</string>
   <string name="menu_file_open">Bestand openen</string>
