@@ -121,9 +121,13 @@ pipeline {
                         errorOccurred = true
                     }
 
-                    sh 'cd /jami-client-android/ci && ./download_screenshots.sh'
+                    try {
+                        sh 'cd /jami-client-android/ci && ./download_screenshots.sh'
+                    } catch (Exception e) {
+                        echo "Failed to download screenshots: ${e.getMessage()}"
+                    }
 
-                    // Archive tests output save it as Jenkins artifact
+                    // Archive tests output and save it as Jenkins artifact
                     sh 'cd /jami-client-android/ci/spoon-output && zip -r ../ui-test-output.zip *'
                     archiveArtifacts artifacts: 'ci/ui-test-output.zip', allowEmptyArchive: false
 
