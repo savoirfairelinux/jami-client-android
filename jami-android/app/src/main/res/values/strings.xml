@@ -393,7 +393,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="help_password_choose">Choose a strong password you will remember to protect your Jami account.</string>
     <string name="help_password_enter">Enter your main Jami account password.</string>
     <string name="help_server_enter">Enter URL of management server.</string>
-    <string name="pin_copied">PIN code copied to clipboard.</string>
+    <string name="pin_copied">Authentication code copied to clipboard.</string>
     <string name="copied_clipboard">Copied to clipboard.</string>
     <string name="wizard_next">Next</string>
     <string name="wizard_back">Back</string>
@@ -678,7 +678,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="link_device_error_network">A network error occurred.\nPlease verify your connection.</string>
     <string name="link_device_error_authentication">An authentication error occurred.\nPlease verify your password.</string>
     <string name="link_device_error_timeout">The operation timed out.</string>
-    <string name="link_device_error_canceled">The operation was canceled.</string>
+    <string name="link_device_error_canceled">The operation was canceled by the user.</string>
     <string name="link_device_error_unknown">An error occurred.</string>
     <string name="link_device_error_bad_password">Please check credentials and try again.</string>
 </resources>
