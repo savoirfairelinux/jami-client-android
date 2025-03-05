@@ -77,8 +77,8 @@
     <string name="pref_push_notifications_logs_summary">View logs captured from push
         notifications.</string>
 
-    <string name="pref_typing_title">Enable typing indicators</string>
-    <string name="pref_typing_summary">Send and receive typing indicators showing that a message is being typed.</string>
+    <string name="pref_typing_title">Typing indicator</string>
+    <string name="pref_typing_summary">Send and request typing indicators to be sent when messages are being typed.</string>
 
     <string name="pref_block_record_title">Block screenshot and recording</string>
     <string name="pref_block_record_summary">Block taking screenshot or record video.</string>
