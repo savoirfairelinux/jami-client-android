@@ -12,5 +12,5 @@
     <string name="control_pause">Pause</string>
     <string name="searchbar_navigation_account">Select account</string>
     <string name="add_conversation_member">Add conversation member</string>
-    <string name="qrcode_to_scan">QR Code to scan</string>
+    <string name="qrcode_to_scan">QR code to scan</string>
 </resources>
