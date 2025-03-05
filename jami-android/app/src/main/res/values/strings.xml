@@ -629,4 +629,31 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="install_success">Extension %1$s has been successfully installed.</string>
     <string name="install_error">An error occurred while importing the extension.</string>
 
+    <string name="export_side_main_title">Export account</string>
+
+    <string name="link_device_dialog_exit_title">Are you sure you want to exit?</string>
+    <string name="link_device_dialog_exit_export_body_1">Exiting now will cancel the account exportation process.</string>
+    <string name="link_device_dialog_exit_export_body_2">If not too late, exiting now will cancel the account exportation process.</string>
+    <string name="export_side_step1_advice_qr">On the new device, initiate a new account.\nSelect <b>Account > Add Account > Connect from another device</b>\nWhen ready, scan the QR Code</string>
+    <string name="export_side_step1_switch_to_code">Alternatively, click here to enter the code manually</string>
+    <string name="export_side_step1_switch_to_qr">Alternatively, click here to show the Qr Code scanner</string>
+    <string name="export_side_step1_error_malformed">New device identifier is not recognized.\nPlease follow above instruction.</string>
+    <string name="export_side_step1_code_prefix">jami-auth://</string>
+    <string name="export_side_step1_code_connect">Connect</string>
+
+    <string name="export_side_step2_advice">Your new device is located here. Is that you?\nClicking on `confirm` will continue transferring the account.</string>
+    <string name="export_side_step2_advice_ip_only">New device found at address below. Is that you?\nClicking on `confirm` will continue transferring the account.</string>
+    <string name="export_side_step2_location" translatable="false">%1$s, %2$s, %3$s - %4$s</string>
+    <string name="export_side_step2_ip_only">New device IP: %1$s</string>
+    <string name="export_side_step2_cancel">Cancel</string>
+    <string name="export_side_step2_confirm">Confirm</string>
+    <string name="export_side_step2_password">Your account is locked with a password.\nUnlock it on the new device to continue.</string>
+
+    <string name="export_side_step3_body_loading">Your account is exporting to your new device.\nPlease wait during the transfer.</string>
+    <string name="export_side_step3_body_done">Your account is successfully imported on the new device!</string>
+    <string name="export_side_step3_exit">Exit</string>
+
+    <string name="link_device_error_network">A network error occurred.\nPlease verify your connection.</string>
+    <string name="link_device_error_authentication">An authentication error occurred.\nPlease verify your password.</string>
+    <string name="link_device_error_unknown">An error occurred.</string>
 </resources>
