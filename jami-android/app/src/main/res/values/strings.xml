@@ -393,7 +393,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="help_password_choose">Choose a strong password you will remember to protect your Jami account.</string>
     <string name="help_password_enter">Enter your main Jami account password.</string>
     <string name="help_server_enter">Enter URL of management server.</string>
-    <string name="pin_copied">PIN code copied to clipboard.</string>
+    <string name="pin_copied">Authentication code copied to clipboard.</string>
     <string name="copied_clipboard">Copied to clipboard.</string>
     <string name="wizard_next">Next</string>
     <string name="wizard_back">Back</string>
@@ -478,7 +478,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="file_transfer_status_unjoinable_peer">Unreachable peer</string>
     <string name="file_transfer_status_canceled">Canceled</string>
     <string name="file_transfer_status_error">An error occurred while transferring the file.</string>
-    <string name="file_transfer_status_timed_out">Timed out</string>
+    <string name="file_transfer_status_timed_out">File transfer operation timed out.</string>
     <string name="file_saved_in">File saved in %s.</string>
     <string name="file_saved_successfully">File saved successfully.</string>
     <string name="file_download">Download</string>
@@ -631,16 +631,16 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="export_side_main_title">Export account</string>
     <string name="import_side_main_title">Import account</string>
 
-    <string name="link_device_dialog_exit_title">Do you want to stop?</string>
-    <string name="link_device_dialog_exit_export_body_1">This will cancel the account export operation.</string>
-    <string name="link_device_dialog_exit_export_body_2">If possible, stopping will cancel the account export operation.</string>
-    <string name="link_device_dialog_exit_import_body_1">Stopping will cancel the account import operation.</string>
-    <string name="link_device_dialog_exit_import_body_2">Stopping will cancel the account import operation.</string>
+    <string name="link_device_dialog_exit_title">Do you want to stop linking the account?</string>
+    <string name="link_device_dialog_exit_export_body_1">Stopping will cancel the export account operation.</string>
+    <string name="link_device_dialog_exit_export_body_2">Stopping will cancel the export account operation.</string>
+    <string name="link_device_dialog_exit_import_body_1">Stopping will cancel the import account operation.</string>
+    <string name="link_device_dialog_exit_import_body_2">Stopping will cancel the import account operation.</string>
 
     <string name="export_side_step1_advice_qr">On the new device, initiate a new account.\nSelect <b>Account > Add Account > Connect from another device</b>\nWhen ready, scan the QR code</string>
     <string name="export_side_step1_switch_to_code">Or click here to enter the authentication code</string>
     <string name="export_side_step1_switch_to_qr">Or click here to scan the QR code</string>
-    <string name="export_side_step1_error_malformed">New device identifier is unrecognized.\nPlease follow above instruction.</string>
+    <string name="export_side_step1_error_malformed">Unrecognized new device identifier. Please follow the instructions above.</string>
     <string name="export_side_step1_code_connect">Connect</string>
 
     <string name="export_side_step2_advice">The new device is located here. Is that you?\nTo continue the account export operation, click Confirm.</string>
@@ -651,7 +651,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="export_side_step2_confirm">Confirm</string>
     <string name="export_side_step2_password">The account is password-protected.\nTo continue, authenticate on the new device.</string>
 
-    <string name="export_side_step3_body_loading">Export account operation to the new device is in progress.\nPlease wait…</string>
+    <string name="export_side_step3_body_loading">Export account operation to the new device is in progress. Please wait…</string>
     <string name="export_side_step3_body_done">Account imported successfully on the new device.</string>
     <string name="export_side_step3_exit">Finish</string>
 
@@ -666,19 +666,19 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="import_side_step2_password_prompt">The account is password-protected.\nUnlock it to continue.</string>
     <string name="import_side_step2_password_import">Import</string>
     <string name="import_side_step2_password_unlocking">Unlocking account…</string>
-    <string name="import_side_step2_action_required">Action required.\nPlease confirm account on the source device.</string>
+    <string name="import_side_step2_action_required">Action required. Please confirm account on the source device.</string>
 
-    <string name="import_side_step3_body_loading">The account is being imported on the new device.\nPlease wait.</string>
-    <string name="import_side_step3_body_done">You\'re all set!\nAccount imported successfully on the new device!</string>
-    <string name="import_side_step3_go_to_account">Go to my new account</string>
+    <string name="import_side_step3_body_loading">The account is being imported on the new device. Please wait…</string>
+    <string name="import_side_step3_body_done">The account was imported successfully.</string>
+    <string name="import_side_step3_go_to_account">Go to the new account</string>
     <string name="import_side_step3_exit">Finish</string>
 
-    <string name="link_device_share_title">Share Jami authentication code</string>
+    <string name="link_device_share_title">Share authentication code</string>
 
-    <string name="link_device_error_network">A network error occurred.\nPlease verify your connection.</string>
-    <string name="link_device_error_authentication">An authentication error occurred.\nPlease verify your password.</string>
+    <string name="link_device_error_network">A network error occurred while linking the account. Please verify your connection and try again.</string>
+    <string name="link_device_error_authentication">An authentication error occurred. Please verify your password.</string>
     <string name="link_device_error_timeout">The operation timed out.</string>
-    <string name="link_device_error_canceled">The operation was canceled.</string>
+    <string name="link_device_error_canceled">The operation was canceled by the user.</string>
     <string name="link_device_error_unknown">An error occurred.</string>
     <string name="link_device_error_bad_password">Please check credentials and try again.</string>
 </resources>
