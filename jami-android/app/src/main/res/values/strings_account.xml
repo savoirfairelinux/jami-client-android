@@ -116,8 +116,8 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <!-- Advanced Details -->
     <string name="account_preferences_advanced_tab">Advanced</string>
     <string name="account_chat_settings_title">Chat settings</string>
-    <string name="account_read_receipts_label">Enable read receipts</string>
-    <string name="account_read_receipts_summary">Send and receive receipts indicating that a message have been displayed.</string>
+    <string name="account_read_receipts_label">Delivery status notification</string>
+    <string name="account_read_receipts_summary">Send and request delivery receipts indicating that messages have been displayed.</string>
     <string name="account_call_settings_title">Call settings</string>
     <string name="account_dht_public_in_calls_label">Allow incoming calls from unknown contacts</string>
     <string name="account_registration_exp_label">Registration Expire</string>
@@ -239,11 +239,11 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="account_link_device">Connect from another device</string>
     <string name="account_link_button">Connect from network</string>
     <string name="account_link_archive_button">Connect from backup</string>
-    <string name="account_new_button">Create a Jami account</string>
-    <string name="account_link_export_button">Link a new device</string>
+    <string name="account_new_button">Create Jami account</string>
+    <string name="account_link_export_button">Link new device</string>
     <string name="account_link_show_button">Show %d more linked device</string>
     <string name="account_link_hide_button">Hide linked device</string>
-    <string name="account_start_export_button">Generate PIN code</string>
+    <string name="account_start_export_button">Generate authentication code</string>
     <string name="account_end_export_button">close</string>
     <string name="account_export_title">Link account to other devices</string>
     <string name="account_connect_server_button">Connect to management server</string>
@@ -302,18 +302,18 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
     <!-- Link a new device -->
     <string name="error_format_not_supported">This format is not supported.</string>
-    <string name="account_link_info">On the new Jami app, scan the QR code or enter manually the PIN code.</string>
+    <string name="account_link_info">In the Jami app on the new device, scan the QR code or enter the authentication code manually.</string>
     <string name="account_link_device_title">Link a new device</string>
-    <string name="account_link_password">This account is password-encrypted, enter the password to generate the PIN code.</string>
+    <string name="account_link_password">This account is password-encrypted, enter the password to generate the authentication code.</string>
     <string name="account_link_generate_button">Generate</string>
-    <string name="account_link_time_valid">The PIN code will be invalid: %1$s.</string>
-    <string name="account_link_device_info">Choose “Link a new device” from the other Jami app to show the QR code or PIN code.</string>
+    <string name="account_link_time_valid">The authentication code will be invalid: %1$s.</string>
+    <string name="account_link_device_info">Choose “Link a new device” from the other Jami app to show the QR code or the authentication code.</string>
     <string name="account_generate_export_device">On the other device</string>
-    <string name="account_generate_export_info">Install and launch Jami, select “Import from an other device” and scan the QR code.</string>
+    <string name="account_generate_export_info">Install and launch Jami. Select “Import from another device,” and scan the QR code. Alternatively, enter the PIN code manually.</string>
     <string name="content_description_qr_generated">Account QR code</string>
-    <string name="account_generate_export_invalid">The PIN code is no longer valid.\nEnter the password and generate another one to link the new device.</string>
-    <string name="account_generate_export_invalid_two">The PIN code is no longer valid.\nGenerate another one to link the new device.</string>
-    <string name="help_pin_info">Fill if the account is password-encrypted</string>
+    <string name="account_generate_export_invalid">The authentication code is no longer valid.\nEnter the password and generate another one to link the new device.</string>
+    <string name="account_generate_export_invalid_two">The authentication code is no longer valid.\nGenerate another one to link the new device.</string>
+    <string name="help_pin_info">Required if the account is password-encrypted.</string>
     <string name="account_link_device_button">Connect</string>
 
     <!-- Biometry -->
@@ -329,6 +329,6 @@ Biometric or device authentication adds a convenient way to locally unlock acces
     <string name="account_biometry_enroll_auth_message">Add secure biometric or device authentication as an alternative to your password</string>
     <string name="account_auth_error">Authentication error: %1$s</string>
     <string name="account_auth_success">Authentication succeeded</string>
-    <string name="account_auth_key_error">Failed to decrypt account key</string>
+    <string name="account_auth_key_error">An error occurred while decrypting the account key.</string>
     <string name="account_auth_password">Use account password</string>
 </resources>
