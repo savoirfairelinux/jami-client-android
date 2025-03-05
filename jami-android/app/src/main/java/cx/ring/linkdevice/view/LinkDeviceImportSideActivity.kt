@@ -206,16 +206,16 @@ class LinkDeviceImportSideActivity : AppCompatActivity(),
 
         val message = when (state) {
             is AddDeviceImportState.Connecting, is AddDeviceImportState.Authenticating ->
-                resources.getString(R.string.link_device_dialog_exit_import_body_1)
+                resources.getString(R.string.link_device_dialog_stop_import_body)
 
             is AddDeviceImportState.InProgress ->
-                resources.getString(R.string.link_device_dialog_exit_import_body_2)
+                resources.getString(R.string.link_device_dialog_stop_import_body)
 
             else -> throw UnsupportedOperationException()
         }
 
         exitDialog = MaterialAlertDialogBuilder(this)
-            .setTitle(resources.getString(R.string.link_device_dialog_exit_title))
+            .setTitle(resources.getString(R.string.link_device_dialog_stop_title))
             .setMessage(message)
             .setPositiveButton(android.R.string.ok) { _, _ -> finish(1) }
             .setNegativeButton(android.R.string.cancel) { _, _ -> }.show()
