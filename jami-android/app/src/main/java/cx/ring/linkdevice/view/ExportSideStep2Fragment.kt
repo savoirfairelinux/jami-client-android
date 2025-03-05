@@ -57,7 +57,7 @@ class ExportSideStep2Fragment : Fragment() {
         binding.cancel.setOnClickListener {
             MaterialAlertDialogBuilder(requireContext())
                 .setTitle(resources.getString(R.string.link_device_dialog_exit_title))
-                .setMessage(resources.getString(R.string.link_device_dialog_exit_export_body_1))
+                .setMessage(resources.getString(R.string.link_device_dialog_exit_export_body))
                 .setPositiveButton(android.R.string.ok) { _, _ ->
                     Log.i(TAG, "Cancel button clicked.")
                     callback.onIdentityConfirmation(false)
