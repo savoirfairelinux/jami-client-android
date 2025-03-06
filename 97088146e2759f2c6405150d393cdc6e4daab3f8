@@ -535,6 +535,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ee4621d4_99710408",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 28
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-03-06T01:09:27Z",
+      "side": 1,
+      "message": "`Account imported successfully to the target device.`",
+      "parentUuid": "50f63650_f933ddce",
+      "range": {
+        "startLine": 674,
+        "startChar": 65,
+        "endLine": 674,
+        "endChar": 121
+      },
+      "revId": "97088146e2759f2c6405150d393cdc6e4daab3f8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "37646729_294f45a9",
         "filename": "jami-android/app/src/main/res/values/strings.xml",
         "patchSetId": 28
