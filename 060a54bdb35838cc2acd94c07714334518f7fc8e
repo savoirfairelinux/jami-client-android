@@ -1,0 +1,372 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ae213411_d2656cc2",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 27
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-03-06T00:42:32Z",
+      "side": 1,
+      "message": "`Do you want to exit?`",
+      "range": {
+        "startLine": 634,
+        "startChar": 49,
+        "endLine": 634,
+        "endChar": 79
+      },
+      "revId": "060a54bdb35838cc2acd94c07714334518f7fc8e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6de9b7de_e162467f",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 27
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-03-06T00:42:32Z",
+      "side": 1,
+      "message": "1. Is `now` superfluous?\n2. `account exportation` → `export account`\n3. `process` → `operation`\n\n`Exiting will cancel the export account operation.`",
+      "range": {
+        "startLine": 635,
+        "startChar": 57,
+        "endLine": 635,
+        "endChar": 113
+      },
+      "revId": "060a54bdb35838cc2acd94c07714334518f7fc8e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4d95eb92_6f33af04",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 27
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-03-06T00:42:32Z",
+      "side": 1,
+      "message": "`Exiting will cancel the export account operation.`",
+      "range": {
+        "startLine": 636,
+        "startChar": 57,
+        "endLine": 636,
+        "endChar": 130
+      },
+      "revId": "060a54bdb35838cc2acd94c07714334518f7fc8e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b750ac0b_e43b4516",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 27
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-03-06T00:42:32Z",
+      "side": 1,
+      "message": "Should `Code` be `code`?",
+      "range": {
+        "startLine": 637,
+        "startChar": 182,
+        "endLine": 637,
+        "endChar": 186
+      },
+      "revId": "060a54bdb35838cc2acd94c07714334518f7fc8e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d1a617a_7f69aaef",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 27
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-03-06T00:42:32Z",
+      "side": 1,
+      "message": "`Click here to display the authentication code.`\n\nCf. comment at https://review.jami.net/c/jami-client-android/+/29600 in jami-android/app/src/main/res/values/strings.xml file at line 663",
+      "range": {
+        "startLine": 638,
+        "startChar": 52,
+        "endLine": 638,
+        "endChar": 104
+      },
+      "revId": "060a54bdb35838cc2acd94c07714334518f7fc8e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5166853b_e14d982b",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 27
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-03-06T00:42:32Z",
+      "side": 1,
+      "message": "`Click here to display the QR code.`",
+      "range": {
+        "startLine": 639,
+        "startChar": 50,
+        "endLine": 639,
+        "endChar": 103
+      },
+      "revId": "060a54bdb35838cc2acd94c07714334518f7fc8e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "708911c8_411e2475",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 27
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-03-06T00:42:32Z",
+      "side": 1,
+      "message": "Should `Qr Code` be `QR code`? Capital `R` and lowercase `c`?",
+      "range": {
+        "startLine": 639,
+        "startChar": 88,
+        "endLine": 639,
+        "endChar": 95
+      },
+      "revId": "060a54bdb35838cc2acd94c07714334518f7fc8e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "67e41fc3_c5fa8efd",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 27
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-03-06T00:42:32Z",
+      "side": 1,
+      "message": "`not recognized` → `unrecognized`",
+      "range": {
+        "startLine": 640,
+        "startChar": 78,
+        "endLine": 640,
+        "endChar": 92
+      },
+      "revId": "060a54bdb35838cc2acd94c07714334518f7fc8e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bf3a0b51_48a41c03",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 27
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-03-06T00:42:32Z",
+      "side": 1,
+      "message": "`Clicking on \"confirm\" will continue transferring the account.`\n→\n`To continue transferring the account, click Confirm.`\n\nDoes the **transfer** move the account from the source device to the target device? Once complete, is the account no longer on the source device and only on the target device?",
+      "range": {
+        "startLine": 644,
+        "startChar": 91,
+        "endLine": 644,
+        "endChar": 152
+      },
+      "revId": "060a54bdb35838cc2acd94c07714334518f7fc8e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a1aff57e_a40243d3",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 27
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-03-06T00:42:32Z",
+      "side": 1,
+      "message": "`Clicking on \"confirm\" will continue transferring the account.`\n→\n`To continue transferring the account, click Confirm.`\n\nDoes the **transfer** move the account from the source device to the target device? Once complete, is the account no longer on the source device and only on the target device?",
+      "range": {
+        "startLine": 645,
+        "startChar": 101,
+        "endLine": 645,
+        "endChar": 162
+      },
+      "revId": "060a54bdb35838cc2acd94c07714334518f7fc8e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "08b33f83_5d08bde3",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 27
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-03-06T00:42:32Z",
+      "side": 1,
+      "message": "1. `New` → `Target`\n2. `IP` → `IP address`\n\n`Target device IP address: %1$s`",
+      "range": {
+        "startLine": 647,
+        "startChar": 45,
+        "endLine": 647,
+        "endChar": 58
+      },
+      "revId": "060a54bdb35838cc2acd94c07714334518f7fc8e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cbdf3d04_f707c123",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 27
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-03-06T00:42:32Z",
+      "side": 1,
+      "message": "`To continue, enter the account password and click Unlock.`\nor\n`To continue, enter the account password.`",
+      "range": {
+        "startLine": 650,
+        "startChar": 87,
+        "endLine": 650,
+        "endChar": 127
+      },
+      "revId": "060a54bdb35838cc2acd94c07714334518f7fc8e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "45547f65_302750fd",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 27
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-03-06T00:42:32Z",
+      "side": 1,
+      "message": "`The account is protected with a password.`",
+      "range": {
+        "startLine": 650,
+        "startChar": 46,
+        "endLine": 650,
+        "endChar": 85
+      },
+      "revId": "060a54bdb35838cc2acd94c07714334518f7fc8e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "56f5dbbf_ac58ada8",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 27
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-03-06T00:42:32Z",
+      "side": 1,
+      "message": "1. `A network error occurred while exporting the account. Check your connectivity.`\nhttps://app.transifex.com/savoirfairelinux/jami/translate/#hu/$?q\u003dtext%3A\u0027A+network+error+occurred+while+exporting+the+account.+Check+your+connectivity.\u0027\n\n2. `A connectivity error occurred. Please verify your connection and try again.`\n3. `A network error occurred. Please verify your connection and try again.`\n\nThe string shown in point 1 is already in use in the Jami Android client. If a different string is required, then the Jami Android client string can be updated.\n\nThank you",
+      "range": {
+        "startLine": 656,
+        "startChar": 72,
+        "endLine": 656,
+        "endChar": 102
+      },
+      "revId": "060a54bdb35838cc2acd94c07714334518f7fc8e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2439b487_97d81342",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 27
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-03-06T00:42:32Z",
+      "side": 1,
+      "message": "1. `Please check the password.`\n2. `Please check credentials.`\n3. `Please check credentials and try again.`",
+      "range": {
+        "startLine": 657,
+        "startChar": 87,
+        "endLine": 657,
+        "endChar": 115
+      },
+      "revId": "060a54bdb35838cc2acd94c07714334518f7fc8e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a27ce7e9_b3191144",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 27
+      },
+      "lineNbr": 658,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-03-06T00:42:32Z",
+      "side": 1,
+      "message": "`An unknown error occurred.`",
+      "range": {
+        "startLine": 658,
+        "startChar": 45,
+        "endLine": 658,
+        "endChar": 63
+      },
+      "revId": "060a54bdb35838cc2acd94c07714334518f7fc8e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
