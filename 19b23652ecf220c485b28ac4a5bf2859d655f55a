@@ -1,0 +1,228 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d4471c7_1f26fe35",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 28
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-03-06T22:08:01Z",
+      "side": 1,
+      "message": "cc",
+      "revId": "19b23652ecf220c485b28ac4a5bf2859d655f55a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3f57cf5d_0e43235d",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 28
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-03-06T22:08:01Z",
+      "side": 1,
+      "message": "`Stopping will cancel the export account operation.`",
+      "range": {
+        "startLine": 635,
+        "startChar": 57,
+        "endLine": 635,
+        "endChar": 103
+      },
+      "revId": "19b23652ecf220c485b28ac4a5bf2859d655f55a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "970bb952_fbbc2506",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 28
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-03-06T22:08:01Z",
+      "side": 1,
+      "message": "`export account operation`",
+      "range": {
+        "startLine": 636,
+        "startChar": 95,
+        "endLine": 636,
+        "endChar": 119
+      },
+      "revId": "19b23652ecf220c485b28ac4a5bf2859d655f55a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "53f12933_22ab0c84",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 28
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-03-06T22:08:01Z",
+      "side": 1,
+      "message": "1. Remove duplicate `.`?\n2. Add `operation`?\n3. `export account operation`\n\n`To continue export account operation, click Confirm.`",
+      "range": {
+        "startLine": 644,
+        "startChar": 90,
+        "endLine": 644,
+        "endChar": 140
+      },
+      "revId": "19b23652ecf220c485b28ac4a5bf2859d655f55a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "79dad7d4_3ca2f030",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 28
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-03-06T22:08:01Z",
+      "side": 1,
+      "message": "1. Remove duplicate `.`?\n2. Add `operation`?\n3. `export account operation`\n\n`To continue export account operation, click Confirm.`",
+      "range": {
+        "startLine": 645,
+        "startChar": 105,
+        "endLine": 645,
+        "endChar": 155
+      },
+      "revId": "19b23652ecf220c485b28ac4a5bf2859d655f55a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ffebf62b_0cb7ead6",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 28
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-03-06T22:08:01Z",
+      "side": 1,
+      "message": "`To continue, authenticate on the new device.`",
+      "range": {
+        "startLine": 650,
+        "startChar": 89,
+        "endLine": 650,
+        "endChar": 132
+      },
+      "revId": "19b23652ecf220c485b28ac4a5bf2859d655f55a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "31f8a81b_208f1a8d",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 28
+      },
+      "lineNbr": 652,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-03-06T22:08:01Z",
+      "side": 1,
+      "message": "`Please wait…`",
+      "range": {
+        "startLine": 652,
+        "startChar": 110,
+        "endLine": 652,
+        "endChar": 122
+      },
+      "revId": "19b23652ecf220c485b28ac4a5bf2859d655f55a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "582ed5c4_912d34d2",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 28
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-03-06T22:08:01Z",
+      "side": 1,
+      "message": "Remove `!`",
+      "range": {
+        "startLine": 653,
+        "startChar": 95,
+        "endLine": 653,
+        "endChar": 96
+      },
+      "revId": "19b23652ecf220c485b28ac4a5bf2859d655f55a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3038316e_9b5225c2",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 28
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-03-06T22:08:01Z",
+      "side": 1,
+      "message": "`Please check credentials.`",
+      "range": {
+        "startLine": 657,
+        "startChar": 87,
+        "endLine": 657,
+        "endChar": 115
+      },
+      "revId": "19b23652ecf220c485b28ac4a5bf2859d655f55a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "87da6c05_6f7b14af",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 28
+      },
+      "lineNbr": 658,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-03-06T22:08:01Z",
+      "side": 1,
+      "message": "`An unknown error occurred.`",
+      "range": {
+        "startLine": 658,
+        "startChar": 45,
+        "endLine": 658,
+        "endChar": 63
+      },
+      "revId": "19b23652ecf220c485b28ac4a5bf2859d655f55a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
