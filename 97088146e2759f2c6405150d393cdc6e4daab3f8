@@ -95,6 +95,52 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "094f3192_7f698808",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 28
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-03-06T01:30:24Z",
+      "side": 1,
+      "message": "`To continue, enter the account password and click Unlock.`\nor\n`To continue, enter the account password.`",
+      "range": {
+        "startLine": 654,
+        "startChar": 87,
+        "endLine": 654,
+        "endChar": 127
+      },
+      "revId": "97088146e2759f2c6405150d393cdc6e4daab3f8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "25543d58_14cf971d",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 28
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-03-06T01:30:24Z",
+      "side": 1,
+      "message": "`The account is protected with a password.`",
+      "range": {
+        "startLine": 654,
+        "startChar": 46,
+        "endLine": 654,
+        "endChar": 85
+      },
+      "revId": "97088146e2759f2c6405150d393cdc6e4daab3f8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f2019a2f_6ac211d8",
         "filename": "jami-android/app/src/main/res/values/strings.xml",
         "patchSetId": 28
