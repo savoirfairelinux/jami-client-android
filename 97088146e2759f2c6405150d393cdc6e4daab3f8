@@ -164,6 +164,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4c66a720_7ad95b96",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 28
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-03-06T00:42:43Z",
+      "side": 1,
+      "message": "`old device` → `source device`",
+      "parentUuid": "b41b303d_a80f5625",
+      "range": {
+        "startLine": 660,
+        "startChar": 54,
+        "endLine": 660,
+        "endChar": 64
+      },
+      "revId": "97088146e2759f2c6405150d393cdc6e4daab3f8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e327c38e_1285fdfc",
         "filename": "jami-android/app/src/main/res/values/strings.xml",
         "patchSetId": 28
@@ -233,6 +257,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8f5e5af9_f933e394",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 28
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-03-06T00:42:43Z",
+      "side": 1,
+      "message": "`old device` → `source device`",
+      "parentUuid": "e327c38e_1285fdfc",
+      "range": {
+        "startLine": 661,
+        "startChar": 56,
+        "endLine": 661,
+        "endChar": 66
+      },
+      "revId": "97088146e2759f2c6405150d393cdc6e4daab3f8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8514dbce_af00e001",
         "filename": "jami-android/app/src/main/res/values/strings.xml",
         "patchSetId": 28
@@ -290,6 +338,30 @@
       "writtenOn": "2025-03-05T23:58:37Z",
       "side": 1,
       "message": "`Connecting to the active device. Please wait…`",
+      "range": {
+        "startLine": 665,
+        "startChar": 48,
+        "endLine": 665,
+        "endChar": 78
+      },
+      "revId": "97088146e2759f2c6405150d393cdc6e4daab3f8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "08ae8470_0622fd23",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 28
+      },
+      "lineNbr": 665,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-03-06T00:42:43Z",
+      "side": 1,
+      "message": "`Connecting to the source device. Please wait…`",
+      "parentUuid": "1a324550_5271b90e",
       "range": {
         "startLine": 665,
         "startChar": 48,
@@ -387,6 +459,75 @@
         "startChar": 56,
         "endLine": 670,
         "endChar": 79
+      },
+      "revId": "97088146e2759f2c6405150d393cdc6e4daab3f8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "02a1d520_a73346da",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 28
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-03-06T00:42:43Z",
+      "side": 1,
+      "message": "`Please confirm account on the source device`",
+      "range": {
+        "startLine": 671,
+        "startChar": 71,
+        "endLine": 671,
+        "endChar": 113
+      },
+      "revId": "97088146e2759f2c6405150d393cdc6e4daab3f8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1aef3c76_ba5dd87e",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 28
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-03-06T00:42:43Z",
+      "side": 1,
+      "message": "`The account is being imported on the target device.`",
+      "range": {
+        "startLine": 673,
+        "startChar": 50,
+        "endLine": 673,
+        "endChar": 100
+      },
+      "revId": "97088146e2759f2c6405150d393cdc6e4daab3f8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "50f63650_f933ddce",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 28
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-03-06T00:42:43Z",
+      "side": 1,
+      "message": "`The account imported successfully on the target device.`",
+      "range": {
+        "startLine": 674,
+        "startChar": 65,
+        "endLine": 674,
+        "endChar": 121
       },
       "revId": "97088146e2759f2c6405150d393cdc6e4daab3f8",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
