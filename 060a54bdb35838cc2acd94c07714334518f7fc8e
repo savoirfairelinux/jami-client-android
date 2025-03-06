@@ -302,6 +302,52 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b5ce251c_187a2ef2",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 27
+      },
+      "lineNbr": 652,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-03-06T01:09:49Z",
+      "side": 1,
+      "message": "`Export account operation to the target device is in progress.`",
+      "range": {
+        "startLine": 652,
+        "startChar": 50,
+        "endLine": 652,
+        "endChar": 95
+      },
+      "revId": "060a54bdb35838cc2acd94c07714334518f7fc8e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b0021862_1b235a78",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 27
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-03-06T01:09:49Z",
+      "side": 1,
+      "message": "`Account imported successfully to the target device.`",
+      "range": {
+        "startLine": 653,
+        "startChar": 47,
+        "endLine": 653,
+        "endChar": 103
+      },
+      "revId": "060a54bdb35838cc2acd94c07714334518f7fc8e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "56f5dbbf_ac58ada8",
         "filename": "jami-android/app/src/main/res/values/strings.xml",
         "patchSetId": 27
