@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c149e381_aa8b59c7",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 29
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-03-06T21:59:06Z",
+      "side": 1,
+      "message": "`Link new device`",
+      "range": {
+        "startLine": 659,
+        "startChar": 129,
+        "endLine": 659,
+        "endChar": 146
+      },
+      "revId": "aa0de252e1dab64d9335efab27a9a02ab289ef82",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f31dc778_df43cc7d",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 29
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-03-06T21:59:06Z",
+      "side": 1,
+      "message": "`Link new device`",
+      "range": {
+        "startLine": 660,
+        "startChar": 131,
+        "endLine": 660,
+        "endChar": 148
+      },
+      "revId": "aa0de252e1dab64d9335efab27a9a02ab289ef82",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "919ac5d6_5d11b9eb",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 29
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-03-06T21:59:06Z",
+      "side": 1,
+      "message": "`The account is protected with a password.`",
+      "range": {
+        "startLine": 667,
+        "startChar": 53,
+        "endLine": 667,
+        "endChar": 91
+      },
+      "revId": "aa0de252e1dab64d9335efab27a9a02ab289ef82",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9bc0f92b_1f02985a",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 29
+      },
+      "lineNbr": 675,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-03-06T21:59:06Z",
+      "side": 1,
+      "message": "Is this at then end of the import? `Finish`",
+      "range": {
+        "startLine": 675,
+        "startChar": 42,
+        "endLine": 675,
+        "endChar": 46
+      },
+      "revId": "aa0de252e1dab64d9335efab27a9a02ab289ef82",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df08fdc4_34319e43",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 29
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-03-06T21:59:06Z",
+      "side": 1,
+      "message": "Sentence case? `Share Jami authentication code`",
+      "range": {
+        "startLine": 677,
+        "startChar": 43,
+        "endLine": 677,
+        "endChar": 73
+      },
+      "revId": "aa0de252e1dab64d9335efab27a9a02ab289ef82",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
