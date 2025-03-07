@@ -424,6 +424,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b03f8b5e_f099388d",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 28
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2025-03-07T16:32:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "138f8eed_aebfb949",
+      "range": {
+        "startLine": 660,
+        "startChar": 132,
+        "endLine": 660,
+        "endChar": 149
+      },
+      "revId": "97088146e2759f2c6405150d393cdc6e4daab3f8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e327c38e_1285fdfc",
@@ -560,6 +584,30 @@
         "startChar": 56,
         "endLine": 661,
         "endChar": 66
+      },
+      "revId": "97088146e2759f2c6405150d393cdc6e4daab3f8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e54e1917_10d94fcb",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 28
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2025-03-07T16:32:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f59a6d87_56dd738b",
+      "range": {
+        "startLine": 661,
+        "startChar": 134,
+        "endLine": 661,
+        "endChar": 151
       },
       "revId": "97088146e2759f2c6405150d393cdc6e4daab3f8",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
@@ -823,6 +871,54 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "78d7882c_6592db8c",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 28
+      },
+      "lineNbr": 668,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2025-03-07T16:32:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd2ca389_7d2855f1",
+      "range": {
+        "startLine": 668,
+        "startChar": 53,
+        "endLine": 668,
+        "endChar": 92
+      },
+      "revId": "97088146e2759f2c6405150d393cdc6e4daab3f8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9d662891_46962952",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 28
+      },
+      "lineNbr": 668,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2025-03-07T16:32:53Z",
+      "side": 1,
+      "message": "changed to\nThe account is password-protected.\\nUnlock it to continue.",
+      "parentUuid": "8bb2cf45_4ebf8f5d",
+      "range": {
+        "startLine": 668,
+        "startChar": 94,
+        "endLine": 668,
+        "endChar": 116
+      },
+      "revId": "97088146e2759f2c6405150d393cdc6e4daab3f8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8b99b704_968367cb",
@@ -836,6 +932,30 @@
       "writtenOn": "2025-03-05T23:58:37Z",
       "side": 1,
       "message": "`Unlock account is in progress. Please wait…`",
+      "range": {
+        "startLine": 670,
+        "startChar": 56,
+        "endLine": 670,
+        "endChar": 79
+      },
+      "revId": "97088146e2759f2c6405150d393cdc6e4daab3f8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8c65589b_bd8c5be0",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 28
+      },
+      "lineNbr": 670,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2025-03-07T16:32:53Z",
+      "side": 1,
+      "message": "Changed to\nUnlocking account…",
+      "parentUuid": "8b99b704_968367cb",
       "range": {
         "startLine": 670,
         "startChar": 56,
