@@ -919,6 +919,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4ea5f756_c707262c",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 28
+      },
+      "lineNbr": 668,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2025-03-07T16:40:29Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "9d662891_46962952",
+      "range": {
+        "startLine": 668,
+        "startChar": 94,
+        "endLine": 668,
+        "endChar": 116
+      },
+      "revId": "97088146e2759f2c6405150d393cdc6e4daab3f8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8b99b704_968367cb",
@@ -956,6 +980,30 @@
       "side": 1,
       "message": "Changed to\nUnlocking account…",
       "parentUuid": "8b99b704_968367cb",
+      "range": {
+        "startLine": 670,
+        "startChar": 56,
+        "endLine": 670,
+        "endChar": 79
+      },
+      "revId": "97088146e2759f2c6405150d393cdc6e4daab3f8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "746adaae_28b57a0e",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 28
+      },
+      "lineNbr": 670,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2025-03-07T16:40:29Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "8c65589b_bd8c5be0",
       "range": {
         "startLine": 670,
         "startChar": 56,
