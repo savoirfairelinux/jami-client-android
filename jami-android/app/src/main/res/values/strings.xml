@@ -666,7 +666,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
     <string name="import_side_step2_password_prompt">The account is password-protected.\nUnlock it to continue.</string>
     <string name="import_side_step2_password_import">Import</string>
-    <string name="import_side_step2_password_unlocking">Unlocking your account…</string>
+    <string name="import_side_step2_password_unlocking">Unlocking account…</string>
     <string name="import_side_step2_action_required">Action required.\nPlease confirm account on the source device.</string>
 
     <string name="import_side_step3_body_loading">The account is being imported on the new device.\nPlease wait.</string>
