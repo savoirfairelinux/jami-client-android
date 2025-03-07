@@ -34,7 +34,6 @@ import net.jami.utils.Log
 import net.jami.utils.SwigNativeConverter
 import java.io.File
 import java.io.UnsupportedEncodingException
-import java.net.SocketException
 import java.net.URLEncoder
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
@@ -89,6 +88,9 @@ class AccountService(
         PublishSubject.create()
     val activeCallsObservable: Observable<ConversationActiveCalls> =
         activeCallsSubject
+
+    private val authResultSubject: Subject<AuthResult> = PublishSubject.create()
+    val authResultObservable: Observable<AuthResult> = authResultSubject
 
     // This variable should only be used for testing purposes.
     var customNameServer: String? = null
@@ -193,12 +195,6 @@ class AccountService(
     private val registeredNameSubject: Subject<RegisteredName> = PublishSubject.create()
     private val searchResultSubject: Subject<UserSearchResult> = PublishSubject.create()
 
-    private data class ExportOnRingResult (
-        val accountId: String,
-        val code: Int,
-        val pin: String?
-    )
-
     private data class DeviceRevocationResult (
         val accountId: String,
         val deviceId: String,
@@ -210,7 +206,6 @@ class AccountService(
         val state: String
     )
 
-    private val mExportSubject: Subject<ExportOnRingResult> = PublishSubject.create()
     private val mDeviceRevocationSubject: Subject<DeviceRevocationResult> = PublishSubject.create()
     private val mMigrationSubject: Subject<MigrationResult> = PublishSubject.create()
     private val registeredNames: Observable<RegisteredName>
@@ -621,27 +616,6 @@ class AccountService(
     fun updateProfile(accountId: String, displayName: String) {
         JamiService.updateProfile(accountId, displayName, "", "", 0)
     }
-
-    /**
-     * Exports the account on the DHT (used for multi-devices feature)
-     */
-    fun exportOnRing(accountId: String, password: String): Single<String> =
-        mExportSubject
-            .filter { r: ExportOnRingResult -> r.accountId == accountId }
-            .firstOrError()
-            .map { result: ExportOnRingResult ->
-                when (result.code) {
-                    PIN_GENERATION_SUCCESS -> return@map result.pin!!
-                    PIN_GENERATION_WRONG_PASSWORD -> throw IllegalArgumentException()
-                    PIN_GENERATION_NETWORK_ERROR -> throw SocketException()
-                    else -> throw UnsupportedOperationException()
-                }
-            }
-            .doOnSubscribe {
-                Log.i(TAG, "exportOnRing() $accountId")
-                mExecutor.execute { JamiService.exportOnRing(accountId, password) }
-            }
-            .subscribeOn(Schedulers.io())
 
     /**
      * @return the list of the account's devices from the Daemon
@@ -1150,11 +1124,6 @@ class AccountService(
             account.devices = devices
             observableAccounts.onNext(account)
         }
-    }
-
-    fun exportOnRingEnded(accountId: String, code: Int, pin: String) {
-        Log.d(TAG, "exportOnRingEnded: $accountId, $code, $pin")
-        mExportSubject.onNext(ExportOnRingResult(accountId, code, pin))
     }
 
     fun nameRegistrationEnded(accountId: String, state: Int, name: String) {
@@ -1718,13 +1687,97 @@ class AccountService(
                 )
             }
 
+    enum class AuthState(val value: Int) {
+        INIT(0),
+        TOKEN_AVAILABLE(1),
+        CONNECTING(2),
+        AUTHENTICATING(3),
+        IN_PROGRESS(4),
+        DONE(5);
+
+        companion object {
+            fun fromInt(value: Int) = AuthState.entries[value]
+        }
+    }
+
+    data class AuthResult(
+        val accountId: String,
+        val state: AuthState,
+        val details: Map<String, String> = emptyMap(),
+        val operationId: Long? = null
+    )
+
+    /**
+     * Related to add device feature (import side).
+     * Updates the state of the account import.
+     */
+    fun deviceAuthStateChanged(accountId: String, state: Int, details: Map<String, String>) {
+        val authState = AuthState.fromInt(state)
+        Log.d(TAG, "Device auth state changed: $accountId::$authState $details")
+        authResultSubject.onNext(AuthResult(accountId, authState, details))
+    }
+
+    /**
+     * Related to add device feature (import side).
+     * Confirmation that the imported account is indeed the one the user want to import.
+     * Unlocks the account if a password is required.
+     * @param password: password for the account
+     */
+    fun provideAccountAuthentication(accountId: String, password: String) {
+        Log.d(TAG, "Provide account authentication")
+        JamiService.provideAccountAuthentication(accountId, password, "password")
+    }
+
+    /**
+     * Related to add device feature (export side).
+     * Updates the state of the account export.
+     * @param operationId Used to identify the operation if there is several at the same time.
+     * @param details Additional details about the state. Specific to the state and to the side.
+     */
+    fun addDeviceStateChanged(
+        accountId: String, operationId: Long, state: Int, details: Map<String, String>
+    ) {
+        val authState = AuthState.fromInt(state)
+        Log.i(TAG, "Add device state changed $accountId:$operationId:${authState.name} $details")
+        authResultSubject.onNext(
+            AuthResult(accountId, AuthState.fromInt(state), details, operationId)
+        )
+    }
+
+    /**
+     * Related to add device feature (export side).
+     * Starts the account export process.
+     * @param token: A URI that identifies a device on the DHT to connect to.
+     */
+    fun addDevice(accountId: String, token: String): Long {
+        Log.i(TAG, "Add device")
+        return JamiService.addDevice(accountId, token)
+    }
+
+    /**
+     * Related to add device feature (export side).
+     * Confirm the address of the device to export the account to.
+     * @param operationId Account can be exported to multiple devices at the same time.
+     */
+    fun confirmAddDevice(accountId: String, operationId: Long) {
+        Log.i(TAG, "Confirm add device")
+        mExecutor.execute { JamiService.confirmAddDevice(accountId, operationId) }
+    }
+
+    /**
+     * Related to add device feature (export side).
+     * Cancel the account exportation process.
+     * @param operationId Account can be exported to multiple devices at the same time.
+     */
+    fun cancelAddDevice(accountId: String, operationId: Long) {
+        Log.i(TAG, "Cancel add device")
+        mExecutor.execute { JamiService.cancelAddDevice(accountId, operationId) }
+    }
+
     companion object {
         private val TAG = AccountService::class.java.simpleName
         private const val VCARD_CHUNK_SIZE = 1000
         private const val DATA_TRANSFER_REFRESH_PERIOD: Long = 500
-        private const val PIN_GENERATION_SUCCESS = 0
-        private const val PIN_GENERATION_WRONG_PASSWORD = 1
-        private const val PIN_GENERATION_NETWORK_ERROR = 2
 
         const val ACCOUNT_SCHEME_NONE = ""
         const val ACCOUNT_SCHEME_PASSWORD = "password"

@@ -159,10 +159,6 @@ class DaemonService(
             mExecutor.submit { mAccountService.knownDevicesChanged(accountId, jdevices) }
         }
 
-        override fun exportOnRingEnded(accountId: String, code: Int, pin: String) {
-            mAccountService.exportOnRingEnded(accountId, code, pin)
-        }
-
         override fun nameRegistrationEnded(accountId: String, state: Int, name: String) {
             mAccountService.nameRegistrationEnded(accountId, state, name)
         }
@@ -196,6 +192,24 @@ class DaemonService(
 
         override fun messageSend(message: String) {
             mHardwareService.logMessage(message)
+        }
+
+        /**
+         * Related to add device feature (import side).
+         */
+        override fun deviceAuthStateChanged(accountId: String, state: Int, details: StringMap) {
+            val detailsMap: Map<String, String> = details.toNativeFromUtf8()
+            mAccountService.deviceAuthStateChanged(accountId, state, detailsMap)
+        }
+
+        /**
+         * Related to add device feature (export side).
+         */
+        override fun addDeviceStateChanged(
+            accountId: String, operationId: Long, state: Int, details: StringMap
+        ) {
+            val detailsMap: Map<String, String> = details.toNativeFromUtf8()
+            mAccountService.addDeviceStateChanged(accountId, operationId, state, detailsMap)
         }
     }
 
