@@ -1,4 +1,74 @@
 {
-  "comments": [],
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ecdd757d_99fde1f0",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 32
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-03-07T22:21:32Z",
+      "side": 1,
+      "message": "Should `_exit_` be `_stop_`?",
+      "range": {
+        "startLine": 634,
+        "startChar": 36,
+        "endLine": 634,
+        "endChar": 42
+      },
+      "revId": "a45f5023a613076ccce892f3fd56dedfdd804e4d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "caa5b2e2_5960633f",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 32
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-03-07T22:21:32Z",
+      "side": 1,
+      "message": "Should a space ` ` be added between the `\u003e` and `Account` so that `\u003eA` becomes `\u003e A`?",
+      "range": {
+        "startLine": 638,
+        "startChar": 100,
+        "endLine": 638,
+        "endChar": 102
+      },
+      "revId": "a45f5023a613076ccce892f3fd56dedfdd804e4d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e5acf11e_0c52f2ab",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 32
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-03-07T22:21:32Z",
+      "side": 1,
+      "message": "Should `account export operation` be written as `export account operation`?",
+      "range": {
+        "startLine": 644,
+        "startChar": 106,
+        "endLine": 644,
+        "endChar": 130
+      },
+      "revId": "a45f5023a613076ccce892f3fd56dedfdd804e4d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ],
   "submitRequirementResults": []
 }
