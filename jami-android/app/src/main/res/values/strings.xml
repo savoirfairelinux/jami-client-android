@@ -630,10 +630,13 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="install_error">An error occurred while importing the extension.</string>
 
     <string name="export_side_main_title">Export account</string>
+    <string name="import_side_main_title">Import account</string>
 
     <string name="link_device_dialog_exit_title">Do you want to stop?</string>
     <string name="link_device_dialog_exit_export_body_1">This will cancel the account export operation.</string>
     <string name="link_device_dialog_exit_export_body_2">If possible, stopping will cancel the account export operation.</string>
+    <string name="link_device_dialog_exit_import_body_1">Stopping will cancel the account import operation.</string>
+    <string name="link_device_dialog_exit_import_body_2">Stopping will cancel the account import operation.</string>
 
     <string name="export_side_step1_advice_qr">On the new device, initiate a new account.\nSelect <b>Account > Add Account > Connect from another device</b>\nWhen ready, scan the QR code</string>
     <string name="export_side_step1_switch_to_code">Or click here to enter the authentication code</string>
@@ -653,7 +656,28 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <string name="export_side_step3_body_done">Account imported successfully on the new device.</string>
     <string name="export_side_step3_exit">Finish</string>
 
-    <string name="link_device_error_network">A network error occurred.\nPlease verify your connection.</string>
-    <string name="link_device_error_authentication">An authentication error occurred.\nPlease verify your password.</string>
-    <string name="link_device_error_unknown">An error occurred.</string>
+    <string name="import_side_step1_advice_qr">Initiate the export on the source device.\n<b>Select Account > Account Settings > Link new device</b>\nWhen ready, scan the QR code below.</string>
+    <string name="import_side_step1_advice_code">Initiate the export on the source device.\n<b>Select Account > Account Settings > Link new device</b>\nWhen ready, enter the code below.</string>
+    <string name="import_side_step1_share">Share</string>
+    <string name="import_side_step1_switch_to_code">Or click here to display the authentication code</string>
+    <string name="import_side_step1_switch_to_qr">Or click here to display the QR code</string>
+    <string name="import_side_step1_connecting">Connecting to the source device…</string>
+    <string name="import_side_step1_preparing_device">Preparing device…</string>
+
+    <string name="import_side_step2_password_prompt">The account is password-protected.\nUnlock it to continue.</string>
+    <string name="import_side_step2_password_import">Import</string>
+    <string name="import_side_step2_password_unlocking">Unlocking your account…</string>
+    <string name="import_side_step2_action_required">Action required.\nPlease confirm account on the source device.</string>
+
+    <string name="import_side_step3_body_loading">The account is being imported on the new device.\nPlease wait.</string>
+    <string name="import_side_step3_body_done">You\'re all set!\nAccount imported successfully on the new device!</string>
+    <string name="import_side_step3_go_to_account">Go to my new account</string>
+    <string name="import_side_step3_exit">Finish</string>
+
+    <string name="link_device_share_title">Share Jami authentication code</string>
+
+    <string name="link_device_error_network">A network error occurred while exporting the account. Check your connectivity.</string>
+    <string name="link_device_error_authentication">An authentication error occurred.\nPlease check credentials.</string>
+    <string name="link_device_error_unknown">An unknown error occurred.</string>
+    <string name="link_device_error_bad_password">Please check credentials and try again.</string>
 </resources>
