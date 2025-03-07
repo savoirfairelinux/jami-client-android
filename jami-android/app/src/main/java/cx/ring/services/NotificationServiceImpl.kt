@@ -52,6 +52,7 @@ import cx.ring.fragments.CallFragment
 import cx.ring.fragments.ConversationFragment
 import cx.ring.service.CallNotificationService
 import cx.ring.service.DRingService
+import cx.ring.service.RemoteControl.Companion.INCOMING_CALL_RECEIVED_EVENT
 import cx.ring.settings.SettingsFragment
 import cx.ring.tv.call.TVCallActivity
 import cx.ring.utils.ContentUri
@@ -81,7 +82,8 @@ class NotificationServiceImpl(
     private val mContactService: ContactService,
     private val mPreferencesService: PreferencesService,
     private val mDeviceRuntimeService: DeviceRuntimeService,
-    private val mCallService: CallService
+    private val mCallService: CallService,
+    private val eventService: EventService,
     ) : NotificationService {
     private val mNotificationBuilders = SparseArray<NotificationCompat.Builder>()
     private val notificationManager: NotificationManagerCompat = NotificationManagerCompat.from(mContext)
@@ -155,6 +157,7 @@ class NotificationServiceImpl(
                     .setIsVideo(hasVideo))
         } else if (conference.isRinging) {
             if (conference.isIncoming) {
+                eventService.logEvent(INCOMING_CALL_RECEIVED_EVENT)
                 messageNotificationBuilder = NotificationCompat.Builder(mContext, NOTIF_CHANNEL_INCOMING_CALL)
                 messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_incoming_call_title, contact.displayName))
                     .setPriority(NotificationCompat.PRIORITY_MAX)
@@ -413,7 +416,9 @@ class NotificationServiceImpl(
                             val i = InputStreamReader(BufferedInputStream(urlConnection.inputStream)).use { it.readText() }
                             Log.w(TAG, "pingPush Got code ${urlConnection.responseCode} $i")
                         }
+                        eventService.logEvent("push_ping", mapOf("server" to server, "account" to accountId, "token" to JamiApplication.instance!!.pushToken))
                     } catch (e: Exception) {
+                        eventService.logEvent("push_ping_error", mapOf("server" to server, "account" to accountId, "token" to JamiApplication.instance!!.pushToken, "error" to e.stackTraceToString()))
                         Log.w(TAG, "Error sending push ping", e)
                     }
                 }

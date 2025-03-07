@@ -17,6 +17,9 @@
 package cx.ring.dependencyinjection
 
 import android.content.Context
+import android.os.Build
+import androidx.annotation.RequiresApi
+import cx.ring.service.ConnectionService
 import cx.ring.services.*
 import cx.ring.utils.DeviceUtils
 import dagger.Module
@@ -62,8 +65,10 @@ object ServiceInjectionModule {
                                    contactService: ContactService,
                                    preferencesService: PreferencesService,
                                    deviceRuntimeService: DeviceRuntimeService,
-                                   callService: CallService): NotificationService {
-        return NotificationServiceImpl(appContext, accountService, contactService, preferencesService, deviceRuntimeService, callService)
+                                   callService: CallService,
+                                   eventService: EventService
+    ): NotificationService {
+        return NotificationServiceImpl(appContext, accountService, contactService, preferencesService, deviceRuntimeService, callService, eventService)
     }
 
     @Provides
@@ -82,8 +87,9 @@ object ServiceInjectionModule {
                              @Named("DaemonExecutor") executor: ScheduledExecutorService,
                              callService: CallService,
                              hardwareService: HardwareService,
-                             accountService: AccountService): DaemonService {
-        return DaemonService(deviceRuntimeService, executor, callService, hardwareService, accountService)
+                             accountService: AccountService,
+                             eventService: EventService): DaemonService {
+        return DaemonService(deviceRuntimeService, executor, callService, hardwareService, accountService, eventService)
     }
 
     @Provides
@@ -101,8 +107,9 @@ object ServiceInjectionModule {
     fun provideAccountService(@Named("DaemonExecutor") executor : ScheduledExecutorService,
                               historyService : HistoryService,
                               deviceRuntimeService : DeviceRuntimeService,
-                              vCardService : VCardService): AccountService {
-        return AccountService(executor, historyService, deviceRuntimeService, vCardService)
+                              vCardService : VCardService,
+                              eventService: EventService): AccountService {
+        return AccountService(executor, historyService, deviceRuntimeService, vCardService, eventService)
     }
 
     @Provides
@@ -164,5 +171,17 @@ object ServiceInjectionModule {
     @Singleton
     fun provideUiScheduler(): Scheduler {
         return DeviceUtils.uiScheduler
+    }
+
+    @Provides
+    @RequiresApi(Build.VERSION_CODES.P)
+    fun provideConnectionService(): ConnectionService {
+        return ConnectionService()
+    }
+
+    @Provides
+    @Singleton
+    fun eventService(): EventService {
+        return EventServiceImpl()
     }
 }

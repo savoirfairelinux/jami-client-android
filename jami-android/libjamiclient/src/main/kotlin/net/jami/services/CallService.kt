@@ -788,7 +788,12 @@ abstract class CallService(
     }
 
     fun getActiveCall(): Call? {
-        return calls.values.firstOrNull { it.callStatus == Call.CallStatus.CURRENT }
+        return calls.values.firstOrNull { listOf(
+            Call.CallStatus.NONE,
+            Call.CallStatus.SEARCHING,
+            Call.CallStatus.CONNECTING,
+            Call.CallStatus.CURRENT,
+        ).contains(it.callStatus) }
     }
 
     fun getIncomingCall(): Call? {

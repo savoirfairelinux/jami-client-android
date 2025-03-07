@@ -24,6 +24,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     android:clipChildren="false"
     android:clipToPadding="false"
     android:keepScreenOn="true"
+    android:padding="24dp"
     tools:background="@color/cardview_dark_background">
 
     <cx.ring.views.ParticipantsContainerView
@@ -67,8 +68,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
             <ImageView
                 android:id="@+id/contact_bubble"
-                android:layout_width="160dp"
-                android:layout_height="160dp"
+                android:layout_width="600dp"
+                android:layout_height="600dp"
                 android:layout_centerInParent="true"
                 tools:src="@drawable/ic_contact_picture_fallback" />
         </RelativeLayout>
@@ -90,6 +91,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:layout_gravity="center_horizontal"
                 android:ellipsize="middle"
                 android:singleLine="true"
+                android:textSize="50sp"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="@color/text_color_primary_dark"
                 android:transitionName="shared_element"
@@ -114,7 +116,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:textColor="@color/text_color_primary_dark"
-                android:textSize="16sp"
+                android:textSize="50sp"
                 tools:text="Connecting" />
 
             <LinearLayout
@@ -157,24 +159,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </LinearLayout>
     </LinearLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/call_hangup_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="48dp"
-        android:tint="@color/white"
-        android:visibility="gone"
-        app:backgroundTint="@color/colorError"
-        app:rippleColor="@android:color/white"
-        app:srcCompat="@drawable/baseline_call_end_24"
-        app:useCompatPadding="true"
-        tools:visibility="visible" />
-
     <LinearLayout
         android:id="@+id/record_layout"
         android:layout_width="wrap_content"
@@ -202,21 +186,5 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             tools:text="Thomas"/>
 
     </LinearLayout>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/call_add_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/call_hangup_btn"
-        android:layout_toEndOf="@+id/call_hangup_btn"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="48dp"
-        android:visibility="gone"
-        app:srcCompat="@drawable/baseline_person_add_24"
-        app:useCompatPadding="true"
-        tools:visibility="visible" />
 
 </RelativeLayout>

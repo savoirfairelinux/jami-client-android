@@ -1,0 +1,91 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Install dev stuff
+        run: |
+          sudo apt update
+          sudo apt install -y libc6-dev autopoint
+      - uses: actions/checkout@v4
+      - name: Set git credentials store
+        run: git config credential.helper store
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Cache Gradle packages
+        uses: actions/cache@v4
+        with:
+          path: |
+            gradle
+            updater/gradle
+            jami-client-android/jami-android/gradle
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x jami-android/gradlew
+
+      - name: Decode Android Keystore
+        run: |
+          echo "${{ secrets.KEYSTORE }}" | base64 --decode > jami-android/app.keystore
+
+      - name: Write jami key
+        run: |
+          [[ -d ~/.gradle ]] || mkdir ~/.gradle
+          echo "jamiAppSigningKey=${{ secrets.KEYSTORE_PASSWORD }}" >> ~/.gradle/gradle.properties
+
+      - name: Get daemon submodule commit hash
+        id: jami_daemon_hash
+        run: |
+          commit=$(cd daemon && git rev-parse HEAD)
+          echo "commit=${commit}" >> $GITHUB_OUTPUT
+
+      - name: Restore jami daemon if already built
+        id: jami-daemon-cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            daemon/build
+            daemon/contrib
+            jami-android/app/.cxx
+          key: ${{ runner.os }}-jami-daemon-${{ steps.jami_daemon_hash.outputs.commit }}
+
+      - name: Build jami daemon (64 bit)
+        if: steps.jami-daemon-cache.outputs.cache-hit != 'true'
+        run: |
+          cd daemon
+          [[ -d build ]] || mkdir build
+          cd build
+          cmake .. -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK/build/cmake/android.toolchain.cmake -DANDROID_ABI=arm64-v8a -DANDROID_API=24 -DBUILD_EXTRA_TOOLS=On -DJAMI_JNI=On -DJAMI_JNI_PACKAGEDIR=java -DANDROID_PLATFORM=24 -DBUILD_TESTING=OFF
+          make -j4
+
+      - name: Generate swig
+        run: |
+          cd daemon/bin/jni
+          PACKAGEDIR=jami-android/libjamiclient/src/main/java ./make-swig.sh
+
+      - name: Build jami
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          RELEASE_VERSION: ${{ github.ref_name }}
+        run: |
+          cd jami-android && ./gradlew --no-daemon app:assembleWithUnifiedPushRelease -Parchs=armeabi-v7a,arm64-v8a
+
+      - uses: ncipollo/release-action@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          artifactErrorsFailBuild: true
+          removeArtifacts: false
+          replacesArtifacts: false
+          artifacts: jami-android/app/build/outputs/apk/withUnifiedPush/release/app-withUnifiedPush-release.apk

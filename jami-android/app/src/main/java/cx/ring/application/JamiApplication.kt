@@ -59,6 +59,7 @@ abstract class JamiApplication : Application() {
         const val PERMISSIONS_REQUEST = 57
         private val RINGER_FILTER = IntentFilter(AudioManager.RINGER_MODE_CHANGED_ACTION)
         var instance: JamiApplication? = null
+        var eventServiceInstance: EventService? = null
     }
 
     @Inject
@@ -91,6 +92,9 @@ abstract class JamiApplication : Application() {
 
     @Inject lateinit
     var mConversationFacade: ConversationFacade
+
+    @Inject lateinit
+    var eventService: EventService
 
     private val ringerModeListener: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
@@ -203,6 +207,7 @@ abstract class JamiApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         instance = this
+        eventServiceInstance = eventService
 
         // Launch logging if previously set up by user (info is stored in shared preferences).
         // Subscribe on it (first element) to initialize pipe construction.

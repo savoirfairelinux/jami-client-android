@@ -24,6 +24,7 @@ import android.telecom.PhoneAccountHandle
 import android.telecom.TelecomManager
 import android.util.Log
 import androidx.annotation.RequiresApi
+import cx.ring.IRemoteService
 import cx.ring.services.CallServiceImpl
 import cx.ring.services.CallServiceImpl.Companion.CONNECTION_SERVICE_TELECOM_API_SDK_COMPATIBILITY
 import cx.ring.utils.ConversationPath
@@ -50,8 +51,11 @@ class ConnectionService : ConnectionService() {
     @Inject
     lateinit var deviceRuntimeService: DeviceRuntimeService
 
+    private val eventListenerList = mutableListOf<IRemoteService.IEventListener>()
+
     private fun buildConnection(request: ConnectionRequest, showIncomingCallUi: ((CallConnection, CallRequestResult) -> Unit)? = null): CallConnection =
         CallConnection(this, request, showIncomingCallUi).apply {
+            Log.w(TAG, "buildConnection $request")
             val account = request.extras.getString(ConversationPath.KEY_ACCOUNT_ID)
             val contactId = request.extras.getString(ConversationPath.KEY_CONVERSATION_URI)
             if (account != null && contactId != null) {
@@ -98,6 +102,21 @@ class ConnectionService : ConnectionService() {
             (callService as CallServiceImpl).onIncomingCallResult(request.extras, null)
         }
     }
+
+    fun registerEventListener(listener: IRemoteService.IEventListener){
+        eventListenerList.add(listener)
+    }
+
+    fun unregisterEventListener(listener: IRemoteService.IEventListener){
+        eventListenerList.remove(listener)
+    }
+
+    private fun notifyEventListeners(name: String, data: Map<String, String>? = null) {
+        eventListenerList.forEach { listener ->
+            listener.onEventReceived(name, data)
+        }
+    }
+
 
     companion object {
         private val TAG: String = ConnectionService::class.java.simpleName

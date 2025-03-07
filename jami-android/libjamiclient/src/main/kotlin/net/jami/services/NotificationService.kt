@@ -22,7 +22,12 @@ interface NotificationService {
     fun showCallNotification(notifId: Int): Any?
     fun cancelCallNotification()
     fun removeCallNotification(notifId: Int)
-    fun handleCallNotification(conference: Conference, remove: Boolean, startScreenshare: Boolean = false)
+    fun handleCallNotification(
+        conference: Conference,
+        remove: Boolean,
+        startScreenshare: Boolean = false
+    )
+
     fun preparePendingScreenshare(conference: Conference, callback: () -> Unit)
     fun startPendingScreenshare(confId: String)
     fun showMissedCallNotification(call: Call)
@@ -33,7 +38,12 @@ interface NotificationService {
     fun showIncomingTrustRequestNotification(account: Account)
     fun cancelTrustRequestNotification(accountID: String)
     fun showFileTransferNotification(conversation: Conversation, info: DataTransfer)
-    fun handleDataTransferNotification(transfer: DataTransfer, conversation: Conversation, remove: Boolean)
+    fun handleDataTransferNotification(
+        transfer: DataTransfer,
+        conversation: Conversation,
+        remove: Boolean
+    )
+
     fun removeTransferNotification(accountId: String, conversationUri: Uri, fileId: String)
     fun getDataTransferNotification(notificationId: Int): Any?
     fun cancelFileNotification(notificationId: Int)

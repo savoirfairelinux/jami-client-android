@@ -1,4 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import java.time.format.DateTimeFormatter
+import java.time.Instant
+import java.time.ZoneId
 
 val kotlin_version: String by rootProject.extra
 val hilt_version: String by rootProject.extra
@@ -21,8 +24,16 @@ android {
     defaultConfig {
         minSdk = 24
         targetSdk = 35
-        versionCode = 453
-        versionName = "20250331-01"
+        // upstream version, patchlevel (last 3 digits)
+        versionCode = 450001
+        versionName = "20250310-01"
+        val release = System.getenv("RELEASE_VERSION")
+        if (release != null) {
+            val numeric = release.slice(1 until release.length).toInt() // chop off the v
+            versionCode = numeric
+            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+            versionName = Instant.now().atZone(ZoneId.of("UTC")).format(formatter) + ".$release"
+        }
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         externalNativeBuild {
             cmake {
@@ -34,16 +45,28 @@ android {
                     "-DJAMI_TESTS=OFF",
                     "-DBUILD_TESTING=OFF",
                     "-DJAMI_JNI=ON",
-                    "-DJAMI_JNI_PACKAGEDIR="+rootProject.projectDir.resolve("libjamiclient/src/main/java"),
+                    "-DJAMI_JNI_PACKAGEDIR=" + rootProject.projectDir.resolve("libjamiclient/src/main/java"),
                     "-DJAMI_DATADIR=/data/data/$namespace/files",
                     "-DJAMI_NATPMP=Off"
                 )
             }
             ndk {
                 debugSymbolLevel = "FULL"
-                abiFilters += properties["archs"]?.toString()?.split(",") ?: listOf("arm64-v8a", "x86_64", "armeabi-v7a")
-                println ("Building for ABIs $abiFilters")
+                abiFilters += properties["archs"]?.toString()?.split(",") ?: listOf(
+                    "arm64-v8a",
+                    "x86_64",
+                    "armeabi-v7a"
+                )
+                println("Building for ABIs $abiFilters")
             }
+        }
+    }
+    signingConfigs {
+        create("config") {
+            keyAlias = "app-release"
+            storeFile = file("../app.keystore")
+            storePassword = findProperty("jamiAppSigningKey") as? String?
+            keyPassword = findProperty("jamiAppSigningKey") as? String?
         }
     }
     buildTypes {
@@ -54,6 +77,7 @@ android {
         release {
             isMinifyEnabled = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            signingConfig = signingConfigs.getByName("config")
         }
     }
     buildFeatures {
@@ -131,6 +155,7 @@ dependencies {
 
     // Dagger dependency injection
     implementation("com.google.dagger:hilt-android:$hilt_version")
+    implementation("androidx.lifecycle:lifecycle-service:2.8.7")
     ksp("com.google.dagger:hilt-android-compiler:$hilt_version")
 
     // Espresso Unit Tests
@@ -192,10 +217,4 @@ protobuf {
 if (buildFirebase) {
     println ("apply plugin $buildFirebase")
     apply(plugin = "com.google.gms.google-services")
-}
-
-// Make sure the native build runs before the Kotlin/Java build
-afterEvaluate {
-    val cmakeTasks = tasks.matching { it.name.startsWith("buildCMake") }
-    tasks.withType<KotlinCompile>().configureEach { dependsOn(cmakeTasks) }
 }

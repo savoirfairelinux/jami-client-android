@@ -114,8 +114,6 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
             binding = b
             b.callAcceptBtn.setOnClickListener { acceptClicked() }
             b.callRefuseBtn.setOnClickListener { refuseClicked() }
-            b.callHangupBtn.setOnClickListener { hangUpClicked() }
-            b.callAddBtn.setOnClickListener { addParticipant() }
         }.root
     }
 
@@ -243,17 +241,6 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
     }
 
     override fun displayHangupButton(display: Boolean) {
-        binding?.apply {
-            if (display) {
-                callHangupBtn.visibility = View.VISIBLE
-                callAddBtn.visibility = View.VISIBLE
-            } else {
-                callHangupBtn.startAnimation(fadeOutAnimation)
-                callAddBtn.startAnimation(fadeOutAnimation)
-                callHangupBtn.visibility = View.GONE
-                callAddBtn.visibility = View.GONE
-            }
-        }
     }
 
     override fun displayDialPadKeyboard() {}
@@ -298,7 +285,6 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
         binding?.apply {
             callAcceptBtn.visibility = View.GONE
             callRefuseBtn.visibility = View.GONE
-            callHangupBtn.visibility = View.VISIBLE
             contactBubbleLayout.isVisible = false
             participantOverlayContainer.isVisible = true
         }
@@ -313,7 +299,6 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
             callAcceptBtn.visibility = View.VISIBLE
             callAcceptBtn.requestFocus()
             callRefuseBtn.visibility = View.VISIBLE
-            callHangupBtn.visibility = View.GONE
             contactBubbleLayout.isVisible = true
             participantOverlayContainer.isVisible = false
         }
@@ -323,7 +308,6 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
         binding?.apply {
             callAcceptBtn.visibility = View.GONE
             callRefuseBtn.visibility = View.VISIBLE
-            callHangupBtn.visibility = View.GONE
             contactBubbleLayout.isVisible = true
         }
     }
