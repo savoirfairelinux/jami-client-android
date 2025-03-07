@@ -82,6 +82,7 @@ import net.jami.model.Profile
 import net.jami.services.AccountService
 import java.io.File
 import javax.inject.Inject
+import cx.ring.linkdevice.view.LinkDeviceExportSideActivity
 
 @AndroidEntryPoint
 class JamiAccountSummaryFragment :
@@ -157,12 +158,16 @@ class JamiAccountSummaryFragment :
             }
         }
 
+    private val linkDeviceActivityLauncher =
+        registerForActivityResult(StartActivityForResult()) { result ->
+            Log.w(TAG, "linkDeviceActivityLauncher: ${result.resultCode}")
+        }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         FragAccSummaryBinding.inflate(inflater, container, false).apply {
             onAppBarScrollTargetViewChanged(scrollview)
             toolbar.setNavigationOnClickListener { activity?.onBackPressedDispatcher?.onBackPressed() }
-            linkNewDevice.setOnClickListener { showWizard(mAccount!!.accountId) }
+            linkNewDevice.setOnClickListener { showLinkNewDevice() }
             linkedDevices.setRightDrawableOnClickListener { onDeviceRename() }
             registerName.setOnClickListener { showUsernameRegistrationPopup() }
             chipMore.setOnClickListener {
@@ -747,6 +752,11 @@ class JamiAccountSummaryFragment :
 
     override fun onDeviceRename(newName: String) {
         presenter.renameDevice(newName)
+    }
+
+    private fun showLinkNewDevice() {
+        linkDeviceActivityLauncher
+            .launch(Intent(requireContext(), LinkDeviceExportSideActivity::class.java))
     }
 
     private fun expand(summary: View) {
