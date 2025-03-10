@@ -70,11 +70,6 @@ jobs:
           cmake .. -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK/build/cmake/android.toolchain.cmake -DANDROID_ABI=arm64-v8a -DANDROID_API=24 -DBUILD_EXTRA_TOOLS=On -DJAMI_JNI=On -DJAMI_JNI_PACKAGEDIR=java -DANDROID_PLATFORM=24 -DBUILD_TESTING=OFF
           make -j4
 
-      - name: Generate swig
-        run: |
-          cd daemon/bin/jni
-          PACKAGEDIR=jami-android/libjamiclient/src/main/java ./make-swig.sh
-
       - name: Build jami
         run: |
           cd jami-android && ./gradlew --no-daemon app:assembleWithUnifiedPushRelease -Parchs=armeabi-v7a,arm64-v8a
