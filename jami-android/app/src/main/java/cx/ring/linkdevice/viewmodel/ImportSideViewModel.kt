@@ -174,10 +174,9 @@ class ImportSideViewModel @Inject constructor(
                 AuthState.CONNECTING,
                 AuthState.DONE
             )
-
             is AddDeviceImportState.Connecting -> listOf(AuthState.AUTHENTICATING, AuthState.DONE)
             is AddDeviceImportState.Authenticating -> listOf(AuthState.IN_PROGRESS, AuthState.DONE)
-            is AddDeviceImportState.InProgress -> listOf(AuthState.DONE, AuthState.DONE)
+            is AddDeviceImportState.InProgress -> listOf(AuthState.IN_PROGRESS, AuthState.AUTHENTICATING, AuthState.DONE)
             is AddDeviceImportState.Done -> listOf(AuthState.DONE)
         }
     }
