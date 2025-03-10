@@ -121,8 +121,6 @@
   <string name="export_account_wait_message">アカウント情報をエクスポートしています</string>
   <string name="account_export_file">アカウントをバックアップ</string>
   <string name="account_export_file_summary">後から復旧できるようにアカウントをデバイスにバックアップします</string>
-  <string name="account_export_end_network_title">ネットワークエラー</string>
-  <string name="account_export_end_error_title">エラー</string>
   <string name="account_enter_password">パスワードを入力してください</string>
   <string name="account_contact_me">ジャミに連絡する!</string>
   <string name="update_account">アカウントを更新</string>
@@ -150,7 +148,7 @@
   <string name="account_link_device">他のデバイスから接続する</string>
   <string name="account_link_button">ネットワークから接続</string>
   <string name="account_link_archive_button">バックアップから接続</string>
-  <string name="account_new_button">Jamiに登録</string>
+  <string name="account_new_button">Jamiアカウントを作成</string>
   <string name="account_link_export_button">新しいデバイスをリンク</string>
   <string name="account_link_show_button">さらに%d個のデバイスを表示</string>
   <string name="account_link_hide_button">リンクされたデバイスを隠す</string>
@@ -182,7 +180,6 @@
   <string name="account_creation_home">Jamiへようこそ</string>
   <string name="account_creation_profile">プロフィールを作成する</string>
   <string name="account_creation_ring">Jamiアカウントを作成</string>
-  <string name="account_link_title">このデバイスをリンクする</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">確認の暗証語を入力</string>
@@ -198,7 +195,6 @@
   <!--Link a new device-->
   <string name="error_format_not_supported">この形式はサポートされていません。</string>
   <string name="account_link_device_title">新しいデバイスをリンク</string>
-  <string name="connect_device_scanqr">QRコードをスキャン</string>
   <string name="account_link_device_button">接続</string>
   <!--Biometry-->
 </resources>

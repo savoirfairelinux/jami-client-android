@@ -85,7 +85,6 @@
   <string name="hist_out_call">%1$s యొక్క అవుట్గోయింగ్ కాల్</string>
   <string name="action_call_decline">తగ్గుదల</string>
   <string name="action_call_mic_mute">మ్యూట్ మైక్రోఫోన్</string>
-  <string name="ab_action_speakerphone">స్పీకర్ను ప్రారంభించండి</string>
   <string name="ab_action_contact_add">పరిచయాలకు జోడించండి</string>
   <string name="ab_action_contact_add_question">పరిచయాలకు జోడించండి?</string>
   <string name="ab_action_audio_call">ఆడియో కాల్ ప్రారంభించండి</string>
@@ -313,4 +312,9 @@
   <!--Donation-->
   <string name="donation_card_not_now">ఇప్పుడు కాదు</string>
   <!--Extension-->
+  <string name="export_side_step1_code_connect">కనెక్ట్</string>
+  <string name="export_side_step2_cancel">రద్దు చేయి</string>
+  <string name="export_side_step2_confirm">ధృవీకరించు</string>
+  <string name="import_side_step1_share">భాగస్వామ్యం</string>
+  <string name="import_side_step2_password_import">దిగుమతి</string>
 </resources>

@@ -120,8 +120,6 @@
   <string name="export_account_wait_message">Ozi gbasara akaụntụ mbupụ</string>
   <string name="account_export_file">Akaụntụ ndabere</string>
   <string name="account_export_file_summary">Mee nkwado ndabere na mpaghara akaụntụ gị na ngwaọrụ gị iji weghachite ya mgbe e mesịrị.</string>
-  <string name="account_export_end_network_title">Njehie netwọk</string>
-  <string name="account_export_end_error_title">Njehie</string>
   <string name="account_enter_password">Tinye paswọọdụ</string>
   <string name="account_contact_me">Kpọtụrụ m na Jami!</string>
   <string name="update_account">Akụkọ mmelite</string>
@@ -149,7 +147,7 @@
   <string name="account_link_device">Jikọọ site na ngwaọrụ ọzọ</string>
   <string name="account_link_button">Jikọọ site na netwọk</string>
   <string name="account_link_archive_button">Jikọọ site nkwado ndabere</string>
-  <string name="account_new_button">Soro Jami</string>
+  <string name="account_new_button">Mepụta akaụntụ Jami</string>
   <string name="account_link_export_button">Jikọọ ngwaọrụ ọhụrụ</string>
   <string name="account_link_show_button">Gosi %d ọzọ jikọrọ ngwaọrụ</string>
   <string name="account_link_hide_button">Ochechi njikọ ngwaọrụ</string>
@@ -180,7 +178,6 @@
   <string name="account_creation_home">Mmadụ Bịa na Jami</string>
   <string name="account_creation_profile">Mepụta profaịlụ gị</string>
   <string name="account_creation_ring">Mepụta akaụntụ Jami gị</string>
-  <string name="account_link_title">Jikọọ ngwaọrụ a</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">Tinye paswọọdụ iji kwado</string>
@@ -195,7 +192,6 @@
   <string name="account_disabled_indicator">Ndị nwere nkwarụ</string>
   <!--Link a new device-->
   <string name="account_link_device_title">Jikọọ ngwaọrụ ọhụrụ</string>
-  <string name="connect_device_scanqr">Nyochaa koodu QR</string>
   <string name="account_link_device_button">Jikọọ</string>
   <!--Biometry-->
 </resources>

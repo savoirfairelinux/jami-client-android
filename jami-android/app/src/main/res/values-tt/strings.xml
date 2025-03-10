@@ -167,4 +167,9 @@
   <!--Donation-->
   <string name="donation_card_not_now">Хәзер түгел</string>
   <!--Extension-->
+  <string name="export_side_step1_code_connect">Бәйләнешкә кертү</string>
+  <string name="export_side_step2_cancel">Баш тарту</string>
+  <string name="export_side_step2_confirm">Ышанычлылык</string>
+  <string name="import_side_step1_share">Бүләкләү</string>
+  <string name="import_side_step2_password_import">Импорт</string>
 </resources>

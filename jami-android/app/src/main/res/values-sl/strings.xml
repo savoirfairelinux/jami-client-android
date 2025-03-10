@@ -107,7 +107,6 @@
   <string name="action_call_decline">Zavrni</string>
   <string name="action_call_mic_mute">Izključi mikrofon</string>
   <string name="action_load_extension">Naloži razširitev</string>
-  <string name="ab_action_speakerphone">Vklopi zvočnik</string>
   <string name="ab_action_contact_add">Dodaj med stike</string>
   <string name="ab_action_contact_add_question">Želite dodati med stike?</string>
   <string name="ab_action_audio_call">Začni zvočni klic</string>
@@ -404,4 +403,8 @@
   <string name="unload_success">%1$s: onemogočeno</string>
   <string name="install_success">Razširitev %1$s je bila uspešno nameščena.</string>
   <string name="install_error">Pri uvozu razširitve je prišlo do napake.</string>
+  <string name="export_side_main_title">Izvozi račun</string>
+  <string name="export_side_step2_cancel">Prekliči</string>
+  <string name="export_side_step2_confirm">Potrdi</string>
+  <string name="import_side_step2_password_import">Uvoz</string>
 </resources>

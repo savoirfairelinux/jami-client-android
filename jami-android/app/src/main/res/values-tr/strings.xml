@@ -90,7 +90,6 @@
   <string name="action_call_accept">Aramayı kabul et </string>
   <string name="action_call_decline">Reddet</string>
   <string name="action_call_mic_mute">Mikrofon sessiz</string>
-  <string name="ab_action_speakerphone">Hoparlörü etkinleştir</string>
   <string name="ab_action_contact_add">Kişilere ekle</string>
   <string name="ab_action_contact_add_question">Kişilere eklensin mi?</string>
   <string name="ab_action_audio_call">Sesli arama başlat</string>
@@ -334,4 +333,10 @@
   <string name="unable_to_load">%1$s yüklenemedi.</string>
   <string name="load_success">%1$s: etkinleştirildi</string>
   <string name="unload_success">%1$s: devre dışı</string>
+  <string name="export_side_main_title">Hesabı dışa aktar</string>
+  <string name="export_side_step1_code_connect">Bağlan</string>
+  <string name="export_side_step2_cancel">İptal</string>
+  <string name="export_side_step2_confirm">Onayla</string>
+  <string name="import_side_step1_share">Paylaş</string>
+  <string name="import_side_step2_password_import">İçe aktar</string>
 </resources>

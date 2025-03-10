@@ -115,8 +115,6 @@
   <string name="export_account_wait_message">ਖਾਤਾ ਜਾਣਕਾਰੀ ਨਿਰਯਾਤ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ</string>
   <string name="account_export_file">ਬੈਕਅੱਪ ਖਾਤਾ</string>
   <string name="account_export_file_summary">ਆਪਣੇ ਡੀਵਾਈਸ \'ਤੇ ਖਾਤੇ ਦਾ ਬੈਕਅੱਪ ਲਓ ਤਾਂ ਕਿ ਬਾਅਦ ਵਿੱਚ ਮੁੜ-ਬਹਾਲ ਕਰ ਸਕੋ।</string>
-  <string name="account_export_end_network_title">ਨੈੱਟਵਰਕ ਗੜਬੜ</string>
-  <string name="account_export_end_error_title">ਗੜਬੜ</string>
   <string name="account_enter_password">ਪਾਸਵਰਡ ਦਾਖਲ ਕਰੋ</string>
   <string name="update_account">ਖਾਤਾ ਅੱਪਡੇਟ ਕਰੋ</string>
   <string name="account_migration">ਤੁਹਾਡਾ Jami ਖਾਤਾ ਅੱਪਡੇਟ ਕੀਤਾ ਜਾ ਸਕਦਾ ਹੈ।\nਕਿਰਪਾ ਕਰਕੇ ਆਪਣਾ ਪਾਸਵਰਡ ਦਾਖਲ ਕਰੋ।</string>
@@ -141,6 +139,7 @@
   <string name="account_link_device">ਕਿਸੇ ਹੋਰ ਡੀਵਾਈਸ ਤੋਂ ਜੁੜੋ</string>
   <string name="account_link_button">ਨੈੱਟਵਰਕ ਤੋਂ ਕਨੈਕਟ ਕਰੋ</string>
   <string name="account_link_archive_button">ਬੈਕਅੱਪ ਤੋਂ ਕਨੈਕਟ ਕਰੋ</string>
+  <string name="account_new_button">Jami ਖਾਤਾ ਬਣਾਓ</string>
   <string name="account_link_export_button">ਨਵਾਂ ਡੀਵਾਈਸ ਜੋੜੋ</string>
   <string name="account_end_export_button">ਬੰਦ ਕਰੋ</string>
   <string name="account_connect_server_button">ਪ੍ਰਬੰਧ ਸਰਵਰ ਨਾਲ ਜੋੜੋ</string>
@@ -168,7 +167,6 @@
   <string name="account_creation_home">Jami ਵਿੱਚ ਜੀ ਆਇਆਂ ਨੂੰ</string>
   <string name="account_creation_profile">ਆਪਣਾ ਪ੍ਰੋਫਾਈਲ ਬਣਾਓ</string>
   <string name="account_creation_ring">ਆਪਣਾ Jami ਖਾਤਾ ਬਣਾਓ</string>
-  <string name="account_link_title">ਇਹ ਡੀਵਾਈਸ ਲਿੰਕ ਕਰੋ</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">ਪੁਸ਼ਟੀ ਕਰਨ ਲਈ ਪਾਸਵਰਡ ਦਾਖਲ ਕਰੋ</string>

@@ -95,6 +95,7 @@
   <string name="hist_invitation_received">Атрыманая запрашэнне</string>
   <!--Account summary-->
   <string name="profile">Профіль</string>
+  <string name="profile_message_warning">Профіль падзяляецца толькі з кантактамі</string>
   <string name="take_a_photo">Здымайце фота</string>
   <string name="profile_name_hint">Увядзіце сваё імя</string>
   <string name="identity">Пазначэнне</string>

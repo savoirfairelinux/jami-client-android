@@ -85,7 +85,6 @@
   <string name="hist_out_call">%1$s এর বহিরাগত কল</string>
   <string name="action_call_decline">হ্রাস</string>
   <string name="action_call_mic_mute">নিঃশব্দ মাইক্রোফোন</string>
-  <string name="ab_action_speakerphone">স্পিকার সক্ষম করুন</string>
   <string name="ab_action_contact_add">পরিচিতি যোগ করুন</string>
   <string name="ab_action_contact_add_question">পরিচিতি যোগ করা?</string>
   <string name="ab_action_audio_call">অডিও কল শুরু করুন</string>

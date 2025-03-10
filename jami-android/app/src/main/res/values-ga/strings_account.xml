@@ -120,8 +120,6 @@
   <string name="export_account_wait_message">faisnéis cuntas onnmhairithe</string>
   <string name="account_export_file">Cunntas cúltaca</string>
   <string name="account_export_file_summary">Cúltaca do chuntas ar do ghléas chun é a athshlánú níos déanaí.</string>
-  <string name="account_export_end_network_title">Measáin</string>
-  <string name="account_export_end_error_title">Meas</string>
   <string name="account_enter_password">Cluiche Pasfhocal</string>
   <string name="account_contact_me">Déan teagmháil liom ar Jami!</string>
   <string name="update_account">Cunntas nuashonrú</string>
@@ -149,7 +147,7 @@
   <string name="account_link_device">Déan nasc ó ghléas eile</string>
   <string name="account_link_button">Déan nasc ó líonra</string>
   <string name="account_link_archive_button">Déan nasc ó ghnóthach</string>
-  <string name="account_new_button">Téigh le Jami</string>
+  <string name="account_new_button">Déan cuntas Jami</string>
   <string name="account_link_export_button">Déan nasc a dhéanamh ar ghléas nua</string>
   <string name="account_link_show_button">Taispeánadh %d níos mó feiste ceangailte</string>
   <string name="account_link_hide_button">Iarrann an t-ionad ceangailte le críocha an Rialacháin seo</string>
@@ -180,7 +178,6 @@
   <string name="account_creation_home">Fáilte go Jami</string>
   <string name="account_creation_profile">Cruthaigh do phróifíl</string>
   <string name="account_creation_ring">Cruthaigh do chuntas Jami</string>
-  <string name="account_link_title">Déan nasc leis an gléas seo</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">Cuir pasfhocal isteach chun a dhearbhú</string>
@@ -195,7 +192,6 @@
   <string name="account_disabled_indicator">An duine atá faoi mhíchumas</string>
   <!--Link a new device-->
   <string name="account_link_device_title">Déan nasc a dhéanamh ar ghléas nua</string>
-  <string name="connect_device_scanqr">Cód QR scánaithe</string>
   <string name="account_link_device_button">Déan nasc</string>
   <!--Biometry-->
 </resources>

@@ -87,7 +87,6 @@
   <string name="action_call_accept">Ta imot samtale</string>
   <string name="action_call_decline">Avslå</string>
   <string name="action_call_mic_mute">Koble ut mikrofon</string>
-  <string name="ab_action_speakerphone">Aktiver høytaler</string>
   <string name="ab_action_contact_add">Legg til kontakter</string>
   <string name="ab_action_contact_add_question">Legg til kontakter?</string>
   <string name="ab_action_audio_call">Start lydsamtale</string>
@@ -318,4 +317,7 @@
   <string name="donation_card_not_now">Ikke nå</string>
   <string name="donation_donate">Doner</string>
   <!--Extension-->
+  <string name="export_side_main_title">Eksporter konto</string>
+  <string name="export_side_step2_confirm">Bekreft</string>
+  <string name="import_side_step2_password_import">Importer</string>
 </resources>

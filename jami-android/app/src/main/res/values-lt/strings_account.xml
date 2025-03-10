@@ -116,9 +116,6 @@
   <string name="export_account_wait_message">Eksportuojama paskyros informacija</string>
   <string name="account_export_file">Padaryti paskyros atsarginę kopiją</string>
   <string name="account_export_end_decryption_message">Neteisingas slaptažodis. Bandykite dar kartą naudodami teisingą slaptažodį</string>
-  <string name="account_export_end_network_title">Tinklo klaida</string>
-  <string name="account_export_end_error_title">Klaida</string>
-  <string name="account_export_end_error_message">Eksportuojant paskyrą įvyko nežinoma klaida.</string>
   <string name="account_enter_password">Įveskite slaptažodį</string>
   <string name="update_account">Atnaujinti paskyrą</string>
   <string name="account_migration">Jūsų Jami paskyra gali būti atnaujinta.\nĮveskite slaptažodį.</string>
@@ -149,7 +146,7 @@
   <string name="account_link_device">Prisijungti iš kito įrenginio</string>
   <string name="account_link_button">Prijungti iš tinklo</string>
   <string name="account_link_archive_button">Prijungti iš atsarginės kopijos</string>
-  <string name="account_new_button">Prisijunkite prie Džami.</string>
+  <string name="account_new_button">Susikurti Jami paskyrą</string>
   <string name="account_link_export_button">Susieti naują įrenginį</string>
   <string name="account_link_hide_button">Slėpti susietą įrenginį</string>
   <string name="account_end_export_button">užverti</string>
@@ -175,7 +172,6 @@
   <string name="account_creation_home">Sveiki atvykę į Jami</string>
   <string name="account_creation_profile">Susikurkite profilį</string>
   <string name="account_creation_ring">Susikurkite Jami paskyrą</string>
-  <string name="account_link_title">Susiekite šį įrenginį</string>
   <!--Edit profile-->
   <string name="account_edit_profile">Taisyti profilį</string>
   <!--Devices-->
@@ -194,7 +190,6 @@
   <string name="error_format_not_supported">Šis formatas yra nepalaikomas.</string>
   <string name="account_link_device_title">Susieti naują įrenginį</string>
   <string name="account_link_generate_button">Generuoti</string>
-  <string name="connect_device_scanqr">Skenuokite QR kodą</string>
   <string name="account_link_device_button">Prisijungti</string>
   <!--Biometry-->
   <string name="no_thanks">Ne, ačiū</string>

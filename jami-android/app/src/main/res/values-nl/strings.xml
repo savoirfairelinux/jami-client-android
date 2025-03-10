@@ -91,7 +91,6 @@
   <string name="action_call_accept">Oproep accepteren</string>
   <string name="action_call_decline">Weigeren</string>
   <string name="action_call_mic_mute">Microfoon dempen</string>
-  <string name="ab_action_speakerphone">Luidspreker inschakelen</string>
   <string name="ab_action_contact_add">Aan contacten toevoegen</string>
   <string name="ab_action_contact_add_question">Toevoegen aan contacten?</string>
   <string name="ab_action_audio_call">Audio-oproep starten</string>
@@ -339,4 +338,7 @@
   <string name="unable_to_load">Niet in staat %1$s te laden</string>
   <string name="load_success">%1$s: ingeschakeld</string>
   <string name="unload_success">%1$s: uitgeschakeld</string>
+  <string name="export_side_main_title">Account exporteren</string>
+  <string name="export_side_step2_confirm">Bevestigen</string>
+  <string name="import_side_step2_password_import">Importeren</string>
 </resources>

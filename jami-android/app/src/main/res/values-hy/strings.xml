@@ -85,7 +85,6 @@
   <string name="hist_out_call">%1$s հեռախոսազանգ</string>
   <string name="action_call_decline">Հասնում է</string>
   <string name="action_call_mic_mute">Միկրոֆոն անջատ</string>
-  <string name="ab_action_speakerphone">Հեռախոսազանգի ակտիվացում</string>
   <string name="ab_action_contact_add">Բարձրացնել շփումները</string>
   <string name="ab_action_contact_add_question">Բարձրացնել կոնտակտներին:</string>
   <string name="ab_action_audio_call">Սկսել ձայնային զանգը</string>
@@ -314,4 +313,5 @@
   <!--Donation-->
   <string name="donation_card_not_now">Ոչ հիմա</string>
   <!--Extension-->
+  <string name="import_side_step2_password_import">Արտահանման համար</string>
 </resources>

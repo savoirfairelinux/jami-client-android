@@ -87,7 +87,6 @@
   <string name="hist_out_call">%1$s의 출력 호출</string>
   <string name="action_call_decline">감소</string>
   <string name="action_call_mic_mute">무음 마이크</string>
-  <string name="ab_action_speakerphone">스피커를 활성화</string>
   <string name="ab_action_contact_add">연락처에 추가하기</string>
   <string name="ab_action_contact_add_question">연락처를 추가할 수 있을까요?</string>
   <string name="ab_action_audio_call">오디오 호출을 시작</string>
@@ -323,4 +322,5 @@
   <!--Donation-->
   <string name="donation_card_not_now">나중에</string>
   <!--Extension-->
+  <string name="import_side_step2_password_import">가져오기</string>
 </resources>

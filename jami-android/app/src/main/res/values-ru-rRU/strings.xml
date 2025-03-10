@@ -51,7 +51,7 @@
     <item quantity="other">%d беседы</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Поиск по имени или разговору...</string>
+  <string name="searchbar_hint">Поиск по имени или беседе...</string>
   <string name="choose_number">Выбор номера</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -113,7 +113,7 @@
   <string name="action_call_decline">Отказаться</string>
   <string name="action_call_mic_mute">Отключить микрофон</string>
   <string name="action_load_extension">Загрузить расширение</string>
-  <string name="ab_action_speakerphone">Включить звук</string>
+  <string name="ab_action_speakerphone">Включить динамик</string>
   <string name="ab_action_contact_add">Добавить контакт</string>
   <string name="ab_action_contact_add_question">Добавить в контакты? </string>
   <string name="ab_action_audio_call">Начать аудиозвонок</string>
@@ -250,7 +250,6 @@
   <string name="help_password_choose">Выберите надежный пароль, который вы запомните, чтобы защитить свою учетную запись Jami.</string>
   <string name="help_password_enter">Введите ваш основной пароль учётной записи Jami </string>
   <string name="help_server_enter">Введите URL сервера управления.</string>
-  <string name="help_pin_enter">Введите PIN-код из другого настроенного аккаунта Jami. Чтобы получить PIN-код, используйте функцию \"Экспорт аккаунта Jami\".</string>
   <string name="pin_copied">ПИН-код скопирован в буфер обмена.</string>
   <string name="copied_clipboard">Скопировано в буфер обмена.</string>
   <string name="wizard_next">Далее</string>
@@ -275,7 +274,7 @@
   <string name="no_registered_name">Имя не зарегистрировано</string>
   <string name="identity">Идентификация</string>
   <string name="identifier">Идентификатор</string>
-  <string name="account">Учётка</string>
+  <string name="account">Учётная запись</string>
   <string name="link_new_device">Привязать новое устройство</string>
   <string name="devices_header">Устройства</string>
   <string name="devices">Привязанные устройства</string>
@@ -466,4 +465,8 @@
   <string name="unload_success">%1$s: отключён</string>
   <string name="install_success">Расширение %1$s установлено успешно.</string>
   <string name="install_error">При импорте расширения возникла ошибка.</string>
+  <string name="export_side_main_title">Экспортировать аккаунт</string>
+  <string name="export_side_step2_cancel">Отмена</string>
+  <string name="export_side_step2_confirm">Подтвердить</string>
+  <string name="import_side_step2_password_import">Импорт</string>
 </resources>

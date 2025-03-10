@@ -123,8 +123,6 @@
   <string name="export_account_wait_message">Експортування інформації про обліковий запис</string>
   <string name="account_export_file">Резервна копія облікового запису</string>
   <string name="account_export_file_summary">Завантажуйте свій обліковий запис на свій пристрій, щоб відновити його пізніше.</string>
-  <string name="account_export_end_network_title">Збій мережі</string>
-  <string name="account_export_end_error_title">Помилка</string>
   <string name="account_enter_password">Ввести пароль</string>
   <string name="account_contact_me">Звініться зі мною на Джамі!</string>
   <string name="update_account">Оновити обліковий запис</string>
@@ -152,7 +150,7 @@
   <string name="account_link_device">Підключити з іншого пристрою</string>
   <string name="account_link_button">Підключення з мережі</string>
   <string name="account_link_archive_button">З\'єднатися з резервної системи</string>
-  <string name="account_new_button">Приєднуйся до Jami</string>
+  <string name="account_new_button">Створити обліковий запис Jami</string>
   <string name="account_link_export_button">Прив\'язати новий пристрій</string>
   <string name="account_link_show_button">Покажіть %d більше пов\'язаних пристроїв</string>
   <string name="account_link_hide_button">Сховати з\'єднане пристрої</string>
@@ -184,7 +182,6 @@
   <string name="account_creation_home">Вітаємо в Jami</string>
   <string name="account_creation_profile">Створіть ваш профіль</string>
   <string name="account_creation_ring">Створіть свій обліковий запис Jami</string>
-  <string name="account_link_title">Зв\'язати цей пристрій</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">Введіть пароль для підтвердження</string>
@@ -198,7 +195,6 @@
   <string name="account_device_this_indicator">Цей пристрій</string>
   <string name="account_disabled_indicator">Інваліди</string>
   <!--Link a new device-->
-  <string name="qr_invalid">Не QR код автентифікації Jami</string>
   <string name="error_format_not_supported">Цей формат не підтримується</string>
   <string name="account_link_device_title">Прив\'язати новий пристрій</string>
   <string name="account_link_password">Цей обліковий запис зашифрований паролем, введіть пароль, щоб згенерувати PIN-код.</string>
@@ -206,7 +202,6 @@
   <string name="account_link_time_valid">PIN-код буде недійсним: %1$s.</string>
   <string name="account_generate_export_device">На іншому пристрої</string>
   <string name="help_pin_info">Заповніть, якщо обліковий запис зашифрований паролем</string>
-  <string name="connect_device_scanqr">Скануйте QR-код</string>
   <string name="account_link_device_button">З\'єднати</string>
   <!--Biometry-->
 </resources>

@@ -121,8 +121,6 @@
   <string name="export_account_wait_message">Informasjon om eksportkontoen</string>
   <string name="account_export_file">Baksekonto</string>
   <string name="account_export_file_summary">Du kan lagra kontoen din opp på einheten din for å gjenoppretta den seinare.</string>
-  <string name="account_export_end_network_title">Netverksfeil</string>
-  <string name="account_export_end_error_title">Feil</string>
   <string name="account_enter_password">Skriv inn passord</string>
   <string name="account_contact_me">Kontakt meg på Jami!</string>
   <string name="update_account">Aktualisering av kontoen</string>
@@ -150,7 +148,7 @@
   <string name="account_link_device">Knytte frå ein annan enhet</string>
   <string name="account_link_button">Knytte frå nettverket</string>
   <string name="account_link_archive_button">Knytte frå backup</string>
-  <string name="account_new_button">Kom til Jami</string>
+  <string name="account_new_button">Skapa ein Jami-konto</string>
   <string name="account_link_export_button">Legg ein ny enhet til</string>
   <string name="account_link_show_button">Visa %d meir knytt til einheten</string>
   <string name="account_link_hide_button">Skjulde tilkobla tilleg</string>
@@ -181,7 +179,6 @@
   <string name="account_creation_home">Velkommen til Jami</string>
   <string name="account_creation_profile">Skapa profil</string>
   <string name="account_creation_ring">Skapa kontoen til Jami</string>
-  <string name="account_link_title">Legg denne einheten til</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">Skriv inn passord for å bekrefta</string>
@@ -197,7 +194,6 @@
   <!--Link a new device-->
   <string name="error_format_not_supported">Dette formatet er ikkje støtta.</string>
   <string name="account_link_device_title">Legg ein ny enhet til</string>
-  <string name="connect_device_scanqr">Skanna QR-kode</string>
   <string name="account_link_device_button">Knytta</string>
   <!--Biometry-->
 </resources>

@@ -123,8 +123,6 @@
   <string name="export_account_wait_message">Hesap bilgilerini dışa aktar</string>
   <string name="account_export_file">Hesabı yedekle</string>
   <string name="account_export_file_summary">Daha sonra geri yüklemek için aygıtınızdaki hesabı yedekleyin.</string>
-  <string name="account_export_end_network_title">Ağ hatası</string>
-  <string name="account_export_end_error_title">Hata</string>
   <string name="account_enter_password">Parolayı gir</string>
   <string name="account_contact_me">Benimle Jami\'de iletişime geç!</string>
   <string name="update_account">Hesabı güncelle</string>
@@ -152,7 +150,7 @@
   <string name="account_link_device">Başka aygıttan bağlan</string>
   <string name="account_link_button">Ağdan bağlan</string>
   <string name="account_link_archive_button">Yedekten bağlan</string>
-  <string name="account_new_button">Jami\'ye katılın.</string>
+  <string name="account_new_button">Jami hesabı oluştur</string>
   <string name="account_link_export_button">Yeni aygıt bağla</string>
   <string name="account_link_show_button">Diğer %d bağlı aygıtı göster</string>
   <string name="account_link_hide_button">Bağlı aygıtı gizle</string>
@@ -184,7 +182,6 @@
   <string name="account_creation_home">Jami\'ye Hoşgeldiniz</string>
   <string name="account_creation_profile">Profilinizi oluşturun</string>
   <string name="account_creation_ring">Jami hesabınızı oluşturun</string>
-  <string name="account_link_title">Bu aygıtı bağla</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">Onaylamak için parolayı girin</string>
@@ -198,7 +195,6 @@
   <string name="account_device_this_indicator">Bu aygıt</string>
   <string name="account_disabled_indicator">Engelliler</string>
   <!--Link a new device-->
-  <string name="qr_invalid">Bir Jami Kimlik Doğrulama QR kodu değil</string>
   <string name="error_format_not_supported">Bu biçim desteklenmiyor.</string>
   <string name="account_link_device_title">Yeni aygıt bağla</string>
   <string name="account_link_password">Bu hesap parola ile şifrelenmiştir; PIN kodunu oluşturmak için parolayı girin.</string>
@@ -206,7 +202,6 @@
   <string name="account_link_time_valid">%1$s sonra bu PIN geçerliliğini yitirecek.</string>
   <string name="account_generate_export_device">Diğer aygıtta</string>
   <string name="help_pin_info">Hesap parola ile şifrelenmişse doldurun</string>
-  <string name="connect_device_scanqr">QR kodunu tarayın</string>
   <string name="account_link_device_button">Bağlan</string>
   <!--Biometry-->
 </resources>

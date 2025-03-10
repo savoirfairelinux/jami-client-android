@@ -203,4 +203,9 @@
   <!--Donation-->
   <string name="donation_card_not_now">Lúc khác</string>
   <!--Extension-->
+  <string name="export_side_step1_code_connect">Kết nối</string>
+  <string name="export_side_step2_cancel">Hủy bỏ</string>
+  <string name="export_side_step2_confirm">Đảm nhận</string>
+  <string name="import_side_step1_share">Chia sẻ</string>
+  <string name="import_side_step2_password_import">Nhập khẩu</string>
 </resources>

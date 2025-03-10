@@ -121,8 +121,6 @@
   <string name="export_account_wait_message">صادرات حسابلاری</string>
   <string name="account_export_file">پشتیبان حساب</string>
   <string name="account_export_file_summary">حسابينينين آرخايينلاشماسي اوچون آلېنماغېندا، اونو سونرا قاییتماق اوچون.</string>
-  <string name="account_export_end_network_title">شبکه خطای</string>
-  <string name="account_export_end_error_title">خطای</string>
   <string name="account_enter_password">رمز یازینی دن</string>
   <string name="account_contact_me">جمي ايله باغلي اول!</string>
   <string name="update_account">حساب یئنیلشدیر</string>
@@ -150,7 +148,7 @@
   <string name="account_link_device">باشقا آلاتدان باغلانیب</string>
   <string name="account_link_button">شبکه دن باغلانیب</string>
   <string name="account_link_archive_button">پشتیبانلیکدن باغلانیب</string>
-  <string name="account_new_button">جمیه یه قوشول</string>
+  <string name="account_new_button">Jami حسابي يارادين</string>
   <string name="account_link_export_button">یئنی آلتی باغلا</string>
   <string name="account_link_show_button">%d داها باغلي اولان آلتی گؤرسهدیر</string>
   <string name="account_link_hide_button">باغلي اولان آلتی اؤرت</string>
@@ -181,7 +179,6 @@
   <string name="account_creation_home">\" جامي \" نين خوش آمديد</string>
   <string name="account_creation_profile">پروفایل یارانماق</string>
   <string name="account_creation_ring">Jami حسابینی یارات</string>
-  <string name="account_link_title">بو آلینانی باغلا</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">تصدیق اوچون رمز یاز</string>
@@ -197,7 +194,6 @@
   <!--Link a new device-->
   <string name="error_format_not_supported">بو فورمات دا معاون دئییل.</string>
   <string name="account_link_device_title">یئنی آلتی باغلا</string>
-  <string name="connect_device_scanqr">QR کد سکن</string>
   <string name="account_link_device_button">باغلا</string>
   <!--Biometry-->
 </resources>

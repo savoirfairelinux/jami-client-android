@@ -85,7 +85,6 @@
   <string name="hist_out_call">Eliranta voko de %1$s</string>
   <string name="action_call_decline">Rifuzi</string>
   <string name="action_call_mic_mute">Muta mikrofono</string>
-  <string name="ab_action_speakerphone">Ŝalti laŭtparolilon</string>
   <string name="ab_action_contact_add">Aldoni al kontaktoj</string>
   <string name="ab_action_contact_add_question">Ĉu aldoni al kontaktoj?</string>
   <string name="ab_action_audio_call">Komenci la aŭdian alvokon</string>
@@ -313,4 +312,5 @@
   <string name="mute_conversation">Silenta konversacio</string>
   <!--Donation-->
   <!--Extension-->
+  <string name="import_side_step2_password_import">Enporti</string>
 </resources>

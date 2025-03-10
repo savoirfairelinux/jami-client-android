@@ -121,8 +121,6 @@
   <string name="export_account_wait_message">નિકાસ ખાતાની માહિતી</string>
   <string name="account_export_file">બેકઅપ એકાઉન્ટ</string>
   <string name="account_export_file_summary">તમારા ઉપકરણ પર તમારા એકાઉન્ટનું બેકઅપ લો જેથી તે પછીથી પુનઃસ્થાપિત થઈ શકે.</string>
-  <string name="account_export_end_network_title">નેટવર્ક ભૂલ</string>
-  <string name="account_export_end_error_title">ભૂલ</string>
   <string name="account_enter_password">પાસવર્ડ દાખલ કરો</string>
   <string name="account_contact_me">જમી પર મને સંપર્ક કરો!</string>
   <string name="update_account">એકાઉન્ટ અપડેટ કરો</string>
@@ -150,7 +148,7 @@
   <string name="account_link_device">અન્ય ઉપકરણથી કનેક્ટ કરો</string>
   <string name="account_link_button">નેટવર્કથી કનેક્ટ</string>
   <string name="account_link_archive_button">બેકઅપ થી કનેક્ટ</string>
-  <string name="account_new_button">જમી સાથે જોડાઓ</string>
+  <string name="account_new_button">એક Jami એકાઉન્ટ બનાવો</string>
   <string name="account_link_export_button">નવી ઉપકરણને લિંક કરો</string>
   <string name="account_link_show_button">%d વધુ જોડાયેલ ઉપકરણ બતાવો</string>
   <string name="account_link_hide_button">જોડાયેલ ઉપકરણ છુપાવો</string>
@@ -181,7 +179,6 @@
   <string name="account_creation_home">જમીમાં આપનું સ્વાગત છે</string>
   <string name="account_creation_profile">તમારી પ્રોફાઇલ બનાવો</string>
   <string name="account_creation_ring">તમારું જમ્મી એકાઉન્ટ બનાવો</string>
-  <string name="account_link_title">આ ઉપકરણને લિંક કરો</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">ખાતરી કરવા માટે પાસવર્ડ દાખલ કરો</string>
@@ -197,7 +194,6 @@
   <!--Link a new device-->
   <string name="error_format_not_supported">આ ફોર્મેટને સપોર્ટેડ નથી.</string>
   <string name="account_link_device_title">નવી ઉપકરણને લિંક કરો</string>
-  <string name="connect_device_scanqr">QR કોડ સ્કેન કરો</string>
   <string name="account_link_device_button">કનેક્ટ કરો</string>
   <!--Biometry-->
 </resources>

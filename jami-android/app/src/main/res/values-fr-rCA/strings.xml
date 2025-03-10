@@ -112,7 +112,6 @@
   <string name="action_call_decline">Refuser</string>
   <string name="action_call_mic_mute">Couper le microphone</string>
   <string name="action_load_extension">Charger le module d\'extension</string>
-  <string name="ab_action_speakerphone">Activer le haut-parleur</string>
   <string name="ab_action_contact_add">Ajouter aux contacts</string>
   <string name="ab_action_contact_add_question">Ajouter au contacts ?</string>
   <string name="ab_action_audio_call">Démarrer appel audio</string>
@@ -247,7 +246,6 @@
   <string name="help_password_choose">Choisir un mot de passe robuste dont vous vous souviendrez pour protéger votre compte Jami.</string>
   <string name="help_password_enter">Saisissez le mot de passe principal de votre compte Jami.</string>
   <string name="help_server_enter">Entrez l\'URL du serveur de gestion</string>
-  <string name="help_pin_enter">Entrer le NIP de votre compte sur l\'autre appareil. Utiliser pour cela la fonction \"Exporter votre compte\" pour obtenir le NIP.</string>
   <string name="pin_copied">Le NIP a été copié dans le presse-papier</string>
   <string name="copied_clipboard">Copié dans le presse-papier</string>
   <string name="wizard_next">Suivant</string>
@@ -463,4 +461,5 @@
   <string name="unload_success">%1$s: désactivé</string>
   <string name="install_success">L\'extension %1$s a été correctement installée.</string>
   <string name="install_error">Une erreur s\'est produite pendant l\'import de l\'extension.</string>
+  <string name="import_side_step2_password_import">Importation</string>
 </resources>

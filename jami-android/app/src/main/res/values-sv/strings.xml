@@ -86,7 +86,6 @@
   <string name="action_call_accept">Acceptera samtal</string>
   <string name="action_call_decline">Avslå</string>
   <string name="action_call_mic_mute">Stäng av mikrofon</string>
-  <string name="ab_action_speakerphone">Aktivera högtalare</string>
   <string name="ab_action_contact_add">Lägg till i kontakter</string>
   <string name="ab_action_contact_add_question">Lägga till i kontakter?</string>
   <string name="ab_action_audio_call">Starta ljudsamtal</string>
@@ -317,4 +316,9 @@
   <!--Donation-->
   <string name="donation_card_not_now">Inte nu</string>
   <!--Extension-->
+  <string name="export_side_main_title">Exportera konto</string>
+  <string name="import_side_main_title">Importera konto</string>
+  <string name="export_side_step2_cancel">Avbryt</string>
+  <string name="export_side_step2_confirm">Bekräfta</string>
+  <string name="import_side_step2_password_import">Importera</string>
 </resources>

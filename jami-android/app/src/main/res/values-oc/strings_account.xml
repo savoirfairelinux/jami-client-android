@@ -121,8 +121,6 @@
   <string name="export_account_wait_message">Informacions de compte d\'exportacion</string>
   <string name="account_export_file">Compte de backup</string>
   <string name="account_export_file_summary">Fau una copia de seguretat de vòstre compte sul vòstre dispositiu per lo restaurar mai tard.</string>
-  <string name="account_export_end_network_title">Error ret</string>
-  <string name="account_export_end_error_title">Error</string>
   <string name="account_enter_password">Introducir la contraròtle</string>
   <string name="account_contact_me">Contactatz-me sus Jami !</string>
   <string name="update_account">Actualizacion de compte</string>
@@ -150,7 +148,7 @@
   <string name="account_link_device">Conectar d\' un autre dispositiu</string>
   <string name="account_link_button">Conectar de la ret</string>
   <string name="account_link_archive_button">Conectar de backup</string>
-  <string name="account_new_button">S\' unís a Jami</string>
+  <string name="account_new_button">Crear un compte Jami</string>
   <string name="account_link_export_button">Ligam un dispositiu novèl</string>
   <string name="account_link_show_button">Mostrar %d d\' autre dispositiu ligat</string>
   <string name="account_link_hide_button">Escondir un dispositiu ligat</string>
@@ -181,7 +179,6 @@
   <string name="account_creation_home">Benvenguts a Jami</string>
   <string name="account_creation_profile">Creacion de ton perfil</string>
   <string name="account_creation_ring">Creacion de ton compte Jami</string>
-  <string name="account_link_title">Ligam aqueste dispositiu</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">Introducir lo mot de passe per confirmar</string>
@@ -197,7 +194,6 @@
   <!--Link a new device-->
   <string name="error_format_not_supported">Aqueste format es pas suportat.</string>
   <string name="account_link_device_title">Ligam un dispositiu novèl</string>
-  <string name="connect_device_scanqr">Escanar lo còdi QR</string>
   <string name="account_link_device_button">Se connectar</string>
   <!--Biometry-->
 </resources>

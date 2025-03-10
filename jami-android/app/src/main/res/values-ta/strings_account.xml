@@ -121,8 +121,6 @@
   <string name="export_account_wait_message">ஏற்றுமதி கணக்கு தகவல்</string>
   <string name="account_export_file">காப்பு கணக்கு</string>
   <string name="account_export_file_summary">பின்னர் மீட்டெடுக்க உங்கள் சாதனத்தில் உங்கள் கணக்கை காப்புப் பிரதி எடுக்கவும்.</string>
-  <string name="account_export_end_network_title">நெட்வொர்க் தவறு</string>
-  <string name="account_export_end_error_title">தவறு</string>
   <string name="account_enter_password">கடவுச்சொல்லை உள்ளிடவும்</string>
   <string name="account_contact_me">ஜாமி மீது என்னை தொடர்பு!</string>
   <string name="update_account">கணக்கை புதுப்பிக்கவும்</string>
@@ -150,7 +148,7 @@
   <string name="account_link_device">மற்றொரு சாதனத்திலிருந்து இணைக்கவும்</string>
   <string name="account_link_button">நெட்வொர்க்கிலிருந்து இணைப்பு</string>
   <string name="account_link_archive_button">காப்பு இருந்து இணைக்கவும்</string>
-  <string name="account_new_button">ஜாமிக்கு சேரவும்</string>
+  <string name="account_new_button">ஜாமி கணக்கை உருவாக்கவும்</string>
   <string name="account_link_export_button">புதிய சாதனத்தை இணைக்கவும்</string>
   <string name="account_link_show_button">%d இணைக்கப்பட்ட சாதனத்தை காட்டவும்</string>
   <string name="account_link_hide_button">இணைக்கப்பட்ட சாதனத்தை மறைக்கவும்</string>
@@ -181,7 +179,6 @@
   <string name="account_creation_home">ஜாமிக்கு வரவேற்கிறோம்</string>
   <string name="account_creation_profile">உங்கள் சுயவிவரத்தை உருவாக்கவும்</string>
   <string name="account_creation_ring">உங்கள் ஜாமி கணக்கை உருவாக்கவும்</string>
-  <string name="account_link_title">இந்த சாதனத்தை இணைக்கவும்</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">உறுதிப்படுத்த கடவுச்சொல்லை உள்ளிடவும்</string>
@@ -197,7 +194,6 @@
   <!--Link a new device-->
   <string name="error_format_not_supported">இந்த வடிவம் ஆதரிக்கப்படவில்லை.</string>
   <string name="account_link_device_title">புதிய சாதனத்தை இணைக்கவும்</string>
-  <string name="connect_device_scanqr">QR குறியீட்டை ஸ்கேன் செய்யவும்</string>
   <string name="account_link_device_button">இணைக்கவும்</string>
   <!--Biometry-->
 </resources>

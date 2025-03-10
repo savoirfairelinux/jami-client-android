@@ -139,10 +139,6 @@
   <string name="account_export_file">Налог за резервну копију</string>
   <string name="account_export_file_summary">Направи резервну копију налога на уређају да бисте га касније вратили.</string>
   <string name="account_export_end_decryption_message">Нетачна лозинка. Покушајте поново са тачном лозинком.</string>
-  <string name="account_export_end_network_title">Грешка на мрежи</string>
-  <string name="account_export_end_network_message">Дошло је до мрежне грешке при извозу налога. Проверите своју повезаност.</string>
-  <string name="account_export_end_error_title">Грешка</string>
-  <string name="account_export_end_error_message">Дошло је до непознате грешке приликом извоза налога.</string>
   <string name="account_enter_password">Унеси лозинку</string>
   <string name="account_share_body">Контактирајте ме користећи „%1$s“ на Јами дистрибуираној комуникационој платформи: %2$s</string>
   <string name="account_share_body_with_username">Контактирајте ме користећи „%1$s“ или моје јавно корисничко име „%2$s“ на Јами дистрибуираној комуникационој платформи: %3$s</string>
@@ -182,7 +178,7 @@
   <string name="account_link_device">Повежи се са другог уређаја</string>
   <string name="account_link_button">Повежи са мреже</string>
   <string name="account_link_archive_button">Повежи из резервне копије</string>
-  <string name="account_new_button">Придружи се Јамију</string>
+  <string name="account_new_button">Направи Јами налог</string>
   <string name="account_link_export_button">Повежи нови уређај</string>
   <string name="account_link_show_button">Прикажи %d више повезаних уређаја</string>
   <string name="account_link_hide_button">Сакриј повезани уређај</string>
@@ -217,7 +213,6 @@
   <string name="account_creation_home">Добродошли у Јами</string>
   <string name="account_creation_profile">Креирај свој профил</string>
   <string name="account_creation_ring">Креирај свој Јами налог</string>
-  <string name="account_link_title">Повежи овај уређај</string>
   <string name="account_sip_cannot_be_registered">Дошло је до грешке при регистрацији SIP налога.</string>
   <!--Edit profile-->
   <string name="account_edit_profile">Уреди профил</string>
@@ -234,7 +229,6 @@
   <string name="account_device_this_indicator">Овај уређај</string>
   <string name="account_disabled_indicator">Онемогућено</string>
   <!--Link a new device-->
-  <string name="qr_invalid">Није QR код за Јами аутентификацију</string>
   <string name="error_format_not_supported">Овај формат није подржан.</string>
   <string name="account_link_device_title">Повежите нови уређај</string>
   <string name="account_link_password">Овај налог је шифрован лозинком, унесите лозинку да бисте генерисали PIN код.</string>
@@ -243,7 +237,6 @@
   <string name="account_generate_export_device">На другом уређају</string>
   <string name="account_generate_export_info">Инсталирајте и покрените Јами, изаберите „Увези са другог уређаја“ и скенирајте QR код.</string>
   <string name="help_pin_info">Попуните ако је налог шифрован лозинком</string>
-  <string name="connect_device_scanqr">Скан QR кода</string>
   <string name="account_link_device_button">Повежи се</string>
   <!--Biometry-->
   <string name="account_biometry_auth_title">Откључајте Јами налог</string>

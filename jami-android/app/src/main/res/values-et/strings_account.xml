@@ -156,10 +156,6 @@ Saad oma kontot hiljem muuta</string>
   <string name="account_export_file">Varunda kasutajakonto</string>
   <string name="account_export_file_summary">Hilisemaks taastamiseks varunda kasutajakonto oma seadmesse.</string>
   <string name="account_export_end_decryption_message">Vigane salasõna. Palun proovi uuesti õige salasõnaga.</string>
-  <string name="account_export_end_network_title">Võrgu viga</string>
-  <string name="account_export_end_network_message">Kasutajakonto eksportimisel tekkis viga võrguühenduses. Palun kontrolli oma nutiseadme võrguühendust.</string>
-  <string name="account_export_end_error_title">Viga</string>
-  <string name="account_export_end_error_message">Kasutajakonto eksportimisel tekkis tundmatu viga.</string>
   <string name="account_enter_password">Sisesta salasõna</string>
   <string name="account_share_body">Kasutades „%1$s“ suhtle minuga hajutatud suhtlusvõrgus Jami: %2$s</string>
   <string name="account_share_body_with_username">Kasutades „%1$s“ või minu avalikku kasutajanime „%2$s“ suhtle minuga hajutatud suhtlusvõrgus Jami: %3$s</string>
@@ -199,16 +195,12 @@ Saad oma kontot hiljem muuta</string>
   <string name="account_link_device">Loo ühendus teisest seadmest</string>
   <string name="account_link_button">Loo ühendus võrgust</string>
   <string name="account_link_archive_button">Loo ühendus varukoopia abil</string>
-  <string name="account_link_prompt_pin">Sisesta PIN-kood</string>
-  <string name="account_new_button">Liitu Jamiga</string>
+  <string name="account_new_button">Loo Jami kasutajakonto</string>
   <string name="account_link_export_button">Seo uus seade</string>
   <string name="account_link_show_button">Näita veel %d seotud seadet</string>
   <string name="account_link_hide_button">Peida seotud seade</string>
-  <string name="account_link_export_info">Kui soovid kasutada seda kontot teistes seadmetes, pead selle esmalt Jami võrgus avaldama. Selle käigus luuakse PIN-kood, mille pead uues seadmes kasutajakonto lisamisel sisestama. PIN-kood on kehtiv 10 minutit.</string>
   <string name="account_start_export_button">Loo PIN-kood</string>
   <string name="account_end_export_button">sulge</string>
-  <string name="account_end_export_infos">Sinu PIN-kood on:\n\n%%\n\nTegevuse lõpetamiseks pead avama Jami uues seadmes. Uue konto lisamiseks kasuta valikut „Ühenda see seade olemasoleva kasutajakontoga“. Sinu PIN-kood on kehtiv 10 minutit.</string>
-  <string name="account_link_export_info_light">Kui soovid kasutada seda kontot teistes seadmetes, pead selle esmalt Jami võrgus avaldama. Selle käigus luuakse PIN-kood, mille pead uues seadmes kasutajakonto lisamisel sisestama. PIN-kood on kehtiv 10 minutit.</string>
   <string name="account_export_title">Ühenda kasutajakonto muude seadmetega</string>
   <string name="account_connect_server_button">Ühenda kasutajakonto haldusserveriga</string>
   <string name="account_connect_button">Ühenda</string>
@@ -242,7 +234,6 @@ Saad oma kontot hiljem muuta</string>
   <string name="account_creation_home">Tere tulemast kasutama suhtlusrakendust Jami</string>
   <string name="account_creation_profile">Loo oma profiil</string>
   <string name="account_creation_ring">Loo oma Jami kasutajakonto</string>
-  <string name="account_link_title">Seosta see nutiseade</string>
   <string name="account_sip_cannot_be_registered">SIP-konto loomisel tekkis viga.</string>
   <!--Edit profile-->
   <string name="account_edit_profile">Muuda profiili</string>
@@ -261,9 +252,6 @@ Saad oma kontot hiljem muuta</string>
   <string name="account_device_this_indicator">See seade</string>
   <string name="account_disabled_indicator">Väljalülitatud</string>
   <!--Link a new device-->
-  <string name="account_link_prompt_pin_manually">Sisesta PIN-kood käsitsi</string>
-  <string name="qr_invalid">See pole Jami autentimiseks mõeldud QR-kood</string>
-  <string name="content_description_checkbox">Sinu näidatud QR-kood on korrektne</string>
   <string name="error_format_not_supported">See vorming pole toetatud</string>
   <string name="account_link_info">Uues Jami rakenduses kas skaneeri seda QR-koodi või sisesta PIN-kood käsitsi.</string>
   <string name="account_link_device_title">Seo uus seade</string>
@@ -277,8 +265,6 @@ Saad oma kontot hiljem muuta</string>
   <string name="account_generate_export_invalid">See PIN-kood enam ei kehti.\nUue seadme sidumiseks sisesta salasõna ja loo uus PIN-kood.</string>
   <string name="account_generate_export_invalid_two">See PIN-kood enam ei kehti.\nUue seadme sidumiseks loo uus PIN-kood.</string>
   <string name="help_pin_info">Täida, kui konto on salasõnaga krüptitud</string>
-  <string name="connect_device_scanqr">QR-koodi skanneerimine</string>
-  <string name="connect_device_enterPIN">või sisesta PIN-kood</string>
   <string name="account_link_device_button">Ühenda</string>
   <!--Biometry-->
   <string name="account_biometry_auth_title">Eemalda Jami kasutajakonto lukustus</string>

@@ -111,7 +111,6 @@
   <string name="action_call_decline">Hylkää</string>
   <string name="action_call_mic_mute">Mykistä mikrofoni</string>
   <string name="action_load_extension">Lataa laajennus</string>
-  <string name="ab_action_speakerphone">Kaiutin käyttöön</string>
   <string name="ab_action_contact_add">Lisää kontakteihin</string>
   <string name="ab_action_contact_add_question">Lisätäänkö kontakteihin?</string>
   <string name="ab_action_audio_call">Aloita äänipuhelu</string>
@@ -246,7 +245,6 @@
   <string name="help_password_choose">Valitse muistettava, vahva salasana jota käytät Jami-tilin suojaamiseen.</string>
   <string name="help_password_enter">Anna Jami-tilisi pääsalasana.</string>
   <string name="help_server_enter">Anna hallintapalvelimen URL.</string>
-  <string name="help_pin_enter">Anna määritetyn Jami-tilin PIN-koodi. Käytä \"Vie Jami-tili\" ominaisuutta saadaksesi PIN-koodin.</string>
   <string name="pin_copied">PIN-koodi kopioitu leikepöydälle.</string>
   <string name="copied_clipboard">Kopioitu leikepöydälle</string>
   <string name="wizard_next">Seuraava</string>
@@ -462,4 +460,5 @@
   <string name="unload_success">%1$s: poistettu</string>
   <string name="install_success">Laajennus %1$s asennettiin.</string>
   <string name="install_error">Laajennuksen tuonnissa tapahtui virhe.</string>
+  <string name="import_side_step2_password_import">Tuo</string>
 </resources>

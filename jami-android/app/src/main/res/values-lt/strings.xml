@@ -81,7 +81,6 @@
   <string name="action_call_decline">Atmesti</string>
   <string name="action_call_mic_mute">Išjungti mikrofoną</string>
   <string name="action_load_extension">Įkelti plėtinį</string>
-  <string name="ab_action_speakerphone">Įjungti garsiakalbį</string>
   <string name="ab_action_contact_add">Pridėti prie adresatų</string>
   <string name="ab_action_contact_add_question">Pridėti prie adresatų?</string>
   <string name="ab_action_audio_call">Pradėti garso skambutį</string>
@@ -313,4 +312,7 @@
   <string name="unable_to_load">Nepavyko įkelti %1$s</string>
   <string name="load_success">%1$s: įjungta</string>
   <string name="unload_success">%1$s: išjungta</string>
+  <string name="export_side_main_title">Eksportuoti paskyrą</string>
+  <string name="export_side_step2_confirm">Patvirtinti</string>
+  <string name="import_side_step2_password_import">Importuoti</string>
 </resources>

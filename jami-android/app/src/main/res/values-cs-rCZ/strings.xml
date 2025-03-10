@@ -90,7 +90,6 @@
   <string name="action_call_accept_video">Přijmout s obrazem</string>
   <string name="action_call_decline">Odmítnout</string>
   <string name="action_call_mic_mute">Ztlumit mikrofon</string>
-  <string name="ab_action_speakerphone">Zapnout reproduktor</string>
   <string name="ab_action_contact_add">Přidat do kontaktů</string>
   <string name="ab_action_contact_add_question">Přidat do kontaktů?</string>
   <string name="ab_action_audio_call">Začít audio hovor</string>

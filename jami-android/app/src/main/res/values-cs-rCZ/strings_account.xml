@@ -121,8 +121,6 @@
   <string name="export_account_wait_message">Exportují se údaje o účtu</string>
   <string name="account_export_file">Zálohovat účet</string>
   <string name="account_export_file_summary">Zálohujte svůj účet v zařízení, abyste jej mohli později obnovit.</string>
-  <string name="account_export_end_network_title">Chyba sítě</string>
-  <string name="account_export_end_error_title">Chyba</string>
   <string name="account_enter_password">Zadejte heslo</string>
   <string name="account_contact_me">Spojte se se mnou přes Jami!</string>
   <string name="update_account">Aktualizovat účet</string>
@@ -151,7 +149,7 @@ Zadejte, prosím, své heslo.</string>
   <string name="account_link_device">Připojit z jiného zařízení</string>
   <string name="account_link_button">Připojit ze sítě</string>
   <string name="account_link_archive_button">Připojit ze zálohy</string>
-  <string name="account_new_button">Připojit k Jami</string>
+  <string name="account_new_button">Vytvořit účet Jami</string>
   <string name="account_link_export_button">Připojit nové zařízení</string>
   <string name="account_link_show_button">Zobrazit %d další propojené zařízení</string>
   <string name="account_link_hide_button">Skrýt propojené zařízení</string>
@@ -183,7 +181,6 @@ Zadejte, prosím, své heslo.</string>
   <string name="account_creation_home">Vítejte v Jami</string>
   <string name="account_creation_profile">Vytvořit vlastní profil</string>
   <string name="account_creation_ring">Vytvořit váš účet Jami</string>
-  <string name="account_link_title">Připojit toto zařízení</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">Pro potvrzení zadejte heslo</string>
@@ -199,7 +196,6 @@ Zadejte, prosím, své heslo.</string>
   <!--Link a new device-->
   <string name="error_format_not_supported">Tento formát je nepodporovaný.</string>
   <string name="account_link_device_title">Připojit nové zařízení</string>
-  <string name="connect_device_scanqr">Naskenovat QR kód</string>
   <string name="account_link_device_button">Připojit</string>
   <!--Biometry-->
 </resources>

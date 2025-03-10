@@ -122,8 +122,6 @@
   <string name="export_account_wait_message">निर्यात खात्याची माहिती</string>
   <string name="account_export_file">बॅकअप खाते</string>
   <string name="account_export_file_summary">नंतर पुनर्संचयित करण्यासाठी आपल्या डिव्हाइसवर आपले खाते बॅकअप घ्या.</string>
-  <string name="account_export_end_network_title">नेटवर्क त्रुटी</string>
-  <string name="account_export_end_error_title">त्रुटी</string>
   <string name="account_enter_password">पासवर्ड प्रविष्ट करा</string>
   <string name="account_contact_me">जमीवर संपर्क साधा!</string>
   <string name="update_account">खाते अद्यतनित करा</string>
@@ -151,7 +149,7 @@
   <string name="account_link_device">दुसर्या डिव्हाइसवरून कनेक्ट करा</string>
   <string name="account_link_button">नेटवर्कवरून कनेक्ट</string>
   <string name="account_link_archive_button">बॅकअप पासून कनेक्ट</string>
-  <string name="account_new_button">जामीमध्ये सामील व्हा</string>
+  <string name="account_new_button">जामी खाते तयार करा</string>
   <string name="account_link_export_button">नवीन डिव्हाइस लिंक करा</string>
   <string name="account_link_show_button">%d अधिक जोडलेले डिव्हाइस दाखवा</string>
   <string name="account_link_hide_button">कनेक्ट केलेले डिव्हाइस लपवा</string>
@@ -182,7 +180,6 @@
   <string name="account_creation_home">जामी येथे आपले स्वागत आहे</string>
   <string name="account_creation_profile">आपला प्रोफाइल तयार करा</string>
   <string name="account_creation_ring">आपले जेमी खाते तयार करा</string>
-  <string name="account_link_title">या उपकरणाला लिंक करा</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">पुष्टी करण्यासाठी पासवर्ड प्रविष्ट करा</string>
@@ -198,7 +195,6 @@
   <!--Link a new device-->
   <string name="error_format_not_supported">या स्वरूपात समर्थन नाही.</string>
   <string name="account_link_device_title">नवीन डिव्हाइस लिंक करा</string>
-  <string name="connect_device_scanqr">QR कोड स्कॅन करा</string>
   <string name="account_link_device_button">कनेक्ट करा</string>
   <!--Biometry-->
 </resources>

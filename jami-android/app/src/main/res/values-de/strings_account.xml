@@ -156,10 +156,6 @@ Sie können Ihr Konto später bearbeiten</string>
   <string name="account_export_file">Konto sichern</string>
   <string name="account_export_file_summary">Machen Sie eine Sicherheitskopie Ihrer Benutzerkennung auf ihrem Gerät um sie im Fehlerfall wiederherstellen zu können.</string>
   <string name="account_export_end_decryption_message">Falsches Passwort. Bitte versuchen Sie es erneut mit dem richtigen Passwort.</string>
-  <string name="account_export_end_network_title">Netzwerkfehler</string>
-  <string name="account_export_end_network_message">Beim Exportieren des Kontos ist ein Netzwerkfehler aufgetreten. Überprüfen Sie Ihre Konnektivität.</string>
-  <string name="account_export_end_error_title">Fehler</string>
-  <string name="account_export_end_error_message">Beim Exportieren des Kontos ist ein unbekannter Fehler aufgetreten.</string>
   <string name="account_enter_password">Passwort eingeben</string>
   <string name="account_share_body">Kontaktieren Sie mich über „%1$s“ auf der Jami-Plattform für verteilte Kommunikation: %2$s</string>
   <string name="account_share_body_with_username">Kontaktieren Sie mich über „%1$s“ oder meinen öffentlichen Benutzernamen „%2$s“ auf der verteilten Kommunikationsplattform Jami:%3$s</string>
@@ -199,16 +195,12 @@ Sie können Ihr Konto später bearbeiten</string>
   <string name="account_link_device">Verbindung von einem anderen Gerät aus herstellen</string>
   <string name="account_link_button">Verbindung vom Netzwerk</string>
   <string name="account_link_archive_button">Verbindung vom Backup</string>
-  <string name="account_link_prompt_pin">PIN-Code eingeben</string>
-  <string name="account_new_button">Mitmachen bei Jami</string>
+  <string name="account_new_button">Ein Jami-Konto erstellen</string>
   <string name="account_link_export_button">Verbinde ein neues Gerät</string>
   <string name="account_link_show_button">Zeige weitere %d verbundene Geräte</string>
   <string name="account_link_hide_button">Verstecke dieses verbundene Gerät</string>
-  <string name="account_link_export_info">Um dieses Konto auf anderen Geräten verwenden zu können, müssen Sie es zunächst auf Jami verfügbar machen. Dadurch wird ein PIN-Code generiert, den Sie auf dem neuen Gerät eingeben müssen, um das Konto einzurichten. Der PIN-Code läuft in 10 Minuten ab.</string>
   <string name="account_start_export_button">PIN-Code generieren</string>
   <string name="account_end_export_button">Schließen</string>
-  <string name="account_end_export_infos">Ihr PIN-Code lautet:\n\n%%\n\nUm den Vorgang abzuschließen, müssen Sie Jami auf dem neuen Gerät öffnen. Erstellen Sie ein neues Konto mit „Dieses Gerät mit einem Konto verknüpfen“. Der PIN-Code läuft in 10 Minuten ab.</string>
-  <string name="account_link_export_info_light">Um dieses Konto auf anderen Geräten verwenden zu können, müssen Sie es zunächst auf Jami verfügbar machen. Dadurch wird ein PIN-Code generiert, den Sie auf dem neuen Gerät eingeben müssen, um das Konto einzurichten. Der PIN-Code läuft in 10 Minuten ab.</string>
   <string name="account_export_title">Konto mit anderen Geräten verbinden</string>
   <string name="account_connect_server_button">Verbindung zum Management-Server</string>
   <string name="account_connect_button">Verbinden</string>
@@ -242,7 +234,6 @@ Sie können Ihr Konto später bearbeiten</string>
   <string name="account_creation_home">Willkommen bei Jami</string>
   <string name="account_creation_profile">Erstellen Sie Ihr Profil</string>
   <string name="account_creation_ring">Erstellen Sie Ihr Jami-Konto</string>
-  <string name="account_link_title">Verbinde diese Gerät</string>
   <string name="account_sip_cannot_be_registered">Beim Registrieren des SIP-Kontos ist ein Fehler aufgetreten.</string>
   <!--Edit profile-->
   <string name="account_edit_profile">Profil bearbeiten</string>
@@ -261,9 +252,6 @@ Sie können Ihr Konto später bearbeiten</string>
   <string name="account_device_this_indicator">Dieses Gerät</string>
   <string name="account_disabled_indicator">Deaktiviert</string>
   <!--Link a new device-->
-  <string name="account_link_prompt_pin_manually">PIN-Code manuell eingeben</string>
-  <string name="qr_invalid">Kein Jami-Authentifizierungs-QR-Code</string>
-  <string name="content_description_checkbox">Ihr QR-Code ist gültig</string>
   <string name="error_format_not_supported">Dieses Format wird nicht unterstützt.</string>
   <string name="account_link_info">Scannen Sie in der neuen Jami-App den QR-Code oder geben Sie den PIN-Code manuell ein.</string>
   <string name="account_link_device_title">Verbinde ein neues Gerät</string>
@@ -277,8 +265,6 @@ Sie können Ihr Konto später bearbeiten</string>
   <string name="account_generate_export_invalid">Der PIN-Code ist nicht mehr gültig.\nGeben Sie das Passwort ein und generieren Sie ein neues, um das neue Gerät zu verknüpfen.</string>
   <string name="account_generate_export_invalid_two">Der PIN-Code ist nicht mehr gültig.\nGenerieren Sie einen anderen, um das neue Gerät zu verknüpfen.</string>
   <string name="help_pin_info">Dieses Feld ausfüllen, wenn das Konto passwortverschlüsselt ist</string>
-  <string name="connect_device_scanqr">QR-Code scannen</string>
-  <string name="connect_device_enterPIN">Oder geben Sie den PIN-Code ein</string>
   <string name="account_link_device_button">Verbinden</string>
   <!--Biometry-->
   <string name="account_biometry_auth_title">Jami-Konto entsperren</string>

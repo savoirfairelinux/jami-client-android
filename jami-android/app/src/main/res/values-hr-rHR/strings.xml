@@ -186,4 +186,5 @@
   <string name="donation_card_not_now">Ne sada</string>
   <string name="donation_donate">Doniraj</string>
   <!--Extension-->
+  <string name="import_side_step2_password_import">Uvezi</string>
 </resources>

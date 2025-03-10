@@ -120,8 +120,6 @@
   <string name="export_account_wait_message">מידע על חשבונות יצוא</string>
   <string name="account_export_file">חשבון גיבוי</string>
   <string name="account_export_file_summary">גיבוי חשבון במכשיר שלך כדי לשחזר אותו מאוחר יותר.</string>
-  <string name="account_export_end_network_title">טעות רשת</string>
-  <string name="account_export_end_error_title">שגיאה</string>
   <string name="account_enter_password">הכניסו סיסמה</string>
   <string name="account_contact_me">התקשר אליי על ג\'מי!</string>
   <string name="update_account">עדכון חשבון</string>
@@ -149,7 +147,7 @@
   <string name="account_link_device">חיבור ממכשיר אחר</string>
   <string name="account_link_button">חיבור ממערכת</string>
   <string name="account_link_archive_button">חיבור ממחזקה</string>
-  <string name="account_new_button">הצטרף לג\'מי.</string>
+  <string name="account_new_button">יצירת חשבון Jami</string>
   <string name="account_link_export_button">קישור מכשיר חדש</string>
   <string name="account_link_show_button">הראה %d יותר מכשיר מקושר</string>
   <string name="account_link_hide_button">חבוי מכשיר מחובר</string>
@@ -180,7 +178,6 @@
   <string name="account_creation_home">ברוך בואך אל Jami</string>
   <string name="account_creation_profile">יצירת הפרופיל שלך</string>
   <string name="account_creation_ring">ליצור חשבון ג\'מי שלך</string>
-  <string name="account_link_title">תקושי את המכשיר הזה.</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">הכניסו סיסמה כדי לאשר</string>
@@ -195,7 +192,6 @@
   <string name="account_disabled_indicator">איכותי</string>
   <!--Link a new device-->
   <string name="account_link_device_title">קישור מכשיר חדש</string>
-  <string name="connect_device_scanqr">סריק קוד QR</string>
   <string name="account_link_device_button">חיבור</string>
   <!--Biometry-->
 </resources>

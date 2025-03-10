@@ -97,7 +97,7 @@
   <string name="account_stun_server_label">STUN-сервер</string>
   <string name="account_accept_files">Принимать входящие файлы автоматически</string>
   <string name="account_conversation_settings_title">Настройки разговора</string>
-  <string name="account_accept_files_max_size">Макс. размер файла для автозагрузки</string>
+  <string name="account_accept_files_max_size">Макс. размер файла автозагрузки</string>
   <string name="account_accept_files_never">Никогда не принимать автоматически</string>
   <string name="account_accept_files_always">Всегда принимать автоматически</string>
   <string name="size_mb">%1$dМб</string>
@@ -156,10 +156,6 @@
   <string name="account_export_file">Создать резервную копию аккаунта</string>
   <string name="account_export_file_summary">Сделайте резервную копию своего аккаунта на устройстве, чтобы восстановить его позже.</string>
   <string name="account_export_end_decryption_message">Неправильный пароль. Пожалуйста, попробуйте еще раз с правильным паролем.</string>
-  <string name="account_export_end_network_title">Ошибка сети</string>
-  <string name="account_export_end_network_message">При экспорте аккаунта произошла ошибка сети. Проверьте ваше подключение.</string>
-  <string name="account_export_end_error_title">Ошибка</string>
-  <string name="account_export_end_error_message">При экспорте аккаунта произошла неизвестная ошибка.</string>
   <string name="account_enter_password">Введите пароль</string>
   <string name="account_share_body">Свяжитесь со мной используя “%1$s” на платформе распределенной коммуникации Jami: %2$s</string>
   <string name="account_share_body_with_username">Свяжитесь со мной используя “%1$s” или мой публичный логин “%2$s” на платформе распределенной коммуникации Jami: %3$s</string>
@@ -199,16 +195,12 @@
   <string name="account_link_device">Подключиться с другого устройства</string>
   <string name="account_link_button">Подключение из сети</string>
   <string name="account_link_archive_button">Подключиться из резервной копии</string>
-  <string name="account_link_prompt_pin">Введите PIN-код</string>
-  <string name="account_new_button">Присоединиться к Джами</string>
+  <string name="account_new_button">Создать аккаунт Jami</string>
   <string name="account_link_export_button">Привязать новое устройство</string>
   <string name="account_link_show_button">Показать еще %d привязанных устройств</string>
   <string name="account_link_hide_button">Скрыть привязанное устройство</string>
-  <string name="account_link_export_info">Чтобы использовать эту учетную запись на других устройствах, вы должны сначала открыть ее на Jami. Это сгенерирует PIN-код, который вы должны ввести на новом устройстве для настройки учетной записи. Срок действия PIN-кода всего 10 минут.</string>
   <string name="account_start_export_button">Создать PIN-код</string>
   <string name="account_end_export_button">закрыть</string>
-  <string name="account_end_export_infos">Ваш PIN:\n\n%%\n\nДля завершения процесса откройте Jami на новом устройстве. Создайте новый аккаунт с помощью \"Привязать это устройство к аккаунту\". Срок действия PIN-кода всего 10 минут.</string>
-  <string name="account_link_export_info_light">Чтобы использовать эту учетную запись на других устройствах, вы должны сначала открыть ее на Jami. Это сгенерирует PIN-код, который вы должны ввести на новом устройстве для настройки учетной записи. Срок действия PIN-кода всего 10 минут.</string>
   <string name="account_export_title">Привязать аккаунт к другому устройству</string>
   <string name="account_connect_server_button">Подключиться к управляющему серверу</string>
   <string name="account_connect_button">Соединение</string>
@@ -242,7 +234,6 @@
   <string name="account_creation_home">Добро пожаловать в Jami</string>
   <string name="account_creation_profile">Создайте свой профиль</string>
   <string name="account_creation_ring">Создать свой аккаунт Jami</string>
-  <string name="account_link_title">Привязать это устройство</string>
   <string name="account_sip_cannot_be_registered">При регистрации SIP-аккаунта произошла ошибка.</string>
   <!--Edit profile-->
   <string name="account_edit_profile">Редактировать профиль</string>
@@ -261,9 +252,6 @@
   <string name="account_device_this_indicator">Это устройство</string>
   <string name="account_disabled_indicator">Отключен</string>
   <!--Link a new device-->
-  <string name="account_link_prompt_pin_manually">Введите PIN-код вручную</string>
-  <string name="qr_invalid">Не QR-код Jami аутентификации</string>
-  <string name="content_description_checkbox">Ваш QR-код действителен</string>
   <string name="error_format_not_supported">Этот формат не поддерживается</string>
   <string name="account_link_info">В новом приложении Jami отсканируйте QR-код или введите PIN-код вручную.</string>
   <string name="account_link_device_title">Привязать новое устройство</string>
@@ -277,8 +265,6 @@
   <string name="account_generate_export_invalid">PIN-код больше не действителен.\nВведите пароль и сгенерируйте другой для привязки к новому устройству.</string>
   <string name="account_generate_export_invalid_two">PIN-код больше не действителен.\nСгенерируйте другой для привязки к новому устройству.</string>
   <string name="help_pin_info">Заполните, если аккаунт зашифрован паролем</string>
-  <string name="connect_device_scanqr">Сканирование QR-кода</string>
-  <string name="connect_device_enterPIN">Или введите PIN-код</string>
   <string name="account_link_device_button">Соединение</string>
   <!--Biometry-->
   <string name="account_biometry_auth_title">Разблокировать аккаунт Jami</string>

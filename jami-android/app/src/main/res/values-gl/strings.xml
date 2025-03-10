@@ -90,7 +90,6 @@
   <string name="action_call_accept">Aceptar chamada</string>
   <string name="action_call_decline">Rexeitar</string>
   <string name="action_call_mic_mute">Apagar micrófono</string>
-  <string name="ab_action_speakerphone">Activar altofalante</string>
   <string name="ab_action_contact_add">Engadir a contactos</string>
   <string name="ab_action_contact_add_question">Engadir a contactos?</string>
   <string name="ab_action_audio_call">Iniciar chamada de audio</string>
@@ -330,4 +329,5 @@
   <string name="unable_to_load">Non se cargou %1$s</string>
   <string name="load_success">%1$s: activado</string>
   <string name="unload_success">%1$s: desactivado </string>
+  <string name="import_side_step2_password_import">Importación</string>
 </resources>

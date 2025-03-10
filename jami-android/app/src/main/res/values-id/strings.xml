@@ -85,7 +85,6 @@
   <string name="action_call_accept">Terima panggilan</string>
   <string name="action_call_decline">Tolak</string>
   <string name="action_call_mic_mute">Senyapkan mikrofon</string>
-  <string name="ab_action_speakerphone">Aktifkan pengeras suara</string>
   <string name="ab_action_contact_add">Tambah sebagai kontak</string>
   <string name="ab_action_contact_add_question">Tambah ke kontak?</string>
   <string name="ab_action_audio_call">Mulai panggilan suara</string>
@@ -314,4 +313,6 @@
   <!--Donation-->
   <string name="donation_card_not_now">Tidak sekarang</string>
   <!--Extension-->
+  <string name="export_side_main_title">Ekspor akun</string>
+  <string name="import_side_step2_password_import">Impor</string>
 </resources>

@@ -89,7 +89,6 @@
   <string name="action_call_accept">Prijať hovor</string>
   <string name="action_call_decline">Odmietnuť</string>
   <string name="action_call_mic_mute">Stlmiť mikrofón</string>
-  <string name="ab_action_speakerphone">Zapnúť reproduktor</string>
   <string name="ab_action_contact_add">Pridať kontakt</string>
   <string name="ab_action_contact_add_question">Pridať do kontaktov?</string>
   <string name="ab_action_audio_call">Začať audio hovor</string>
@@ -321,4 +320,8 @@
   <string name="donation_card_not_now">Teraz nie</string>
   <string name="donation_donate">Prispejte</string>
   <!--Extension-->
+  <string name="export_side_main_title">Exportovať účet</string>
+  <string name="export_side_step2_cancel">Zrušiť</string>
+  <string name="export_side_step2_confirm">Potvrdiť</string>
+  <string name="import_side_step2_password_import">Dovoz</string>
 </resources>

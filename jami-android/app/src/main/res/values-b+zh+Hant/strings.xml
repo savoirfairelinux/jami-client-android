@@ -115,7 +115,6 @@
   <!--Contacts-->
   <string name="prompt_new_password_repeat">确认新密码</string>
   <string name="account_create_title">建立 Jami 帳號</string>
-  <string name="help_pin_enter">从另一个配置的Jami帐户输入PIN。使用“导出Jami帐户”功能获取PIN。</string>
   <string name="pin_copied">PIN码复制到剪贴板</string>
   <string name="copied_clipboard">已复制到剪贴板。</string>
   <string name="hist_contact_blocked">联系人被封锁</string>
@@ -231,4 +230,10 @@
   <string name="unload_success">%1$s: 已禁用</string>
   <string name="install_success">扩展%1$s已成功安装</string>
   <string name="install_error">导入扩展时出错</string>
+  <string name="export_side_main_title">导出账户</string>
+  <string name="export_side_step1_code_connect">连接</string>
+  <string name="export_side_step2_cancel">取消</string>
+  <string name="export_side_step2_confirm">確認</string>
+  <string name="import_side_step1_share">分享</string>
+  <string name="import_side_step2_password_import">倒入</string>
 </resources>

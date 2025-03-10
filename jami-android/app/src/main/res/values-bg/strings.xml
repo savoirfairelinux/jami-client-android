@@ -86,7 +86,6 @@
   <string name="action_call_accept">Приемане на обаждането</string>
   <string name="action_call_decline">Отказ</string>
   <string name="action_call_mic_mute">Заглушаване на микрофона</string>
-  <string name="ab_action_speakerphone">Активиране на високоговорител</string>
   <string name="ab_action_contact_add">Добавяне към контактите</string>
   <string name="ab_action_contact_add_question">Добавяне към контактите?</string>
   <string name="ab_action_audio_call">Започване на гласов разговор</string>
@@ -192,6 +191,7 @@
   <string name="hist_invitation_received">Поканата е приета</string>
   <!--Account summary-->
   <string name="profile">Профил</string>
+  <string name="profile_message_warning">Профилът се споделя само с контактите</string>
   <string name="open_the_gallery">Отваряне на галерията</string>
   <string name="take_a_photo">Направи снимка</string>
   <string name="profile_name_hint">Введете името си.</string>

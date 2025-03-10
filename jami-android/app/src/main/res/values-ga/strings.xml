@@ -168,4 +168,5 @@
   <!--Donation-->
   <string name="donation_card_not_now">Níos déanaí</string>
   <!--Extension-->
+  <string name="import_side_step2_password_import">Éireodh</string>
 </resources>

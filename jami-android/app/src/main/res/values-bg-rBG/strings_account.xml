@@ -121,8 +121,6 @@
   <string name="export_account_wait_message">Информация за износната сметка</string>
   <string name="account_export_file">Резервен профил</string>
   <string name="account_export_file_summary">Запишете профила си на устройството си, за да го възстановите по-късно.</string>
-  <string name="account_export_end_network_title">Мрежова грешка</string>
-  <string name="account_export_end_error_title">Грешка</string>
   <string name="account_enter_password">Въведете парола</string>
   <string name="account_contact_me">Свържете се с мен по Джами!</string>
   <string name="update_account">Обновяване на профила</string>
@@ -150,7 +148,7 @@
   <string name="account_link_device">Свържете се от друго устройство</string>
   <string name="account_link_button">Свържете се от мрежата</string>
   <string name="account_link_archive_button">Свържете се от резервното</string>
-  <string name="account_new_button">Присъединете се към Джами.</string>
+  <string name="account_new_button">Създаване на профил в Jami</string>
   <string name="account_link_export_button">Свържете ново устройство</string>
   <string name="account_link_hide_button">Скрийте свързано устройство</string>
   <string name="account_end_export_button">затваряне</string>
@@ -181,7 +179,6 @@
   <string name="account_creation_home">Добре дошли в Jami</string>
   <string name="account_creation_profile">Създаване на профил</string>
   <string name="account_creation_ring">Създаване на профил в Jami</string>
-  <string name="account_link_title">Свързване на това устройство</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">Въведете парола, за да продължите</string>
@@ -197,7 +194,6 @@
   <!--Link a new device-->
   <string name="error_format_not_supported">Този формат не се поддържа.</string>
   <string name="account_link_device_title">Свържете ново устройство</string>
-  <string name="connect_device_scanqr">Сканиране на QR код</string>
   <string name="account_link_device_button">Свържете се</string>
   <!--Biometry-->
 </resources>

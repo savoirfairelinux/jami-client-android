@@ -130,8 +130,6 @@
   <string name="export_account_wait_message">Eksportowanie informacji o koncie</string>
   <string name="account_export_file">Wykonaj kopię zapasową</string>
   <string name="account_export_file_summary">Utwórz kopię zapasową swojego konta na tym urządzeniu by przywrócić ją później.</string>
-  <string name="account_export_end_network_title">Błąd sieci</string>
-  <string name="account_export_end_error_title">Błąd</string>
   <string name="account_enter_password">Wprowadź hasło</string>
   <string name="account_contact_me">Skontaktuj się ze mną na Jami!</string>
   <string name="update_account">Zaktualizuj konto</string>
@@ -159,7 +157,7 @@
   <string name="account_link_device">Połącz z innego urządzenia</string>
   <string name="account_link_button">Połącz z sieci</string>
   <string name="account_link_archive_button">Połącz z kopii zapasowej</string>
-  <string name="account_new_button">Dołącz do Jami</string>
+  <string name="account_new_button">Stwórz konto Jami</string>
   <string name="account_link_export_button">Połącz nowe urządzenie</string>
   <string name="account_link_show_button">Wyświetlać %d więcej urządzeń połączonych</string>
   <string name="account_link_hide_button">Ukryj urządzenie połączone</string>
@@ -192,7 +190,6 @@
   <string name="account_creation_home">Witaj w Jami</string>
   <string name="account_creation_profile">Stwórz swój profil</string>
   <string name="account_creation_ring">Stwórz swoje konto Jami</string>
-  <string name="account_link_title">Połącz to urządzenie</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">Wprowadź hasło aby potwierdzić</string>
@@ -206,7 +203,6 @@
   <string name="account_device_this_indicator">To urządzenie</string>
   <string name="account_disabled_indicator">Niepełnosprawni</string>
   <!--Link a new device-->
-  <string name="qr_invalid">Nie jest to kod QR uwierzytelniania Jami</string>
   <string name="error_format_not_supported">Ten format nie jest obsługiwany.</string>
   <string name="account_link_device_title">Połącz nowe urządzenie</string>
   <string name="account_link_password">To konto jest szyfrowane hasłem, wprowadź hasło, aby wygenerować kod PIN.</string>
@@ -214,7 +210,6 @@
   <string name="account_link_time_valid">Kod PIN będzie nieprawidłowy: %1$s.</string>
   <string name="account_generate_export_device">Na drugim urządzeniu</string>
   <string name="help_pin_info">Wypełnij, jeśli konto jest szyfrowane hasłem</string>
-  <string name="connect_device_scanqr">Skanowanie kodu QR</string>
   <string name="account_link_device_button">Połącz</string>
   <!--Biometry-->
   <string name="account_biometry_auth_title">Odblokuj konto Jami</string>

@@ -121,8 +121,6 @@
   <string name="export_account_wait_message">निर्यात खाता की जानकारी</string>
   <string name="account_export_file">बैकअप खाता</string>
   <string name="account_export_file_summary">बाद में इसे बहाल करने के लिए अपने डिवाइस पर अपने खाते का बैकअप लें।</string>
-  <string name="account_export_end_network_title">नेटवर्क त्रुटि</string>
-  <string name="account_export_end_error_title">त्रुटि</string>
   <string name="account_enter_password">पासवर्ड दर्ज करें</string>
   <string name="account_contact_me">Jami पर मुझसे संपर्क करें!</string>
   <string name="update_account">खाता अद्यतन</string>
@@ -150,7 +148,7 @@
   <string name="account_link_device">किसी अन्य डिवाइस से कनेक्ट करें</string>
   <string name="account_link_button">नेटवर्क से कनेक्ट करें</string>
   <string name="account_link_archive_button">बैकअप से कनेक्ट करें</string>
-  <string name="account_new_button">जामी में शामिल हों</string>
+  <string name="account_new_button">एक जामी खाता बनाएं</string>
   <string name="account_link_export_button">एक नई डिवाइस को लिंक करें</string>
   <string name="account_link_show_button">%d अधिक जुड़ी हुई डिवाइस दिखाएँ</string>
   <string name="account_link_hide_button">छुपाए हुए कनेक्टेड डिवाइस</string>
@@ -182,7 +180,6 @@
   <string name="account_creation_home">जामी में आपका स्वागत है</string>
   <string name="account_creation_profile">अपनी प्रोफ़ाइल बनाएं</string>
   <string name="account_creation_ring">अपना जेमी खाता बनाएं</string>
-  <string name="account_link_title">इस डिवाइस को लिंक करें</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">पुष्टि करने के लिए पासवर्ड दर्ज करें</string>
@@ -198,7 +195,6 @@
   <!--Link a new device-->
   <string name="error_format_not_supported">यह प्रारूप समर्थित नहीं है।</string>
   <string name="account_link_device_title">एक नई डिवाइस को लिंक करें</string>
-  <string name="connect_device_scanqr">QR कोड स्कैन करें</string>
   <string name="account_link_device_button">कनेक्ट करें</string>
   <!--Biometry-->
 </resources>

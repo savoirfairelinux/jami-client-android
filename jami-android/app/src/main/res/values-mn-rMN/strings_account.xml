@@ -121,8 +121,6 @@
   <string name="export_account_wait_message">Экспортын дансны мэдээлэл</string>
   <string name="account_export_file">Давуу сан</string>
   <string name="account_export_file_summary">Танай хэрэгслийн хуудаснаар дансыг сэргээхэд архив аваарай.</string>
-  <string name="account_export_end_network_title">Хүлжээний алдаа</string>
-  <string name="account_export_end_error_title">Хатаг</string>
   <string name="account_enter_password">Хууль нууц товчийг оруул</string>
   <string name="account_contact_me">Жэми дээр намайг холбогдох!</string>
   <string name="update_account">Хэтгэлэгт хангах</string>
@@ -150,7 +148,7 @@
   <string name="account_link_device">Өөр төхөөрөмжээс холбох</string>
   <string name="account_link_button">Сүлжээээс холбох</string>
   <string name="account_link_archive_button">Дахин хангах</string>
-  <string name="account_new_button">Жэмид нэгдээрэй</string>
+  <string name="account_new_button">Jami-ийн дансыг бий болгох</string>
   <string name="account_link_export_button">Шинэ төхөөрөмжийг холбох</string>
   <string name="account_link_show_button">%d-ийг холбогдсон төхөөрөмжээр нь харуулна</string>
   <string name="account_link_hide_button">Хаалсан холбогдсон төхөөрөмж</string>
@@ -181,7 +179,6 @@
   <string name="account_creation_home">Жэми-д тавтай морилно уу</string>
   <string name="account_creation_profile">Таны профилийг бий болго</string>
   <string name="account_creation_ring">Jami-ийн дансыг бүтээх</string>
-  <string name="account_link_title">Энэ төхөөрөмжийг холбох</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">Тагварын нууц үг</string>
@@ -197,7 +194,6 @@
   <!--Link a new device-->
   <string name="error_format_not_supported">Энэ форматг дэмжихгүй.</string>
   <string name="account_link_device_title">Шинэ төхөөрөмжийг холбох</string>
-  <string name="connect_device_scanqr">QR код сканируулна</string>
   <string name="account_link_device_button">Харилцаа холбоо</string>
   <!--Biometry-->
 </resources>

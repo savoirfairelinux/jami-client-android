@@ -107,7 +107,6 @@
   <string name="action_call_decline">Rechazar</string>
   <string name="action_call_mic_mute">Enmudecer micrófono</string>
   <string name="action_load_extension">Extensión de carga</string>
-  <string name="ab_action_speakerphone">Activar altavoz</string>
   <string name="ab_action_contact_add">Añadir a contactos</string>
   <string name="ab_action_contact_add_question">¿Agregar a contactos?</string>
   <string name="ab_action_audio_call">Iniciar una llamada con audio</string>
@@ -242,7 +241,6 @@
   <string name="help_password_choose">Elige una contraseña robusta que recuerdes para proteger tu cuenta de Jami.</string>
   <string name="help_password_enter">Ingresa la contraseña maestra de tu cuenta de Jami</string>
   <string name="help_server_enter">Ingresá la URL del servidor de administración.</string>
-  <string name="help_pin_enter">Ingrese el PIN de otra cuenta Jami configurada. Utilice la función\" Exportar cuenta Jami \" para obtener un PIN.</string>
   <string name="pin_copied">Código PIN copiado en el portapapeles.</string>
   <string name="copied_clipboard">Copiado al portapapeles.</string>
   <string name="wizard_next">Seguir</string>
@@ -317,9 +315,14 @@
   <string name="file_transfer_status_closed_by_host">Cerrado por anfitrión</string>
   <string name="file_transfer_status_closed_by_peer">Cerrado por pares</string>
   <string name="file_transfer_status_invalid_pathname">Ruta de acceso no válida</string>
+  <string name="file_transfer_status_unjoinable_peer">Par inalcanzable</string>
   <string name="file_transfer_status_canceled">Cancelado</string>
+  <string name="file_transfer_status_error">Se produjo un error mientras transfería el archivo.</string>
+  <string name="file_transfer_status_timed_out">Agotado el tiempo de espera</string>
+  <string name="file_saved_in">Archivo guardado en %s.</string>
   <string name="file_saved_successfully">Archivo guardado correctamente.</string>
   <string name="file_download">Descargar</string>
+  <string name="no_space_left_on_device">No hay espacio disponible en el dispositivo.</string>
   <string name="title_media_viewer">Visor de medios</string>
   <string name="menu_file_open">Abrir archivo</string>
   <string name="menu_file_download">Descargar el archivo</string>
@@ -356,6 +359,7 @@
   <string name="conversation_input_speech_hint">Diga algo...</string>
   <string name="audio_permission_denied">El permiso del micrófono está deshabilitado. Habilítelo en la configuración del dispositivo para usar esta función.</string>
   <string name="camera_permission_denied">El permiso de la cámara está deshabilitado. Habilítelo en la configuración del dispositivo para usar esta función.</string>
+  <string name="speech_recogniton_unavailable">El reconocimiento de voz no está disponible.</string>
   <string name="audio_permission_rationale_title">Permiso de audio requerido</string>
   <string name="camera_permission_rationale_title">Se requiere permiso de la cámara</string>
   <string name="audio_permission_rationale_message">Jami requiere el permiso del micrófono para utilizar la función de texto a voz y grabar audio. Se solicitará en el siguiente paso.</string>
@@ -441,6 +445,7 @@
   <string name="show_certificate">Mostrar el certificado</string>
   <string name="mute_conversation">Silenciar conversación</string>
   <!--Donation-->
+  <string name="donation_card_description">Si disfrutas usando Jami y crees en nuestra misión, ¿quieres hacer una donación?</string>
   <string name="donation_card_not_now">Ahora no</string>
   <string name="donation_donate">Donar</string>
   <string name="donation_setting_title">Recordatorio de donación</string>
@@ -451,4 +456,5 @@
   <string name="unload_success">%1$s: desactivado</string>
   <string name="install_success">La extensión %1$s se ha instalado correctamente.</string>
   <string name="install_error">Se produjo un error al importar la extensión.</string>
+  <string name="import_side_step2_password_import">Importar</string>
 </resources>

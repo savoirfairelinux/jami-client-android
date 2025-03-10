@@ -86,7 +86,6 @@
   <string name="action_call_accept">Deia onartu</string>
   <string name="action_call_decline">Ukatu</string>
   <string name="action_call_mic_mute">Mututu mikrofonoa</string>
-  <string name="ab_action_speakerphone">Gaitu bozgorailua</string>
   <string name="ab_action_contact_add">Gehitu kontaktuetara</string>
   <string name="ab_action_contact_add_question">Gehitu kontaktuetara?</string>
   <string name="ab_action_audio_call">Hasi audio-deia</string>
@@ -314,4 +313,5 @@
   <!--Donation-->
   <string name="donation_card_not_now">Orain ez</string>
   <!--Extension-->
+  <string name="import_side_step2_password_import">Inportazioa</string>
 </resources>

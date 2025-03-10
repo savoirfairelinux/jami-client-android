@@ -90,7 +90,6 @@
   <string name="call_duration">%sचला</string>
   <string name="action_call_decline">गिरावट</string>
   <string name="action_call_mic_mute">मूक माइक्रोफोन</string>
-  <string name="ab_action_speakerphone">स्पीकर सक्षम करें</string>
   <string name="ab_action_contact_add">संपर्क के खाते में जोड़ें</string>
   <string name="ab_action_contact_add_question">संपर्क जोड़ें?</string>
   <string name="ab_action_audio_call">ऑडियो कॉल प्रारंभ करें</string>
@@ -355,4 +354,5 @@
   <string name="unload_success">%1$s: अक्षम</string>
   <string name="install_success">%1$s एक्सटेंशन सफलतापूर्वक स्थापित हो गया है</string>
   <string name="install_error">एक्सटेंशन आयात करते समय एक त्रुटि हुई</string>
+  <string name="import_side_step2_password_import">आयात</string>
 </resources>

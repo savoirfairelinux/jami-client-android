@@ -121,8 +121,6 @@
   <string name="export_account_wait_message">Habari za akaunti ya kuuza nje</string>
   <string name="account_export_file">Akaunti ya chelezo</string>
   <string name="account_export_file_summary">Fungua akaunti yako kwenye kifaa chako ili kuiweka upya baadaye.</string>
-  <string name="account_export_end_network_title">Kosa la mtandao</string>
-  <string name="account_export_end_error_title">Kosa</string>
   <string name="account_enter_password">Ingiza nywila</string>
   <string name="account_contact_me">Wasiliana nami juu ya Jami!</string>
   <string name="update_account">Rekodi ya sasisho</string>
@@ -150,7 +148,7 @@
   <string name="account_link_device">Unganisha kutoka kifaa kingine</string>
   <string name="account_link_button">Kuunganisha kutoka mtandao</string>
   <string name="account_link_archive_button">Kuunganisha kutoka salama</string>
-  <string name="account_new_button">Jiunge Jami</string>
+  <string name="account_new_button">Unda akaunti ya Jami</string>
   <string name="account_link_export_button">Unganisha kifaa kipya</string>
   <string name="account_link_show_button">Onyesha %d zaidi kifaa kilichounganishwa</string>
   <string name="account_link_hide_button">Funga kifaa kilichounganishwa</string>
@@ -181,7 +179,6 @@
   <string name="account_creation_home">Karibu Jami</string>
   <string name="account_creation_profile">Unda wasifu wako</string>
   <string name="account_creation_ring">Unda akaunti yako ya Jami</string>
-  <string name="account_link_title">Unganisha kifaa hiki</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">Ingiza password ili kuthibitisha</string>
@@ -197,7 +194,6 @@
   <!--Link a new device-->
   <string name="error_format_not_supported">Umbizo hili halitegemewi.</string>
   <string name="account_link_device_title">Unganisha kifaa kipya</string>
-  <string name="connect_device_scanqr">Scan QR code</string>
   <string name="account_link_device_button">Unganisha</string>
   <!--Biometry-->
 </resources>

@@ -86,7 +86,6 @@
   <string name="action_call_accept">Αποδοχή κλήσης</string>
   <string name="action_call_decline">Απόρριψη κλήσης</string>
   <string name="action_call_mic_mute">Σίγαση μικροφώνου</string>
-  <string name="ab_action_speakerphone">Μεγάφωνο</string>
   <string name="ab_action_contact_add">Προσθήκη στις επαφές</string>
   <string name="ab_action_contact_add_question">Προσθήκη στις επαφές;</string>
   <string name="ab_action_audio_call">Ξεκινάτε την οχητική κλήση</string>

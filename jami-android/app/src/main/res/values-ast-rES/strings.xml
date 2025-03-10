@@ -85,7 +85,6 @@
   <string name="hist_out_call">L\' llamada saliente del %1$s</string>
   <string name="action_call_decline">El declive</string>
   <string name="action_call_mic_mute">Micrófonos silenciosos</string>
-  <string name="ab_action_speakerphone">Activu de altavoz</string>
   <string name="ab_action_contact_add">Aponer a los contactos</string>
   <string name="ab_action_contact_add_question">¿A añadir a los contactos?</string>
   <string name="ab_action_audio_call">Iniciativa pa la defensa del asturianu</string>
@@ -190,6 +189,7 @@
   <string name="hist_invitation_received">La invitación recibida</string>
   <!--Account summary-->
   <string name="profile">Perfil</string>
+  <string name="profile_message_warning">El perfil ye compartidu solamente con contactos</string>
   <string name="open_the_gallery">Abri la galería.</string>
   <string name="take_a_photo">Ye una fotografía.</string>
   <string name="profile_name_hint">Entra\'l so nome</string>
@@ -225,6 +225,7 @@
   <string name="gallery_error_title">Nun se atopó l\' aplicación Galería</string>
   <string name="gallery_error_message">Nun se atopó aplicación nel dispositivu pa abrir Galería</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_canceled">Cancelada</string>
   <string name="file_download">Descargar</string>
   <string name="title_media_viewer">Vía de medios</string>
   <string name="menu_file_open">Archivu abiertu</string>
