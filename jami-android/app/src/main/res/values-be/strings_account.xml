@@ -120,8 +120,6 @@
   <string name="export_account_wait_message">Інфармацыя аб экспорты</string>
   <string name="account_export_file">Запіс запісу</string>
   <string name="account_export_file_summary">Запісваць свой рахунак на прыладзе, каб аднавіць яго пазней.</string>
-  <string name="account_export_end_network_title">Памылка сеткі</string>
-  <string name="account_export_end_error_title">Памылка</string>
   <string name="account_enter_password">Увядзіце пароль</string>
   <string name="account_contact_me">Звяжыцеся са мной на Jami!</string>
   <string name="update_account">Абноўленне рахунку</string>
@@ -149,7 +147,7 @@
   <string name="account_link_device">Падключыць з іншага прылады</string>
   <string name="account_link_button">Палучайцеся з сеткі</string>
   <string name="account_link_archive_button">Падключыце з рэзервовай сістэмы</string>
-  <string name="account_new_button">Далучайцеся да Jami</string>
+  <string name="account_new_button">Стварэнне ўліковага запісу Jami</string>
   <string name="account_link_export_button">Злучыць новае прылада</string>
   <string name="account_link_show_button">Паказаць %d больш звязаных прылад</string>
   <string name="account_link_hide_button">Схаваць злучанае прылада</string>
@@ -180,7 +178,6 @@
   <string name="account_creation_home">Сардэчна запрашаем у Джамі</string>
   <string name="account_creation_profile">Стварэнне вашага профілю</string>
   <string name="account_creation_ring">Стварыце свой рахунак Jami</string>
-  <string name="account_link_title">Звязаць гэта прылада</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">Увядзіце пароль для пацверджання</string>
@@ -195,7 +192,6 @@
   <string name="account_disabled_indicator">З інваліднасцю</string>
   <!--Link a new device-->
   <string name="account_link_device_title">Злучыць новае прылада</string>
-  <string name="connect_device_scanqr">Сканаваць QR-код</string>
   <string name="account_link_device_button">Злучэнне</string>
   <!--Biometry-->
 </resources>

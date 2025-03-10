@@ -121,8 +121,6 @@
   <string name="export_account_wait_message">Kontuaren informazioa esportatzen</string>
   <string name="account_export_file">Egin kontuaren babes-kopia</string>
   <string name="account_export_file_summary">Zure kontua zure gailuan babestu eta gero berreskuratu.</string>
-  <string name="account_export_end_network_title">Sare errorea</string>
-  <string name="account_export_end_error_title">Errorea</string>
   <string name="account_enter_password">Sartu pasahitza</string>
   <string name="account_contact_me">Jarri harremanetan Jami-rekin!</string>
   <string name="update_account">Eguneratu kontua</string>
@@ -150,7 +148,7 @@
   <string name="account_link_device">Beste gailu batetik konektatu</string>
   <string name="account_link_button">Konektatu saretik</string>
   <string name="account_link_archive_button">Konektatu babes-kopiatik</string>
-  <string name="account_new_button">Jar zaitez Jami-rekin.</string>
+  <string name="account_new_button">Sortu Jami kontua</string>
   <string name="account_link_export_button">Estekatu gailu berria</string>
   <string name="account_link_show_button">%d gehiagoren konektatutako gailua erakutsi</string>
   <string name="account_link_hide_button">Ezkutatu lotutako gailua</string>
@@ -181,7 +179,6 @@
   <string name="account_creation_home">Ongi etorri Jamira</string>
   <string name="account_creation_profile">Sortu zure profila</string>
   <string name="account_creation_ring">Sortu zure Jami kontua</string>
-  <string name="account_link_title">Estekatu gailu hau</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">Sartu pasahitza berresteko</string>
@@ -197,7 +194,6 @@
   <!--Link a new device-->
   <string name="error_format_not_supported">Formatu hau ez da onartzen.</string>
   <string name="account_link_device_title">Estekatu gailu berria</string>
-  <string name="connect_device_scanqr">QR kodea eskaneatu</string>
   <string name="account_link_device_button">Konektatu</string>
   <!--Biometry-->
 </resources>

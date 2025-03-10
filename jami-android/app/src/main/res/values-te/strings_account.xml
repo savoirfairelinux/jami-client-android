@@ -121,8 +121,6 @@
   <string name="export_account_wait_message">ఎగుమతి ఖాతా సమాచారం</string>
   <string name="account_export_file">బ్యాకప్ ఖాతా</string>
   <string name="account_export_file_summary">మీ ఖాతాను మీ పరికరంలో బ్యాకప్ చేసి, తరువాత దాన్ని పునరుద్ధరించండి.</string>
-  <string name="account_export_end_network_title">నెట్వర్క్ లోపం</string>
-  <string name="account_export_end_error_title">తప్పు</string>
   <string name="account_enter_password">పాస్వర్డ్ను నమోదు చేయండి</string>
   <string name="account_contact_me">Jami వద్ద నాకు సంప్రదించండి!</string>
   <string name="update_account">ఖాతా నవీకరణ</string>
@@ -150,7 +148,7 @@
   <string name="account_link_device">మరొక పరికరము నుండి కనెక్ట్</string>
   <string name="account_link_button">నెట్వర్క్ నుండి కనెక్ట్</string>
   <string name="account_link_archive_button">బ్యాకప్ నుండి కనెక్ట్</string>
-  <string name="account_new_button">జామితో చేరండి</string>
+  <string name="account_new_button">జమీ ఖాతాను సృష్టించండి</string>
   <string name="account_link_export_button">కొత్త పరికరాన్ని లింక్ చేయండి</string>
   <string name="account_link_show_button">%d మరింత లింక్ చేయబడిన పరికరాన్ని చూపించు</string>
   <string name="account_link_hide_button">లింక్ చేయబడిన పరికరాన్ని దాచండి</string>
@@ -181,7 +179,6 @@
   <string name="account_creation_home">జామికి స్వాగతం</string>
   <string name="account_creation_profile">మీ ప్రొఫైల్ను సృష్టించండి</string>
   <string name="account_creation_ring">మీ జామి ఖాతాను సృష్టించండి</string>
-  <string name="account_link_title">ఈ పరికరాన్ని లింక్ చేయండి</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">నిర్ధారించడానికి పాస్వర్డ్ను నమోదు చేయండి</string>
@@ -197,7 +194,6 @@
   <!--Link a new device-->
   <string name="error_format_not_supported">ఈ ఫార్మాట్కు మద్దతు లేదు.</string>
   <string name="account_link_device_title">కొత్త పరికరాన్ని లింక్ చేయండి</string>
-  <string name="connect_device_scanqr">QR కోడ్ స్కాన్</string>
   <string name="account_link_device_button">కనెక్ట్</string>
   <!--Biometry-->
 </resources>

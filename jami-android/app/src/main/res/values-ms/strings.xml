@@ -84,7 +84,6 @@
   <string name="hist_out_call">Panggilan keluar sebanyak %1$s</string>
   <string name="action_call_decline">Bantah panggilan</string>
   <string name="action_call_mic_mute">മിണ്ടാത്ത മൈക്രോഫോൺ</string>
-  <string name="ab_action_speakerphone">Aktifkan pembesar suara</string>
   <string name="ab_action_contact_add">Tambahkan sebagai kenalan</string>
   <string name="ab_action_contact_add_question">ബന്ധുക്കളെ കൂട്ടിച്ചേർക്കണോ?</string>
   <string name="ab_action_audio_call">ഓഡിയോ കോൾ ആരംഭിക്കുക</string>
@@ -313,4 +312,6 @@
   <!--Donation-->
   <string name="donation_card_not_now">Bukan sekarang</string>
   <!--Extension-->
+  <string name="export_side_step2_confirm">സ്ഥിരീകരണം</string>
+  <string name="import_side_step2_password_import">ഇറക്കുമതി</string>
 </resources>

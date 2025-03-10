@@ -121,8 +121,6 @@
   <string name="export_account_wait_message">Informaĵoj pri eksportkontoj</string>
   <string name="account_export_file">Konto de rezervo</string>
   <string name="account_export_file_summary">Rezervu vian konton en via aparato por reestigi ĝin poste.</string>
-  <string name="account_export_end_network_title">Reta eraro</string>
-  <string name="account_export_end_error_title">Eraro</string>
   <string name="account_enter_password">Enigu pasvorton</string>
   <string name="account_contact_me">Kontaktu min pri Jami!</string>
   <string name="update_account">Aktualigo de konto</string>
@@ -150,7 +148,7 @@
   <string name="account_link_device">Konektiĝi de alia aparato</string>
   <string name="account_link_button">Konektiĝu de reto</string>
   <string name="account_link_archive_button">Konektiĝi de rezervo</string>
-  <string name="account_new_button">Aliĝu al Jami</string>
+  <string name="account_new_button">Krei konto en Jami</string>
   <string name="account_link_export_button">Ligigu novan aparaton</string>
   <string name="account_link_show_button">Montru %d pli ligitan aparaton</string>
   <string name="account_link_hide_button">Kaŝu ligitan aparaton</string>
@@ -181,7 +179,6 @@
   <string name="account_creation_home">Bonvenon al Jami.</string>
   <string name="account_creation_profile">Kreu vian profilon</string>
   <string name="account_creation_ring">Krei vian konto Jami</string>
-  <string name="account_link_title">Ligigu ĉi tiun aparaton</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">Enigu pasvorton por konfirmi</string>
@@ -197,7 +194,6 @@
   <!--Link a new device-->
   <string name="error_format_not_supported">Tiu formato ne estas subtenata.</string>
   <string name="account_link_device_title">Ligigu novan aparaton</string>
-  <string name="connect_device_scanqr">Skanu QR-kodojn</string>
   <string name="account_link_device_button">Konekti</string>
   <!--Biometry-->
 </resources>

@@ -121,8 +121,6 @@
   <string name="export_account_wait_message">Արտահանման հաշվետվության տեղեկատվություն</string>
   <string name="account_export_file">Բաքու հաշիվ</string>
   <string name="account_export_file_summary">Ձեր հաշիվը պահուստային պահեստով պահեք ձեր սարքում, որպեսզի այն հետագայում վերականգնվի:</string>
-  <string name="account_export_end_network_title">Համացանցի սխալ</string>
-  <string name="account_export_end_error_title">Սխալ</string>
   <string name="account_enter_password">Գտեք գաղտնաբառ</string>
   <string name="account_contact_me">Կապվեք ինձ հետ Ջամիի մասին:</string>
   <string name="update_account">Հաշիվի թարմացում</string>
@@ -150,7 +148,7 @@
   <string name="account_link_device">Կապակցել այլ սարք</string>
   <string name="account_link_button">Հեռախոսային ցանցից միանալ</string>
   <string name="account_link_archive_button">Կապակցեք պահուստային համակարգից</string>
-  <string name="account_new_button">Միացեք Ջամիին</string>
+  <string name="account_new_button">Ստեղծեք Jami հաշիվ</string>
   <string name="account_link_export_button">Կապակցեք նոր սարք</string>
   <string name="account_link_show_button">Ցուցադրել %d ավելի շատ կապված սարք</string>
   <string name="account_link_hide_button">Հավաքել միացված սարքը</string>
@@ -181,7 +179,6 @@
   <string name="account_creation_home">Բարի գալուստ Ջամի:</string>
   <string name="account_creation_profile">Ստեղծեք ձեր պրոֆիլը</string>
   <string name="account_creation_ring">Ստեղծեք ձեր Jami հաշիվը</string>
-  <string name="account_link_title">Կապակցեք այս սարքը</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">Փոխանցեք գաղտնաբառը հաստատելու համար</string>
@@ -197,7 +194,6 @@
   <!--Link a new device-->
   <string name="error_format_not_supported">Այս ձեւաչափը չի աջակցվում:</string>
   <string name="account_link_device_title">Կապակցեք նոր սարք</string>
-  <string name="connect_device_scanqr">QR կոդը ստուգել</string>
   <string name="account_link_device_button">Կապակցել</string>
   <!--Biometry-->
 </resources>

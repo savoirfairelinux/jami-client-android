@@ -85,7 +85,6 @@
   <string name="hist_out_call">Udgående opkald af %1$s</string>
   <string name="action_call_decline">Afvis</string>
   <string name="action_call_mic_mute">Sluk mikrofon</string>
-  <string name="ab_action_speakerphone">Aktiver højtaler</string>
   <string name="ab_action_contact_add">Tilføj til kontakter</string>
   <string name="ab_action_contact_add_question">Tilføj til kontakter?</string>
   <string name="ab_action_audio_call">Start et audio opkald</string>

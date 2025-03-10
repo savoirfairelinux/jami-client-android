@@ -121,8 +121,6 @@
   <string name="export_account_wait_message">Exporterar kontoinformation</string>
   <string name="account_export_file">Säkerhetskopiera konto</string>
   <string name="account_export_file_summary">Säkerhetskopiera ditt konto på din enhet för att kunna återställa senare. </string>
-  <string name="account_export_end_network_title">Nätverksfel</string>
-  <string name="account_export_end_error_title">Fel</string>
   <string name="account_enter_password">Ange lösenord</string>
   <string name="account_contact_me">Kontakta mig på Jami!</string>
   <string name="update_account">Uppdatera konto</string>
@@ -150,7 +148,7 @@
   <string name="account_link_device">Anslut från en annan enhet</string>
   <string name="account_link_button">Anslut från nätverk</string>
   <string name="account_link_archive_button">Anslut från säkerhetskopia</string>
-  <string name="account_new_button">Gå med Jami.</string>
+  <string name="account_new_button">Skapa ett Jami-konto</string>
   <string name="account_link_export_button">Koppla en ny enhet</string>
   <string name="account_link_show_button">Visa %d fler anslutna enheter</string>
   <string name="account_link_hide_button">Dölj ansluten enhet</string>
@@ -182,7 +180,6 @@
   <string name="account_creation_home">Välkommen till Jami!</string>
   <string name="account_creation_profile">Skapa din profil</string>
   <string name="account_creation_ring">Skapa ditt Jami-konto</string>
-  <string name="account_link_title">Länka den här enheten</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">Ange lösenord för att bekräfta</string>
@@ -198,7 +195,6 @@
   <!--Link a new device-->
   <string name="error_format_not_supported">Detta format saknar stöd.</string>
   <string name="account_link_device_title">Koppla en ny enhet</string>
-  <string name="connect_device_scanqr">Skanna QR-kod</string>
   <string name="account_link_device_button">Anslut</string>
   <!--Biometry-->
 </resources>

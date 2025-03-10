@@ -85,7 +85,6 @@
   <string name="hist_out_call">%1$s ની બહાર નીકળો કૉલ</string>
   <string name="action_call_decline">ઘટાડો</string>
   <string name="action_call_mic_mute">મ્યૂટ માઇક્રોફોન</string>
-  <string name="ab_action_speakerphone">સ્પીકર સક્ષમ કરો</string>
   <string name="ab_action_contact_add">સંપર્કો ઉમેરવા</string>
   <string name="ab_action_contact_add_question">સંપર્કમાં ઉમેરો?</string>
   <string name="ab_action_audio_call">ઑડિઓ કૉલ શરૂ કરો</string>
@@ -313,4 +312,5 @@
   <!--Donation-->
   <string name="donation_card_not_now">હમણાં નહીં</string>
   <!--Extension-->
+  <string name="import_side_step2_password_import">આયાત</string>
 </resources>

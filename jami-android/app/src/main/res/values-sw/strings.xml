@@ -85,7 +85,6 @@
   <string name="hist_out_call">Kuondoka wito wa %1$s</string>
   <string name="action_call_decline">Kupungua</string>
   <string name="action_call_mic_mute">Kipaza sauti</string>
-  <string name="ab_action_speakerphone">Kuwezesha msemaji</string>
   <string name="ab_action_contact_add">Ongeza kwa mawasiliano</string>
   <string name="ab_action_contact_add_question">Kuongeza mawasiliano?</string>
   <string name="ab_action_audio_call">Kuanza wito wa sauti</string>
@@ -312,4 +311,7 @@
   <string name="mute_conversation">Mazungumzo ya kimya</string>
   <!--Donation-->
   <!--Extension-->
+  <string name="export_side_step2_cancel">Kughairi</string>
+  <string name="export_side_step2_confirm">Tumia</string>
+  <string name="import_side_step2_password_import">Uagizaji</string>
 </resources>

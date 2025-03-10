@@ -137,10 +137,6 @@
   <string name="account_export_file">Nalog za rezervnu kopiju</string>
   <string name="account_export_file_summary">Napravite rezervnu kopiju naloga na uređaju da biste ga kasnije vratili.</string>
   <string name="account_export_end_decryption_message">Netačna lozinka. Pokušajte ponovo sa tačnom lozinkom.</string>
-  <string name="account_export_end_network_title">Greška na mreži</string>
-  <string name="account_export_end_network_message">Došlo je do mrežne greške pri izvozu naloga. Proverite svoju povezanost.</string>
-  <string name="account_export_end_error_title">Greška</string>
-  <string name="account_export_end_error_message">Došlo je do nepoznate greške prilikom izvoza naloga.</string>
   <string name="account_enter_password">Unesi lozinku</string>
   <string name="account_share_body">Kontaktirajte me koristeći „%1$s“ na Jami distribuiranoj komunikacionoj platformi: %2$s</string>
   <string name="account_share_body_with_username">Kontaktirajte me koristeći „%1$s“ ili moje javno korisničko ime „%2$s“ na Jami distribuiranoj komunikacionoj platformi: %3$s</string>
@@ -180,7 +176,7 @@
   <string name="account_link_device">Poveži se sa drugog uređaja</string>
   <string name="account_link_button">Poveži se sa mreže</string>
   <string name="account_link_archive_button">Poveži se sa rezervne kopije</string>
-  <string name="account_new_button">Pridruži se Jamiju</string>
+  <string name="account_new_button">Napravi Jami nalog</string>
   <string name="account_link_export_button">Povežite novi uređaj</string>
   <string name="account_link_show_button">Prikaži %d više povezanih uređaja</string>
   <string name="account_link_hide_button">Sakri povezane uređaje</string>
@@ -215,7 +211,6 @@
   <string name="account_creation_home">Dobrodošli na Jami</string>
   <string name="account_creation_profile">Napravi svoj profil</string>
   <string name="account_creation_ring">Napravi svoj Jami nalog</string>
-  <string name="account_link_title">Povežite ovaj uređaj</string>
   <string name="account_sip_cannot_be_registered">Došlo je do greške pri registraciji SIP naloga.</string>
   <!--Edit profile-->
   <string name="account_edit_profile">Uredi profil</string>
@@ -232,7 +227,6 @@
   <string name="account_device_this_indicator">Ovaj uređaj</string>
   <string name="account_disabled_indicator">Onemogućeno</string>
   <!--Link a new device-->
-  <string name="qr_invalid">Nije QR kod za Jami autentifikaciju</string>
   <string name="error_format_not_supported">Format nije podržan</string>
   <string name="account_link_device_title">Povežite novi uređaj</string>
   <string name="account_link_password">Ovaj nalog je šifrovan lozinkom, unesite lozinku da biste generisali PIN kod.</string>
@@ -241,7 +235,6 @@
   <string name="account_generate_export_device">Na drugom uređaju</string>
   <string name="account_generate_export_info">Instalirajte i pokrenite Jami, izaberite „Uvezi sa drugog uređaja“ i skenirajte QR kod.</string>
   <string name="help_pin_info">Popunite ako je nalog šifrovan lozinkom</string>
-  <string name="connect_device_scanqr">Skenirajte QR kod</string>
   <string name="account_link_device_button">Poveži</string>
   <!--Biometry-->
   <string name="account_biometry_auth_title">Otključajte Jami nalog</string>

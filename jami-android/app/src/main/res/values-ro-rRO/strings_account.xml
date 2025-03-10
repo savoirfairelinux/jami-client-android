@@ -156,10 +156,6 @@
   <string name="account_export_file">Copiază contul</string>
   <string name="account_export_file_summary">Fă o copie de rezervă a contului pentru a-l recupera la nevoie.</string>
   <string name="account_export_end_decryption_message">Parolă greșită. Încearcă din nou cu parola corectă.</string>
-  <string name="account_export_end_network_title">Eroare de rețea</string>
-  <string name="account_export_end_network_message">A apărut o eroare de rețea în timpul exportării contului. Verifică conectarea.</string>
-  <string name="account_export_end_error_title">Eroare</string>
-  <string name="account_export_end_error_message">A apărut o eroare necunoscută în timpul exportării contului.</string>
   <string name="account_enter_password">Introdu parola</string>
   <string name="account_share_body">Contactează-mă folosind „%1$s” pe platforma distribuită de comunicare Jami: %2$s</string>
   <string name="account_share_body_with_username">Contactează-mă folosind „%1$s” sau numele meu public de utilizator „%2$s” pe platforma distribuită de comunicare Jami: %3$s </string>
@@ -199,16 +195,12 @@
   <string name="account_link_device">Conectează-te de la alt aparat</string>
   <string name="account_link_button">Conectează-te dintr-o rețea</string>
   <string name="account_link_archive_button">Conectare din copia de rezervă</string>
-  <string name="account_link_prompt_pin">Introdu codul PIN</string>
-  <string name="account_new_button">Folosește Jami</string>
+  <string name="account_new_button">Creează un cont Jami</string>
   <string name="account_link_export_button">Asociază alt aparat</string>
   <string name="account_link_show_button">Arată încă %d aparate asociate</string>
   <string name="account_link_hide_button">Ascunde aparatul asociat</string>
-  <string name="account_link_export_info">Pentru a folosi acest cont în alte aparate, trebuie să îl expui mai întâi în Jami. Asta va genera un cod PIN care trebuie introdus în noul aparat pentru a configura contul. Acest PIN e valabil 10 minute.</string>
   <string name="account_start_export_button">Generează codul PIN</string>
   <string name="account_end_export_button">închide</string>
-  <string name="account_end_export_infos">Codul tău PIN este:\n\n%%\n\nPentru a completa procesul, trebuie să deschizi Jami în noul aparat. Creează un cont nou cu „Asociază acest aparat cu un cont”. Codul tău PIN este valabil 10 minute.</string>
-  <string name="account_link_export_info_light">Pentru a folosi acest cont în alte aparate, trebuie să îl expui mai întâi în Jami. Asta va genera un cod PIN care trebuie introdus în noul aparat pentru a configura contul. Acest PIN e valabil 10 minute.</string>
   <string name="account_export_title">Asociază contul cu alte aparate</string>
   <string name="account_connect_server_button">Conectează-te la serverul de administrare</string>
   <string name="account_connect_button">Conectează</string>
@@ -242,7 +234,6 @@
   <string name="account_creation_home">Bine ai venit pe Jami</string>
   <string name="account_creation_profile">Creează profilul tău</string>
   <string name="account_creation_ring">Creează contul tău Jami</string>
-  <string name="account_link_title">Asociază acest aparat</string>
   <string name="account_sip_cannot_be_registered">A apărut o eroare la înscrierea contului SIP.</string>
   <!--Edit profile-->
   <string name="account_edit_profile">Modifică profilul</string>
@@ -261,9 +252,6 @@
   <string name="account_device_this_indicator">Acest aparat</string>
   <string name="account_disabled_indicator">Dezactivat</string>
   <!--Link a new device-->
-  <string name="account_link_prompt_pin_manually">Introdu manual codul PIN</string>
-  <string name="qr_invalid">Nu este un cod QR de autentificare Jami</string>
-  <string name="content_description_checkbox">Codul tău QR este valabil</string>
   <string name="error_format_not_supported">Acest format nu este acceptat.</string>
   <string name="account_link_info">În noua aplicație Jami, scanează codul QR sau introdu manual codul PIN.</string>
   <string name="account_link_device_title">Asociază alt aparat</string>
@@ -277,8 +265,6 @@
   <string name="account_generate_export_invalid">Codul PIN nu mai este valabil.\nIntrodu parola și generează altul pentru asocierea noului aparat.</string>
   <string name="account_generate_export_invalid_two">Codul PIN nu mai este valabil.\nGenerează altul pentru asocierea noului aparat.</string>
   <string name="help_pin_info">Se completează dacă acest cont are parolă</string>
-  <string name="connect_device_scanqr">Scanează codul QR</string>
-  <string name="connect_device_enterPIN">Sau introdu codul PIN</string>
   <string name="account_link_device_button">Conectează</string>
   <!--Biometry-->
   <string name="account_biometry_auth_title">Deblochează contul Jami</string>

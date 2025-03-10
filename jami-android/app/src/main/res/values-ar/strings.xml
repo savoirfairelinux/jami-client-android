@@ -89,7 +89,6 @@
   <string name="hist_out_call">مكالمة صادرة من %1$s</string>
   <string name="action_call_decline">رفض</string>
   <string name="action_call_mic_mute">كتم ميكروفون</string>
-  <string name="ab_action_speakerphone">تفعيل مكبر الصوت</string>
   <string name="ab_action_contact_add">إضافة إلى جهات الاتصال</string>
   <string name="ab_action_contact_add_question">إضافة إلى جهات الإتصال؟</string>
   <string name="ab_action_audio_call">بدأ مكالمة صوتية</string>
@@ -196,6 +195,7 @@
   <string name="hist_invitation_received">تم تلقي دعوة</string>
   <!--Account summary-->
   <string name="profile">الملف الشخصى</string>
+  <string name="profile_message_warning">الملف الشخصي تتم مشاركته فقط مع جهات الإتصال</string>
   <string name="open_the_gallery">فتح المعرض</string>
   <string name="take_a_photo">التقاط صورة</string>
   <string name="profile_name_hint">إدخال إسمك</string>
@@ -231,6 +231,7 @@
   <string name="gallery_error_title">لا يوجد برنامج المعرض</string>
   <string name="gallery_error_message">لم يتم إيجاد برنامج على الجهاز لفتح المعرض</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_canceled">تم الإلغاء</string>
   <string name="file_download">تنزيل</string>
   <string name="title_media_viewer">عارض الوسائط</string>
   <string name="menu_file_open">فتح ملف</string>

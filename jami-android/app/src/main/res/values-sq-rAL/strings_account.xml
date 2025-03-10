@@ -156,10 +156,6 @@
   <string name="account_export_file">Kopjeruaje llogarinë</string>
   <string name="account_export_file_summary">Kopjeruajeni llogarinë tuaj në pajisjen tuaj për ta rikthyer më vonë.</string>
   <string name="account_export_end_decryption_message">Fjalëkalim i pasaktë. Ju lutemi, riprovoni me fjalëkalimin e saktë.</string>
-  <string name="account_export_end_network_title">Gabim rrjeti</string>
-  <string name="account_export_end_network_message">Ndodhi një gabim rrjeti teksa eksportohej llogaria. Kontrolloni lidhjen tuaj në internet.</string>
-  <string name="account_export_end_error_title">Gabim</string>
-  <string name="account_export_end_error_message">Ndodhi një gabim i panjohur teksa eksportohej llogaria.</string>
   <string name="account_enter_password">Jepni fjalëkalimin</string>
   <string name="account_share_body">Lidhuni me mua duke përdorur “%1$s” në platformën Jami të komunikimeve të shpërndara: %2$s</string>
   <string name="account_share_body_with_username">Lidhuni me mua duke përdorur “%1$s”, ose emrin tim publik të përdoruesit “%2$s” në platformën Jami të komunikimeve të shpërndara: %3$s</string>
@@ -199,16 +195,12 @@
   <string name="account_link_device">Lidhuni prej një pajisje tjetër</string>
   <string name="account_link_button">Lidhu prej rrjeti</string>
   <string name="account_link_archive_button">Lidhje prej kopjeruajtjeje</string>
-  <string name="account_link_prompt_pin">Jepni PIN-in</string>
-  <string name="account_new_button">Bëhuni pjesë e Jami-t</string>
+  <string name="account_new_button">Krijoni një llogari Jami</string>
   <string name="account_link_export_button">Lidhni një pajisje të re</string>
   <string name="account_link_show_button">Shfaq %d pajisje të tjera të lidhura</string>
   <string name="account_link_hide_button">Fshihe pajisjen e lidhur</string>
-  <string name="account_link_export_info">Që të përdorni këtë llogari në pajisje të tjera, së pari duhet t\ia ekspozoni atë Jami-t. Kështu do të prodhohet një kod PIN që duhet ta jepni te pajisja e re për të rregulluar llogarinë. Kodi PIN do të skadojë pas 10 minutash.</string>
   <string name="account_start_export_button">Prodho kod PIN</string>
   <string name="account_end_export_button">mbylle</string>
-  <string name="account_end_export_infos">Kodi juaj PIN është:\n\n%%\n\nQë të plotësohet procesi, lypset të hapni Jami-n në pajisjen e re. Krijoni një llogari të re përmes “Lidhe këtë pajisje te një llogari”. PIN-i juaj do të skadojë pas 10 minutash.</string>
-  <string name="account_link_export_info_light">Që të përdorni këtë llogari në pajisje të tjera, së pari duhet t\ia ekspozoni atë Jami-t. Kështu do të prodhohet një kod PIN që duhet ta jepni te pajisja e re për të rregulluar llogarinë. Kodi PIN do të skadojë pas 10 minutash.</string>
   <string name="account_export_title">Lidheni llogarinë te pajisje të tjera</string>
   <string name="account_connect_server_button">Lidhu me shërbyesin e administrimit</string>
   <string name="account_connect_button">Lidhu</string>
@@ -242,7 +234,6 @@
   <string name="account_creation_home">Mirë se vini te Jami</string>
   <string name="account_creation_profile">Krijoni profilin tuaj</string>
   <string name="account_creation_ring">Krijoni llogarinë tuaj Jami</string>
-  <string name="account_link_title">Lidhe këtë pajisje</string>
   <string name="account_sip_cannot_be_registered">Ndodhi një gabim teksa regjistrohej llogaria SIP.</string>
   <!--Edit profile-->
   <string name="account_edit_profile">Përpunoni profil</string>
@@ -261,9 +252,6 @@
   <string name="account_device_this_indicator">Këtë pajisje</string>
   <string name="account_disabled_indicator">Çaktivizuar</string>
   <!--Link a new device-->
-  <string name="account_link_prompt_pin_manually">Jepeni dorazi kodin PIN</string>
-  <string name="qr_invalid">S’është kod QR Mirëfilltësimi Jami</string>
-  <string name="content_description_checkbox">Kodi juaj QR është i vlefshëm</string>
   <string name="error_format_not_supported">Ky format nuk mbulohet.</string>
   <string name="account_link_info">Te aplikacioni i ri Jami, skanoni kodin QR, ose jepni dorazi kodin PIN.</string>
   <string name="account_link_device_title">Lidhni një pajisje të re</string>
@@ -277,8 +265,6 @@
   <string name="account_generate_export_invalid">Kodi PIN s’është më i vlefshëm.\n Që të lidhni pajisjen e re, jepni fjalëkalimin dhe prodhoni një tjetër.</string>
   <string name="account_generate_export_invalid_two">Kodi PIN s’është më i vlefshëm.\nQë të lidhni pajisjen e re, prodhoni një tjetër.</string>
   <string name="help_pin_info">Plotësojeni nëse llogaria është e fshehtëzuar me fjalëkalim</string>
-  <string name="connect_device_scanqr">Skanoni kod QR</string>
-  <string name="connect_device_enterPIN">Ose jepni kodin PIN</string>
   <string name="account_link_device_button">Lidhu</string>
   <!--Biometry-->
   <string name="account_biometry_auth_title">Shkyçni llogari Jami</string>

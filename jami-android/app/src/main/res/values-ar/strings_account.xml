@@ -121,8 +121,6 @@
   <string name="export_account_wait_message">تصدير معلومات الحساب</string>
   <string name="account_export_file">حساب احتياطي</string>
   <string name="account_export_file_summary">قم بإجراء نسخ احتياطي لحسابك على جهازك لاستعادته في وقت لاحق.</string>
-  <string name="account_export_end_network_title">خطأ في الشبكة</string>
-  <string name="account_export_end_error_title">خطأ</string>
   <string name="account_enter_password">أدخِل كلمة المرور</string>
   <string name="account_contact_me">اتصل بي عن (جامي)!</string>
   <string name="update_account">تحديث الحساب&lt;br&gt;</string>
@@ -150,7 +148,7 @@
   <string name="account_link_device">اتصل من جهاز آخر</string>
   <string name="account_link_button">الاتصال من الشبكة</string>
   <string name="account_link_archive_button">الاتصال من النسخ الاحتياطي</string>
-  <string name="account_new_button">انضموا إلى جامي</string>
+  <string name="account_new_button">إنشاء حساب جامي</string>
   <string name="account_link_export_button">ربط جهاز جديد</string>
   <string name="account_link_show_button">إظهار %d المزيد من الأجهزة المرتبطة</string>
   <string name="account_link_hide_button">إخفاء الأجهزة المرتبطة</string>
@@ -182,7 +180,6 @@
   <string name="account_creation_home">مرحبا بك في جامي</string>
   <string name="account_creation_profile">أنشئ ملفك الشخصي</string>
   <string name="account_creation_ring">أنشئ حساب چامى الخاص بك</string>
-  <string name="account_link_title">ربط هذا الجهاز</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">أدخل كلمة المرور للتأكيد</string>
@@ -198,7 +195,6 @@
   <!--Link a new device-->
   <string name="error_format_not_supported">هذا التنسيق غير مدعوم.</string>
   <string name="account_link_device_title">ربط جهاز جديد</string>
-  <string name="connect_device_scanqr">قم بتسجيل رمز QR</string>
   <string name="account_link_device_button">إتصال</string>
   <!--Biometry-->
 </resources>

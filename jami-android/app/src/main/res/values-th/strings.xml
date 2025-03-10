@@ -84,7 +84,6 @@
   <string name="hist_out_call">การโทรออกของ%1$s</string>
   <string name="action_call_decline">ปฏิเสธ</string>
   <string name="action_call_mic_mute">ปิดเสียงไมโครโฟน</string>
-  <string name="ab_action_speakerphone">เปิดใช้งานลำโพง</string>
   <string name="ab_action_contact_add">เพิ่มในรายชื่อติดต่อ</string>
   <string name="ab_action_contact_add_question">เพิ่มในรายชื่อติดต่อไหม</string>
   <string name="ab_action_audio_call">เริ่มการโทรเสียง</string>
@@ -313,4 +312,9 @@
   <!--Donation-->
   <string name="donation_card_not_now">ไม่ใช่ตอนนี้</string>
   <!--Extension-->
+  <string name="export_side_step1_code_connect">เชื่อมต่อ</string>
+  <string name="export_side_step2_cancel">ยกเลิก</string>
+  <string name="export_side_step2_confirm">ยืนยัน</string>
+  <string name="import_side_step1_share">แบ่งปัน</string>
+  <string name="import_side_step2_password_import">การนําเข้า</string>
 </resources>

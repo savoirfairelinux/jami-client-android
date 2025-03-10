@@ -85,7 +85,6 @@
   <string name="hist_out_call">%1$s च्या आउटगोइंग कॉल</string>
   <string name="action_call_decline">घट</string>
   <string name="action_call_mic_mute">गप्प मायक्रोफोन</string>
-  <string name="ab_action_speakerphone">स्पीकर सक्षम करा</string>
   <string name="ab_action_contact_add">संपर्क जोडणे</string>
   <string name="ab_action_contact_add_question">संपर्क जोडण्यासाठी?</string>
   <string name="ab_action_audio_call">ऑडिओ कॉल सुरू करा</string>
@@ -313,4 +312,6 @@
   <!--Donation-->
   <string name="donation_card_not_now">आता नाही</string>
   <!--Extension-->
+  <string name="export_side_step2_confirm">पुष्टी करा</string>
+  <string name="import_side_step2_password_import">आयात</string>
 </resources>

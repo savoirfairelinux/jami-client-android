@@ -121,8 +121,6 @@
   <string name="export_account_wait_message">برون‌برد اطلاعات حساب</string>
   <string name="account_export_file">پشتیبان‌گیری حساب</string>
   <string name="account_export_file_summary">از حساب‌تان در دستگاه خود پشتیبان تهیه کنید تا بعدا آن را بازیابی کنید.</string>
-  <string name="account_export_end_network_title">خطای شبکه</string>
-  <string name="account_export_end_error_title">خطا</string>
   <string name="account_enter_password">ورود گذرواژه</string>
   <string name="account_contact_me">با من روی جمی در تماس باشید!</string>
   <string name="update_account">به‌روز‌رسانی حساب</string>
@@ -150,7 +148,7 @@
   <string name="account_link_device">اتصال از دستگاه دیگر</string>
   <string name="account_link_button">اتصال از طریق شبکه</string>
   <string name="account_link_archive_button">اتصال از طریق پشتیبان</string>
-  <string name="account_new_button">با جمی هم همراهی کن</string>
+  <string name="account_new_button">ایجاد یک حساب جمی</string>
   <string name="account_link_export_button">پیوند یک دستگاه جدید</string>
   <string name="account_link_show_button">نمایش %d دستگاه‌های پیوندیافته بیشتر</string>
   <string name="account_link_hide_button">مخفی‌کردن دستگاه پیوند‌داده‌شده</string>
@@ -182,7 +180,6 @@
   <string name="account_creation_home">به جمی خوش آمدید</string>
   <string name="account_creation_profile">نمایه خود را بسازید</string>
   <string name="account_creation_ring">حساب جمی خود را بسازید</string>
-  <string name="account_link_title">پیوند این دستگاه</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">گذرواژه خود را دوباره وارد کنید</string>
@@ -198,7 +195,6 @@
   <!--Link a new device-->
   <string name="error_format_not_supported">این قالب پشتیبانی نمی‌شود.</string>
   <string name="account_link_device_title">پیوند یک دستگاه جدید</string>
-  <string name="connect_device_scanqr">کد QR را اسکن کنید</string>
   <string name="account_link_device_button">اتصال</string>
   <!--Biometry-->
 </resources>

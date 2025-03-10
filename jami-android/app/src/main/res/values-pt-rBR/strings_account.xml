@@ -155,10 +155,6 @@
   <string name="account_export_file">Cópia de segurança da conta</string>
   <string name="account_export_file_summary">Faça backup de sua conta no dispositivo para restaurá-la mais tarde.</string>
   <string name="account_export_end_decryption_message">Palavra-passe incorreta. Tente novamente com a palavra-passe correta.</string>
-  <string name="account_export_end_network_title">Erro de rede</string>
-  <string name="account_export_end_network_message">Ocorreu um erro de rede durante a exportação da conta. Verifique a sua conetividade.</string>
-  <string name="account_export_end_error_title">Erro</string>
-  <string name="account_export_end_error_message">Ocorreu um erro desconhecido ao exportar a conta.</string>
   <string name="account_enter_password">Digite a senha</string>
   <string name="account_share_body">Contacte-me utilizando “%1$s” na plataforma de comunicação distribuída Jami Jami: %2$s</string>
   <string name="account_share_body_with_username">Contacte-me utilizando “%1$s” ou o meu nome público de utilizador “%2$s” na plataforma de comunicação distribuída Jami: %3$s</string>
@@ -198,16 +194,12 @@
   <string name="account_link_device">Conectar de outro dispositivo</string>
   <string name="account_link_button">Conectar a partir da rede</string>
   <string name="account_link_archive_button">Conectar a partir do backup</string>
-  <string name="account_link_prompt_pin">Introduza o código PIN</string>
-  <string name="account_new_button">Junte-se a Jami</string>
+  <string name="account_new_button">Criar uma conta no Jami</string>
   <string name="account_link_export_button">Vincular um novo dispositivo</string>
   <string name="account_link_show_button">Mostrar mais %d dispositivo(s) vinculado(s)</string>
   <string name="account_link_hide_button">Ocultar dispositivo vinculado</string>
-  <string name="account_link_export_info">Para utilizar esta conta noutros dispositivos, tem de a expor primeiro no Jami. Isto irá gerar um código PIN que deve ser introduzido no novo dispositivo para configurar a conta. O código PIN expira dentro de 10 minutos.</string>
   <string name="account_start_export_button">Gerar o código PIN</string>
   <string name="account_end_export_button">fechar</string>
-  <string name="account_end_export_infos">O seu código PIN é:\n\n%%\n\nPara completar o processo, tem de abrir o Jami no novo dispositivo. Crie uma nova conta com \"Vincular este dispositivo a uma conta”. O código PIN expira dentro de 10 minutos.</string>
-  <string name="account_link_export_info_light">Para utilizar esta conta noutros dispositivos, tem de a expor primeiro no Jami. Isto irá gerar um código PIN que deve ser introduzido no novo dispositivo para configurar a conta. O código PIN expira dentro de 10 minutos.</string>
   <string name="account_export_title">Vincular a conta a outros dispositivos</string>
   <string name="account_connect_server_button">Conectar ao servidor de gerenciamento</string>
   <string name="account_connect_button">Conectar</string>
@@ -240,7 +232,6 @@
   <string name="account_creation_home">Bem-vindo ao Jami</string>
   <string name="account_creation_profile">Crie seu perfil</string>
   <string name="account_creation_ring">Crie sua conta Jami</string>
-  <string name="account_link_title">Vincular este dispositivo</string>
   <string name="account_sip_cannot_be_registered">Ocorreu um erro ao registar a conta SIP.</string>
   <!--Edit profile-->
   <string name="account_edit_profile">Editar perfil</string>
@@ -259,9 +250,6 @@
   <string name="account_device_this_indicator">Este dispositivo</string>
   <string name="account_disabled_indicator">Desabilitado</string>
   <!--Link a new device-->
-  <string name="account_link_prompt_pin_manually">Introduzir o código PIN manualmente</string>
-  <string name="qr_invalid">Não é um código QR de autenticação Jami</string>
-  <string name="content_description_checkbox">O seu código QR é válido</string>
   <string name="error_format_not_supported">Este formato não é suportado.</string>
   <string name="account_link_info">Na nova aplicação Jami, digitalize o código QR ou introduza manualmente o código PIN.</string>
   <string name="account_link_device_title">Vincular um novo dispositivo</string>
@@ -275,8 +263,6 @@
   <string name="account_generate_export_invalid">O código PIN já não é válido.\nIntroduza a palavra-passe e crie outro para vincular o novo dispositivo.</string>
   <string name="account_generate_export_invalid_two">O código PIN já não é válido.\nCrie outro para vincular o novo dispositivo.</string>
   <string name="help_pin_info">Preencher se a conta for criptografada por senha</string>
-  <string name="connect_device_scanqr">Escanar código QR</string>
-  <string name="connect_device_enterPIN">Ou introduza o código PIN</string>
   <string name="account_link_device_button">Conectar</string>
   <!--Biometry-->
   <string name="account_biometry_auth_title">Desbloquear a conta Jami</string>

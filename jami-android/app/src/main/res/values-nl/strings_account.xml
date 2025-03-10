@@ -121,8 +121,6 @@
   <string name="export_account_wait_message">Accountinformatie wordt geëxporteerd</string>
   <string name="account_export_file">Reservekopie van account maken</string>
   <string name="account_export_file_summary">Backup je account op je apparaat om het later te herstellen.</string>
-  <string name="account_export_end_network_title">Netwerkfout</string>
-  <string name="account_export_end_error_title">Fout</string>
   <string name="account_enter_password">Voer wachtwoord in</string>
   <string name="account_contact_me">Contacteer me op Jami!</string>
   <string name="update_account">Account bijwerken</string>
@@ -150,7 +148,7 @@
   <string name="account_link_device">Dit apparaat koppelen</string>
   <string name="account_link_button">Verbinden uit netwerk</string>
   <string name="account_link_archive_button">Verbinden uit back-up</string>
-  <string name="account_new_button">Neem deel aan Jami.</string>
+  <string name="account_new_button">Een Jami-account aanmaken</string>
   <string name="account_link_export_button">Een nieuw apparaat koppelen</string>
   <string name="account_link_show_button">Toon %d meer gekoppelde apparaten</string>
   <string name="account_link_hide_button">Gekoppelde apparaten verbergen</string>
@@ -182,7 +180,6 @@
   <string name="account_creation_home">Welkom bij Jami</string>
   <string name="account_creation_profile">Maak uw profiel aan</string>
   <string name="account_creation_ring">Maak uw Jami-account aan</string>
-  <string name="account_link_title">Dit apparaat koppelen</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">Voer wachtwoord in om te bevestigen</string>
@@ -198,7 +195,6 @@
   <!--Link a new device-->
   <string name="error_format_not_supported">Dit formaat wordt niet ondersteund.</string>
   <string name="account_link_device_title">Een nieuw apparaat koppelen</string>
-  <string name="connect_device_scanqr">Scan QR-code</string>
   <string name="account_link_device_button">Verbinden</string>
   <!--Biometry-->
 </resources>

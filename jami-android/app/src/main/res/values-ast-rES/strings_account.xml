@@ -121,8 +121,6 @@
   <string name="export_account_wait_message">Información de cuenta d\'exportación</string>
   <string name="account_export_file">Cuenta de copia de seguridad</string>
   <string name="account_export_file_summary">La copia de seguridad de la cuenta nel so dispositivu pa restaurar más tarde.</string>
-  <string name="account_export_end_network_title">Error de red</string>
-  <string name="account_export_end_error_title">Error de cita</string>
   <string name="account_enter_password">Entra contraseña</string>
   <string name="account_contact_me">¡Contacta-me en Jami!</string>
   <string name="update_account">Actualización de cuenta</string>
@@ -150,7 +148,7 @@
   <string name="account_link_device">Conectar dende otru dispositivu</string>
   <string name="account_link_button">Conectar dende la rede</string>
   <string name="account_link_archive_button">Conectar dende l\' respaldu</string>
-  <string name="account_new_button">Uníu a Jami</string>
+  <string name="account_new_button">Crear una cuenta Jami</string>
   <string name="account_link_export_button">Enlazar un nuevu dispositivu</string>
   <string name="account_link_show_button">Mostrar %d más dispositivos enllazaos</string>
   <string name="account_link_hide_button">Dispositivu de ocultar conectáu</string>
@@ -181,7 +179,6 @@
   <string name="account_creation_home">Bienveníu a Jami.</string>
   <string name="account_creation_profile">Crea\'l teu perfil</string>
   <string name="account_creation_ring">Crear la so cuenta Jami</string>
-  <string name="account_link_title">Enlazar este dispositivu</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">Entra contraseña pa confirmar</string>
@@ -197,7 +194,6 @@
   <!--Link a new device-->
   <string name="error_format_not_supported">Esta versión nun ye compatible.</string>
   <string name="account_link_device_title">Enlazar un nuevu dispositivu</string>
-  <string name="connect_device_scanqr">Escanu del codiciu QR</string>
   <string name="account_link_device_button">Conectar</string>
   <!--Biometry-->
 </resources>

@@ -50,8 +50,6 @@ Sie können Ihr Konto später bearbeiten</string>
   <!--restore/backup-->
   <string name="error_passwords_not_equals">Passwörter stimmen nicht überein.</string>
   <string name="account_export_end_decryption_message">Falsches Passwort. Bitte versuchen Sie es erneut mit dem richtigen Passwort.</string>
-  <string name="account_export_end_network_message">Beim Exportieren des Kontos ist ein Netzwerkfehler aufgetreten. Überprüfen Sie Ihre Konnektivität.</string>
-  <string name="account_export_end_error_message">Beim Exportieren des Kontos ist ein unbekannter Fehler aufgetreten.</string>
   <string name="account_share_body">Kontaktieren Sie mich über „%1$s“ auf der Jami-Plattform für verteilte Kommunikation: %2$s</string>
   <string name="account_share_body_with_username">Kontaktieren Sie mich über „%1$s“ oder meinen öffentlichen Benutzernamen „%2$s“ auf der verteilten Kommunikationsplattform Jami:%3$s</string>
   <string name="account_contact_me">Kontaktiere mich bei Jami!</string>
@@ -67,12 +65,8 @@ Sie können Ihr Konto später bearbeiten</string>
   <string name="account_sip_success_title">SIP-Konto registriert</string>
   <string name="account_sip_success_message">SIP-Konto erfolgreich registriert.</string>
   <!--TV-->
-  <string name="account_link_prompt_pin">PIN-Code eingeben</string>
-  <string name="account_new_button">Mitmachen bei Jami</string>
-  <string name="account_link_export_info">Um dieses Konto auf anderen Geräten verwenden zu können, müssen Sie es zunächst auf Jami verfügbar machen. Dadurch wird ein PIN-Code generiert, den Sie auf dem neuen Gerät eingeben müssen, um das Konto einzurichten. Der PIN-Code läuft in 10 Minuten ab.</string>
+  <string name="account_new_button">Jami-Konto erstellen</string>
   <string name="account_start_export_button">PIN-Code generieren</string>
-  <string name="account_end_export_infos">Ihr PIN-Code lautet:\n\n%%\n\nUm den Vorgang abzuschließen, müssen Sie Jami auf dem neuen Gerät öffnen. Erstellen Sie ein neues Konto mit „Dieses Gerät mit einem Konto verknüpfen“. Der PIN-Code läuft in 10 Minuten ab.</string>
-  <string name="account_link_export_info_light">Um dieses Konto auf anderen Geräten verwenden zu können, müssen Sie es zunächst auf Jami verfügbar machen. Dadurch wird ein PIN-Code generiert, den Sie auf dem neuen Gerät eingeben müssen, um das Konto einzurichten. Der PIN-Code läuft in 10 Minuten ab.</string>
   <string name="account_connect_server">Verbindung zum JAMS-Server herstellen</string>
   <string name="account_enter_username">Benutzernamen eingeben</string>
   <string name="account_enter_servername">Server eingeben</string>
@@ -92,15 +86,11 @@ Sie können Ihr Konto später bearbeiten</string>
   <string name="account_device_name_empty">Der Gerätename darf nicht leer sein.</string>
   <string name="account_disabled_indicator">Deaktiviert</string>
   <!--Link a new device-->
-  <string name="account_link_prompt_pin_manually">PIN-Code manuell eingeben</string>
-  <string name="content_description_checkbox">Ihr QR-Code ist gültig</string>
   <string name="account_link_info">Scannen Sie in der neuen Jami-App den QR-Code oder geben Sie den PIN-Code manuell ein.</string>
   <string name="account_link_device_info">Wählen Sie in der anderen Jami-App „Neues Gerät verknüpfen“, um den QR-Code oder PIN-Code anzuzeigen.</string>
   <string name="account_generate_export_info">Installieren und starten Sie Jami, wählen Sie „Von einem anderen Gerät importieren“ und scannen Sie den QR-Code.</string>
   <string name="content_description_qr_generated">Konto-QR-Code</string>
   <string name="account_generate_export_invalid">Der PIN-Code ist nicht mehr gültig.\nGeben Sie das Passwort ein und generieren Sie ein neues, um das neue Gerät zu verknüpfen.</string>
   <string name="account_generate_export_invalid_two">Der PIN-Code ist nicht mehr gültig.\nGenerieren Sie einen anderen, um das neue Gerät zu verknüpfen.</string>
-  <string name="connect_device_scanqr">QR-Code scannen</string>
-  <string name="connect_device_enterPIN">Oder geben Sie den PIN-Code ein</string>
   <!--Biometry-->
 </resources>

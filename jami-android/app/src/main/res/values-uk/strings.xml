@@ -93,7 +93,6 @@
   <string name="call_duration">Тривалість %s</string>
   <string name="action_call_decline">Відхилити</string>
   <string name="action_call_mic_mute">Відключити мікрофон</string>
-  <string name="ab_action_speakerphone">Увімкнути гучномовець</string>
   <string name="ab_action_contact_add">Додати до контактів</string>
   <string name="ab_action_contact_add_question">Додати до контактів?</string>
   <string name="ab_action_audio_call">Розпочати аудіодзвінок</string>
@@ -336,4 +335,10 @@
   <string name="unable_to_load">Неможливо завантажити %1$s</string>
   <string name="load_success">%1$s: увімкнено</string>
   <string name="unload_success">%1$s: вимкнено</string>
+  <string name="export_side_main_title">Експортувати обліковий запис</string>
+  <string name="export_side_step1_code_connect">З\'єднати</string>
+  <string name="export_side_step2_cancel">Скасувати</string>
+  <string name="export_side_step2_confirm">Підтвердження</string>
+  <string name="import_side_step1_share">Поділитися</string>
+  <string name="import_side_step2_password_import">Імпортувати</string>
 </resources>

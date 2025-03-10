@@ -85,7 +85,6 @@
   <string name="hist_out_call">%1$s இன் வெளிவரும் அழைப்பு</string>
   <string name="action_call_decline">குறைவு</string>
   <string name="action_call_mic_mute">மைக்ரோஃபோன் முடக்கப்பட்டது</string>
-  <string name="ab_action_speakerphone">பேச்சாளர் இயக்கு</string>
   <string name="ab_action_contact_add">தொடர்புகளை சேர்க்கவும்</string>
   <string name="ab_action_contact_add_question">தொடர்புகளை சேர்க்க?</string>
   <string name="ab_action_audio_call">ஆடியோ அழைப்பைத் தொடங்கவும்</string>
@@ -313,4 +312,9 @@
   <!--Donation-->
   <string name="donation_card_not_now">இப்போது வேண்டாம்</string>
   <!--Extension-->
+  <string name="export_side_step1_code_connect">இணைக்கவும்</string>
+  <string name="export_side_step2_cancel">ரத்துசெய்க</string>
+  <string name="export_side_step2_confirm">உறுதிப்படுத்தவும்</string>
+  <string name="import_side_step1_share">பகிர்வு</string>
+  <string name="import_side_step2_password_import">இறக்குமதி</string>
 </resources>

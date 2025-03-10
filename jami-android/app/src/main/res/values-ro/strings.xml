@@ -112,7 +112,7 @@
   <string name="action_call_decline">Refuză</string>
   <string name="action_call_mic_mute">Oprește microfonul</string>
   <string name="action_load_extension">Încarcă extensia</string>
-  <string name="ab_action_speakerphone">Activează difuzorul</string>
+  <string name="ab_action_speakerphone">Pornește difuzorul</string>
   <string name="ab_action_contact_add">Adaugă la contacte</string>
   <string name="ab_action_contact_add_question">Adaugi la contacte?</string>
   <string name="ab_action_audio_call">Începe un apel vocal</string>
@@ -247,7 +247,6 @@
   <string name="help_password_choose">Alege o parolă complexă pe care să ți-o amintești, pentru a proteja contul tău Jami.</string>
   <string name="help_password_enter">Introdu parola contului tău principal Jami.</string>
   <string name="help_server_enter">Introdu URL-ul serverului de administrare</string>
-  <string name="help_pin_enter">Introdu codul PIN obținut de la un cont Jami. Folosește opțiunea „Exportă contul Jami” pentru a obține codul PIN.</string>
   <string name="pin_copied">Cod PIN copiat în memorie.</string>
   <string name="copied_clipboard">Copiat în memorie.</string>
   <string name="wizard_next">Înainte</string>
@@ -463,4 +462,7 @@
   <string name="unload_success">%1$s: dezactivat</string>
   <string name="install_success">Extensia %1$s a fost instalată cu succes.</string>
   <string name="install_error">A apărut o eroare la importarea extensiei.</string>
+  <string name="export_side_main_title">Exportă contul</string>
+  <string name="export_side_step2_confirm">Confirmă</string>
+  <string name="import_side_step2_password_import">Importă</string>
 </resources>

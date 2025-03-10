@@ -84,7 +84,6 @@
   <string name="hist_out_call">%1$s ਨੂੰ ਜਾਂਦੀ ਕਾਲ</string>
   <string name="action_call_decline">ਕਾਲ ਕੱਟੋ</string>
   <string name="action_call_mic_mute">ਮਾਈਕ੍ਰੋਫ਼ੋਨ ਬੰਦ ਕਰੋ</string>
-  <string name="ab_action_speakerphone">ਸਪੀਕਰ ਚਾਲੂ ਕਰੋ</string>
   <string name="ab_action_contact_add">ਸੰਪਰਕਾਂ ਵਿੱਚ ਜੋੜੋ</string>
   <string name="ab_action_contact_add_question">ਸੰਪਰਕਾਂ ਵਿੱਚ ਜੋੜੀਏ?</string>
   <string name="ab_action_change_screen_orientation">ਸਕ੍ਰੀਨ ਦੀ ਦਿਸ਼ਾ ਬਦਲੋ</string>

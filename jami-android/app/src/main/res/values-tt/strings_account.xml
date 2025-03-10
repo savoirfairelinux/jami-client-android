@@ -120,8 +120,6 @@
   <string name="export_account_wait_message">Экспорт хисабы турында мәгълүмат</string>
   <string name="account_export_file">Яңарту хисабы</string>
   <string name="account_export_file_summary">Аккаунтыгызны соңрак торгызу өчен, үз җайланмагызга резервка күчерегез.</string>
-  <string name="account_export_end_network_title">Аварияләр</string>
-  <string name="account_export_end_error_title">Хата</string>
   <string name="account_enter_password">Пароль кертегез</string>
   <string name="account_contact_me">Җәми белән элемтәгә керегез!</string>
   <string name="update_account">Аккаунтны яңарту</string>
@@ -149,7 +147,7 @@
   <string name="account_link_device">Башка җайланмадан тоташтыру</string>
   <string name="account_link_button">Авырулар</string>
   <string name="account_link_archive_button">Ярдәмдән тоташтыру</string>
-  <string name="account_new_button">Җәмигә кушылыгыз</string>
+  <string name="account_new_button">Jami хисабы булдыру</string>
   <string name="account_link_export_button">Яңа җайланманы тоташтыру</string>
   <string name="account_link_show_button">%d күбрәк бәйләнгән җайланманы күрсәтү</string>
   <string name="account_link_hide_button">Яшереп куелган җайланма</string>
@@ -180,7 +178,6 @@
   <string name="account_creation_home">Җәмигә рәхим итегез.</string>
   <string name="account_creation_profile">Профиль төзегез</string>
   <string name="account_creation_ring">Jami хисабыгызны булдырыгыз</string>
-  <string name="account_link_title">Бу җайланманы тоташтырыгыз</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">Ышаныч бирү өчен пароль кертегез</string>
@@ -195,7 +192,6 @@
   <string name="account_disabled_indicator">Авырлык</string>
   <!--Link a new device-->
   <string name="account_link_device_title">Яңа җайланманы тоташтыру</string>
-  <string name="connect_device_scanqr">QR-кодны сканерлау</string>
   <string name="account_link_device_button">Бәйләнешкә кертү</string>
   <!--Biometry-->
 </resources>

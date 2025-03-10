@@ -120,8 +120,6 @@
   <string name="export_account_wait_message">معلوماتي حساب صادراتي</string>
   <string name="account_export_file">حساب ڤڠاجرن</string>
   <string name="account_export_file_summary">كاوڤونكن ايكونت دالم ڤرودوک اونتوق مڠمبيلكنڽ لاين.</string>
-  <string name="account_export_end_network_title">خطأ شبكه</string>
-  <string name="account_export_end_error_title">خطأ</string>
   <string name="account_enter_password">ڤرلو مڠهادڤي كاسوس</string>
   <string name="account_contact_me">با من دري جامي تماس بگير!</string>
   <string name="update_account">ڤڠاجرن حساب</string>
@@ -149,7 +147,7 @@
   <string name="account_link_device">منچاريكن دري ڤرودوک لاين</string>
   <string name="account_link_button">منچاريكن دري نيتۏرك</string>
   <string name="account_link_archive_button">منوليسكن دري ڤڠوربانن</string>
-  <string name="account_new_button">مڠڬوناكن Jami</string>
+  <string name="account_new_button">منوليسكن اکاونت Jami</string>
   <string name="account_link_export_button">منچيلكن ڤڠڬونا?? ن بارو</string>
   <string name="account_link_show_button">مڠمبيل %d ڤرودوک يڠ دتڠݢوڠ</string>
   <string name="account_link_hide_button">ڤڠڬيلن يڠ دڤرچايا?? ي</string>
@@ -180,7 +178,6 @@
   <string name="account_creation_home">خوش اومدن جامي</string>
   <string name="account_creation_profile">ڤرچاي ڤرڤايل</string>
   <string name="account_creation_ring">منوليسكن حساب Jami</string>
-  <string name="account_link_title">وصلكن ڤرودوک اين</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">ڤرلو مڠهادڤي كاسد اونتوق مڠهادڤي</string>
@@ -195,7 +192,6 @@
   <string name="account_disabled_indicator">ڤڠاجين</string>
   <!--Link a new device-->
   <string name="account_link_device_title">منچيلكن ڤڠڬونا?? ن بارو</string>
-  <string name="connect_device_scanqr">سكين كود QR</string>
   <string name="account_link_device_button">وصلكن</string>
   <!--Biometry-->
 </resources>

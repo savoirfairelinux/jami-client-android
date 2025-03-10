@@ -86,7 +86,6 @@
   <string name="action_call_accept">Acceptar la sonada</string>
   <string name="action_call_decline">Regetar</string>
   <string name="action_call_mic_mute">Micròfon silenciós</string>
-  <string name="ab_action_speakerphone">Abilitar lo parlant</string>
   <string name="ab_action_contact_add">Ajustar als contactes</string>
   <string name="ab_action_contact_add_question">Ajustar a los contactes?</string>
   <string name="ab_action_audio_call">Començar l\'audio-call</string>
@@ -314,4 +313,7 @@
   <string name="mute_conversation">Conversacion mut</string>
   <!--Donation-->
   <!--Extension-->
+  <string name="export_side_main_title">Exportar compte</string>
+  <string name="export_side_step2_confirm">Confirmacion</string>
+  <string name="import_side_step2_password_import">Importacion</string>
 </resources>

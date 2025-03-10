@@ -121,8 +121,6 @@
   <string name="export_account_wait_message">निर्यात खाताको जानकारी</string>
   <string name="account_export_file">ब्याकअप खाता</string>
   <string name="account_export_file_summary">तपाईँको खातालाई तपाईँको यन्त्रमा ब्याकअप गर्नुहोस् र यसलाई पछि पुनःस्थापित गर्नुहोस्।</string>
-  <string name="account_export_end_network_title">नेटवर्क त्रुटि</string>
-  <string name="account_export_end_error_title">त्रुटि</string>
   <string name="account_enter_password">पासवर्ड प्रविष्ट गर्नुहोस्</string>
   <string name="account_contact_me">मलाई Jami मा सम्पर्क!</string>
   <string name="update_account">खाता अपडेट गर्ने</string>
@@ -150,7 +148,7 @@
   <string name="account_link_device">अर्को उपकरणबाट जडान</string>
   <string name="account_link_button">नेटवर्कबाट जडान</string>
   <string name="account_link_archive_button">ब्याकअपबाट जडान</string>
-  <string name="account_new_button">जामीमा सामेल हुनुहोस्</string>
+  <string name="account_new_button">Jami खाता सिर्जना गर्नुहोस्</string>
   <string name="account_link_export_button">नयाँ उपकरण जडान गर्नुहोस्</string>
   <string name="account_link_show_button">%d थप जोडिएको उपकरण देखाउनुहोस्</string>
   <string name="account_link_hide_button">छुपाएर जडान गरिएको उपकरण</string>
@@ -181,7 +179,6 @@
   <string name="account_creation_home">जामीमा स्वागत छ</string>
   <string name="account_creation_profile">आफ्नो प्रोफाइल सिर्जना गर्नुहोस्</string>
   <string name="account_creation_ring">आफ्नो Jami खाता सिर्जना गर्नुहोस्</string>
-  <string name="account_link_title">यो यन्त्रलाई लिंक गर्नुहोस्</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">पुष्टि गर्न पासवर्ड प्रविष्ट गर्नुहोस्</string>
@@ -197,7 +194,6 @@
   <!--Link a new device-->
   <string name="error_format_not_supported">यो ढाँचा समर्थित छैन।</string>
   <string name="account_link_device_title">नयाँ उपकरण जडान गर्नुहोस्</string>
-  <string name="connect_device_scanqr">QR कोड स्क्यान गर्नुहोस्</string>
   <string name="account_link_device_button">जोड्नुहोस्</string>
   <!--Biometry-->
 </resources>

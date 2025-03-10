@@ -85,7 +85,6 @@
   <string name="hist_out_call">%1$s-ийн гадаад дуудлага</string>
   <string name="action_call_decline">Хөгжиж байна</string>
   <string name="action_call_mic_mute">Улаан чимээгүй микрофон</string>
-  <string name="ab_action_speakerphone">Дуучинг идэвхжүүлнэ</string>
   <string name="ab_action_contact_add">Байрлуудад нэмнэ</string>
   <string name="ab_action_contact_add_question">Та нар ч гэсэн холбоотондоо нэмж байна уу?</string>
   <string name="ab_action_audio_call">Зэвсэгт дуу дуулах</string>
@@ -314,4 +313,6 @@
   <!--Donation-->
   <string name="donation_card_not_now">Одоо биш</string>
   <!--Extension-->
+  <string name="export_side_step2_confirm">Дашрамд</string>
+  <string name="import_side_step2_password_import">Импортын</string>
 </resources>

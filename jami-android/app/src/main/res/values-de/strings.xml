@@ -111,7 +111,6 @@
   <string name="action_call_decline">Ablehnen</string>
   <string name="action_call_mic_mute">Mikrofon stummschalten</string>
   <string name="action_load_extension">Erweiterung laden</string>
-  <string name="ab_action_speakerphone">Lautsprecher einschalten</string>
   <string name="ab_action_contact_add">Zu Kontakten hinzufügen</string>
   <string name="ab_action_contact_add_question">Zu Kontakten hinzufügen?</string>
   <string name="ab_action_audio_call">Audioanruf starten</string>
@@ -246,7 +245,6 @@
   <string name="help_password_choose">Wählen Sie ein sicheres Passwort, an das Sie sich erinnern können, um Ihr Jami-Konto zu schützen.</string>
   <string name="help_password_enter">Geben Sie Ihr Passwort für das Jami-Hauptkonto ein.</string>
   <string name="help_server_enter">URL des Management-Servers eingeben.</string>
-  <string name="help_pin_enter">Geben Sie die PIN eines anderen konfigurierten Jami-Kontos ein. Nutzen Sie die Funktion „Jami-Konto exportieren“, um eine PIN zu erhalten.</string>
   <string name="pin_copied">PIN-Code in die Zwischenablage kopiert.</string>
   <string name="copied_clipboard">In die Zwischenablage kopiert.</string>
   <string name="wizard_next">Weiter</string>

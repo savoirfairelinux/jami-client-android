@@ -158,10 +158,6 @@ Vous pourrez apporter des modifications à ce compte plus tard.</string>
   <string name="account_export_file">Sauvegarder le compte</string>
   <string name="account_export_file_summary">Sauvegarder le compte de votre appareil pour pouvoir le restaurer plus tard</string>
   <string name="account_export_end_decryption_message">Mot de passe incorrect. Veuillez réessayer.</string>
-  <string name="account_export_end_network_title">Erreur de réseau</string>
-  <string name="account_export_end_network_message">Une erreur réseau s\'est produite pendant l\'exportation du compte. Vérifier votre connectivité réseau.</string>
-  <string name="account_export_end_error_title">Erreur</string>
-  <string name="account_export_end_error_message">Une erreur inconnue s\'est produite lors de l\'exportation du compte.</string>
   <string name="account_enter_password">Entrez le mot de passe</string>
   <string name="account_share_body">Contactez-moi en utilisant l\'identifiant \"%1$s\" sur la plateforme de communication distribuée %2$s</string>
   <string name="account_share_body_with_username">Contactez-moi en utilisant l\'identifiant \'%1$s\' ou mon nom d\'utilisateur public \'%2$s\' sur la plateforme de communication distribuée : %3$s</string>
@@ -201,16 +197,12 @@ Vous pourrez apporter des modifications à ce compte plus tard.</string>
   <string name="account_link_device">Se connecter à partir d\'un autre appareil</string>
   <string name="account_link_button">Se connecter à partir d\'un réseau</string>
   <string name="account_link_archive_button">Se Connecter à partir d\'une sauvegarde</string>
-  <string name="account_link_prompt_pin">Entrer le code NIP</string>
-  <string name="account_new_button">Rejoindre Jami</string>
+  <string name="account_new_button">Créer un compte Jami</string>
   <string name="account_link_export_button">Associer un nouvel appareil</string>
   <string name="account_link_show_button">Montrer %d appareils liés supplémentaires</string>
   <string name="account_link_hide_button">Cacher les appareils liés</string>
-  <string name="account_link_export_info">Pour utiliser ce compte sur d\'autres appareils, vous devez d\'abord l\'exposer sur Jami. Ceci générera un code NIP que vous devrez entrer sur le nouvel appareil pour configurer le compte. Le NIP restera valide pendant 10 minutes.</string>
   <string name="account_start_export_button">Générer un NIP</string>
   <string name="account_end_export_button">fermer</string>
-  <string name="account_end_export_infos">Votre NIP est:\n\n%%\n\nPour terminer l\'opération, vous devez ouvrir Jami sur un autre appareil puis créer un nouveau compte avec \\"Lier cet appareil à un compte\\". Votre NIP est utilisable pendant 10 minutes.</string>
-  <string name="account_link_export_info_light">Pour utiliser ce compte sur d\'autres appareils, vous devez d\'abord l\'exposer sur Jami. Ceci générera un code NIP que vous devrez entrer sur le nouvel appareil pour configurer le compte. Le NIP restera valide pendant 10 minutes.</string>
   <string name="account_export_title">Associer le compte à d\'autres appareils</string>
   <string name="account_connect_server_button">Se connecter à un serveur de gestion de comptes</string>
   <string name="account_connect_button">Se connecter</string>
@@ -244,10 +236,9 @@ Vous pourrez apporter des modifications à ce compte plus tard.</string>
   <string name="account_creation_home">Bienvenue sur Jami</string>
   <string name="account_creation_profile">Créer votre profil</string>
   <string name="account_creation_ring">Créer un compte Jami</string>
-  <string name="account_link_title">Lier cet appareil</string>
   <string name="account_sip_cannot_be_registered">Une erreur s\'est produite pendant l\'enregistrement du compte SIP.</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">Modifier votre profile</string>
+  <string name="account_edit_profile">Modifier votre profil</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Entrer le mot de passe pour confirmer</string>
   <string name="enter_password">Entrez votre mot de passe</string>
@@ -263,9 +254,6 @@ Vous pourrez apporter des modifications à ce compte plus tard.</string>
   <string name="account_device_this_indicator">Cet appareil</string>
   <string name="account_disabled_indicator">Désactivé</string>
   <!--Link a new device-->
-  <string name="account_link_prompt_pin_manually">Entrer votre NIP manuellement</string>
-  <string name="qr_invalid">n\'est pas un QR code Jami valide</string>
-  <string name="content_description_checkbox">Votre code QR est valide</string>
   <string name="error_format_not_supported">Ce format de fichier n\'est pas supporté.</string>
   <string name="account_link_info">Sur votre nouvel application Jami, scannez le code QR ou bien saisissez manuellement votre NIP</string>
   <string name="account_link_device_title">Associer un nouvel appareil</string>
@@ -279,8 +267,6 @@ Vous pourrez apporter des modifications à ce compte plus tard.</string>
   <string name="account_generate_export_invalid">Votre NIP n\'est plus valide. Saisissez le mot de passe et générer un nouveau NIP pour associer cet appareil.</string>
   <string name="account_generate_export_invalid_two">Votre NIP n\'est plus valide. Générer un nouveau NIP pour associer cet appareil.</string>
   <string name="help_pin_info">Renseigner ce champ si le compte est chiffré</string>
-  <string name="connect_device_scanqr">Scanner le code QR</string>
-  <string name="connect_device_enterPIN">ou entrer le NIP</string>
   <string name="account_link_device_button">Se connecter</string>
   <!--Biometry-->
   <string name="account_biometry_auth_title">Déverrouiller le compte Jami</string>

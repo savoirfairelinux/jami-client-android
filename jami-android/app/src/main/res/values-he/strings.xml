@@ -182,4 +182,5 @@
   <!--Donation-->
   <string name="donation_card_not_now">לא עכשיו</string>
   <!--Extension-->
+  <string name="import_side_step2_password_import">יבוא</string>
 </resources>

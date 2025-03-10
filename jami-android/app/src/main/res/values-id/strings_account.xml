@@ -121,8 +121,6 @@
   <string name="export_account_wait_message">Mengekspor informasi akun</string>
   <string name="account_export_file">Cadangkan akun</string>
   <string name="account_export_file_summary">Cadangkan akun di perangkat anda untuk memulihkannya nanti.</string>
-  <string name="account_export_end_network_title">Galat jaringan</string>
-  <string name="account_export_end_error_title">Eror</string>
   <string name="account_enter_password">Masukan kata sandi</string>
   <string name="account_contact_me">Hubungi saya di Jami!</string>
   <string name="update_account">Perbarui akun</string>
@@ -150,7 +148,7 @@
   <string name="account_link_device">Hubungkan melalui perangkat lain</string>
   <string name="account_link_button">Hubungkan melalui jaringan</string>
   <string name="account_link_archive_button">Hubungkan melalui cadangan</string>
-  <string name="account_new_button">Gabung Jami</string>
+  <string name="account_new_button">Buat akun Jami</string>
   <string name="account_link_export_button">Hubungkan perangkat baru</string>
   <string name="account_link_show_button">Tampilkan %d lebih banyak perangkat yang ditautkan</string>
   <string name="account_link_hide_button">Sembunyikan perangkat yang tertaut</string>
@@ -182,7 +180,6 @@
   <string name="account_creation_home">Selamat datang di Jami</string>
   <string name="account_creation_profile">Buat profil Anda</string>
   <string name="account_creation_ring">Buat akun Jami Anda</string>
-  <string name="account_link_title">Hubungkan perangkat ini</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">Masukkan kata sandi untuk konfirmasi</string>
@@ -198,7 +195,6 @@
   <!--Link a new device-->
   <string name="error_format_not_supported">Format tidak didukung.</string>
   <string name="account_link_device_title">Hubungkan perangkat baru</string>
-  <string name="connect_device_scanqr">Scan kode QR</string>
   <string name="account_link_device_button">Hubungkan</string>
   <!--Biometry-->
 </resources>

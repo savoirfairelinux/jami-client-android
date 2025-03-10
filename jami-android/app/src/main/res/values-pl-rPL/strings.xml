@@ -93,7 +93,6 @@
   <string name="action_call_accept">Zaakceptuj rozmowę</string>
   <string name="action_call_decline">Odrzuć</string>
   <string name="action_call_mic_mute">Wycisz mikrofon</string>
-  <string name="ab_action_speakerphone">Włącz głośnik</string>
   <string name="ab_action_contact_add">Dodaj do kontaków</string>
   <string name="ab_action_contact_add_question">Dodać do kontaktów?</string>
   <string name="ab_action_audio_call">Rozpocznij połączenie głosowe</string>
@@ -363,4 +362,8 @@
   <string name="unload_success">%1$s: wyłączone </string>
   <string name="install_success">Rozszerzenie %1$s zostało pomyślnie zainstalowane.</string>
   <string name="install_error">Wystąpił błąd podczas importowania rozszerzenia.</string>
+  <string name="export_side_main_title">Wyeksportuj konto</string>
+  <string name="import_side_main_title">Importuj konto</string>
+  <string name="export_side_step2_confirm">Potwierdź</string>
+  <string name="import_side_step2_password_import">Importuj</string>
 </resources>

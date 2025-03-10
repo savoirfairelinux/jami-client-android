@@ -91,7 +91,6 @@
   <string name="action_call_accept">قبول تماس</string>
   <string name="action_call_decline">ردکردن</string>
   <string name="action_call_mic_mute">قطع میکروفون</string>
-  <string name="ab_action_speakerphone">فعال‌سازی بلندگو</string>
   <string name="ab_action_contact_add">افزودن به مخاطبان</string>
   <string name="ab_action_contact_add_question">افزودن به مخاطبان؟</string>
   <string name="ab_action_audio_call">شروع تماس صوتی</string>
@@ -326,4 +325,5 @@
   <string name="donation_setting_title">یادآوری اهدا کردن</string>
   <string name="donation_setting_description">فعال کردن یادآوری اهدا کردن</string>
   <!--Extension-->
+  <string name="import_side_step2_password_import">واردات</string>
 </resources>

@@ -122,8 +122,6 @@
   <string name="export_account_wait_message">Exportant informació del compte</string>
   <string name="account_export_file">Fes còpia de seguretat del compte</string>
   <string name="account_export_file_summary">Copia de seguretat del compte al dispositiu per restablir-lo més tard.</string>
-  <string name="account_export_end_network_title">Error de xarxa</string>
-  <string name="account_export_end_error_title">Error</string>
   <string name="account_enter_password">Introduïu la contrasenya</string>
   <string name="account_contact_me">Contacta amb mi en Jami!</string>
   <string name="update_account">Actualitza el compte</string>
@@ -151,7 +149,7 @@
   <string name="account_link_device">Connecta des d\'un altre dispositiu</string>
   <string name="account_link_button">Connecta des de la xarxa</string>
   <string name="account_link_archive_button">Connecta des d\'una còpia de seguretat</string>
-  <string name="account_new_button">Unir-se a Jami</string>
+  <string name="account_new_button">Crear un compte Jami</string>
   <string name="account_link_export_button">Enllaça un nou dispositiu</string>
   <string name="account_link_show_button">Mostra %d més dispositius enllaçats</string>
   <string name="account_link_hide_button">Amaga el dispositiu enllaçat</string>
@@ -183,7 +181,6 @@
   <string name="account_creation_home">Benvingut a Jami</string>
   <string name="account_creation_profile">Crei el seu perfil</string>
   <string name="account_creation_ring">Crei el seu compte de Jami</string>
-  <string name="account_link_title">Vincula aquest dispositiu</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">Introduïu la contrasenya per confirmar</string>
@@ -199,7 +196,6 @@
   <!--Link a new device-->
   <string name="error_format_not_supported">Aquest format no és compatible.</string>
   <string name="account_link_device_title">Enllaça un nou dispositiu</string>
-  <string name="connect_device_scanqr">Escanir codi QR</string>
   <string name="account_link_device_button">Connectar</string>
   <!--Biometry-->
 </resources>

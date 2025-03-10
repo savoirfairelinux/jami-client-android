@@ -121,8 +121,6 @@
   <string name="export_account_wait_message">Exportovanie údajov o účte</string>
   <string name="account_export_file">Zálohovať účet</string>
   <string name="account_export_file_summary">Zálohujte si účet na zariadenie, aby ste ho neskôr obnovili.</string>
-  <string name="account_export_end_network_title">Chyba siete</string>
-  <string name="account_export_end_error_title">Chyba</string>
   <string name="account_enter_password">Zadajte heslo</string>
   <string name="account_contact_me">Kontaktujte ma na Jami!</string>
   <string name="update_account">Aktualizovať účet</string>
@@ -150,7 +148,7 @@
   <string name="account_link_device">Pripojenie z iného zariadenia</string>
   <string name="account_link_button">Pripojiť zo siete</string>
   <string name="account_link_archive_button">Pripojiť zo zálohy</string>
-  <string name="account_new_button">Pridajte sa k Jami</string>
+  <string name="account_new_button">Vytvoriť Jami účet</string>
   <string name="account_link_export_button">Prepojiť nové zariadenie</string>
   <string name="account_link_hide_button">Skryjte prepojené zariadenie</string>
   <string name="account_end_export_button">Zavrieť</string>
@@ -181,7 +179,6 @@
   <string name="account_creation_home">Vitajte v Jami</string>
   <string name="account_creation_profile">Vytvorte si váš profil</string>
   <string name="account_creation_ring">Vytvorte si svoj Jami účet</string>
-  <string name="account_link_title">Prepojiť toto zariadenie</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">Zadajte heslo na potvrdenie</string>
@@ -197,7 +194,6 @@
   <!--Link a new device-->
   <string name="error_format_not_supported">Tento formát nie je podporovaný.</string>
   <string name="account_link_device_title">Prepojiť nové zariadenie</string>
-  <string name="connect_device_scanqr">Skenovanie QR kódu</string>
   <string name="account_link_device_button">Pripojiť</string>
   <!--Biometry-->
 </resources>

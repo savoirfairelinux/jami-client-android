@@ -80,7 +80,7 @@
   <string name="account_link_device">Povezivanje s drugog uređaja</string>
   <string name="account_link_button">Povezivanje s mreže</string>
   <string name="account_link_archive_button">Povezivanje sa rezervom</string>
-  <string name="account_new_button">Pridruži se Jamiju.</string>
+  <string name="account_new_button">Napravite Jami račun</string>
   <string name="account_link_export_button">Povežite novi uređaj</string>
   <string name="account_link_show_button">Pokaži %d više povezanih uređaja</string>
   <string name="account_link_hide_button">Skloni se priključeno uređaj</string>
@@ -105,7 +105,6 @@
   <string name="account_status_offline">Neprijavljeni</string>
   <!--Create account-->
   <string name="account_creation_ring">Stvorite svoj Jami račun</string>
-  <string name="account_link_title">Povežite ovaj uređaj</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">Ubaci lozinku za potvrdu</string>
@@ -120,7 +119,6 @@
   <!--Link a new device-->
   <string name="error_format_not_supported">Ovaj format nije podržan.</string>
   <string name="account_link_device_title">Povežite novi uređaj</string>
-  <string name="connect_device_scanqr">Skeniranje QR koda</string>
   <string name="account_link_device_button">Povezivanje</string>
   <!--Biometry-->
 </resources>

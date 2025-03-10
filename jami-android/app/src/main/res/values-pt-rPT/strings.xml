@@ -113,7 +113,6 @@
   <string name="action_call_decline">Rejeitar</string>
   <string name="action_call_mic_mute">Silenciar microfone</string>
   <string name="action_load_extension">Carregar extensão</string>
-  <string name="ab_action_speakerphone">Ativar alta-voz</string>
   <string name="ab_action_contact_add">Adicionar aos contactos</string>
   <string name="ab_action_contact_add_question">Adicionar aos contactos?</string>
   <string name="ab_action_audio_call">Começar chamada de áudio</string>
@@ -247,7 +246,6 @@
   <string name="help_password_choose">Escolha uma palavra-passe forte que se lembre para proteger a sua conta Jami.</string>
   <string name="help_password_enter">Introduza a palavra-passe da sua conta principal do Jami.</string>
   <string name="help_server_enter">Introduzir o URL do servidor de gestão.</string>
-  <string name="help_pin_enter">Introduzir o PIN de outra conta Jami configurada. Utilizar a funcionalidade “Exportar conta Jami” para obter um PIN.</string>
   <string name="pin_copied">Código PIN copiado para a área de transferência.</string>
   <string name="copied_clipboard">Copiado para a área de transferência,</string>
   <string name="wizard_next">Próximo</string>
@@ -441,4 +439,7 @@
   <string name="unload_success">%1$s: desativado</string>
   <string name="install_success">A extensão %1$s foi instalada com sucesso.</string>
   <string name="install_error">Ocorreu um erro ao importar a extensão.</string>
+  <string name="export_side_main_title">Exportar conta</string>
+  <string name="export_side_step2_confirm">Confirmar</string>
+  <string name="import_side_step2_password_import">Importar</string>
 </resources>

@@ -121,8 +121,6 @@
   <string name="export_account_wait_message">การส่งออกข้อมูลบัญชี</string>
   <string name="account_export_file">บาคเกปบัญชี</string>
   <string name="account_export_file_summary">ทําสํารองบัญชีของคุณในเครื่องของคุณ เพื่อนํากลับมาในภายหลัง</string>
-  <string name="account_export_end_network_title">ความผิดพลาดในเครือข่าย</string>
-  <string name="account_export_end_error_title">ข้อผิดพลาด</string>
   <string name="account_enter_password">ใส่รหัสผ่าน</string>
   <string name="account_contact_me">ติดต่อฉันใน Jami!</string>
   <string name="update_account">การอัพเดทบัญชี</string>
@@ -150,7 +148,7 @@
   <string name="account_link_device">เชื่อมต่อจากอุปกรณ์อื่น</string>
   <string name="account_link_button">เชื่อมต่อจากเครือข่าย</string>
   <string name="account_link_archive_button">เชื่อมต่อจากสํารอง</string>
-  <string name="account_new_button">เข้าร่วมกับจามิ</string>
+  <string name="account_new_button">สร้างบัญชี Jami</string>
   <string name="account_link_export_button">เชื่อมโยงอุปกรณ์ใหม่</string>
   <string name="account_link_show_button">แสดง %d หน่วยที่เชื่อมต่อมากกว่า</string>
   <string name="account_link_hide_button">ปิดอุปกรณ์เชื่อมโยง</string>
@@ -181,7 +179,6 @@
   <string name="account_creation_home">ยินดีต้อนรับสู่ Jami</string>
   <string name="account_creation_profile">สร้างโปรไฟล์ของคุณ</string>
   <string name="account_creation_ring">สร้างบัญชี Jami</string>
-  <string name="account_link_title">เชื่อมต่ออุปกรณ์นี้</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">กรอกปัสผ่านเพื่อยืนยัน</string>
@@ -197,7 +194,6 @@
   <!--Link a new device-->
   <string name="error_format_not_supported">ไม่รองรับรูปแบบนี้</string>
   <string name="account_link_device_title">เชื่อมโยงอุปกรณ์ใหม่</string>
-  <string name="connect_device_scanqr">ตรวจสอบรหัส QR</string>
   <string name="account_link_device_button">เชื่อมต่อ</string>
   <!--Biometry-->
 </resources>

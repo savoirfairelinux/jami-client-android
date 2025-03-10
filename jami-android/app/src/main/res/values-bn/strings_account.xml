@@ -121,8 +121,6 @@
   <string name="export_account_wait_message">রপ্তানি অ্যাকাউন্টের তথ্য</string>
   <string name="account_export_file">ব্যাকআপ অ্যাকাউন্ট</string>
   <string name="account_export_file_summary">আপনার অ্যাকাউন্টটি আপনার ডিভাইসে ব্যাকআপ করুন পরে এটি পুনরুদ্ধার করতে।</string>
-  <string name="account_export_end_network_title">নেটওয়ার্ক ত্রুটি</string>
-  <string name="account_export_end_error_title">ত্রুটি</string>
   <string name="account_enter_password">পাসওয়ার্ড লিখুন</string>
   <string name="account_contact_me">জামিতে আমার সাথে যোগাযোগ করুন!</string>
   <string name="update_account">অ্যাকাউন্ট আপডেট</string>
@@ -150,7 +148,7 @@
   <string name="account_link_device">অন্য ডিভাইস থেকে সংযোগ</string>
   <string name="account_link_button">নেটওয়ার্ক থেকে সংযোগ</string>
   <string name="account_link_archive_button">ব্যাকআপ থেকে সংযোগ</string>
-  <string name="account_new_button">জামিতে যোগদান করুন</string>
+  <string name="account_new_button">জামি অ্যাকাউন্ট তৈরি করুন</string>
   <string name="account_link_export_button">একটি নতুন ডিভাইস লিঙ্ক</string>
   <string name="account_link_show_button">%d আরো সংযুক্ত ডিভাইস দেখান</string>
   <string name="account_link_hide_button">সংযুক্ত ডিভাইস লুকান</string>
@@ -181,7 +179,6 @@
   <string name="account_creation_home">জামিতে স্বাগতম</string>
   <string name="account_creation_profile">আপনার প্রোফাইল তৈরি করুন</string>
   <string name="account_creation_ring">আপনার জামি অ্যাকাউন্ট তৈরি করুন</string>
-  <string name="account_link_title">এই ডিভাইসটি সংযুক্ত করুন</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">নিশ্চিত করার জন্য পাসওয়ার্ড লিখুন</string>
@@ -197,7 +194,6 @@
   <!--Link a new device-->
   <string name="error_format_not_supported">এই ফরম্যাট সমর্থিত নয়।</string>
   <string name="account_link_device_title">একটি নতুন ডিভাইস লিঙ্ক</string>
-  <string name="connect_device_scanqr">QR কোড স্ক্যান করুন</string>
   <string name="account_link_device_button">সংযুক্ত করুন</string>
   <!--Biometry-->
 </resources>

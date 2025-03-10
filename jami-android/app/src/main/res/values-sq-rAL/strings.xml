@@ -111,7 +111,7 @@
   <string name="action_call_decline">Hidhe tej</string>
   <string name="action_call_mic_mute">Heshtoje mikrofonin</string>
   <string name="action_load_extension">Ngarko zgjerimin</string>
-  <string name="ab_action_speakerphone">Aktivizoni altoparlantin</string>
+  <string name="ab_action_speakerphone">Hap altoparlantin</string>
   <string name="ab_action_contact_add">Shtoje te kontaktet</string>
   <string name="ab_action_contact_add_question">Të shtohet te kontaktet?</string>
   <string name="ab_action_audio_call">Filloni thirrje audio</string>
@@ -246,7 +246,6 @@
   <string name="help_password_choose">Për të mbrojtur llogarinë tuaj Jami, zgjidhni fjalëkalim të fuqishëm që do ta mbani mend.</string>
   <string name="help_password_enter">Jepni fjalëkalimin e llogarisë tuaj kryesore Jami.</string>
   <string name="help_server_enter">Jepni URL-në e shërbyesit të administrimeve.</string>
-  <string name="help_pin_enter">Jepni PIN-in prej një tjetër llogarie Jami të formësuar. Që të keni PIN-in, përdorni veçorinë “Eksportoni llogari Jami”.</string>
   <string name="pin_copied">Kodi PIN u kopjua në të papastër.</string>
   <string name="copied_clipboard">U kopjua në të papastër.</string>
   <string name="wizard_next">Pasuesi</string>
@@ -461,4 +460,8 @@
   <string name="unload_success">%1$s: e çaktivizuar</string>
   <string name="install_success">Zgjerimi %1$s u instalua me sukses.</string>
   <string name="install_error">Ndodhi një gabim teksa importohej zgjerimi.</string>
+  <string name="export_side_main_title">Eksportoni llogari</string>
+  <string name="export_side_step2_cancel">Anuloje</string>
+  <string name="export_side_step2_confirm">Ripohoje</string>
+  <string name="import_side_step2_password_import">Importoje</string>
 </resources>

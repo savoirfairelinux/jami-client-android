@@ -120,8 +120,6 @@
   <string name="export_account_wait_message">Thông tin tài khoản xuất khẩu</string>
   <string name="account_export_file">Tài khoản sao lưu</string>
   <string name="account_export_file_summary">sao lưu tài khoản của bạn trên thiết bị của bạn để khôi phục nó sau đó.</string>
-  <string name="account_export_end_network_title">Hầm mạng</string>
-  <string name="account_export_end_error_title">Trận lỗi</string>
   <string name="account_enter_password">Nhập mật khẩu</string>
   <string name="account_contact_me">Liên hệ với tôi về Jami!</string>
   <string name="update_account">Tải đổi tài khoản</string>
@@ -149,7 +147,7 @@
   <string name="account_link_device">Kết nối từ thiết bị khác</string>
   <string name="account_link_button">Kết nối từ mạng</string>
   <string name="account_link_archive_button">Kết nối từ backup</string>
-  <string name="account_new_button">Tham gia Jami</string>
+  <string name="account_new_button">Tạo tài khoản Jami</string>
   <string name="account_link_export_button">Kết nối một thiết bị mới</string>
   <string name="account_link_show_button">hiển thị %d thiết bị liên kết khác</string>
   <string name="account_link_hide_button">Cụm thiết bị kết nối</string>
@@ -180,7 +178,6 @@
   <string name="account_creation_home">Chào mừng đến với Jami.</string>
   <string name="account_creation_profile">Tạo hồ sơ của bạn</string>
   <string name="account_creation_ring">Tạo tài khoản Jami của bạn</string>
-  <string name="account_link_title">Kết nối thiết bị này</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">Nhập mật khẩu để xác nhận</string>
@@ -195,7 +192,6 @@
   <string name="account_disabled_indicator">Khối khuyết tật</string>
   <!--Link a new device-->
   <string name="account_link_device_title">Kết nối một thiết bị mới</string>
-  <string name="connect_device_scanqr">Quét mã QR</string>
   <string name="account_link_device_button">Kết nối</string>
   <!--Biometry-->
 </resources>

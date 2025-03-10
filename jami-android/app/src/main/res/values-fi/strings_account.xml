@@ -156,10 +156,6 @@ Voit muokata tiliäsi myöhemmin</string>
   <string name="account_export_file">Varakäyttäjätunnus</string>
   <string name="account_export_file_summary">Varmuuskopioi tili laitteellesi niin voit palauttaa sen myöhemmin.</string>
   <string name="account_export_end_decryption_message">Väärä salasana. Yritä uudelleen oikealla salasanalla.</string>
-  <string name="account_export_end_network_title">Verkkovirhe</string>
-  <string name="account_export_end_network_message">Tiliä vietäessä tapahtui verkkovirhe. Tarkista yhteytesi.</string>
-  <string name="account_export_end_error_title">Virhe</string>
-  <string name="account_export_end_error_message">Tiliä vietäessä tapahtui tuntematon virhe.</string>
   <string name="account_enter_password">Anna salasana</string>
   <string name="account_share_body">Ota minuun yhteyttä käyttämällä \"%1$s\" Jami viestintäalustalla: %2$s</string>
   <string name="account_share_body_with_username">Ota minuun yhteyttä käyttämällä \"%1$s\" tai julkista käyttäjänimeä \"%2$s\" Jami viestintäalustalla: %3$s</string>
@@ -199,16 +195,12 @@ Voit muokata tiliäsi myöhemmin</string>
   <string name="account_link_device">Yhdistä toisesta laitteesta</string>
   <string name="account_link_button">Yhdistä verkosta</string>
   <string name="account_link_archive_button">Yhdistä varmuuskopiosta</string>
-  <string name="account_link_prompt_pin">Anna PIN-koodi</string>
-  <string name="account_new_button">Liity Jamiin</string>
+  <string name="account_new_button">Luo Jami-tili</string>
   <string name="account_link_export_button">Linkitä uusi laite</string>
   <string name="account_link_show_button">Näytä %d muuta linkitettyä laitetta</string>
   <string name="account_link_hide_button">Piilota linkitetty laite</string>
-  <string name="account_link_export_info">Käyttääksesi tiliä muilla laitteilla, sinun on ensin vietävä se Jami:lle. Tämä luo PIN-koodin, joka annetaan uuteen laitteeseen tilin luomiseksi. PIN-koodi vanhenee 10 minuutissa.</string>
   <string name="account_start_export_button">Luo PIN-koodi</string>
   <string name="account_end_export_button">sulje</string>
-  <string name="account_end_export_infos">PIN-koodisi on:\n\n%%\n\nSuorita prosessin loppuun, avaamalla Jami uudessa laitteessa. Luo uusi tili, valitse \"Yhdistä tämä laite tiliin\". Huomaa: PIN-koodi vanhenee 10 minuutissa.</string>
-  <string name="account_link_export_info_light">Käyttääksesi tiliä muilla laitteilla, sinun on ensin vietävä se Jami:lle. Tämä luo PIN-koodin, joka annetaan uuteen laitteeseen tilin luomiseksi. PIN-koodi vanhenee 10 minuutissa.</string>
   <string name="account_export_title">Linkitä tunnus toisesta laitteesta</string>
   <string name="account_connect_server_button">Yhteyden muodostaminen hallintapalvelimeen</string>
   <string name="account_connect_button">Yhdistä</string>
@@ -242,7 +234,6 @@ Voit muokata tiliäsi myöhemmin</string>
   <string name="account_creation_home">Tervetuloa Jamiin</string>
   <string name="account_creation_profile">Luo sinun profiili</string>
   <string name="account_creation_ring">Luo sinun Jami-tili</string>
-  <string name="account_link_title">Linkitä tämä laite</string>
   <string name="account_sip_cannot_be_registered">SIP-tilin rekisteröinnin aikana tapahtui virhe.</string>
   <!--Edit profile-->
   <string name="account_edit_profile">Muokkaa profiilia</string>
@@ -261,9 +252,6 @@ Voit muokata tiliäsi myöhemmin</string>
   <string name="account_device_this_indicator">Tämä laite</string>
   <string name="account_disabled_indicator">Poistettu</string>
   <!--Link a new device-->
-  <string name="account_link_prompt_pin_manually">Anna PIN-koodi käsin</string>
-  <string name="qr_invalid">Ei Jamin QR-koodi</string>
-  <string name="content_description_checkbox">QR-koodi on voimassa</string>
   <string name="error_format_not_supported">Tätä tiedostomuotoa ei tueta.</string>
   <string name="account_link_info">Skannaa QR-koodi uudessa Jami-sovelluksessa tai anna PIN-koodi käsin.</string>
   <string name="account_link_device_title">Linkitä uusi laite</string>
@@ -277,8 +265,6 @@ Voit muokata tiliäsi myöhemmin</string>
   <string name="account_generate_export_invalid">PIN-koodi ei ole enää voimassa.\nAnna salasana ja linkitä laite uudelleen.</string>
   <string name="account_generate_export_invalid_two">PIN-koodi ei ole enää voimassa.\nLuo uusi ja linkitä laite uudelleen.</string>
   <string name="help_pin_info">Täytä, jos tili on salattu salasanalla</string>
-  <string name="connect_device_scanqr">Skannaa QR-koodi</string>
-  <string name="connect_device_enterPIN">tai anna PIN-koodi</string>
   <string name="account_link_device_button">Yhdistä</string>
   <!--Biometry-->
   <string name="account_biometry_auth_title">Avaa Jami-tilin lukitus</string>

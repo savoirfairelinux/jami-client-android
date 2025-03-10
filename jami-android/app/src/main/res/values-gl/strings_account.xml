@@ -123,8 +123,6 @@
   <string name="export_account_wait_message">Exportando información da conta</string>
   <string name="account_export_file">Copia de apoio da conta</string>
   <string name="account_export_file_summary">Fai copia da conta no dispositivo para restaurala máis tarde.</string>
-  <string name="account_export_end_network_title">Fallo na rede</string>
-  <string name="account_export_end_error_title">Erro</string>
   <string name="account_enter_password">Escribir contrasinal</string>
   <string name="account_contact_me">Contacta comigo en Jami!</string>
   <string name="update_account">Actualizar conta</string>
@@ -152,7 +150,7 @@
   <string name="account_link_device">Conectar desde outro dispositivo</string>
   <string name="account_link_button">Conectar desde a rede</string>
   <string name="account_link_archive_button">Conectar desde copia de apoio</string>
-  <string name="account_new_button">Unirse a Jami</string>
+  <string name="account_new_button">Crear conta Jami</string>
   <string name="account_link_export_button">Ligar un novo dispositio</string>
   <string name="account_link_show_button">Mostar %d dispositivo ligado</string>
   <string name="account_link_hide_button">Agochar dispositivo ligado</string>
@@ -184,7 +182,6 @@
   <string name="account_creation_home">Benvida/o a Jami</string>
   <string name="account_creation_profile">Crea o teu perfil</string>
   <string name="account_creation_ring">Crea a túa conta Jami</string>
-  <string name="account_link_title">Liga este dispositivo</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">Escribe o contrasinal para confirmar</string>
@@ -198,7 +195,6 @@
   <string name="account_device_this_indicator">Este dispositivo</string>
   <string name="account_disabled_indicator">Desactivada</string>
   <!--Link a new device-->
-  <string name="qr_invalid">Non é un código QR de Autenticación de Jami</string>
   <string name="error_format_not_supported">Este formato non está soportado.</string>
   <string name="account_link_device_title">Ligar un novo dispositio</string>
   <string name="account_link_password">Esta conta está protexida con contrasinal, escribe o contrasinal para crear un código PIN.</string>
@@ -206,7 +202,6 @@
   <string name="account_link_time_valid">O código PIN xa non será válido en: %1$s.</string>
   <string name="account_generate_export_device">No outro dispositivo</string>
   <string name="help_pin_info">Completar se a conta está cifrada con contrasinal</string>
-  <string name="connect_device_scanqr">Escanar código QR</string>
   <string name="account_link_device_button">Conectar</string>
   <!--Biometry-->
 </resources>

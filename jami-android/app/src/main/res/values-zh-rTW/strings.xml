@@ -110,7 +110,6 @@
   <string name="action_call_decline">拒絕</string>
   <string name="action_call_mic_mute">麥克風靜音</string>
   <string name="action_load_extension">加载扩展</string>
-  <string name="ab_action_speakerphone">啟用喇叭</string>
   <string name="ab_action_contact_add">加到聯絡人</string>
   <string name="ab_action_contact_add_question">新增到聯絡人？</string>
   <string name="ab_action_audio_call">開始音訊通話</string>
@@ -245,7 +244,6 @@
   <string name="help_password_choose">選擇您可以記住用來保護您的 Jami 帳號的強式密碼。</string>
   <string name="help_password_enter">輸入您的主要 Jami 帳號密碼。</string>
   <string name="help_server_enter">輸入管理伺服器的 URL。</string>
-  <string name="help_pin_enter">从另一个配置的Jami帐户输入PIN。使用“导出Jami帐户”功能获取PIN。</string>
   <string name="pin_copied">PIN码复制到剪贴板</string>
   <string name="copied_clipboard">已复制到剪贴板。</string>
   <string name="wizard_next">下一個</string>
@@ -461,4 +459,10 @@
   <string name="unload_success">%1$s: 已禁用</string>
   <string name="install_success">扩展%1$s已成功安装</string>
   <string name="install_error">导入扩展时出错</string>
+  <string name="export_side_main_title">匯出帳號</string>
+  <string name="export_side_step1_code_connect">連線</string>
+  <string name="export_side_step2_cancel">取消</string>
+  <string name="export_side_step2_confirm">確認</string>
+  <string name="import_side_step1_share">分享</string>
+  <string name="import_side_step2_password_import">匯入</string>
 </resources>

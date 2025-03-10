@@ -131,8 +131,6 @@
   <string name="account_export_file">Varnostno kopiranje računa</string>
   <string name="account_export_file_summary">Varnostno kopiranje računa za kasnejšo obnovitev.</string>
   <string name="account_export_end_decryption_message">Nepravilno geslo. Poskusite znova s pravim geslom.</string>
-  <string name="account_export_end_network_title">Napaka na omrežju</string>
-  <string name="account_export_end_error_title">Napaka</string>
   <string name="account_enter_password">Vnesite geslo</string>
   <string name="account_contact_me">Poišči me na Jami-ju!</string>
   <string name="update_account">Posodobi račun</string>
@@ -162,8 +160,7 @@
   <string name="account_link_device">Poveži se z druge naprave</string>
   <string name="account_link_button">Poveži se iz omrežja</string>
   <string name="account_link_archive_button">Poveži se se iz varnostne kopije</string>
-  <string name="account_link_prompt_pin">Vnesite kodo PIN</string>
-  <string name="account_new_button">Pridruži se Jami</string>
+  <string name="account_new_button">Ustvari račun Jami</string>
   <string name="account_link_export_button">Poveži novo napravo</string>
   <string name="account_link_show_button">Prikaži %d več povezanih naprav</string>
   <string name="account_link_hide_button">Skrij povezano napravo</string>
@@ -196,7 +193,6 @@
   <string name="account_creation_home">Dobrodošli v Jami</string>
   <string name="account_creation_profile">Ustvari profil</string>
   <string name="account_creation_ring">Ustvari račun Jami</string>
-  <string name="account_link_title">Poveži to napravo</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">Vnesite geslo za potrditev</string>
@@ -210,7 +206,6 @@
   <string name="account_device_this_indicator">Ta naprava</string>
   <string name="account_disabled_indicator">Onemogočeno</string>
   <!--Link a new device-->
-  <string name="qr_invalid">Ni overitvena koda QR Jami</string>
   <string name="error_format_not_supported">Format ni podprt.</string>
   <string name="account_link_device_title">Poveži novo napravo</string>
   <string name="account_link_password">Ta račun je šifriran z geslom, vnesite geslo, da tvorite kodo PIN.</string>
@@ -218,7 +213,6 @@
   <string name="account_link_time_valid">Koda PIN bo neveljavna: %1$s.</string>
   <string name="account_generate_export_device">Na drugi napravi</string>
   <string name="help_pin_info">Izpolnite, če je račun zaščiten z geslom</string>
-  <string name="connect_device_scanqr">Preberi QR-kodo</string>
   <string name="account_link_device_button">Poveži</string>
   <!--Biometry-->
   <string name="account_biometry_auth_title">Odkleni račun Jami</string>

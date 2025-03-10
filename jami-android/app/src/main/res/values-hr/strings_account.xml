@@ -122,8 +122,6 @@
   <string name="export_account_wait_message">Informacije o izvoznim računu</string>
   <string name="account_export_file">Zaštita računa</string>
   <string name="account_export_file_summary">Zaštita računa na uređaju da ga kasnije obnovite.</string>
-  <string name="account_export_end_network_title">Greška mreže</string>
-  <string name="account_export_end_error_title">Greška</string>
   <string name="account_enter_password">Unesite lozinku</string>
   <string name="account_contact_me">Kontaktirajte me na Jami!</string>
   <string name="update_account">Ažuriraj račun</string>
@@ -151,7 +149,7 @@
   <string name="account_link_device">Povezivanje s drugog uređaja</string>
   <string name="account_link_button">Povezivanje s mreže</string>
   <string name="account_link_archive_button">Povezivanje sa rezervom</string>
-  <string name="account_new_button">Pridruži se Jamiju.</string>
+  <string name="account_new_button">Napravite Jami račun</string>
   <string name="account_link_export_button">Povežite novi uređaj</string>
   <string name="account_link_show_button">Pokaži %d više povezanih uređaja</string>
   <string name="account_link_hide_button">Skloni se priključeno uređaj</string>
@@ -182,7 +180,6 @@
   <string name="account_creation_home">Dobrodošli u Jami</string>
   <string name="account_creation_profile">Napravite vaš profil</string>
   <string name="account_creation_ring">Stvorite svoj Jami račun</string>
-  <string name="account_link_title">Povežite ovaj uređaj</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">Ubaci lozinku za potvrdu</string>
@@ -198,7 +195,6 @@
   <!--Link a new device-->
   <string name="error_format_not_supported">Ovaj format nije podržan.</string>
   <string name="account_link_device_title">Povežite novi uređaj</string>
-  <string name="connect_device_scanqr">Skeniranje QR koda</string>
   <string name="account_link_device_button">Povezivanje</string>
   <!--Biometry-->
 </resources>

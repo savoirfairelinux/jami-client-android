@@ -107,7 +107,6 @@
   <string name="action_call_accept_audio">Prihvatite sa zvukom</string>
   <string name="action_call_decline">Одбиј</string>
   <string name="action_call_mic_mute">Искључи микрофон</string>
-  <string name="ab_action_speakerphone">Омогући звучник</string>
   <string name="ab_action_contact_add">Додај у контакте</string>
   <string name="ab_action_contact_add_question">Додај у контакте?</string>
   <string name="ab_action_audio_call">Почне аудио позив</string>
@@ -213,7 +212,6 @@
   <string name="help_password_choose">Изаберите јаку лозинку коју ћете запамтити да бисте заштитили свој Јами налог.</string>
   <string name="help_password_enter">Унесите своју главну лозинку за Јами налог.</string>
   <string name="help_server_enter">Унесите УРЛ сервера за управљање.</string>
-  <string name="help_pin_enter">Unesite PIN sa drugog konfigurisanog Jami naloga. Koristite funkciju „Izvoz Jami naloga“ da biste dobili PIN.</string>
   <string name="wizard_next">Напред</string>
   <string name="wizard_back">Назад</string>
   <string name="wizard_skip">Прескочи</string>
@@ -388,4 +386,7 @@
   <string name="load_success">%1$s: укључено</string>
   <string name="unload_success">%1$s: искључено</string>
   <string name="install_error">Došlo je do greške pri uvozu ekstenzije.</string>
+  <string name="export_side_step2_cancel">Откажи</string>
+  <string name="export_side_step2_confirm">Потврди</string>
+  <string name="import_side_step2_password_import">Увоз</string>
 </resources>

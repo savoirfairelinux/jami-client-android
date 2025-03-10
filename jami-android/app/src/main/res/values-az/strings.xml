@@ -85,7 +85,6 @@
   <string name="hist_out_call">%1$s-ین چیخان چاغیرماسی</string>
   <string name="action_call_decline">آشاغی صفحه</string>
   <string name="action_call_mic_mute">Mikrofonu səssiz et</string>
-  <string name="ab_action_speakerphone">اسپکر فعال ائدئ</string>
   <string name="ab_action_contact_add">تماسلارا قوش</string>
   <string name="ab_action_contact_add_question">تماس لری آرتیرماق؟</string>
   <string name="ab_action_audio_call">صداي زنگي باشلا</string>
@@ -190,6 +189,7 @@
   <string name="hist_invitation_received">دعوت آلدی</string>
   <!--Account summary-->
   <string name="profile">پروفایل</string>
+  <string name="profile_message_warning">پروفایل فقط تماسلارلا اشتراک اولونور</string>
   <string name="open_the_gallery">گالری آچ</string>
   <string name="take_a_photo">عکس آل</string>
   <string name="profile_name_hint">آدینی واردات</string>
@@ -225,6 +225,7 @@
   <string name="gallery_error_title">گالری ایستیفاده سی تاپیلدی</string>
   <string name="gallery_error_message">گالری آچیقلاماق اوچون آلینادا ایستیفاده تاپیلدی</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_canceled">Ləğv edilib</string>
   <string name="file_download">دانلود</string>
   <string name="title_media_viewer">میدیالی باخار</string>
   <string name="menu_file_open">آچیق فایل</string>

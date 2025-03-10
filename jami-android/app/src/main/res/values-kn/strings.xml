@@ -85,7 +85,6 @@
   <string name="hist_out_call">%1$s ನ ಹೊರಹೋಗುವ ಕರೆ</string>
   <string name="action_call_decline">ಕುಸಿತ</string>
   <string name="action_call_mic_mute">ಮೂಕ ಮೈಕ್ರೊಫೋನ್</string>
-  <string name="ab_action_speakerphone">ಸ್ಪೀಕರ್ ಅನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿ</string>
   <string name="ab_action_contact_add">ಸಂಪರ್ಕಗಳನ್ನು ಸೇರಿಸಿ</string>
   <string name="ab_action_contact_add_question">ಸಂಪರ್ಕಗಳಿಗೆ ಸೇರಿಸುವುದೇ?</string>
   <string name="ab_action_audio_call">ಆಡಿಯೋ ಕರೆ ಆರಂಭಿಸಿ</string>
@@ -313,4 +312,5 @@
   <!--Donation-->
   <string name="donation_card_not_now">ಈಗ ಬೇಡ</string>
   <!--Extension-->
+  <string name="import_side_step2_password_import">ಆಮದು</string>
 </resources>

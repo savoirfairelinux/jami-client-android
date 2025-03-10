@@ -85,7 +85,6 @@
   <string name="hist_out_call">%1$s को आउटगोइङ कल</string>
   <string name="action_call_decline">घट्दो</string>
   <string name="action_call_mic_mute">गहिरो माइक्रोफोन</string>
-  <string name="ab_action_speakerphone">स्पीकर सक्षम गर्नुहोस्</string>
   <string name="ab_action_contact_add">सम्पर्कमा थप्नुहोस्</string>
   <string name="ab_action_contact_add_question">सम्पर्कमा थप्न?</string>
   <string name="ab_action_audio_call">अडियो कल सुरु गर्नुहोस्</string>
@@ -313,4 +312,6 @@
   <!--Donation-->
   <string name="donation_card_not_now">अहिले होइन</string>
   <!--Extension-->
+  <string name="export_side_step2_confirm">पुष्टि गर्नुहोस्</string>
+  <string name="import_side_step2_password_import">आयात</string>
 </resources>

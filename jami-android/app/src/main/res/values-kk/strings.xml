@@ -85,7 +85,6 @@
   <string name="hist_out_call">%1$s шығыс шақыру</string>
   <string name="action_call_decline">Ауыру</string>
   <string name="action_call_mic_mute">Ақысыз микрофон</string>
-  <string name="ab_action_speakerphone">Дисплейтерді қосу</string>
   <string name="ab_action_contact_add">Байланыстарға қосу</string>
   <string name="ab_action_contact_add_question">Байланыстарға қосыл?</string>
   <string name="ab_action_audio_call">Аудио шақыруды бастау</string>
@@ -313,4 +312,5 @@
   <!--Donation-->
   <string name="donation_card_not_now">Қазір емес</string>
   <!--Extension-->
+  <string name="import_side_step2_password_import">Импорт</string>
 </resources>

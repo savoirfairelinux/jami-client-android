@@ -121,8 +121,6 @@
   <string name="export_account_wait_message">ರಫ್ತು ಖಾತೆ ಮಾಹಿತಿ</string>
   <string name="account_export_file">ಬ್ಯಾಕಪ್ ಖಾತೆ</string>
   <string name="account_export_file_summary">ನಿಮ್ಮ ಖಾತೆಯನ್ನು ನಿಮ್ಮ ಸಾಧನದಲ್ಲಿ ಬ್ಯಾಕಪ್ ಮಾಡಿ ನಂತರ ಅದನ್ನು ಮರುಸ್ಥಾಪಿಸಿ.</string>
-  <string name="account_export_end_network_title">ನೆಟ್ವರ್ಕ್ ದೋಷ</string>
-  <string name="account_export_end_error_title">ದೋಷ</string>
   <string name="account_enter_password">ಪಾಸ್ವರ್ಡ್ ನಮೂದಿಸಿ</string>
   <string name="account_contact_me">ಜಾಮಿ ಬಗ್ಗೆ ನನ್ನನ್ನು ಸಂಪರ್ಕಿಸಿ!</string>
   <string name="update_account">ಖಾತೆಯನ್ನು ನವೀಕರಿಸಿ</string>
@@ -150,7 +148,7 @@
   <string name="account_link_device">ಮತ್ತೊಂದು ಸಾಧನದಿಂದ ಸಂಪರ್ಕ</string>
   <string name="account_link_button">ನೆಟ್ವರ್ಕ್ನಿಂದ ಸಂಪರ್ಕ</string>
   <string name="account_link_archive_button">ಬ್ಯಾಕ್ಅಪ್ನಿಂದ ಸಂಪರ್ಕ</string>
-  <string name="account_new_button">ಜಾಮಿಗೆ ಸೇರಿ</string>
+  <string name="account_new_button">ಜಾಮಿ ಖಾತೆಯನ್ನು ರಚಿಸಿ</string>
   <string name="account_link_export_button">ಹೊಸ ಸಾಧನವನ್ನು ಸಂಪರ್ಕಿಸಿ</string>
   <string name="account_link_show_button">%d ಹೆಚ್ಚು ಸಂಪರ್ಕಿತ ಸಾಧನವನ್ನು ತೋರಿಸಿ</string>
   <string name="account_link_hide_button">ಸಂಪರ್ಕಿತ ಸಾಧನವನ್ನು ಮರೆಮಾಡಿ</string>
@@ -181,7 +179,6 @@
   <string name="account_creation_home">ಜಾಮಿಗೆ ಸ್ವಾಗತ</string>
   <string name="account_creation_profile">ನಿಮ್ಮ ಪ್ರೊಫೈಲ್ ಅನ್ನು ರಚಿಸಿ</string>
   <string name="account_creation_ring">ನಿಮ್ಮ ಜಾಮಿ ಖಾತೆಯನ್ನು ರಚಿಸಿ</string>
-  <string name="account_link_title">ಈ ಸಾಧನವನ್ನು ಸಂಪರ್ಕಿಸಿ</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">ಖಚಿತಪಡಿಸಲು ಪಾಸ್ವರ್ಡ್ ನಮೂದಿಸಿ</string>
@@ -197,7 +194,6 @@
   <!--Link a new device-->
   <string name="error_format_not_supported">ಈ ಸ್ವರೂಪವನ್ನು ಬೆಂಬಲಿಸುವುದಿಲ್ಲ.</string>
   <string name="account_link_device_title">ಹೊಸ ಸಾಧನವನ್ನು ಸಂಪರ್ಕಿಸಿ</string>
-  <string name="connect_device_scanqr">QR ಕೋಡ್ ಸ್ಕ್ಯಾನ್ ಮಾಡಿ</string>
   <string name="account_link_device_button">ಸಂಪರ್ಕ</string>
   <!--Biometry-->
 </resources>

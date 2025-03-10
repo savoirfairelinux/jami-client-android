@@ -111,7 +111,7 @@
   <string name="action_call_decline">Elutasítás</string>
   <string name="action_call_mic_mute">Mikrofon elnémítása</string>
   <string name="action_load_extension">Bővítmény betöltése</string>
-  <string name="ab_action_speakerphone">Hangszóró engedélyezése</string>
+  <string name="ab_action_speakerphone">Hangszóró bekapcsolása</string>
   <string name="ab_action_contact_add">Hozzáadás a kapcsolattartók közé</string>
   <string name="ab_action_contact_add_question">Hozzáadás a kapcsolattartók közé?</string>
   <string name="ab_action_audio_call">Hanghívás indítása</string>
@@ -246,7 +246,6 @@
   <string name="help_password_choose">Válasszon erős jelszót, amelyre emlékezni fog, hogy megvédje a Jami-fiókját.</string>
   <string name="help_password_enter">Fő Jami-fiók jelszavának megadása.</string>
   <string name="help_server_enter">Adja meg a felügyeleti kiszolgáló URL-jét.</string>
-  <string name="help_pin_enter">Adja meg egy másik beállított Jami fiók PIN-kodját. Használja a „Jami-fiók exportálása” működést a PIN-kod eléréséhez.</string>
   <string name="pin_copied">A PIN-kód kimásolva a vágólapra.</string>
   <string name="copied_clipboard">A vágólapra másolva.</string>
   <string name="wizard_next">Tovább</string>
@@ -462,4 +461,6 @@
   <string name="unload_success">%1$s: letiltva</string>
   <string name="install_success">A(z) %1$s bővítmény telepítése sikerült.</string>
   <string name="install_error">Hiba történt a bővítmény importálása közben.</string>
+  <string name="export_side_main_title">Fiók exportálása</string>
+  <string name="import_side_step2_password_import">Importálás</string>
 </resources>

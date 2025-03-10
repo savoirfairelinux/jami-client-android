@@ -156,10 +156,6 @@
   <string name="account_export_file">备份账户</string>
   <string name="account_export_file_summary">备份您设备上的账户以便恢复</string>
   <string name="account_export_end_decryption_message">使用该密码无法解锁您的账户。</string>
-  <string name="account_export_end_network_title">网络错误</string>
-  <string name="account_export_end_network_message">无法进行账户在线导出。请检查您的网络连接。</string>
-  <string name="account_export_end_error_title">错误</string>
-  <string name="account_export_end_error_message">无法导出账户，发生未知错误。</string>
   <string name="account_enter_password">输入密码</string>
   <string name="account_share_body">用 \"%1$s\" 在 Jami 分布式通信平台上与我联系：%2$s</string>
   <string name="account_share_body_with_username">使用 \"%1$s\"或我的公开用户名 \"%2$s\" 在 Jami 分布式通讯平台上联系我：%3$s</string>
@@ -199,16 +195,12 @@
   <string name="account_link_device">从另一台设备连接</string>
   <string name="account_link_button">从网络关联</string>
   <string name="account_link_archive_button">从备份文件关联</string>
-  <string name="account_link_prompt_pin">输入PIN码</string>
-  <string name="account_new_button">加入 Jami</string>
+  <string name="account_new_button">建立 Jami 帳號</string>
   <string name="account_link_export_button">关联新设备</string>
   <string name="account_link_show_button">再显示 %d 个关联设备</string>
   <string name="account_link_hide_button">隐藏关联设备</string>
-  <string name="account_link_export_info">要在其他设备上使用此账户，您必须先在Jami上公开它。这将生成一个PIN码，您必须在新设备上输入该PIN码才能设置此账户。PIN码有效期为 10 分钟。</string>
   <string name="account_start_export_button">生成PIN码</string>
   <string name="account_end_export_button">关闭</string>
-  <string name="account_end_export_infos">我们的PIN是：\n\n%%\n\n要完成此过程，您需要在新设备上打开Jami。使用“将此设备链接到帐户”创建新帐户。PIN将在10分钟后过期。</string>
-  <string name="account_link_export_info_light">要在其他设备上使用此账户，您必须先在Jami上公开它。这将生成一个PIN码，您必须在新设备上输入该PIN码才能设置此账户。PIN码有效期为 10 分钟。</string>
   <string name="account_export_title">将账号关联至其他设备</string>
   <string name="account_connect_server_button">连接到管理服务器</string>
   <string name="account_connect_button">连接</string>
@@ -241,7 +233,6 @@
   <string name="account_creation_home">欢迎来到 Jami</string>
   <string name="account_creation_profile">创建您的账户资料</string>
   <string name="account_creation_ring">创建您的 Jami 账户</string>
-  <string name="account_link_title">关联此设备</string>
   <string name="account_sip_cannot_be_registered">无法注册账户</string>
   <!--Edit profile-->
   <string name="account_edit_profile">修改您的账户资料</string>
@@ -260,9 +251,6 @@
   <string name="account_device_this_indicator">本设备</string>
   <string name="account_disabled_indicator">已停用</string>
   <!--Link a new device-->
-  <string name="account_link_prompt_pin_manually">手动输入PIN</string>
-  <string name="qr_invalid">不是Jami的身份验证二维码</string>
-  <string name="content_description_checkbox">您的二维码有效</string>
   <string name="error_format_not_supported">不支援此格式。</string>
   <string name="account_link_info">在新的Jami应用程序上，扫描二维码或手动输入PIN</string>
   <string name="account_link_device_title">关联新设备</string>
@@ -276,8 +264,6 @@
   <string name="account_generate_export_invalid">PIN不再有效。\n输入密码并生成新的密码以链接新设备。</string>
   <string name="account_generate_export_invalid_two">PIN不再有效。\n生成新PIN以链接新设备。</string>
   <string name="help_pin_info">如果帐户是密码加密的，请输入</string>
-  <string name="connect_device_scanqr">扫描 QR 码</string>
-  <string name="connect_device_enterPIN">或输入PIN</string>
   <string name="account_link_device_button">连接</string>
   <!--Biometry-->
   <string name="account_biometry_auth_title">解锁Jami帐户</string>

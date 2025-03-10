@@ -88,7 +88,6 @@
   <string name="action_call_accept">着信を受ける</string>
   <string name="action_call_decline">辞退</string>
   <string name="action_call_mic_mute">マイクをミュート</string>
-  <string name="ab_action_speakerphone">スピーカーを有効にする</string>
   <string name="ab_action_contact_add">連絡先に追加</string>
   <string name="ab_action_contact_add_question">連絡先を追加しますか？</string>
   <string name="ab_action_audio_call">音声通話を開始</string>
@@ -319,4 +318,6 @@
   <!--Donation-->
   <string name="donation_card_not_now">後で</string>
   <!--Extension-->
+  <string name="export_side_main_title">アカウントをエクスポート</string>
+  <string name="import_side_step2_password_import">輸入</string>
 </resources>
