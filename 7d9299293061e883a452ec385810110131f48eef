@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "035560d4_a6005322",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 19
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-03-11T02:15:18Z",
+      "side": 0,
+      "message": "To unify with other clients, it should be\n`The operation timed out.`\n\nHowever, if you prefer it could be\n`File transfer operation timed out.`\n\nThank you",
+      "range": {
+        "startLine": 481,
+        "startChar": 50,
+        "endLine": 481,
+        "endChar": 59
+      },
+      "revId": "7d9299293061e883a452ec385810110131f48eef",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
