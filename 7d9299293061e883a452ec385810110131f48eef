@@ -22,6 +22,52 @@
       },
       "revId": "7d9299293061e883a452ec385810110131f48eef",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a7010dd9_bb25454f",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 19
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-03-11T03:19:45Z",
+      "side": 0,
+      "message": "Can this line be removed as it is a duplicate of the line above?",
+      "range": {
+        "startLine": 636,
+        "startChar": 1,
+        "endLine": 636,
+        "endChar": 129
+      },
+      "revId": "7d9299293061e883a452ec385810110131f48eef",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aabb3483_4782752c",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 19
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2025-03-11T03:19:45Z",
+      "side": 0,
+      "message": "Can this line be removed as it is a duplicate of the line above?",
+      "range": {
+        "startLine": 638,
+        "startChar": 0,
+        "endLine": 638,
+        "endChar": 116
+      },
+      "revId": "7d9299293061e883a452ec385810110131f48eef",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
