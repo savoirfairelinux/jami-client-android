@@ -37,11 +37,10 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         externalNativeBuild {
             cmake {
-                version = "3.30.5"
                 arguments += listOf(
                     "-DANDROID_STL=c++_shared",
                     "-DBUILD_CONTRIB=ON",
-                    "-DBUILD_EXTRA_TOOLS=OFF",
+                    "-DBUILD_EXTRA_TOOLS=ON",
                     "-DJAMI_TESTS=OFF",
                     "-DBUILD_TESTING=OFF",
                     "-DJAMI_JNI=ON",
