@@ -25,8 +25,8 @@ android {
         minSdk = 24
         targetSdk = 35
         // upstream version, patchlevel (last 3 digits)
-        versionCode = 450001
-        versionName = "20250310-01"
+        versionCode = 450002
+        versionName = "20250310-02"
         val release = System.getenv("RELEASE_VERSION")
         if (release != null) {
             val numeric = release.slice(1 until release.length).toInt() // chop off the v
