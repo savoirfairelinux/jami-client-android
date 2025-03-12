@@ -53,7 +53,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_PHONE_CALL" />
     <uses-permission android:name="com.android.providers.tv.permission.WRITE_EPG_DATA" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_REMOTE_MESSAGING"/>
-    <permission android:name="cx.ring.permission.BIND_REMOTE_SERVICE" />
 
     <uses-feature
         android:name="android.hardware.wifi"
@@ -468,7 +467,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:enabled="true"
             android:exported="true"
             android:foregroundServiceType="remoteMessaging"
-            android:permission="cx.ring.permission.BIND_REMOTE_SERVICE">
+            android:permission="android.permission.CALL_PHONE">
             <intent-filter>
                 <action android:name="cx.ring.service.REMOTE_CONTROL" />
             </intent-filter>
