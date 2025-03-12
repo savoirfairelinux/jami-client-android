@@ -232,6 +232,9 @@ class AccountService(
      */
     fun hasJamiAccount(): Boolean = mHasRingAccount
 
+    var accountsHaveBeenLoaded: Boolean = false
+        private set
+
     /**
      * Loads the accounts from the daemon and then builds the local cache (also sends ACCOUNTS_CHANGED event)
      *
@@ -263,6 +266,7 @@ class AccountService(
         // Cleanup removed accounts
         for (acc in curList) if (!newAccounts.contains(acc)) acc.cleanup()
         accountsSubject.onNext(newAccounts)
+        accountsHaveBeenLoaded = true
     }
 
     private fun loadAccount(account: Account) {

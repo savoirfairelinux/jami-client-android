@@ -8,7 +8,6 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.IBinder
-import android.os.Looper
 import android.os.RemoteException
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
@@ -19,7 +18,6 @@ import cx.ring.fragments.CallFragment
 import cx.ring.tv.call.TVCallActivity
 import cx.ring.utils.ConversationPath
 import dagger.hilt.android.AndroidEntryPoint
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -374,6 +372,12 @@ class RemoteControl : LifecycleService() {
             connectionMonitors[monitor]?.dispose()
             connectionMonitors.remove(monitor)
             hardwareService.mPreferenceService.isLogActive = connectionMonitors.isNotEmpty()
+        }
+
+        override fun getOrCreateAccount(data: Map<String, String>): String? {
+            return if (accountService.accountsHaveBeenLoaded) {
+                accountService.currentAccount?.accountId ?: createAccount(data)
+            } else null
         }
     }
 
