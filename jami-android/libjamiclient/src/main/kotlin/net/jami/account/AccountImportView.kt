@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2004-2024 Savoir-faire Linux Inc.
+ *  Copyright (C) 2004-2025 Savoir-faire Linux Inc.
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -14,15 +14,15 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-package cx.ring.linkdevice.viewmodel
+package net.jami.account
 
-interface AuthStateListener {
-    fun onInitSignal() { // Should not be received since there is nothing to do.
-        throw UnsupportedOperationException()
-    }
-    fun onTokenAvailableSignal(details: Map<String, String>)
-    fun onConnectingSignal()
-    fun onAuthenticatingSignal(details: Map<String, String>)
-    fun onInProgressSignal()
-    fun onDoneSignal(details: Map<String, String>)
+import net.jami.services.AccountService
+
+interface AccountImportView {
+    fun showToken(token: String)
+    fun showConnecting()
+    fun showAuthenticating(needPassword: Boolean, jamiId: String, registeredName: String, error: String?)
+    fun showInProgress()
+    fun showDone(error: AccountService.AuthError?)
+    fun showExit()
 }

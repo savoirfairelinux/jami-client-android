@@ -30,6 +30,7 @@ import net.jami.model.Account
 import net.jami.model.AccountConfig
 import net.jami.model.ConfigKey
 import net.jami.services.AccountService
+import net.jami.services.AccountService.AuthError
 import net.jami.utils.Log
 import javax.inject.Inject
 import javax.inject.Named

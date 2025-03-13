@@ -16,7 +16,6 @@
  */
 package cx.ring.linkdevice.view
 
-import cx.ring.linkdevice.viewmodel.AuthError
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -27,6 +26,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import cx.ring.R
 import cx.ring.databinding.FragmentImportSideStep3Binding
+import net.jami.services.AccountService.AuthError
 
 class ImportSideStep3Fragment : Fragment() {
     private var _binding: FragmentImportSideStep3Binding? = null
