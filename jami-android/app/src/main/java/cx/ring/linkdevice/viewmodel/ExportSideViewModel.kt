@@ -55,6 +55,7 @@ class ExportSideViewModel @Inject constructor(
     private val _uiState = MutableStateFlow<AddDeviceExportState>(AddDeviceExportState.Init())
     val uiState: StateFlow<AddDeviceExportState> = _uiState.asStateFlow()
 
+    private val accountId = accountService.currentAccount!!.accountId
     private var operationId: Long? = null
 
     private var compositeDisposable = CompositeDisposable()
@@ -66,35 +67,39 @@ class ExportSideViewModel @Inject constructor(
             || (jamiAuthentication.length != 59)
         ) {
             Log.w(TAG, "Invalid input: $jamiAuthentication")
-            _uiState.value =
-                AddDeviceExportState.Init() // If state is unchanged, error is not emitted again.
+            // If state is unchanged, error is not emitted again.
+            _uiState.value = AddDeviceExportState.Init()
             _uiState.value = AddDeviceExportState.Init(ExportSideInputError.INVALID_INPUT)
             return
         }
 
-        operationId = accountService
-            .addDevice(accountService.currentAccount!!.accountId, jamiAuthentication)
+        val operationId = accountService.addDevice(accountId, jamiAuthentication)
+        if (operationId < 0) {
+            Log.e(TAG, "Failed to add device: $jamiAuthentication $operationId")
+            _uiState.value = when (operationId) {
+                -1L -> AddDeviceExportState.Init(ExportSideInputError.INVALID_INPUT)
+                else -> AddDeviceExportState.Done(AuthError.UNKNOWN)
+            }
+            return
+        }
+        this.operationId = operationId
 
         assert(compositeDisposable.size() == 0) // Should not have any subscription.
 
         accountService.authResultObservable
-            .filter {
-                it.accountId == accountService.currentAccount?.accountId
-                        && it.operationId == operationId
-            }
+            .filter { it.accountId == accountId && it.operationId == operationId }
             .observeOn(mUiScheduler)
-            .subscribe { it: AuthResult ->
-                updateAuthState(it)
-            }.apply { compositeDisposable.add(this) }
+            .subscribe(this::updateAuthState)
+            .apply { compositeDisposable.add(this) }
     }
 
     fun onIdentityConfirmation() {
-        accountService.confirmAddDevice(accountService.currentAccount!!.accountId, operationId!!)
+        accountService.confirmAddDevice(accountId, operationId!!)
     }
 
     fun onCancel() {
         val operationId = operationId ?: return
-        accountService.cancelAddDevice(accountService.currentAccount!!.accountId, operationId)
+        accountService.cancelAddDevice(accountId, operationId)
     }
 
     // There is no token to be received in export side.
@@ -103,7 +108,6 @@ class ExportSideViewModel @Inject constructor(
     }
 
     override fun onConnectingSignal() {
-        // Nothing to do here.
         _uiState.value = AddDeviceExportState.Connecting
     }
 
