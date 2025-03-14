@@ -30,6 +30,7 @@ import net.jami.model.Account
 import net.jami.model.AccountConfig
 import net.jami.model.ConfigKey
 import net.jami.services.AccountService
+import net.jami.services.AccountService.AuthError
 import net.jami.utils.Log
 import javax.inject.Inject
 import javax.inject.Named
@@ -40,9 +41,9 @@ sealed class AddDeviceImportState {
     data class TokenAvailable(val token: String) : AddDeviceImportState()
     data object Connecting : AddDeviceImportState()
     data class Authenticating(
-        val jamiId: String,
+        val id: String,
         val needPassword: Boolean,
-        val registeredName: String = "",
+        val registeredName: String? = null,
         val error: InputError?
     ) : AddDeviceImportState()
 
@@ -78,9 +79,8 @@ class ImportSideViewModel @Inject constructor(
                 accountService.authResultObservable.filter { it.accountId == account.accountId }
             }
             .observeOn(mUiScheduler)
-            .subscribe { it: AuthResult ->
-                updateDeviceAuthState(it)
-            }.apply { compositeDisposable.add(this) }
+            .subscribe(this::updateDeviceAuthState)
+            .apply { compositeDisposable.add(this) }
     }
 
     fun onAuthentication(password: String = "") {
@@ -109,14 +109,14 @@ class ImportSideViewModel @Inject constructor(
         val authError = details[IMPORT_AUTH_ERROR_KEY]?.let {
             InputError.fromString(it)
         }
-        val jamiId = details[IMPORT_PEER_ID_KEY] ?: throw IllegalStateException("Jami ID not found")
+        val peerId = details[IMPORT_PEER_ID_KEY] ?: throw IllegalStateException("Jami ID not found")
         _tempAccount?.accountId?.apply {
-            accountService.findRegistrationByAddress(this, "", jamiId)
+            accountService.findRegistrationByAddress(this, "", peerId)
                 .observeOn(mUiScheduler)
                 .subscribe { registeredName ->
                     Log.d(TAG, "Registered name: ${registeredName.name}")
                     _uiState.value = AddDeviceImportState.Authenticating(
-                        jamiId = jamiId,
+                        id = peerId,
                         needPassword = needPassword,
                         registeredName = registeredName.name,
                         error = authError
@@ -124,7 +124,7 @@ class ImportSideViewModel @Inject constructor(
                 }.apply { compositeDisposable.add(this) }
         }
         _uiState.value = AddDeviceImportState.Authenticating(
-            jamiId = jamiId,
+            id = peerId,
             needPassword = needPassword,
             error = authError
         )

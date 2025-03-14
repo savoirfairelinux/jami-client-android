@@ -63,8 +63,8 @@ class ImportSideStep1Fragment : Fragment() {
         binding.share.setOnClickListener {
             ActionHelper.shareAuthenticationToken(requireContext(), currentAuthenticationToken)
         }
-
     }
+
     fun showOutput(token: String) {
         Log.i(TAG, "Show authentication token : $token")
         currentAuthenticationToken = token

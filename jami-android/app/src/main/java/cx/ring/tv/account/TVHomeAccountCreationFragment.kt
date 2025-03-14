@@ -16,6 +16,7 @@
  */
 package cx.ring.tv.account
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.activityViewModels
 import androidx.leanback.widget.GuidanceStylist.Guidance
@@ -36,8 +37,10 @@ class TVHomeAccountCreationFragment : JamiGuidedStepFragment<HomeAccountCreation
         add(parentFragmentManager, TVJamiAccountCreationFragment())
     }
 
-    override fun goToAccountLink() { // Todo: Legacy code. Implement new UI instead of TVJamiLinkAccountFragment.
-//        add(parentFragmentManager, TVJamiLinkAccountFragment())
+    override fun goToAccountLink() {
+        //add(parentFragmentManager, TVJamiLinkAccountFragment())
+        //start TVImportWizard activity:
+        startActivity(Intent(requireContext(), TVImportWizard::class.java))
     }
 
     override fun goToAccountConnect() {
