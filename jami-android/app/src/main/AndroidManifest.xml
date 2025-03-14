@@ -312,7 +312,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         <service android:name=".service.ConnectionService"
             android:permission="android.permission.BIND_TELECOM_CONNECTION_SERVICE"
-            android:exported="true">
+            android:exported="true"
+            tools:targetApi="28">
             <intent-filter>
                 <action android:name="android.telecom.ConnectionService" />
             </intent-filter>
@@ -374,6 +375,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         <activity
             android:name=".tv.account.TVAccountWizard"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
+            android:exported="false"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".tv.account.TVImportWizard"
             android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
             android:exported="false"
             android:theme="@style/AppTheme" />

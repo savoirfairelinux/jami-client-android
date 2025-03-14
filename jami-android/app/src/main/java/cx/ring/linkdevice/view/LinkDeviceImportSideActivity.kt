@@ -97,7 +97,7 @@ class LinkDeviceImportSideActivity : AppCompatActivity(),
                                 (adapter as ViewPagerAdapter).importSideStep2
                                     .showAuthentication(
                                         it.needPassword,
-                                        it.jamiId,
+                                        it.id,
                                         it.registeredName,
                                         it.error
                                     )

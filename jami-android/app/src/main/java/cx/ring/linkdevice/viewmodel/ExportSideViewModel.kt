@@ -24,6 +24,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import net.jami.services.AccountService
+import net.jami.services.AccountService.AuthError
 import net.jami.services.AccountService.AuthState
 import net.jami.services.AccountService.AuthResult
 import net.jami.utils.Log

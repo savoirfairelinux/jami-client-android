@@ -184,6 +184,10 @@ class AvatarDrawable : Drawable {
             this.id = uri.rawUriString
             return this
         }
+        fun withId(id: String): Builder {
+            this.id = id
+            return this
+        }
 
         fun withPhoto(photo: Bitmap?): Builder {
             photos = if (photo == null) null else mutableListOf(photo) // list elements must be mutable

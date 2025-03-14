@@ -39,7 +39,7 @@ object StringUtils {
 
     fun toPassword(s: String): String {
         if (s.isEmpty()) return ""
-        return String(CharArray(s.length).apply { Arrays.fill(this, '*') })
+        return String(CharArray(s.length).apply { Arrays.fill(this, '●') })
     }
 
     fun toNumber(s: String?): String? = s?.replace("(", "")?.replace(")", "")?.replace("-", "")?.replace(" ", "")
