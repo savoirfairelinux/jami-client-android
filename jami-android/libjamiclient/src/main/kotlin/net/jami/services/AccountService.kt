@@ -1707,6 +1707,24 @@ class AccountService(
         val operationId: Long? = null
     )
 
+    enum class AuthError {
+        NETWORK,
+        AUTHENTICATION,
+        TIMEOUT,
+        CANCELED,
+        UNKNOWN;
+        companion object {
+            fun fromString(value: String) = when (value) {
+                "network" -> NETWORK
+                "auth_error" -> AUTHENTICATION
+                "timeout" -> TIMEOUT
+                "canceled" -> CANCELED
+                "unknown" -> UNKNOWN
+                else -> UNKNOWN
+            }
+        }
+    }
+
     /**
      * Related to add device feature (import side).
      * Updates the state of the account import.

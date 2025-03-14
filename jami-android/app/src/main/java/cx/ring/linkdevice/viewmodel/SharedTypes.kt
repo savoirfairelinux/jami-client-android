@@ -20,29 +20,9 @@ interface AuthStateListener {
     fun onInitSignal() { // Should not be received since there is nothing to do.
         throw UnsupportedOperationException()
     }
-
     fun onTokenAvailableSignal(details: Map<String, String>)
     fun onConnectingSignal()
     fun onAuthenticatingSignal(details: Map<String, String>)
     fun onInProgressSignal()
     fun onDoneSignal(details: Map<String, String>)
-}
-
-enum class AuthError {
-    NETWORK,
-    AUTHENTICATION,
-    TIMEOUT,
-    CANCELED,
-    UNKNOWN;
-
-    companion object {
-        fun fromString(value: String) = when (value) {
-            "network" -> NETWORK
-            "auth_error" -> AUTHENTICATION
-            "timeout" -> TIMEOUT
-            "canceled" -> CANCELED
-            "unknown" -> UNKNOWN
-            else -> UNKNOWN
-        }
-    }
 }
