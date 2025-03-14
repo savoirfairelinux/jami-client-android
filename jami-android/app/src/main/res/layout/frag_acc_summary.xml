@@ -164,6 +164,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         android:layout_height="wrap_content"
                         android:hint="@string/registered_username"
                         android:textColorHint="@color/settings_submenu_header"
+                        style="?attr/textInputFilledStyle"
                         app:hintEnabled="true"
                         app:hintTextColor="@color/settings_submenu_header"
                         android:enabled="false">
@@ -223,6 +224,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_height="wrap_content"
                     android:hint="@string/ring_account_identity"
                     android:textColorHint="@color/settings_submenu_header"
+                    style="?attr/textInputFilledStyle"
                     app:hintEnabled="true"
                     app:hintTextColor="@color/settings_submenu_header">
 
