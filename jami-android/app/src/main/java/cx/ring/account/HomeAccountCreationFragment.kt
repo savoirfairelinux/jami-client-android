@@ -98,6 +98,7 @@ class HomeAccountCreationFragment :
 
     override fun onDestroyView() {
         super.onDestroyView()
+        mCompositeDisposable.dispose()
         binding = null
     }
 
@@ -109,6 +110,10 @@ class HomeAccountCreationFragment :
     override fun goToAccountLink() {
         linkDeviceActivityLauncher
             .launch(Intent(requireContext(), LinkDeviceImportSideActivity::class.java))
+    }
+
+    override fun goToBackupAccountLink() {
+        TODO("Not yet implemented")
     }
 
     override fun goToAccountConnect() {
